@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FCFC8461A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:59:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C95F846201
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 21:39:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEADB1F28564
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:59:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF3E91F214F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:39:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E076D8564D;
-	Thu,  1 Feb 2024 19:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9499A1A708;
+	Thu,  1 Feb 2024 20:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SSQmiX8k"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A9iE2ygj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E98929B0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 19:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8F2B9B7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 20:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706817568; cv=none; b=sNnuFDTT0xTkukO/ZQ0qQKJWrw06e1p3r0k/GIaivYUvhFowKiYRQL7cuthqdoq6j/es9HqFXLK7pDJgGxl2NlFvwolB5Cb0i8IamAkdAICziJuBM959gjUIZrESU0CP6dXIo3b9x2dBHV3F8RNAS46L476di5L0t444wxlswDY=
+	t=1706819951; cv=none; b=aqNAaA/QbsenKhKoxKTjc2e10yHBteol20p+oVIbVgHH/WiRUSrs/e7mNj3LYNs57eEhuhDQatdn2BR8vk2GNj8e5h8YJIcicV0Y55daGDw144O0lebltRnTRRintHOsdg3Ge28hJr9fsV0l0C8lPderNnKOXH6p3Di0hXsCIwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706817568; c=relaxed/simple;
-	bh=yemCSlTLsk8OwQPnRNYD/2IQjQ+HSzqIQZuEziEQu1k=;
+	s=arc-20240116; t=1706819951; c=relaxed/simple;
+	bh=+DHBCFZYgh7WBnVrdonCpXXy2S80iyiLUobKfL9zE84=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hbBIZKRrgRJrGO9GL21goJJW4JQN7Z0tVukKDXMA89fhCBFW0zyGA93H8FsH+oEylUWqW9OHsrO3gVnRef+MGSWg3LtfkGqWhgWVk6zzkB+0krmcbaBQoXKJKQMnHo+UF19hYDpvuNvUOq9pqhZr1fBPUNB+ixPv6w/gKeOBb1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SSQmiX8k; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:Content-Type; b=C4et0FRU35FMNJJWzcizC+tWEazMtgfDpmeoX7vmcn32NZmG/hzH+Pn3XkY81sPVf0wuqr+CzM2YO7EMix8OunltZBpp7XRg8wjRZ/b3w0WexlBnkv6oB/HInv+XvSDSSlxasz51Xvh8GDMYZWEr79VPfdk0mS031xs/jzINyNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A9iE2ygj; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a36126ee41eso183321366b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 11:59:25 -0800 (PST)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5111c7d40deso2116596e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 12:39:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706817564; x=1707422364; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706819948; x=1707424748; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8dOp1JQgASRukzALnfQhyhwz92RPkxu1KRtWoDV2mjs=;
-        b=SSQmiX8kBf9DWucTG4j0Ze/me28qTf5/CaFfxjGN6o/DcnbJDM7vdkwh8PeXrxc1FR
-         FDyaPMFsnntmFddmBrK4qdGrmJodgEty0osjvSMe6ySsQ2ulHvyQ3o7oDL9m+6y7KWYe
-         K5az1z9JTQytWcE8SeUemXRGmPseBavhhkFuIesnWu9h0V5gMUyCrDcXw+gCxcJbBp1o
-         LmMyverT/sFeZbKqxxfRRzMFC5MJcG1DRlRRhKBtQe7bJ4+MrPZGyRBC/Wf7jXdd9xrs
-         sFzlllGWVLs+9BlEJgQeid864iX4zXHbYihYXKfo4D1BeZcYxwDuvCphgZ3GDSR463Ab
-         sgJg==
+        bh=y9YFKFaHM7YsZHDCZN3lYx4blhCBTgQmFl612USwy9w=;
+        b=A9iE2ygjAVk9evM1gaOoWp7OPVqm3AHsKi/8NKDF0mQICHChPztE3YF4nEctlYjgod
+         G3WpN1irF4jyH9GOe+3/rz1RmFaX5yoBdYcou96+hfCN1gxG1ZOpQdm0Ldne+lf2AzWN
+         R498Akf1SW/+Y5W2f4gw4f7azQVoSPOmvZ/no7kSE6DnaCAvbzOGhQxMDyyLYqxLQNT8
+         jKboJ9ZFsabIn3T1cLgNLCABa39gW3smbiyYXpUWrfMbooHvhYrH5pJYnILNXkVmRnnu
+         5zYPIoj5zY1D8UJVupnhtCpmvRzF5MJ85Y9r6C0GDNg00WoIujxyqfT9wQ7xJSn9RrAm
+         ks4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706817564; x=1707422364;
+        d=1e100.net; s=20230601; t=1706819948; x=1707424748;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8dOp1JQgASRukzALnfQhyhwz92RPkxu1KRtWoDV2mjs=;
-        b=d3NIbt9fbXZc5GXAYIveykObaX4D0RYpKWtd2Pk0ygsHmCa/vs35rquBLSTUk00B6X
-         +FNHD0941weasZ0Dkj2xfSPa6HATeWBIWXpa2cZw+vn79VK74MeB6B4zXH1Q1Wwkj03+
-         qYcFudABL0kAWsQ/l0sh8UNOqfO/pW4DyKPcRA2KBoC4jDtyl+GgELUXDkBwOPumoSMC
-         1NN1TApt2Gl4dEfepoE/l3s3mCFBUIIPAQyH+2IkkvKlRmOUJ7+h2+XFdGe6GpISytva
-         OJHxMwvBPhHsLHuc6Z1/B90zsSyudpusvYHgTlHEkz4lYRfcvrVJ3QST+dpbvc0fQW1d
-         fCEQ==
-X-Gm-Message-State: AOJu0YxjEcUOJZgPVXAjAsO2cT0jWwCCIy3YCRPC3u/CiIRLLTIrt7wL
-	qXUAp4Y3PUD6UhPwYYQ1Tw9mhQXzj9gJVrkIW+lkmQc0/N1ugiTTYu5ApGH7BQI=
-X-Google-Smtp-Source: AGHT+IEssAWZFv+S4cGJLFyN6xFk8Ti/YY5fL4gEFTtsux6fgSXjeK3MbRw8YIb89B8Xy+Zy48nnzg==
-X-Received: by 2002:a17:906:807:b0:a31:88d4:9a4c with SMTP id e7-20020a170906080700b00a3188d49a4cmr3861366ejd.22.1706817564249;
-        Thu, 01 Feb 2024 11:59:24 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWiRa5+Ww1MOwD7IJi1uBnxI6qvvRoZicjEsvFAld+PkE4XFrkA3zaW31nZErxltJRiB/Nz7q5btw80YWViRUMLbzGtaZnRYaXynuJ1VriWtvNta2bkHJo92vJHCLioenqdbC182yQcK8GA+01zgxHHLzzcICpKdPjxyU4bSENpH16tHHHQu1JGqKkZCDs3wGAxT6sr0XzfAWYbou4i/B6fIeS+113vT9KjjEFBegXlOpPljCA/lEevmMyh1SuPKnYfLwZVT8vfyYub
+        bh=y9YFKFaHM7YsZHDCZN3lYx4blhCBTgQmFl612USwy9w=;
+        b=ZJ2zrfi+FLim/XxtBhhIICsZAcZD7lK0rVR7k3hGVxVzc+uojtxVZ0k8HB2M7gLrOq
+         G5uvvoappF5OYzizawDdpG7Dr9OBV7GTmfgUVMCRVhI8/wJ7lZZGwWgsgUYSzyvG7/3w
+         Dd8IXFMQKcZn8HWlKgaFCWsG/P6orIHi3wObxSdfi8nMqJ9LfEI1k0/5mlYQ2Dr7U4kT
+         YTH7ASqorIFR2R9dGhmPZAv150/Nqy/thXLeQz1KA9C/fboeGAGKvjCJxUmJTkIxzgua
+         qEKQ7RQG7UdsvBCNzGbj6CcRJa6VcdBefDGqhbTw61sseYgaI4IElifKtyfqr5x80G3y
+         ABNg==
+X-Gm-Message-State: AOJu0YwUmlE+7rPxNxrljeOn5nvIb0/P9CQgXCsuxTwa1euaLE8iAk0v
+	XmgD1g9sTOgpgXLxZXB0r81wFfNDTTuHF8Yzy471FnVpw29Q1c7xMMNZI7IP5KA=
+X-Google-Smtp-Source: AGHT+IFyjvhbNZIbd/4txylH1j8mJ2YdMR8JU4sJ4+BFPgD9TuJ8ij3WYUxdzQG6ETBYZ7wzx0rRDg==
+X-Received: by 2002:a05:6512:2023:b0:511:15ff:5628 with SMTP id s3-20020a056512202300b0051115ff5628mr52039lfs.22.1706819947629;
+        Thu, 01 Feb 2024 12:39:07 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVA/aQBbzvCSoBXiOpEYwvTJ26qIvIpuZ83FxRp6iyIM0JFPIWajvSqx9A8+v6zcBzWXsM/mN/MrizGnoH3rMfWDwkNRKnDb7EyOUduFuLDOn8IeYcurUomIwQLcRhWy42GyKOKQ8RCp2vT0OX8b/OpuATqmaPYdcOLy66h3sN4IO5vJGQT8BRRnB5njxkOJeOPGVSBWya+tKwKl81na0lrkAgoRsdPG/NeV/VnUn8NNJQGx20/VVneYXjaM78NCPjWK3k0C6htCwHUSGRTq3DM7C6Jj+p4/ENEIWprhUDBGdD349ZPuKMm36eY6RcxicmUEpuHPxlMuDXmbtA2zniE+O6K/DU8BPc9RBaI7W1/D8Zhbq4DMilSsT4l3HJEyuHb/ushhS4ipzulyl7RiM3L5ndFWWI=
 Received: from [192.168.159.104] (178235179129.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.129])
-        by smtp.gmail.com with ESMTPSA id s14-20020a17090699ce00b00a36c6b0485asm108608ejn.103.2024.02.01.11.59.23
+        by smtp.gmail.com with ESMTPSA id u19-20020a170906069300b00a35becf3f0csm145526ejb.85.2024.02.01.12.39.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Feb 2024 11:59:23 -0800 (PST)
-Message-ID: <0cf69024-a3e6-4be2-89ce-017ae521721d@linaro.org>
-Date: Thu, 1 Feb 2024 20:59:22 +0100
+        Thu, 01 Feb 2024 12:39:06 -0800 (PST)
+Message-ID: <dee1e1fb-107e-4e74-bd0d-762618ec2192@linaro.org>
+Date: Thu, 1 Feb 2024 21:39:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,15 +76,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550: Add dma-coherent property
 Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org>
+To: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: quic_kuiw@quicinc.com, quic_ekangupt@quicinc.com, kernel@quicinc.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240125102413.3016-1-quic_lxu5@quicinc.com>
+ <20240125102413.3016-2-quic_lxu5@quicinc.com>
+ <918d1d55-e95a-4b00-af59-7b5d7057b9fb@linaro.org>
+ <05a5402e-9c9e-4dbe-88a6-f990c5c2fbf0@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -121,37 +123,50 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org>
+In-Reply-To: <05a5402e-9c9e-4dbe-88a6-f990c5c2fbf0@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 25.01.2024 17:55, Neil Armstrong wrote:
-> Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
-> received from endpoint devices to the CPU using GIC-ITS MSI controller.
-> Add support for it.
+On 26.01.2024 03:34, Ling Xu wrote:
+> 在 2024/1/26 0:38, Konrad Dybcio 写道:
+>>
+>>
+>> On 1/25/24 11:24, Ling Xu wrote:
+>>> Add dma-coherent property to fastRPC context bank nodes to pass dma
+>>> sequence test in fastrpc sanity test, ensure that data integrity is
+>>> maintained during DMA operations.
+>>>
+>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>>> ---
+>>
+>> How can we replicate this validation?
+>>
+>> Konrad
 > 
-> The GIC-ITS MSI implementation provides an advantage over internal MSI
-> implementation using Locality-specific Peripheral Interrupts (LPI) that
-> would allow MSIs to be targeted for each CPU core.
+> Without this change, case8 and case14 about DMA sequence test in fastRPC sanity test can not pass.
 > 
-> Like SM8450 & SM8550, the IDs are swapped, but works fine on PCIe0 and PCIe1.
-> 
-> WiFi PCIe Device on SM8650-QRD using GIC-ITS:
-> 159:          0          0          0          0          0          0          0          0   ITS-MSI   0 Edge      PCIe PME, aerdrv
-> 167:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
-> 168:          0          0          4          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
-> 169:          0          0          0         34          0          0          0          0   ITS-MSI 524290 Edge      mhi
-> 170:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
-> 171:          0          0          0          0          0          2          0          0   ITS-MSI 524292 Edge      ce1
-> 172:          0          0          0          0          0          0        806          0   ITS-MSI 524293 Edge      ce2
-> 173:          0          0          0          0          0          0          0         76   ITS-MSI 524294 Edge      ce3
-> 174:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
-> 175:          0         13          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
-> 176:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
+> The steps to do fastRPC sanity test is:
+> 1.download code
+> p4 login
+> export PATH="$PATH:/prj/qct/asw/qctss/linux/bin/vce"
+> vce.py view --base fastrpctest.common.1.0 --checkout=<username> --root .
 
-Is it by chance that this one never fired?
+I'm assuming it's not this one.. https://pypi.org/project/vce/
 
-(lgtm otherwise)
+
+> 2.compile command
+> chmod -R 777 ./fastrpc_tests && python3 ./fastrpc_tests/build_fastrpc_test.py -target=LE
+> 3.run fastRPC test
+> fastrpc_tests_ReleaseG_push_LE.bat
+> adb shell fastrpc_tests -e (case number) -d 3
+> 
+
+I see, however there has been some talks about halting fastrpc developments
+until an open source userspace counterpart is ready, as upstream outright
+rejects binary glue..
+
+That said, I am not sure whether I'd be against fixing up the devicetree
+component..
 
 Konrad
 
