@@ -1,139 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-9394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3AEC8460F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:30:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2760284612F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 20:43:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0C7A1C265E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:30:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C6841C248E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 19:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1563D85293;
-	Thu,  1 Feb 2024 19:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EjLxYP15"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E93485288;
+	Thu,  1 Feb 2024 19:43:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4658E8562D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 19:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7423652;
+	Thu,  1 Feb 2024 19:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706815810; cv=none; b=kZPUqhXWjG7c6dn1UWpRehtIMupT9DgtBsI2NXkAQh4Bs+cj9JFT3jZHPYhGzqVgl863ZS9MrJ8q3+gMJhq5S8LgxbnZXY8R9gUJG2w11Ha/EWfKQo9YcTw6JOqcfxysWKekd63zHsto5F2lRzh4jQh1O78siFFu9KTCm2GgYA0=
+	t=1706816586; cv=none; b=JhXUyki/x7UFwkmX5Yj6pT0IgG494jynHjrod77U7T+u3/XNOM369rgzF5z+KlBIVcdAVJObMc2yVs77JddknB2eyMY1Z5wzXih3Tyv4X5T47B0owk//fi1Fb0VLuBWXThSipY+JS21AOhX9aexrqObuFhQcO+pPvKTnOxbWVoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706815810; c=relaxed/simple;
-	bh=qEdOIhplANC0gorwcTR2WxNxvxwlx3uplcYTcQ9qBKY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mt3alaZYAs6rgo50Usut/x0RACZpSAkYJTgh4PrsevpltF6wvqH4f1doZ4AsFs7x3DHFEh9SkYALXbtyPwcSqMramFZbUq574nb7De5SvHkLmanaNZUEpF5qZVTLDh4Gk3po9cmweVlZaApj6+GFwFTXvjkt+DcPeUSkR4FNNg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EjLxYP15; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55faa1e3822so1807983a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 11:30:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706815806; x=1707420606; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p8AF+nF7f6GKyHNgDkKIyrm92UYx2InesUiKuHDgxjA=;
-        b=EjLxYP154gSgNB+thsRnMUshj1rlGe6xzFjcBC3IRcQ+kf9ygr0DL3ReS8n014oQix
-         4/8RW6k2A+uaWKXuMx5XyX5liJwe4VV94DP31z75X2bIlJd15u6/U4vYvWNoCDAgtGGx
-         90ztDHzCAS+psSeNJv9sOrSFHD0iWvpuLP1KwC6CSB1cfOC+A8iY2HWLase8QVPqmr4U
-         j/G1CmMp6gqnT5hSrG8ydL9vIPtyc3m6jGhWCuaJHP4ApcAN7C3mtyRa3PxEmOfix82E
-         mqH3GHGJ2vifGzB8dXZ81YORLKf1aNNNFlHZwKnAtaytWg6AghbEoSsWqHN0by5Qxi4R
-         a0CA==
+	s=arc-20240116; t=1706816586; c=relaxed/simple;
+	bh=EI6Wdf+UwkRuRvguDGNKbFCflnhm+lABsh5itXBFJ0o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fXVwb77tfE4BBpeNABQuVQTmxsQ/jfDsfWm+nl9YJSGjJs2sT+gLBHxXqRafnAKkzltv48p1x8uztA59lbWZ+mw5ZxoqYXC0GA+hkR1rp12Fx0Os8bl/HK5TTG94c+vRQJX1h9Z2Hk8U3W8LCyu+NtIPVLa0qKOle3vIuFAQ4YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-59a47232667so168837eaf.0;
+        Thu, 01 Feb 2024 11:43:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706815806; x=1707420606;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p8AF+nF7f6GKyHNgDkKIyrm92UYx2InesUiKuHDgxjA=;
-        b=dLbeyb+hC/gAmMvblWOHCz8s+1JLEpfMPnoO0u6uqlsxTBsk1ou6+m78AmlSCWyB1l
-         LrkDAErEh8SBQWd2+XQ9LVY/QRa23zT0UuADYiXllPlLu9IP9qt/uGSimLEE4cr3wiDM
-         /pHLTUg8kvaQ7/yCBM4mTAr7CPwcOvtpL4CJv2eSOWkcOv/j1YA09c8WkFdWhXmcIAjL
-         oUYRN0BRYcBu+aMm1Elxnw8uRy5an9E2XcxcN1LWDAWZqQyf+53NKvbtNOiCH+44ke13
-         8OFeOpILTJ1F9YvczpFqnLNb/ZSxmgYxYSNrCLrUs/9SrIA+pMjb9Vj+XhKqg1UWHuZB
-         EwHQ==
-X-Gm-Message-State: AOJu0YzfEfovDqDRuSNucTb3zQ3VR1EipDZjVs1qFqd0AXB09cyUGVfv
-	zAI67vCoFThWjR/409eIWCFPKEgVIEa+G6udW52SGPOomz43bKHJwd79wAfL3CQ=
-X-Google-Smtp-Source: AGHT+IEkKtSLNo+Ps5dlB9BfkBVWWZSEfjFQelsor9HO5y8oGLVBKmRLPigMyO4ZMQPPKKtg4A1XQw==
-X-Received: by 2002:a05:6402:1aca:b0:55f:e35e:1450 with SMTP id ba10-20020a0564021aca00b0055fe35e1450mr363191edb.0.1706815806611;
-        Thu, 01 Feb 2024 11:30:06 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVLFV2meBnZyL2aQToPalM5dRVdfEbeV5Rqhbw7IHafWJYZKhQg6t7RZ8bVZm+x4uAH4YThlx0QGCmwNRk1Nxkj56PXICjd0fI2BGoQBHpn6B8pHoO7RDtxsDeCT9FKh0Bf+DvmcjxQEajOjPTpDM7MoEzBuKJBfVHJeFZ7KVJzVX/hB8tw6kDAiubxvtEO0b2WEACkl0dChcGGl1GIezVl4BGv7UtceKSJWvPJxgSBgtnibCenWUCENT7vobB5efcSrz043CPoIAUy
-Received: from [192.168.159.104] (178235179129.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.129])
-        by smtp.gmail.com with ESMTPSA id h2-20020a0564020e0200b0055eed9cac54sm110982edh.12.2024.02.01.11.30.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Feb 2024 11:30:06 -0800 (PST)
-Message-ID: <d16729a0-ce5e-4587-aeaf-b9fceffd2696@linaro.org>
-Date: Thu, 1 Feb 2024 20:30:05 +0100
+        d=1e100.net; s=20230601; t=1706816584; x=1707421384;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KIfIQzx9YZcK7zdFdUNXFqLOVj9oiILciX2Jy5KyqR0=;
+        b=qrNI+IlWTVOm13C4PZS1Mxsc8iDSGTr8A/PPAsfx0VJxqi1AsMCCxiccldj4Ymftr5
+         Bk2+n1G8zI/ior+6ezFY3Uw3SSr4ANwaciRrvlRX2XRudpic3XNw5TAHox+l5QLbLk6H
+         pdovdpcM3QgFZuHdGGIhSWPeum8q5DwnJGR9r8uGwxPHKsM3/YtUAOteZsaUPeH/tOVg
+         3Nw0nx4DuVclG4GMjUacUXJJq3e+0dezbHjsmdrR0ohfQlYTLIW+PWUazTzq1WRggelz
+         lhrzVaQRSiGvfosbq/0hvQbsfnO0aWjylKKRKWP30EzjhmyJzRHXp2/r4CeWPQH0jmKe
+         0w2Q==
+X-Forwarded-Encrypted: i=0; AJvYcCWHCP7KHzhWF2+3EGY9jQVybGWJiDM4PwdmQ/0/7bGQNRBsaugfJtQyB12E+BXiqWVY0lzsTmjS5ol6QOB6QGx9z+JH+S8VTfeAm9kMhVbv9cMuaurBke7ByJS6p7yOavfo/Fbi7zIPbG6YUUHJgS1n+y7kEBzGdfCWkrmmfzuuKTMFTA2qxdu8xZcOvvyVF8p4zjZ/Oek3rcDmzMy5GR6uONoSld5d9Sw=
+X-Gm-Message-State: AOJu0YwJgfYSa0RQt1Rk0+z0c41mcDTzyNkJz9i3mCaxhjdp2F5EaG67
+	gGWE5wl5Z3y+iPHfXHex5vxY/Wrgx6pcj0NcPCmpJR0N6xi7zxHUQ6rCJKYfrLbFc5uveIFtdkH
+	OkR5VlrVKRWxR7ci5rgQPVt1bQ78=
+X-Google-Smtp-Source: AGHT+IF4d2qVzkyJfWAEFUKt+0yhhszmCH5h7eayyLTyhb+UTNnYVy0aTBkyzcVw4YAyAiHmxAqp4+kRoyY1okMmtGE=
+X-Received: by 2002:a05:6870:b6a4:b0:218:d1b7:e8cd with SMTP id
+ cy36-20020a056870b6a400b00218d1b7e8cdmr4317354oab.3.1706816583711; Thu, 01
+ Feb 2024 11:43:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/5] arm64: dts: qcom: sc8180x-lenovo-flex-5g: fix GPU
- firmware path
-Content-Language: en-US
-To: Anton Bambura <jenneron@postmarketos.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240130202755.2289952-1-jenneron@postmarketos.org>
- <20240130202755.2289952-2-jenneron@postmarketos.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240130202755.2289952-2-jenneron@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com> <20240130111250.185718-4-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20240130111250.185718-4-angelogioacchino.delregno@collabora.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 1 Feb 2024 20:42:52 +0100
+Message-ID: <CAJZ5v0g6YNDAUxaWK9KfM0tt2x4wqaCap4--UjSauwmfYiEgoA@mail.gmail.com>
+Subject: Re: [PATCH v1 03/18] thermal: Directly use thermal_zone_platform_params
+ for thermal_zone_device
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: daniel.lezcano@linaro.org, miquel.raynal@bootlin.com, rafael@kernel.org, 
+	rui.zhang@intel.com, lukasz.luba@arm.com, support.opensource@diasemi.com, 
+	shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de, 
+	festevam@gmail.com, linux-imx@nxp.com, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, amitk@kernel.org, thara.gopinath@gmail.com, 
+	niklas.soderlund@ragnatech.se, srinivas.pandruvada@linux.intel.com, 
+	baolin.wang@linux.alibaba.com, u.kleine-koenig@pengutronix.de, 
+	hayashi.kunihiko@socionext.com, d-gole@ti.com, linus.walleij@linaro.org, 
+	DLG-Adam.Ward.opensource@dm.renesas.com, error27@gmail.com, heiko@sntech.de, 
+	hdegoede@redhat.com, jernej.skrabec@gmail.com, f.fainelli@gmail.com, 
+	bchihi@baylibre.com, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, kernel@collabora.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 30.01.2024 21:27, Anton Bambura wrote:
-> Fix GPU firmware path so it uses model-specific directory.
-> 
-> Signed-off-by: Anton Bambura <jenneron@postmarketos.org>
-> ---
+On Tue, Jan 30, 2024 at 12:13=E2=80=AFPM AngeloGioacchino Del Regno
+<angelogioacchino.delregno@collabora.com> wrote:
+>
+> Remove all duplicate members from thermal_zone_device and directly
+> use the corresponding ones from struct thermal_zone_platform_params.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+I totally disagree with this approach.
 
-Konrad
+It does make sense to store these things in a tz directly.
+
+1. devdata allows the caller of the thermal zone to get to their own
+information on it conveniently.  This patch makes it harder.
+2. It makes sense to copy type into tz to allow the zone creator to
+free the string (should they want to do that).
+3. It would make sense to copy the contents of the trips[] table to tz
+to allow the zone creator to free their initial table.  This doesn't
+happen today, but it is in the works and your patch goes against this.
+4. It makes sense to copy num_trips directly to tz, because it is
+closely related to trips[].
+5. It makes sense to copy ops directly into tz, because this will
+allow zone creators to use const ops for zone registration.  Again,
+this doesn't happen today, but it is in the works and this patch goes
+against this.
+
+As far as I'm concerned, this one is a total no-go.
+
+Thanks!
 
