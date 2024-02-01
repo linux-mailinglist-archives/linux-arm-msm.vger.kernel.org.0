@@ -1,188 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-9314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFC3E8456B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 12:59:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93D9D8456C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 13:03:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1FFC81C23600
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 11:59:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6E2D1C28527
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Feb 2024 12:03:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C03BF15D5B9;
-	Thu,  1 Feb 2024 11:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DAF515D5C1;
+	Thu,  1 Feb 2024 12:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P+uMA5M4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zAsRh9Mx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0483615D5A3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 11:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E142615DBA0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Feb 2024 12:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706788751; cv=none; b=g94gAR3EZ7LqNrdt3MtMW2CZcZQaQclWVPVycdinxrY8SKBrg8kIsdmgUXVk/hvYtxOg238H1qv6OdtQj9JW3Pt+rvwE8F10WclOnIw6Hq9hxrobixpp2Ntulb4lNingRAu8sndcVkJXCuzIhyZzAEa13sRNeCrGYLbhPupcszg=
+	t=1706789008; cv=none; b=lGW/Xodq5wG/VFgVktCafJgu2rYE/XmVvOkVRhdcJO6SQWHrNoLTFrvuW/rJIpvBYxhWUL4XTYPWGYrB+r1rCPTb2KAvUC/Xw+mJuj2nL+bhtiFnZew4TzilEhPASNOykN6YO7Ey464wt/z0qG2IN7F5A5Z4VVjegdFgqbOEs9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706788751; c=relaxed/simple;
-	bh=OZsGrszBeKUHNZmz0F4X8KtWFi79ZQpewOFt5i7n+i0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PxY97tph8pbX60rXesucqf8Tgf5CCAKEirZjfYk0+nJTVyLseWXrjde6t9CeyMMXdSfCpnMc+OOCYGJQqAoShHykZo+skwQ1+6gCkFgrYAWphhYkNmT1CgJrEYcE8FWVRejdI3btYuz3mMe3KNsdgok9TaJxPVwiVkbFcQ6g9bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P+uMA5M4; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1706789008; c=relaxed/simple;
+	bh=TiprOwt7tUEf7EeXjFc++Q44zN30BsJWpw76yapmUZE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pJflalr5Ivb0RV4amiHoa8pPZHQwBlf6xGtUjbE2LsLwAzd96A1ANHH4l+JosQrZtJk04n6Gymad+Wwf8xHzPi4J+byR3UO5/kF0IwdFjS27TxJC+B9EJ7oJhDY7ipcs0gsqCb0pGQNO2Tkzgz5pWnM0qKsxVEFyr/eLSzE7ARk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zAsRh9Mx; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-60406da718aso8842067b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 03:59:09 -0800 (PST)
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-42adb5f806fso8842901cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Feb 2024 04:03:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706788749; x=1707393549; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uKEpVLIoUGjy+WrPCxIEJ9ucHcFp2SdWWm/C9ZhEGXw=;
-        b=P+uMA5M4o3L2jNoiqwhsOFlWKv3GoAstWZOqlqCaQU9iheeRNY98iEF3Fg6IQfRnmb
-         QFJgbRqLj8JKpIPUzmk3xEbJYAe9m9/38tX8ekNqtmP+j1/EdfkgckwCLhsAk7Bpwmn/
-         HpFOaTMSFprI3OdmbQHyiCTkGFvPi201Amhwbxa7ihMSTBLAq1toOofAm8jTuoM7Xjtf
-         tWnrF8/S/wP8xrV/rNswadlcr39A01Z+P2pOXXf4LyeExix0FNfLLVhcRKhh2B5Acows
-         645pL29Cjib3AQsGEoh6eD99G2GyjgmBcDnXQsOpsVz6hkjcmQMZBThDm2K1xeQqxxbV
-         5HJg==
+        d=linaro.org; s=google; t=1706789006; x=1707393806; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NNs2+h3cA2GnTmXa5rdXvMXKwDcixW8pQGoHn2GARQ0=;
+        b=zAsRh9Mx3L3sf3oM7FfBZV1rHQqytq5zXxaoOp02Ciwld0YMvkIXmC+k25FXE1eTx4
+         Zsq8pBMZFcC0el/nCi4Zcc5IqLigW++ox9SE0hO3kDoQ7GklTuLu/NPU2Mi3W3jlhjhX
+         kS2A4B5lAj5tAfVIkshP56OFHzVmWYmfSQVD/LRepv7eSm3rMEz2/TxbVx9yphXXjaa6
+         31mWWQ4r1wpdGZPgP1wqcwrnYhCylDo1abNCxBR6sz8EY4kMzKEfnYfjeXFYtK04uowx
+         ZgKB67jrVc/juCcWwHd9irp70mpPvHas3+XQv90Xg6gUlOpr1qhce2W0fVMbwi2AippI
+         QV/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706788749; x=1707393549;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uKEpVLIoUGjy+WrPCxIEJ9ucHcFp2SdWWm/C9ZhEGXw=;
-        b=lRtaRu2lLjHwQuMlP148z3Yw9BaksGmHyKvqtTozpsf/SRIBH9k0MPcS9fMbBvnyuT
-         7tDptJt9pyXsk9OGz6VuEbQa6qgvm1cVccLewkeoJCxI/tWtBJycTtHXWS4xSwMsQXun
-         o+f1UyeouInzd8pCIAByMsOfWLXHxsqZpf84TGXwhd8ufpTliCme0IsczKfoo9rlBmP1
-         LzMB5FQt988X4sdNv4Ab8BQGDTva/SVhEMcLvNAuw5z1er4JMe0f1SrPvzmrTH3xBwtq
-         9ENLI4SKPN8/s3Y4ZS5Dlc1foBRxDw/1skk1luO16f5qBdVKMAvt5jc+8cHgZdWoImd8
-         suQQ==
-X-Gm-Message-State: AOJu0YwbzqgTWkkptpxZ8dEooUptTNtYyyJVKoR3HeLc6pf/5tDSUYF5
-	ycwCtb8BdjrL7KcdsgGnQNQS7MA8CD2UaH2eDm0gR/sJWDyCqaQY7Rbr0p6leKjKPzx3peqPlLh
-	I9E6df5XDL2S1bF0qZ8oPWF2Y3LHFjOdhLXcXlw==
-X-Google-Smtp-Source: AGHT+IG3BqsBlMIK+5jbWKOuxuJsDpvCPL0V2HadliqqQz05cdkoXtQw9qjR7RA5e7+YCNT2G6NA6p9yeYIqtzHeO/8=
-X-Received: by 2002:a0d:db8a:0:b0:602:ab27:3752 with SMTP id
- d132-20020a0ddb8a000000b00602ab273752mr4465559ywe.33.1706788748906; Thu, 01
- Feb 2024 03:59:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706789006; x=1707393806;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NNs2+h3cA2GnTmXa5rdXvMXKwDcixW8pQGoHn2GARQ0=;
+        b=KownePjy6IcejMsRWRTz1eHDDfeE5Fi2eCgdQRaWo2Wa7psPr7BL1m0lGk8DyMALl5
+         1frXVZpTn28NGXbef3kiKouGjtJXYji4adlTg6pLePuJUj6CXKzpR0z8MkCr0dZkiUf1
+         /X3r9sd5w0j1S3+EiAI70MFnfJ7wNubrukwVhYj+JdK7YEWbKE9AiLKloZ/UQ9lXCK7f
+         S1YYUck68ZUMcBTpyraEyAkKd5uUHha3H60zVbEQvum/sMcBZt6NCtsD3GRKzqw2rJaa
+         7Bjp2zy5fPWTiSXxAb6ESibJzXWFolo+jP2AdA9OQxKDhoODB1hJ3t7LK70MoioBOYkg
+         xGdA==
+X-Gm-Message-State: AOJu0Yxnv8ZNQ7D+1PhOmyk5PI1M6e4JPYocI6Q3rZqCbfTSWfZPKOQL
+	xIFCLOXG/xmFlsOfVzpmdDXvdXhuKqO06RQi0aik3aqGlvBgQmQdqtT5+ofqxUk=
+X-Google-Smtp-Source: AGHT+IGZda1VhxfPL0IwzjXB6TeemP/lFytJpuYNCwevemyLU6Z5ZQXgPaly3QcPtreJ8fUXEqzK3A==
+X-Received: by 2002:a05:622a:199b:b0:42b:f01e:d9d5 with SMTP id u27-20020a05622a199b00b0042bf01ed9d5mr3395562qtc.62.1706789005827;
+        Thu, 01 Feb 2024 04:03:25 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXi9u6H9dvaGIMz+DLiw4Cp1PCvKdNCgRoiiYPApWq5hmokUfmBdhmLDFLXhYP7i3M8MeP9NgLyiNE6QPVUA28ORxdh2Fr0Dp7Sd/Cv2T9ESE7p8zlmvhlHp5Ghu3UiIBx6R8gLgsz4a+I6rv9Y/BH2aXK5UbF3Dyv0ukH2fKhJKUDDkajdyN6QPTnv3XOQVIyrybwfGDhDvVAY61I89AK+eveWXSj5AeebS5dNhWWjfUwr1nwSRCBFSmxUkzdKXS7tTdtzbD/aQy1cC5IQf68T1/hrA4hj79hXLtVBCto5Erqx1pWHw3q7EiR5ehEoZpNkF+JFQBt+Yi1sXoa8DvXsAQOyAe7DVfa+PWxTsC5Q96IE/xrOZNdv5FUTpYccC4IkQwCkyVbuCDJl/CAleir3jdKkL2ZZPzCUDdBz57Yc4kP45TfypG9CZQ==
+Received: from [192.168.1.20] ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id cf5-20020a05622a400500b0042aab8ca417sm3488466qtb.3.2024.02.01.04.03.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Feb 2024 04:03:25 -0800 (PST)
+Message-ID: <3e3cbc36-2f3f-4295-9325-90757f0d77ce@linaro.org>
+Date: Thu, 1 Feb 2024 13:03:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com>
- <20240112-opp_support-v6-6-77bbf7d0cc37@quicinc.com> <CAA8EJpqwOfeS-QpLVvYGf0jmTVxiT02POwK+9tkN03Cr4DgL+g@mail.gmail.com>
- <da1945ce-7e34-6ad5-7b9b-478fcbd4a2c6@quicinc.com> <CAA8EJpoZakDcBXYE57bRPMFvGEXh1o82r7Znv8mwCK6mRf5xog@mail.gmail.com>
- <20240201115415.GA2934@thinkpad>
-In-Reply-To: <20240201115415.GA2934@thinkpad>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 1 Feb 2024 13:58:58 +0200
-Message-ID: <CAA8EJppAL44ZLL5SnmX7SSwzvRUm2PffFUL6=gQRjq4neaLtRA@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] PCI: qcom: Add OPP support to scale performance
- state of power domain
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, Brian Masney <bmasney@redhat.com>, 
-	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org, vireshk@kernel.org, 
-	quic_vbadigan@quicinc.com, quic_skananth@quicinc.com, 
-	quic_nitegupt@quicinc.com, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: aim300: add AIM300 AIoT
+Content-Language: en-US
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com,
+ Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
+ <20240119100621.11788-7-quic_tengfan@quicinc.com>
+ <d3ef45cf-2de8-4f5b-8857-62d1996f3f58@linaro.org>
+ <842bf6ad-46e1-43d8-86be-79ab0f49710b@quicinc.com>
+ <c17dafd2-db89-4fe2-8e98-2a031f7237c2@quicinc.com>
+ <b28904a6-c1ef-44b5-96ca-313a9a2a3f8b@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <b28904a6-c1ef-44b5-96ca-313a9a2a3f8b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, 1 Feb 2024 at 13:54, Manivannan Sadhasivam <mani@kernel.org> wrote:
->
-> On Tue, Jan 16, 2024 at 11:55:17AM +0200, Dmitry Baryshkov wrote:
-> > On Tue, 16 Jan 2024 at 07:17, Krishna Chaitanya Chundru
-> > <quic_krichai@quicinc.com> wrote:
-> > >
-> > >
-> > >
-> > > On 1/12/2024 9:03 PM, Dmitry Baryshkov wrote:
-> > > > On Fri, 12 Jan 2024 at 16:25, Krishna chaitanya chundru
-> > > > <quic_krichai@quicinc.com> wrote:
-> > > >>
-> > > >> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
-> > > >> maintains hardware state of a regulator by performing max aggregation of
-> > > >> the requests made by all of the processors.
-> > > >>
-> > > >> PCIe controller can operate on different RPMh performance state of power
-> > > >> domain based up on the speed of the link. And this performance state varies
-> > > >> from target to target.
-> > > >>
-> > > >> It is manadate to scale the performance state based up on the PCIe speed
-> > > >> link operates so that SoC can run under optimum power conditions.
-> > > >>
-> > > >> Add Operating Performance Points(OPP) support to vote for RPMh state based
-> > > >> upon GEN speed link is operating.
-> > > >>
-> > > >> OPP can handle ICC bw voting also, so move icc bw voting through opp
-> > > >> framework if opp entries are present.
-> > > >>
-> > > >> In PCIe certain gen speeds like GEN1x2 & GEN2X1 or GEN3x2 & GEN4x1 use
-> > > >> same icc bw and has frequency, so use frequency based search to reduce
-> > > >> number of entries in the opp table.
-> > > >>
-> > > >> Don't initialize icc if opp is supported.
-> > > >>
-> > > >> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > >> ---
-> > > >>   drivers/pci/controller/dwc/pcie-qcom.c | 83 ++++++++++++++++++++++++++++------
-> > > >>   1 file changed, 70 insertions(+), 13 deletions(-)
-> > > >>
-> > > >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > >> index 035953f0b6d8..31512dc9d6ff 100644
-> > > >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->
-> [...]
->
-> > > >>   static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
-> > > >> @@ -1471,8 +1502,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
-> > > >>   static int qcom_pcie_probe(struct platform_device *pdev)
-> > > >>   {
-> > > >>          const struct qcom_pcie_cfg *pcie_cfg;
-> > > >> +       unsigned long max_freq = INT_MAX;
-> > > >>          struct device *dev = &pdev->dev;
-> > > >>          struct qcom_pcie *pcie;
-> > > >> +       struct dev_pm_opp *opp;
-> > > >>          struct dw_pcie_rp *pp;
-> > > >>          struct resource *res;
-> > > >>          struct dw_pcie *pci;
-> > > >> @@ -1539,9 +1572,33 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > > >>                  goto err_pm_runtime_put;
-> > > >>          }
-> > > >>
-> > > >> -       ret = qcom_pcie_icc_init(pcie);
-> > > >> -       if (ret)
-> > > >> +        /* OPP table is optional */
-> > > >> +       ret = devm_pm_opp_of_add_table(dev);
-> > > >> +       if (ret && ret != -ENODEV) {
-> > > >> +               dev_err_probe(dev, ret, "Failed to add OPP table\n");
-> > > >>                  goto err_pm_runtime_put;
-> > > >> +       }
-> > > >
-> > > > Can we initialise the table from the driver if it is not found? This
-> > > > will help us by having the common code later on.
-> > > >
-> > > we already icc voting if there is no opp table present in the dts.
-> >
-> > Yes. So later we have two different code paths: one for the OPP table
-> > being present and another one for the absent OPP table. My suggestion
-> > is to initialise minimal OPP table by hand and then have a common code
-> > path in qcom_pcie_icc_update().
-> >
->
-> Are you suggesting to duplicate DT in the driver?
+On 01/02/2024 12:49, Tengfei Fan wrote:
+>>>> This should be probably TX SWR_INPUT1.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>>
+>>>
+>>> I will double check this with related team and I will update this.
+>>>
+>>
+>> I will apply "TX SWR_INPUT1" on audio-routing node in the next patch 
+>> series.
+>>
+> 
+> This patch series has been sent for nearly two weeks. do you think it is 
+> better to modify the patch series acording to the current comments and 
+> submit a new patch series, or continue to wait for your review comments 
+> on the current path series?
 
-As a fallback for the cases when there is no OPP table in the driver
-it might make sense. See
-Otherwise the DT is still somewhat duplicated in the form of calling
-icc functions directly.
+Hi,
 
--- 
-With best wishes
-Dmitry
+Whom do you ask?
+
+Best regards,
+Krzysztof
+
 
