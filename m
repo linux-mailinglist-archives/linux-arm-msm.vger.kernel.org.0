@@ -1,77 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-9488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6100C846A6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8512846A72
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:19:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85F7B1C22EA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:18:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C721D1C21259
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:19:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65E2182AB;
-	Fri,  2 Feb 2024 08:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D33F342073;
+	Fri,  2 Feb 2024 08:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EWH3J6gR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vhjaHTTr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48E418030
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 08:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F186C47F47
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 08:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706861512; cv=none; b=T8SEcBovuosjkoKiFSd+Slx9cn2oymyI3xz77YN0DVYzZDH8zAnfuRVnPG8GooQdG+ekII5i1FhVhWQVaD0rruPT3sFQz4xB5BtsUmYAKxEaiwmoU6iPSaipGXMqFqQlkb5qjqBfUErmVKzhciz2hUHydmhg6COn2rMzmIjPdWE=
+	t=1706861610; cv=none; b=J2dz7s2HAdw4UnE5ezd/0JZgnftm7FIfUdg71j6c7jeUjBXsLrcVpjlT+2Hknfn8p/LYUdjpVAbqg8TRM8rt8e3SgNV/4WCqhwjeX1DqmZFIc6/hDK86upGz620Hcwmq7v2UXCAEx9vA6PGVC9WD7kb21VlwgTbFWFvXr8Ca0FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706861512; c=relaxed/simple;
-	bh=bTtGqCgt8+lUk9uK976uGz7vMakgO575FyOGcuvJdr8=;
+	s=arc-20240116; t=1706861610; c=relaxed/simple;
+	bh=KSqyD8wFxqc0yy9pvP/WpF5qy+7BoasQAlz83MIgEFM=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Sf2bAqSsJnB3ZmSlaNnpQXjxWfr8VhIr9x1d8DjW4Zt+WWaBJRmxWnoYg9UmtyWdyAsxgKI3TB51A42X0X+0g4Uie8tUGxkxPkXVBcbdv8hGfRmBQfvYbjM6PdGaWUYHUMzqn0dByZqxdSGqAKJVoF+GnFTEiypT9i4t4qbZCMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EWH3J6gR; arc=none smtp.client-ip=209.85.167.50
+	 In-Reply-To:Content-Type; b=aIZZY9XthZFrg9NgOCjMNehu3Fs5oaAqS7K5adAg8ieqqHplxk1qcP1WaRN51yXw8YswvCpPD3+e4Wem/io+nQ5bGvmIzgYCsiBY64DKnQ/ycXfFnE921r8LyfHlYPqbKNMJT0Ezf8eYSUkqcLBb5z3+ubWmDpffYgHoHfGz/Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vhjaHTTr; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51032e62171so2515391e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 00:11:50 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-51124d43943so2861421e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 00:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706861509; x=1707466309; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706861607; x=1707466407; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A+phSLkXQoy73qpLUNAhiP2lrCdlciG3yr5Wt06yo40=;
-        b=EWH3J6gRwn6yKZMdRkqaTMfqRe1ttj/J40J2sCNUueMRjr0prC0g6/IzFfv1LwqqsG
-         QtNAvueYYavk/N5+M7tBEx8LTF7XgEMp6258k+3OmJjUkOFE+ZaDLlcdOO6RcATbC03m
-         +xp9O+i36hmaDZRmsfklsHQV23DYbg9Fj9tQrNhIlqoX2UUDoUZj1Cvxh06p0/Ffqqj2
-         dOhKwEdmLo7sKqlCNuYiXMqtdWC5Fq9cRxpLF1CeZisaaZHeL1kx3O0gahZfh+/twumO
-         Ruh5Gbl+LkqCXIUaSP2ewvFHFBgfTO8twPiRs1aYPyvCCyQQhHt3FQRTk2PQB2x3ZrmG
-         G7Xg==
+        bh=6ggsCfwMJnBPvg51wpVBNnYRzEbc6WGF98qXbqSsoo8=;
+        b=vhjaHTTrRv55XOLOwhJ9ehANIc8/geNwHoPaqGGStTFUBTd+KSjEZjQt1FKZePPm6h
+         w9ZWFXc1tuu9YBXOrrN+Fu6uvce3sl/XcmaAm9oHfBEQP+HIvgkro/sPKFON/vCrWBYI
+         ydaJqTqJn0G/ccQ6gMIJfh8OlvXoqOiX3H2xY54CbRBoVD+2IfvTlJsYFQ9eSticAmoz
+         1LUOWWrkiEW0+/WKElOVV2AiZlaSVkvukvZcqFKSx940LZmbjw3oYwOgor4oqGI8cZfA
+         p+22F49PV46lE9JeNOVxijWi/FDWnbxQ5AReHZ6l/qTYdUMkkrH5qbESiq0Qqbup2u3C
+         KgGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706861509; x=1707466309;
+        d=1e100.net; s=20230601; t=1706861607; x=1707466407;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=A+phSLkXQoy73qpLUNAhiP2lrCdlciG3yr5Wt06yo40=;
-        b=Xxd8B7RUeB0ayFO4PAvMqYrd2grjAiUUFsbtArvi2dVFi8SJO//iaG9lUOqCP0QFFe
-         z0mXXMktpGKS5cmoDagSn/tPvJzXfNboyVD7xyRSgsdKVerKi5YTAoCQe1sNuFpFmHUi
-         hp5SazCCjhmoASh8BFxeKkjb+4vV/3k0sqrWMGxkIZP9cY0G5fkEDzW01cPCyFhlid5k
-         t8hQvlmKRqyqm1RYaOiMNeg+GFlftMpMBp2Hx5JLtz+9ncbH+2zAKLKuOWUnPxZAfy0F
-         fN9EEY1D1ZBBuV6oEsb4tyQDX26yYpoHQ3q8rGJSNc0ZUVlsfEvIPgq3bMgehlXQG0Q3
-         vl/A==
-X-Gm-Message-State: AOJu0Yyw88dH0gTyAi2Rl+vmt3f742QBpL+iO/0Feh8xDSJBzw8gXP8L
-	0Wtgco2QqRqtogPWwOxWVdMfB0xQTbrDe3DkSLBN1dhYBDPyojfAez/34CB9NO+bFzx/4U+7t5v
-	A7CI6VA==
-X-Google-Smtp-Source: AGHT+IFFRlYYbYbfxCl751fzPqVcTtiNOx74uwltdXB9jT1S9GqCxRnzy4+OMEE6v3Ty+Rp7w9Oj1g==
-X-Received: by 2002:ac2:442d:0:b0:511:2fd7:b0cb with SMTP id w13-20020ac2442d000000b005112fd7b0cbmr729854lfl.49.1706861508887;
-        Fri, 02 Feb 2024 00:11:48 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUnFuUOJ29IlEpe5oQXZvV9EUSS6+0XBTclwUAKeYrVhaEa/i37TuwOG5e4hptV3jvEelVhcZDgseWrWtxH74ltZjitsaU77bkS1JUpWsb6RNvdsmo4i2BrdOJPI2u7tKtIR5Hi3oOfrZ7ThHPksAaLtvQNs7RIs2UFXKndxmP775aMOknS7k28b6Nn
+        bh=6ggsCfwMJnBPvg51wpVBNnYRzEbc6WGF98qXbqSsoo8=;
+        b=NyqHFda/xEEJ/5+c7jcFQe7gN2imyB/k0iskLwB7xR8CDFynHvLjcy4+7U2TbYxLHk
+         d1wgf6OwSFhnwe/7LEewXRfkURyLNZXCmrcRMW3ncCFcBezsM5JWu7oPBL873H4oD1O1
+         70O4GKYq5BCme6cBQvlYvVbn9mNR888vNq/nuh3K/l7l+lET/uQvZ2LWcyf5fsR2zATZ
+         5N3bRcivgcGMYlnC218eXD6bCYVOOmhzJS45xgz8Pjp+nmidIu3arEdpZe1gzxdOYXEo
+         bCj9/2vuK0+V1auQ7UUzg26/0XVvt+xPHiaG/rzArYfccgOXltSPcsTrQO7iXOG25hHM
+         7rnA==
+X-Gm-Message-State: AOJu0YwhT/qwL8vuP/2kgKEkAQ7IoApRz/MqWyFAPWJBnWQpTxNqfiL5
+	xot0DsB3XZqyL3VNj7FCyZ9PotfpjY2cZz445O5xP7ReUIHsr1pb0t1KG3Y/LDQ=
+X-Google-Smtp-Source: AGHT+IEJZvr5kBd7N/uLExR+nlfQRTw3XzobmgpihI7SxYGEJ7N7Rzp7gcee9AvFMvm88xVUmJnjvQ==
+X-Received: by 2002:a19:6554:0:b0:511:33a4:f9ed with SMTP id c20-20020a196554000000b0051133a4f9edmr730537lfj.66.1706861606951;
+        Fri, 02 Feb 2024 00:13:26 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXmVd6YvaDYmQQ8oB5BhpZPgJvR2HoqkJuxrJAYY99jZ/su1ySz622Zvp3FmKkqKAx6WylUJJUYzhQeb7/31o/noVHuwxRMhkuniEHNbRCaRE+Xz6bKV/6nVhyJsS2eYDPYuQA4h/ZgHmiMGDCn1qZN4kSH2D3ZgmEqGFQ0qOqlw47a/vOWmyUyvI+/a0bmZWW+4yXQc9ir/Q+R9WQXN3cmS1kgcvQKsYugN+fNqcgH21auvOUh9pLzj3zKwbUKGla0IJA99pVQxShv9UJmjsniID3rVJ6iFxjJKNDPrEm/J+BzhrftdE1yERov1hrzyBaR0TcOaVNvVrLLKCMjVF6wX9nNaw==
 Received: from ?IPV6:2a01:e0a:982:cbb0:560a:f70f:7627:2c48? ([2a01:e0a:982:cbb0:560a:f70f:7627:2c48])
-        by smtp.gmail.com with ESMTPSA id 13-20020a05600c228d00b0040fb0c90da6sm6547641wmf.14.2024.02.02.00.11.48
+        by smtp.gmail.com with ESMTPSA id 13-20020a05600c228d00b0040fb0c90da6sm6547641wmf.14.2024.02.02.00.13.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 00:11:48 -0800 (PST)
-Message-ID: <d8e32f3d-1658-4dcd-a1dd-e37b664986ae@linaro.org>
-Date: Fri, 2 Feb 2024 09:11:46 +0100
+        Fri, 02 Feb 2024 00:13:26 -0800 (PST)
+Message-ID: <a0034c34-4af7-4733-93f7-f82f665f36f3@linaro.org>
+Date: Fri, 2 Feb 2024 09:13:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,12 +80,19 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v1 00/16] Add missing features to FastRPC driver
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add X1E80100 PCIe support
 Content-Language: en-US, fr
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, srinivas.kandagatla@linaro.org,
- linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
-References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Abel Vesa
+ <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240129-x1e80100-pci-v2-0-a466d10685b6@linaro.org>
+ <20240129-x1e80100-pci-v2-2-a466d10685b6@linaro.org>
+ <30360d96-4513-40c4-9646-e3ae09121fa7@linaro.org>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -112,72 +118,39 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+In-Reply-To: <30360d96-4513-40c4-9646-e3ae09121fa7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 02/02/2024 07:40, Ekansh Gupta wrote:
-> This patch series adds the listed features that have been missing
-> in upstream fastRPC driver.
+On 01/02/2024 20:20, Konrad Dybcio wrote:
+> On 29.01.2024 12:10, Abel Vesa wrote:
+>> Add the compatible and the driver data for X1E80100.
+>>
+>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 10f2d0bb86be..2a6000e457bc 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -1642,6 +1642,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>>   	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
+>>   	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
+>>   	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
+>> +	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_9_0 },
 > 
-> - Redesign and improve remote heap management.
-> - Add static PD restart support for audio and sensors PD using
->    PDR framework.
-> - Add changes to support multimode invocation ioctl request. This
->    ioctl call facilitates multiple types of requests from user including
->    CRC check, performance counters, shared context bank usage, etc.
->    This series also carries patch to save and restore interrupted
->    context.
-> - Add early wakeup support to allow DSP user to send early response
->    to CPU and improve fastrpc performance.
-> - Add polling mode support with which driver polls on memory to avoid
->    CPU from going to low power modes.
-> - Add notifications frameworks to provide users with the DSP PD status
->    notifications.
-> - Add a control mechanism to allow users to clean up DSP user PD
-> - Add wakelock management support
-> - Add DSP signalling support
-> - Add check for untrusted applications and allow trusted processed to
->    offload to system unsigned PD.
+> I swear I'm not delaying everything related to x1 on purpose..
+> 
+> But..
+> 
+> Would a "qcom,pcie-v1.9.0" generic match string be a good idea?
 
-Could you precise:
-- Which workload are you fixing
-- Which platforms are concerned
-- Which platforms were tested
-
-So far I've been trying to run the "getserial" on SM8550-QRD and SM8650-QRD without
-success, would those changes fix this ?
-Is there any chance we could get an open-source minimal implementation of a fastRPC SDK using
-the open-source Hexagon LLVM like we have for the AIC100 ?
-It would definitely help validating the upstream fastRPC implementation.
-
-Thanks,
-Neil
+Yes as fallback, this is why I used qcom,pcie-sm8550 as fallback for SM8650.
 
 > 
-> Ekansh Gupta (16):
->    misc: fastrpc: Redesign remote heap management
->    misc: fastrpc: Add support for unsigned PD
->    misc: fastrpc: Add static PD restart support
->    misc: fastrpc: Add fastrpc multimode invoke request support
->    misc: fastrpc: Add CRC support for remote buffers
->    misc: fastrpc: Capture kernel and DSP performance counters
->    misc: fastrpc: Add support to save and restore interrupted
->    misc: fastrpc: Add support to allocate shared context bank
->    misc: fastrpc: Add early wakeup support for fastRPC driver
->    misc: fastrpc: Add polling mode support for fastRPC driver
->    misc: fastrpc: Add DSP PD notification support
->    misc: fastrpc: Add support for users to clean up DSP user PD
->    misc: fastrpc: Add wakelock management support
->    misc: fastrpc: Add DSP signal support
->    misc: fastrpc: Restrict untrusted apk to spawn privileged PD
->    misc: fastrpc: Add system unsigned PD support
-> 
->   drivers/misc/fastrpc.c      | 1949 +++++++++++++++++++++++++++++++----
->   include/uapi/misc/fastrpc.h |  112 ++
->   2 files changed, 1844 insertions(+), 217 deletions(-)
+> Konrad
 > 
 
 
