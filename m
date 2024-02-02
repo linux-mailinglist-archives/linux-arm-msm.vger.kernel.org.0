@@ -1,78 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-9576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D93FC8475A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:05:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B10DA8475B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:06:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB9961C212F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:05:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B8D11C27CE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:06:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E69E614D43A;
-	Fri,  2 Feb 2024 17:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7945614C594;
+	Fri,  2 Feb 2024 17:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5YYYMdy"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="NtuLNXu5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B85D14900A;
-	Fri,  2 Feb 2024 17:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5C14AD3B;
+	Fri,  2 Feb 2024 17:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706893403; cv=none; b=OmDy6sMHxndPPfjAkN607eHN/fXzFWeSUNesoTRpvE0EuqjoPj7AgdRVQU7clYKOYK0wbCqGu5dFHsPs1EC6RpEW50PZIiU8ggolkb+n6jCviCeHxYDhjN3FiXcwVsnQM+lZ4V4rXOFLYTnC9o85NSW5XYSUDuxZ3LLnX/4vStc=
+	t=1706893480; cv=none; b=bTOotnaPtZOfepWcZvpVIdcY2iJpDsplbcAcneZg9ZAZEVz9iy2q24xU1FoB0iYDgMdfEuMxxOlWXgILZpEXV7uvj7E3roXfH9Sps7ndPxgt1uPZwHQymOzgVbGEqDUSCVF/BD0DomZgnSyg2/Ui0XsFkin6bHo+u8qTFcPE/3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706893403; c=relaxed/simple;
-	bh=UNcjKbgtq2SHVkgxXgFW1sGPDotmGruVW6Uw3ganfnU=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gKIdXceIxC9AluiM8NCFgkLj3CV5N8o8uVdeF4/UG3F6Po4ilNs/HPu10kF2vS+71OEZP2wLb2Ux+KY1YW5KINxsZSNgN2fZn3jiGL7ta/QEkt9BmtGlnuW31r+mURyRBMgsg6vdO3nlJVV+rU6++sLWC2PKxPhb01pL/rj0NOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k5YYYMdy; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40fccd090c2so763095e9.0;
-        Fri, 02 Feb 2024 09:03:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706893400; x=1707498200; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DOlCKHisK2Tg4+zoV5Rvslpll2neVr4rhQD1dXHl3vw=;
-        b=k5YYYMdyI4ctkL89KlTxGVDdp101wJTgKz7p69JDvpYfqKFnaD4N3jfieG1dQig1vS
-         FivnWViPXONCvkTguRvhYfqDe3rUnm2TlF1X7S7LbRKQ7mc1noBf2UQy7a41gjtsEoT2
-         6/p+kenqtrQmSOtPkEphbEI/V6/D8qIvh6H4Fw3AElMDz86FMcwFKDvUycyY3P8rQtdV
-         OJQJCU1Hp5+smkhjeDqxGuWFi3I7nGKgF1aezZu7xHNu0DqVXOVY6XsGYDvCYcy2/dAT
-         PZrQg4FHyg3HOtL05sFDhnXfMbV4tRX6d3ieDvCwW2J5zzJSLQCrj75zfhY8BoG/WZsX
-         +Bfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706893400; x=1707498200;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DOlCKHisK2Tg4+zoV5Rvslpll2neVr4rhQD1dXHl3vw=;
-        b=Cyipclo8GjhjnJ17OtPazmvDpSPVYXaWeQ4tKuHVDfWJvwazlmby6q4HuqQzOPdg4O
-         kQzIEt7ytnmxGpXAmyLXUqTIs8cGfH9ohxgWkNpcsNu5F2LeuAU5ko0M0B9y8bXC5lnM
-         guFyQvNLZ86F4GK35Q5SiR3JYo8F71G+Qif/Ndyzt8CLWmpq92zKIP31Fz2O/2zmum/a
-         HhBsEJwwvqovr2bHvuvcQM8AzTBDE2Najn5hUdS8Blnb4xCDqHU+pBN+2872CeSd5xXR
-         ES7QaQPMLqrKwX+qpOPjbtyBzjDezcKa5y0DratJEtvRyOGSnkgJkpBGG/ORQtTUTQkV
-         aMVg==
-X-Gm-Message-State: AOJu0YyA+vnEfRmCrRwhUYjW9YstRu2bbIPwqZQcim1xs7beNUjxnJaG
-	iqLwcukXh7EdNX7gDuwHlcBSk26Xh7pcjsMBkt1nNkBcMkioj+yG
-X-Google-Smtp-Source: AGHT+IEjhLMP/SwXID7gjUKxnJg7zcodpyKpg5Aat7driagvPstkgl7qEfPavqvpBZw231y/w/1ZkA==
-X-Received: by 2002:a05:600c:35c4:b0:40e:f67e:a4e2 with SMTP id r4-20020a05600c35c400b0040ef67ea4e2mr6389283wmq.39.1706893399939;
-        Fri, 02 Feb 2024 09:03:19 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVQYKLQqDENSg0SCkt1ywpIL+KTmSCRIXPvPPJrk/z1CWS4YUOPYvekFRipoeD1fCIvLSiRs2SlOP4SIMufYY6UB7dTLYsy95bKEMRZ3HlRzJCM98cHdDl8jvRlhKtgPHYEDLDBxSIW+YeURxonmb5R7h59tMJdXDKXiPzyBUCHXRtAckb6vZVDGvZ5PL6whoxWypn2ERD47PImeJyDoggBYM2aYrhyljFnUoc2PtcAA4VqeiYm8OcjjFX+bTnu2uK6gWt095pfmjylOsrvSUBc58vpfQopGMZj2XYcr13B7bUWDLTN/i5dUBrzNv5R3Zwrh23XGP1RQ8Gh6f6aOrAsWr17/VfKG/saJUaOlohsfQyJWRwqA5kgkPdIwUDQ9Vh8l0I6jOUNri3qqyVeSb7bzas6hru2z58BmQWA1v66GSUwriuWbJ4XcZP6+AAFyqjnrLJnrJvqYBvauM06mnIiGmio0W3nWBhiNjlp+tqkrOuk+GN1ZslJ1sX+ru8l8Vh2DLs6oOVNFb0UX92rAr9zY9Yy1OxqT7KQu+IHQK8u
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id l30-20020a05600c1d1e00b0040eee852a3dsm447924wms.10.2024.02.02.09.03.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 09:03:19 -0800 (PST)
-Message-ID: <65bd2057.050a0220.e4621.31f2@mx.google.com>
-X-Google-Original-Message-ID: <Zb0gVMjOskSC--_T@Ansuel-xps.>
-Date: Fri, 2 Feb 2024 18:03:16 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	s=arc-20240116; t=1706893480; c=relaxed/simple;
+	bh=lvs9fHcrGg2OPMpdrPeH/OkjYfW05zd3QXvR1LMSlQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jfGiXj90p4hEWclnT0DnZmRegJ7/pJZicEFVxLFNwlzZjAYDgAAzKYiijbQ9TeRW+zVJ1/qygLf0NSEIVX0TpUNrWuePx+Wrd2ll5bNMDYKRTl9r4Sngufn2r+4H52sHUZt8+/BlsRzemLGrGRu/BVvqL/2j7IGuAVrHt/pdilA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=NtuLNXu5; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=gP1Igi6tDOQ8064ZzeRS81oPRpXVLjhChGAEqcyWoFQ=; b=NtuLNXu5uyZVZexMYXOA7cgX/A
+	IMbBwyXMxpvArMnzStfNdQPbZ2YMp/LPgTd9hCmdVdPm9cQrz43RPGn45CsqAZcWda7x+IwIXv8tQ
+	ITyeHi1X2gWpzwvAaUu5nsGEgbqo1jDc1JlPC3xH8lh9dVtEBJIwKeft6OL2BM6y1vufeLTDdwsm5
+	DuF+w2pt00feJa3O3Fm5H8kBC3wRrxw1OEGj70M9HcSJzc10KZsD6/HxUbJOEESHLX+VtcrreEU3X
+	BsInpboJ9HaD1GIzgitauMThDXLlpIkoJUIwbS2nJJksnSOKeCbCwdA7jb4/V2lr/PpV4imMvPko2
+	8aj4TaEQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:45998)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rVwxm-0006FD-1e;
+	Fri, 02 Feb 2024 17:04:26 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rVwxj-0008T0-4x; Fri, 02 Feb 2024 17:04:23 +0000
+Date: Fri, 2 Feb 2024 17:04:23 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, "David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh+dt@kernel.org>,
@@ -80,19 +63,18 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
 	Frank Rowand <frowand.list@gmail.com>,
 	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v5 5/9] dt-bindings: net: add QCA807x PHY defines
+Subject: Re: [net-next PATCH v5 9/9] net: phy: qca807x: add support for
+ configurable LED
+Message-ID: <Zb0glzoHmgN5iHl7@shell.armlinux.org.uk>
 References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-6-ansuelsmth@gmail.com>
- <9933685a-5265-467e-aa39-d2c92a12edca@linaro.org>
- <65bd07f7.050a0220.e8e5e.9e28@mx.google.com>
- <20240202-absurd-guidable-527a3f3147bb@spud>
+ <20240201151747.7524-10-ansuelsmth@gmail.com>
+ <46085abf-8e82-4fd9-95b8-95cbfde6e5c2@lunn.ch>
+ <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,74 +83,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240202-absurd-guidable-527a3f3147bb@spud>
+In-Reply-To: <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Fri, Feb 02, 2024 at 04:58:32PM +0000, Conor Dooley wrote:
-> On Fri, Feb 02, 2024 at 04:19:15PM +0100, Christian Marangi wrote:
-> > On Fri, Feb 02, 2024 at 08:41:56AM +0100, Krzysztof Kozlowski wrote:
-> > > On 01/02/2024 16:17, Christian Marangi wrote:
-> > > > From: Robert Marko <robert.marko@sartura.hr>
-> > > > 
-> > > > Add DT bindings defined for Qualcomm QCA807x PHY series related to
-> > > > calibration and DAC settings.
-> > > 
-> > > Nothing from this file is used and your commit msg does not provide
-> > > rationale "why", thus it does not look like something for bindings.
-> > > Otherwise please point me which patch with *driver* uses these bindings.
-> > >
+On Fri, Feb 02, 2024 at 05:40:21PM +0100, Christian Marangi wrote:
+> On Fri, Feb 02, 2024 at 02:43:37AM +0100, Andrew Lunn wrote:
+> > > +
+> > > +			phydev->drv->led_brightness_set = NULL;
+> > > +			phydev->drv->led_blink_set = NULL;
+> > > +			phydev->drv->led_hw_is_supported = NULL;
+> > > +			phydev->drv->led_hw_control_set = NULL;
+> > > +			phydev->drv->led_hw_control_get = NULL;
 > > 
-> > Hi, since I have to squash this, I will include the reason in the schema
-> > patch.
-> > 
-> > Anyway these are raw values used to configure the qcom,control-dac
-> > property.
+> > I don't see how that works. You have multiple PHYs using this
+> > driver. Some might have LEDs, some might have GPOs. But if you modify
+> > the driver structure like this, you prevent all PHYs from having LEDs,
+> > and maybe cause a Opps if a PHY device has already registered its
+> > LEDs?
+> >
 > 
-> Maybe I am missing something, but a quick scan of the patchset and a
-> grep of the tree doesn't show this property being documented anywhere.
-> 
-> > In the driver it's used by qca807x_config_init. We read what is set in
-> > DT and we configure the reg accordingly.
-> > 
-> > If this is wrong should we use a more schema friendly approach with
-> > declaring an enum of string and document that there?
-> 
-> Without any idea of what that property is used for it is hard to say,
-> but personally I much prefer enums of strings for what looks like a
-> property that holds register values.
-> 
-> That you felt it necessary to add defines for the values makes it more
-> like that that is the case.
->
+> God you are right! Off-topic but given the effects this may cause, why
+> the thing is not const? I assume it wouldn't make sense to add OPS based
+> on the detected feature since it would have side effect on other PHYs
+> that use the same driver.
 
-Ok, no problem. The big idea here was really to skip having to have a
-big function that parse strings but I get that it's better handle with
-string and have them documented directly in the yaml.
+Maybe phydev->drv should be const to avoid this kind of thing. It
+doesn't look like it would be hard to do, and importantly doesn't
+require casting away the const-ness anywhere. PHY drivers themselves
+can't be const because the driver model needs to be able to modify
+the embedded device_driver struct (e.g. see bus_add_driver().)
 
-> > 
-> > > > 
-> > > > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-> > > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > > ---
-> > > >  include/dt-bindings/net/qcom-qca807x.h | 30 ++++++++++++++++++++++++++
-> > > 
-> > > Use filename matching compatible, so vendor,device. No wildcards, unless
-> > > your compatible also has them.
-> > > 
-> > > >  1 file changed, 30 insertions(+)
-> > > >  create mode 100644 include/dt-bindings/net/qcom-qca807x.h
-> > > > 
-> > > 
-> > > 
-> > > 
-> > > Best regards,
-> > > Krzysztof
-> > > 
-> > 
-> > -- 
-> > 	Ansuel
+ drivers/net/phy/phy.c               | 3 +--
+ drivers/net/phy/phy_device.c        | 4 ++--
+ drivers/net/phy/xilinx_gmii2rgmii.c | 2 +-
+ include/linux/phy.h                 | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-
+Just build-testing it.
 
 -- 
-	Ansuel
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
