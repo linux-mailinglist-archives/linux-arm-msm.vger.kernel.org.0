@@ -1,127 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-9577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B10DA8475B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:06:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C0EE8475B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:07:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B8D11C27CE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:06:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2917628730B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:07:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7945614C594;
-	Fri,  2 Feb 2024 17:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7630814AD10;
+	Fri,  2 Feb 2024 17:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="NtuLNXu5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j43xr1XA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5C14AD3B;
-	Fri,  2 Feb 2024 17:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC704148FFE;
+	Fri,  2 Feb 2024 17:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706893480; cv=none; b=bTOotnaPtZOfepWcZvpVIdcY2iJpDsplbcAcneZg9ZAZEVz9iy2q24xU1FoB0iYDgMdfEuMxxOlWXgILZpEXV7uvj7E3roXfH9Sps7ndPxgt1uPZwHQymOzgVbGEqDUSCVF/BD0DomZgnSyg2/Ui0XsFkin6bHo+u8qTFcPE/3Y=
+	t=1706893597; cv=none; b=sIbzLD35EZGXcxYiD9+uiMh7meOvjo8C47PL7dK5Ae4TiXmZv/G0KgYnKm+aD195YI3Wojs9c0xc4vgXG13mgnHK6qbvGhc/GWPQcUU57AcuYjIvcI/AQQmxsfsDIyxWXkEW7dxQapElgHbEMMEvRCbSNE7oV7RuHV74BB5fo/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706893480; c=relaxed/simple;
-	bh=lvs9fHcrGg2OPMpdrPeH/OkjYfW05zd3QXvR1LMSlQQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jfGiXj90p4hEWclnT0DnZmRegJ7/pJZicEFVxLFNwlzZjAYDgAAzKYiijbQ9TeRW+zVJ1/qygLf0NSEIVX0TpUNrWuePx+Wrd2ll5bNMDYKRTl9r4Sngufn2r+4H52sHUZt8+/BlsRzemLGrGRu/BVvqL/2j7IGuAVrHt/pdilA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=NtuLNXu5; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=gP1Igi6tDOQ8064ZzeRS81oPRpXVLjhChGAEqcyWoFQ=; b=NtuLNXu5uyZVZexMYXOA7cgX/A
-	IMbBwyXMxpvArMnzStfNdQPbZ2YMp/LPgTd9hCmdVdPm9cQrz43RPGn45CsqAZcWda7x+IwIXv8tQ
-	ITyeHi1X2gWpzwvAaUu5nsGEgbqo1jDc1JlPC3xH8lh9dVtEBJIwKeft6OL2BM6y1vufeLTDdwsm5
-	DuF+w2pt00feJa3O3Fm5H8kBC3wRrxw1OEGj70M9HcSJzc10KZsD6/HxUbJOEESHLX+VtcrreEU3X
-	BsInpboJ9HaD1GIzgitauMThDXLlpIkoJUIwbS2nJJksnSOKeCbCwdA7jb4/V2lr/PpV4imMvPko2
-	8aj4TaEQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:45998)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rVwxm-0006FD-1e;
-	Fri, 02 Feb 2024 17:04:26 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rVwxj-0008T0-4x; Fri, 02 Feb 2024 17:04:23 +0000
-Date: Fri, 2 Feb 2024 17:04:23 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v5 9/9] net: phy: qca807x: add support for
- configurable LED
-Message-ID: <Zb0glzoHmgN5iHl7@shell.armlinux.org.uk>
-References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-10-ansuelsmth@gmail.com>
- <46085abf-8e82-4fd9-95b8-95cbfde6e5c2@lunn.ch>
- <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
+	s=arc-20240116; t=1706893597; c=relaxed/simple;
+	bh=fXYcVQeS1rnoov7pNUybIB+0ltad7FRtsKISdkiMkms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tUW2WIIJyoKNlmZuHhYkEzPK0T0LVr3gxa1n2wApKmDEmVy3q8QNpztz1YMcGWtx/NqxoEb0IVDsiyVouAgRCYEEgCdL1acqqfpZnw8FptvseHwcSnY32dt9NVUsdtw07zwNsWL0tK93wOoG4QFhvJFJ3nck4dUPFqcKlVJry90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j43xr1XA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412FZrFt008756;
+	Fri, 2 Feb 2024 17:06:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=RCAsEbay9473oUiUhfGKQgYpSlUN+6hO6gJH1qP/hb8=; b=j4
+	3xr1XAY38rAHXhQV7n9Eren5GYY+sjmR2p/l/6xLJJS5KuD0p9OYOSnT1LGlnUIy
+	nblqLBVWYpWkDP5pOuZWyxoCW2PmDErB+EisG0d8fN7ct2l4AirpoCD/N0e9BFfg
+	bmRnsF89ebP8JCM/9Zan/5Z/fjTj3jC2gs1zYEwcupaW96NaJfBZAfW256fRwMiM
+	0usxEwDB0SGFmEf52VatwtwAYgv9JrnOKEX38fxER35x/zvbO/cHcHHpJ9Ct91W3
+	/zjonCcVxKGv5qBtrrxt9GZnFzXnOBIFSZxjW9JmjiQNQXVjUn/KfpNAJbbQxwkj
+	Z8QRkCtfvDPiip+m0LxA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0ptv1xxm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 17:06:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412H6Lj9015815
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 17:06:21 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
+ 2024 09:06:20 -0800
+Message-ID: <66c4830d-8756-3ade-c8ec-af2b334b24e3@quicinc.com>
+Date: Fri, 2 Feb 2024 10:06:20 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] Documentation: embargoed-hardware-issues.rst: Fix
+ Trilok's email
+Content-Language: en-US
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: <corbet@lwn.net>, <carlos.bilbao@amd.com>, <avadhut.naik@amd.com>,
+        <alexs@kernel.org>, <iyanteng@loongson.cn>,
+        <2023002089@link.tyut.edu.cn>, <quic_bjorande@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <workflows@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240202164119.4090703-1-quic_jhugo@quicinc.com>
+ <2024020223-eskimo-armoire-a517@gregkh>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <2024020223-eskimo-armoire-a517@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pwsWqSHmhUhzy7kUdblznhzZ29PxIBSI
+X-Proofpoint-GUID: pwsWqSHmhUhzy7kUdblznhzZ29PxIBSI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-02_10,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1011 spamscore=0 phishscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=720 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020122
 
-On Fri, Feb 02, 2024 at 05:40:21PM +0100, Christian Marangi wrote:
-> On Fri, Feb 02, 2024 at 02:43:37AM +0100, Andrew Lunn wrote:
-> > > +
-> > > +			phydev->drv->led_brightness_set = NULL;
-> > > +			phydev->drv->led_blink_set = NULL;
-> > > +			phydev->drv->led_hw_is_supported = NULL;
-> > > +			phydev->drv->led_hw_control_set = NULL;
-> > > +			phydev->drv->led_hw_control_get = NULL;
-> > 
-> > I don't see how that works. You have multiple PHYs using this
-> > driver. Some might have LEDs, some might have GPOs. But if you modify
-> > the driver structure like this, you prevent all PHYs from having LEDs,
-> > and maybe cause a Opps if a PHY device has already registered its
-> > LEDs?
-> >
+On 2/2/2024 9:48 AM, Greg KH wrote:
+> On Fri, Feb 02, 2024 at 09:41:19AM -0700, Jeffrey Hugo wrote:
+>> The servers for the @codeaurora domain have long been retired and any
+>> messages addressed to @codeaurora will bounce.
+>>
+>> Trilok has an entry in .mailmap, but the raw documentation files still
+>> list an old @codeaurora address.  Update the address in the
+>> documentation files for anyone reading them.
+>>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> ---
+>>   Documentation/process/embargoed-hardware-issues.rst             | 2 +-
+>>   .../translations/sp_SP/process/embargoed-hardware-issues.rst    | 2 +-
+>>   .../translations/zh_CN/process/embargoed-hardware-issues.rst    | 2 +-
+>>   .../translations/zh_TW/process/embargoed-hardware-issues.rst    | 2 +-
+>>   4 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> God you are right! Off-topic but given the effects this may cause, why
-> the thing is not const? I assume it wouldn't make sense to add OPS based
-> on the detected feature since it would have side effect on other PHYs
-> that use the same driver.
+> I think we need an ack from Trilok for this :)
 
-Maybe phydev->drv should be const to avoid this kind of thing. It
-doesn't look like it would be hard to do, and importantly doesn't
-require casting away the const-ness anywhere. PHY drivers themselves
-can't be const because the driver model needs to be able to modify
-the embedded device_driver struct (e.g. see bus_add_driver().)
+That is fair.  I expect Trilok will see this in the next day or so, and 
+respond.
 
- drivers/net/phy/phy.c               | 3 +--
- drivers/net/phy/phy_device.c        | 4 ++--
- drivers/net/phy/xilinx_gmii2rgmii.c | 2 +-
- include/linux/phy.h                 | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
-
-Just build-testing it.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+-Jeff
 
