@@ -1,254 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-9561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EAEA847325
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:29:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C56F847384
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:41:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 936AB1C21C35
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 15:29:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0683F28E350
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 15:41:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8ED7145B3A;
-	Fri,  2 Feb 2024 15:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEB731474B4;
+	Fri,  2 Feb 2024 15:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FQcMYbJD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oZt0qiEb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C3714198F;
-	Fri,  2 Feb 2024 15:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC91474B6
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 15:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706887750; cv=none; b=RXYLhPBUQexWME5W42Kanj1Bcdw2dYN8qqGhtaB4yl2taH3YRNI/V+B/ybbySml7554mFJiTS79lrmgtO/FMXfi0dAK8e8NgSrIpwcPW26L8P6uhXlSRjWyhvmeg+LUpxc+Co5f695dKAiSPPYcr08usGLx4TVAEJ+MMoSbwuTc=
+	t=1706888464; cv=none; b=fn2OaR6kB4R2J7fM4/umOpUFNSIqLyOpUfm0hiGMsAyM5ns6vn//HM8q6/CCRlXB0h3GD2mQtPJQoPVIYcBDw5AWEXEdiv1DIN8MWnrIYHnteWd2xLeUKhc3VS/oI3mBHyCqE8wYga+OCTJ0QH556ltrbeFXIQXjWJFE/RIWgdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706887750; c=relaxed/simple;
-	bh=eWCT34Fq+b7991k5pNSiwWeUVYQTzCYYL/cyt2+oOI4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pbq9uBsYpli02Ah7Dtnaspvmo4L2DkvyR8UPFjxB1rBAYwCe/uRukt7eO0BwBChkckQLBVxnNf+740o3/3eK95RAzZMZkVL8sPqTpTWjLJoiKhyUhapaD092BMvxo3rzurLnFuQKRsixMRFN6kL4Eve4jgqj/YX5ayGG9fkqpX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FQcMYbJD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F71C433C7;
-	Fri,  2 Feb 2024 15:29:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706887750;
-	bh=eWCT34Fq+b7991k5pNSiwWeUVYQTzCYYL/cyt2+oOI4=;
-	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
-	b=FQcMYbJD377UCUye1ongyzueF7fnGQ9TAFH0kSvL/OREHfX9BuNNBixbmGDTpSsMq
-	 DnoNGZ/Kn76YG6ZZNVnKfa3/2buI1j9JIbr8szqq+uV17LUgaGkVQBGv9rk7OttVZJ
-	 CbCxbTeiws5gZ66nmRbYgOViuF/j045PjFYyBXr4mtt5VG2MOzy/9vu1e9jJ9TpbeZ
-	 E8UCx5f2lOujI5D4n2prtl7OWXa8ya7Gukiz8HJHfe7jVUdAgbX6BKLJz2qTR9Ht10
-	 Qg40JNqkJOm3scz4i6gT2vl7FSJ697eV2hiFvdYOd3MTXu4ACBMyrz8qgR+m9LyROd
-	 iwO5+XeVvnCrg==
-Date: Fri, 2 Feb 2024 09:29:08 -0600
-From: Rob Herring <robh@kernel.org>
-To: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
-	vgupta@kernel.org, arnd@arndb.de, olof@lixom.net, soc@kernel.org,
-	guoren@kernel.org, monstr@monstr.eu, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, dinguyen@kernel.org, chenhuacai@kernel.org,
-	tsbogend@alpha.franken.de, jonas@southpole.se,
-	stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-	mpe@ellerman.id.au, ysato@users.sourceforge.jp, dalias@libc.org,
-	glaubitz@physik.fu-berlin.de, richard@nod.at,
-	anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-	chris@zankel.net, jcmvbkbc@gmail.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH 00/46] Dynamic allocation of reserved_mem array.
-Message-ID: <20240202152908.GA4045321-robh@kernel.org>
-References: <20240126235425.12233-1-quic_obabatun@quicinc.com>
- <20240131000710.GA2581425-robh@kernel.org>
- <51dc64bb-3101-4b4a-a54f-c0df6c0b264c@quicinc.com>
- <20240201194653.GA1328565-robh@kernel.org>
- <d98288ed-a0d9-4fc1-87bc-d79cb528778c@quicinc.com>
+	s=arc-20240116; t=1706888464; c=relaxed/simple;
+	bh=07df+/LTKKZSwe6VhhGVQ01Ed9ZDf0bXecwBWhioYwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m6ZJzER73aMKl+L4DG6A8dGgXJGNOzcL9/onfFzwUtvqrB0sGIn7kFz2ImpFKBksWIkJMFhmdOXrxJuuvmRIPlJTmUWqUpEEE7Av7POx0+cghGEOeHmKrTqCEX0HAhKEm6gJEMm6cHMi5LN9S7z1WmcbrV0RwRHl/ELaQS0YzVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oZt0qiEb; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40fb94d42e4so17337355e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 07:41:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706888460; x=1707493260; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z2GY6qZhOt8VgKdbRBPMlub8IrFFQP8vgPbAArJs2KU=;
+        b=oZt0qiEbnQpysZ++TgImE9ymIIvlE36OPyUH1Pej0/y6kqQ9xFaqyGkACWYy8MYTd4
+         DyH57F9N57V5HCpWMfgk6jx75nsQXcweHU7Vk5XJtHnvFcGLaXRd+zrLiH5Z3LJGKt7S
+         1ExA3ygZ5WPHoluxoAc81Cfq879CkLO5VJloQHLjOOBNSQEZyIt3BoBAoZ0mdaTkroJt
+         8uDPhpCkYcVw9+lFJdG6J293X8f8+aw6qzFOFmf/4N57kaSjS5wcpW21JlGQIVtkUMsX
+         HI+kMyGPViUATT0Z4bxXjE12NGY93se5rNBRdLrMAfe+cNxiXMuvBRL5eU+NUPUC5iGE
+         /qbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706888460; x=1707493260;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z2GY6qZhOt8VgKdbRBPMlub8IrFFQP8vgPbAArJs2KU=;
+        b=kCgSIDDOLUzIjPHv+j1vN80b/MlCNWyCH6ABoMhkT1iSMgDKL4Qr6tSaxIteb3AYyn
+         OXjDip/sAwXG/70J9eWeRGjBk5J+JOPPfzaAMaSSr/civDUoFJavZYgvGVSI1AcC1d5Q
+         b2tXKLjXCGvSs8itS7TQzbRarHnYeg4S8CokMF8+CkBlVEyHtvAIytLa+Gy1RkGsKI7u
+         SUIyOODbNwOr/XSNj6YujO4VdzO85dzImkLbHJ9bd6dNwCrO5/CVGboqch9YGW0WSsIz
+         QFPhQJAI0fW95mA4Iy2r3UWpVU5hoBqemCRQl25rJ84oRFvHyYCKl/nZgYFERKfTDfmW
+         1TTQ==
+X-Gm-Message-State: AOJu0YwhkyYMQqc9BBFYiLv4xaaeH8mWkMlrdbegwWn6ogGhXm8Tn9nI
+	LssXVbq73yhMnHBT7iZodbSa7vYlvenATrB6nbsx3pjJtimf0U3pDx9DtX587a8=
+X-Google-Smtp-Source: AGHT+IGDwFlH/xWMIloR+2mH8/ZvBww4o73fFgEkNDL93enfNJde0Zo1eJ4/FhVgta3dXYg5K72ToQ==
+X-Received: by 2002:adf:cc84:0:b0:33a:ec79:f923 with SMTP id p4-20020adfcc84000000b0033aec79f923mr3703268wrj.54.1706888460406;
+        Fri, 02 Feb 2024 07:41:00 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWZer5caOfAi6ulp3obGzvj8cUZE2QhPOjBLb+JzlAlf2+LKbPgftymheDgv5oGXDKfIwNj45/wp7PG+Hywxb3bP6ADKXE6vhSJHh67SRR3k3RjmBmi54BzF7iHgRky2RYkTAfANOPHklVjdRGc64tfP2XRR1O2IvEtmsoVqUcmbDU4HADkcQ+8raJPLffiaiCxHlTfeZgK24ytk/rYEImBcALrKMOWFaJSxxU2Hbb1HSFsymuQYe0xJ187UOgT1VjD4EVKUzNA/7ohLcGMqyKeeovO9HJM3NathN+ODdk3Q7vH3mhpKX1R7qANnaCKSbcwEhOxsFpr4+DX8iiM0lsnLirWQqTbNvX1hsCUUoesiqNtAR/8UdeerNBOAYU8nA/44WxKNBQjSK38end7P7QJzpIlJ3HvnesbRPmNQyB9
+Received: from [10.54.252.95] ([217.145.44.194])
+        by smtp.gmail.com with ESMTPSA id m26-20020a056000181a00b0033afcf8925asm2198557wrh.24.2024.02.02.07.40.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Feb 2024 07:40:59 -0800 (PST)
+Message-ID: <430a290e-1d35-4aea-a555-e20d88672388@linaro.org>
+Date: Fri, 2 Feb 2024 16:40:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d98288ed-a0d9-4fc1-87bc-d79cb528778c@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: pm4125: define USB-C related
+ blocks
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
+ <20240202-pm4125-typec-v2-3-12771d85700d@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240202-pm4125-typec-v2-3-12771d85700d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 01, 2024 at 01:10:18PM -0800, Oreoluwa Babatunde wrote:
+On 02/02/2024 00:55, Dmitry Baryshkov wrote:
+> Define VBUS regulator and the Type-C handling block as present on the
+> Quacomm PM4125 PMIC.
 > 
-> On 2/1/2024 11:46 AM, Rob Herring wrote:
-> > On Thu, Feb 01, 2024 at 09:08:06AM -0800, Oreoluwa Babatunde wrote:
-> >> On 1/30/2024 4:07 PM, Rob Herring wrote:
-> >>> On Fri, Jan 26, 2024 at 03:53:39PM -0800, Oreoluwa Babatunde wrote:
-> >>>> The reserved_mem array is used to store data for the different
-> >>>> reserved memory regions defined in the DT of a device.  The array
-> >>>> stores information such as region name, node, start-address, and size
-> >>>> of the reserved memory regions.
-> >>>>
-> >>>> The array is currently statically allocated with a size of
-> >>>> MAX_RESERVED_REGIONS(64). This means that any system that specifies a
-> >>>> number of reserved memory regions greater than MAX_RESERVED_REGIONS(64)
-> >>>> will not have enough space to store the information for all the regions.
-> >>>>
-> >>>> Therefore, this series extends the use of the static array for
-> >>>> reserved_mem, and introduces a dynamically allocated array using
-> >>>> memblock_alloc() based on the number of reserved memory regions
-> >>>> specified in the DT.
-> >>>>
-> >>>> Some architectures such as arm64 require the page tables to be setup
-> >>>> before memblock allocated memory is writable.  Therefore, the dynamic
-> >>>> allocation of the reserved_mem array will need to be done after the
-> >>>> page tables have been setup on these architectures. In most cases that
-> >>>> will be after paging_init().
-> >>>>
-> >>>> Reserved memory regions can be divided into 2 groups.
-> >>>> i) Statically-placed reserved memory regions
-> >>>> i.e. regions defined in the DT using the @reg property.
-> >>>> ii) Dynamically-placed reserved memory regions.
-> >>>> i.e. regions specified in the DT using the @alloc_ranges
-> >>>>     and @size properties.
-> >>>>
-> >>>> It is possible to call memblock_reserve() and memblock_mark_nomap() on
-> >>>> the statically-placed reserved memory regions and not need to save them
-> >>>> to the reserved_mem array until memory is allocated for it using
-> >>>> memblock, which will be after the page tables have been setup.
-> >>>> For the dynamically-placed reserved memory regions, it is not possible
-> >>>> to wait to store its information because the starting address is
-> >>>> allocated only at run time, and hence they need to be stored somewhere
-> >>>> after they are allocated.
-> >>>> Waiting until after the page tables have been setup to allocate memory
-> >>>> for the dynamically-placed regions is also not an option because the
-> >>>> allocations will come from memory that have already been added to the
-> >>>> page tables, which is not good for memory that is supposed to be
-> >>>> reserved and/or marked as nomap.
-> >>>>
-> >>>> Therefore, this series splits up the processing of the reserved memory
-> >>>> regions into two stages, of which the first stage is carried out by
-> >>>> early_init_fdt_scan_reserved_mem() and the second is carried out by
-> >>>> fdt_init_reserved_mem().
-> >>>>
-> >>>> The early_init_fdt_scan_reserved_mem(), which is called before the page
-> >>>> tables are setup is used to:
-> >>>> 1. Call memblock_reserve() and memblock_mark_nomap() on all the
-> >>>>    statically-placed reserved memory regions as needed.
-> >>>> 2. Allocate memory from memblock for the dynamically-placed reserved
-> >>>>    memory regions and store them in the static array for reserved_mem.
-> >>>>    memblock_reserve() and memblock_mark_nomap() are also called as
-> >>>>    needed on all the memory allocated for the dynamically-placed
-> >>>>    regions.
-> >>>> 3. Count the total number of reserved memory regions found in the DT.
-> >>>>
-> >>>> fdt_init_reserved_mem(), which should be called after the page tables
-> >>>> have been setup, is used to carry out the following:
-> >>>> 1. Allocate memory for the reserved_mem array based on the number of
-> >>>>    reserved memory regions counted as mentioned above.
-> >>>> 2. Copy all the information for the dynamically-placed reserved memory
-> >>>>    regions from the static array into the new allocated memory for the
-> >>>>    reserved_mem array.
-> >>>> 3. Add the information for the statically-placed reserved memory into
-> >>>>    reserved_mem array.
-> >>>> 4. Run the region specific init functions for each of the reserve memory
-> >>>>    regions saved in the reserved_mem array.
-> >>> I don't see the need for fdt_init_reserved_mem() to be explicitly called 
-> >>> by arch code. I said this already, but that can be done at the same time 
-> >>> as unflattening the DT. The same conditions are needed for both: we need 
-> >>> to be able to allocate memory from memblock.
-> >>>
-> >>> To put it another way, if fdt_init_reserved_mem() can be called "early", 
-> >>> then unflattening could be moved earlier as well. Though I don't think 
-> >>> we should optimize that. I'd rather see all arches call the DT functions 
-> >>> at the same stages.
-> >> Hi Rob,
-> >>
-> >> The reason we moved fdt_init_reserved_mem() back into the arch specific code
-> >> was because we realized that there was no apparently obvious way to call
-> >> early_init_fdt_scan_reserved_mem() and fdt_init_reserved_mem() in the correct
-> >> order that will work for all archs if we placed fdt_init_reserved_mem() inside the
-> >> unflatten_devicetree() function.
-> >>
-> >> early_init_fdt_scan_reserved_mem() needs to be
-> >> called first before fdt_init_reserved_mem(). But on some archs,
-> >> unflatten_devicetree() is called before early_init_fdt_scan_reserved_mem(), which
-> >> means that if we have fdt_init_reserved_mem() inside the unflatten_devicetree()
-> >> function, it will be called before early_init_fdt_scan_reserved_mem().
-> >>
-> >> This is connected to your other comments on Patch 7 & Patch 14.
-> >> I agree, unflatten_devicetree() should NOT be getting called before we reserve
-> >> memory for the reserved memory regions because that could cause memory to be
-> >> allocated from regions that should be reserved.
-> >>
-> >> Hence, resolving this issue should allow us to call fdt_init_reserved_mem() from
-> >> the  unflatten_devicetree() function without it changing the order that we are
-> >> trying to have.
-> > There's one issue I've found which is unflatten_device_tree() isn't 
-> > called for ACPI case on arm64. Turns out we need /reserved-memory 
-> > handled in that case too. However, I think we're going to change 
-> > calling unflatten_device_tree() unconditionally for another reason[1]. 
-> >
-> > [1] https://lore.kernel.org/all/efe6a7886c3491cc9c225a903efa2b1e.sboyd@kernel.org/
-> >
-> >> I will work on implementing this and send another revision.
-> > I think we should go with a simpler route that's just copy the an 
-> > initial array in initdata to a properly sized, allocated array like the 
-> > patch below. Of course it will need some arch fixes and a follow-on 
-> > patch to increase the initial array size.
-> >
-> > 8<--------------------------------------------------------------------
-> > From: Rob Herring <robh@kernel.org>
-> > Date: Wed, 31 Jan 2024 16:26:23 -0600
-> > Subject: [PATCH] of: reserved-mem: Re-allocate reserved_mem array to actual
-> >  size
-> >
-> > In preparation to increase the static reserved_mem array size yet again,
-> > copy the initial array to an allocated array sized based on the actual
-> > size needed. Now increasing the the size of the static reserved_mem
-> > array only eats up the initdata space. For platforms with reasonable
-> > number of reserved regions, we have a net gain in free memory.
-> >
-> > In order to do memblock allocations, fdt_init_reserved_mem() is moved a
-> > bit later to unflatten_device_tree(). On some arches this is effectively
-> > a nop.
-
-[...]
-
-> Hi Rob,
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/pm4125.dtsi | 30 ++++++++++++++++++++++++++++++
+>   1 file changed, 30 insertions(+)
 > 
-> One thing that could come up with this is that  memory
-> for the dynamically-placed reserved memory regions
-> won't be allocated until we call fdt_init_reserved_mem().
-> (i.e. reserved memory regions defined using @alloc-ranges
-> and @size properties)
+> diff --git a/arch/arm64/boot/dts/qcom/pm4125.dtsi b/arch/arm64/boot/dts/qcom/pm4125.dtsi
+> index d886a9e4b091..cf8c822e80ce 100644
+> --- a/arch/arm64/boot/dts/qcom/pm4125.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm4125.dtsi
+> @@ -36,6 +36,36 @@ pm4125_resin: resin {
+>   			};
+>   		};
+>   
+> +		pm4125_vbus: usb-vbus-regulator@1100 {
+> +			compatible = "qcom,pm4125-vbus-reg", "qcom,pm8150b-vbus-reg";
+> +			reg = <0x1100>;
+> +			status = "disabled";
+> +		};
+> +
+> +		pm4125_typec: typec@1500 {
+> +			compatible = "qcom,pm4125-typec", "qcom,pmi632-typec";
+> +			reg = <0x1500>;
+> +			interrupts = <0x0 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x0 0x15 0x01 IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x0 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x0 0x15 0x03 IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x0 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x0 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x0 0x15 0x06 IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x0 0x15 0x07 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "or-rid-detect-change",
+> +					  "vpd-detect",
+> +					  "cc-state-change",
+> +					  "vconn-oc",
+> +					  "vbus-change",
+> +					  "attach-detach",
+> +					  "legacy-cable-detect",
+> +					  "try-snk-src-detect";
+> +			vdd-vbus-supply = <&pm4125_vbus>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>   		rtc@6000 {
+>   			compatible = "qcom,pm8941-rtc";
+>   			reg = <0x6000>, <0x6100>;
 > 
-> Since fdt_init_reserved_mem() is now being called from
-> unflatten_device_tree(), the page tables would have been
-> setup on most architectures, which means we will be
-> allocating from memory that have already been mapped.
-> 
-> Could this be an issue for memory that is supposed to be
-> reserved? 
 
-I suppose if the alloc-ranges region is not much bigger than the size 
-and the kernel already made some allocation that landed in the region, 
-then the allocation could fail. Not much we can do other than alloc the 
-reserved regions as soon as possible. Are there cases where that's not 
-happening?
-
-I suppose the kernel could try and avoid all alloc-ranges until they've 
-been allocated, but that would have to be best effort. I've seen 
-optimizations where it's desired to spread buffers across DRAM banks, so 
-you could have N alloc-ranges for N banks that covers all of memory.
-
-There's also the issue that if you have more fixed regions than memblock 
-can handle (128) before it can reallocate its arrays, then the 
-page tables themselves could be allocated in reserved regions.
-
-> Especially for the regions that are specified as
-> no-map?
-
-'no-map' is a hint, not a guarantee. Arm32 ignores it for regions 
-within the kernel's linear map (at least it used to). I don't think 
-anything changes here with it.
-
-Rob
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
