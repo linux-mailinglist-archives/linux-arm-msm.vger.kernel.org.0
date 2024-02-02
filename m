@@ -1,121 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-9584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3247E8475F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:19:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A54E684761C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:31:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA6B01F21ADC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:19:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F41B1F2D58B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B94414A4C3;
-	Fri,  2 Feb 2024 17:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A40A814AD33;
+	Fri,  2 Feb 2024 17:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G+/MD08j"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="0AwoUNqs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93DB1420A4;
-	Fri,  2 Feb 2024 17:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F91B14AD0E;
+	Fri,  2 Feb 2024 17:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706894381; cv=none; b=qfyh48QD3RMG9B0MS+myps8hx0Z0r07c+B9G92zcQx/Gvzifm8pkng1hOPlVqvghY1BKJQMT73EsBTySATsHepCLO9UWx7w5KGS/ckqFW1rKUuMxuVzzEKW87/L4UwcxM5ft2s56xDYo7ZCXlKv8bZdMQG9GFopasmnMYpp2c6k=
+	t=1706895038; cv=none; b=M8Exid2i1sA1sz+nBfphsYssCvNqwp58QUrWGCXCEZdgMAVVpy3rM4hdW05c43yuAiHUsOQLByHYzdLmTN+yXMyF9wTZ+nGapfxnQeFvl+74VTDgPM+oMOtrjfP//khG9kG2qbArSn+UnCKQxI+aWpDvYrqZ5iMiJDiy08c3t48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706894381; c=relaxed/simple;
-	bh=tc/H3cE6aOg2akGtqlufzRlVEUi7dZgg0jTn47lX3Zc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HHwysGQlCt1zBdGv2lNSepMQ4UqwmcxIAuQc5zStai/wsWcYdaEG/SO9pXtr2pONvNjKeLRCJ5jnhM/zuOTZVlCLjR9pPBpCfl5WeAiuhWPFDKWdLqnWfMm9uF24AYKMAMBzpeqLD4TqoGethp9/lxN26/h5uJ1Y1mw8LTiBN8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G+/MD08j; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412HEAXX020339;
-	Fri, 2 Feb 2024 17:19:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=15c9nbq
-	JheROjqA7qKcVMJWn/7rwUepjgl9U7MZxvjU=; b=G+/MD08j4UGU7bcgur3GPZt
-	82VyhA1TfjYaB3qFAZooEXyFmY6uuPbDpZ2I3C61wB252XW9XWA6Bx2RhPztD7hK
-	0GPLA7dMz4uofoQkjvRoWrwAkkHTE2rZOIclnA9SSABJ2KU1qKn5notJK+ovP3np
-	0kOAf7Ae1k/B9vXkrBHtTSH8XVFyB604KMTaLBpPwFIjQHIh3AGDgPru3jhOVmCQ
-	5RTISmD40NWYF4fdbxAdYtURY7iZ3Dod9zV2OkDS6yIh12Z/+0t30yuw7tadTiP/
-	lbvkgjL2PURuiMFtSfdPnAirDEAAOa6GuTPq3RL+n/vyCLJQvcHTOzaM0mFNA9g=
-	=
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwc1xa4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 17:19:35 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412HJYMs005638
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 17:19:34 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 2 Feb 2024 09:19:33 -0800
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>
-Subject: [PATCH] dt-bindings: clock: qcom: Fix @codeaurora email in Q6SSTOP
-Date: Fri, 2 Feb 2024 10:19:15 -0700
-Message-ID: <20240202171915.4101842-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1706895038; c=relaxed/simple;
+	bh=BlIMjuEgLbBMCBsdwCAz1BdgaPd0WZtrspP0SKES5qc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sMFLskLzp2jBJsBrTlS3387YvysmFpKmziwAjaXJdDWqeQRMV/W+KXjn7X/NNqlbfwAJAeBZrM678t8nX9cm0QN+Fi05KsYnE1YXQoqNjNa8IC+hn9Trun9SeX79e3T1sq+XVi9FfvSSWDlIzGo4AbqwB8BTCNfn03DlIqTXIjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=0AwoUNqs; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=SrWGzRDXFcq0Pr0rVOE+6OznEblUBFj2izYzbtEY5sc=; b=0AwoUNqsmMIvSNZVVt2Ksny2HI
+	2B5XEYr2LYd/flO3suuyWPhfyFHs2cxroDQtly9R9OOcgLEjCK1+R5EKBmxZoCxDAWIvGNK0+Uy4g
+	V+4GFZnOLkDF3m2cW4wWtYvZUuk8/vrdCJK9Na+dg0S4YTkHkF0CDS8JRqYGD+z5B7NKSYdsBG06h
+	LYxKRw4uSybfu8NTu8NtIKnzKM4LPbH1SQ11PT8llc8Mohx7qRcsmU2YFRbQfK3qtNfdkViOVBP77
+	JBqp6ThbzqdM8m5CH+4n54DACeQhzIOainmjNQO0o8N5GbRVmhtbgepEO0kUPZ1bWj39QOEEcBkbO
+	KNNFVdbw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55012)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rVxMw-0006Gu-03;
+	Fri, 02 Feb 2024 17:30:26 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rVxMt-0008U5-Nw; Fri, 02 Feb 2024 17:30:23 +0000
+Date: Fri, 2 Feb 2024 17:30:23 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Christian Marangi <ansuelsmth@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v5 9/9] net: phy: qca807x: add support for
+ configurable LED
+Message-ID: <Zb0mryS0CGfkolbO@shell.armlinux.org.uk>
+References: <20240201151747.7524-1-ansuelsmth@gmail.com>
+ <20240201151747.7524-10-ansuelsmth@gmail.com>
+ <46085abf-8e82-4fd9-95b8-95cbfde6e5c2@lunn.ch>
+ <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
+ <8bbff46a-f316-49b7-82f8-44dbdd452b0d@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tLd5zrOf45gRUkyhEWyLLzfEYwn_xy1c
-X-Proofpoint-ORIG-GUID: tLd5zrOf45gRUkyhEWyLLzfEYwn_xy1c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=807 clxscore=1011
- phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020124
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8bbff46a-f316-49b7-82f8-44dbdd452b0d@lunn.ch>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-The servers for the @codeaurora domain are long retired and any messages
-addressed there will bounce.  Govind Singh has left the company which
-appears to leave the Q6SSTOP clock controller binding unmaintained.
+On Fri, Feb 02, 2024 at 06:08:33PM +0100, Andrew Lunn wrote:
+> On Fri, Feb 02, 2024 at 05:40:21PM +0100, Christian Marangi wrote:
+> > On Fri, Feb 02, 2024 at 02:43:37AM +0100, Andrew Lunn wrote:
+> > > > +
+> > > > +			phydev->drv->led_brightness_set = NULL;
+> > > > +			phydev->drv->led_blink_set = NULL;
+> > > > +			phydev->drv->led_hw_is_supported = NULL;
+> > > > +			phydev->drv->led_hw_control_set = NULL;
+> > > > +			phydev->drv->led_hw_control_get = NULL;
+> > > 
+> > > I don't see how that works. You have multiple PHYs using this
+> > > driver. Some might have LEDs, some might have GPOs. But if you modify
+> > > the driver structure like this, you prevent all PHYs from having LEDs,
+> > > and maybe cause a Opps if a PHY device has already registered its
+> > > LEDs?
+> > >
+> > 
+> > God you are right! Off-topic but given the effects this may cause, why
+> > the thing is not const?
+> 
+> I would like it to be, but its not easy. There are fields in the
+> driver structure that phylib needs to modify. e.g. mdiodrv.driver gets
+> passed to the driver core when registering the driver, and it modifies
+> it. mdiodrv.flags is also manipulated. So we cannot make the whole
+> structure const.
 
-Move maintenance of the binding to the Qualcomm Clock Drivers maintainer
-as suggested by Bjorn Andersson.
+We can make phy_device's drv pointer const though, which would have the
+effect of catching code such as the above. That doesn't impact the
+driver model nor the mdio layer.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-index 03fa30fe9253..e0f4d692728c 100644
---- a/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Q6SSTOP clock Controller
- 
- maintainers:
--  - Govind Singh <govinds@codeaurora.org>
-+  - Bjorn Andersson <andersson@kernel.org>
- 
- properties:
-   compatible:
 -- 
-2.34.1
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
