@@ -1,65 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-9590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D14F84768C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:47:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEB81847694
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:48:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B48C1F20D22
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:47:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1D1F1C26470
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:48:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F4BE14AD3D;
-	Fri,  2 Feb 2024 17:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C38E714AD19;
+	Fri,  2 Feb 2024 17:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QkQf7Jiv"
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b="JSdtw7GO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141EC14AD2A;
-	Fri,  2 Feb 2024 17:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46474168B9;
+	Fri,  2 Feb 2024 17:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706895982; cv=none; b=uurkS+c+VQB+ODVx1SUqpC04znojm8I7oT22YwwJ9gUctW7vQQgj1wl8u2J4yBoWqCU81sWs8BN0Ts9uxQZMQ5Q86RRzfrd8RdXnfEqal6OPxlgOEllF7ARxjixeKMdcXm5FPPS+ANNCLuKddXww/JvH+KgD0cYlE9ENKn6dEcU=
+	t=1706896121; cv=none; b=nqWiYXpmHw3AxSmhVvBbJK6vhc4uAxZ5m3vDMZSY3sB0rzau1uHS21gEddhilgkwIHieRGs3O+U9pYudCpklM5yTB9BqJhGgUclBp8fs66/WW6TGAF0wfZniGPPkM6h7bBA5XKSP6tcCwaHd/RoE6BnLVqbqYzrTXUSqFMELA3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706895982; c=relaxed/simple;
-	bh=7jgOF5NtTnU74w1rpsqxhGKkI60zcMEfbbeuZkMITbg=;
+	s=arc-20240116; t=1706896121; c=relaxed/simple;
+	bh=fRArofEFyV+mEzuCwxl1rFk1RSKjZ9nhZus4D76DbVU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QwLsRNdhuOLgVPQpVrAqrYAXjY2PdKTjid2aO8xLKQW5OMhwvVZIBVe48/HWwAa7EAGWLnnwpYyYsFctcZwnq+F7+U252HSU85uLg+hRxQhHUaXPGzEKDHM8lEttNoERlCAX4T5Cgq+cswLlNZHHcZ8g8owQtR1nh3bpqdGQNRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QkQf7Jiv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2405FC433C7;
-	Fri,  2 Feb 2024 17:46:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706895981;
-	bh=7jgOF5NtTnU74w1rpsqxhGKkI60zcMEfbbeuZkMITbg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QkQf7JivLyt7i71KUt//AVXLcGeQVUqYyc544w7KuPB4ExMGFzAxOKXBeAtLNuaXr
-	 kEjxO6XJU7llvVd57Y8CGNjRXZKDeb4hZUDy2ra88LdLWAwYrQEsH5P/lbqwpkErAd
-	 GaFanAJ5xbDqikZRsKMUE+KdvMhxgM7I6oVGojQDEjh6Sf7kNWPxzNQSOW1FUi/JZv
-	 5QHmPBCLVMGZDIffq+kWcU1nNG4pTRj5CDaT67esQ3gL0mWR0B5/eLiUi3VqkgBENd
-	 yuHx7MFEaj4UooQ4Jao6zD3GsmdPS+KY681FTNefL1vjCm1K8mqkYLjwg8B739UvUa
-	 kW3mm7/W/RM4A==
-Date: Fri, 2 Feb 2024 17:46:15 +0000
-From: Simon Horman <horms@kernel.org>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
-Subject: Re: [PATCH net-next v3] net: stmmac: dwmac-qcom-ethqos: Add support
- for 2.5G SGMII
-Message-ID: <20240202174615.GT530335@kernel.org>
-References: <20240130111234.1244-1-quic_snehshah@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=A90irFKYX4PbUTBqW5zPEBHSnLQdqCsNhNXiItp+t1wMaXBDgqpMzcfGN/6ejbXQB2DXq+L3zx2zJ9ox4HjN8Q/uX0VobfQPcCs50T7nBeimC46Yyd0a0Ok9h/FqUk9VZhtAoQ/BF7NNzsx9PRjCOJ35WqloCv7oCXnj7A+6II8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=erick.archer@gmx.com header.b=JSdtw7GO; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+	s=s31663417; t=1706896108; x=1707500908; i=erick.archer@gmx.com;
+	bh=fRArofEFyV+mEzuCwxl1rFk1RSKjZ9nhZus4D76DbVU=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
+	 In-Reply-To;
+	b=JSdtw7GO816RZ2gkiccH1dMv+q9KOxYDOnVTZAAkZ8wzTWgEJTJsATWrdSRwHyOe
+	 bE3bUxc/JFIaGxH9s3bRar99ojTntA8WGfaQOOF2pJBeO1bxXIU0UV+pZTGvA+nMI
+	 sf2qfSOlpkPkmihGU6kdKjlUjsqdmDsaEG4FkiLCu5NzB/2BJyq/6IA9XHba2Mkly
+	 /RIA2RMTrOmfQd/DqGDSid3zFXvpCexhoMd9gGSYGFDbQocath2r8HxNKgjPxeRD4
+	 uA0m337egDT4n6z6kQ8pBqvT7igHsXE/D6NpDm81mx69IxltA26pFwturas46O8By
+	 MncHri29v2NTFvDDHQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from titan ([79.157.194.183]) by mail.gmx.net (mrgmx005
+ [212.227.17.184]) with ESMTPSA (Nemesis) id 1MO9zH-1rglPB2gqf-00OXq7; Fri, 02
+ Feb 2024 18:48:28 +0100
+Date: Fri, 2 Feb 2024 18:48:17 +0100
+From: Erick Archer <erick.archer@gmx.com>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Erick Archer <erick.archer@gmx.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <20240202174817.GA4528@titan>
+References: <20240120152518.13006-1-erick.archer@gmx.com>
+ <43614a09-d520-4111-873a-b352bd93ea07@moroto.mountain>
+ <20240128102933.GA2800@titan>
+ <3b175cb6-fcbe-4521-b6ac-442c8a11c297@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,17 +71,58 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240130111234.1244-1-quic_snehshah@quicinc.com>
+In-Reply-To: <3b175cb6-fcbe-4521-b6ac-442c8a11c297@moroto.mountain>
+X-Provags-ID: V03:K1:rtIgJn7pmL5lL6vGpRvFEKAofZVjZhyCaB9E/9VDne1F3q25qZ8
+ 7G/Jh4Acg9rS4kW0Md/PW4nR2rJapbUfT6DV3UoEGDPd0lwe+ROTKVYEfiA2Q0h5r92hDA3
+ Iw7WmbsTIA6YJKBLuluiTHjTAGkak36yvgoPaanEeUMGF1C33OO8VGYeNhotWBGOZ69ptKq
+ TmgcMjFokJe3bsDo8Lx5A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:29H8hio1c6g=;TkzoBl8a9dsfCi8c6fPJThbbKJ4
+ UVjlCR6g1UL7r/risxhYylpG3698ZTtztzwMTHuN5F1GHp4VKq9PIVZzeOjWq1Fe5hoOam/jQ
+ CnqOhCcggSfaTbXYSspkYKjWYc/vmP0icaJh7e96kJ6f4sss0HS+sqr7UXNisvzGQ8mLWNnhj
+ W1jRAY9xHmFieakEpVMryKE/rAoj9TkUNfxCYDizoTIkVxL9BSIpcB5yJtWzRHUhKJAb98ck4
+ 6lvkza/97frSU482Zlw6vOAkG10RYMPUepO2o5m4D0mqgtV/TogiP92Gz4yvsLR3xmC779mpP
+ /nn4nqIaK3m0mlCy2AAeZ2twv/WCRwsCcWBlhHc/J8royGPd/O3kFsQY2kvHTgGTj394JWbIc
+ EbWqV0nhCJiNSempCGmhQBick/PGN/4Gx77BtzP/qbpLRkeHbbKugRPp7IY/5SP0JEnZydopW
+ ukREJq3gf2y9AmZqp4z9U4qR9hEiuqHroXC3fC0ogylpMk7nfi91Zf+nNdyOuDnYMRMLGHzeu
+ j4U9L10frSQj9pxULAWpBLP2dII/jCF4rW4kMWDalqLVRDRcNX5xy/ATQ3zzv/fZTIgT7mDkv
+ 8M+dj7HJ/+c/YgZ0a/p52tdFEK5UrTqxpSnbmLDZI27EFPucXv72fM7v3CMc1mLjEcbf/PcAq
+ bYbQ5Lsu7e+hNy7KGsDBcfAmQsVQsu0HfGONlbuK7nKVuskpPMAhGixWE9jTjEwXylT82UQOM
+ NcqsPHPkPzIfXNI7L/TSqEqeqwSSpaHWWCqlMHr8qP6sDd/QKOlZJ36yKQRuUuhyo/aF/KuU0
+ AMC3XUFR6mDrcUD5/tzNS5m7WV05sWniUjHx7t6femOac=
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 30, 2024 at 04:42:34PM +0530, Sneh Shah wrote:
-> Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
-> mode for 1G/100M/10M speed.
-> Added changes to configure serdes phy and mac based on link speed.
-> Changing serdes phy speed involves multiple register writes for
-> serdes block. To avoid redundant write opertions only update serdes
-> phy when new speed is different.
+Hi Dan,
 
-nit: operations
+On Mon, Jan 29, 2024 at 08:20:26AM +0300, Dan Carpenter wrote:
+> On Sun, Jan 28, 2024 at 11:29:33AM +0100, Erick Archer wrote:
+> > > It's a bit concerning that ->event_rings is set multiple times, but =
+only
+> > > allocated one time.  It's either unnecessary or there is a potential
+> > > memory corruption bug.  If it's really necessary then there should b=
+e a
+> > > check that the new size is <=3D the size of the original buffer that=
+ we
+> > > allocated.
+> >
+> > The ->event_rings is set twice. In the mhi_ep_mmio_init function and i=
+n
+> > the mhi_ep_mmio_update_ner function.
+> >
+>
+> It's not about the type.
+>
+> The event_rings struct member is the number of elements in the
+> mhi_cntrl->mhi_event array.  However, we ->event_rings without
+> re-allocating mhi_cntrl->mhi_event so those are not in sync any more.
+> So since we don't know the number of elements in the mhi_cntrl->mhi_even=
+t
+> array leading to memory corruption.
 
-...
+Thanks for this clarification. Now I understand what you are explaining
+to me.
+
+Regards,
+Erick
+
 
