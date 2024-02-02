@@ -1,140 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-9517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB06846D2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 11:00:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0C1846D35
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 11:01:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2358E1F268B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 10:00:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E21111F22285
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 10:01:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 200C477646;
-	Fri,  2 Feb 2024 10:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B6577646;
+	Fri,  2 Feb 2024 10:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r9Lxm4OQ"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VyfW0C3f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB49605CC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 10:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C533990;
+	Fri,  2 Feb 2024 10:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706868049; cv=none; b=iqWsQieR6Kv46LUgdh11P072ckXBwQRzYQN85oR/T4qbFr5yV3H2IOa9f51+JLeCu+gUhc6jH6O733Ynb2HsFAxhpRzc4LuqUYr1iz2PaizTRw64bDnEcpS3guBzM3x2iNgz1AQVSHg2TLjVEVqyHg2IxiPQodKg+CNlpigYNpE=
+	t=1706868099; cv=none; b=drEzF7mW9DW+l+pDczm1ivOSUBsj3dUfAg46KJbPTV6dc5KtGkQzM0316tWha8pam2emzQmpsXeFaJJmfP8HAwXm7htEZnG/Ku1zrb+o9xUN6dcOGcHKwKhSLIem4rT6hJSkjVHEYHwmqEFocNIHkBSU7N1MXeJvNwRYhsnPMA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706868049; c=relaxed/simple;
-	bh=/46XmXS6WHLjojvBp7vJRWo/zydF4oNVEb5JMR3H5M0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rtws9wbVw6mXe2zoa31S12H8qAFB3ZTrknLMkBWVEEUWDSrjp5XQuGhKA2ZoLy/uS+S8H95911uWG1OP2rWSgYYSXpvjyyfg04oXn79ImSg8opznl26GwLyzCcMjp/zKvzqP31JirItakTu+EXJ0ItJzKOgdZoit0IU6GctWtqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r9Lxm4OQ; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6daf694b439so1491973b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 02:00:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706868047; x=1707472847; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Icnw/ylZjZ47F0p04CO9FlDlgDGuhe99H7DfZw8POCQ=;
-        b=r9Lxm4OQEVI/myqobiieUg4FvvJwNk6FEj9F1VQql9sEQyWYTRFaUnyR98ycq5I6nW
-         XFqGFMEa79wZq9PW3+u96jOJTvb3vYapS4OylaRHfDt9tEqgIpaivh1bTQOIsYrIZnKr
-         otNZMG/4zyaB51r87BgVkbrD0jL1WyPXyk8YWk7/dyyylmAHFQoiIkFiD3LfD0g+DxrS
-         3gJOZg4SpGDkcq4LncHyTxH0YDAxf6RvQfvseCI4BXGaji4ilhlVKDWZxsKo4zdsM/Fe
-         6Vz06pWTWgFCHxv9YohS58zFra100u47qfBne++BASkNnAj3U5ezF2DakaRCg/IUXWlp
-         KG8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706868047; x=1707472847;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Icnw/ylZjZ47F0p04CO9FlDlgDGuhe99H7DfZw8POCQ=;
-        b=Y2KPltXaWcxUVw0MiyrNfjnkjmzQUKd986522I1GHlccyHKr1/f7emvWyauHOiRRzR
-         xCYxn6FQip2PGQDKJ3zi/fKRujJI+N7b+ANItZzSKyoru0eG2IJgNS2wWiOr7eFXDp6u
-         xMxl+PsKME0rxspF+R7l06zKtehOTvezmxVp08rThO4YPe1C05dstF0NXbdRLOp0naRZ
-         JA3AafFY5aWuFcfVRzeXBNA/L8pOM9s8c924Uv2tzXwPyyl9zn8UAk0etCz69qJLySG2
-         kc8zRiX0qKugA+B4Hsp2ID+wf2ylgk3yrmI7CrkPbj8U4ctTCl3EAMEuKozMFnyt+GJN
-         bizw==
-X-Gm-Message-State: AOJu0YwBBthlqaP8QWMfPOz1hVx0Snn1RghpAYHDHTE+r3twYOSSczkt
-	rK4k4YthoVaD4zMZO2k0wHWqhsjxS0vDBXfSKpplHuRprMwQLzxkZ1UsYUGJVw==
-X-Google-Smtp-Source: AGHT+IHEt0kqIdqil1OgUDS40VaxvT9QbF43kZ4LxpIrez5UaGbV0J9rZjexZfFLSiGus9niF1lsJg==
-X-Received: by 2002:aa7:8203:0:b0:6df:dde5:6029 with SMTP id k3-20020aa78203000000b006dfdde56029mr6142650pfi.19.1706868046681;
-        Fri, 02 Feb 2024 02:00:46 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXh6Eq8x89cUSKh8IzQd23bvhoSyshOLH8GA4DX6LdUtwEborxEGvJv5IeECHC3LTitGVn/cFce5p1acGuY2zkexgLdseYZAdoS6A5Q2HmRgTqUTa1uiposYCpTUmQI62YGnjtFXXedHtHQ0brmsnIGVPDAbCB/8inZ3uVGuZ2Rdp2M7p8ft443rrTm+/zcg6NjS34AeoNfcvXcWASrgEbs8VLa0ohYAS7JXaVkF3pnwVAwvz39mQxSwE82qrHEkWveCr25ltyrYoxbntN39uE5NkAoiXDMAKeSA8D9Nt+xL7QzO6XqnEV4LSnISrbPg6JEQ/CzSqI4XJl5gKp7Ta4zahUxjPI93enkMfo02XXOsx1glAy7F1TzE9K1+vZiwF88HCbv+fW7
-Received: from thinkpad ([120.56.198.122])
-        by smtp.gmail.com with ESMTPSA id n21-20020a637215000000b005cee9115cb3sm1240400pgc.0.2024.02.02.02.00.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 02:00:46 -0800 (PST)
-Date: Fri, 2 Feb 2024 15:30:41 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/2] Enable D3 support for Qualcomm bridges
-Message-ID: <20240202100041.GB8020@thinkpad>
-References: <20240202-pcie-qcom-bridge-v1-0-46d7789836c0@linaro.org>
- <20240202090033.GA9589@wunner.de>
+	s=arc-20240116; t=1706868099; c=relaxed/simple;
+	bh=iAeX2V1R4iOUtvH22ZujrykVDWSHb4t4vjjKCuU9whE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VQnZWNXK8isXTi5sgUvOAiTiAy8LF3DpQTLmMkCZ56Wu8mwI+b0JgS/KltiOWRA0hVIqdGs45Ez3J1c/BjjN75zaT+xOOAPaH+okeMuZ+m8l4NIy/GbeIBkXMs0VbjmKx8PjCUTvb9GX80qq5c0TJ/ZLJPqxcZuODy3pMXWDJAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VyfW0C3f; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1706868095;
+	bh=iAeX2V1R4iOUtvH22ZujrykVDWSHb4t4vjjKCuU9whE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VyfW0C3f9keG8ojus4cmEQwMN2EnvI0tIVvsA3Ii/GpmHw52bLje/tXn4xbuY+eoS
+	 4M375eeVut0YoxOaeYzVXArtC5/U294a4MzKp2BRqiawtSK/O7PN1qB1SMv6SkV7tf
+	 aQIW9GsEJsx6T+zqmu9gDz4wpywo0ZNjyZ0DD0cz+Xvx/cFGAirIpynFCE8s7kSFuh
+	 uB4FzeE66vah56gdra09tuqVP3cIRAPUl2ItzW3+kH/DjdI3bj3mrrUOalNqj/Cby+
+	 77J4DT9DLWw6weO8aZDyH80I2FDdSr4pvi7jrhhidNiCaWiK7/QhkdzgIsDZQKzm/O
+	 b3sdnfbEzAvSg==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 62213378047F;
+	Fri,  2 Feb 2024 10:01:33 +0000 (UTC)
+Message-ID: <6f8021d5-50af-40c5-983e-cd203b1b3683@collabora.com>
+Date: Fri, 2 Feb 2024 11:01:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/18] thermal: core: Change governor name to const
+ char pointer
+Content-Language: en-US
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: daniel.lezcano@linaro.org, miquel.raynal@bootlin.com,
+ rui.zhang@intel.com, lukasz.luba@arm.com, support.opensource@diasemi.com,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, linux-imx@nxp.com, andersson@kernel.org,
+ konrad.dybcio@linaro.org, amitk@kernel.org, thara.gopinath@gmail.com,
+ niklas.soderlund@ragnatech.se, srinivas.pandruvada@linux.intel.com,
+ baolin.wang@linux.alibaba.com, u.kleine-koenig@pengutronix.de,
+ hayashi.kunihiko@socionext.com, d-gole@ti.com, linus.walleij@linaro.org,
+ DLG-Adam.Ward.opensource@dm.renesas.com, error27@gmail.com, heiko@sntech.de,
+ hdegoede@redhat.com, jernej.skrabec@gmail.com, f.fainelli@gmail.com,
+ bchihi@baylibre.com, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, kernel@collabora.com
+References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+ <20240130111250.185718-2-angelogioacchino.delregno@collabora.com>
+ <CAJZ5v0hOcS0Fm2-mKWtc1-0ym33XuH=B39GGL9b6MfGSqeERkQ@mail.gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <CAJZ5v0hOcS0Fm2-mKWtc1-0ym33XuH=B39GGL9b6MfGSqeERkQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240202090033.GA9589@wunner.de>
 
-On Fri, Feb 02, 2024 at 10:00:33AM +0100, Lukas Wunner wrote:
-> On Fri, Feb 02, 2024 at 12:24:16PM +0530, Manivannan Sadhasivam wrote:
-> > This series enables D3 support for PCI bridges found in Qcom SoCs. Currently,
-> > PCI core will enable D3 support for PCI bridges only when the following
-> > conditions are met:
-> > 
-> > 1. Platform is ACPI based
-> > 2. Thunderbolt controller is used
-> > 3. pcie_port_pm=force passed in cmdline
-> > 
-> > While options 1 and 2 do not apply to Qcom SoCs, option 3 will make the life
-> > harder for distro maintainers. Due to this, runtime PM is also not getting
-> > enabled for the bridges.
-> > 
-> > Ideally, D3 support should be enabled by default for the recent PCI bridges,
-> > but we do not have a sane way to detect them. So this series adds a new flag
-> > "bridge_d3_capable" to "struct pci_dev" which could be set by the bridge
-> > drivers for capable devices. This will allow the PCI core to enable D3
-> > support for the bridges during enumeration.
+Il 01/02/24 19:37, Rafael J. Wysocki ha scritto:
+> On Tue, Jan 30, 2024 at 12:13 PM AngeloGioacchino Del Regno
+> <angelogioacchino.delregno@collabora.com> wrote:
+>>
+>> All users are already assigning a const char * to the `governor_name`
+>> member of struct thermal_zone_params and to the `name` member of
+>> struct thermal_governor.
+>> Even if users are technically wrong, it just makes more sense to change
+>> this member to be a const char pointer instead of doing the other way
+>> around.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 > 
-> I think the right way to do this is to use the existing call to
-> platform_pci_bridge_d3() in pci_bridge_d3_possible().
+> Acked-by: Rafael J. Wysocki <rafael@kernel.org>
 > 
-> Please amend platform_pci_bridge_d3() to call a new of_pci_bridge_d3()
-> function which determines whether D3 is supported by the platform.
-> 
-> E.g. of_pci_bridge_d3() could contain a whitelist of supported VID/DID
-> tuples.  Or it could be defined as a __weak function which always
-> returns false but can be overridden at link time by a function
-> defined somewhere in arch/arm/, arch/arm64/ or in some driver
-> whose Kconfig option is enabled in Qualcomm platforms.
+> or I can pick it up right away if you want me to do that.
 > 
 
-Hmm. If we go with a DT based solution, then introducing a new property like
-"d3-support" in the PCI bridge node would be the right approach. But then, it
-also requires defining the PCI bridge node in all the DTs. But that should be
-fine since it will help us to support WAKE# (per bridge) in the future.
+I appreciate having less patches to carry over with new series versions.
 
-Thanks for the review.
+Whatever you can take, please feel free to pick directly :-)
 
-- Mani
+Thanks,
+Angelo
 
--- 
-மணிவண்ணன் சதாசிவம்
+>> ---
+>>   include/linux/thermal.h | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+>> index b7a3deb372fd..65d8f92a9a0d 100644
+>> --- a/include/linux/thermal.h
+>> +++ b/include/linux/thermal.h
+>> @@ -214,7 +214,7 @@ struct thermal_zone_device {
+>>    * @governor_list:     node in thermal_governor_list (in thermal_core.c)
+>>    */
+>>   struct thermal_governor {
+>> -       char name[THERMAL_NAME_LENGTH];
+>> +       const char *name;
+>>          int (*bind_to_tz)(struct thermal_zone_device *tz);
+>>          void (*unbind_from_tz)(struct thermal_zone_device *tz);
+>>          int (*throttle)(struct thermal_zone_device *tz,
+>> @@ -226,7 +226,7 @@ struct thermal_governor {
+>>
+>>   /* Structure to define Thermal Zone parameters */
+>>   struct thermal_zone_params {
+>> -       char governor_name[THERMAL_NAME_LENGTH];
+>> +       const char *governor_name;
+>>
+>>          /*
+>>           * a boolean to indicate if the thermal to hwmon sysfs interface
+>> --
+
 
