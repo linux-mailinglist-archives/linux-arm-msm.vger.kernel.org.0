@@ -1,198 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-9630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FCA9847B62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 22:15:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABF0F847B69
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 22:17:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3E7A1F26A6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 21:15:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D147F1C21AA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 21:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53C6180631;
-	Fri,  2 Feb 2024 21:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C6278062B;
+	Fri,  2 Feb 2024 21:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="I75KgkAQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yvjzg8v2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAC980603;
-	Fri,  2 Feb 2024 21:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA2518049;
+	Fri,  2 Feb 2024 21:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706908499; cv=none; b=Eb7kcbxymxoHV2pOtPESHQDWwtFz2BifnySYx5mwf1H4qRAcn/U/lxgB3wBzNMIH0y0FdFd0FVKlAuV2JTBjo9Np+Yk1q97bg91dzrVBudG6DFaY67W/dMylC2VLm77o3OhfKLaz5ohvq6Q/k4/h0Cz8w2HQksb1YZkOoZZFbcs=
+	t=1706908672; cv=none; b=oUvP8UO8r5qhJmdkuNG0kCd+SMHOzUEIsoAAhwKY90owW0ljocQxrAIYRBsCd+QHYaNriqneTashk+JZdY9ne1VeiSro9/8fuWRq7Gf6geBtl88SizbIwMyRwiNOTT8Oa2niDsui4DmO6f8jxPvhkzHFl/b4uy3g/fEFviFNJ+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706908499; c=relaxed/simple;
-	bh=8JMAKuvDOPU+pRXPHNHPc0+MCc/C1gyNi0c8kqz5obM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aiOxkCJg9VmMTy4xmrRcPOzdIaOCeNNJQ3MmlfcAJzClern5Z0vIQQNUhvBKHbqzQi3Xq20oaKm0gZ0kfaqopvsLi2dw/QLUwYS/ummbYp6UX8HyT0TTulINU3ODRoMzl4y3CLv4uRZK4Fb/oLx6T1ZDcMhThfczQFVBU3FZTz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=I75KgkAQ; arc=none smtp.client-ip=198.47.19.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 412LEMbZ085689;
-	Fri, 2 Feb 2024 15:14:22 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1706908462;
-	bh=zgoKyKRzk2mlaXzGvR0gvmhQcCU8wlgUE8Q0I6gaFsc=;
-	h=Date:Subject:To:CC:References:From:In-Reply-To;
-	b=I75KgkAQUsaPlBf/YLEiOSkHkEW05KrTLoHvGTLcje0odsTFPACke5MknbOKoOZ8k
-	 6qC5DXfTiykIYoJxQwDbXcw1XqOAavzFtMk3BLxNfKqhtXnUTiMt9ThO1ONqy1dFhm
-	 fvzAWKy2F4Ysim5wFbsUNNS4jB3wGE/GlhOtrkt4=
-Received: from DFLE103.ent.ti.com (dfle103.ent.ti.com [10.64.6.24])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 412LEMGe031234
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Fri, 2 Feb 2024 15:14:22 -0600
-Received: from DFLE110.ent.ti.com (10.64.6.31) by DFLE103.ent.ti.com
- (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Fri, 2
- Feb 2024 15:14:21 -0600
-Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DFLE110.ent.ti.com
- (10.64.6.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Fri, 2 Feb 2024 15:14:22 -0600
-Received: from [10.249.42.149] ([10.249.42.149])
-	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 412LELJI084221;
-	Fri, 2 Feb 2024 15:14:21 -0600
-Message-ID: <60d46d58-ad77-47e8-8ff6-bc05db7cf1be@ti.com>
-Date: Fri, 2 Feb 2024 15:14:20 -0600
+	s=arc-20240116; t=1706908672; c=relaxed/simple;
+	bh=/VCh0+HPTFG2lAHl8Ir63vVbaWY0czUg4EndhAmsGSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sMJF2dFq6SfyqIbmqDFnncc9ZWvuG/RnyzaJmeuLBXwx2XTX0jXv8aj/qP4bTUEZO2Afj9uYByN3ed/ppxuLEVPZoHNdj45IAdX8oh+oJPWtnBXXXyM/AltjEiBp9Dojuh7BOLL8RCSprx4RCviilOnQJXprme+qYu77GDWHq9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yvjzg8v2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB59C433F1;
+	Fri,  2 Feb 2024 21:17:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706908671;
+	bh=/VCh0+HPTFG2lAHl8Ir63vVbaWY0czUg4EndhAmsGSQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yvjzg8v2QAYg2UYrB+Vbpmh7MiYTumX0/jy0ou8L09dgeEe2AjOeKOVCL38zLtq2B
+	 3EnMHuQG6hAXgLSwJmtknf63d9V5i8YDh1rpVTeUYLV61yKuBCTvLG3v29pLYY4rV8
+	 1P322vsYsiW3VWtNnWfWTGjTrJMC5ANbMAwJuWvxAlIok42ADCt793YIY9Rkc9FWM1
+	 Coy70l89C4Rk6R5vGd1Uae0XVtfzACT+rF9BkzunQi0BL38hPlS2lFsw1sVmTQNW3I
+	 lcnCjL5AZ6qLnoamq/rh7NtQ+GQ91Erg9DYlSvDHqRKq0zW9fJoHt5VUEd+3kcWvYl
+	 CKI3HeTmiZgZg==
+Date: Fri, 2 Feb 2024 15:17:49 -0600
+From: Rob Herring <robh@kernel.org>
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org,
+	robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev,
+	devicetree@vger.kernel.org, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robdclark@gmail.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
+	quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
+	quic_sudaraja@quicinc.com, djakov@kernel.org
+Subject: Re: [PATCH v4 01/10] dt-bindings: iommu: Add Translation Buffer Unit
+ bindings
+Message-ID: <20240202211749.GA1467077-robh@kernel.org>
+References: <20240201210529.7728-1-quic_c_gdjako@quicinc.com>
+ <20240201210529.7728-2-quic_c_gdjako@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] remoteproc: qcom_q6v5_wcss: Use devm_rproc_alloc()
- helper
-Content-Language: en-US
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Shawn
- Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix
- Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP
- Linux Team <linux-imx@nxp.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>
-CC: <linux-remoteproc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20240123184632.725054-1-afd@ti.com>
- <20240123184632.725054-6-afd@ti.com>
- <256072b3-c1d0-4e11-9456-bbd50b84a310@quicinc.com>
-From: Andrew Davis <afd@ti.com>
-In-Reply-To: <256072b3-c1d0-4e11-9456-bbd50b84a310@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240201210529.7728-2-quic_c_gdjako@quicinc.com>
 
-On 2/2/24 2:51 PM, Unnathi Chalicheemala wrote:
+On Thu, Feb 01, 2024 at 01:05:20PM -0800, Georgi Djakov wrote:
+> Add common bindings for the TBUs to describe their properties. The
+> TBUs are modelled as child devices of the IOMMU and each of them is
+> described with their compatible, reg and stream-id-range properties.
+> There could be other implementation specific properties to describe
+> any resources like clocks, regulators, power-domains, interconnects
+> that would be needed for TBU operation. Such properties will be
+> documented in a separate vendor-specific TBU schema.
 > 
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+> ---
+>  .../devicetree/bindings/iommu/arm,smmu.yaml   | 14 ++++++++++
+>  .../devicetree/bindings/iommu/tbu-common.yaml | 28 +++++++++++++++++++
+>  2 files changed, 42 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/iommu/tbu-common.yaml
 > 
-> On 1/23/2024 10:46 AM, Andrew Davis wrote:
->> Use the device lifecycle managed allocation function. This helps prevent
->> mistakes like freeing out of order in cleanup functions and forgetting to
->> free on error paths.
->>
->> Signed-off-by: Andrew Davis <afd@ti.com>
->> ---
->>   drivers/remoteproc/qcom_q6v5_wcss.c | 24 +++++++++---------------
->>   1 file changed, 9 insertions(+), 15 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
->> index cff1fa07d1def..94f68c919ee62 100644
->> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
->> @@ -1011,8 +1011,8 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->>   	if (!desc)
->>   		return -EINVAL;
->>   
->> -	rproc = rproc_alloc(&pdev->dev, pdev->name, desc->ops,
->> -			    desc->firmware_name, sizeof(*wcss));
->> +	rproc = devm_rproc_alloc(&pdev->dev, pdev->name, desc->ops,
->> +				 desc->firmware_name, sizeof(*wcss));
->>   	if (!rproc) {
->>   		dev_err(&pdev->dev, "failed to allocate rproc\n");
->>   		return -ENOMEM;
->> @@ -1027,29 +1027,29 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->>   
->>   	ret = q6v5_wcss_init_mmio(wcss, pdev);
->>   	if (ret)
->> -		goto free_rproc;
->> +		return ret;
->>   
->>   	ret = q6v5_alloc_memory_region(wcss);
->>   	if (ret)
->> -		goto free_rproc;
->> +		return ret;
->>   
->>   	if (wcss->version == WCSS_QCS404) {
->>   		ret = q6v5_wcss_init_clock(wcss);
->>   		if (ret)
->> -			goto free_rproc;
->> +			return ret;
->>   
->>   		ret = q6v5_wcss_init_regulator(wcss);
->>   		if (ret)
->> -			goto free_rproc;
->> +			return ret;
->>   	}
->>   
->>   	ret = q6v5_wcss_init_reset(wcss, desc);
->>   	if (ret)
->> -		goto free_rproc;
->> +		return ret;
->>   
->>   	ret = qcom_q6v5_init(&wcss->q6v5, pdev, rproc, desc->crash_reason_smem, NULL, NULL);
->>   	if (ret)
->> -		goto free_rproc;
->> +		return ret;
->>   
->>   	qcom_add_glink_subdev(rproc, &wcss->glink_subdev, "q6wcss");
->>   	qcom_add_ssr_subdev(rproc, &wcss->ssr_subdev, "q6wcss");
->> @@ -1061,16 +1061,11 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->>   
->>   	ret = rproc_add(rproc);
->>   	if (ret)
->> -		goto free_rproc;
->> +		return ret;
->>   
->>   	platform_set_drvdata(pdev, rproc);
->>   
->>   	return 0;
->> -
->> -free_rproc:
->> -	rproc_free(rproc);
->> -
->> -	return ret;
-> 
-> This return statement should stay, right?
-> 
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index a4042ae24770..ba3237023b39 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -235,6 +235,20 @@ properties:
+>        enabled for any given device.
+>      $ref: /schemas/types.yaml#/definitions/phandle
+>  
+> +  '#address-cells':
+> +    enum: [ 1, 2 ]
+> +
+> +  '#size-cells':
+> +    enum: [ 1, 2 ]
+> +
+> +  ranges: true
+> +
+> +patternProperties:
+> +  "^tbu@[0-9a-f]+$":
+> +    description: TBU child nodes
+> +    type: object
+> +    $ref: tbu-common.yaml#
 
-No path goes to "free_rproc" anymore, so we always do the "return 0;"
-above on non-error paths.
+       additionalProperties: false
 
-Andrew
 
->>   }
->>   
->>   static void q6v5_wcss_remove(struct platform_device *pdev)
->> @@ -1080,7 +1075,6 @@ static void q6v5_wcss_remove(struct platform_device *pdev)
->>   
->>   	qcom_q6v5_deinit(&wcss->q6v5);
->>   	rproc_del(rproc);
->> -	rproc_free(rproc);
->>   }
->>   
->>   static const struct wcss_data wcss_ipq8074_res_init = {
+However, that's going to break with the extra QCom properties. In 
+json-schema, you can't have 2 schemas and extend the properties of 
+their child nodes. The validator doesn't "see" the child node schemas at 
+the same time. You are going to have to move QCom SMMU to its own schema 
+and remove it from arm,smmu.yaml.
+
+Rob
 
