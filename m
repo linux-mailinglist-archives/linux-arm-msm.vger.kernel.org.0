@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39B85847016
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 13:20:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE470847025
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 13:21:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECD8828DB42
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 12:20:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E5311C26DC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 12:21:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E2A140779;
-	Fri,  2 Feb 2024 12:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39666140795;
+	Fri,  2 Feb 2024 12:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xIPmnWw5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DXYOI+0D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7400079930
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 12:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACA4140798
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 12:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706876404; cv=none; b=DMyabmcEpUWy4UV0p0Xg5k/dgWL2Kag3ZLbwly+SDitPfjkRZ7x/j/YJHIVk0y87FoNCxYSZWKZ9+TXKJGOdGDx0+iTiBJGgnroUUSk0kBYhaSlWNfbYsnC+sA93rG18fNY7bp0azFBPQUf0bCmNW0jd/FT5lGbF9+/I5PQazjo=
+	t=1706876442; cv=none; b=L06uXaTX0ptooRbYWec9Q0gTaRF9gx0vU62FH6cvwRQlbrQcW4PSYgxGrPXQcKuHpWpS4uyuhR27BZSRZrnYa4b/PjiERQPkWsBcyxR0HPOoqOldMyTsKUWRTybKP8fL5eoDioJbwqZPoMUFaGlmKe1+BwalznSsXExpe8CyWMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706876404; c=relaxed/simple;
-	bh=ZFLQdei8xlg1cwqkesOsjr5bgM9I79Lr3BOF4Qbotno=;
+	s=arc-20240116; t=1706876442; c=relaxed/simple;
+	bh=9YZopy2TeHxgP0yzQOepMLgIqTR9PKUUU3JWfTdcnPQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kqGOOurbC4h6H9JC2NtPg3LKdUhUCqPceTRp16D9SHmvkrL4G8WJULoqCLtF+aAcWj98rWQ3vBxfu6G+/vsCuZPj00Hy47Z4EsZZu0+k+1aM7IdQiZGI7WvPrTstVb/x/1Ltcsmd2xC4ER0s6ZvdVaBACdNzKoNnDQcnW+OyuLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xIPmnWw5; arc=none smtp.client-ip=209.85.208.52
+	 In-Reply-To:Content-Type; b=VeRMAfe7UbqKY1j/gyaVZFjTsUSR1J16fyWfrD3M1PGbEKI/s1b+tlKFf4q0+rPeqwmD/RkFTh2fxW1axVeFNM3RnyxJr2evO3DV+V+e4Jq63KCtBdmFCJGaDACicUK0G4RlteiHDkwX8Ud9FhQOyboAaDQFYah9Gq4Ex79fgnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXYOI+0D; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-55a179f5fa1so2791608a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 04:20:02 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56002e7118dso290934a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 04:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706876400; x=1707481200; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706876438; x=1707481238; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HiajaXq4ADJJJV5m89dGHzIE2BPOaQ5OEIoMtsAKSSw=;
-        b=xIPmnWw5JxcztMy5CboIwIuMMm41oExIwr+OE7BnWKRAFXZzXXofRfaPS52eEBq7tJ
-         lsTS+To5l/QAj7JOnCHSyNKIr+6vCOkE+xSCF6TM8noEkv+IlE1Aa7XH6VsXI/U5SBt8
-         cstU6oYOWPUIryAxvw/jg/tK9XM/x1tgn0qCXccdUKFF5UATA24BrkgNNlsZJX3fPjk/
-         qZOwT+Dj3wnD1FFhOAwyl55gg3LNjoi3peT/C422bvclz13LQ/7Ybg7ki8nAxPmKnHdy
-         f2SDDCzHwLPE6eFrgFHV4dC2yLpQfMv+ifNmcp+qt+ZOJ+QfWpE7WWeKSgDlBrQqYsGD
-         hEpw==
+        bh=JEhP/kvo7+H18lNfoFAvBKQU0xRqI+1E+89VLjha/LM=;
+        b=DXYOI+0DtyivwCwv748yuNyE6v5ouygyQUVod8y4XFjv3wHF40AStY6xY2axOY8FdA
+         u4KqjfDxJYodVieQDXmBTWA+KZw/2HKg3uDN9XLRP9HRXwCk7OeboksbsyOKp9yQYahg
+         rc+cUQO6Vls0Vke1tf0sVCqwanYOxSaQSfPGIymPPparts2bBAan4E1MFzFfgRYu+TIw
+         6fttIMZG6c7ZJOLQWRatOHE4921tYv6iVE6svSa/RHmbXp4VckT6oqF1Y2zV/6sFWgR9
+         yEwZqew4k8V3oPDNys8SjG87pMhjpiZeNui5eZ+bWJHr3+WhKMbQMZIaesLUB6AKHFbr
+         CqGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706876400; x=1707481200;
+        d=1e100.net; s=20230601; t=1706876438; x=1707481238;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HiajaXq4ADJJJV5m89dGHzIE2BPOaQ5OEIoMtsAKSSw=;
-        b=CyvJvv3RfArzn/1/o2to27x85STxwSx68A+39wNuF3p9OaR2UPQhhtquaDNob2xgPF
-         SAzYqxP8jiIwW47o9RY9aL7v/7VTDeAPal2FMlbu+Vyfm1scrWW+jHpxD87+cnAbG9VC
-         LIkzmPGMVrWT0AXUiQef+EZgfkyWzxz5QsDjOZ8Sd88vfYB/+c71RSXQ0ysHrm6Dv2LB
-         WBXVBdYVGDOoWcgQhF+PY6BwUHCfNlA9f9iJZkGSwN4eU2M5i+oY4rR+QjdbU0rCKNyW
-         lvkLaCjh2xpd3sVOokxFNkOsY1a9EKphVBhhrFHC3cJRNC8kluicgXu/AHMk6PZoV0Vd
-         ruUg==
-X-Gm-Message-State: AOJu0Ywac0dDbCo+WN7VIHkq45tPF2r6Q7SIfmm3Hk2/Aug2p5LouKmj
-	/vYPekk2v+9LM6WTtvHdtAirkfLLH/jku7by6iLr4X4FiyMcZE7oB8XK5lsE6NA=
-X-Google-Smtp-Source: AGHT+IFcMewJjcknQFXbl/2jGBD++vhG15oI4+ONCQPvlMd7FtZTjhXyojzsYeR+ZVbm5x27KGzOCw==
-X-Received: by 2002:aa7:c444:0:b0:55f:fd22:ff6e with SMTP id n4-20020aa7c444000000b0055ffd22ff6emr779342edr.39.1706876400517;
-        Fri, 02 Feb 2024 04:20:00 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUKttvY3oKSyHZXC8LNqHvkOTYN6ZYqt2BnSlOUcJYynbbCZxUdaRqhPOzV7i2Vx99T3vsnsyMyZkXBZaCEQj10idzfGibTtC9cXmmL4c3CbIny3z4pDsjTGSBIMuTAysWZ71tNZ2HqtStFQQUDUcspk46g9BP0Wsdeg9D7q4YfiC5dEk7PNvAaXNDRenTUYdpSSqGulOPNESuc8XnX7AHo1hG1rSizLgJ5W4y8UJj5LPkMhSTLUYmSm52KHV1CoH9eI6TfJ5ycamXs4MdWsJ/YHKIQ5bt361YoZDncZxyJdlZ1wvXnNAvsltt84QYs3mBJ0xRa8qOYtsncepA2XW3h/AmBpB0Mdy+l8yc365irLFWQjqGtvxJEu46fVpWGEcYmf8rddKSssLANFjKDMSk6decyba1kcHuCE5pO4QOveVEp0S2H
+        bh=JEhP/kvo7+H18lNfoFAvBKQU0xRqI+1E+89VLjha/LM=;
+        b=f/5GiIMox2cQwSLz5pS4L1DJ+OPDztJ7F41J3XayexP4MLyD86HFAlarCB9+lxVqyc
+         SXjkNCyPdd4a/D4sUeYgKVo8ATYDdOLwlDnoZvsn1xrVefM27jAeUVTEr8B6Of/es/4U
+         CY5vjG5YcvG9hwac10zo7GLy+aLSGQP0YG2ckytIK8AR5snr47zMhgv/11ZnbDnZ2W11
+         +mUEQE45RUgSg4sAPZjOdMo7lbNPuDN3xG1972jLJ0H+S+mptY/adnAJSCzh1qq7mRLa
+         kvJVieCdi3spW8XqIM036NK+cAiYk7574ry1Er4lHtF3/082eqFTu6tiZPZSsaFjej9v
+         QkRg==
+X-Gm-Message-State: AOJu0YzrKPRrwmZ/ulcW5zjIGtwasjsOgIK2aviuYNpnJfsqUkUrwtPL
+	5da6PgZcpyxUhCAH/9JOVJXiBffu2UwHcF+eHuXwivgxVcdgH8WtelshmwrKgG4=
+X-Google-Smtp-Source: AGHT+IHEwghXMkMYvzhrYxzhjMV5XxasDfqebbFISQpYq3RlsI6QkgJUrVfM3rugUa15VEj18xzWqA==
+X-Received: by 2002:a05:6402:33d6:b0:55f:eb11:8937 with SMTP id a22-20020a05640233d600b0055feb118937mr1116681edc.33.1706876438268;
+        Fri, 02 Feb 2024 04:20:38 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUJ6CB6Kd/kBE2Og35lVxEEr7zhoybwpRuUZxuZrNZb6PCSVMO9J6jrihRsKrEf+yTKDKKIKv8jHcNnEfRZxsw+oQfXamBlKp4bJjgEOoRvdWcsSx0mStzcmemh0cLGQC2sBeHAeUnP9a+V0QkUQUhIXmq6OAAgQT7kZaZZDvgPQIGpBtjc77ZKZlLoEPaGY4SYoQJj9kcy0Z74BN1yDaAOVqx2VTno4UdFz2sMDJAs8j6BvabP6inxjXYhqgO4BvT3sn8TO6SLAD0nRcIuEacV+SUO9qu4uYwIpTuXNJKL7PDoYD45CKXDkFGmSWAYBe0riRz5W1XdzaXOpfDw13RzFP+A3FfNwJt0FA5j/24e8BPpNZuZFbu3T35yvOtRSkwb0vaxMeZtpg==
 Received: from [192.168.159.104] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id c16-20020aa7c990000000b0055ef1d4fcb5sm751602edt.9.2024.02.02.04.19.58
+        by smtp.gmail.com with ESMTPSA id c16-20020aa7c990000000b0055ef1d4fcb5sm751602edt.9.2024.02.02.04.20.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 04:20:00 -0800 (PST)
-Message-ID: <9dabe028-278c-4273-8a57-1cb080c1019d@linaro.org>
-Date: Fri, 2 Feb 2024 13:19:57 +0100
+        Fri, 02 Feb 2024 04:20:37 -0800 (PST)
+Message-ID: <7527574c-8faa-4ccb-9387-8563f75be3ab@linaro.org>
+Date: Fri, 2 Feb 2024 13:20:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,20 +76,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] arm64: dts: qcom: msm8953: Add GPU IOMMU
+Subject: Re: [PATCH RFC 2/2] arm64: dts: qcom: msm8953: Add GPU
 Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, Vladimir Lypak <vladimir.lypak@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240125-msm8953-gpu-v1-0-f6493a5951f3@z3ntu.xyz>
- <d576e655-5d00-44ff-9405-0fceaa2d3935@linaro.org>
- <a75d8b2f-a55a-4087-b039-60769678a480@linaro.org>
- <6009977.lOV4Wx5bFT@z3ntu.xyz>
+ <20240125-msm8953-gpu-v1-2-f6493a5951f3@z3ntu.xyz>
+ <c58c5897-b3f0-4449-a5b1-df10b117733c@linaro.org>
+ <4539846.LvFx2qVVIh@z3ntu.xyz>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -126,62 +125,100 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <6009977.lOV4Wx5bFT@z3ntu.xyz>
+In-Reply-To: <4539846.LvFx2qVVIh@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 27.01.2024 18:24, Luca Weiss wrote:
-> On Freitag, 26. Jänner 2024 00:49:55 CET Konrad Dybcio wrote:
->> On 1/25/24 23:24, Dmitry Baryshkov wrote:
->>> On 25/01/2024 23:56, Luca Weiss wrote:
->>>> From: Vladimir Lypak <vladimir.lypak@gmail.com>
->>>>
->>>> Add the IOMMU used for the GPU on MSM8953.
->>>>
->>>> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/msm8953.dtsi | 31
->>>> +++++++++++++++++++++++++++++++ 1 file changed, 31 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
->>>> b/arch/arm64/boot/dts/qcom/msm8953.dtsi index dcb5c98b793c..91d083871ab0
->>>> 100644
->>>> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
->>>> @@ -1046,6 +1046,37 @@ mdss_dsi1_phy: phy@1a96400 {
->>>>               };
->>>>           };
->>>> +        gpu_iommu: iommu@1c48000 {
+On 27.01.2024 18:32, Luca Weiss wrote:
+> On Freitag, 26. Jänner 2024 00:50:43 CET Konrad Dybcio wrote:
+>> On 1/25/24 22:56, Luca Weiss wrote:
+>>> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 >>>
->>> Nit: most of the platforms use the adreno_smmu label. But maybe the
->>> msm-iommu vs arm-smmu makes difference here.
->> Not really :)
->>
->> Please keep the labels unified
-> 
-> Ack, renaming to adreno_smmu
-> 
->>
->>> Nevertheless:
+>>> Add the GPU node for the Adreno 506 found on this family of SoCs. The
+>>> clock speeds are a bit different per SoC variant, SDM450 maxes out at
+>>> 600MHz while MSM8953 (= SDM625) goes up to 650MHz and SDM632 goes up to
+>>> 725MHz.
 >>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> To achieve this, create a new sdm450.dtsi to hold the 600MHz OPP and
+>>> use the new dtsi for sdm450-motorola-ali.
 >>>
->>>> +            compatible = "qcom,msm8953-iommu", "qcom,msm-iommu-v2";
->>>> +            ranges = <0 0x01c48000 0x8000>;
->>>> +
->>>> +            clocks = <&gcc GCC_OXILI_AHB_CLK>,
->>>> +                 <&gcc GCC_BIMC_GFX_CLK>;
+>>> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+>>> Co-developed-by: Luca Weiss <luca@z3ntu.xyz>
+>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>> ---
+>>>
+>>>   arch/arm64/boot/dts/qcom/msm8953.dtsi            | 115
+>>>   +++++++++++++++++++++++
+>>>   arch/arm64/boot/dts/qcom/sdm450-motorola-ali.dts |   2 +-
+>>>   arch/arm64/boot/dts/qcom/sdm450.dtsi             |  14 +++
+>>>   arch/arm64/boot/dts/qcom/sdm632.dtsi             |   8 ++
+>>>   4 files changed, 138 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>>> b/arch/arm64/boot/dts/qcom/msm8953.dtsi index 91d083871ab0..1fe0c0c4fd15
+>>> 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+>>> @@ -1046,6 +1046,94 @@ mdss_dsi1_phy: phy@1a96400 {
+>>>
+>>>   			};
+>>>   		
+>>>   		};
+>>>
+>>> +		gpu: gpu@1c00000 {
+>>> +			compatible = "qcom,adreno-506.0", "qcom,adreno";
+>>> +			reg = <0x01c00000 0x40000>;
+>>> +			reg-names = "kgsl_3d0_reg_memory";
+>>> +			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+>>> +
+>>> +			clocks = <&gcc GCC_OXILI_GFX3D_CLK>,
+>>> +				 <&gcc GCC_OXILI_AHB_CLK>,
+>>> +				 <&gcc GCC_BIMC_GFX_CLK>,
+>>> +				 <&gcc GCC_BIMC_GPU_CLK>,
+>>> +				 <&gcc GCC_OXILI_TIMER_CLK>,
+>>> +				 <&gcc GCC_OXILI_AON_CLK>;
+>>> +			clock-names = "core",
+>>> +				      "iface",
+>>> +				      "mem_iface",
+>>> +				      "alt_mem_iface",
+>>> +				      "rbbmtimer",
+>>> +				      "alwayson";
+>>> +			power-domains = <&gcc OXILI_GX_GDSC>;
+>>> +
+>>> +			iommus = <&gpu_iommu 0>;
+>>> +			operating-points-v2 = <&gpu_opp_table>;
+>>> +
+>>> +			#cooling-cells = <2>;
+>>> +
+>>> +			status = "disabled";
+>>> +
+>>> +			zap-shader {
+>>> +				memory-region = <&zap_shader_region>;
+>>> +			};
+>>> +
+>>> +			gpu_opp_table: opp-table {
+>>> +				compatible = "operating-points-v2";
+>>> +
+>>> +				opp-19200000 {
+>>> +					opp-hz = /bits/ 64 <19200000>;
+>>> +					opp-supported-hw = <0xff>;
+>>> +					required-opps = <&rpmpd_opp_min_svs>;
+>>> +				};
 >>
->> And align these
+>> If you remove all OPPs but this one, can the GPU still spit out pixels?
 > 
-> They are?
-
-Not in my email client :P, anyway..
-
+> Yep, phosh is starting and is rendering at a few fps.
 > 
-> Also any comment about the issues listed in the cover letter?
+> fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c00000.gpu/min_freq
+> 19200000
+> fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c00000.gpu/max_freq 
+> 19200000
+> fairphone-fp3:~$ cat /sys/devices/platform/soc@0/1c00000.gpu/devfreq/1c00000.gpu/cur_freq 
+> 19200000
 
-I think v2 on all smmus on this platform is right
+Interesting..
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
