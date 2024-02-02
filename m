@@ -1,164 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-9540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEFA0847037
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 13:24:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9A9F847048
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 13:27:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A47E92878D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 12:24:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6ADE91F217D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 12:27:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB67D14533B;
-	Fri,  2 Feb 2024 12:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F005B144636;
+	Fri,  2 Feb 2024 12:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cPKHFn83"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AUg5xpMf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC903145352
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 12:24:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D0922067
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 12:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706876682; cv=none; b=Qq+q3B1LnYwMeeDYrIofoudQV5hw5HMMce7ju4NT7gpvv4E90uosDK3uiwsm0SdpH+bEgK4Q1zPfZK6G0tAVoWCebrgeaMLkFOci77i7GRAIzmpbwAQIzSzricar2o1SR1NNICAOa/oiwuyP4g3rKFv8fHXC9iVR8Gp9PMAun3s=
+	t=1706876819; cv=none; b=lOGw2kSCyxQ46/u6N9C11Rvo7/VBfg6Bll7DYuHlJakiClmlrYoPaYUmoup4mk8TWRlZsH7mo5h6bbGMYsDCcj7eaI15LGrcyvj4fZbSifH87zWqqwJe/o6d7MGI2FELHFDfdCkXte71nOpiEnV/LSYbOCLA5bCQcDzCcuvl88U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706876682; c=relaxed/simple;
-	bh=rltGmC1GHB8pdd1yW+POUFfym+S/IIvIXoyJRo+7+sw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mLqaCuMJUiTukGO1PXE++URTsPEG/jG0JdTLu1e1jyd/JSk0k53uH1+JZZvbbqF28rp6/bmS96NRWo4v6BvENXg8jqi2fDpsjrVXBCDlIUOX5EnTaFJNaExJpFOhYUqOskhtr+/0li9Xl9IFLhrqYEXve8UvuNKxT7m89jGti9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cPKHFn83; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1706876819; c=relaxed/simple;
+	bh=Bf4Up7WRKNNJkk2B2Ny8OMSo7CnhLQW6PMrg0VWGUfc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hjDXHjNSdqSw6q2xrpKvV3koMIWZkszXoyJ09gM2iY1USaGgb9b9XOlltgxeOsa0tIoYLN9VwyIxCZBjgfTBsgz0rrQBBr0kKVmhFI+XG6nBZ05UBIzAEEJXNpd9BH8VHdPsKCfDDwfLzQfF2fHOTR2PyvN/KIhCiUlNwAk8FfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AUg5xpMf; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55fc7f63639so2210470a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 04:24:34 -0800 (PST)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d73066880eso17364395ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 04:26:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706876671; x=1707481471; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ErGgrSjGcI1gfiIfMa2tifZML8/zJN+4ELwCxdeBffA=;
-        b=cPKHFn83x6JoLbdgILZ/b/1+Ge1gumiHtVdzIzdSgWcSTVHR+eR4SOELsH07FLAKrf
-         Q1EozdmQKun6Q5f18ja/rfws13f90otNgXHKfhZBAyB6kWxObr9p1QlI2QxCHmkSFvBx
-         z+IPeu5MyYcFaSNKDRJK6a7lw3o1GltxFPYrn6uilqtzkOdItNNEQWFrZEjo/goskupZ
-         aw53H0cnyDiHXsO3/njK2rhMkOqXSvB3535jUYR7SpuhENBctnH6iaJnTJPt5X1bXhnn
-         aUjtUHux6cA+u1tCTci7AYsv0HWCQkbqAdW5GescuQByLiHK7/jzsedNxxa362+F6qNE
-         sJ1w==
+        d=linaro.org; s=google; t=1706876817; x=1707481617; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9Y+fTwYyuNILHWoWbcIweD1jablI0n426/hbloY+0EY=;
+        b=AUg5xpMfsjt24dz5JsokpejZmMcmrlGE4BRyCc4+gIYv5MYU4ln2Isnmm5bjaskZEp
+         GSsM4tl8cYvI3S1WbMjKOxapa339H+YmZAkEwV/8KbBVlfLZb9pPaCgB15RaIfZt0RtX
+         hGjJytt2B1OpESE2WWzqcKF/L6SPnovG4BjlnI0SbNhkeB7IourVOBDdbxhtchFA2Jsd
+         LcR7ll2SoBg+ii3tm27A7NTC1KhvIoOF7DtzgneA4bcjfyfGm66WrNgvTVZCuQj2ouJs
+         ZaCbKrk8epLTF61HSujlLxvs8ZBycz50lxfc9HAf1TpnYu/MPBUlvWqd89QTLqwaCSgi
+         RHOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706876671; x=1707481471;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1706876817; x=1707481617;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ErGgrSjGcI1gfiIfMa2tifZML8/zJN+4ELwCxdeBffA=;
-        b=MZhDlcFWMeY464Fm7UlRidsthdpGqXtZcbCP17aBr5OEVIj5zo2vkv+4aat/bmDISR
-         M25ZlnYXI0ayOv3la/E4SLL2GEtnyaA4gUr8OCEZmT/iTa47BMMAPzgAq3k9qtPsqU41
-         5rZA/uQ/5fZUwpy1WlSW9u15/Y2YzZhVNi/UUiwpqsrR7rHuJucxrZ6QHpj++UirZzVD
-         TmtMYjuMAyNO4dk3kDyNZaYxzrYAPel2EjzUA7y+8etprtUTC/OQQOqatXL9drcpU7hc
-         PojKWfD7G7GZmtXG+KqPUhgV1U9EWf1G1ri9DWxWZp3feEKZmI+hEqtajeTXn/nggV/+
-         bTow==
-X-Gm-Message-State: AOJu0YxuEPeY7liGFC0uxcHkmo7qv0BwNNFIWU2SsWw9pjPJ42lYJw/O
-	CMhHGgG1r2RW74yjBcuN5hApT9+mEMfjOj3X8giaozN+GjpYE0G2AKI5U+vh//4kQjk9l3HmLO5
-	m
-X-Google-Smtp-Source: AGHT+IGkUAivELBKUH7eZ/XPBhC8V0yYnbHnxA7mCyMe/gt8hkKH+p4N2XGi6/SzjrhLKvKC57Rd6Q==
-X-Received: by 2002:a05:6402:26d2:b0:55f:abe7:8f33 with SMTP id x18-20020a05640226d200b0055fabe78f33mr4543587edd.15.1706876671523;
-        Fri, 02 Feb 2024 04:24:31 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWdx9assdmm8xe6VJIsT8YpCdl7tYAOCJB2bElJ6YSelvW8KflQI6WeEdM8GIIGXhgZ5cifxW42wdCItGSWQr4y/j0zBRw18GYWEM1lyZGvzUzBPCIKsL17QTECRXsTIMfRmT2mP5+6CHd1dUKuhF5tcrwi2l59C4MUcNAQhsQQowHGHAksweeR/ykaHJi3HBuUpgBQd5V5zt3MIPK+f9YPAqwm3lIgplv9+RN+eiFIfgr8+TemaqBhmXnHshlyoqfdT2h4TZJWFIRF
-Received: from [192.168.159.104] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id x24-20020aa7d398000000b0055fb4b16f29sm765018edq.21.2024.02.02.04.24.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 04:24:31 -0800 (PST)
-Message-ID: <5713ba6c-9fbe-4b25-bdf9-e7a572baad6a@linaro.org>
-Date: Fri, 2 Feb 2024 13:24:28 +0100
+        bh=9Y+fTwYyuNILHWoWbcIweD1jablI0n426/hbloY+0EY=;
+        b=JdF6pVn0NXa9RISbzZQ4yJXVX8uo9KOkf2WQdxq9C0cfajffUi+l+ivW0bBAgGjQtR
+         sWDpMboZ+1jKhpoEYBtbaSjiKZkddk9KmaVvuYhTb4bgxcGdRy7DxCrf0AniEd4A/Sir
+         RaHYf8GNA34A+ADlbgAq3GS5+QRnREQJO6KMvw9P3C5to9FTDXYVxKx35e5Ta9lIJsMF
+         qxEBg+7TV5QgwVCWX5WM1Zls9V+dQ7PVUxi/N0B42bHTPSnHQ8ef19butU8VIVg9kiR4
+         STJ9aTZf1pNg/Z5edMPjw7CARGY3KYD3stAb+Y9q44G1eFKC3b6ru8PJUZozroKuX96+
+         8Flg==
+X-Gm-Message-State: AOJu0YyLSzhDKCtJjmSuNiAGIoCRW3jixtcGnOrRHHJIsWbh6omvRMCp
+	3B2/dtlqHhZOjvyRYht2Iselm70WKv6WDw8venWHLyf93uYHoEJAlPQ9CkJyfA==
+X-Google-Smtp-Source: AGHT+IGI1K8CSU7kV9E2ObyJafkFW954cd+WUxDFClY8Hk2SO4JShs6jB7GNIUQmPp4iwYKDO+tqbQ==
+X-Received: by 2002:a17:902:eb4b:b0:1d9:6e53:b8ca with SMTP id i11-20020a170902eb4b00b001d96e53b8camr1792547pli.62.1706876816709;
+        Fri, 02 Feb 2024 04:26:56 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUABWAbmKPc1y0oGs2Om27vm/Z02JNjlc9/2Sy1H9Ll7b+nL4h06xNLL1B0iuzPgp8SGmfkksjo2pyI78ujs0mnIF+WHrc8fCyr140aR5E5MJDhRNg93IU1AzIHk8pzudUW6HPRRqU8vdWccO/Z3JUdyH9vAffuYLYw6IizeJJw6PBKZBwVXVVLtDc1NTIyhK3QwSTvWkLsTNGeN7jkAfPUmdVUJdDv4kvI/64BzJPAzkRCrlmOR+aTjhDSSlvqrbfWJg7rdI+4gLHxybGKXFf61ScPET5OZxERmQE4JMttmn/HPeRQt9/RPeg+7pl2geeInpmRJJkrl3+UlmhQuKj9XHexbCRrLERdZvjTdWQdnyx9JFO4qtfgn4eoWEhEw5TpvU3tJ13LRmsyKRxGldGJAQMtrxANvtDVjqHNH8VmggN5fl8ank/XKQPxupIEkXyVdevC9hpF7iDIvSJBcJu665LurKdmOOU6psv3n34DtkCDc0F1P+iM1pUirdTnV77yQgYthaxIKV3KZ3Umc304U21nvVeSDowbJbz3I28/zZKrnl9ithNTIZEqE9FvvuEK7JDnBKYrYw4wHc4f4bqePM23GpFncQ/hfyBq0lyXu3acjwDwEsOu1Xxkae8nIMq95PDWjX680A/PdaN2YUvMhrx4kDBNO+2Po1i1FGjgG5ukp461HtiQIRfZc8SfWDWqJ463wvXagADveuTgOiPpI1tas1BzF7pOQ4ZtflyVsFvuyy5Ub31lvaqA5U3Z34G1f7pcjmMoyj6aKpplMjq6xCPfHdFbusxl1gi+J8Maqdx/OrOCxRk6qUBUZfhmUEwSpoeArudjzrO3TpZsGvQw9DfgIri2c/krT/khABIjBXWP5nuDcoKvhRkka7qekr4m6/n3Su2lFOA=
+Received: from thinkpad ([120.56.198.122])
+        by smtp.gmail.com with ESMTPSA id f4-20020a170902e98400b001d7405022ecsm1462559plb.159.2024.02.02.04.26.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Feb 2024 04:26:56 -0800 (PST)
+Date: Fri, 2 Feb 2024 17:56:48 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Serge Semin <fancer.lancer@gmail.com>
+Cc: Mrinmay Sarkar <quic_msarkar@quicinc.com>, vkoul@kernel.org,
+	jingoohan1@gmail.com, conor+dt@kernel.org, konrad.dybcio@linaro.org,
+	robh+dt@kernel.org, quic_shazhuss@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_parass@quicinc.com, quic_schintav@quicinc.com,
+	quic_shijjose@quicinc.com,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev
+Subject: Re: [PATCH v1 4/6] dmaengine: dw-edma: Move HDMA_V0_MAX_NR_CH
+ definition to edma.h
+Message-ID: <20240202122648.GD8020@thinkpad>
+References: <1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com>
+ <1705669223-5655-5-git-send-email-quic_msarkar@quicinc.com>
+ <qfdsnz7louqdrs6mhz72o6mzjo66kw63vtlhgpz6hgqfyyzyhq@tge3r7mvwtw3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1
-Content-Language: en-US
-To: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org>
- <0cf69024-a3e6-4be2-89ce-017ae521721d@linaro.org>
- <6f89dd4f-aae5-4221-9a0a-bebbef862229@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <6f89dd4f-aae5-4221-9a0a-bebbef862229@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <qfdsnz7louqdrs6mhz72o6mzjo66kw63vtlhgpz6hgqfyyzyhq@tge3r7mvwtw3>
 
-On 2.02.2024 09:03, Neil Armstrong wrote:
-> On 01/02/2024 20:59, Konrad Dybcio wrote:
->> On 25.01.2024 17:55, Neil Armstrong wrote:
->>> Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
->>> received from endpoint devices to the CPU using GIC-ITS MSI controller.
->>> Add support for it.
->>>
->>> The GIC-ITS MSI implementation provides an advantage over internal MSI
->>> implementation using Locality-specific Peripheral Interrupts (LPI) that
->>> would allow MSIs to be targeted for each CPU core.
->>>
->>> Like SM8450 & SM8550, the IDs are swapped, but works fine on PCIe0 and PCIe1.
->>>
->>> WiFi PCIe Device on SM8650-QRD using GIC-ITS:
->>> 159:          0          0          0          0          0          0          0          0   ITS-MSI   0 Edge      PCIe PME, aerdrv
->>> 167:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
->>> 168:          0          0          4          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
->>> 169:          0          0          0         34          0          0          0          0   ITS-MSI 524290 Edge      mhi
->>> 170:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
->>> 171:          0          0          0          0          0          2          0          0   ITS-MSI 524292 Edge      ce1
->>> 172:          0          0          0          0          0          0        806          0   ITS-MSI 524293 Edge      ce2
->>> 173:          0          0          0          0          0          0          0         76   ITS-MSI 524294 Edge      ce3
->>> 174:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
->>> 175:          0         13          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
->>> 176:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
->>
->> Is it by chance that this one never fired?
+On Fri, Feb 02, 2024 at 01:47:37PM +0300, Serge Semin wrote:
+> Hi Mrinmay
 > 
-> Yeah I only associated to an SSID and did a simple iperf, not enough to trigger all MSIs
+> On Fri, Jan 19, 2024 at 06:30:20PM +0530, Mrinmay Sarkar wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > To maintain uniformity with eDMA, let's move the HDMA max channel
+> > definition to edma.h. While at it, let's also rename it to HDMA_MAX_NR_CH.
+> 
+> First of all include/linux/dma/edma.h already contains the common DW
+> EDMA and _HDMA_ settings/entities including the number of channels.
+> Both of these IP-cores have the same constraints on the max amount of
+> channels. Moreover the EDMA_MAX_WR_CH/EDMA_MAX_RD_CH macros are
+> already utilized in the common dw_edma_probe() method. So to speak you
+> can freely use these macros for HDMA too. Thus this change is
+> redundant. So is the patches 1/6 and 2/6.
+> 
+> Note currently all the common DW EDMA driver code uses the EDMA_/edma_
+> prefixes. HDMA_/hdma_ prefixes are utilized in the Native
+> HDMA-specific module only. So if you wished to provide some IP-core
+> specific settings utilized in the common part of the driver, then the
+> best approach would be to provide a change for the entire driver
+> interface (for instance first convert it to having a neutral prefixes,
+> like xdma_/etc, and then use the IP-core specific ones). So please
+> just use the EDMA_MAX_WR_CH and EDMA_MAX_RD_CH macros and drop the
+> patches 1, 2, and 4.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hmm. With my limited access to the HDMA IP insights, I was not aware that the
+constraints are similar with EDMA. If so, then it makes sense to reuse the same
+macros. But I would also add a comment on top of the macros to avoid confusion.
 
-Konrad
+- Mani
+
+> -Serge(y)
+> 
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> > ---
+> >  drivers/dma/dw-edma/dw-hdma-v0-core.c | 4 ++--
+> >  drivers/dma/dw-edma/dw-hdma-v0-regs.h | 3 +--
+> >  include/linux/dma/edma.h              | 1 +
+> >  3 files changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > index 1f4cb7d..819ef1f 100644
+> > --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > @@ -54,7 +54,7 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
+> >  {
+> >  	int id;
+> >  
+> > -	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
+> > +	for (id = 0; id < HDMA_MAX_NR_CH; id++) {
+> >  		SET_BOTH_CH_32(dw, id, int_setup,
+> >  			       HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
+> >  		SET_BOTH_CH_32(dw, id, int_clear,
+> > @@ -70,7 +70,7 @@ static u16 dw_hdma_v0_core_ch_count(struct dw_edma *dw, enum dw_edma_dir dir)
+> >  	 * available, we set it to maximum channels and let the platform
+> >  	 * set the right number of channels.
+> >  	 */
+> > -	return HDMA_V0_MAX_NR_CH;
+> > +	return HDMA_MAX_NR_CH;
+> >  }
+> >  
+> >  static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+> > diff --git a/drivers/dma/dw-edma/dw-hdma-v0-regs.h b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+> > index a974abd..cd7eab2 100644
+> > --- a/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+> > +++ b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+> > @@ -11,7 +11,6 @@
+> >  
+> >  #include <linux/dmaengine.h>
+> >  
+> > -#define HDMA_V0_MAX_NR_CH			8
+> >  #define HDMA_V0_LOCAL_ABORT_INT_EN		BIT(6)
+> >  #define HDMA_V0_REMOTE_ABORT_INT_EN		BIT(5)
+> >  #define HDMA_V0_LOCAL_STOP_INT_EN		BIT(4)
+> > @@ -92,7 +91,7 @@ struct dw_hdma_v0_ch {
+> >  } __packed;
+> >  
+> >  struct dw_hdma_v0_regs {
+> > -	struct dw_hdma_v0_ch ch[HDMA_V0_MAX_NR_CH];	/* 0x0000..0x0fa8 */
+> > +	struct dw_hdma_v0_ch ch[HDMA_MAX_NR_CH];	/* 0x0000..0x0fa8 */
+> >  } __packed;
+> >  
+> >  struct dw_hdma_v0_lli {
+> > diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+> > index 550f6a4..2cdf249a 100644
+> > --- a/include/linux/dma/edma.h
+> > +++ b/include/linux/dma/edma.h
+> > @@ -14,6 +14,7 @@
+> >  
+> >  #define EDMA_MAX_WR_CH                                  8
+> >  #define EDMA_MAX_RD_CH                                  8
+> > +#define HDMA_MAX_NR_CH					8
+> >  
+> >  struct dw_edma;
+> >  struct dw_edma_chip;
+> > -- 
+> > 2.7.4
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
