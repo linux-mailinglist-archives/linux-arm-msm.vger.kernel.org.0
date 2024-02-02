@@ -1,163 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-9569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C2F9847526
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:42:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87AC0847520
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:42:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B70FBB2BF5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:42:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EAF4286764
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:42:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48FB1487E2;
-	Fri,  2 Feb 2024 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 546D5148FEB;
+	Fri,  2 Feb 2024 16:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cGG0JMzL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AO06o+M0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1621468E6;
-	Fri,  2 Feb 2024 16:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDBE148306;
+	Fri,  2 Feb 2024 16:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706892124; cv=none; b=TQH2dW9MNXPidxnAEwku70qKFedzdoXNbYfRj9cdXDmhEzUpWt9NDMu6WdWTxsZ5WUSvrkLcWiI3C6kuEZGs3PtTriLQ3nGYeCKYtSGwin9sZtNFKxxtapTWIMBPv8cyPDl726QwUhHG6rX7YX0P0W8v3Jnz1QSLHUywF+OzCrI=
+	t=1706892110; cv=none; b=k+uXD0+cUKBqi3EIahBRgkpYfvZHnH7/6F/ZnNI8m7qBlaa/5hQJeO29n/9OUMTSAZPUluPEMXkmCba70aMuDcnUHrND9US01DLSzbqbYW2I4mdrpcNwK2/ZoO3n6lHfJLznKEIfiO11i6hzEzqTanNBAfGaKdZis0us4YgmAKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706892124; c=relaxed/simple;
-	bh=g4/Lme51PqbRNplL2dW1VIxg//AbxpVLnn6uJyh7p8s=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NTdUQ31UmerWdLJ8vb3wMhw86oKhdGfEaXmFix8vO6pxavAZsyBjEAqt+3/qbVWu21rdPNYnX4gTjPPMa/v4WO3tOjWiiESsIATb1k6fn+SFiSvJq/IeiaudTmwvBwdQ+kHJ5nwe30j3OhhlC0T3pxh38itA1p/ylpy/0xy/N68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cGG0JMzL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412GOVwK029960;
-	Fri, 2 Feb 2024 16:41:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=qcppdkim1; bh=1ieg7Nu1h5WLta/i10MG
-	vCQme0ZcAD8tbxUmkqkp2Jg=; b=cGG0JMzLUfKTzP1NtSJVdkbbbQccaqDAnTfm
-	txC+PS50Vo7pEOEAYpI4aC5TSknGT2oFrfWJMweunHBLlobZMiQonedEHWItfHaX
-	uNu2Hnwa6mLxTJt3i614QVHVC59/CNlebsHiBmp1eUPu9S7UoRc92+C/0u+yDXJD
-	zEWSEusVRPEM0+2gwLdi8atb3r7fiI4jmYl2VwYBUf6BeY5XBQuO4gONnfxKfeaO
-	4paxdXmfPX41AbJcVdNbAJZ/G8dHs5i3RoPYUF5ayUs3eggiQZ15lzqKKp0yPQJF
-	Tv8SBvULBrzAbZVvia2B4OKPHMrIA8cCy0/b5KMAS4gKWK/zEQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwc1uek-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 16:41:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412GflsN025317
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 16:41:47 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 2 Feb 2024 08:41:46 -0800
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <corbet@lwn.net>, <carlos.bilbao@amd.com>, <avadhut.naik@amd.com>,
-        <alexs@kernel.org>, <iyanteng@loongson.cn>,
-        <2023002089@link.tyut.edu.cn>, <quic_bjorande@quicinc.com>,
-        <quic_tsoni@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <workflows@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>
-Subject: [PATCH] Documentation: embargoed-hardware-issues.rst: Fix Trilok's email
-Date: Fri, 2 Feb 2024 09:41:19 -0700
-Message-ID: <20240202164119.4090703-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1706892110; c=relaxed/simple;
+	bh=byD/uDmfIyGSSgmTUNx/D1BNsUYtDcKiObLVnogvsyQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=janjqrkaRYxmvdMNBIQLSf70vRhhYKC/6ZYN2zAcqyj/heVnWn4N2rrTxMGM8SKjKEAMTHCFAFxFL7GoYpdfU388P9+0F9wrA3c5b61XAhDyfwfxwuveXp/0/hXeCwXgTdcYKnuHshFQbcRyhGsQsKY26KTINvWkjAa7il6oDRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AO06o+M0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD42BC433C7;
+	Fri,  2 Feb 2024 16:41:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706892109;
+	bh=byD/uDmfIyGSSgmTUNx/D1BNsUYtDcKiObLVnogvsyQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AO06o+M05qQ8e93mZISuKzCx9WQQR05CLtuLzIizUFWyh2XDcCWktt/jIclTmGXRJ
+	 LX0dyc0S9HRcTQd7xJ1xq+KHDPV1tFV+HqFlyAj4Qcen+vIEsewo+vCdg0BYlzXh6p
+	 O1UWR/WGjIYgxG1539gLUjRi85hab/OiKyHOpfQuPPBRW7VphXNbYqqYEm7hjpXten
+	 xqEusjonXZ6RtqGBkSevEz59m++Geqe11ZuD5GqZzfmzCXpOETDnlEmOHrVywpSYeN
+	 6up0KtAxZiIgRT0uaB+WcTZ9xYPsQV0UzfHhJdWl/ZnF0Is1Yy13+360nMmTlc5fpf
+	 cUq0I/fPh1EUw==
+Date: Fri, 2 Feb 2024 10:41:46 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: Re: [RFC 2/9] arm64: dts: qcom: qrb5165-rb5: model the PMU of
+ the QCA6391
+Message-ID: <iifyazcucnghjpnmzq4qtyj6o25upntmmst6abyugpom4jrs3p@mly5h7s7owl3>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
+ <20240201155532.49707-3-brgl@bgdev.pl>
+ <5lirm5mnf7yqbripue5nyqu6ej54sx4rtmgmyqjrqanabsriyp@2pjiv5xbmxpk>
+ <CAMRc=Mcq8a7T06DaX9nirfHOXPs+Bh51rKgO3FksxKH+Hph2FA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UHEM4n3Oug9_QCHsvcVEo9sSl-NXoHwV
-X-Proofpoint-ORIG-GUID: UHEM4n3Oug9_QCHsvcVEo9sSl-NXoHwV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=781 clxscore=1011
- phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020121
+In-Reply-To: <CAMRc=Mcq8a7T06DaX9nirfHOXPs+Bh51rKgO3FksxKH+Hph2FA@mail.gmail.com>
 
-The servers for the @codeaurora domain have long been retired and any
-messages addressed to @codeaurora will bounce.
+On Fri, Feb 02, 2024 at 02:23:49PM +0100, Bartosz Golaszewski wrote:
+> On Fri, Feb 2, 2024 at 5:34 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> 
+> [snip]
+> 
+> > > +
+> > > +             wlan-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+> > > +             bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> > > +
+> > > +             regulators {
+> > > +                     vreg_pmu_rfa_cmn: ldo0 {
+> > > +                             regulator-name = "vreg_pmu_rfa_cmn";
+> > > +                             regulator-min-microvolt = <760000>;
+> > > +                             regulator-max-microvolt = <840000>;
+> >
+> > I'm still not convinced that the PMU has a set of LDOs, and looking at
+> > your implementation you neither register these with the regulator
+> > framework, nor provide any means of controlling the state or voltage of
+> > these "regulators".
+> >
+> 
+> Why are you so fixated on the driver implementation matching the
+> device-tree 1:1? I asked that question before - what does it matter if
+> we use the regulator subsystem or not?
 
-Trilok has an entry in .mailmap, but the raw documentation files still
-list an old @codeaurora address.  Update the address in the
-documentation files for anyone reading them.
+I'm sorry, I must have missed this question. I'm not questioning why the
+DT needs to match the Linux implementation, I was really questioning if
+the hardware you describe here existed.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- Documentation/process/embargoed-hardware-issues.rst             | 2 +-
- .../translations/sp_SP/process/embargoed-hardware-issues.rst    | 2 +-
- .../translations/zh_CN/process/embargoed-hardware-issues.rst    | 2 +-
- .../translations/zh_TW/process/embargoed-hardware-issues.rst    | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+> This is just what HW there is.
+> What we do with that knowledge in C is irrelevant. Yes, I don't use
+> the regulator subsystem because it's unnecessary and would actually
+> get in the way of the power sequencing.
 
-diff --git a/Documentation/process/embargoed-hardware-issues.rst b/Documentation/process/embargoed-hardware-issues.rst
-index 31000f075707..bb2100228cc7 100644
---- a/Documentation/process/embargoed-hardware-issues.rst
-+++ b/Documentation/process/embargoed-hardware-issues.rst
-@@ -255,7 +255,7 @@ an involved disclosed party. The current ambassadors list:
-   IBM Power	Anton Blanchard <anton@linux.ibm.com>
-   IBM Z		Christian Borntraeger <borntraeger@de.ibm.com>
-   Intel		Tony Luck <tony.luck@intel.com>
--  Qualcomm	Trilok Soni <tsoni@codeaurora.org>
-+  Qualcomm	Trilok Soni <quic_tsoni@quicinc.com>
-   RISC-V	Palmer Dabbelt <palmer@dabbelt.com>
-   Samsung	Javier González <javier.gonz@samsung.com>
- 
-diff --git a/Documentation/translations/sp_SP/process/embargoed-hardware-issues.rst b/Documentation/translations/sp_SP/process/embargoed-hardware-issues.rst
-index c261b428b3f0..7d4d694967c7 100644
---- a/Documentation/translations/sp_SP/process/embargoed-hardware-issues.rst
-+++ b/Documentation/translations/sp_SP/process/embargoed-hardware-issues.rst
-@@ -273,7 +273,7 @@ revelada involucrada. La lista de embajadores actuales:
-   IBM Power	Anton Blanchard <anton@linux.ibm.com>
-   IBM Z		Christian Borntraeger <borntraeger@de.ibm.com>
-   Intel		Tony Luck <tony.luck@intel.com>
--  Qualcomm	Trilok Soni <tsoni@codeaurora.org>
-+  Qualcomm	Trilok Soni <quic_tsoni@quicinc.com>
-   Samsung	Javier González <javier.gonz@samsung.com>
- 
-   Microsoft	James Morris <jamorris@linux.microsoft.com>
-diff --git a/Documentation/translations/zh_CN/process/embargoed-hardware-issues.rst b/Documentation/translations/zh_CN/process/embargoed-hardware-issues.rst
-index cf5f1fca3d92..c90ecb557811 100644
---- a/Documentation/translations/zh_CN/process/embargoed-hardware-issues.rst
-+++ b/Documentation/translations/zh_CN/process/embargoed-hardware-issues.rst
-@@ -177,7 +177,7 @@ CVE分配
-   AMD		Tom Lendacky <thomas.lendacky@amd.com>
-   IBM
-   Intel		Tony Luck <tony.luck@intel.com>
--  Qualcomm	Trilok Soni <tsoni@codeaurora.org>
-+  Qualcomm	Trilok Soni <quic_tsoni@quicinc.com>
- 
-   Microsoft	Sasha Levin <sashal@kernel.org>
-   VMware
-diff --git a/Documentation/translations/zh_TW/process/embargoed-hardware-issues.rst b/Documentation/translations/zh_TW/process/embargoed-hardware-issues.rst
-index 3cce7db2ab7e..93d21fd88910 100644
---- a/Documentation/translations/zh_TW/process/embargoed-hardware-issues.rst
-+++ b/Documentation/translations/zh_TW/process/embargoed-hardware-issues.rst
-@@ -180,7 +180,7 @@ CVE分配
-   AMD		Tom Lendacky <thomas.lendacky@amd.com>
-   IBM
-   Intel		Tony Luck <tony.luck@intel.com>
--  Qualcomm	Trilok Soni <tsoni@codeaurora.org>
-+  Qualcomm	Trilok Soni <quic_tsoni@quicinc.com>
- 
-   Microsoft	Sasha Levin <sashal@kernel.org>
-   VMware
--- 
-2.34.1
+Then describe that in your commit messages.
 
+> But it doesn't change the fact
+> that the regulators *are* there so let's show them.
+> 
+> What isn't there is a "power sequencer device". This was the main
+> concern about Dmitry's implementation before.
+
+I don't agree. The concerns that I saw being raised with Dmitry's
+proposed design was that he used connected the WiFi controller to the
+QCA6391 using power-domains, etc.
+
+> We must not have
+> "bt-pwrseq = <&...>;" -like properties in device-tree because there is
+> no device that this would represent. But there *are* LDO outputs of
+> the PMU which can be modelled and then used in C to retrieve the power
+> sequencer and this is what I'm proposing.
+> 
+
+Performing device-specific power sequences is extremely common, but we
+so far don't have a separate abstraction of this because it's generally
+not an matter external to any given device.
+
+If we're going to introduce a power sequence framework, it needs to be
+made very clear that it is there to solve the problem that you have
+devices on separate busses that need to share that sequence.
+
+This also implies that for most examples out there where we have a need
+for doing "PCI power sequencing", I don't think we would use the
+power-sequence framework.
+
+Regards,
+Bjorn
+
+> Bartosz
+> 
+> > [..]
+> > >
+> > >  &uart6 {
+> > > @@ -1311,17 +1418,16 @@ &uart6 {
+> > >       bluetooth {
+> > >               compatible = "qcom,qca6390-bt";
+> > >
+> > > -             pinctrl-names = "default";
+> > > -             pinctrl-0 = <&bt_en_state>;
+> > > -
+> > > -             enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> > > -
+> > > -             vddio-supply = <&vreg_s4a_1p8>;
+> > > -             vddpmu-supply = <&vreg_s2f_0p95>;
+> > > -             vddaon-supply = <&vreg_s6a_0p95>;
+> > > -             vddrfa0p9-supply = <&vreg_s2f_0p95>;
+> > > -             vddrfa1p3-supply = <&vreg_s8c_1p3>;
+> > > -             vddrfa1p9-supply = <&vreg_s5a_1p9>;
+> > > +             vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> > > +             vddaon-supply = <&vreg_pmu_aon_0p59>;
+> > > +             vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> > > +             vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> > > +             vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+> > > +             vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
+> > > +             vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
+> > > +             vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
+> > > +             vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
+> > > +             vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
+> >
+> > As I asked before, why does bluetooth suddenly care about PCIe supplies?
+> >
+> 
+> Yes, I forgot to remove it, I'll do it next time.
+> 
+> Bartosz
+> 
+> [snip]
 
