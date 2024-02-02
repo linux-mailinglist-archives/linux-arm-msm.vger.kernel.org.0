@@ -1,178 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-9515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66B36846CEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 10:49:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D60C4846D20
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 10:59:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0E041F26841
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:49:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2C4F1C2638C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:59:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61E9177F14;
-	Fri,  2 Feb 2024 09:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D22077F38;
+	Fri,  2 Feb 2024 09:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zyYhOuUI"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="y4448Zhj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8ED2482FB
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 09:48:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F4F77F2F;
+	Fri,  2 Feb 2024 09:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706867310; cv=none; b=aYvBixUYE1sJ73e+l8g3AAc+I5x7jwSGzj5If9HFKT0cBjUbn4XBodTvCod0dRu3hQLtqY0oZXfwgs8i4d4iawkBvrgyTP/URBQlEq94MeDpKGzEYXf8rvLWg3J2gl6FShPOFTV04ltdlABslTc4kTKSijuje+RDmRwFPx/T7w4=
+	t=1706867908; cv=none; b=DmsKYblcby2220tLGxLT//xbM+8N7mYuALdeUHJmNnhCOeOajPF+y9GtpVKMugWZG6SuQfaPul3/it8F+G3Jb3/hJPlUEoOEW0g1MBtDfex9fpH3VdkIhxGMphWfq74t2BZxYUJ6a5tu36vMYx2SUqRMNMOb3sYIsKeKCdG0XhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706867310; c=relaxed/simple;
-	bh=kzPaULzFvPF3PMCdaeoG/nw2+KHJM6ciXwfij0rgIrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D64K9NI5o+M6nl+NbXY+D+GTWzKtZw0QgETa0CxIdY7uBWNucZkFUkFbfHRkuPUpGN3VIYaJSKnOE0K96rHL2VnmosKXdOh7AKR7iDl8d2kMdyEz6RcfncomOz7/ekdQ9l5+JRSAXq+i1lPwVVur15+nOQivt0rE00XDd0kHJyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zyYhOuUI; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3bb9d54575cso1232247b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 01:48:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706867307; x=1707472107; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oLfN6KoWDp7SJJDtG51IU5F3us3n4E7e6QFVHVgsnuY=;
-        b=zyYhOuUIfg4SYrYPE96gcl5STc37IHaThYkZiqNFg+Dqd5JzhSQPKepEFhcJZBDIoN
-         D+sFuHqJQHfNYiquayOiF1Sg9M6A8VrmOppSoq8vXUmtfnawR7UMJ5q0FSva+dF0sxAk
-         Yeb3pKR30MU8EXqQO8T2jD9aWimtzldXF59sQUmx+lYZPjvvxiJpQFtplBO+kz7udth1
-         0PGuwOQde2L07p/9StfQQacmGqwMU0zO5R2odHGwbi8ZjexwaiLmxb3zSdUEbnv2cHqV
-         H5C5CGHIG+5THdmkFBijOgHg1/7+m5u4QYhXybMz/65ee0jQk+oZ0KGNYys6Qot0YXpF
-         iwcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706867307; x=1707472107;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLfN6KoWDp7SJJDtG51IU5F3us3n4E7e6QFVHVgsnuY=;
-        b=YyKxsqLs3a5Z2kIKXapOScgGTySQFs5o1xwv3nCYyLtZCBkc56eaeIPTLCR4aKNTnG
-         bj/ep94wEsbv4GH/2qViMBmgShnOlK8wRduImYM0l86aRsxyPDRUpHvwI9cKfNYNVEC4
-         pROPdPsp4MIV5zooDJAk/BitM9Z9v0/rl8oV+v8HS1tqpbj93Xusdgw78rSXZQSrHqNq
-         3uP/QwuQUmVFVKXbsWbYCIpX4SEOpZSSpnjfsuJl5Dvs5JfaHlglnG/PnRIgeTx3sC5V
-         Za7MRJTBM8eLqVhzyvECZGe+Em00lTT8Tg8vYyPm4zOMNQQq+q9pZu1ZaT3fihMPpjRH
-         ld4A==
-X-Gm-Message-State: AOJu0Yw+T6szdUqPlDYiAt7GAUvX8+dkNsevntg4/oR86UefYzYJ0O+t
-	OEXQAsZShcAqs8QGGN+iMS0aF+4PlSsZQHxlpTRp6jJPSXF0gaOOR98QyRYq+Q==
-X-Google-Smtp-Source: AGHT+IFfLwK+9BXpOchg1FqvYhCKmgFQNu67uOS5ROmN2r6iI2847Kbamt6KVkKnR0trFIZgrIZE8A==
-X-Received: by 2002:a05:6808:23d1:b0:3bf:c37e:c781 with SMTP id bq17-20020a05680823d100b003bfc37ec781mr503171oib.4.1706867305593;
-        Fri, 02 Feb 2024 01:48:25 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVvCIbeHADoIhg8Tj5FXRQdduW2c/1/rso5VvJ20Cf6fzW2VgAr7yFE8PSYVZ+uxHjOk5ziT9qoqsKqtkV32Hql+Z2pffTMqLAP01Z4Q6T3qVJ05O5S/eqhQQZQkPT5R04GuRduEJjhM4HYFMb5vacrf6B4TWoc4+gAJOU4esRMzTNPpTaFvNZ7wl8Up5NhtSH2FvvJwmM8Z5SEiR5ZtDpyVFI9QnJgM2/CrVtK6JXjQw6VX1Jc8FQ5XjocWVBcnPMQFc79PSCxAsxFGKKfz5rwE231hB+Y0SzYoGXgMQPPFqkAa5CX/0Y=
-Received: from thinkpad ([120.56.198.122])
-        by smtp.gmail.com with ESMTPSA id d9-20020a056a0010c900b006ddb77d443asm1174306pfu.209.2024.02.02.01.48.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 01:48:25 -0800 (PST)
-Date: Fri, 2 Feb 2024 15:18:20 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] PCI: qcom: Add X1E80100 PCIe support
-Message-ID: <20240202094820.GA8020@thinkpad>
-References: <20240129-x1e80100-pci-v2-0-a466d10685b6@linaro.org>
- <20240129-x1e80100-pci-v2-2-a466d10685b6@linaro.org>
- <30360d96-4513-40c4-9646-e3ae09121fa7@linaro.org>
- <Zbyqn5wnH7yCe38P@linaro.org>
- <20240202084806.GF2961@thinkpad>
- <ZbyuANz7Jza7lzZS@linaro.org>
- <Zby2hp2vH4TRv+xV@linaro.org>
+	s=arc-20240116; t=1706867908; c=relaxed/simple;
+	bh=3yoKAEkp7fZQnp9uYTICy3qIfHawRJiuCLjeE8sbj0c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YZcx4EOPmUGfBoh+bTkZEQTI1gcmr0oJQgwxl2S9R3aNBt2snuThaZjkQ+CT84OLrW5PKYwRZ/I79Uwovh63Xw/Cp3NYCAKQ1bY5HENA5MwRRWqAjVV/NtHaacWLjwnCCUbtoElhXlbqhVPz3tq6fKeiAOISkxhBCh1CMeT9z74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=y4448Zhj; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1706867898;
+	bh=3yoKAEkp7fZQnp9uYTICy3qIfHawRJiuCLjeE8sbj0c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=y4448ZhjZZloNj+kMKSQSwoQtCJJUIK9QZLHw0xdMR7nL5vjxTJeatrWdCvunuMap
+	 f2CNLpwG1HV/NJf+mEvNtqf9ikfuYvjEuwOOcavGk1XZSWZDPxQBgoD2YKe414xSMZ
+	 hzSMLKUo89SZVsbxubMAsXQdgULWBzpHRU0vw83mONBd+n2YAkxWwns6Azq9ORN9Gp
+	 u4Oy0NpNOGWihvBslBgNVd440TzQUWfHpxT5+NShhm+kHhGXLbhEsrXa00qFVJ9NeX
+	 6Vg9Y/Zilhu49Zc1SyDjWMHAW0TvvfZneaMAThVws24jH0VXKtLpVWt3pL9OSIesbk
+	 t4TEg7l1hqrXA==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 5582A3782053;
+	Fri,  2 Feb 2024 09:58:16 +0000 (UTC)
+Message-ID: <923499c2-1a60-42dc-b0e2-3f7d78de9d8a@collabora.com>
+Date: Fri, 2 Feb 2024 10:58:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 00/18] Thermal: Part 1 - Introduce new structs and
+ registration
+Content-Language: en-US
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: daniel.lezcano@linaro.org, miquel.raynal@bootlin.com,
+ rui.zhang@intel.com, lukasz.luba@arm.com, support.opensource@diasemi.com,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, linux-imx@nxp.com, andersson@kernel.org,
+ konrad.dybcio@linaro.org, amitk@kernel.org, thara.gopinath@gmail.com,
+ niklas.soderlund@ragnatech.se, srinivas.pandruvada@linux.intel.com,
+ baolin.wang@linux.alibaba.com, u.kleine-koenig@pengutronix.de,
+ hayashi.kunihiko@socionext.com, d-gole@ti.com, linus.walleij@linaro.org,
+ DLG-Adam.Ward.opensource@dm.renesas.com, error27@gmail.com, heiko@sntech.de,
+ hdegoede@redhat.com, jernej.skrabec@gmail.com, f.fainelli@gmail.com,
+ bchihi@baylibre.com, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, kernel@collabora.com
+References: <20240130111250.185718-1-angelogioacchino.delregno@collabora.com>
+ <CAJZ5v0haFEGOjaMC4a8CZbQe+cxFfaB1hD60NkN297NY2TZB5A@mail.gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <CAJZ5v0haFEGOjaMC4a8CZbQe+cxFfaB1hD60NkN297NY2TZB5A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zby2hp2vH4TRv+xV@linaro.org>
 
-On Fri, Feb 02, 2024 at 11:31:50AM +0200, Abel Vesa wrote:
-> On 24-02-02 10:55:28, Abel Vesa wrote:
-> > On 24-02-02 14:18:06, Manivannan Sadhasivam wrote:
-> > > On Fri, Feb 02, 2024 at 10:41:03AM +0200, Abel Vesa wrote:
-> > > > On 24-02-01 20:20:40, Konrad Dybcio wrote:
-> > > > > On 29.01.2024 12:10, Abel Vesa wrote:
-> > > > > > Add the compatible and the driver data for X1E80100.
-> > > > > > 
-> > > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > > ---
-> > > > > >  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
-> > > > > >  1 file changed, 1 insertion(+)
-> > > > > > 
-> > > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > index 10f2d0bb86be..2a6000e457bc 100644
-> > > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > > @@ -1642,6 +1642,7 @@ static const struct of_device_id qcom_pcie_match[] = {
-> > > > > >  	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
-> > > > > >  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
-> > > > > >  	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
-> > > > > > +	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_9_0 },
-> > > > > 
-> > > > > I swear I'm not delaying everything related to x1 on purpose..
-> > > > > 
-> > > > 
-> > > > No worries.
-> > > > 
-> > > > > But..
-> > > > > 
-> > > > > Would a "qcom,pcie-v1.9.0" generic match string be a good idea?
-> > > > 
-> > > > Sure. So that means this would be fallback compatible for all the following platforms:
-> > > > 
-> > > > - sa8540p
-> > > > - sa8775p
-> > > > - sc7280
-> > > > - sc8180x
-> > > > - sc8280xp
-> > > > - sdx55
-> > > > - sm8150
-> > > > - sm8250
-> > > > - sm8350
-> > > > - sm8450-pcie0
-> > > > - sm8450-pcie1
-> > > > - sm8550
-> > > > - x1e80100
-> > > > 
-> > > > Will prepare a patchset.
-> > > > 
-> > > 
-> > > NO. Fallback should be based on the base SoC for this platform.
-> > 
-> > Right, so since the SM8250 is the one that has the core version 1.9.0,
-> > should we just the sm8550 compatible as fallback for all other ones.
-> > 
-> > Yes, I know that there is SM8150, which has core version 1.5.0, but it
-> > is still 1.9.0 compatible.
-> > 
-> > Or maybe we should rename the config to 1_5_0 and have the sm8150
-> > compatible as fallback for all these platforms.
-> > 
+Il 01/02/24 19:35, Rafael J. Wysocki ha scritto:
+> On Tue, Jan 30, 2024 at 12:13 PM AngeloGioacchino Del Regno
+> <angelogioacchino.delregno@collabora.com> wrote:
+>>
+>> This series is a preparation for a bigger cleanup that will be split in
+>> three parts in order to avoid immutable branches on multiple subsystems,
+>> as in other parts of this series there will be changes in:
+>> - drivers/acpi
+>> - drivers/platform/x86
+>> - drivers/power/supply
+>> - drivers/net/wireless
+>> - drivers/net/ethernet
+>>
+>> This is the first part which adds new structures and starts reorganizing
+>> struct members around, plus, this migrates all of the thermal drivers
+>> found in drivers/thermal/ to the new thermal_zone_device_register()
+>> function, and advertises that the old registration functions are
+>> deprecated and will be removed.
+>>
+>> The reorganization is supposed to be complete (or mostly) but...
+>>   - struct thermal_zone_platform_params has a temporary name:
+>>     this is done in order to avoid compile time failures for
+>>     the drivers outside of drivers/thermal before migrating
+>>     them to thermal_zone_device_params/thermal_zone_device_register();
+>>   - struct thermal_zone_params temporarily has two duplicated members,
+>>     governor_name and no_hwmon;
+>>
+>> Part 2 of this topic will migrate all drivers that are external to
+>> drivers/thermal to thermal_zone_device_register(); I will send that
+>> part only after part 1 is confirmed to be acceptable, as otherwise
+>> I'd be spamming people for no reason :-)
+>>
+>> After all drivers will be migrated to thermal_zone_device_register(),
+>> we won't have to care about changing anything outside of drivers/thermal
+>> to finish this set of cleanups/changes (and no immutable branches needed)
+>> and this means that...
+>> Part 3 of this topic will contain the following changes:
+>>   - thermal_zone_device_register_with_trips() will be removed
+>>   - thermal_tripless_zone_device_register() will be removed
+>>   - thermal_zone_params will be renamed to thermal_governor_ipa_params
+>>     - governor_name, no_hwmon members will be removed
+>>   - thermal_zone_platform_params will be renamed to thermal_zone_params
+>>   - Removal of the THERMAL_NAME_LENGTH limitation for `type`
+>>
+>> More scheduled changes, which should end up in part 3 (at least that's
+>> my intention), or eventually entirely after this cleanup topic, include:
+>>   - Introduction of Thermal Zone names
+>>   - Disambiguation of TZ name and type
+>>   - Addition of `thermal-zones`, `thermal-zone-names` parsing for
+>>     devicetrees
 > 
-> Actually no, that's a bad idea. I would break DT backwards compatibility.
+> You really should start with this, because that's your goal.
+> 
+> It is quite arguable that it can be achieved without making all of the
+> changes mentioned above.
 > 
 
-Yes!
+Actually, my initial idea was exactly that... but then there were some
+discussions around it, please check [1] for the thermal-zone-names, and
+[2] for the rest of the discussion.
 
-> I'll just drop the compatible from driver and add fallback in DT for
-> X1E80100.
+[1]: https://lore.kernel.org/all/8d42e0f5-b2d2-471b-ada9-79f76c637abe@collabora.com/
+
+[2]: https://lore.kernel.org/all/4dd4ac79-e8bc-4d88-92d6-6061dae42092@collabora.com/
+
+>>
+>> ... Summarizing ...
+>>
+>> Part 1:
+>>   - Reorganize structures (some temporary names/leftovers)
+>>   - New registration function, deprecation of old ones
+>>   - Migration of drivers/thermal drivers to new registration
+> 
+> I kind of see where this is going, but I don't agree with some of the
+> changes made.
+> 
+> Let me comment on individual patches (which is not necessarily going
+> to happen today or even tomorrow, so let me go through the entire
+> series before deciding what to do next).
 > 
 
-Sounds good.
+Sure, thanks for your feedback!
 
-- Mani
+Cheers,
+Angelo
 
--- 
-மணிவண்ணன் சதாசிவம்
 
