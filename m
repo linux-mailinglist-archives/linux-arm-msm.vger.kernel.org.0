@@ -1,63 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-9438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BBFA846518
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:41:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A45BD846535
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 02:03:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 900E81C2438B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:40:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B8261F25B85
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:03:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF274A26;
-	Fri,  2 Feb 2024 00:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D85853A2;
+	Fri,  2 Feb 2024 01:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oz1LoouU"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="dGjiB7bY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A2F3C23;
-	Fri,  2 Feb 2024 00:40:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6397EAD4F;
+	Fri,  2 Feb 2024 01:02:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706834455; cv=none; b=LF65N9Nx0t0zF+ixjmnbzhD6ZweO1i0oiEs/MQHRDP/wE3aWPqw5KILv+RYpFK6L2lCyv46/43PgXHoUJRpUvpJLTC+cKcSu7E2cqZsBf3QCsF3ssTtI72iNl71rGlzihAdM63vG/StbfHMy+FtDMrMZA2+N7F5++qzPdCHnJDw=
+	t=1706835775; cv=none; b=JVO2MNZxPPiXCDSAJzdN3CQQwP81sI1mBwsT6BJe/uvnypom6zZuxWYdDF78VD6T3skHu8oAr0wumz7H+/IKXxXbTdGOOstwuwIOenu9VSgIsgY1Zyxv+OvsHMUsZ+ScnBgOQUz6A/9kZ1Tf6tBAsnZWHOjf/p96Ihkq7VnhyZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706834455; c=relaxed/simple;
-	bh=dLf5cloqiSaHlekbWkAHkgFrqJzKTS7rJSxj4m9pkNw=;
+	s=arc-20240116; t=1706835775; c=relaxed/simple;
+	bh=t7fqNukb58DPR2uH9r6sePm8zu2FpuOah650ZPEwo7c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cI3xETHSpxpirktKonC4f186YIBKMx+Pewru366XT6MnTjFjyJUZJuMm8oxxgTtRXf37P8H8OdU/35BqTkBEuoMuHwUYw408VKsxK2BQr10DnJOO4HmkVy/SlMCbEEqQjqkd01qOqtGUi62a63Wu30GcNhwVgzTZkbOt0CAHuRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oz1LoouU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07665C433C7;
-	Fri,  2 Feb 2024 00:40:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706834454;
-	bh=dLf5cloqiSaHlekbWkAHkgFrqJzKTS7rJSxj4m9pkNw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oz1LoouUgbOyVQzt99sDj3Ic+NNgrwdyDpyOTD7l77xb4miDPki4x6F9ZILOQ1tr2
-	 EYTgfp6ytRYeXdDGPXAqK9+H3TFQDbgXqUvz7ktIe9pNyWzIaz+IHdTN+hox60Kpot
-	 mwFTcdcq5zS9g8npvGMhtOMvGreSG2+P67MMjBzDu63iZXtlhuZKLWT3F909SacwCk
-	 ZiXhvTWllzwJjXK3EMeD41FRTipnXYR2q+X7L8QqXHn15uctUMheaQ1wAaAP50dtQV
-	 tPh1ZF3go10X2JZt9dXMoLQZ2m9exWq8p7gzzj548QxOA4vibe8X2csE5HFx5Hmmmz
-	 8cIdJDEhS2j5Q==
-Date: Thu, 1 Feb 2024 18:40:50 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pci@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RFC 0/9] power: sequencing: implement the subsystem and add
- first users
-Message-ID: <xdef5sjo5bvdvgx2ezgubeboos45mkeb2dcua63qhmztqrk6ja@m5ylrmdrwmia>
-References: <20240201155532.49707-1-brgl@bgdev.pl>
+	 Content-Type:Content-Disposition:In-Reply-To; b=a6AOXqrfYgTt/L4T4xlopJ9sJVNdaTGHo2hb6IpdoF6cFuGRp+C2n8bAf+mXkzj5G1jm2yhvysWCC1FJuCpfxDU4c+PVzLuxCYvl5l8I/Nir1Z780DXqlh8tEwWJXHnf6z96gez0b9j5HaKjo/56N5DGCZL+Yf5CuXViVQPzxXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=dGjiB7bY; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=SRwLFjr2kgHxYJ1y6JChlTLnAQdKVct1/aWOL5U9V1E=; b=dGjiB7bYGz73GOemZdRIpMdldZ
+	fjwWY0MERslapOKspJ8e7S3E+cKy0xPZ8YR5/KAbl+E3TlvK80b9Oy5wiGXajZDDh7tY6U8mnzJGO
+	QtpI7PeFasregV25OhbVn5v29t2nA8HqVbCHXusiGm201hkk/yRBTAzs6Pw170EHBSmE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rVhx3-006jdz-Ce; Fri, 02 Feb 2024 02:02:41 +0100
+Date: Fri, 2 Feb 2024 02:02:41 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Antoine Tenart <atenart@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Russell King <linux@armlinux.org.uk>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: Re: [net-next PATCH v5 2/9] net: phy: add support for scanning PHY
+ in PHY packages nodes
+Message-ID: <2bba44dc-b5df-46ef-b5f3-eabbd34aa7db@lunn.ch>
+References: <20240201151747.7524-1-ansuelsmth@gmail.com>
+ <20240201151747.7524-3-ansuelsmth@gmail.com>
+ <170680473689.4979.1991415008659281513@kwain>
+ <65bbd2ce.050a0220.5ff09.69d5@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,100 +75,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240201155532.49707-1-brgl@bgdev.pl>
+In-Reply-To: <65bbd2ce.050a0220.5ff09.69d5@mx.google.com>
 
-On Thu, Feb 01, 2024 at 04:55:23PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Feb 01, 2024 at 06:20:10PM +0100, Christian Marangi wrote:
+> On Thu, Feb 01, 2024 at 05:25:36PM +0100, Antoine Tenart wrote:
+> > Quoting Christian Marangi (2024-02-01 16:17:28)
+> > > 
+> > > +static int __of_mdiobus_parse_phys(struct mii_bus *mdio, struct device_node *np,
+> > > +                                  int base_addr, bool *scanphys)
+> > > +{
+> > > +       struct device_node *child;
+> > > +       int addr, rc = 0;
+> > > +
+> > > +       /* Loop over the child nodes and register a phy_device for each phy */
+> > > +       for_each_available_child_of_node(np, child) {
+> > > +               if (of_node_name_eq(child, "ethernet-phy-package")) {
+> > > +                       rc = of_property_read_u32(child, "reg", &addr);
+> > > +                       if (rc)
+> > > +                               goto exit;
+> > 
+> > This means a PHY package node w/o a reg property will prevent all other
+> > PHYs in the same parent node to be found?
+> >
 > 
+> Since this is something new, would it be a problem to make it mandatory
+> to define a reg? (And return error if we find something? Or print a
+> warn?)
 
-We now have 3 RFC and 1 PATCH versions of these patches on the list in
-under a month. Please at least add a version to your subject...
+Making reg mandatory within a package is reasonable. Please indicate
+this in the DT schema.
 
-> I'd like to preface the cover letter by saying right away that this
-> series is not complete. It's an RFC that presents my approach and is sent
-> to the list for discussion. There are no DT bindings nor docs in
-> Documentation/ yet. Please review it as an RFC and not an upstreambound
-> series. If the approach is accepted as correct, I'll add missing bits.
-> 
-> The RFC[1] presenting my proposed device-tree representation of the
-> QCA6391 package present on the RB5 board - while not really officially
-> accepted - was not outright rejected which is a good sign.
-> 
-> This series incorporates it and builds a proposed power sequencing
-> subsystem together with the first dedicated driver around it. Then it
-> adds first two users: the Bluetooth and WLAN modules of the QCA6391.
-> 
-> The Bluetooth part is pretty straightforward. The WLAN however is a PCIe
-> device and as such needs to be powered-up *before* it's detected on the
-> PCI bus. To that end, we modify the PCI core to instantiate platform
-> devices for existing DT child nodes of the PCIe ports. For those nodes
-> for which a power-sequencing driver exists, we bind it and let it probe.
-> The driver then triggers a rescan of the PCI bus with the aim of
-> detecting the now powered-on device. The device will consume the same DT
-> node as the platform, power-sequencing device. We use device links to
-> make the latter become the parent of the former.
-> 
-> The main advantage of the above approach (both for PCI as well as
-> generic power sequencers) is that we don't introduce significant changes
-> in DT bindings and don't introduce new properties. We merely define new
-> resources.
-> 
-
-How can we tell? There are still no Documentation/dt-bindings changes in
-your series.
-
-Regards,
-Bjorn
-
-> [1] https://lore.kernel.org/all/CAMRc=MckG32DQv7b1AQL-mbnYdx4fsdYWtLwCyXc5Ma7EeSAKw@mail.gmail.com/T/#md5dc62007d12f6833d4e51658b14e0493954ba68
-> 
-> Bartosz Golaszewski (9):
->   of: provide a cleanup helper for OF nodes
->   arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
->   power: sequencing: new subsystem
->   power: pwrseq: add a driver for the QCA6390 PMU module
->   Bluetooth: qca: use the power sequencer for QCA6390
->   PCI: create platform devices for child OF nodes of the port node
->   PCI: hold the rescan mutex when scanning for the first time
->   PCI/pwrctl: add PCI power control core code
->   PCI/pwrctl: add a PCI power control driver for power sequenced devices
-> 
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts  | 128 +++++-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi      |  10 +
->  drivers/bluetooth/hci_qca.c               |  30 ++
->  drivers/pci/Kconfig                       |   1 +
->  drivers/pci/Makefile                      |   1 +
->  drivers/pci/bus.c                         |   9 +-
->  drivers/pci/probe.c                       |   2 +
->  drivers/pci/pwrctl/Kconfig                |  17 +
->  drivers/pci/pwrctl/Makefile               |   4 +
->  drivers/pci/pwrctl/core.c                 |  82 ++++
->  drivers/pci/pwrctl/pci-pwrctl-pwrseq.c    |  83 ++++
->  drivers/pci/remove.c                      |   2 +
->  drivers/power/Kconfig                     |   1 +
->  drivers/power/Makefile                    |   1 +
->  drivers/power/sequencing/Kconfig          |  28 ++
->  drivers/power/sequencing/Makefile         |   6 +
->  drivers/power/sequencing/core.c           | 482 ++++++++++++++++++++++
->  drivers/power/sequencing/pwrseq-qca6390.c | 232 +++++++++++
->  include/linux/of.h                        |   4 +
->  include/linux/pci-pwrctl.h                |  24 ++
->  include/linux/pwrseq/consumer.h           |  53 +++
->  include/linux/pwrseq/provider.h           |  41 ++
->  22 files changed, 1229 insertions(+), 12 deletions(-)
->  create mode 100644 drivers/pci/pwrctl/Kconfig
->  create mode 100644 drivers/pci/pwrctl/Makefile
->  create mode 100644 drivers/pci/pwrctl/core.c
->  create mode 100644 drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
->  create mode 100644 drivers/power/sequencing/Kconfig
->  create mode 100644 drivers/power/sequencing/Makefile
->  create mode 100644 drivers/power/sequencing/core.c
->  create mode 100644 drivers/power/sequencing/pwrseq-qca6390.c
->  create mode 100644 include/linux/pci-pwrctl.h
->  create mode 100644 include/linux/pwrseq/consumer.h
->  create mode 100644 include/linux/pwrseq/provider.h
-> 
-> -- 
-> 2.40.1
-> 
+     Andrew
 
