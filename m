@@ -1,91 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-9443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07169846582
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 02:43:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F49A84658C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 02:49:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39C1C1C2409C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:43:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C07D528D236
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD1BF63BA;
-	Fri,  2 Feb 2024 01:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6A5CB659;
+	Fri,  2 Feb 2024 01:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="1meNNi5A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AEFmz3wU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B3E8824;
-	Fri,  2 Feb 2024 01:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10CA8BED;
+	Fri,  2 Feb 2024 01:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706838229; cv=none; b=LqBsEl5RemRfySKDswLVF2kFhxUvnwnUKLJ28hyhTRMR4ny7AUB4KYA5sUdFPmel/m76KYhPyJzBkDPyIEA/ikIAzNrGfyEa0nO9jAL2+y/ETkSQoZLC9c8iFMlLagTnB16s2qQX5FU0KgYVeMeNqNJbSSlJ/WCn3TtNo8bEIAY=
+	t=1706838540; cv=none; b=QQcS4hpKMxucRH2vsQVBetyZsH+Ui+SjwTxrLioEO4qYg92gJcD/PynWm+AP3kqgInTB4VnoK9hAWlx+60Uw0wYm6iU7C9inrAKa+e54q1xCEh2VxzwNYrraHi8Moi3ZPYD0ols4267ysY+IS3uOx/muG5ISgPm4gj0N0x5SVdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706838229; c=relaxed/simple;
-	bh=jF7cqlsOLjqdYzWUfrDIRz33gJa1OHskriEj+F8t68s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VK2wUXyvCFW4OtOfuceerGaREafzfqF3YZ3//mlq6KEMLv1wqRmZtlQjtbrP4/qIMXnSWbVSxSmh0d1sDWz8AuJh16hB6omUCa9BZzKqNkxlujxxEy125yT4wzSRwjjw+dd/2tQv8mTdRMI/w5lS0uH5PfYDrN1XhLG64gIGKs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=1meNNi5A; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=bUBDi/m6vanSfN7M1l7jMTNcJUjKwJryfyB1BXudoSg=; b=1meNNi5AWyupGCEBpPG/qvE0jH
-	qHT2flxVKXduJRVNGc1gJPVEMWbHDwndfrIv0O1PeGOqnnlYHAPZvjLWHN+041RvQJD61XXP2H4ob
-	z0KuDS3B5b0uBdNL4Caud36vx4KSxonWgw4GwgG0ciql4H59CS3VGJ10jEwgCgA4o5KY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rViaf-006jmC-Ku; Fri, 02 Feb 2024 02:43:37 +0100
-Date: Fri, 2 Feb 2024 02:43:37 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v5 9/9] net: phy: qca807x: add support for
- configurable LED
-Message-ID: <46085abf-8e82-4fd9-95b8-95cbfde6e5c2@lunn.ch>
-References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-10-ansuelsmth@gmail.com>
+	s=arc-20240116; t=1706838540; c=relaxed/simple;
+	bh=gW4MhsWKgnrV0MWLgY1KwNTmPiN5rKAzTznnQ80tRSI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eBps6cTYJjZ4vhTxggvN8aSoRjhI6rPwaZ7x/e57PG+Y7+eOKfMs0kuOQ4jueG3aTnX7uClC6V7bP6O61dJabPXrtltzx+/iL8Ebc03kpbqo7z3xIqz59ixXka3mPA1iaNtpA/OEVExM+fS4NaIyiH0dPjZdeeUKtE6geSw90rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AEFmz3wU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4121caew025491;
+	Fri, 2 Feb 2024 01:48:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=qfBOkfPzPc+LRVy3VtHCZAQg+VPtonGAka6/GiikkEc=; b=AE
+	Fmz3wUG0lIk64CYnACvQpEwbz6+zzt9lYTgHuPhZlqNj1LADDhUkZtUcXxQH2fV+
+	KoIrne0v04SnrUUNCMcYBIbwjfgkSFSIg52OhA4/XZMeXB60MMJiFfaehmX1b0pN
+	m8m0v8gIMSx3MTWhy8XrOFzAz9KMAuH4/uhxDdyB5tJQNr4kFAEW6nFVEZcaUnGL
+	lNPPzlwFPiuhY/w2brQCmTmiYUmBYQ4FZqTHTmpkIqIoix2oIWmEc6KxyUfveUb+
+	csaA5573d7TrOsoWzveRkQK1y3JR1/3wDXbkHgOQd8IgZZbmpn7RMZRH+EjD8J1V
+	WcO5V6JvhuJSLUvJxffQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwjg0f2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 01:48:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4121mqV5003112
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 01:48:52 GMT
+Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 1 Feb 2024 17:48:52 -0800
+From: Mike Tipton <quic_mdtipton@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <djakov@kernel.org>
+CC: <neil.armstrong@linaro.org>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <abel.vesa@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH 0/2] interconnect: qcom: ACV enable_mask fixes
+Date: Thu, 1 Feb 2024 17:48:04 -0800
+Message-ID: <20240202014806.7876-1-quic_mdtipton@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240201151747.7524-10-ansuelsmth@gmail.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mGi2LD7B-CegqP3BHrEE2L-7m6Cz5IEP
+X-Proofpoint-ORIG-GUID: mGi2LD7B-CegqP3BHrEE2L-7m6Cz5IEP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-01_10,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1011 mlxscore=0 phishscore=0 mlxlogscore=591
+ malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020010
 
-> +
-> +			phydev->drv->led_brightness_set = NULL;
-> +			phydev->drv->led_blink_set = NULL;
-> +			phydev->drv->led_hw_is_supported = NULL;
-> +			phydev->drv->led_hw_control_set = NULL;
-> +			phydev->drv->led_hw_control_get = NULL;
+A couple small fixes for targets using incorrect ACV enable_masks.
 
-I don't see how that works. You have multiple PHYs using this
-driver. Some might have LEDs, some might have GPOs. But if you modify
-the driver structure like this, you prevent all PHYs from having LEDs,
-and maybe cause a Opps if a PHY device has already registered its
-LEDs?
+Mike Tipton (2):
+  interconnect: qcom: sm8650: Use correct ACV enable_mask
+  interconnect: qcom: x1e80100: Add missing ACV enable_mask
 
-	Andrew
+ drivers/interconnect/qcom/sm8650.c   | 2 +-
+ drivers/interconnect/qcom/x1e80100.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.17.1
+
 
