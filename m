@@ -1,267 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-9551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA9FC847141
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 14:37:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ACCE8471FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 15:34:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 92AB128F8AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 13:37:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 25CFA1F2BD77
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 14:34:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAFFC47774;
-	Fri,  2 Feb 2024 13:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 351BA210E4;
+	Fri,  2 Feb 2024 14:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eaIClWeg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MwS/uEMt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0D84643A;
-	Fri,  2 Feb 2024 13:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D961798F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 14:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706881016; cv=none; b=dXgRlEq3WS4HhtLkh51/UnfW7aOoMfLvW9vC9LmyASLWHeyuXrl3nW+3PjhNicCXBeeqGGX1+cMT+gcvnYocOZiDNIHpDtYV+/mpeQsLhF5Mzt3v/o2jjBTzWEVHh3+RcPAJQICLvNsfVqaN9MBvYZnAmxh/x5OcHH5fxitSLEI=
+	t=1706884454; cv=none; b=m0RfZfu/agfqpsdIAS3YEw2OPCaCRtcOe9ysGtXGQWwfpidxoL5mBgwtTDDHpsGR+JDyRDiZmu68QMLRF5kXvCSyZwh7QTAzrLg6XTKr6bToXsSUrpyGqL7NYYi24Mnvs9HlkfkGeGf+fqAuJxLARzRD+5Jp+BnOvQm8OTy/jKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706881016; c=relaxed/simple;
-	bh=a0D7YFvUOEUJEBzo8I5mq62Kv+BvSEC14i8qhkl0W+c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXYJHYoYCFlWgMsVoEbenaaYVlZT5D749cjb5FsYQjnJFDlBqzhyFRZaAz7jdwF9xSULmgpqVD7kL53/R67rYXgLtCkW8X5Y8q+6oB1C9pRiLohts+/dIQ4RfPLrg1oXv6ho+W60ohQDVj/rE9I4mJ3AyhGHIQqM993WJXygmsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eaIClWeg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412CrS8J013475;
-	Fri, 2 Feb 2024 13:36:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=DsdXMe3
-	4KXFvuJanA/fj53vB84m7HoavxVPCeFqotvo=; b=eaIClWegCqBcPYtGYpPT8By
-	Suoj297CQnTLTifhqmBdcp14z121VGFTRYpQfngF7wn5mvQXJdnJaEn3+gXEnvFB
-	dPWIxN2mat1Y7bBCHMsz6AkH9Gw+hN/DxRZn3y0DLp/5fr092YiM0EoesoM+d0H/
-	XliQsWRKmlLiWE25ImzzoSL2sZHCw299Dy+H6wU28F7zusokOvjgYA4GyT5XHMAa
-	ZFHTNgWurdOQj/QgYpmrnsCSZ9XkkL8qkEe57xmoS+mHQguz/ZXDmUzlUuDdoKBz
-	eHGGji7MYB4SNGbCL2memAUA+9xAlY67DNs1MUbKcSGIjHQc9lKIm+fgPnqU9TA=
-	=
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwjhf1a-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 13:36:49 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 412DajDo017956;
-	Fri, 2 Feb 2024 13:36:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3vvtwm3wsy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 02 Feb 2024 13:36:45 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 412Daj93017933;
-	Fri, 2 Feb 2024 13:36:45 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.242.220])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 412Daj1t017930;
-	Fri, 02 Feb 2024 13:36:45 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3944840)
-	id D126B50094E; Fri,  2 Feb 2024 19:06:43 +0530 (+0530)
-From: Wasim Nazir <quic_wasimn@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        Wasim Nazir <quic_wasimn@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: Add initial support for rb5gen2 HDK board
-Date: Fri,  2 Feb 2024 19:06:38 +0530
-Message-ID: <20240202133638.4720-4-quic_wasimn@quicinc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240202133638.4720-1-quic_wasimn@quicinc.com>
-References: <20240202133638.4720-1-quic_wasimn@quicinc.com>
+	s=arc-20240116; t=1706884454; c=relaxed/simple;
+	bh=smELjAc+1lxu7z3cmyggWXvk5TEfu9w8DqoHbL7V/Sk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U7dU/n1iYKZs4B49zbcYcLP+t3P3F4BBHprzfaOsHv+t+wokqeXteD79skAg93Ii6qxZMulimUThorb82c57P/15HDwpItrM8eX5orP4pFPPnkUL5HmIU8b284QBCxiz9F42Wib9NT1GfI+BPvpQjSmHg+YbaWnnGOSpubmtdaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MwS/uEMt; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so318566766b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 06:34:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706884450; x=1707489250; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cZAWF8WNyPIOZBGCeXYXz44JlQLAqQAUYrdryEsZijM=;
+        b=MwS/uEMtCSoLHwpqkQOTzsj6AsPwpt/XIWi5Dd74ab4LRsI0F0+SK5RSAJ7pPWzlqh
+         N1Bo9oQkupjUM8KJ5AlhYxuXN0cm2QuHlF6coOIS2l0o7RPqxqSIfY+H35RTBkv2GAv4
+         YP1huzY5SYenBtmttpsY83UsqG31k9CMFQGkcWCURIP3tg6t9/WsW1HpbTt8B4FxL3ZT
+         u5H1Bx2K42jz4WJrtgP9fiql4jkvy/eHltv9Y2ob/1xHAGpdOd52rCTQAHei21Iz/q46
+         xsJ5/jTDYL8Qd58ekoonMar1eYAL4DOq/LYWQX6gJ/QZqA1TxpAxQu3jLgBdtRDyPo9S
+         YGig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706884450; x=1707489250;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cZAWF8WNyPIOZBGCeXYXz44JlQLAqQAUYrdryEsZijM=;
+        b=kE9r7vKcTi5sxqkUjOkvVCBMQ7YJ9aeINPSsek2pG8Y1bJ+BBPmuSKsXSPT+mrUQO2
+         cfDUAm8/A/T5hGbR+GvoRNbek+RRTnhybd19r+YPE1uYnyGlWQiIignsIcPxjmWYvDfF
+         GlZYJUFs9lhdgFrLNs+8Q2Td+3e8SXVAzY2KC8LqEyZ8iUlL+V+Shdx9Y6WxuW8srgg7
+         onW7BjSKSCJQzpJ319whgTeE978C/L8TQ7VXpYowOK0ej1l+IKGw/iGqVI9KBkdcTuZc
+         xLU5wN1cbCCz1WDMbVmb+WBXIH10ngGk8eyuJERxqoAz6R9RevcpydE+OzCCMZTNO9V9
+         weYA==
+X-Gm-Message-State: AOJu0YxVgSmOS+YRdr2Glc/x0aCjexR/vbw2kW/FOQUc1k0OGQX9n1OP
+	8N6dgPtymW4ioQGQu5wTCC0aLuIqrGHK0AU8zIvO1cKP1CahCJYMQq+n1OmvMpY=
+X-Google-Smtp-Source: AGHT+IGXuaTTYhVenIjzovitfKix3bgmDZdzjbESI6N5z4LDL1eDMWWfGVRPtwxUruoQW7Ka5UHeJg==
+X-Received: by 2002:a17:906:cecc:b0:a36:5b1c:fb4b with SMTP id si12-20020a170906cecc00b00a365b1cfb4bmr4122804ejb.13.1706884450450;
+        Fri, 02 Feb 2024 06:34:10 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXYmZXJ+RWUJegx40QB/r2pp3Jr8YWrATIFHx8G7qlJxkzSeYSDGDVaiaO2LMtiDXSlDXsUH369aGGIoZZ230i8i32jLBLqxiNBvU/w+AM59d1g4tXXOKwLVC377h25Bd2UMiS+O8hGAeJJ/xoee1cGoRXOsV0+3+bwlDXgqzDiLKfmJXdBQLTrKo8ncMarZKm9Wj82GjGcZaSvOMSwLmrRj5PzQWtCoDhtF5C29a4clzXDgYlEN+Kvy4YjYjywXbDQIGRBOaGHdLAJX1ylTKtXvS2FrACm4ztiFKbCXM8ggLNJz++6ymXHC6qMjMMq3ngdtuZF5whtiN076J+cqjINYvjH8jl7hwyhsHp3EQoc+bdiivcA
+Received: from [192.168.1.20] ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id uz12-20020a170907118c00b00a3685526ed6sm922654ejb.183.2024.02.02.06.34.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Feb 2024 06:34:09 -0800 (PST)
+Message-ID: <7e7bc8ba-f349-47f5-b6ba-6594edccaaa8@linaro.org>
+Date: Fri, 2 Feb 2024 15:34:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: USZtIWBM64vLo-YcR_cirIrr16QtLf24
-X-Proofpoint-ORIG-GUID: USZtIWBM64vLo-YcR_cirIrr16QtLf24
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_07,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 mlxscore=0 phishscore=0 mlxlogscore=999
- malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020098
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/6] dt-bindings: arm: qcom: Document QCM8550, QCS8550
+ SoC and board
+Content-Language: en-US
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
+ <20240119100621.11788-2-quic_tengfan@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240119100621.11788-2-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-RB5gen2 hardware development kit is based on QCS8550-Rb5gen2 SOM
-for IOT solutions.
-This initial version describes VPH_PWR, UART & USB3.1.
+On 19/01/2024 11:06, Tengfei Fan wrote:
+> Document QCM8550, QCS8550 SoC and the AIM300 AIoT board bindings.
+> QCS8550 and QCM8550 processor combines powerful computing, extreme edge
+> AI processing, Wi-Fi 7, and robust video and graphics for a wide range
+> of use cases for the Internet of Things (IoT). QCS8550 is a QCS version
+> for QCM8550. Modem RF only in QCM8550 but not in QCS8550.
+> AIM300 Series is a highly optimized family of modules designed to
+> support AIoT applications. The module is mounted onto Qualcomm AIoT
+> carrier board to support verification, evaluation and development. It
+> integrates QCS8550 SoC, UFS and PMIC chip etc.
+> AIM stands for Artificial Intelligence Module. AIoT stands for AI IoT.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On-board PMICs:
-- PMR735D
-- PM8010
+I want to unreview it.
 
-Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+Please fix your commit msg to drop marketing and instead describe the
+SoC. I don't see for example any explanation why there is qcm8550 and
+sm8550. Aren't they the same?
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6fdde64d7540..8840b219d6d5 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -93,6 +93,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-rb5gen2-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts
-new file mode 100644
-index 000000000000..6f4c68402823
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts
-@@ -0,0 +1,136 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcs8550-rb5gen2.dtsi"
-+#include "pm8010.dtsi"
-+#include "pmr735d_a.dtsi"
-+#include "pmr735d_b.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. QCS8550 RB5Gen2 HDK";
-+	compatible = "qcom,qcs8550-rb5gen2-hdk", "qcom,qcs8550-rb5gen2",
-+			"qcom,qcs8550", "qcom,qcm8550", "qcom,sm8550";
-+
-+	aliases {
-+		serial0 = &uart7;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-2 {
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-3 {
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-4 {
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-5 {
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&pm8550b_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_1p8>;
-+	vdd3-supply = <&vreg_l5b_3p1>;
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&vreg_l1e_0p88>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&pm8550b_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3f_0p88>;
-+
-+	status = "okay";
-+};
---
-2.43.0
+
+
+Best regards,
+Krzysztof
 
 
