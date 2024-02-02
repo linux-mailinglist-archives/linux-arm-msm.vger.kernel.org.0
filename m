@@ -1,204 +1,313 @@
-Return-Path: <linux-arm-msm+bounces-9530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D283D846E4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 11:51:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B37E846E7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 12:00:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63686298FCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 10:51:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 165B11F27784
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 11:00:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6229713BE8F;
-	Fri,  2 Feb 2024 10:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90FA013EFE4;
+	Fri,  2 Feb 2024 10:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dvo8XzHi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YZtNtzIh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C6C22067;
-	Fri,  2 Feb 2024 10:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB113E20C;
+	Fri,  2 Feb 2024 10:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706871077; cv=none; b=AcMcGPkfCJ86RSlKWZylAgl9xvqzKOq+W4tKI6wR+KrNE8BBbaKf+WNKxAnkU6RywGzdvF/d2Di1GF89UNbJERcSUR8ogYRyqqt06QNJH4DJBrtkyAzI3apUmXxHNaXMx4xxF0K3N3RCg+ivh7acvb676AQamyKL/xiyqlYMTF0=
+	t=1706871569; cv=none; b=uHD/p4RIVzTXjnBHfXxGwVhOrVUASJp0gfG6X87ZSOG+KeP7yt+/5LH/Y3WmnPMWEyPVa0cGPTBpvLypnwVd71TJ+/gnRs53EXGX7Ng7kjGXNRcobJuphr0zlQtDCTCXiVGkzt6kdTZPOxUiZLCesPpY6rJV3LgJFxaaXx0mnUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706871077; c=relaxed/simple;
-	bh=IOY6464NxNU4brqTtjjX6NWMS6Lq4bFk/LCbg383F2A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VUIKcJAaZQZwuLrrfYHEKbPgyd8c91jGfJZzC6YzNEkvyV219IuL78XJH4mNO9ZZGQcuiVLG1/GSC+gl+tqC/JbgrgkviNoBgFMCEln0rSZKNeAjp7DUXf8NlIRJYVMLF7l3+/AW8ANQ9S1PcBV/plnGnWJ325ZtP+hwAUtJ0pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dvo8XzHi; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d05b06b5f9so22743181fa.3;
-        Fri, 02 Feb 2024 02:51:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706871073; x=1707475873; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kx4mIgU1jBfilctvZhlH5DYX3FWSs/9dFiVk8rkOVB0=;
-        b=Dvo8XzHiGKjF4p0kxiOA6W1fyeSj2rWZfQPo3i0fIUKa2vWaPtxWLQuSgjKFoqdIPP
-         p9tTYQ022FUr/9VRdxbWLnOs5CaTfvXPS8XgIZkqh5I9xQlddvJ9nuVMAj762UT4Hn13
-         nd2rfqDj7usjSCoPq0VcpqNAW7h96alzRGni2iFFkFT/43dkHLFsa1OuHgSPAY/49zqa
-         Yr+1KBcH12dcaRtsz7D8Fse+x/B8glXG1XjJ529UVwuMj6XqrGUq9nVlBouzYPQ/XyM6
-         LtJuCK0V0dXX80pBTzKGRjqUBZho2qizSjZhM7iK2P4VcnP5avwFUGkckoXa7lFwMfwP
-         GN/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706871073; x=1707475873;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kx4mIgU1jBfilctvZhlH5DYX3FWSs/9dFiVk8rkOVB0=;
-        b=UIkxNWPZV06r0AIWLXCi0Z1ZJ/M1OurysbNS9nOnFhK7X9SP4lInsKbfZR+ZYeN76n
-         /ABomRVV3t6/q+eM0YgNgXVQj/fS2QXqHa+AEx2FOc5R3sRDnp2VpHUIX6r96AbxzCQb
-         nuBBypfrwnsRieVlEAkzVHHd3pdhJavjsHJsr8/0H1gS/xd7efoVpEGXxN4y62cjNZov
-         KBir15Ui1IcHpEjHxUV9GocJJazP3q0olBPxiUHiKgC4vNUeWfZAw6IHsZxAkAgJBZzJ
-         plKBanJm5/ScTMvaYl8HeICYXkKlgqNE7fw19m3W1Ks4WllNmQNGjTrc5Di3pKzRCH2t
-         IheA==
-X-Gm-Message-State: AOJu0Yxu+/QGv3h9vSAtjFYQQRuvQ6PtV14Tw3XFfzXklbcxzWur78pu
-	MR2RXmR3+9N8/3QFdYz/chq/6pp0RSDplwekNoH5pS137Zlf43ox
-X-Google-Smtp-Source: AGHT+IFBBAv4djkjIr64uSUqBaRgzJgTXmTCYRnLptqsty5wsmiMjBqHWBJy6fRmQbvifnYBus9v4Q==
-X-Received: by 2002:a2e:3c0f:0:b0:2d0:54ac:35a with SMTP id j15-20020a2e3c0f000000b002d054ac035amr990510lja.4.1706871073157;
-        Fri, 02 Feb 2024 02:51:13 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVHq+TVXuo5qAsWn2M07nkxLeFNz1PodEBo1sRZRYCLFTYpE77y15gWwkSE+lEJSNnsEz8coRLdXJ0rsUXI23QOOGaSE7TstJYQEssCaZCzD7BUaNHwBb4ziHp0BAKjLFKcuaZrIri7O/HWr7uHzLPxiNanY44oaCb+y9oCorn/VH1KFT/8PUCL5mm5q7A4BZR7aF0iXlnwmKlGElSdpwA8IvZltIj/CmBwcraguqkv4JWvzLa7daY4pmn9Aa2tyTEudKY5CsuK3RFE0KMQQXYx6Kid0jBaNRi7hzgiy6M3eRT6CF5ib9cI6Nd9G4ho8CTIXZODz6dyyzn/wLecTxt9tAe1fhnufBaMta04dEWL3BNhLa+E85Svbx3INGbslJNrQWK+JkdW/YKDSN9Kw5tAEYaU3Z7cJE13TgF1+1OVYC3VKcnPePhSjFPin/4szTTFLOIEqLGn/WUqjefN3R84AzA3VKP25fb7xAoK8QvPdF734i6yKutr9d2zhNOo5w+gfomo8GmdD+DZGcpgM7OxMEEb1T0nKNdp537/YSVomy/mkXFj1bNSC/dL44l1ffnWfZIUvkm4WQEq5RQPtsesZYfoGgv8FN5ozrguaVWsT3KG5oe6hi9641BykkJcAAbtfzaLF6DiKChg7hKLQPT5nupdw60gZUvEIKJY+DfGXg4OdeZf/TZ+YLs9Nif/c1tlQ50O8wJRFldJMnHWzze8rSmRN2B/aAyUM+k/mkHKfbG3CfHbAv9UMjwe5ZK9rDlpx2HvvaFF5a+t86lv47WVGibUCy3eFcLeSLXygnj/dCBlnFKQVFKurWYC9XtWn9C2Yn8uurLdZc+3grv1HGMII4tjfEk7YTZ3mXjgmg86MOc14fxUNdFAdwzI7RwkooVuqVXkWE3lTAtu3V0lwWYz9mGwoXI+iLvx
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id bx30-20020a05651c199e00b002d0511e7420sm241007ljb.6.2024.02.02.02.51.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 02:51:12 -0800 (PST)
-Date: Fri, 2 Feb 2024 13:51:10 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: vkoul@kernel.org, jingoohan1@gmail.com, conor+dt@kernel.org, 
-	konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org, robh+dt@kernel.org, 
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com, 
-	quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com, 
-	quic_vbadigan@quicinc.com, quic_parass@quicinc.com, quic_schintav@quicinc.com, 
-	quic_shijjose@quicinc.com, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
-Subject: Re: [PATCH v1 2/6] dmaengine: dw-edma: Introduce helpers for getting
- the eDMA/HDMA max channel count
-Message-ID: <yaf4wvjqy27whulyppep5qvw3cabfcvaoyxfn3p2i7khc3deyv@42pjna2sfmzr>
-References: <1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com>
- <1705669223-5655-3-git-send-email-quic_msarkar@quicinc.com>
+	s=arc-20240116; t=1706871569; c=relaxed/simple;
+	bh=m1EFA5P8J0/nD2ngsANe5WNr+7ap5mfLVoefoWB8IuU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZoGFU9UgDG21eSGV6h/EPoGa0UEK5DzePVKhI/QSco6chtIov5Z3b9CKG8hcXHJpsreFObfHCxX3X+aRDzi699C7pPGvRvJ/UGwALfSIf11LrOx5a+ts2dzEcU3ctw4YLOPUguPblYOE2jLOEgvClGOlJtoM0GcPZaLuCWL09kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YZtNtzIh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4122QPr0010784;
+	Fri, 2 Feb 2024 10:59:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=tpn2xMnaCKeuqASQPH9BaQOkPasxMEb5EX6qzIgVA2k=; b=YZ
+	tNtzIhanVWa0JteiV/uXsf69Nz16uXKcz/7Xwf7OBcxLgI5i4PpcvURvYRqfFM0V
+	YgpiNUypbPjgpHVqZN+iwy7tw3wU5J9Iopw8kNyf5IZQT3gSo7kzADsnzHXGBh2W
+	+L3mbVNEfoUFK9XASk7o2d8xUIL/qpO4YlOdCwMwzQpoUIm39nKVx2O6pOmm6TDC
+	FlpWJ9q4elLsn3+CDr3vjUZWFoxpi1j0AZWHJ37bKZCtuBOCqOjvTgAUaH3PgF0U
+	h6xGIKh5cUiQq7vxBWXVOvD69hujluh5mqU10IYOqjK6vOousoA6qIr1B7hSrTMy
+	u1FEadnPxos+LDSUafBA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pu1s5s4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 10:59:23 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412AxMBc014804
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 10:59:22 GMT
+Received: from aiquny2-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 2 Feb 2024 02:59:16 -0800
+From: Maria Yu <quic_aiquny@quicinc.com>
+To: <andersson@kernel.org>, <linus.walleij@linaro.org>
+CC: Maria Yu <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v4] pinctrl: Add lock to ensure the state atomization
+Date: Fri, 2 Feb 2024 18:58:54 +0800
+Message-ID: <20240202105854.26446-1-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1705669223-5655-3-git-send-email-quic_msarkar@quicinc.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0VlqJell03VnIUfPNApaLhsbfJNOI6Z2
+X-Proofpoint-ORIG-GUID: 0VlqJell03VnIUfPNApaLhsbfJNOI6Z2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-02_05,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ impostorscore=0 clxscore=1011 mlxlogscore=995 malwarescore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020079
 
-On Fri, Jan 19, 2024 at 06:30:18PM +0530, Mrinmay Sarkar wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Add common helpers for getting the eDMA/HDMA max channel count.
+Currently pinctrl_select_state is an export symbol and don't have
+effective re-entrance protect design. During async probing of devices
+it's possible to end up in pinctrl_select_state() from multiple
+contexts simultaneously, so make it thread safe.
+More over, when the real racy happened, the system frequently have
+printk message like:
+  "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+already used for some other setting".
+Finally the system crashed after the flood log.
+Add per pinctrl lock to ensure the old state and new state transition
+atomization.
+Also move dev error print message outside the region with interrupts
+disabled.
+Use scoped guard to simplify the lock protection needed code.
 
-See my comment to the patch 4:
-https://lore.kernel.org/linux-pci/qfdsnz7louqdrs6mhz72o6mzjo66kw63vtlhgpz6hgqfyyzyhq@tge3r7mvwtw3/
+Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration")
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+---
+ drivers/pinctrl/core.c | 143 +++++++++++++++++++++--------------------
+ drivers/pinctrl/core.h |   2 +
+ 2 files changed, 75 insertions(+), 70 deletions(-)
 
--Serge(y)
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index ee56856cb80c..1f7d001d4c1e 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1061,6 +1061,7 @@ static struct pinctrl *create_pinctrl(struct device *dev,
+ 	p->dev = dev;
+ 	INIT_LIST_HEAD(&p->states);
+ 	INIT_LIST_HEAD(&p->dt_maps);
++	spin_lock_init(&p->lock);
+ 
+ 	ret = pinctrl_dt_to_map(p, pctldev);
+ 	if (ret < 0) {
+@@ -1257,93 +1258,95 @@ static void pinctrl_link_add(struct pinctrl_dev *pctldev,
+ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
+ {
+ 	struct pinctrl_setting *setting, *setting2;
+-	struct pinctrl_state *old_state = READ_ONCE(p->state);
++	struct pinctrl_state *old_state;
+ 	int ret;
+ 
+-	if (old_state) {
+-		/*
+-		 * For each pinmux setting in the old state, forget SW's record
+-		 * of mux owner for that pingroup. Any pingroups which are
+-		 * still owned by the new state will be re-acquired by the call
+-		 * to pinmux_enable_setting() in the loop below.
+-		 */
+-		list_for_each_entry(setting, &old_state->settings, node) {
+-			if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
+-				continue;
+-			pinmux_disable_setting(setting);
++	scoped_guard(spinlock_irqsave, &p->lock) {
++		old_state = p->state;
++		if (old_state) {
++			/*
++			 * For each pinmux setting in the old state, forget SW's record
++			 * of mux owner for that pingroup. Any pingroups which are
++			 * still owned by the new state will be re-acquired by the call
++			 * to pinmux_enable_setting() in the loop below.
++			 */
++			list_for_each_entry(setting, &old_state->settings, node) {
++				if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
++					continue;
++				pinmux_disable_setting(setting);
++			}
+ 		}
+-	}
+-
+-	p->state = NULL;
+ 
+-	/* Apply all the settings for the new state - pinmux first */
+-	list_for_each_entry(setting, &state->settings, node) {
+-		switch (setting->type) {
+-		case PIN_MAP_TYPE_MUX_GROUP:
+-			ret = pinmux_enable_setting(setting);
+-			break;
+-		case PIN_MAP_TYPE_CONFIGS_PIN:
+-		case PIN_MAP_TYPE_CONFIGS_GROUP:
+-			ret = 0;
+-			break;
+-		default:
+-			ret = -EINVAL;
+-			break;
+-		}
++		p->state = NULL;
+ 
+-		if (ret < 0)
+-			goto unapply_new_state;
++		/* Apply all the settings for the new state - pinmux first */
++		list_for_each_entry(setting, &state->settings, node) {
++			switch (setting->type) {
++			case PIN_MAP_TYPE_MUX_GROUP:
++				ret = pinmux_enable_setting(setting);
++				break;
++			case PIN_MAP_TYPE_CONFIGS_PIN:
++			case PIN_MAP_TYPE_CONFIGS_GROUP:
++				ret = 0;
++				break;
++			default:
++				ret = -EINVAL;
++				break;
++			}
+ 
+-		/* Do not link hogs (circular dependency) */
+-		if (p != setting->pctldev->p)
+-			pinctrl_link_add(setting->pctldev, p->dev);
+-	}
++			if (ret < 0)
++				goto unapply_new_state;
+ 
+-	/* Apply all the settings for the new state - pinconf after */
+-	list_for_each_entry(setting, &state->settings, node) {
+-		switch (setting->type) {
+-		case PIN_MAP_TYPE_MUX_GROUP:
+-			ret = 0;
+-			break;
+-		case PIN_MAP_TYPE_CONFIGS_PIN:
+-		case PIN_MAP_TYPE_CONFIGS_GROUP:
+-			ret = pinconf_apply_setting(setting);
+-			break;
+-		default:
+-			ret = -EINVAL;
+-			break;
++			/* Do not link hogs (circular dependency) */
++			if (p != setting->pctldev->p)
++				pinctrl_link_add(setting->pctldev, p->dev);
+ 		}
+ 
+-		if (ret < 0) {
+-			goto unapply_new_state;
+-		}
++		/* Apply all the settings for the new state - pinconf after */
++		list_for_each_entry(setting, &state->settings, node) {
++			switch (setting->type) {
++			case PIN_MAP_TYPE_MUX_GROUP:
++				ret = 0;
++				break;
++			case PIN_MAP_TYPE_CONFIGS_PIN:
++			case PIN_MAP_TYPE_CONFIGS_GROUP:
++				ret = pinconf_apply_setting(setting);
++				break;
++			default:
++				ret = -EINVAL;
++				break;
++			}
+ 
+-		/* Do not link hogs (circular dependency) */
+-		if (p != setting->pctldev->p)
+-			pinctrl_link_add(setting->pctldev, p->dev);
+-	}
++			if (ret < 0)
++				goto unapply_new_state;
+ 
+-	p->state = state;
++			/* Do not link hogs (circular dependency) */
++			if (p != setting->pctldev->p)
++				pinctrl_link_add(setting->pctldev, p->dev);
++		}
+ 
+-	return 0;
++		p->state = state;
++
++		return 0;
+ 
+ unapply_new_state:
+-	dev_err(p->dev, "Error applying setting, reverse things back\n");
+ 
+-	list_for_each_entry(setting2, &state->settings, node) {
+-		if (&setting2->node == &setting->node)
+-			break;
+-		/*
+-		 * All we can do here is pinmux_disable_setting.
+-		 * That means that some pins are muxed differently now
+-		 * than they were before applying the setting (We can't
+-		 * "unmux a pin"!), but it's not a big deal since the pins
+-		 * are free to be muxed by another apply_setting.
+-		 */
+-		if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
+-			pinmux_disable_setting(setting2);
++		list_for_each_entry(setting2, &state->settings, node) {
++			if (&setting2->node == &setting->node)
++				break;
++			/*
++			 * All we can do here is pinmux_disable_setting.
++			 * That means that some pins are muxed differently now
++			 * than they were before applying the setting (We can't
++			 * "unmux a pin"!), but it's not a big deal since the pins
++			 * are free to be muxed by another apply_setting.
++			 */
++			if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
++				pinmux_disable_setting(setting2);
++		}
+ 	}
+ 
++	dev_err(p->dev, "Error applying setting, reverse things back\n");
+ 	/* There's no infinite recursive loop here because p->state is NULL */
+ 	if (old_state)
+ 		pinctrl_select_state(p, old_state);
+diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
+index 837fd5bd903d..6844edd38b4a 100644
+--- a/drivers/pinctrl/core.h
++++ b/drivers/pinctrl/core.h
+@@ -12,6 +12,7 @@
+ #include <linux/list.h>
+ #include <linux/mutex.h>
+ #include <linux/radix-tree.h>
++#include <linux/spinlock.h>
+ #include <linux/types.h>
+ 
+ #include <linux/pinctrl/machine.h>
+@@ -91,6 +92,7 @@ struct pinctrl {
+ 	struct pinctrl_state *state;
+ 	struct list_head dt_maps;
+ 	struct kref users;
++	spinlock_t lock;
+ };
+ 
+ /**
 
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->  drivers/dma/dw-edma/dw-edma-core.c           | 18 ++++++++++++++++++
->  drivers/pci/controller/dwc/pcie-designware.c |  6 +++---
->  include/linux/dma/edma.h                     | 14 ++++++++++++++
->  3 files changed, 35 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> index 7fe1c19..2bd6e43 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> @@ -902,6 +902,24 @@ static int dw_edma_irq_request(struct dw_edma *dw,
->  	return err;
->  }
->  
-> +static u32 dw_edma_get_max_ch(enum dw_edma_map_format mf, enum dw_edma_dir dir)
-> +{
-> +	if (mf == EDMA_MF_HDMA_NATIVE)
-> +		return HDMA_MAX_NR_CH;
-> +
-> +	return dir == EDMA_DIR_WRITE ? EDMA_MAX_WR_CH : EDMA_MAX_RD_CH;
-> +}
-> +
-> +u32 dw_edma_get_max_rd_ch(enum dw_edma_map_format mf)
-> +{
-> +	return dw_edma_get_max_ch(mf, EDMA_DIR_READ);
-> +}
-> +
-> +u32 dw_edma_get_max_wr_ch(enum dw_edma_map_format mf)
-> +{
-> +	return dw_edma_get_max_ch(mf, EDMA_DIR_WRITE);
-> +}
-> +
->  int dw_edma_probe(struct dw_edma_chip *chip)
->  {
->  	struct device *dev;
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index eca047a..96575b8 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -864,7 +864,7 @@ static int dw_pcie_edma_irq_vector(struct dw_edma_chip *edma, unsigned int nr)
->  	char name[6];
->  	int ret;
->  
-> -	if (nr >= EDMA_MAX_WR_CH + EDMA_MAX_RD_CH)
-> +	if (nr >= dw_edma_get_max_rd_ch(edma->mf) + dw_edma_get_max_wr_ch(edma->mf))
->  		return -EINVAL;
->  
->  	ret = platform_get_irq_byname_optional(pdev, "dma");
-> @@ -923,8 +923,8 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
->  	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
->  
->  	/* Sanity check the channels count if the mapping was incorrect */
-> -	if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
-> -	    !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > EDMA_MAX_RD_CH)
-> +	if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > dw_edma_get_max_wr_ch(pci->edma.mf) ||
-> +	    !pci->edma.ll_rd_cnt || pci->edma.ll_rd_cnt > dw_edma_get_max_rd_ch(pci->edma.mf))
->  		return -EINVAL;
->  
->  	return 0;
-> diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-> index 7197a58..550f6a4 100644
-> --- a/include/linux/dma/edma.h
-> +++ b/include/linux/dma/edma.h
-> @@ -106,6 +106,9 @@ struct dw_edma_chip {
->  #if IS_REACHABLE(CONFIG_DW_EDMA)
->  int dw_edma_probe(struct dw_edma_chip *chip);
->  int dw_edma_remove(struct dw_edma_chip *chip);
-> +
-> +u32 dw_edma_get_max_rd_ch(enum dw_edma_map_format mf);
-> +u32 dw_edma_get_max_wr_ch(enum dw_edma_map_format mf);
->  #else
->  static inline int dw_edma_probe(struct dw_edma_chip *chip)
->  {
-> @@ -116,6 +119,17 @@ static inline int dw_edma_remove(struct dw_edma_chip *chip)
->  {
->  	return 0;
->  }
-> +
-> +static inline u32 dw_edma_get_max_rd_ch(enum dw_edma_map_format mf)
-> +{
-> +	return 0;
-> +}
-> +
-> +static inline u32 dw_edma_get_max_wr_ch(enum dw_edma_map_format mf)
-> +{
-> +	return 0;
-> +}
-> +
->  #endif /* CONFIG_DW_EDMA */
->  
->  #endif /* _DW_EDMA_H */
-> -- 
-> 2.7.4
-> 
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+-- 
+2.17.1
+
 
