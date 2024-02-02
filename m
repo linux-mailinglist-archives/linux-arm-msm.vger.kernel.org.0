@@ -1,117 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-9446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DFD684658E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 02:49:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 236B084662B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 03:59:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2C4828D2A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:49:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7FDFFB247E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 02:59:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8EE2B67C;
-	Fri,  2 Feb 2024 01:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A123AC2CD;
+	Fri,  2 Feb 2024 02:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EIHIbq4M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sC+1NFyp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B4A8C08;
-	Fri,  2 Feb 2024 01:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA02E56D;
+	Fri,  2 Feb 2024 02:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706838540; cv=none; b=HfL2xiVnDArHOZ5GKUImaL/mDjk2e6iH8ShUTQESR5187JOtggWOg3MSc1bCDkMJUzD/NITzqvinzDJ8zyzO3MxNfZ3dVjnJFKbVsbJk+mS723GbBaX6QmX1FZZLQH8OQgsreD9ieGnnxAYuI+q2BiIiz+EwpXVEYJeVq79i0ck=
+	t=1706842762; cv=none; b=GehGN/wLRdd/tB3GmdiPpsOIaAHjlN4Aic7lw2pYW+kSiOQil4ZQMY44rv2GyLDz3RV/wrEJpi/3xkN8g78kOuQGK+tJC1cFevpH5KykmmH2A4Ld5L5o3gAcHqeyMEHI3Vh3me4ZdMRW6AGXvEu6gf7DjQSR9vv3vcRk4RDI2Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706838540; c=relaxed/simple;
-	bh=300mRTpVBKdVL02WYT2MCQqRQRQJwlhnk9YDweXgRH8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PWLZ441QFhgPpuLOFjWeeF73x4+eoERN1TGjlbbKXv1xlO8X4R9DD7QbmoMEuGndIaPPvgTDz6IL+vhF253kWHw/hlb10UHSubXRARof/nr602w1uB1gENRHkHu2gm+5uQgjgnUr1XpwdR/Hh3OzhMYh5Jc2pxH1YIFop23/HTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EIHIbq4M; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4121cZwl016204;
-	Fri, 2 Feb 2024 01:48:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=E3doFnL1WgDxi/4NsTKz
-	ZqMaAvfcL+TJ+uGrIup/UYY=; b=EIHIbq4MkPG83nIQn762nse5m7IIb3P8TG1V
-	kR568LsUpxJxyg2XtkxRt9OmmnfojJUxo10+lJtan6RoYDAcGoj66lLjpb+0R5By
-	dXgbAJzZ2ylOiXxx9ni+UEHT4WWveD+BQYfic3EOXNXuCsARhTA+kgvV3HOLAR98
-	yrzBdcbmqKdaGim4AZytTR3ParqdNPtwKZmz5eSsSGF/4vVIPnOzDSZGdL8xoZqI
-	qWE9cWfkQZpRbZkLT9CohdTxIS4VyEPNBFH8VpBCcFj6TvEXPprH80mjqvCVk5NQ
-	3fEA11zLuYVLOvWHrCi+muu/vv/5ds1CRqeflYHT7FvWxS14BQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwm00kf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 01:48:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4121mrK8011422
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 01:48:53 GMT
-Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 1 Feb 2024 17:48:52 -0800
-From: Mike Tipton <quic_mdtipton@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <djakov@kernel.org>
-CC: <neil.armstrong@linaro.org>, <quic_rjendra@quicinc.com>,
-        <quic_sibis@quicinc.com>, <abel.vesa@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: [PATCH 2/2] interconnect: qcom: x1e80100: Add missing ACV enable_mask
-Date: Thu, 1 Feb 2024 17:48:06 -0800
-Message-ID: <20240202014806.7876-3-quic_mdtipton@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240202014806.7876-1-quic_mdtipton@quicinc.com>
-References: <20240202014806.7876-1-quic_mdtipton@quicinc.com>
+	s=arc-20240116; t=1706842762; c=relaxed/simple;
+	bh=r+SvB9zLGCJWcQpfU6TkqIBEDh5OyZdXwt12sASYJsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dSWwUvo/P82UUKAACqfA9tpg5oJCBxEE55kjOjXj9qAgsD7SXKvCKZt/R+vTlG3A9JmdV1yPAi0pX9fRIvHFGeRqvTeqXqOo+DhJ0Ib4B2P50vXp3+WGIcT2Yhjp25dIE5LI3/QoiWPHMSc0WHVY2+YGeb3Trqu8kVryMjFnrug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sC+1NFyp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D387C433C7;
+	Fri,  2 Feb 2024 02:59:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706842761;
+	bh=r+SvB9zLGCJWcQpfU6TkqIBEDh5OyZdXwt12sASYJsE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sC+1NFypNfxuFBEhWIbnU8IRj9MaBq/uUm+ma3F4l7JIWq9z5VS4/4a8GOX+KyCDg
+	 8+ZaI2eUJnh81vL3qdRrh7lh/Cvgf7OyTOBVZ7by+sjZ+raxykejfcb67QeO9Ym0Wn
+	 edY3kWWKi/6WmtZJJ5JtOqAkQkAQCSXeGArYIdJP3hVBpmrW2P4mGsEM4oDrYGyqE9
+	 jgDOIRVHrI93PvE21HBfzBj8fl+BxOoItaSf/Pj8CFkxlpd4jf6cYmk8iV8G+zGIVQ
+	 CEtxelvPpoMi+SOqRKGaoNN/jgqwhh9GW+oMQ9XyZyBiEjNRswGZgpdyVnfBmm4cc5
+	 hkoPR2kKyI36A==
+Date: Thu, 1 Feb 2024 20:59:18 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 6/9] PCI: create platform devices for child OF nodes of the
+ port node
+Message-ID: <4epbzsmxj2gfvjcufclfw7vnamr6hyeickrbyakibdtubwnefs@lkyt7mth43nq>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
+ <20240201155532.49707-7-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TaxKVm5y0PbA9-8dDeGpFQB00XXBhTG9
-X-Proofpoint-ORIG-GUID: TaxKVm5y0PbA9-8dDeGpFQB00XXBhTG9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-01_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 adultscore=0 mlxscore=0 mlxlogscore=733
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402020010
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240201155532.49707-7-brgl@bgdev.pl>
 
-The ACV BCM is voted using bitmasks. Add the proper mask for this
-target.
+On Thu, Feb 01, 2024 at 04:55:29PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> In order to introduce PCI power-sequencing,
 
-Fixes: 9f196772841e ("interconnect: qcom: Add X1E80100 interconnect provider driver")
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
----
- drivers/interconnect/qcom/x1e80100.c | 1 +
- 1 file changed, 1 insertion(+)
+Please provide a proper problem description.
 
-diff --git a/drivers/interconnect/qcom/x1e80100.c b/drivers/interconnect/qcom/x1e80100.c
-index 5b2de9c3a1d6..281295a9a077 100644
---- a/drivers/interconnect/qcom/x1e80100.c
-+++ b/drivers/interconnect/qcom/x1e80100.c
-@@ -1372,6 +1372,7 @@ static struct qcom_icc_node qns_aggre_usb_south_snoc = {
- 
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
- };
--- 
-2.17.1
+> we need to create platform
 
+And properly express why this is a "need".
+
+> devices for child nodes of the port node. They will get matched against
+> the pwrseq drivers
+
+That's not what happens in your code, the child nodes of the bridge node
+in DeviceTree will match against arbitrary platform_drivers.
+
+I also would like this commit message to express that the job of the
+matched device is to:
+
+1) power up said device, followed by triggering a scan on the parent PCI
+bus during it's probe function.
+
+2)  power down said device, during its remove function.
+
+> (if one exists) and then the actual PCI device will
+> reuse the node once it's detected on the bus.
+
+I think the "reuse" deserves to be clarified as there will be both a pci
+and a platform device associated with the same of_node.
+
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  drivers/pci/bus.c    | 9 ++++++++-
+>  drivers/pci/remove.c | 2 ++
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+> index 826b5016a101..17ab41094c4e 100644
+> --- a/drivers/pci/bus.c
+> +++ b/drivers/pci/bus.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/errno.h>
+>  #include <linux/ioport.h>
+>  #include <linux/of.h>
+> +#include <linux/of_platform.h>
+>  #include <linux/proc_fs.h>
+>  #include <linux/slab.h>
+>  
+> @@ -342,8 +343,14 @@ void pci_bus_add_device(struct pci_dev *dev)
+>  	 */
+>  	pcibios_bus_add_device(dev);
+>  	pci_fixup_device(pci_fixup_final, dev);
+> -	if (pci_is_bridge(dev))
+> +	if (pci_is_bridge(dev)) {
+>  		of_pci_make_dev_node(dev);
+> +		retval = of_platform_populate(dev->dev.of_node, NULL, NULL,
+> +					      &dev->dev);
+
+I'm not familiar enough with the ins and outs of the PCI code. Can you
+confirm that there are no problems with this (possibly) calling
+pci_rescan_bus() before the bridge device is fully initialized below?
+
+Regards,
+Bjorn
+
+> +		if (retval)
+> +			pci_err(dev, "failed to populate child OF nodes (%d)\n",
+> +				retval);
+> +	}
+>  	pci_create_sysfs_dev_files(dev);
+>  	pci_proc_attach_device(dev);
+>  	pci_bridge_d3_update(dev);
+> diff --git a/drivers/pci/remove.c b/drivers/pci/remove.c
+> index d749ea8250d6..fc9db2805888 100644
+> --- a/drivers/pci/remove.c
+> +++ b/drivers/pci/remove.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  #include <linux/pci.h>
+>  #include <linux/module.h>
+> +#include <linux/of_platform.h>
+>  #include "pci.h"
+>  
+>  static void pci_free_resources(struct pci_dev *dev)
+> @@ -22,6 +23,7 @@ static void pci_stop_dev(struct pci_dev *dev)
+>  		device_release_driver(&dev->dev);
+>  		pci_proc_detach_device(dev);
+>  		pci_remove_sysfs_dev_files(dev);
+> +		of_platform_depopulate(&dev->dev);
+>  		of_pci_remove_node(dev);
+>  
+>  		pci_dev_assign_added(dev, false);
+> -- 
+> 2.40.1
+> 
 
