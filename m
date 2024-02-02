@@ -1,136 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-9623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46E89847A89
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 21:37:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7342847A93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 21:39:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C65E72893A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 20:36:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AB0B1C245C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 20:39:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC7401803A;
-	Fri,  2 Feb 2024 20:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06453C487;
+	Fri,  2 Feb 2024 20:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="c3mPZqsE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mWdL9qfG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B590482E9
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 20:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CABF7A705;
+	Fri,  2 Feb 2024 20:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706906217; cv=none; b=M77s6zHo6202L27uwKQWPZPZPmMDGb60wWzgH2fZK4RleDPFjYjq+o6ti5SfuOG42Kyl9ujkFf9mQdjcEavrqgt+VZ7S3a90rYEzBzK1tCKCoJVTqQ+TXfhztYVDC7NKhne3Wxq6QyTEAwDI0YT8a5u5ZNL+k+19xv6Z/LK6nKM=
+	t=1706906357; cv=none; b=VosYsLecc9Faqgr0U9NhHYUcXQFaAC5r6BOB1ktjl47QFVAazXX2l7N40w4lo2FrKMK1NzJLC9XV+Qp8CE8alXXFp45/Ug4hDbi8itAlHpCtN+b868L1c8rRh6znCbR0mk5hO4lQi0sjiCLH1ucDUyVfrS2Pt/zkIlGimkiZJpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706906217; c=relaxed/simple;
-	bh=53lrrcAwsOReEPvUCjLVaJtxk7JP82CHsTgE15pO0as=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nrPmxKWdRA5ifhPP++37jgs7MdmuOAB44/meGHzoBkvWE0mowKL6RQB0lcmK2PAcByrOULoL0Me22cdP8K3AxKMcjOF6Sq70BuK/de3mqeM1lxL7XPhx0ydXWSWgZYFNnhdLDasG0xlWQ6+Fk3ynRFK6bvb++wWK/ApYNL4eZ6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=c3mPZqsE; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a26fa294e56so356341066b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 12:36:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1706906214; x=1707511014; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0h1IIKH0viGaA3orHuy1hmOvR0Hle+LrWHOWH3Kx7Iw=;
-        b=c3mPZqsEvLZpi++OSXhluSDHGx2HPgp+q4AdBi7WvC3BCjTBPrD9J9A0D49AxdO+xp
-         UdV1UCrl+ygwu3ivBcJskZfQsqSUCUv8z+6KLjA7yc7ORWhwcV+UBLQ+/JFFwyyDTKHO
-         Z7Z1oZRB3gYg3xNCgO9fXAojQ28cS4JY0SfuM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706906214; x=1707511014;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0h1IIKH0viGaA3orHuy1hmOvR0Hle+LrWHOWH3Kx7Iw=;
-        b=P8PItUNaIzHiDCgW1o4gQoMXBk3kLumNfDxtXnHGWAVKq9+cYMpGzqtxAjQLAyizMN
-         /TAJLv971EHjkpuybT2Tnzuig/eJ1AlMraoT3nktn2V4ZhRDz6FJkReKkcgEwC4DqC7j
-         SS5/rfjttbH9GTv5Int8Brwe1sGo5UM7u+NLLmYC0pMk4FP3jw/c5vHX1s84ai3xJ6Zj
-         5l4QrQrA5WYqTi99QMWSQ09P8JVsjLBPJ6smfaJ6Cn94qcB+d+IradKWP+KrzUaPQpni
-         MVBlaqN4YtyKMx/Br4UDyngimYNiM2SfDRaJDrcWNQdeEBlBMEBSvsj0xTMejV0OiNkB
-         J1NA==
-X-Gm-Message-State: AOJu0YwbKCKQMeKv/cHWhcmykrZ7YvQSj1A9TNOthSiYeba6qZcAnRSo
-	yw+r2ykJZIrVauI3rzy78GxcdxXFw8G4Rx5ADW6p1EOTQobrt6YfxdvWW3pxmBeRmYAVI/x6vmV
-	jPc2I
-X-Google-Smtp-Source: AGHT+IEGwtCKzQcEi67Dm3eXxB1h8m64sVD+6s0QhEPLgCCHmqyA4/30pZSjmQm60WPO9E4ig3bUNw==
-X-Received: by 2002:a17:906:f114:b0:a36:c8aa:203 with SMTP id gv20-20020a170906f11400b00a36c8aa0203mr4039383ejb.61.1706906213943;
-        Fri, 02 Feb 2024 12:36:53 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXBbebRM1GqpkavJIzv8pWXE3huh/khYOHW8UJk8sNjy3q/TnG+czRKU+ndLzRfZgBq2+GZ/J9nIaVKWPugYl9+UYJ+J854NXhCq6/ECQ==
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com. [209.85.208.51])
-        by smtp.gmail.com with ESMTPSA id k11-20020a17090627cb00b00a367a82c0e6sm1226121ejc.156.2024.02.02.12.36.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 12:36:53 -0800 (PST)
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55f63fd3dd8so2422a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 12:36:53 -0800 (PST)
-X-Received: by 2002:a50:8d15:0:b0:55f:a1af:bade with SMTP id
- s21-20020a508d15000000b0055fa1afbademr6757eds.4.1706905905770; Fri, 02 Feb
- 2024 12:31:45 -0800 (PST)
+	s=arc-20240116; t=1706906357; c=relaxed/simple;
+	bh=lUiZwAyJaZQ+4+AMBX9/v5QxyV7H20zeM9q/qx9XCac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CDDnzmHkFapCJkoa7sBg3NawFgR1z6Hh6i8YpMQZPFjlbG/PfZp2HjByQXomkFp9XnGqw65s6M9DwdRvV/Yz0NxDQiNWRswYOsr/Lp6sYJQFIJ+pns0FMFXRAQsPxWXJLiTaAJuXoJf0P6e/anB84f9EOmRdwVhblQ4pqFSLfl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mWdL9qfG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F31C433F1;
+	Fri,  2 Feb 2024 20:39:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706906357;
+	bh=lUiZwAyJaZQ+4+AMBX9/v5QxyV7H20zeM9q/qx9XCac=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mWdL9qfGg9+QYiLHGqKxy5w13NQS3jS8kuZiGZQpV1EHP0DDuiG50vo53jUAMg7el
+	 9Eg5SKbj+hgnPOOHe/DnUhehIBbvGqKvBPa2H6jt3Jd8CZrSKgmatkyFNVrwvVF/Mv
+	 y/RM/pYp9W8S76hE1ryic+RHRHTv5/tY1d1yYFSMa12Da5W4RzYZpTIbiclMaGBNWk
+	 BcaESKdR34K7KngBrj/kZNHznnAspo0bqYaVvQSbtfPUOqlb6XVN1I3bFuNZdZP14d
+	 rLAQKz1fy1fH5ITZ0/9cE94sQkhjd8gRI//CQPBLvQ6EAtI52h/5BTcTfyREgrQj0o
+	 8iSEimIbIsGRA==
+Date: Fri, 2 Feb 2024 14:39:15 -0600
+From: Rob Herring <robh@kernel.org>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v5 6/9] dt-bindings: net: Document Qcom QCA807x
+ PHY package
+Message-ID: <20240202203915.GA1075521-robh@kernel.org>
+References: <20240201151747.7524-1-ansuelsmth@gmail.com>
+ <20240201151747.7524-7-ansuelsmth@gmail.com>
+ <94dfc4c4-5fe6-438d-bcda-4f818eafd2f0@linaro.org>
+ <65bd0678.050a0220.bf9e4.9bd2@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240202202329.4172917-1-quic_jhugo@quicinc.com>
-In-Reply-To: <20240202202329.4172917-1-quic_jhugo@quicinc.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 2 Feb 2024 12:31:30 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WkNKFiRKyadVnAMmtcDH=PVv6vk2CvMbME9FZ5UHNxuw@mail.gmail.com>
-Message-ID: <CAD=FV=WkNKFiRKyadVnAMmtcDH=PVv6vk2CvMbME9FZ5UHNxuw@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: drm/bridge: ti-sn65dsi86: Fix bouncing
- @codeaurora address
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org, 
-	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se, jernej.skrabec@gmail.com, 
-	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	quic_bjorande@quicinc.com, airlied@gmail.com, daniel@ffwll.ch, 
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65bd0678.050a0220.bf9e4.9bd2@mx.google.com>
 
-Hi,
+On Fri, Feb 02, 2024 at 04:12:53PM +0100, Christian Marangi wrote:
+> On Fri, Feb 02, 2024 at 08:45:52AM +0100, Krzysztof Kozlowski wrote:
+> > On 01/02/2024 16:17, Christian Marangi wrote:
+> > > Document Qcom QCA807x PHY package.
+> > > 
+> > > Qualcomm QCA807X Ethernet PHY is PHY package of 2 or 5
+> > > IEEE 802.3 clause 22 compliant 10BASE-Te, 100BASE-TX and
+> > > 1000BASE-T PHY-s.
+> > > 
+> > > Document the required property to make the PHY package correctly
+> > > configure and work.
+> > > 
+> > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> > > ---
+> > >  .../devicetree/bindings/net/qcom,qca807x.yaml | 142 ++++++++++++++++++
+> > 
+> > Your bindings header must be squashed here. Headers are not separate
+> > thing from the bindings.
+> > 
+> > >  1 file changed, 142 insertions(+)
+> > >  create mode 100644 Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/net/qcom,qca807x.yaml b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+> > > new file mode 100644
+> > > index 000000000000..1c3692897b02
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+> > > @@ -0,0 +1,142 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/net/qcom,qca807x.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Qualcomm QCA807X Ethernet PHY
+> > 
+> > What is "X"? Wildcards are usually not expected.
+> >
+> 
+> It's to identify the Ethrnet PHY family. Looks wrong to declare qca8072
+> or qca8074 since they would refer to a more generic Family of devices.
 
-On Fri, Feb 2, 2024 at 12:25=E2=80=AFPM Jeffrey Hugo <quic_jhugo@quicinc.co=
-m> wrote:
->
-> The servers for the @codeaurora domain are long retired and any messages
-> sent there bounce.  Sandeep Panda's email address is no longer valid and
-> should be repleaced.  However Sandeep has left the company and has not
-> been active sice, therefore it looks like this binding is orphaned.
->
-> Doug is listed as the reviewer for this file in MAINTAINERS and has
-> volunteered to be listed within the file as the binding maintainer.
-> Therefore replace Sandeep with Doug to make the documentation current.
->
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
->  .../devicetree/bindings/display/bridge/ti,sn65dsi86.yaml        | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi8=
-6.yaml b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> index 6ec6d287bff4..c93878b6d718 100644
-> --- a/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> +++ b/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
-> @@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
->  title: SN65DSI86 DSI to eDP bridge chip
->
->  maintainers:
-> -  - Sandeep Panda <spanda@codeaurora.org>
-> +  - Douglas Anderson <dianders@chromium.org>
+Declare them all or provide some justification such as the exact model 
+is discoverable (and better be sure power on is the same in order to do 
+discovery).
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> What would be the correct way? We have many other case on net with
+> schema called qca8k that refer to the family of Ethernet Switch but in
+> it refer to qca8327 qca8337 qca8334...
+> 
+> > > +
+> > > +maintainers:
+> > > +  - Christian Marangi <ansuelsmth@gmail.com>
+> > > +  - Robert Marko <robert.marko@sartura.hr>
+> > > +
+> > > +description: |
+> > > +  Qualcomm QCA807X Ethernet PHY is PHY package of 2 or 5
+> > > +  IEEE 802.3 clause 22 compliant 10BASE-Te, 100BASE-TX and
+> > > +  1000BASE-T PHY-s.
+> > > +
+> > > +  They feature 2 SerDes, one for PSGMII or QSGMII connection with
+> > > +  MAC, while second one is SGMII for connection to MAC or fiber.
+> > > +
+> > > +  Both models have a combo port that supports 1000BASE-X and
+> > > +  100BASE-FX fiber.
+> > > +
+> > > +  Each PHY inside of QCA807x series has 4 digitally controlled
+> > > +  output only pins that natively drive LED-s for up to 2 attached
+> > > +  LEDs. Some vendor also use these 4 output for GPIO usage without
+> > > +  attaching LEDs.
+> > > +
+> > > +  Note that output pins can be set to drive LEDs OR GPIO, mixed
+> > > +  definition are not accepted.
+> > > +
+> > > +  PHY package can be configured in 3 mode following this table:
+> > > +
+> > > +                First Serdes mode       Second Serdes mode
+> > > +  Option 1      PSGMII for copper       Disabled
+> > > +                ports 0-4
+> > > +  Option 2      PSGMII for copper       1000BASE-X / 100BASE-FX
+> > > +                ports 0-4
+> > > +  Option 3      QSGMII for copper       SGMII for
+> > > +                ports 0-3               copper port 4
+> > > +
+> > > +$ref: ethernet-phy-package.yaml#
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    const: qcom,qca807x-package
+> > > +
+> > > +  qcom,package-mode:
+> > 
+> > Where is definition of this property with type and description?
+> > 
+> > > +    enum:
+> > > +      - qsgmii
+> > > +      - psgmii
+> > > +
+> > > +  qcom,tx-driver-strength:
+> > 
+> > Use proper unit suffix.
+> > 
+> > https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/property-units.yaml
+> > 
+> > > +    description: set the TX Amplifier value in mv.
+> > > +      If not defined, 600mw is set by default.
+> > > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > > +    enum: [140, 160, 180, 200, 220,
+> > > +           240, 260, 280, 300, 320,
+> > > +           400, 500, 600]
+> > > +
+> > > +patternProperties:
+> > > +  ^ethernet-phy(@[a-f0-9]+)?$:
+> > > +    $ref: ethernet-phy.yaml#
+> > > +
+> > > +    properties:
+> > > +      gpio-controller:
+> > > +        description: set the output lines as GPIO instead of LEDs
+> > > +        type: boolean
 
-Unless there are comments, I'll let this stew over the weekend and
-then land it through drm-misc next week.
+You only need 'gpio-controller: true'. The core already defines the 
+type.
 
--Doug
+> > > +
+> > > +      '#gpio-cells':
+> > > +        description: number of GPIO cells for the PHY
+
+Not a useful description. Normally, you'd describe what's in the cells, 
+but GPIO is standardized so no need (unless you are deviating from the 
+norm).
+
+> > > +        const: 2
+> > > +
+> > > +    dependencies:
+> > > +      gpio-controller: ['#gpio-cells']
+> > 
+> > Why do you need it? None of gpio-controllers do it, I think.
+> > 
+> 
+> Well gpio-controller property is optional and having that declared and
+> #gpio-cells skipped will result in an error on probe. I think it should
+> be the opposite with other schema having to declare this.
+
+If you think everything else is wrong, then please fix them. :)
+
+> 
+> In usual way for gpio-controller both property are defined as required
+> but you can see some (to-be-converted) txt files whith comments where
+> they say:
+> 
+> ./mux/adi,adgs1408.txt:10:- gpio-controller : if present, #gpio-cells is required.
+> 
+> Should I instead add this condition in the if right below?
+
+The core schema enforces this dependency, so you don't need to.
+
+Rob
 
