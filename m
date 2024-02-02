@@ -1,159 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-9563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A90C847394
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:43:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AE4784739D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 16:45:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABC161F291A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 15:43:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E3D81C23D83
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 15:45:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A24011482E2;
-	Fri,  2 Feb 2024 15:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987C91468FF;
+	Fri,  2 Feb 2024 15:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HLLUzUU/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UrnMHZj7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE7E1482E1;
-	Fri,  2 Feb 2024 15:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6267144632
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 15:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706888568; cv=none; b=EWwaOC5cTx32G/crm2NEbxQDgakvNu/0+96mujawX1+ZmN6FUno5Yi5RdTDBJEZ5mo2+O8T2WgO/RsNH+PKo6R7wV79WLRrotKXE7txkQJIqLR2c5IK2Xdjoo1cCRiFlAifHVQ0DdzeOeJl+/ViOghI731Sy0o2ZKQ8y/lKG9II=
+	t=1706888711; cv=none; b=iXwUnQdwLJhR9hvDIqMBILzsAo9URb8ki5I6INex9Ne4H9YaxhwP2+Rzs6YFZxkJHUeeB8sBjPvyXIAJX+lRkPggJqA6k0ijptYVkqlEEKvUFmpC310Qp+AQds54rCy1dVFAyuV3bhh3K+gzaLxEAEVN7tPXVed2lp4bS6hCuiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706888568; c=relaxed/simple;
-	bh=i+fwGDOYXUBBa/SmGUmEeeSRO1FqOePL0sfvubTwHA0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V9Qaa/qpQNu3eb0YXsn1xasM2enScNLGw7mkRJXQF/tWr4LXWu0DvWD+9qt5GOkq4X6DZ1GRMizGbFxuLzUF+BDSXjoWsMtXzZ4tZ85CZEIWIOUy3KMMhRKd/cumS2SySynTtvKzMyXvQoooggmUWDFDpPiAYVIyX6YMPhEz2Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HLLUzUU/; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706888567; x=1738424567;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=i+fwGDOYXUBBa/SmGUmEeeSRO1FqOePL0sfvubTwHA0=;
-  b=HLLUzUU/LNE4ElIFWXxKjRICR8wWGtL4SKzPaWO833kBimDw4Jjloe0M
-   2JsyaHWp8Y/NaaF3Rlit5AcNU4WZzHJztJPiDaZD2rgJOqCvYEze9xieZ
-   bRsaX7yF4Afnuf7NsJ6rSD5nBXLwf4+RObqM6sJkM7Ybb54Xp/GlIcmy+
-   MMcn3wmLdZWmIGgmjQ1ENYnqc0jzAnY1/xhk6apc84tBwoIwMdivQ8B6i
-   Zo73CH3pa8u/WXQzU6bYq0GqigCn2Fj++vNjkmq5eOJEvYgPzEgNURp+k
-   2PYCb7RUPkBsWsMWHEBC2CFJ1/A5bL3eKDPPNijxyhUQ3XVn9dHyS2OMZ
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="11543304"
-X-IronPort-AV: E=Sophos;i="6.05,238,1701158400"; 
-   d="scan'208";a="11543304"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2024 07:42:46 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,238,1701158400"; 
-   d="scan'208";a="4719672"
-Received: from lkp-server02.sh.intel.com (HELO 59f4f4cd5935) ([10.239.97.151])
-  by fmviesa003.fm.intel.com with ESMTP; 02 Feb 2024 07:42:41 -0800
-Received: from kbuild by 59f4f4cd5935 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rVvgd-0003zm-1G;
-	Fri, 02 Feb 2024 15:42:39 +0000
-Date: Fri, 2 Feb 2024 23:42:26 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Davis <afd@ti.com>, Sebastian Reichel <sre@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>
-Subject: Re: [PATCH 06/18] power: reset: brcm-kona-reset: Use
- devm_register_sys_off_handler(RESTART)
-Message-ID: <202402022349.daHRuWLB-lkp@intel.com>
-References: <20240201180102.70395-7-afd@ti.com>
+	s=arc-20240116; t=1706888711; c=relaxed/simple;
+	bh=M3v1kvhpo8UGKlkBDc0ZfDtYXWqRAIydumkGECEwXvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cRkmKoqupsML5yb2ciwIxO84hczhaNI7mH2j1Tu1g+sMVttExatOpcO4NOJoL425DJ1wlXEifyZ32PSspkOO3rWqZI1Ica29IUnrO8NHAg4OuE2vOqL2EgSaJiLmVXGqp/g07v1evrbH/zwAm5uZIDy6LZUD8qTvs6/DIhgui7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UrnMHZj7; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-511234430a4so3735204e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 07:45:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706888707; x=1707493507; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5oKJpH1Ch23ggBkqJI+tlaubHZaYHKi3Py5AbeBu5iY=;
+        b=UrnMHZj7JOFPWKHbEQW5IJCq+ti5B8t+RDJNgUdd24NVaR4wqfVcGEy+bobPb0Hi5o
+         iV8OK0JhTk/VWI28VKP5MucmwF1DeKlB/4HBnNle4tACEEeCWSdLwZoGSHxuijhMkEI1
+         kCaB3FaW7Jp05L8O3fs/mkLP44FMBw44sdPMbSWlplUe3ckhGV0IErWj+kToeYcObNww
+         2BAkVQ+VkEd9dVaZ5AHa0WnZJgAfyYi4Q6v2c+osfsH2vi2/vLIhhB0WK6T2BeGvJMpg
+         nsIKvbVfCIuj20bJekmRZlWBRWh4/lEJkmJe3JC3OUyUtZmuLmuLma5nCk58X/aER+CF
+         94bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706888707; x=1707493507;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5oKJpH1Ch23ggBkqJI+tlaubHZaYHKi3Py5AbeBu5iY=;
+        b=amZuKUO1VD0NqyGwRY6KkofgBlfpC8NevTRsGWbx5GXvJh7qOfcKU+gxRh+EJWvbRk
+         PVVdQO42TZ0+vYZqndFUHYUEl630A9nVvbcjeH11PRePmp1/3j/SPIam5LaJnl2B1CaC
+         Aufx1QZWo/FuK+DDkluu5BYeEPh7JiPoqaLE7KQCFeqboUcPMICHnDFpr9hQRcDu3pbe
+         STdvInX50nMx1g16YVxpC3HtI9em0P2/rFr0Kv049g3+649vvMawX67+DkuSSItJk07I
+         zXbg6UnUtvfdvmIFr5uhlY3LFQPet8HujONkav3+hXi3Vrqn/rsC8KBvxX2OlvO+Iftn
+         LMCg==
+X-Gm-Message-State: AOJu0YxPZxMLZXDnzXM/VEEJHfjAMTIfj+xHlFR2L9ZXmDAd2zoeujRC
+	+Y2laS7SNQHLvAvnnAb+TTgXx6c5W1BhL2Yxb7+37rGV33LVhDvZoBxdheowd2w=
+X-Google-Smtp-Source: AGHT+IGzUJGdwOx4wpoOyNUXQmNL27vzq9TOCZbaOTtaRTUmcFMLgLs6fGjPdjO2M73XBf8ZaTtnfA==
+X-Received: by 2002:ac2:494a:0:b0:511:312d:6761 with SMTP id o10-20020ac2494a000000b00511312d6761mr3005867lfi.47.1706888707642;
+        Fri, 02 Feb 2024 07:45:07 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCX0V8apxEyEVPdUDC90CAXetJeLijmTog8tAsqlXZYb2Ot7rXji8cMKA/jC+F9bTc9ggeW04r5clzQp3PA/LTU/H2Tc6MBYk5WikakmI8KDD8oHP8nuC/A6mvYpvRk1k3GkRel6bRHH+jenm76C3fSQaKiwGuEb89TeKH41LmWxU4fKs6Z1bVDhB7SdF9lKVYczC3bB8zSC6CGX1HkjP5DtGf4WfBu+0xnwiyVRUhjwKEMJvJ0OeRQ+507uT8+oDO2XCLM4U34TUq+7G7j89npT2JeHc2H3S10HkNUcszWbUNoP5qceYbRri2ihznts3Qr0cUW0RmtXuwlaNLRjKgKPbL3kxNBb11Oy19/VQ5pCOZU4cNF7e9VMVlMRiCUorapQ0kAkXN48C8cinxnhbA/hSqKEiuXfCXO9s27buJuU
+Received: from [10.54.252.95] ([217.145.44.194])
+        by smtp.gmail.com with ESMTPSA id p4-20020a05600c358400b0040fb7c87c73sm243115wmq.45.2024.02.02.07.45.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Feb 2024 07:45:07 -0800 (PST)
+Message-ID: <2e09aa7d-4e65-4d9f-98ed-c2fcd88cba21@linaro.org>
+Date: Fri, 2 Feb 2024 16:45:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240201180102.70395-7-afd@ti.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qrb2210-rb1: enable USB-C port
+ handling
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
+ <20240202-pm4125-typec-v2-4-12771d85700d@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240202-pm4125-typec-v2-4-12771d85700d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Andrew,
+On 02/02/2024 00:55, Dmitry Baryshkov wrote:
+> Plug in USB-C related bits and pieces to enable USB role switching and
+> USB-C orientation handling for the Qualcomm RB1 board.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-kernel test robot noticed the following build warnings:
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[auto build test WARNING on sre-power-supply/for-next]
-[also build test WARNING on mani-mhi/mhi-next soc/for-next linus/master v6.8-rc2 next-20240202]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Andrew-Davis/power-reset-atc260x-poweroff-Use-devm_register_sys_off_handler-RESTART/20240202-020809
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git for-next
-patch link:    https://lore.kernel.org/r/20240201180102.70395-7-afd%40ti.com
-patch subject: [PATCH 06/18] power: reset: brcm-kona-reset: Use devm_register_sys_off_handler(RESTART)
-config: arm-randconfig-r121-20240202 (https://download.01.org/0day-ci/archive/20240202/202402022349.daHRuWLB-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20240202/202402022349.daHRuWLB-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202402022349.daHRuWLB-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/power/reset/brcm-kona-reset.c:18:45: sparse: sparse: incorrect type in initializer (different address spaces) @@     expected void [noderef] __iomem *kona_reset_base @@     got void *cb_data @@
-   drivers/power/reset/brcm-kona-reset.c:18:45: sparse:     expected void [noderef] __iomem *kona_reset_base
-   drivers/power/reset/brcm-kona-reset.c:18:45: sparse:     got void *cb_data
->> drivers/power/reset/brcm-kona-reset.c:43:46: sparse: sparse: incorrect type in argument 5 (different address spaces) @@     expected void *cb_data @@     got void [noderef] __iomem *[assigned] kona_reset_base @@
-   drivers/power/reset/brcm-kona-reset.c:43:46: sparse:     expected void *cb_data
-   drivers/power/reset/brcm-kona-reset.c:43:46: sparse:     got void [noderef] __iomem *[assigned] kona_reset_base
-
-vim +18 drivers/power/reset/brcm-kona-reset.c
-
-    15	
-    16	static int kona_reset_handler(struct sys_off_data *data)
-    17	{
-  > 18		void __iomem *kona_reset_base = data->cb_data;
-    19	
-    20		/*
-    21		 * A soft reset is triggered by writing a 0 to bit 0 of the soft reset
-    22		 * register. To write to that register we must first write the password
-    23		 * and the enable bit in the write access enable register.
-    24		 */
-    25		writel((RSTMGR_WR_PASSWORD << RSTMGR_WR_PASSWORD_SHIFT) |
-    26			RSTMGR_WR_ACCESS_ENABLE,
-    27			kona_reset_base + RSTMGR_REG_WR_ACCESS_OFFSET);
-    28		writel(0, kona_reset_base + RSTMGR_REG_CHIP_SOFT_RST_OFFSET);
-    29	
-    30		return NOTIFY_DONE;
-    31	}
-    32	
-    33	static int kona_reset_probe(struct platform_device *pdev)
-    34	{
-    35		void __iomem *kona_reset_base;
-    36	
-    37		kona_reset_base = devm_platform_ioremap_resource(pdev, 0);
-    38		if (IS_ERR(kona_reset_base))
-    39			return PTR_ERR(kona_reset_base);
-    40	
-    41		return devm_register_sys_off_handler(&pdev->dev, SYS_OFF_MODE_RESTART,
-    42						     128, kona_reset_handler,
-  > 43						     kona_reset_base);
-    44	}
-    45	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
