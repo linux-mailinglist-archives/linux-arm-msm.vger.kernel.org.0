@@ -1,125 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-9592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2019847697
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:49:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7ADC784769C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:50:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D3971F2856E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:49:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31CC92880E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B56C14900B;
-	Fri,  2 Feb 2024 17:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6B1114C59A;
+	Fri,  2 Feb 2024 17:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UxJu2BVf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WPJJYvAz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1D9168B9;
-	Fri,  2 Feb 2024 17:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCEE148FFF;
+	Fri,  2 Feb 2024 17:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706896178; cv=none; b=GAEO9/guA8TxnyAffTF7ikPxN+WdEm3YFWU/9gxf3vDsBY8GdH0ZXMOLP4DFtOFZyB4UI7W5V9Uh2YgDfeLpurVLhb6hwjaP7s0NBNM7gMzwI/8pIM1MoiBZJFTw3G8Vf6cKIrumjXAc2n4d9JWzuwQ4jpuN/x6Ih3Ah1PUHMnw=
+	t=1706896184; cv=none; b=YDIyMj6GsiKTX8FwYtRTnwXM96mOn5kMPIJJW93iXTK2aZs/z0r3zkxwNMulY6nQuK360wH/JfBAC6PSIZ/NGT5Pimm7fCm246K2+IqhpVgoDWHjJybKQrWzN05KyMCRmsnJ6YdJzsTux8mk7XY18prVk9ps/eGcCZgzpu07pt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706896178; c=relaxed/simple;
-	bh=ORUBZj9VbJrS+6YnsNZ+Hq1I3Z9kACZ53vfnC6z1j6Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=naks1ljI9+daVPefYn33BRXN4Ik6eSFqFH3i0QUtB4eTkuVjMfnFnQQZ+4OKIx/v5WBJ2tHUJ1ZyPqyfQM/qogkhWBBoQtcxcAIdzcIBUAEfSQ2xPQJtQq6ISh3IR31sj1EooKcxgPl2VggnFzqAyiVfKajPNIUE6eTXoh5VOYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UxJu2BVf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412B5I9j003316;
-	Fri, 2 Feb 2024 17:49:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=oDjf0Uy4yNJyMguYyjd0ZF+yN77D94FizZdVWHnKdZ8=; b=Ux
-	Ju2BVf+IR5KBBoGt0+JaQALT4a2O7Xy0Vf/hm1XJfccC00RvoOTEmrXRSDhd3jCL
-	xWrVCY9BwcIupl9QlU/Ko+PICCcbRbjvfB/7k9sR+hoT2C9PKcMXZY6jzWdZyMgZ
-	0o7B5GmHg2OI60jOPrmtnUK0F6SBrW6s9ZUQZwzeuZWIED7TuapKDQBeEyXO1HTn
-	CY90RjN724QauLDBdC66lMGoN1Fy+pGg+H1K46eGVFz4FgfIQ2WkNXqvwCdDs0Tt
-	aGb/rh2OTtl2d6ydA6Fw15pYS66Ypn93hrVxrkZ90sQj8NyqisUvppfWZfUqw5fh
-	v2HCb908A0CHkHSp5utw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwc20h7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 17:49:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412HnWKs001766
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 17:49:32 GMT
-Received: from [10.110.0.40] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
- 2024 09:49:31 -0800
-Message-ID: <4a9b6d7b-70ab-cd18-770c-37993b0ccc63@quicinc.com>
-Date: Fri, 2 Feb 2024 09:49:21 -0800
+	s=arc-20240116; t=1706896184; c=relaxed/simple;
+	bh=dOC6l/UpwJt+sDh73ImH2SYn2JbGC0ZF3A9tIFxdqtk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q8FrLABDuJ2YzIBnCSTfQ0mx/QESP0eyj51NH5pTzUeiN1YQkwsEPIiwpG61oOjj1cpp2nV8hKqSxujoS0EoKhE3I7xeQQYwKDmJYKoY5d77619Du09xr8dgpdx2ekTtJVpmZVmaGY/i2ZW6d2KzcouZuQBeR4ZtW/ScZkcJzSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WPJJYvAz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7E5C433C7;
+	Fri,  2 Feb 2024 17:49:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706896184;
+	bh=dOC6l/UpwJt+sDh73ImH2SYn2JbGC0ZF3A9tIFxdqtk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WPJJYvAz83PqbWfJevH/VqATyZyF8CMELM/qsF5iGbGg+7c08RkvpLVnt1A5GE/cF
+	 tcu63FYZn4b7uhLLPzbN+EdUSZoRoygx/1agCdTpP9s/n883bAkiQP8gjBz/mp+kDW
+	 qAUTtz5OnUdUz5st4dAWc5OGoV8IM7DK0KDm2fKGNgkvkbFxVCqblojdOgeVCjK2WT
+	 8TgIKe63Wz1bq6Pwy73SdDw6XnGCRuLJmukJO4LPOLdK/c9MQGRTbs1oxi0ZYlm/v9
+	 h+6C4sTZAkHgIq2mWUe1PiL9Ix6Qz58Sj0f91Fwj4LzNhLlO4dG31aRGnZ1zxuS/WT
+	 KdHH/uaxwI7ag==
+Date: Fri, 2 Feb 2024 11:49:41 -0600
+From: Rob Herring <robh@kernel.org>
+To: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	"Lad,  Prabhakar" <prabhakar.csengg@gmail.com>,
+	=?iso-8859-1?Q?=22Niklas_S=C3=B6derlund=22?= <niklas.soderlund+renesas@ragnatech.se>,
+	=?iso-8859-1?Q?=22Uwe_Kleine-K=C3=B6nig=22?= <u.kleine-koenig@pengutronix.de>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alexey Brodkin <abrodkin@synopsys.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Andy Gross <agross@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Emma Anholt <emma@anholt.net>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Helge Deller <deller@gmx.de>,
+	Hugues Fruchet <hugues.fruchet@foss.st.com>,
+	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Jacopo Mondi <jacopo@jmondi.org>, James Clark <james.clark@arm.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Liam Girdwood <lgirdwood@gmail.com>, Liu Ying <victor.liu@nxp.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Marek Vasut <marex@denx.de>, Mark Brown <broonie@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Michal Simek <michal.simek@amd.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Philippe Cornu <philippe.cornu@foss.st.com>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+	Rob Clark <robdclark@gmail.com>, Robert Foss <rfoss@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Stefan Agner <stefan@agner.ch>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Takashi Iwai <tiwai@suse.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Todor Tomov <todor.too@gmail.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Yannick Fertre <yannick.fertre@foss.st.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Jonas Karlman <jonas@kwiboo.se>, Leo Yan <leo.yan@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mike Leach <mike.leach@linaro.org>, Sam Ravnborg <sam@ravnborg.org>,
+	Sean Paul <sean@poorly.run>, Tom Rix <trix@redhat.com>,
+	coresight@lists.linaro.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-amlogic@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-fbdev@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-staging@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org, llvm@lists.linux.dev
+Subject: Re: [PATCH v3 05/24] media: i2c: switch to use
+ of_graph_get_next_device_endpoint()
+Message-ID: <20240202174941.GA310089-robh@kernel.org>
+References: <87o7d26qla.wl-kuninori.morimoto.gx@renesas.com>
+ <87h6iu6qjs.wl-kuninori.morimoto.gx@renesas.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: Add qcom,pbs bindings
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <lee@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <linux-leds@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>
-References: <20240201204421.16992-2-quic_amelende@quicinc.com>
- <20240201204421.16992-4-quic_amelende@quicinc.com>
- <1de7cfbc-3507-459f-842e-c9349b2f05ac@linaro.org>
-From: Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <1de7cfbc-3507-459f-842e-c9349b2f05ac@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1RG0hPmpTWbv0d2sxE46VFefcLvl8srb
-X-Proofpoint-ORIG-GUID: 1RG0hPmpTWbv0d2sxE46VFefcLvl8srb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_11,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=438 clxscore=1015
- phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020128
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87h6iu6qjs.wl-kuninori.morimoto.gx@renesas.com>
 
-
-
-On 2/1/2024 11:29 PM, Krzysztof Kozlowski wrote:
-> On 01/02/2024 21:44, Anjelique Melendez wrote:
->> Add binding for the Qualcomm Programmable Boot Sequencer device.
->>
->> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Wed, Jan 31, 2024 at 05:05:27AM +0000, Kuninori Morimoto wrote:
+> of_graph_get_next_endpoint() is now renamed to
+> of_graph_get_next_device_endpoint(). Switch to it.
 > 
-> How is it possible? This is v1, not a resend, and I never give review
-> tags not in public.
+> Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+> ---
+>  drivers/media/i2c/adv7343.c              | 2 +-
+>  drivers/media/i2c/adv748x/adv748x-core.c | 2 +-
+>  drivers/media/i2c/adv7604.c              | 2 +-
+>  drivers/media/i2c/isl7998x.c             | 2 +-
+>  drivers/media/i2c/max9286.c              | 2 +-
+>  drivers/media/i2c/mt9p031.c              | 2 +-
+>  drivers/media/i2c/mt9v032.c              | 2 +-
+>  drivers/media/i2c/ov2659.c               | 2 +-
+>  drivers/media/i2c/ov5645.c               | 2 +-
+>  drivers/media/i2c/ov5647.c               | 2 +-
+>  drivers/media/i2c/s5c73m3/s5c73m3-core.c | 2 +-
+>  drivers/media/i2c/s5k5baf.c              | 2 +-
+>  drivers/media/i2c/tc358743.c             | 2 +-
+>  drivers/media/i2c/tda1997x.c             | 2 +-
+>  drivers/media/i2c/tvp514x.c              | 2 +-
+>  drivers/media/i2c/tvp5150.c              | 4 ++--
+>  drivers/media/i2c/tvp7002.c              | 2 +-
+>  17 files changed, 18 insertions(+), 18 deletions(-)
 > 
-> Best regards,
-> Krzysztof
-> 
-Sorry for the confusion, this patch was originally in this series:
-https://lore.kernel.org/all/20231221185838.28440-2-quic_amelende@quicinc.com/,
-where you gave your reviewed by tag in v3:
-https://lore.kernel.org/all/102328fa-5699-4731-d639-079bce8863a5@linaro.org/.
-This was separated into a new series since half of the original
-patches were already applied. I mentioned this in the cover
-letter but in future should I keep version the same as the original
-series?
+> diff --git a/drivers/media/i2c/adv7343.c b/drivers/media/i2c/adv7343.c
+> index ff21cd4744d3..7e4eb2f8bf0d 100644
+> --- a/drivers/media/i2c/adv7343.c
+> +++ b/drivers/media/i2c/adv7343.c
+> @@ -403,7 +403,7 @@ adv7343_get_pdata(struct i2c_client *client)
+>  	if (!IS_ENABLED(CONFIG_OF) || !client->dev.of_node)
+>  		return client->dev.platform_data;
+>  
+> -	np = of_graph_get_next_endpoint(client->dev.of_node, NULL);
+> +	np = of_graph_get_next_device_endpoint(client->dev.of_node, NULL);
 
-Thanks,
-Anjelique
+This is assuming there's just 1 port and 1 endpoint, but let's be 
+specific as the bindings are (first endpoint on port 0):
+
+of_graph_get_endpoint_by_regs(client->dev.of_node, 0, -1);
+
+Note we could ask for endpoint 0 here, but the bindings generally allow 
+for more than 1.
+
+I imagine most of the other cases here are the same.
+
+>  	if (!np)
+>  		return NULL;
+>  
+> diff --git a/drivers/media/i2c/adv748x/adv748x-core.c b/drivers/media/i2c/adv748x/adv748x-core.c
+> index 3eb6d5e8f082..4e9e4cef8954 100644
+> --- a/drivers/media/i2c/adv748x/adv748x-core.c
+> +++ b/drivers/media/i2c/adv748x/adv748x-core.c
+> @@ -657,7 +657,7 @@ static int adv748x_parse_dt(struct adv748x_state *state)
+>  	bool in_found = false;
+>  	int ret;
+>  
+> -	for_each_endpoint_of_node(state->dev->of_node, ep_np) {
+> +	for_each_device_endpoint_of_node(state->dev->of_node, ep_np) {
+
+I would skip the rename.
+
+Rob
 
