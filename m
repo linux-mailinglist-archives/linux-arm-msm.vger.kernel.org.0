@@ -1,128 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-9636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66E6A847BCD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 22:50:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB66847C33
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 23:24:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17C121F29116
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 21:50:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A7DB2869C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 22:24:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B178B83A07;
-	Fri,  2 Feb 2024 21:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 481088593D;
+	Fri,  2 Feb 2024 22:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bTySsv6t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZcZF5FC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D117D8060D;
-	Fri,  2 Feb 2024 21:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04529126F13;
+	Fri,  2 Feb 2024 22:23:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706910649; cv=none; b=uDcQQrT/XhQI6NcwPyUOiVEICiMoFxLGLtp5fcWY7URVZ8DrUAXDpaX9wVLtLrJIKjuDZFvQwxxWxviWOg7y+5gbu+lMfiduIyfqXeYlCNw3onvxXXRb9aWiTmmz2vTNs3CKARNw4oqL4E7I4teFJ9t6QKcbDt6F4ucx8fj9JAU=
+	t=1706912627; cv=none; b=YDKeO6Wi/YloC6andN0tJJkcXnPLcJyZQncy+wxepuBBxs3NPWqUNJhwwDFyOp2xweImhvqaowvAqaAYxReoervupzPaUPjdhIsKYLzjdts9BZEkkWLQwGjalsOG/QcLKpZJTnsruIRlhIyNUjUNNOFFSWfsJ9LT4qr2kY5b8cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706910649; c=relaxed/simple;
-	bh=O2Lsa5KL5GxKg5QnRfDjyLpIoTIAQCOszwP8LJlqAuo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZdBTb7pNAdYN+DyevOmnU585XBVZmbEXvnevtnIEkEByPA4Anf74lMeV2u0v/nvRnW1Rgr/BEnbVT+GzPWRaSEmoywxHD61vxnF8vojRzCJ4kgEKVS4xgUkoNNXcZyoFhAdJd9GP9iELAnh9JZqdUWMqgjBy7nRyqJ+ipuJ0NIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bTySsv6t; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=NcIRGxju6SMTFH2+BO670Y4r/6YmRM2psDzw/RSO4YY=; b=bTySsv6tAo2nG6vDjflCwLCzzg
-	yyvGGwyvsWA1nZv7jr0L+Z5cxITNBEfZnfIvqV2Nr4YrI6qzGDTXw0/NMRruC5rMV+GrriWFcPjRZ
-	KlpeVRrQnE08zfUuj/mM+SBMTrT0CAiFfRwbXZNACfPssDVvML9oPinHV4a8Gt9TSbJ8=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rW1Qh-006qsK-Dp; Fri, 02 Feb 2024 22:50:35 +0100
-Date: Fri, 2 Feb 2024 22:50:35 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Rob Herring <robh@kernel.org>
-Cc: Christian Marangi <ansuelsmth@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	s=arc-20240116; t=1706912627; c=relaxed/simple;
+	bh=i6HTJL8JbdO5UqIMmgRXK3anSEPC7g7b+u7MrObSAV8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NnIpo8BRqs+B+Tsw1LjIsuwragvpYQ4Ah0K86Byt8x0zHcvWmtgnp5pvjjo2wHXbH6MU2LenQ1mdaY1M91bpteMC1x3w+egX7Xh3E9O+bVZS4DanwZSzx95jFo1oWo3mIgSiPdHmZFFnVrdyjkmWMleugoT+zRBu2pVPCA7Tues=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZcZF5FC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A36C433F1;
+	Fri,  2 Feb 2024 22:23:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706912626;
+	bh=i6HTJL8JbdO5UqIMmgRXK3anSEPC7g7b+u7MrObSAV8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pZcZF5FCtJ5ITHsbrc3oU/pZ0o6uEqFEBROR5ZSS91loikQQ9by3Xuq3vvw/Dx0Qk
+	 dIBlokjekYfIQNlM+9iY/XUdDf14tQ/7EvM2IeH3Vuj/p5hhcvMDCX/B9SVOwoijOe
+	 XdQGQwWbj9DV+27iULWTVMGn5/a67cOwrOcaer1G3s2Ah4yzfrAHxZPwHdaWxB5liW
+	 AyJm9looJMfG51bpg1nO6Dwl+eWbyRDNKA4MA4c2PG6VGTOFYCRN6xxODl6Dx/hUWY
+	 rEAUasy0h+CiOrUQCAokDSPGsa29MMC9EHH37jq9mcT4tRZs9NvLD7bcZfV3OK7mYd
+	 d2zBYRv1d47Ug==
+From: Rob Herring <robh@kernel.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v5 6/9] dt-bindings: net: Document Qcom QCA807x
- PHY package
-Message-ID: <9e6298ad-a0c9-4c3e-b94b-13dec8c253c6@lunn.ch>
-References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-7-ansuelsmth@gmail.com>
- <20240202204536.GB1075521-robh@kernel.org>
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: display: msm: sm8650-mdss: Add missing explicit "additionalProperties"
+Date: Fri,  2 Feb 2024 16:23:37 -0600
+Message-ID: <20240202222338.1652333-1-robh@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240202204536.GB1075521-robh@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-> > +patternProperties:
-> > +  ^ethernet-phy(@[a-f0-9]+)?$:
-> 
-> I don't get how an address is optional.
+In order to check schemas for missing additionalProperties or
+unevaluatedProperties, cases allowing extra properties must be explicit.
 
-Its pretty unusual, but for example:
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ .../devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml     | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-arch/arm/boot/dts/nxp/imx/imx6q-novena.dts
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
+index bd11119dc93d..24cece1e888b 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
+@@ -37,18 +37,21 @@ properties:
+ patternProperties:
+   "^display-controller@[0-9a-f]+$":
+     type: object
++    additionalProperties: true
+     properties:
+       compatible:
+         const: qcom,sm8650-dpu
+ 
+   "^displayport-controller@[0-9a-f]+$":
+     type: object
++    additionalProperties: true
+     properties:
+       compatible:
+         const: qcom,sm8650-dp
+ 
+   "^dsi@[0-9a-f]+$":
+     type: object
++    additionalProperties: true
+     properties:
+       compatible:
+         items:
+@@ -57,6 +60,7 @@ patternProperties:
+ 
+   "^phy@[0-9a-f]+$":
+     type: object
++    additionalProperties: true
+     properties:
+       compatible:
+         const: qcom,sm8650-dsi-phy-4nm
+-- 
+2.43.0
 
-&fec {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_enet_novena>;
-        phy-mode = "rgmii";
-        phy-handle = <&ethphy>;
-        phy-reset-gpios = <&gpio3 23 GPIO_ACTIVE_LOW>;
-        status = "okay";
-
-        mdio {
-                #address-cells = <1>;
-                #size-cells = <0>;
-
-                ethphy: ethernet-phy {
-                        compatible = "ethernet-phy-ieee802.3-c22";
-                        rxc-skew-ps = <3000>;
-                        rxdv-skew-ps = <0>;
-                        txc-skew-ps = <3000>;
-                        txen-skew-ps = <0>;
-                        rxd0-skew-ps = <0>;
-                        rxd1-skew-ps = <0>;
-                        rxd2-skew-ps = <0>;
-                        rxd3-skew-ps = <0>;
-                        txd0-skew-ps = <3000>;
-                        txd1-skew-ps = <3000>;
-                        txd2-skew-ps = <3000>;
-                        txd3-skew-ps = <3000>;
-                };
-        };
-};
-
-There is no reg property, because its optional. If there is no reg,
-there is no address.
-
-When phylib finds a DT blob like this, it enumerates the bus, and then
-assigns the nodes to the devices it finds in the order it finds them.
-
-Its old behaviour, from before the times of yaml validation, and
-current best practices, etc. But because it works, it still used in
-new bindings.
-
-    Andrew
 
