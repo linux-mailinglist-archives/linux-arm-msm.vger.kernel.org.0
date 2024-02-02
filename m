@@ -1,119 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-9637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB66847C33
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 23:24:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81306847D1F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 00:20:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A7DB2869C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 22:24:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3FCF1C22DB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 23:20:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 481088593D;
-	Fri,  2 Feb 2024 22:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0347126F29;
+	Fri,  2 Feb 2024 23:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZcZF5FC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5E2eXf1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04529126F13;
-	Fri,  2 Feb 2024 22:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75108592F;
+	Fri,  2 Feb 2024 23:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706912627; cv=none; b=YDKeO6Wi/YloC6andN0tJJkcXnPLcJyZQncy+wxepuBBxs3NPWqUNJhwwDFyOp2xweImhvqaowvAqaAYxReoervupzPaUPjdhIsKYLzjdts9BZEkkWLQwGjalsOG/QcLKpZJTnsruIRlhIyNUjUNNOFFSWfsJ9LT4qr2kY5b8cY=
+	t=1706916049; cv=none; b=WeLqos2GAWeU495/7Psv9R/Q84LY7XoJQc48X/iYue7gFM37VfVC5JpXnsxX+ZC6b2x4SdF1TJL8zQIc6air63dLaKdewMS74YugtxYq3xTwApPPUqovHD0d7AkpYejly9IOYBFVbL+kdNiTuxjC6em+HAcdi5bfq+fWnj+ezqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706912627; c=relaxed/simple;
-	bh=i6HTJL8JbdO5UqIMmgRXK3anSEPC7g7b+u7MrObSAV8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NnIpo8BRqs+B+Tsw1LjIsuwragvpYQ4Ah0K86Byt8x0zHcvWmtgnp5pvjjo2wHXbH6MU2LenQ1mdaY1M91bpteMC1x3w+egX7Xh3E9O+bVZS4DanwZSzx95jFo1oWo3mIgSiPdHmZFFnVrdyjkmWMleugoT+zRBu2pVPCA7Tues=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZcZF5FC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A36C433F1;
-	Fri,  2 Feb 2024 22:23:46 +0000 (UTC)
+	s=arc-20240116; t=1706916049; c=relaxed/simple;
+	bh=OZlIIMlUht4XYhbukAIZUl5DVjNY9FcWhu1WB1zXhO8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jjn3wbsccDDd6Ycerzx86oKGwi3ykOY8MRcLZmrArziKvzUQSOcfsOz6BO4zpaLxnPIFPgk3NIQBbqDda4Wg2o4jtdgPIkacCL1qNi5b3D0t6Gne6irSEDHnj3dlrc0p47dG6j2Myqy8ULHh5Z+MwiHJ2TLMJ/XV/F1dgd4w8HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5E2eXf1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C14C433F1;
+	Fri,  2 Feb 2024 23:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706912626;
-	bh=i6HTJL8JbdO5UqIMmgRXK3anSEPC7g7b+u7MrObSAV8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=pZcZF5FCtJ5ITHsbrc3oU/pZ0o6uEqFEBROR5ZSS91loikQQ9by3Xuq3vvw/Dx0Qk
-	 dIBlokjekYfIQNlM+9iY/XUdDf14tQ/7EvM2IeH3Vuj/p5hhcvMDCX/B9SVOwoijOe
-	 XdQGQwWbj9DV+27iULWTVMGn5/a67cOwrOcaer1G3s2Ah4yzfrAHxZPwHdaWxB5liW
-	 AyJm9looJMfG51bpg1nO6Dwl+eWbyRDNKA4MA4c2PG6VGTOFYCRN6xxODl6Dx/hUWY
-	 rEAUasy0h+CiOrUQCAokDSPGsa29MMC9EHH37jq9mcT4tRZs9NvLD7bcZfV3OK7mYd
-	 d2zBYRv1d47Ug==
-From: Rob Herring <robh@kernel.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: display: msm: sm8650-mdss: Add missing explicit "additionalProperties"
-Date: Fri,  2 Feb 2024 16:23:37 -0600
-Message-ID: <20240202222338.1652333-1-robh@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	s=k20201202; t=1706916049;
+	bh=OZlIIMlUht4XYhbukAIZUl5DVjNY9FcWhu1WB1zXhO8=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=f5E2eXf1Ild/UMkfGx99IbLsTij/1GRs5ifwmhNvRkW/K++94QA58uN3l7ic5ZQsi
+	 agVFB7axGJfjtI95n+uM9bJryBfV1IZZLvMz7SKFM/dzxdNKTL6fxiw0pGR1RSsrB7
+	 PCpK2BVU2V6j7p1umI4ncoz4kY7PmYUKnGw4j4ADQHlh3yMjBo5GDzfkHUnGkWfynv
+	 IF/WIiRZXD/umuoVdEzuVtFcmSGijqysTCf8vguztRT7ueTDAbaJUmwadeePS1+6Lw
+	 AJVuaAsXSci79oOQjhgwnygnG+HamDu8UhPbX2f8xiOQyWPSic8ZOOFArMH0ooBr4N
+	 599AZNBx/FTzw==
+Date: Fri, 2 Feb 2024 17:20:46 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: Re: [PATCH] soc: qcom: llcc: Check return value on Broadcast_OR
+ reg read
+Message-ID: <2fwmzxfxm3eyrffmri2ybxicgk3n6rxckmyvvpxhmok62cqvzs@iaioxvhlncwu>
+References: <20240202-fix_llcc_update_act_ctrl-v1-1-d36df95c8bd5@quicinc.com>
+ <5ba42ywqwi2ix2hyo4ysdgo2onyrhm6rtvpow626r7kctoixz6@xrens4w3k7ar>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5ba42ywqwi2ix2hyo4ysdgo2onyrhm6rtvpow626r7kctoixz6@xrens4w3k7ar>
 
-In order to check schemas for missing additionalProperties or
-unevaluatedProperties, cases allowing extra properties must be explicit.
+On Fri, Feb 02, 2024 at 11:56:53AM -0800, Elliot Berman wrote:
+> On Fri, Feb 02, 2024 at 11:47:43AM -0800, Unnathi Chalicheemala wrote:
+> > Commit a3134fb09e0b ("drivers: soc: Add LLCC driver") didn't
+> > check return value after Broadcast_OR register read in
+> > llcc_update_act_ctrl(), add it.
+> > 
+> 
+> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+> 
+> You'll probably want to add:
+> 
+> Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml     | 4 ++++
- 1 file changed, 4 insertions(+)
+No, this was correct in a3134fb09e0b, ret was returned on the following
+line. The problem was introduced when the new 4.1 if statement was
+introduced without considering that ret might be overwritten.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
-index bd11119dc93d..24cece1e888b 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
-@@ -37,18 +37,21 @@ properties:
- patternProperties:
-   "^display-controller@[0-9a-f]+$":
-     type: object
-+    additionalProperties: true
-     properties:
-       compatible:
-         const: qcom,sm8650-dpu
- 
-   "^displayport-controller@[0-9a-f]+$":
-     type: object
-+    additionalProperties: true
-     properties:
-       compatible:
-         const: qcom,sm8650-dp
- 
-   "^dsi@[0-9a-f]+$":
-     type: object
-+    additionalProperties: true
-     properties:
-       compatible:
-         items:
-@@ -57,6 +60,7 @@ patternProperties:
- 
-   "^phy@[0-9a-f]+$":
-     type: object
-+    additionalProperties: true
-     properties:
-       compatible:
-         const: qcom,sm8650-dsi-phy-4nm
--- 
-2.43.0
+Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
 
+Regards,
+Bjorn
+
+> 
+> > Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+> > ---
+> >  drivers/soc/qcom/llcc-qcom.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> > index 4ca88eaebf06..cbef0dea1d5d 100644
+> > --- a/drivers/soc/qcom/llcc-qcom.c
+> > +++ b/drivers/soc/qcom/llcc-qcom.c
+> > @@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
+> >  	ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+> >  				      slice_status, !(slice_status & status),
+> >  				      0, LLCC_STATUS_READ_DELAY);
+> > +	if (ret)
+> > +		return ret;
+> >  
+> >  	if (drv_data->version >= LLCC_VERSION_4_1_0_0)
+> >  		ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
+> > 
+> > ---
+> > base-commit: 021533194476035883300d60fbb3136426ac8ea5
+> > change-id: 20240202-fix_llcc_update_act_ctrl-64908aed9450
+> > 
+> > Best regards,
+> > -- 
+> > Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+> > 
 
