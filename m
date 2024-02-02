@@ -1,159 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-9618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B8CE8479C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 20:38:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A11898479E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 20:48:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93EB71F24E53
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 19:38:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D5BC288216
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 19:48:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C288168B9;
-	Fri,  2 Feb 2024 19:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E118815E5AE;
+	Fri,  2 Feb 2024 19:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ovi+0ekJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oJZA58Q4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5046E15E5D8;
-	Fri,  2 Feb 2024 19:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E104215E5B0;
+	Fri,  2 Feb 2024 19:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706902691; cv=none; b=PIr1JrFHq6opl77RcLlrskmFl7z0zHB94S8+NTN7oh9e4akS9bjd0m7yTfxHL/ZtxM7OfOYMSczNHxWSWt00QIaNW7BUcq/ka1kYDH9fa8ffWBYMd1l4Iw/vUYkh4TPLNgyMQNWeyrI8miBkFK4+xrJJlwOCAyT0BqQQr2E9HCw=
+	t=1706903292; cv=none; b=dVZMDSdthN3AHWYL/aobD5GAVNhumjGolEqm0xSFLT/n9bVzhe2cCsziNti5byt+ZuDYqX1eLj9KR05OzZTh+EXuRwuOk2hCm+1ghIypA2M7mD4OIVawrx5LRdZv04J+xD3gb63vkc2ROWgipeBSwMwlCa87ehGrCH439GU/mMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706902691; c=relaxed/simple;
-	bh=cXSewaIhyGydS5Gw01kUhO+TK9P0kL9oR3wsJgkpSXw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c2+cUy4K12Ry734F4Kqv6SgyGf6pjLe86z8/VXXi9TBps6mBqYYp3HX9Dxz0hk4UMCdLzX1pqDWFd9XnvE2SV/eFZNBRvQuFXffJ7G/bJ8ISo847rG0PgoeDHYCBhX5lBYa+lbZa+98QQWQPKg8Qpx3erxH5bLhX21P7qaUaESs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ovi+0ekJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B896C433C7;
-	Fri,  2 Feb 2024 19:38:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706902690;
-	bh=cXSewaIhyGydS5Gw01kUhO+TK9P0kL9oR3wsJgkpSXw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ovi+0ekJPZurgLg8k360G3rdBWysmMIochoK+bC4Dcn43HvlSf4ueyyed1iL/BIKp
-	 pxEKuGpZMJgyE5VB2iyakVKzVkI2z27TLziSvsZ4MBVpP8XEWYFAY5S0rSaNa7I0UG
-	 SKlElFrz4Z9VulT1xnl556sxrDbnc+j8TwwhaKH4uSReLWdLMGT2fi1fd8C7dP5jrO
-	 rM+V/ev1Bil/ScnFXez9obyL29t300jIRIfkQUgX4ZB9faRUULT7KshaFJKNwYCoHV
-	 JObzf2YabL/I7Jf8mWG8M//XHvb2ipLKSxgKCp88Y6Q7G7+p85bTJwyv93zIvOThvZ
-	 bwDBvEtB+tMRg==
-Date: Fri, 2 Feb 2024 13:38:08 -0600
-From: Rob Herring <robh@kernel.org>
-To: Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>, Leo Yan <leo.yan@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-msm@vger.kernel.org,
-	Tingwei Zhang <quic_tingweiz@quicinc.com>,
-	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-	Tao Zhang <quic_taozha@quicinc.com>
-Subject: Re: [PATCH v3 2/2] dt-bindings: arm: Add device-name in the
- coresight components
-Message-ID: <20240202193808.GA581322-robh@kernel.org>
-References: <20240131082628.6288-1-quic_jinlmao@quicinc.com>
- <20240131082628.6288-3-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1706903292; c=relaxed/simple;
+	bh=3oCXU5oLOkCP1EmBxyuE3BXoh2axCVFn3sXB5wmKqx4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=hJrrhA4evLt6dbfGbNB/0JVwG41WJwRoWQllUtwBwjn0qnyVQkpMgyY8jYhc4dM4OT6AvwBLOl4Cjoom2jnZkf3Ne5ANg+fd1ybVrVHTfONkvrUkQxsqWyiakNJdDEqUQ7cj+8Egk8e98b24Yj3MSKFUkyNAproZHsdm3sz0/bY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oJZA58Q4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412DTtNP008603;
+	Fri, 2 Feb 2024 19:48:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=gq4
+	o9jWhaIfaZM/pumBcf3agGL/sUeHK1Fv4y5qvKc0=; b=oJZA58Q4aOUmsZy4lxE
+	I3L1+cSgbC3nFYhCJn2zrUUEMlaglUJEFdC+DMEPyw5jr5EiFMvHFb0JALmiMCis
+	wl+mpJ8j/Kmq+mErTU/XgotORenhTFXzBiaQDHs6xFETaG2BMEcHWsosY5IJBHKf
+	28Lfk0TkJW+0PmZDXXKI3gATMuYnF7OC//wRb42pXGTH+hQKuO7D9OaKwO18uVb8
+	LLupRh3KOUrslSSnELF1KIhr4xPCrCUwRh05NuurxeYIiPrtcaGhW6Nu+Qp06jtY
+	uKfXX2Ph4ivY3m9oM76qx2XAD5CD1RauISftlYBTj0xznZY/xzDFioenPF49vl/v
+	jSw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0ptwacjb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 19:48:06 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412Jm54q013580
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 19:48:05 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
+ 2024 11:48:03 -0800
+From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+Date: Fri, 2 Feb 2024 11:47:43 -0800
+Subject: [PATCH] soc: qcom: llcc: Check return value on Broadcast_OR reg
+ read
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240131082628.6288-3-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240202-fix_llcc_update_act_ctrl-v1-1-d36df95c8bd5@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAN5GvWUC/x2MUQqAIBAFrxL7nWBhUV0lQmTdakEq1CKI7t7Sz
+ 8DAvPdAosiUYCgeiHRx4n0TqcoCcHXbQoq9ONS6NlqgZr5tCIj2PLzLZB1mizkG1Zped458bxo
+ NMj8iSftfj9P7fhaWvgxqAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Unnathi Chalicheemala" <quic_uchalich@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706903282; l=1046;
+ i=quic_uchalich@quicinc.com; s=20240202; h=from:subject:message-id;
+ bh=3oCXU5oLOkCP1EmBxyuE3BXoh2axCVFn3sXB5wmKqx4=;
+ b=Q0AvVESI3f/xUctl+Ynr7fgvkuJfhQ8MToZPQ7gzOo0VS4UIEBVFLwlnAUtLu39v+9kQQREk4
+ N/v9iRhStxUDvVuEGocC2TsfgObkoaQEEjU+i919GBNDXKCEtWXKjO1
+X-Developer-Key: i=quic_uchalich@quicinc.com; a=ed25519;
+ pk=8n+IFmsCDcEIg91sUP/julv9kf7kmyIKT2sR+1yFd4A=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: o9MiPB8ZHQiKyF16kcAxMiL6-Qth9HWN
+X-Proofpoint-GUID: o9MiPB8ZHQiKyF16kcAxMiL6-Qth9HWN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-02_12,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ malwarescore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=811 adultscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020142
 
-On Wed, Jan 31, 2024 at 12:26:26AM -0800, Mao Jinlong wrote:
-> Current name of coresight component's folder consists of prefix of
-> the device and the id in the device list. When run 'ls' command,
-> we can get the register address of the device. Take CTI for example,
-> if we want to set the config for modem CTI, but we can't know which
-> CTI is modem CTI from all current information.
-> 
-> cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
-> cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
-> 
-> Add device-name in device tree which can provide a better description
-> of the coresight device. It can provide the info like the system or
-> HW it belongs to.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../devicetree/bindings/arm/arm,coresight-catu.yaml         | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-cpu-debug.yaml    | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-cti.yaml          | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-dummy-sink.yaml   | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
->  .../bindings/arm/arm,coresight-dynamic-funnel.yaml          | 6 ++++++
->  .../bindings/arm/arm,coresight-dynamic-replicator.yaml      | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-etb10.yaml        | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-etm.yaml          | 6 ++++++
->  .../bindings/arm/arm,coresight-static-funnel.yaml           | 6 ++++++
->  .../bindings/arm/arm,coresight-static-replicator.yaml       | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-stm.yaml          | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-tmc.yaml          | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-tpiu.yaml         | 6 ++++++
->  .../devicetree/bindings/arm/qcom,coresight-tpda.yaml        | 6 ++++++
->  .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml        | 6 ++++++
+Commit a3134fb09e0b ("drivers: soc: Add LLCC driver") didn't
+check return value after Broadcast_OR register read in
+llcc_update_act_ctrl(), add it.
 
-Why do you need a name on everything? Funnels and replicators, for 
-example, aren't a source of data, but just connected to things that are. 
-ETM is tightly coupled to a CPU and you have a link to it. You have 
-graph links to show connections. Limit this to where you actually need 
-it. 
+Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+---
+ drivers/soc/qcom/llcc-qcom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
->  16 files changed, 96 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-catu.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-catu.yaml
-> index 2bae06eed693..a4d20aad0c70 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-catu.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-catu.yaml
-> @@ -44,6 +44,12 @@ properties:
->        - const: arm,coresight-catu
->        - const: arm,primecell
->  
-> +  device-name:
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 4ca88eaebf06..cbef0dea1d5d 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
+ 	ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+ 				      slice_status, !(slice_status & status),
+ 				      0, LLCC_STATUS_READ_DELAY);
++	if (ret)
++		return ret;
+ 
+ 	if (drv_data->version >= LLCC_VERSION_4_1_0_0)
+ 		ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
 
-This is too generic of a name. Make is something closer to how it is 
-used or what it is for. Naming sysfs devices is not how it is used. 
-That's just an intermediate step.
+---
+base-commit: 021533194476035883300d60fbb3136426ac8ea5
+change-id: 20240202-fix_llcc_update_act_ctrl-64908aed9450
 
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description:
-> +      Define the name which can describe what kind of HW or system the
-> +      device is for.
-> +
->    reg:
->      maxItems: 1
->  
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml
-> index 0a6bc03ebe00..6094cc9cb834 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml
-> @@ -39,6 +39,12 @@ properties:
->        - const: arm,coresight-cpu-debug
->        - const: arm,primecell
->  
-> +  device-name:
-> +    $ref: /schemas/types.yaml#/definitions/string
+Best regards,
+-- 
+Unnathi Chalicheemala <quic_uchalich@quicinc.com>
 
-If you are redefining the type multiple times, there's a problem in the 
-structure of the schemas. Really, that's true for anything duplicated in 
-the kernel.
-
-Rob
 
