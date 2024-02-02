@@ -1,82 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-9585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A54E684761C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:31:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28451847637
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:35:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F41B1F2D58B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:31:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D786B2841EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A40A814AD33;
-	Fri,  2 Feb 2024 17:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ABC314AD2F;
+	Fri,  2 Feb 2024 17:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="0AwoUNqs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1vYBLdx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F91B14AD0E;
-	Fri,  2 Feb 2024 17:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C4314A4F4;
+	Fri,  2 Feb 2024 17:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706895038; cv=none; b=M8Exid2i1sA1sz+nBfphsYssCvNqwp58QUrWGCXCEZdgMAVVpy3rM4hdW05c43yuAiHUsOQLByHYzdLmTN+yXMyF9wTZ+nGapfxnQeFvl+74VTDgPM+oMOtrjfP//khG9kG2qbArSn+UnCKQxI+aWpDvYrqZ5iMiJDiy08c3t48=
+	t=1706895320; cv=none; b=LkaDpdJY4NO6zgAjVBxTjFU7MxMUfOjwXivGoJ0YXWkaNUAqsdlW0aZZgw8ICXKVKatqURiRQaeXda+zkq8PSfXYiEQquTOIv1hGCEmT/Ikh5zYdYD6tiuUJR9h+NoXwndWmY7qXzPnn9q2a5VmuvMcU0W7kL6ePblzx4EF5XUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706895038; c=relaxed/simple;
-	bh=BlIMjuEgLbBMCBsdwCAz1BdgaPd0WZtrspP0SKES5qc=;
+	s=arc-20240116; t=1706895320; c=relaxed/simple;
+	bh=pbu0xiu71mLzG3tpAlx4XRiq02M7PQbHrw97/JF7Ohs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sMFLskLzp2jBJsBrTlS3387YvysmFpKmziwAjaXJdDWqeQRMV/W+KXjn7X/NNqlbfwAJAeBZrM678t8nX9cm0QN+Fi05KsYnE1YXQoqNjNa8IC+hn9Trun9SeX79e3T1sq+XVi9FfvSSWDlIzGo4AbqwB8BTCNfn03DlIqTXIjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=0AwoUNqs; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=SrWGzRDXFcq0Pr0rVOE+6OznEblUBFj2izYzbtEY5sc=; b=0AwoUNqsmMIvSNZVVt2Ksny2HI
-	2B5XEYr2LYd/flO3suuyWPhfyFHs2cxroDQtly9R9OOcgLEjCK1+R5EKBmxZoCxDAWIvGNK0+Uy4g
-	V+4GFZnOLkDF3m2cW4wWtYvZUuk8/vrdCJK9Na+dg0S4YTkHkF0CDS8JRqYGD+z5B7NKSYdsBG06h
-	LYxKRw4uSybfu8NTu8NtIKnzKM4LPbH1SQ11PT8llc8Mohx7qRcsmU2YFRbQfK3qtNfdkViOVBP77
-	JBqp6ThbzqdM8m5CH+4n54DACeQhzIOainmjNQO0o8N5GbRVmhtbgepEO0kUPZ1bWj39QOEEcBkbO
-	KNNFVdbw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55012)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rVxMw-0006Gu-03;
-	Fri, 02 Feb 2024 17:30:26 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rVxMt-0008U5-Nw; Fri, 02 Feb 2024 17:30:23 +0000
-Date: Fri, 2 Feb 2024 17:30:23 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Christian Marangi <ansuelsmth@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=moSFJP+ExnfhQMLmDyjzPX99EC/Ul5mv0phXfIXsAFW/ibCk9DKVy9z2B0OcjX93W3IFrR0GHdg6vHNJ4l4p3R+k8GrgHNjEAkdkwsL1/HkCEpVoTtBQQ9H2EukDXIzn1EHq1UV4A2r55FjOCZSfATbQEiY9F31J1644a6tysAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1vYBLdx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80438C433C7;
+	Fri,  2 Feb 2024 17:35:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706895319;
+	bh=pbu0xiu71mLzG3tpAlx4XRiq02M7PQbHrw97/JF7Ohs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c1vYBLdxQMumiL5sxhAxnqvnHpG6QNMuCs3YsPZgglZQwxqXD2ii4jpO0SDI6+BH7
+	 oKMIes1W5EcWzMTTKWx6aglx3CJLB3O2SzP0qDBCYiSMt1S9oBWBORQGbq57kzwZ6U
+	 NTuee7T89T9vUQumVHY5mknuXTVi39A89JlzfZixiPgnavqPm+7M7bp3qom3MEifcB
+	 34V79gLh1ooMWm9kbM7F3LublFgKQXwhlOgcnYTdXJajTXzj6/N8Uom+oskQEN6UZC
+	 PTd0scEJYo9HtAMZWu3n1dSjNH/YZRvBJfrlzWQtVPOxdcjSXJIowB7Q5TmivPdpvF
+	 +XGUcjwAMjA/w==
+Date: Fri, 2 Feb 2024 11:35:17 -0600
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
+	linux-usb@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>,
 	Bjorn Andersson <andersson@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v5 9/9] net: phy: qca807x: add support for
- configurable LED
-Message-ID: <Zb0mryS0CGfkolbO@shell.armlinux.org.uk>
-References: <20240201151747.7524-1-ansuelsmth@gmail.com>
- <20240201151747.7524-10-ansuelsmth@gmail.com>
- <46085abf-8e82-4fd9-95b8-95cbfde6e5c2@lunn.ch>
- <65bd1af9.df0a0220.c0618.9f8d@mx.google.com>
- <8bbff46a-f316-49b7-82f8-44dbdd452b0d@lunn.ch>
+	Liam Girdwood <lgirdwood@gmail.com>
+Subject: Re: [PATCH v3 2/6] dt-bindings: usb: qcom,pmic-typec: add support
+ for the PMI632 block
+Message-ID: <170689531689.307900.6931801262613726978.robh@kernel.org>
+References: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
+ <20240130-pmi632-typec-v3-2-b05fe44f0a51@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,40 +70,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8bbff46a-f316-49b7-82f8-44dbdd452b0d@lunn.ch>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <20240130-pmi632-typec-v3-2-b05fe44f0a51@linaro.org>
 
-On Fri, Feb 02, 2024 at 06:08:33PM +0100, Andrew Lunn wrote:
-> On Fri, Feb 02, 2024 at 05:40:21PM +0100, Christian Marangi wrote:
-> > On Fri, Feb 02, 2024 at 02:43:37AM +0100, Andrew Lunn wrote:
-> > > > +
-> > > > +			phydev->drv->led_brightness_set = NULL;
-> > > > +			phydev->drv->led_blink_set = NULL;
-> > > > +			phydev->drv->led_hw_is_supported = NULL;
-> > > > +			phydev->drv->led_hw_control_set = NULL;
-> > > > +			phydev->drv->led_hw_control_get = NULL;
-> > > 
-> > > I don't see how that works. You have multiple PHYs using this
-> > > driver. Some might have LEDs, some might have GPOs. But if you modify
-> > > the driver structure like this, you prevent all PHYs from having LEDs,
-> > > and maybe cause a Opps if a PHY device has already registered its
-> > > LEDs?
-> > >
-> > 
-> > God you are right! Off-topic but given the effects this may cause, why
-> > the thing is not const?
+
+On Tue, 30 Jan 2024 21:32:55 +0200, Dmitry Baryshkov wrote:
+> The PMI632 PMIC has the same Type-C register block as the PM8150B.
+> However this PMIC doesn't support USB Power Delivery. As such it doesn't
+> have the second region used by the existing pm8150b bindings. Add if
+> clauses to handle the PMI632 usecase.
 > 
-> I would like it to be, but its not easy. There are fields in the
-> driver structure that phylib needs to modify. e.g. mdiodrv.driver gets
-> passed to the driver core when registering the driver, and it modifies
-> it. mdiodrv.flags is also manipulated. So we cannot make the whole
-> structure const.
+> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/usb/qcom,pmic-typec.yaml   | 32 +++++++++++++++++++++-
+>  1 file changed, 31 insertions(+), 1 deletion(-)
+> 
 
-We can make phy_device's drv pointer const though, which would have the
-effect of catching code such as the above. That doesn't impact the
-driver model nor the mdio layer.
+Reviewed-by: Rob Herring <robh@kernel.org>
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
