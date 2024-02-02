@@ -1,91 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-9586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28451847637
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:35:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D53F1847678
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 18:44:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D786B2841EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:35:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89A781F24543
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 17:44:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ABC314AD2F;
-	Fri,  2 Feb 2024 17:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA49114C59E;
+	Fri,  2 Feb 2024 17:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1vYBLdx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ox/DJBfx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C4314A4F4;
-	Fri,  2 Feb 2024 17:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC17514533A;
+	Fri,  2 Feb 2024 17:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706895320; cv=none; b=LkaDpdJY4NO6zgAjVBxTjFU7MxMUfOjwXivGoJ0YXWkaNUAqsdlW0aZZgw8ICXKVKatqURiRQaeXda+zkq8PSfXYiEQquTOIv1hGCEmT/Ikh5zYdYD6tiuUJR9h+NoXwndWmY7qXzPnn9q2a5VmuvMcU0W7kL6ePblzx4EF5XUM=
+	t=1706895821; cv=none; b=GUJDJZdfmef0BcCuw5BCIG7sed3V/oHeo8tMlQs8Q5cFFafzlAP426HiOhMRAJUSJQUAO1PGhaCYZy+g4N6bOogYsEp4HLSZYFEj90lOYTsFCqEsHF4+lYnZtuJzxuk3IQKyeUq5QsBtmHpSJgRHVgD4DhrozZpAzqnb/KdUQsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706895320; c=relaxed/simple;
-	bh=pbu0xiu71mLzG3tpAlx4XRiq02M7PQbHrw97/JF7Ohs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=moSFJP+ExnfhQMLmDyjzPX99EC/Ul5mv0phXfIXsAFW/ibCk9DKVy9z2B0OcjX93W3IFrR0GHdg6vHNJ4l4p3R+k8GrgHNjEAkdkwsL1/HkCEpVoTtBQQ9H2EukDXIzn1EHq1UV4A2r55FjOCZSfATbQEiY9F31J1644a6tysAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1vYBLdx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80438C433C7;
-	Fri,  2 Feb 2024 17:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706895319;
-	bh=pbu0xiu71mLzG3tpAlx4XRiq02M7PQbHrw97/JF7Ohs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c1vYBLdxQMumiL5sxhAxnqvnHpG6QNMuCs3YsPZgglZQwxqXD2ii4jpO0SDI6+BH7
-	 oKMIes1W5EcWzMTTKWx6aglx3CJLB3O2SzP0qDBCYiSMt1S9oBWBORQGbq57kzwZ6U
-	 NTuee7T89T9vUQumVHY5mknuXTVi39A89JlzfZixiPgnavqPm+7M7bp3qom3MEifcB
-	 34V79gLh1ooMWm9kbM7F3LublFgKQXwhlOgcnYTdXJajTXzj6/N8Uom+oskQEN6UZC
-	 PTd0scEJYo9HtAMZWu3n1dSjNH/YZRvBJfrlzWQtVPOxdcjSXJIowB7Q5TmivPdpvF
-	 +XGUcjwAMjA/w==
-Date: Fri, 2 Feb 2024 11:35:17 -0600
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>
-Subject: Re: [PATCH v3 2/6] dt-bindings: usb: qcom,pmic-typec: add support
- for the PMI632 block
-Message-ID: <170689531689.307900.6931801262613726978.robh@kernel.org>
-References: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
- <20240130-pmi632-typec-v3-2-b05fe44f0a51@linaro.org>
+	s=arc-20240116; t=1706895821; c=relaxed/simple;
+	bh=LLN9y61AoFj7+BGhIcNuEpEgy1jM9vokgbzH/7xzzEM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=S+xZ++ZaG2HpmUEjDi5QUHCXWMRP/SEGW3lM5XADlauFNhQa0YC9DbKQwG09Hwi9ZOKSaw6VGWMHkkLXEDPRKfUXMoxyM5I5AAoNZdB7Lt/dIgxImw9JyzSTfsmfd6PjxwlWWkHOBnoF2S9Qtmp6gaM+H9EnG8321J0cAF/Q+Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ox/DJBfx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 412GOZ3A012362;
+	Fri, 2 Feb 2024 17:43:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=w9TDcpG
+	+ViqU0k0LnHjATuGvwzj+eqaumBwSjgdKJyc=; b=Ox/DJBfxa++at7M+Vhk90Qb
+	y/y6BnhhEY/OSBnxjxhoDHIXdqbLbXnjJHSMN97jKXubolDTvtebAZBYDCkh0Ao2
+	w6kR88FuvFihPufCk2c8BhqHsT4tELAL20qD/VOu7w88EwFgNVNuGn2XXdG07xpm
+	MZaGo6iieIodWFOjlTZabcg/DefXvuNCZBuCfgSTWfeZlzwKRdtr7TCLRpJ4W0pk
+	+j5tSVC19Uuk4HmNeov/vXe0kr3bOVnJ9R0TNb5scFrAN5KJfhEmRzWsUl32/0nB
+	77d92Oex1w6SllexGjJb0645aAD6rCxQt5uIsbRZQGqBFcZwF9RzuyuMFr/wcZw=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0ptvj0q4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 17:43:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 412HhX0i001484
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 17:43:33 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 2 Feb 2024 09:43:32 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <judyhsiao@chromium.org>, <quic_bjorande@quicinc.com>
+CC: <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+Subject: [PATCH] ASoC: dt-bindings: google,sc7280-herobrine: Drop bouncing @codeaurora
+Date: Fri, 2 Feb 2024 10:43:13 -0700
+Message-ID: <20240202174313.4113670-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240130-pmi632-typec-v3-2-b05fe44f0a51@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: x0I-X33R-5sBKvv7YPz6LWqnJl2RaALZ
+X-Proofpoint-ORIG-GUID: x0I-X33R-5sBKvv7YPz6LWqnJl2RaALZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-02_11,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxlogscore=550 priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020128
 
+The servers for the @codeaurora domain have long been retired and any
+messages sent there bounce.  Srinivasa Rao Mandadapu has left the
+company and there does not appear to be an updated address to suggest,
+so drop Srinivasa as maintainer of the binding.  The binding still
+appears to be maintined as Judy is listed.
 
-On Tue, 30 Jan 2024 21:32:55 +0200, Dmitry Baryshkov wrote:
-> The PMI632 PMIC has the same Type-C register block as the PM8150B.
-> However this PMIC doesn't support USB Power Delivery. As such it doesn't
-> have the second region used by the existing pm8150b bindings. Add if
-> clauses to handle the PMI632 usecase.
-> 
-> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/usb/qcom,pmic-typec.yaml   | 32 +++++++++++++++++++++-
->  1 file changed, 31 insertions(+), 1 deletion(-)
-> 
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ .../devicetree/bindings/sound/google,sc7280-herobrine.yaml       | 1 -
+ 1 file changed, 1 deletion(-)
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+index ec4b6e547ca6..cdcd7c6f21eb 100644
+--- a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
++++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+@@ -7,7 +7,6 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Google SC7280-Herobrine ASoC sound card driver
+ 
+ maintainers:
+-  - Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+   - Judy Hsiao <judyhsiao@chromium.org>
+ 
+ description:
+-- 
+2.34.1
 
 
