@@ -1,158 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-9486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A533C846A14
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:03:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CE3D846A1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:05:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA0D11C29D71
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:03:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5EAD1F2A4BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:05:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D621804E;
-	Fri,  2 Feb 2024 08:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FCCD182A1;
+	Fri,  2 Feb 2024 08:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CmN4zUCg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YyVcB4IH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6770617C96
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 08:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31636182AB;
+	Fri,  2 Feb 2024 08:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706860998; cv=none; b=YToHuZlRNL71xszzqCbWV2a4oSzSnGySKqzkagamo0typAXfn7eVRfnvJisn5WhJ/J+0uk/2E6LNuNMJ8MmnxQkDHLZLR+rDlNL99Tq3+jXmMmhKy1IuDFAeHuofVgInt8FIR6/fBI5PT4IlUItxFu0IKP33CWRkrcXXAN0yuvc=
+	t=1706861107; cv=none; b=rfweHxi2MfJPFQ560UbMk876sUZHjSGfSBan79yM0Dj9CQcR3uiNlghAbq9J+mIPRjC1olHUM2pvgAluencT59icY4GskcCEw8YJtzLmGEy7VHL32rDuiYvfX35VQTLU+k76mHEvVPoGVdroE9/IRjRvLFDRDt8B4DNqIEdXJtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706860998; c=relaxed/simple;
-	bh=u1j/FQG3r7UnfjaAFghDYZBL8vZoKi0GU5L7uMw+bew=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ak9kx/8oPZbyx+eFEVKPTEnMN3vAFBsVcVXKzqCb+mG+7Z3F7EXsDRSVmKVx4MoHALCgJN9gs+uyR6cJ/beBSeMFdS6mJdioYUdG4CiD6HtIP/bCghgTc0p8tAz+02FBCZ8qF1R2oYckH0r1isWJqp9nYRHbIEunHhwPw/m7mBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CmN4zUCg; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51121637524so2687818e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 00:03:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706860994; x=1707465794; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KB4XVOF8NhiViTXxA6Zl1yFXZ6IHetiibAxn6ek+TKk=;
-        b=CmN4zUCgK3o7elWFEoi0dxGHXbgJiaoTdANsDTw9xvpfjvEX//RZDrNfEIWR/QblbN
-         wOGhvmq+yRsZmWbFRnlQXwdi9IBrjG2nwEjYKT0kIrDeC8A+YDLz3xE6n9rx1URTkhgI
-         BJQYnN+Elb4UvSKJUHRwU5bQ6sPVNNNkPl+rycinr3EWPubnDzR4NS241Wzcs2QZ5agE
-         ZnfK3mppuWxOtlXs7gqiFJ2V7ILBSJMUzIVMxf1EHIYyrGJt8ABXkikSXlg7IB9wqFEd
-         Cu45t3edi5D4EaYdGgsm6r4moF7sg+AGVUAzZI2EzIqz8RsVzYOIpC83CMpDFw6H4teO
-         fM6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706860994; x=1707465794;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KB4XVOF8NhiViTXxA6Zl1yFXZ6IHetiibAxn6ek+TKk=;
-        b=cP22E6VpyfnpmLEBFdD73JZa0xwZ4y9O4haJKhQhJqD0QRmMpmtywz5oF/x9Ugs3p6
-         vSbUV0E/BAP6L7oS5Td2SDzSIUfeG6tY7nGQYKQKyFiUzU/KJ+VEt8BKazwmKJBCQIth
-         pwczS1np9jqX0PxiLJ1HEcm4zdNDYymtN98pY5AWR3CMj2MpUsNj+77zoUu7SmIyYZXk
-         daHuBdUkwXGYa4Ns6kZAXhOSRpqi8qw3slkDjKMdxrM5kdPj9gsBxJPP9FMxja4Pqw0H
-         akMAOb64ZIqCjy0W4r5joq3SyZ5t6yfR+2rcSdZX0Gp1Bn9poCAYyeH98DIcJpovOu5f
-         u03w==
-X-Gm-Message-State: AOJu0YyaZIhVqGOom+5ih9j25Yx2okhbq/bknJqztd3/ynKIF0Kl1qE4
-	lfAy0rMy0suzC6CiSnmoTmMJ3Un5rZq93MvMhRlh96MYpsWjPoflBNgkFAz9h98=
-X-Google-Smtp-Source: AGHT+IFB6mce1oI/LW8EsnQI5aFAYQIU3ugIJ/la2J1AO+yeZB2NnZvwehyFGNprWrWK9PoqB0i5PQ==
-X-Received: by 2002:a05:6512:3c90:b0:511:e7f:3ae8 with SMTP id h16-20020a0565123c9000b005110e7f3ae8mr4373685lfv.48.1706860994134;
-        Fri, 02 Feb 2024 00:03:14 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCX3IJUnmoWf05B7dBJebuIeWUyfOgVD5AP05f1K1Dd2L0TxvxqkwUXGSWOBIdhiPm5wCFeWnrz8TDeggLN2+OHAaY+qlhTDsY/4qR3AGvL0Efim75BItajmUrdHZX4aK7bgi6sVF6RuPREhy9JA7bdeKLyWB4rU+KJdBZDGS/MfvtdKpN35YDvtc36SvcHenFHV6gCFodF8kyg4BiIDCeQSs/KZj6MQKHKBHkNtGBsVRFLwZRo7/W4Kv9bCI1GbG64p2Ldlb2d4NluM
-Received: from ?IPV6:2a01:e0a:982:cbb0:560a:f70f:7627:2c48? ([2a01:e0a:982:cbb0:560a:f70f:7627:2c48])
-        by smtp.gmail.com with ESMTPSA id w13-20020a05600c474d00b0040ec66021a7sm1870497wmo.1.2024.02.02.00.03.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 00:03:13 -0800 (PST)
-Message-ID: <6f89dd4f-aae5-4221-9a0a-bebbef862229@linaro.org>
-Date: Fri, 2 Feb 2024 09:03:12 +0100
+	s=arc-20240116; t=1706861107; c=relaxed/simple;
+	bh=7mI6NlFwieNOHDQjAZw0IK3HCmfxxR/i9TASPTBpMNI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I0F3MwYS75H+UIIQlTbfo35mVyaMxDEUc+RruRPqFAMy4W1g0HByfte7pqczA2a9Z3lYPNK+9hmoZfDG571XhD6x3B7eW/ot/2mcbHtsAgvO9YiAd7PY7pC0uyKdv8oVx2UipF0y87MEOTZWi5vmy1tPLNWZdyLHz7imAg1CNgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YyVcB4IH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4127Fgh2019667;
+	Fri, 2 Feb 2024 08:05:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Ty+Qj9A+Kq0SxNjkhWAFPF3gpCT1JtB+qJfAJBgIQHQ=; b=Yy
+	VcB4IHlabDk0xIPnMovROen01itCpzC6qqTtX/wh1rXSBNV5uc13I0dowGpyFg7r
+	LymJ/P+DM9mnfpL3KX86UJ1KSywKw5LoL03hh78VyBAiHG+01K0NFG/OJ6qPMitc
+	HtSQ6X+En/dalQoRokcJ0XFXsCtfURUlyO0WzSJ4HmpLQALoj4iRkOPfs2vU0J8x
+	OaX9JZUyq/TUZCwNVxNKU2fH9jqu5BsiNzcKt7PowuByRvREBXQrFW69V1kl11hK
+	wDYDE7611g05wS06gtoB1lBrFqiGIqDGmMtq/n6Ozc2UHHhSFhcZkQonsUs8VNjw
+	RxSj5+ffyn/DGZ6VxuYA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pu4gtcr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 02 Feb 2024 08:05:00 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41284x2W022320
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 08:04:59 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
+ 2024 00:04:57 -0800
+Message-ID: <9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com>
+Date: Fri, 2 Feb 2024 13:34:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1
-Content-Language: en-US, fr
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org>
- <0cf69024-a3e6-4be2-89ce-017ae521721d@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <0cf69024-a3e6-4be2-89ce-017ae521721d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v1] soc: qcom: mdt_loader: Add Upperbounds check for
+ program header access
+Content-Language: en-US
+To: Auditya Bhattaram <quic_audityab@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240202063919.23780-1-quic_audityab@quicinc.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20240202063919.23780-1-quic_audityab@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yjVRKeSGM5qYyVmq9XFV6vA_8F2o4Beo
+X-Proofpoint-ORIG-GUID: yjVRKeSGM5qYyVmq9XFV6vA_8F2o4Beo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-02_02,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1015 bulkscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020057
 
-On 01/02/2024 20:59, Konrad Dybcio wrote:
-> On 25.01.2024 17:55, Neil Armstrong wrote:
->> Both PCIe0 and PCIe1 controllers are capable of signalling the MSIs
->> received from endpoint devices to the CPU using GIC-ITS MSI controller.
->> Add support for it.
->>
->> The GIC-ITS MSI implementation provides an advantage over internal MSI
->> implementation using Locality-specific Peripheral Interrupts (LPI) that
->> would allow MSIs to be targeted for each CPU core.
->>
->> Like SM8450 & SM8550, the IDs are swapped, but works fine on PCIe0 and PCIe1.
->>
->> WiFi PCIe Device on SM8650-QRD using GIC-ITS:
->> 159:          0          0          0          0          0          0          0          0   ITS-MSI   0 Edge      PCIe PME, aerdrv
->> 167:          0          4          0          0          0          0          0          0   ITS-MSI 524288 Edge      bhi
->> 168:          0          0          4          0          0          0          0          0   ITS-MSI 524289 Edge      mhi
->> 169:          0          0          0         34          0          0          0          0   ITS-MSI 524290 Edge      mhi
->> 170:          0          0          0          0          3          0          0          0   ITS-MSI 524291 Edge      ce0
->> 171:          0          0          0          0          0          2          0          0   ITS-MSI 524292 Edge      ce1
->> 172:          0          0          0          0          0          0        806          0   ITS-MSI 524293 Edge      ce2
->> 173:          0          0          0          0          0          0          0         76   ITS-MSI 524294 Edge      ce3
->> 174:          0          0          0          0          0          0          0          0   ITS-MSI 524295 Edge      ce5
->> 175:          0         13          0          0          0          0          0          0   ITS-MSI 524296 Edge      DP_EXT_IRQ
->> 176:          0          0          0          0          0          0          0          0   ITS-MSI 524297 Edge      DP_EXT_IRQ
+
+This should be v2., first time patches is always counted as v1
+
+On 2/2/2024 12:09 PM, Auditya Bhattaram wrote:
+> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
+> is found. Add an upperbound check to phdrs to access within elf size.
 > 
-> Is it by chance that this one never fired?
+> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com> > ---
+> Added error prints for Invalid access.
+> Link for previous discussion https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
 
-Yeah I only associated to an SSID and did a simple iperf, not enough to trigger all MSIs
+Would be better if you take reference from other patches,
 
-Neil
+Like above can be done as,
 
+Changes in v2:
+   -  ...
+   -  ,,,
+> ---
+>   drivers/soc/qcom/mdt_loader.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> (lgtm otherwise)
+> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> index 6f177e46fa0f..61e2377cc5c3 100644
+> --- a/drivers/soc/qcom/mdt_loader.c
+> +++ b/drivers/soc/qcom/mdt_loader.c
+> @@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+>   	if (phdrs[0].p_type == PT_LOAD)
+>   		return ERR_PTR(-EINVAL);
 > 
-> Konrad
+> +	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
+> +		dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
 
+Should this not be marked for stable kernel ? as without this it could 
+be accessing beyond fw_size for uncertain scenario.
+
+-Mukesh
+
+>   	for (i = 1; i < ehdr->e_phnum; i++) {
+>   		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
+>   			hash_segment = i;
+> --
+> 2.17.1
+> 
+> 
 
