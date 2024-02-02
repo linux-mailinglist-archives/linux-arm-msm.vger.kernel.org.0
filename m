@@ -1,110 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-9459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ADDC84681B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 07:38:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8062A846820
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 07:39:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED5E41F2571F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 06:38:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 845BDB24338
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 06:39:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1303317542;
-	Fri,  2 Feb 2024 06:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E6817755;
+	Fri,  2 Feb 2024 06:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hiK/WfK/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UbtUVvGD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385FE1754C;
-	Fri,  2 Feb 2024 06:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0E71774A;
+	Fri,  2 Feb 2024 06:39:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706855880; cv=none; b=W4JuJzvzFdTWTTjCYO6mb8xYVBCYEZqxyHQXewIDAYrtIwtXrdmPn4Z/Ii/fl7A7ykp94lzAxt/zfXtz5DqDQxsSxvEygm2yelV9nQUF5+bespEzjD5FyJW0jtAlH/dkPXsvw3Mz4MeTYf2qc8zOS21+ar4e2GhO6bUR7hZL268=
+	t=1706855974; cv=none; b=goEr/ylk76ekOPVrDWatF33xhLf7OGHvMsx2RQClQVq0qhK0yOIom/pcfkQmc5ZI1hc0odT/emVCIQfhVDI5aSNX/qJqQUXVLNJTBgTxpPj+kUlQ+kK1mjWaV42WqqskaHOk6c4aoH1E/RpJdr879/YYHOaAVkJMNu/sBC95GxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706855880; c=relaxed/simple;
-	bh=NO6aRY+5svoJRq0NRwfuCjWU+uL1flZP5X/b/oDognI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kpuBxTaMao1/rrKGDD62EUKDG0ysdtwho3lcJNS9whwfKwsn8Oe9bsASJrbC/RSnLIPna+5CL6Qtqkm/FDscPPg2Rt0j/gNnlPONKDgUuMJqTw4R6cB7Pzkl9taP2t7h0InoRvFiV78KY9/uMdDn3+s3C6m5V0iwxPpPxghUba0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hiK/WfK/; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1706855974; c=relaxed/simple;
+	bh=+uwWgROn7xwCpYK73AuMgwmLjp+IXPeINgrWeDo7rvA=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=qJB1+h+43+dG+OsymGUwJ+RFTqvyTmOIMJEd9AXIsEBGObDIxIWhLe41/Bqk/wbURjS/11DC5Oes2JcyLyN6NOG+rEc9p90YjvE3B4dIRaZsEYSoxZiZPIbq1Db8/z+69qBz34RkzAzOcWq3vXueQga0cvNpxYtlaWhjG8tr4/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UbtUVvGD; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4124KV5X024187;
-	Fri, 2 Feb 2024 06:37:55 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4124UMOb028383;
+	Fri, 2 Feb 2024 06:39:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=SzXomCEIOJEr4Pg8l4u035/JwBQ6qeb4zNLDT4xhp7E=; b=hi
-	K/WfK/ppmCF69GMfuKKack8sTqETfSZZCUjFtz6kCi/njhAX45nhRXpRB7mLgV54
-	cYjPToF3dollC/euxPw8MJPgrWDFTRb4O3zUJAhjpN5ykC4XREZuTiGM0IR99HtS
-	rxOyo27SUmDARPj2RmlIdF49Qz2kejTb9iHxpLlVO1sz1sOMO3cjPWsAzItWi6qv
-	BQsOQC9qU5AfaIErDUw+ESdhtR/d5BwCmf7ckmDZtyPK9dyluJ4Gxru1EHXfR1im
-	49KWR6IyXwyyG5XWz4XtzhP8GrheVSEojU9zmLhdAOvENUBFIIG589HqRY3O6L0l
-	DEUOiFU/Fx8JDfJnusUQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pu1rn7f-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=bFOdQ4cUclMz
+	twQO9lzol9OV1vF0GcInILFfiyet5KA=; b=UbtUVvGDpaZVn9fQ8nycIhpciosI
+	CdN4/BYrYzNit6AOkD/VbJnFEhsPoJ6SArEbMKK9CrHQl5JKxhDGxiTDg3jXEDjL
+	sh5aLSjepbDNxY554b01jkmK0lA/3zNgJ4wS6bEmJ7ePWE6cqN/YY7mj7OlujXsg
+	UCU5YDqfA6GHLJx98qW7HaqM4RBQ3kxYSeXmEKyIqK1NQYEVKnY9q0lryqDU7K2T
+	jEeewIYB1UnBh7swdpjXJBDkSfHkgvVSfaWw8JlKAHEiFQFINIyUll0QzBl8nxTN
+	CbOzqUQdctCe+cCFLgf8Nz06Fc0zboN1jWUfnLNUbt5VCF4KdbxMQTC53Q==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pwc0n02-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 06:37:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4126bH9G007730
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 06:37:17 GMT
-Received: from [10.214.18.146] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 1 Feb
- 2024 22:37:16 -0800
-Message-ID: <b643ff62-27be-437f-821f-7ae366f167d9@quicinc.com>
-Date: Fri, 2 Feb 2024 12:07:12 +0530
+	Fri, 02 Feb 2024 06:39:26 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4126dMEZ016344;
+	Fri, 2 Feb 2024 06:39:22 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3vvtwmrta2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Fri, 02 Feb 2024 06:39:22 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4126dM0c016337;
+	Fri, 2 Feb 2024 06:39:22 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-audityab-hyd.qualcomm.com [10.147.244.159])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 4126dLi6016335;
+	Fri, 02 Feb 2024 06:39:22 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 207879)
+	id 0EF625001C2; Fri,  2 Feb 2024 12:09:21 +0530 (+0530)
+From: Auditya Bhattaram <quic_audityab@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Auditya Bhattaram <quic_audityab@quicinc.com>
+Subject: [PATCH v1] soc: qcom: mdt_loader: Add Upperbounds check for program header access
+Date: Fri,  2 Feb 2024 12:09:19 +0530
+Message-Id: <20240202063919.23780-1-quic_audityab@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0xG4ksmH8z3ZGJJQgs-7X-AIcXxE1MuM
+X-Proofpoint-ORIG-GUID: 0xG4ksmH8z3ZGJJQgs-7X-AIcXxE1MuM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-01_10,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
+ phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402020047
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Add Upperbounds check for program
- header access
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240131094253.20384-1-quic_audityab@quicinc.com>
- <5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org>
-Content-Language: en-US
-From: Auditya Bhattaram <quic_audityab@quicinc.com>
-In-Reply-To: <5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Oq2nZImckSnpdh0PX4T2FlcoVKEbe0re
-X-Proofpoint-ORIG-GUID: Oq2nZImckSnpdh0PX4T2FlcoVKEbe0re
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-01_10,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- impostorscore=0 clxscore=1015 mlxlogscore=958 malwarescore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0
- spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020047
 
+hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
+is found. Add an upperbound check to phdrs to access within elf size.
 
+Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
+---
+Added error prints for Invalid access.
+Link for previous discussion https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
+---
+ drivers/soc/qcom/mdt_loader.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-On 2/1/2024 8:20 PM, Konrad Dybcio wrote:
-> On 31.01.2024 10:42, Auditya Bhattaram wrote:
->> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
->> is found. Add an upperbound check to phdrs to access within elf size.
->>
->> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
->> ---
-> 
-> Could you print an error when this happens? There's a lot of EINVALs
-> in the MDT loader codepaths, but you never know which one fired..
-> 
-> Konrad
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 6f177e46fa0f..61e2377cc5c3 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+ 	if (phdrs[0].p_type == PT_LOAD)
+ 		return ERR_PTR(-EINVAL);
 
-Sure, will add error prints
++	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
++		dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	for (i = 1; i < ehdr->e_phnum; i++) {
+ 		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
+ 			hash_segment = i;
+--
+2.17.1
+
 
