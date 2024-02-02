@@ -1,56 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-9451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8409A8466E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 05:15:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2B798466FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 05:34:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E318B242E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 04:15:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 86FB41F23FE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 04:34:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AD66DF4C;
-	Fri,  2 Feb 2024 04:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 800088474;
+	Fri,  2 Feb 2024 04:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hMLGFbP/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mvkWrecU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED741E549;
-	Fri,  2 Feb 2024 04:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4711BEAF2;
+	Fri,  2 Feb 2024 04:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706847330; cv=none; b=Epl3JVGUaFys6hY5n24AREh5M5RMfW/eLh31ieyguQk+SYPFtjBhc8QkQn5tc07/ufJcnHJK0aV427QgQFTWwOVKy7xn65KAekmeEv1d5GOjtaGBv/rynEjIqDMZuTWDWK9iux/CmVlCOFEmYeihwEygqJmSdXWyPgAIZOUJsQw=
+	t=1706848475; cv=none; b=jDivbTPgzA/TjRldERgvIVjf0qeU/2oY84IEKyMBPmHKHlGz0/rFnYG/PQ8ktxVd1K9EM+aUEM0L43Vq8dHOm11hhe6TyXcRyTw7MRADe37zc4ThJardCjP6oMrg4m4FfejWjabUOIeKNlS39546X1gfwQ8Ewb7Olp9HbNwV9Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706847330; c=relaxed/simple;
-	bh=kkjBxErGvqMyqVNGgQPkKqrSn2xGdcYeslQx1VwjIYE=;
+	s=arc-20240116; t=1706848475; c=relaxed/simple;
+	bh=satbLNeZz+QWwEIu5LrwtxRMwFvB1z9KyJTB07xtAgw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JALj6aREzo8pZOXrZgGcR1qHviagCL1D4Oj/SmHfw2IJEKZe0k2qdMJD7GwwjLVqOeloGvh6faoEAjiNmP1doGtln39faQlXqvqTZluCsxCn4mdjTWDhb3fwOAIXcrlzsa0eTdBmmVCXue2mDMxgrjaxngu7OMaRnoNISgW43YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hMLGFbP/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB01C433C7;
-	Fri,  2 Feb 2024 04:15:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=KTCMZNF4g/GW1mL/ViQaPu3bwKsJYUPPIPJSdVxALRAQbwLal8fWcMMi0FcloT8k8mhDr7QNljzJqK7S8fXQRVY/l8iqsJJ5qAYkIxqcu5vvURcwawEaQoTSGK7f9KKRJ7WGdd0j1uHniRzrE8rIuLc+p3fILr5b9soZYE/cJ1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mvkWrecU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAECDC433F1;
+	Fri,  2 Feb 2024 04:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706847329;
-	bh=kkjBxErGvqMyqVNGgQPkKqrSn2xGdcYeslQx1VwjIYE=;
+	s=k20201202; t=1706848474;
+	bh=satbLNeZz+QWwEIu5LrwtxRMwFvB1z9KyJTB07xtAgw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hMLGFbP/hcARdZrNnP6IggS9IfdiSlwHKrbQesdFAJinKWDJLeH7HDoEXYYpEbVXe
-	 H3TpeVnVVXbTb9R8AKk/WU13CkEH4PTAqMF2hKmsvJ292L+K/AxYGQM64nSLYyWb+3
-	 IIe0uJPjRhfN56fypd8Q1etN9I+9GvywStHP8EvGtFIpSstxnk7cQLH3pN+Fye2Ix6
-	 MPTmiXK8cymWbPAEMWZscfRfjFzfP5ETieGmYfuKApePJhGgP5BjXWRO3Ub9kiTYhW
-	 h4n6LT6Mvy9pmNDqvqX+V6Dm5zr2fWFkVeGhe0vaoQaT42taXe/QbHwdD9JSx1yg3a
-	 IHb6n5ptUPU1A==
-Date: Thu, 1 Feb 2024 22:15:26 -0600
+	b=mvkWrecULFI83GjFioZwqm5vQ1TbPIlFqnepDB4YbeJudyH6HH4//FFf42DN2DhqN
+	 E16V9EUtLRMVBl8NOkxZ81MzljTO1myTN++gHrA1u/ncJQrrsTYai2Z0yN6loVzx8R
+	 YzaOEtjrFjoeKvD3Rod1kVYDB42d8hn/qXdHKcxiLjZMIxYFvBl9PrvvUTdKgKX3yS
+	 F/R/Vm0ED29YaHpwNvHFN6YmiDuZZkzg4e5SmbaTR/6JhSB25QiEmCuzGLbJXjl+1b
+	 3mZeuzrQYKvxGZJ+kxcMOGSdaDud/tKKepoSxycP+b+IEMVxgwfjZThKoOxSCOdE3V
+	 OLmt+gdb4LgNQ==
+Date: Thu, 1 Feb 2024 22:34:30 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, robh+dt@kernel.org
-Subject: Re: Re: [PATCH v3 2/2] arm64: dts: qcom: ipq6018: enable sdhci node
-Message-ID: <eqepewdgp5k3ajusf3hk7nazi2eli2w6wgxlbjroldwyobzh3d@aewtie2d3ora>
-References: <3dev6ez4iovtigj5felmwhascaaupzzptwz5wfoag7ml7knlmj@arnddy2jaqxz>
- <20240129024006.1110513-1-amadeus@jmu.edu.cn>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 2/9] arm64: dts: qcom: qrb5165-rb5: model the PMU of the
+ QCA6391
+Message-ID: <5lirm5mnf7yqbripue5nyqu6ej54sx4rtmgmyqjrqanabsriyp@2pjiv5xbmxpk>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
+ <20240201155532.49707-3-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,34 +67,118 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240129024006.1110513-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20240201155532.49707-3-brgl@bgdev.pl>
 
-On Mon, Jan 29, 2024 at 10:40:06AM +0800, Chukun Pan wrote:
-> Hi, Bjorn
-> > Subject and commit message says "enable", but this says disable. Could
-> > you change this to "Add" instead?
+On Thu, Feb 01, 2024 at 04:55:25PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Thanks for your suggestion, I will change this to "Add".
+> Add a node for the PMU module of the QCA6391 present on the RB5 board.
+> Assign its LDO power outputs to the existing Bluetooth module. Add a
+> node for the PCIe port to sm8250.dtsi and define the WLAN node on it in
+> the board's .dts and also make it consume the power outputs of the PMU.
 > 
-
-Thanks
-
-> > Do you have a patch for any board where this is actually enabled?
-> > Perhaps you missed a 3rd patch that enables this and uses the ipq6018_l2
-> > regulator you add in patch 1?
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 128 +++++++++++++++++++++--
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi     |  10 ++
+>  2 files changed, 127 insertions(+), 11 deletions(-)
 > 
-> Some ipq6000 devices do not have pmic chips, resulting in l2 being
-> unavailable. So vqmmc-supply should be configured in the dts of each
-> specific device. As Robert suggested, the ipq6018_l2 node is used for
-> the device dts reference.
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index cd0db4f31d4a..fab5bebafbad 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -108,6 +108,87 @@ lt9611_3v3: lt9611-3v3 {
+>  		regulator-always-on;
+>  	};
+>  
+> +	qca6390_pmu: pmu@0 {
+> +		compatible = "qcom,qca6390-pmu";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
+> +
+> +		vddaon-supply = <&vreg_s6a_0p95>;
+> +		vddpmu-supply = <&vreg_s2f_0p95>;
+> +		vddrfa1-supply = <&vreg_s2f_0p95>;
+> +		vddrfa2-supply = <&vreg_s8c_1p3>;
+> +		vddrfa3-supply = <&vreg_s5a_1p9>;
+> +		vddpcie1-supply = <&vreg_s8c_1p3>;
+> +		vddpcie2-supply = <&vreg_s5a_1p9>;
+> +		vddio-supply = <&vreg_s4a_1p8>;
+> +
+> +		wlan-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+> +		bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> +
+> +		regulators {
+> +			vreg_pmu_rfa_cmn: ldo0 {
+> +				regulator-name = "vreg_pmu_rfa_cmn";
+> +				regulator-min-microvolt = <760000>;
+> +				regulator-max-microvolt = <840000>;
 
-That sounds good, but do we have any one of those boards that should
-reference &ipq6018_l2? Could make plug it into the sdhci node on some
-board?
+I'm still not convinced that the PMU has a set of LDOs, and looking at
+your implementation you neither register these with the regulator
+framework, nor provide any means of controlling the state or voltage of
+these "regulators".
 
-Essentially, why is it needed upstream, when there are no user?
+[..]
+>  
+>  &uart6 {
+> @@ -1311,17 +1418,16 @@ &uart6 {
+>  	bluetooth {
+>  		compatible = "qcom,qca6390-bt";
+>  
+> -		pinctrl-names = "default";
+> -		pinctrl-0 = <&bt_en_state>;
+> -
+> -		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+> -
+> -		vddio-supply = <&vreg_s4a_1p8>;
+> -		vddpmu-supply = <&vreg_s2f_0p95>;
+> -		vddaon-supply = <&vreg_s6a_0p95>;
+> -		vddrfa0p9-supply = <&vreg_s2f_0p95>;
+> -		vddrfa1p3-supply = <&vreg_s8c_1p3>;
+> -		vddrfa1p9-supply = <&vreg_s5a_1p9>;
+> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
+> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> +		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
+> +		vddrfa0-supply = <&vreg_pmu_rfa_0p8>;
+> +		vddrfa1-supply = <&vreg_pmu_rfa_1p2>;
+> +		vddrfa2-supply = <&vreg_pmu_rfa_1p7>;
+> +		vddpcie0-supply = <&vreg_pmu_pcie_0p9>;
+> +		vddpcie1-supply = <&vreg_pmu_pcie_1p8>;
+
+As I asked before, why does bluetooth suddenly care about PCIe supplies?
 
 Regards,
 Bjorn
+
+>  	};
+>  };
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 4d849e98bf9b..7cd21d4e7278 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2203,6 +2203,16 @@ pcie0: pcie@1c00000 {
+>  			dma-coherent;
+>  
+>  			status = "disabled";
+> +
+> +			pcieport0: pcie@0 {
+> +				device_type = "pci";
+> +				reg = <0x0 0x0 0x0 0x0 0x0>;
+> +				#address-cells = <3>;
+> +				#size-cells = <2>;
+> +				ranges;
+> +
+> +				bus-range = <0x01 0xff>;
+> +			};
+>  		};
+>  
+>  		pcie0_phy: phy@1c06000 {
+> -- 
+> 2.40.1
+> 
 
