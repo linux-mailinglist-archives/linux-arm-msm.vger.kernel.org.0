@@ -1,95 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-9437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F10578464C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:03:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BBFA846518
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 01:41:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACC8A289875
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:03:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 900E81C2438B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 00:40:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A72E382;
-	Fri,  2 Feb 2024 00:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF274A26;
+	Fri,  2 Feb 2024 00:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ELiKg/sM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oz1LoouU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0216105;
-	Fri,  2 Feb 2024 00:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A2F3C23;
+	Fri,  2 Feb 2024 00:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706832218; cv=none; b=C/JIsv6LUT05kIW8shxJHaAmM6rXrCXeFV41GBnQJDAaqXgu7RfWys/pnia1XpCsA7j5u+GyjrJUz4FDZ0zTSs9X01FBd8KzeNl4ZzS6II3W/WG7f88q1qja919iNfw+Jr5Lin26Uj1BAet5+j4408JHcCONs+8VIxXQsNY9PnM=
+	t=1706834455; cv=none; b=LF65N9Nx0t0zF+ixjmnbzhD6ZweO1i0oiEs/MQHRDP/wE3aWPqw5KILv+RYpFK6L2lCyv46/43PgXHoUJRpUvpJLTC+cKcSu7E2cqZsBf3QCsF3ssTtI72iNl71rGlzihAdM63vG/StbfHMy+FtDMrMZA2+N7F5++qzPdCHnJDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706832218; c=relaxed/simple;
-	bh=jRRF9WD0Ih34oFyn8QC1/CQx0uQoczFXftdu1/ViRb4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pRhuhU1ccUQjrMOHBkANABsfcBsiTmJy0sadE5rD7bp7x4TmJXfr87WJMggu1hjaCxAOI/K4d+Ae3ZoVOU3+vaZzqsujCtV3nlHgyOjmqXfQqPF4+CWKPWSgas7ErfbI2qZmcNvR35KTnV3U5gTu4ykty4CtF1FcTBcoUxxTY74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ELiKg/sM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FDEC433F1;
-	Fri,  2 Feb 2024 00:03:36 +0000 (UTC)
+	s=arc-20240116; t=1706834455; c=relaxed/simple;
+	bh=dLf5cloqiSaHlekbWkAHkgFrqJzKTS7rJSxj4m9pkNw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cI3xETHSpxpirktKonC4f186YIBKMx+Pewru366XT6MnTjFjyJUZJuMm8oxxgTtRXf37P8H8OdU/35BqTkBEuoMuHwUYw408VKsxK2BQr10DnJOO4HmkVy/SlMCbEEqQjqkd01qOqtGUi62a63Wu30GcNhwVgzTZkbOt0CAHuRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oz1LoouU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07665C433C7;
+	Fri,  2 Feb 2024 00:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706832217;
-	bh=jRRF9WD0Ih34oFyn8QC1/CQx0uQoczFXftdu1/ViRb4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELiKg/sM9oMYqNibGG/5LYhmgT0jM5x2oYprQxJqLmZyTZ2nRwppEdaTmQfAN69F0
-	 FgMCPdgBl39xnkRFNfkD64XX7idIYesPJH9e0LCtaYn0l7kT03k02+Gvip2XS/ZUc5
-	 vUohXNz4xvFOSgO2k2Mg4i6M4jctvhxOwyeyyuKfNbpCBtxMPpMfGsXJztnC4dgyCM
-	 PL2bGc116RDtZuavthS2bkDIucZg3tpOSBmkVqCoFYfCu4xbo2EIVfIvMPFxJuwE9Y
-	 VeVDtCneZvqEHmvu9QGRV+aYZPgoA4POxen9VfDyV2AjLlp1kHEvHSfHJIjLOKvkix
-	 kvy5Qtuf65rSQ==
+	s=k20201202; t=1706834454;
+	bh=dLf5cloqiSaHlekbWkAHkgFrqJzKTS7rJSxj4m9pkNw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oz1LoouUgbOyVQzt99sDj3Ic+NNgrwdyDpyOTD7l77xb4miDPki4x6F9ZILOQ1tr2
+	 EYTgfp6ytRYeXdDGPXAqK9+H3TFQDbgXqUvz7ktIe9pNyWzIaz+IHdTN+hox60Kpot
+	 mwFTcdcq5zS9g8npvGMhtOMvGreSG2+P67MMjBzDu63iZXtlhuZKLWT3F909SacwCk
+	 ZiXhvTWllzwJjXK3EMeD41FRTipnXYR2q+X7L8QqXHn15uctUMheaQ1wAaAP50dtQV
+	 tPh1ZF3go10X2JZt9dXMoLQZ2m9exWq8p7gzzj548QxOA4vibe8X2csE5HFx5Hmmmz
+	 8cIdJDEhS2j5Q==
+Date: Thu, 1 Feb 2024 18:40:50 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: lee@kernel.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	agross@kernel.org,
-	Anjelique Melendez <quic_amelende@quicinc.com>
-Cc: konrad.dybcio@linaro.org,
-	linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-pwm@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add QCOM PBS driver
-Date: Thu,  1 Feb 2024 18:03:34 -0600
-Message-ID: <170683221107.260225.17408986886128551623.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240201204421.16992-2-quic_amelende@quicinc.com>
-References: <20240201204421.16992-2-quic_amelende@quicinc.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RFC 0/9] power: sequencing: implement the subsystem and add
+ first users
+Message-ID: <xdef5sjo5bvdvgx2ezgubeboos45mkeb2dcua63qhmztqrk6ja@m5ylrmdrwmia>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240201155532.49707-1-brgl@bgdev.pl>
 
-
-On Thu, 01 Feb 2024 12:44:20 -0800, Anjelique Melendez wrote:
-> Add the Qualcomm PBS (Programmable Boot Sequencer) driver. The QCOM PBS
-> driver supports configuring software PBS trigger events through PBS RAM
-> on Qualcomm Technologies, Inc (QTI) PMICs.
+On Thu, Feb 01, 2024 at 04:55:23PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> QCOM PBS driver is needed to support LUT PPG. This is a new series to
-> separate PBS patches from the applied LUT PPG patch. Original comments
-> can be found here:
-> https://lore.kernel.org/all/20231221185838.28440-1-quic_amelende@quicinc.com/T/#m7ab7af4c59c6e1019721d01cb3696cb5ed708bda
+
+We now have 3 RFC and 1 PATCH versions of these patches on the list in
+under a month. Please at least add a version to your subject...
+
+> I'd like to preface the cover letter by saying right away that this
+> series is not complete. It's an RFC that presents my approach and is sent
+> to the list for discussion. There are no DT bindings nor docs in
+> Documentation/ yet. Please review it as an RFC and not an upstreambound
+> series. If the approach is accepted as correct, I'll add missing bits.
 > 
-> [...]
+> The RFC[1] presenting my proposed device-tree representation of the
+> QCA6391 package present on the RB5 board - while not really officially
+> accepted - was not outright rejected which is a good sign.
+> 
+> This series incorporates it and builds a proposed power sequencing
+> subsystem together with the first dedicated driver around it. Then it
+> adds first two users: the Bluetooth and WLAN modules of the QCA6391.
+> 
+> The Bluetooth part is pretty straightforward. The WLAN however is a PCIe
+> device and as such needs to be powered-up *before* it's detected on the
+> PCI bus. To that end, we modify the PCI core to instantiate platform
+> devices for existing DT child nodes of the PCIe ports. For those nodes
+> for which a power-sequencing driver exists, we bind it and let it probe.
+> The driver then triggers a rescan of the PCI bus with the aim of
+> detecting the now powered-on device. The device will consume the same DT
+> node as the platform, power-sequencing device. We use device links to
+> make the latter become the parent of the former.
+> 
+> The main advantage of the above approach (both for PCI as well as
+> generic power sequencers) is that we don't introduce significant changes
+> in DT bindings and don't introduce new properties. We merely define new
+> resources.
+> 
 
-Applied, thanks!
+How can we tell? There are still no Documentation/dt-bindings changes in
+your series.
 
-[1/2] dt-bindings: soc: qcom: Add qcom,pbs bindings
-      commit: 641fde51bdb26c09ea8cdbd82084e93bd88d1fcb
-[2/2] soc: qcom: add QCOM PBS driver
-      commit: 5b2dd77be1d85ac3a8be3749f5605bf0830e2998
+Regards,
+Bjorn
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> [1] https://lore.kernel.org/all/CAMRc=MckG32DQv7b1AQL-mbnYdx4fsdYWtLwCyXc5Ma7EeSAKw@mail.gmail.com/T/#md5dc62007d12f6833d4e51658b14e0493954ba68
+> 
+> Bartosz Golaszewski (9):
+>   of: provide a cleanup helper for OF nodes
+>   arm64: dts: qcom: qrb5165-rb5: model the PMU of the QCA6391
+>   power: sequencing: new subsystem
+>   power: pwrseq: add a driver for the QCA6390 PMU module
+>   Bluetooth: qca: use the power sequencer for QCA6390
+>   PCI: create platform devices for child OF nodes of the port node
+>   PCI: hold the rescan mutex when scanning for the first time
+>   PCI/pwrctl: add PCI power control core code
+>   PCI/pwrctl: add a PCI power control driver for power sequenced devices
+> 
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts  | 128 +++++-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi      |  10 +
+>  drivers/bluetooth/hci_qca.c               |  30 ++
+>  drivers/pci/Kconfig                       |   1 +
+>  drivers/pci/Makefile                      |   1 +
+>  drivers/pci/bus.c                         |   9 +-
+>  drivers/pci/probe.c                       |   2 +
+>  drivers/pci/pwrctl/Kconfig                |  17 +
+>  drivers/pci/pwrctl/Makefile               |   4 +
+>  drivers/pci/pwrctl/core.c                 |  82 ++++
+>  drivers/pci/pwrctl/pci-pwrctl-pwrseq.c    |  83 ++++
+>  drivers/pci/remove.c                      |   2 +
+>  drivers/power/Kconfig                     |   1 +
+>  drivers/power/Makefile                    |   1 +
+>  drivers/power/sequencing/Kconfig          |  28 ++
+>  drivers/power/sequencing/Makefile         |   6 +
+>  drivers/power/sequencing/core.c           | 482 ++++++++++++++++++++++
+>  drivers/power/sequencing/pwrseq-qca6390.c | 232 +++++++++++
+>  include/linux/of.h                        |   4 +
+>  include/linux/pci-pwrctl.h                |  24 ++
+>  include/linux/pwrseq/consumer.h           |  53 +++
+>  include/linux/pwrseq/provider.h           |  41 ++
+>  22 files changed, 1229 insertions(+), 12 deletions(-)
+>  create mode 100644 drivers/pci/pwrctl/Kconfig
+>  create mode 100644 drivers/pci/pwrctl/Makefile
+>  create mode 100644 drivers/pci/pwrctl/core.c
+>  create mode 100644 drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
+>  create mode 100644 drivers/power/sequencing/Kconfig
+>  create mode 100644 drivers/power/sequencing/Makefile
+>  create mode 100644 drivers/power/sequencing/core.c
+>  create mode 100644 drivers/power/sequencing/pwrseq-qca6390.c
+>  create mode 100644 include/linux/pci-pwrctl.h
+>  create mode 100644 include/linux/pwrseq/consumer.h
+>  create mode 100644 include/linux/pwrseq/provider.h
+> 
+> -- 
+> 2.40.1
+> 
 
