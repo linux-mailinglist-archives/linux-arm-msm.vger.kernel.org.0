@@ -1,143 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-9487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CE3D846A1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:05:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6100C846A6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 09:18:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5EAD1F2A4BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:05:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85F7B1C22EA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Feb 2024 08:18:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FCCD182A1;
-	Fri,  2 Feb 2024 08:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65E2182AB;
+	Fri,  2 Feb 2024 08:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YyVcB4IH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EWH3J6gR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31636182AB;
-	Fri,  2 Feb 2024 08:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48E418030
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Feb 2024 08:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706861107; cv=none; b=rfweHxi2MfJPFQ560UbMk876sUZHjSGfSBan79yM0Dj9CQcR3uiNlghAbq9J+mIPRjC1olHUM2pvgAluencT59icY4GskcCEw8YJtzLmGEy7VHL32rDuiYvfX35VQTLU+k76mHEvVPoGVdroE9/IRjRvLFDRDt8B4DNqIEdXJtE=
+	t=1706861512; cv=none; b=T8SEcBovuosjkoKiFSd+Slx9cn2oymyI3xz77YN0DVYzZDH8zAnfuRVnPG8GooQdG+ekII5i1FhVhWQVaD0rruPT3sFQz4xB5BtsUmYAKxEaiwmoU6iPSaipGXMqFqQlkb5qjqBfUErmVKzhciz2hUHydmhg6COn2rMzmIjPdWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706861107; c=relaxed/simple;
-	bh=7mI6NlFwieNOHDQjAZw0IK3HCmfxxR/i9TASPTBpMNI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=I0F3MwYS75H+UIIQlTbfo35mVyaMxDEUc+RruRPqFAMy4W1g0HByfte7pqczA2a9Z3lYPNK+9hmoZfDG571XhD6x3B7eW/ot/2mcbHtsAgvO9YiAd7PY7pC0uyKdv8oVx2UipF0y87MEOTZWi5vmy1tPLNWZdyLHz7imAg1CNgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YyVcB4IH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4127Fgh2019667;
-	Fri, 2 Feb 2024 08:05:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Ty+Qj9A+Kq0SxNjkhWAFPF3gpCT1JtB+qJfAJBgIQHQ=; b=Yy
-	VcB4IHlabDk0xIPnMovROen01itCpzC6qqTtX/wh1rXSBNV5uc13I0dowGpyFg7r
-	LymJ/P+DM9mnfpL3KX86UJ1KSywKw5LoL03hh78VyBAiHG+01K0NFG/OJ6qPMitc
-	HtSQ6X+En/dalQoRokcJ0XFXsCtfURUlyO0WzSJ4HmpLQALoj4iRkOPfs2vU0J8x
-	OaX9JZUyq/TUZCwNVxNKU2fH9jqu5BsiNzcKt7PowuByRvREBXQrFW69V1kl11hK
-	wDYDE7611g05wS06gtoB1lBrFqiGIqDGmMtq/n6Ozc2UHHhSFhcZkQonsUs8VNjw
-	RxSj5+ffyn/DGZ6VxuYA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w0pu4gtcr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 02 Feb 2024 08:05:00 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41284x2W022320
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 2 Feb 2024 08:04:59 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
- 2024 00:04:57 -0800
-Message-ID: <9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com>
-Date: Fri, 2 Feb 2024 13:34:54 +0530
+	s=arc-20240116; t=1706861512; c=relaxed/simple;
+	bh=bTtGqCgt8+lUk9uK976uGz7vMakgO575FyOGcuvJdr8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Sf2bAqSsJnB3ZmSlaNnpQXjxWfr8VhIr9x1d8DjW4Zt+WWaBJRmxWnoYg9UmtyWdyAsxgKI3TB51A42X0X+0g4Uie8tUGxkxPkXVBcbdv8hGfRmBQfvYbjM6PdGaWUYHUMzqn0dByZqxdSGqAKJVoF+GnFTEiypT9i4t4qbZCMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EWH3J6gR; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51032e62171so2515391e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 00:11:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706861509; x=1707466309; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A+phSLkXQoy73qpLUNAhiP2lrCdlciG3yr5Wt06yo40=;
+        b=EWH3J6gRwn6yKZMdRkqaTMfqRe1ttj/J40J2sCNUueMRjr0prC0g6/IzFfv1LwqqsG
+         QtNAvueYYavk/N5+M7tBEx8LTF7XgEMp6258k+3OmJjUkOFE+ZaDLlcdOO6RcATbC03m
+         +xp9O+i36hmaDZRmsfklsHQV23DYbg9Fj9tQrNhIlqoX2UUDoUZj1Cvxh06p0/Ffqqj2
+         dOhKwEdmLo7sKqlCNuYiXMqtdWC5Fq9cRxpLF1CeZisaaZHeL1kx3O0gahZfh+/twumO
+         Ruh5Gbl+LkqCXIUaSP2ewvFHFBgfTO8twPiRs1aYPyvCCyQQhHt3FQRTk2PQB2x3ZrmG
+         G7Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706861509; x=1707466309;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=A+phSLkXQoy73qpLUNAhiP2lrCdlciG3yr5Wt06yo40=;
+        b=Xxd8B7RUeB0ayFO4PAvMqYrd2grjAiUUFsbtArvi2dVFi8SJO//iaG9lUOqCP0QFFe
+         z0mXXMktpGKS5cmoDagSn/tPvJzXfNboyVD7xyRSgsdKVerKi5YTAoCQe1sNuFpFmHUi
+         hp5SazCCjhmoASh8BFxeKkjb+4vV/3k0sqrWMGxkIZP9cY0G5fkEDzW01cPCyFhlid5k
+         t8hQvlmKRqyqm1RYaOiMNeg+GFlftMpMBp2Hx5JLtz+9ncbH+2zAKLKuOWUnPxZAfy0F
+         fN9EEY1D1ZBBuV6oEsb4tyQDX26yYpoHQ3q8rGJSNc0ZUVlsfEvIPgq3bMgehlXQG0Q3
+         vl/A==
+X-Gm-Message-State: AOJu0Yyw88dH0gTyAi2Rl+vmt3f742QBpL+iO/0Feh8xDSJBzw8gXP8L
+	0Wtgco2QqRqtogPWwOxWVdMfB0xQTbrDe3DkSLBN1dhYBDPyojfAez/34CB9NO+bFzx/4U+7t5v
+	A7CI6VA==
+X-Google-Smtp-Source: AGHT+IFFRlYYbYbfxCl751fzPqVcTtiNOx74uwltdXB9jT1S9GqCxRnzy4+OMEE6v3Ty+Rp7w9Oj1g==
+X-Received: by 2002:ac2:442d:0:b0:511:2fd7:b0cb with SMTP id w13-20020ac2442d000000b005112fd7b0cbmr729854lfl.49.1706861508887;
+        Fri, 02 Feb 2024 00:11:48 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUnFuUOJ29IlEpe5oQXZvV9EUSS6+0XBTclwUAKeYrVhaEa/i37TuwOG5e4hptV3jvEelVhcZDgseWrWtxH74ltZjitsaU77bkS1JUpWsb6RNvdsmo4i2BrdOJPI2u7tKtIR5Hi3oOfrZ7ThHPksAaLtvQNs7RIs2UFXKndxmP775aMOknS7k28b6Nn
+Received: from ?IPV6:2a01:e0a:982:cbb0:560a:f70f:7627:2c48? ([2a01:e0a:982:cbb0:560a:f70f:7627:2c48])
+        by smtp.gmail.com with ESMTPSA id 13-20020a05600c228d00b0040fb0c90da6sm6547641wmf.14.2024.02.02.00.11.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Feb 2024 00:11:48 -0800 (PST)
+Message-ID: <d8e32f3d-1658-4dcd-a1dd-e37b664986ae@linaro.org>
+Date: Fri, 2 Feb 2024 09:11:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v1] soc: qcom: mdt_loader: Add Upperbounds check for
- program header access
-Content-Language: en-US
-To: Auditya Bhattaram <quic_audityab@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240202063919.23780-1-quic_audityab@quicinc.com>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20240202063919.23780-1-quic_audityab@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v1 00/16] Add missing features to FastRPC driver
+Content-Language: en-US, fr
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>, srinivas.kandagatla@linaro.org,
+ linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
+References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yjVRKeSGM5qYyVmq9XFV6vA_8F2o4Beo
-X-Proofpoint-ORIG-GUID: yjVRKeSGM5qYyVmq9XFV6vA_8F2o4Beo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_02,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
- mlxlogscore=999 clxscore=1015 bulkscore=0 spamscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402020057
 
+Hi,
 
-This should be v2., first time patches is always counted as v1
-
-On 2/2/2024 12:09 PM, Auditya Bhattaram wrote:
-> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
-> is found. Add an upperbound check to phdrs to access within elf size.
+On 02/02/2024 07:40, Ekansh Gupta wrote:
+> This patch series adds the listed features that have been missing
+> in upstream fastRPC driver.
 > 
-> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com> > ---
-> Added error prints for Invalid access.
-> Link for previous discussion https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
+> - Redesign and improve remote heap management.
+> - Add static PD restart support for audio and sensors PD using
+>    PDR framework.
+> - Add changes to support multimode invocation ioctl request. This
+>    ioctl call facilitates multiple types of requests from user including
+>    CRC check, performance counters, shared context bank usage, etc.
+>    This series also carries patch to save and restore interrupted
+>    context.
+> - Add early wakeup support to allow DSP user to send early response
+>    to CPU and improve fastrpc performance.
+> - Add polling mode support with which driver polls on memory to avoid
+>    CPU from going to low power modes.
+> - Add notifications frameworks to provide users with the DSP PD status
+>    notifications.
+> - Add a control mechanism to allow users to clean up DSP user PD
+> - Add wakelock management support
+> - Add DSP signalling support
+> - Add check for untrusted applications and allow trusted processed to
+>    offload to system unsigned PD.
 
-Would be better if you take reference from other patches,
+Could you precise:
+- Which workload are you fixing
+- Which platforms are concerned
+- Which platforms were tested
 
-Like above can be done as,
+So far I've been trying to run the "getserial" on SM8550-QRD and SM8650-QRD without
+success, would those changes fix this ?
+Is there any chance we could get an open-source minimal implementation of a fastRPC SDK using
+the open-source Hexagon LLVM like we have for the AIC100 ?
+It would definitely help validating the upstream fastRPC implementation.
 
-Changes in v2:
-   -  ...
-   -  ,,,
-> ---
->   drivers/soc/qcom/mdt_loader.c | 5 +++++
->   1 file changed, 5 insertions(+)
+Thanks,
+Neil
+
 > 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index 6f177e46fa0f..61e2377cc5c3 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
->   	if (phdrs[0].p_type == PT_LOAD)
->   		return ERR_PTR(-EINVAL);
+> Ekansh Gupta (16):
+>    misc: fastrpc: Redesign remote heap management
+>    misc: fastrpc: Add support for unsigned PD
+>    misc: fastrpc: Add static PD restart support
+>    misc: fastrpc: Add fastrpc multimode invoke request support
+>    misc: fastrpc: Add CRC support for remote buffers
+>    misc: fastrpc: Capture kernel and DSP performance counters
+>    misc: fastrpc: Add support to save and restore interrupted
+>    misc: fastrpc: Add support to allocate shared context bank
+>    misc: fastrpc: Add early wakeup support for fastRPC driver
+>    misc: fastrpc: Add polling mode support for fastRPC driver
+>    misc: fastrpc: Add DSP PD notification support
+>    misc: fastrpc: Add support for users to clean up DSP user PD
+>    misc: fastrpc: Add wakelock management support
+>    misc: fastrpc: Add DSP signal support
+>    misc: fastrpc: Restrict untrusted apk to spawn privileged PD
+>    misc: fastrpc: Add system unsigned PD support
 > 
-> +	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
-> +		dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
-
-Should this not be marked for stable kernel ? as without this it could 
-be accessing beyond fw_size for uncertain scenario.
-
--Mukesh
-
->   	for (i = 1; i < ehdr->e_phnum; i++) {
->   		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
->   			hash_segment = i;
-> --
-> 2.17.1
+>   drivers/misc/fastrpc.c      | 1949 +++++++++++++++++++++++++++++++----
+>   include/uapi/misc/fastrpc.h |  112 ++
+>   2 files changed, 1844 insertions(+), 217 deletions(-)
 > 
-> 
+
 
