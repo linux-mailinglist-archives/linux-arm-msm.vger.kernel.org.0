@@ -1,236 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-9705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEE40848694
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 14:47:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37FD68486CF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 15:49:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C11C286484
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 13:47:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 853E1284C61
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 14:49:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1A1C5D8FB;
-	Sat,  3 Feb 2024 13:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B085EE86;
+	Sat,  3 Feb 2024 14:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MHhDhSAh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HW0N6jwv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72775D733
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 13:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CA95DF2C
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 14:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706968051; cv=none; b=ZWIloXRJI6J1wSXmEXVroCmhLGtBFeYRQU8posQCX5Bpj8BBYfQX0xi3EJZtfUXxZvSqAc0geL3Gm4NOo7UOn0Jt7fz1SiAswLRiiQgA/y5B94gsBs8IR4Xbwb6cC76F9U/VxU5I/IOUpij0z2a3ALX08qoSxTAYkgzZXVAV1T0=
+	t=1706971767; cv=none; b=dgpIQJpRi5KiI1U/O3n9VqakKZNdjqWkHGOFXLgi4XDT3z73LGAgghwwhIAHm/PmoT9JxXqmxHGN7GcJsi5yisA8BkucNYUI2HOKuOaK0IQALm1W99SXbrK1fpGD9yrTGuXC/sP/QNqX/AOyHGlfBnazEXcLN+PYtb9fzbh+Odk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706968051; c=relaxed/simple;
-	bh=uYr58wgFc5nItKc5X4u2aBvF0R7wzlYmYT4bOMAqMYs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LBlgpu0g7BG2/bHyxpi2xuGDSZ4TyN7r3cY3su9KMuXitiG06hUekAp8+Zwb/EbDzLaVDinpkViO6MOn74NaJvB0g2kJG+Q++ogqgWEXnRD+5m6jQHKesZ35wi0cQLat9tUCHuP1wptfEInKBt2jecH4QmeKzya13CS1PlOS9P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MHhDhSAh; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1706971767; c=relaxed/simple;
+	bh=oTGrdNu/Zsgb5ggIIfn5UQgbiGCPFypv12nHJ/gcYps=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=uv32hsYdLbIRezbZXx/+sAqi7SILWNEOMPg3ofcfdUTsfdz3wpniK9PaOmpBnKCaZAfQtxxkehb3RhGcGRKwSG2e0ralrkfGH6A5YOkcWBODOXTIYcDfIkpUsEH0ghZo6kRADt1QQfCHKSg108TSaQP1i93/in9i/vR6sCGW+pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HW0N6jwv; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5113a97a565so1645274e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 05:47:29 -0800 (PST)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40efcb37373so27343095e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 06:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706968048; x=1707572848; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pw5pFN7i641hIu8JSJl2aLirgM2QU5HnN7Q1+QEDosg=;
-        b=MHhDhSAhcObp+I3HZtMgyor66Djro97AtnbRAWz93Y7NYVaZ3a1CPgEXltGonvJHga
-         hEUFcMOFE4hFEEr7DikUMGwSPFQp6Pl183frbu/a5P+PcdZGyCxLEtE4j2++pX/bnoFj
-         z7JdHp5wSjiO4W9OQ6Mj2gDWd7nKjkGfBFwYYhtbAqzkdW0p0pV1eGa1syQlPEviEIbG
-         wvlAxR9OkRgbh7nTFA9lNyQDFgtkpF7BkfYsNKnIkeq439gorMd8IWXOPWeNmZ3pOWGW
-         pTsefsnQhBbyhKsXMGo5Rcngszt9UdVvLa6Il/8AkBb72IE9dan7x9jmDfiUxqLMzDqH
-         lgqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706968048; x=1707572848;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1706971764; x=1707576564; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pw5pFN7i641hIu8JSJl2aLirgM2QU5HnN7Q1+QEDosg=;
-        b=Yk+YBOjGbfO/TsWgGz028UnsQ34OFjbR8SUaBGmf5PtckqVg8OJTOuEWED3D54Zeoq
-         F6tZDUgUNPVFf+aLzPuihYLlb2VzjQjOi7l+SjkqlpA/6c4jeg0YsZfcUqvjA2vJi/rA
-         PksUozCG1j1BoXAnZwgBBnrEOEKY5m7DsgNUXiq30EoJ+p7ZJPeTJ3WkDvXiTCUlFs0W
-         zr/S0Wm+N/kv8NhA1SZ3I6MUU1rTwGpmHxFC7xdsAiN9YqWv6hj1qLq6hu55BrsMux9e
-         3FjEWs7W8fxNT64AsKX6PkVXrsmnwJKCEXI2sy1nOfb21ES5KrZnc7y1lDIB0+SRFKyM
-         I5/A==
-X-Gm-Message-State: AOJu0YyyjWS1+fabme6dQhX+Ak/JoU5iXdlh7CsOFqn/eE/Q5fx7iiYH
-	isZ80vNTjZJwIwxV0N2KGTeIZwqxdEjjazqWvkHugcNchuz1YDhO4PqFF3cMaFU=
-X-Google-Smtp-Source: AGHT+IEszdnDIn/Y5wPJVYvshohWKpTy3aZ8P4gLhxlbyuJBsxd7yMonStPFPg6uvroOanJh5C/Dow==
-X-Received: by 2002:ac2:43c8:0:b0:511:4860:425f with SMTP id u8-20020ac243c8000000b005114860425fmr609160lfl.17.1706968047668;
-        Sat, 03 Feb 2024 05:47:27 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXTzGT4XGIU5jd7krQi2gTAInO1eTDD20AYIXqfFy5sHfnr6wXKfYdHPN2DPwLX8xEXUzhmHZNIYZ+Vg62dEa14fxmr9sEJl1LTznOnCiBJCHXEJsdsNdES3Lb6HHTPgY27viWNJAeZ9SXs8yma1ut+TOccUiXWmUKM76iEVWXpFIcFbj/M3SXt9J20Xgvjw8VZrsPh6l0tAZ4QWGbt4PJRY1GaEZueieb3+ktbgSW4Rs+SApKjrW81U92cfzhScJMcK4XAl46J2chKvNecuU/io6tlW2suMWxGwGwKv7vt3Hl5aBNu/UJM1g6aTXm4ONMG+lgDLTcW4q9OTTYQSvS68YD+FT6U2tQmVKKEh9kDbfYIjVZ4tgKL7LvUMUjWROiaaGSiPMU1Y3sP4CgRnM2RLOkJLKRfqf4G41NbMIc1c26j9yVAvu8=
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c29-20020a19655d000000b00511480138f6sm130173lfj.8.2024.02.03.05.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Feb 2024 05:47:27 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 03 Feb 2024 15:47:25 +0200
-Subject: [PATCH] drm/msm/dp: allow voltage swing / pre emphasis of 3
+        bh=+qFWwBr6Hvcn11xuZYjbWXeQeB08RrBU+G+cOZ4qdqQ=;
+        b=HW0N6jwvH8qJkh2GkNG1JGlmYIRFfMEgIgYN3UKtcFeVElAXLEteIL3n2iDIjsydOR
+         9Zpo/rSA3vlKkjIZjWSXDwsQ4mZcv1QoyW9p79ju/9Fd8r7wx9kyVShFBqYYyWPKO44f
+         A8JQuT09UXNSJ4CWpNRYBuw0hvUK8HDfE3hcAcK6NIgnAPDrFYiYzTSuzFZF12qviSBd
+         LdZS/tnnqPiUkd7VPL5HcoPHUoGfTT+gEerMHluWdbY3c9yY1AQuQvTc+jnOqoMaAHFU
+         vmy6JYcLWCa9DKCfsWTnIXGb63IB002Elqepjd04kcVs0BUdLeqHmOOLh6RVjS8gGO2k
+         EO6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706971764; x=1707576564;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+qFWwBr6Hvcn11xuZYjbWXeQeB08RrBU+G+cOZ4qdqQ=;
+        b=hEH1jJP0LI7dZbaFf+OycFuLMib/gBKKqqggKcOsNZ6N0+pDRSm2M3oNMWAh6ccYKO
+         dlpsbCBPJRVK44+LDo4nxPDxrDqQb0nTst4GzxTD/drqiFv1fh59udHOntTI0TL0EWgZ
+         xKagCNxcdDCsrqdE/m37rSMQ+aKkx9eLLaHxYwm537KG/GArAcRqFSOl79R4lf3NLkcj
+         lzBDs/jf5NCg+7k8rLDZodTaAlQu2AF7B7FuK0lQzYoSEgRlRaKEYcPFU6iqZ/N27t8Y
+         Cjp4PJbTqN13T1EIIKtRyeqLvKWoXZzEz+hUobdy1lj1nTRTqF0PeIIQ9AB7rmu2Jefp
+         D8cQ==
+X-Gm-Message-State: AOJu0YwygTaxomgBlp63qgJdrMvRP4L38VqbQUT9llUJyZooLc2UIrGo
+	NFDWJzERTfPcB3YDCq2yPTk9XpyPMlzBjFSSoN/Mu13TjUIm6+0k8It+UKNCvpjsSvp4+KaiuYL
+	jv4ROL92H
+X-Google-Smtp-Source: AGHT+IHo6BBy7NFZiI4OHptx/CEW9WTWSLiSa2iHDninGnWOkDM2WUkgsSGWs3zzJp9iGEiIeUVzBA==
+X-Received: by 2002:a05:600c:1910:b0:40f:b5d2:1af2 with SMTP id j16-20020a05600c191000b0040fb5d21af2mr1225981wmq.8.1706971764166;
+        Sat, 03 Feb 2024 06:49:24 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUFq+EtJ/AX2PUD8zOpsPau+11PSHHbAhSSRTaHftqMPGWhA7X6QJx9wdQABtZ0rsj8KQRaSVEwcYHfyy82/Bk8nDGHHoSXOiHXknFn5r3x6ZqYavhp3dRBreFv6vx4HnMOoqbBNyOjzRUdnaJnno0EobkVmD7g8C0T40nEvN0ntAxNrSmETilwSfDfmV80gGsrghGP8AObT4HQ9uVq2pLh1MotJ/Axx0Jv6ohxFr6tjyrisJ35Rc9dVAT41iFKQvwX/2vNflQOzZW05Xg4a3HEKhWk69fE+hPrJ2k4/Lk2bUpjHzhbpqSk9wYGZnOE9IY5+ipq6DI=
+Received: from ?IPV6:2001:67c:1810:f055:5044:617a:60fb:ed01? ([2001:67c:1810:f055:5044:617a:60fb:ed01])
+        by smtp.gmail.com with ESMTPSA id o11-20020a5d58cb000000b00337d5cd0d8asm4169435wrf.90.2024.02.03.06.49.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Feb 2024 06:49:23 -0800 (PST)
+Message-ID: <6e9030cc-3431-45c5-a7a8-0da02bafab09@linaro.org>
+Date: Sat, 3 Feb 2024 15:49:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/2] interconnect: qcom: sm8650: Use correct ACV
+ enable_mask
+Content-Language: en-US, fr
+To: Mike Tipton <quic_mdtipton@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org
+Cc: quic_rjendra@quicinc.com, quic_sibis@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240202014806.7876-1-quic_mdtipton@quicinc.com>
+ <20240202014806.7876-2-quic_mdtipton@quicinc.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20240202014806.7876-2-quic_mdtipton@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240203-dp-swing-3-v1-1-6545e1706196@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOxDvmUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDIwNj3ZQC3eLyzLx0XWPdJDOTtLTkVBND0xRLJaCGgqLUtMwKsGHRsbW
- 1AIEJIy5cAAAA
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>, 
- Stephen Boyd <swboyd@chromium.org>, Doug Anderson <dianders@chromium.org>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4768;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=uYr58wgFc5nItKc5X4u2aBvF0R7wzlYmYT4bOMAqMYs=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlvkPuKfIwae5yOn0QbddgFmxk+UYA5FqHO4DUU
- Diw2DiIa9mJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZb5D7gAKCRCLPIo+Aiko
- 1eEzCACD7jF8Vz2stVzLH7NleE0wqUGkLFPAg5AdLNQHQKk1CxAE/eWIZ3Hz3D00IrDNcesJNI1
- Rk+//3ghboGBEKE/fu67fo/Shj+HoV6uvmMCjq3/Gd0iBr/SLQF1/ux8QDWJv0V0DxBgCY69OuC
- 4ufMn80d/zsBP0td/ZQKgs18nKO7E28Rm2Qzag5NZCP52YmfNXdy8tBlFxL/VZLxpATnG8v1P6q
- tLk14UcCVkPXyXqVUQF2Gc1qQwz0qHhksAqOCF1xg4r/BvyYu1VAjMYsYh+nGnpsXO9dJwjhm9e
- 7juD87ThD/cZ4VAlyC1FKXlsljqBkzDLFBlvkeEEJZj33v2s
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
-pre-emphasis to 2, while the real maximum value for the sum of the
-voltage swing and pre-emphasis is 3. Fix the DP code to remove this
-limitation.
+On 02/02/2024 02:48, Mike Tipton wrote:
+> The ACV enable_mask is historically BIT(3), but it's BIT(0) on this
+> target. Fix it.
+> 
+> Fixes: c062bcab5924 ("interconnect: qcom: introduce RPMh Network-On-Chip Interconnect on SM8650 SoC")
+> Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> ---
+>   drivers/interconnect/qcom/sm8650.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sm8650.c b/drivers/interconnect/qcom/sm8650.c
+> index b83de54577b6..b962e6c233ef 100644
+> --- a/drivers/interconnect/qcom/sm8650.c
+> +++ b/drivers/interconnect/qcom/sm8650.c
+> @@ -1160,7 +1160,7 @@ static struct qcom_icc_node qns_gemnoc_sf = {
+>   
+>   static struct qcom_icc_bcm bcm_acv = {
+>   	.name = "ACV",
+> -	.enable_mask = BIT(3),
+> +	.enable_mask = BIT(0),
+>   	.num_nodes = 1,
+>   	.nodes = { &ebi },
+>   };
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
- drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
- drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
- 3 files changed, 15 insertions(+), 27 deletions(-)
+Indeed it changed in the meantime
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 77a8d9366ed7..26241970019f 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1024,14 +1024,14 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
- 	if (ret)
- 		return ret;
- 
--	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
-+	if (voltage_swing_level >= DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"max. voltage swing level reached %d\n",
- 				voltage_swing_level);
- 		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
- 	}
- 
--	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
-+	if (pre_emphasis_level >= DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"max. pre-emphasis level reached %d\n",
- 				pre_emphasis_level);
-@@ -1122,7 +1122,7 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
- 		}
- 
- 		if (ctrl->link->phy_params.v_level >=
--			DP_TRAIN_VOLTAGE_SWING_MAX) {
-+			DP_TRAIN_LEVEL_MAX) {
- 			DRM_ERROR_RATELIMITED("max v_level reached\n");
- 			return -EAGAIN;
- 		}
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 98427d45e9a7..e7da0571ecff 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -1107,6 +1107,7 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
- {
- 	int i;
-+	u8 max_p_level;
- 	int v_max = 0, p_max = 0;
- 	struct dp_link_private *link;
- 
-@@ -1138,30 +1139,29 @@ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
- 	 * Adjust the voltage swing and pre-emphasis level combination to within
- 	 * the allowable range.
- 	 */
--	if (dp_link->phy_params.v_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
-+	if (dp_link->phy_params.v_level > DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested vSwingLevel=%d, change to %d\n",
- 			dp_link->phy_params.v_level,
--			DP_TRAIN_VOLTAGE_SWING_MAX);
--		dp_link->phy_params.v_level = DP_TRAIN_VOLTAGE_SWING_MAX;
-+			DP_TRAIN_LEVEL_MAX);
-+		dp_link->phy_params.v_level = DP_TRAIN_LEVEL_MAX;
- 	}
- 
--	if (dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_MAX) {
-+	if (dp_link->phy_params.p_level > DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested preEmphasisLevel=%d, change to %d\n",
- 			dp_link->phy_params.p_level,
--			DP_TRAIN_PRE_EMPHASIS_MAX);
--		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_MAX;
-+			DP_TRAIN_LEVEL_MAX);
-+		dp_link->phy_params.p_level = DP_TRAIN_LEVEL_MAX;
- 	}
- 
--	if ((dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_LVL_1)
--		&& (dp_link->phy_params.v_level ==
--			DP_TRAIN_VOLTAGE_SWING_LVL_2)) {
-+	max_p_level = DP_TRAIN_LEVEL_MAX - dp_link->phy_params.v_level;
-+	if (dp_link->phy_params.p_level > max_p_level) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested preEmphasisLevel=%d, change to %d\n",
- 			dp_link->phy_params.p_level,
--			DP_TRAIN_PRE_EMPHASIS_LVL_1);
--		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_LVL_1;
-+			max_p_level);
-+		dp_link->phy_params.p_level = max_p_level;
- 	}
- 
- 	drm_dbg_dp(link->drm_dev, "adjusted: v_level=%d, p_level=%d\n",
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 9dd4dd926530..79c3a02b8dac 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -19,19 +19,7 @@ struct dp_link_info {
- 	unsigned long capabilities;
- };
- 
--enum dp_link_voltage_level {
--	DP_TRAIN_VOLTAGE_SWING_LVL_0	= 0,
--	DP_TRAIN_VOLTAGE_SWING_LVL_1	= 1,
--	DP_TRAIN_VOLTAGE_SWING_LVL_2	= 2,
--	DP_TRAIN_VOLTAGE_SWING_MAX	= DP_TRAIN_VOLTAGE_SWING_LVL_2,
--};
--
--enum dp_link_preemaphasis_level {
--	DP_TRAIN_PRE_EMPHASIS_LVL_0	= 0,
--	DP_TRAIN_PRE_EMPHASIS_LVL_1	= 1,
--	DP_TRAIN_PRE_EMPHASIS_LVL_2	= 2,
--	DP_TRAIN_PRE_EMPHASIS_MAX	= DP_TRAIN_PRE_EMPHASIS_LVL_2,
--};
-+#define DP_TRAIN_LEVEL_MAX	3
- 
- struct dp_link_test_video {
- 	u32 test_video_pattern;
 
----
-base-commit: 41d66f96d0f15a0a2ad6fa2208f6bac1a66cbd52
-change-id: 20240203-dp-swing-3-b64ffce415d9
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
