@@ -1,220 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-9729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E88388488A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 21:13:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56E0D8488AE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 21:20:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C4E9B23940
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 20:13:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E9B3285963
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 20:20:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9175FDD8;
-	Sat,  3 Feb 2024 20:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6346A5FDBC;
+	Sat,  3 Feb 2024 20:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="owdTVPnF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VQNi9+su"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700875FDB0
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 20:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F0D5FB86
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 20:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706991172; cv=none; b=FOyjMxGmYAYhtfxSrL5h94dm0paRnLcjt+urkZKh4aBTrrxYfxuIgi0XZVwkmDhoPGEfu8IopwO+ftP3q0lr02Bv4BmpJVLsV2IDS1mI0kXSV+VgwAdB7fhVaqCQrqugxuQW9uNtQySB2WqGPDPcF9l8UdE6oAlonL8ya9fu0YU=
+	t=1706991623; cv=none; b=R07aP9b7tJnqVWwUWjRyFRNo3Z+pHp7ldt53SBqQOBsykIsZnX4edSztR76P1wnp9KsXKV2+WwMul4mdHTp20LgzyImOWnmKnH3hWiy0bPGmGjcAuGKqv6+MGyLNYJee19/D6F/ITAN/zAVXIG5OiIR0fkezLvCnd7BdID5Qllg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706991172; c=relaxed/simple;
-	bh=XMiuwDIpVjrwT8pZFL8FTDbig4Uonmz+QY2PmFoT1mE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GmW01RMtNfozlRbIRJ7xwtqI8PpR5EAQ7I4/e9HXh6rJG4vp1WMLQV87QJI2dvYhKNymKNcNY/wyuE9wQdQwhrVdcWRkL49cc0kMqjx501EqbCqufpFEge/vFvIcwzHPIR9Qd0uvdPbxtLvLSuF+9hRPcYsQO1Fz16SkTT9CLNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=owdTVPnF; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1706991623; c=relaxed/simple;
+	bh=0AAo12kDZgadNPUf8ah1lPSKiCNnZfWTor+R9Sby9as=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ay51NDqonK8yy+gY5oaK8s45vxfXjeDqshUEtK362Ge9qOlhmloa+8WDmqEQHMWEjl0Kuz1UsyE29RiKnS+yuR1ye8GXBupbS8kFa+aGgcYHMhKyNoRSrqqIJbx5X79Be4SIlcPkMx4OcZjycg+eZhPaemt/fNhjZUkKYjtBfVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VQNi9+su; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33b130f605eso1978192f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 12:12:49 -0800 (PST)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40ef6bbb61fso26954305e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 12:20:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706991168; x=1707595968; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8ahih9RgEoYwMlpRdersewynKDFZTyq1Vc8lHuD3WPU=;
-        b=owdTVPnFkM8bUZpBPMHYSxtCL+c1fqBIfzb6HhzQ29vPbe7sIjFrythraCV0ZddV9E
-         t5VDNAUQhTBpkMYIq4FYwlxWW9JZVC+NB/YBqTaAgyDHjBg/IiMNgX3hl0r+7q4cO8wH
-         5laT8hhGG9o3TaPD932Igq3Yjal4mL+BGriPVIQcJQJK1QYZNogYzKpsLiQGd8AYU/2F
-         P6Fe2pUn4OOrmF31D/OfTRDr+rmHZP6XoRnLiRvzNWWHXC+22PS3//vTweuWvTPPjSA9
-         tkvB2w48nMTMt6ItXh3QAjBIGqD2y3okPSyildYrOc3U5tDGfJj6EKiVh2AM3Q10NG50
-         yDGQ==
+        d=linaro.org; s=google; t=1706991620; x=1707596420; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1pewoWUcsLIHtlOoMZy6asN2BD4xRrWRp9TUT7zeRtI=;
+        b=VQNi9+su90vsigU4BOE2KBNObETc0esSrctDH2KEw/ai3mZJgFbc7pp4tqsbPsGP0+
+         1GRkwIFFLD9Q+Takvjb7msR92smTGHXdS4VYpzoh4PdAjrosqQs6XMw8p/inblsuoZyI
+         sANn895VDuqOK6j4sNh/4/q/qSl7+1ox4s8ForYX6SnElFX0yexytqEY+/unQzYh3qPP
+         AwjUiJlUVoBWlJTV6NxT0mc3GsPPBjr/m7wYFGh4PpE37YICQjTF6iUYaDj3CKbwuMPP
+         HqSTSiv1sYINmsr8fbeqgtMDFR4qca63IWIEbghPIgtM7PcouivRjPWJmqhGjZOxK2jo
+         /eBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706991168; x=1707595968;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8ahih9RgEoYwMlpRdersewynKDFZTyq1Vc8lHuD3WPU=;
-        b=u2/XNV15KfcveWsOs42dyYy4WFEmNe+E3ue8npGTMBTLfmeAMk3ug9RSXrVcct1VCk
-         PgeInrX58AuRcxNqI96kS/IpuWH89nQ2HCMMltgHOUtsxAOgRr+ZqWkDlw1IA0mGg+ob
-         ktRgGLJ1mlyYtScjorbxKUpLhXnGWQ1XWa9b1nBZr21Tkk2m2LVuj256RFJgU59/mJGY
-         mDJH3RRZaF+5UNShdOFTjZ5tS8EcAagQBlaECNVjzDGyYLgfFVLEsIhesjkGdQV3+Cpz
-         VHg2Lemi1WAkPinwjMzU1JrKvvxDaoOXU5B7YCpZPL0oteiOiKzWL4EFL+jFBxERNrj6
-         p6Gg==
-X-Gm-Message-State: AOJu0YzpoJuxJVpWX2F+GHBOPEI4JoBhySt0gbM/GQG+/C46xxwUucIi
-	++GOlGR+IMWoPoCNcjHJVc3eyJDhCa1WAb0fQRAT+aWUhqgL/NLb2UQOlpm2JRu75YBOtKxNb5G
-	uf+CvAi0q
-X-Google-Smtp-Source: AGHT+IEBMgd3qvNtSGTG9qXtLL492Vflm5wg+fXnH0hHmn45E1sCU1TVe1l1l+2xL2zvDe6NgjaCpA==
-X-Received: by 2002:a5d:644a:0:b0:33b:182f:eb9d with SMTP id d10-20020a5d644a000000b0033b182feb9dmr4393583wrw.43.1706991167596;
-        Sat, 03 Feb 2024 12:12:47 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXddspYHgSOlgLatjC0n0l4mR2eo0YQjWGgViZn2aPK1M3eDvdCRySgBLTL2bu+czyfKf8zqPUey8UMnHYyZMujdV6LB7kPkzsb2usDwkj5cfBwFnM7xKXFKwQdbgcjxsimp1sDbiQ0aifIwTnRu/nluSRQUL4sBIM5J+Lgxvt90RL7Z2Ve/WdXJ6yMot53XmKaAhVD/fsADY0h5784L+GAAtzxfVbU1NaOQ/caOfWcUpYb/LbOehPQ+FImUmpqoYswjD49xbQPTM6QPtOWvd4L8vYRCFVuuFnSR/4iFY6sQyvi/oza7w==
-Received: from [192.168.27.65] (home.beaume.starnux.net. [82.66.176.246])
-        by smtp.gmail.com with ESMTPSA id c8-20020a5d4f08000000b0033b15fdad42sm4662053wru.34.2024.02.03.12.12.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Feb 2024 12:12:46 -0800 (PST)
-Message-ID: <a594ca1e-bef6-4ce9-b5c7-02999969a756@linaro.org>
-Date: Sat, 3 Feb 2024 21:12:37 +0100
+        d=1e100.net; s=20230601; t=1706991620; x=1707596420;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1pewoWUcsLIHtlOoMZy6asN2BD4xRrWRp9TUT7zeRtI=;
+        b=BwPMgCbpai2KgX7NHL5qHeEuYNX//0NeIdpSkFiU13F+AHcvI6CgwXigq7UVV7jy4N
+         +/ivnOXX4PEGvNWeCBUsvXem0OWQerXxHyhJZH1M5nyytOea6CasmjCfbZYBXgLnaJRu
+         5asPy6zCkM3BwEeUogg/3MRenfCdJOx5U3ICEnII5YXxmSY/bnAyjDHumih9Q/0sf3BI
+         wTxScgtbh9i0oP9dTWvkdad+ILYk9VCVBbg54my4r4P/iFgy70DVQ9/vgPnF/WZm6U7D
+         rAnBi9alXdL8jQ6UOIYhJPjbPVn2LXInudwTR2iM4B84QcQVuB6v4UGOU5P2A8wFWHOD
+         t72Q==
+X-Gm-Message-State: AOJu0YzK2SakaCL8MJugMIeiIA2JHWCg7N3bXARtwol7ZUDDYjOiI8gJ
+	pBoLrGxw7v76jSjqCJ4POHXu3UqQ66Qw+UbhHWOAP1J/S3lE+ETUtw2EDjenBsY=
+X-Google-Smtp-Source: AGHT+IHAdc49mfAlWi2pAvdjJSsS72fBmc7yBRfo2xmR70Idt17xiRuLMy1wmVmZyQrB4bWyO8URhw==
+X-Received: by 2002:a05:600c:4747:b0:40f:d0f1:23e4 with SMTP id w7-20020a05600c474700b0040fd0f123e4mr1599483wmo.41.1706991619569;
+        Sat, 03 Feb 2024 12:20:19 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXq7YCWkgrvYwQ9+5B5D0Cy97DUywt/wTzr7rJhGXQmr6p5mp+6q4VHxiaNc9fK/iZV7JWifJLVMXizT8garrGQ25oDkJI0odqr7wBAltP2VA0XJsMhXniASn2Kzhf71VNT6JTrp6GASlyHXYZJiGbo9mLD3W6cqPMXORVSVLoh8qTkYaAjbku2be/wjrH4Xfvv3qm9mRO3jpgKxhsNO5RJ
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id k2-20020a05600c1c8200b0040fafd84095sm3820652wms.41.2024.02.03.12.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Feb 2024 12:20:19 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Sat, 03 Feb 2024 21:20:17 +0100
+Subject: [PATCH] arm64: deconfig: enable Goodix Berlin SPI touchscreen
+ driver as module
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Switch UFS from opp-table-hz
- to opp-v2
-Content-Language: en-US, fr
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240203-topic-8550_ufs_oppv2-v2-1-b0bef2a73e6c@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240203-topic-8550_ufs_oppv2-v2-1-b0bef2a73e6c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240203-topic-sm8x50-upstream-goodix-spi-defconfig-v1-1-b69ed85ddd05@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAACgvmUC/x3NMQ6DMAxA0asgz7UUQkGlV6k6QOKkHoijmKJIi
+ Ls36viW/09QKkwKz+6EQgcrS2robx24z5IiIftmsMbejTUD7pLZoW6POhr8Zt0LLRtGEc8VNTN
+ 6Ck5S4IjjOs1uoDlMfYAWzIUC1//s9b6uH+hijNl8AAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=900;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=0AAo12kDZgadNPUf8ah1lPSKiCNnZfWTor+R9Sby9as=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlvqACH1ji8o0FHwADXMV1X+EJKK266FgqNFd8KIqT
+ JuYGpSiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZb6gAgAKCRB33NvayMhJ0f/eD/
+ 4ru7aLNUj7w+yJfhRjW/zKyH9ja76gcPF5jk1rLaWszk2PjzcxFk8mbUkvTYzipqMZqWen2+TjaE6F
+ odnsPsVhvH9/vt1AodTD6rhmbYnVB15LgXre7GGZ8aArbbMfEHtDwYek1pMMzIVAA42K7w3G2nRMkk
+ jUTU+Y6oSbPPAxNvjbEzG5ZbeN2e/+Bbnc1fQKtpNmkXbm1Z/BBSI77OLT+XuCqRKz6MWqZuD/tRie
+ PSSbHDiUeaDZmMovR4z26gzXqbKrcrnZUq0x0weT/MREksgmyt9nDBL53tXQyx0G5X+9UMd/bWQ/Nd
+ BU9xcaMVHpTzLS7N4L6ADPf6BzWAF5rr0DLGdpsbjJqrXBSSUmjOdWGtFbs0zriNnifgcweuE95Gmo
+ Ihhbba+h7bfmM2JOh++AotA+jqNfNYXXaq58mRPpLVAIW8g3PkobLc5ymw/WItnfNe37wuC8zfC5fB
+ lD+me/axDDotXRCvPBG0i2L5oAs7vK7xm+WZMAeneSNi2wZTpCfl50H1jL95AahUFXY8noC8a2eAwJ
+ xBOlTC9Hf8aqGBT0EU1TYwy37AHpzRNLhrIXm6nsF98ZzkN2kZNAJkeM/vjmcvxC6G4E8TkZnxqV/V
+ uu0cKlnZ1hYpkBHdiL307xUyS7Pzn7XVt7omtw6Glwp8HGyWA/Z6ob/Uzd9Q==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 03/02/2024 01:10, Konrad Dybcio wrote:
-> Now that the non-legacy form of OPP is supported within the UFS driver,
-> go ahead and switch to it, adding support for more intermediate freq/power
-> states.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Extracted out of:
-> https://lore.kernel.org/linux-arm-msm/15d2bd66-29f3-435b-8494-d82ec4036413@linaro.org/#t
-> 
-> Changes since v1:
-> - Set the reference clock rate to 0 in opp entries, it doesn't support
->    ratesetting anyway. Confirmed UFS still works.
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 50 +++++++++++++++++++++++++++++-------
->   1 file changed, 41 insertions(+), 9 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index c89d8f3dad21..144e20edf237 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1966,6 +1966,7 @@ ufs_mem_hc: ufs@1d84000 {
->   			iommus = <&apps_smmu 0x60 0x0>;
->   			dma-coherent;
->   
-> +			operating-points-v2 = <&ufs_opp_table>;
->   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
->   					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->   
-> @@ -1986,18 +1987,49 @@ ufs_mem_hc: ufs@1d84000 {
->   				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> -			freq-table-hz =
-> -				<75000000 300000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<75000000 300000000>,
-> -				<100000000 403000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<0 0>;
->   			qcom,ice = <&ice>;
->   
->   			status = "disabled";
-> +
-> +			ufs_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-75000000 {
-> +					opp-hz = /bits/ 64 <75000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <75000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-> +
-> +				opp-150000000 {
-> +					opp-hz = /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_svs>;
-> +				};
-> +
-> +				opp-300000000 {
-> +					opp-hz = /bits/ 64 <300000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <300000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_nom>;
-> +				};
-> +			};
->   		};
->   
->   		ice: crypto@1d88000 {
-> 
-> ---
-> base-commit: 076d56d74f17e625b3d63cf4743b3d7d02180379
-> change-id: 20240203-topic-8550_ufs_oppv2-bb88d63a4c58
-> 
-> Best regards,
+enable Goodix Berlin SPI driver as module since used on the
+Qualcomm SM8550 QRD and SM8650 QRD platforms.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 2064e7bc529e..ea000c333e50 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -432,6 +432,7 @@ CONFIG_MOUSE_ELAN_I2C=m
+ CONFIG_INPUT_TOUCHSCREEN=y
+ CONFIG_TOUCHSCREEN_ATMEL_MXT=m
+ CONFIG_TOUCHSCREEN_GOODIX=m
++CONFIG_TOUCHSCREEN_GOODIX_BERLIN_SPI=m
+ CONFIG_TOUCHSCREEN_ELAN=m
+ CONFIG_TOUCHSCREEN_EDT_FT5X06=m
+ CONFIG_INPUT_MISC=y
+
+---
+base-commit: 076d56d74f17e625b3d63cf4743b3d7d02180379
+change-id: 20240203-topic-sm8x50-upstream-goodix-spi-defconfig-5b69c3e9f61f
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
