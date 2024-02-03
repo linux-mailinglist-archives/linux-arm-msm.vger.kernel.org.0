@@ -1,72 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-9708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 242A7848724
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 16:38:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAF2884876A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 17:25:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCE2A283495
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 15:38:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A79CB23FC8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 16:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82525F47F;
-	Sat,  3 Feb 2024 15:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4828B5F57C;
+	Sat,  3 Feb 2024 16:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QhV3hOoj"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="2lLAyxbH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3822F5F543;
-	Sat,  3 Feb 2024 15:38:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755CF58206;
+	Sat,  3 Feb 2024 16:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706974685; cv=none; b=XQMllseEm4h+Igkv589RSSLAgvKt921ivJt4YG+uDmXA0UTRzkwbC3Gu5Op/alH97UB9iu+wX+eitAjxFMDv3obmlIKmXwiCHqNa60JSfBPdyg6slVwf37dvE8cpGXJtCCU2U+9O62IIyHMEAj4VxOVmBEGpTJdCFmYJk7ItorA=
+	t=1706977536; cv=none; b=mBEaenqDutFcjHq6+krDJKnkeH73pq6nzQcUIfI/Cu3HqbISwyfzGsq49Tv/6zcRRQhZy/Z0/stcuoQt9q900MEXQ+C8l/qBfXS0sClys3xfXhIqXcANKyE0LeTBepl7cXiWTXsNgEQfHK960Z53WkvrPmTiQmjKscXqCQfiZbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706974685; c=relaxed/simple;
-	bh=SNnVQo1kDmMsJArsZpVPFWmrsmhNlHXHLXsJaiu5qlo=;
+	s=arc-20240116; t=1706977536; c=relaxed/simple;
+	bh=vWy0Zx39e4wmgFNDFPUH6HFaDxM9TNK1v6d9d2+MVE0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qTKLXWtieOf1VqvFyDc8PteECsbqdJwXTz2nGyw/HN/Rtr7aKMpIzDnnu1DIyIt4BMyIZeR1PU0dSWdJu8uTrZRdO+AKL3SJUeZVwrICuo3+jnpuFiXR/McbPU8EO2eJoaIFmXrFcs3k/H5MtcZot7HT9NFEvi/k8yW5e2+XadE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QhV3hOoj; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706974683; x=1738510683;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=SNnVQo1kDmMsJArsZpVPFWmrsmhNlHXHLXsJaiu5qlo=;
-  b=QhV3hOojdOTaDCGY8hp429N1w2lb5AdvEsTms3hlmA0kpwnwGyPuZ/zv
-   7n1trTDvxyeHqu6flWym3whGObowlRUecXxSYBgndSAA1U+dv/bkWDFDC
-   vZLOaoqOR3OMs0XOwOxMVyYwmyECvRt77YvgRv2FixusRe+GpZts8uEe/
-   kSAEFUF8mu6MxNuNW0rWXxvZC9fJ6F8EwbRzkDAa8c5uILiY14b8xE+cr
-   HqJvY4WGmxdVdXObuVt4QzvEibWsQxWHCp+ycEe6TqwQ9wFDV5uyKFwkD
-   gTu8M9/XCipWLqddeYrNu7QNjvGO8dSJix5lJeXdBw1v6DvbafFdBAl8N
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10973"; a="243130"
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="243130"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2024 07:38:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="652517"
-Received: from lkp-server02.sh.intel.com (HELO 59f4f4cd5935) ([10.239.97.151])
-  by orviesa007.jf.intel.com with ESMTP; 03 Feb 2024 07:38:00 -0800
-Received: from kbuild by 59f4f4cd5935 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rWI5d-0005F0-1g;
-	Sat, 03 Feb 2024 15:37:57 +0000
-Date: Sat, 3 Feb 2024 23:37:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 03/16] misc: fastrpc: Add static PD restart support
-Message-ID: <202402032322.GxfJcjnK-lkp@intel.com>
-References: <20240202064039.15505-4-quic_ekangupt@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=dlMx3mv+n0P9ghj0uJ9TXo7pctnIbWNtwgRBGuQpYs4f0wGmNBymofL2rvMMqBRXGXVjR4sqy8va/EG+0/VclaVPX/p/piPCgqLwYpU1jWNVbs780+Wk4RBZRjufcOITKWZAx9x0vbRW86h8WLYQZ3PIiJQUH1iux/+Dlb7m7+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=2lLAyxbH; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=4djEjuQQh7CJm2rcKQ3SV1fnshnuP3wO2z85v1DRISU=; b=2lLAyxbH+7u/rQ2fN8is/U0PSy
+	zy9m9wMMdFiIMIaQYnPZd1qcz7HhGAraK1eO2zuCDS66BBJsDS5jHUCoPXwqe6IkhA3OnGmmNzN/d
+	nFFk4s63sIR1BliZKt808FdHcKr4D4OQiZKa5EA1M2/GsSvFYljoJMTVquL0dqDAgGGs=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rWIpX-006udA-V2; Sat, 03 Feb 2024 17:25:23 +0100
+Date: Sat, 3 Feb 2024 17:25:23 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v5 7/9] net: phy: qcom: add support for QCA807x
+ PHY Family
+Message-ID: <c3447c2b-4b43-4c09-b89e-d6a44971b923@lunn.ch>
+References: <20240201151747.7524-1-ansuelsmth@gmail.com>
+ <20240201151747.7524-8-ansuelsmth@gmail.com>
+ <a530f40c-b8fd-4da1-b4df-f80ab05f0394@lunn.ch>
+ <65bd29f9.050a0220.a175d.3d5f@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,42 +74,56 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240202064039.15505-4-quic_ekangupt@quicinc.com>
+In-Reply-To: <65bd29f9.050a0220.a175d.3d5f@mx.google.com>
 
-Hi Ekansh,
+On Fri, Feb 02, 2024 at 06:44:22PM +0100, Christian Marangi wrote:
+> On Fri, Feb 02, 2024 at 02:35:11AM +0100, Andrew Lunn wrote:
+> > > +static int qca807x_read_fiber_status(struct phy_device *phydev)
+> > > +{
+> > > +	int ss, err, lpa, old_link = phydev->link;
+> > > +
+> > > +	/* Update the link, but return if there was an error */
+> > > +	err = genphy_update_link(phydev);
+> > > +	if (err)
+> > > +		return err;
+> > > +
+> > > +	/* why bother the PHY if nothing can have changed */
+> > > +	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
+> > > +		return 0;
+> > > +
+> > > +	phydev->speed = SPEED_UNKNOWN;
+> > > +	phydev->duplex = DUPLEX_UNKNOWN;
+> > > +	phydev->pause = 0;
+> > > +	phydev->asym_pause = 0;
+> > > +
+> > > +	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete) {
+> > > +		lpa = phy_read(phydev, MII_LPA);
+> > > +		if (lpa < 0)
+> > > +			return lpa;
+> > > +
+> > > +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
+> > > +				 phydev->lp_advertising, lpa & LPA_LPACK);
+> > > +		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+> > > +				 phydev->lp_advertising, lpa & LPA_1000XFULL);
+> > > +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Pause_BIT,
+> > > +				 phydev->lp_advertising, lpa & LPA_1000XPAUSE);
+> > > +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
+> > > +				 phydev->lp_advertising,
+> > > +				 lpa & LPA_1000XPAUSE_ASYM);
+> > > +
+> > > +		phy_resolve_aneg_linkmode(phydev);
+> > > +	}
+> > 
+> > This looks a lot like genphy_c37_read_status(). Can it be used?
+> >
+> 
+> Yes but I had to expand genphy_c37_read_status. Hope it will be OK.
 
-kernel test robot noticed the following build errors:
+You can expand it, but please keep to what is defined within 802.3. We
+don't want any vendor extensions in this common code. Vendor things
+should be kept in the vendor driver. So you can call
+genphy_c37_read_status() and then do any vendor specific fixups
+needed.
 
-[auto build test ERROR on char-misc/char-misc-testing]
-[also build test ERROR on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.8-rc2 next-20240202]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Redesign-remote-heap-management/20240202-144921
-base:   char-misc/char-misc-testing
-patch link:    https://lore.kernel.org/r/20240202064039.15505-4-quic_ekangupt%40quicinc.com
-patch subject: [PATCH v1 03/16] misc: fastrpc: Add static PD restart support
-config: i386-buildonly-randconfig-006-20240203 (https://download.01.org/0day-ci/archive/20240203/202402032322.GxfJcjnK-lkp@intel.com/config)
-compiler: gcc-11 (Debian 11.3.0-12) 11.3.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240203/202402032322.GxfJcjnK-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202402032322.GxfJcjnK-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   ld: drivers/misc/fastrpc.o: in function `fastrpc_setup_service_locator.constprop.0':
->> fastrpc.c:(.text+0x752): undefined reference to `pdr_handle_alloc'
->> ld: fastrpc.c:(.text+0x781): undefined reference to `pdr_add_lookup'
-   ld: drivers/misc/fastrpc.o: in function `fastrpc_rpmsg_remove':
->> fastrpc.c:(.text+0x16f4): undefined reference to `pdr_handle_release'
->> ld: fastrpc.c:(.text+0x16ff): undefined reference to `pdr_handle_release'
-   ld: fastrpc.c:(.text+0x172c): undefined reference to `pdr_handle_release'
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+      Andrew
 
