@@ -1,200 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-9701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82713848413
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 07:37:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1AB184841D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 08:00:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA06D1F26E85
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 06:37:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DC04B21DF9
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 07:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A8B1B5B7;
-	Sat,  3 Feb 2024 06:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dMECvtci"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BECFC481AE;
+	Sat,  3 Feb 2024 07:00:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-m12830.netease.com (mail-m12830.netease.com [103.209.128.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685651AAD2;
-	Sat,  3 Feb 2024 06:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D5481A2;
+	Sat,  3 Feb 2024 07:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.209.128.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706942266; cv=none; b=BkvHCXhmreMLtfyFabe+/WNpwmAWZb+uJpIqpsEbiJQscQW1zb5NLcp2R3/km/6jt5kgQMBwMxqeYFbIJMwsD2gAhUNdVlT22GlOByHhvBYXh6MrIZ0Yf/Qrhf2a4gd5n1KJR3LNQhPOPMu1LmubN9G9vaDx8y4loYNlEfZmsQ4=
+	t=1706943633; cv=none; b=VCw008/YNXozHhakRfXu3Qi/IQ0Gp/yZHkfMumI+SPMlNEjb5DbCixxL050NPnBt4oIvYTQr1UYmgKHwzmChwTQ/1uC3XuydpNdZf1flhS3MEg7Fc8tD0/rHXirDoDliL+/vQU7gWk49q9GHIy1BxB9J7hqupyaX0/a3YQepVHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706942266; c=relaxed/simple;
-	bh=NWsuLgcUqK/SS+nC89P+huD7byUyZzjhqKttzM5nCv0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XQMR+QGdkHoni75vRiIRtLN53thlK2rX2wJPGcbHJk/Kh9aX7PO1IOgArDbmV+/JRCN73tiLQNXmFEz/6Kc441RdKcialpPLncSPXMlYLoFFRic3HkbuSYDi3YrTexAQrN1YOaSsOSzG5CP/ZgSWwJ9vJSTnnDXTaksSA7zMyvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dMECvtci; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4136bP3n029472;
-	Sat, 3 Feb 2024 06:37:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=V1gGZUc/2iBRmUitELzTdMe/CsmObuU2g5gUnc1Jvc0=; b=dM
-	ECvtcifEeHDX2V+j2SCIKC8phsD2PVeljjBU2FtNc5gFD/bvrZkli/TrFw8hRSUo
-	BHPrkAv4h53WpKkggj0vJHUZUylmPmnde7yDXe8lUyF5BboVKpBXLhtrDl+tsRA/
-	T7a9pfWrvJP1/tMfcrEYc5zR2XulVzx0ozF40uOSgGltPdRS05KZz40Czranui5J
-	llyKommE1jfQ3p2ZxY5uncV8nx18/I0I0NRjnYMtYd1vE4HmAyMl2HQqtJ37l/bc
-	2VMaKV4MwbIhljiU9tYTQYO+clHDIM77cA+uJXWSB2rfBROeC3RBtCpy1F1V1q23
-	eP6N56TAPop0ufIRDXBA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w1f40r2t8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 03 Feb 2024 06:37:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4136bNkj029002
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 3 Feb 2024 06:37:23 GMT
-Received: from [10.216.25.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 2 Feb
- 2024 22:37:20 -0800
-Message-ID: <67ed3805-40cb-4f00-9d0d-b0fd012d6221@quicinc.com>
-Date: Sat, 3 Feb 2024 12:07:17 +0530
+	s=arc-20240116; t=1706943633; c=relaxed/simple;
+	bh=gwpYgD9SXVmLkQjZQCkPviuVubC9iSyJGLJsGJwbn0w=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=cx45Eb/MA6bym1eZ1PS0CVd1eMDHK4H1MMSWa/DEEyDrFMPN6+J14eOAUjnoK9AEYddbp7ml6VYvSAUE96cKrmKqhyueBqegYQDg2B/afiEKTUVUova/ByobzgE/1MvLYSBrt3uxkLAHQ86nYgNJF4QegXiHvsmM5akilSmYOxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=103.209.128.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from amadeus-Vostro-3710.lan (unknown [116.25.94.16])
+	by smtp.qiye.163.com (Hmail) with ESMTPA id 40F3E7E0154;
+	Sat,  3 Feb 2024 15:00:11 +0800 (CST)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: andersson@kernel.org
+Cc: amadeus@jmu.edu.cn,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	konrad.dybcio@linaro.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh+dt@kernel.org
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: ipq6018: enable sdhci node
+Date: Sat,  3 Feb 2024 15:00:08 +0800
+Message-Id: <20240203070008.15206-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <eqepewdgp5k3ajusf3hk7nazi2eli2w6wgxlbjroldwyobzh3d@aewtie2d3ora>
+References: <eqepewdgp5k3ajusf3hk7nazi2eli2w6wgxlbjroldwyobzh3d@aewtie2d3ora>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] watchdog: qcom: fine tune the max timeout value
- calculation
-To: Guenter Roeck <linux@roeck-us.net>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Wim Van
- Sebroeck <wim@linux-watchdog.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240116-wdt-v2-1-501c7694c3f0@quicinc.com>
- <2c4f9829-138d-41a5-8810-d13cf749fded@roeck-us.net>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <2c4f9829-138d-41a5-8810-d13cf749fded@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -RHG9Y1qdlcKZBex5DrycRtgGDA_FJUj
-X-Proofpoint-GUID: -RHG9Y1qdlcKZBex5DrycRtgGDA_FJUj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-03_02,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 mlxlogscore=999
- clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402030044
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZTEtDVk8dQh5DGUIfSkNCGFUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUpKTVVJTlVCT1VKTVlXWRYaDxIVHRRZQVlPS0hVSkpLSEpDVUpLS1VLWQY+
+X-HM-Tid: 0a8d6dc4825303a2kunm40f3e7e0154
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PE06Txw6IjMSDzgaKFFIQzQK
+	LjQKCwxVSlVKTEtNQk9ITUpKQ0JPVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	TVVJTlVCT1VKTVlXWQgBWUFJS0tLNwY+
 
+Hi, Bjorn
+> That sounds good, but do we have any one of those boards that should
+> reference &ipq6018_l2? Could make plug it into the sdhci node on some
+> board?
 
+Actually I have an ipq6010 sdcard device with pmic, which needs to
+reference ipq6018_l2. Also on the downstream qsdk kernel, the sdhc
+node writes 'vqmmc-supply = <&ipq6018_l2>;' by default.
 
-On 1/16/2024 8:32 PM, Guenter Roeck wrote:
-> On 1/16/24 00:22, Kathiravan Thirumoorthy wrote:
->> To determine the max_timeout value, the below calculation is used.
->>
->>     max_timeout = 0x10000000 / clk_rate
->>
->> cat 
->> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
->> 8388
->>
->> However, this is not valid for all the platforms. IPQ SoCs starting from
->> IPQ40xx and recent Snapdragron SoCs also has the bark and bite time field
->> length of 20bits, which can hold max up to 32 seconds if the clk_rate is
->> 32KHz.
->>
->> If the user tries to configure the timeout more than 32s, then the value
->> will be truncated and the actual value will not be reflected in the HW.
->>
->> To avoid this, lets add a variable called max_tick_count in the device 
->> data,
->> which defines max counter value of the WDT controller. Using this, 
->> max-timeout
->> will be calculated in runtime for various WDT contorllers.
->>
->> With this change, we get the proper max_timeout as below and restricts
->> the user from configuring the timeout higher than this.
->>
->> cat 
->> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
->> 32
->>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> 
-> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> Essentially, why is it needed upstream, when there are no user?
 
+Most ipq60xx devices have pmic chips, including some ipq6000 devices,
+while another ipq6000 devices do not have the pmic chips. So it does not
+mean there are no users but the supply is board specific. Maybe we should
+move the mp5496 node outside of ipq6018.dtsi.
 
-Guenter / Will, Can this be picked for v6.9? I don't see this in linux- 
-next yet, so please consider this as a gentle reminder!
+Thanks,
+Chukun
 
-> 
->> ---
->> Changes in v2:
->> - drop the minimum timeout change from 30s to 32s
->> - Link to v1: 
->> https://lore.kernel.org/r/20240111-wdt-v1-1-28c648b3b1f3@quicinc.com
->> ---
->>   drivers/watchdog/qcom-wdt.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
->> index 9e790f0c2096..006f9c61aa64 100644
->> --- a/drivers/watchdog/qcom-wdt.c
->> +++ b/drivers/watchdog/qcom-wdt.c
->> @@ -41,6 +41,7 @@ static const u32 reg_offset_data_kpss[] = {
->>   struct qcom_wdt_match_data {
->>       const u32 *offset;
->>       bool pretimeout;
->> +    u32 max_tick_count;
->>   };
->>   struct qcom_wdt {
->> @@ -177,11 +178,13 @@ static const struct watchdog_info 
->> qcom_wdt_pt_info = {
->>   static const struct qcom_wdt_match_data match_data_apcs_tmr = {
->>       .offset = reg_offset_data_apcs_tmr,
->>       .pretimeout = false,
->> +    .max_tick_count = 0x10000000U,
->>   };
->>   static const struct qcom_wdt_match_data match_data_kpss = {
->>       .offset = reg_offset_data_kpss,
->>       .pretimeout = true,
->> +    .max_tick_count = 0xFFFFFU,
->>   };
->>   static int qcom_wdt_probe(struct platform_device *pdev)
->> @@ -236,7 +239,7 @@ static int qcom_wdt_probe(struct platform_device 
->> *pdev)
->>        */
->>       wdt->rate = clk_get_rate(clk);
->>       if (wdt->rate == 0 ||
->> -        wdt->rate > 0x10000000U) {
->> +        wdt->rate > data->max_tick_count) {
->>           dev_err(dev, "invalid clock rate\n");
->>           return -EINVAL;
->>       }
->> @@ -260,7 +263,7 @@ static int qcom_wdt_probe(struct platform_device 
->> *pdev)
->>       wdt->wdd.ops = &qcom_wdt_ops;
->>       wdt->wdd.min_timeout = 1;
->> -    wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
->> +    wdt->wdd.max_timeout = data->max_tick_count / wdt->rate;
->>       wdt->wdd.parent = dev;
->>       wdt->layout = data->offset;
->>
->> ---
->> base-commit: 9e21984d62c56a0f6d1fc6f76b646212cfd7fe88
->> change-id: 20240111-wdt-5bd079ecf14d
->>
->> Best regards,
-> 
+-- 
+2.25.1
+
 
