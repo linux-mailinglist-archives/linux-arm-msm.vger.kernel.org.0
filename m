@@ -1,224 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-9707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24BC98486DB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 15:55:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 242A7848724
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 16:38:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B5441C20F42
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 14:55:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCE2A283495
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 15:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1625EE64;
-	Sat,  3 Feb 2024 14:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82525F47F;
+	Sat,  3 Feb 2024 15:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tLVmp8Zx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QhV3hOoj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3295EE95
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 14:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3822F5F543;
+	Sat,  3 Feb 2024 15:38:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706972094; cv=none; b=D0CZEQVzAKRQSusIaz9wuEm6xnztIf8o6PeYFYAFAEMsyIGnZA5OaCY0bqQERickLUifVXgpK1T5cqIHMMbaya9GxDzuKAVDtQmyaxWXgKQuc2u1OgmDzs70cFNEAH/JjQWasAbRTXBnatYzahtFhjs0aoJxwgS8R3k1vYH0/H8=
+	t=1706974685; cv=none; b=XQMllseEm4h+Igkv589RSSLAgvKt921ivJt4YG+uDmXA0UTRzkwbC3Gu5Op/alH97UB9iu+wX+eitAjxFMDv3obmlIKmXwiCHqNa60JSfBPdyg6slVwf37dvE8cpGXJtCCU2U+9O62IIyHMEAj4VxOVmBEGpTJdCFmYJk7ItorA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706972094; c=relaxed/simple;
-	bh=9Yrtb6dNl6HImYgM5t9N6vy88uzxettAlCzyHo53KP0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=SwWrmeorpirGfkGiDmIxSv2JFxnNLe/nhxWXomC/hhJ3yjjscrUN1u8jA6tu84aNuPZ+lvXCyEUogGF5FtIMCrivP/UewulW7eWCvg+K6eZtVkwF99UKFLQN+njziLLCla6LGBMS9UlXH2cmJfKaJAxF8MLFXakYcy9Gq22hL88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tLVmp8Zx; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33b18099411so1837018f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 06:54:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706972091; x=1707576891; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l9tkqvlJI491obbTK4oQ1wFNxZfPVsleOITChHyLKBE=;
-        b=tLVmp8ZxSGjm157qdDIMkEjGF5T3j0KL7Hmc9sC25PB2y7R/+8mMBTuu0Iy02OcZxN
-         0TENG3gnDj5H68koYcKL4IWFJOUAytBIY6G0+NS5t0be906W8JATjmNUuMqrLRMETbFT
-         nR7mmAupATpjX4yNlFZsoAw2t6DUdFcnOQzW4nN3OH+GPA87p6QeXUBlcWyt/DKVw/nG
-         Aeq9iICSWMxD34ifz9+nO67MtUZfwZ2Slk0iYNcUmPF2Z56wu60L0T7ybVRR6cxOntwd
-         1j4rVlbtNDXmz/Tp9BenDhb/cYcYvDBXtli3+ToimCPtE19HnZeb2ZxG7YeTuGOkm89q
-         NYow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706972091; x=1707576891;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=l9tkqvlJI491obbTK4oQ1wFNxZfPVsleOITChHyLKBE=;
-        b=U752eYwF07//5p8MKLcEU7Sf+HvlT+s6Q1RlrE27C2fPtQThzAKhOMvzHqLfq8wZRw
-         Se56G7IKVp8hXUGg2kygMMXNJm2Il1jnj4doQfO/tWOdk/FDl8Mt/xHf99fCR3E3v/tr
-         sMSgNeehC87wQYslQ6M8m+nGsYG69ZbTyN88VZzdkCbrV97VxmxDrVHjKq7rWXGonYIE
-         LbMRkQF1q3pPy8VN+GJTJBbCoABAsmOrySMVCsg8pL9SSNxgqxv4HKZBTRZXKoYBox1X
-         WF73IAk6kmITCAKZga6b7Uy4lVZI+/1n/CZZrYCEsc7HXrp/GXpw48f1h4D7+MPgLkuF
-         RC0A==
-X-Gm-Message-State: AOJu0YxUr1f7RZoPFaIiYVtVv30tJdR2Mp2YBTWVH2iSISQkkzItG3ZG
-	MBY2qFLweqzDoq87mptT++J/wqpMkKZtrREq8fnHZ2YzpUO/IDfRqBu0PT49bwg=
-X-Google-Smtp-Source: AGHT+IHXAkBEU+4phuk0x9RIgoQbb/RVBPp7glE19zxapjl1x1NoB1M1sSuHmDXgk0zB4Aiuntw8jQ==
-X-Received: by 2002:a5d:4d10:0:b0:33a:fdc3:a61c with SMTP id z16-20020a5d4d10000000b0033afdc3a61cmr3548775wrt.31.1706972090927;
-        Sat, 03 Feb 2024 06:54:50 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVRCzHtAxcuO8mrR+BHEE9m2OUgtXZvH24s2X8wVEUHdg3dAJKrtQBscD0H9UBYB7EQTgfgy8gxbJjpr8clQA5C7Mm6+M7aL2StC2EeuzuRMH3KTyk3Nj1Fxjq5KHqIaIQTUqkbVXrIthqr/naK88+8SIZYQJw0LAhy10KuS88w9UTyIypyCOsLxwYBT9P8CDha26LwfKrhX+Qu/t1kfO2yIOcC2Qj+SYc7hPx1nmC8wB3ehPpE7dis7hP3LxrJmjFhf5zletxBIsljJ3rzSQSiMrstw9Fxn+C+ZrkShRhPhmENeGTq5g==
-Received: from ?IPV6:2001:67c:1810:f055:5044:617a:60fb:ed01? ([2001:67c:1810:f055:5044:617a:60fb:ed01])
-        by smtp.gmail.com with ESMTPSA id n7-20020a5d6b87000000b0033b0d2ba3a1sm4210200wrx.63.2024.02.03.06.54.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Feb 2024 06:54:50 -0800 (PST)
-Message-ID: <74968e8f-1a14-4044-933d-528af39e61b7@linaro.org>
-Date: Sat, 3 Feb 2024 15:54:48 +0100
+	s=arc-20240116; t=1706974685; c=relaxed/simple;
+	bh=SNnVQo1kDmMsJArsZpVPFWmrsmhNlHXHLXsJaiu5qlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qTKLXWtieOf1VqvFyDc8PteECsbqdJwXTz2nGyw/HN/Rtr7aKMpIzDnnu1DIyIt4BMyIZeR1PU0dSWdJu8uTrZRdO+AKL3SJUeZVwrICuo3+jnpuFiXR/McbPU8EO2eJoaIFmXrFcs3k/H5MtcZot7HT9NFEvi/k8yW5e2+XadE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QhV3hOoj; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706974683; x=1738510683;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=SNnVQo1kDmMsJArsZpVPFWmrsmhNlHXHLXsJaiu5qlo=;
+  b=QhV3hOojdOTaDCGY8hp429N1w2lb5AdvEsTms3hlmA0kpwnwGyPuZ/zv
+   7n1trTDvxyeHqu6flWym3whGObowlRUecXxSYBgndSAA1U+dv/bkWDFDC
+   vZLOaoqOR3OMs0XOwOxMVyYwmyECvRt77YvgRv2FixusRe+GpZts8uEe/
+   kSAEFUF8mu6MxNuNW0rWXxvZC9fJ6F8EwbRzkDAa8c5uILiY14b8xE+cr
+   HqJvY4WGmxdVdXObuVt4QzvEibWsQxWHCp+ycEe6TqwQ9wFDV5uyKFwkD
+   gTu8M9/XCipWLqddeYrNu7QNjvGO8dSJix5lJeXdBw1v6DvbafFdBAl8N
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10973"; a="243130"
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
+   d="scan'208";a="243130"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2024 07:38:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
+   d="scan'208";a="652517"
+Received: from lkp-server02.sh.intel.com (HELO 59f4f4cd5935) ([10.239.97.151])
+  by orviesa007.jf.intel.com with ESMTP; 03 Feb 2024 07:38:00 -0800
+Received: from kbuild by 59f4f4cd5935 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rWI5d-0005F0-1g;
+	Sat, 03 Feb 2024 15:37:57 +0000
+Date: Sat, 3 Feb 2024 23:37:16 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 03/16] misc: fastrpc: Add static PD restart support
+Message-ID: <202402032322.GxfJcjnK-lkp@intel.com>
+References: <20240202064039.15505-4-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Switch UFS from opp-table-hz
- to opp-v2
-Content-Language: en-US, fr
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240203-topic-8550_ufs_oppv2-v2-1-b0bef2a73e6c@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240203-topic-8550_ufs_oppv2-v2-1-b0bef2a73e6c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240202064039.15505-4-quic_ekangupt@quicinc.com>
 
-On 03/02/2024 01:10, Konrad Dybcio wrote:
-> Now that the non-legacy form of OPP is supported within the UFS driver,
-> go ahead and switch to it, adding support for more intermediate freq/power
-> states.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Extracted out of:
-> https://lore.kernel.org/linux-arm-msm/15d2bd66-29f3-435b-8494-d82ec4036413@linaro.org/#t
-> 
-> Changes since v1:
-> - Set the reference clock rate to 0 in opp entries, it doesn't support
->    ratesetting anyway. Confirmed UFS still works.
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 50 +++++++++++++++++++++++++++++-------
->   1 file changed, 41 insertions(+), 9 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index c89d8f3dad21..144e20edf237 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1966,6 +1966,7 @@ ufs_mem_hc: ufs@1d84000 {
->   			iommus = <&apps_smmu 0x60 0x0>;
->   			dma-coherent;
->   
-> +			operating-points-v2 = <&ufs_opp_table>;
->   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
->   					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->   
-> @@ -1986,18 +1987,49 @@ ufs_mem_hc: ufs@1d84000 {
->   				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
->   				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> -			freq-table-hz =
-> -				<75000000 300000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<75000000 300000000>,
-> -				<100000000 403000000>,
-> -				<0 0>,
-> -				<0 0>,
-> -				<0 0>;
->   			qcom,ice = <&ice>;
->   
->   			status = "disabled";
-> +
-> +			ufs_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-75000000 {
-> +					opp-hz = /bits/ 64 <75000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <75000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-> +
-> +				opp-150000000 {
-> +					opp-hz = /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <150000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_svs>;
-> +				};
-> +
-> +				opp-300000000 {
-> +					opp-hz = /bits/ 64 <300000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <300000000>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>,
-> +						 /bits/ 64 <0>;
-> +					required-opps = <&rpmhpd_opp_nom>;
-> +				};
-> +			};
->   		};
->   
->   		ice: crypto@1d88000 {
-> 
-> ---
-> base-commit: 076d56d74f17e625b3d63cf4743b3d7d02180379
-> change-id: 20240203-topic-8550_ufs_oppv2-bb88d63a4c58
-> 
-> Best regards,
+Hi Ekansh,
 
-Looks fine:
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+kernel test robot noticed the following build errors:
 
-Let me have a test run with it first before applying.
+[auto build test ERROR on char-misc/char-misc-testing]
+[also build test ERROR on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.8-rc2 next-20240202]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Neil
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Redesign-remote-heap-management/20240202-144921
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/20240202064039.15505-4-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 03/16] misc: fastrpc: Add static PD restart support
+config: i386-buildonly-randconfig-006-20240203 (https://download.01.org/0day-ci/archive/20240203/202402032322.GxfJcjnK-lkp@intel.com/config)
+compiler: gcc-11 (Debian 11.3.0-12) 11.3.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240203/202402032322.GxfJcjnK-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202402032322.GxfJcjnK-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   ld: drivers/misc/fastrpc.o: in function `fastrpc_setup_service_locator.constprop.0':
+>> fastrpc.c:(.text+0x752): undefined reference to `pdr_handle_alloc'
+>> ld: fastrpc.c:(.text+0x781): undefined reference to `pdr_add_lookup'
+   ld: drivers/misc/fastrpc.o: in function `fastrpc_rpmsg_remove':
+>> fastrpc.c:(.text+0x16f4): undefined reference to `pdr_handle_release'
+>> ld: fastrpc.c:(.text+0x16ff): undefined reference to `pdr_handle_release'
+   ld: fastrpc.c:(.text+0x172c): undefined reference to `pdr_handle_release'
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
