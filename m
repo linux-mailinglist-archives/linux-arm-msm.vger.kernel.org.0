@@ -1,96 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-9703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABE4B848662
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 14:00:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 75DC2848690
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 14:43:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D792C1C213D9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 13:00:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A831B1C217A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 13:43:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCB4639860;
-	Sat,  3 Feb 2024 13:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF56F5D72E;
+	Sat,  3 Feb 2024 13:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PHHAPXOr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xplTRPv5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0DD5D8F8;
-	Sat,  3 Feb 2024 13:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A7B58206
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 13:43:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706965225; cv=none; b=WheK4NVgEskO07WF60XnulKNnBEyJyjISQxRKLDOh75DmmvxBropctrw0VWzZdsNyaNaWwBYo0kDiUalgrFMPy4MDQTdLFefs41ehJ63lZoOalG94wq/As3y3xKqJVzK/fvJxSE9rQpo5r5ONxmp+JTdwFciEP+ZGVlfXc8g9Co=
+	t=1706967832; cv=none; b=N0XnQjWTjX/toRdwFx+TNagewVPw+toTXXsgRq2rVWnJl69RO/0irPtDCt1d1Q7Apu0E63MjXaBcs/murF5HL/Zha6yB8gfoK5WL6XKoVSo4vQ1kOIKL7qYefmQE5HxNszy44XDFIH5QN5sByN4V3t+Wj41Vq2e2vCG1JJJ/Mik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706965225; c=relaxed/simple;
-	bh=FJ8Nj0hzNhpNxCGXjpL0hGqqjoeOXzwYxUtzxxHfV0M=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=FWBHUXmQxKrAw89jiJLDTiQmgoLTe9WVpHObCo1nPdbZ+Xq87nddsWm7I8Smqi1plIC9MXpXvchN2A1qOGDT9bYeYMSRT0aAxMn7LISI3HzKA3rfUR7x+aKKHnRo0Ultm6OOTz6OVSigbu/KpdY54XUAr42k6nQCQy5gbRVpyYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PHHAPXOr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 135BEC433C7;
-	Sat,  3 Feb 2024 13:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706965225;
-	bh=FJ8Nj0hzNhpNxCGXjpL0hGqqjoeOXzwYxUtzxxHfV0M=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=PHHAPXOrLbqA84PtmYXxkDExvNrInzqsIfgyNRtbfnfxOXolW41ilDMKPcrsqnutB
-	 XbbBzyvstc3Ykx1Dtb5cQyya23kcKcvZUNF7X/4uk/VrSCSlXGoiCGlu80vYP3pXKE
-	 KgOKqERb/anPsRtjafQbOKn3g9PmE8Fs06ks+hFNeBaHcMYmqtXLY+d/DESHas30+n
-	 4+XDh/hQiTgoOCddvt3QEH1cwDpf1WvU+dypW1G9jeFtGDcYGU6+G1jzR00MnJND1s
-	 f97DvMUS1+dVetEHqznkl/6WQSBFbz5Ch9ptLrzUIcU0glCngAGO7T/8A2mWOCXPL8
-	 +p//LVsMTwynw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E917EC395F3;
-	Sat,  3 Feb 2024 13:00:24 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1706967832; c=relaxed/simple;
+	bh=bB5NkbMpLI0HMjQqKghAYbfh6kYTOIzuHFhSgRTqF8A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NhrInhAU9aoxoYBwDs3d7vk4OmA59hiOqKUosiNQcDSoW11oh4JaRprpwBZUNm2mIl0Xa6UhZUwTxwSPrPZsATotTYLjLSGa7QXSvsPFf67MmVbQ7hIjLZe88h+hsnLWJYng/pJjEu9kXcEI1GbEdqnOnDHpQeWFMFlF3acw09U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xplTRPv5; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc6d8f31930so1353640276.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Feb 2024 05:43:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706967830; x=1707572630; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Moz+VNtFoELbtekbvE4gjgVQwcWCMsMt8Pxrs1cix0U=;
+        b=xplTRPv57H9fHe6LnBMdCcERI3feAeaCo41jCCrPg2eze8Eoo/PsbSvOdrsZpmlfY3
+         F63PSW/SscYt8VhqjI5IC0AMtxjwfzVTQRsoA4CsGy90zZvnTkoOEXKzYiSu5PelOtit
+         I0ZZZtn8mSerCtIxjUgAAwVoH6W5Mim1nBZU2zhb1LK9usflDnx7GL2ks6Eq2SUoytcx
+         6DpChByqZsBdtiaiQRRAbOgjHQIcc1E/DmI7Qv7EDS6Vv/WZ5/mEpXJ6iTvrHDI+Xoau
+         3IO560cECUFt7IqWZeVC56fM14trVlNTdnVqgkEDPuOjj3sBL/8HZjQeL9jIKroEBRJP
+         AmUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706967830; x=1707572630;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Moz+VNtFoELbtekbvE4gjgVQwcWCMsMt8Pxrs1cix0U=;
+        b=cXMOUhViv+ZL69aZoz5jqzOpG4lzZ931VV1xtfq0PMQ3ddKy8HjbCrUDd4YkRN0/u5
+         ywYnK3SYLCKvc7a8WbaDEAuMBtqVW3x5Vb47V3E1ZssIry66zZUU5QPzVlcdlKyu7Caf
+         WQu7KoGKl36bktvlgDaXnGsicvQkIpUVkkNdkbnzqn8LVAYFFsH5kT0ENcgKZToEOrqn
+         zm0kX4r1HtDxueAJ/7kNCqhTNTMJxAnIdDpNapjzveHaNnv+cV13v8U7zPYHMZjIXXBq
+         CQvQGQUl20EJ5vEEMFi8C6D8U3+I/AcsyTEkaKy8c5ahNTSiRFJc3we0ecXQkXfmaqj9
+         XNtw==
+X-Gm-Message-State: AOJu0YyLkXozmRw5xDEUMPHlqYBsJvMYIEjEfI4avIti0Z7+ybLL4+Uo
+	765raUDM6q/Iv35lVnq8CaIqnpwefpEb5cptOJeXlEkPTkAaYBL9g3E0+bSrIYXAyOlqQWJvKeM
+	7y57B9AEfwZ8dMCdCCMGJFTltDpBQRV0lZ+IVDKj8P6zzf5KCoYQ=
+X-Google-Smtp-Source: AGHT+IHC1Kjcdw2ForbRnh30ds48ubtWrAYlVUrU2czhMHf7NwzSUklUGHHrewM+CW4nYQ+906Zj9TjWidJCAslfPqs=
+X-Received: by 2002:a05:6902:dc9:b0:dc2:a46:3d29 with SMTP id
+ de9-20020a0569020dc900b00dc20a463d29mr987960ybb.9.1706967830271; Sat, 03 Feb
+ 2024 05:43:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [net-next PATCH 0/2] net: phy: qcom: qca808x: fixup qca808x LED
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <170696522495.24738.13214617196290591760.git-patchwork-notify@kernel.org>
-Date: Sat, 03 Feb 2024 13:00:24 +0000
-References: <20240201134602.11085-1-ansuelsmth@gmail.com>
-In-Reply-To: <20240201134602.11085-1-ansuelsmth@gmail.com>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch,
- hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
+References: <eqepewdgp5k3ajusf3hk7nazi2eli2w6wgxlbjroldwyobzh3d@aewtie2d3ora> <20240203070008.15206-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20240203070008.15206-1-amadeus@jmu.edu.cn>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 3 Feb 2024 14:43:39 +0100
+Message-ID: <CAA8EJppdG--2=pC=WjaK0HH3NDrh_HXLNmk8AMMMfCLvbtxpEw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: ipq6018: enable sdhci node
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hello:
+On Sat, 3 Feb 2024 at 08:00, Chukun Pan <amadeus@jmu.edu.cn> wrote:
+>
+> Hi, Bjorn
+> > That sounds good, but do we have any one of those boards that should
+> > reference &ipq6018_l2? Could make plug it into the sdhci node on some
+> > board?
+>
+> Actually I have an ipq6010 sdcard device with pmic, which needs to
+> reference ipq6018_l2. Also on the downstream qsdk kernel, the sdhc
+> node writes 'vqmmc-supply = <&ipq6018_l2>;' by default.
+>
+> > Essentially, why is it needed upstream, when there are no user?
+>
+> Most ipq60xx devices have pmic chips, including some ipq6000 devices,
+> while another ipq6000 devices do not have the pmic chips. So it does not
+> mean there are no users but the supply is board specific. Maybe we should
+> move the mp5496 node outside of ipq6018.dtsi.
 
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+Yes, please. In the end, mp5496 is not a part of the SoC.
 
-On Thu,  1 Feb 2024 14:45:59 +0100 you wrote:
-> This is a bit embarassing and totally my fault so sorry for that!
-> 
-> While reworking the patch to phy_modify API, it was done a logic
-> error and made the brightness_set function broken. It wasn't
-> notice in last revisions test as the testing method was to verify
-> if hw control was correctly working.
-> 
-> [...]
-
-Here is the summary with links:
-  - [net-next,1/2] net: phy: qcom: qca808x: fix logic error in LED brightness set
-    https://git.kernel.org/netdev/net-next/c/f2ec98566775
-  - [net-next,2/2] net: phy: qcom: qca808x: default to LED active High if not set
-    https://git.kernel.org/netdev/net-next/c/f203c8c77c76
-
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+With best wishes
+Dmitry
 
