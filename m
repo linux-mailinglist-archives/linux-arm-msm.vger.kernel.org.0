@@ -1,162 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-9696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD40A8483BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 05:33:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C6F8483CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 05:55:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D23561C23605
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 04:33:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 360B31F21BE1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 04:55:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368E810A09;
-	Sat,  3 Feb 2024 04:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C35101CE;
+	Sat,  3 Feb 2024 04:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ob/JSzh4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yr40aX5V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A22F9E9;
-	Sat,  3 Feb 2024 04:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52876101FA
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 04:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706934072; cv=none; b=hGm5cPbLFWPlzDVCn5UQcheK4SpZZpO2Zd3vg27wTqO0BqjQVmTBFyIL1U4dP7tIZQrMtbAc28Oh0YqXh8bm/UFG8yO29ysqx7MVSzPrkq5cUsopb9tZNPa8z0TT2onZBRx51YIiZXF1u86RxJtsPbvXkiuyY+fyZUkeWczIlxA=
+	t=1706936120; cv=none; b=pdIxedfQL3ki42S6zAGsROvt+qzBjM9OiUkqId6IcYlaRWYu7RvdW1t/qjr/DHY37Fd9VlVix4rylcqizj66c4JZPm0P2qF1N517eIAD8bUwXJZAk/BJdr7M7mnwkMB2+7y5+U979+ODYvJNwpQ758osblcB1pCGKCo7sNmyDxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706934072; c=relaxed/simple;
-	bh=l8fqb95s8syuE8Cx9UHSXoTZx0Bim/EsdxuGX0FstWM=;
+	s=arc-20240116; t=1706936120; c=relaxed/simple;
+	bh=prhyuYpiyJHE3S7DnClC1gPKzqdA5hlwv1JmdIn2t4g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JlrzzMn17WcE2+omPjIlPfNkxA0NKTNLHLUghMgDF/+ZPCZDIVCkqZSTb/VKnsiAkcTvvDhgozch9yumz3cd1MH8jWlq6sQrKln6gcS/fClkKlTsU/YTny3GCO3iEH8tiaaBxfiZHrDHgDMWCSTAXHqk2Pajr47r0Ho/S32GrtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ob/JSzh4; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706934070; x=1738470070;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=l8fqb95s8syuE8Cx9UHSXoTZx0Bim/EsdxuGX0FstWM=;
-  b=Ob/JSzh4WBeKLXmCRYHxj0k/fdIaMYdMwTw8tdPiN6OBBPCRuSofnoie
-   S1W2a9wUCnGYYPfO6jYcARhZ+lqAEe3Gl/OwtWWHAN0hotGLHnFB3Br5M
-   uSESZkJIcczAzGtKcgbjHv7KCE7PkqYcOVU+6oCessqMcJIX9FLyjM09M
-   H54X4/G5CPOSGm16CojGP7Kgr3BWLmXPdbZBuw+Mvp0U6EfYkvPIYVRUA
-   bijxowSmPI5RZbHPi4dCPhNXEwDKRQSAn4UC/xuA/WZS8A+1UpkAlsJsc
-   NAWyQngE3ZSfJtF1sZf1h+y1D2kapn2p27ZvPdM9MLVCDW9BEem6zoVWo
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="11655561"
-X-IronPort-AV: E=Sophos;i="6.05,238,1701158400"; 
-   d="scan'208";a="11655561"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2024 20:21:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,238,1701158400"; 
-   d="scan'208";a="31047732"
-Received: from lkp-server02.sh.intel.com (HELO 59f4f4cd5935) ([10.239.97.151])
-  by orviesa002.jf.intel.com with ESMTP; 02 Feb 2024 20:21:04 -0800
-Received: from kbuild by 59f4f4cd5935 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rW7WX-0004cQ-0G;
-	Sat, 03 Feb 2024 04:21:01 +0000
-Date: Sat, 3 Feb 2024 12:20:06 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Davis <afd@ti.com>, Sebastian Reichel <sre@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=tYK349S7k1U82ZOV3nIrOb9tebuD8Pa7uu/Z+Z8YOb0QRB2KFX9nJhKTJFib6dcM+KN5TdQtXTa++wFVF8puKvSo9xi4NjC8/ntFVxt46HTTNRgq7RaW6tRA0+8pQuQzWzD5//9+vkqpYQui7j+Jo0B3tE0Gik4TeGYn3I+uoLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yr40aX5V; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3bda4bd14e2so2267089b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 20:55:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706936118; x=1707540918; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=liH+UlEUy0/qdW3w6rXrGrhdkv4ggd+gQjsdMoONLdg=;
+        b=Yr40aX5Vdwd2PrAPmusyeO5XUqyrEkqohDXyXoWBJa6AzbvSk2dkmN5xfEEDR0wA1y
+         m1Tpm8iz3T6X6MI+3FwJcMYNcaOKLXwHNfqoTIWTOfMlgHh0f+wvtqnlOCtqMa+vCE4k
+         nuu7PNmp2ccsaFS899sPRwM/9aRLETZy9UGMxLYxM2JgthLw2RqQfqaWDoVEYM02QxXF
+         z5SkYCkF4lvF40gi2sx0FeziFMyeboqBx0VgKlBkJjzwuUW0RqEjmeKgDisGFIOC9pfw
+         e3WcX/fcZbjj0hfnObLxSZsopjelgUfPMlsgQRF16vJ69HLZkBXc7qZmGrsMDrYfpApR
+         SVPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706936118; x=1707540918;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=liH+UlEUy0/qdW3w6rXrGrhdkv4ggd+gQjsdMoONLdg=;
+        b=T50FVcgGLtVtSyWMWqYo3p5OooDbZVo9ZdDIIwTQWB5mDW1hQJN72eNLP4xZWGHZc+
+         Ab6JGeTEropUePKDILDDiHH6uxqDHXkszVirK10ynTgfW2tUXSECRHVhXXVfvKWaSsoQ
+         CY3mixgt0aJ4Zm/YnWvc+s4awKxo7dht7Irkh2QgdQKSganwyFA0w37VqPhq8zhdlzMR
+         jkzs/NXbFririWpoBL73pRMs4W8SKEA6bCA6rskgAULxwagOifF0VVGNUMrP67wU1WwJ
+         BMbmnbQaSTtUicesrbRHwK7d1YD3BxaexREf2KwIWSpmn1lwA66+u+aGJ41/MAhp/WKt
+         hzWg==
+X-Gm-Message-State: AOJu0YxoRYBOb2b+1pu/WE28YZ1sQ/obmU/xMtlL9bNAbXUdZimZ4Oyn
+	pkYGo0lmkiQyZAQm6ddtOclcHxU6eZh19T/7UY1VoW42qN36koo5WrquHHlyzA==
+X-Google-Smtp-Source: AGHT+IHdMv2idNnsnA2Q8aRKwiJvIlzhH8ITKTDULVqn1uKBYYZSSnoU26Aac8cRhwlwGKan8m52Qw==
+X-Received: by 2002:a05:6808:2120:b0:3bf:ce2e:c4b2 with SMTP id r32-20020a056808212000b003bfce2ec4b2mr417298oiw.50.1706936118304;
+        Fri, 02 Feb 2024 20:55:18 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXUa+col4sTfn88a4vmaccjdk3Lpyd+XnHeUvYW4WBO9Sd+nRVAAP1o5/Cp9h6wpuhupUU8LRF7jkbplfeUvpukjn5WF17Z0UhUjI7Jw6yzxbRRJ4nqJwNhx0i5r9vcTmVl/MC0Fzu+ENJMxDhKhKAh9/BPhM/MrEDKMcb4c+FeqZuwdKRxJQBWVcRHnX2S1xiWSyG570oeU3f9HYGmvDCykKjennYFQDpfxSHoGj4xMJjU8wH+bgrqS4+cMXcGJsXZWuF7tzB9DfbGFRQQiELRLvyqw5CCuK5a2waOP7r0NCwUwPBCUDBAG9pYi0up76Uuv5k2r1zqZk25e06PjZo4TThSaHHUfrSx4QKMiMI6NSAjnnGdX+rfdNqXFLMr+LcDuagUSV3H
+Received: from thinkpad ([117.202.187.138])
+        by smtp.gmail.com with ESMTPSA id y11-20020a62f24b000000b006ddc7de91e9sm2467321pfl.197.2024.02.02.20.55.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Feb 2024 20:55:17 -0800 (PST)
+Date: Sat, 3 Feb 2024 10:25:12 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Lukas Wunner <lukas@wunner.de>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>
-Subject: Re: [PATCH 09/18] power: reset: rmobile-reset: Use
- devm_register_sys_off_handler(RESTART)
-Message-ID: <202402031246.nZHDnDnf-lkp@intel.com>
-References: <20240201180102.70395-10-afd@ti.com>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/2] Enable D3 support for Qualcomm bridges
+Message-ID: <20240203045512.GA3038@thinkpad>
+References: <20240202-pcie-qcom-bridge-v1-0-46d7789836c0@linaro.org>
+ <20240202090033.GA9589@wunner.de>
+ <20240202100041.GB8020@thinkpad>
+ <20240202193326.GA29000@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240201180102.70395-10-afd@ti.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240202193326.GA29000@wunner.de>
 
-Hi Andrew,
+On Fri, Feb 02, 2024 at 08:33:26PM +0100, Lukas Wunner wrote:
+> On Fri, Feb 02, 2024 at 03:30:41PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Feb 02, 2024 at 10:00:33AM +0100, Lukas Wunner wrote:
+> > > Please amend platform_pci_bridge_d3() to call a new of_pci_bridge_d3()
+> > > function which determines whether D3 is supported by the platform.
+> > > 
+> > > E.g. of_pci_bridge_d3() could contain a whitelist of supported VID/DID
+> > > tuples.  Or it could be defined as a __weak function which always
+> > > returns false but can be overridden at link time by a function
+> > > defined somewhere in arch/arm/, arch/arm64/ or in some driver
+> > > whose Kconfig option is enabled in Qualcomm platforms.
+> > 
+> > Hmm. If we go with a DT based solution, then introducing a new property like
+> > "d3-support" in the PCI bridge node would be the right approach. But then, it
+> > also requires defining the PCI bridge node in all the DTs. But that should be
+> > fine since it will help us to support WAKE# (per bridge) in the future.
+> 
+> I'm not sure whether a "d3-support" property would be acceptable.
+> My understanding is that capabilities which can be auto-sensed by
+> the driver (or the PCI core in this case), e.g. by looking at the
+> PCI IDs or compatible string, should not be described in the DT.
+> 
 
-kernel test robot noticed the following build warnings:
+We cannot whitelist platforms in DT. DT should describe the hardware and its
+capabilities. In this case, the "supports-d3" property as I proposed [1] tells
+the OS that this bridge is capable of supporting D3.
 
-[auto build test WARNING on sre-power-supply/for-next]
-[also build test WARNING on mani-mhi/mhi-next soc/for-next linus/master v6.8-rc2 next-20240202]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Blacklisting/whitelisting belongs to the OS. We can however, whitelist the
+bridges in PCI core. But that has the downside of not being useful to other OSes
+supporting DT. Hence, a DT property that describes the hardware capability
+makes sense to me.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Andrew-Davis/power-reset-atc260x-poweroff-Use-devm_register_sys_off_handler-RESTART/20240202-020809
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git for-next
-patch link:    https://lore.kernel.org/r/20240201180102.70395-10-afd%40ti.com
-patch subject: [PATCH 09/18] power: reset: rmobile-reset: Use devm_register_sys_off_handler(RESTART)
-config: hexagon-randconfig-r122-20240202 (https://download.01.org/0day-ci/archive/20240203/202402031246.nZHDnDnf-lkp@intel.com/config)
-compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project 7dd790db8b77c4a833c06632e903dc4f13877a64)
-reproduce: (https://download.01.org/0day-ci/archive/20240203/202402031246.nZHDnDnf-lkp@intel.com/reproduce)
+- Mani
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202402031246.nZHDnDnf-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/power/reset/rmobile-reset.c:24:40: sparse: sparse: incorrect type in initializer (different address spaces) @@     expected void [noderef] __iomem *sysc_base2 @@     got void *cb_data @@
-   drivers/power/reset/rmobile-reset.c:24:40: sparse:     expected void [noderef] __iomem *sysc_base2
-   drivers/power/reset/rmobile-reset.c:24:40: sparse:     got void *cb_data
->> drivers/power/reset/rmobile-reset.c:45:47: sparse: sparse: incorrect type in argument 5 (different address spaces) @@     expected void *cb_data @@     got void [noderef] __iomem *[assigned] sysc_base2 @@
-   drivers/power/reset/rmobile-reset.c:45:47: sparse:     expected void *cb_data
-   drivers/power/reset/rmobile-reset.c:45:47: sparse:     got void [noderef] __iomem *[assigned] sysc_base2
-
-vim +24 drivers/power/reset/rmobile-reset.c
-
-    21	
-    22	static int rmobile_reset_handler(struct sys_off_data *data)
-    23	{
-  > 24		void __iomem *sysc_base2 = data->cb_data;
-    25	
-    26		/* Let's assume we have acquired the HPB semaphore */
-    27		writel(RESCNT2_PRES, sysc_base2 + RESCNT2);
-    28	
-    29		return NOTIFY_DONE;
-    30	}
-    31	
-    32	static int rmobile_reset_probe(struct platform_device *pdev)
-    33	{
-    34		void __iomem *sysc_base2;
-    35		int error;
-    36	
-    37		sysc_base2 = devm_platform_ioremap_resource(pdev, 0);
-    38		if (IS_ERR(sysc_base2))
-    39			return PTR_ERR(sysc_base2);
-    40	
-    41		error = devm_register_sys_off_handler(&pdev->dev,
-    42						      SYS_OFF_MODE_RESTART,
-    43						      SYS_OFF_PRIO_HIGH,
-    44						      rmobile_reset_handler,
-  > 45						      sysc_base2);
-    46		if (error) {
-    47			dev_err(&pdev->dev,
-    48				"cannot register restart handler (err=%d)\n", error);
-    49			return error;
-    50		}
-    51	
-    52		return 0;
-    53	}
-    54	
+[1] https://github.com/devicetree-org/dt-schema/pull/127
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
