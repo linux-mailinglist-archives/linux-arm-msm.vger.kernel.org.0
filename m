@@ -1,89 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-9697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0C6F8483CE
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 05:55:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0220A8483D2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 05:57:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 360B31F21BE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 04:55:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7752C1F24E0B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  3 Feb 2024 04:57:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C35101CE;
-	Sat,  3 Feb 2024 04:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D715D10A05;
+	Sat,  3 Feb 2024 04:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yr40aX5V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DM58zrJ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52876101FA
-	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 04:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AF710782
+	for <linux-arm-msm@vger.kernel.org>; Sat,  3 Feb 2024 04:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706936120; cv=none; b=pdIxedfQL3ki42S6zAGsROvt+qzBjM9OiUkqId6IcYlaRWYu7RvdW1t/qjr/DHY37Fd9VlVix4rylcqizj66c4JZPm0P2qF1N517eIAD8bUwXJZAk/BJdr7M7mnwkMB2+7y5+U979+ODYvJNwpQ758osblcB1pCGKCo7sNmyDxI=
+	t=1706936223; cv=none; b=Bp1SAaEqGK7HBnt3kimGRU8O2NnnktZALlsitE8TI+6VfNMBg6gMwq8KQBwK/mFEF1AlE/kRYw4L0t4Rp2YvIYl++X+v9mcJS0CI+H5MeW1fq1LKkdmsDSuXtx62KUY4k7nVqFhHi2GUuVJfnNrBBI29hVLJhfKb/wYrbFTIYw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706936120; c=relaxed/simple;
-	bh=prhyuYpiyJHE3S7DnClC1gPKzqdA5hlwv1JmdIn2t4g=;
+	s=arc-20240116; t=1706936223; c=relaxed/simple;
+	bh=wKy8pJGaRQ54CuzSdhu8+xkT6SOYTsPwXkeIF/nYQD0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tYK349S7k1U82ZOV3nIrOb9tebuD8Pa7uu/Z+Z8YOb0QRB2KFX9nJhKTJFib6dcM+KN5TdQtXTa++wFVF8puKvSo9xi4NjC8/ntFVxt46HTTNRgq7RaW6tRA0+8pQuQzWzD5//9+vkqpYQui7j+Jo0B3tE0Gik4TeGYn3I+uoLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yr40aX5V; arc=none smtp.client-ip=209.85.167.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=c3cwoF8AxeNH9b1/xdQiUQxln/LJDEzAwYCpjvA/qny1WbIfgk1QNduSoN1f/uBErxeLdKeRoAkURA5hSz5VGamrCo91rXEXrHcWfNEy8UpiqJTc7dx2xeFflKkHqehsjn5cf5mXW0uBXjbul50ffe6WReA3YWXc/r10/5qaU5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DM58zrJ/; arc=none smtp.client-ip=209.85.161.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3bda4bd14e2so2267089b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 20:55:19 -0800 (PST)
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-59a910a1265so1498164eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Feb 2024 20:57:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706936118; x=1707540918; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1706936220; x=1707541020; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=liH+UlEUy0/qdW3w6rXrGrhdkv4ggd+gQjsdMoONLdg=;
-        b=Yr40aX5Vdwd2PrAPmusyeO5XUqyrEkqohDXyXoWBJa6AzbvSk2dkmN5xfEEDR0wA1y
-         m1Tpm8iz3T6X6MI+3FwJcMYNcaOKLXwHNfqoTIWTOfMlgHh0f+wvtqnlOCtqMa+vCE4k
-         nuu7PNmp2ccsaFS899sPRwM/9aRLETZy9UGMxLYxM2JgthLw2RqQfqaWDoVEYM02QxXF
-         z5SkYCkF4lvF40gi2sx0FeziFMyeboqBx0VgKlBkJjzwuUW0RqEjmeKgDisGFIOC9pfw
-         e3WcX/fcZbjj0hfnObLxSZsopjelgUfPMlsgQRF16vJ69HLZkBXc7qZmGrsMDrYfpApR
-         SVPw==
+        bh=Js2QfXs3Kv3aTrQZDgjZoyjW7ifVdIqfUU+Z5Gf8Jr0=;
+        b=DM58zrJ/ae/LmnsnDY+/pEK6fRzCBJ270Mx6vZmm/76YOp9zL9sloDSYn3C4oMcHcP
+         1lKqB2Wbvo5/q2Bhzin3JnzIMKZsU8dDp8zvnJDfhyENLzg9bthZJYuV3nCrXrmM67UM
+         bLLi+nnBPZlwAfvi8tBRsw/c1Osxx8kP2ancyl+SsDUe92+SXoAj3LcVgCBEtlOMAH43
+         7QJtNboXhMLWm1ZHwyWpLipFkmC/ph8JI2qkQ+XXmXtGfEMpRsdZQMEGexWkrbAstheV
+         C0uHLGfFTK13+YxMH8UWvz8r0VfIyVSw43Uqgu/IkIxNADHux/blK3wSkJba9qH9KL0I
+         MQFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706936118; x=1707540918;
+        d=1e100.net; s=20230601; t=1706936220; x=1707541020;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=liH+UlEUy0/qdW3w6rXrGrhdkv4ggd+gQjsdMoONLdg=;
-        b=T50FVcgGLtVtSyWMWqYo3p5OooDbZVo9ZdDIIwTQWB5mDW1hQJN72eNLP4xZWGHZc+
-         Ab6JGeTEropUePKDILDDiHH6uxqDHXkszVirK10ynTgfW2tUXSECRHVhXXVfvKWaSsoQ
-         CY3mixgt0aJ4Zm/YnWvc+s4awKxo7dht7Irkh2QgdQKSganwyFA0w37VqPhq8zhdlzMR
-         jkzs/NXbFririWpoBL73pRMs4W8SKEA6bCA6rskgAULxwagOifF0VVGNUMrP67wU1WwJ
-         BMbmnbQaSTtUicesrbRHwK7d1YD3BxaexREf2KwIWSpmn1lwA66+u+aGJ41/MAhp/WKt
-         hzWg==
-X-Gm-Message-State: AOJu0YxoRYBOb2b+1pu/WE28YZ1sQ/obmU/xMtlL9bNAbXUdZimZ4Oyn
-	pkYGo0lmkiQyZAQm6ddtOclcHxU6eZh19T/7UY1VoW42qN36koo5WrquHHlyzA==
-X-Google-Smtp-Source: AGHT+IHdMv2idNnsnA2Q8aRKwiJvIlzhH8ITKTDULVqn1uKBYYZSSnoU26Aac8cRhwlwGKan8m52Qw==
-X-Received: by 2002:a05:6808:2120:b0:3bf:ce2e:c4b2 with SMTP id r32-20020a056808212000b003bfce2ec4b2mr417298oiw.50.1706936118304;
-        Fri, 02 Feb 2024 20:55:18 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXUa+col4sTfn88a4vmaccjdk3Lpyd+XnHeUvYW4WBO9Sd+nRVAAP1o5/Cp9h6wpuhupUU8LRF7jkbplfeUvpukjn5WF17Z0UhUjI7Jw6yzxbRRJ4nqJwNhx0i5r9vcTmVl/MC0Fzu+ENJMxDhKhKAh9/BPhM/MrEDKMcb4c+FeqZuwdKRxJQBWVcRHnX2S1xiWSyG570oeU3f9HYGmvDCykKjennYFQDpfxSHoGj4xMJjU8wH+bgrqS4+cMXcGJsXZWuF7tzB9DfbGFRQQiELRLvyqw5CCuK5a2waOP7r0NCwUwPBCUDBAG9pYi0up76Uuv5k2r1zqZk25e06PjZo4TThSaHHUfrSx4QKMiMI6NSAjnnGdX+rfdNqXFLMr+LcDuagUSV3H
+        bh=Js2QfXs3Kv3aTrQZDgjZoyjW7ifVdIqfUU+Z5Gf8Jr0=;
+        b=QOK5bzlHV9cmy8DZ3UKE8r3WxJIS43sA5ZhDaxBuV0+4Z/jCYreh2MaTarDwk8FH7Z
+         c2TgRUcBKJ7gLymc+Q0BxJW/+/pPjX5Um5WHRnEW/ZhHkiPAccvSMYQQ/e1mKoSg5pTw
+         KY+gHACQS8CCFtpmm+jHLe+sKrksGG2BWts3zLZVqZ6eVa3JTNWUwRCM78JasnOlwVKU
+         t9vSgfsM4zF3IQ7u1supfF0aZbvlOvsKc1hzHkwkHiXflrTOq25hZ6yGiJhPx3MdhovI
+         s9XcE+sVKg77cDQCCF0ld19qYFAo4yixzXacJ49Z/qsaIunBVlCumLYULclzgdDkDEEd
+         qeGA==
+X-Gm-Message-State: AOJu0YxEljtkaBOvjFHugiOyd4irR4nJcvVnscUONg7XFnuZLT4TdWVr
+	ubDAuE4VeiiKnaqG3q6iNDlPd/+xGXAFAi+kfQg/eKiDkzeOYW/hyKQG6oZ5DA==
+X-Google-Smtp-Source: AGHT+IGOgmxZ3CB6VB34fKCm/ENjp6io0zJyn4+7PxlwjeLGiYmNeh5ehDZqnV1Yxl+sjPgzEbquAg==
+X-Received: by 2002:a05:6358:3a0e:b0:176:916e:5d97 with SMTP id g14-20020a0563583a0e00b00176916e5d97mr9279249rwe.32.1706936219967;
+        Fri, 02 Feb 2024 20:56:59 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVF4BmuxQQtX2Z3E/9s1868PC597dydjDbX0qy52eMb3OihcGrpzTKaXf1yyTwQ/q76pQGBRr7jxWpToOrYMr2VjBUQ6ldXWVD2baTsTMwQCjZjCU6CaU0I4KHpQvJcEBTwbR2OSV34Mv1uu1iWHDLWP6PaYWuA4KcBnGRTrdeTCQyTcLCGVGaGp6CjMXZLm0HlJGqxkVPrVTtEQbrQ01muOk/u3++uVfJpMT2wWz8EDAjgNGXx7j79L9B2Y3H0CTsZaN2WcLbFb4TnXBABbatQk4+v5w0cUS0RIoRzHJMban3bI004Sy2Y8Kp1w0domqj4cBTzMMA6+KQtngWNEMDyH7tV6p1+eCw0EQSM
 Received: from thinkpad ([117.202.187.138])
-        by smtp.gmail.com with ESMTPSA id y11-20020a62f24b000000b006ddc7de91e9sm2467321pfl.197.2024.02.02.20.55.14
+        by smtp.gmail.com with ESMTPSA id j31-20020a63595f000000b005cfbe445a85sm2631019pgm.70.2024.02.02.20.56.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 20:55:17 -0800 (PST)
-Date: Sat, 3 Feb 2024 10:25:12 +0530
+        Fri, 02 Feb 2024 20:56:59 -0800 (PST)
+Date: Sat, 3 Feb 2024 10:26:53 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Lukas Wunner <lukas@wunner.de>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/2] Enable D3 support for Qualcomm bridges
-Message-ID: <20240203045512.GA3038@thinkpad>
-References: <20240202-pcie-qcom-bridge-v1-0-46d7789836c0@linaro.org>
- <20240202090033.GA9589@wunner.de>
- <20240202100041.GB8020@thinkpad>
- <20240202193326.GA29000@wunner.de>
+To: Erick Archer <erick.archer@gmx.com>
+Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alex Elder <elder@linaro.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: ep: Use kcalloc() instead of kzalloc()
+Message-ID: <20240203045653.GB3038@thinkpad>
+References: <20240128112722.4334-1-erick.archer@gmx.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,43 +90,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240202193326.GA29000@wunner.de>
+In-Reply-To: <20240128112722.4334-1-erick.archer@gmx.com>
 
-On Fri, Feb 02, 2024 at 08:33:26PM +0100, Lukas Wunner wrote:
-> On Fri, Feb 02, 2024 at 03:30:41PM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Feb 02, 2024 at 10:00:33AM +0100, Lukas Wunner wrote:
-> > > Please amend platform_pci_bridge_d3() to call a new of_pci_bridge_d3()
-> > > function which determines whether D3 is supported by the platform.
-> > > 
-> > > E.g. of_pci_bridge_d3() could contain a whitelist of supported VID/DID
-> > > tuples.  Or it could be defined as a __weak function which always
-> > > returns false but can be overridden at link time by a function
-> > > defined somewhere in arch/arm/, arch/arm64/ or in some driver
-> > > whose Kconfig option is enabled in Qualcomm platforms.
-> > 
-> > Hmm. If we go with a DT based solution, then introducing a new property like
-> > "d3-support" in the PCI bridge node would be the right approach. But then, it
-> > also requires defining the PCI bridge node in all the DTs. But that should be
-> > fine since it will help us to support WAKE# (per bridge) in the future.
+On Sun, Jan 28, 2024 at 12:27:22PM +0100, Erick Archer wrote:
+> This is an effort to get rid of all multiplications from allocation
+> functions in order to prevent integer overflows [1].
 > 
-> I'm not sure whether a "d3-support" property would be acceptable.
-> My understanding is that capabilities which can be auto-sensed by
-> the driver (or the PCI core in this case), e.g. by looking at the
-> PCI IDs or compatible string, should not be described in the DT.
+> Here the multiplication is obviously safe because the "event_rings"
+> member never can have a value greater than 255 (8 bits). This member
+> is set twice using always FIELD_GET:
 > 
+> mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+> mhi_cntrl->event_rings = FIELD_GET(MHICFG_NER_MASK, regval);
+> 
+> And the MHICFG_NER_MASK macro defines the 8 bits mask that guarantees
+> a maximum value of 255.
+> 
+> However, using kcalloc() is more appropriate [1] and improves
+> readability. This patch has no effect on runtime behavior.
+> 
+> Link: https://github.com/KSPP/linux/issues/162 [1]
+> Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]
+> Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> Signed-off-by: Erick Archer <erick.archer@gmx.com>
 
-We cannot whitelist platforms in DT. DT should describe the hardware and its
-capabilities. In this case, the "supports-d3" property as I proposed [1] tells
-the OS that this bridge is capable of supporting D3.
-
-Blacklisting/whitelisting belongs to the OS. We can however, whitelist the
-bridges in PCI core. But that has the downside of not being useful to other OSes
-supporting DT. Hence, a DT property that describes the hardware capability
-makes sense to me.
+Applied to mhi-next!
 
 - Mani
 
-[1] https://github.com/devicetree-org/dt-schema/pull/127
+> ---
+> Changes in v2:
+> - Add more info in the commit message to better explain the change.
+>   (Dan Carpenter)
+> - Add the "Reviewed-by:" tag.
+> 
+> Previous versions:
+> v1 - https://lore.kernel.org/linux-hardening/20240120152518.13006-1-erick.archer@gmx.com/
+> ---
+>  drivers/bus/mhi/ep/main.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 65fc1d738bec..8d7a4102bdb7 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -1149,8 +1149,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+>  	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
+>  	mhi_ep_mmio_init(mhi_cntrl);
+> 
+> -	mhi_cntrl->mhi_event = kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_cntrl->mhi_event)),
+> -					GFP_KERNEL);
+> +	mhi_cntrl->mhi_event = kcalloc(mhi_cntrl->event_rings,
+> +				       sizeof(*mhi_cntrl->mhi_event),
+> +				       GFP_KERNEL);
+>  	if (!mhi_cntrl->mhi_event)
+>  		return -ENOMEM;
+> 
+> --
+> 2.25.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
