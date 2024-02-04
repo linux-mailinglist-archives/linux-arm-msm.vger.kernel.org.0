@@ -1,373 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-9733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF49E848A56
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 02:58:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1769848AFE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 05:27:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 716DC285511
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 01:58:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1D121C21C82
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 04:27:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A99431115;
-	Sun,  4 Feb 2024 01:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD651869;
+	Sun,  4 Feb 2024 04:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pK8tPQmy"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L7wvaLCe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3A410E9;
-	Sun,  4 Feb 2024 01:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B351C3D;
+	Sun,  4 Feb 2024 04:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707011924; cv=none; b=LV2+mhF5Y1x7GbFN3pt0P3VPdeDiiwtMKjaKaZL/dupyb5PuIM89fLqtpZ0LiZ1pKCl0hnK3JE3K1IM4IAS89eQ4+yGlK0jCzVIK0dp1cHkxLZyuCh2re85jX8tZidocMmQvtqgzcCGLy1JwLU7ff/D/ZOkV6LIF1qSf/e5OO18=
+	t=1707020867; cv=none; b=jZikSIYjVNDZKvtZGXGkRHBkdJOsMrOYgdi7tsD3/e02G7FDKPkg+mo1LxEgBqS5sPTXAX2U0ecE22fr7+r4+j4E+w9vEzT8orDyFHDBllH3RwttNc8x6raVjQgt8qfinuuCxP4VNjYUmUa2ZPLt4FyGAMj7KSW7uqbKpBDYuSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707011924; c=relaxed/simple;
-	bh=NTPNh3cTeRSfoTwS5A1S08W8Ljz1Zk+2HLab1hdZ1/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JXeFEKj+0ofQmSXSWr/YclXgvXwkb/8d9Bt7n+6C/bF+VKYwrHbCupilT3gAIRPTRgv9aZeDh69eooP3mXEUaFFel0kcYjjIf5KOPxGsDMuSH+epTsf7QWRCtAjbZQHAPB3PprREnRmFCzW/vMj3r/Enh2e3aMM/S5S1BJGAu/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pK8tPQmy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4141vT4A027391;
-	Sun, 4 Feb 2024 01:58:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=jQWeAX/wHe5PGCAHtIyZQ9edqlpURtUg44s0chHXtMY=; b=pK
-	8tPQmy+i46q3Ct0EZejeOS/5cFArM8H8jC++SV4eYm3WVW3MYeR3hY8nzawC4aTN
-	luDTLBmu28GFR0rzWE787aJQj+g6E1d+zgOryzNZh95ujV8SWQW7qA86T8BKSd30
-	0Dr/96qZH0uv9s33Ox1hxIJeIQC72BQ7yQJxvR3OHOeY2k8GLAHLWsyhK9o4/AhM
-	Ed+EAHHvArjffFpi/SCi5rHFQJ/p8uXRt3BEsHTwPqlxfPTjDEFsPdXMFrrc8T5a
-	K8fqTjYJ0mjdSEtS0LCm50OSi+gDP0boo2MFnjfZyrE8a1Fs53KjiI/PsF6vzUo7
-	hOstI1qI3tkAunHG+6Uw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w1eyah4qh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 04 Feb 2024 01:58:09 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4141w8kn002650
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 4 Feb 2024 01:58:08 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 3 Feb
- 2024 17:58:03 -0800
-Message-ID: <54292059-9ecf-4e9d-b1ca-4c4ff2425189@quicinc.com>
-Date: Sun, 4 Feb 2024 09:58:01 +0800
+	s=arc-20240116; t=1707020867; c=relaxed/simple;
+	bh=5ueOFmnH0raghBRETpa0zjyXxByg30ezHCMopGwPipM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N6K41Elq/bi2DUF0TUtNOzsoSgIfeXZQmF9TomDqeh3j9bqVkgUuz43oQ++OlC1eJ/BF6cD6F26wkppMURx17n19q+kZuLDEmyfnx+xUt8PeQLICw5xIvJ83Vdgs4sLP+ALvABnVhBSwpe7G7f/z5Z+RsEo87cBJZezmF1uTXko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=L7wvaLCe; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1707020865; x=1738556865;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5ueOFmnH0raghBRETpa0zjyXxByg30ezHCMopGwPipM=;
+  b=L7wvaLCeribC1zBYVF65UDBiqH92vkGm0HWNHD5a5L/OdcMy+vKx3uBH
+   oniUaLuWUkMKIT8pwmhC8Xxi1ygXxAxMYgyFgxhjrYNJ1ko9I5r9SeYqx
+   KKAeuKfjcqfdeFrhHAQ1aV0M19I8zjGX3PSMfcST11OT+eVlmm/JGRgrd
+   u99+lqBjuZkx9RRlwqEGedEC85gS7EogDk7jW9SgvZIxKFfCDUXR6/9zx
+   +A+PPaqgL9IPnjp4OdAGm2UN5E4jnMSvEZ/8kgIwVjbgXAw6GOMIvQOxL
+   3Lry15D1rCOOksko462pZlMJV9O9hGrbDx1OZXZErjRRJIP7DSOhGbaP4
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10973"; a="3328439"
+X-IronPort-AV: E=Sophos;i="6.05,242,1701158400"; 
+   d="scan'208";a="3328439"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2024 20:27:44 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,242,1701158400"; 
+   d="scan'208";a="427609"
+Received: from lkp-server02.sh.intel.com (HELO 59f4f4cd5935) ([10.239.97.151])
+  by orviesa009.jf.intel.com with ESMTP; 03 Feb 2024 20:27:42 -0800
+Received: from kbuild by 59f4f4cd5935 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rWU6V-00060k-1u;
+	Sun, 04 Feb 2024 04:27:39 +0000
+Date: Sun, 4 Feb 2024 12:27:30 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 08/16] misc: fastrpc: Add support to allocate shared
+ context bank
+Message-ID: <202402041227.P8EVWOg4-lkp@intel.com>
+References: <20240202064039.15505-9-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/10] coresight-tpda: Add support to configure CMB
- element
-Content-Language: en-US
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1706866364-19861-1-git-send-email-quic_taozha@quicinc.com>
- <1706866364-19861-6-git-send-email-quic_taozha@quicinc.com>
- <58e91497-1794-46d9-a935-fc23f327f32b@arm.com>
- <265086d1-8398-49f8-b873-36194c44505a@arm.com>
-From: Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <265086d1-8398-49f8-b873-36194c44505a@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wJpAe87x3wVRgxDamBL_HbzTJZGp_nk4
-X-Proofpoint-ORIG-GUID: wJpAe87x3wVRgxDamBL_HbzTJZGp_nk4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-03_18,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- bulkscore=0 phishscore=0 spamscore=0 mlxscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 mlxlogscore=943 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402040013
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240202064039.15505-9-quic_ekangupt@quicinc.com>
 
+Hi Ekansh,
 
-On 2/2/2024 6:06 PM, Suzuki K Poulose wrote:
-> On 02/02/2024 09:45, Suzuki K Poulose wrote:
->> On 02/02/2024 09:32, Tao Zhang wrote:
->>> Read the CMB element size from the device tree. Set the register
->>> bit that controls the CMB element size of the corresponding port.
->>>
->>> Reviewed-by: James Clark <james.clark@arm.com>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-tpda.c | 125 
->>> +++++++++++--------
->>>   drivers/hwtracing/coresight/coresight-tpda.h |   6 +
->>>   2 files changed, 81 insertions(+), 50 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>> index 4ac954f4bc13..27d567f4c8bf 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>> @@ -18,6 +18,7 @@
->>>   #include "coresight-priv.h"
->>>   #include "coresight-tpda.h"
->>>   #include "coresight-trace-id.h"
->>> +#include "coresight-tpdm.h"
->>>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->>> @@ -28,24 +29,59 @@ static bool coresight_device_is_tpdm(struct 
->>> coresight_device *csdev)
->>>               CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM);
->>>   }
->>> +static void tpdm_clear_element_size(struct coresight_device *csdev)
->>
->> I just noticed this anomaly. This is supposed to be :
->>
->> tpda_clear_element_size() ? I can fix it up locally.
->>
->>
->> Suzuki
->>
->>
->>> +{
->>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->>> +
->>> +    drvdata->dsb_esize = 0;
->>> +    drvdata->cmb_esize = 0;
->>> +}
->>> +
->>> +static void tpda_set_element_size(struct tpda_drvdata *drvdata, u32 
->>> *val)
->>> +{
->>> +    /* Clear all relevant fields */
->>> +    *val &= ~(TPDA_Pn_CR_DSBSIZE | TPDA_Pn_CR_CMBSIZE);
->>> +
->>> +    if (drvdata->dsb_esize == 64)
->>> +        *val |= TPDA_Pn_CR_DSBSIZE;
->>> +    else if (drvdata->dsb_esize == 32)
->>> +        *val &= ~TPDA_Pn_CR_DSBSIZE;
->>> +
->>> +    if (drvdata->cmb_esize == 64)
->>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x2);
->>> +    else if (drvdata->cmb_esize == 32)
->>> +        *val |= FIELD_PREP(TPDA_Pn_CR_CMBSIZE, 0x1);
->>> +    else if (drvdata->cmb_esize == 8)
->>> +        *val &= ~TPDA_Pn_CR_CMBSIZE;
->>> +}
->>> +
->>>   /*
->>> - * Read the DSB element size from the TPDM device
->>> + * Read the element size from the TPDM device. One TPDM must have 
->>> at least one of the
->>> + * element size property.
->>>    * Returns
->>> - *    The dsb element size read from the devicetree if available.
->>> - *    0 - Otherwise, with a warning once.
->>> + *    0 - The element size property is read
->>> + *    Others - Cannot read the property of the element size
->>>    */
->>> -static int tpdm_read_dsb_element_size(struct coresight_device *csdev)
->>> +static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->>> +                  struct coresight_device *csdev)
->>>   {
->>> -    int rc = 0;
->>> -    u8 size = 0;
->>> +    int rc = -EINVAL;
->>> +    struct tpdm_drvdata *tpdm_data = 
->>> dev_get_drvdata(csdev->dev.parent);
->>> +
->>> +    if (tpdm_has_dsb_dataset(tpdm_data)) {
->>> +        rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>> +                "qcom,dsb-element-size", &drvdata->dsb_esize);
->>> +    }
->>> +    if (tpdm_has_cmb_dataset(tpdm_data)) {
->>> +        rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
->>> +                "qcom,cmb-element-bits", &drvdata->cmb_esize);
->>> +    }
->>> -    rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
->>> -            "qcom,dsb-element-size", &size);
->>>       if (rc)
->>>           dev_warn_once(&csdev->dev,
->>> -            "Failed to read TPDM DSB Element size: %d\n", rc);
->>> +            "Failed to read TPDM Element size: %d\n", rc);
->>> -    return size;
->>> +    return rc;
->>>   }
->>>   /*
->>> @@ -56,11 +92,12 @@ static int tpdm_read_dsb_element_size(struct 
->>> coresight_device *csdev)
->>>    * Parameter "inport" is used to pass in the input port number
->>>    * of TPDA, and it is set to -1 in the recursize call.
->>>    */
->>> -static int tpda_get_element_size(struct coresight_device *csdev,
->>> +static int tpda_get_element_size(struct tpda_drvdata *drvdata,
->>> +                 struct coresight_device *csdev,
->>>                    int inport)
->>>   {
->>> -    int dsb_size = -ENOENT;
->>> -    int i, size;
->>> +    int rc = 0;
->>> +    int i;
->>>       struct coresight_device *in;
->>>       for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>> @@ -69,30 +106,26 @@ static int tpda_get_element_size(struct 
->>> coresight_device *csdev,
->>>               continue;
->>>           /* Ignore the paths that do not match port */
->>> -        if (inport > 0 &&
->>> +        if (inport >= 0 &&
->>>               csdev->pdata->in_conns[i]->dest_port != inport)
->>>               continue;
->>>           if (coresight_device_is_tpdm(in)) {
->>> -            size = tpdm_read_dsb_element_size(in);
->>> +            if (drvdata->dsb_esize || drvdata->cmb_esize)
->>> +                return -EEXIST;
->>> +            rc = tpdm_read_element_size(drvdata, in);
->>> +            if (rc)
->>> +                return rc;
->>>           } else {
->>>               /* Recurse down the path */
->>> -            size = tpda_get_element_size(in, -1);
->>> -        }
->>> -
->>> -        if (size < 0)
->>> -            return size;
->>> -
->>> -        if (dsb_size < 0) {
->>> -            /* Found a size, save it. */
->>> -            dsb_size = size;
->>> -        } else {
->>> -            /* Found duplicate TPDMs */
->>> -            return -EEXIST;
->>> +            rc = tpda_get_element_size(drvdata, in, -1);
->>> +            if (rc)
->>> +                return rc;
->>>           }
->>>       }
->>> -    return dsb_size;
->>> +
->>> +    return rc;
->>>   }
->>>   /* Settings pre enabling port control register */
->>> @@ -109,7 +142,7 @@ static void tpda_enable_pre_port(struct 
->>> tpda_drvdata *drvdata)
->>>   static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->>>   {
->>>       u32 val;
->>> -    int size;
->>> +    int rc;
->>>       val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
->>>       /*
->>> @@ -117,29 +150,21 @@ static int tpda_enable_port(struct 
->>> tpda_drvdata *drvdata, int port)
->>>        * Set the bit to 0 if the size is 32
->>>        * Set the bit to 1 if the size is 64
->>>        */
->
-> The comment above is stale, you need to remove it. I noticed it
-> after I applied the series for my build tests.
->
-> Please could you respin the series with the two issues above fixed ?
+kernel test robot noticed the following build errors:
 
-Sure, I will update them to the new patch series soon.
+[auto build test ERROR on char-misc/char-misc-testing]
+[also build test ERROR on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.8-rc2 next-20240202]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Redesign-remote-heap-management/20240202-144921
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/20240202064039.15505-9-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 08/16] misc: fastrpc: Add support to allocate shared context bank
+config: i386-buildonly-randconfig-001-20240203 (https://download.01.org/0day-ci/archive/20240204/202402041227.P8EVWOg4-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240204/202402041227.P8EVWOg4-lkp@intel.com/reproduce)
 
-Best,
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202402041227.P8EVWOg4-lkp@intel.com/
 
-Tao
+All errors (new ones prefixed by >>):
 
->
-> Suzuki
->
->
->>> -    size = tpda_get_element_size(drvdata->csdev, port);
->>> -    switch (size) {
->>> -    case 32:
->>> -        val &= ~TPDA_Pn_CR_DSBSIZE;
->>> -        break;
->>> -    case 64:
->>> -        val |= TPDA_Pn_CR_DSBSIZE;
->>> -        break;
->>> -    case 0:
->>> -        return -EEXIST;
->>> -    case -EEXIST:
->>> +    tpdm_clear_element_size(drvdata->csdev);
->>> +    rc = tpda_get_element_size(drvdata, drvdata->csdev, port);
->>> +    if (!rc && (drvdata->dsb_esize || drvdata->cmb_esize)) {
->>> +        tpda_set_element_size(drvdata, &val);
->>> +        /* Enable the port */
->>> +        val |= TPDA_Pn_CR_ENA;
->>> +        writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->>> +    } else if (rc == -EEXIST)
->>>           dev_warn_once(&drvdata->csdev->dev,
->>> -            "Detected multiple TPDMs on port %d", -EEXIST);
->>> -        return -EEXIST;
->>> -    default:
->>> -        return -EINVAL;
->>> -    }
->>> -
->>> -    /* Enable the port */
->>> -    val |= TPDA_Pn_CR_ENA;
->>> -    writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
->>> +                  "Detected multiple TPDMs on port %d", port);
->>> +    else
->>> +        dev_warn_once(&drvdata->csdev->dev,
->>> +                  "Didn't find TPDM element size");
->>> -    return 0;
->>> +    return rc;
->>>   }
->>>   static int __tpda_enable(struct tpda_drvdata *drvdata, int port)
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h 
->>> b/drivers/hwtracing/coresight/coresight-tpda.h
->>> index b3b38fd41b64..19af64120fcf 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->>> @@ -10,6 +10,8 @@
->>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>>   /* Aggregator port enable bit */
->>>   #define TPDA_Pn_CR_ENA        BIT(0)
->>> +/* Aggregator port CMB data set element size bit */
->>> +#define TPDA_Pn_CR_CMBSIZE        GENMASK(7, 6)
->>>   /* Aggregator port DSB data set element size bit */
->>>   #define TPDA_Pn_CR_DSBSIZE        BIT(8)
->>> @@ -25,6 +27,8 @@
->>>    * @csdev:      component vitals needed by the framework.
->>>    * @spinlock:   lock for the drvdata value.
->>>    * @enable:     enable status of the component.
->>> + * @dsb_esize   Record the DSB element size.
->>> + * @cmb_esize   Record the CMB element size.
->>>    */
->>>   struct tpda_drvdata {
->>>       void __iomem        *base;
->>> @@ -32,6 +36,8 @@ struct tpda_drvdata {
->>>       struct coresight_device    *csdev;
->>>       spinlock_t        spinlock;
->>>       u8            atid;
->>> +    u8            dsb_esize;
->>> +    u32            cmb_esize;
->>>   };
->>>   #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
->>
->
+   In file included from <built-in>:1:
+>> ./usr/include/misc/fastrpc.h:182:2: error: unknown type name 'u32'
+     182 |         u32 sharedcb;   /* Set to SMMU share context bank */
+         |         ^
+   ./usr/include/misc/fastrpc.h:186:2: error: unknown type name 'u32'
+     186 |         u32 req;
+         |         ^
+   2 errors generated.
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
