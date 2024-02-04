@@ -1,156 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-9758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0658C848FED
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 19:32:50 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4AB084900B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 20:19:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0C6B2826A4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 18:32:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 020231C2181C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 19:19:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E04B24B21;
-	Sun,  4 Feb 2024 18:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAA36250EC;
+	Sun,  4 Feb 2024 19:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="NEtxkGF0"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="OoyrtVtH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83352249EE;
-	Sun,  4 Feb 2024 18:32:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE93250EA
+	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Feb 2024 19:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707071563; cv=none; b=ZuPt7597U8ny3KZPHT+jdJWKuJXPr39yW101VI5T2Pcc5antz/IZ5YaUvmq9lNT+8Di3kY8sVrivEe/kQyGdBpXnawfU5Myt41nX339nVlJASgL+rPQA0ha7cJpAtUBexLX4ZxQWwqfGKl/wwr0TOmmb3apnKEvRzmXWNovsOEk=
+	t=1707074340; cv=none; b=SgACCFvWqQAog2A65an8Dpzjf5VCkjlB7tUGAXpXbt6MuGyJnx2zWGVGkQCBfGCqwCqjwpwLgWI8MFeazvE8g9I4p9OIiobk2XuevJ04Qr5GlGGm9zWVue3Iizy1z2NVz5pdNlJGA3pyUDrLlQDarN3TLeBIgBYJrnXC6/81w1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707071563; c=relaxed/simple;
-	bh=0+rTMhidwrziDNcAPA5ZtRDC2hGitSVJlE07G60n9N8=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qShD9XtWUVITc3Il4N4SCr4bbsKq/dV3vHZoR+rVTtkKBgJDoFXEQd3a7/Z/AbHpc1v5N3NaCm+UhYJmyt4YmxlmWMBZpOE7cCUhuM2zYuXoJnbnHryAxyptC4C1Zyrp5w/RHgZEVz1NLfhlH2+2qBlyBrXjbuc9Sg/ew2hGP+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=NEtxkGF0; arc=none smtp.client-ip=198.47.19.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 414IW9Ft020319;
-	Sun, 4 Feb 2024 12:32:09 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1707071529;
-	bh=s2TWXxbk1O39WIKgnGYQbW++dB7WqbpabTQYcEP9Epg=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date;
-	b=NEtxkGF0LK9XaN9HqFJjU9aFr3taztUE4uxi+uN7w/z6xRWBwV/f5C1nBHVQUOsNW
-	 l2APL7p+wukyZK+oneR50K5qf3nPn8zPfiJ1y1sbJjJZiOI4epbkRk6XcpzUsAxHoS
-	 dquzwtolCOfUc11IG0xiylFmsBeN9TaCsknOPWVc=
-Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 414IW9NI020112
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Sun, 4 Feb 2024 12:32:09 -0600
-Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE102.ent.ti.com
- (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Sun, 4
- Feb 2024 12:32:09 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE111.ent.ti.com
- (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Sun, 4 Feb 2024 12:32:09 -0600
-Received: from localhost (kamlesh.dhcp.ti.com [172.24.227.123])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 414IW86i038451;
-	Sun, 4 Feb 2024 12:32:08 -0600
-From: Kamlesh Gurudasani <kamlesh@ti.com>
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <andersson@kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <robh+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_omprsing@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, <bartosz.golaszewski@linaro.org>,
-        <konrad.dybcio@linaro.org>, <ulf.hansson@linaro.org>,
-        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>, <mani@kernel.org>,
-        <davem@davemloft.net>, <herbert@gondor.apana.org.au>,
-        Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Subject: Re: [EXTERNAL] [PATCH v4 04/15] soc: qcom: ice: add hwkm support in
- ice
-In-Reply-To: <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
- <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
-Date: Mon, 5 Feb 2024 00:02:07 +0530
-Message-ID: <87jznkytaw.fsf@kamlesh.i-did-not-set--mail-host-address--so-tickle-me>
+	s=arc-20240116; t=1707074340; c=relaxed/simple;
+	bh=U7fuHKCS7P0gibNRuhCi/+lWNbl//hi+bf2tD9GrdHo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uEO5j7K2ghBGEyF+3R/Ioj4x4Q3/BkTgPEQfDCz3DShE5KGXRaazWCnWJmBTA4F0CLd+W8XymOLQ/k7dlqimRZwmDSG1tM2W6+ONP9ODzc9lMagxlEcLXJFxXpkyDmGtAft/2OSExJca6494PT6y4FeTjwhZn67Et8E7gsRdFto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=OoyrtVtH; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-363b2cc9372so6829105ab.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Feb 2024 11:18:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1707074338; x=1707679138; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U7fuHKCS7P0gibNRuhCi/+lWNbl//hi+bf2tD9GrdHo=;
+        b=OoyrtVtHrVGc2XeI/zv7GteSD0rgrVV7Zm1CKj+zBeRYXCnoqxy4GZvG395QtuC7/X
+         g1/T27YUxx0t8Ua3E8lghdv0Hd+69QaWAjOePCbSxo6Uppk0DsuFN2WI+6C2EO9px4PN
+         eyrsYFqKPl74A5ktS2WvogEmKlMkugznf7jQRyk755BFPktvr1ce6GLWv7od0EipZ3DN
+         xe/SB0vHCxS3oOL7qSr+Xmvaqr4KdWqEdSr6wOIzbnHcEcwoQwSLiY/flcOa+1wVnson
+         DIjdM5C9cNypkvbwtSS6bhNuYixH+PmkQcR7VKsGPayjha7oFSwu6RmTNRoqj4IOj2Er
+         in0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707074338; x=1707679138;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=U7fuHKCS7P0gibNRuhCi/+lWNbl//hi+bf2tD9GrdHo=;
+        b=tiFeeqUsAOOSM5nsjXfFbBlKlcaRdmipSEy/5umibFSXT+RqLMxjozRJRlSHjit87t
+         vJLEyeG20yzw1bOOWqzo1sbB63+iAEMuJXBs3lEvTeZB5QlJkJGlgFIR7vDtWfmNPyFl
+         1YhGojn4V9xcaexck9pmJyOQ3ClzI1H/7kmfV9/ObZVy+1xrjLleQfB/N/pjGm5ybmjy
+         44bIxNjCkAVIwpLktR0cYp+Kcol+x6WFuPCkqRea5uUuXAm+hRQzLjWec5gIlATjzcks
+         +GMam3gD016I3LkNcTCQ6OE6g2w/7MB2+bH/HZ698nex6NIc9WT7uemXntuEj03kvdcN
+         DrpA==
+X-Gm-Message-State: AOJu0Yx1H+RtDThWhB+Ae160iceVNQPKhL3odDVR+3SzJ9ByO4THlWr/
+	Vqp6aaVwMfqESPrzC5dGP0HnEyBYK5sJVVQbaaXPYf1QrDlz7Q36ZBaIFfq+IGDHTvw6Ey0kZnW
+	/keR6kkKqCN8kcJxjin572G5F7/oroAXn62/F0w==
+X-Google-Smtp-Source: AGHT+IG030GFNoRO+D9HsQtpRkpxOEHuKCB6i5c74CD190x3V48aR41aB7RFrMKEewt7N4ui/ox4/rbyj64984Kw2d8=
+X-Received: by 2002:a05:6e02:2184:b0:363:bf96:560 with SMTP id
+ j4-20020a056e02218400b00363bf960560mr4301345ila.15.1707074338436; Sun, 04 Feb
+ 2024 11:18:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+References: <20240201155532.49707-1-brgl@bgdev.pl> <20240201155532.49707-2-brgl@bgdev.pl>
+ <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
+In-Reply-To: <CAL_JsqKq8AngeC7ohsbYB0w70uALD+PX-df53cswTDUY-Rrdgw@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Sun, 4 Feb 2024 20:18:47 +0100
+Message-ID: <CAMRc=MdxgETs-Zx3Njao3msmE3T+DeKkPc0YMD3CvVW-Lj2qoQ@mail.gmail.com>
+Subject: Re: [RFC 1/9] of: provide a cleanup helper for OF nodes
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Gaurav Kashyap <quic_gaurkash@quicinc.com> writes:
+On Thu, Feb 1, 2024 at 11:18=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
+:
+>
+> On Thu, Feb 1, 2024 at 9:55=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+> >
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Allow to use __free() to automatically put references to OF nodes.
+>
+> Jonathan has already been working on this[1].
+>
+> Rob
+>
+> [1] https://lore.kernel.org/all/20240128160542.178315-1-jic23@kernel.org/
 
-...
+Thanks, I will watch this but for now I'll have to stick to carrying
+it in my series until it gets upstream.
 
-> +	/*
-> +	 * When ICE is in standard (hwkm) mode, it supports HW wrapped
-> +	 * keys, and when it is in legacy mode, it only supports standard
-> +	 * (non HW wrapped) keys.
-> +	 *
-> +	 * Put ICE in standard mode, ICE defaults to legacy mode.
-> +	 * Legacy mode - ICE HWKM slave not supported.
-> +	 * Standard mode - ICE HWKM slave supported.
-> +	 *
-> +	 * Depending on the version of HWKM, it is controlled by different
-> +	 * registers in ICE.
-> +	 */
-> +	if (ice->hwkm_version >= 2) {
-> +		val = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
-> +		val = val & 0xFFFFFFFE;
-From the code I understand that the last bit is used for setting the
-mode.
-
-Was wondering if it would make more sense to use ~BIT(0) or GENMASK
-to generate this value and #define this value to express the work it
-does.
-
-In this case, something like #define xx_SET_MODE_MASK (~BIT(0)) or use GENMASK
-
-This would make it easier for a person who is taking a look at the code
-for first time. This is just my perspective.
-
-If you do agree, you can change them at multiple places accross this
-patch, wherever magic numbers are used for val and masking the value.
-
-Regards,
-Kamlesh
-
-> +		qcom_ice_writel(ice, val, QCOM_ICE_REG_CONTROL);
-> +	} else {
-> +		qcom_ice_writel(ice, 0x7, HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
-> +	}
-> +}
-> +
-> +static void qcom_ice_hwkm_init(struct qcom_ice *ice)
-> +{
-> +	/* Disable CRC checks. This HWKM feature is not used. */
-> +	qcom_ice_writel(ice, 0x6,
-> +			HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
-> +
-> +	/*
-> +	 * Give register bank of the HWKM slave access to read and modify
-> +	 * the keyslots in ICE HWKM slave. Without this, trustzone will not
-> +	 * be able to program keys into ICE.
-> +	 */
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_0));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_1));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_2));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_3));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_4));
-> +
-> +	/* Clear HWKM response FIFO before doing anything */
-> +	qcom_ice_writel(ice, 0x8, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS));
-> +	ice->hwkm_init_complete = true;
-> +}
-
-...
+Bart
 
