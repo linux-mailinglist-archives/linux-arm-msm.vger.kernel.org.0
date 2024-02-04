@@ -1,135 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-9747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D07BC848CA1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 10:59:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73D7E848EE1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 16:22:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 83DF41F223F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 09:59:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A097F1C21F11
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 15:22:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AD141B28D;
-	Sun,  4 Feb 2024 09:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53067225B2;
+	Sun,  4 Feb 2024 15:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n7CYokBT"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="qfAUkoX5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B80B1B582;
-	Sun,  4 Feb 2024 09:59:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A07C225AA;
+	Sun,  4 Feb 2024 15:22:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707040777; cv=none; b=Acp1xXLc7tQeIliDw4UgPVupYFJBB/aG7Ug0x3CRGI2cvwiE3jaynmJ2woxE++z5ov9BfZrS3ndnFaU6o8+Vqmb/10H7nbQJPzxaM5mQ0dNgZbUDm6EZ66axrfm+pyiSFhc4FerN5gtbnwNTKFwMv8FtXfJrCmwGEup2Rg8vQck=
+	t=1707060150; cv=none; b=CfZSCp4SRzEgKz0BxEX7afQsIPR62VYxaCv0xGFBe8BtpCwMCzMit4mor1LP0jJ2E0yksHKlXYlcHZIUb+518tFUYA9fVanMmFyNnAv59snkoQrHVJvF6864AkE5QnSc0k1IxYZjIYipruUWIgF1rYR74g6R3lANIbUPIypntjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707040777; c=relaxed/simple;
-	bh=PREsO0fDn5ks0m6BkKrklGoIT157BD8L8D9Y5xRwnpY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=MWzBEiGH0RmmWiIded/rhGwpMFE4QYERGwntuTFdXv6EOcN1hLWHtVAvBVXrxVN0LN9zI38oRbWRwwrCbhTlPCYzN77tTIYQ5gPCGdzfNnrpL/JCKPHpL9akAIVH2k/RmyNfxesIA/es2WYsN5xw7ebXd2Rub9fAsufvI8l/4cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n7CYokBT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4149uIou002651;
-	Sun, 4 Feb 2024 09:59:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=tmDZogz+xOwkuZlnDnPxKEWbHLw0ooZZybvU2YEDlg4=; b=n7
-	CYokBTfMrYx4h15SvgxU1+rjFXTj0wKVA5iHN/WJrRwbFb5fsdwXaE7FsNsTNs1V
-	g0bLdn/kKc1BWOIOErg8rI3sxXIJLlURYehbCwGep3jh4YaY4VNi2WYtI9kG2TGd
-	l74c3qopTODCq1RigzKhY5+2haGrYJaNepipdQJFMZcj9jbO8N72Oxj0UfwfuCPE
-	ld/7jAXddPXJtVRMNVTgNFpa2kN2oHHh6N8ZOA8WFSWPzNZkDoK6ChbdLCUcz+s2
-	/UNb2elfl/KXKjeXk3SPxYVg/7IBFrQqFeeB+LPzU2arXwUJI5sWn1b2q5Ar5GxI
-	4kOrEVIyjuB5uJ5cJtZA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w1f40sjd8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 04 Feb 2024 09:59:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4149xHnA020742
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 4 Feb 2024 09:59:17 GMT
-Received: from [10.253.73.69] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 4 Feb
- 2024 01:59:12 -0800
-Message-ID: <7d86388d-15f5-4e72-b99f-aee3b47a5232@quicinc.com>
-Date: Sun, 4 Feb 2024 17:59:10 +0800
+	s=arc-20240116; t=1707060150; c=relaxed/simple;
+	bh=HdEPymNokVINCHkSEa5LvnInxWnhWuDC0WVzzVWsEk8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E2Ivk0PNrxYM5TVZBqlqe7s3gtpbRyu4PjZ2nc/Z8KYM6yELp1p6DFU0qh5PVFwhdOrbUil07uYildJoP6Dbxws1sNqrss52ONS8GAyTUp3fMO/XX+G06YInLXatBlM08V9PlyDibzGjBMb0gCQE0/7cAqjJnxJSIgL75OpXXro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=qfAUkoX5; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=Nevq5mgSlVT/I2RCsRjjpab+WWwVDBjfunWL49iu92I=; b=qfAUkoX5Nn/s46SQ+3G23exnMe
+	jIEsEzz6WSdE+V58VpbzM5cVDDquV5M8O4HPyNrl3O6kiSLToZDXaGD6J+Tz1/+aidUF9pzILNwfK
+	4gdPqwfMgZmhBNM4QpFt6OSTizGoF/xWyejFIPKY14WMc9sHCxX0adLIfdht5SrZm1Gg=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rWeJt-006xv7-0q; Sun, 04 Feb 2024 16:22:09 +0100
+Date: Sun, 4 Feb 2024 16:22:09 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Christian Marangi <ansuelsmth@gmail.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Robert Marko <robert.marko@sartura.hr>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [net-next PATCH v2 2/3] net: mdio: ipq4019: add support for
+ clock-frequency property
+Message-ID: <4cd01d93-7b6d-4766-8337-c4dc09aeedc2@lunn.ch>
+References: <20240130003546.1546-1-ansuelsmth@gmail.com>
+ <20240130003546.1546-3-ansuelsmth@gmail.com>
+ <7d86388d-15f5-4e72-b99f-aee3b47a5232@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [net-next PATCH v2 2/3] net: mdio: ipq4019: add support for
- clock-frequency property
-Content-Language: en-US
-To: Christian Marangi <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell
- King <linux@armlinux.org.uk>,
-        Robert Marko <robert.marko@sartura.hr>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240130003546.1546-1-ansuelsmth@gmail.com>
- <20240130003546.1546-3-ansuelsmth@gmail.com>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20240130003546.1546-3-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RA8x5ZYS1QVVacm8q5u3nrlWgkvWcodj
-X-Proofpoint-GUID: RA8x5ZYS1QVVacm8q5u3nrlWgkvWcodj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-04_08,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 mlxlogscore=999
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402040076
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7d86388d-15f5-4e72-b99f-aee3b47a5232@quicinc.com>
 
+On Sun, Feb 04, 2024 at 05:59:10PM +0800, Jie Luo wrote:
+> 
+> 
+> On 1/30/2024 8:35 AM, Christian Marangi wrote:
+> > +
+> > +	/* If div is /256 assume nobody have set this value and
+> > +	 * try to find one MDC rate that is close the 802.3 spec of
+> > +	 * 2.5MHz
+> > +	 */
+> > +	for (div = 256; div >= 8; div /= 2) {
+> > +		/* Stop as soon as we found a divider that
+> > +		 * reached the closest value to 2.5MHz
+> > +		 */
+> > +		if (DIV_ROUND_UP(ahb_rate, div) > 2500000)
+> > +			break;
+> 
+> Hi Christian,
+> Sorry for the delayed review.
+> 
+> The MDIO hardware block supports higher frequency 6.25M and 12.5M,
+> Would you remove this 2.5MHZ limitation? On the IPQ platform, we
+> normally use 6.25MHZ.
 
+802.3 says the clock has a maximum of 2.5MHz. So this code is correct.
 
-On 1/30/2024 8:35 AM, Christian Marangi wrote:
-> +
-> +	/* If div is /256 assume nobody have set this value and
-> +	 * try to find one MDC rate that is close the 802.3 spec of
-> +	 * 2.5MHz
-> +	 */
-> +	for (div = 256; div >= 8; div /= 2) {
-> +		/* Stop as soon as we found a divider that
-> +		 * reached the closest value to 2.5MHz
-> +		 */
-> +		if (DIV_ROUND_UP(ahb_rate, div) > 2500000)
-> +			break;
+It is however O.K. to go faster, but since that breaks the standard,
+you need each board to indicate it knows all the devices on the bus do
+support higher speeds and its O.K. to break the standard. You indicate
+this by using the DT property in its .dts file. For an MDIO bus which
+is totally internal, you could however put the DT property in the SoC
+.dtsi file.
 
-Hi Christian,
-Sorry for the delayed review.
-
-The MDIO hardware block supports higher frequency 6.25M and 12.5M,
-Would you remove this 2.5MHZ limitation? On the IPQ platform, we
-normally use 6.25MHZ.
-> +
-> +		priv->mdc_rate = DIV_ROUND_UP(ahb_rate, div);
-> +	}
->   }
+      Andrew
 
