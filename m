@@ -1,325 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-9760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60F27849019
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 20:32:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C484A8491E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 00:45:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D54E51F239AF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 19:32:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30B4A1F21758
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 23:45:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E735250F4;
-	Sun,  4 Feb 2024 19:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BB5EC122;
+	Sun,  4 Feb 2024 23:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="CeINcSds"
+	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="dUESpUC3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2129.outbound.protection.outlook.com [40.107.113.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D2250F1;
-	Sun,  4 Feb 2024 19:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.249
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707075119; cv=none; b=f3aFQyRNFk0zjNHr4laCTJO/xZQDXfIcZL38GuGdSK4T/KSMY7mRM/0lKO9MkP9Gxv66KFDmYS4aEobH+wZjqzR4Sq7vOieuQ4UUr+IKX5Hn7vhBnVH3P1fEnRueviG7/Msay7ky5VyLglY9QXEhhDAqrk5/V/6nJjYun2Bb0cQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707075119; c=relaxed/simple;
-	bh=n5XSk91kCslNCoYl44I0uBsnPT+dMeWqMwNXAzbHByc=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lsaRV9QQP7e31IFnTky6nM+VN0tZRtcZg7y5/YOiF74jKamKDn7wkcVfVjTnm48tAxilBUHUcElwU6rR7zQJu1I3G7j+Gjw4r48Gv/SaFXOqDEQXSDLC5q9vmPj6y7MDkvvOdjOlitb6OeO96Coq90cBDRrxBRWhk8MXhjNVP/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=CeINcSds; arc=none smtp.client-ip=198.47.23.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-	by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 414JV1D9127371;
-	Sun, 4 Feb 2024 13:31:01 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1707075061;
-	bh=TaSPTXlkDftBhODwH0N+U0NVhn/CexktNfHvrkQWmrs=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date;
-	b=CeINcSds7ejqXCg7Bembi14ln3Ss+0mOLHeRealRcIaQF4wa7Z6P2wahiGWB1y82y
-	 MhJV4AnHJ8cG0QfBIQqWo55/nxeCoLrlVbK0xtXY2VcGORvnIYqa1jRGI92Rf35Qfd
-	 J4plz1Aj3GEmCjDUzGXRIXc3scaRUut+7SBnDk1Y=
-Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
-	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 414JV1DL090422
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Sun, 4 Feb 2024 13:31:01 -0600
-Received: from DLEE102.ent.ti.com (157.170.170.32) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Sun, 4
- Feb 2024 13:31:01 -0600
-Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DLEE102.ent.ti.com
- (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Sun, 4 Feb 2024 13:31:01 -0600
-Received: from localhost (kamlesh.dhcp.ti.com [172.24.227.123])
-	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 414JV0K1093538;
-	Sun, 4 Feb 2024 13:31:00 -0600
-From: Kamlesh Gurudasani <kamlesh@ti.com>
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <andersson@kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <robh+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_omprsing@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, <bartosz.golaszewski@linaro.org>,
-        <konrad.dybcio@linaro.org>, <ulf.hansson@linaro.org>,
-        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>, <mani@kernel.org>,
-        <davem@davemloft.net>, <herbert@gondor.apana.org.au>,
-        Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Subject: Re: [EXTERNAL] [PATCH v4 05/15] soc: qcom: ice: support for
- hardware wrapped keys
-In-Reply-To: <20240127232436.2632187-6-quic_gaurkash@quicinc.com>
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
- <20240127232436.2632187-6-quic_gaurkash@quicinc.com>
-Date: Mon, 5 Feb 2024 01:00:59 +0530
-Message-ID: <87h6ioyqks.fsf@kamlesh.i-did-not-set--mail-host-address--so-tickle-me>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AEBDDCF;
+	Sun,  4 Feb 2024 23:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.113.129
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707090296; cv=fail; b=DYDu8oZd8+KWttJbQm4NBWlXrkIIMK6KKkP/b9cf88bpHfyr8hEARvMscAa0zAvU5H4i/jTjTVzcQabiALSzHd43nlI4dF8EdOxqMVQD9qbGmWFYjsaUy5pWJRXzgpT8+jXcjluLrzWmF1H2sPk1dAvdInXR3PLOYZ88Ahzq1nk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707090296; c=relaxed/simple;
+	bh=MH9nB6ux2s/+NCVr2S0h1B6JREmnAdG3wqNf1R8mJaw=;
+	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 Date:MIME-Version; b=a73ZT6+hsVonbNRQdnzeMQPU1ycbr2XMt/0CbLizsV8bIBN/kyB+8DgmSLRO0ds2xiNrJAeVOvgI1HoAltjKUKvDbgp3LCF6UHYlqNSL619oW/fT3RjrCLg9hnXThH65L7sxy5bcbWQdBUQ/05v5vridIXs+aFEqfocb8YPj41w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=dUESpUC3; arc=fail smtp.client-ip=40.107.113.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NlL2dRGMsTIvtqiA/w1SVs36/siA9y6+PxzLSBE4bkZ8PZgTGGH0iQMpuAu3Jq94/I+xFZRrXo3DjtRn1CTEczzvVB3HYv/MbGMu/as0l7MkQJqjOuxXJ8hwQg/qNfp3d9wGC6Lsl/QzF4pcdPWe8zec+EcJ+xuaryEXcZsJpz5ItLpAE/tlXU3zx55IOy4XcFBKu8XSbjtNJ4dMKLQVsv7JgJI/IK7RfMX/rTgVB5Owgr8BzsTl2HF9Np+TLpWcpinvuAwN/Jt1R+8cayi68FNlqpgRd1DvYrr6qiiTKeytWR9XSnTe0oF/7IydhIOPAlwFUKDcZM2r/hJsEsWanA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JAIGVyqVDt1okm0zADf/MCqj5u3NVqHjHiCFJPiPG6E=;
+ b=G/MSoyvLj1hSW7K8L92orU8tatdo7q3n5BZLOttGhL0UnX4eHWiWcwUYobA8BUZqnBVNQvDnuoMDEYtmvCB5QrK59rH8hKHU960FngbHpnRlVno/E49jyO/2U9Upb0Yv9+Gv9gX9zVUmozYqVYgYibZBPOJHZ7Zr0olZZ9CqTLFBO67EqW7V93W2C/HBNKh1bWFfPfRF3bpTCCCSgufMS2a0of3xZHk5SbCeXlocWW/GrO+7UGY4D8j46npqeYx0J4uSQYCjAR6bY4dTlC8+TAsWJxvGDetztmq2tLPZGWMp3twwoW54lepV/4c2rHj0sS/JZwUMsl8dbSc2Yk5YbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
+ dkim=pass header.d=renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JAIGVyqVDt1okm0zADf/MCqj5u3NVqHjHiCFJPiPG6E=;
+ b=dUESpUC3D7P6nU5PeIQfjD8E4H9/8Mi5dwrPWIQLg5dBBA9+iGitBA88jCILFRlKDbjYMkWZK48bzcdMM54gQRujOE5RBA+FBgpE1v1q4ZUoDuH9pTBPXS+s70Mj/cgwPuPWCDbqwSTu51f1QVG0OLJWnuHzWZqasZ+9qjkZ76Q=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=renesas.com;
+Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
+ (2603:1096:400:3a9::11) by TY1PR01MB10656.jpnprd01.prod.outlook.com
+ (2603:1096:400:323::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.14; Sun, 4 Feb
+ 2024 23:44:40 +0000
+Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
+ ([fe80::4d0b:6738:dc2b:51c8]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
+ ([fe80::4d0b:6738:dc2b:51c8%6]) with mapi id 15.20.7249.032; Sun, 4 Feb 2024
+ 23:44:40 +0000
+Message-ID: <875xz3n6ag.wl-kuninori.morimoto.gx@renesas.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+To: Rob Herring <robh@kernel.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,	"Lad,  Prabhakar"
+ <prabhakar.csengg@gmail.com>,	=?ISO-8859-1?Q?=22Niklas_S=C3=B6derlund=22?=
+ <niklas.soderlund+renesas@ragnatech.se>,	=?ISO-8859-1?Q?=22Uwe_Kleine-K?=
+ =?ISO-8859-1?Q?=C3=B6nig=22?= <u.kleine-koenig@pengutronix.de>,	Abhinav
+ Kumar <quic_abhinavk@quicinc.com>,	Alexander Shishkin
+ <alexander.shishkin@linux.intel.com>,	Alexander Stein
+ <alexander.stein@ew.tq-group.com>,	Alexandre Belloni
+ <alexandre.belloni@bootlin.com>,	Alexandre Torgue
+ <alexandre.torgue@foss.st.com>,	Alexey Brodkin <abrodkin@synopsys.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,	Andy Gross <agross@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,	Bjorn Andersson
+ <andersson@kernel.org>,	Claudiu Beznea <claudiu.beznea@tuxon.dev>,	Daniel
+ Vetter <daniel@ffwll.ch>,	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	David Airlie <airlied@gmail.com>,	Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>,	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Emma Anholt <emma@anholt.net>,	Eugen Hristev
+ <eugen.hristev@collabora.com>,	Florian Fainelli
+ <florian.fainelli@broadcom.com>,	Frank Rowand <frowand.list@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,	Hans Verkuil
+ <hverkuil-cisco@xs4all.nl>,	Helge Deller <deller@gmx.de>,	Hugues Fruchet
+ <hugues.fruchet@foss.st.com>,	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Jacopo Mondi <jacopo@jmondi.org>,	James Clark <james.clark@arm.com>,
+	Jaroslav Kysela <perex@perex.cz>,	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kevin Hilman <khilman@baylibre.com>,	Kieran Bingham
+ <kieran.bingham+renesas@ideasonboard.com>,	Kieran Bingham
+ <kieran.bingham@ideasonboard.com>,	Konrad Dybcio
+ <konrad.dybcio@linaro.org>,	Krzysztof Kozlowski
+ <krzysztof.kozlowski@linaro.org>,	Laurent Pinchart
+ <laurent.pinchart+renesas@ideasonboard.com>,	Laurent Pinchart
+ <laurent.pinchart@ideasonboard.com>,	Liam Girdwood <lgirdwood@gmail.com>,
+	Liu Ying <victor.liu@nxp.com>,	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,	Marek Vasut
+ <marex@denx.de>,	Mark Brown <broonie@kernel.org>,	Mauro Carvalho Chehab
+ <mchehab@kernel.org>,	Maxime Coquelin <mcoquelin.stm32@gmail.com>,	Maxime
+ Ripard <mripard@kernel.org>,	Michael Tretter <m.tretter@pengutronix.de>,
+	Michal Simek <michal.simek@amd.com>,	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,	Neil Armstrong
+ <neil.armstrong@linaro.org>,	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,	Philipp Zabel
+ <p.zabel@pengutronix.de>,	Philippe Cornu <philippe.cornu@foss.st.com>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,	Rob Clark
+ <robdclark@gmail.com>,	Robert Foss <rfoss@kernel.org>,	Russell King
+ <linux@armlinux.org.uk>,	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Saravana Kannan <saravanak@google.com>,	Sascha Hauer
+ <s.hauer@pengutronix.de>,	Shawn Guo <shawnguo@kernel.org>,	Sowjanya
+ Komatineni <skomatineni@nvidia.com>,	Stefan Agner <stefan@agner.ch>,	Suzuki
+ K Poulose <suzuki.poulose@arm.com>,	Sylwester Nawrocki
+ <s.nawrocki@samsung.com>,	Takashi Iwai <tiwai@suse.com>,	Thierry Reding
+ <thierry.reding@gmail.com>,	Thomas Zimmermann <tzimmermann@suse.de>,	Tim
+ Harvey <tharvey@gateworks.com>,	Todor Tomov <todor.too@gmail.com>,	Tomi
+ Valkeinen <tomi.valkeinen@ideasonboard.com>,	Yannick Fertre
+ <yannick.fertre@foss.st.com>,	Alim Akhtar <alim.akhtar@samsung.com>,	Fabio
+ Estevam <festevam@gmail.com>,	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,	Jerome Brunet
+ <jbrunet@baylibre.com>,	Jessica Zhang <quic_jesszhan@quicinc.com>,	Jonas
+ Karlman <jonas@kwiboo.se>,	Leo Yan <leo.yan@linaro.org>,	Marijn Suijten
+ <marijn.suijten@somainline.org>,	Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>,	Mike Leach <mike.leach@linaro.org>,
+	Sam Ravnborg <sam@ravnborg.org>,	Sean Paul <sean@poorly.run>,	Tom Rix
+ <trix@redhat.com>,	coresight@lists.linaro.org,	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,	freedreno@lists.freedesktop.org,
+	linux-amlogic@lists.infradead.org,	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,	linux-fbdev@vger.kernel.org,
+	linux-media@vger.kernel.org,	linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,	linux-rpi-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,	linux-sound@vger.kernel.org,
+	linux-staging@lists.linux.dev,	linux-stm32@st-md-mailman.stormreply.com,
+	linux-tegra@vger.kernel.org,	llvm@lists.linux.dev
+Subject: Re: [PATCH v3 05/24] media: i2c: switch to use of_graph_get_next_device_endpoint()
+In-Reply-To: <20240202174941.GA310089-robh@kernel.org>
+References: <87o7d26qla.wl-kuninori.morimoto.gx@renesas.com>
+	<87h6iu6qjs.wl-kuninori.morimoto.gx@renesas.com>
+	<20240202174941.GA310089-robh@kernel.org>
+User-Agent: Wanderlust/2.15.9 Emacs/27.1 Mule/6.0
+Content-Type: text/plain; charset=US-ASCII
+Date: Sun, 4 Feb 2024 23:44:39 +0000
+X-ClientProxiedBy: TYWPR01CA0018.jpnprd01.prod.outlook.com
+ (2603:1096:400:a9::23) To TYCPR01MB10914.jpnprd01.prod.outlook.com
+ (2603:1096:400:3a9::11)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TY1PR01MB10656:EE_
+X-MS-Office365-Filtering-Correlation-Id: ce9702a3-24e7-4d54-2b1f-08dc25db4164
+X-LD-Processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	/O52G/Tf4EynOcF+CqlepmWEhaPKnRSC7dHmtSIHmNjFXLCtWrivEuE8w7zTy0crJC+Kp05Gy1W4kVB6ir6xcO8b0+sLfhM9YgHBbcwzx4k5FWm5mM6Qtig0wWJwUvdGYwihvC+3V4AC1Wg4mimEqp9ocfNxQEGDr261+Xo7WVJgBNT4mMmZA0VTJCPw39KTly8iInLeEG0L9RqpUPmt1w+WpewISnpi2a/cZ28hUdk3Qx+FuqJin/ERQtbhrkx6r2iJ4MM/0H20HA7TdyR6rSM5WcjUHpxcbADjhHpAbPR0WEOgkhol1o2izt5i9ObWqNz9YNy4+EHsiWZVd42jorfk+6Lm9ItSfbh3/syuN+adMU+a3vd08c1f3rku/PI0qDsgliiproGiY6DVMYNpG48pqW3J+h6KSHa3xZAPfEDdkzVkDA2G7ip1EgE12hk1RePaldVLx/LftupAoyRYfbPI27gyRoVf2pfS8x1jot4OTUGYq0xocxCpGGWX8QVI7TNbC5L4It9DKF7g+6UL7mINFX97/VXXzsqbE/94Ka3CQZH+0HwiM2fhoSZoi4BFdGoFLALGTlYiqlcnqmFQPcxFLfLA7esClBdQ8CAWq/o=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(396003)(376002)(366004)(136003)(346002)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(4326008)(8676002)(8936002)(66556008)(66476007)(6916009)(66946007)(316002)(54906003)(26005)(6486002)(966005)(478600001)(38100700002)(36756003)(2616005)(6512007)(7416002)(86362001)(41300700001)(7366002)(6506007)(5660300002)(2906002)(7406005)(4744005)(52116002)(7276002)(7336002)(38350700005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?MlOk4Y/sddMQ2YpdYHdbIaOjKUW1atQ/ZAkXUtAY/udPsvSEzQ9wb6w4+9+8?=
+ =?us-ascii?Q?16VIPm0Om7pDBamGT853Es+d7hy+wxbWlMU3kcNkuP+DAn0EImtAbpOdXjcH?=
+ =?us-ascii?Q?OjXCfnjqy5XlsYTOjQEMv5XFJn9QIp1Pof3/uFQLv2x7jYHi4oSaOemQFXhb?=
+ =?us-ascii?Q?QdMDNwsfMx1uWMN5IgmHYyg8iDRKxneb12fssDp24dSBDw6/mrIho9I5bIAl?=
+ =?us-ascii?Q?MORU8FW+DfNXTE9i0/IlhKcaqA5oon5WpH7p5xDQu85KFCiMSxGq7X7Ww+od?=
+ =?us-ascii?Q?aRmfHONS7Gpo6UMMwiCKwAEvBQC8PBCv4Nr4aGSrWXV7a0/dHJacqnbaVEBS?=
+ =?us-ascii?Q?0elyliUF00erR1BQVIUZgVTgOeI1v4lPoEijOujFlFnt+Rbhl6E/KiauXLEk?=
+ =?us-ascii?Q?qmly06ccIQcVZle6EcA6BMFsfV0viDT5YoVwHzBIWFysAdyN+4CCKPoERS8N?=
+ =?us-ascii?Q?rsuvx3BG5ycwVXeUD1yowGjjO1NF7NmX4eTxsFnOdIi70LUs3edxFTQeOQHN?=
+ =?us-ascii?Q?spBmqxPzXCokgy/uata4WktGY/6qXMBAdwr/EEjSmxmzKo2fRJ7pevzp9pLN?=
+ =?us-ascii?Q?mLarsYujvZk+avqcbI71Mk1wKScfmz8qqaxAf4RoTYzyxlGFBpjbKg0FgFcN?=
+ =?us-ascii?Q?lC6G6jPiZ57QNlEAk/KB9mGLZzKP6l5HfSxdxkKsMIeC7MAKMJexruFRJjdG?=
+ =?us-ascii?Q?M1GHAqylyyfhxUwwKJ1BDhKz1oGFa4Rva5HK4peUcaccoGMckcQdFnUT1x/l?=
+ =?us-ascii?Q?8WpUxweIkdcq02wmX2hL+cg3vzaXD8JXpPLLvsu5JT2OF7cCKryqlN2VycBZ?=
+ =?us-ascii?Q?SgJW+QPjAIh/BPSYOtSC3yg3JoIZ8y03HyA9WVzQWw6NKiegYI4Uu3PixzGX?=
+ =?us-ascii?Q?a+gCVAIGpdvmV8WzvmLBbM7Thdv2LIB0wH29R0YK5xBHMzRRs9wN6KbU143T?=
+ =?us-ascii?Q?HUP66jrA2i/QuGvSgE4d7MNzoBoHpuyLOJhjbgHtAx8SrA3AfQ2VGEMcAGOq?=
+ =?us-ascii?Q?ACWB8BaIYcTHB5OO27tai+9ezbVvbwhRHaChfAxOAZo/2kWhEfV2NEyXWN7w?=
+ =?us-ascii?Q?Xmg4ynr68iMGMdenbsM0zhry1BKsuki/t/1Izw/6ouFnuQnXamyBYOnC7I27?=
+ =?us-ascii?Q?y0/3H7oIHr4wRkagezECt6IJ2LdJsyGwOaNFwHBOx/ZHNALAFL5tzOXeYkGy?=
+ =?us-ascii?Q?GwjwF6OX0MFJYMg0Gy7HYZ1G+0HlU+yKmILIL3GtQTv+oiRaxoW6y+ZcjFir?=
+ =?us-ascii?Q?02ALWGgznThFG7IAiUL07L1WbFcx5aPxONUMp72pagrPaO0/cacLHDOX8jV3?=
+ =?us-ascii?Q?WGq8wtnSTrFg0+M8d3kOk8UPnudW+XkPwV0DsZ5O4ht8vpoP/u1lafOEhfBm?=
+ =?us-ascii?Q?VlNFEqUYYr9mQskQ0NQqDIqg9p9W120bGkdjJZe7nGBJDedVlvVOkNbvkveQ?=
+ =?us-ascii?Q?jnZQxVAoLRulrLUIqByzrlICGxao6qG+p5RwFC0JGaFafuJWcHgrIE+p96Oa?=
+ =?us-ascii?Q?kanv3Oy9e3D/KBKbY8hcDQnKO65cXuMzb+KRWJ2VwvprFSskYwcKt+82BugF?=
+ =?us-ascii?Q?ubjnn/VZZAg4DiHXRXltfRS/FEFvAXXbeSN5TtI164qE8fEO3+7bZELmwmF8?=
+ =?us-ascii?Q?YueRChZ6xIjhwbKZh1GH/J4=3D?=
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce9702a3-24e7-4d54-2b1f-08dc25db4164
+X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2024 23:44:40.7009
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4kjz26qbchml8CHh6clYPS1ycK8vwv3eyyJSmF5HgNCf49rF5esw/Tuz24MY6Wj87Zxz+cVpyjTQcx1XymcJbKt0T46SF360Kx0R1bL8HAvASpMJALlHoRaCE/xNEUW6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PR01MB10656
 
-Gaurav Kashyap <quic_gaurkash@quicinc.com> writes:
 
-> This message was sent from outside of Texas Instruments. 
-> Do not click links or open attachments unless you recognize the source of this email and know the content is safe. 
->  
-> Now that HWKM support is added to ICE, extend the ICE
-> driver to support hardware wrapped keys programming coming
-> in from the storage controllers (ufs and emmc). This is
-> similar to standard keys where the call is forwarded to
-> Trustzone, however certain wrapped key and HWKM specific
-> actions has to be performed around the SCM calls.
->
-> Derive software secret support is also added by forwarding the
-> call to the corresponding scm api.
->
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/soc/qcom/ice.c | 119 +++++++++++++++++++++++++++++++++++++----
->  include/soc/qcom/ice.h |   4 ++
->  2 files changed, 112 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index c718e8153b23..c3b852269dca 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -27,6 +27,8 @@
->  #define QCOM_ICE_REG_BIST_STATUS		0x0070
->  #define QCOM_ICE_REG_ADVANCED_CONTROL		0x1000
->  #define QCOM_ICE_REG_CONTROL			0x0
-> +#define QCOM_ICE_LUT_KEYS_CRYPTOCFG_R16		0x4040
-> +
->  /* QCOM ICE HWKM registers */
->  #define QCOM_ICE_REG_HWKM_TZ_KM_CTL			0x1000
->  #define QCOM_ICE_REG_HWKM_TZ_KM_STATUS			0x1004
-> @@ -48,6 +50,8 @@
->  #define QCOM_ICE_FORCE_HW_KEY0_SETTING_MASK	0x2
->  #define QCOM_ICE_FORCE_HW_KEY1_SETTING_MASK	0x4
->  
-> +#define QCOM_ICE_LUT_KEYS_CRYPTOCFG_OFFSET	0x80
-> +
->  #define QCOM_ICE_HWKM_REG_OFFSET	0x8000
->  #define HWKM_OFFSET(reg)		((reg) + QCOM_ICE_HWKM_REG_OFFSET)
->  
-> @@ -68,6 +72,16 @@ struct qcom_ice {
->  	bool hwkm_init_complete;
->  };
->  
-> +union crypto_cfg {
-> +	__le32 regval;
-> +	struct {
-> +		u8 dusize;
-> +		u8 capidx;
-> +		u8 reserved;
-> +		u8 cfge;
-> +	};
-> +};
-> +
->  static bool qcom_ice_check_supported(struct qcom_ice *ice)
->  {
->  	u32 regval = qcom_ice_readl(ice, QCOM_ICE_REG_VERSION);
-> @@ -273,6 +287,51 @@ int qcom_ice_suspend(struct qcom_ice *ice)
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_suspend);
->  
-> +/*
-> + * HW dictates the internal mapping between the ICE and HWKM slots,
-> + * which are different for different versions, make the translation
-> + * here. For v1 however, the translation is done in trustzone.
-> + */
-> +static int translate_hwkm_slot(struct qcom_ice *ice, int slot)
-> +{
-> +	return (ice->hwkm_version == 1) ? slot : (slot * 2);
-> +}
-> +
-> +static int qcom_ice_program_wrapped_key(struct qcom_ice *ice,
-> +					const struct blk_crypto_key *key,
-> +					u8 data_unit_size, int slot)
-> +{
-> +	union crypto_cfg cfg;
-> +	int hwkm_slot;
-> +	int err;
-> +
-> +	hwkm_slot = translate_hwkm_slot(ice, slot);
-> +
-> +	memset(&cfg, 0, sizeof(cfg));
-> +	cfg.dusize = data_unit_size;
-> +	cfg.capidx = QCOM_SCM_ICE_CIPHER_AES_256_XTS;
-> +	cfg.cfge = 0x80;
-> +
-This is a clever use of union, writing from one member and
-reading from inactive member.
+Hi Rob
 
-I hope this a common practice in linux(being used in some other module
-already) or fits the standard of C or will give deterministic result on
-other compilers as well. Thanks.
+> This is assuming there's just 1 port and 1 endpoint, but let's be 
+> specific as the bindings are (first endpoint on port 0):
+> 
+> of_graph_get_endpoint_by_regs(client->dev.of_node, 0, -1);
+> 
+> Note we could ask for endpoint 0 here, but the bindings generally allow 
+> for more than 1.
+> 
+> I imagine most of the other cases here are the same.
 
-Regards,
-Kamlesh
+I will do it on new patch-set
 
-> +	/* Clear CFGE */
-> +	qcom_ice_writel(ice, 0x0, QCOM_ICE_LUT_KEYS_CRYPTOCFG_R16 +
-> +				  QCOM_ICE_LUT_KEYS_CRYPTOCFG_OFFSET * slot);
-> +
-> +	/* Call trustzone to program the wrapped key using hwkm */
-> +	err = qcom_scm_ice_set_key(hwkm_slot, key->raw, key->size,
-> +				   QCOM_SCM_ICE_CIPHER_AES_256_XTS, data_unit_size);
-> +	if (err) {
-> +		pr_err("%s:SCM call Error: 0x%x slot %d\n", __func__, err,
-> +		       slot);
-> +		return err;
-> +	}
-> +
-> +	/* Enable CFGE after programming key */
-> +	qcom_ice_writel(ice, cfg.regval, QCOM_ICE_LUT_KEYS_CRYPTOCFG_R16 +
-> +					 QCOM_ICE_LUT_KEYS_CRYPTOCFG_OFFSET * slot);
-> +
-> +	return err;
-> +}
-> +
->  int qcom_ice_program_key(struct qcom_ice *ice,
->  			 u8 algorithm_id, u8 key_size,
->  			 const struct blk_crypto_key *bkey,
-> @@ -288,24 +347,39 @@ int qcom_ice_program_key(struct qcom_ice *ice,
->  
->  	/* Only AES-256-XTS has been tested so far. */
->  	if (algorithm_id != QCOM_ICE_CRYPTO_ALG_AES_XTS ||
-> -	    key_size != QCOM_ICE_CRYPTO_KEY_SIZE_256) {
-> +	    (key_size != QCOM_ICE_CRYPTO_KEY_SIZE_256 &&
-> +	    key_size != QCOM_ICE_CRYPTO_KEY_SIZE_WRAPPED)) {
->  		dev_err_ratelimited(dev,
->  				    "Unhandled crypto capability; algorithm_id=%d, key_size=%d\n",
->  				    algorithm_id, key_size);
->  		return -EINVAL;
->  	}
->  
-> -	memcpy(key.bytes, bkey->raw, AES_256_XTS_KEY_SIZE);
-> -
-> -	/* The SCM call requires that the key words are encoded in big endian */
-> -	for (i = 0; i < ARRAY_SIZE(key.words); i++)
-> -		__cpu_to_be32s(&key.words[i]);
-> +	if (bkey->crypto_cfg.key_type == BLK_CRYPTO_KEY_TYPE_HW_WRAPPED) {
-> +		/* It is expected that HWKM init has completed before programming wrapped keys */
-> +		if (!ice->use_hwkm || !ice->hwkm_init_complete) {
-> +			dev_err_ratelimited(dev, "HWKM not currently used or initialized\n");
-> +			return -EINVAL;
-> +		}
-> +		err = qcom_ice_program_wrapped_key(ice, bkey, data_unit_size,
-> +						   slot);
-> +	} else {
-> +		if (bkey->size != QCOM_ICE_CRYPTO_KEY_SIZE_256)
-> +			dev_err_ratelimited(dev,
-> +					    "Incorrect key size; bkey->size=%d\n",
-> +					    algorithm_id);
-> +		return -EINVAL;
-> +		memcpy(key.bytes, bkey->raw, AES_256_XTS_KEY_SIZE);
->  
-> -	err = qcom_scm_ice_set_key(slot, key.bytes, AES_256_XTS_KEY_SIZE,
-> -				   QCOM_SCM_ICE_CIPHER_AES_256_XTS,
-> -				   data_unit_size);
-> +		/* The SCM call requires that the key words are encoded in big endian */
-> +		for (i = 0; i < ARRAY_SIZE(key.words); i++)
-> +			__cpu_to_be32s(&key.words[i]);
->  
-> -	memzero_explicit(&key, sizeof(key));
-> +		err = qcom_scm_ice_set_key(slot, key.bytes, AES_256_XTS_KEY_SIZE,
-> +					   QCOM_SCM_ICE_CIPHER_AES_256_XTS,
-> +					   data_unit_size);
-> +		memzero_explicit(&key, sizeof(key));
-> +	}
->  
->  	return err;
->  }
-> @@ -313,7 +387,21 @@ EXPORT_SYMBOL_GPL(qcom_ice_program_key);
->  
->  int qcom_ice_evict_key(struct qcom_ice *ice, int slot)
->  {
-> -	return qcom_scm_ice_invalidate_key(slot);
-> +	int hwkm_slot = slot;
-> +
-> +	if (ice->use_hwkm) {
-> +		hwkm_slot = translate_hwkm_slot(ice, slot);
-> +	/*
-> +	 * Ignore calls to evict key when HWKM is supported and hwkm init
-> +	 * is not yet done. This is to avoid the clearing all slots call
-> +	 * during a storage reset when ICE is still in legacy mode. HWKM slave
-> +	 * in ICE takes care of zeroing out the keytable on reset.
-> +	 */
-> +		if (!ice->hwkm_init_complete)
-> +			return 0;
-> +	}
-> +
-> +	return qcom_scm_ice_invalidate_key(hwkm_slot);
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
->  
-> @@ -323,6 +411,15 @@ bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
->  
-> +int qcom_ice_derive_sw_secret(struct qcom_ice *ice, const u8 wkey[],
-> +			      unsigned int wkey_size,
-> +			      u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
-> +{
-> +	return qcom_scm_derive_sw_secret(wkey, wkey_size,
-> +					 sw_secret, BLK_CRYPTO_SW_SECRET_SIZE);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_derive_sw_secret);
-> +
->  static struct qcom_ice *qcom_ice_create(struct device *dev,
->  					void __iomem *base)
->  {
-> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-> index 1f52e82e3e1c..dabe0d3a1fd0 100644
-> --- a/include/soc/qcom/ice.h
-> +++ b/include/soc/qcom/ice.h
-> @@ -17,6 +17,7 @@ enum qcom_ice_crypto_key_size {
->  	QCOM_ICE_CRYPTO_KEY_SIZE_192		= 0x2,
->  	QCOM_ICE_CRYPTO_KEY_SIZE_256		= 0x3,
->  	QCOM_ICE_CRYPTO_KEY_SIZE_512		= 0x4,
-> +	QCOM_ICE_CRYPTO_KEY_SIZE_WRAPPED	= 0x5,
->  };
->  
->  enum qcom_ice_crypto_alg {
-> @@ -35,5 +36,8 @@ int qcom_ice_program_key(struct qcom_ice *ice,
->  			 u8 data_unit_size, int slot);
->  int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
->  bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
-> +int qcom_ice_derive_sw_secret(struct qcom_ice *ice, const u8 wkey[],
-> +			      unsigned int wkey_size,
-> +			      u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE]);
->  struct qcom_ice *of_qcom_ice_get(struct device *dev);
->  #endif /* __QCOM_ICE_H__ */
-> -- 
-> 2.43.0
+> > -	for_each_endpoint_of_node(state->dev->of_node, ep_np) {
+> > +	for_each_device_endpoint_of_node(state->dev->of_node, ep_np) {
+> 
+> I would skip the rename.
+
+It is needed to avoid confuse, because new function will add
+another endpoint loop.
+
+see
+https://lore.kernel.org/r/20240131100701.754a95ee@booty
+
+
+Thank you for your help !!
+
+Best regards
+---
+Renesas Electronics
+Ph.D. Kuninori Morimoto
 
