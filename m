@@ -1,74 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-9751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 843B5848F74
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 17:56:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20E60848FC8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 18:40:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EC691F21DCA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 16:56:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45F0C1C215F2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 17:40:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0C52377E;
-	Sun,  4 Feb 2024 16:56:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g/1nShbv"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3B20249E8;
+	Sun,  4 Feb 2024 17:40:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7172B23758
-	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Feb 2024 16:56:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2135724215
+	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Feb 2024 17:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707065800; cv=none; b=N8TVJgH4lPn934MGLeWrzM1SyZuUdZHHfm0JpLFYhcVz0a3XMd3Qehp47lRDn4uH3lM1/Dp9Iu5QOp8iMfj1P5GZLdnqO3G5jy+aDOh0YCrdd31hdJ/YWze54raCQdMFsCrEqLtFzrvXCN/8hitsx3wHsJke35KMDsLifbfW+XA=
+	t=1707068431; cv=none; b=i4uBWSuQ/Sgf6bI6US1xdg1zu1EqmfbAt7zlEpTxP2vXe3sdZLRHTHIpIeQR0OIL6EBPPYbei7IauyfabwIG+SSXstqdV2bOC2kpeEqIb8ia74OUT3K0rTTcmomM0jDRNp/RFzlgwQv879m2oIA4xxeU7f3fFn0Jtvpuqc5phrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707065800; c=relaxed/simple;
-	bh=/naVz0yogTrAGGrLDcPYQNkmDO6KhHPaYIn8ugEJCtY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=H8y9NuxkLqPrlmWe+a/X4sDa+B54VFMpsXsSBGQ8H80RfrpcGVYu4AB/VlpMDroAIu+jRJES70kubpTTjgeigF/a+TgiJbgrEypV9uwU4k6awW1MAfkti6x1naaLeZ/SmfEzs0WKv5FK7FLwot6xsr9oW8YbLOxKxBEyZx6Yi7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g/1nShbv; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5114b1e8819so741762e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Feb 2024 08:56:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707065796; x=1707670596; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wa9WkUM08vxQljPPw+aDlDsFQkr1vS2kut5JZm66AZI=;
-        b=g/1nShbvzLTOLiurm0+TFEuNEf+hR655N8YAMdSKjPwngmfrqBvBQXsYAzTqBp8IuT
-         hYEohmZULdXtPZdC/CpG3PrWhDNbllF5HO8DaH204/RKmo8wTNb0dlXu1IXtYZmtqrCG
-         rfxIWrcJv9K0w2hBjY0kbSTxSxCCRyOy18GcoqwVAKWliXTZ4VCvwVxz2a0Mw04SOMmz
-         6PtkyD6ZG7n1R8wqVrbSGDlz9MD4704/ZkZMc3cswhXu4aT7ePo0u143r1b/YvG3m4dd
-         yjFov5aoAj7UnTpI6WWlvgBciSmRz8+f5bm3tZtj0c2IucXNM3h+w9+/fxN0gtbWQYz9
-         FvCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707065796; x=1707670596;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wa9WkUM08vxQljPPw+aDlDsFQkr1vS2kut5JZm66AZI=;
-        b=eopJ5Zyre/c7hSmh46Gm2I8ljXKl+KyGpsCIaEYKc3o2SFHMD0f7TgXhjyvhXoHH01
-         4XN16xBbRvRpp6kwMWTd3GP33KJsDMykK2aSF3wNh9JJRgMphXg17lnA2aP2u2ObmQlO
-         ZioxhQYxpZYp/tM7W7Wm+vKTraJbt+UjOz25Av8fVwIscczEL/N8VrR8w8XEq6SPhJvw
-         GtOVAD5cj4z5w1y/gRfaDQJc1ntzL0xrp5jobb1qlg1/n5eLoTng+JTpKrszD4XS5owt
-         Aa3WKX7odaysi1Y7IqkQvhTffiAxiQK2uhea7c0vgV70LYeHV7gJGhQrdv7uVR8KooHM
-         +Imw==
-X-Gm-Message-State: AOJu0YzhhCknCvKcGTkZ+2CXQja5ylFfkvx2sL3tHE2v8747tx7UjkIJ
-	es2PWyPqthauhHqgxiH6KNIDDugG1gDQw6/q7UEIsvDhkYpSRsMKdGaRNYLGZW0=
-X-Google-Smtp-Source: AGHT+IGy22zr4BwSxp7w5EK4AqOBgOA7A4SiX8h9URT6Utr8E+g/C80ojnzM7eSTXJQgkRWpP6U45g==
-X-Received: by 2002:a05:6512:4011:b0:511:4995:c196 with SMTP id br17-20020a056512401100b005114995c196mr2659121lfb.59.1707065796428;
-        Sun, 04 Feb 2024 08:56:36 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCX2qBH0w+34afAelcxhz6ixlYnrgnl8tULEvhz3PzSD0UHG+6SeAkKfIYXjWya8uC2ZoQF3Q1iv1nqIFjvhNdtkiQywHH3GIPlY9imk5DkNR5btZH2Q8GTDhRRsxMioihvS6oN4DtD+ne2nW9wv92GKpgaUGpRyrrMEZHHGX3ZeZFZABg926vfbdQ6f+VRhysVElG831KpcffeA3RW1zhigq2rXA7g8h3mlxP08IWwXkQa21z7qvqnB/KIT4+B8GA==
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o24-20020ac24e98000000b005114808c659sm456550lfr.41.2024.02.04.08.56.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Feb 2024 08:56:35 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 04 Feb 2024 18:56:35 +0200
-Subject: [PATCH] dt-bindings: arm: qcom: drop the superfluous device
- compatibility schema
+	s=arc-20240116; t=1707068431; c=relaxed/simple;
+	bh=CYnlJJled2n08Hk3YAWmPfwDTjQEfYbTDQd2ofA+7tQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qKuTM0pRQTO0IIFubrwXKV6OnrUJI3lhdfkVcieQZQP8904Cgjjvk72UM/dugJepElC2ZSwaNZXM9BNWT1tbRtCAjnrKqCxEyFMCo/DI78QlQ57TTh7tTMg1Xc2iL/BCl3vYE6F4yocnkLZFfAYp1M/M+1EDJxWm7puEN8b59iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from Marijn-Arch-Book.localdomain (2a02-a420-2a-6767-164f-8aff-fee4-5930.mobile6.kpn.net [IPv6:2a02:a420:2a:6767:164f:8aff:fee4:5930])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 541161F6CF;
+	Sun,  4 Feb 2024 18:04:42 +0100 (CET)
+From: Marijn Suijten <marijn.suijten@somainline.org>
+Date: Sun, 04 Feb 2024 18:04:39 +0100
+Subject: [PATCH] drm/msm/dsi: Replace dsi_get_bpp() with mipi_dsi header
+ function
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,120 +46,91 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240204-qcom-drop-compat-v1-1-69d6cd92aa0e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMLBv2UC/x2MQQqAIBAAvxJ7bkFFCvtKdIhtrT2UphFB+Pek2
- 8xh5oXMSTjD0LyQ+JYs4aii2wZom4+VUZbqYJSxyiiLJ4UdlxQiVojzhR0ZTY61d6qHmsXEXp5
- /OU6lfLfho7ZiAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Message-Id: <20240204-drm-msm-dsi-remove-open-coded-get-bpp-v1-1-c16212de7e86@somainline.org>
+X-B4-Tracking: v=1; b=H4sIAKbDv2UC/x3NywrCQAxG4VcpWRuYVPH2KuLCaX5rFnMhU4pQ+
+ u4OLr/NORs1uKHRfdjIsVqzkjvkMND0eeUZbNpNYxiPEuTG6olTS6zN2JHKCi4VmaeiUJ6xcKy
+ VcbmeTzFEEVXqrep42/f/eTz3/QdOocv9dwAAAA==
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Marijn Suijten <marijn.suijten@somainline.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3458;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=/naVz0yogTrAGGrLDcPYQNkmDO6KhHPaYIn8ugEJCtY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlv8HD5vaz0YuS24rsw6R8TYihvwl8ym3O884kw
- IoQaCDSbq2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZb/BwwAKCRCLPIo+Aiko
- 1ZgXB/0RdtHykjPWyR4uE+ZVhlX5EAT1n/OSUoSajw39/zi9zM2Eb9Aum6EZBC+RlFDHhibCrxx
- hbWSK1ncF/dqvGQMv2ncSWshABiS6mgKvzNRA+TSpZicRQNl8lsk+2b2Uo8tel/vyISe1uql7dN
- DzJUcA/Cb8y0koQqALN8diJbrBqD+hZ44JMQSM8aVBiJlOMN5TnXGA4DM914/uB1DzZyZP77BY0
- polhL0QYZhWeIwYhqPLSDc1+17SBF0cTTt8KBpDxN6LsJVfCBfBn2L8gkP81o8D3lUqdtq1Mco5
- o5cTbrBoDm4tsKbo3oUUymgvPGYBNsDFKyVpJLEvjp2IdgWn
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The idea impressed in the commit b32e592d3c28 ("devicetree: bindings:
-Document qcom board compatible format") never got actually adopted. As
-can be seen from the existing board DT files, no device actually used
-the PMIC / foundry / version parts of the compatible string. Drop this
-compatibility string description to avoid possible confusion and keep
-just the generic terms and the SoC list.
+drm_mipi_dsi.h already provides a conversion function from MIPI_DSI_FMT_
+to bpp, named mipi_dsi_pixel_format_to_bpp().
 
-Fixes: b32e592d3c28 ("devicetree: bindings: Document qcom board compatible format")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 51 +++----------------------
- 1 file changed, 5 insertions(+), 46 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 1999a5f2f254..2b993b4c51dc 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -10,17 +10,10 @@ maintainers:
-   - Bjorn Andersson <bjorn.andersson@linaro.org>
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index deeecdfd6c4e..9fa0053fac74 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -183,16 +183,6 @@ struct msm_dsi_host {
+ 	int irq;
+ };
  
- description: |
--  Some qcom based bootloaders identify the dtb blob based on a set of
--  device properties like SoC and platform and revisions of those components.
--  To support this scheme, we encode this information into the board compatible
--  string.
--
--  Each board must specify a top-level board compatible string with the following
--  format:
--
--  	compatible = "qcom,<SoC>[-<soc_version>][-<foundry_id>]-<board>[/<subtype>][-<board_version>]"
--
--  The 'SoC' and 'board' elements are required. All other elements are optional.
-+  For devices using the Qualcomm SoC the "compatible" properties consists of
-+  one or several "manufacturer,model" strings, describing the device itself,
-+  followed by one or several "qcom,<SoC>" strings, describing the SoC used in
-+  the device.
+-static u32 dsi_get_bpp(const enum mipi_dsi_pixel_format fmt)
+-{
+-	switch (fmt) {
+-	case MIPI_DSI_FMT_RGB565:		return 16;
+-	case MIPI_DSI_FMT_RGB666_PACKED:	return 18;
+-	case MIPI_DSI_FMT_RGB666:
+-	case MIPI_DSI_FMT_RGB888:
+-	default:				return 24;
+-	}
+-}
  
-   The 'SoC' element must be one of the following strings:
+ static inline u32 dsi_read(struct msm_dsi_host *msm_host, u32 reg)
+ {
+@@ -567,7 +557,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
+ {
+ 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+ 	u8 lanes = msm_host->lanes;
+-	u32 bpp = dsi_get_bpp(msm_host->format);
++	u32 bpp = mipi_dsi_pixel_format_to_bpp(msm_host->format);
+ 	unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, is_bonded_dsi);
+ 	unsigned long pclk_bpp;
  
-@@ -90,43 +83,9 @@ description: |
-         sm8650
-         x1e80100
+@@ -610,7 +600,7 @@ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
  
--  The 'board' element must be one of the following strings:
--
--        adp
--        cdp
--        dragonboard
--        idp
--        liquid
--        mtp
--        qcp
--        qrd
--        rb2
--        ride
--        sbc
--        x100
--
--  The 'soc_version' and 'board_version' elements take the form of v<Major>.<Minor>
--  where the minor number may be omitted when it's zero, i.e.  v1.0 is the same
--  as v1. If all versions of the 'board_version' elements match, then a
--  wildcard '*' should be used, e.g. 'v*'.
--
--  The 'foundry_id' and 'subtype' elements are one or more digits from 0 to 9.
--
--  Examples:
--
--  	"qcom,msm8916-v1-cdp-pm8916-v2.1"
--
--  A CDP board with an msm8916 SoC, version 1 paired with a pm8916 PMIC of version
--  2.1.
--
--  	"qcom,apq8074-v2.0-2-dragonboard/1-v0.1"
--
--  A dragonboard board v0.1 of subtype 1 with an apq8074 SoC version 2, made in
--  foundry 2.
--
-   There are many devices in the list below that run the standard ChromeOS
-   bootloader setup and use the open source depthcharge bootloader to boot the
--  OS. These devices do not use the scheme described above. For details, see:
-+  OS. These devices use the bootflow explained at
-   https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
+ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ {
+-	u32 bpp = dsi_get_bpp(msm_host->format);
++	u32 bpp = mipi_dsi_pixel_format_to_bpp(msm_host->format);
+ 	unsigned int esc_mhz, esc_div;
+ 	unsigned long byte_mhz;
  
- properties:
+@@ -993,7 +983,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ 		/* image data and 1 byte write_memory_start cmd */
+ 		if (!msm_host->dsc)
+-			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
++			wc = hdisplay * mipi_dsi_pixel_format_to_bpp(msm_host->format) / 8 + 1;
+ 		else
+ 			/*
+ 			 * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
+@@ -1413,7 +1403,7 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+ {
+ 	int len, ret;
+ 	int bllp_len = msm_host->mode->hdisplay *
+-			dsi_get_bpp(msm_host->format) / 8;
++			mipi_dsi_pixel_format_to_bpp(msm_host->format) / 8;
+ 
+ 	len = dsi_cmd_dma_add(msm_host, msg);
+ 	if (len < 0) {
 
 ---
-base-commit: 076d56d74f17e625b3d63cf4743b3d7d02180379
-change-id: 20240204-qcom-drop-compat-6c21c9e1f907
+base-commit: 01af33cc9894b4489fb68fa35c40e9fe85df63dc
+change-id: 20231019-drm-msm-dsi-remove-open-coded-get-bpp-e7864b0b11dd
 
 Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Marijn Suijten <marijn.suijten@somainline.org>
 
 
