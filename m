@@ -1,107 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-9757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EE1A848FCC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 18:45:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0658C848FED
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 19:32:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 086C91C21961
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 17:45:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0C6B2826A4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 18:32:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D14B0249E4;
-	Sun,  4 Feb 2024 17:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E04B24B21;
+	Sun,  4 Feb 2024 18:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="NEtxkGF0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6480A2421C
-	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Feb 2024 17:45:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83352249EE;
+	Sun,  4 Feb 2024 18:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707068732; cv=none; b=gAKkuh8V2OwBALi5vdSsGdnHub2/jJC1/fji5jdgQYClKQCftxpMmGBmaUH1BO5oPs2KcIFH6fhyeoOEbXzyXOK21NyrQZUsyXr1iiHfp9rJBL21rF3FQRU6G/k/1IYa6MrAhrTg3XrsiomrfmIS7pd2+aXrychgl5uiRhWsi20=
+	t=1707071563; cv=none; b=ZuPt7597U8ny3KZPHT+jdJWKuJXPr39yW101VI5T2Pcc5antz/IZ5YaUvmq9lNT+8Di3kY8sVrivEe/kQyGdBpXnawfU5Myt41nX339nVlJASgL+rPQA0ha7cJpAtUBexLX4ZxQWwqfGKl/wwr0TOmmb3apnKEvRzmXWNovsOEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707068732; c=relaxed/simple;
-	bh=eJbZT3mdrNA2RzxGIe/uKdeOxu+kH6M/tWk7d/atqWM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WAzFAGVCi+c1O83Uaw8Xm3d3UCw3pmCmdNGxd37rKeELidQcCv2cx2HDMM2YxQ+0ghNA1qH2AM/o4noBjyw+LD1lQOPOtFuHowb3QqsgC5OKUI/Mp5ZoKrSCEgLxUlkkfuVUBf2XOHIC7aZ74lKvzVtwu+RzKmZAuu+MpaR1C1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from Marijn-Arch-Book.localdomain (2a02-a420-67-c93f-164f-8aff-fee4-5930.mobile6.kpn.net [IPv6:2a02:a420:67:c93f:164f:8aff:fee4:5930])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7360D3F092;
-	Sun,  4 Feb 2024 18:45:28 +0100 (CET)
-From: Marijn Suijten <marijn.suijten@somainline.org>
-Date: Sun, 04 Feb 2024 18:45:27 +0100
-Subject: [PATCH] drm/msm/dpu: Only enable DSC_MODE_MULTIPLEX if dsc_merge
- is enabled
+	s=arc-20240116; t=1707071563; c=relaxed/simple;
+	bh=0+rTMhidwrziDNcAPA5ZtRDC2hGitSVJlE07G60n9N8=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qShD9XtWUVITc3Il4N4SCr4bbsKq/dV3vHZoR+rVTtkKBgJDoFXEQd3a7/Z/AbHpc1v5N3NaCm+UhYJmyt4YmxlmWMBZpOE7cCUhuM2zYuXoJnbnHryAxyptC4C1Zyrp5w/RHgZEVz1NLfhlH2+2qBlyBrXjbuc9Sg/ew2hGP+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=NEtxkGF0; arc=none smtp.client-ip=198.47.19.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+	by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 414IW9Ft020319;
+	Sun, 4 Feb 2024 12:32:09 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1707071529;
+	bh=s2TWXxbk1O39WIKgnGYQbW++dB7WqbpabTQYcEP9Epg=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date;
+	b=NEtxkGF0LK9XaN9HqFJjU9aFr3taztUE4uxi+uN7w/z6xRWBwV/f5C1nBHVQUOsNW
+	 l2APL7p+wukyZK+oneR50K5qf3nPn8zPfiJ1y1sbJjJZiOI4epbkRk6XcpzUsAxHoS
+	 dquzwtolCOfUc11IG0xiylFmsBeN9TaCsknOPWVc=
+Received: from DFLE102.ent.ti.com (dfle102.ent.ti.com [10.64.6.23])
+	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 414IW9NI020112
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Sun, 4 Feb 2024 12:32:09 -0600
+Received: from DFLE111.ent.ti.com (10.64.6.32) by DFLE102.ent.ti.com
+ (10.64.6.23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Sun, 4
+ Feb 2024 12:32:09 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE111.ent.ti.com
+ (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Sun, 4 Feb 2024 12:32:09 -0600
+Received: from localhost (kamlesh.dhcp.ti.com [172.24.227.123])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 414IW86i038451;
+	Sun, 4 Feb 2024 12:32:08 -0600
+From: Kamlesh Gurudasani <kamlesh@ti.com>
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <andersson@kernel.org>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <robh+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_omprsing@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <bartosz.golaszewski@linaro.org>,
+        <konrad.dybcio@linaro.org>, <ulf.hansson@linaro.org>,
+        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>, <mani@kernel.org>,
+        <davem@davemloft.net>, <herbert@gondor.apana.org.au>,
+        Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Subject: Re: [EXTERNAL] [PATCH v4 04/15] soc: qcom: ice: add hwkm support in
+ ice
+In-Reply-To: <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
+References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
+ <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
+Date: Mon, 5 Feb 2024 00:02:07 +0530
+Message-ID: <87jznkytaw.fsf@kamlesh.i-did-not-set--mail-host-address--so-tickle-me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240204-dpu-dsc-multiplex-v1-1-080963233c52@somainline.org>
-X-B4-Tracking: v=1; b=H4sIADbNv2UC/x3MQQqAIBBA0avErBswE6KuEi1KxxowE80IorsnL
- d/i/wcSRaYEQ/VApIsTH76gqSvQ2+xXQjbFIIVUQgqFJmQ0SeOe3cnB0Y2q141auta2JKB0IZL
- l+3+O0/t+A1HiRmMAAAA=
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-X-Mailer: b4 0.12.4
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-When the topology calls for two interfaces on the current fixed topology
-of 2 DSC blocks, or uses 1 DSC block for a single interface (e.g. SC7280
-with only one DSC block), there should be no merging of DSC output.
+Gaurav Kashyap <quic_gaurkash@quicinc.com> writes:
 
-This is already represented by the return value of
-dpu_encoder_use_dsc_merge(), but not yet used to correctly configure
-this flag.
+...
 
-Fixes: 58dca9810749 ("drm/msm/disp/dpu1: Add support for DSC in encoder")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
-Note that more changes are needed to properly support the proposed 2:2:2
-and 1:1:1 topology (in contrast to the already-supported 2:2:1 topology),
-but this could be a trivial patch to get going separately before all that
-extra work is done.
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> +	/*
+> +	 * When ICE is in standard (hwkm) mode, it supports HW wrapped
+> +	 * keys, and when it is in legacy mode, it only supports standard
+> +	 * (non HW wrapped) keys.
+> +	 *
+> +	 * Put ICE in standard mode, ICE defaults to legacy mode.
+> +	 * Legacy mode - ICE HWKM slave not supported.
+> +	 * Standard mode - ICE HWKM slave supported.
+> +	 *
+> +	 * Depending on the version of HWKM, it is controlled by different
+> +	 * registers in ICE.
+> +	 */
+> +	if (ice->hwkm_version >= 2) {
+> +		val = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
+> +		val = val & 0xFFFFFFFE;
+From the code I understand that the last bit is used for setting the
+mode.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 83380bc92a00..6d3ed4d870d7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1857,7 +1857,9 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
- 	dsc_common_mode = 0;
- 	pic_width = dsc->pic_width;
- 
--	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
-+	dsc_common_mode = DSC_MODE_SPLIT_PANEL;
-+	if (dpu_encoder_use_dsc_merge(enc_master->parent))
-+		dsc_common_mode |= DSC_MODE_MULTIPLEX;
- 	if (enc_master->intf_mode == INTF_MODE_VIDEO)
- 		dsc_common_mode |= DSC_MODE_VIDEO;
- 
+Was wondering if it would make more sense to use ~BIT(0) or GENMASK
+to generate this value and #define this value to express the work it
+does.
 
----
-base-commit: 01af33cc9894b4489fb68fa35c40e9fe85df63dc
-change-id: 20240204-dpu-dsc-multiplex-49c14b73f3e0
+In this case, something like #define xx_SET_MODE_MASK (~BIT(0)) or use GENMASK
 
-Best regards,
--- 
-Marijn Suijten <marijn.suijten@somainline.org>
+This would make it easier for a person who is taking a look at the code
+for first time. This is just my perspective.
 
+If you do agree, you can change them at multiple places accross this
+patch, wherever magic numbers are used for val and masking the value.
+
+Regards,
+Kamlesh
+
+> +		qcom_ice_writel(ice, val, QCOM_ICE_REG_CONTROL);
+> +	} else {
+> +		qcom_ice_writel(ice, 0x7, HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
+> +	}
+> +}
+> +
+> +static void qcom_ice_hwkm_init(struct qcom_ice *ice)
+> +{
+> +	/* Disable CRC checks. This HWKM feature is not used. */
+> +	qcom_ice_writel(ice, 0x6,
+> +			HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
+> +
+> +	/*
+> +	 * Give register bank of the HWKM slave access to read and modify
+> +	 * the keyslots in ICE HWKM slave. Without this, trustzone will not
+> +	 * be able to program keys into ICE.
+> +	 */
+> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_0));
+> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_1));
+> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_2));
+> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_3));
+> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_4));
+> +
+> +	/* Clear HWKM response FIFO before doing anything */
+> +	qcom_ice_writel(ice, 0x8, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS));
+> +	ice->hwkm_init_complete = true;
+> +}
+
+...
 
