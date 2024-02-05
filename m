@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-9813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76A9F849DB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 16:11:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 961EF849DBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 16:12:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B33E1C22CC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 15:11:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E4611F20EC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 15:12:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 821E02D045;
-	Mon,  5 Feb 2024 15:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF21C2C6AC;
+	Mon,  5 Feb 2024 15:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kwrnDPvR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iFOKGX/A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF022CCD6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 15:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413992C691
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 15:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707145861; cv=none; b=T2t2udGAUtCEBner4veB0O1/AgxE7zNJP+u2B0r3rOygFU1wmtEqIXluKcH/legcta1cZlgu+5TCHG+aBwVuNhZ96JcQc3cVSkcJVg5211nnVOSmRshxNbdCMT5rygYtbwmOvPf2uuydPqIXQrUAx4mTMVFrsXERfgJWIW1S8V8=
+	t=1707145934; cv=none; b=bzoiJUUXpZ3laKX64OXs3fwBs7GSKh0Xq41X2rwdgCZ0iWRRxzKrmcwDuNgAYqLa82sNuR5QNAOkUxuM828GekV9mSBOQGt+vmYMAmfsJVeeLs+u6uW0N26hW9tgSaacSZJhfrK4/Ds8t9HiH0ifKAFbo7s50yZC/S/qHMQYsbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707145861; c=relaxed/simple;
-	bh=ppafPnnOXTKF4WNgG23A3R+Hsm2QX9c+PaNn5OWONhY=;
+	s=arc-20240116; t=1707145934; c=relaxed/simple;
+	bh=8KHJiJdvkaYJEmL8dJDvp2dK3TgjbQJhM/nTucwFCSM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sf8H0Rp5rwN4qJGgozlU1pxxNj4+L4Z4rXAvtJBqmN6uLykPzRc42+eKkcR99KAGe2NYpwQ6yOib+qTkiZw9xtezqu9w2SLac6LoMOddOCiAO/C2cDs/0R+V/c6brqi6wRoE4tYcZuHtoSZRAvLwyQrJoW2uSsqqaOf4cFYDgyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kwrnDPvR; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=o2OYnRxQAXHUZXY7zDtvV7csrlb0MqBE8/FaJRMTNJWPFL4VFfvcDOECBh3x6sv4c7j4ob3ajCXwLUyY4Sg5JO+OFv396+zcK1APQ4GaCahGaHCA4+wxn8Lsvop3tCCxAXyzs6/rSo+kXDaEsRWHfObmntUMq4pNMBFuCQ0MkB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iFOKGX/A; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40fc549ab9bso28635305e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 07:10:59 -0800 (PST)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40fb3b5893eso37222035e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 07:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707145858; x=1707750658; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707145931; x=1707750731; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ppafPnnOXTKF4WNgG23A3R+Hsm2QX9c+PaNn5OWONhY=;
-        b=kwrnDPvRLl4xf3uwUTL9AWYhawUlTBz2IV/vuEWvsEt27ftSmVnLExAEG7JhcIBBqE
-         hGG759R/lQmdsjyp+nW16ODb1H2Lf0l3HCQKsq4PI6VEHIMnuuOoNbTXaZ/hOIDwpKMV
-         6stZwvNvdpdM7CS2Xnmkz7RZYqdj6cy8djyz0GOvtfvro+KFjTCCP8dgaNsBBMt8Wxz7
-         3MkJs0nir+EQQ6XZQWaXzZBCxgcMdyeuGg0BfKnIjWFUo4QESJJbu0k5O+/n6L4RQuNA
-         nB2jLWqIMdvbdzlkKBBO+Es486qVj9pd5uOCkVEntDKbUae45OY/lsOvKY5AiiD2C2Xi
-         Mesg==
+        bh=XukEwwNROST4MAhIsD9QHQj3cxSau4ptDbEDrBWVEZo=;
+        b=iFOKGX/AG2h6xMk5htrLWJhp76U8d8NJM+5owuswu+XY9JMlsDdS+wnxSpj9Q11YFe
+         EnjideBOOMsR6xd61LrqXpBH/4iTKHPBVj/pS4p7P9WrIT2QoHDNFE2eYefxxSdWNmZu
+         F1EJuBaKqT9ufKES0QnRKOC5JVvEBQHOPOvGYL4a9sZq2tI7xYBcE6vsoHC1awEXLqNN
+         8oASx9agqeL7dRq5FDcPeSi31rLtz1NDIsSej+7lQtV1QazmITNIqtfuUMVilCepf+aE
+         d7ac6DPIAcDAPB4ukVSJ2dXtZ1+156sPObp0EOSU9ohsOmH5sGiA2fkdkI5pdwl9jCAm
+         TmMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707145858; x=1707750658;
+        d=1e100.net; s=20230601; t=1707145931; x=1707750731;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ppafPnnOXTKF4WNgG23A3R+Hsm2QX9c+PaNn5OWONhY=;
-        b=LWKP0DnwoqToEvdtxX4puHhLtVZ4K8Fva4kLY3uT0BAb2agMgs/NTQT3nCn283+AZK
-         4DK9qWGG7QfXOY2vhHGmnEHePTDZ3kwbw2NUJNCbCKLeExm4Lfzf281KoUbjVPmV5keo
-         XqMYoha3YLgbPosyoFLooHxk+y4I2xS8ftpQ9E2ReOmfpSuADrFpl2LudZLz69DjGJs9
-         qWRVixE+DC3CmfVcZcYPbABS/5nvrG8l8cx/16LKpN5e7eMOE6ka8IMmsAK9WlzvwLoF
-         9/zQuwyHU+yx6NrPHWNVFpdKrZp6mgKXmm1QGlQkp0muKXV7ud+kwmMoj1Zlt9v/ghgd
-         gopQ==
-X-Gm-Message-State: AOJu0Yzy+d1cRpIm6bpEVehwb08zfTBhoNTvNVBA6njE3b118YJBVMLf
-	BeYFDR6UQhB7XCiDwYmel8dPo8gja81CU+qwmCBFMm0tULAa9Zo09J1wm7St+ow=
-X-Google-Smtp-Source: AGHT+IFR+ntRNEzktx1JW9F/V8n1MZ93h5DpWrLgZe6VWC8JG8Vu7Bm8IYjFO4WiB8PFfnjYGSicoA==
-X-Received: by 2002:a05:600c:4ed1:b0:40f:c36f:3ce5 with SMTP id g17-20020a05600c4ed100b0040fc36f3ce5mr60479wmq.16.1707145858025;
-        Mon, 05 Feb 2024 07:10:58 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUL1DUFYJBq4oal4xFzD19ftjN794L0XENkmCFonim5378wWJaciEdig2mVQh4Ef9ondBL6uy2zu3zMc8dfGbyaMhPvtK3ppR/k5Xs6yEYVOp6NIm4auCu+m3uOUOwxI5qghzXIs0uL1unF5iJ63fzbMacrc/FBpejZMnR/iWqaFFvGgaXoc+Hhstw8kEpuT4yhFRZAEGgjgkxZiQrdwsNNQAqEQ9MkpVzGErrV9I4fLGnZGHNnI1soTWWJGrmuRAPWKAf0bw5QJO5ne0Dutxv+qNoJvzfsDLvh42zt+Q/KvNjs3yS+RfJb214/Jp1/tIb+A/RrSmNE+CehNIPpWlZa550JBQoQgpf7LLGv2oRtlaJJkNVO5LiVnsM4KP8AxuI0VLNnLtow
+        bh=XukEwwNROST4MAhIsD9QHQj3cxSau4ptDbEDrBWVEZo=;
+        b=sNnr278moYldoc1UL50gV0j06vSTlw5HBFfre0rF2TqQlQznhdQc7oaTGtD8ZgCU5d
+         v0MYsw2ICQnOkLdltIRHb2qEgtZcspHnrJED0MBE1oOsd8twSrl+VV30rpQhXdbx69TC
+         PPMcc1AHIZnqWshOjesC5VMyiIz8eE74m1wzz2qLnLgxtS8gEnT0cbocnkwvDEa+Nqu/
+         OBsy0ti0brTcu2+R+jmMSzjE18WuE7bS6Do9/OoQwmbeKfOfhRUNSp4yrQ2Me5RzfAZ4
+         GK5RucrpsG59xXqOljtqv1qrYGJ4rWgZNYq/o42po+4LcCEHGG4bxE0+IYBo0Q1XbpDH
+         XXxQ==
+X-Gm-Message-State: AOJu0YxFZ2b3fNWuLswzliG28AsF+p5k1PstXX0am5xI1fQz6/cC+t8D
+	lRqhOYA2fR94wNhWGtdXhm9bDQEaRpHhsfLrZmp0F084X2Q1eNgnRmuiA1aWpFiI8Hg8sqAAE1r
+	V
+X-Google-Smtp-Source: AGHT+IHHICDtw/8losgVG/NS3r+mfbnvGOyxdEXUtpPF9IWSh0adWS7114402LJLDqzLQ4SmAQMBJQ==
+X-Received: by 2002:a05:600c:5490:b0:40f:ba0b:16b3 with SMTP id iv16-20020a05600c549000b0040fba0b16b3mr70606wmb.2.1707145931619;
+        Mon, 05 Feb 2024 07:12:11 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXLV6ifnAjcXxTu16J3k3pzYbjQG7rjYgS8CXd3se8D21ocXYs7zcHex+U2Z/NO5wZMl5ZZMPSutu6FVoRVm5SKmUs4S/YZsQKr9yLKUv0IZEfpWmnBgC8PWIOqqCnttdfYenO/CAEBbPjQHLR8Cza8sm8VlcQlCfMDzyA+CoDiUtVXQRDdy1JMPuuZLc2sGHAVcHOSEmv3mRYTaCktRBPs6HIeP77myHcg+jK8DKP9MwpYi4SDnZKjh85e5D6OXHEspMSzNmcV0Agfj5uw7qz0dbBY3K3TGOP77dwOwrpugp4B4vrnM5HKz3wRCeCHDh1okNKvzkBLqDdQGMXN8MdQn/Ny3Diy6tk+uzWl1pYBi+D2QeYDILImdZe8dBTky/FY+TesHloQ
 Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id g7-20020a05600c4ec700b0040fb0193565sm8777767wmq.29.2024.02.05.07.10.56
+        by smtp.gmail.com with ESMTPSA id g7-20020a05600c4ec700b0040fb0193565sm8777767wmq.29.2024.02.05.07.12.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 07:10:57 -0800 (PST)
-Message-ID: <e473937e-2d8e-47e3-bffd-025b87769335@linaro.org>
-Date: Mon, 5 Feb 2024 16:10:55 +0100
+        Mon, 05 Feb 2024 07:12:11 -0800 (PST)
+Message-ID: <ecdf3c46-77ba-443f-9d64-caf4dc67fc3a@linaro.org>
+Date: Mon, 5 Feb 2024 16:12:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +77,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] dt-bindings: interconnect: add clock property to
- configure QoS on SC7280
+Subject: Re: [PATCH v2 2/4] interconnect: qcom: sc7280: enable QoS
+ configuration
 Content-Language: en-US
 To: Odelu Kukatla <quic_okukatla@quicinc.com>, djakov@kernel.org
 Cc: rafael@kernel.org, corbet@lwn.net, linux-pm@vger.kernel.org,
@@ -85,7 +86,7 @@ Cc: rafael@kernel.org, corbet@lwn.net, linux-pm@vger.kernel.org,
  quic_viveka@quicinc.com, peterz@infradead.org, quic_mdtipton@quicinc.com,
  linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
 References: <20240205145606.16936-1-quic_okukatla@quicinc.com>
- <20240205145606.16936-4-quic_okukatla@quicinc.com>
+ <20240205145606.16936-3-quic_okukatla@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -131,34 +132,44 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240205145606.16936-4-quic_okukatla@quicinc.com>
+In-Reply-To: <20240205145606.16936-3-quic_okukatla@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/02/2024 15:56, Odelu Kukatla wrote:
-> Added clock property to enable clocks required for accessing
-> qos registers.
+> Enable QoS configuration for the master ports with predefined values
+> for priority and urgency.
+> 
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+> ---
+>  drivers/interconnect/qcom/sc7280.c | 332 +++++++++++++++++++++++++++++
+>  1 file changed, 332 insertions(+)
+> 
+> diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+> index 7d33694368e8..438f927935e5 100644
+> --- a/drivers/interconnect/qcom/sc7280.c
+> +++ b/drivers/interconnect/qcom/sc7280.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   *
+>   */
+>  
+> @@ -16,29 +17,53 @@
+>  #include "icc-rpmh.h"
+>  #include "sc7280.h"
+>  
+> +static struct qcom_icc_qosbox qhm_qspi_qos = {
 
-I have no idea how you came up with that CC list. It makes no sense.
+Why this cannot be const?
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
+> +	.num_ports = 1,
+> +	.port_offsets = { 0x7000 },
+> +	.prio = 2,
+> +	.urg_fwd = 0,
 
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline), work on fork of kernel
-(don't, instead use mainline) or you ignore some maintainers (really
-don't). Just use b4 and everything should be fine, although remember
-about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time, thus I will skip this patch entirely till you follow
-the process allowing the patch to be tested.
-
-Please kindly resend and include all necessary To/Cc entries. Tomorrow.
 
 Best regards,
 Krzysztof
