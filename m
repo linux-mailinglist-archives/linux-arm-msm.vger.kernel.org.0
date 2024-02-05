@@ -1,150 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-9763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14AF28492C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 04:24:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD10984935B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 06:31:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0A3A283651
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 03:24:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3ED5E1F214EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 05:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDEC679E0;
-	Mon,  5 Feb 2024 03:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C7D2B671;
+	Mon,  5 Feb 2024 05:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QkMXeHFQ"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="dX5TZh9e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F3C9455;
-	Mon,  5 Feb 2024 03:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A806CB667
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 05:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707103483; cv=none; b=CUCMQ20AfhSSJr9mNC0Z8237r4boUGmHuYej+CaPFtJEVLCb4wR7H+x5HL8hq84vnRP8wiRCteQBPaHVOXqNiGAGxrUmn+9+YgFJhn2OfDVSmWElEQA747aiQ6pe88EDhFuxFtGN1B9IrDQkzesvWEgkV+qK5VAvE71w5d575FA=
+	t=1707111071; cv=none; b=F32MOOf/FBVa78CrBvdSZW6+3lDnZ1FcN8k69ywaHDqkqgWIDbhv3WsDhXoCNS8IPbTZzZf0N/DCuycWMjSo5LzBWG0CSBd8wLKiMg7O3w4U8Ak9s6n4nFpQ3IFb6EJnYEvAsH73mpjx2vOf4ZDwcZY4oBnYzZMVbsGBLNPzQyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707103483; c=relaxed/simple;
-	bh=5gfeHckEgn7wafvr84TEMXZGl6K5uSSF8aAeLCt6SNI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ps2WrKwLQnjPd+fHRtTWWJY8ShMeGFnO2ff3/kGLVhkMqvHebKA4W0leRC+VGKKjQmpopY58OU8Y6D2HbAfwsFdnvjsLOI/bGRBZoXclw8EHHfG8hjhNfzR8zKytWr1FaNsz6vWlJEBiDcxGwMC5eXSnBUF88oquuqB5/7YXjTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QkMXeHFQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4150duaJ002662;
-	Mon, 5 Feb 2024 03:24:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bzk4sJkqKPDVjXVVLKXE3zEm3Jpnwgu3XaFCAYr5a2A=; b=Qk
-	MXeHFQ9eeNytU/QNebhQJRBSxFqB1T/UyEBHPPVRY1nDOOQ+CO1XFfF5xfdhZIYc
-	2CL02A7ceaVZWEsp3R4ji59uez6LIYv+8v8DLXoV19mhSqqZ2c+FrQ5gzvw+pCf6
-	0iromW49yzmz+xPp97eCD2Sl2dQFRAGLH1QQiUImd3DE3MQBmMoU6NbnyfFh5h9R
-	B8oHOj6b95VyYK2nfHCuhgpon+W+6GKPTH8Zn5iNSGPg5/cJFAcEHnPlyBr44d+k
-	RxqfvjEe4nuMKnRAjc6XhHgVR8ynt4AhwbUrYtr9pZ68CQEkA+DMJ3J6lj1MTyH8
-	noFB5jDBK6Gae1oS3vuA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w1f232g30-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Feb 2024 03:24:24 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4153ONXp026005
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 03:24:23 GMT
-Received: from [10.253.38.98] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 4 Feb
- 2024 19:24:19 -0800
-Message-ID: <05253a6d-7fa5-4c32-af6f-cda0f902cf77@quicinc.com>
-Date: Mon, 5 Feb 2024 11:24:16 +0800
+	s=arc-20240116; t=1707111071; c=relaxed/simple;
+	bh=8dvg3kspNp0mB8pEf9n87ygvuTCSpQuz16yR20ablaU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qr+zi3UeySra2go6WxQsZWIMqjSG+JpGuKVCv4f3mAZvwz2+bcw1iFU8sh6iSPFXrgjOU+mMumO1Mspt8a640cTXowbEj6cvyoOHkdbD5sW3mkEJVsX8gqo8vnw8oNUBKkCBhXtAJ8+8VfYpFy2B/rwAhmhPkD7/Y9JXlawl8wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=dX5TZh9e; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5605c7b0ca2so682461a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Feb 2024 21:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1707111067; x=1707715867; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qvTivQr7yMNzLTdZH8/6zPuEHJDF3llGK5yB7TgmFXs=;
+        b=dX5TZh9endnz5X4Vmi42rhPjNpgNQNzqE5DyPw38VqQcfOlDNH7yDa88Ik0045XZez
+         oKXcN0Mtu3fZpFTrs70VF1v3nltiXyVlfviygMzU1dQTkkB44E0e6MRQ+aBlR0Al8yCq
+         0ye11L4LZhR2a8kCZloLcutMJCNO7Jq9qVK+sf2tvkXcWeQaUMfMYnM/W8PNUgIM7v52
+         aPj8CXCLk5B4TBkpqCfZGO26BT2MLYhgTv9lwA9M5OQMT+KJTfzq0waWTMGnheamysiD
+         uvyGip6M4bjbpdjIddlF3xBzP3ut/31AoyfAnyhwm/7Zr3UuOvQse9xnC2l3tZvoXa1D
+         BvwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707111067; x=1707715867;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qvTivQr7yMNzLTdZH8/6zPuEHJDF3llGK5yB7TgmFXs=;
+        b=nql5Pr6JMz5on74s6QxzYseap5FlnwmswvYbf+c8u33IvWUFLXjrvcNgnj3NIfXx09
+         O76xuttM7OQ0FvxHIT1dd0YA1p+eYzvj7ny22/jnh2qzbWwFomc7IAFO0XjOh7o0EKSk
+         YQIMofXKQ6O3uSre8tY63z+WyU7t9f/3Gcp8wTmp0BGxl5JNK8Gb9EDlanNfMeUMFud8
+         o3nVVYabJFSye4g0latChwVxNQgCYNDAR0HAFOQ6DY08auTE3CdhC7mxHZxSPB7eRw3Q
+         h9nRHESJtEmQC/vuWF0vWDmZOeVJCB9vqQYJIkla3yXfWa+jCmsUMVJPSk2ydLTj9X2T
+         l9/Q==
+X-Gm-Message-State: AOJu0YwAI2C4K9rNvuWLD5WGRPgbXHFu81GXghpWy4T9mxj6m481HzBe
+	CzDS/faXhYfVoIcO62BUXdORK9ygZNkDuplvNvRbLgTYV3igPuMjwSOFrCbXAZXsPBdm4PLc6QC
+	rz9AMjz0aRpROnnfobLXMoBJysfyfmDDmjbk9wg==
+X-Google-Smtp-Source: AGHT+IHpSsbuM22ODC/FineIS1A+7QNo1EsBE6usAyuXcNL6M4/S2bquVhwbhRHk6Q4R/EBSTCYYCxIqBhlLa1zRUAE=
+X-Received: by 2002:a05:6402:30b7:b0:560:5ace:2476 with SMTP id
+ df23-20020a05640230b700b005605ace2476mr1496897edb.35.1707111066439; Sun, 04
+ Feb 2024 21:31:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [net-next PATCH v2 2/3] net: mdio: ipq4019: add support for
- clock-frequency property
-Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Christian Marangi <ansuelsmth@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Robert Marko <robert.marko@sartura.hr>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240130003546.1546-1-ansuelsmth@gmail.com>
- <20240130003546.1546-3-ansuelsmth@gmail.com>
- <7d86388d-15f5-4e72-b99f-aee3b47a5232@quicinc.com>
- <4cd01d93-7b6d-4766-8337-c4dc09aeedc2@lunn.ch>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <4cd01d93-7b6d-4766-8337-c4dc09aeedc2@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4eiG2ulv9_zSk7S7PwD1Oa1jz-ca5GBS
-X-Proofpoint-GUID: 4eiG2ulv9_zSk7S7PwD1Oa1jz-ca5GBS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-04_14,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- suspectscore=0 malwarescore=0 clxscore=1011 spamscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402050025
+References: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
+ <c34dd7ca-01b5-4424-a8ec-a525b8d722a3@linaro.org> <5497d428-cdc1-4057-afda-6861d2e3860a@linaro.org>
+ <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
+In-Reply-To: <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Sun, 4 Feb 2024 23:30:54 -0600
+Message-ID: <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue
+ microphone route
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Jan 29, 2024 at 8:27=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 26/01/2024 14:22, Krzysztof Kozlowski wrote:
+> > On 26/01/2024 14:21, Srinivas Kandagatla wrote:
+> >> Thanks Krzystof,
+> >>
+> >> On 25/01/2024 15:45, Krzysztof Kozlowski wrote:
+> >>> Starting with Qualcomm SM8350 SoC, so Low Power Audio SubSystem (LPAS=
+S)
+> >>> block version v9.2, the register responsible for TX SMIC MUXn muxes i=
+s
+> >>> different.  The LPASS TX macro codec driver is being fixed to handle
+> >>> that difference, so the DTS must be updated as well for new widget na=
+me.
+> >>>
+> >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>
+> >>> ---
+> >>>
+> >> Unfortunately this is breaking mic on X13s.
+> >
+> > This alone? Of course, there is dependency... Or you meant something el=
+se?
+>
+> There was no further comments on my proposal to skip touching sc8280xp:
+> https://lore.kernel.org/alsa-devel/20240125153110.410295-1-krzysztof.kozl=
+owski@linaro.org/T/#mc45e487f25a2d6388b5c478b1b7827b113640f4f
+>
+> so I will go with that approach. Please ignore this DTS patch. I will
+> send ASoC changes which won't affect sc8280xp.
+>
+> Best regards,
+> Krzysztof
+>
+>
+I somehow missed that patchset or conversation; As an owner of an
+X13s, which is sc8280xp, I can say, neither pre-dts patch, nor post,
+seem to do much good.  When I attempt to do a voice chat in armcord,
+the responses I get to how I sound when using the mic on the X13s
+itself range from "You sound like hot trash" to "You sound like a
+robot with hiccups".
 
-
-On 2/4/2024 11:22 PM, Andrew Lunn wrote:
-> On Sun, Feb 04, 2024 at 05:59:10PM +0800, Jie Luo wrote:
->>
->>
->> On 1/30/2024 8:35 AM, Christian Marangi wrote:
->>> +
->>> +	/* If div is /256 assume nobody have set this value and
->>> +	 * try to find one MDC rate that is close the 802.3 spec of
->>> +	 * 2.5MHz
->>> +	 */
->>> +	for (div = 256; div >= 8; div /= 2) {
->>> +		/* Stop as soon as we found a divider that
->>> +		 * reached the closest value to 2.5MHz
->>> +		 */
->>> +		if (DIV_ROUND_UP(ahb_rate, div) > 2500000)
->>> +			break;
->>
->> Hi Christian,
->> Sorry for the delayed review.
->>
->> The MDIO hardware block supports higher frequency 6.25M and 12.5M,
->> Would you remove this 2.5MHZ limitation? On the IPQ platform, we
->> normally use 6.25MHZ.
-> 
-> 802.3 says the clock has a maximum of 2.5MHz. So this code is correct.
-> 
-> It is however O.K. to go faster, but since that breaks the standard,
-> you need each board to indicate it knows all the devices on the bus do
-> support higher speeds and its O.K. to break the standard. You indicate
-> this by using the DT property in its .dts file. For an MDIO bus which
-> is totally internal, you could however put the DT property in the SoC
-> .dtsi file.
-> 
->        Andrew
-
-Understand it, Thanks Andrew.
+-- steev
 
