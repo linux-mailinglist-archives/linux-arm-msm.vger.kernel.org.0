@@ -1,152 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-9772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80136849507
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 09:04:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 890D4849518
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 09:09:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E688F1F21A77
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 08:04:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC7111C21B41
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 08:09:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C601173D;
-	Mon,  5 Feb 2024 08:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BA911198;
+	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ajHR7gKq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GTiLfbGJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93C511190
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 08:04:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3DA11185;
+	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707120257; cv=none; b=NSlUzPCC63Jl6ursQWZSCHbe8KaNDlEfN6hsiIae/D97ayey7lt9mtW/n5oRmjIuXbULBXW3CfgWbqWrMBwtaymtjZU2pp3+jEZ5015UWylU7ZEnvaEpr+kcCDnsA+8hxIwrzPRee1/iV/uVkqHxC6hIuFhhTb+/AgLQJAHIzaY=
+	t=1707120590; cv=none; b=r9FAy7cf6a1hltxMuCtYDzDeorDu6IS6aLpVWYygdqMTaBMIO3I+dEpCA4dnq9E29vyhvXkLvYuZlCeJuUEu+NOURD2X2rvfWw54sN7CZ8HSN0jahqFSbMcz3neojoO6jSFbewvesYwyXxl22GCq5L+LUGmeckuWjBxseD9Osko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707120257; c=relaxed/simple;
-	bh=TrE/p3ttE3stmZdiihuuez4I8ZtTs4vsKSjS4QC8bbA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RSa2GuPD5E33jQ9qVX3CPs6Xb30eujAlXy5v2HyStHqbQ9dQFIgalcQnkFyp3C9SYxR/uXadNFuYvYoH/f73El8FtTmZbO8fdW6dy1b2K7tRstmHCF1+MY+uzC2PxjpG9wPOGHpwJfDBks/l8pD3JU/LSJZfxdgVdROxsrdm/Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ajHR7gKq; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a30e445602cso1067368066b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 00:04:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707120254; x=1707725054; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ly53AiJS3SoOsXrI7rwMSWndr6ZfowNIwWczf0zRPgE=;
-        b=ajHR7gKqw7Cuv9SrcI9H8/UsB6/Q4xcDabTUkBAxFG19RJAzsFQACJ8varAJKAIToy
-         QP1V6ROBeXLqz2BWeIVc7yiXIauMIk31Tc5tT6VomJil44ZsaxZNtOsButyN+qNAbIiw
-         43gFHNuus28ZFamTN6xc9k6ZIOpz0jforAmXed7YbWgNgFMA517WoJuHms+NTXQJIewQ
-         rmfe7DV6vGILd1CWsA8zfVG5B4kIjsZMX8MvmYsuloMgeR0iHHWWLCv/uJbQfgXiRIOC
-         m/d3Z4+3zLFnOocvx188btnvwlkSfqW7V+ZJE29yRnInyGFLE1JijaIAYiwe4cmcrGnM
-         KUsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707120254; x=1707725054;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ly53AiJS3SoOsXrI7rwMSWndr6ZfowNIwWczf0zRPgE=;
-        b=iArvmku2ekwnQZ5vVDp5xxx8N8yd2Xu5rUwXrA/wYLJCPtZPOwC9MVzNXtBPao7Lr/
-         IFjNiEEAolKbuKNJ6Wfc3XAy+Gu8nc5tdk4QnmO19jbMxGGM/hgEi3nNmgsfrD3GvTM8
-         JKBUGUJCpnDF27r5JxGzTQ3N0FBk/R2WTepb3vcjNvFVzScDYl3LK8cCDPQvIMrN36Km
-         U62S64IJeyDE68riDM/zw7Bgl9rAYSPpUiORkQwzdMIA2uSIMMUCud7EEwSz75WoqXHl
-         wFvzOBq4NK3exFZKO/MU7ZtJapiYW7EBW2lBPWa4CaD8zG3gjtMzQpxqxuio0E2yL747
-         Dlsg==
-X-Gm-Message-State: AOJu0YzugeBZQDWajsAjGDGzYSCG5Vo/cvkXMJ29soYX/N1GvAhJ0aWm
-	L8TZdQCHn8SD1EflVB6w+7Mqmr9XnFIYiQxbIGLfAwTLkVmubijRcOR9SWGBeMY=
-X-Google-Smtp-Source: AGHT+IFSigaVXMIkg070FfzpRmT4ZkCo0EOQNsSqGCQz0cCkYGX3PBTgbtEWdEXoN3W/UXXniPCYoA==
-X-Received: by 2002:a17:906:d294:b0:a31:818c:ffe0 with SMTP id ay20-20020a170906d29400b00a31818cffe0mr5072466ejb.19.1707120254210;
-        Mon, 05 Feb 2024 00:04:14 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCW/uUJodGhb9aEg7ZFXJMNzZn2x8furlJgVBImMlXUIqNGaA46B1mD23WUP4c+bIEHKdeHXcybt6izRMILO/QNHXMV5oYxgAEkUp409PRVNmr45D40PpwOHV2NueuWwvSSrWx+6i2Fv4hfn8QOnskaRIqVn18Rr8rKlISQjuZiT5jsgu5Kj5DBeDJ61iUv5u7nsGzpdFFqVRyUeH2+egNrh9/imqtrnU7cxRyBL3FuDLk/6gRmymNmZ1hiEwo6zKr01UmNdorZz7r5RZ6UAmgUdSLPP3wZaHkcftRCiO2l/BFPy55qHrUOhhnGcm8alWWSJl/bDNi0bV+W8VIF7ZltOviqfiKl3j5BpIcPWaHzSgpeVnEiF
-Received: from [192.168.1.20] ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id kq8-20020a170906abc800b00a30cd599285sm4004822ejb.223.2024.02.05.00.04.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 00:04:13 -0800 (PST)
-Message-ID: <04fa81b1-e47e-4cf9-8e59-3a1777a13879@linaro.org>
-Date: Mon, 5 Feb 2024 09:04:12 +0100
+	s=arc-20240116; t=1707120590; c=relaxed/simple;
+	bh=tjnc9TCmrK1oUMDhylwqt1frva0l2latksdf20OLonI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JwnpcobIKXrytyhdeyBeSksnNpeTsm6fgiCWmGnzLw2mYJJPCg1RqBQsB/AurewtIQ7Pp5ZC3dy6CuT6D92ZiFeg4AWm/CEXQJlJ9VgjrOTkiXmhVicLzBjJWu+wQZ4HgtjCSflzZysMy5p2R1dk6BBYEqy+MokYhULDRZaDWgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GTiLfbGJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ECAC433C7;
+	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707120590;
+	bh=tjnc9TCmrK1oUMDhylwqt1frva0l2latksdf20OLonI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GTiLfbGJRMd1+e0OKid4AWN6lQY8CEaTyYUIznZQoQ/HwaI7A7XJEM/UCkwSljBGe
+	 GJZPHPVCVSep1ftzfS43KB32fr3Y8bhTqOS/GZbBEtOKsj6oP1QZLr6duyWXbfu+m+
+	 6L7TZ8rLMU7gkilZZPK87QTu2YNqMJ1t0g9Su5bDfXYpPdux2warMTCkKQyMFwdMpQ
+	 iVc+FV69wwiCLUbpXfl3RacrD44tFfD4/SSelZ944Iy0yaiL63wEooW5R7F1AarK28
+	 X4fZoZbpek3tZWnrJIlfFdS5A6fcrSmRbAVzVZ1pOghwRPrx7TfyVDG1pK4gz/W3tj
+	 CC3IJSIMrlEKA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rWu38-000000000W5-0y2L;
+	Mon, 05 Feb 2024 09:09:54 +0100
+Date: Mon, 5 Feb 2024 09:09:54 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Steev Klimaszewski <steev@kali.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue
+ microphone route
+Message-ID: <ZcCX0hDGrWqRXr9R@hovoldconsulting.com>
+References: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
+ <c34dd7ca-01b5-4424-a8ec-a525b8d722a3@linaro.org>
+ <5497d428-cdc1-4057-afda-6861d2e3860a@linaro.org>
+ <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
+ <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] soc: qcom: socinfo: add SoC Info support for
- QCM8550 and QCS8550 platform
-Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
- <20240119100621.11788-4-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240119100621.11788-4-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
 
-On 19/01/2024 11:06, Tengfei Fan wrote:
-> Add SoC Info support for QCM8550 and QCS8550 platform.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+On Sun, Feb 04, 2024 at 11:30:54PM -0600, Steev Klimaszewski wrote:
+> On Mon, Jan 29, 2024 at 8:27 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
 
-NAK.
+> > so I will go with that approach. Please ignore this DTS patch. I will
+> > send ASoC changes which won't affect sc8280xp.
 
-Drop my tag.
+> I somehow missed that patchset or conversation; As an owner of an
+> X13s, which is sc8280xp, I can say, neither pre-dts patch, nor post,
+> seem to do much good.  When I attempt to do a voice chat in armcord,
+> the responses I get to how I sound when using the mic on the X13s
+> itself range from "You sound like hot trash" to "You sound like a
+> robot with hiccups".
 
-Best regards,
-Krzysztof
+That's a separate issue entirely. Both the digital and analog microphone
+(jack) is working on the X13s as long as you use pulseaudio.
 
+As I've mentioned before, there are problems with both playback and
+capture when you use pipewire however ("robot with hiccups" one could
+indeed describe it as).
+
+That suggests a more general problem with the Qualcomm audio drivers,
+but that has nothing to do with the audio routing.
+
+Johan
 
