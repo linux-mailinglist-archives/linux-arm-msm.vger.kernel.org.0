@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-9844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4099384A255
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:31:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4011D84A257
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:32:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA8831F24B44
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:31:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B96121F2504E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:32:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44B3850A97;
-	Mon,  5 Feb 2024 18:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38853524DC;
+	Mon,  5 Feb 2024 18:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="BFd0uCk2"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="yw1XbxRp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721534F888
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 18:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C86850A6A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 18:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707157709; cv=none; b=XFYLRZEBpQ4AEnHnGLWrW599A5VnarWvra5xlyG5atQ0UGfJz2l2zroQEJnQYTCKt3Ed1Mf3BEiutxU0T1lbqnPnoq1PrgOktz75KbsZo9KRiivQoddGn3+tfnAKx76SuTziyvPL8d90dr6KjTvAvWhWGus2wjcPA+Rr9wzZBC0=
+	t=1707157711; cv=none; b=K8Fm9gDx5aKIFmOarOdL0IEozjW2HzLaBz7uAvarSH9pcb8A7X67WCLH5Nb4PuWCXpCrj6a24V9S+mq42IcJx/nDzMVV+8CGKmYGotXvaTrHhrLcyuUCfLiaalHgOwT3TUYkcGxylmVeOls5DCTotREpoi9oSgGO0bLmElay5q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707157709; c=relaxed/simple;
-	bh=RcKQ75xoYo5Om6NQThsRZd4P2ACDxtfbHJ3rKoRtNvE=;
+	s=arc-20240116; t=1707157711; c=relaxed/simple;
+	bh=5OOWzBxeb7BtobnU9iNj/y8p2LAmrftIcVh9GRDhdDE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mKo4rY+Auhh0gTLR9qVbSeREX7dOn7OrcdYIbdXEVdOJflNndnBGbbEuNxk9UwF+Fr8KCHrOuYlPmvWoPwkMe5BdA2k4VOvBoVRiAGfx2T+VLJqwooLnTwQcamwoZ7x4lr9ecyyIrk4rqyCRoC9uf+x/vxgiuu7+hVH4Xv9leWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=BFd0uCk2; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version; b=HxmKLeI7Gpwtfh/B2w0da7eu4+CkLAc3Slac1ASEDOrT1fjIMRNsWBpZHfCwzTuVthwyDfqOeuVXv4EQ3zn43Y81yQ1hZgR9eqNVfsVR21hlihmrftrucqy9tmfZliuRxb99qCx097hSOtNobGia16gZaxiHLEl7pdqLoOadnMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=yw1XbxRp; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33b401fd72bso739006f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 10:28:27 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40fdc63f4feso9130385e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 10:28:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1707157706; x=1707762506; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1707157707; x=1707762507; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/tupJ2FnxBizYD8gOKKXQjNXDQsDvYn5mQ/R4h0dASo=;
-        b=BFd0uCk2pVOFWjuMauOX6MYm6byKOYfb290WyHDWUfwEV5HXXX1aTTN43ot0C3maEu
-         dLZKv/r0cKXK989A89LHPyqEcGtjeAZSwzEBq6vElE9WaZsmvfDG6lrb2ywu+dGqFyNs
-         s+3+WXi9vi7CJWiSnA733iWrfb9ZA/fJWjhEA16258eUqTGZPp3gqlkJ/AzozIzXQRrp
-         S8DWwJCxTyRhi53VoKwSuAHRwhlIN7c61W/3k2je04DjwV+r2vTt4rQClu3vPYsNw4Od
-         cdpIlzi61llBc8p7HwnIBIsuD45fQxVn03ObvSFQsX3LBJNAhLIi6+hdAEnf4Y+Lbq0j
-         E+Kg==
+        bh=Y0tdf3eyAnzGsNLeuGvazlCndWizgRVXM7rJoHxIMZA=;
+        b=yw1XbxRpsOo73hOsMVv5s6bhobH85BTOY2XsuRziUpwDW/96r2tGuPYBjQ6qrwGDZg
+         BWE3fQV38lIBkAYmQY3l+scaSpCb4YztccKcGHxd1Z8dTuqPBAMkPnK1G1bHJ9qWnD4U
+         Vn6Yib+K3RJ1KTS3nvuHbOHWOALk70kDKIPWhgxcTMluo2YJ52eKk5ls2aDd0OUlxDzx
+         7UlLh8VitdobYN4DXD+clUC/VWI6XHySz1qlMRDiHG/YqLJ0GHIoJUCcxQuUzl6MOl+g
+         XPGc5JOjfO4ziIzWxfd9zG10HjyNSSS8S0fqRhjK13xwpmgHHY/LhSbedrfr80SYKPGM
+         KM2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707157706; x=1707762506;
+        d=1e100.net; s=20230601; t=1707157707; x=1707762507;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/tupJ2FnxBizYD8gOKKXQjNXDQsDvYn5mQ/R4h0dASo=;
-        b=t/1gXFflGx+hiwtJ+RYc+6C/6jI8DGVnS9IZIHaOXWJFyhq8Ao/NBGw5IrwiwwX3Gr
-         aMfLNOBPZ7EGhi/BgX9nEayOwGPvOW7VqVzS+OdhSqX1BzBud+vCQeHpd9EWN7kNvyai
-         kV5hyiGkOAZPl/KiFoZs+TousJvxcQnl3/8G8kTtpG1ijOn6t9W/b0hpqgAuRLfY9O1H
-         Z/C11XjkC3OIW2VlAMLCdQlnL7A7NDFy+ahD2qLC93AiGCgUN3P+yKXUIdlqV1KB3PSz
-         jtmbFzuCoyjF9Lb+FX2Hp6+8KJvaar3O+kPBlxTYE3GBK9NTJtAd3pw0mDNCpn7i1vCO
-         y1Tg==
-X-Gm-Message-State: AOJu0YyiJgZ+LfLvymu1++ufbFTO+YCyyoduWRe7tNOdd/ELy+mTC3Ie
-	qDugmFRDiCBMkmfA0daKrTC3wcOCvJ0k0LvcCg9ix6r///8iFRGScAI8fvFGNos=
-X-Google-Smtp-Source: AGHT+IG+sbdjO6Ne8XmtkOxg440O385CsG10rcZ7aD0fSOEF5DCvQP0k+e5WPvC4oyOL/1iaE06kWw==
-X-Received: by 2002:a5d:494e:0:b0:33a:df1f:c18d with SMTP id r14-20020a5d494e000000b0033adf1fc18dmr255069wrs.50.1707157705890;
-        Mon, 05 Feb 2024 10:28:25 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXT4ZnvEnP4r10+RPvCVOQEo/78xjrvuNkUXKNr++627Pk5BHgAMo+Rf0L/87RTJA+svf85xNKmwk6kmz1uPt2PkGDVRD2gnMPKtsJwWgLUZyGmpD1E0uhk4e1CZObeYh6dabINSzekps/tw9VN9MY5EQgzJzUem0h87D4uH7M7mX7vRI6+dlFYxfvdozs2Lm+53hPSmrvuvl8S/AONFl/aHEbigym1Lih9+1BaOE9+Itd0diqOSE6bvzlmhmZGrtPHMgyRteHjV1fgRVNm13JMscAALB38tXEbAi0VTrtcUDT6I0E5ZR4VwAMVT1CMmSxQiNm3fPWhG0CVeZB6o6rr2DJtowzN8/KpJzGDrMzABZZoVCxlUc02q6IW7fM91L3839j7Zfn497dsZj86Jyr901En4lqTvLZ1jFsxvmrSTHMTXU0henmvHiXvgvOFRpN2PbFszLxiZDZA6aPA0YOZNtbcuqdW+yVzIcpbVMp5SfbDS/NE/r0ac3Ztb/qbKD0vVtrIw+dtjRJh48zQk5y+58svR/mty7n4a/gumYUcukQq9R9+zjeHcXWYgusCqUQ=
+        bh=Y0tdf3eyAnzGsNLeuGvazlCndWizgRVXM7rJoHxIMZA=;
+        b=p2poKVsMK7nrwdNYywmVJ/4aD7muS8I5BP1pwAe0I813m4Ica9s92p+SX05HaZ24YM
+         7G/xQzfVI8aG9k29iJ6uVcbSo0dkawpPwyyLN7wqZiVX7VtyDbUDdbfQDzqnCTPZhpjN
+         HiHjPbjtkS0nwI5m4SO6AFuCAee5kbMiDKBGojM9yxwm381Vf4sOFJDuNVizm38JCVhl
+         9+24r1EA7NKEKCklEuDT0U0UDaEV1dxP/1M1m/U+hcblVCIUVlww7KFbmc8/2vLAs12x
+         POrH7sqS7kh4Sc072azeCPnzStAvP4x9cdTlWlWUYslt0oHnfEHWwGeAUjEbOV4T4kZc
+         eF3w==
+X-Gm-Message-State: AOJu0YwyIManetSJsvdPzMCSx5QXNEruyLmUWhzJD7+NfKzVRJG/RDL9
+	OTMQlxyMqFQJXiQbkO8YzdOBUCBprSwCsi+gIzwsvUheXNPZOmc95nNDQNs0t+U=
+X-Google-Smtp-Source: AGHT+IHu5p1ceHFoAUa++kZkcnC3iCS/21606cNviCdPf+6pX55U9pu4oXhyXtJF6JmtMSV/S4UbKg==
+X-Received: by 2002:a05:6000:1a50:b0:33b:3ced:a5e1 with SMTP id t16-20020a0560001a5000b0033b3ceda5e1mr243568wry.20.1707157706813;
+        Mon, 05 Feb 2024 10:28:26 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXGRBLc/LqneVab/oV9PBWtd0RCAUMnY+sHtiXRGVsKANmqAxba5G6tcECdeTHHpnPjSiRcWsn0zChBXJhXgszshnBOd8Fo4Cj+AKcG/InSph0+OfBODs8GtnACDq1QZFrPjNoT/9TaP99NGEVERvaiMDUv5T1RwzKhLusUZaT7VkuMDHmKJA8JCP0fuYkdxXLFPnEkF08NP15WVLhbjbX6p+XLug6x+NnFcqpz0ur3KAkGug5hR8GYEQdWRXUtrDEBqhfHKFnXInLjJsL8Wm3GMtfMPXDjAHID1PyLgJ0Czo+jFBDbVcuRpbiFveU8BhIBDGSEdLdSFxxIxtCdvYUr3byl33M3nbVLB86JNXQvjGa4WiTITOSM/9coD9i5fuAZcundTalQx1ubNGKPncUEK6I7RJIQaaPond8W0bfcnx1yhQMtaLx9flVGFEMgwBAcQonQWGxFapvtuHMNq+xGPMZ8xgCi8+D0PXmcSfQYy1i4PBjxo1l5+XHbXdzcBtJkqOQ8sKPN6vHawF5djxi6Iszoc+WcxzBwECWeruU5VBw0asO37OMCk1HX8Vbq0BM=
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d929:10db:5b5c:b49d])
-        by smtp.gmail.com with ESMTPSA id v15-20020a5d678f000000b0033b17e18df8sm203229wru.12.2024.02.05.10.28.24
+        by smtp.gmail.com with ESMTPSA id v15-20020a5d678f000000b0033b17e18df8sm203229wru.12.2024.02.05.10.28.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 10:28:24 -0800 (PST)
+        Mon, 05 Feb 2024 10:28:26 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -85,9 +85,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	kernel@quicinc.com,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: [PATCH v7 05/12] firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
-Date: Mon,  5 Feb 2024 19:28:03 +0100
-Message-Id: <20240205182810.58382-6-brgl@bgdev.pl>
+Subject: [PATCH v7 06/12] firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+Date: Mon,  5 Feb 2024 19:28:04 +0100
+Message-Id: <20240205182810.58382-7-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240205182810.58382-1-brgl@bgdev.pl>
 References: <20240205182810.58382-1-brgl@bgdev.pl>
@@ -110,51 +110,46 @@ Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
 Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
 Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- drivers/firmware/qcom/qcom_scm.c | 21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 754f6056b99f..31071a714cf1 100644
+index 31071a714cf1..11638daa2fe5 100644
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1197,32 +1197,21 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
- 		.args[4] = data_unit_size,
+@@ -1340,8 +1340,6 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_profile_change);
+ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+ 		       u64 limit_node, u32 node_id, u64 version)
+ {
+-	dma_addr_t payload_phys;
+-	u32 *payload_buf;
+ 	int ret, payload_size = 5 * sizeof(u32);
+ 
+ 	struct qcom_scm_desc desc = {
+@@ -1356,7 +1354,9 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
  		.owner = ARM_SMCCC_OWNER_SIP,
  	};
--	void *keybuf;
--	dma_addr_t key_phys;
-+
- 	int ret;
  
--	/*
--	 * 'key' may point to vmalloc()'ed memory, but we need to pass a
--	 * physical address that's been properly flushed.  The sanctioned way to
--	 * do this is by using the DMA API.  But as is best practice for crypto
--	 * keys, we also must wipe the key after use.  This makes kmemdup() +
--	 * dma_map_single() not clearly correct, since the DMA API can use
--	 * bounce buffers.  Instead, just use dma_alloc_coherent().  Programming
--	 * keys is normally rare and thus not performance-critical.
--	 */
--
--	keybuf = dma_alloc_coherent(__scm->dev, key_size, &key_phys,
--				    GFP_KERNEL);
-+	void *keybuf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
-+							   key_size,
-+							   GFP_KERNEL);
- 	if (!keybuf)
+-	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
++	u32 *payload_buf __free(qcom_tzmem) = qcom_tzmem_alloc(__scm->mempool,
++							       payload_size,
++							       GFP_KERNEL);
+ 	if (!payload_buf)
  		return -ENOMEM;
- 	memcpy(keybuf, key, key_size);
--	desc.args[1] = key_phys;
-+	desc.args[1] = qcom_tzmem_to_phys(keybuf);
+ 
+@@ -1366,11 +1366,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+ 	payload_buf[3] = 1;
+ 	payload_buf[4] = payload_val;
+ 
+-	desc.args[0] = payload_phys;
++	desc.args[0] = qcom_tzmem_to_phys(payload_buf);
  
  	ret = qcom_scm_call(__scm->dev, &desc, NULL);
  
- 	memzero_explicit(keybuf, key_size);
- 
--	dma_free_coherent(__scm->dev, key_size, keybuf, key_phys);
+-	dma_free_coherent(__scm->dev, payload_size, payload_buf, payload_phys);
  	return ret;
  }
- EXPORT_SYMBOL_GPL(qcom_scm_ice_set_key);
+ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
 -- 
 2.40.1
 
