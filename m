@@ -1,103 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-9773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 890D4849518
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 09:09:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FA6D84953E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 09:20:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC7111C21B41
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 08:09:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0755A1F247D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 08:20:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BA911198;
-	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 088C411738;
+	Mon,  5 Feb 2024 08:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GTiLfbGJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="M26sS6Pi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3DA11185;
-	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FDE11185;
+	Mon,  5 Feb 2024 08:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707120590; cv=none; b=r9FAy7cf6a1hltxMuCtYDzDeorDu6IS6aLpVWYygdqMTaBMIO3I+dEpCA4dnq9E29vyhvXkLvYuZlCeJuUEu+NOURD2X2rvfWw54sN7CZ8HSN0jahqFSbMcz3neojoO6jSFbewvesYwyXxl22GCq5L+LUGmeckuWjBxseD9Osko=
+	t=1707121234; cv=none; b=Vm0c0AMVylIlSDtR1iwmxSqCelGrXdGpwooB5j2FAUWDmaep3kV5Mr5U37p8cbN9M2tor22tw/akOLuKi+1Dwlk481X5BElvKhTnzUi93dl2P2hh26cDq3+PhPP6a+Kp05HHfBxLm424rlSXYI4m7+HEC2/0crQmGfcSjF5a9+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707120590; c=relaxed/simple;
-	bh=tjnc9TCmrK1oUMDhylwqt1frva0l2latksdf20OLonI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JwnpcobIKXrytyhdeyBeSksnNpeTsm6fgiCWmGnzLw2mYJJPCg1RqBQsB/AurewtIQ7Pp5ZC3dy6CuT6D92ZiFeg4AWm/CEXQJlJ9VgjrOTkiXmhVicLzBjJWu+wQZ4HgtjCSflzZysMy5p2R1dk6BBYEqy+MokYhULDRZaDWgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GTiLfbGJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ECAC433C7;
-	Mon,  5 Feb 2024 08:09:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707120590;
-	bh=tjnc9TCmrK1oUMDhylwqt1frva0l2latksdf20OLonI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GTiLfbGJRMd1+e0OKid4AWN6lQY8CEaTyYUIznZQoQ/HwaI7A7XJEM/UCkwSljBGe
-	 GJZPHPVCVSep1ftzfS43KB32fr3Y8bhTqOS/GZbBEtOKsj6oP1QZLr6duyWXbfu+m+
-	 6L7TZ8rLMU7gkilZZPK87QTu2YNqMJ1t0g9Su5bDfXYpPdux2warMTCkKQyMFwdMpQ
-	 iVc+FV69wwiCLUbpXfl3RacrD44tFfD4/SSelZ944Iy0yaiL63wEooW5R7F1AarK28
-	 X4fZoZbpek3tZWnrJIlfFdS5A6fcrSmRbAVzVZ1pOghwRPrx7TfyVDG1pK4gz/W3tj
-	 CC3IJSIMrlEKA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rWu38-000000000W5-0y2L;
-	Mon, 05 Feb 2024 09:09:54 +0100
-Date: Mon, 5 Feb 2024 09:09:54 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Steev Klimaszewski <steev@kali.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue
- microphone route
-Message-ID: <ZcCX0hDGrWqRXr9R@hovoldconsulting.com>
-References: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
- <c34dd7ca-01b5-4424-a8ec-a525b8d722a3@linaro.org>
- <5497d428-cdc1-4057-afda-6861d2e3860a@linaro.org>
- <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
- <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
+	s=arc-20240116; t=1707121234; c=relaxed/simple;
+	bh=p7VIl6MhCIqATnPphkUNjx22KAhNDEK+6bbzQyPLhPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eqjuflvAarAdrPCkHHiZZg3LDFH7gFf8Q4lboiOikXmJzpR0aREtxBKsR6ROUis57v7GXUNbICzfiPQgYdMlBGDYaZzGORAWuIwSsw1mmXIMDR/Tc4Fk9F3iBU41qnGOvrWAPCacdT3ou6jB8utYW/3DpOu8PWpocoim72MF8MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=M26sS6Pi; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1707121234; x=1738657234;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=p7VIl6MhCIqATnPphkUNjx22KAhNDEK+6bbzQyPLhPQ=;
+  b=M26sS6PiLtaeWB9+F4n6nNXW2tIfN9gF3OHGZyMocr1nk3NHQhzj24Vl
+   phdvCu38+8yEXhE5JVtLQ5JI+5TGRQgM6QaDNRa9nFJlKkn0eVFfyXPpB
+   N6AMhhEFAVPSPqe9zNYfgOmAhFL+HairrUZQCPAjTpqY97Sq9bLPX+324
+   wokcQGQfbYTgrdVy34X+oknBJX4IfjFBGg3YkAjkgNH3P8COciKb3m8rl
+   ShzBq1WKQJZbPBMIenUjDnh0pR8pp+u9XPKuUQ88u0umDoMrq/qlsYiHn
+   x5ST5cb64kYMD+hTB92wHHm6PG9dXOyWnEMIH5QLW1q4gdH4sfx6EKx7X
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10974"; a="11566172"
+X-IronPort-AV: E=Sophos;i="6.05,242,1701158400"; 
+   d="scan'208";a="11566172"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 00:20:29 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,242,1701158400"; 
+   d="scan'208";a="5401061"
+Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.8.107]) ([10.94.8.107])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 00:20:23 -0800
+Message-ID: <2abb6c0b-ea66-4649-b205-bafe49340aee@linux.intel.com>
+Date: Mon, 5 Feb 2024 09:20:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 20/53] ASoC: Add SOC USB APIs for adding an USB
+ backend
+Content-Language: en-US
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+ Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
+ tiwai@suse.com, robh+dt@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240203023645.31105-1-quic_wcheng@quicinc.com>
+ <20240203023645.31105-21-quic_wcheng@quicinc.com>
+From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>
+In-Reply-To: <20240203023645.31105-21-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Feb 04, 2024 at 11:30:54PM -0600, Steev Klimaszewski wrote:
-> On Mon, Jan 29, 2024 at 8:27 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 2/3/2024 3:36 AM, Wesley Cheng wrote:
+> Some platforms may have support for offloading USB audio devices to a
+> dedicated audio DSP.  Introduce a set of APIs that allow for management of
+> USB sound card and PCM devices enumerated by the USB SND class driver.
+> This allows for the ASoC components to be aware of what USB devices are
+> available for offloading.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
 
-> > so I will go with that approach. Please ignore this DTS patch. I will
-> > send ASoC changes which won't affect sc8280xp.
+...
 
-> I somehow missed that patchset or conversation; As an owner of an
-> X13s, which is sc8280xp, I can say, neither pre-dts patch, nor post,
-> seem to do much good.  When I attempt to do a voice chat in armcord,
-> the responses I get to how I sound when using the mic on the X13s
-> itself range from "You sound like hot trash" to "You sound like a
-> robot with hiccups".
+> +
+> +/**
+> + * snd_soc_usb_add_port() - Add a USB backend port
+> + * @dev: USB backend device
+> + * @priv: private data
+> + * @connection_cb: connection status callback
+> + *
+> + * Register a USB backend device to the SND USB SOC framework.  Memory is
+> + * allocated as part of the USB backend device.
+> + *
+> + */
+> +int snd_soc_usb_add_port(struct snd_soc_usb *usb)
+> +{
+> +
+> +
 
-That's a separate issue entirely. Both the digital and analog microphone
-(jack) is working on the X13s as long as you use pulseaudio.
+Cosmetic, but why is there white space between start of function and 
+body of function?
 
-As I've mentioned before, there are problems with both playback and
-capture when you use pipewire however ("robot with hiccups" one could
-indeed describe it as).
+> +	mutex_lock(&ctx_mutex);
+> +	list_add_tail(&usb->list, &usb_ctx_list);
+> +	mutex_unlock(&ctx_mutex);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
+> +
 
-That suggests a more general problem with the Qualcomm audio drivers,
-but that has nothing to do with the audio routing.
-
-Johan
 
