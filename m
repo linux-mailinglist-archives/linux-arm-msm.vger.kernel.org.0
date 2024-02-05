@@ -1,96 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-9852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9C9984A270
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:35:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84DF84A277
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:37:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55C741F25DF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:35:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB3B51C227F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:37:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9605848CE4;
-	Mon,  5 Feb 2024 18:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18F021E890;
+	Mon,  5 Feb 2024 18:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BoBI3GEP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mz2lAVhO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661B24C3C6;
-	Mon,  5 Feb 2024 18:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA503EA67;
+	Mon,  5 Feb 2024 18:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707158022; cv=none; b=KZC03VTB7M5IhKSmOMyEqDRFYP4wcAmluULyA3KLDJbQzOuEnMnR0NCpk/RFRZZInZ0fdCBg73cyTK4SIZ10ff7YMp8p95HsuebV81BXxhyl1CHdRb2g1c/sOVaTwTg4j9494UEtHq/A6gdAHTHNzVn+vsGXaTJMQm/F29dDtcI=
+	t=1707158227; cv=none; b=sZuhFTfvQkasA+mdI+4FPkKfltK5WqTgE2ybzbLcCXE0+Dn9s8W9e03batCJGueOEd6ouVHeZAduI4mSn+xbR6AuPJB0hdnEJxB6XY1njif4G9iAPPG+MuynAEOnsNXQLXNMz6AsLBd2Bfr7kei51KYG0VrdAtDxl7DFVS/aszc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707158022; c=relaxed/simple;
-	bh=OMpuFYp2jnF+MtIul2XGUwcOea6+QDQ7KKMjIrGCNbI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YG9G4bWDTqxi21KuMRIT1+mC4AwOU+ZdI+3p93FKQ1Q71YG/ZFHAs3wXbkcT9r9Ft8WNB9CNwhz6W9ZsrO8tEv6X1i5nR8lFeCQ29B+NCnAF5voCX/04LerxJPwyflF+lUSHlMrU8YB8yKi9lpkM5VvqP0JDwoU+tXT+DkBYkyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BoBI3GEP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB90C433F1;
-	Mon,  5 Feb 2024 18:33:41 +0000 (UTC)
+	s=arc-20240116; t=1707158227; c=relaxed/simple;
+	bh=ril2mjZw5Tmfit3JBs/6rZtrfDzak390D6OdEMFzCTY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HmwuWvIkOCrUjeq7V7Abt8nzY/ugUYgmYnieB7tHbH6TRDwIJ0Q2bHMI/r0Ed2k2S5yVRlVwnouCuv3fCsCulr8c2oQzp2XXhhT9xDIr9kbtdTVcGaFR5L7gcpQ00aIOCxV1wWhz/KucVZoNZQLK8u3MChickLqfAH4dQKlT8NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mz2lAVhO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A48C43394;
+	Mon,  5 Feb 2024 18:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707158021;
-	bh=OMpuFYp2jnF+MtIul2XGUwcOea6+QDQ7KKMjIrGCNbI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BoBI3GEPGCdugQDRKMbiYTzMfkh3t9fccCfY6tk7r7UtfdqFfAmne/A80hkIrZpSW
-	 5sGjVSALvMngl/H6IL44p9ftSd969fGHeV7Oy8uUMzRwcbFY/I4vzwYk5dFKGq8BmW
-	 AyiFKAyq+2CucJD76BRK0JJgYl2024CbOXrl7UzovvaMh+ax5hWb37zMbIFew4F9xH
-	 suRquXmceZfXo9d2pTDGBCXYLow5orClBv6+1P1OY/aMjFzlJhkCqGsYCAuVbfoL89
-	 jaCSjyu79HmirWOJ7wm/p8gQ8SwgrU3jvSG5JOYmrRvEcNxS0/CyPdeNiD3i/T/1Wb
-	 Twf20KepIdgwA==
-Date: Mon, 5 Feb 2024 18:33:38 +0000
-From: Rob Herring <robh@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com,
-	sboyd@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: qcom: Fix @codeaurora email in
- Q6SSTOP
-Message-ID: <20240205183338.GA3905881-robh@kernel.org>
-References: <20240202171915.4101842-1-quic_jhugo@quicinc.com>
+	s=k20201202; t=1707158226;
+	bh=ril2mjZw5Tmfit3JBs/6rZtrfDzak390D6OdEMFzCTY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=mz2lAVhOIlwI+4wB/NVzBZtNzy3hVoLPol+OJX3UyjRvBwlwZL9MsvDrDBZ/41K+i
+	 hbsdSEryR640VyZfB3Ds02wPJsKxRQJzGfDa7mNHK1PG/MWUtYAREVpA30AOIwANf4
+	 5lXv2Q5mVpK4LIHT1WmwxuCa18r4bLxLSYRoTcQkpSrQx5lntSlMdE7b9WLbt1Icg6
+	 iaKT9VCFBBWAl20NYgzjtNCsenRrKTC4U9zZ9aZZbDgE+3bnyMR/9y/bzM/uFl+qaT
+	 5ZoO12U0bq5771cDCfV7HSn5BOmmKe9Kkd6E+n7FW59RfdvSqDotrM5rbqfLvw81GK
+	 ru+aPoxUvf6ug==
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5112a04c7acso7643543e87.3;
+        Mon, 05 Feb 2024 10:37:06 -0800 (PST)
+X-Gm-Message-State: AOJu0YyEJ87A7r3FWbUR036E8PGdQtYL22EibhW4f2dZ+seCCJ2Rbp0D
+	hUzuYeWwAY96/Ol+I32nWbFptqHZ5ncOngY9woyzAZW/24C7eGLZomKT06En9uIVNmalaDN81/1
+	3fC5gaWUBNOSRkZMGgp1z6OQlGQ==
+X-Google-Smtp-Source: AGHT+IFLhqaDldx2J/zwVTLy2bXBhYfBWSmTcNJzhsZJZXwWmsKPuubHGJZmQXSA9B4FmBD2VULodz3rrgOrIHfHrtI=
+X-Received: by 2002:ac2:4c93:0:b0:511:33d4:c99a with SMTP id
+ d19-20020ac24c93000000b0051133d4c99amr302024lfl.61.1707158224608; Mon, 05 Feb
+ 2024 10:37:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240202171915.4101842-1-quic_jhugo@quicinc.com>
+References: <20240202171915.4101842-1-quic_jhugo@quicinc.com> <20240205183338.GA3905881-robh@kernel.org>
+In-Reply-To: <20240205183338.GA3905881-robh@kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 5 Feb 2024 18:36:51 +0000
+X-Gmail-Original-Message-ID: <CAL_JsqJvW7fWyCXt6UfNkJwezY27Ezkx4UWA=d5ecGrRS=8Q-w@mail.gmail.com>
+Message-ID: <CAL_JsqJvW7fWyCXt6UfNkJwezY27Ezkx4UWA=d5ecGrRS=8Q-w@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: clock: qcom: Fix @codeaurora email in Q6SSTOP
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, mturquette@baylibre.com, 
+	sboyd@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 02, 2024 at 10:19:15AM -0700, Jeffrey Hugo wrote:
-> The servers for the @codeaurora domain are long retired and any messages
-> addressed there will bounce.  Govind Singh has left the company which
-> appears to leave the Q6SSTOP clock controller binding unmaintained.
-> 
-> Move maintenance of the binding to the Qualcomm Clock Drivers maintainer
-> as suggested by Bjorn Andersson.
-> 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-How about the rest of the tree?:
-
-Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml:  - Sandeep Panda <spanda@codeaurora.org
+On Mon, Feb 5, 2024 at 6:34=E2=80=AFPM Rob Herring <robh@kernel.org> wrote:
 >
-Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml:  - Harigovindan P <harigovi@codeauro
-ra.org>
-Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml:  - Odelu Kukatla <okukatla@codeaurora.org>
-Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml:  - Kiran Gunda <kgunda@codeaurora.org>
-Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml:  - Balakrishna Godavarthi <bgodava
-r@codeaurora.org>
-Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml:  - Rocky Liao <rjliao@codeaurora.o
-rg>
-Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml:  - Shyam Kumar Thella <sthella@codeaurora.org>
-Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml:  - Srinivasa Rao Mandadapu <srivasam@
-codeaurora.org>
-Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml:  - Sai Prakash Ranjan <saiprakash.ranjan@codeauro
-ra.org>
+> On Fri, Feb 02, 2024 at 10:19:15AM -0700, Jeffrey Hugo wrote:
+> > The servers for the @codeaurora domain are long retired and any message=
+s
+> > addressed there will bounce.  Govind Singh has left the company which
+> > appears to leave the Q6SSTOP clock controller binding unmaintained.
+> >
+> > Move maintenance of the binding to the Qualcomm Clock Drivers maintaine=
+r
+> > as suggested by Bjorn Andersson.
+> >
+> > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/clock/qcom,q6sstopcc.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> How about the rest of the tree?:
+>
+> Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml:  - Sa=
+ndeep Panda <spanda@codeaurora.org
+> >
+> Documentation/devicetree/bindings/display/panel/visionox,rm69299.yaml:  -=
+ Harigovindan P <harigovi@codeauro
+> ra.org>
+> Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml:  - Odelu K=
+ukatla <okukatla@codeaurora.org>
+> Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml:  - Kiran=
+ Gunda <kgunda@codeaurora.org>
+> Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml: =
+ - Balakrishna Godavarthi <bgodava
+> r@codeaurora.org>
+> Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml: =
+ - Rocky Liao <rjliao@codeaurora.o
+> rg>
+> Documentation/devicetree/bindings/nvmem/qcom,spmi-sdam.yaml:  - Shyam Kum=
+ar Thella <sthella@codeaurora.org>
+> Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml:  - =
+Srinivasa Rao Mandadapu <srivasam@
+> codeaurora.org>
+> Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml:  - Sai Prakash =
+Ranjan <saiprakash.ranjan@codeauro
+> ra.org>
+
+Nevermind, I see the other patches now. BTW, this kind of thing you
+can just send me 1 patch fixing them all. Split is fine too.
+
+Rob
 
