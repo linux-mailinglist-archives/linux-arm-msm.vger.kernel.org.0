@@ -1,148 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-9863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A501184A2F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 20:01:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 930AC84A71F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 22:23:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6022128B9CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:01:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B34A2287DC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 21:23:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87C6148CD5;
-	Mon,  5 Feb 2024 19:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDCAF6311D;
+	Mon,  5 Feb 2024 19:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MOmpDQLK"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="IVJ9WWfl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5242E3FD;
-	Mon,  5 Feb 2024 19:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3393A634F9;
+	Mon,  5 Feb 2024 19:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.248
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707159608; cv=none; b=gkiUSySgPeHw3YbSZXc1tPiY8yTqSGg9Q4aY4L5/ZLSbElLx4Igrqrm3kkrW/yQ7mUBNzfyy4qa9G6PZBnWKQiqOT+74fnLMnhlTK32ESguNnfhwbKHRz0xUrWBDZMSpCRSe8MPE1xLNRuyGWMgfC5BbSrhOBq/7lGMeCM2Z6Nk=
+	t=1707162298; cv=none; b=T0xC0gCs37rSlRH5KLV1Ya7IpOFEmgg3ot5//OQO9uHhQZiSXt0J+eKcpdO/p9zKvvwVXXhhMar3nVUq5VczOYo80WKMQQSHCdg3sNz9gBaPUY4EEST89GxPYKKmIOXblH/KUdFLh0ZQXOjB52fqMgL/xXjHsqEM5YNkqBj/f60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707159608; c=relaxed/simple;
-	bh=HNYrnp9WLIKqhOXfadNXBc7gufyxT44WSMQVNI9swv8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Mc/8t45TwHEqS2kB8uy7ulOBC+z2ix4IzpNcHlAVxYa917QhmuE8Wq1MHswYY8BR2HGzgutkn72hY1lrowsw82w/PY43T/pZ/IbbA64hLsEpkcXSn5EIBw9L/hMMmhj6VXql5Of8tqwFvCTWO3yFVAQf5erHprV8IJxmQvghGpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MOmpDQLK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 415EwfiI003365;
-	Mon, 5 Feb 2024 18:59:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=LBmqhbGx6f84e6T5h03SQhOocsnVabU6PUYhi2PETL4=; b=MO
-	mpDQLKDvDWAwLBja6peMLUL7JSoH8y+pS96NAt2lbWYQgl+mYZUtj0BMHfUz8fpV
-	CYBt/AIwi3qRlj+cxxvS+MeGsH+Fq4Lrhxrmv+ZBVjKmcPQ0BCPq/dmEWDLDcEMO
-	frA5Zi2nY2jZD0abNi10MQSSxSThTkZivAc4l4EyHvJvppqOAzq6wU/EeOo5ThcC
-	xsYI8z0rhJV/yEVxdXUXUhQqmAt87KoDj6zk9UjF2gNelJ3+kM9ndSUlFQQtMU2V
-	TqGBWxncVohJCQsVf267e0D4B0yRpkdXfyUzsXz3D6B5BFCj1TtFzHLnVcSf6Qb6
-	GchIhTiGvLrr6sHnTEsw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w31wnrjp0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Feb 2024 18:59:54 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415IxrEW017665
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 18:59:53 GMT
-Received: from [10.216.24.76] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
- 2024 10:59:42 -0800
-Message-ID: <ddb49c10-4463-4a8f-b44e-c10d5220d8a5@quicinc.com>
-Date: Tue, 6 Feb 2024 00:29:38 +0530
+	s=arc-20240116; t=1707162298; c=relaxed/simple;
+	bh=6FZWkOFT7WKgccnoPgI4xt1xCedhQt6VkcInqPcK5yA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jdRSfAEyI+ZYD5/1UT0G2u4QLtsNLOPTaUFC5GBsOdy1ZBpU87ZPPMXaN03VJXhIzQ6K685JC2q+E7iIKmlgr0BkqPP3MXleB+nxvlqFaMgw+6DbgqE/Kf84863wE06vOiNPbQD2wRP43wjaFH+MPUlYg5KQeYrawYOtkTHlwNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=IVJ9WWfl; arc=none smtp.client-ip=198.47.23.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 415JidWl016337;
+	Mon, 5 Feb 2024 13:44:39 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1707162279;
+	bh=I2VglAtdv1vuqLTP4/IxTbXu7umNiNc+hKIhHdGfH0E=;
+	h=From:To:CC:Subject:Date;
+	b=IVJ9WWflrLwutF++zW8zY7/bau/svLyN2jC85tuPzOzq42diYRXOKezzRDESQf90B
+	 nchO1ahoi+5DdZ4ig7eR1ci1IaQUFxEVZaJVi7tFUZXnowK35uo7odueLy94fxGxFw
+	 VEh19aVVQZuzEa+7kwhQogEIDcKBNVENO+Nih4sI=
+Received: from DLEE115.ent.ti.com (dlee115.ent.ti.com [157.170.170.26])
+	by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 415JidJk073094
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Mon, 5 Feb 2024 13:44:39 -0600
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE115.ent.ti.com
+ (157.170.170.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Mon, 5
+ Feb 2024 13:44:39 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Mon, 5 Feb 2024 13:44:39 -0600
+Received: from lelvsmtp5.itg.ti.com ([10.249.42.149])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 415JicQN028467;
+	Mon, 5 Feb 2024 13:44:38 -0600
+From: Andrew Davis <afd@ti.com>
+To: Sebastian Reichel <sre@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Cristian Ciocaltea
+	<cristian.ciocaltea@gmail.com>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden
+	<sbranden@broadcom.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>,
+        Sean Wang <sean.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>
+CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-actions@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>, Andrew Davis <afd@ti.com>
+Subject: [PATCH v2 00/19] Remove pm_power_off use in drivers/power/reset
+Date: Mon, 5 Feb 2024 13:44:18 -0600
+Message-ID: <20240205194437.180802-1-afd@ti.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/15] ufs: host: wrapped keys support in ufs qcom
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <andersson@kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <robh+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <konrad.dybcio@linaro.org>,
-        <ulf.hansson@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <mani@kernel.org>, <davem@davemloft.net>,
-        <herbert@gondor.apana.org.au>
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
- <20240127232436.2632187-11-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20240127232436.2632187-11-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SHzNTd1x01RGFKe2FX5ORZBspHnLzBtT
-X-Proofpoint-GUID: SHzNTd1x01RGFKe2FX5ORZBspHnLzBtT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_13,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 phishscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402050141
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
+Hello all,
 
+Use of pm_power_off is considered legacy and should be replaced with
+register_sys_off*(). Same for register_restart_handler(). Do this
+for the drivers/power/reset subsystem for all trivial cases.
 
-On 1/28/2024 4:44 AM, Gaurav Kashyap wrote:
-> Use the wrapped keys quirk when hwkm is supported/used.
-> Whether to use HWKM or not would be decided during an ICE
-> probe, and based on this information, UFS can decide to use
-> wrapped keys or standard keys.
-> 
-> Also, propagate the appropriate key size to the ICE driver
-> when wrapped keys are used.
-> 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
->   drivers/ufs/host/ufs-qcom.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index acf352594362..5c9ba06438a9 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -123,6 +123,8 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
->   
->   	host->ice = ice;
->   	hba->caps |= UFSHCD_CAP_CRYPTO;
-> +	if (qcom_ice_hwkm_supported(host->ice))
-> +		hba->quirks |= UFSHCD_QUIRK_USES_WRAPPED_CRYPTO_KEYS;
->   
->   	return 0;
->   }
-> @@ -160,7 +162,11 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
->   	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
->   		return -EOPNOTSUPP;
->   
-> -	ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_256;
-> +	if (bkey->crypto_cfg.key_type == BLK_CRYPTO_KEY_TYPE_HW_WRAPPED)
-> +		ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_WRAPPED;
-> +	else
-> +		ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_256;
-> +
->   	if (config_enable)
->   		return qcom_ice_program_key(host->ice,
->   					    QCOM_ICE_CRYPTO_ALG_AES_XTS,
+Thanks,
+Andrew
+
+Changes for v2:
+ - Fix sparse warning in 7/19 and 10/19
+ - Add new patch fixing an already existing sparse warning (3/19)
+ - Rebase on v6.8-rc3
+
+Andrew Davis (19):
+  power: reset: atc260x-poweroff: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: atc260x-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: xgene-reboot: Use devm_platform_ioremap_resource()
+    helper
+  power: reset: xgene-reboot: Use devm_register_sys_off_handler(RESTART)
+  power: reset: tps65086-restart: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: tps65086-restart: Remove unneeded device data struct
+  power: reset: brcm-kona-reset: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: axxia-reset: Use devm_register_sys_off_handler(RESTART)
+  power: reset: rmobile-reset: Use devm_platform_ioremap_resource()
+    helper
+  power: reset: rmobile-reset: Use
+    devm_register_sys_off_handler(RESTART)
+  power: reset: mt6323-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: msm-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: msm-poweroff: Use devm_register_sys_off_handler(RESTART)
+  power: reset: regulator-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: as3722-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: gemini-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: restart-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+  power: reset: syscon-poweroff: Move device data into a struct
+  power: reset: syscon-poweroff: Use
+    devm_register_sys_off_handler(POWER_OFF)
+
+ drivers/power/reset/as3722-poweroff.c    | 30 ++++-------
+ drivers/power/reset/atc260x-poweroff.c   | 55 ++++++++------------
+ drivers/power/reset/axxia-reset.c        | 16 +++---
+ drivers/power/reset/brcm-kona-reset.c    | 11 ++--
+ drivers/power/reset/gemini-poweroff.c    | 16 +++---
+ drivers/power/reset/msm-poweroff.c       | 25 ++++-----
+ drivers/power/reset/mt6323-poweroff.c    | 28 +++++-----
+ drivers/power/reset/regulator-poweroff.c | 36 +++++--------
+ drivers/power/reset/restart-poweroff.c   | 25 +++------
+ drivers/power/reset/rmobile-reset.c      | 35 ++++---------
+ drivers/power/reset/syscon-poweroff.c    | 66 ++++++++++++------------
+ drivers/power/reset/tps65086-restart.c   | 58 ++++-----------------
+ drivers/power/reset/xgene-reboot.c       | 21 +++-----
+ 13 files changed, 154 insertions(+), 268 deletions(-)
+
+-- 
+2.39.2
+
 
