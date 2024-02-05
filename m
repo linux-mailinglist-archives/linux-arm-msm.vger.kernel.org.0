@@ -1,354 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-9838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29FCC84A203
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:23:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EBE484A24B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:30:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 471B81C20E19
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:23:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0EDF1F215D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:30:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 774A247F71;
-	Mon,  5 Feb 2024 18:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3F7C482EC;
+	Mon,  5 Feb 2024 18:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JbYbP1uD"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Ez39udAw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8535247F67;
-	Mon,  5 Feb 2024 18:23:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9CD482F2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 18:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707157394; cv=none; b=GN48K6Who8R9hXVnbrW1sEaJorPHhAnW4c3ROsv4pJ0TkB0xOMv2dGsQt+RPv/rPxsAZ5iCKcmm8TvEueJYmQcKmDmvjKghm0mOsQ+HiM888HvwFPnMCgGFBU9ni5qH3UdqvCA2fvVmYeFu1a2o7uhscG+HymSehgsBCB0rcvT4=
+	t=1707157703; cv=none; b=eSsFV2TJf8v5pJb5Eg9c93k1bhHXijHsMMC39FTFik90kDBiwl/s8kF5ZQ1cU3BiLSy810KWVrpPPPV3N7B2fXNN5zle1o+1vA2sP0tUDG7I8RKUnSW2CpaxkRS0lbLsUY+JmTbib/nsLob612rR04fGacrI9v0MWfTpp9TeEZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707157394; c=relaxed/simple;
-	bh=1IgCSO5fXyYE52DwV0JuqU9+gtibNXoj553nuIL0a9s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=owJNRoO1p9eh0bqZXQ1CRK85ifXtO2+xo9+GBcrTKmTrDVYJ8ojPtnX3+Bx6LKq9GNv1gEzmDBUcBCidC275YiK9tdGW3w7ZGYfLl2+TB8eYubuMa3yKZFbTJX5JmfmF8Z0nSfBW01Hy3LR6MblaY9k7p0DNqNStncmWQAaUGvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JbYbP1uD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 415Ewfgf003365;
-	Mon, 5 Feb 2024 18:22:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=FEn4SqIgrbfDB+gxpOj0QgyMAFS+cW09sobFdzZvM4g=; b=Jb
-	YbP1uDZQ/RCyIG6DYaWUDR8t73v3ASMjqvOxa9ZLDEWIud5cw4IczXHWxpReXDG2
-	Ap0kXoniwrMuJaPCVrbg4zW8+HANM17Ffox00vs4L7MxNGD+hDKqthLUDfFSvFL7
-	PWGEZ9ceKLq2q/5VpmtdU99mXqFqumraMDCBsfl0jIzXiSLqhNfLK7V6rJDI02ej
-	7tGgYQeE3Jl/36K4QVvoxSncddnSUHuHXmVq8jdmNrPJmhckvMwkV/k/NCb8gNpT
-	Bt4f5ghuRG+b/oXhCHoj75NZR9kjdSOrBhK4OThkGlym700MYK6pSxowezSqhKTC
-	G5JozyAF1sPQtBi7dUAQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w31wnrg9n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Feb 2024 18:22:58 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415IMvCr008012
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 18:22:57 GMT
-Received: from [10.216.24.76] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
- 2024 10:22:46 -0800
-Message-ID: <4b6a8b75-8fc1-4888-a76a-f14a67521359@quicinc.com>
-Date: Mon, 5 Feb 2024 23:52:42 +0530
+	s=arc-20240116; t=1707157703; c=relaxed/simple;
+	bh=FrgXf5u2mQ9+ou9vmhgfkmqkvim0hM5jWrxZiojnQPI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b9zheL8lK5jlhYKCj5cAoDOapncRmsTMkCRKz2owRzjXyZFTo8gDDHbR7kYN4C7Qx0blqzoiee69cR0ky6V3eAg7jjkqs86Rf78k95+DfGPqFvAJN6n9sv5Xn7pYNoISLws07gpQ7c2GYpaYWWxOB2L3zQ/l7gJ2skPjXhsC578=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Ez39udAw; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33b402116e5so591943f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 10:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1707157700; x=1707762500; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=L9SYY+qgpvvxUhsi9zVed0l424i9mHr1dF1RqnBUnS8=;
+        b=Ez39udAwqru2wBsPkB8vIYm97HafZ536o8ceUAfiJPNAjxMB0RiZWlml0F5AF6hZgI
+         kN9965gfQ3ZPvlq/G4Zyoaek0Hh1lKpI+AyyJa1HsbrLbukiSo46yoCEVfPRLDDBAXiO
+         8TYGjM0A9luqtZ4W1HkwyKH8mEDDuyec5c+1+dgVwbwSM2hze/kWPMN+8s6dCSwCza/w
+         RZEKqHT75L0dGJvaI0XbcLRwLhOzV1VDI4W6x0KEYvigEONMwWKpZ8VCKE8LcoRmlFdP
+         W9RYXmBIimLy4RuP7vu7jrwl8cwkQKa75ade1w5skgl4XJKvtIG24DXjYwmfoxQWmF28
+         wPcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707157700; x=1707762500;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L9SYY+qgpvvxUhsi9zVed0l424i9mHr1dF1RqnBUnS8=;
+        b=qhJRCFLkIl0UuLh9i9DvehP0WLQmwON/lza7+B3FkDtiTIfmsvnSnGWiYPGaPn7w+o
+         /6uMY9VsqVBW/GC0LvBDQBb/gvyOLkb25NXbZ1cefdc/2B4oS/terd8l6DKf4+036zvg
+         KAdImHPRgrwyQXaa2PslUb5AB7RwZSo4P/qHe7YlIhsm8mSVUwBsgXXunHrBQVhFgyDp
+         rqZzx642AKCsOyWfwFpke7faFzH1o7UzCKMk40hdw7L0G0oaF0Q+n8B99BNSL5JCtaLt
+         SH7gtkUe6DfjFTqZAkCreXAVbV4b7isfqCvmbBBrVj37e/0aZZKS9n1pLYc71vE9RW0T
+         KXlA==
+X-Gm-Message-State: AOJu0Yx/8kwnYlz0RPCMt3OlYam7c+ubm4W89yKzNZL9RC5MHQVjV6Ne
+	wXk94qRSLVOxM57FM0un3ST3yCZlIsd0o9Ty6R+SqYV03IIqZKnnpxxisyTYpAg=
+X-Google-Smtp-Source: AGHT+IFXKTwFzId4HeD48V0GUEepHR/dav3QLileDXFCLu/lm6sGjYLlaU1mBljSkwZfYSQSpyIiXQ==
+X-Received: by 2002:a05:6000:248:b0:33b:3c79:9182 with SMTP id m8-20020a056000024800b0033b3c799182mr223826wrz.3.1707157699823;
+        Mon, 05 Feb 2024 10:28:19 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUPFThfwYFaIB2slHnICTpsQvB4UcTrsX/f+BFLAnnJdy9c28RIqhda+FuZCwcIlmbcV5/tWKoMvcpm9wRvSqRLQ4v+4ejqRA6DXTQ3X8dPYWedTiM9W+0RToVSi1DLKlvfsPEzHoipmpuyPoXCmC56W0AQyfkbajwY/XkHT4yfXMtQZvQnk6I2IbyweXaN8ap0NEMtHw8sby435OR7ULlT3KE0sGJDpdbpXEXIKj6mcgPv6m6NKkUhfLFiudkduLlzR54wT1tPVG/uQ5QQ8RN4hhMcrpC6LwLQ/3tXFrjyfS9m0TUVU1+2dQa5nKGAviEXyReU5IIOa4aZzBtkJW2mc+n0O2m5mj89mJwe3nxV2Ys7QeCbEQIMcUqiMJIWHWBDCkoX5UhwFapXv1Oxnlfjo9UN2AEFAG4ohn/gNATAAmn54PWeag/r0zg5fWz//Eomq9deTJRzOOC6Hhc1i1/pppRohEYcASGi+vQJox/gu1QAxq2Ye8bC6uYf6UgmGfOspR+v/BdFK8alipI9Nk+186CC/ljtiA==
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d929:10db:5b5c:b49d])
+        by smtp.gmail.com with ESMTPSA id v15-20020a5d678f000000b0033b17e18df8sm203229wru.12.2024.02.05.10.28.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Feb 2024 10:28:19 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Guru Das Srinagesh <quic_gurus@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	kernel@quicinc.com,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v7 00/12] arm64: qcom: add and enable SHM Bridge support
+Date: Mon,  5 Feb 2024 19:27:58 +0100
+Message-Id: <20240205182810.58382-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/15] soc: qcom: ice: add hwkm support in ice
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <andersson@kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <robh+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <konrad.dybcio@linaro.org>,
-        <ulf.hansson@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <mani@kernel.org>, <davem@davemloft.net>,
-        <herbert@gondor.apana.org.au>
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
- <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20240127232436.2632187-5-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8lmM3iHwCc0-NJVlJAzJ6nzEtdMg0vFR
-X-Proofpoint-GUID: 8lmM3iHwCc0-NJVlJAzJ6nzEtdMg0vFR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_12,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 phishscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402050138
+Content-Transfer-Encoding: 8bit
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+We've established the need for using separate secured memory pools for
+SCM and QSEECOM as well as the upcoming scminvoke driver.
 
-On 1/28/2024 4:44 AM, Gaurav Kashyap wrote:
-> Qualcomm's ICE (Inline Crypto Engine) contains a proprietary
-> key management hardware called Hardware Key Manager (HWKM).
-> This patch integrates HWKM support in ICE when it is
-> available. HWKM primarily provides hardware wrapped key support
-> where the ICE (storage) keys are not available in software and
-> protected in hardware.
-> 
-> When HWKM software support is not fully available (from Trustzone),
-> there can be a scenario where the ICE hardware supports HWKM, but
-> it cannot be used for wrapped keys. In this case, standard keys have
-> to be used without using HWKM. Hence, providing a toggle controlled
-> by a devicetree entry to use HWKM or not.
-> 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/soc/qcom/ice.c | 126 ++++++++++++++++++++++++++++++++++++++++-
->   include/soc/qcom/ice.h |   1 +
->   2 files changed, 124 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index 6f941d32fffb..c718e8153b23 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -26,6 +26,20 @@
->   #define QCOM_ICE_REG_FUSE_SETTING		0x0010
->   #define QCOM_ICE_REG_BIST_STATUS		0x0070
->   #define QCOM_ICE_REG_ADVANCED_CONTROL		0x1000
-> +#define QCOM_ICE_REG_CONTROL			0x0
-> +/* QCOM ICE HWKM registers */
-> +#define QCOM_ICE_REG_HWKM_TZ_KM_CTL			0x1000
-> +#define QCOM_ICE_REG_HWKM_TZ_KM_STATUS			0x1004
-> +#define QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS	0x2008
-> +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_0			0x5000
-> +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_1			0x5004
-> +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_2			0x5008
-> +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_3			0x500C
-> +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_4			0x5010
-> +
-> +/* QCOM ICE HWKM BIST vals */
-> +#define QCOM_ICE_HWKM_BIST_DONE_V1_VAL		0x14007
-> +#define QCOM_ICE_HWKM_BIST_DONE_V2_VAL		0x287
->   
->   /* BIST ("built-in self-test") status flags */
->   #define QCOM_ICE_BIST_STATUS_MASK		GENMASK(31, 28)
-> @@ -34,6 +48,9 @@
->   #define QCOM_ICE_FORCE_HW_KEY0_SETTING_MASK	0x2
->   #define QCOM_ICE_FORCE_HW_KEY1_SETTING_MASK	0x4
->   
-> +#define QCOM_ICE_HWKM_REG_OFFSET	0x8000
-> +#define HWKM_OFFSET(reg)		((reg) + QCOM_ICE_HWKM_REG_OFFSET)
-> +
->   #define qcom_ice_writel(engine, val, reg)	\
->   	writel((val), (engine)->base + (reg))
->   
-> @@ -46,6 +63,9 @@ struct qcom_ice {
->   	struct device_link *link;
->   
->   	struct clk *core_clk;
-> +	u8 hwkm_version;
-> +	bool use_hwkm;
-> +	bool hwkm_init_complete;
->   };
->   
->   static bool qcom_ice_check_supported(struct qcom_ice *ice)
-> @@ -63,8 +83,21 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
->   		return false;
->   	}
->   
-> -	dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d\n",
-> -		 major, minor, step);
-> +	if (major >= 4 || (major == 3 && minor == 2 && step >= 1))
-> +		ice->hwkm_version = 2;
-> +	else if (major == 3 && minor == 2)
-> +		ice->hwkm_version = 1;
-> +	else
-> +		ice->hwkm_version = 0;
-> +
-> +	if (ice->hwkm_version == 0)
-> +		ice->use_hwkm = false;
-> +
-> +	dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d, HWKM v%d\n",
-> +		 major, minor, step, ice->hwkm_version);
-> +
-> +	if (!ice->use_hwkm)
-> +		dev_info(dev, "QC ICE HWKM (Hardware Key Manager) not used/supported");
->   
->   	/* If fuses are blown, ICE might not work in the standard way. */
->   	regval = qcom_ice_readl(ice, QCOM_ICE_REG_FUSE_SETTING);
-> @@ -113,10 +146,14 @@ static void qcom_ice_optimization_enable(struct qcom_ice *ice)
->    * fails, so we needn't do it in software too, and (c) properly testing
->    * storage encryption requires testing the full storage stack anyway,
->    * and not relying on hardware-level self-tests.
-> + *
-> + * However, we still care about if HWKM BIST failed (when supported) as
-> + * important functionality would fail later, so disable hwkm on failure.
->    */
->   static int qcom_ice_wait_bist_status(struct qcom_ice *ice)
->   {
->   	u32 regval;
-> +	u32 bist_done_reg;
->   	int err;
->   
->   	err = readl_poll_timeout(ice->base + QCOM_ICE_REG_BIST_STATUS,
-> @@ -125,15 +162,85 @@ static int qcom_ice_wait_bist_status(struct qcom_ice *ice)
->   	if (err)
->   		dev_err(ice->dev, "Timed out waiting for ICE self-test to complete\n");
->   
-> +	if (ice->use_hwkm) {
-> +		bist_done_reg = (ice->hwkm_version == 1) ?
-> +				 QCOM_ICE_HWKM_BIST_DONE_V1_VAL :
-> +				 QCOM_ICE_HWKM_BIST_DONE_V2_VAL;
-> +		if (qcom_ice_readl(ice,
-> +				   HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_STATUS)) !=
-> +				   bist_done_reg) {
-> +			dev_err(ice->dev, "HWKM BIST error\n");
-err is not upsated to capture this failure.
-> +			ice->use_hwkm = false;
-> +		}
-> +	}
->   	return err;
->   }
->   
-> +static void qcom_ice_enable_standard_mode(struct qcom_ice *ice)
-> +{
-> +	u32 val = 0;
-> +
-> +	/*
-> +	 * When ICE is in standard (hwkm) mode, it supports HW wrapped
-> +	 * keys, and when it is in legacy mode, it only supports standard
-> +	 * (non HW wrapped) keys.
-> +	 *
-> +	 * Put ICE in standard mode, ICE defaults to legacy mode.
-> +	 * Legacy mode - ICE HWKM slave not supported.
-> +	 * Standard mode - ICE HWKM slave supported.
-> +	 *
-> +	 * Depending on the version of HWKM, it is controlled by different
-> +	 * registers in ICE.
-> +	 */
-> +	if (ice->hwkm_version >= 2) {
-> +		val = qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
-> +		val = val & 0xFFFFFFFE;
-do not use constant "0xFFFFFFFE". Better to define bits that are being set.
-> +		qcom_ice_writel(ice, val, QCOM_ICE_REG_CONTROL);
-> +	} else {
-> +		qcom_ice_writel(ice, 0x7, HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
-do not use constant "0x7". Better to define bits that are being set.
-> +	}
-> +}
-> +
-> +static void qcom_ice_hwkm_init(struct qcom_ice *ice)
-> +{
-> +	/* Disable CRC checks. This HWKM feature is not used. */
-> +	qcom_ice_writel(ice, 0x6,
-> +			HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
-> +
-> +	/*
-> +	 * Give register bank of the HWKM slave access to read and modify
-> +	 * the keyslots in ICE HWKM slave. Without this, trustzone will not
-> +	 * be able to program keys into ICE.
-> +	 */
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_0));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_1));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_2));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_3));
-> +	qcom_ice_writel(ice, 0xFFFFFFFF, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_4));
-> +
-> +	/* Clear HWKM response FIFO before doing anything */
-> +	qcom_ice_writel(ice, 0x8, HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS));
-Do not use constant "0x8". Please define bits that are being set.
-> +	ice->hwkm_init_complete = true;
-> +}
-> +
->   int qcom_ice_enable(struct qcom_ice *ice)
->   {
-> +	int err;
-> +
->   	qcom_ice_low_power_mode_enable(ice);
->   	qcom_ice_optimization_enable(ice);
->   
-> -	return qcom_ice_wait_bist_status(ice);
-> +	if (ice->use_hwkm)
-> +		qcom_ice_enable_standard_mode(ice);
-> +
-> +	err = qcom_ice_wait_bist_status(ice);
-> +	if (err)
-> +		return err;
-> +
-> +	if (ice->use_hwkm)
-> +		qcom_ice_hwkm_init(ice);
-> +
-> +	return err;
->   }
->   EXPORT_SYMBOL_GPL(qcom_ice_enable);
->   
-> @@ -149,6 +256,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
->   		return err;
->   	}
->   
-> +	if (ice->use_hwkm) {
-> +		qcom_ice_enable_standard_mode(ice);
-> +		qcom_ice_hwkm_init(ice);
-> +	}
->   	return qcom_ice_wait_bist_status(ice);
->   }
->   EXPORT_SYMBOL_GPL(qcom_ice_resume);
-> @@ -156,6 +267,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
->   int qcom_ice_suspend(struct qcom_ice *ice)
->   {
->   	clk_disable_unprepare(ice->core_clk);
-> +	ice->hwkm_init_complete = false;
->   
->   	return 0;
->   }
-> @@ -205,6 +317,12 @@ int qcom_ice_evict_key(struct qcom_ice *ice, int slot)
->   }
->   EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
->   
-> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
-> +{
-> +	return ice->use_hwkm;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
-> +
->   static struct qcom_ice *qcom_ice_create(struct device *dev,
->   					void __iomem *base)
->   {
-> @@ -239,6 +357,8 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->   		engine->core_clk = devm_clk_get_enabled(dev, NULL);
->   	if (IS_ERR(engine->core_clk))
->   		return ERR_CAST(engine->core_clk);
-> +	engine->use_hwkm = of_property_read_bool(dev->of_node,
-> +						 "qcom,ice-use-hwkm");
->   
->   	if (!qcom_ice_check_supported(engine))
->   		return ERR_PTR(-EOPNOTSUPP);
-> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-> index 9dd835dba2a7..1f52e82e3e1c 100644
-> --- a/include/soc/qcom/ice.h
-> +++ b/include/soc/qcom/ice.h
-> @@ -34,5 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
->   			 const struct blk_crypto_key *bkey,
->   			 u8 data_unit_size, int slot);
->   int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
-> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
->   struct qcom_ice *of_qcom_ice_get(struct device *dev);
->   #endif /* __QCOM_ICE_H__ */
+It's also become clear that in order to be future-proof, the new
+allocator must be an abstraction layer of a higher level as the SHM
+Bridge will not be the only memory protection mechanism that we'll see
+upstream. Hence the rename to TrustZone Memory rather than SCM Memory
+allocator.
+
+Also to that end: the new allocator is its own module now and provides a
+Kconfig choice menu for selecting the mode of operation (currently
+default and SHM Bridge).
+
+Tested on sm8550 and sa8775p with the Inline Crypto Engine and
+remoteproc.
+
+v6 -> v7:
+- fix a Kconfig issue: TZMEM must select GENERIC_ALLOCATOR
+
+v5 -> v6:
+Fixed two issues reported by autobuilders:
+- add a fix for memory leaks in the qseecom driver as the first patch for
+  easier backporting to the v6.6.y branch
+- explicitly cast the bus address stored in a variable of type dma_addr_t
+  to phys_addr_t expected by the genpool API
+
+v4 -> v5:
+- fix the return value from qcom_tzmem_init() if SHM Bridge is not supported
+- remove a comment that's no longer useful
+- collect tags
+
+v3 -> v4:
+- include linux/sizes.h for SZ_X macros
+- use dedicated RCU APIs to dereference radix tree slots
+- fix kerneldocs
+- fix the comment in patch 14/15: it's the hypervisor, not the TrustZone
+  that creates the SHM bridge
+
+v2 -> v3:
+- restore pool management and use separate pools for different users
+- don't use the new allocator in qcom_scm_pas_init_image() as the
+  TrustZone will create an SHM bridge for us here
+- rewrite the entire series again for most part
+
+v1 -> v2:
+- too many changes to list, it's a complete rewrite as explained above
+
+Bartosz Golaszewski (12):
+  firmware: qcom: add a dedicated TrustZone buffer allocator
+  firmware: qcom: scm: enable the TZ mem allocator
+  firmware: qcom: scm: smc: switch to using the SCM allocator
+  firmware: qcom: scm: make qcom_scm_assign_mem() use the TZ allocator
+  firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
+  firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+  firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ
+    allocator
+  firmware: qcom: qseecom: convert to using the TZ allocator
+  firmware: qcom: scm: add support for SHM bridge operations
+  firmware: qcom: tzmem: enable SHM Bridge support
+  firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
+  arm64: defconfig: enable SHM Bridge support for the TZ memory
+    allocator
+
+ MAINTAINERS                                   |   8 +
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/firmware/qcom/Kconfig                 |  31 ++
+ drivers/firmware/qcom/Makefile                |   1 +
+ .../firmware/qcom/qcom_qseecom_uefisecapp.c   | 281 +++++---------
+ drivers/firmware/qcom/qcom_scm-smc.c          |  30 +-
+ drivers/firmware/qcom/qcom_scm.c              | 179 +++++----
+ drivers/firmware/qcom/qcom_scm.h              |   6 +
+ drivers/firmware/qcom/qcom_tzmem.c            | 365 ++++++++++++++++++
+ drivers/firmware/qcom/qcom_tzmem.h            |  13 +
+ include/linux/firmware/qcom/qcom_qseecom.h    |   4 +-
+ include/linux/firmware/qcom/qcom_scm.h        |   6 +
+ include/linux/firmware/qcom/qcom_tzmem.h      |  28 ++
+ 13 files changed, 685 insertions(+), 268 deletions(-)
+ create mode 100644 drivers/firmware/qcom/qcom_tzmem.c
+ create mode 100644 drivers/firmware/qcom/qcom_tzmem.h
+ create mode 100644 include/linux/firmware/qcom/qcom_tzmem.h
+
+-- 
+2.40.1
+
 
