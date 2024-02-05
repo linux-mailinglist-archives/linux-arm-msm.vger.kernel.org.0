@@ -1,106 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-9803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2747849C23
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 14:46:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0F4F849C4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 14:55:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 660571F24CE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 13:46:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 667DE281BD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 13:55:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6F3B1CFB2;
-	Mon,  5 Feb 2024 13:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 054D5210F0;
+	Mon,  5 Feb 2024 13:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4pNDrHt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h9KzbfW7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E6220DCB;
-	Mon,  5 Feb 2024 13:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1792321379
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 13:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707140808; cv=none; b=oivV638KXHGTKkFfB0DtQ8gm0IzfTyrvouXAmxGZ3hZnOxnak1CKYoar2XT/Va5QTmli+DOueQ5oTiHUdOrEfTvisDwySsWl20wdnFKGhGNNbGOly54L7hpTTeU+9qj0dkbdzM00H06iIx6IzzsLzJ6tEKIY6RiT5+185xwp8SM=
+	t=1707141278; cv=none; b=btC7tZ3v67XMl1hihA7uKnMMF1fKXWq9poz97/tJX+QgAzuFIDf/awyaUBg8iK3mK8hNfy6y67zxNzRwrsl5ILMi9D+u8yhQ+sW7xPqu/b6SGYAWhG5mbrk488Vayc0TQhBBH72C755Dnl/lVhBuyS8ZiMEVDR+TWsX5f+Deohw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707140808; c=relaxed/simple;
-	bh=xZKAosXWiPWEA9EOczuud1mbvfI3IhqZUQtdG3FwbPY=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=I4PKTl9Uw0O5Ruu9OScBiw/o+aEybAXxDxsh8qgGSIf82IRtpzc3h00Gy9+2YZMmhDNB7II4wZPZn3aI7yBeqah4J/7ctu8P8BpuVLRFSIZNbaK2NaOFxQh3NvOIlTyXgF86MiuqSiAPgLUaWai03FhMbZ4sSNhhPAGbHZsxK0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4pNDrHt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6718CC433F1;
-	Mon,  5 Feb 2024 13:46:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707140808;
-	bh=xZKAosXWiPWEA9EOczuud1mbvfI3IhqZUQtdG3FwbPY=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=U4pNDrHtO8FE/d65h3/afExT+LeMzX0lLiXPDwlRWsULdbWsEJMKuYC2CUjnDkzDa
-	 2mIDy6I0Hahhaad8i1jv6qDcPyOJCI9rpGEFZbLHXzVktJvsKKjyRxiEY6A5B5ZMjP
-	 PQGp4kgct03hXZw5iQR00daLjN278ggEOEINaRXg24BzewbAJifiq0cfeO08pgy9f3
-	 o60Z8gHe/6mChhMeh+5sthTmCAAdSHrlsg40caGeEj6u7VSqoB8Df5r73nkRSxiEcm
-	 74Qk8oQlQTmqB3lMvXdtjk+ggGwAiqeh56VzJvO4U6xadSH9820+tz0Hu5yynxl8zP
-	 qVexeZv5WQjjg==
-Date: Mon, 05 Feb 2024 13:46:45 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1707141278; c=relaxed/simple;
+	bh=JOKHiC6XDnMvCFB+2urHL6ouF/Z2o4GIp6viWvkNhSI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hj7/HiVf40QFxQ9E7Pva1BUZUJ/BnAc6peUQcLYBvGuswSkYzeHw123KErMV5IBeS5q4JXNYDtom8UPHWEGNKX2BroNr6k7jyE8W/kR9Mcih6+VcUuYh7a21BI/wr3HRAnzNJ4vtnyzlXKLktwUWd8yOQ8etkB0YjKjA5lW/a7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h9KzbfW7; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-60460399a33so7951857b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 05:54:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707141276; x=1707746076; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JtBlYOtJ0skwp1KJO8a8C9zsixZtlwcwqIpjM6PlYiA=;
+        b=h9KzbfW7qoLb5hf3wQ3d5oH7YofrK+B97T664pc2di3yzcZBAYmHgMFmdrug82WEXo
+         1XZDvkTcHXS+RNuxwNeGhTlvLhWGc/XLOlf3BtDR0q+diJm++igKejzBoKKSK62pnoFK
+         Gl/WWh5rBuWoDa056ugOy/L/ENdEUTxsX182lwL6SJe5GShP+Y6cq1FUOfYGPKWNcjtO
+         9WVBpnwyKGKj/8fAtpY0Gw4m1cPaY5eKSumfwk4LUoiebMNqSeiRV/QoOy47cc/0RhaO
+         9jGdqNQcgCPWuF9uXt1evt2NfVchMjzKnYsCW+rKVnJ+aLzKcEVAcyo8aR0WesndseZA
+         hn9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707141276; x=1707746076;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JtBlYOtJ0skwp1KJO8a8C9zsixZtlwcwqIpjM6PlYiA=;
+        b=acOYaHQ9yQ7JACHFeRc1f4uyoO3GQWrLfcyHACBZ0c2s6gKMHUVqPvVwAUyl3Iv/Il
+         uh0xKDnmOA1SBcgP5zfHIPqsEDA8l/lmUGtheSOtqmLhkG/6/0qRLlGlv5MISd1xmwnV
+         56P7nev6+e9TixocJobcMMnGwPeYp8nxekFXTzmhOyW37jOhyerRLIJpq4DVwAzeSyUe
+         nz10vHJekkQDo7FM/veOQRnv0jymBqGFGtRJInPXRey3hUlU84TkOR74HgICkfzToQEh
+         Dur49sobEnvabdmEHSoBuaxQJ00dgDKH1sc7BJ3d5Tssk5t1UOqdusdPGKxtxNZenYO/
+         YHuQ==
+X-Gm-Message-State: AOJu0Ywmja0+LY13G92tvEvN1UGAW23eZibbUPw9iAmyL86b+4qDOWvh
+	zv5aS+8XfV2O9d4uPAzKb4Pj8yBOiwfRXDCfMUEHAVSKKQ04cVyF9jxlyPYBTOfXyHwUvlQp3Re
+	CbwCQEqrh5cTFnL9sqbf5LkpLm4wLRgp9nGuMdg==
+X-Google-Smtp-Source: AGHT+IGpSzTyt8vbbIqitI5GoUk9JT4XUNcvQrbvqDpIn3MhWnis9GRwj8SDab9bFdb0JISqVskwSvWUEcLPq8Pt5Zo=
+X-Received: by 2002:a81:a18a:0:b0:5fb:c044:f087 with SMTP id
+ y132-20020a81a18a000000b005fbc044f087mr9614980ywg.35.1707141275864; Mon, 05
+ Feb 2024 05:54:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- phone-devel@vger.kernel.org, Lee Jones <lee@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, Will Deacon <will@kernel.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, Stephen Boyd <sboyd@kernel.org>, 
- devicetree@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>
-In-Reply-To: <20240205-pmi632-ppg-v1-1-e236c95a2099@fairphone.com>
-References: <20240205-pmi632-ppg-v1-0-e236c95a2099@fairphone.com>
- <20240205-pmi632-ppg-v1-1-e236c95a2099@fairphone.com>
-Message-Id: <170714066275.3239944.3114776132620071326.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pbs to SPMI
- device types
+References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
+ <20240119100621.11788-2-quic_tengfan@quicinc.com> <CAA8EJprpMjK03rKPK6wgfVuDvBikYsKZjMc0Wusa1BxFOBnXhQ@mail.gmail.com>
+ <86672501-206a-49ed-8af7-2b6c332c1697@quicinc.com>
+In-Reply-To: <86672501-206a-49ed-8af7-2b6c332c1697@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 5 Feb 2024 15:48:36 +0200
+Message-ID: <CAA8EJppkDDACV_sLxFW4EqKQLHfo4ivSLwa_jCde8JpeH4YfzA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/6] dt-bindings: arm: qcom: Document QCM8550, QCS8550
+ SoC and board
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 5 Feb 2024 at 12:21, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+>
+>
+>
+> On 2/5/2024 12:29 AM, Dmitry Baryshkov wrote:
+> > On Fri, 19 Jan 2024 at 11:07, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+> >>
+> >> Document QCM8550, QCS8550 SoC and the AIM300 AIoT board bindings.
+> >> QCS8550 and QCM8550 processor combines powerful computing, extreme edge
+> >> AI processing, Wi-Fi 7, and robust video and graphics for a wide range
+> >> of use cases for the Internet of Things (IoT). QCS8550 is a QCS version
+> >> for QCM8550. Modem RF only in QCM8550 but not in QCS8550.
+> >> AIM300 Series is a highly optimized family of modules designed to
+> >> support AIoT applications. The module is mounted onto Qualcomm AIoT
+> >> carrier board to support verification, evaluation and development. It
+> >> integrates QCS8550 SoC, UFS and PMIC chip etc.
+> >> AIM stands for Artificial Intelligence Module. AIoT stands for AI IoT.
+> >>
+> >> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> >> ---
+> >>   Documentation/devicetree/bindings/arm/qcom.yaml | 11 +++++++++++
+> >>   1 file changed, 11 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> index 1a5fb889a444..9cee874a8eae 100644
+> >> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> @@ -49,8 +49,10 @@ description: |
+> >>           msm8996
+> >>           msm8998
+> >>           qcs404
+> >> +        qcs8550
+> >>           qcm2290
+> >>           qcm6490
+> >> +        qcm8550
+> >
+> > Drop
+>
+> we want to introduce qcm8550 here.
 
-On Mon, 05 Feb 2024 10:51:38 +0100, Luca Weiss wrote:
-> Add the PBS (Programmable Boot Sequencer) to the list of devices.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+What for. It either had to be introduced beforehand, or it should be
+introduced when one adds support for an actual qcm8550 device.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> qcm8550.dtsi has been introduced and qcs8550-aim300.dtsi include
+> qcm8550.dtsi directly.
+>
+> qcs8550 is a QCS version for qcm8550. qcs8550 is a sub-series of
+> qcm8550. qcm8550 will be a firmware release series from qualcomm.
 
-yamllint warnings/errors:
+All three names refer to the different kinds of the same platform. The
+base chip name is sm8550, so it is the last one. Other than that,
+there is no need to include any SoC compatibles other than the actual
+SoC name. See existing qrb devices for an inspiration.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml:
-Error in referenced schema matching $id: http://devicetree.org/schemas/soc/qcom/qcom,pbs.yaml
+>
+> here is the qcm8550/qcs8550 detailed spec:
+> https://docs.qualcomm.com/bundle/publicresource/87-61717-1_REV_A_Qualcomm_QCS8550_QCM8550_Processors_Product_Brief.pdf
+>
+> here is the sm8550 detailed spec:
+> https://docs.qualcomm.com/bundle/publicresource/87-71408-1_REV_C_Snapdragon_8_gen_3_Mobile_Platform_Product_Brief.pdf
 
-doc reference errors (make refcheckdocs):
+Can you please summarise the _actual_ difference between qcm8550,
+qcs8550 and sm8550? Are they fully soft compatible? Soft compatible
+except the modem? Pin compatible?
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240205-pmi632-ppg-v1-1-e236c95a2099@fairphone.com
+>
+> >
+> >>           qdu1000
+> >>           qrb2210
+> >>           qrb4210
+> >> @@ -93,6 +95,7 @@ description: |
+> >>     The 'board' element must be one of the following strings:
+> >>
+> >>           adp
+> >> +        aim300-aiot
+> >
+> > We probably need to drop this list, it doesn't surve its purposes.
+>
+> I am a little confused, do you expect to just remove this "aim300-aiot"
+> or do you want to introduce a new patch and remove the whole list?
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+If you were following the list, you would have seen the patch
+reworking the bindings.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+>
+> >
+> >>           cdp
+> >>           dragonboard
+> >>           idp
+> >> @@ -904,6 +907,14 @@ properties:
+> >>             - const: qcom,qcs404-evb
+> >>             - const: qcom,qcs404
+> >>
+> >> +      - items:
+> >> +          - enum:
+> >> +              - qcom,qcs8550-aim300-aiot
+> >> +          - const: qcom,qcs8550-aim300
+> >> +          - const: qcom,qcs8550
+> >> +          - const: qcom,qcm8550
+> >
+> > In the review comments for v3 you have been asked to add qcom,sm8550.
+> > But not the qcom,qcm8550. I don't think that there is any need to
+> > mention qcm8550 here.
+>
+> qcm8550 and sm8550 are different, they have different firmware release.
+>
+> AIM300 AIoT board depend on qcs8550, qcs8550 is a QCS version for
+> qcm8550. Modem RF only in qcm8550 but not in qcs8550.
 
-pip3 install dtschema --upgrade
+There are no 'dependecies' here. The thing is about declaring compatibility.
+In my opinion, the qcm8550 is an unnecesary part of the equation. You
+declare compatibility with the board itself,  with the SoM, with the
+actual SoC and with the base of the series. Anybody caring for the
+difference between QCM, QCS and SM will have to check for both
+qcom,qcs8550 and qcom,qcm8550 anyway, as there are differences on the
+modem side.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+> >> +          - const: qcom,sm8550
+> >> +
+> >>         - items:
+> >>             - enum:
+> >>                 - qcom,sa8155p-adp
+> >> --
 
+-- 
+With best wishes
+Dmitry
 
