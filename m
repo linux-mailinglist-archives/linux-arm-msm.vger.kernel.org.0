@@ -1,63 +1,36 @@
-Return-Path: <linux-arm-msm+bounces-9785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AEE08497A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 11:21:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5F748497CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 11:29:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 842D51F21134
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 10:21:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A3E4B256F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 10:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80C251642C;
-	Mon,  5 Feb 2024 10:21:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CVaoUzLs"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF18217592;
+	Mon,  5 Feb 2024 10:29:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95123168CD;
-	Mon,  5 Feb 2024 10:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47C91758B;
+	Mon,  5 Feb 2024 10:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707128465; cv=none; b=Yn99nWtnwaJQ4VHWpOJFKBJQD/ctkNcJ8aJww2Bc/xklVs8WoauL6xcmL5X6pyMpv/GsMWO3C4G7Ms6TQoITPSCem90qpfHG12t2EV9YUDw60mRr2hgHpwrrLFotRMvzwKLcEjusXA1iFo5I/59qvYBHjtmcSSr+/qFSEAK60OI=
+	t=1707128952; cv=none; b=YFnSrjeqY1lxnw0y7RHxravzOnERgnoj05cGc0SIgwRJLtBdVH5nB42Q+bBtsV3AJPC7LiXTGNwl/24DZcNH82u7LQgcnEerHTz7I97bBujw/FkvXeWD08DDpqerWFYiBNes0IOr5qLrhkhMtbRyWF1uxi6IKPyuNPmWaQZU51c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707128465; c=relaxed/simple;
-	bh=VLGzVaM3Mj7P+IEAuP2IoiJSDH9MT9MjxjQrm4VijZQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P5Lt17XssUxVasIAFF8U5+AgNV6FcE9lDrPMX0Ggqu4GsKauLX6kbXd8hq5Q4woVvfpcY935unFpXso6EU4nsit90WtF29xTpzUb+n3XK9SqOpRtxiEkH5lv/JlTB73F8ztmvnBpayPr4mvwTnrGNZys5l0VXekng4Fg+L+8tAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CVaoUzLs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4158THM4011213;
-	Mon, 5 Feb 2024 10:20:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=HZNc3roTrbVrajfUeI29OzYVEwJSo8Id9bwqToV0jrI=; b=CV
-	aoUzLsAMCBuf6gOiwNWjSpu+nj851vdPSp5fKdLleRIwv4brqG0BMxN/GPoeOOOc
-	7T2/pD56sjm/DVsmGN89ipPrlv83EtIvHefOi/g5ibUvcUqIH2wUyBRRPCmY8Sy1
-	wnnjxrAnVHwbxAcd3TH43M5uFRxzmIf/8ZWMvxDUo0R10N5eJ+xLSn0fgXvXDk1P
-	+wdMnfq2JVsv34ArEKPfsnlAsXDAfyTWJy73XdiMqo10akBhKAFCIw6r5i2x+l4J
-	DD81dx8bp6Ryg+HOiT/LgSEum8DBnOOODlRpExoY80qAN4yDcF0DRFe9Rbkwf9mf
-	kbeSYcITzsHjQpDglsfA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w2v728708-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Feb 2024 10:20:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415AKEUr002384
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 10:20:14 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
- 2024 02:20:08 -0800
-Message-ID: <86672501-206a-49ed-8af7-2b6c332c1697@quicinc.com>
-Date: Mon, 5 Feb 2024 18:20:05 +0800
+	s=arc-20240116; t=1707128952; c=relaxed/simple;
+	bh=/wlzKzNGUjh5hzxTw/V3EZD8Wh/eked9GcqGmJlsNyI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=n9miQ7J1JvDTwYm6DDhEW6eIhilhdSjC2n9VRNffc6XMmg7y+a8l1nKd6lA608febMhzANy40SpKkKb4XC/H2zE+8GKmWdLzo4lVJTJhakRao3G6349sfqKYhppgJ3hKMURCEDbwfQJm78zhWLRt3PHNHP31aN337DuT/Vf7Qk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91ABC433C7;
+	Mon,  5 Feb 2024 10:29:03 +0000 (UTC)
+Message-ID: <201ae1d1-1e03-40e2-9cc4-49df70abb8da@xs4all.nl>
+Date: Mon, 5 Feb 2024 11:29:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,138 +38,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] dt-bindings: arm: qcom: Document QCM8550, QCS8550
- SoC and board
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240119100621.11788-1-quic_tengfan@quicinc.com>
- <20240119100621.11788-2-quic_tengfan@quicinc.com>
- <CAA8EJprpMjK03rKPK6wgfVuDvBikYsKZjMc0Wusa1BxFOBnXhQ@mail.gmail.com>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <CAA8EJprpMjK03rKPK6wgfVuDvBikYsKZjMc0Wusa1BxFOBnXhQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH 17/17] linux: v4l2-vp9.h: Fix kerneldoc
+Content-Language: en-US, nl
+To: Ricardo Ribalda <ribalda@chromium.org>, Jonathan Corbet <corbet@lwn.net>,
+ Randy Dunlap <rdunlap@infradead.org>
+Cc: Tiffany Lin <tiffany.lin@mediatek.com>,
+ Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans Verkuil <hverkuil@xs4all.nl>,
+ Kieran Bingham <kieran.bingham@ideasonboard.com>,
+ Bin Liu <bin.liu@mediatek.com>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Bingbu Cao <bingbu.cao@intel.com>,
+ Tianshu Qiu <tian.shu.qiu@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+ linux-amlogic@lists.infradead.org, Sakari Ailus <sakari.ailus@iki.fi>
+References: <20240126-gix-mtk-warnings-v1-0-eed7865fce18@chromium.org>
+ <20240126-gix-mtk-warnings-v1-17-eed7865fce18@chromium.org>
+ <ZbTTb-SdK-EubGdc@valkosipuli.retiisi.eu>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <ZbTTb-SdK-EubGdc@valkosipuli.retiisi.eu>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yXgrD-41-EqAXm8DnK2zplpNBsoLxeTm
-X-Proofpoint-ORIG-GUID: yXgrD-41-EqAXm8DnK2zplpNBsoLxeTm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_05,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
- mlxscore=0 priorityscore=1501 bulkscore=0 suspectscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402050078
 
-
-
-On 2/5/2024 12:29 AM, Dmitry Baryshkov wrote:
-> On Fri, 19 Jan 2024 at 11:07, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+On 27/01/2024 10:57, Sakari Ailus wrote:
+> Hi Ricardo,
+> 
+> On Fri, Jan 26, 2024 at 11:16:16PM +0000, Ricardo Ribalda wrote:
+>> Kerneldoc cannot understand arrays defined like
+>> v4l2_frame_symbol_counts.
 >>
->> Document QCM8550, QCS8550 SoC and the AIM300 AIoT board bindings.
->> QCS8550 and QCM8550 processor combines powerful computing, extreme edge
->> AI processing, Wi-Fi 7, and robust video and graphics for a wide range
->> of use cases for the Internet of Things (IoT). QCS8550 is a QCS version
->> for QCM8550. Modem RF only in QCM8550 but not in QCS8550.
->> AIM300 Series is a highly optimized family of modules designed to
->> support AIoT applications. The module is mounted onto Qualcomm AIoT
->> carrier board to support verification, evaluation and development. It
->> integrates QCS8550 SoC, UFS and PMIC chip etc.
->> AIM stands for Artificial Intelligence Module. AIoT stands for AI IoT.
+>> Adding an asterisk to the name does do the trick.
 >>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/arm/qcom.yaml | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 1a5fb889a444..9cee874a8eae 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -49,8 +49,10 @@ description: |
->>           msm8996
->>           msm8998
->>           qcs404
->> +        qcs8550
->>           qcm2290
->>           qcm6490
->> +        qcm8550
+>> Disable the kerneldoc notation for now, it is already ignored:
+>> https://docs.kernel.org/search.html?q=v4l2_vp9_frame_symbol_counts
 > 
-> Drop
-
-we want to introduce qcm8550 here.
-
-qcm8550.dtsi has been introduced and qcs8550-aim300.dtsi include 
-qcm8550.dtsi directly.
-
-qcs8550 is a QCS version for qcm8550. qcs8550 is a sub-series of 
-qcm8550. qcm8550 will be a firmware release series from qualcomm.
-
-here is the qcm8550/qcs8550 detailed spec: 
-https://docs.qualcomm.com/bundle/publicresource/87-61717-1_REV_A_Qualcomm_QCS8550_QCM8550_Processors_Product_Brief.pdf
-
-here is the sm8550 detailed spec: 
-https://docs.qualcomm.com/bundle/publicresource/87-71408-1_REV_C_Snapdragon_8_gen_3_Mobile_Platform_Product_Brief.pdf
-
+> Wouldn't it be nicer to fix kerneldoc instead? It might not be difficult at
+> all.
 > 
->>           qdu1000
->>           qrb2210
->>           qrb4210
->> @@ -93,6 +95,7 @@ description: |
->>     The 'board' element must be one of the following strings:
->>
->>           adp
->> +        aim300-aiot
-> 
-> We probably need to drop this list, it doesn't surve its purposes.
-
-I am a little confused, do you expect to just remove this "aim300-aiot" 
-or do you want to introduce a new patch and remove the whole list?
-
-> 
->>           cdp
->>           dragonboard
->>           idp
->> @@ -904,6 +907,14 @@ properties:
->>             - const: qcom,qcs404-evb
->>             - const: qcom,qcs404
->>
->> +      - items:
->> +          - enum:
->> +              - qcom,qcs8550-aim300-aiot
->> +          - const: qcom,qcs8550-aim300
->> +          - const: qcom,qcs8550
->> +          - const: qcom,qcm8550
-> 
-> In the review comments for v3 you have been asked to add qcom,sm8550.
-> But not the qcom,qcm8550. I don't think that there is any need to
-> mention qcm8550 here.
-
-qcm8550 and sm8550 are different, they have different firmware release.
-
-AIM300 AIoT board depend on qcs8550, qcs8550 is a QCS version for 
-qcm8550. Modem RF only in qcm8550 but not in qcs8550.
-
-> 
->> +          - const: qcom,sm8550
->> +
->>         - items:
->>             - enum:
->>                 - qcom,sa8155p-adp
->> --
->> 2.17.1
->>
-> 
+> Feel free to, but I can also give it a try.
 > 
 
--- 
-Thx and BRs,
-Tengfei Fan
+It would be nice to have this fixed in kerneldoc itself. I'm holding this
+patch back for two weeks to see if someone wants to work on kerneldoc.
+
+If not, then I'll take this anyway to fix the noise in our build.
+
+Note that while this header is indeed ignored in the documentation, that
+is really more a bug and it would be nice to actually include this header
+somewhere in our documentation. So fixing these kerneldoc warnings one way
+or another is something that we should do.
+
+Regards,
+
+	Hans
 
