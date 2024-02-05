@@ -1,234 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-9761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C484A8491E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 00:45:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C073D84921A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 02:01:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30B4A1F21758
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Feb 2024 23:45:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DDD6F1C2160F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 01:01:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BB5EC122;
-	Sun,  4 Feb 2024 23:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22DE9474;
+	Mon,  5 Feb 2024 01:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="dUESpUC3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lphxLzhg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2129.outbound.protection.outlook.com [40.107.113.129])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AEBDDCF;
-	Sun,  4 Feb 2024 23:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.113.129
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707090296; cv=fail; b=DYDu8oZd8+KWttJbQm4NBWlXrkIIMK6KKkP/b9cf88bpHfyr8hEARvMscAa0zAvU5H4i/jTjTVzcQabiALSzHd43nlI4dF8EdOxqMVQD9qbGmWFYjsaUy5pWJRXzgpT8+jXcjluLrzWmF1H2sPk1dAvdInXR3PLOYZ88Ahzq1nk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707090296; c=relaxed/simple;
-	bh=MH9nB6ux2s/+NCVr2S0h1B6JREmnAdG3wqNf1R8mJaw=;
-	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=a73ZT6+hsVonbNRQdnzeMQPU1ycbr2XMt/0CbLizsV8bIBN/kyB+8DgmSLRO0ds2xiNrJAeVOvgI1HoAltjKUKvDbgp3LCF6UHYlqNSL619oW/fT3RjrCLg9hnXThH65L7sxy5bcbWQdBUQ/05v5vridIXs+aFEqfocb8YPj41w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=dUESpUC3; arc=fail smtp.client-ip=40.107.113.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NlL2dRGMsTIvtqiA/w1SVs36/siA9y6+PxzLSBE4bkZ8PZgTGGH0iQMpuAu3Jq94/I+xFZRrXo3DjtRn1CTEczzvVB3HYv/MbGMu/as0l7MkQJqjOuxXJ8hwQg/qNfp3d9wGC6Lsl/QzF4pcdPWe8zec+EcJ+xuaryEXcZsJpz5ItLpAE/tlXU3zx55IOy4XcFBKu8XSbjtNJ4dMKLQVsv7JgJI/IK7RfMX/rTgVB5Owgr8BzsTl2HF9Np+TLpWcpinvuAwN/Jt1R+8cayi68FNlqpgRd1DvYrr6qiiTKeytWR9XSnTe0oF/7IydhIOPAlwFUKDcZM2r/hJsEsWanA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JAIGVyqVDt1okm0zADf/MCqj5u3NVqHjHiCFJPiPG6E=;
- b=G/MSoyvLj1hSW7K8L92orU8tatdo7q3n5BZLOttGhL0UnX4eHWiWcwUYobA8BUZqnBVNQvDnuoMDEYtmvCB5QrK59rH8hKHU960FngbHpnRlVno/E49jyO/2U9Upb0Yv9+Gv9gX9zVUmozYqVYgYibZBPOJHZ7Zr0olZZ9CqTLFBO67EqW7V93W2C/HBNKh1bWFfPfRF3bpTCCCSgufMS2a0of3xZHk5SbCeXlocWW/GrO+7UGY4D8j46npqeYx0J4uSQYCjAR6bY4dTlC8+TAsWJxvGDetztmq2tLPZGWMp3twwoW54lepV/4c2rHj0sS/JZwUMsl8dbSc2Yk5YbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JAIGVyqVDt1okm0zADf/MCqj5u3NVqHjHiCFJPiPG6E=;
- b=dUESpUC3D7P6nU5PeIQfjD8E4H9/8Mi5dwrPWIQLg5dBBA9+iGitBA88jCILFRlKDbjYMkWZK48bzcdMM54gQRujOE5RBA+FBgpE1v1q4ZUoDuH9pTBPXS+s70Mj/cgwPuPWCDbqwSTu51f1QVG0OLJWnuHzWZqasZ+9qjkZ76Q=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11) by TY1PR01MB10656.jpnprd01.prod.outlook.com
- (2603:1096:400:323::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.14; Sun, 4 Feb
- 2024 23:44:40 +0000
-Received: from TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::4d0b:6738:dc2b:51c8]) by TYCPR01MB10914.jpnprd01.prod.outlook.com
- ([fe80::4d0b:6738:dc2b:51c8%6]) with mapi id 15.20.7249.032; Sun, 4 Feb 2024
- 23:44:40 +0000
-Message-ID: <875xz3n6ag.wl-kuninori.morimoto.gx@renesas.com>
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,	"Lad,  Prabhakar"
- <prabhakar.csengg@gmail.com>,	=?ISO-8859-1?Q?=22Niklas_S=C3=B6derlund=22?=
- <niklas.soderlund+renesas@ragnatech.se>,	=?ISO-8859-1?Q?=22Uwe_Kleine-K?=
- =?ISO-8859-1?Q?=C3=B6nig=22?= <u.kleine-koenig@pengutronix.de>,	Abhinav
- Kumar <quic_abhinavk@quicinc.com>,	Alexander Shishkin
- <alexander.shishkin@linux.intel.com>,	Alexander Stein
- <alexander.stein@ew.tq-group.com>,	Alexandre Belloni
- <alexandre.belloni@bootlin.com>,	Alexandre Torgue
- <alexandre.torgue@foss.st.com>,	Alexey Brodkin <abrodkin@synopsys.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,	Andy Gross <agross@kernel.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>,	Bjorn Andersson
- <andersson@kernel.org>,	Claudiu Beznea <claudiu.beznea@tuxon.dev>,	Daniel
- Vetter <daniel@ffwll.ch>,	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	David Airlie <airlied@gmail.com>,	Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>,	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Emma Anholt <emma@anholt.net>,	Eugen Hristev
- <eugen.hristev@collabora.com>,	Florian Fainelli
- <florian.fainelli@broadcom.com>,	Frank Rowand <frowand.list@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,	Hans Verkuil
- <hverkuil-cisco@xs4all.nl>,	Helge Deller <deller@gmx.de>,	Hugues Fruchet
- <hugues.fruchet@foss.st.com>,	Jacopo Mondi <jacopo+renesas@jmondi.org>,
-	Jacopo Mondi <jacopo@jmondi.org>,	James Clark <james.clark@arm.com>,
-	Jaroslav Kysela <perex@perex.cz>,	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kevin Hilman <khilman@baylibre.com>,	Kieran Bingham
- <kieran.bingham+renesas@ideasonboard.com>,	Kieran Bingham
- <kieran.bingham@ideasonboard.com>,	Konrad Dybcio
- <konrad.dybcio@linaro.org>,	Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>,	Laurent Pinchart
- <laurent.pinchart+renesas@ideasonboard.com>,	Laurent Pinchart
- <laurent.pinchart@ideasonboard.com>,	Liam Girdwood <lgirdwood@gmail.com>,
-	Liu Ying <victor.liu@nxp.com>,	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,	Marek Vasut
- <marex@denx.de>,	Mark Brown <broonie@kernel.org>,	Mauro Carvalho Chehab
- <mchehab@kernel.org>,	Maxime Coquelin <mcoquelin.stm32@gmail.com>,	Maxime
- Ripard <mripard@kernel.org>,	Michael Tretter <m.tretter@pengutronix.de>,
-	Michal Simek <michal.simek@amd.com>,	Miguel Ojeda <ojeda@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,	Neil Armstrong
- <neil.armstrong@linaro.org>,	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,	Philipp Zabel
- <p.zabel@pengutronix.de>,	Philippe Cornu <philippe.cornu@foss.st.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,	Rob Clark
- <robdclark@gmail.com>,	Robert Foss <rfoss@kernel.org>,	Russell King
- <linux@armlinux.org.uk>,	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Saravana Kannan <saravanak@google.com>,	Sascha Hauer
- <s.hauer@pengutronix.de>,	Shawn Guo <shawnguo@kernel.org>,	Sowjanya
- Komatineni <skomatineni@nvidia.com>,	Stefan Agner <stefan@agner.ch>,	Suzuki
- K Poulose <suzuki.poulose@arm.com>,	Sylwester Nawrocki
- <s.nawrocki@samsung.com>,	Takashi Iwai <tiwai@suse.com>,	Thierry Reding
- <thierry.reding@gmail.com>,	Thomas Zimmermann <tzimmermann@suse.de>,	Tim
- Harvey <tharvey@gateworks.com>,	Todor Tomov <todor.too@gmail.com>,	Tomi
- Valkeinen <tomi.valkeinen@ideasonboard.com>,	Yannick Fertre
- <yannick.fertre@foss.st.com>,	Alim Akhtar <alim.akhtar@samsung.com>,	Fabio
- Estevam <festevam@gmail.com>,	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,	Jerome Brunet
- <jbrunet@baylibre.com>,	Jessica Zhang <quic_jesszhan@quicinc.com>,	Jonas
- Karlman <jonas@kwiboo.se>,	Leo Yan <leo.yan@linaro.org>,	Marijn Suijten
- <marijn.suijten@somainline.org>,	Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>,	Mike Leach <mike.leach@linaro.org>,
-	Sam Ravnborg <sam@ravnborg.org>,	Sean Paul <sean@poorly.run>,	Tom Rix
- <trix@redhat.com>,	coresight@lists.linaro.org,	devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,	freedreno@lists.freedesktop.org,
-	linux-amlogic@lists.infradead.org,	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,	linux-fbdev@vger.kernel.org,
-	linux-media@vger.kernel.org,	linux-omap@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,	linux-rpi-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,	linux-sound@vger.kernel.org,
-	linux-staging@lists.linux.dev,	linux-stm32@st-md-mailman.stormreply.com,
-	linux-tegra@vger.kernel.org,	llvm@lists.linux.dev
-Subject: Re: [PATCH v3 05/24] media: i2c: switch to use of_graph_get_next_device_endpoint()
-In-Reply-To: <20240202174941.GA310089-robh@kernel.org>
-References: <87o7d26qla.wl-kuninori.morimoto.gx@renesas.com>
-	<87h6iu6qjs.wl-kuninori.morimoto.gx@renesas.com>
-	<20240202174941.GA310089-robh@kernel.org>
-User-Agent: Wanderlust/2.15.9 Emacs/27.1 Mule/6.0
-Content-Type: text/plain; charset=US-ASCII
-Date: Sun, 4 Feb 2024 23:44:39 +0000
-X-ClientProxiedBy: TYWPR01CA0018.jpnprd01.prod.outlook.com
- (2603:1096:400:a9::23) To TYCPR01MB10914.jpnprd01.prod.outlook.com
- (2603:1096:400:3a9::11)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F699455;
+	Mon,  5 Feb 2024 01:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707094888; cv=none; b=GUF6yCWoODmOJ8jhUNdK2/QjFXD7AX6DygJmSPtpI+BCNotp6Lmv9SPe+W20+IEWAK79p9JcarkLCa/j/XUooOOn1VjGtVXEuOY3ByK4pqNU3zDFmyV+zYzd/lhz4JLLUEWj4LB5b4Kt+L57jCqiILIn8du0ODbHnCNIpgEgLUI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707094888; c=relaxed/simple;
+	bh=hgBGtjwY1Bs21q9PH8D5y7GXBrkCB8rw9wP8pIRJ5Dg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=h3qUHjD6HBjkvBJ45RaCvcTuJD3ne9Q/8xNU//tvSk0WVEVTAdCn4cf1VkoOa638DOWmPLil+cM8csYQBtSUuUhF19Yb/PwtCradjumSZtRCCX9zNFIquk3QqOmLFxJp6QcboWXIiqk1kp5jrd/P+C2/nbNF9I2QqvbZdMninCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lphxLzhg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4150tvpJ031582;
+	Mon, 5 Feb 2024 01:01:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=78cIa99MEoyogJ8djgg9C7dZxI+eg7u0VNRcSPZ3UBU=; b=lp
+	hxLzhgEXvgRpOznz2kP+7awx9YNfHCtR+R5S35oo21aYlzZc1w/VzkitojEseHzW
+	Sml4uqJdKvZxU55/0qHGMpgI5agbKoYDuyPxDT5qVSeEANiIVQoR6w/MSeJ3BaCK
+	My4ocZ91lfqIE7W6CAW62AHuvZ7sCL4a2AcoQ3tPnLcsood3K3Tj3shrW1S44EBS
+	QtpWWbh0NhXwCiQhXIflZpGF5PjIsn5ine7hNGNpf9AdnPNRr7m/krK7ibWNpqaw
+	iMJ/OaH+onWf1Wx51Wx7HHnCCeBvOC3erwgdEDaHRWXBUAxr8w4S5z/p7aaH4fz2
+	v4no8BrTdfVkfcWIDjag==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w1ey52bm6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Feb 2024 01:01:21 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41511KAW007485
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 01:01:20 GMT
+Received: from [10.110.18.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 4 Feb
+ 2024 17:01:17 -0800
+Message-ID: <b01116fe-6c38-329e-70b6-62fb0c585584@quicinc.com>
+Date: Sun, 4 Feb 2024 17:01:16 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCPR01MB10914:EE_|TY1PR01MB10656:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce9702a3-24e7-4d54-2b1f-08dc25db4164
-X-LD-Processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	/O52G/Tf4EynOcF+CqlepmWEhaPKnRSC7dHmtSIHmNjFXLCtWrivEuE8w7zTy0crJC+Kp05Gy1W4kVB6ir6xcO8b0+sLfhM9YgHBbcwzx4k5FWm5mM6Qtig0wWJwUvdGYwihvC+3V4AC1Wg4mimEqp9ocfNxQEGDr261+Xo7WVJgBNT4mMmZA0VTJCPw39KTly8iInLeEG0L9RqpUPmt1w+WpewISnpi2a/cZ28hUdk3Qx+FuqJin/ERQtbhrkx6r2iJ4MM/0H20HA7TdyR6rSM5WcjUHpxcbADjhHpAbPR0WEOgkhol1o2izt5i9ObWqNz9YNy4+EHsiWZVd42jorfk+6Lm9ItSfbh3/syuN+adMU+a3vd08c1f3rku/PI0qDsgliiproGiY6DVMYNpG48pqW3J+h6KSHa3xZAPfEDdkzVkDA2G7ip1EgE12hk1RePaldVLx/LftupAoyRYfbPI27gyRoVf2pfS8x1jot4OTUGYq0xocxCpGGWX8QVI7TNbC5L4It9DKF7g+6UL7mINFX97/VXXzsqbE/94Ka3CQZH+0HwiM2fhoSZoi4BFdGoFLALGTlYiqlcnqmFQPcxFLfLA7esClBdQ8CAWq/o=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB10914.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(396003)(376002)(366004)(136003)(346002)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(4326008)(8676002)(8936002)(66556008)(66476007)(6916009)(66946007)(316002)(54906003)(26005)(6486002)(966005)(478600001)(38100700002)(36756003)(2616005)(6512007)(7416002)(86362001)(41300700001)(7366002)(6506007)(5660300002)(2906002)(7406005)(4744005)(52116002)(7276002)(7336002)(38350700005);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?MlOk4Y/sddMQ2YpdYHdbIaOjKUW1atQ/ZAkXUtAY/udPsvSEzQ9wb6w4+9+8?=
- =?us-ascii?Q?16VIPm0Om7pDBamGT853Es+d7hy+wxbWlMU3kcNkuP+DAn0EImtAbpOdXjcH?=
- =?us-ascii?Q?OjXCfnjqy5XlsYTOjQEMv5XFJn9QIp1Pof3/uFQLv2x7jYHi4oSaOemQFXhb?=
- =?us-ascii?Q?QdMDNwsfMx1uWMN5IgmHYyg8iDRKxneb12fssDp24dSBDw6/mrIho9I5bIAl?=
- =?us-ascii?Q?MORU8FW+DfNXTE9i0/IlhKcaqA5oon5WpH7p5xDQu85KFCiMSxGq7X7Ww+od?=
- =?us-ascii?Q?aRmfHONS7Gpo6UMMwiCKwAEvBQC8PBCv4Nr4aGSrWXV7a0/dHJacqnbaVEBS?=
- =?us-ascii?Q?0elyliUF00erR1BQVIUZgVTgOeI1v4lPoEijOujFlFnt+Rbhl6E/KiauXLEk?=
- =?us-ascii?Q?qmly06ccIQcVZle6EcA6BMFsfV0viDT5YoVwHzBIWFysAdyN+4CCKPoERS8N?=
- =?us-ascii?Q?rsuvx3BG5ycwVXeUD1yowGjjO1NF7NmX4eTxsFnOdIi70LUs3edxFTQeOQHN?=
- =?us-ascii?Q?spBmqxPzXCokgy/uata4WktGY/6qXMBAdwr/EEjSmxmzKo2fRJ7pevzp9pLN?=
- =?us-ascii?Q?mLarsYujvZk+avqcbI71Mk1wKScfmz8qqaxAf4RoTYzyxlGFBpjbKg0FgFcN?=
- =?us-ascii?Q?lC6G6jPiZ57QNlEAk/KB9mGLZzKP6l5HfSxdxkKsMIeC7MAKMJexruFRJjdG?=
- =?us-ascii?Q?M1GHAqylyyfhxUwwKJ1BDhKz1oGFa4Rva5HK4peUcaccoGMckcQdFnUT1x/l?=
- =?us-ascii?Q?8WpUxweIkdcq02wmX2hL+cg3vzaXD8JXpPLLvsu5JT2OF7cCKryqlN2VycBZ?=
- =?us-ascii?Q?SgJW+QPjAIh/BPSYOtSC3yg3JoIZ8y03HyA9WVzQWw6NKiegYI4Uu3PixzGX?=
- =?us-ascii?Q?a+gCVAIGpdvmV8WzvmLBbM7Thdv2LIB0wH29R0YK5xBHMzRRs9wN6KbU143T?=
- =?us-ascii?Q?HUP66jrA2i/QuGvSgE4d7MNzoBoHpuyLOJhjbgHtAx8SrA3AfQ2VGEMcAGOq?=
- =?us-ascii?Q?ACWB8BaIYcTHB5OO27tai+9ezbVvbwhRHaChfAxOAZo/2kWhEfV2NEyXWN7w?=
- =?us-ascii?Q?Xmg4ynr68iMGMdenbsM0zhry1BKsuki/t/1Izw/6ouFnuQnXamyBYOnC7I27?=
- =?us-ascii?Q?y0/3H7oIHr4wRkagezECt6IJ2LdJsyGwOaNFwHBOx/ZHNALAFL5tzOXeYkGy?=
- =?us-ascii?Q?GwjwF6OX0MFJYMg0Gy7HYZ1G+0HlU+yKmILIL3GtQTv+oiRaxoW6y+ZcjFir?=
- =?us-ascii?Q?02ALWGgznThFG7IAiUL07L1WbFcx5aPxONUMp72pagrPaO0/cacLHDOX8jV3?=
- =?us-ascii?Q?WGq8wtnSTrFg0+M8d3kOk8UPnudW+XkPwV0DsZ5O4ht8vpoP/u1lafOEhfBm?=
- =?us-ascii?Q?VlNFEqUYYr9mQskQ0NQqDIqg9p9W120bGkdjJZe7nGBJDedVlvVOkNbvkveQ?=
- =?us-ascii?Q?jnZQxVAoLRulrLUIqByzrlICGxao6qG+p5RwFC0JGaFafuJWcHgrIE+p96Oa?=
- =?us-ascii?Q?kanv3Oy9e3D/KBKbY8hcDQnKO65cXuMzb+KRWJ2VwvprFSskYwcKt+82BugF?=
- =?us-ascii?Q?ubjnn/VZZAg4DiHXRXltfRS/FEFvAXXbeSN5TtI164qE8fEO3+7bZELmwmF8?=
- =?us-ascii?Q?YueRChZ6xIjhwbKZh1GH/J4=3D?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce9702a3-24e7-4d54-2b1f-08dc25db4164
-X-MS-Exchange-CrossTenant-AuthSource: TYCPR01MB10914.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2024 23:44:40.7009
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4kjz26qbchml8CHh6clYPS1ycK8vwv3eyyJSmF5HgNCf49rF5esw/Tuz24MY6Wj87Zxz+cVpyjTQcx1XymcJbKt0T46SF360Kx0R1bL8HAvASpMJALlHoRaCE/xNEUW6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PR01MB10656
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND region
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Unnathi Chalicheemala
+	<quic_uchalich@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <cover.1706296015.git.quic_uchalich@quicinc.com>
+ <12bfdd23772c49530b8b0993cc82bc89b3eb4ada.1706296015.git.quic_uchalich@quicinc.com>
+ <CAA8EJppapW5nOFphBWove1ni8nbkA=xHON9D13NYeYHhyqL1Fg@mail.gmail.com>
+ <94b097d4-dcfa-4136-ba75-f665f5bc747d@quicinc.com>
+ <CAA8EJpqa5YArFk893nDz_oibbV=oqGEeYq6_jw582rQs=O_WpA@mail.gmail.com>
+ <30d972b1-9685-408b-a87c-98352c4a2449@quicinc.com>
+ <CAA8EJprPZThviO0vZfyYz+YShPKxg9YcuOUUCv4B_ePghuB8XA@mail.gmail.com>
+From: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+In-Reply-To: <CAA8EJprPZThviO0vZfyYz+YShPKxg9YcuOUUCv4B_ePghuB8XA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6r04AXQBLGREbbXYrJWM5SfhiKPSWsxn
+X-Proofpoint-ORIG-GUID: 6r04AXQBLGREbbXYrJWM5SfhiKPSWsxn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-04_14,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1011 priorityscore=1501 suspectscore=0 adultscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402050006
 
 
-Hi Rob
+On 1/30/2024 10:57 AM, Dmitry Baryshkov wrote:
+> On Tue, 30 Jan 2024 at 19:52, Unnathi Chalicheemala
+> <quic_uchalich@quicinc.com> wrote:
+>> On 1/29/2024 2:03 PM, Dmitry Baryshkov wrote:
+>>> On Mon, 29 Jan 2024 at 20:17, Unnathi Chalicheemala
+>>> <quic_uchalich@quicinc.com> wrote:
+>>>>
+>>>>
+>>>> On 1/26/2024 12:29 PM, Dmitry Baryshkov wrote:
+>>>>> On Fri, 26 Jan 2024 at 21:48, Unnathi Chalicheemala
+>>>>> <quic_uchalich@quicinc.com> wrote:
+>>>>>> To support CSR programming, a broadcast interface is used to program
+>>>>>> all channels in a single command. Until SM8450 there was only one
+>>>>>> broadcast region (Broadcast_OR) used to broadcast write and check
+>>>>>> for status bit 0. From SM8450 onwards another broadcast region
+>>>>>> (Broadcast_AND) has been added which checks for status bit 1.
+>>>>>>
+>>>>>> Update llcc_drv_data structure with new regmap for Broadcast_AND
+>>>>>> region and initialize regmap for Broadcast_AND region when HW block
+>>>>>> version is greater than 4.1 for backwards compatibility.
+>>>>>>
+>>>>>> Switch from broadcast_OR to broadcast_AND region for checking
+>>>>>> status bit 1 as Broadcast_OR region checks only for bit 0.
+>>>>> This breaks backwards compatibility with the existing DT files,
+>>>>> doesn't it?
+>>>>>
+>>>> It shouldn't as checking for status bit 1 is happening only when the
+>>>> block
+>>>> version is greater than 4.1, which is when Broadcast_AND region support
+>>>> is added.
+>>> Let me reiterate, please: with the existing DT files. You are patching
+>>> DT files in patches 2-4, but this is not enough. DT files are
+>>> considered to be ABI. As such old DT files must continue to work with
+>>> newer kernels.
+>>>
+>> I'm sorry, I think I'm not understanding this right.
+>>
+>>>>>> While at it, also check return value after reading Broadcast_OR
+>>>>>> region in llcc_update_act_ctrl().
+>>>>> Separate patch, Fixes tag.
+>>>>>
+>>>> Ack. Will remove this from existing patch.
+>>>> Thanks for the review Dmitry!
+>>>>
+>>>>>> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/soc/qcom/llcc-qcom.c       | 12 +++++++++++-
+>>>>>>   include/linux/soc/qcom/llcc-qcom.h |  4 +++-
+>>>>>>   2 files changed, 14 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/soc/qcom/llcc-qcom.c
+>>>>>> b/drivers/soc/qcom/llcc-qcom.c
+>>>>>> index 4ca88eaebf06..5a2dac2d4772 100644
+>>>>>> --- a/drivers/soc/qcom/llcc-qcom.c
+>>>>>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>>>>>> @@ -849,7 +849,7 @@ static int llcc_update_act_ctrl(u32 sid,
+>>>>>>                  return ret;
+>>>>>>
+>>>>>>          if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+>>>>>> -               ret =
+>>>>>> regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+>>>>>> +               ret =
+>>>>>> regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
+>>>>>>                                        slice_status, (slice_status &
+>>>>>> ACT_COMPLETE),
+>>>>>>                                        0, LLCC_STATUS_READ_DELAY);
+>> Above if condition will be true only for SM8450, 8550 and 8650 - whose DT
+>> files have been changed.
+>> It would never check for other existing DT files - I guess I'm failing to
+>> understand why the code
+>> would break with other DeviceTree files.
+> I'm saying that the driver must continue to work (well, at least not
+> to crash) even if somebody runs the kernel with older DT.
+Thanks Dmitry. While I get the ask, wondering why someone would use old 
+DT while DT
+is also being updated in this series along with the driver change?
 
-> This is assuming there's just 1 port and 1 endpoint, but let's be 
-> specific as the bindings are (first endpoint on port 0):
-> 
-> of_graph_get_endpoint_by_regs(client->dev.of_node, 0, -1);
-> 
-> Note we could ask for endpoint 0 here, but the bindings generally allow 
-> for more than 1.
-> 
-> I imagine most of the other cases here are the same.
-
-I will do it on new patch-set
-
-> > -	for_each_endpoint_of_node(state->dev->of_node, ep_np) {
-> > +	for_each_device_endpoint_of_node(state->dev->of_node, ep_np) {
-> 
-> I would skip the rename.
-
-It is needed to avoid confuse, because new function will add
-another endpoint loop.
-
-see
-https://lore.kernel.org/r/20240131100701.754a95ee@booty
-
-
-Thank you for your help !!
-
-Best regards
----
-Renesas Electronics
-Ph.D. Kuninori Morimoto
+Unnathi, you add check and make sure to update only when bcast_and 
+region is specified in DT,
+otherwise, stick to what is being done today, that way backwards 
+compatibility is maintained.
+>>>>>>                  if (ret)
+>>>>>> @@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
+>>>>>>          ret = regmap_read_poll_timeout(drv_data->bcast_regmap,
+>>>>>> status_reg,
+>>>>>>                                        slice_status, !(slice_status &
+>>>>>> status),
+>>>>>>                                        0, LLCC_STATUS_READ_DELAY);
+>>>>>> +       if (ret)
+>>>>>> +               return ret;
+>>>>>>
+>>>>>>          if (drv_data->version >= LLCC_VERSION_4_1_0_0)
+>>>>>>                  ret = regmap_write(drv_data->bcast_regmap,
+>>>>>> act_clear_reg,
+>>>>>> @@ -1282,6 +1284,14 @@ static int qcom_llcc_probe(struct
+>>>>>> platform_device *pdev)
+>>>>>>
+>>>>>>          drv_data->version = version;
+>>>>>>
+>>>>>> +       if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+>>>>>> +               drv_data->bcast_and_regmap =
+>>>>>> qcom_llcc_init_mmio(pdev, i + 1, "llcc_broadcast_and_base");
+>>>>>> +               if (IS_ERR(drv_data->bcast_and_regmap)) {
+>>>>>> +                       ret = PTR_ERR(drv_data->bcast_and_regmap);
+>>>>>> +                       goto err;
+>>>>>> +               }
+>>>>>> +       }
+>> I have added a similar check in the probe function above; are you saying
+>> this too will break with
+>> existing DT files?
+>>
+>>>>>> +
+>>>>>>          llcc_cfg = cfg->sct_data;
+>>>>>>          sz = cfg->size;
+>>>>>>
+>>>>>> diff --git a/include/linux/soc/qcom/llcc-qcom.h
+>>>>>> b/include/linux/soc/qcom/llcc-qcom.h
+>>>>>> index 1a886666bbb6..9e9f528b1370 100644
+>>>>>> --- a/include/linux/soc/qcom/llcc-qcom.h
+>>>>>> +++ b/include/linux/soc/qcom/llcc-qcom.h
+>>>>>> @@ -115,7 +115,8 @@ struct llcc_edac_reg_offset {
+>>>>>>   /**
+>>>>>>    * struct llcc_drv_data - Data associated with the llcc driver
+>>>>>>    * @regmaps: regmaps associated with the llcc device
+>>>>>> - * @bcast_regmap: regmap associated with llcc broadcast offset
+>>>>>> + * @bcast_regmap: regmap associated with llcc broadcast OR offset
+>>>>>> + * @bcast_and_regmap: regmap associated with llcc broadcast AND
+>>>>>> offset
+>>>>>>    * @cfg: pointer to the data structure for slice configuration
+>>>>>>    * @edac_reg_offset: Offset of the LLCC EDAC registers
+>>>>>>    * @lock: mutex associated with each slice
+>>>>>> @@ -129,6 +130,7 @@ struct llcc_edac_reg_offset {
+>>>>>>   struct llcc_drv_data {
+>>>>>>          struct regmap **regmaps;
+>>>>>>          struct regmap *bcast_regmap;
+>>>>>> +       struct regmap *bcast_and_regmap;
+>>>>>>          const struct llcc_slice_config *cfg;
+>>>>>>          const struct llcc_edac_reg_offset *edac_reg_offset;
+>>>>>>          struct mutex lock;
+>>>>>> --
+>>>>>> 2.25.1
+>>>>>>
+>>>>>>
+>>>>>
+>>>
+>>>
+>> --
+>> Thanks & Warm Regards,
+>> Unnathi
+>
+>
 
