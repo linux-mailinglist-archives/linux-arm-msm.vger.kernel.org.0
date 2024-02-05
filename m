@@ -1,187 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-9881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A13EA84A752
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 22:27:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B98A84A8A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 23:08:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AD221F2613D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 21:27:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDE131C242A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 22:08:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74A7B77F0C;
-	Mon,  5 Feb 2024 19:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 473405579C;
+	Mon,  5 Feb 2024 21:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="U/TDTDZe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E0XU/KjY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99437745E0;
-	Mon,  5 Feb 2024 19:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E634E1BC;
+	Mon,  5 Feb 2024 21:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707162310; cv=none; b=pDM5swpaM6/p/8n5jV7MUyI5tmkxYXEjPYgGIywYzq4vyOvsdbe5Ab8iB8raS+4EaOKMswiNiH+AXtaqhOUsyhITvLRByH8jHlSaaPOVBut+jp8jTC6nZLTvE+h6qOth0o3IvoZebCBRLG3IVnbu+k8KWR9O23ZGYKjaP/AjkY8=
+	t=1707168451; cv=none; b=FD0W0X9SWcRGhuyL2fxAM24qOIYOmy+tS36jEt/GP6VOCo8bA8+4I78hvHnAeAuz0VNlbKoW2ENX5zyVo4IOOBtqYaPYLmkUy6/4GcaaZJSOtJGu6CZbImEamvkw/imUBzMnY/U8ZszFhIGp1EqL5uKBcrESFBFQAzXfojKxUz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707162310; c=relaxed/simple;
-	bh=XmOFZVJS2nbpGNUIJRoCh2m3rWFsAgRF8B1pZ3UaoOo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sy2QDPcpE4SHAKty750eEafSStxSqA1Qt63dTXFeXV1SfrQ/c3Ams4ZfsmU6hL3TTcPPtzbR/4+rp98eV3t31/XX34EXckcLITYRAcreh0PJP6t9FiR0M88P7sPHcQFvVuSQ7KlS+EIsmV1LVBLWHHCUu6Ozp4expNNpGoHSQaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=U/TDTDZe; arc=none smtp.client-ip=198.47.23.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-	by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 415JipUM101215;
-	Mon, 5 Feb 2024 13:44:51 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1707162291;
-	bh=NIThW8dvWRvWMprZfYkUcAv9QvAIjazC0Wh9+WTdW/k=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References;
-	b=U/TDTDZe48TOZlXKa2/P5bsRemvEkpBf2zyycXeCvsfYIdO+o9EUhYrflRA9TzKi7
-	 ojOnTHFu3wGQ41vLoQCyPhBK4d1tw0pk93aOPmp5SttYKOV3URTAH2ZrJBH0Y0K7SC
-	 gSqacdWWQu2J0Q+d1zPa59WE9cTXWcxMLozZqblg=
-Received: from DLEE111.ent.ti.com (dlee111.ent.ti.com [157.170.170.22])
-	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 415JipKS071105
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Mon, 5 Feb 2024 13:44:51 -0600
-Received: from DLEE103.ent.ti.com (157.170.170.33) by DLEE111.ent.ti.com
- (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Mon, 5
- Feb 2024 13:44:51 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Mon, 5 Feb 2024 13:44:51 -0600
-Received: from lelvsmtp5.itg.ti.com ([10.249.42.149])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 415JicQg028467;
-	Mon, 5 Feb 2024 13:44:50 -0600
-From: Andrew Davis <afd@ti.com>
-To: Sebastian Reichel <sre@kernel.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Cristian Ciocaltea
-	<cristian.ciocaltea@gmail.com>,
-        Florian Fainelli
-	<florian.fainelli@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>, Scott Branden
-	<sbranden@broadcom.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>,
-        Sean Wang <sean.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>
-CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-actions@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>, Andrew Davis <afd@ti.com>
-Subject: [PATCH v2 19/19] power: reset: syscon-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-Date: Mon, 5 Feb 2024 13:44:37 -0600
-Message-ID: <20240205194437.180802-20-afd@ti.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240205194437.180802-1-afd@ti.com>
-References: <20240205194437.180802-1-afd@ti.com>
+	s=arc-20240116; t=1707168451; c=relaxed/simple;
+	bh=WF79LcyptTYwzEhU/Gz6Jrq78t2eREqNKLqqvgDivhE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Zdtj2ME9RP4WNDmJ8XKyuhoNetlB/PxI/uM41Xqaz/zXuT4EKeKNJHGqrJ5r2oqCkwLI5ub1kB9//1DB1cF/LjcQVHtX99Ovm9sEi2eSHpxBEDh7i+DPeS/VA7ljR4prjQDNZFv52TNKnlEIIiNwtZ1H5I0qSbdZp15L78IHKig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E0XU/KjY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 415KZpZL013684;
+	Mon, 5 Feb 2024 21:27:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=80XiqQagWrXSjkbFB7IZMeTVBIcws+/+UsrZOrDK37I=; b=E0
+	XU/KjYVh5bclOJjOXgEj6T88+d0afhkJxj5YaelqQJ+m8FOEjWzsdu3CIHAI+ZIk
+	jcwrtkEBcGhxNA9Qho3kXxKyzNE3HbI8qLUZdGrl89ScoD8hFJP8p29DjDZH0D4W
+	SxB1pWPjN7t6dxhNPoX46jk/J3EPisOLhOpOYtlSSzUhHHdJqS3SmY9I25oCMAmt
+	mnpp5hbnmSXzctKtYbTmgxpSvAxDIpfRvXa9fQtWdh7Rrs08s3L07CJ7ac5suS9R
+	TGMIs2jrQk94HnbFTsZLYD7+JvjMU438r/HQ9KxgsNcp4fDa7/oAaZrym2m5ZysC
+	NSkqWMWXECqDA8u+dnOw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w32s1rqj6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Feb 2024 21:27:07 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415LR6JQ011461
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 21:27:06 GMT
+Received: from [10.110.7.251] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
+ 2024 13:27:05 -0800
+Message-ID: <c5e9419d-1d16-4816-4fd0-c23c5eb358e1@quicinc.com>
+Date: Mon, 5 Feb 2024 13:26:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v13 20/53] ASoC: Add SOC USB APIs for adding an USB
+ backend
+Content-Language: en-US
+To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
+	<amadeuszx.slawinski@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240203023645.31105-1-quic_wcheng@quicinc.com>
+ <20240203023645.31105-21-quic_wcheng@quicinc.com>
+ <2abb6c0b-ea66-4649-b205-bafe49340aee@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2abb6c0b-ea66-4649-b205-bafe49340aee@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kbmUi6lAuyvjf1WEfxhQ6nHGodNDySsr
+X-Proofpoint-ORIG-GUID: kbmUi6lAuyvjf1WEfxhQ6nHGodNDySsr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_15,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
+ mlxlogscore=756 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402050160
 
-Use device life-cycle managed register function to simplify probe and
-exit paths.
+Hi Amadeusz,
 
-Signed-off-by: Andrew Davis <afd@ti.com>
----
- drivers/power/reset/syscon-poweroff.c | 34 ++++++++++++---------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+On 2/5/2024 12:20 AM, Amadeusz Sławiński wrote:
+> On 2/3/2024 3:36 AM, Wesley Cheng wrote:
+>> Some platforms may have support for offloading USB audio devices to a
+>> dedicated audio DSP.  Introduce a set of APIs that allow for 
+>> management of
+>> USB sound card and PCM devices enumerated by the USB SND class driver.
+>> This allows for the ASoC components to be aware of what USB devices are
+>> available for offloading.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+> 
+> ...
+> 
+>> +
+>> +/**
+>> + * snd_soc_usb_add_port() - Add a USB backend port
+>> + * @dev: USB backend device
+>> + * @priv: private data
+>> + * @connection_cb: connection status callback
+>> + *
+>> + * Register a USB backend device to the SND USB SOC framework.  
+>> Memory is
+>> + * allocated as part of the USB backend device.
+>> + *
+>> + */
+>> +int snd_soc_usb_add_port(struct snd_soc_usb *usb)
+>> +{
+>> +
+>> +
+> 
+> Cosmetic, but why is there white space between start of function and 
+> body of function?
+> 
 
-diff --git a/drivers/power/reset/syscon-poweroff.c b/drivers/power/reset/syscon-poweroff.c
-index 4899a019256e8..203936f4c544f 100644
---- a/drivers/power/reset/syscon-poweroff.c
-+++ b/drivers/power/reset/syscon-poweroff.c
-@@ -13,6 +13,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
-+#include <linux/reboot.h>
- #include <linux/regmap.h>
- 
- struct syscon_poweroff_data {
-@@ -22,23 +23,30 @@ struct syscon_poweroff_data {
- 	u32 mask;
- };
- 
--static struct syscon_poweroff_data *data;
--
--static void syscon_poweroff(void)
-+static int syscon_poweroff(struct sys_off_data *off_data)
- {
-+	struct syscon_poweroff_data *data = off_data->cb_data;
-+
- 	/* Issue the poweroff */
- 	regmap_update_bits(data->map, data->offset, data->mask, data->value);
- 
- 	mdelay(1000);
- 
- 	pr_emerg("Unable to poweroff system\n");
-+
-+	return NOTIFY_DONE;
- }
- 
- static int syscon_poweroff_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-+	struct syscon_poweroff_data *data;
- 	int mask_err, value_err;
- 
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
- 	data->map = syscon_regmap_lookup_by_phandle(dev->of_node, "regmap");
- 	if (IS_ERR(data->map)) {
- 		data->map = syscon_node_to_regmap(dev->parent->of_node);
-@@ -69,21 +77,10 @@ static int syscon_poweroff_probe(struct platform_device *pdev)
- 		data->mask = 0xFFFFFFFF;
- 	}
- 
--	if (pm_power_off) {
--		dev_err(dev, "pm_power_off already claimed for %ps",
--			pm_power_off);
--		return -EBUSY;
--	}
--
--	pm_power_off = syscon_poweroff;
--
--	return 0;
--}
--
--static void syscon_poweroff_remove(struct platform_device *pdev)
--{
--	if (pm_power_off == syscon_poweroff)
--		pm_power_off = NULL;
-+	return devm_register_sys_off_handler(&pdev->dev,
-+					     SYS_OFF_MODE_POWER_OFF,
-+					     SYS_OFF_PRIO_DEFAULT,
-+					     syscon_poweroff, data);
- }
- 
- static const struct of_device_id syscon_poweroff_of_match[] = {
-@@ -93,7 +90,6 @@ static const struct of_device_id syscon_poweroff_of_match[] = {
- 
- static struct platform_driver syscon_poweroff_driver = {
- 	.probe = syscon_poweroff_probe,
--	.remove_new = syscon_poweroff_remove,
- 	.driver = {
- 		.name = "syscon-poweroff",
- 		.of_match_table = syscon_poweroff_of_match,
--- 
-2.39.2
+Thanks for catching this.  Will fix it.
 
+Thanks
+Wesley Cheng
 
