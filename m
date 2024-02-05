@@ -1,214 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-9806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 341FE849CEC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 15:23:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77330849D78
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 15:57:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B01351F27862
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 14:23:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26D46281AB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 14:57:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C74F24B2A;
-	Mon,  5 Feb 2024 14:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DCC22C1A7;
+	Mon,  5 Feb 2024 14:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NQfc5zvF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z5FvtXFN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4977A28DD5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Feb 2024 14:23:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4D92C688;
+	Mon,  5 Feb 2024 14:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707143000; cv=none; b=lTEFdDdNpNNy3ItS3/N1njemCSeKdLYrIC26P27BW6vAdsA8f5vyhJ0PkSpHaAmcksmSrseuMnP5jHQEud/qZ+29XXjTMSPH9RFR04XwyQ0BwGJOzeLIOTXSVQMddZnFTGCKklLL+62XhE4nZ1n+lrwzCSdcs2gRvXcg3Xy68/4=
+	t=1707145055; cv=none; b=Hcl4nTGAXpkB9+vVh+xvfiR8rCpoVzJMYb/Ngj/6KMkSwvgmcBtQzWlLShO3MmMGu/hPee7kDkphybFQu7t51wTOVVJHPDriHJsYsX06m8hLIbHSbNvowH+u1C1f25nxfP8MkpCWtfnUxmAbSy5apmRm+I4Ud+C6UUvCuMQpzcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707143000; c=relaxed/simple;
-	bh=5RyMVLemSkWVpyHBi0so1fiYtu5f37OhHrGEU8lWY2Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pJEHttTnhOJJWkopnJ9Hzhl4jbBqOecEhcv9ZHZLCxSY31wDhwcub6WIcZwP8Drh3Ae7KkYI+oa91fjz/afIhkwYTrmfkdURKUZ+nN5VdlpIsebcsUZxsJv9WNzr3HFJi1Pf/ZTqiaaTc8moP6YCdiYZcsfAcgr3dwSi8zhRjjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NQfc5zvF; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc6d8f19ab3so4399896276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 06:23:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707142997; x=1707747797; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+5NlV443+B7q3oSMetmnKtZavUAqBXHNm5S0epsUCIU=;
-        b=NQfc5zvF8fb4Iv1czlnFnsrAGQULSpqyTntEPy8R0ej0wzEa/OfOKOMfoTYEgjkwsF
-         oxc5xMVesQO/nN0FJUQlYcnUdroO2tU77lx/+LWQ/ieeeLAKaC0GB/p40j2syrtiLpR5
-         r1KcUOaWLgOf06uVXrojPXonDNfW11SCyF34blWNBsufyh1YJ+7t2dtKUt65cXwJlnv1
-         BgETtjgFC6Aruf6oI3H5Hj5N3uN49EHQB3IxGS8J2XPoI+/0oF8xx+VdDuDSDFVrcCc2
-         p+e2gvEWNzkYft7AdwSSXZtaek7+xaaN5lljO8fJsWDDSmLEXPXp9vJerMe5zGvTxnfn
-         1mbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707142997; x=1707747797;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+5NlV443+B7q3oSMetmnKtZavUAqBXHNm5S0epsUCIU=;
-        b=DrkRjAyTLCvcICZEzKT+VPZqeSym4TuTqpXJ2UU9ng/h78EJqjwYowR2D5luej+a/E
-         Km6njmwrlGgwMrJVWqAxBTCAlbO5jNkxj6cENK1M32IHs4pdyy/VvazUPu0dPewrmHqa
-         4upoLYCEtVOv7+XFsWHNtFz36nmseA94RlajIIUNPMvpeifvoZHqKXCw2k3fOJDvmzr1
-         CnRb0muOTySNDqKe4MDtQvubx+aYdg0nFsMuxWtRTuOy5Gwl2XgoTMCh9DzrAUb6KDLh
-         oGmMqHfFVAbuYtuauzr0cOwlC6OFUNo5PaiyQEAws+fCvvKudZvyMcJVHTeDxZ1KQUMI
-         kl6Q==
-X-Gm-Message-State: AOJu0YwIihnt34U/lh7faFUu2hhjYEn/6vgG7rYXX+YTmoMlEbJYh/Af
-	Kmw3MSIp/D+Yy4L3/whIKpOePG7YL+s/4oA8IXC3sd01FviZgTi5Efesw9aK9LGko8qhrwvnTLU
-	aBMQL/soxSSU/7HoXRu2/DF+HQwgaVxOmwG3AwA==
-X-Google-Smtp-Source: AGHT+IEUlohlidLYzYqnXenkXiTLg3hicV5YhqMEsU4zqFnIKrsU4uVbegoKrmAkB3WpX/zLBRuIrICMW8TGUvdgVxg=
-X-Received: by 2002:a25:acd2:0:b0:dc2:35c1:7d9c with SMTP id
- x18-20020a25acd2000000b00dc235c17d9cmr8131574ybd.60.1707142997250; Mon, 05
- Feb 2024 06:23:17 -0800 (PST)
+	s=arc-20240116; t=1707145055; c=relaxed/simple;
+	bh=RxXvJ6Oxzk/Mk4W4ObVkYG3nVDUACQ3QyEybGeMseN4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KK26Urnkc4lXdHeZyLZ83t+eLGPuwOj26fTEC9bcKxp1JrAb7Z+QqXoeuGxOwcNxeT4VM9YG8EJDC+C9L4GrjZNCnP3zizKlRJ3Etaeer0K3/LxpJmo//glkivm6neYiEmcD+BOudDEkUXiyiyHaIT7xIz4UmDC+84IbG9r/EzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z5FvtXFN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 415ApZD2001614;
+	Mon, 5 Feb 2024 14:57:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=+qiW1FvrZibrd0hus1IX9TpWC6Ia1DUINhu0PW690CE=; b=Z5
+	FvtXFNGHuRr3YvaSvEiFSGdxkQ+5Ptq1cDKoRgaTfl47Jg1730z4BU0kuSTJDLN7
+	O6h3h6TpXIWEy2G1qassDQDcnHNCt2vmDz3o3hPVgpNL/Q59A29M5dWUn0c6U0/I
+	7WKeFgJ4MTBAjL7h0T5VWHMJHaAL/KJvfSX/utqNQgMkjH9EfK1PcTE9jG+7wVCj
+	teKjzfJ3c77QzOY1iD6s4cAFb4b7hiHgSEkFLJvyjbMlANs2dNeByyYAyZ6T2ayO
+	6Mr07q/n6x3PfAuQli5IZjsjQ50Z8+YqtAcOQJ9PInC6200pGPuKuhOScrxVVoSj
+	6D79ZDrxDeqjj3qcISdw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w2s07s5et-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Feb 2024 14:57:24 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415EvNIm001748
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 14:57:23 GMT
+Received: from hu-okukatla-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 5 Feb 2024 06:57:19 -0800
+From: Odelu Kukatla <quic_okukatla@quicinc.com>
+To: <djakov@kernel.org>
+CC: <rafael@kernel.org>, <corbet@lwn.net>, <linux-pm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_okukatla@quicinc.com>, <quic_viveka@quicinc.com>,
+        <peterz@infradead.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 0/4] Add support for QoS configuration
+Date: Mon, 5 Feb 2024 20:26:02 +0530
+Message-ID: <20240205145606.16936-1-quic_okukatla@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240205115721.1195336-1-quic_jingyw@quicinc.com> <20240205115721.1195336-6-quic_jingyw@quicinc.com>
-In-Reply-To: <20240205115721.1195336-6-quic_jingyw@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 5 Feb 2024 16:23:06 +0200
-Message-ID: <CAA8EJpr7tHXZHcH1Sbcy0-MCZfMxKBjaPXGdpg3cqyyFjTZOeA@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/6] arm64: dts: qcom: add base AIM500 dtsi
-To: Jingyi Wang <quic_jingyw@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	kernel@quicinc.com, Tingwei Zhang <quic_tingweiz@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8CuRHnaaUPPMOjkjr2nz6EityrsQmTPz
+X-Proofpoint-GUID: 8CuRHnaaUPPMOjkjr2nz6EityrsQmTPz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_09,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1011
+ phishscore=0 spamscore=0 mlxscore=0 bulkscore=0 adultscore=0
+ mlxlogscore=740 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402050113
 
-On Mon, 5 Feb 2024 at 14:00, Jingyi Wang <quic_jingyw@quicinc.com> wrote:
->
-> Introduce aim500 board dtsi.
+This series adds QoS support for QNOC type device which can be found on 
+SC7280 platform. It adds support for programming priority,
+priority forward disable and urgency forwarding. This helps in
+priortizing the traffic originating from different interconnect masters
+at NOC(Network On Chip).
 
-So, is it a board or a module?
+Changes in v2:
+ - Updated regmap_update to make use GENMASK and FIELD_PREP.
+ - Removed the regmap structure from qcom_icc_node.
+ - Made qcom_icc_rpmh_configure_qos() static
+ - Removed qcom_icc_rpmh_map() API, inlined the code in probe
+   function.
+ - Updated declarations to reverse christmas tree fashion.
 
->
-> AIM500 Series is a highly optimized family of modules designed to
-> support AIoT and Generative AI applications based on sm8650p with
-> PMIC and bluetooth functions etc.
->
-> Co-developed-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
-> Signed-off-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
-> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi | 409 +++++++++++++++++++
->  1 file changed, 409 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
-> new file mode 100644
-> index 000000000000..cb857da8653b
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
-> @@ -0,0 +1,409 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sm8650p.dtsi"
-> +#include "pm8550.dtsi"
-> +#include "pm8550b.dtsi"
-> +#define PMK8550VE_SID 8
-> +#include "pm8550ve.dtsi"
-> +#include "pm8550vs.dtsi"
-> +#include "pmk8550.dtsi"
-> +
-> +/ {
-> +       aliases {
-> +               serial1 = &uart14;
-> +       };
-> +
-> +       vph_pwr: vph-pwr-regulator { };
+Odelu Kukatla (4):
+  interconnect: qcom: icc-rpmh: Add QoS configuration support
+  interconnect: qcom: sc7280: enable QoS configuration
+  dt-bindings: interconnect: add clock property to configure QoS on
+    SC7280
+  arm64: dts: qcom: sc7280: Add clocks for QoS configuration
 
-Is this regulator a part of the module or a part of the carrier board?
-If the latter is true, this must go to the carrier board DT file.
-
-> +};
-> +
-> +&apps_rsc {
-> +       regulators-0 {
-> +               compatible = "qcom,pm8550-rpmh-regulators";
-> +
-> +               vdd-bob1-supply = <&vph_pwr>;
-> +               vdd-bob2-supply = <&vph_pwr>;
-> +               vdd-l2-l13-l14-supply = <&vreg_bob1>;
-> +               vdd-l3-supply = <&vreg_s1c_1p2>;
-> +               vdd-l5-l16-supply = <&vreg_bob1>;
-> +               vdd-l6-l7-supply = <&vreg_bob1>;
-> +               vdd-l8-l9-supply = <&vreg_bob1>;
-> +               vdd-l11-supply = <&vreg_s1c_1p2>;
-> +               vdd-l12-supply = <&vreg_s6c_1p8>;
-> +               vdd-l15-supply = <&vreg_s6c_1p8>;
-> +               vdd-l17-supply = <&vreg_bob2>;
-> +
-> +               qcom,pmic-id = "b";
-
-[skipped]
-
-> +
-> +&qupv3_id_1 {
-> +       status = "okay";
-> +};
-
-No GPI node being enabled?
-
-> +
-> +&tlmm {
-> +       bt_default: bt-default-state {
-> +               bt-en-pins {
-> +                       pins = "gpio17";
-> +                       function = "gpio";
-> +                       drive-strength = <16>;
-> +                       bias-disable;
-> +               };
-> +
-> +               sw-ctrl-pins {
-> +                       pins = "gpio18";
-> +                       function = "gpio";
-> +                       bias-pull-down;
-> +               };
-> +       };
-> +};
-> +
-> +&uart14 {
-> +       status = "okay";
-> +
-> +       bluetooth {
-> +               compatible = "qcom,wcn7850-bt";
-> +
-> +               clocks = <&rpmhcc RPMH_RF_CLK1>;
-> +
-> +               vddio-supply = <&vreg_l3c_1p2>;
-> +               vddaon-supply = <&vreg_l15b_1p8>;
-> +               vdddig-supply = <&vreg_s3c_0p9>;
-> +               vddrfa0p8-supply = <&vreg_s3c_0p9>;
-> +               vddrfa1p2-supply = <&vreg_s1c_1p2>;
-> +               vddrfa1p9-supply = <&vreg_s6c_1p8>;
-> +
-> +               max-speed = <3200000>;
-> +
-> +               enable-gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
-> +               swctrl-gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-> +
-> +               pinctrl-0 = <&bt_default>;
-> +               pinctrl-names = "default";
-> +       };
-> +};
-> --
-> 2.25.1
->
->
-
+ .../interconnect/qcom,sc7280-rpmh.yaml        |  49 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |   3 +
+ drivers/interconnect/qcom/icc-rpmh.c          | 161 ++++++++-
+ drivers/interconnect/qcom/icc-rpmh.h          |  32 ++
+ drivers/interconnect/qcom/sc7280.c            | 332 ++++++++++++++++++
+ 5 files changed, 573 insertions(+), 4 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.17.1
+
 
