@@ -1,118 +1,361 @@
-Return-Path: <linux-arm-msm+bounces-9836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C777284A139
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:46:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33D1D84A1BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 19:05:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 077741F21135
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 17:46:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 926EE1F22DE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Feb 2024 18:05:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9283D481BF;
-	Mon,  5 Feb 2024 17:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14DCD47A76;
+	Mon,  5 Feb 2024 18:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KV5sY6cN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lKG8aOBA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B9C47F53;
-	Mon,  5 Feb 2024 17:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E38045C04;
+	Mon,  5 Feb 2024 18:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707155158; cv=none; b=uLtmoCvk9EXkEkLJODkj1PeMKw5TpPTRV6L9ycYXNDdQX1UJ9Ay/c0RsGj4BhD3acQqELOlUblSBmIvzMJvuMs9jibd1c7IxyOiX+9kWt5DuzyvpOs8OxrPRJkBUzVnH5if0LdDk/oCEGeywDSOtoJwMDw5jUPDgPGBU+1y46oU=
+	t=1707156315; cv=none; b=UVTkEmilz/+Cmir1KH9kSKcHhJqEMMvVOoIQpdVsLU+g3T2XpqpIIBuX3af/EXSzM91jUfEhP8mkzFzq1WmBkIqF+plM4nGKryVmYc2eIUdi8crr6UFRbFWO22q6BCL/aVbnHtfGc7hL+xkTFMCME3a0+0Jmr81oocPGhzrSmhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707155158; c=relaxed/simple;
-	bh=wfjuJDCo9ikop915DTLcUPjxvweOFqYhpNnxU+fUtKQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mZhI1z8UfNjlICU5Awbe/sQau1R5zwEkCeAXWNHdAbAhlNAV7CHN1rxnuzKARW7/ymgLeIXupeoOxKOrtz4pxkf0rcJDX6sb/htKfyruRq29OrWI31PLjZlVpJUtlQMFP0J0A7nu0S2Kb8KCWB/fOz/6ey+qYgSOBXfmZw1B0k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KV5sY6cN; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-29685114bc3so918653a91.3;
-        Mon, 05 Feb 2024 09:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707155156; x=1707759956; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tWpkA0adWfJg/N96ugMkWhlTX4/Zx12uY2WHwPaeRnA=;
-        b=KV5sY6cNWaCCNRShIkvNPAO0T8x+prCIilt1FNV9S8N262Oq7jgMyoyd40QwZrfAWF
-         Mz/6LHIh59F27KGxaPomrn+TZD2nB7let5nMRtR3xLd3pBb47odc7E+0Dds79IE55+GJ
-         CfPrRzH3UHnEXaZRnYQTU6AzlgfHw9SnSm+iLQsMxPqnnjguNR/tIAl9wbvN/W2guxiU
-         RTmbIkhSWa9TObXSweooQUVQsFT8Swg96t0xoTPnR8IKbNm3XWyu9jttHoDAbIYQeSyo
-         lvS8xP1Z9RumNEA+FsldaWTHAtkJGw34eWK01rrCw/etlaD6DvUFUMMD+yDd65tiqfzx
-         E4yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707155156; x=1707759956;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tWpkA0adWfJg/N96ugMkWhlTX4/Zx12uY2WHwPaeRnA=;
-        b=THGyNCckFp9VGCGDHFFSt61hybo2HhzITs9PqItDhYHNiFO23SGYW1WO89JdAFdSTF
-         apfw3n63VRQ5D51NBmeVt7+dZ+0ueoRiIwSLN07Udh9mwsqE0poIf8KAFWlK0szwr1Vj
-         TR1Ay0jAcfgZnnCvACzmPegqQ3MiZNft7FOTvZCDLcY0UJnpTvTcN9ytLU2gOrUYWqgY
-         flrI7tlOEEvq6bVR66pTxD9sqjLsjNZyBMn6nvPCwVNYZ5u7rqlxuBrudX76fFWvX1ro
-         0vQdopQvfG17xiaUapEb5d9XBLc7uF7rsmAmdI/KVE0NImP45pDyn3TTllTsXlmB0hKf
-         gASw==
-X-Gm-Message-State: AOJu0Ywp+LJq5iTV82+NWmasEjlu4z8a8LDy++VVvwZxjDEznU7ih7MJ
-	vatINLJyWBIh43DYoehGYxH6gD1aNdyHCh7ukZkqqfUPNSmypzXO
-X-Google-Smtp-Source: AGHT+IEqEmWKxapPmLXYmOp2uW9MmgZudDXICGNoo85jUNcxH4rxgZoagf5UZXbl3QwCCMxY73PBsw==
-X-Received: by 2002:a17:90b:3647:b0:296:3a5:6fb8 with SMTP id nh7-20020a17090b364700b0029603a56fb8mr140155pjb.25.1707155156241;
-        Mon, 05 Feb 2024 09:45:56 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUUTj4d9BneUR8TZxAaWCjiW0qPu4NyC9O0WiMqD0EHnQyDK/qEVa141FY7qkYuJnDqIDgdelFh/eE6OODkrU1xkP6MwGo1Rt4S8atEe92QUmNAC4qwcKL6NjLrhFpAbdAtuF4tZ0iSPFhZcNJvztJ+Oif6QDoKQP+woOxB+gNeACViotwAWvKQ0yEAcmkFw6aRy0M9Ahg5aX4o4dnA7tXBTiZpTGFAGhd8wEkpw6VdnFx9tIorsXqvjsSZM3byxJdSkfgWlHNoa2Rt7mZHKCmZd8B0Rl3ygArty1j/RFdt8876/3tNc2YGX3rrQMJvrU0/rpAaTe9J7N8PErxAllclAaSxa8IWv3bbiamB+yG6CkYt8W/2bY/qXRTgYWOTC7IJNdON29VtTP5MmAeDIzalabi2qUF44plo4wSA44LtuJfXkg==
-Received: from localhost (dhcp-141-239-144-21.hawaiiantel.net. [141.239.144.21])
-        by smtp.gmail.com with ESMTPSA id lc4-20020a170902fa8400b001d8e41b3f95sm141669plb.51.2024.02.05.09.45.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 09:45:55 -0800 (PST)
-Sender: Tejun Heo <htejun@gmail.com>
-Date: Mon, 5 Feb 2024 07:45:54 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Tasmiya Nalatwad <tasmiya@linux.vnet.ibm.com>
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"linux-next@vger.kernel.org" <linux-next@vger.kernel.org>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-	jiangshanlai@gmail.com,
-	"abdhalee@linux.vnet.ibm.com" <abdhalee@linux.vnet.ibm.com>,
-	"mputtash@linux.vnet.com" <mputtash@linux.vnet.com>,
-	"sachinp@linux.vnet.com" <sachinp@linux.vnet.com>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [Bisected] [commit dd6c3c544126] [linux-next] [6.8.0-rc2] Task
- hungs for infinite time call traces
-Message-ID: <ZcEe0q8Bg5zca1nA@slm.duckdns.org>
-References: <a95f5bcd-3c49-4ebd-b1b3-a688c5b6727c@linux.vnet.ibm.com>
+	s=arc-20240116; t=1707156315; c=relaxed/simple;
+	bh=vZ2vxmRSMlVSv9xWPjyyN4vmf705tCs2I2oPOSFY6jM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fJl3X6IQTgBG1zYaQz7aGD3myM47oE2F9I4aTXaC1oQXODOPCZuZpWHfh2KtYbFF2pmEh7g7nmLFUVnljENIlycr6L6jsnMPYKrUTwn3+t6mKzay0NDtzTePpw66EPR1iPDK3AbWOgq9/LfflTs8Jf3p5nKhT5d6iWd4aPLV8aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lKG8aOBA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4154o1OF018786;
+	Mon, 5 Feb 2024 18:03:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=EkcQSpWyhn7LMoQRMmn9wHaTsNm6fXeU0gN+3OV3Fhs=; b=lK
+	G8aOBA1xxeADfSlonObUqyU4gbhwSf4/ovUmXodkMwpchSGh9LjDp23WEPLV00U4
+	GDFeL8SEE9wUFgPuXozm8iS4Zm2Ojyzog/0uu9fYQHUMzCP+iQ86s2SvX2jIDcCb
+	dHyAl280dtWOZfUCiampfLIk69wKpdTvx2DZJm6kmkFQ9O/kVYRs/VrkwhqwIIfM
+	1Hmi8c+Asc5mH5o/3T3lIvguNhLrt3oO5wapAIKFNo0UVLpsAEDBLwBrBKJNV1bJ
+	9Uh8d17XxIa+2JPaWev7nrokoyX8AEc+r3CX0NjSXgAJTmPalKkejfD/jnNfCcb6
+	fBwPj8U0DLtg3Zw9akZA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w2s07ska7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Feb 2024 18:03:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415I3utq018616
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 18:03:56 GMT
+Received: from [10.216.24.76] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
+ 2024 10:03:44 -0800
+Message-ID: <3e8cf072-b633-4c02-a296-2b09daccc805@quicinc.com>
+Date: Mon, 5 Feb 2024 23:33:41 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a95f5bcd-3c49-4ebd-b1b3-a688c5b6727c@linux.vnet.ibm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/15] qcom_scm: scm call for create, prepare and
+ import keys
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <andersson@kernel.org>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <robh+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_nguyenb@quicinc.com>,
+        <bartosz.golaszewski@linaro.org>, <konrad.dybcio@linaro.org>,
+        <ulf.hansson@linaro.org>, <jejb@linux.ibm.com>,
+        <martin.petersen@oracle.com>, <mani@kernel.org>, <davem@davemloft.net>,
+        <herbert@gondor.apana.org.au>
+References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com>
+ <20240127232436.2632187-4-quic_gaurkash@quicinc.com>
+Content-Language: en-US
+From: Om Prakash Singh <quic_omprsing@quicinc.com>
+In-Reply-To: <20240127232436.2632187-4-quic_gaurkash@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2E0KVRb9ITXLnbDLoKzZmZPvY1dqb6wL
+X-Proofpoint-GUID: 2E0KVRb9ITXLnbDLoKzZmZPvY1dqb6wL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_12,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1015
+ phishscore=0 spamscore=0 mlxscore=0 bulkscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402050136
 
-Hello,
 
-On Mon, Feb 05, 2024 at 03:24:17PM +0530, Tasmiya Nalatwad wrote:
-> Greetings,
+
+On 1/28/2024 4:44 AM, Gaurav Kashyap wrote:
+> Storage encryption has two IOCTLs for creating, importing
+> and preparing keys for encryption. For wrapped keys, these
+> IOCTLs need to interface with Qualcomm's Trustzone, which
+> require these SCM calls.
 > 
-> [Linux-next] [6.8.0-rc2-next-20240130] [FC / XFS] Task hangs for infinite
-> time while running bonnie test XFS filesystem
+> generate_key: This is used to generate and return a longterm
+>                wrapped key. Trustzone achieves this by generating
+> 	      a key and then wrapping it using hwkm, returning
+> 	      a wrapped keyblob.
+> import_key:   The functionality is similar to generate, but here,
+>                a raw key is imported into hwkm and a longterm wrapped
+> 	      keyblob is returned.
+> prepare_key:  The longterm wrapped key from import or generate
+>                is made further secure by rewrapping it with a per-boot
+> 	      ephemeral wrapped key before installing it to the linux
+> 	      kernel for programming to ICE.
 > 
-> Bisected the issue. Git bisect points to the below commit
-> commit dd6c3c5441263723305a9c52c5ccc899a4653000
->           workqueue: Move pwq_dec_nr_in_flight() to the end of work item
-> handling
-
-This should be fixed by c70e1779b73a ("Fix pwq->nr_in_flight corruption in
-try_to_grab_pending()").
-
-Thanks.
-
--- 
-tejun
+> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>   drivers/firmware/qcom/qcom_scm.c       | 182 +++++++++++++++++++++++++
+>   drivers/firmware/qcom/qcom_scm.h       |   3 +
+>   include/linux/firmware/qcom/qcom_scm.h |   5 +
+>   3 files changed, 190 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 4882f8a36453..20dbab765c8e 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1285,6 +1285,188 @@ int qcom_scm_derive_sw_secret(const u8 *wkey, size_t wkey_size,
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_scm_derive_sw_secret);
+>   
+> +/**
+> + * qcom_scm_generate_ice_key() - Generate a wrapped key for encryption.
+> + * @lt_key: the wrapped key returned after key generation
+> + * @lt_key_size: size of the wrapped key to be returned.
+> + *
+> + * Qualcomm wrapped keys need to be generated in a trusted environment.
+> + * A generate key IOCTL call is used to achieve this. These are longterm
+> + * in nature as they need to be generated and wrapped only once per
+> + * requirement.
+> + *
+> + * Adds support for the create key IOCTL to interface
+> + * with the secure environment to generate and return a wrapped key..
+> + *
+> + * Return: longterm key size on success; -errno on failure.
+Why to return parameter input value? already has it. returning 0 on 
+success should be the standard unless the returned key size would change.
+> + */
+> +int qcom_scm_generate_ice_key(u8 *lt_key, size_t lt_key_size)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd =  QCOM_SCM_ES_GENERATE_ICE_KEY,
+> +		.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW, QCOM_SCM_VAL),
+> +		.args[1] = lt_key_size,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	void *lt_key_buf;
+> +	int ret;
+> +
+> +	lt_key_buf = qcom_tzmem_alloc(__scm->mempool, lt_key_size, GFP_KERNEL);
+> +	if (!lt_key_buf)
+> +		return -ENOMEM;
+> +
+> +	desc.args[0] = qcom_tzmem_to_phys(lt_key_buf);
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +	if (!ret)
+> +		memcpy(lt_key, lt_key_buf, lt_key_size);
+> +
+> +	memzero_explicit(lt_key_buf, lt_key_size);
+> +	qcom_tzmem_free(lt_key_buf);
+> +
+> +	if (!ret)
+> +		return lt_key_size;
+return 0 on success. lt_key_size is input value. Caller already has it.
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_generate_ice_key);
+> +
+> +/**
+> + * qcom_scm_prepare_ice_key() - Get per boot ephemeral wrapped key
+> + * @lt_key: the longterm wrapped key
+> + * @lt_key_size: size of the wrapped key
+> + * @eph_key: ephemeral wrapped key to be returned
+> + * @eph_key_size: size of the ephemeral wrapped key
+> + *
+> + * Qualcomm wrapped keys (longterm keys) are rewrapped with a per-boot
+> + * ephemeral key for added protection. These are ephemeral in nature as
+> + * they are valid only for that boot. A create key IOCTL is used to
+> + * achieve this. These are the keys that are installed into the kernel
+> + * to be then unwrapped and programmed into ICE.
+> + *
+> + * Adds support for the create key IOCTL to interface
+> + * with the secure environment to rewrap the wrapped key with an
+> + * ephemeral wrapping key.
+> + *
+> + * Return: ephemeral key size on success; -errno on failure.
+> + */
+> +int qcom_scm_prepare_ice_key(const u8 *lt_key, size_t lt_key_size,
+> +			     u8 *eph_key, size_t eph_key_size)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd =  QCOM_SCM_ES_PREPARE_ICE_KEY,
+> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
+> +					 QCOM_SCM_VAL, QCOM_SCM_RW,
+> +					 QCOM_SCM_VAL),
+> +		.args[1] = lt_key_size,
+> +		.args[3] = eph_key_size,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	void *eph_key_buf;
+> +	void *lt_key_buf;
+> +	int ret;
+> +
+> +	lt_key_buf = qcom_tzmem_alloc(__scm->mempool, lt_key_size, GFP_KERNEL);
+> +	if (!lt_key_buf)
+> +		return -ENOMEM;
+> +	eph_key_buf = qcom_tzmem_alloc(__scm->mempool, eph_key_size, GFP_KERNEL);
+> +	if (!eph_key_buf) {
+> +		ret = -ENOMEM;
+> +		goto err_free_longterm;
+> +	}
+> +
+> +	memcpy(lt_key_buf, lt_key, lt_key_size);
+> +	desc.args[0] = qcom_tzmem_to_phys(lt_key_buf);
+> +	desc.args[2] = qcom_tzmem_to_phys(eph_key_buf);
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +	if (!ret)
+> +		memcpy(eph_key, eph_key_buf, eph_key_size);
+> +
+> +	memzero_explicit(eph_key_buf, eph_key_size);
+> +	qcom_tzmem_free(eph_key_buf);
+> +
+> +err_free_longterm:
+> +	memzero_explicit(lt_key_buf, lt_key_size);
+> +	qcom_tzmem_free(lt_key_buf);
+> +
+> +	if (!ret)
+> +		return eph_key_size;
+return 0 on success. eph_key_size is input value. Caller already has it.
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_prepare_ice_key);
+> +
+> +/**
+> + * qcom_scm_import_ice_key() - Import a wrapped key for encryption
+> + * @imp_key: the raw key that is imported
+> + * @imp_key_size: size of the key to be imported
+> + * @lt_key: the wrapped key to be returned
+> + * @lt_key_size: size of the wrapped key
+> + *
+> + * Conceptually, this is very similar to generate, the difference being,
+> + * here we want to import a raw key and return a longterm wrapped key
+> + * from it. The same create key IOCTL is used to achieve this.
+> + *
+> + * Adds support for the create key IOCTL to interface with
+> + * the secure environment to import a raw key and generate a longterm
+> + * wrapped key.
+> + *
+> + * Return: longterm key size on success; -errno on failure.
+> + */
+> +int qcom_scm_import_ice_key(const u8 *imp_key, size_t imp_key_size,
+> +			    u8 *lt_key, size_t lt_key_size)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd =  QCOM_SCM_ES_IMPORT_ICE_KEY,
+> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
+> +					 QCOM_SCM_VAL, QCOM_SCM_RW,
+> +					 QCOM_SCM_VAL),
+> +		.args[1] = imp_key_size,
+> +		.args[3] = lt_key_size,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	void *imp_key_buf;
+> +	void *lt_key_buf;
+> +	int ret;
+> +
+> +	imp_key_buf = qcom_tzmem_alloc(__scm->mempool, imp_key_size, GFP_KERNEL);
+> +	if (!imp_key_buf)
+> +		return -ENOMEM;
+> +	lt_key_buf = qcom_tzmem_alloc(__scm->mempool, lt_key_size, GFP_KERNEL);
+> +	if (!lt_key_buf) {
+> +		ret = -ENOMEM;
+> +		goto err_free_longterm;
+> +	}
+> +
+> +	memcpy(imp_key_buf, imp_key, imp_key_size);
+> +	desc.args[0] = qcom_tzmem_to_phys(imp_key_buf);
+> +	desc.args[2] = qcom_tzmem_to_phys(lt_key_buf);
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +	if (!ret)
+> +		memcpy(lt_key, lt_key_buf, lt_key_size);
+> +
+> +	memzero_explicit(lt_key_buf, lt_key_size);
+> +	qcom_tzmem_free(lt_key_buf);
+> +
+> +err_free_longterm:
+> +	memzero_explicit(imp_key_buf, imp_key_size);
+> +	qcom_tzmem_free(imp_key_buf);
+> +
+> +	if (!ret)
+> +		return lt_key_size;
+return 0 on success. lt_key_size is input value. Caller already has it.
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_import_ice_key);
+> +
+>   /**
+>    * qcom_scm_hdcp_available() - Check if secure environment supports HDCP.
+>    *
+> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+> index 56ff0806f5d2..c30d6383b6de 100644
+> --- a/drivers/firmware/qcom/qcom_scm.h
+> +++ b/drivers/firmware/qcom/qcom_scm.h
+> @@ -128,6 +128,9 @@ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
+>   #define QCOM_SCM_ES_INVALIDATE_ICE_KEY	0x03
+>   #define QCOM_SCM_ES_CONFIG_SET_ICE_KEY	0x04
+>   #define QCOM_SCM_ES_DERIVE_SW_SECRET	0x07
+> +#define QCOM_SCM_ES_GENERATE_ICE_KEY	0x08
+> +#define QCOM_SCM_ES_PREPARE_ICE_KEY	0x09
+> +#define QCOM_SCM_ES_IMPORT_ICE_KEY	0xA
+>   
+>   #define QCOM_SCM_SVC_HDCP		0x11
+>   #define QCOM_SCM_HDCP_INVOKE		0x01
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index 89358478ac67..a0983a40bc09 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -105,6 +105,11 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+>   			 enum qcom_scm_ice_cipher cipher, u32 data_unit_size);
+>   int qcom_scm_derive_sw_secret(const u8 *wkey, size_t wkey_size,
+>   			      u8 *sw_secret, size_t sw_secret_size);
+> +int qcom_scm_generate_ice_key(u8 *lt_key, size_t lt_key_size);
+> +int qcom_scm_prepare_ice_key(const u8 *lt_key, size_t lt_key_size,
+> +			     u8 *eph_key, size_t eph_size);
+> +int qcom_scm_import_ice_key(const u8 *imp_key, size_t imp_size,
+> +			    u8 *lt_key, size_t lt_key_size);
+>   
+>   bool qcom_scm_hdcp_available(void);
+>   int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt, u32 *resp);
 
