@@ -1,57 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-10013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F12484BF8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:52:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E04784C023
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:36:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E57B9B21D7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 21:52:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE3F6288D91
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:36:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CA0F1B963;
-	Tue,  6 Feb 2024 21:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HTLGHygp"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08C2A1C291;
+	Tue,  6 Feb 2024 22:36:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638421B95A;
-	Tue,  6 Feb 2024 21:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA5B1C29B;
+	Tue,  6 Feb 2024 22:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707256334; cv=none; b=AeDNFhbS1YU4Hhsk5OqEPpjS0c4PUPFT/9WYFTey9DSb6XwjAWvbKqm/KQ3pxI2dXEv/YeLYR1xVjKnE4paFRturJKZwv8rBfH4IVa045FajQBoudqhiAPTz3s2M53GNGlSF5Xe/SkCUU3WLg3R8g2wLVpleG3T03tx2tG47Xx0=
+	t=1707259004; cv=none; b=OeEvizlqj/x69yY+AuABHYbu4Uro/kmTYnh8aShR1YyiEqMp9aIk+4QkRqeB2gybL7ehyw6IRTXsB/5LWyogBXoCVjmU2WCKF5yDa9xo87OUTtUthLmr5yBBs2MfZ1cSy0SnkF3Vl+IG8gx+OML/YKDuDwebBTst0jufCxl1P0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707256334; c=relaxed/simple;
-	bh=H8+vCoR4mKowgldkPjWk9n+dvBkZ0xRly25CMhTfZMc=;
+	s=arc-20240116; t=1707259004; c=relaxed/simple;
+	bh=A6S132/zWnIF604R2BGgbTO1mKS5nuWInKg4JB4uibs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jnHt/arKOMmAfNmSdIpiJRd6foPbYCAm83A1wt9wn/45oWoICfnNDuEbIc7GH8Vw5HuU0GX6hK67Svk5DfNk6LyF3ef/NnENj88w2AKDiYmElhNqnC/oxiFTxI91ryLalUtJvIY8uAWyp5okDQCUmisHAmCUYbkVV+U7S9gGY34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HTLGHygp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498E0C433F1;
-	Tue,  6 Feb 2024 21:52:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707256334;
-	bh=H8+vCoR4mKowgldkPjWk9n+dvBkZ0xRly25CMhTfZMc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HTLGHygpemhnbgkK97eGUCi8Sys6gw6l9fo9yFaiTfPIv5Fkf3s5GIc76cx/dWZjr
-	 SrlS8FRcXNyrbpP+O8HNhYMjRMwsZIx5wrtenT0HUCB14dx6ZRttzkshO33HORuJLG
-	 hlWhuSnDI4zF+2jh93wKcF8Ci+/Ssa7XY226x+KUQqRlv4QQALVCJtjh2XM/29Urux
-	 ULd0u6xWu7RorlQnzjJgl5E5/Ljud8lPB46C8H/zNQNk7j1JVuQrEv9wmCD4PwO+oV
-	 Cw4DWuQAexqKMMZyGq/2Qssb+bPvacEdvKNKtkVwR7snGsK7M2J9HwSyxJ4j1pmNkO
-	 L7UJITQeb7muQ==
-Date: Tue, 6 Feb 2024 15:52:11 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: arm: qcom: drop the superfluous device
- compatibility schema
-Message-ID: <t2vjjm5fsitmkszbbrntwcn7qoedhd6oai5t7gx7vvi3loteea@qomgj2voar7r>
-References: <20240204-qcom-drop-compat-v1-1-69d6cd92aa0e@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FqCdWybQ1ToKTXoxztRbb+5gjnK1s5hlIqGS7S3LrWD5Tncu9RDHR1E2OLQsX2e+KG96kW1iDbzE8MdaivltxxHZg/1FJkdbZeO9lYCTqYaiu+KvRe9y1UIHPnPIQKP0Uk2EBEvkj2NcFyIB6/GdGo6jKDv7RT3IRV1APdN37No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 07AC33F78E;
+	Tue,  6 Feb 2024 23:36:32 +0100 (CET)
+Date: Tue, 6 Feb 2024 23:36:29 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, g@somainline.org
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>, 
+	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
+ pins
+Message-ID: <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
+References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
+ <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
+ <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,21 +58,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240204-qcom-drop-compat-v1-1-69d6cd92aa0e@linaro.org>
+In-Reply-To: <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
 
-On Sun, Feb 04, 2024 at 06:56:35PM +0200, Dmitry Baryshkov wrote:
-> The idea impressed in the commit b32e592d3c28 ("devicetree: bindings:
-> Document qcom board compatible format") never got actually adopted. As
-> can be seen from the existing board DT files, no device actually used
-> the PMIC / foundry / version parts of the compatible string. Drop this
-> compatibility string description to avoid possible confusion and keep
-> just the generic terms and the SoC list.
+On 2024-02-06 19:58:50, Konrad Dybcio wrote:
+> On 21.01.2024 23:33, Marijn Suijten wrote:
+> > Add the pinctrl states for SDC1 and use them on sdhc_1.
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
 > 
-> Fixes: b32e592d3c28 ("devicetree: bindings: Document qcom board compatible format")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [...]
+> 
+> 
+> > @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
+> >  				 <&gcc GCC_SDCC1_APPS_CLK>,
+> >  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+> >  			clock-names = "iface", "core", "xo";
+> > +
+> > +			pinctrl-names = "default", "sleep";
+> > +			pinctrl-0 = <&sdc1_on_state>;
+> > +			pinctrl-1 = <&sdc1_off_state>;
+> 
+> -names should go last
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Per the cover letter:
 
-Regards,
-Bjorn
+    - Moved pinctrl-names before pinctrl-N (Konrad);
+
+You explicitly requested this in https://lore.kernel.org/linux-arm-msm/60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org/#t
+but we also backtracked on it somewhat for consistency with other -names, and the general state of this file.
+
+Maybe we should apply v1 of this specific patch?
+
+- Marijn
 
