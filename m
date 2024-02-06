@@ -1,79 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A3B484BB78
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 17:56:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A01D284BBE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:32:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8935B1F2430E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 16:56:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C489284185
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 17:32:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C78D6539A;
-	Tue,  6 Feb 2024 16:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FF8D79F2;
+	Tue,  6 Feb 2024 17:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQGbIz22"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XI+qmq7g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0C44A3C;
-	Tue,  6 Feb 2024 16:55:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6168DDDA5;
+	Tue,  6 Feb 2024 17:32:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707238560; cv=none; b=SHlHuexPUsLPO2hcn8eVTU1/3qnP7HM4uiTU/Nu6bTMWXkdGDWO2TRBSPja7SU8gd0GynQ6GXUSWpe4o1P6yFjhUTpvAmtaQVZVJBN78+wsfKPG8UQ3di55TBZHrAgLHANpt1ZmO7EyDRYn5yypsR6crTjVHc8uzsAGTgZ/N1xw=
+	t=1707240737; cv=none; b=VzhbbwD5+qAlwQ/wVQW6iKTdpYgsdP0Y+Gio0jESX/mbGBERAVnWtCSi5za0gK/2OpORu8hSTCWqUdgQU+jfEhby2iQ8YIUoZo/GSf1/IGCUAMAdEFgJcPL7ZuqoO9Bdv+qqfoqsywpNJBRmm+WWjMbt8oo2xoVAjHt0R938Hcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707238560; c=relaxed/simple;
-	bh=0DzQTz3e7duXjAdDGG2HxGhv1OSVoCiUZ8ZzzpuxZLY=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LVvWXghvFYDJZgl9wfYqDo4lUMb4KFEf5uR0iRTzl3O+LT6JYdbE1kXNKbOX8wc13N9w4fVId5pBkNtI5HA8CDoZueJSc10opeJeWPvCpeC/yTe3R5qYxNAZW/FNQYe8ba63iJ1Umavhr23n3y0g44N88EQMgff9BQlY5XczOuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQGbIz22; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1707240737; c=relaxed/simple;
+	bh=3EeqJRLIoyYWfkrLk4PEQiIIv5w+frMQJAaL/cliLXA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=PXUnzAKm2iCK5E9iBLk1xeQiasA7tlI/fudQGmxpgQXyHhnx1ffutrvhdTKRfl626PrzhZsAcLM5+JSPhfybFnh6POYGuGJS68jgAjdAKykUEoyHNHLVll/VNSGvMgptotKzVOQJ713ZBRmvNHEACJPdngxtKhz+k5spMPRnSSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XI+qmq7g; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40fe03cd1caso11653275e9.0;
-        Tue, 06 Feb 2024 08:55:57 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40fd72f7125so24162135e9.1;
+        Tue, 06 Feb 2024 09:32:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707238556; x=1707843356; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQYvS2Nd94lvkvJ5h7uQC8LM8aPq2LsaJJg/9Gdvc2I=;
-        b=BQGbIz22UGh572OC2HLAsucmz77YDcpwdfMcN7UR8a1L5dFHVF8vxBlduHyNnCUlUu
-         6+GQGHeaAYrg1oIzMlDI8GpBNEGPCwbgbtrRE+CKdp+mrSUyibcdf/vbMOoCPVQs2wPy
-         SAKJ87l1cT98d9gDwKu31cKPcfTCV9RR1B/DlcNRjjs1WJ9wpwC0ecA0yqg4Fv3rV8WY
-         Hi84IBHugrPNmIOdhZkIMxQiIuL7sFz+ygNes6e2CwJ32WQB2Bko/mIQP6HbXhvcnzIh
-         QEmoVyL/epMllOljK6nUDyIn2r0W2EXx7qwqR/u8xHs/qsk8SfhvRbKnqRzVwVVYFOKq
-         pP9g==
+        d=gmail.com; s=20230601; t=1707240733; x=1707845533; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=V70bM6HDNj3Uk2T0tooI4Z/8UV1Jdcvl7ssqvAQfxw8=;
+        b=XI+qmq7gXzwpMY/x2FbD4pqDzDsvTH9yJ67c7NOUAzLhxKFU+flFE/LwMEbdV4XYGr
+         TiLUw3OS+q0jRvuyGfXo0ufHWZREheUu4bRo0qdB6FuywtbIucICE2SjpED0e3DIY/vb
+         90yIkwwLNHNC/pYarPD9+lnAkihIUGe5DZFKvngCsTyW1+k2jhsgsQ/TMPXNRbdaUaur
+         HJvyrEKI9YXWhKmfbcJ3uaDm69Fo231Q83xTTn+irg6JPWCVdPGMFsdmdVSWmhJBTJcm
+         ftjqbWXHN0oi0V4YSt2We4PvOdAcrd9Ow60Y86WoF0dMF3JtCaiozQQbPo7mgiCI2E4W
+         PkRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707238556; x=1707843356;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DQYvS2Nd94lvkvJ5h7uQC8LM8aPq2LsaJJg/9Gdvc2I=;
-        b=ejNPXSghEHJ8SojJ0cQCE7pTfmXm3tFh9fBq4+Cdn02OEauKe/hx/yqyD4v9KU2i3a
-         e/N2ELausuSXDZa1xQZDRz5FlP9T7j4/ca6dfrcogG8GqIIppj/2omI+q0a9ZmqCjjZW
-         39V5VAWyRc6Xq86pGraYDlC9xwygt2lWe3LrgnxtJKPjAM4j+bfu2Ic/z/gzPyGQTm8b
-         KBviT9X1SZFtrpGhiLz0OmxugaRKh/HVuNuhMqYUgHf4mBuHmNG0yPluJg8JQgcZmYZ3
-         DlL6c3roGznMOTxajnW+q9RYktUOaWi2mpQERXR0ebijc+7zTweHOBr9uMy2i2JRB57q
-         0Asw==
-X-Gm-Message-State: AOJu0Yw7pHst92ymvshOot+ulL1S6fQjvQw4+AVPCjD4l6uE145rSUpW
-	SsTf9zIA+ORKNl2z06iu8t82YY1xLaYxhd3M9W4XIBUQoPVXmOwP
-X-Google-Smtp-Source: AGHT+IERS90AfZk97jnnoFogRTYTgoR2FBo6O/FidCfBh3vKq//6L9L+dWeGdXOLQUOfv1tejDV6og==
-X-Received: by 2002:a05:600c:138c:b0:40e:e25c:41cf with SMTP id u12-20020a05600c138c00b0040ee25c41cfmr2498046wmf.12.1707238555647;
-        Tue, 06 Feb 2024 08:55:55 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWDCewoDdshbLkNDODTr84UP83nCrRLXABxPAlbqM+t6esdx9VWGB+QzPbH8bK0l4x0Vay8RcCwsGBh/qJekO95e0iAZ8CaK1FvfP8C+tW1L/2sdafTIABL+3TtYf6tJCEDNF8BSTrCeYfFlco6Kj+RDWyVXLGEZkwd6Gt89p35AGWs3b23LUs3bW3H+DEPVHhsEalI96bbL7anvABvfgVQLCcPtq3F8/S5RKJsnm+I5EyZSfN+mN8YzDwlI4dAjIfI3ZoSOmx0/2kL/RshNCDKCG1Wkxz1aOX88fdY91SjLCtxgptHp+msRLqbwkSPX8RQQFItKLPWURWGtGl6i0vpQUiQU/JHpeagkvZvuSskVxR44vGCOHtonjVLnzaNX1ey3kTZqqdFKFt34lVmI7yx9itY36gzihAxV9S+VTURG+XXZsSydnOKqYIoYe6HrQYxG3w2hg/6l0P6ybNgy6GgPJkClUoeTGPNu9d9DjA6rDvhh3ruCsJwWGy0SemXYLaYNte/qjdyICauE+m8eo1JWQqz3SlkhuOaCTkLId4CKzoYOujTi+JCsyALaFhxh7zsGg2Fj3WeNARWhxKMcJz2IyZ7048nH5fxRu9h1Kf5QQ024MJVZD76VJyE
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id l9-20020a1c7909000000b0040fc2f07ed5sm2456846wme.27.2024.02.06.08.55.53
+        d=1e100.net; s=20230601; t=1707240733; x=1707845533;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V70bM6HDNj3Uk2T0tooI4Z/8UV1Jdcvl7ssqvAQfxw8=;
+        b=YsgqQMftibK6alAz86/+MdZd2s058IGPSBAQNmkXFRbiXNZUm4PkEtxicPFb2A/1Ex
+         aPT8rsyrdcWwlopElM0VizLVdgl/h6G/adlJZzuhjfwji/bvGWTsXMkLa9iFUwI+uETx
+         CFDaH2pHlfAKrMidcKj9eILgJrg0LwQ3dkra+/tJJKZrGWATgLxVtZqnLycdGclfTeg0
+         YUa0IXs65VeY6K9oyAt+o+dCHQN5deTR/quia1he/knLIyihTNROxAA46sp7hQT02XSK
+         dkXIXyw++MnpYJwMx2cCKhoKsUW7jaSpiKvyyaXXbhhOGW1SX87sGyB1z8+NybpgnRjN
+         UC4Q==
+X-Gm-Message-State: AOJu0YyMKjE4sbR28bz8zLEWxx9dnh6rtqoQ3ImtrsPTlLNL8eFi+9G8
+	LCe9Mmw6pxym79a4b/t5hZTM0ZrEZ5jL4l/ijWAhJbUp38AdqQmA
+X-Google-Smtp-Source: AGHT+IEMwx8Lk6oiSspl5swxW099g50M8+BAg5/3So1l1AliwRcW/NIn2wnSplLRUrqwLu5d6riV8w==
+X-Received: by 2002:a05:600c:4587:b0:40f:afdd:40a with SMTP id r7-20020a05600c458700b0040fafdd040amr2659546wmo.0.1707240733446;
+        Tue, 06 Feb 2024 09:32:13 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXDvJOZ6skEQke9aWfAmCIifEAZLSqQhoQ3dK/YZASnpDsgHhFARn5wvKyaCeQJ+s8Mpmngwt8lhINKdJVp2vXL5RWBf9nq3H6yCedz2M1lOHr+BpXNnLM+bQu4HUyNT2uepjBM6+N8bvWcNOLPAX5uIYlHo1pCO5umAbDCZ5kgmFiEuq//mg/pqiwkj4QB173eXcTPqItIqKvlQkNljRaq6jYbjfoOk+ORXfdpNNgbPsSZJbhnY1GrWxU++pMYWoKMXEdt2POh/p79eDiCtnqbb6mMvKXaMdpYX8Wq4HpKLa4t8MojZ7sWIIOEazyuYXx2fMDb6So0MzEeZsqmz7rMXrHHKtZRhe5BrMnFsUL4IsOb5L60OchnosgA9vBf8OMT/RKe1LYaOTe7HoJWuNt8TurM9eNRalrhv4KdAZBvQE+47zhzZD/QEqnirqU1Av2NcShSoSh3JH66ljbPsGd1RlVQobeFFzFRVQSX5nkJvaLOOJ36TKVSO3SWcJQAlZi38JtWrmXLfoKTAKadWxrVyDTMxcCJPr87t7xIY/QVjhz7YVbSB81sRjwESZvPJEWzZTqw7BwJmSOOAWe1T6vnru0eDjSUZ+eqDzlat5aZA6dPZ7lBkqFEbQwzb4ZiD6qqj0eQYhuQGmGOkzH2/JmyOCxuMZRK/1l6aBxsvPPEN9X8mX7P8w==
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id l14-20020a05600c4f0e00b0040fc56712e8sm2621215wmq.17.2024.02.06.09.31.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 08:55:54 -0800 (PST)
-Message-ID: <65c2649a.1c0a0220.ca891.c8da@mx.google.com>
-X-Google-Original-Message-ID: <ZcJklT-ob7iP6ozk@Ansuel-xps.>
-Date: Tue, 6 Feb 2024 17:55:49 +0100
+        Tue, 06 Feb 2024 09:31:39 -0800 (PST)
 From: Christian Marangi <ansuelsmth@gmail.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>,
+To: "David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
@@ -84,86 +79,146 @@ Cc: "David S. Miller" <davem@davemloft.net>,
 	Russell King <linux@armlinux.org.uk>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v6 05/10] dt-bindings: net: Document Qcom
- QCA807x PHY package
-References: <20240205164851.1351-1-ansuelsmth@gmail.com>
- <20240205164851.1351-6-ansuelsmth@gmail.com>
- <20240206-correct-viscous-1f8c163f4d0c@spud>
+Subject: [net-next PATCH v7 00/10] net: phy: Introduce PHY Package concept
+Date: Tue,  6 Feb 2024 18:31:03 +0100
+Message-ID: <20240206173115.7654-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240206-correct-viscous-1f8c163f4d0c@spud>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 06, 2024 at 04:32:29PM +0000, Conor Dooley wrote:
-> Hey Christian,
-> 
-> On Mon, Feb 05, 2024 at 05:48:37PM +0100, Christian Marangi wrote:
-> > Document Qcom QCA807x PHY package.
-> > 
-> > Qualcomm QCA807X Ethernet PHY is PHY package of 2 or 5
-> > IEEE 802.3 clause 22 compliant 10BASE-Te, 100BASE-TX and
-> > 1000BASE-T PHY-s.
-> > 
-> > Document the required property to make the PHY package correctly
-> > configure and work.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> 
-> I think this looks pretty decent, some minor comments.
-> 
-> > +  qcom,package-mode:
-> > +    description: |
-> > +      PHY package can be configured in 3 mode following this table:
-> > +
-> > +                    First Serdes mode       Second Serdes mode
-> > +      Option 1      PSGMII for copper       Disabled
-> > +                    ports 0-4
-> > +      Option 2      PSGMII for copper       1000BASE-X / 100BASE-FX
-> > +                    ports 0-4
-> > +      Option 3      QSGMII for copper       SGMII for
-> > +                    ports 0-3               copper port 4
-> > +
-> > +      PSGMII mode (option 1 or 2) is configured dynamically by the driver
-> 
-> I'd drop mention of the driver here, with s/by the driver//.
->
+Idea of this big series is to introduce the concept of PHY package in DT
+and give PHY drivers a way to derive the base address from DT.
 
-Sure.
+The concept of PHY package is nothing new and is already a thing in the
+kernel with the API phy_package_join/leave/read/write.
 
-> > +      based on the presence of a connected SFP device.
-> > +    $ref: /schemas/types.yaml#/definitions/string
-> > +    enum:
-> > +      - qsgmii
-> > +      - psgmii
-> > +    default: psgmii
-> > +
-> > +  qcom,tx-driver-strength-milliwatt:
-> 
-> Is this a typo? Should not it be "drive-strength"? There's 39 mentions
-> in tree of "driver-strength" and 3500 for "drive-strength".
+What is currently lacking is describing this in DT and better reference
+a base address to calculate offset from.
 
-In the PHY datasheet the reg is called TX_DRIVER and the description say
-TX driver amplitude adjustment.
+In the scenario of a PHY package where multiple address are used and
+there isn't a way to get the base address of the PHY package from some
+regs, getting the information from DT is the only way.
 
-But the section is PSGMII/QSGMII drive control 1 register...
+A possible example to this problem is this:
 
-Guess it's a typo in the datasheet. Will change to drive.
+        ethernet-phy-package@0 {
+            compatible = "qcom,qca8075-package";
+            #address-cells = <1>;
+            #size-cells = <0>;
 
-> 
-> Otherwise I think the review comments have been resolved:
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-> 
+            reg = <0>;
+            qcom,package-mode = "qsgmii";
 
-Thanks!
+            ethernet-phy@1 {
+              reg = <1>;
+            };
+
+            phy4: ethernet-phy@4 {
+              reg = <4>;
+            };
+        };
+
+The mdio parse functions are changed to address for this additional
+special node, the function is changed to simply detect this node and
+search also in this. (we match the node name to be "ethernet-phy-package")
+
+PHY driver can then use introduced helper of_phy_package_join to join the
+PHY to the PHY package and derive the base address from DT.
+
+Changes v7:
+- Rebase on top of net-next
+- Add Reviewed-by tag for DT patch
+- Change tx-driver-strength to tx-drive-strength
+- Drop driver reference in DT
+Changes v6:
+- Back to absolute PHY implementation
+- Correctly drop refcount for node on error condition and on PHY leave
+- Drop DT include patch in favor for 3 boolean vendor property
+- Fix Documentation problem for compatible and missing type and
+  description
+- Drop redundand gpio-controller dependency and description
+- Skip scanphy with invalid PHY Package node and make reg mandatory
+- Rework fiber read status to use more generic function
+- Split qca808x LED generalization patch to permit easier review
+- Correctly return -EINVAL with wrong data passed to vendor property
+- Drop removing LED ops for qca807x PHY driver with gpio-controller
+Changes v5:
+- Rebase on top of net-next
+- Change implementation to base addr + offset in subnode
+- Adapt to all the changes and cleanup done to at803x
+Changes v4:
+- Rework DT implementation
+- Drop of autojoin support and rework to simple helper
+- Rework PHY driver to the new implementation
+- Add compatible for qca807x package
+- Further cleanup patches
+Changes v3:
+- Add back compatible implementation
+- Detach patch that can be handled separately (phy_package_mmd, 
+  phy_package extended)
+- Rework code to new simplified implementation with base addr + offset
+- Improve documentation with additional info and description
+Changes v2:
+- Drop compatible "ethernet-phy-package", use node name prefix matching
+  instead
+- Improve DT example
+- Add reg for ethernet-phy-package
+- Drop phy-mode for ethernet-phy-package
+- Drop patch for generalization of phy-mode
+- Drop global-phy property (handle internally to the PHY driver)
+- Rework OF phy package code and PHY driver to handle base address
+- Fix missing of_node_put
+- Add some missing docs for added variables in struct
+- Move some define from dt-bindings include to PHY driver
+- Handle qsgmii validation in PHY driver
+- Fix wrong include for gpiolib
+- Drop reduntant version.h include
+
+Christian Marangi (9):
+  dt-bindings: net: document ethernet PHY package nodes
+  net: phy: add support for scanning PHY in PHY packages nodes
+  net: phy: add devm/of_phy_package_join helper
+  net: phy: qcom: move more function to shared library
+  dt-bindings: net: Document Qcom QCA807x PHY package
+  net: phy: provide whether link has changed in c37_read_status
+  net: phy: qcom: move common qca808x LED define to shared header
+  net: phy: qcom: generalize some qca808x LED functions
+  net: phy: qca807x: add support for configurable LED
+
+Robert Marko (1):
+  net: phy: qcom: add support for QCA807x PHY Family
+
+ .../bindings/net/ethernet-phy-package.yaml    |  52 ++
+ .../devicetree/bindings/net/qcom,qca807x.yaml | 184 ++++
+ drivers/net/mdio/of_mdio.c                    |  79 +-
+ drivers/net/phy/broadcom.c                    |   3 +-
+ drivers/net/phy/mdio_bus.c                    |  44 +-
+ drivers/net/phy/phy_device.c                  | 107 ++-
+ drivers/net/phy/qcom/Kconfig                  |   8 +
+ drivers/net/phy/qcom/Makefile                 |   1 +
+ drivers/net/phy/qcom/at803x.c                 |  38 +-
+ drivers/net/phy/qcom/qca807x.c                | 849 ++++++++++++++++++
+ drivers/net/phy/qcom/qca808x.c                | 308 +------
+ drivers/net/phy/qcom/qcom-phy-lib.c           | 247 +++++
+ drivers/net/phy/qcom/qcom.h                   | 123 +++
+ include/linux/phy.h                           |   8 +-
+ 14 files changed, 1676 insertions(+), 375 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/ethernet-phy-package.yaml
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+ create mode 100644 drivers/net/phy/qcom/qca807x.c
 
 -- 
-	Ansuel
+2.43.0
+
 
