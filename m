@@ -1,164 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-9932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FDAC84B3AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:40:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C36F784B42C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 13:02:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA3F91F23AD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 11:40:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 027FF1C2317E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:02:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8411130E38;
-	Tue,  6 Feb 2024 11:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 250FD134730;
+	Tue,  6 Feb 2024 11:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pSLNGsH7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T7ckRfl7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D78133406;
-	Tue,  6 Feb 2024 11:32:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4219C134726
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 11:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707219162; cv=none; b=noyOFS68lyjA+uY8tW+VTmk3n/0/16BPDr/GV9BoEgM65WITZJxV56A29Q+/eUVYYBMKGHyV1DeTtucfOtLVa/pm6oee14Oep81teBTP0VR4UAymYoaSRHhqMqivcpA2grtVAB7WkKri7WTGj3rDM3o7ZhcvT4s3DJi4lsGZHp4=
+	t=1707220026; cv=none; b=hbXyZKBFBTE2mAUCPx9jsQRVz988Oe6JJxVBnsNmYz4lDjqL42FDB2641d5hyL5UJcOFQ1GxATXz2+yXsUGZRMwp6NVGqRiLe7BHQiXiSbh7J/zP45PlJ5KKClhPBp4ODXpykMgIlBUfWVeyDyf/97MZzQ5ibi4Mu/dyU7lm7lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707219162; c=relaxed/simple;
-	bh=N79rJzM8GDHrhhzgeLlRgFnL/Nib/s4RpPCU7DyNa60=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SS2sGhOQ/NTX2qILGkk2goyMIs2kiNAQRq61xhiytIsaAtdPsY45FIe2AUOPEtutCy0EWvkfVE6WWhONxblo0Dt85oVk/pcVXAaHw6GLdYMtokyiS3X7EtWvR5C1wCpzERwOOIW9Qd0GgM9yXz08Jmu8QY6P4ycKznn9h99WGSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pSLNGsH7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416Acmo8007922;
-	Tue, 6 Feb 2024 11:32:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=E4k5345QOidUYeqmeDW+O1v6o7xV0leCEXUtllXhijA=; b=pS
-	LNGsH7vo3ArMM++M+RdRPjHKGYm5w3mrr9+fkOquxqDP6N4SPmOkCMr65idgmOsY
-	QQcXEHRmBhrH/EziRjTa7egrPrLgnwPMPfccwgz0Lv3PlDEvECxN5EYobIyObQff
-	N9fQ8oJ3Xck5JTrKYPHSr/IMgIRtn5aNnDN2o+uHM/QcqaDiGlieu1URwnkhS29I
-	hCIaLsmdOgjnOcOdpebUfWWEpSH37fzSuof2XrgwEd6l8apVrITei3QduDZATJsO
-	v2UwtMU1iGNCflc9H/jcnR/aPrbnojVvQq22PEcKzd6dCafOgMv/S3c5P9g4cwvy
-	nnAjgoXP8BleZDO1MnDg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3k6g83km-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 11:32:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416BWaZb025091
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Feb 2024 11:32:36 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 6 Feb 2024 03:32:31 -0800
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Ajit Pandey" <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona
-	<quic_jkona@quicinc.com>
-Subject: [PATCH 5/5] arm64: dts: qcom: sm8650: Add video and camera clock controllers
-Date: Tue, 6 Feb 2024 17:01:45 +0530
-Message-ID: <20240206113145.31096-6-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240206113145.31096-1-quic_jkona@quicinc.com>
-References: <20240206113145.31096-1-quic_jkona@quicinc.com>
+	s=arc-20240116; t=1707220026; c=relaxed/simple;
+	bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=K5DYo3AQS7JaC3dSF1I8dV2lr/E+TOIEzFkZjOIjSezj5hO6kDvxg/WPXzSMj1nzaT5ep39geHhmDDm5kC9JnAlfkO8h1HK02RFPXlYvStnEt+NIka4NJ9oHC8/G6jhn6u+7WGBwrxo058s0OQky+SYSqRTZ574twkYYWn5r21w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T7ckRfl7; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-60460399a33so18881697b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 03:47:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707220023; x=1707824823; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
+        b=T7ckRfl7+rz1Il39jNvgCpmjsYDy5v1j7Xb30fEStr+SYZulnz/LrqIup2lAEwh/dZ
+         OVH05SmtkTmyInfa/6LWxNHAd7ErBCQyqETpVptwxBF2UF8Dj6lC2vA6KZiZW2eDw2xr
+         AQdfxjpUPXiGYpODFJgQpyJMapJPLxmTmkDZlQdrNQWOWx7UqU8YgupQx08eO3n1ssTy
+         2zrKHL+6FD44jxLVpUqGbTkTqz5+Gq8o71dUv99kdjFOjChqxH+iyZOHfjc431D8hB9j
+         zGV32E0gbo6Y7yp7S9JjQizQPO70A5lYbd10fXNshH+h85HvMveExZ6Thv2e8RY/rB94
+         /FPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707220023; x=1707824823;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
+        b=qXhn45ew3AAORmfbvbfBVHVy40EzqyqEDJbvLInFphAiq0JuwWkUX+8tHZK/6w80o4
+         +AnW7TaM/p56ZurVw3GlFELsIlxYRvQ3E10+AAYrGStgpqxvG3QpkcK/ZNSqnyxo2HoQ
+         v2QHD9P78dmJJ5k3rzHwOKgvmmXcL7Y+xaofEa1SrQfpZy+oHZAmD5o4xQbmbD5mtl5O
+         If/zqDf61Or4OcZxqcjFIAKXRSyEcpYSO/MkysqXdb1MzXqPRP1YTySON/mWIcSci9IJ
+         6ImrgkisVxcId+mqEBsUFxsw7gbdUoQyO1ULSFr/NJWCin+GzqtrSRiqhwRn1sb7HrI+
+         dB3g==
+X-Gm-Message-State: AOJu0YxNsA7i5YvAaNEoI5QjVlm9SWlPWWYnTxnUlvS29UDyJ8PubWyH
+	8gMgwSL+U+i1sAC21h8PQK3ufUIptGetd2Q0Scy4jAwYPcof25OOw+wv5EgXrYYjn7naKXkZZMr
+	hKoQPsCp9od9mx8Wyz8eOEuCFwDZd0jbL9h8bag==
+X-Google-Smtp-Source: AGHT+IEfuSnFGwsVfjXpB67ixsdZ+sH5jJ3p57j+957+Y+Qu/ANlFkY0BcCK6ARwCr2ZftAxxEvyAXpHsoHwk4FNWoo=
+X-Received: by 2002:a0d:c1c7:0:b0:604:57e2:d87b with SMTP id
+ c190-20020a0dc1c7000000b0060457e2d87bmr1263880ywd.40.1707220023286; Tue, 06
+ Feb 2024 03:47:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ec4kAiHTRhS6zVDVLaZe2SuL7F8hvsPy
-X-Proofpoint-GUID: ec4kAiHTRhS6zVDVLaZe2SuL7F8hvsPy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-06_04,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0 spamscore=0
- suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402060081
+References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com> <20240127232436.2632187-2-quic_gaurkash@quicinc.com>
+In-Reply-To: <20240127232436.2632187-2-quic_gaurkash@quicinc.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 6 Feb 2024 12:46:52 +0100
+Message-ID: <CACMJSevf1hRS42oBFw7UotPk6B71uAWn9sWDdHu+PMk1zeN5=A@mail.gmail.com>
+Subject: Re: [PATCH v4 01/15] ice, ufs, mmc: use blk_crypto_key for program_key
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	andersson@kernel.org, ebiggers@google.com, neil.armstrong@linaro.org, 
+	srinivas.kandagatla@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org, robh+dt@kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, kernel@quicinc.com, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_omprsing@quicinc.com, 
+	quic_nguyenb@quicinc.com, konrad.dybcio@linaro.org, ulf.hansson@linaro.org, 
+	jejb@linux.ibm.com, martin.petersen@oracle.com, mani@kernel.org, 
+	davem@davemloft.net, herbert@gondor.apana.org.au
+Content-Type: text/plain; charset="UTF-8"
 
-Add device nodes for video and camera clock controllers on Qualcomm
-SM8650 platform.
+On Sun, 28 Jan 2024 at 00:26, Gaurav Kashyap <quic_gaurkash@quicinc.com> wrote:
+>
+> The program key ops in the storage controller does not
+> pass on the blk crypto key structure to ice, this is okay
+> when wrapped keys are not supported and keys are standard
+> AES XTS sizes. However, wrapped keyblobs can be of any size
+> and in preparation for that, modify the ICE and storage
+> controller APIs to accept blk_crypto_key.
+>
+> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index c455ca4e6475..0469dd6e119c 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -4,6 +4,8 @@
-  */
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sm8450-videocc.h>
-+#include <dt-bindings/clock/qcom,sm8650-camcc.h>
- #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
- #include <dt-bindings/clock/qcom,sm8650-gcc.h>
- #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
-@@ -3100,6 +3102,32 @@ opp-202000000 {
- 			};
- 		};
- 
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,sm8650-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&bi_tcxo_div2>,
-+				 <&gcc GCC_VIDEO_AHB_CLK>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm8650-camcc";
-+			reg = <0 0x0ade0000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&bi_tcxo_div2>,
-+				 <&bi_tcxo_ao_div2>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: display-subsystem@ae00000 {
- 			compatible = "qcom,sm8650-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
--- 
-2.43.0
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
