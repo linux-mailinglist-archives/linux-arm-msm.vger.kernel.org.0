@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-9997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C6A584BD93
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:58:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E33484BD97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:59:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7DB42920D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:58:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E22D71F29904
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:59:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67444134DB;
-	Tue,  6 Feb 2024 18:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C35F013FF6;
+	Tue,  6 Feb 2024 18:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cnf1RTss"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n/GBm2Oz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8937F14AAD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 18:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41A13FF8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 18:58:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707245880; cv=none; b=bM3zaa3S3AiMsfQROp8sGMDC52SMHRKVV1Wh1H7UEckGrL4Czca0cOgXUsL2CqgpD9HrKXvs8H0JdMnxhBiy/Hmo5yY8BccA87vE/XmcbUd0t9NS+VKFqrcPZbPQKiQfZeML893C5RODa1BQEc8AIuDT3uC20fkMxAsYqjIE7G4=
+	t=1707245935; cv=none; b=hy5GbZecV0ncM7MPiudSus88RY4EXSfX/GCB2nC28sMU/ZttQ9CLfpNqmiH2etbiWLQP4ZAiv/bVJeqSelUYcf5RG7gExq57s8NlV+za8O3sl6pJjW85fVQe8zLmMRJK3eBRZ4KRzq1kN2ttHzQ731Krb9UqPG2xWAwvdA8pDWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707245880; c=relaxed/simple;
-	bh=811TtQ+u7lVkK0DFvD7XxzbN/eKD39v1rQxALwhDaOY=;
+	s=arc-20240116; t=1707245935; c=relaxed/simple;
+	bh=Qq3xKFGjIEfMfs8qVG/PR9UbUlr+y95P+DQqHobJq7Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TH73sOBTL6LqKng8OsipNSnkK+0lxVLHvto1oXMUNhgHXxghekZZdovJFWmD50B3HaWXtJfVHcii11dixapqG2CJNksa2xFLtuX6AL7XkfvHA9huZmQIxCQFX8Z0fHC83ovX7hyo+rOkemo1ZH+zkmG6YCX2i0WMyuNcuUBRZhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cnf1RTss; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:Content-Type; b=ouuB6eNMoSwok7mfzzXP7oiPrJQnVhzw5jFLTe2AjgWPeROU76miJ1oGms4G+fPLlSvvBQ88UkF4MwugOOIzQO9QpNQkQWuo148joA3uEn+cu+SWznFvSdeNWyFwqTtBf9XhGmlnF/W5p4lbbC/k4ytduy5oRLs9ygvqLDBkmWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n/GBm2Oz; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a3856588ba8so31925866b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 10:57:58 -0800 (PST)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a372a3773a5so404637366b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 10:58:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707245877; x=1707850677; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707245931; x=1707850731; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vixop/hbyXnCNa7TQeaAEHJb2bqnpeq800yiSE0X/Pk=;
-        b=cnf1RTsslszJ4schJ4cNngvJR6MMEaX8w5P0zWRhWYmT0m7I8UkYVoTvTgQQB0SAx2
-         KF7QDI87t+Q53ynVFwuCR5eNwxWjuzI2KSYiVeAPznxu47KShwY+VpeUQgVFC1l9lhR/
-         ASf9csptToD38Ytx0k8066jFA4ibZMHu7v+l8uwE2GDDXE9XL++Qgx4FOmfkatzMmJfB
-         7eNtdTDFEZGzMi6c9rNQKVIFnb+x64uf4rtS7ANaft7B8dCJjLXPbESDubYTjx1lEnoL
-         6TxK7g4o5/QYfgJhWKlPyQ1jux0WKwAS8yvX0y49JXTfHzq+7+8Pj1swpuw1oyoYvwvl
-         p8qA==
+        bh=FdAl2S1Pm6Ai0QntvJ25FTPqot82sSqL9vq3piBlzQs=;
+        b=n/GBm2Ozx+to+mk1svXWmCZjkInl5IwC+NQIJPbRMli5xf5O9iTZm7TEsJWsgygqFh
+         sxMl4gjDmAjIeRnrl7F+0ydU1gYsFYhSRMEMCidhKrCXgNR1zJdY9dDBRi72HNxJ7T+L
+         IoVD44RS35APJWXUMU1tg/EeGAfU//cwHe2C2JXLDPCLR2AA7bTxlpII7JV0U5P9mK4x
+         NgrMHyjBIwsK332q1mjoOCfISHB/uNeK1UDB3NFiwd/bnFJ0WyVCofKTnhpe0jbE//04
+         v8TkyGNUVPxTxBe3kitwwsnNuJ6Y0EyzUDjiQSRKYVW5/ZXuw6QAvzSOilMO25YjHbPM
+         L2vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707245877; x=1707850677;
+        d=1e100.net; s=20230601; t=1707245931; x=1707850731;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vixop/hbyXnCNa7TQeaAEHJb2bqnpeq800yiSE0X/Pk=;
-        b=bWaVsI/rcygCKhHRwmtXPJbjyMUrZ4zhezEK5jiL0Ng4O752grxUq0336/EmyJBcU6
-         spfOMHKKfl4sr1x+jBDS9iep8ltTdgk3rFb70hKwvqu4reO9kcqpnXpoq59X4Z+7EuEq
-         6QSipYelAS3ZVHDihTb6cv0iKWVdbLJN9mVnWjUvbNGUspfCC12a8r9xX5nj7zZUCch3
-         6EqvzvJHpzq+ZAbOWKo+WFyH77Y0zNryBYW3bH20dB9FrRQOvV/nfqFHc/oKfEhv8po8
-         hPQki8sS/+bmY6Lak2HaZYMwpeiJm8eonhSDIVRrbXDrlRBERIvd9XRkqTAJIUIGPyKZ
-         0J2A==
-X-Gm-Message-State: AOJu0YwNUyz5OFR+HTgAIQVJEKLJxwy4UIKvggLdjD+RAdqJmE21Q0bE
-	r/kLAkRpSIttS84QibGRbFCzP3CLaAsAayCZDQP12ReL6PTPg/XLxW5sjLdAvbc=
-X-Google-Smtp-Source: AGHT+IEvcTOcw3XZZ2sXTIoiIQ+uxuF8HNW113vbCA1U2OAVcXkOUXxhonx22HNefZoUYmdv+dkOug==
-X-Received: by 2002:a17:907:7673:b0:a36:3345:be88 with SMTP id kk19-20020a170907767300b00a363345be88mr2787197ejc.30.1707245876909;
-        Tue, 06 Feb 2024 10:57:56 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUIFCh9PHZuEUexAjyDgcBWwztla682CM8RVE4eHVTSOxlUxipKg/87DT/meLoDOFvXrF99DcOU74GXTle8jhXpNNdkjgigQF6fIi32Ge67I4C+IF8voyPp1QRljgI61qa6nO2BLpDTwcFxEbj5yn8+NrnHbuzfQLwDGYEHgV63UBIupyF74Qqb8yERdobWlDAtS9lbbbdPVymu22Acpz5g/75ZzNhre1AFkc0ZnHYzi38/aOZ4r7Gp4fV0yxFmgfceUyagwsHZ6+GrrF0eQFdaqsYk55e5sWm35JbfHNOfGmipbHYiuxfySVWqalnikfp+XWgyvWEWDbt8X4n3tU5fMD1F0stSdAftOariSjbcfgPB4LDgydPwPbW9zSLCRDcWgtgZWydFFY+YtmDZqfE26nld56mm+PeRfXggXXVtpRhWbmMjZ9iNn1WZaLYEFuUWd03kPgjCh6KSB7+BtXAc5slUrZssuIvmALoiz/lG2jPGf6qCVr8sTu//zKRIcUQVTnhgg44/liGT47ju+QJnX4wow0Eapt4vRg==
+        bh=FdAl2S1Pm6Ai0QntvJ25FTPqot82sSqL9vq3piBlzQs=;
+        b=u6fNgWIMxO4h89GMpl9XutRB9yZrDu8bb6Q4Yaj/5RiFRGmp9D4jVH3D1S5SNGkF7r
+         aXcUeMgRFfpB9wKC+Uub/Fjp4YVxR3mSkS1bx4nLl3Md/oXDomddJGmPN0XIeHr0Mn/B
+         Axq9cU4Iou50UayU+EbzJAX1IRp96Ec7g8iL22sJoB39s17fKPIdLZJxieV5eKWQQau4
+         90s415qDjYmO89JD6IbmVg1t4o6ko1iZf4MCAR5HqSI6GV1X/ZwwXa+RNuX9uaWg6rRY
+         OohRewFawNyIby1HToElDhV1Bo6DaPEViOWNk3b6sff2npYaGLQqXF/UHB7BQaL7erEF
+         IT/Q==
+X-Gm-Message-State: AOJu0YyvqxQJ8goB76tdADrPcVbduc65ecDo8/948Qi+XdxwUmLQC+hQ
+	1Mn2d4IF2D0YsMPOtpFN6azCHdvfp0ZNETF+Uz7hsjlxoQSIIubxQvdfdWlWf3I=
+X-Google-Smtp-Source: AGHT+IHHdeSrMjTPU39iYfRnmM/7OI0WsvY4zV0WS8j+hlcW4T0f4Fz1WR//rDoY7veUgZG9STkXNQ==
+X-Received: by 2002:a17:906:1b49:b0:a37:ebcf:f5dd with SMTP id p9-20020a1709061b4900b00a37ebcff5ddmr2755088ejg.11.1707245931519;
+        Tue, 06 Feb 2024 10:58:51 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWFATPKd7yatVpK1q443z0b9Fm8ua9iFEI32UBtHUxbp+Md68YBCbqPecuYVxWP1JqEZtJcjQpbsWHmbsnRr+xJkWDcHZCMORJv9t0vLhSe2NsSFHLx6/vI9kNvljHnj/w6lkhgeo2cWYTq7bXtGPP7NUDLZm5BtgqOAZkyao64eqV73M5MdUqgHKHx/bUMdm72/zLBzll9aH3XKeJs+iMRudYjKQU98hfgaS141M9oA3FQ8OzptdW8+dHNP+nrUG9nynELOrfZWQg5jeDqoMVGTOjH2akdrTsnF15mZjtxtpvkx0+zodsphV94xeDM2Coa0y/FbK9pCM1x0tQYc7a3ETQVbCmu57pis483tCcLYzHT/tmbDglZGIuuS7BRggGyrV/LIl7X+iMoSNV9qE7OYGpqm4p+oqE53ZB3h7WbiS6w3l1g8Oknwe6XpgPYLQ1iMisZxXv0oDX5J+Tmmn0MeXLqxxA+Rz7S4HJ/16/eyA==
 Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id y16-20020a170906071000b00a371eced193sm1465555ejb.49.2024.02.06.10.57.55
+        by smtp.gmail.com with ESMTPSA id y16-20020a170906071000b00a371eced193sm1465555ejb.49.2024.02.06.10.58.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Feb 2024 10:57:56 -0800 (PST)
-Message-ID: <3222c2c0-542d-4584-8283-c679a18315dd@linaro.org>
-Date: Tue, 6 Feb 2024 19:57:55 +0100
+        Tue, 06 Feb 2024 10:58:51 -0800 (PST)
+Message-ID: <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
+Date: Tue, 6 Feb 2024 19:58:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: msm8956-loire: Add usb vbus and
- id extcons to ci-hdrc
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
+ pins
 Content-Language: en-US
 To: Marijn Suijten <marijn.suijten@somainline.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -88,10 +88,9 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht,
  Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>,
  Martin Botka <martin.botka@somainline.org>,
  Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-2-7b186a02dc72@somainline.org>
+ <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -128,21 +127,29 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240121-msm8976-dt-v2-2-7b186a02dc72@somainline.org>
+In-Reply-To: <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21.01.2024 23:33, Marijn Suijten wrote:
-> ci-hdrc does not have the ability to detect voltage presence (5V vbus)
-> on the USB connector nor the role (via an ID sensing pin), and relies on
-> the PMIC-side charger to provide such information through an extcon
-> driver.
+> Add the pinctrl states for SDC1 and use them on sdhc_1.
 > 
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+
+> @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
+>  				 <&gcc GCC_SDCC1_APPS_CLK>,
+>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>  			clock-names = "iface", "core", "xo";
+> +
+> +			pinctrl-names = "default", "sleep";
+> +			pinctrl-0 = <&sdc1_on_state>;
+> +			pinctrl-1 = <&sdc1_off_state>;
+
+-names should go last
 
 Konrad
 
