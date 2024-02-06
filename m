@@ -1,124 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-9947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A08C084B5CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 14:00:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7725384B5F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 14:07:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56F3228A6B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 13:00:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3196B232FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 13:07:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F05EF12FF99;
-	Tue,  6 Feb 2024 13:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F44412FF82;
+	Tue,  6 Feb 2024 13:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="W0j0SuN+";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ANiJc1Kz";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="W0j0SuN+";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ANiJc1Kz"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Rq77jRC/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="E7cC4vu+";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="VNSmwHXL";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="OUot+J0z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B7612EBD6;
-	Tue,  6 Feb 2024 13:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576DE5B1E8;
+	Tue,  6 Feb 2024 13:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707224423; cv=none; b=N4McNfpgt2KrdZdGcp2j3q93JJkwgorKaVDBqtaPCW9CaMcDt0NkgeraTPyN8J3gSZ2a8iVdO0dgm03+l7f8z2ygNEUx3T5zBYwP26gTq9gJPTYfBpHjkPfNcgHXP5xyK58Sj0/ZXesMV0VbUZvfNw82wbYIHNy5ASjMXIMKhgo=
+	t=1707224834; cv=none; b=pVIuIAkGfiUjw96aFyOiabi1/tyE4kzQTJAJcijhbXkS5zEuJnX5ikk0zeZSa78KUauL347hcBC/0//5xdiH5HlN7tL6WzhEAAA9pNdmisYvK4o8IS6C6Rn52Kb7gG2j8oVQIlVsoBSrMqzrBGPXoKkm9uiUjDHhZc0elZXWov4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707224423; c=relaxed/simple;
-	bh=+aT0rKIS3UKpo4tm29e7syaTdpncuM29O5o+70E1SWo=;
+	s=arc-20240116; t=1707224834; c=relaxed/simple;
+	bh=Rk5h5UIopbKH5U0G82QzovYfd7Xtz6kEqds0jEkVH8s=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a0xJSVoTdKX/EzcnqyufIEjGVULUz6RopMnGXQHBsh//ig9j3g+mhjO0HhHTEAhOIif4i+q/kyHrW8vftsZmKCHgBYyvNnkteca/iQjo0Ovj8WMObUTjxHslC3YkrasLExsjxfFI0yL/0mvpTLF7naWtzVEPixRw6gioZxecqt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=W0j0SuN+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ANiJc1Kz; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=W0j0SuN+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ANiJc1Kz; arc=none smtp.client-ip=195.135.223.130
+	 MIME-Version:Content-Type; b=Q0JT/6uqPSf6ybNbk1zYODJKjHWP6ZsNGTp3IBL9GF/sCHmHdVwkqmlZlPPUyBHGBvRT+rd885YBzIlFVfMtWyv4aKKAOJhzl9nPL+okIaVgqUgXMatutu0UY6g6J+czwNB6xFvcB54rHa+NXsukJfES+wCU4iPZGERK3Cqzsqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Rq77jRC/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=E7cC4vu+; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=VNSmwHXL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=OUot+J0z; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 26B5121F97;
-	Tue,  6 Feb 2024 13:00:20 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 81A841F385;
+	Tue,  6 Feb 2024 13:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707224420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1707224830; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rPhPVGYDJ3fdMIeQrhxnapM7DO5sG2kieq0UlwBxO6I=;
-	b=W0j0SuN+f3pdCTZ/eqYSrkeUibin5cCK5VUQZRbbQeVgIA+GrcC0q0bxzYOH85qV+pF3h8
-	IyzuJDVmuYmw/NQQa8oeMAeSJq4nQ/eO7h2xUs2pbRczfdbWXnC1S1tCBa+/o0ZCXA7p1k
-	pWtJ66CIO5nhWvmAEuF3xYlfB06bPdI=
+	bh=uIELh7o1rf7Q9H6OH9+qJK0Dq6Bc0SJb8oKPETTnW6M=;
+	b=Rq77jRC/vRJKsbIrwrA0fKPplFv9GALPkxsoAUlBzXGT+J6cwSSUX27enNncFkNvRTODR5
+	P0hHQOaWvYF6pCrOdatV+0+R5rCGUbiNgqzToVsN1+MsL5W1g1V5FwoOVWrRSi1GdwzivJ
+	8tHc25qsy88t4VlYFsJUbPOSIwhxq4E=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707224420;
+	s=susede2_ed25519; t=1707224830;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rPhPVGYDJ3fdMIeQrhxnapM7DO5sG2kieq0UlwBxO6I=;
-	b=ANiJc1Kzkh0E1o6XsSz0NVKALAxAysv6xSiEsoyTnl62fV/+eOoyuwoQx0WVkjwFFwsrc2
-	emMI+XJorrW4yzCA==
+	bh=uIELh7o1rf7Q9H6OH9+qJK0Dq6Bc0SJb8oKPETTnW6M=;
+	b=E7cC4vu+ixHkjarke+cEHhy63uJ/aTzXRw7uYPIuSIX9oRAA6LcXcGke6d1+E+LnlhFN7E
+	+aAwR75LKjpk29Cg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707224420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1707224828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rPhPVGYDJ3fdMIeQrhxnapM7DO5sG2kieq0UlwBxO6I=;
-	b=W0j0SuN+f3pdCTZ/eqYSrkeUibin5cCK5VUQZRbbQeVgIA+GrcC0q0bxzYOH85qV+pF3h8
-	IyzuJDVmuYmw/NQQa8oeMAeSJq4nQ/eO7h2xUs2pbRczfdbWXnC1S1tCBa+/o0ZCXA7p1k
-	pWtJ66CIO5nhWvmAEuF3xYlfB06bPdI=
+	bh=uIELh7o1rf7Q9H6OH9+qJK0Dq6Bc0SJb8oKPETTnW6M=;
+	b=VNSmwHXLZV1vQnXC8Qzm6jeAOmw2ZzmR36+X5vhFEhN4HO7eM8dSunrFsCfHZelrynPoKF
+	JNRbB7P9PjmgSN2jgIML8T3ig7WaSjVa98NcIsZyBaJTUDJ+GooknWJEol+LBPU5JuBuWl
+	zLByi4qudwxUzVE/kZEFkiXw12vZ5Aw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707224420;
+	s=susede2_ed25519; t=1707224828;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rPhPVGYDJ3fdMIeQrhxnapM7DO5sG2kieq0UlwBxO6I=;
-	b=ANiJc1Kzkh0E1o6XsSz0NVKALAxAysv6xSiEsoyTnl62fV/+eOoyuwoQx0WVkjwFFwsrc2
-	emMI+XJorrW4yzCA==
+	bh=uIELh7o1rf7Q9H6OH9+qJK0Dq6Bc0SJb8oKPETTnW6M=;
+	b=OUot+J0z9hiWb651NB0borJfEJwa57lzNq0aAwl9ePJy2TdFKGJE1t25x2f41888iOTUBi
+	AY0coTgyhbrSAADw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D30FD132DD;
-	Tue,  6 Feb 2024 13:00:19 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3209F132DD;
+	Tue,  6 Feb 2024 13:07:08 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id OHcAM2MtwmXaNAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 06 Feb 2024 13:00:19 +0000
-Date: Tue, 06 Feb 2024 14:00:19 +0100
-Message-ID: <87zfwdvjbw.wl-tiwai@suse.de>
+	id A7yVC/wuwmW2NgAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Tue, 06 Feb 2024 13:07:08 +0000
+Date: Tue, 06 Feb 2024 14:07:03 +0100
+Message-ID: <87y1bxvj0o.wl-tiwai@suse.de>
 From: Takashi Iwai <tiwai@suse.de>
-To: Amadeusz =?ISO-8859-2?Q?S=B3awi=F1ski?=
- <amadeuszx.slawinski@linux.intel.com>
-Cc: Wesley Cheng <quic_wcheng@quicinc.com>,
-	srinivas.kandagatla@linaro.org,
-	mathias.nyman@intel.com,
-	perex@perex.cz,
-	conor+dt@kernel.org,
-	corbet@lwn.net,
-	lgirdwood@gmail.com,
-	andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	gregkh@linuxfoundation.org,
-	Thinh.Nguyen@synopsys.com,
-	broonie@kernel.org,
-	bgoswami@quicinc.com,
-	tiwai@suse.com,
-	robh+dt@kernel.org,
-	konrad.dybcio@linaro.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	alsa-devel@alsa-project.org
-Subject: Re: [PATCH v13 50/53] ALSA: usb-audio: Allow for rediscovery of connected USB SND devices
-In-Reply-To: <aaa76d7a-4299-4e1c-83f1-cbbea763927f@linux.intel.com>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: <srinivas.kandagatla@linaro.org>,
+	<mathias.nyman@intel.com>,
+	<perex@perex.cz>,
+	<conor+dt@kernel.org>,
+	<corbet@lwn.net>,
+	<lgirdwood@gmail.com>,
+	<andersson@kernel.org>,
+	<krzysztof.kozlowski+dt@linaro.org>,
+	<gregkh@linuxfoundation.org>,
+	<Thinh.Nguyen@synopsys.com>,
+	<broonie@kernel.org>,
+	<bgoswami@quicinc.com>,
+	<tiwai@suse.com>,
+	<robh+dt@kernel.org>,
+	<konrad.dybcio@linaro.org>,
+	<linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<linux-sound@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>,
+	<alsa-devel@alsa-project.org>
+Subject: Re: [PATCH v13 35/53] ALSA: usb-audio: Prevent starting of audio stream if in use
+In-Reply-To: <20240203023645.31105-36-quic_wcheng@quicinc.com>
 References: <20240203023645.31105-1-quic_wcheng@quicinc.com>
-	<20240203023645.31105-51-quic_wcheng@quicinc.com>
-	<aaa76d7a-4299-4e1c-83f1-cbbea763927f@linux.intel.com>
+	<20240203023645.31105-36-quic_wcheng@quicinc.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -126,16 +119,15 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
+Content-Type: text/plain; charset=US-ASCII
+Authentication-Results: smtp-out2.suse.de;
 	none
-X-Spam-Level: *
-X-Spam-Score: 1.20
-X-Spamd-Result: default: False [1.20 / 50.00];
+X-Spam-Level: 
+X-Spam-Score: -1.80
+X-Spamd-Result: default: False [-1.80 / 50.00];
 	 ARC_NA(0.00)[];
 	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 BAYES_HAM(-0.00)[32.59%];
+	 BAYES_HAM(-3.00)[100.00%];
 	 FROM_HAS_DN(0.00)[];
 	 TO_DN_SOME(0.00)[];
 	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
@@ -143,72 +135,123 @@ X-Spamd-Result: default: False [1.20 / 50.00];
 	 TAGGED_RCPT(0.00)[dt];
 	 MIME_GOOD(-0.10)[text/plain];
 	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 RCVD_COUNT_THREE(0.00)[3];
 	 R_RATELIMIT(0.00)[to_ip_from(RLjs3ec4aura4kmsd6wxjjm4hg)];
+	 RCVD_COUNT_THREE(0.00)[3];
 	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	 NEURAL_HAM_SHORT(-0.20)[-1.000];
-	 RCPT_COUNT_TWELVE(0.00)[24];
+	 RCPT_COUNT_TWELVE(0.00)[23];
 	 MID_CONTAINS_FROM(1.00)[];
 	 DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email];
 	 FUZZY_BLOCKED(0.00)[rspamd.com];
 	 FROM_EQ_ENVFROM(0.00)[];
 	 MIME_TRACE(0.00)[0:+];
-	 FREEMAIL_CC(0.00)[quicinc.com,linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,suse.com,vger.kernel.org,alsa-project.org];
+	 FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,quicinc.com,suse.com,vger.kernel.org,alsa-project.org];
 	 RCVD_TLS_ALL(0.00)[];
 	 SUSPICIOUS_RECIPS(1.50)[]
 X-Spam-Flag: NO
 
-On Mon, 05 Feb 2024 10:01:03 +0100,
-Amadeusz S³awiñski wrote:
+On Sat, 03 Feb 2024 03:36:27 +0100,
+Wesley Cheng wrote:
 > 
-> On 2/3/2024 3:36 AM, Wesley Cheng wrote:
-> > In case of notifying SND platform drivers of connection events, some of
-> > these use cases, such as offloading, require an ASoC USB backend device to
-> > be initialized before the events can be handled.  If the USB backend device
-> > has not yet been probed, this leads to missing initial USB audio device
-> > connection events.
-> > 
-> > Expose an API that traverses the usb_chip array for connected devices, and
-> > to call the respective connection callback registered to the SND platform
-> > driver.
-> > 
-> > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> > ---
-> >   sound/usb/card.c                  | 19 +++++++++++++++++++
-> >   sound/usb/card.h                  |  2 ++
-> >   sound/usb/qcom/qc_audio_offload.c |  2 ++
-> >   3 files changed, 23 insertions(+)
-> > 
-> > diff --git a/sound/usb/card.c b/sound/usb/card.c
-> > index 11b827b7a2a5..995b2df676ab 100644
-> > --- a/sound/usb/card.c
-> > +++ b/sound/usb/card.c
-> > @@ -202,6 +202,25 @@ struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
-> >   }
-> >   EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
-> >   +/*
-> > + * in case the platform driver was not ready at the time of USB SND
-> > + * device connect, expose an API to discover all connected USB devices
-> > + * so it can populate any dependent resources/structures.
-> > + */
-> > +void snd_usb_rediscover_devices(void)
-> > +{
-> > +	int i;
-> > +
-> > +	mutex_lock(&register_mutex);
-> > +	for (i = 0; i < SNDRV_CARDS; i++) {
-> > +		if (usb_chip[i])
-> > +			if (platform_ops && platform_ops->connect_cb)
-> > +				platform_ops->connect_cb(usb_chip[i]);
+> With USB audio offloading, an audio session is started from the ASoC
+> platform sound card and PCM devices.  Likewise, the USB SND path is still
+> readily available for use, in case the non-offload path is desired.  In
+> order to prevent the two entities from attempting to use the USB bus,
+> introduce a flag that determines when either paths are in use.
 > 
-> if inside if, it can just be && or maybe move callback check before
-> mutex lock and just return early if it is not present?
+> If a PCM device is already in use, the check will return an error to
+> userspace notifying that the stream is currently busy.  This ensures that
+> only one path is using the USB substream.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 
-The callback check must be inside mutex; otherwise you'll get a race
-about the platform_ops registration.
+Hm, I'm not sure whether it's safe to hold chip->mutex there for the
+long code path.  It even kicks off the auto-resume, which may call
+various functions at resuming, and some of them may re-hold
+chip->mutex.
+
+If it's only about the open flag, protect only the flag access with
+the mutex, not covering the all open function.  At least the re-entry
+can be avoided by that.
 
 
 thanks,
 
 Takashi
+
+> ---
+>  sound/usb/card.h |  1 +
+>  sound/usb/pcm.c  | 19 +++++++++++++++++--
+>  2 files changed, 18 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sound/usb/card.h b/sound/usb/card.h
+> index ed4a664e24e5..6d59995440c3 100644
+> --- a/sound/usb/card.h
+> +++ b/sound/usb/card.h
+> @@ -165,6 +165,7 @@ struct snd_usb_substream {
+>  	unsigned int pkt_offset_adj;	/* Bytes to drop from beginning of packets (for non-compliant devices) */
+>  	unsigned int stream_offset_adj;	/* Bytes to drop from beginning of stream (for non-compliant devices) */
+>  
+> +	unsigned int opened:1;		/* pcm device opened */
+>  	unsigned int running: 1;	/* running status */
+>  	unsigned int period_elapsed_pending;	/* delay period handling */
+>  
+> diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+> index 3adb09ce1702..c2cb52cd5d23 100644
+> --- a/sound/usb/pcm.c
+> +++ b/sound/usb/pcm.c
+> @@ -1241,8 +1241,15 @@ static int snd_usb_pcm_open(struct snd_pcm_substream *substream)
+>  	struct snd_usb_stream *as = snd_pcm_substream_chip(substream);
+>  	struct snd_pcm_runtime *runtime = substream->runtime;
+>  	struct snd_usb_substream *subs = &as->substream[direction];
+> +	struct snd_usb_audio *chip = subs->stream->chip;
+>  	int ret;
+>  
+> +	mutex_lock(&chip->mutex);
+> +	if (subs->opened) {
+> +		mutex_unlock(&chip->mutex);
+> +		return -EBUSY;
+> +	}
+> +
+>  	runtime->hw = snd_usb_hardware;
+>  	/* need an explicit sync to catch applptr update in low-latency mode */
+>  	if (direction == SNDRV_PCM_STREAM_PLAYBACK &&
+> @@ -1259,13 +1266,17 @@ static int snd_usb_pcm_open(struct snd_pcm_substream *substream)
+>  
+>  	ret = setup_hw_info(runtime, subs);
+>  	if (ret < 0)
+> -		return ret;
+> +		goto out;
+>  	ret = snd_usb_autoresume(subs->stream->chip);
+>  	if (ret < 0)
+> -		return ret;
+> +		goto out;
+>  	ret = snd_media_stream_init(subs, as->pcm, direction);
+>  	if (ret < 0)
+>  		snd_usb_autosuspend(subs->stream->chip);
+> +	subs->opened = 1;
+> +out:
+> +	mutex_unlock(&chip->mutex);
+> +
+>  	return ret;
+>  }
+>  
+> @@ -1274,6 +1285,7 @@ static int snd_usb_pcm_close(struct snd_pcm_substream *substream)
+>  	int direction = substream->stream;
+>  	struct snd_usb_stream *as = snd_pcm_substream_chip(substream);
+>  	struct snd_usb_substream *subs = &as->substream[direction];
+> +	struct snd_usb_audio *chip = subs->stream->chip;
+>  	int ret;
+>  
+>  	snd_media_stop_pipeline(subs);
+> @@ -1287,6 +1299,9 @@ static int snd_usb_pcm_close(struct snd_pcm_substream *substream)
+>  
+>  	subs->pcm_substream = NULL;
+>  	snd_usb_autosuspend(subs->stream->chip);
+> +	mutex_lock(&chip->mutex);
+> +	subs->opened = 0;
+> +	mutex_unlock(&chip->mutex);
+>  
+>  	return 0;
+>  }
 
