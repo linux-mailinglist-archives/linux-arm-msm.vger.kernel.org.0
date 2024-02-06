@@ -1,128 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-10010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95CC484BE69
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 21:07:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEAEF84BF2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:28:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AC481F24E19
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 20:07:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B1E21F246E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 21:28:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1E921798A;
-	Tue,  6 Feb 2024 20:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132A71B950;
+	Tue,  6 Feb 2024 21:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nj0tB5yY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TBgXOWI/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AA617BCE;
-	Tue,  6 Feb 2024 20:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4821B81F;
+	Tue,  6 Feb 2024 21:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707250001; cv=none; b=W8cz+5Tzjwz5vSQOosJ6u/cEimSGyKTuIt+jrAzt4kQ3oi315y5RpQ7RzOUEYsv9P58FgJ4Qj9SIXsUXfdSydJdx9Djt0S8kvXl/uB1j7RJnawiP8Q7YI/Yb9NtBk2ByLcJWWaVFCW1fNCYR5A6EEyaXMR6YtPoRgwU/u02UNF4=
+	t=1707254899; cv=none; b=Ad2G/Aphv7LlVji/Sn9Or0geWkk3mE2cGUUULEhhZh0mrqEFVAHo/0IGWPsErvfUabUp/Xgkq/7Fb3XflvHFAeEP9uJQlc1KdVaZybime5cYTtIaA0B22DzotRCaWRjBRE3QV2Oehb4GZ8unmM2T02XDCgDv8SIUD/Qr+IygeGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707250001; c=relaxed/simple;
-	bh=VQ0SGIi4z2XyvepZBFYEVNAzFUIqIq3PsOw+G721v/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kFCfzf4UNsaqiuDrO5DZjnDUEUai3qDtbYcHHi6r5XCxQuPLw22WlHxZLShknbuKv2XfjC+HjlkShvnKpfssccyGMscuWldD0YwbulBNmZMRlzu4FuitS5VsbLcVYZJOoFbl33yDsScfUkttRysj5jOBCQI62ap44NzgEu+scVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nj0tB5yY; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1707254899; c=relaxed/simple;
+	bh=7Pm8fH+QR8eYSwznrNxCN5gHgcDM4ULOqVSCbRSf0Jo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sl8Rx1812SBka3eRPPLK7g/c4wsy1fk3EdPbX1TL5JsYnzIdEAbstEvCLlEpRuWiKUG0lCSFkgWvJaD1xUs+tlNWx0JTkPIz74i6FF2ufvatpNKPWHEyiVqTMb9rH0hutdtAyU4XIdx70CAdJVzE8kchv6ge05lga9/zmD7B6nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TBgXOWI/; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416K0WpP015007;
-	Tue, 6 Feb 2024 20:06:35 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416J147h023727;
+	Tue, 6 Feb 2024 21:28:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=H0bBGW7clRKEJWq0+cMgOgOlsVK8a4Po1YyUgny5KLs=; b=nj
-	0tB5yY5YO9GBMbMsHnSk6svOI1x7Gpj1IJr5LYesokyWODku1Yzrxs0ioYDuY3VV
-	afBlHT2Cupw/cx6uieMyjlZNR8XIBy9BO0NKY8e9riF8KYITOqI/YUaS/pRUFdO9
-	jGzrSg0cTOITpNYpsgToO532TniRLTkiDsXJkInjYk+eDN3shfg870mvNTOvgBRn
-	NFks3vI1hMOm0ahdqQrGFd/rnsTHIjxIotXcn8Axfouyg0EYI8qzs45Ia6hoWQIP
-	WKDqqpMw6ZpKn9hHRQoadBZ+jZzTT05OLDupAlkSYy+8B0tkbdI5eCd7Z+76meZC
-	d55dRSKZN0BCKAIstbpA==
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=hEoSiQdSIeE/Z9h6sh8I
+	iBbAA21LDJu25KZcrFHfcvo=; b=TBgXOWI/p8bpIG6bIIoqSlFsYmKfnbG6dlyY
+	m1TdeD6wz4IWtl3vEA9zT04+StO+A+FDvgYegTSIhTVXxnjjdB+B3eI4Qf5Y0uDZ
+	DtT7p1e5LOClGCfCtfywukuBL6OMJlAIPxWI0aroeXCRjK1/x15XlmMpBkjG9cJU
+	wkwqqjkiUXoLXYvA3QsuVXjNzw/jh03Upr4Fk42Vzzhd3LVOwINTnzeFb0EegZuK
+	tiWRQpep002lUHi9q1eRj3YvdbTdAIpZMmZZq2d37sIR72qsxEwLccNkOULG2HfH
+	SEQJ21Hp5cCQcbJ8spUXI3gfsTmi2q5DX4A9hX+ebCaH/mepvw==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3ud2r0sg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3hsesjav-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 20:06:35 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416K6Yt4015727
+	Tue, 06 Feb 2024 21:28:03 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 416LN76W006027;
+	Tue, 6 Feb 2024 21:27:35 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3w1ejm0rw8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Feb 2024 20:06:34 GMT
-Received: from [10.110.41.143] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 6 Feb
- 2024 12:06:31 -0800
-Message-ID: <79a01e7c-3a88-49cf-b227-804155a65a4b@quicinc.com>
-Date: Tue, 6 Feb 2024 12:06:31 -0800
+	Tue, 06 Feb 2024 21:27:35 +0000
+Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 416LRYTD010370;
+	Tue, 6 Feb 2024 21:27:34 GMT
+Received: from hu-devc-lv-u20-a-new.qualcomm.com (hu-abchauha-lv.qualcomm.com [10.81.25.35])
+	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 416LRY0u010367
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 Feb 2024 21:27:34 +0000
+Received: by hu-devc-lv-u20-a-new.qualcomm.com (Postfix, from userid 214165)
+	id 266132207A; Tue,  6 Feb 2024 13:27:34 -0800 (PST)
+From: Abhishek Chauhan <quic_abchauha@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+        Prasad Sodagudi <psodagud@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>
+Cc: kernel@quicinc.com
+Subject: [PATCH v1] TSO and TBS cannot co-exist. TBS requires special descriptor to be allocated at bootup. Initialising Tx queues at probe to support TSO and TBS can help in allocating those resources at bootup.
+Date: Tue,  6 Feb 2024 13:27:34 -0800
+Message-Id: <20240206212734.1209920-1-quic_abchauha@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: sm8450: Add mapping to llcc
- Broadcast_AND region
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <cover.1707202761.git.quic_uchalich@quicinc.com>
- <cf138f258ecbfbcc94717e4914de2f60153e5abb.1707202761.git.quic_uchalich@quicinc.com>
- <1e26c5b3-716b-4f16-bae4-2682667550a5@linaro.org>
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-In-Reply-To: <1e26c5b3-716b-4f16-bae4-2682667550a5@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2YAAIXSMdXVycn0rLv5z7Xr3R9POA_SH
-X-Proofpoint-GUID: 2YAAIXSMdXVycn0rLv5z7Xr3R9POA_SH
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lfZlG20eE5DXVv3KFTogqAoLNjZneWf9
+X-Proofpoint-GUID: lfZlG20eE5DXVv3KFTogqAoLNjZneWf9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-06_13,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- malwarescore=0 mlxscore=0 adultscore=0 mlxlogscore=463 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402060139
+ definitions=2024-02-06_14,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxlogscore=646 mlxscore=0 impostorscore=0 bulkscore=0
+ phishscore=0 clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402060150
 
-On 2/6/2024 12:35 AM, Krzysztof Kozlowski wrote:
-> On 06/02/2024 08:15, Unnathi Chalicheemala wrote:
->> Mapping Broadcast_AND region for LLCC in SM8450.
-> 
-> Why?
-> 
-> And why your DTS is in the middle of driver changes? Driver cannot
-> depend on DTS - you are now breaking all existing boards and users.
-> 
+TX queues with TBS can support etf qdisc hw offload.
 
-I was following a similar patch which has DT and driver changes in the
-same patchset:
-https://lore.kernel.org/all/20230314080443.64635-1-manivannan.sadhasivam@linaro.org/
+Signed-off-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-The AND region was added in the IP block in SM8450, but was not added to the DT or
-driver. That is why I included both in the same patchset - if you think the DT
-changes should be separate I can correct it in the next version.
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 31631e3f89d0..d2f9b8f6c027 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -728,7 +728,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	struct stmmac_resources stmmac_res;
+ 	struct device *dev = &pdev->dev;
+ 	struct qcom_ethqos *ethqos;
+-	int ret;
++	int ret, i;
+ 
+ 	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
+ 	if (ret)
+@@ -822,6 +822,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+ 	}
+ 
++	/*Enable TSO on queue0 and enable TBS on rest of the queues*/
++	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
++		plat_dat->tx_queues_cfg[i].tbs_en = 1;
++
+ 	return devm_stmmac_pltfr_probe(pdev, plat_dat, &stmmac_res);
+ }
+ 
+-- 
+2.25.1
 
-Thanks a lot for taking the time to review Krzysztof.
-
-> 
-> Best regards,
-> Krzysztof
-> 
 
