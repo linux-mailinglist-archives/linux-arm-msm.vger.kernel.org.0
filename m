@@ -1,105 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-9934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C36F784B42C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 13:02:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80CE684B433
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 13:03:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 027FF1C2317E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:02:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2A121C20B6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:03:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 250FD134730;
-	Tue,  6 Feb 2024 11:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 485A4134CCB;
+	Tue,  6 Feb 2024 11:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T7ckRfl7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TN+CvUFl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4219C134726
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 11:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41FE134CCF;
+	Tue,  6 Feb 2024 11:48:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707220026; cv=none; b=hbXyZKBFBTE2mAUCPx9jsQRVz988Oe6JJxVBnsNmYz4lDjqL42FDB2641d5hyL5UJcOFQ1GxATXz2+yXsUGZRMwp6NVGqRiLe7BHQiXiSbh7J/zP45PlJ5KKClhPBp4ODXpykMgIlBUfWVeyDyf/97MZzQ5ibi4Mu/dyU7lm7lI=
+	t=1707220087; cv=none; b=nYnD4/aBoN+IXtrNGrFxaI986LWFIn/2rYtW22mzTLRVg8ahWU15oCLgMY8JqVT+nFEv9JoAmsNQu8fozQyn+2fkFyLPjfr44C6cNGbHiAuyIfrMoBqvHIxOG/Y991uhMwGZY+R8Z28PqVtRC4NtWwMA4zggclXKczDslvgmnsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707220026; c=relaxed/simple;
-	bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K5DYo3AQS7JaC3dSF1I8dV2lr/E+TOIEzFkZjOIjSezj5hO6kDvxg/WPXzSMj1nzaT5ep39geHhmDDm5kC9JnAlfkO8h1HK02RFPXlYvStnEt+NIka4NJ9oHC8/G6jhn6u+7WGBwrxo058s0OQky+SYSqRTZ574twkYYWn5r21w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T7ckRfl7; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-60460399a33so18881697b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 03:47:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707220023; x=1707824823; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
-        b=T7ckRfl7+rz1Il39jNvgCpmjsYDy5v1j7Xb30fEStr+SYZulnz/LrqIup2lAEwh/dZ
-         OVH05SmtkTmyInfa/6LWxNHAd7ErBCQyqETpVptwxBF2UF8Dj6lC2vA6KZiZW2eDw2xr
-         AQdfxjpUPXiGYpODFJgQpyJMapJPLxmTmkDZlQdrNQWOWx7UqU8YgupQx08eO3n1ssTy
-         2zrKHL+6FD44jxLVpUqGbTkTqz5+Gq8o71dUv99kdjFOjChqxH+iyZOHfjc431D8hB9j
-         zGV32E0gbo6Y7yp7S9JjQizQPO70A5lYbd10fXNshH+h85HvMveExZ6Thv2e8RY/rB94
-         /FPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707220023; x=1707824823;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LgStSMzzVGruMHl1t/Pl1KmMB+700dD4gEWkJUh5cH8=;
-        b=qXhn45ew3AAORmfbvbfBVHVy40EzqyqEDJbvLInFphAiq0JuwWkUX+8tHZK/6w80o4
-         +AnW7TaM/p56ZurVw3GlFELsIlxYRvQ3E10+AAYrGStgpqxvG3QpkcK/ZNSqnyxo2HoQ
-         v2QHD9P78dmJJ5k3rzHwOKgvmmXcL7Y+xaofEa1SrQfpZy+oHZAmD5o4xQbmbD5mtl5O
-         If/zqDf61Or4OcZxqcjFIAKXRSyEcpYSO/MkysqXdb1MzXqPRP1YTySON/mWIcSci9IJ
-         6ImrgkisVxcId+mqEBsUFxsw7gbdUoQyO1ULSFr/NJWCin+GzqtrSRiqhwRn1sb7HrI+
-         dB3g==
-X-Gm-Message-State: AOJu0YxNsA7i5YvAaNEoI5QjVlm9SWlPWWYnTxnUlvS29UDyJ8PubWyH
-	8gMgwSL+U+i1sAC21h8PQK3ufUIptGetd2Q0Scy4jAwYPcof25OOw+wv5EgXrYYjn7naKXkZZMr
-	hKoQPsCp9od9mx8Wyz8eOEuCFwDZd0jbL9h8bag==
-X-Google-Smtp-Source: AGHT+IEfuSnFGwsVfjXpB67ixsdZ+sH5jJ3p57j+957+Y+Qu/ANlFkY0BcCK6ARwCr2ZftAxxEvyAXpHsoHwk4FNWoo=
-X-Received: by 2002:a0d:c1c7:0:b0:604:57e2:d87b with SMTP id
- c190-20020a0dc1c7000000b0060457e2d87bmr1263880ywd.40.1707220023286; Tue, 06
- Feb 2024 03:47:03 -0800 (PST)
+	s=arc-20240116; t=1707220087; c=relaxed/simple;
+	bh=G1dDs/9WsNKUIZnIOL647TVbY+D68jj0YN44/q2g2u8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bhDIL7fjzO8NdvIegzIEGBIYjW0y4yzmlGITwiP8cbmTOM5mnD8EvRnmkBgR9qdmFtc4m2p09EO3yuEHCCPUyUfWm9tyhuroHOBMJ6ANzmbG8hiz2zFJAgmh/i6IoV3KSjJ/3Q/ybfQ33BLMhkSOG+3MlYxdCDxyFuJs+FtwtJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TN+CvUFl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4166bqKm015018;
+	Tue, 6 Feb 2024 11:48:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=52Qa1Bq
+	L4bQ5LnlYJ/8i2kpS256hYNChle2ib8AJ5u8=; b=TN+CvUFlYnXGKgu8mlOhFMS
+	Va4eTgPmf6lLeUh+Webd0jz13UH+a7IBeN5YhcD1q838n4hblu+IZ5RVZR3hDL08
+	4UA0YVswQU/sPT7qIETsssU5ITAvOdD/73P8hyZc3mWoWMeOE1MIxqZq9oMpNjiU
+	DinBFCjFiVm84uFIhkiep5UOuR/qcOKTkS2Zi673aZ2eoZmMUE9XS5cZU0bKtS4Y
+	r41BYe9TpASSXCj5ovCYaolC9pMBUdaVhcA7g8twqbug4reaZa+auQYuc+uMQ6Oa
+	SCQ3imSdnUrgpKT4/2xzwgxJGweM0wSCRMjmAJM1cHEy00UpN/atAZltlsj9QgA=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3cafry9j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 Feb 2024 11:48:01 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416Bm03p014528
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 Feb 2024 11:48:00 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 6 Feb 2024 03:47:56 -0800
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH 0/3] Add DT support for Multiport controller on SC8280XP
+Date: Tue, 6 Feb 2024 17:17:42 +0530
+Message-ID: <20240206114745.1388491-1-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240127232436.2632187-1-quic_gaurkash@quicinc.com> <20240127232436.2632187-2-quic_gaurkash@quicinc.com>
-In-Reply-To: <20240127232436.2632187-2-quic_gaurkash@quicinc.com>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Tue, 6 Feb 2024 12:46:52 +0100
-Message-ID: <CACMJSevf1hRS42oBFw7UotPk6B71uAWn9sWDdHu+PMk1zeN5=A@mail.gmail.com>
-Subject: Re: [PATCH v4 01/15] ice, ufs, mmc: use blk_crypto_key for program_key
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	andersson@kernel.org, ebiggers@google.com, neil.armstrong@linaro.org, 
-	srinivas.kandagatla@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, robh+dt@kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, kernel@quicinc.com, linux-crypto@vger.kernel.org, 
-	devicetree@vger.kernel.org, quic_omprsing@quicinc.com, 
-	quic_nguyenb@quicinc.com, konrad.dybcio@linaro.org, ulf.hansson@linaro.org, 
-	jejb@linux.ibm.com, martin.petersen@oracle.com, mani@kernel.org, 
-	davem@davemloft.net, herbert@gondor.apana.org.au
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QfXOg5XxQxTGf0LuP3OuexcFf9BpoDDI
+X-Proofpoint-GUID: QfXOg5XxQxTGf0LuP3OuexcFf9BpoDDI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-06_04,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ mlxscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ mlxlogscore=274 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402060083
 
-On Sun, 28 Jan 2024 at 00:26, Gaurav Kashyap <quic_gaurkash@quicinc.com> wrote:
->
-> The program key ops in the storage controller does not
-> pass on the blk crypto key structure to ice, this is okay
-> when wrapped keys are not supported and keys are standard
-> AES XTS sizes. However, wrapped keyblobs can be of any size
-> and in preparation for that, modify the ICE and storage
-> controller APIs to accept blk_crypto_key.
->
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+Series [1] introduces binding and driver support for DWC3 Multiport
+controllers. This series adds support for tertiary controller of SC8280
+and enabled multiport controller for SA8295P-ADP/ SA8540P-RIDE platforms.
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Till v13 the DT was pushed along with driver code. Separate the DT changes
+from driver update and pushing it as this series.
+
+[1]: https://lore.kernel.org/all/20240206051825.1038685-1-quic_kriskura@quicinc.com/
+
+Andrew Halaney (1):
+  arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb
+    controller
+
+Krishna Kurapati (2):
+  arm64: dts: qcom: sc8280xp: Add multiport controller node for SC8280
+  arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
+    ports
+
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts  | 49 ++++++++++++++
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 21 ++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 82 +++++++++++++++++++++++
+ 3 files changed, 152 insertions(+)
+
+-- 
+2.34.1
+
 
