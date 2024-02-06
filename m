@@ -1,142 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-10011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEAEF84BF2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:28:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89D9984BF70
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:46:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B1E21F246E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 21:28:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4302C287A19
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 21:46:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132A71B950;
-	Tue,  6 Feb 2024 21:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 146B81B963;
+	Tue,  6 Feb 2024 21:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TBgXOWI/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FYLeFB0s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4821B81F;
-	Tue,  6 Feb 2024 21:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2581CF8D;
+	Tue,  6 Feb 2024 21:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707254899; cv=none; b=Ad2G/Aphv7LlVji/Sn9Or0geWkk3mE2cGUUULEhhZh0mrqEFVAHo/0IGWPsErvfUabUp/Xgkq/7Fb3XflvHFAeEP9uJQlc1KdVaZybime5cYTtIaA0B22DzotRCaWRjBRE3QV2Oehb4GZ8unmM2T02XDCgDv8SIUD/Qr+IygeGM=
+	t=1707255955; cv=none; b=Em18emBEx/89cpOVXFfVrKiEfgsyLC6955zZAmEM9l1DivDB2Rvqr3zUPEXKRXcJilG5VuBvZow53Hfvmd6Meows7WbLGa4l9pIWuhyhJPvedE67HohP9KgSdtXIlizXIYNEBAKNt1XJT+333ISXbqiAWpJ94A3pjNCO6nuunzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707254899; c=relaxed/simple;
-	bh=7Pm8fH+QR8eYSwznrNxCN5gHgcDM4ULOqVSCbRSf0Jo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sl8Rx1812SBka3eRPPLK7g/c4wsy1fk3EdPbX1TL5JsYnzIdEAbstEvCLlEpRuWiKUG0lCSFkgWvJaD1xUs+tlNWx0JTkPIz74i6FF2ufvatpNKPWHEyiVqTMb9rH0hutdtAyU4XIdx70CAdJVzE8kchv6ge05lga9/zmD7B6nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TBgXOWI/; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1707255955; c=relaxed/simple;
+	bh=DSedkawQja0hcKyNYn9zHA2+CGNQ2UnDLpJZ3JJMsiM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=MT4c4NNjyEVjsayLkIXA0Zz4UOSSfa2/GHV/l8kHuHdrD2HbJI6fsGI7IiKiTgVN8TOIN+H8MUtecrqZoJdxLqy404i9131EaKpKxvprfWttmli4AAW0GVrazUhUS2qMT5nMnLCt1WV8TX8KkgT5umhJ+PGR0VGTvyddsjAG26Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FYLeFB0s; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416J147h023727;
-	Tue, 6 Feb 2024 21:28:03 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416LFAgg015907;
+	Tue, 6 Feb 2024 21:45:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding; s=qcppdkim1; bh=hEoSiQdSIeE/Z9h6sh8I
-	iBbAA21LDJu25KZcrFHfcvo=; b=TBgXOWI/p8bpIG6bIIoqSlFsYmKfnbG6dlyY
-	m1TdeD6wz4IWtl3vEA9zT04+StO+A+FDvgYegTSIhTVXxnjjdB+B3eI4Qf5Y0uDZ
-	DtT7p1e5LOClGCfCtfywukuBL6OMJlAIPxWI0aroeXCRjK1/x15XlmMpBkjG9cJU
-	wkwqqjkiUXoLXYvA3QsuVXjNzw/jh03Upr4Fk42Vzzhd3LVOwINTnzeFb0EegZuK
-	tiWRQpep002lUHi9q1eRj3YvdbTdAIpZMmZZq2d37sIR72qsxEwLccNkOULG2HfH
-	SEQJ21Hp5cCQcbJ8spUXI3gfsTmi2q5DX4A9hX+ebCaH/mepvw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3hsesjav-1
+	message-id:date:mime-version:from:subject:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=8orMNZMzQmmxRu6fO+dde4rp0XK+Ix1lzjCBAESpG7k=; b=FY
+	LeFB0s7KsuLRgwJ/fM9f89rN3sSgb5yq+Lu1dLoa617kztJMQhDwZpi8bIgFsfvd
+	lRe+avf52igIq7xI+98tfRKIx/cnnceggtAqrjKa6j2Db5/vNAzznDneN39lEPPS
+	fkukXMJeuavypnbVMg5hUjINPpphjAj/cuW6w3D5QNV5KEs7NHuFyNSeSC/6lOa/
+	lY7HcWHgT3Z15aYvY0QlrgNmR8JaI6iWRwXQQoPhQEDn3qWEouHw78yalrO2ZJSb
+	eX3b5YXoCw4bu95UbU1FsP4uyqwIbfUzEXKvppuCq7N/wB5ci/0yj2jTNTxRLYth
+	vyjPym3o0r1JR51LqmqQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w37t5aqmy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 21:28:03 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 416LN76W006027;
-	Tue, 6 Feb 2024 21:27:35 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 3w1ejm0rw8-1
+	Tue, 06 Feb 2024 21:45:49 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416Ljm1D002193
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 21:27:35 +0000
-Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 416LRYTD010370;
-	Tue, 6 Feb 2024 21:27:34 GMT
-Received: from hu-devc-lv-u20-a-new.qualcomm.com (hu-abchauha-lv.qualcomm.com [10.81.25.35])
-	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 416LRY0u010367
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 21:27:34 +0000
-Received: by hu-devc-lv-u20-a-new.qualcomm.com (Postfix, from userid 214165)
-	id 266132207A; Tue,  6 Feb 2024 13:27:34 -0800 (PST)
-From: Abhishek Chauhan <quic_abchauha@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-        Prasad Sodagudi <psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>
-Cc: kernel@quicinc.com
-Subject: [PATCH v1] TSO and TBS cannot co-exist. TBS requires special descriptor to be allocated at bootup. Initialising Tx queues at probe to support TSO and TBS can help in allocating those resources at bootup.
-Date: Tue,  6 Feb 2024 13:27:34 -0800
-Message-Id: <20240206212734.1209920-1-quic_abchauha@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	Tue, 6 Feb 2024 21:45:48 GMT
+Received: from [10.110.41.143] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 6 Feb
+ 2024 13:45:45 -0800
+Message-ID: <2e1e0bea-4407-4ca6-a3c9-07c79232f37b@quicinc.com>
+Date: Tue, 6 Feb 2024 13:45:41 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+Subject: Re: [PATCH v2 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND
+ region
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <cover.1707202761.git.quic_uchalich@quicinc.com>
+ <169277f53affed98ef41e5a7cbf2401fe62716bd.1707202761.git.quic_uchalich@quicinc.com>
+ <1ca4d384-9df4-4c00-a4c9-0c5ff491616e@linaro.org>
+Content-Language: en-US
+In-Reply-To: <1ca4d384-9df4-4c00-a4c9-0c5ff491616e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: lfZlG20eE5DXVv3KFTogqAoLNjZneWf9
-X-Proofpoint-GUID: lfZlG20eE5DXVv3KFTogqAoLNjZneWf9
+X-Proofpoint-GUID: QqtsSU5F-xyazswora-CJjeLB9oc-hXP
+X-Proofpoint-ORIG-GUID: QqtsSU5F-xyazswora-CJjeLB9oc-hXP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-06_14,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=646 mlxscore=0 impostorscore=0 bulkscore=0
- phishscore=0 clxscore=1011 spamscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402060150
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=809 phishscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402060151
 
-TX queues with TBS can support etf qdisc hw offload.
+On 2/6/2024 10:42 AM, Konrad Dybcio wrote:
+> On 6.02.2024 08:15, Unnathi Chalicheemala wrote:
+>> Define new regmap structure for Broadcast_AND region and initialize
+>> regmap for Broadcast_AND region when HW block version
+>> is greater than 4.1 for backwards compatibility.
+> 
+> Are they actually separate regions and not a single contiguous one?
+> 
 
-Signed-off-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Yes, they are separate regions.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 31631e3f89d0..d2f9b8f6c027 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -728,7 +728,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	struct stmmac_resources stmmac_res;
- 	struct device *dev = &pdev->dev;
- 	struct qcom_ethqos *ethqos;
--	int ret;
-+	int ret, i;
- 
- 	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
- 	if (ret)
-@@ -822,6 +822,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
- 	}
- 
-+	/*Enable TSO on queue0 and enable TBS on rest of the queues*/
-+	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
-+		plat_dat->tx_queues_cfg[i].tbs_en = 1;
-+
- 	return devm_stmmac_pltfr_probe(pdev, plat_dat, &stmmac_res);
- }
- 
--- 
-2.25.1
+>>
+>> Switch from broadcast_OR to broadcast_AND region for checking
+>> status bit 1 as Broadcast_OR region checks only for bit 0.
+>>
+>> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+>> ---
+>>  drivers/soc/qcom/llcc-qcom.c       | 22 +++++++++++++++++++---
+>>  include/linux/soc/qcom/llcc-qcom.h |  4 +++-
+>>  2 files changed, 22 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+>> index 4ca88eaebf06..fbd2542cd4c5 100644
+>> --- a/drivers/soc/qcom/llcc-qcom.c
+>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>> @@ -849,9 +849,14 @@ static int llcc_update_act_ctrl(u32 sid,
+>>  		return ret;
+>>  
+>>  	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+>> -		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+>> -				      slice_status, (slice_status & ACT_COMPLETE),
+>> -				      0, LLCC_STATUS_READ_DELAY);
+>> +		if (!drv_data->bcast_and_regmap)
+>> +			ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+>> +					slice_status, (slice_status & ACT_COMPLETE),
+>> +					0, LLCC_STATUS_READ_DELAY);
+>> +		else
+>> +			ret = regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
+>> +					slice_status, (slice_status & ACT_COMPLETE),
+>> +					0, LLCC_STATUS_READ_DELAY);
+> 
+> struct regmap *regmap = drv_data->bcast_and_regmap ?: bcast_regmap;
+> 
+> ?
 
+Ack. Will minimize the redundancy.
+
+> 
+>> +	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+> 
+> This check is rather redundant.. If there's no such region in hardware,
+> it won't be described, and as such the _get()s will return some sort
+> of an error.
+> 
+
+I see what you're saying.
+
+> Might as well make it a comment that it's intended for >=v4.1 and
+> definitely leave a comment for the next guy that there's a backwards
+> compatibility quirk involved..
+
+Ack.
+Thanks for the review Konrad!
+
+> 
+> Konrad
+> 
 
