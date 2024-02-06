@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-9985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADDC484BD2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:45:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7295084BD33
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:46:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49D4F28CA04
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:45:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A603B1C239B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:46:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72FA11B816;
-	Tue,  6 Feb 2024 18:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A27AA1B971;
+	Tue,  6 Feb 2024 18:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HMZonAVv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U8YB1/Sb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44341B297
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 18:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E861B805
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 18:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707245036; cv=none; b=F9UV3ZX4QjxmauI0XXfd0jcXTaX4bmVdnF16cIlAWTURoAK8WPpAUfJjCjYpaC1Wbt76O4I9VT82Zuj1s9HeKQbw2+IbYvsfs7V/DpzRZq5b5QzXDrY7dp++gSQlYyXCObjnuxR25Zib/odQQnMuRyLdqHiYxSeWnBcmM7AvM0k=
+	t=1707245038; cv=none; b=rEAi1CQcDGmotfHNd4zJh0jhCoMN8t6U6kCoO+cAFRgUDH4RP6vTIYTtsgwY9li+axJ9rECxGZ/EGLo81cefnglq2Mnq2oitnde0CqTzD3qIPbCNXSxOv2EIlCG0c5LatdEqc6j75VYKEqo5Hp/1jnpCxI6F8mKayRWjJMBDsvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707245036; c=relaxed/simple;
-	bh=Um3XHTCPqPzKjXY4QlaL0lzOw9Adn3IKIs6tquKWAGg=;
+	s=arc-20240116; t=1707245038; c=relaxed/simple;
+	bh=7ZxBeTpI7rU3/jGQrGYsBGxNSFTwMdNCV6VkV77JbJc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LdMk+VLCTpIJVyg+YDGp7+/yRUPMfCp3GHXC3h7IURB881ZgU83UwhmlA3qOC20cFDtfnVQxPqfu3H9W1NwG/3vkuT8E5WFGFdm514JTSqRGwVmx/kd+b5aVxqtHTOgTlQC5fUh84Z1MPhe2HXfXkfhcAq0qq791FM9niu0YYdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HMZonAVv; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:To:Cc; b=BJdwufDgA1wavinBm5eqqWOX0pCeDXtFvSPJVwNSQB5H1Z014d/mCo+A/yNmlBSc3d90jmDejE01ttjCZVVI8XvxepIokzElz6aTDF4JR/rX7o56JDC4ss4oU3hk7vL6fpDhslwjZjEre93cIdpJYglcomp44j8mM77iY6B8MLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U8YB1/Sb; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-55fbbfbc0f5so1669209a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 10:43:54 -0800 (PST)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a380a1fa56fso171162166b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 10:43:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707245033; x=1707849833; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707245034; x=1707849834; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sx2jWOy3+mcft3g2k461xAsra2Zzmr6pjNDzJKoJgMQ=;
-        b=HMZonAVvSxziRwXXY2E77c9gtJKwpXLP48NaGhCN7hA0onOURTAN/QeNJm7l1ddRgD
-         6Clj3GNKFBkxJVmCZ7HX0biBdWQmstEgCSrF6WM84OT+1Tt5WyyGqmcEeVApUUbDJ+je
-         rBMAj0qjSkS1xD3WJZKhudwGKtI35Y6in1TlRonDyMj7VZt5HXhMSGbSsOotsrzKDpdX
-         OOucltMXx5/qy6cmSw6UX98kzU4XXWfTnuzD0fX/bTMtKIZf0sJmAHstNjfSyCNMLsjM
-         zRGXruXzhMuW7pb55yCuGzOzDXnlunghr/q1eURriMdkGKDuNnutJx0PJx5sAgtO6H/4
-         Xx2g==
+        bh=6JFIAAu62FuQn/HSZ5tKqmYhrMc0VqNnJVz9VNDCrjM=;
+        b=U8YB1/SbcajaNo6MtJJPaP7bx7DCjn0g02KnCGkLTRlmLFQHGLcWP2BRhMXZfH2Tnw
+         TG66AM7XS9/oxglXwdq2uyM714U5w3OmMoGsO2938GynQeUBPFFdTjkybPy3yfO+s8Bs
+         UbSXSAW/OFkO5cuUl6chYgoteaBmCFKFK7Oog5ik5w/OwZ5F5hl5pSMswmShMyuCFCqo
+         mu9T/JJqvf2V/xd0FUCX4HmNTwE+nICu1YugobOn6RUiBremDZDh6oflwcprncmeHBBG
+         QfVbtUGKY+csQe7jhEBiuwONOHoW7RHJKEs1Tz9gFHmo65Mf2s9YNNkSlu4MQvVhpMHH
+         ZxpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707245033; x=1707849833;
+        d=1e100.net; s=20230601; t=1707245034; x=1707849834;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sx2jWOy3+mcft3g2k461xAsra2Zzmr6pjNDzJKoJgMQ=;
-        b=HZ1xNScWFUs2+igPlDEedXoU62La9bqKznyXffEMZ/X+nBMQfn+BU2Vicox7WooQ73
-         0Dgb8LVlbqKf1n0Lx9ZDWvI+p1YpcYE7Lp3B0gsVTez+80BnuBRg5S4oxgBaxYCTPr/k
-         8IJBlaK51+NCye5w1n4xUsp3xBqG83Y5ur7KZtwzKjlxpcIXkS1c52kngGPTVA6bxdLd
-         tdc6xYmFpEjCY+bORsRNnHZ9SGdYxBFQ54LI7OkHbwbURqFqWzq16xOqdQefSYD6mNh3
-         95jkmfl9ijMPnBv+cgYLjngkgfEBH/UYsHUoq+bVkVGJVZrbl6D/exPy7YPN450QOATa
-         4jfw==
-X-Gm-Message-State: AOJu0Yy/D8MKK3Zu4OGYYgWyF77GYXLfUUD0NRd/1TUtIzctxG4JEqLP
-	ql8CrXz/uOrnN7sLdOUCL8RnnqpKbmbdCL6N/cFKAX4sttWJq+po6KHdI5oTSjA=
-X-Google-Smtp-Source: AGHT+IHdgIMDLE+qw3jwrHAaomcUMXOC4b2jvJ1Pc5h7C6eE7EE+S7xI2quLCslWdMEmJbGAs3+Usg==
-X-Received: by 2002:a17:906:4e8b:b0:a37:687:275c with SMTP id v11-20020a1709064e8b00b00a370687275cmr3895790eju.20.1707245033098;
-        Tue, 06 Feb 2024 10:43:53 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWf0xsvKto8gDTOhhkvQRLi+YvCUaDUUyZbwlbZTXzQ8pksP0S6iOjf7HSmedSdJerkcvnapbXfIgNEQD2dzCLKV3Q1IjjCemsiuN5p56++qSGgNmQEjffa4dNgdP4ACUDSTG+jm8g87jmkHTNy9qYiJHn9/FNgXvXQVr8/rx3L3Jfd/o0sgzur5xLR0mfmNeV9NdLSWaGXSU1FKbLBJoyn2Ekk9jpYgRfgWZDOj2O4tfrDOt9nTwCG6VjcHZl9OXe7DFeQirdiji2YSGJc1gIsgGBYfwWmc8jSnoUWU80RD6EfQppGNXUEaPK1A1tMJksq9tNYK8R4yrel8uEY+POcoZcUmVCv/BNUEIEhPCHFVemqS+M1LRdeoem8CuK2xIfPF94WTc3sByFGNDcfM8/SUmt2xOxxImStOsFbG7uLEFo0fF7gXKzPrXj8gB3XbXbP1yLHeL8M
+        bh=6JFIAAu62FuQn/HSZ5tKqmYhrMc0VqNnJVz9VNDCrjM=;
+        b=niyC1DXvljJeU5ok4knKufnAI5rC5U60CHlo74kWmj3wRgfRaAEhlh0UrapP/SLYdg
+         prlb8O11wt2+ayLKBO+7SiYHF1FPohV01BPuTBtcf6m5e/kD+/dvJ9yG9YEfS8telCFF
+         IBRHV3fCg1bqA0TIS2dPhRJMGlZJDILbUz1k+5LTOcKb8cGzKTpwTgy96rrqTwgaTkKx
+         kzlcd0UzG5W9tq27RXQZQWpeOzHdocl67wxqQxAMfILFOw9dDNdYjkyF+eE+BHZ4P4Zn
+         Tsbd+gGzlXZP1JruzGH7Xj5PPa6ttO35DOpNODX3FW3cRl534NLpQWGXdAtvNBizwfNY
+         sXzw==
+X-Gm-Message-State: AOJu0Yw79Ti+ygAY5A+xs55msphRA6djU8pGjdp8Pu2cgE0L+Y38gL11
+	LF4mzdzYNujhn1glT1zyTHFjGg/g++Al+p2YXw4OGLsIaYZal/d9UUVcfPvN3Fk=
+X-Google-Smtp-Source: AGHT+IFRnU7S9WuINV3NhaAKT2gjDWTwPGpFeNX4WG2QF1077VknapVFzp8zFOquS5VGWgaguqZCwg==
+X-Received: by 2002:a17:906:3297:b0:a35:b59c:fc04 with SMTP id 23-20020a170906329700b00a35b59cfc04mr3562614ejw.25.1707245034391;
+        Tue, 06 Feb 2024 10:43:54 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCU3GW7DesvZfeZqzLXJ9bmcXbGuiNMy3LJq+VOD/cMGEPUlLtDY/ddOTJAliMHrcBDDAz2a6vd0Iij1ilRqUNdnK4nToxkPvOM2ID/b67mvZbZvKnSObM7cwpHAvnAUX2QwJ6AVvoV4q4PNRXNqD3ZAbpBWrCzoc9uhCY9uuzufzopIF7Pwri/sIspnjvVXd0Fmc2I0pfIgeYj0Jv22+T+oFO9p03oqvCLgpJ5LRLOIU+pvv15CuSAqna0R87VuBdR7R21jlXfGHAdbXEbeEfVh/9b61KoQjNHA33HhjYBkSXBPlZEMATZ7Nt+jSnD/V7vsH0sNLCBRLVVtlS3w9pdh6tJKLrEuEExVL4rftP3DQqIgdlP88q9AdPoxmSX6pB5FcF3jdCRRHSh8kAx4+MHEWn93+DiQKqI5NbFn9FUHGTMWPlIDHtQQ6Cq4BQwik+5GlUJRVcew
 Received: from [10.167.154.1] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id un9-20020a170907cb8900b00a384365e3b9sm562305ejc.195.2024.02.06.10.43.51
+        by smtp.gmail.com with ESMTPSA id un9-20020a170907cb8900b00a384365e3b9sm562305ejc.195.2024.02.06.10.43.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 10:43:52 -0800 (PST)
+        Tue, 06 Feb 2024 10:43:54 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 06 Feb 2024 19:43:42 +0100
-Subject: [PATCH v2 09/18] clk: qcom: gcc-sm8250: Set delay for Venus CLK
+Date: Tue, 06 Feb 2024 19:43:43 +0100
+Subject: [PATCH v2 10/18] clk: qcom: gcc-sm8350: Set delay for Venus CLK
  resets
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240105-topic-venus_reset-v2-9-c37eba13b5ce@linaro.org>
+Message-Id: <20240105-topic-venus_reset-v2-10-c37eba13b5ce@linaro.org>
 References: <20240105-topic-venus_reset-v2-0-c37eba13b5ce@linaro.org>
 In-Reply-To: <20240105-topic-venus_reset-v2-0-c37eba13b5ce@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,40 +93,39 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707245017; l=1210;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707245017; l=1113;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Um3XHTCPqPzKjXY4QlaL0lzOw9Adn3IKIs6tquKWAGg=;
- b=V/zN5DGxKHRNUqW9xIcpmoQbVyk8TUrsM4Bgad0H4xzD6h7GzxAQn+4hIs0phzgj6rlmWZ0lo
- PAG4qSv/eiqBe/BhYdE93BqftCEUl87uipHK2YVu2f+fyyqH44SPhlT
+ bh=7ZxBeTpI7rU3/jGQrGYsBGxNSFTwMdNCV6VkV77JbJc=;
+ b=IjZM3jN5XHZrj5wc5iXTiZuKe8lstZqNruPJ13n3kYfjb61cQtY0BWSyA+c4+SNxU5Z59zsEl
+ FFlmLMVgijVBk9qV7fgkaVVVDBpl/9tfRtod4o1RKlRwx1jwkHM0HHx
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 Some Venus resets may require more time when toggling. Describe that.
 
-The value was obtained by referencing the msm-4.19 driver, which uses a
-single value for all platforms [1].
+The value is known for SM8350, see [1].
 
-[1] https://git.codelinaro.org/clo/la/platform/vendor/opensource/video-driver/-/blob/LA.UM.9.15.c26/msm/vidc/hfi_common.c?ref_type=heads#L3662-3663
+[1] https://git.codelinaro.org/clo/la/platform/vendor/opensource/video-driver/-/commit/dfe241edf23daf3c1ccbb79b02798965123fad98
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8250.c | 4 ++--
+ drivers/clk/qcom/gcc-sm8350.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
-index c6c5261264f1..61d01d4c379b 100644
---- a/drivers/clk/qcom/gcc-sm8250.c
-+++ b/drivers/clk/qcom/gcc-sm8250.c
-@@ -3576,8 +3576,8 @@ static const struct qcom_reset_map gcc_sm8250_resets[] = {
+diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
+index 1385a98eb3bb..df4842588a24 100644
+--- a/drivers/clk/qcom/gcc-sm8350.c
++++ b/drivers/clk/qcom/gcc-sm8350.c
+@@ -3743,8 +3743,8 @@ static const struct qcom_reset_map gcc_sm8350_resets[] = {
  	[GCC_USB3PHY_PHY_PRIM_BCR] = { 0x50004 },
  	[GCC_USB3PHY_PHY_SEC_BCR] = { 0x50010 },
  	[GCC_USB_PHY_CFG_AHB2PHY_BCR] = { 0x6a000 },
--	[GCC_VIDEO_AXI0_CLK_ARES] = { 0xb024, 2 },
--	[GCC_VIDEO_AXI1_CLK_ARES] = { 0xb028, 2 },
-+	[GCC_VIDEO_AXI0_CLK_ARES] = { 0xb024, .bit = 2, .udelay = 150 },
-+	[GCC_VIDEO_AXI1_CLK_ARES] = { 0xb028, .bit = 2, .udelay = 150 },
+-	[GCC_VIDEO_AXI0_CLK_ARES] = { 0x28010, 2 },
+-	[GCC_VIDEO_AXI1_CLK_ARES] = { 0x28018, 2 },
++	[GCC_VIDEO_AXI0_CLK_ARES] = { .reg = 0x28010, .bit = 2, .udelay = 400 },
++	[GCC_VIDEO_AXI1_CLK_ARES] = { .reg = 0x28018, .bit = 2, .udelay = 400 },
+ 	[GCC_VIDEO_BCR] = { 0x28000 },
  };
  
- static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
 
 -- 
 2.43.0
