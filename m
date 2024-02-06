@@ -1,91 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-9926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD35284B164
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 10:36:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F213484B2F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:02:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 914181F23503
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 09:36:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F6901C237B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 11:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7194712D162;
-	Tue,  6 Feb 2024 09:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786DD7CF18;
+	Tue,  6 Feb 2024 11:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="aSOH7z1V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWlnllwj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00415745D6;
-	Tue,  6 Feb 2024 09:36:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473595F561;
+	Tue,  6 Feb 2024 11:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707212175; cv=none; b=gqmOa8ya1OqGRk3qXf21ikxFcKktUkUuhPi3NLMzWxH0IFYMzsKPFzpk1OtSpo0F4GHX3a57O5ANlrv51xS5yQ6DCiuXj5qV3SiZOduno9tEpgfgq9+sNNv9KI4rbq4oxH/C1ctMnhnfY6wn/RXezPnx3yFvS4BtB9cajZ5uqoY=
+	t=1707217334; cv=none; b=dJ/emA7RktIMX6F3HhWwCGaodiBHYkJy9jXRP9kzcJLY6bao35147+jAAnsH156O7mfZWTA4yOjyBWyxpVZ+pOteJUjjKdweQIo23ScujVUeGbKCV+2y+004FxWJ+Yp2c4HyF/828Sj7WqlDUla2Pi1fj4kzGuds0WYPbND/hfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707212175; c=relaxed/simple;
-	bh=luROSI1t+DKF5ceyQuKSrABuZSi136QYuZumnfZGPPg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L1SOTWfhk4QH0pstAtCwz6w9QMafzxYsNCwbGPl7Hi8tIZAGnpdbTBU1e2jFb/xh2MLn9LJcXuPZemQb9HV0mxKMg51FrmCDiEyCeRVYT9iOIS1ixqmTKOc5v0i+Rc96sGdENwC9g2rreQ8OHl8uVLNMwuMTOseiVTL5Bo/mp4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=aSOH7z1V; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1707212172;
-	bh=luROSI1t+DKF5ceyQuKSrABuZSi136QYuZumnfZGPPg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=aSOH7z1VxB4VvzEWSRLptEW7UztO288D3llYuxrHh2Thlop7wogU/Pu/VjRIXOHPM
-	 Wxl1BTS6XbGFlNW4EJYD9MzCDn8xtLo1udQlMQOKamuXHkp+HU2IDgoKh83YTMdzRg
-	 d0DcfOyesV/75xidwWm0mqt76H5oUKrseaTK7eShCQ24pyq/rP5vKS5KwW0AGtGnXl
-	 j9oTT3oS0WE5CpemoNfmQwGpv6pADXLx40vjN0spOmUWVKkGtw+NF0Z8ijD32KAKyU
-	 ZzXMoetCRkDBpUkgQHofJYxKJesC9wknBtNKy4KNNf/fNrveCcHCIAhHoE87Ar8TzY
-	 2Iup6OK0jRrnQ==
-Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 4506E3782051;
-	Tue,  6 Feb 2024 09:36:11 +0000 (UTC)
-Message-ID: <bf4b8c00-cb21-4eae-9bf2-7941dcfae437@collabora.com>
-Date: Tue, 6 Feb 2024 10:36:10 +0100
+	s=arc-20240116; t=1707217334; c=relaxed/simple;
+	bh=Pg7gzInhVbP+4MJrlr7AIQs7Dl6s73wN7MZFJhlFk0c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nJgyzxQJLK8ML977GrwqLLNPdqzMS4PQ1xXca3r/JcShzfi0enHosPvK35uXoP9ZGbsYzyyOaVhF6UMs5c1/eHROo0GpPIwwSRMyZrBmtpiPIMqeQOJ3biYaQHRwB/SiXMLENi9mgxb0E46Fvcnow/42WImbS2DD9/Rq4BMWYgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWlnllwj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3105C433C7;
+	Tue,  6 Feb 2024 11:02:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707217334;
+	bh=Pg7gzInhVbP+4MJrlr7AIQs7Dl6s73wN7MZFJhlFk0c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kWlnllwj4HvBWKZMYXPvtg86jLxACkDEVS/oYnjtGosNHgCx5Z8sXCRYIANIHuZTw
+	 RbnA1mWYhJD+if0Gr1/1Po62hwuZmq/DWiXf6odytpmDlOZmJxWJ10/SKZPLNcz9WT
+	 uVnhtn/Ni4NaUVaNAfxhqoc+rFP3S92yKhRFMDiwVVzOWU0/IGwSadd6xT18YnWFDE
+	 tpBDX5maMq6sFhZGQHaIWlys7EsBiSAlfxae1JRSLwTMRPQ7FOaE0/+vcGaqVY+IBE
+	 A/3Md/NymEsRSngtf1ENiD6bwFD2F1eXEz7jGlMB1x/BJdPEg2zbHLicOxgS2HJich
+	 UTtkFCDoRtXow==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rXJDX-000000003MZ-1H39;
+	Tue, 06 Feb 2024 12:02:19 +0100
+Date: Tue, 6 Feb 2024 12:02:19 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jikos@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>
+Subject: Re: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document
+ reset-related properties
+Message-ID: <ZcIRuz7ClkMQt8Mf@hovoldconsulting.com>
+References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
+ <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
+ <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
+ <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 18/19] power: reset: syscon-poweroff: Move device data
- into a struct
-Content-Language: en-US
-To: Andrew Davis <afd@ti.com>, Sebastian Reichel <sre@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Sean Wang
- <sean.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
-References: <20240205194437.180802-1-afd@ti.com>
- <20240205194437.180802-19-afd@ti.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20240205194437.180802-19-afd@ti.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
 
-Il 05/02/24 20:44, Andrew Davis ha scritto:
-> Currently all these device data elements are top level global variables.
-> Move these into a struct. This will be used in the next patch when
-> the global variable usage is removed. Doing this in two steps makes
-> the patches easier to read.
+On Thu, Feb 01, 2024 at 04:08:05PM -0600, Bjorn Andersson wrote:
+> On Thu, Feb 01, 2024 at 11:05:47AM +0100, Johan Hovold wrote:
+> > On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
+ 
+> > > +  post-reset-deassert-delay-ms:
+> > > +    description: Time required by the device after reset has been deasserted,
+> > > +      before it is ready for communication.
+> > 
+> > I know that Rob reluctantly acked this, but re-reading the commit
+> > message for the commit that added support for the reset gpio to the
+> > driver, and added a comment about this not having been added to the
+> > devicetree binding, it becomes obvious that the latter was done on
+> > purpose and that we probably should not be adding the
+> > 'post-reset-deassert-delay-ms' property after all:
+> > 
+> > 	For now the new "post-reset-deassert-delay-ms" property is only
+> > 	used on x86/ACPI (non devicetree) devs. IOW it is not used in
+> > 	actual devicetree files and the same goes for the reset GPIO.
+> > 	The devicetree-bindings maintainers have requested properties
+> > 	like these to not be added to the devicetree-bindings, so the
+> > 	new property + GPIO are deliberately not added to the existing
+> > 	devicetree-bindings.
+> > 
+> > 	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
+> > 
+> > So perhaps we should just do this properly and add a new compatible
+> > property for X13s touchscreen which can be used to determine these
+> > delays (e.g. for cases where some default values are insufficient).
 > 
-> Signed-off-by: Andrew Davis <afd@ti.com>
+> So we should add a new binding, with a device-specific compatible and
+> add a reset-gpios only for that (and not the generic hid-over-i2c
+> binding), and then in the i2c-hid driver encode the two delays?
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Right.
 
+> I can try to rewrite these patches, if you can provide me with a
+> compatible.
+
+My X13s doesn't have a touchscreen, but the ACPI tables says "ELAN901C".
+
+You can look at the current binding and work with the HID and DT
+maintainers to come up with something appropriate. There is one
+device-specific compatible in the DT schema currently:
+
+	wacom,w9013
+
+so something like
+
+	elan,<product>
+
+where <product> is a name for the device with product id 0x901c (or you
+use the HID product id directly somehow).
+
+Johan
 
