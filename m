@@ -1,112 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-9974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 895AF84BCDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:23:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36E7584BD09
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 19:42:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBC301C23734
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:23:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF66F2883EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 18:42:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC24812B90;
-	Tue,  6 Feb 2024 18:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0F2F13AEE;
+	Tue,  6 Feb 2024 18:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfFjdEgT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t54LG0m5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F71118A;
-	Tue,  6 Feb 2024 18:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FA413FE2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 18:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707243822; cv=none; b=fryvwwGAtXWox5J3u6X5mn5gU5JSLvcgFe2SIXLGdbBmGFKrpJsjb8G9qWcpQpPt2/At4qKOAqgb8ND7agrxZMAkBd+0xF2zv5Fl82C4VLPc3TxCpkXUCK6AZXIRK9xyvywfAh9KcmuUwguyeffJZGsFkNIoxraa/9HwUZg7my8=
+	t=1707244965; cv=none; b=VNTQ3d99w0Fa4hnW2ZAG62tf7uZNF24AyUtU9LR29WPa4V29OqgfWb/ZFQfC94qUpZ15v3YWa93Pu5zm1/xMVL4JAMZl+lI6W29o3D+iVdAWgenPZ8XGzxXGVvJvkdWoGvn/3a34HeJtKji+aYMInstUChVYZaW/dK9ouQrVTaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707243822; c=relaxed/simple;
-	bh=/8n9Kr9l4Sw1yum7U8xJubl081hOJbXFL+loiNN+f3Q=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=QXmUpQ+/dDXjTDJWuLhBbkkzZtiwFMmiURFB3wb5jvmXySmEMQvXeGqQVBqm4lziTW1BsGi3Jn14Yu0ndXfTz/j4czl8N/YJBNrzHf2fk2KewhA5VpRKzntnmMeHEjmGxrJZLqpGjQffuqgcu37tv1xeDbYhPctdBzxkd/gKJaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfFjdEgT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA31C43390;
-	Tue,  6 Feb 2024 18:23:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707243822;
-	bh=/8n9Kr9l4Sw1yum7U8xJubl081hOJbXFL+loiNN+f3Q=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=VfFjdEgT1J4LiAMho3HkP7m9Pl0ujNDEqh+XARqNwTjWgoFkGLzw9niS0kuxWT2aR
-	 5t1qp7nA9TOKhz2pa70UxGbrM/Opyy3keYQ154lifEKkoXXVBBliZjHgSd5EBbCD6m
-	 J/CTmiukWr8r30kUqrSIgsaarhtXS8tC/UElaHMoBiahKr8tronCYlQQXh5SRBy47V
-	 36BwwYpcSk9e5bC1AHOCHFZW71VuTguU5+K/mqk5IOYqmg8NivgHErvf3qSLPPIFjc
-	 ahxT3YBPQ74CF3fSP/eEYTw/ksbCN/ccfzG9kH2f7+80jViT8uczOoTqDZpFyyU+ON
-	 wWF4aSp8taNig==
-Date: Tue, 06 Feb 2024 18:23:32 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1707244965; c=relaxed/simple;
+	bh=8MBaPabl0Bb8vU/2dLb7YtAB4T72Dtck7qdoLLQY0+g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VwSUR8gIBtBbcfoW5KiQ6AiF4dW0Ar5etPsjbpn6abJPXx6t0wRZJTO2wY6oj1Zb/GkLGUpVXdLsw/VmZHM0+g5IbAIulFWovssnSuTEAHDkJ08QoOuYdLgSN4RayXVK88+MT5k23uSip0GD57tX3dJpzIprMwj2ze+Um19iNzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t54LG0m5; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-56002e7118dso4914798a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 10:42:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707244960; x=1707849760; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CV/6DGRY7F0B4TiYPGlbuRxOZltTnz6gkeLa95KIEeM=;
+        b=t54LG0m5WdAqmSSKke/GmJcBc4RXgHHDPyLank6li49psSQkYIE22q0U/rHr6ybuPF
+         ot+OkGmqjAZ3+qBYY8Z2efAsb3jOpwzF4ITVClCOr6CTZ5gqlD9mACgGsQr2e66pyjSA
+         /unkmHXHoyPd6mCv/XDnL2+/nNBWd6C1KtKDlmUo7cB4BgWs9tuxDrqEmHDC8Q3yZGZZ
+         bq2ZwZ5NOzl/ivMIF6RHhggLPsvjPXCTz4gT6qvZscCt5GPYZgGs9q1RHV7GdjUgNPPT
+         D9suxhwfjesuktpNYoFJeFjlqybkb1NRgnK2UApI8fE3+UFZk+5C2TpdY+WsQPNruzxU
+         xKbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707244960; x=1707849760;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CV/6DGRY7F0B4TiYPGlbuRxOZltTnz6gkeLa95KIEeM=;
+        b=ARkMQfHQkM7h9bqYOp0m4pkhtz3RxcMjAUjgfTCPjFxGAvrNwLqNa5fLpGZSIpPt9V
+         Ex9mnJAdWkLjLw8+lBr5TWNC71k6Kbk75/ES7OCy3Yz/ePBtwkVPW+dd4po2xMhT8Snl
+         2cQj/4l9fPF5ak7gpFPW0ZCOFIIpxEKW1nP52f8IEglakV/PFV30XrK6PYseaUvfWKXL
+         PMOIodQAroX2fu1LQdTP+W6MFYtDdWdbcBtONMeEv+sHwOv9O2oItAqzZ1c3b2n4yICz
+         E6YWEV2gIGO0bd03KOqsanAc8YmxJhZWKrGC3MDYBdWfHHW+amC033RqF9+upImPcXMv
+         meYQ==
+X-Gm-Message-State: AOJu0YxIBRJXXYFQ8fSPT0pUKIHdMZ39EQal+1uQ0MuqJfnITWhrsJoK
+	RxDM4Taquk9AzG+FkTI9Q1apiNALD/Bq4qWe0C8cfJXtx4jW7eadTOk1fIQzKSs=
+X-Google-Smtp-Source: AGHT+IEO0ATnE8Phd7dm6ARNRR8q9Xnd2l2uEpSzz8LWBBdkN1/vfqnnKDm/J5Q61B0urpBIW1LtwA==
+X-Received: by 2002:aa7:d78e:0:b0:55f:adc6:4ee7 with SMTP id s14-20020aa7d78e000000b0055fadc64ee7mr2243064edq.32.1707244960376;
+        Tue, 06 Feb 2024 10:42:40 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUnD00nltNonygXyK4VjlYfQI+kO3r01XnKjIC2YQ35vpxeaaqhosToIo0p1nJcWMJ7kUjlYFJfwbByUYcCzIFN40pWSLjanhUj/TwK8BTqm427FdW2sXP8bK++oIAUNhcH7xXJXGZsLj+RA7OXeuiVtdvPdiIFztPohGDWyxgwQJ41D5acC7GfylOU/f30o9UpWtb5VkdW5qOAYjP2aJfqoH+anym/vL5Ixsg8JV2dPUnWFELmluUyRMsimlJ/uK++SVVupCSXbNG83EEsVnZdj5qXnz/oKAEOSSAzsNs=
+Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
+        by smtp.gmail.com with ESMTPSA id k10-20020aa7d8ca000000b0056007548c9csm1283846eds.48.2024.02.06.10.42.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Feb 2024 10:42:40 -0800 (PST)
+Message-ID: <1ca4d384-9df4-4c00-a4c9-0c5ff491616e@linaro.org>
+Date: Tue, 6 Feb 2024 19:42:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-kernel@vger.kernel.org, kernel@quicinc.com, 
- Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <53ba029fb1e3f66505b9f6487030e5d981e1621f.1707202761.git.quic_uchalich@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] soc: qcom: llcc: Add regmap for Broadcast_AND
+ region
+To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
 References: <cover.1707202761.git.quic_uchalich@quicinc.com>
- <53ba029fb1e3f66505b9f6487030e5d981e1621f.1707202761.git.quic_uchalich@quicinc.com>
-Message-Id: <170724381060.1723303.7103861511476056588.robh@kernel.org>
-Subject: Re: [PATCH v2 1/5] dt-bindings: arm: msm: Add llcc Broadcast_AND
- register region
+ <169277f53affed98ef41e5a7cbf2401fe62716bd.1707202761.git.quic_uchalich@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <169277f53affed98ef41e5a7cbf2401fe62716bd.1707202761.git.quic_uchalich@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 6.02.2024 08:15, Unnathi Chalicheemala wrote:
+> Define new regmap structure for Broadcast_AND region and initialize
+> regmap for Broadcast_AND region when HW block version
+> is greater than 4.1 for backwards compatibility.
 
-On Mon, 05 Feb 2024 23:15:52 -0800, Unnathi Chalicheemala wrote:
-> The LLCC driver in SM8450, SM8550 and SM8650 have a new register
-> space for Broadcast_AND region. This is used to check that all
-> channels have bit set to "1", mainly in SCID activation/deactivation.
+Are they actually separate regions and not a single contiguous one?
+
 > 
-> Previously we were mapping only the Broadcast_OR region assuming
-> there was only one broadcast register region. Now we also map
-> Broadcast_AND region.
+> Switch from broadcast_OR to broadcast_AND region for checking
+> status bit 1 as Broadcast_OR region checks only for bit 0.
 > 
 > Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../devicetree/bindings/cache/qcom,llcc.yaml  | 41 +++++++++++++++----
->  1 file changed, 33 insertions(+), 8 deletions(-)
+>  drivers/soc/qcom/llcc-qcom.c       | 22 +++++++++++++++++++---
+>  include/linux/soc/qcom/llcc-qcom.h |  4 +++-
+>  2 files changed, 22 insertions(+), 4 deletions(-)
 > 
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 4ca88eaebf06..fbd2542cd4c5 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -849,9 +849,14 @@ static int llcc_update_act_ctrl(u32 sid,
+>  		return ret;
+>  
+>  	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
+> -		ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+> -				      slice_status, (slice_status & ACT_COMPLETE),
+> -				      0, LLCC_STATUS_READ_DELAY);
+> +		if (!drv_data->bcast_and_regmap)
+> +			ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
+> +					slice_status, (slice_status & ACT_COMPLETE),
+> +					0, LLCC_STATUS_READ_DELAY);
+> +		else
+> +			ret = regmap_read_poll_timeout(drv_data->bcast_and_regmap, status_reg,
+> +					slice_status, (slice_status & ACT_COMPLETE),
+> +					0, LLCC_STATUS_READ_DELAY);
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+struct regmap *regmap = drv_data->bcast_and_regmap ?: bcast_regmap;
 
-yamllint warnings/errors:
+?
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cache/qcom,llcc.example.dtb: system-cache-controller@25000000: reg: [[0, 622854144, 0, 2097152], [0, 624951296, 0, 2097152], [0, 627048448, 0, 2097152], [0, 629145600, 0, 2097152], [0, 631242752, 0, 2097152]] is too short
-	from schema $id: http://devicetree.org/schemas/cache/qcom,llcc.yaml#
+> +	if (drv_data->version >= LLCC_VERSION_4_1_0_0) {
 
-doc reference errors (make refcheckdocs):
+This check is rather redundant.. If there's no such region in hardware,
+it won't be described, and as such the _get()s will return some sort
+of an error.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/53ba029fb1e3f66505b9f6487030e5d981e1621f.1707202761.git.quic_uchalich@quicinc.com
+Might as well make it a comment that it's intended for >=v4.1 and
+definitely leave a comment for the next guy that there's a backwards
+compatibility quirk involved..
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Konrad
 
