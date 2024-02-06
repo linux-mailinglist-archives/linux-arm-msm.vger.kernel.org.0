@@ -1,94 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-10014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E04784C023
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:36:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93F7484C02C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:41:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE3F6288D91
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:36:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51745285F83
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 22:41:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08C2A1C291;
-	Tue,  6 Feb 2024 22:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 411861C298;
+	Tue,  6 Feb 2024 22:41:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NohBTfRn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA5B1C29B;
-	Tue,  6 Feb 2024 22:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EFA1C291;
+	Tue,  6 Feb 2024 22:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707259004; cv=none; b=OeEvizlqj/x69yY+AuABHYbu4Uro/kmTYnh8aShR1YyiEqMp9aIk+4QkRqeB2gybL7ehyw6IRTXsB/5LWyogBXoCVjmU2WCKF5yDa9xo87OUTtUthLmr5yBBs2MfZ1cSy0SnkF3Vl+IG8gx+OML/YKDuDwebBTst0jufCxl1P0I=
+	t=1707259280; cv=none; b=OiDfrgbRBnyJEn2nsbe22SrR5KRe3GBJnI1zNcH9KUe68BIcuSbNdspf3+u0PQETWNhjgdEOr5tUygupMQye+dcPmYSNBwGYLWRBcq1v2xni5DZp/BVaklyQ0SxjtWoLa4aFLZKEWdeIDa21BgAJoAo2iIz6yqwfyuz6xKm7PcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707259004; c=relaxed/simple;
-	bh=A6S132/zWnIF604R2BGgbTO1mKS5nuWInKg4JB4uibs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FqCdWybQ1ToKTXoxztRbb+5gjnK1s5hlIqGS7S3LrWD5Tncu9RDHR1E2OLQsX2e+KG96kW1iDbzE8MdaivltxxHZg/1FJkdbZeO9lYCTqYaiu+KvRe9y1UIHPnPIQKP0Uk2EBEvkj2NcFyIB6/GdGo6jKDv7RT3IRV1APdN37No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 07AC33F78E;
-	Tue,  6 Feb 2024 23:36:32 +0100 (CET)
-Date: Tue, 6 Feb 2024 23:36:29 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, g@somainline.org
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>, 
-	Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
- pins
-Message-ID: <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
-References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
- <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
+	s=arc-20240116; t=1707259280; c=relaxed/simple;
+	bh=GvQWGxfzzJo/PNDI8kmCuJ1FJnA7C1Qpj2C4krhkaK4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IC7uLJWG3UT39tEQ7CSwwoa72J9mfdbaR2EWSK3mnJ+GsefELAnStatz31pPpE+YTUvUhrgp79npU++Jq191a10GGXvIlUH1Ddej0nhN9EYt+kHoDdXVKTyNKEIFHa1VtIV9kU9RUXZ6GDRrvBsHHbyo7KZi4IvGN7EKeI/UVSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NohBTfRn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416KWrq3009087;
+	Tue, 6 Feb 2024 22:41:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=XxdHIA+QMOuSWmvYypzcXruKSBNNGtCu59rJ1V7ez8A=; b=No
+	hBTfRnxrX69Eu+8SXUmV/QXc/mYYHIiFVdMt3O/9J0JdnHagFaKR6Kl8dCIQk66v
+	aCI0GXuz3RpZtdcsBSTPmqVe41WxYsOEzX6suCl0hwc+sjGWfll55bT6mT7Qr/h4
+	eHLPAvW1kBKLolcJ+YxcZ7rTpT3S4dObKxaKzww1rVO107Dtbo+hsrPtiB5AaPLe
+	HyPqvgYu9I2QuUCo2juBMgXfxKX7XIeAN1VevdnnIKvUiN9kK/jrPZRQuv7Z83a8
+	AQxsXGnZW2tIM2qkq9COpZqswqAt8cnrjUZQHPRNn4VNLbzoKQLmQSlQqN2gyIi/
+	djehOOBI97R/j4f8EAvA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3k6g9evp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 Feb 2024 22:41:10 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416Mf80B020563
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 Feb 2024 22:41:08 GMT
+Received: from [10.110.46.191] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 6 Feb
+ 2024 14:41:07 -0800
+Message-ID: <bce60ac4-9c57-94ff-f93a-c3facf0ad267@quicinc.com>
+Date: Tue, 6 Feb 2024 14:41:05 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 06/10] clk: qcom: clk-alpha-pll: Add support for zonda
+ ole pll configure
+Content-Language: en-US
+To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Rajendra Nayak
+	<quic_rjendra@quicinc.com>
+References: <20240129-x1e80100-clock-controllers-v3-0-d96dacfed104@linaro.org>
+ <20240129-x1e80100-clock-controllers-v3-6-d96dacfed104@linaro.org>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20240129-x1e80100-clock-controllers-v3-6-d96dacfed104@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Co5JC-mJFxt24F0GfrrBMK_a0lQ-E7QV
+X-Proofpoint-GUID: Co5JC-mJFxt24F0GfrrBMK_a0lQ-E7QV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-06_14,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=792
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1011
+ impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401310000 definitions=main-2402060160
 
-On 2024-02-06 19:58:50, Konrad Dybcio wrote:
-> On 21.01.2024 23:33, Marijn Suijten wrote:
-> > Add the pinctrl states for SDC1 and use them on sdhc_1.
-> > 
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> 
-> [...]
-> 
-> 
-> > @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
-> >  				 <&gcc GCC_SDCC1_APPS_CLK>,
-> >  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-> >  			clock-names = "iface", "core", "xo";
-> > +
-> > +			pinctrl-names = "default", "sleep";
-> > +			pinctrl-0 = <&sdc1_on_state>;
-> > +			pinctrl-1 = <&sdc1_off_state>;
-> 
-> -names should go last
+On 1/28/2024 2:52 PM, Abel Vesa wrote:
+> +	.set_rate = clk_zonda_pll_set_rate,
+> +};
+> +EXPORT_SYMBOL(clk_alpha_pll_zonda_ole_ops);
 
-Per the cover letter:
+GPL variant please. 
 
-    - Moved pinctrl-names before pinctrl-N (Konrad);
+-- 
+---Trilok Soni
 
-You explicitly requested this in https://lore.kernel.org/linux-arm-msm/60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org/#t
-but we also backtracked on it somewhat for consistency with other -names, and the general state of this file.
-
-Maybe we should apply v1 of this specific patch?
-
-- Marijn
 
