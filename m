@@ -1,182 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-9899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BFDE84AE08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 06:22:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C256784AE3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 06:57:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98EBEB22131
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 05:22:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75F5A2864F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 05:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AF0581210;
-	Tue,  6 Feb 2024 05:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EC258004B;
+	Tue,  6 Feb 2024 05:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G28tMiBQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h4RtbnBf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A278F81AA3;
-	Tue,  6 Feb 2024 05:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6D57F470
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 05:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707196781; cv=none; b=tI6KtVuXag+Gh2fIev8IoNRGA7z7wknx/KAXxzWj0wZcqILL79b+7e1zfkox3ePQ4U1Ro2A0aCfMD1mgQactx2UM2MrFGQv03Cs/oWzsw8epxByFQ2rlLKDUtGqa0D91ffh46WyZ0XVvV3/iRkQuoYBiPySdMCcY9qaMjHz8ypU=
+	t=1707199071; cv=none; b=ZlFXl3ngark3ZgTF73fpwrCtM7elAxrpZJ0Pf/EkPFtBXjdx7q5iFfmoJa/480YJeEUE6RVL9sJm3HAUGgrAXuzyj5cNWtpSQThCidRFrQv30nELIov0O7LHxgG8BG99XvKDVWT+3R39Dwx7ArB9ZF3tzY44mBJWo1pdQGCG3Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707196781; c=relaxed/simple;
-	bh=ZWXdXoRoci2I2JY1vAA8SZHj20GPexRSHmRz/CFI7BI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nqdgLN+ejHU8EKuTJOjMfY0q0rHmI/0HiCN/gDwih1k7RKeV9Lpqpamo+ip0gr5XmZpxZZTM31D8OyJYJ8yfXeDGbIAMh1IG1s5fhQuG5kTpVJnBgAlQCNqo/bIYcMPbt5r5i195l7SOrMypvyrPbB3wzX+BcEvUfVSZohibnDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G28tMiBQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4163mc8U008538;
-	Tue, 6 Feb 2024 05:19:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=jR0CDxm9qu95XIEKbUM20OhmF4Uf8b9WqGbgZ5c0X/U=; b=G2
-	8tMiBQxiWmeuehouUYkhsJrsDrtHWmez4eez0uSmsovrA+yGJdbtflqtQYXQ21N8
-	zC8MSFoYZjjBT55PedTkUNvJJ72O9jnEe/cWKJM33XDGoP2dQd8dIwF9Gx71utvv
-	I4LYNm+VJ7Ve+x7x1rSwNtRoa52vxasao7oiDHJPZHyecgOy/kE2qeuQf4rDMX8f
-	uEpSmQVKh7696b1EJqeQ/du1s31hx2dMnkcb52atrJqdggYq5+m27yVf2Pzld8xN
-	FJn3YXxxGgKBWEfZ6X12eEGKTgs22ski0SR5tPJi74jlcSxljRqmoyxFRmTL1PyA
-	j5oX26V6NshW/kFRg9ZA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w2v25ae8q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Feb 2024 05:19:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4165JYtI003589
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Feb 2024 05:19:34 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 5 Feb 2024 21:19:29 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Felipe Balbi
-	<balbi@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        Krishna Kurapati
-	<quic_kriskura@quicinc.com>
-Subject: [PATCH v14 9/9] usb: dwc3: qcom: Add multiport suspend/resume support for wrapper
-Date: Tue, 6 Feb 2024 10:48:25 +0530
-Message-ID: <20240206051825.1038685-10-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
-References: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1707199071; c=relaxed/simple;
+	bh=ysU08zj4Hg/RYgoGDggCvO60aVp5MmHmJq2MC6dL0VE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=En4BrtMLmtEUdo1nBglVeAwjjptZqDJx5LTvGS+bbNojaz7bZlFTGZJaF/GA01yaatH7vXia60dexeetkrfEj+dnHoR8YCC4ZC9Pt+ZynGR/SS7E0WBJ2Bl/Bwn/OcypQy5M9V0Udn/AYvf6ktgqqryfUv6hdLKIJGge9wWVl5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h4RtbnBf; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-604713c4ee5so9747767b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Feb 2024 21:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707199068; x=1707803868; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wmo8OZ+RD3WMbukSfHahLE4n7rr4rX9TbI2saroDAe0=;
+        b=h4RtbnBf/uLQ1ZRD7HxSb6mBzYQu3mAkqU9cQTbgxzMPx/pGpAbAJYSTlYMXwRGXND
+         JIPRf3jhDnfqca3+yu4CeADEF1IZ2ApOSWRR99KbVYWaWFfATFGggxQetXJfYxLBmfgW
+         ssZbBrIP/oOb3fSy29goQlQ6m3NFaNzse0bylewfER9h1HoGs9B/WH15ZSDeY8Oh6rB0
+         2E8o4byt0fIGH2B7mKq5B+mvWC1xgx8ebEbugI9bEWQo8YMsz2uZhS8HKegbn6VraONY
+         4BFxibQvTmYgu/Kf0pCui1PROFwWEXXwGaiDTTjH1ZjSLP6ZHk22lrsH24mmcwWzTH+G
+         PZOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707199068; x=1707803868;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wmo8OZ+RD3WMbukSfHahLE4n7rr4rX9TbI2saroDAe0=;
+        b=jbt/5CUFfAx76V/YcGIZN60DAifxbidBket5YQnrWOFxEf7gdH4evjk4dKtV3aF2Z/
+         jzlrGdkeDFj1YPpFaLjQWuYCipCDO1adM5Cxqn5lbVQAx5gGwoJsfLam157e2xPuiiJ8
+         6j6kC4Ha6Ft1hDtzI8v5UDyP3PUY1kjXXY5fH0NPfnLPHL/frLN3L8vR4lKIPK9erRVp
+         X7E5Nsr6f3PXnU5MpBlFyfi1M+FVGFwKrTR6EA0hwbqOlCheVhqQ01fLczTxnkzfORjJ
+         IHm+/mYPJDCYDICdAwBGeTnTb4A1AnUqGE3iwjkZsyA57DGoyUqL2ySeDNRwP1aoLDc9
+         UXmA==
+X-Gm-Message-State: AOJu0YxeCb/rPK6Pspybr1DkkX8gxuyThJem7Z7aVryMZbRvK54HKSVp
+	BUY3Yv8wBYNXLjXivwI0MQyXDT9fgKB60vojYVxuYdSSTzT5PR1dLXNsbytvzWQBW2pTnKzMnEr
+	zfTwujiu74wzVd/hCKmbtm0G1piN0tleByQTesw==
+X-Google-Smtp-Source: AGHT+IH+R9/XEh5MDFKwcKvN1122YGkm05bcyEuArFy7J3lbwWjm15zjwXjtYTmM97101cB17yqIknzWzpzCcwMYKxI=
+X-Received: by 2002:a81:a882:0:b0:604:76c3:7b3c with SMTP id
+ f124-20020a81a882000000b0060476c37b3cmr758325ywh.6.1707199068531; Mon, 05 Feb
+ 2024 21:57:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Hjm0P1XVd4Dcj1VoXvHrux-UxDqqINnW
-X-Proofpoint-GUID: Hjm0P1XVd4Dcj1VoXvHrux-UxDqqINnW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_18,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- mlxscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 mlxlogscore=778 malwarescore=0 clxscore=1015
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402060035
+References: <20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com>
+In-Reply-To: <20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 6 Feb 2024 07:57:37 +0200
+Message-ID: <CAA8EJpqo6p+S4JirhGybGsiG0X9Evdb3LEVgorsewEcRT8LMgg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-idp: Add configurations for gpio-keys
+To: quic_huliu@quicinc.com
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Power event IRQ stat registers are present for each port
-connected to controller. Add support for modifying all power event
-irq stat registers present in wrapper.
+On Tue, 6 Feb 2024 at 04:21, Hui Liu via B4 Relay
+<devnull+quic_huliu.quicinc.com@kernel.org> wrote:
+>
+> From: Hui Liu <quic_huliu@quicinc.com>
+>
+> Add configurations for gpio-keys to enable pon_key and pon_resin
+> key.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- drivers/usb/dwc3/dwc3-qcom.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+Configuring gpio-keys is a requirement for enabling the pon_key and
+pon_resin, so the commit message is incorrect.
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 572dc3fdae12..e789745a9468 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -37,7 +37,11 @@
- #define PIPE3_PHYSTATUS_SW			BIT(3)
- #define PIPE_UTMI_CLK_DIS			BIT(8)
- 
--#define PWR_EVNT_IRQ_STAT_REG			0x58
-+#define PWR_EVNT_IRQ1_STAT_REG			0x58
-+#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
-+#define PWR_EVNT_IRQ3_STAT_REG			0x228
-+#define PWR_EVNT_IRQ4_STAT_REG			0x238
-+
- #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
- #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
- 
-@@ -109,6 +113,13 @@ struct dwc3_qcom {
- 	u8			num_ports;
- };
- 
-+static const u32 pwr_evnt_irq_stat_reg_offset[DWC3_MAX_PORTS] = {
-+	PWR_EVNT_IRQ1_STAT_REG,
-+	PWR_EVNT_IRQ2_STAT_REG,
-+	PWR_EVNT_IRQ3_STAT_REG,
-+	PWR_EVNT_IRQ4_STAT_REG,
-+};
-+
- static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
- {
- 	u32 reg;
-@@ -444,9 +455,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
- 	if (qcom->is_suspended)
- 		return 0;
- 
--	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
--	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
--		dev_err(qcom->dev, "HS-PHY not in L2\n");
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-+		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-+			dev_err(qcom->dev, "Port-%d HS-PHY not in L2\n", i + 1);
-+	}
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--)
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -491,9 +504,12 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
- 	if (ret)
- 		dev_warn(qcom->dev, "failed to enable interconnect: %d\n", ret);
- 
--	/* Clear existing events from PHY related to L2 in/out */
--	dwc3_qcom_setbits(qcom->qscratch_base, PWR_EVNT_IRQ_STAT_REG,
--			  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	for (i = 0; i < qcom->num_ports; i++) {
-+		/* Clear existing events from PHY related to L2 in/out */
-+		dwc3_qcom_setbits(qcom->qscratch_base,
-+				  pwr_evnt_irq_stat_reg_offset[i],
-+				  PWR_EVNT_LPM_IN_L2_MASK | PWR_EVNT_LPM_OUT_L2_MASK);
-+	}
- 
- 	qcom->is_suspended = false;
- 
--- 
-2.34.1
 
+
+
+>
+> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 43 ++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> index acf145d1d97c..4199ebf667af 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> @@ -9,6 +9,7 @@
+>  #define PM7250B_SID 8
+>  #define PM7250B_SID1 9
+>
+> +#include <dt-bindings/input/linux-event-codes.h>
+>  #include <dt-bindings/leds/common.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sc7280.dtsi"
+> @@ -39,6 +40,24 @@ chosen {
+>                 stdout-path = "serial0:115200n8";
+>         };
+>
+> +       gpio-keys {
+> +               compatible = "gpio-keys";
+> +               label = "gpio-keys";
+> +
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&key_vol_up_default>;
+
+pinctrl-names should come after pinctrl-0
+
+LGTM otherwise
+
+> +
+> +               key-volume-up {
+> +                       label = "volume_up";
+> +                       gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
+> +                       linux,input-type = <1>;
+> +                       linux,code = <KEY_VOLUMEUP>;
+> +                       wakeup-source;
+> +                       debounce-interval = <15>;
+> +                       linux,can-disable;
+> +               };
+> +       };
+> +
+>         reserved-memory {
+>                 xbl_mem: xbl@80700000 {
+>                         reg = <0x0 0x80700000 0x0 0x100000>;
+> @@ -421,6 +440,17 @@ vreg_bob_3p296: bob {
+>         };
+>  };
+>
+> +&pm7325_gpios {
+> +       key_vol_up_default: key-vol-up-state {
+> +               pins = "gpio6";
+> +               function = "normal";
+> +               input-enable;
+> +               bias-pull-up;
+> +               power-source = <0>;
+> +               qcom,drive-strength = <3>;
+> +       };
+> +};
+> +
+>  &pm8350c_pwm {
+>         status = "okay";
+>
+> @@ -448,6 +478,19 @@ led@3 {
+>         };
+>  };
+>
+> +&pmk8350_pon {
+> +       status = "okay";
+> +};
+> +
+> +&pon_pwrkey {
+> +       status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +       linux,code = <KEY_VOLUMEDOWN>;
+> +       status = "okay";
+> +};
+> +
+>  &qupv3_id_0 {
+>         status = "okay";
+>  };
+>
+> ---
+> base-commit: 23e11d0318521e8693459b0e4d23aec614b3b68b
+> change-id: 20240206-gpio-keys-138bbd850298
+>
+> Best regards,
+> --
+> Hui Liu <quic_huliu@quicinc.com>
+>
+>
+
+
+--
+With best wishes
+
+Dmitry
 
