@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-10018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24C3184C0EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:33:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7992D84C0EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:34:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D56ED285FBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:33:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1932D2866BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:34:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E32E01CD26;
-	Tue,  6 Feb 2024 23:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E04E1CF8D;
+	Tue,  6 Feb 2024 23:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PxjrHLUr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E+6qXcTL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C911CA8E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 23:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075821CD19
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 23:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707262435; cv=none; b=oqKQpXTHdNZDOp+OuYAkyrs8ZxhwNEx3Q/UPjaUMfpxgOrg7IFSK3dLPPCTa+tiTgPz77NAYty39m+7/zpeCSSAvEu/8dM6s5KwQchkLXFnYOzFByGGHpM7b0qTq7y0TZkVjAjLkjf4W6Bv9o7hbrMq963DPzxtLbsCMvEpavO8=
+	t=1707262438; cv=none; b=iGwnN6tiU6kw4UZ6a8kaxlnwjU2U3Yco4aLTIByVJegz+0T967Q5a2n8pL7TQtMU9TTdlElwOwdRt+gAGs7b+9SL5EGQMWhn26/jp3MZA89fv1VZkcaMzJuCx7kK9oAJHtZUPidh4OXiGafTm/nmSefKquRJqbx0szcGVFoXogo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707262435; c=relaxed/simple;
-	bh=uUa/Ho3Wm4SxUj+BbGgsm/fyqzW+5eMAhtSXlwrvm0M=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JqrE+j/inGdASbYA3iLTIk8AzfuUzBxH1kuTygk1tZvDYiJbvP4+zehQ2S5OGqSEpB5iBNAkSL+ATsuXx6rX33lQMpFAWl0Ut9RoS+pmRhJy3egxHXA+FuU6xOKXKt6CLqKciLWaUXGaOdYw2TMaj7F3aS1ji3hPOwrx8m6IGMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PxjrHLUr; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1707262438; c=relaxed/simple;
+	bh=ZJ1b8KghLleqJ8T+rAkzn1+HdBws+EtGs+BFf25yaNE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nFUiAKfm2NC3WYu1eOrwX+H2xgPYZMDr4edT+mC6CvNSMh+akM6fCVUBmVKscTwliZ+cmUFh7fyKsYESA8pKzWs+BINjCjAKo+3MOfb15MdiLzxLtvozUSv5mU4hHF3QkirZRWODz9BT22+o/Q4RWfGvSC5J82cWPzWLRguO4EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E+6qXcTL; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a38291dbe65so3426066b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 15:33:53 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55fbbfbc0f5so2119877a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 15:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707262432; x=1707867232; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=J3t/dCk69ENxLEtiFl6GrgXJweCO07ULmDgCmo0QZh4=;
-        b=PxjrHLUrxUCNnGAcER0Beix+E3hGnNHyG4frZbI7umIFj2Xx61uFT8EygK4c0tH5hf
-         7vJAyfI4iQxa1oUC+gSugV65SgpvGbGSbDxG6fhgc8GoMrrdtCk/25leDP1pqlUpuYwR
-         FDA7xFNs8SlbJS8hi0vwuRFjFTVgk3vFMplC7XxIMT2sNgiBDp4qjVc7HGk3tf7tpdPS
-         ooz2/J7pAyzc6rssAp6HqoXiCEfQPlX3tYNd2VOYqJ5pI8Iu/B5HBYUMEDZioKwKyR/1
-         MWF3Edok2l39symWv0QduFymrIk9L0wWNEiUyrT2a60L3Tx/axm0/CG7fGPxXSErNevi
-         7F4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707262432; x=1707867232;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1707262433; x=1707867233; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=J3t/dCk69ENxLEtiFl6GrgXJweCO07ULmDgCmo0QZh4=;
-        b=rHlZKtXclqFORrEckqZaY2+nqmQ5GIHPp1eCpyuRS2xFryxQd5R8qwRfMtSvHzs1Fa
-         w0Y3jEEwOYnuXcOWz1KjP8k20K8WUXFF9jtbYgLmTRf1pI+bgaytSH3x3lYYXSRiFv8N
-         5oyOPSDKRNkvE0fCgDyPYNWXJdHNmokkoPGpYo9xo2nMmM8Stwv/BNwVuOrcQqvWgVmV
-         xdSHPLDjW5xj6Dgl10f7UmDu55ujtYjZpNVihzoiikuC4u54I7TkCW7cuccAs7IqxhTF
-         rLm2ToxkBrgIKmBZ3SG0ehEgC845VoXWs7gjJiumTOELD2bsb2gJEmEVnRBvAPhmQ7iz
-         E5zw==
-X-Gm-Message-State: AOJu0YwWuBdatFaiFiqtgxZCxWYfKZUaS+TEbLh+ZBGADA37+H2WdD62
-	mznJSq1/pspxN8n4sUYA9aFxVU9iNBLh4wSulMJIqgc+y306kCpIKhP3Oei9qv4=
-X-Google-Smtp-Source: AGHT+IHChQ4b8HUl5ZWL3mUPsNr4TOqpEOvJqMc5tmddRtG1OJQD1z/pv6D8ttNAMEN6b8MIDkzaUA==
-X-Received: by 2002:a17:906:301b:b0:a38:2694:46f9 with SMTP id 27-20020a170906301b00b00a38269446f9mr2007544ejz.71.1707262432016;
-        Tue, 06 Feb 2024 15:33:52 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVSQTuvLi1jJ2nPud0S4+sepdTgNa2Nigx8K+PbWd4I4nELkynhotStbXMK3XK4l1oPPAlzspPSo7I5EUjyxzeYGtsOJ446PZEfG6TICWzDQKVYHF1VPjs7PKAps+L4kNOzIyuyGyaZ7Xc57+/I6qhT5nID5ty6ydEM5ssVOgApdNVxl7Y8rANft9+lA27/gn52HSi25F5H3Cz0zd0sbjeoZXTXww/rlOJRjY99QCdElgPMIIvVFP/E5NbmYqpuDPsC2safVHqDZfZM6h4SB8+s5jzhIjCBIQ0O9zHgiVMsg+ARJkCDHpEpFo/E1cQlddUr8/SbuUxuAW5f3uBoZ896CZHmM4frx0S/o60mN3K11X9oTCU39WxHPWOneUWS
+        bh=MGYOUF8uM1GQoN69Xx2a7IClOY1nWEoUB3pl/we5xUQ=;
+        b=E+6qXcTLUBy5El9uVCY4TbLDgx/rKQbVR4SrtIqCyiWqmBYpNSi72izpeIy/Ib6jq2
+         v6VJPfgYpS5eg8BQ3qM4DYTdZMHtdNkvDJDUYIAGu+Zkn8WZLKlg/dR5dD5SJYrVuEw5
+         nNGjw3aK2JDxMwXiV5taeMf11XTnrB/fQb4exU/4dVDnfbz1uP7Tk3RaViiTNsofDobY
+         YDjp7usTJf5M+FY1/9fE34UIwFCSATXPFdusUC2FbVRYOYilJogJgC7o38ws7cr2xKYz
+         M6gRlK4w2BD8M9nyGTglCnKMfsAw6MgZ4pfZk4VJkZFkA93zj+ga8EYDhNPwmZFAfrUc
+         wtrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707262433; x=1707867233;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MGYOUF8uM1GQoN69Xx2a7IClOY1nWEoUB3pl/we5xUQ=;
+        b=O7vDkAtiwalDKCozbmva38OgQiAn6BBbHDvosiGOU2jXc9S+Pyh8wcVkQHrxsgI/vA
+         Vo8XozAL9jnBzdtBLlmkW20pWsfgN7t7AdGL3YJaLNbyutc9bxBZ4BaA8Qt9hsb8v9OQ
+         Bu+HH3ktyO0wYSsMrw6IrCBozb9ogX7BAFAm9/I3QAm53rMlIwzjMbh5kIIjGogf7t4s
+         fzUMv4076j8AK+oReIXoqCrRab5J5xYYQaO5yiO08hhiywCigmRHtcL/Rdb/7PvJEIEu
+         0cKsTOdXgD9QEFJN96nl0PY3sRYvZmd6KUkJD/t33GdlSQpaY+VLQllG+CFblbplxgDD
+         XSZQ==
+X-Gm-Message-State: AOJu0Yz0kqDwTeBk9XgZBizqQauEVjCsaYx8y6uOB3O9Bmyft8HS0KVq
+	0EbvdyZnpv1hH33BT+wdCSKNkBzqo91F/RtFufNxTepdZjuRe+rUH31p2OXl67k=
+X-Google-Smtp-Source: AGHT+IGVz7HuWzYNsl2sPusAdsnXMlWxF9DRATNu3wMO7Hr5UU3S7SHGY0MsgOvTxZD41f9z4f1nDw==
+X-Received: by 2002:a17:906:af91:b0:a37:9b07:fffc with SMTP id mj17-20020a170906af9100b00a379b07fffcmr4344594ejb.12.1707262433271;
+        Tue, 06 Feb 2024 15:33:53 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXIVDhXl2w9Mr2g8ySKb7VwzoyBxI31Ha1CcTGlEpVjAtkdSLrYcDyVo6gHqF6bS379agbqqeS37t8DsG4he15eRWwHzvbxX8tqVdNki6Shof5gUGyro36ItgnQrOLW+MNVxjna7csiPp3KfZgHT3rYY+CB7cbemUQYCXxIr+KGTv56JFFMNqJ9nSbDUJuEquUj09WwdwBTZuUWIks14szumAaAstSOx1mM6wnKAXrVZGb2ALMrMd4n7ywjHo1RHvuxyNDgKAs/XdZEiaX7MpN2dvIona8B6tBjZTS7GO2A6nAO/zsvQioTNTCULyYHw1pDNFUsc5Iiv3QQmkLFu5/bBO0aRR67YIIQQ2xUKKAmwAGIRutQ1MH7jZzBMNzw
 Received: from [127.0.1.1] ([62.231.97.49])
-        by smtp.gmail.com with ESMTPSA id un9-20020a170907cb8900b00a36ed37683fsm72404ejc.215.2024.02.06.15.33.50
+        by smtp.gmail.com with ESMTPSA id un9-20020a170907cb8900b00a36ed37683fsm72404ejc.215.2024.02.06.15.33.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 15:33:51 -0800 (PST)
+        Tue, 06 Feb 2024 15:33:52 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH RFC 0/2] spmi: Add multi master support
-Date: Wed, 07 Feb 2024 01:33:41 +0200
-Message-Id: <20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org>
+Date: Wed, 07 Feb 2024 01:33:42 +0200
+Subject: [PATCH RFC 1/2] spmi: Add support for multi-master
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANXBwmUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDIwNz3eKC3Ezd3NKcEiCZWFySWqRbXFpQkF9UomthbJRobmCSZG5umaQ
- E1F9QlJqWWQE2O1opyM1ZKba2FgBmdoGrcAAAAA==
+Message-Id: <20240207-spmi-multi-master-support-v1-1-ce57f301c7fd@linaro.org>
+References: <20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org>
+In-Reply-To: <20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org>
 To: Stephen Boyd <sboyd@kernel.org>, 
  Matthias Brugger <matthias.bgg@gmail.com>, 
  Bjorn Andersson <andersson@kernel.org>, 
@@ -89,51 +90,388 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
  Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1122; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=uUa/Ho3Wm4SxUj+BbGgsm/fyqzW+5eMAhtSXlwrvm0M=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlwsHXBTBDUHkw22LNTcEGnFGBZ3ed0WbfJnF1y
- niQsAL7VQWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZcLB1wAKCRAbX0TJAJUV
- VnnLD/9XlbcGQXYnjM2J4ynDwPwRpDPDYJJrZSrHKt8dkZozLK0uEUvFivSsgRF0Oa2MrJNyeh9
- i4ixNnZwvFa4jB5SFVFJuFvwgja1dJwPLwCzdqIm+voss5v9XYt254D+N5uuCxcVcrfHQAPE78m
- pTBy6rnrXPVYzDjp2jJByWbXPZwPp2GdCQeBGrffVWQOqVfpGQZuU1/MnuDOD/3Lwv6qukgVTHP
- PrXx012Ts341rhufybu/z9dKotXDjg0kRPL0gdhoxxLpn2/lD3Dt/k2GSnHGutcTft2VPTRIzV2
- IGBwztmXS/ACt2EqGFNqEYxnFwu16buKMsusbjPB0fd8pdhXCle+2yHTUGQ3lzcjeBk9i99o+cc
- BD+dQqVlRWmpvTSmibrAbpGQWdc41TuOW+YAmE443hK3g1/mPrX6GQqooXF15+PMgYshkU0vPNE
- xZmFp7ilYWRRH9MiuxZfELbYURWAyiFIRxYKhka6XvT1KFD018ttajfW1gqcgY4F1rCfuhIPobq
- 5bvuBXl3cgQbH2baq5QmIVI0nu5EWjwtMoqIqcZR5xcrECQ4gRl1aLVM5k0iLwdpDdpdDWrLeRJ
- SfmhNv233g7TsVX9ZE+Zffge/GXh6lfbb7vw8vbVBqEw+a1AfFEF0tGmven58863MIMLeJapq84
- W2uCzVA1cmdE42A==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13789; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=ZJ1b8KghLleqJ8T+rAkzn1+HdBws+EtGs+BFf25yaNE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlwsHc6sOSTWPG1JjumHLk8DdAa3QRC74YuxX6J
+ B8N0YXjVT2JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZcLB3AAKCRAbX0TJAJUV
+ Vnf9EAC7fRIYjVxEGfFIbqFPqBUek4oQzqBoNxiRiBiUN1Pd8gpSd2ZjgmsFW4zb69IJ1bAUyXo
+ ubmPGiJSiz5EhLZw5CWd0yqn9ZXmf93slTdkPQD69Kz9+D17DULg4NIuLm5LiuTygKRSpCCyIxS
+ vG3EVABcqw3fLmDF8WqwKyOw/vuCxjr44R3dEbP53c883HkbKK6vpFp58mquo5BIKEBFnbifv+k
+ +R31USU7/pGmYICdqVVrp6aLOxYVmwALebRXZ0oIMRng/2AVJuVfM2yp1DFZXgXPtE2f//4Vif7
+ yZgWGMRIojLHpDUM0nDBSNm7QwxATd0wUsidtYTstDMaNJzuulAX9iS6BBPHk+Q7OiS3T8hTsn7
+ gEQa9jdge/ziJ9BrVqCfmpAppCX9rhgpPN4/EJsm/dPrKCn9kN/tPmyWXXq17/x1+ZTVMjL4wDR
+ 4O7I7AS6+P/t6/xUboOQ/FAizKbKWNu4uK8Oisl9ewtR/vGWFvk+V4Jnq3fIkNLMPVk7W2xDvUT
+ L1OeEoHwE1J/wuLdLU82QeVJThhesmK03DvQ49xnFE5r+CA/EjXx13eHhWhZ8UoHI9mQRBrziQS
+ 0QtXM/k36uDuHwo1etVBiOz3VW2WxAlxEre60XC/hI/sMomorz8v6RQiih3frbSGSKbUFT+9XdJ
+ R0y5oA6nNPtSVcQ==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Newer SPMI controller (v7) found on Qualcomm platforms
-provide support for multiple bus master. So add support
-for multiple masters in both the generic framework and
-the Qualcomm SPMI PMIC Arbiter driver.
-
-Currently, the DT child nodes of the spmi controller node
-are the slave devices connected to the bus. This patchset
-proposes another layer of nodes in between. They would be
-the master bus nodes. They will not be populated as separate
-devices as they need to share register regions with the controller.
+Some newer SPMI controllers support multiple bus masters.
+Such a master can control multiple slave devices. The generic
+framework needs to be able to pass on the master id to the
+controller-specific driver. So do that. The framework will
+check if the devicetree child nodes are actually bus masters
+and will register the devices for each master. The legacy
+approach will still be supported for backwards compatibility.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-Abel Vesa (2):
-      spmi: Add support for multi-master
-      spmi: pmic-arb: Add support for multi-master
+ drivers/spmi/spmi-mtk-pmif.c |  6 ++--
+ drivers/spmi/spmi-pmic-arb.c | 10 +++---
+ drivers/spmi/spmi.c          | 76 ++++++++++++++++++++++++++++++--------------
+ include/linux/spmi.h         | 10 +++---
+ 4 files changed, 67 insertions(+), 35 deletions(-)
 
- drivers/spmi/spmi-mtk-pmif.c |   6 +-
- drivers/spmi/spmi-pmic-arb.c | 711 +++++++++++++++++++++++++++----------------
- drivers/spmi/spmi.c          |  76 +++--
- include/linux/spmi.h         |  10 +-
- 4 files changed, 506 insertions(+), 297 deletions(-)
----
-base-commit: ac139fc7db67968e5061715508b5fc4aa7c40c56
-change-id: 20240207-spmi-multi-master-support-832a704b779b
+diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
+index 5079442f8ea1..b19bb0351ff1 100644
+--- a/drivers/spmi/spmi-mtk-pmif.c
++++ b/drivers/spmi/spmi-mtk-pmif.c
+@@ -286,7 +286,7 @@ static bool pmif_is_fsm_vldclr(struct pmif *arb)
+ 	return GET_SWINF(reg_rdata) == SWINF_WFVLDCLR;
+ }
+ 
+-static int pmif_arb_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid)
++static int pmif_arb_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid)
+ {
+ 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
+ 	u32 rdata, cmd;
+@@ -308,7 +308,7 @@ static int pmif_arb_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid)
+ 	return ret;
+ }
+ 
+-static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
++static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid,
+ 			      u16 addr, u8 *buf, size_t len)
+ {
+ 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
+@@ -375,7 +375,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	return 0;
+ }
+ 
+-static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
++static int pmif_spmi_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid,
+ 			       u16 addr, const u8 *buf, size_t len)
+ {
+ 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index 9ed1180fe31f..597207720146 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -341,7 +341,7 @@ pmic_arb_non_data_cmd_v2(struct spmi_controller *ctrl, u8 opc, u8 sid)
+ }
+ 
+ /* Non-data command */
+-static int pmic_arb_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid)
++static int pmic_arb_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid)
+ {
+ 	struct spmi_pmic_arb *pmic_arb = spmi_controller_get_drvdata(ctrl);
+ 
+@@ -410,7 +410,7 @@ static int pmic_arb_read_cmd_unlocked(struct spmi_controller *ctrl, u32 cmd,
+ 	return 0;
+ }
+ 
+-static int pmic_arb_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
++static int pmic_arb_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid,
+ 			     u16 addr, u8 *buf, size_t len)
+ {
+ 	struct spmi_pmic_arb *pmic_arb = spmi_controller_get_drvdata(ctrl);
+@@ -486,7 +486,7 @@ static int pmic_arb_write_cmd_unlocked(struct spmi_controller *ctrl, u32 cmd,
+ 				      PMIC_ARB_CHANNEL_RW);
+ }
+ 
+-static int pmic_arb_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
++static int pmic_arb_write_cmd(struct spmi_controller *ctrl, u8 opc, u8 master_id, u8 sid,
+ 			      u16 addr, const u8 *buf, size_t len)
+ {
+ 	struct spmi_pmic_arb *pmic_arb = spmi_controller_get_drvdata(ctrl);
+@@ -568,7 +568,7 @@ static void qpnpint_spmi_write(struct irq_data *d, u8 reg, void *buf,
+ 	u8 sid = hwirq_to_sid(d->hwirq);
+ 	u8 per = hwirq_to_per(d->hwirq);
+ 
+-	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, sid,
++	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, 0, sid,
+ 			       (per << 8) + reg, buf, len))
+ 		dev_err_ratelimited(&pmic_arb->spmic->dev, "failed irqchip transaction on %x\n",
+ 				    d->irq);
+@@ -580,7 +580,7 @@ static void qpnpint_spmi_read(struct irq_data *d, u8 reg, void *buf, size_t len)
+ 	u8 sid = hwirq_to_sid(d->hwirq);
+ 	u8 per = hwirq_to_per(d->hwirq);
+ 
+-	if (pmic_arb_read_cmd(pmic_arb->spmic, SPMI_CMD_EXT_READL, sid,
++	if (pmic_arb_read_cmd(pmic_arb->spmic, SPMI_CMD_EXT_READL, 0, sid,
+ 			      (per << 8) + reg, buf, len))
+ 		dev_err_ratelimited(&pmic_arb->spmic->dev, "failed irqchip transaction on %x\n",
+ 				    d->irq);
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index 3a60fd2e09e1..7dc778db7242 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -64,7 +64,7 @@ int spmi_device_add(struct spmi_device *sdev)
+ 	struct spmi_controller *ctrl = sdev->ctrl;
+ 	int err;
+ 
+-	dev_set_name(&sdev->dev, "%d-%02x", ctrl->nr, sdev->usid);
++	dev_set_name(&sdev->dev, "%d-%02x-%02x", ctrl->nr, sdev->mid, sdev->usid);
+ 
+ 	err = device_add(&sdev->dev);
+ 	if (err < 0) {
+@@ -91,19 +91,19 @@ void spmi_device_remove(struct spmi_device *sdev)
+ EXPORT_SYMBOL_GPL(spmi_device_remove);
+ 
+ static inline int
+-spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
++spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 mid, u8 sid)
+ {
+ 	int ret;
+ 
+ 	if (!ctrl || !ctrl->cmd || ctrl->dev.type != &spmi_ctrl_type)
+ 		return -EINVAL;
+ 
+-	ret = ctrl->cmd(ctrl, opcode, sid);
++	ret = ctrl->cmd(ctrl, opcode, mid, sid);
+ 	trace_spmi_cmd(opcode, sid, ret);
+ 	return ret;
+ }
+ 
+-static inline int spmi_read_cmd(struct spmi_controller *ctrl, u8 opcode,
++static inline int spmi_read_cmd(struct spmi_controller *ctrl, u8 opcode, u8 mid,
+ 				u8 sid, u16 addr, u8 *buf, size_t len)
+ {
+ 	int ret;
+@@ -112,12 +112,12 @@ static inline int spmi_read_cmd(struct spmi_controller *ctrl, u8 opcode,
+ 		return -EINVAL;
+ 
+ 	trace_spmi_read_begin(opcode, sid, addr);
+-	ret = ctrl->read_cmd(ctrl, opcode, sid, addr, buf, len);
++	ret = ctrl->read_cmd(ctrl, opcode, mid, sid, addr, buf, len);
+ 	trace_spmi_read_end(opcode, sid, addr, ret, len, buf);
+ 	return ret;
+ }
+ 
+-static inline int spmi_write_cmd(struct spmi_controller *ctrl, u8 opcode,
++static inline int spmi_write_cmd(struct spmi_controller *ctrl, u8 opcode, u8 mid,
+ 				 u8 sid, u16 addr, const u8 *buf, size_t len)
+ {
+ 	int ret;
+@@ -126,7 +126,7 @@ static inline int spmi_write_cmd(struct spmi_controller *ctrl, u8 opcode,
+ 		return -EINVAL;
+ 
+ 	trace_spmi_write_begin(opcode, sid, addr, len, buf);
+-	ret = ctrl->write_cmd(ctrl, opcode, sid, addr, buf, len);
++	ret = ctrl->write_cmd(ctrl, opcode, mid, sid, addr, buf, len);
+ 	trace_spmi_write_end(opcode, sid, addr, ret);
+ 	return ret;
+ }
+@@ -145,7 +145,7 @@ int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf)
+ 	if (addr > 0x1F)
+ 		return -EINVAL;
+ 
+-	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_READ, sdev->usid, addr,
++	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_READ, sdev->mid, sdev->usid, addr,
+ 			     buf, 1);
+ }
+ EXPORT_SYMBOL_GPL(spmi_register_read);
+@@ -167,7 +167,7 @@ int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
+ 	if (len == 0 || len > 16)
+ 		return -EINVAL;
+ 
+-	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_EXT_READ, sdev->usid, addr,
++	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_EXT_READ, sdev->mid, sdev->usid, addr,
+ 			     buf, len);
+ }
+ EXPORT_SYMBOL_GPL(spmi_ext_register_read);
+@@ -189,7 +189,7 @@ int spmi_ext_register_readl(struct spmi_device *sdev, u16 addr, u8 *buf,
+ 	if (len == 0 || len > 8)
+ 		return -EINVAL;
+ 
+-	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_EXT_READL, sdev->usid, addr,
++	return spmi_read_cmd(sdev->ctrl, SPMI_CMD_EXT_READL, sdev->mid, sdev->usid, addr,
+ 			     buf, len);
+ }
+ EXPORT_SYMBOL_GPL(spmi_ext_register_readl);
+@@ -208,7 +208,7 @@ int spmi_register_write(struct spmi_device *sdev, u8 addr, u8 data)
+ 	if (addr > 0x1F)
+ 		return -EINVAL;
+ 
+-	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_WRITE, sdev->usid, addr,
++	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_WRITE, sdev->mid, sdev->usid, addr,
+ 			      &data, 1);
+ }
+ EXPORT_SYMBOL_GPL(spmi_register_write);
+@@ -222,7 +222,7 @@ EXPORT_SYMBOL_GPL(spmi_register_write);
+  */
+ int spmi_register_zero_write(struct spmi_device *sdev, u8 data)
+ {
+-	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_ZERO_WRITE, sdev->usid, 0,
++	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_ZERO_WRITE, sdev->mid, sdev->usid, 0,
+ 			      &data, 1);
+ }
+ EXPORT_SYMBOL_GPL(spmi_register_zero_write);
+@@ -244,7 +244,7 @@ int spmi_ext_register_write(struct spmi_device *sdev, u8 addr, const u8 *buf,
+ 	if (len == 0 || len > 16)
+ 		return -EINVAL;
+ 
+-	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_EXT_WRITE, sdev->usid, addr,
++	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_EXT_WRITE, sdev->mid, sdev->usid, addr,
+ 			      buf, len);
+ }
+ EXPORT_SYMBOL_GPL(spmi_ext_register_write);
+@@ -266,7 +266,7 @@ int spmi_ext_register_writel(struct spmi_device *sdev, u16 addr, const u8 *buf,
+ 	if (len == 0 || len > 8)
+ 		return -EINVAL;
+ 
+-	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_EXT_WRITEL, sdev->usid,
++	return spmi_write_cmd(sdev->ctrl, SPMI_CMD_EXT_WRITEL, sdev->mid, sdev->usid,
+ 			      addr, buf, len);
+ }
+ EXPORT_SYMBOL_GPL(spmi_ext_register_writel);
+@@ -281,7 +281,7 @@ EXPORT_SYMBOL_GPL(spmi_ext_register_writel);
+  */
+ int spmi_command_reset(struct spmi_device *sdev)
+ {
+-	return spmi_cmd(sdev->ctrl, SPMI_CMD_RESET, sdev->usid);
++	return spmi_cmd(sdev->ctrl, SPMI_CMD_RESET, sdev->mid, sdev->usid);
+ }
+ EXPORT_SYMBOL_GPL(spmi_command_reset);
+ 
+@@ -293,7 +293,7 @@ EXPORT_SYMBOL_GPL(spmi_command_reset);
+  */
+ int spmi_command_sleep(struct spmi_device *sdev)
+ {
+-	return spmi_cmd(sdev->ctrl, SPMI_CMD_SLEEP, sdev->usid);
++	return spmi_cmd(sdev->ctrl, SPMI_CMD_SLEEP, sdev->mid, sdev->usid);
+ }
+ EXPORT_SYMBOL_GPL(spmi_command_sleep);
+ 
+@@ -306,7 +306,7 @@ EXPORT_SYMBOL_GPL(spmi_command_sleep);
+  */
+ int spmi_command_wakeup(struct spmi_device *sdev)
+ {
+-	return spmi_cmd(sdev->ctrl, SPMI_CMD_WAKEUP, sdev->usid);
++	return spmi_cmd(sdev->ctrl, SPMI_CMD_WAKEUP, sdev->mid, sdev->usid);
+ }
+ EXPORT_SYMBOL_GPL(spmi_command_wakeup);
+ 
+@@ -318,7 +318,7 @@ EXPORT_SYMBOL_GPL(spmi_command_wakeup);
+  */
+ int spmi_command_shutdown(struct spmi_device *sdev)
+ {
+-	return spmi_cmd(sdev->ctrl, SPMI_CMD_SHUTDOWN, sdev->usid);
++	return spmi_cmd(sdev->ctrl, SPMI_CMD_SHUTDOWN, sdev->mid, sdev->usid);
+ }
+ EXPORT_SYMBOL_GPL(spmi_command_shutdown);
+ 
+@@ -477,15 +477,16 @@ struct spmi_controller *spmi_controller_alloc(struct device *parent,
+ }
+ EXPORT_SYMBOL_GPL(spmi_controller_alloc);
+ 
+-static void of_spmi_register_devices(struct spmi_controller *ctrl)
++static void of_spmi_register_devices(struct spmi_controller *ctrl,
++				     struct device_node *parent, u8 mid)
+ {
+ 	struct device_node *node;
+ 	int err;
+ 
+-	if (!ctrl->dev.of_node)
++	if (!parent)
+ 		return;
+ 
+-	for_each_available_child_of_node(ctrl->dev.of_node, node) {
++	for_each_available_child_of_node(parent, node) {
+ 		struct spmi_device *sdev;
+ 		u32 reg[2];
+ 
+@@ -519,6 +520,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
+ 
+ 		sdev->dev.of_node = node;
+ 		sdev->usid = (u8)reg[0];
++		sdev->mid = mid;
+ 
+ 		err = spmi_device_add(sdev);
+ 		if (err) {
+@@ -529,6 +531,30 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
+ 	}
+ }
+ 
++static int of_spmi_register_bus_masters(struct spmi_controller *ctrl)
++{
++	struct device_node *node = ctrl->dev.of_node, *child;
++	int mid = 0;
++
++	for_each_available_child_of_node(node, child) {
++		if (of_node_name_eq(child, "spmi-bus-master"))
++			of_spmi_register_devices(ctrl, child, mid++);
++	}
++
++	return 0;
++}
++
++static bool of_spmi_has_bus_multi_master(struct spmi_controller *ctrl)
++{
++	struct device_node *node = ctrl->dev.of_node, *child;
++
++	for_each_available_child_of_node(node, child)
++		if (of_node_name_eq(child, "spmi-bus-master"))
++			return true;
++
++	return false;
++}
++
+ /**
+  * spmi_controller_add() - Add an SPMI controller
+  * @ctrl:	controller to be registered.
+@@ -548,8 +574,12 @@ int spmi_controller_add(struct spmi_controller *ctrl)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (IS_ENABLED(CONFIG_OF))
+-		of_spmi_register_devices(ctrl);
++	if (IS_ENABLED(CONFIG_OF)) {
++		if (of_spmi_has_bus_multi_master(ctrl))
++			of_spmi_register_bus_masters(ctrl);
++		else
++			of_spmi_register_devices(ctrl, ctrl->dev.of_node, 0);
++	}
+ 
+ 	dev_dbg(&ctrl->dev, "spmi-%d registered: dev:%p\n",
+ 		ctrl->nr, &ctrl->dev);
+diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+index 28e8c8bd3944..6e9031df47f0 100644
+--- a/include/linux/spmi.h
++++ b/include/linux/spmi.h
+@@ -34,12 +34,14 @@
+  * struct spmi_device - Basic representation of an SPMI device
+  * @dev:	Driver model representation of the device.
+  * @ctrl:	SPMI controller managing the bus hosting this device.
+- * @usid:	This devices' Unique Slave IDentifier.
++ * @usid:	This device's Unique Slave IDentifier.
++ * @mid:	This device's Bus Master IDentifier.
+  */
+ struct spmi_device {
+ 	struct device		dev;
+ 	struct spmi_controller	*ctrl;
+ 	u8			usid;
++	u8			mid;
+ };
+ 
+ static inline struct spmi_device *to_spmi_device(struct device *d)
+@@ -80,10 +82,10 @@ void spmi_device_remove(struct spmi_device *sdev);
+ struct spmi_controller {
+ 	struct device		dev;
+ 	unsigned int		nr;
+-	int	(*cmd)(struct spmi_controller *ctrl, u8 opcode, u8 sid);
+-	int	(*read_cmd)(struct spmi_controller *ctrl, u8 opcode,
++	int	(*cmd)(struct spmi_controller *ctrl, u8 opcode, u8 mid, u8 sid);
++	int	(*read_cmd)(struct spmi_controller *ctrl, u8 opcode, u8 mid,
+ 			    u8 sid, u16 addr, u8 *buf, size_t len);
+-	int	(*write_cmd)(struct spmi_controller *ctrl, u8 opcode,
++	int	(*write_cmd)(struct spmi_controller *ctrl, u8 opcode, u8 mid,
+ 			     u8 sid, u16 addr, const u8 *buf, size_t len);
+ };
+ 
 
-Best regards,
 -- 
-Abel Vesa <abel.vesa@linaro.org>
+2.34.1
 
 
