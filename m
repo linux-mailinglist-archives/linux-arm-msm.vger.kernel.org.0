@@ -1,136 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-9927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-9928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F213484B2F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:02:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD81E84B399
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 12:37:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F6901C237B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 11:02:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 540E91F2316D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 11:37:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786DD7CF18;
-	Tue,  6 Feb 2024 11:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92CF9130AE1;
+	Tue,  6 Feb 2024 11:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWlnllwj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kc/eAhyA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473595F561;
-	Tue,  6 Feb 2024 11:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCD6130AC9;
+	Tue,  6 Feb 2024 11:32:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707217334; cv=none; b=dJ/emA7RktIMX6F3HhWwCGaodiBHYkJy9jXRP9kzcJLY6bao35147+jAAnsH156O7mfZWTA4yOjyBWyxpVZ+pOteJUjjKdweQIo23ScujVUeGbKCV+2y+004FxWJ+Yp2c4HyF/828Sj7WqlDUla2Pi1fj4kzGuds0WYPbND/hfQ=
+	t=1707219137; cv=none; b=eJ7iraAJsAYlQh6KR9C7HUP8kDwx6CIEaCtAipipFaLUxoM1mgic8TgRH9E7OJbP1PIwThB7cXPIg/nOlpLab9g3POC969VD5V7/GNeFEoFU8lSKkKo8HuqMyo/zsQW/w85bgo8+a17XsNeUgmvISTVRlhahqx6rMKx3cPqqSdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707217334; c=relaxed/simple;
-	bh=Pg7gzInhVbP+4MJrlr7AIQs7Dl6s73wN7MZFJhlFk0c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nJgyzxQJLK8ML977GrwqLLNPdqzMS4PQ1xXca3r/JcShzfi0enHosPvK35uXoP9ZGbsYzyyOaVhF6UMs5c1/eHROo0GpPIwwSRMyZrBmtpiPIMqeQOJ3biYaQHRwB/SiXMLENi9mgxb0E46Fvcnow/42WImbS2DD9/Rq4BMWYgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWlnllwj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3105C433C7;
-	Tue,  6 Feb 2024 11:02:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707217334;
-	bh=Pg7gzInhVbP+4MJrlr7AIQs7Dl6s73wN7MZFJhlFk0c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kWlnllwj4HvBWKZMYXPvtg86jLxACkDEVS/oYnjtGosNHgCx5Z8sXCRYIANIHuZTw
-	 RbnA1mWYhJD+if0Gr1/1Po62hwuZmq/DWiXf6odytpmDlOZmJxWJ10/SKZPLNcz9WT
-	 uVnhtn/Ni4NaUVaNAfxhqoc+rFP3S92yKhRFMDiwVVzOWU0/IGwSadd6xT18YnWFDE
-	 tpBDX5maMq6sFhZGQHaIWlys7EsBiSAlfxae1JRSLwTMRPQ7FOaE0/+vcGaqVY+IBE
-	 A/3Md/NymEsRSngtf1ENiD6bwFD2F1eXEz7jGlMB1x/BJdPEg2zbHLicOxgS2HJich
-	 UTtkFCDoRtXow==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rXJDX-000000003MZ-1H39;
-	Tue, 06 Feb 2024 12:02:19 +0100
-Date: Tue, 6 Feb 2024 12:02:19 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Jiri Kosina <jikos@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Rob Herring <robh@kernel.org>
-Subject: Re: Re: [PATCH v4 1/3] dt-bindings: HID: i2c-hid: Document
- reset-related properties
-Message-ID: <ZcIRuz7ClkMQt8Mf@hovoldconsulting.com>
-References: <20240131-x13s-touchscreen-v4-0-39c0f9925d3c@quicinc.com>
- <20240131-x13s-touchscreen-v4-1-39c0f9925d3c@quicinc.com>
- <Zbts-9tRDPcXbhYi@hovoldconsulting.com>
- <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
+	s=arc-20240116; t=1707219137; c=relaxed/simple;
+	bh=RgiiVTkv2UIw5nxUPD/uiphokqDs+9ojkYcvt1/ntAk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EC4JPBN7IKPYc0RtaIj6s90H0uefTv3SsNsx6xQB9uHMAIKuNxBKgLB+AMboeBq/BcZZRi1OLFPWT6qzCDPRREGIluTY3IPIvl5r9yiTQZTAptCzRVyzzejaruiU0MOo56D9khK2lrYyHekaEocmR0e93xKpAhUDI1CREThonBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kc/eAhyA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416AcWYD007766;
+	Tue, 6 Feb 2024 11:32:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=CVHcz0b
+	NbywadoMU6fGB649MjS2WWGGq8j42V2DdIMU=; b=Kc/eAhyA+0VMqJkwEehQkM4
+	bi9lULZt1Q3S+gsmtU60Rk0AJ/BVkF1tbtZTXZGtsRx/nydJ0XEENpWoWzWoiky2
+	U5/s6r2HCy2iA5prjPMCS2V/SMX3fTApPlQDhIaguPsqgfcw5+ZM0WmXOC4Cu5YI
+	Dgli6S/V4bvIL2NYdtkQ0LESDWv4uwYgXrfyGl4IRfqDb9aIxk6Ta8Wz3j+dC/ae
+	7Ir12dFLPUuPG4DNvtYQfX+txemJLaEV0PQKKg2S4M8Xe1O2Rx/L279wKuxZVE8u
+	/5Ayyf7tHI2pfJ7OJxOAwrZ+iLOCNSDQACzMeTx26c8sncvS5+HO4pMpJdRI3bg=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3k6g83jp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 Feb 2024 11:32:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 416BWAxW000920
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 6 Feb 2024 11:32:10 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 6 Feb 2024 03:32:05 -0800
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Ajit Pandey" <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>
+Subject: [PATCH 0/5] Add support for videocc and camcc on SM8650
+Date: Tue, 6 Feb 2024 17:01:40 +0530
+Message-ID: <20240206113145.31096-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <luzkdel2hshufku2gjgbsvfhxkmpg5eo6ekythuawaiz6kibvs@lsajkktmetkv>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TMnJ34t1gw1M_8IL81zplxQuv_hO_cma
+X-Proofpoint-GUID: TMnJ34t1gw1M_8IL81zplxQuv_hO_cma
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-06_04,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=608
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1011
+ impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401310000 definitions=main-2402060081
 
-On Thu, Feb 01, 2024 at 04:08:05PM -0600, Bjorn Andersson wrote:
-> On Thu, Feb 01, 2024 at 11:05:47AM +0100, Johan Hovold wrote:
-> > On Wed, Jan 31, 2024 at 07:07:26PM -0800, Bjorn Andersson wrote:
- 
-> > > +  post-reset-deassert-delay-ms:
-> > > +    description: Time required by the device after reset has been deasserted,
-> > > +      before it is ready for communication.
-> > 
-> > I know that Rob reluctantly acked this, but re-reading the commit
-> > message for the commit that added support for the reset gpio to the
-> > driver, and added a comment about this not having been added to the
-> > devicetree binding, it becomes obvious that the latter was done on
-> > purpose and that we probably should not be adding the
-> > 'post-reset-deassert-delay-ms' property after all:
-> > 
-> > 	For now the new "post-reset-deassert-delay-ms" property is only
-> > 	used on x86/ACPI (non devicetree) devs. IOW it is not used in
-> > 	actual devicetree files and the same goes for the reset GPIO.
-> > 	The devicetree-bindings maintainers have requested properties
-> > 	like these to not be added to the devicetree-bindings, so the
-> > 	new property + GPIO are deliberately not added to the existing
-> > 	devicetree-bindings.
-> > 
-> > 	2be404486c05 ("HID: i2c-hid-of: Add reset GPIO support to i2c-hid-of")
-> > 
-> > So perhaps we should just do this properly and add a new compatible
-> > property for X13s touchscreen which can be used to determine these
-> > delays (e.g. for cases where some default values are insufficient).
-> 
-> So we should add a new binding, with a device-specific compatible and
-> add a reset-gpios only for that (and not the generic hid-over-i2c
-> binding), and then in the i2c-hid driver encode the two delays?
+Add support for video and camera clock controllers on Qualcomm
+SM8650 platform.
 
-Right.
+Jagadeesh Kona (5):
+  dt-bindings: clock: qcom: Add video clock bindings for SM8650
+  clk: qcom: videocc-sm8550: Add support for SM8650 videocc
+  dt-bindings: clock: qcom: Add SM8650 camera clock controller
+  clk: qcom: camcc-sm8650: Add camera clock controller driver for SM8650
+  arm64: dts: qcom: sm8650: Add video and camera clock controllers
 
-> I can try to rewrite these patches, if you can provide me with a
-> compatible.
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |    3 +
+ .../bindings/clock/qcom,sm8450-videocc.yaml   |    4 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |   28 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8650.c               | 3601 +++++++++++++++++
+ drivers/clk/qcom/videocc-sm8550.c             |  160 +-
+ .../dt-bindings/clock/qcom,sm8450-videocc.h   |    8 +-
+ include/dt-bindings/clock/qcom,sm8650-camcc.h |  195 +
+ 9 files changed, 4002 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sm8650.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-camcc.h
 
-My X13s doesn't have a touchscreen, but the ACPI tables says "ELAN901C".
+-- 
+2.43.0
 
-You can look at the current binding and work with the HID and DT
-maintainers to come up with something appropriate. There is one
-device-specific compatible in the DT schema currently:
-
-	wacom,w9013
-
-so something like
-
-	elan,<product>
-
-where <product> is a name for the device with product id 0x901c (or you
-use the HID product id directly somehow).
-
-Johan
 
