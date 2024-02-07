@@ -1,191 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-10085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F18584C8DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:42:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38DDB84C8FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:51:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99E3E1F22770
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:42:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B8581C249F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CEA614A99;
-	Wed,  7 Feb 2024 10:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C72411772D;
+	Wed,  7 Feb 2024 10:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mO/hQ3qs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OUgE4MMp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76E14A89;
-	Wed,  7 Feb 2024 10:42:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C41A171AD
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 10:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707302540; cv=none; b=r/ILn6rT0qJ2dt5gsKoKkCS+sW7tJhC4q1y0zn0qAsw4OzgxUFlnEvdwZBI3negp2ObRXWXlxrfVNtaebCNNNndsXggxbOqHul+cETrl7BAd9pZYRlKp14gVdjL0ZLhaIEbwzvucDOGpTgxqE6NxfCVeCG8+aIM06lkSW9qlGcc=
+	t=1707303079; cv=none; b=KgRJP1yUvPli15QPgJBFCXNYfNGZzLW2pSxV2m5T/Hd07OkHd1iMxRddSTJkcyUx7MMW99nIkQZjyz2SwaG4CiK4NdPVEIK8pyVRlf3tZgkhPZvCPe3IKbYxxqJoSrCaCHU1Y4svGjsnuXAjPN7lcvO8AVZIRMPxgLXWwVdAjtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707302540; c=relaxed/simple;
-	bh=II47jwsuZLY/0YRKVtpUI0sbrhHp7KT8QYWiYIYnm64=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=jiHJ6ngut7ABZTMl1n8IvVE53LRz+SyOKcioxGb9Z9PIvwU7oXAyMpgJjtnUcL/TjdpeEO4huNc2mKBGpYSpXiuAOJNuNHXy6slVHVEA3TCRj9qrefbWliCrWfUtIChwiB+8s5ZezqD36MtVfpQMx2e7wp741c/BylbgS43dfAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mO/hQ3qs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 417AQCvF013143;
-	Wed, 7 Feb 2024 10:42:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=f4a
-	6QVU4hulFuG7QklOItbrc6hHNenm18VOdI1gRvJM=; b=mO/hQ3qsZ4NCjy6vB8h
-	7a8g10w6fApuzU7RUOC6n7rJwK0gxLthGHk8qp4BDmpFkBm0fnz/9RWfN1U99xZv
-	J53BsAZ+MUndGabJzXPMMAQpI2qpEsyvnLEkPly1204TV42ytQDFyfDkTsb2Df/J
-	MSqXdLmRfuHkKny7S2XYPkMrMED71J2RbYGBTceKGSlBXdwTeyTSpKvUiKgioOhn
-	HdPchDRdi90ycMsqclDXuBdf6MJc+5Auw4qSN+YVI+kKBsVZAXsgWBfXp2CqzOGD
-	Xic0cZYQ2rgLCDFv9fj/wdmHyDZOlp4k9kQXAMQexG/A/P/afQJEyP/FDisjHxAu
-	3dA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3ub6hfnq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 10:42:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417Ag13b003200
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 10:42:01 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 7 Feb 2024 02:41:56 -0800
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Wed, 7 Feb 2024 16:11:49 +0530
-Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+	s=arc-20240116; t=1707303079; c=relaxed/simple;
+	bh=B1XlVHojLLasAfoIWAsxe6ObOEeItQD1Hm73mZXbzls=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W7884kKiXUuqFLUKypT7jzSxN5VJcUdDFuc7p+zH0EEzINT7MuZWiZQdETRkw0C1Yzlo/O2uqjaev88A9GnZTCI62u8qmEVjIJxwRx1lRZxMRpJpWoA/6SGttf01NJmg55aRZ4qncmfEQgmHp2Vk3w9g5sIOSkZuKinIFvbeNns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OUgE4MMp; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-5ffdf06e009so4855097b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 02:51:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707303077; x=1707907877; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zsgl1js8sdc7s9A+KRDmi3P2Sf5UWIXz1ucHF4fn3yo=;
+        b=OUgE4MMpdifYgsFHfDR9t4lqRRvMBKMKqgii9KQnv39yj11jn6K7EWoof67C1Kqul7
+         GiDjd01OyRUwJOeF2GYQE14OvFRNgJe/mmnIMIlcMFvHT3i3oQU/8zQDCnYhIRbMefpU
+         R2qWYU/ii1U+npKL37OjhA4txWm29QYcrYM5kbPoBmd4kyXPByPVK1Y4KWFPL57AjoGc
+         gy11JusqJeImju2O3DLRWYUKcNlgCMF04i+BlKprKCytRAHB3cdhXXOhvjzDL2YrkQO7
+         mmmyDKvaZ9jOEzrSf+DAOqvWWggfq3CyRi87RBiNkWMIEVWUQ8qlF1RhfoGirfEJw3ju
+         pd5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707303077; x=1707907877;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zsgl1js8sdc7s9A+KRDmi3P2Sf5UWIXz1ucHF4fn3yo=;
+        b=JgGC2Zwdsh6Uu+PaSfs4SnyBVhVSn4go+1G4w3Pb+d7ByXOWoAMgTKpjnkkf5f5yAD
+         5s9M4prlGfnm7kFTN9GC8pfhxE84yOfd9NBkjs4iN3pX6TiKdCKCWP6JCDMXzGE4jJuh
+         CAHBlABQEy/pFb6pKbHlw4GID31bWoMpt5JxW9yKwQUZG3MeAYY/tM5LljNK73cpO3K7
+         N66ceuBybOY7IXJcnCvjeXc4k5gPBwsNJ6mJ1diixFBdj/Bvsb5zRJ+cm2Cn/ZAwHHfx
+         ywS8OoGTkKUbo6a71nrYl6ZVw6qFm1koKnhwRa833gAEftuCn3hezinH45Ds+h3Nphyj
+         8d2Q==
+X-Gm-Message-State: AOJu0YylfzIXB/Ri6O3h7hDD8f3/cg1+BC8q5HlvPxkcZj1ylstN36nA
+	tLIE0J8vX+sxji1QLCCJC864+TqI6coNLVeMfYydMsewIsNRdOwScZHZpifflnijthCv7l/POcC
+	rpWJAiZ0jxoJ/lqq9vW6o6yyW/HbbW/GTDWmHnA==
+X-Google-Smtp-Source: AGHT+IHf4kWxGCgC7QO0GQY35mQOn1MkRO0ngJpqcZ5PyTIrE9gtDbtBPUNd1xmk5zPB94GYf6h2CoHwXv8UHIe13NU=
+X-Received: by 2002:a81:99c8:0:b0:602:b697:dc60 with SMTP id
+ q191-20020a8199c8000000b00602b697dc60mr3517588ywg.50.1707303076901; Wed, 07
+ Feb 2024 02:51:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAG1ew2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDIwNz3dS8xKSc1PiC5MxUXUvTJMMUMzNDoyQjcyWgjoKi1LTMCrBp0bG
- 1tQDbjrJiXQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
-        "Krishna chaitanya
- chundru" <quic_krichai@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707302517; l=2092;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=II47jwsuZLY/0YRKVtpUI0sbrhHp7KT8QYWiYIYnm64=;
- b=u2Wyoa7F0oRnHv37GNU4l5ZZUKYEDZyWQtH9gXoTyXrBkP3tWdwz3DG5YGmGiYGfxXGIqOQdz
- Wu2/ku5afGnDK6vK/HMRwzBc2CIoCiER/U6gCqaKJouGC18XQcbPwnj
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8L8kUlVtulcoBfuJ32aTvlkce2y4ag-W
-X-Proofpoint-ORIG-GUID: 8L8kUlVtulcoBfuJ32aTvlkce2y4ag-W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-07_04,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=808 adultscore=0
- spamscore=0 bulkscore=0 priorityscore=1501 phishscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402070079
+References: <20240202105854.26446-1-quic_aiquny@quicinc.com>
+In-Reply-To: <20240202105854.26446-1-quic_aiquny@quicinc.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 7 Feb 2024 11:51:30 +0100
+Message-ID: <CACRpkdZM96tji2OCXHPd9iXE1kU5u1TGsuPhB0YLbHG=LXAiqg@mail.gmail.com>
+Subject: Re: [PATCH v4] pinctrl: Add lock to ensure the state atomization
+To: Maria Yu <quic_aiquny@quicinc.com>
+Cc: andersson@kernel.org, kernel@quicinc.com, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Enable PCIe1 controller and its corresponding PHY nodes on
-qcs6490-rb3g2 platform.
+On Fri, Feb 2, 2024 at 11:59=E2=80=AFAM Maria Yu <quic_aiquny@quicinc.com> =
+wrote:
 
-PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
-connected. For each endpoint a unique BDF will be assigned and should
-assign unique smmu id. So for each BDF add smmu id.
+> Currently pinctrl_select_state is an export symbol and don't have
+> effective re-entrance protect design. During async probing of devices
+> it's possible to end up in pinctrl_select_state() from multiple
+> contexts simultaneously, so make it thread safe.
+> More over, when the real racy happened, the system frequently have
+> printk message like:
+>   "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+> already used for some other setting".
+> Finally the system crashed after the flood log.
+> Add per pinctrl lock to ensure the old state and new state transition
+> atomization.
+> Also move dev error print message outside the region with interrupts
+> disabled.
+> Use scoped guard to simplify the lock protection needed code.
+>
+> Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration"=
+)
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+Thank you for rebasing!
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 8bb7d13d85f6..0082a3399453 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&pcie1 {
-+	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
-+	pinctrl-names = "default";
-+
-+	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
-+		    <0x100 &apps_smmu 0x1c81 0x1>,
-+		    <0x208 &apps_smmu 0x1c84 0x1>,
-+		    <0x210 &apps_smmu 0x1c85 0x1>,
-+		    <0x218 &apps_smmu 0x1c86 0x1>,
-+		    <0x300 &apps_smmu 0x1c87 0x1>,
-+		    <0x400 &apps_smmu 0x1c88 0x1>,
-+		    <0x500 &apps_smmu 0x1c89 0x1>,
-+		    <0x501 &apps_smmu 0x1c90 0x1>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -420,6 +446,22 @@ &qupv3_id_0 {
- &tlmm {
- 	gpio-reserved-ranges = <32 2>, /* ADSP */
- 			       <48 4>; /* NFC */
-+
-+	pcie1_reset_n: pcie1-reset-n-state {
-+		pins = "gpio2";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	pcie1_wake_n: pcie1-wake-n-state {
-+		pins = "gpio3";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- };
- 
- &uart5 {
+Patch applied now, so we get some shakeout in linux-next and can
+make sure it works for everyone.
 
----
-base-commit: 70d201a40823acba23899342d62bc2644051ad2e
-change-id: 20240207-enable_pcie-95b1d6612b27
-
-Best regards,
--- 
-Krishna chaitanya chundru <quic_krichai@quicinc.com>
-
+Yours,
+Linus Walleij
 
