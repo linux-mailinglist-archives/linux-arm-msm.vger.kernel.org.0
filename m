@@ -1,253 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-10070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE3E084C58A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 08:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED5C384C58C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 08:20:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 99D60B21A27
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 07:19:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB799B23725
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 07:20:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C92901F614;
-	Wed,  7 Feb 2024 07:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EFDC1F60B;
+	Wed,  7 Feb 2024 07:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mCGiRoXg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wCSDiE2R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFC51F608
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 07:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F9E1F5F0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 07:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707290394; cv=none; b=M2ENtct/5f8x2K0OEhQ/lQRebjrMkGN9v3oOBu30rAjRtrDh8sk4/kfxAGF9iXeeiCHB42WApNkpySuHvsdTgN2Vf63ut77zaK649/4bbyYxQubIinkTq1kEmKRTma2nYcDhSoModbpS4ee6PANo47Pzms4uNUbAks06lmN3zDA=
+	t=1707290395; cv=none; b=So9T5RE/A1LuM9sqon7Mxnh3m7LVNERF1EUVqjp2En7p0hSwgY1TES6alntghQgFDBXtyRxu5TBxfOx9+VahZb2SoR/ev6DO2pkjbYnRGnxY+BvocNZwlHp8KxdXC4nGoCnThzdWHlMeCejDY0jnkpQGVnVyQ1qGn0g3yL6xkj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707290394; c=relaxed/simple;
-	bh=jOWJZSzWaK4+0VT16VB+v6WWFNJFnRP4dzFsaZYfHvA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ym8LqVSKSRdi79C6t3s9ZWHA4ilYoo9l2okV0B3w9uHRgKROjMfcbNOA2gQvwXt16k1T6UgsMVgvtwQRfs2D6/4bMov7ql6AW2Ua8syteNahkydXcZmE6k0UGs5R19HWad+LGL7gCjW4H2p4IbpL9DV2gH8cEBUs1JpOR+Z/e2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mCGiRoXg; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1707290395; c=relaxed/simple;
+	bh=6Oq8+C9EsRx9uFcgJHwCwEghe/ailacRB5UCFid3aL4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cju1vQmyeg/PiF6h3AlOwTXhvdB/P+QP3CD39b+R21pwB5HFKccqKjPN38E9KwA/BZGKj6ZiRBKT9QyvEfHDtx7mDWUmgr+z5wzCWbpui7AfNVIltZ3NIqeW//lVRH3zl4Qpoe1rcreXwE8uy4gy9bQSpcmhT9G5JJFyfygZYPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wCSDiE2R; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5edfcba97e3so2742687b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 23:19:52 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-55ee686b5d5so307874a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 23:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1707290392; x=1707895192; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5daENJYj4pUJ4CRHaxq/r43mZVSt748JMtHzHYSnQ7g=;
-        b=mCGiRoXgh7v504tWIkNW9bNPgF9ivN/fmM38g03goj9J0u7gxNFUx4uHvYK7D/cPd6
-         zoes8ivS2yAEyd8qC2b9f98T8SNJB0FFkQS9MaK6tpcjFXTcRqnVtXXJXtRhG3MC3Fx3
-         58AhMD5twCw0CA5/4pNHc+dTGVylkzW2FGuX/qom79Fi34PtAUFzANKGfgxW9iZy3L3x
-         ZAR8i+s/yeRuw2Fd6a4FDlwhIpNmkyvoGx3eHxa5cpy0C1Q6Z4n+JJaOU7wfSIXf/sm8
-         M+p4GmUHx318B8qD179ihCwP4WHNT0XviPrauYOU8W7A5dWBBHfY+bQwdY+bJD1znQlv
-         aNgQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6SYbxDYeGniiA6rdtb6/T8QgKPCQ4hLYc/Upt3Qn8Ng=;
+        b=wCSDiE2RYACsuHQwRG51MBt2EVQJh/dFDn9KLhVgp024+8AtzHEhQDSA0wjSKmSDc3
+         ZnzXn1kXI3uIFa8uiNt6a2OnxBZ3+ZeuaOFHwby1XfkBQWcJy2j7etNrhvi+bfpMNaZm
+         o4VraHY3pZhRugPCICK07eB8Ps+YYZKPVTjZxmGBqoLAeF2UIH5ZgKkFpKM3/Ae537KN
+         CnSXj3UEJPLTKT6yWLeE9qHtlyj7HGY18pQzh/yymIwWrIcT42mixCcpxeFJJSrlVlQl
+         eD5ho3DkcrvOM4ES19C7xTV1TmLxgGaF3dDI05y8DP1XWRX7yZS0JnRk47vcguhaUDaI
+         FS5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707290392; x=1707895192;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5daENJYj4pUJ4CRHaxq/r43mZVSt748JMtHzHYSnQ7g=;
-        b=IR/r0ZEBGsSRENjYF49IzZPkA2d4x7VcdmMJhmYAcyPadoyVPluOD1OSMyVoLB1U/N
-         UCic4L1rcYqa/QafbfZQHyTGDDM03q7ObaAcxTzR9EcpThqsKxXZBdUJ1ayXqllUZdsi
-         KN7ol3juottRyKtaxyRgjORZD9dDP/Wmd6MPezgEUFJwUUQlPeSUboU9fjI8L37nU8TB
-         KMmwDuz/4Si63VVNxm/6CWFEtYl9bFqIy9s0U7JFJ94N8FSzKPjhLjaDW9wdaPs4tNqf
-         GzCVVNhZGzbUJctpZI9v33kKnxelRe7yGLg/zHLL9kHR0XnDFsraa6Ew8oOIXByfjQTE
-         9GHg==
-X-Gm-Message-State: AOJu0YwEaPrlmNlNPCpK5MXVE3d2mSmZmzIFSdA5fVQoEnohhQcv5Do4
-	zIyydu5RyKvx0b5RmHAcLWsrg2ZhlTX+WlTQVdXOO+yDheoaV/DwY/qgdYGWd1JVU0/KbVeEc7/
-	qN0CTRtSQmKSSx7iC1JmzWmH3GKA6bgKy+6EEDA==
-X-Google-Smtp-Source: AGHT+IGYoBuojf8/TqZbXQjBxCnpK1eP4U/a3FxEXeyfk/eqOz4L4LbF8nuDPAUI6Y/H6Ywp2sg4vHvlhA1PNAHsf1g=
-X-Received: by 2002:a81:ee01:0:b0:604:3f5b:550c with SMTP id
- l1-20020a81ee01000000b006043f5b550cmr3767918ywm.17.1707290391890; Tue, 06 Feb
- 2024 23:19:51 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6SYbxDYeGniiA6rdtb6/T8QgKPCQ4hLYc/Upt3Qn8Ng=;
+        b=dMDoR2ManXXJF+gzGOqtstvUAD5cCewBoIFbSzOSHwlm8fxq9RTIoyowxMsxjfNiVV
+         WzlIHL/PeoZ8R2LeXxJrk40t9yyMYR5ok97oSQTMrgVmRNr9U+xoOcqVWx3WDo8EQMQT
+         6ligin6MRpbfH5EAP7gxHo/GbWEpLVnM4y0hUZE8T7gOQ0D4uruoP3ZchC2JALsAY31s
+         TAQkJNBPoTxatY281AdwbM+6K4ZHC6qtRR63mWZVcxYxemMeeEKaVp7qW8vWEh+AQB3j
+         T9tUikDXSDT5rJLnrMsgM3CzB+KUeDlMq/y/tgikcFdVclHLLy+VH5cP5IBUXKGya1c7
+         B1sQ==
+X-Gm-Message-State: AOJu0YyyJGznWEGXrtrcI5yOZkFQUlE1y5NrGpGGuqosFTJCElqCStY1
+	NOxhjjGwlNE6n5xFtf0wcMPbTtALsw7IH1/K2pzpThArihs4rv298wRUUQeT7AU=
+X-Google-Smtp-Source: AGHT+IGdBxPyBXyrnHPSHM2F9u/oCyDhNJlzKgFj2xDI/+5OYO2QdgsC1LNX75LwkVn1O3UVPPnVZA==
+X-Received: by 2002:a05:6402:1a44:b0:560:9906:9f31 with SMTP id bf4-20020a0564021a4400b0056099069f31mr3161100edb.27.1707290391944;
+        Tue, 06 Feb 2024 23:19:51 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW/zdcZSDg4pLH1Rt+RivOPBAEybdDR4XOBF+p0P2MTVI+ITlPExLJz6aP2vR4wY4bD0Kr+LBEn+X5BkmRuCuTKzXHWhd941xh3jYX+JLHAmV90kAmRWUNMWj7iAsSe3JC1WYIqzyWYWKQrXTB9jvgYxIqDpdZZ5qy2GY7FGWOmzZbxXa+X1C2vPCdty640ZQP9B5GftyhfDvl0ro9jYeX42sxJzEacqqg92RmcQr9cXMsmvmALrDL9j5jA74sKkW+MF+y8Qq3lkNA2Gj7ddYm7QHlyjW0K0K78DB0qzPcRH9M5TXELrwvgmM42/kjlCJARJnvdlTeqzwKZt9AaGZmUGeLZ/FGYZIFegYpoam2Y4PjsNOfFR+pwxKTtLGwpyji8GUUKrL4=
+Received: from linaro.org ([62.231.97.49])
+        by smtp.gmail.com with ESMTPSA id f1-20020aa7d841000000b00560cd4f3098sm360696eds.95.2024.02.06.23.19.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Feb 2024 23:19:51 -0800 (PST)
+Date: Wed, 7 Feb 2024 09:19:50 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH RFC 1/2] spmi: Add support for multi-master
+Message-ID: <ZcMvFtAwQQjAZhk6@linaro.org>
+References: <20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org>
+ <20240207-spmi-multi-master-support-v1-1-ce57f301c7fd@linaro.org>
+ <CAA8EJpqsJmv36=o1aTjVH6eMHXMg8BHNpiDvs+Q8YB23ezVGtQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240206113145.31096-1-quic_jkona@quicinc.com>
- <20240206113145.31096-3-quic_jkona@quicinc.com> <CAA8EJpqbKQS7Bp28xNZ0twu7BFLdOES9qS5xBvoonux8Ma4q6Q@mail.gmail.com>
- <e90522c1-7a2d-40ff-bf4e-c8f974722ddf@quicinc.com>
-In-Reply-To: <e90522c1-7a2d-40ff-bf4e-c8f974722ddf@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 7 Feb 2024 09:19:40 +0200
-Message-ID: <CAA8EJpqCDOE_5vg+4ew8H0HbhQM1w8reqU6Pu0MAYJtMw8zXUw@mail.gmail.com>
-Subject: Re: [PATCH 2/5] clk: qcom: videocc-sm8550: Add support for SM8650 videocc
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Imran Shaik <quic_imrashai@quicinc.com>, 
-	Ajit Pandey <quic_ajipan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpqsJmv36=o1aTjVH6eMHXMg8BHNpiDvs+Q8YB23ezVGtQ@mail.gmail.com>
 
-On Wed, 7 Feb 2024 at 08:59, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->
->
->
-> On 2/6/2024 5:24 PM, Dmitry Baryshkov wrote:
-> > On Tue, 6 Feb 2024 at 13:39, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
-> >>
-> >> Add support to the SM8650 video clock controller by extending the
-> >> SM8550 video clock controller, which is mostly identical but SM8650
-> >> has few additional clocks and minor differences.
+On 24-02-07 01:55:39, Dmitry Baryshkov wrote:
+> On Wed, 7 Feb 2024 at 01:34, Abel Vesa <abel.vesa@linaro.org> wrote:
 > >
-> > In the past we tried merging similar clock controllers. In the end
-> > this results in the ugly source code. Please consider submitting a
-> > separate driver.
-> >
->
-> Thanks Dmitry for your review. SM8650 has only few clock additions and
-> minor changes compared to SM8550, so I believe it is better to reuse
-> this existing driver and extend it.
+> > Some newer SPMI controllers support multiple bus masters.
+> > Such a master can control multiple slave devices. The generic
+> > framework needs to be able to pass on the master id to the
+> > controller-specific driver. So do that. The framework will
+> > check if the devicetree child nodes are actually bus masters
+> > and will register the devices for each master. The legacy
+> > approach will still be supported for backwards compatibility.
+> 
+> Please remind me, are those two actual bus musters driving a single
+> bus in parallel or two SPMI buses being handled by a single device? In
+> the latter case this implementation is incorrect. There should be
+> multiple spmi_controller instances, one for each bus. Allocate them in
+> a loop and set ctrl->dev.of_node after allocating.
 
-I'd say, the final decision is on Bjorn and Konrad as maintainers.
+It's two SPMI buses (two sets of wires) handled by the same controller,
+HW-wise.
 
->
-> >>
-> >> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> >> ---
-> >>   drivers/clk/qcom/videocc-sm8550.c | 160 +++++++++++++++++++++++++++++-
-> >>   1 file changed, 156 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
-> >> index f3c9dfaee968..cdc08f5900fc 100644
-> >> --- a/drivers/clk/qcom/videocc-sm8550.c
-> >> +++ b/drivers/clk/qcom/videocc-sm8550.c
-> >> @@ -1,6 +1,6 @@
-> >>   // SPDX-License-Identifier: GPL-2.0-only
-> >>   /*
-> >> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> >> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> >>    */
-> >>
-> >>   #include <linux/clk-provider.h>
-> >
-> > [skipping]
-> >
-> >>   static struct gdsc video_cc_mvs0c_gdsc = {
-> >>          .gdscr = 0x804c,
-> >>          .en_rest_wait_val = 0x2,
-> >> @@ -354,15 +481,20 @@ static struct clk_regmap *video_cc_sm8550_clocks[] = {
-> >>          [VIDEO_CC_MVS0_CLK] = &video_cc_mvs0_clk.clkr,
-> >>          [VIDEO_CC_MVS0_CLK_SRC] = &video_cc_mvs0_clk_src.clkr,
-> >>          [VIDEO_CC_MVS0_DIV_CLK_SRC] = &video_cc_mvs0_div_clk_src.clkr,
-> >> +       [VIDEO_CC_MVS0_SHIFT_CLK] = &video_cc_mvs0_shift_clk.clkr,
-> >>          [VIDEO_CC_MVS0C_CLK] = &video_cc_mvs0c_clk.clkr,
-> >>          [VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC] = &video_cc_mvs0c_div2_div_clk_src.clkr,
-> >> +       [VIDEO_CC_MVS0C_SHIFT_CLK] = &video_cc_mvs0c_shift_clk.clkr,
-> >>          [VIDEO_CC_MVS1_CLK] = &video_cc_mvs1_clk.clkr,
-> >>          [VIDEO_CC_MVS1_CLK_SRC] = &video_cc_mvs1_clk_src.clkr,
-> >>          [VIDEO_CC_MVS1_DIV_CLK_SRC] = &video_cc_mvs1_div_clk_src.clkr,
-> >> +       [VIDEO_CC_MVS1_SHIFT_CLK] = &video_cc_mvs1_shift_clk.clkr,
-> >>          [VIDEO_CC_MVS1C_CLK] = &video_cc_mvs1c_clk.clkr,
-> >>          [VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC] = &video_cc_mvs1c_div2_div_clk_src.clkr,
-> >> +       [VIDEO_CC_MVS1C_SHIFT_CLK] = &video_cc_mvs1c_shift_clk.clkr,
-> >>          [VIDEO_CC_PLL0] = &video_cc_pll0.clkr,
-> >>          [VIDEO_CC_PLL1] = &video_cc_pll1.clkr,
-> >> +       [VIDEO_CC_XO_CLK_SRC] = &video_cc_xo_clk_src.clkr,
-> >>   };
-> >>
-> >>   static struct gdsc *video_cc_sm8550_gdscs[] = {
-> >> @@ -380,6 +512,7 @@ static const struct qcom_reset_map video_cc_sm8550_resets[] = {
-> >>          [CVP_VIDEO_CC_MVS1C_BCR] = { 0x8074 },
-> >>          [VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
-> >>          [VIDEO_CC_MVS1C_CLK_ARES] = { 0x8090, 2 },
-> >> +       [VIDEO_CC_XO_CLK_ARES] = { 0x8124, 2 },
-> >
-> > Is this reset applicable to videocc-sm8550?
-> >
->
-> SM8550 also has above reset support in hardware, hence it is safe to
-> model above reset for both SM8550 and SM8650.
+If we register two spmi controllers with the kernel framework, it will
+be HW inaccurate, because there is just one controller which has
+multiple masters.
 
-Then, separate commit, Fixes tag.
+I'm not saying it might not work. But, to me, it looks more like a hack.
 
->
-> >>   };
-> >>
-> >>   static const struct regmap_config video_cc_sm8550_regmap_config = {
-> >> @@ -402,6 +535,7 @@ static struct qcom_cc_desc video_cc_sm8550_desc = {
-> >>
-> >>   static const struct of_device_id video_cc_sm8550_match_table[] = {
-> >>          { .compatible = "qcom,sm8550-videocc" },
-> >> +       { .compatible = "qcom,sm8650-videocc" },
-> >>          { }
-> >>   };
-> >>   MODULE_DEVICE_TABLE(of, video_cc_sm8550_match_table);
-> >> @@ -410,6 +544,7 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
-> >>   {
-> >>          struct regmap *regmap;
-> >>          int ret;
-> >> +       u32 offset;
-> >>
-> >>          ret = devm_pm_runtime_enable(&pdev->dev);
-> >>          if (ret)
-> >> @@ -425,6 +560,23 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
-> >>                  return PTR_ERR(regmap);
-> >>          }
-> >>
-> >> +       if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8550-videocc")) {
-> >> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0_SHIFT_CLK] = NULL;
-> >> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0C_SHIFT_CLK] = NULL;
-> >> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1_SHIFT_CLK] = NULL;
-> >> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1C_SHIFT_CLK] = NULL;
-> >> +               video_cc_sm8550_clocks[VIDEO_CC_XO_CLK_SRC] = NULL;
+Basically, we would be mapping HW bus masters to kernel controllers.
+
+> 
 > >
-> > Please invert the logic. Make video_cc_sm8550_clocks reflect SM8550
-> > and patch in new clocks in the SM8650-specific branch below.
-> >
->
-> Sure, will add these clocks as NULL in video_cc_sm8550_clocks and patch
-> in new clocks here for SM8650. Then we can remove above check for SM8550.
-
-No need to set them to NULL, it is the default value. Just add them to
-the sm8650 branch.
-
->
-> Thanks,
-> Jagadeesh
->
-> >> +               offset = 0x8140;
-> >> +       } else  if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8650-videocc")) {
-> >> +               video_cc_pll0_config.l = 0x1e;
-> >> +               video_cc_pll0_config.alpha = 0xa000;
-> >> +               video_cc_pll1_config.l = 0x2b;
-> >> +               video_cc_pll1_config.alpha = 0xc000;
-> >> +               video_cc_mvs0_clk_src.freq_tbl = ftbl_video_cc_mvs0_clk_src_sm8650;
-> >> +               video_cc_mvs1_clk_src.freq_tbl = ftbl_video_cc_mvs1_clk_src_sm8650;
-> >> +               offset = 0x8150;
-> >> +       }
-> >> +
-> >>          clk_lucid_ole_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
-> >>          clk_lucid_ole_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
-> >>
-> >> @@ -435,7 +587,7 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
-> >>           *      video_cc_xo_clk
-> >>           */
-> >>          regmap_update_bits(regmap, 0x80f4, BIT(0), BIT(0));
-> >> -       regmap_update_bits(regmap, 0x8140, BIT(0), BIT(0));
-> >> +       regmap_update_bits(regmap, offset, BIT(0), BIT(0));
-> >>          regmap_update_bits(regmap, 0x8124, BIT(0), BIT(0));
-> >>
-> >>          ret = qcom_cc_really_probe(pdev, &video_cc_sm8550_desc, regmap);
-> >> --
-> >> 2.43.0
-> >>
-> >>
-> >
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/spmi/spmi-mtk-pmif.c |  6 ++--
+> >  drivers/spmi/spmi-pmic-arb.c | 10 +++---
+> >  drivers/spmi/spmi.c          | 76 ++++++++++++++++++++++++++++++--------------
+> >  include/linux/spmi.h         | 10 +++---
+> >  4 files changed, 67 insertions(+), 35 deletions(-)
+> 
+> -- 
+> With best wishes
+> Dmitry
 
