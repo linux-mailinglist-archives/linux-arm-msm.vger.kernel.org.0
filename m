@@ -1,125 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-10023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E430C84C117
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:56:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7983B84C131
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 01:08:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 180321C22D3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Feb 2024 23:56:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DEEF1C236F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:08:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F541CD31;
-	Tue,  6 Feb 2024 23:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67DD238F;
+	Wed,  7 Feb 2024 00:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nhh79qqR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y2PtoaEX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E888F1CD26
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Feb 2024 23:56:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC873211;
+	Wed,  7 Feb 2024 00:08:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707263800; cv=none; b=mjDJQph6s7jPMjsoVSrQHHnI0AvHrHLx/wMtykA6x7Q8eAFhbY1ILTrKQOqLmtynYHBNyTjDu0XwbLn20Q5HiOi1AjOaI9VYFlmpt2xeUGdpxk4fKGswzNQnvUjIn8KaYzNuuKEkgsyPGtfVVbt+r2kblWMF1h8ZzhoX7FceZIs=
+	t=1707264514; cv=none; b=E9FV4t7npdx2jGBp7AUwUu02rGwTJVnYHsFf9chvd/1VGX3plX38O3vB7fhbmREwpV1EQJSIWKktDFH4nJqPkLKLZciyg2DXB4i0F27tAv+eRzcV8jcRfUSCXbyih1cPGuwtluJWtjPIwTbgQoX1x94D9AshGEsgJSMbm5sdzDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707263800; c=relaxed/simple;
-	bh=CY6CnplEQSBuLw8QELN4NeQcXpf6PsLxs6bvLTXkwG0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PvZQ8h3XCpAm6nxBRvtaYRptoF5mOjzIiOTkGKVgHlFB0CJXjvhwFyPH1VEm27dgM6Pd8MZSmHZt4f76OR2HOoY5NPQ61qyJKrZhq9P8FU5NMn+xeDmgT5nkcJOKXJQ1/OmZ2jtDxIYlbNwIQ/frRypPZ5BXh8eH+UqxXDxBtok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nhh79qqR; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-60406da718aso703237b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 15:56:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707263798; x=1707868598; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lPO0vylciwlxHh3ogoVDX/Xe2KENfa+Qqy6uMd1Hm4s=;
-        b=Nhh79qqRVSw7MgVM+B31xuUdjRaHgs3VGwZza6qfaHCETSh85SfMBonEYaWK4fun+6
-         NAMmEDvVhlqjzVV3VXpLSobZoNgEypblMOflEj0fDqTcUV/phmXAgeE3UrhP1aHoVh7y
-         H5ZMNXJnL5yQ7+HqDypSaKi0cOAGkwzzjVe8pKgM1/TWSVZCcOA19JwbBfleZHDO1NBl
-         EUs+N8yC1IYStMG9UklTKKL/8H8eQZHWPD3iTKyKUye0pzpYhHhcV7PCe2VUMsRxAFoM
-         rgvWyk/CAeKr+Iy0huoV4Coz0lxPYdogd5DvZ+2HFhFJPNInxkFaIz8sC/4nVdbOXGDg
-         fNYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707263798; x=1707868598;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lPO0vylciwlxHh3ogoVDX/Xe2KENfa+Qqy6uMd1Hm4s=;
-        b=etmiNLWIl5EqinQZvpLlmetIFJ2abElNS/e6wu6pVSIVX2TDcE/WFot5/WXCRUT1kI
-         SIYs450HvoUzv7UN/EQwehUDMjgnlPHisIMN+Ie/km0tpPY/3cYgbrK7IzTwwFBhIKdA
-         pemotm+gdGZYiXHX8yuKFJQwAUFkusXukscnPyXbYjWUXQkl3hP8+zMSHwXb+fOiPzhj
-         7JF+GkKJhJqmcBwp4b5VG5om0ac2iVhSCa7xK5jgunv4vTqBKpxe3Od8kva3OyzTAEzv
-         onokiBT5/gXx+wfEJIE37arDAJ5B5eJt3NcnFcXsmTZg6sLcB3vrcDi7oEbwG8HXJwKK
-         L+rw==
-X-Gm-Message-State: AOJu0YwbExTQFF+qtCH3PoqyukP3zuR4BMunbCQnL5AxXE2j0qZMsb7A
-	6ypkvO/ceWBoU8vpMfjrkVgo+dNS+1LWSHVfUVSBWxkjy76TYQ+i0irTwc3EnxZaNwbcQe9iU4j
-	VV4ylMt4uv7mjdRvyi/HYMlaieWQJEa3l6LiZpA==
-X-Google-Smtp-Source: AGHT+IE6M0Dg1dF1XKQ5SZog5KVbT6+bWDmKAq1fr/keDl6DkOU0HeAaW6wB4lOG1URtDhlO4e8pMxN/MBRT07NjCl8=
-X-Received: by 2002:a81:d441:0:b0:5ff:f176:9fd3 with SMTP id
- g1-20020a81d441000000b005fff1769fd3mr3364581ywl.4.1707263797880; Tue, 06 Feb
- 2024 15:56:37 -0800 (PST)
+	s=arc-20240116; t=1707264514; c=relaxed/simple;
+	bh=mFIrM+Di9InkZwQXHNBXM1hyZVucQXVbLEjHXOAJ6EU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IOlFx9aWnUTEPXOBUwVkNi1zXCh8qPxkV/BOqnRRuZZ3fYw6PTM4RHRG8jz3LhvX91f9SYy02xE1mSXpyqmP/cP5KUD00ht3mrXG9fy+0cb0ksbMpvjwjnQDbHPOL5hJUy4dkGYru6/3j7Q5/yCiSgMoNAQfHDIiKLeOsXJDQzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y2PtoaEX; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416NpWNL030915;
+	Wed, 7 Feb 2024 00:08:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=+D4nktpCYUtZM2am9USds2jdVYtzFu8/AHIYCkKZE+I=; b=Y2
+	PtoaEXIjnihGpiCg6oKnkBK+zLcYcdmGipTAQM46Fnqz4sDXtlGo2eaqgQgACc60
+	3Bu3KpgMW8IphxFDY35ZlAXW5aNNFnocXJ3kAEaeZbgVSpTYFsgCgwwMadCeW8L/
+	a5guZ7DLbpURgr++VkhoAoLABkLdKuuDF9gCd15VVSKycv2OR+rCyOirlw9BBc0A
+	H0V20CApS5+twrmoQs0kOlQf0efnsV44nS9poefHImTLf5Hl6cWYGQYWjo3akhC3
+	9W2v62JUrvPUu7moPtfYUazJEvnNU/obI0TYf+zffZ/ADF3vPCX5sslCuzWjLHZG
+	7XiTzbvjQ4WX0ZfD2l+w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3hyvhtp9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Feb 2024 00:08:03 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4170823w004677
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 Feb 2024 00:08:02 GMT
+Received: from [10.110.7.251] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 6 Feb
+ 2024 16:08:01 -0800
+Message-ID: <ef83036f-6605-1db3-d962-ac28a10711ac@quicinc.com>
+Date: Tue, 6 Feb 2024 16:08:00 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1707202761.git.quic_uchalich@quicinc.com>
- <cf138f258ecbfbcc94717e4914de2f60153e5abb.1707202761.git.quic_uchalich@quicinc.com>
- <1e26c5b3-716b-4f16-bae4-2682667550a5@linaro.org> <79a01e7c-3a88-49cf-b227-804155a65a4b@quicinc.com>
-In-Reply-To: <79a01e7c-3a88-49cf-b227-804155a65a4b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 7 Feb 2024 01:56:26 +0200
-Message-ID: <CAA8EJprbyvRMo0gEw0_Aa9akRNsgUwGA03sgQKLNv0fxupm3hQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: sm8450: Add mapping to llcc
- Broadcast_AND region
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v13 35/53] ALSA: usb-audio: Prevent starting of audio
+ stream if in use
+Content-Language: en-US
+To: Takashi Iwai <tiwai@suse.de>
+CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>
+References: <20240203023645.31105-1-quic_wcheng@quicinc.com>
+ <20240203023645.31105-36-quic_wcheng@quicinc.com>
+ <87y1bxvj0o.wl-tiwai@suse.de>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <87y1bxvj0o.wl-tiwai@suse.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qIQyJL9pDt7huHZmKIMEX-BC0aAcy2JV
+X-Proofpoint-GUID: qIQyJL9pDt7huHZmKIMEX-BC0aAcy2JV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-06_15,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=879
+ suspectscore=0 adultscore=0 malwarescore=0 bulkscore=0 phishscore=0
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402060171
 
-On Tue, 6 Feb 2024 at 22:07, Unnathi Chalicheemala
-<quic_uchalich@quicinc.com> wrote:
->
-> On 2/6/2024 12:35 AM, Krzysztof Kozlowski wrote:
-> > On 06/02/2024 08:15, Unnathi Chalicheemala wrote:
-> >> Mapping Broadcast_AND region for LLCC in SM8450.
-> >
-> > Why?
-> >
-> > And why your DTS is in the middle of driver changes? Driver cannot
-> > depend on DTS - you are now breaking all existing boards and users.
-> >
->
-> I was following a similar patch which has DT and driver changes in the
-> same patchset:
-> https://lore.kernel.org/all/20230314080443.64635-1-manivannan.sadhasivam@linaro.org/
->
-> The AND region was added in the IP block in SM8450, but was not added to the DT or
-> driver. That is why I included both in the same patchset - if you think the DT
-> changes should be separate I can correct it in the next version.
+Hi Takashi,
 
-Just move the DT changes to be the last patches in the patchset.
+On 2/6/2024 5:07 AM, Takashi Iwai wrote:
+> On Sat, 03 Feb 2024 03:36:27 +0100,
+> Wesley Cheng wrote:
+>>
+>> With USB audio offloading, an audio session is started from the ASoC
+>> platform sound card and PCM devices.  Likewise, the USB SND path is still
+>> readily available for use, in case the non-offload path is desired.  In
+>> order to prevent the two entities from attempting to use the USB bus,
+>> introduce a flag that determines when either paths are in use.
+>>
+>> If a PCM device is already in use, the check will return an error to
+>> userspace notifying that the stream is currently busy.  This ensures that
+>> only one path is using the USB substream.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> 
+> Hm, I'm not sure whether it's safe to hold chip->mutex there for the
+> long code path.  It even kicks off the auto-resume, which may call
+> various functions at resuming, and some of them may re-hold
+> chip->mutex.
+> 
 
->
-> Thanks a lot for taking the time to review Krzysztof.
->
-> >
-> > Best regards,
-> > Krzysztof
-> >
->
+That's a good point.
 
+> If it's only about the open flag, protect only the flag access with
+> the mutex, not covering the all open function.  At least the re-entry
+> can be avoided by that.
+> 
 
--- 
-With best wishes
-Dmitry
+Sure, let me re-order the check/assignment and the mutex locking.  Since 
+this is now checked here in USB PCM and the QC offload driver, we want 
+to make sure that if there was some application attempting to open both 
+at the same time, we prevent any possible races.
+
+I think the best way to address this would be something like:
+
+static int snd_usb_pcm_open(struct snd_pcm_substream *substream)
+{
+...
+	mutex_lock(&chip->mutex);
+	if (subs->opened) {
+		mutex_unlock(&chip->mutex);
+		return -EBUSY;
+	}
+	subs->opened = 1;
+	mutex_unlock(&chip->mutex);
+
+//Execute bulk of PCM open routine
+...
+	return 0;
+
+// If any errors are seen, unwind
+err_resume:
+	snd_usb_autosuspend(subs->stream->chip);
+err_open:
+	mutex_lock(&chip->mutex);
+	subs->opened = 0;
+	mutex_unlock(&chip->mutex);
+
+	return ret;
+}
+
+Set the opened flag first, so that if QC offload checks it, it can exit 
+early and vice versa.  Otherwise, if we set the opened flag at the same 
+position as the previous patch, we may be calling the other routines in 
+parallel to the QC offload enable stream routine.  The only thing with 
+this patch is that we'd need some error handling unwinding.
+
+Thanks
+Wesley Cheng
 
