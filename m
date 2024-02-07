@@ -1,111 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-10092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3D9C84CA25
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 13:04:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FA8884CA90
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 13:15:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6B551C25050
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 12:04:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7305F1C21A3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 12:15:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E901F59B6A;
-	Wed,  7 Feb 2024 12:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CF7059B74;
+	Wed,  7 Feb 2024 12:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jQNjylFE"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="hIqhqKzL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5359B61;
-	Wed,  7 Feb 2024 12:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E18459B6C;
+	Wed,  7 Feb 2024 12:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707307443; cv=none; b=H49MXLRN6ecpVct2DyatqDhRWzuNUopdCsDSwqproZVq5yOGqzI3lbK9oyCcGF93kJq5ZqWdh0qZynRnsZHsS9os3FvbMh6rGn8Gvc1ncvu7p0WW1EhP96aJU1/R00vFGHJ6dpW5W+NoE0t1LtsxHGRvqA3EKyMT1FHlb/0Uqek=
+	t=1707308127; cv=none; b=j3iiqTEiGpdwfyATaRonrtokACTM13PykFK1ckFRAW77F9o8vrVPv9ArDXU/C2CwXRmFXsZ/gUESER36JRJTX4+k9dpPQfaazYLoH1mJNsH3p8iMILM0DHOTZhNwI2Bxi8VYILtFVnraFA0HBoN6hphu/+IgQntdUOV+8hrfoL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707307443; c=relaxed/simple;
-	bh=QKftlHCvnz4PA0HyFRTffsRwC4M0FHR2Bt8ifsskhn4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPaSoaXdEC2G6b4kqa2zWtMZodDQFnlyiip1KAyJw+w8W/n0syogyxVz+bbMDsVYPjdq+x3enM0wMriR8K/whPLnlU9PKLUIyR14uUWgiPOatqInTyFjP1+tznIAye1kGISmiEGGbklhL0X2a8qJgMy9DP5O3d4ZHJwosUmY9Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jQNjylFE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C929C433F1;
-	Wed,  7 Feb 2024 12:04:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707307443;
-	bh=QKftlHCvnz4PA0HyFRTffsRwC4M0FHR2Bt8ifsskhn4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jQNjylFEZqmw901m1hs3LiTkT1oSXiJzAO80rj+Je/5h03o1ZRrVaxiwdhtsr+yeh
-	 lDtAbSzzFZ0YGy9e+EknuYChS9Recc2wVCAWIUvZI4edAnTrHi1acZv5RybxYhfcR9
-	 9RI4ee09F1h3Pg+6eURw/fggXRrEMaCAz4o0jnSQDo5hduW6YCZDcnl0h0hdmuwRZK
-	 pXN6fjjtE91sg1OFQmdLgFMFGUlLOwB3dYRVWlT01/jK01G3zh8RI7ymT3j9P3GM3G
-	 str6fHBNf0uA8IG1qH5mCRcMqiwCuMVPIhIi8zz/yck0nsgb2m6Ncuz4VqOGoDAqs0
-	 DVmIgfC7FkoFA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rXgex-000000003Qa-0ZuX;
-	Wed, 07 Feb 2024 13:04:11 +0100
-Date: Wed, 7 Feb 2024 13:04:11 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Steev Klimaszewski <steev@kali.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue
- microphone route
-Message-ID: <ZcNxuyRJdZCryHU_@hovoldconsulting.com>
-References: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
- <c34dd7ca-01b5-4424-a8ec-a525b8d722a3@linaro.org>
- <5497d428-cdc1-4057-afda-6861d2e3860a@linaro.org>
- <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
- <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
- <ZcCX0hDGrWqRXr9R@hovoldconsulting.com>
- <c075f2f8-4fbf-4309-a478-a5cfb199fdd5@linaro.org>
+	s=arc-20240116; t=1707308127; c=relaxed/simple;
+	bh=NybHckFncJ0KkN3jVVXoKqPgsh3dBuBh1zYR1aSYl7U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kC4mrjxQZv0heh0S+ND9QQx08KkA3Qkh+NLATO1GBS5BvQocn0/n+1RWbD72z2vGLj6lBu5r1KDRPpdeDQ+t8GcnDhE6dMwv8kuXJGmwE5UYdrSTdllcA7WG2rPWgle7zwj0tMR3Aq+os9QXiIZbQ/utUdkcwg8A0rAqK8jSnK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=hIqhqKzL; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1707308122;
+	bh=NybHckFncJ0KkN3jVVXoKqPgsh3dBuBh1zYR1aSYl7U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=hIqhqKzLQgafMDRbj201qbF4xnuBIHKB1ewOafY290qM7BbS2kVtstC/8PkOIwCs0
+	 JIFU4lu7LCkHUL+Gs7/Z/ZChsx4pDEdd9ZtivAddd9aiwN2gU9L3IacWe4vlF45Sbf
+	 uC9RkS9RVgKO/v3D4Us8BlpHE9GyCZy1Ov8RCRhO5kaUXgNZeQPd0Gtmy5NS/84eOK
+	 74X/79V+V1qxWqhJgsoLyQ8LCl6YTI2TfcNoDXyM+JqnXBPuuO/ddqW8fuaW9/tNqg
+	 GWPQD8jBdWZeNUN21GE4wKkVVqLriMgZGt9fAty9+xezpsd7JPAYhnIAgRKqIRy9rq
+	 4dec2ld9v9MIw==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id AB3933782069;
+	Wed,  7 Feb 2024 12:15:21 +0000 (UTC)
+Message-ID: <48aa9df6-44fc-4d1a-8eeb-0e9fdd8b8833@collabora.com>
+Date: Wed, 7 Feb 2024 13:15:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c075f2f8-4fbf-4309-a478-a5cfb199fdd5@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
+ pins
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, g@somainline.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht,
+ Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>,
+ Martin Botka <martin.botka@somainline.org>,
+ Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
+ <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
+ <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
+ <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 07, 2024 at 11:05:02AM +0000, Srinivas Kandagatla wrote:
-> On 05/02/2024 08:09, Johan Hovold wrote:
-> > On Sun, Feb 04, 2024 at 11:30:54PM -0600, Steev Klimaszewski wrote:
-
-> >> I somehow missed that patchset or conversation; As an owner of an
-> >> X13s, which is sc8280xp, I can say, neither pre-dts patch, nor post,
-> >> seem to do much good.  When I attempt to do a voice chat in armcord,
-> >> the responses I get to how I sound when using the mic on the X13s
-> >> itself range from "You sound like hot trash" to "You sound like a
-> >> robot with hiccups".
+Il 06/02/24 23:36, Marijn Suijten ha scritto:
+> On 2024-02-06 19:58:50, Konrad Dybcio wrote:
+>> On 21.01.2024 23:33, Marijn Suijten wrote:
+>>> Add the pinctrl states for SDC1 and use them on sdhc_1.
+>>>
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> ---
+>>
+>> [...]
+>>
+>>
+>>> @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
+>>>   				 <&gcc GCC_SDCC1_APPS_CLK>,
+>>>   				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>>   			clock-names = "iface", "core", "xo";
+>>> +
+>>> +			pinctrl-names = "default", "sleep";
+>>> +			pinctrl-0 = <&sdc1_on_state>;
+>>> +			pinctrl-1 = <&sdc1_off_state>;
+>>
+>> -names should go last
 > 
-> does arecord exhibit same issue?
 
-I only did a quick test by switching from pulseaudio to pipewire and
-running parecord. Recording is corrupted (robot with hiccups), while it
-works fine with pulseaudio proper.
+Konrad is technically correct as per [1] but, for consistency, since all of the
+other nodes in msm8976.dtsi are following that order for pinctrl, this version of
+the patch is correct.
 
-You can also notice that something is off by looking at the pavucontrol
-volume meters which were quite active.
+That, unless anyone wants to reorder everything in this file as per [1], which
+may or may not be worth the noise.
 
-> What is your setup looking like? I would like to reproduce this on my x13s.
+[1]: 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/dts-coding-style.rst
 
-I know that Steve is using pipewire (on Kali Linux I assume).
+Regards,
+Angelo
 
-> > That's a separate issue entirely. Both the digital and analog microphone
-> > (jack) is working on the X13s as long as you use pulseaudio.
-> > 
-> > As I've mentioned before, there are problems with both playback and
-> > capture when you use pipewire however ("robot with hiccups" one could
-> > indeed describe it as).
+> Per the cover letter:
+> 
+>      - Moved pinctrl-names before pinctrl-N (Konrad);
+> 
+> You explicitly requested this in https://lore.kernel.org/linux-arm-msm/60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org/#t
+> but we also backtracked on it somewhat for consistency with other -names, and the general state of this file.
+> 
+> Maybe we should apply v1 of this specific patch?
+> 
+> - Marijn
 
-Johan
+
 
