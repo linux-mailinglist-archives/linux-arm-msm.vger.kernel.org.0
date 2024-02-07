@@ -1,253 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-10066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0452984C552
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 07:59:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF30784C558
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 08:00:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 290111C2597A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 06:59:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F2E31C21FDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 07:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0BE11D55E;
-	Wed,  7 Feb 2024 06:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 645CC1CFBE;
+	Wed,  7 Feb 2024 07:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hfanaPzl"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="AaqypUD/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="854zUxh0";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="AaqypUD/";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="854zUxh0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2206D1CF94;
-	Wed,  7 Feb 2024 06:59:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C23B1CFAF;
+	Wed,  7 Feb 2024 07:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707289171; cv=none; b=O54Npmyo529kP37pGRZG6ChM2qqI7odljGwAo4hYy0axu9vVXeT3o9hgekcc5pZD89uWoqisBNnnROsqwYccG7c6NI0r+OA4JnO+OoPXmEOlCuAsfe8T22krn7uArXT+ILYEohNgZ8liEAD1Chc6eAAXgOgG0/Q1uFEntzhmhXg=
+	t=1707289219; cv=none; b=DQ2M1/ONG63hLRVj+KM6TMWN4/RmwmP1D3QZsy+GyMG+mRLZRA8clD0lLedjqIxoE9cr4IbISMvW798IruvIhipINpuyL0cMhD8o8z2/YXQXB6xw7XzPuRxff0SZa+2Qs0Am68ayj/MJEhLDmQypLqrRANt9qgL2e88yk/s2VFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707289171; c=relaxed/simple;
-	bh=nKzsRMvhOPzjRr5dXRryXqwDxv3hbcjahpFvvOCo1Lg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZpXNxKCYGK6HxPvVEpQvFc105yiJV01pmJZdbvWEDHo8JkghPQPBR3/JM6CtMOy4z54o3/x6/pFZnRcTDCWiNtbTFqY29fpxffPEh4WhHCB9rnTgyTMlIkkKUZEotBgZhArb9Bp8uS2yTG+FArbYjs/CAOfbQI72Hyxq8TDjHNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hfanaPzl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4175oSFN011466;
-	Wed, 7 Feb 2024 06:59:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=DG/J8ta9Ra8NQoxjCsWNjWq3m66l9UKT7KaIyxuGgbI=; b=hf
-	anaPzlxYLIG6QzAaOkn/FCr1OcZgnKykKE4vTzA2TbCdK6mtHU5vYMQ+c5oiPPEf
-	KdmjDVAjF7o+axF7umknfjdIQRyPm/z7XaOXo90cNNSrLwByv4IhnLUkZp6/kZHv
-	/cDkw/PztHpHpjlTwBI3sSPMC4r4H/k3+agjW40DYudNyqSUiSkYKHO/efjFYx4W
-	HXw4zF/sjUTau9rZe2qAb+6QjPj8gRFBm0XhGZhdYIq+z4B+s9POxc0E/4S9jW/K
-	YTYBqPFcOJWqJXX/xyFfSGKw4nYG2ov1gpPEt2hB2cVetxt4ktR8Ul0s0nf48OCW
-	0CVPkgY3tX554bjKWMLA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4425r3xe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 06:59:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4176xO1r016368
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 06:59:24 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 6 Feb
- 2024 22:59:19 -0800
-Message-ID: <e90522c1-7a2d-40ff-bf4e-c8f974722ddf@quicinc.com>
-Date: Wed, 7 Feb 2024 12:28:57 +0530
+	s=arc-20240116; t=1707289219; c=relaxed/simple;
+	bh=v7msrzpyw2ptuE2fVKl5DgGja6IcIfOGzZaserJmkIY=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IogYYbC0WVS1xK7Bf003ce32ZRVddOZm52jRd8oI5osOvLJ1mfHy5hESHLnGGiF8n36v8UP6Rt99mUWR/dxSCRDcG1Iv88KDFLTKYa1VhAisTjhiplJ86h2nMzCZ5//GaBhdGcgbSLFBmJSkNvERM0VgdjqwRhP16x4V3SpTTf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=AaqypUD/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=854zUxh0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=AaqypUD/; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=854zUxh0; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 679411F456;
+	Wed,  7 Feb 2024 07:00:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707289202; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fq3JEuDRzhumdt/uENPOAy/8jwo374BpY8aqwtGc6x4=;
+	b=AaqypUD/ThwT5mQhX1+4Zyy1K1xtovP5sTiL+EQppv/EeGB13qVbepfFo0E9GsHdhVt1xv
+	JqBzZ3vqCuUk9uD+ig0PLJSOqmZXVy0w3ELqzQe+DhedjpT0lJgRHtXGErbVi3ZVltkhyp
+	L7GkqQFhYAZ4D7XlgW/tydX9Xr92ogM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707289202;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fq3JEuDRzhumdt/uENPOAy/8jwo374BpY8aqwtGc6x4=;
+	b=854zUxh0IZJu0GRTU3i/YEtzchcM+UVIokiuwRAsnvtvh6v6zTdgm2w9BkaiOhAb0IWf1a
+	8QzZZcpnWnF631Aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707289202; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fq3JEuDRzhumdt/uENPOAy/8jwo374BpY8aqwtGc6x4=;
+	b=AaqypUD/ThwT5mQhX1+4Zyy1K1xtovP5sTiL+EQppv/EeGB13qVbepfFo0E9GsHdhVt1xv
+	JqBzZ3vqCuUk9uD+ig0PLJSOqmZXVy0w3ELqzQe+DhedjpT0lJgRHtXGErbVi3ZVltkhyp
+	L7GkqQFhYAZ4D7XlgW/tydX9Xr92ogM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707289202;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fq3JEuDRzhumdt/uENPOAy/8jwo374BpY8aqwtGc6x4=;
+	b=854zUxh0IZJu0GRTU3i/YEtzchcM+UVIokiuwRAsnvtvh6v6zTdgm2w9BkaiOhAb0IWf1a
+	8QzZZcpnWnF631Aw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DEDDF139D8;
+	Wed,  7 Feb 2024 07:00:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id weg+NXEqw2XlKwAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Wed, 07 Feb 2024 07:00:01 +0000
+Date: Wed, 07 Feb 2024 08:00:01 +0100
+Message-ID: <878r3w7o9a.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: <srinivas.kandagatla@linaro.org>,
+	<mathias.nyman@intel.com>,
+	<perex@perex.cz>,
+	<conor+dt@kernel.org>,
+	<corbet@lwn.net>,
+	<lgirdwood@gmail.com>,
+	<andersson@kernel.org>,
+	<krzysztof.kozlowski+dt@linaro.org>,
+	<gregkh@linuxfoundation.org>,
+	<Thinh.Nguyen@synopsys.com>,
+	<broonie@kernel.org>,
+	<bgoswami@quicinc.com>,
+	<tiwai@suse.com>,
+	<robh+dt@kernel.org>,
+	<konrad.dybcio@linaro.org>,
+	<linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<linux-sound@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>,
+	<alsa-devel@alsa-project.org>
+Subject: Re: [PATCH v13 48/53] ALSA: usb-audio: mixer: Add USB offloading mixer control
+In-Reply-To: <dbe544de-dc04-59a8-6642-883fc00214f3@quicinc.com>
+References: <20240203023645.31105-1-quic_wcheng@quicinc.com>
+	<20240203023645.31105-49-quic_wcheng@quicinc.com>
+	<871q9pwy0l.wl-tiwai@suse.de>
+	<dbe544de-dc04-59a8-6642-883fc00214f3@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] clk: qcom: videocc-sm8550: Add support for SM8650
- videocc
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Ajit Pandey" <quic_ajipan@quicinc.com>
-References: <20240206113145.31096-1-quic_jkona@quicinc.com>
- <20240206113145.31096-3-quic_jkona@quicinc.com>
- <CAA8EJpqbKQS7Bp28xNZ0twu7BFLdOES9qS5xBvoonux8Ma4q6Q@mail.gmail.com>
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <CAA8EJpqbKQS7Bp28xNZ0twu7BFLdOES9qS5xBvoonux8Ma4q6Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UtmxEYq6CMrtIKj1Duy308MrIS7Fe3Uj
-X-Proofpoint-GUID: UtmxEYq6CMrtIKj1Duy308MrIS7Fe3Uj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-06_16,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 spamscore=0 malwarescore=0 phishscore=0 mlxscore=0
- priorityscore=1501 mlxlogscore=999 clxscore=1011 lowpriorityscore=0
- bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402070051
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="AaqypUD/";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=854zUxh0
+X-Spamd-Result: default: False [2.16 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[dt];
+	 MIME_GOOD(-0.10)[text/plain];
+	 BAYES_HAM(-0.03)[56.23%];
+	 R_RATELIMIT(0.00)[to_ip_from(RLe67txhfobum3fqdb5xx8e3au)];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 DKIM_TRACE(0.00)[suse.de:+];
+	 MX_GOOD(-0.01)[];
+	 RCPT_COUNT_TWELVE(0.00)[23];
+	 MID_CONTAINS_FROM(1.00)[];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,suse.de:dkim];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,quicinc.com,suse.com,vger.kernel.org,alsa-project.org];
+	 RCVD_TLS_ALL(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Score: 2.16
+X-Rspamd-Queue-Id: 679411F456
+X-Spam-Level: **
+X-Spam-Flag: NO
+X-Spamd-Bar: ++
+
+On Wed, 07 Feb 2024 02:24:46 +0100,
+Wesley Cheng wrote:
+> 
+> Hi Takashi,
+> 
+> On 2/6/2024 4:57 AM, Takashi Iwai wrote:
+> > On Sat, 03 Feb 2024 03:36:40 +0100,
+> > Wesley Cheng wrote:
+> >> 
+> >> In order to allow userspace/applications know about USB offloading status,
+> >> expose a sound kcontrol that fetches information about which sound card
+> >> index is associated with the ASoC platform card supporting offloading.  In
+> >> the USB audio offloading framework, the ASoC BE DAI link is the entity
+> >> responsible for registering to the SOC USB layer.  SOC USB will expose more
+> >> details about the current offloading status, which includes the USB sound
+> >> card and USB PCM device indexes currently being used.
+> >> 
+> >> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> > 
+> > The concept is understandable, but the control element name ("SNDUSB
+> > OFFLD playback available") looks non-intrusive and non-conformant.
+> > Use a bit more understandable name instead.
+> > 
+> > This provides a card number where the offload driver is bound, and the
+> > name should indicate something about that.
+> > 
+> 
+> Hmmm, does USB sound have a naming convention that it usually follows
+> for mixer/control interfaces?
+
+The old rule is found in Documentation/sound/designs/control-names.rst
+(although the prefix and the suffix are often dropped for non-standard
+controls).
+
+> For something that is more closely related, how about:
+> "USB offload capable card"
+
+Yes, it looks better.  But usually each word begins with an upper
+letter.
 
 
-
-On 2/6/2024 5:24 PM, Dmitry Baryshkov wrote:
-> On Tue, 6 Feb 2024 at 13:39, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>
->> Add support to the SM8650 video clock controller by extending the
->> SM8550 video clock controller, which is mostly identical but SM8650
->> has few additional clocks and minor differences.
-> 
-> In the past we tried merging similar clock controllers. In the end
-> this results in the ugly source code. Please consider submitting a
-> separate driver.
-> 
-
-Thanks Dmitry for your review. SM8650 has only few clock additions and 
-minor changes compared to SM8550, so I believe it is better to reuse 
-this existing driver and extend it.
-
->>
->> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->> ---
->>   drivers/clk/qcom/videocc-sm8550.c | 160 +++++++++++++++++++++++++++++-
->>   1 file changed, 156 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/videocc-sm8550.c b/drivers/clk/qcom/videocc-sm8550.c
->> index f3c9dfaee968..cdc08f5900fc 100644
->> --- a/drivers/clk/qcom/videocc-sm8550.c
->> +++ b/drivers/clk/qcom/videocc-sm8550.c
->> @@ -1,6 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->>   /*
->> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>
->>   #include <linux/clk-provider.h>
-> 
-> [skipping]
-> 
->>   static struct gdsc video_cc_mvs0c_gdsc = {
->>          .gdscr = 0x804c,
->>          .en_rest_wait_val = 0x2,
->> @@ -354,15 +481,20 @@ static struct clk_regmap *video_cc_sm8550_clocks[] = {
->>          [VIDEO_CC_MVS0_CLK] = &video_cc_mvs0_clk.clkr,
->>          [VIDEO_CC_MVS0_CLK_SRC] = &video_cc_mvs0_clk_src.clkr,
->>          [VIDEO_CC_MVS0_DIV_CLK_SRC] = &video_cc_mvs0_div_clk_src.clkr,
->> +       [VIDEO_CC_MVS0_SHIFT_CLK] = &video_cc_mvs0_shift_clk.clkr,
->>          [VIDEO_CC_MVS0C_CLK] = &video_cc_mvs0c_clk.clkr,
->>          [VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC] = &video_cc_mvs0c_div2_div_clk_src.clkr,
->> +       [VIDEO_CC_MVS0C_SHIFT_CLK] = &video_cc_mvs0c_shift_clk.clkr,
->>          [VIDEO_CC_MVS1_CLK] = &video_cc_mvs1_clk.clkr,
->>          [VIDEO_CC_MVS1_CLK_SRC] = &video_cc_mvs1_clk_src.clkr,
->>          [VIDEO_CC_MVS1_DIV_CLK_SRC] = &video_cc_mvs1_div_clk_src.clkr,
->> +       [VIDEO_CC_MVS1_SHIFT_CLK] = &video_cc_mvs1_shift_clk.clkr,
->>          [VIDEO_CC_MVS1C_CLK] = &video_cc_mvs1c_clk.clkr,
->>          [VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC] = &video_cc_mvs1c_div2_div_clk_src.clkr,
->> +       [VIDEO_CC_MVS1C_SHIFT_CLK] = &video_cc_mvs1c_shift_clk.clkr,
->>          [VIDEO_CC_PLL0] = &video_cc_pll0.clkr,
->>          [VIDEO_CC_PLL1] = &video_cc_pll1.clkr,
->> +       [VIDEO_CC_XO_CLK_SRC] = &video_cc_xo_clk_src.clkr,
->>   };
->>
->>   static struct gdsc *video_cc_sm8550_gdscs[] = {
->> @@ -380,6 +512,7 @@ static const struct qcom_reset_map video_cc_sm8550_resets[] = {
->>          [CVP_VIDEO_CC_MVS1C_BCR] = { 0x8074 },
->>          [VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
->>          [VIDEO_CC_MVS1C_CLK_ARES] = { 0x8090, 2 },
->> +       [VIDEO_CC_XO_CLK_ARES] = { 0x8124, 2 },
-> 
-> Is this reset applicable to videocc-sm8550?
-> 
-
-SM8550 also has above reset support in hardware, hence it is safe to 
-model above reset for both SM8550 and SM8650.
-
->>   };
->>
->>   static const struct regmap_config video_cc_sm8550_regmap_config = {
->> @@ -402,6 +535,7 @@ static struct qcom_cc_desc video_cc_sm8550_desc = {
->>
->>   static const struct of_device_id video_cc_sm8550_match_table[] = {
->>          { .compatible = "qcom,sm8550-videocc" },
->> +       { .compatible = "qcom,sm8650-videocc" },
->>          { }
->>   };
->>   MODULE_DEVICE_TABLE(of, video_cc_sm8550_match_table);
->> @@ -410,6 +544,7 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
->>   {
->>          struct regmap *regmap;
->>          int ret;
->> +       u32 offset;
->>
->>          ret = devm_pm_runtime_enable(&pdev->dev);
->>          if (ret)
->> @@ -425,6 +560,23 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
->>                  return PTR_ERR(regmap);
->>          }
->>
->> +       if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8550-videocc")) {
->> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0_SHIFT_CLK] = NULL;
->> +               video_cc_sm8550_clocks[VIDEO_CC_MVS0C_SHIFT_CLK] = NULL;
->> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1_SHIFT_CLK] = NULL;
->> +               video_cc_sm8550_clocks[VIDEO_CC_MVS1C_SHIFT_CLK] = NULL;
->> +               video_cc_sm8550_clocks[VIDEO_CC_XO_CLK_SRC] = NULL;
-> 
-> Please invert the logic. Make video_cc_sm8550_clocks reflect SM8550
-> and patch in new clocks in the SM8650-specific branch below.
-> 
-
-Sure, will add these clocks as NULL in video_cc_sm8550_clocks and patch 
-in new clocks here for SM8650. Then we can remove above check for SM8550.
-
-Thanks,
-Jagadeesh
-
->> +               offset = 0x8140;
->> +       } else  if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8650-videocc")) {
->> +               video_cc_pll0_config.l = 0x1e;
->> +               video_cc_pll0_config.alpha = 0xa000;
->> +               video_cc_pll1_config.l = 0x2b;
->> +               video_cc_pll1_config.alpha = 0xc000;
->> +               video_cc_mvs0_clk_src.freq_tbl = ftbl_video_cc_mvs0_clk_src_sm8650;
->> +               video_cc_mvs1_clk_src.freq_tbl = ftbl_video_cc_mvs1_clk_src_sm8650;
->> +               offset = 0x8150;
->> +       }
->> +
->>          clk_lucid_ole_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
->>          clk_lucid_ole_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
->>
->> @@ -435,7 +587,7 @@ static int video_cc_sm8550_probe(struct platform_device *pdev)
->>           *      video_cc_xo_clk
->>           */
->>          regmap_update_bits(regmap, 0x80f4, BIT(0), BIT(0));
->> -       regmap_update_bits(regmap, 0x8140, BIT(0), BIT(0));
->> +       regmap_update_bits(regmap, offset, BIT(0), BIT(0));
->>          regmap_update_bits(regmap, 0x8124, BIT(0), BIT(0));
->>
->>          ret = qcom_cc_really_probe(pdev, &video_cc_sm8550_desc, regmap);
->> --
->> 2.43.0
->>
->>
-> 
-> 
+Takashi
 
