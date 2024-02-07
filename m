@@ -1,138 +1,343 @@
-Return-Path: <linux-arm-msm+bounces-10106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13AD684CFC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 18:26:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B16C84D038
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 18:53:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7B8A1F27380
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 17:26:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C425A2821C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 17:53:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C18D68286F;
-	Wed,  7 Feb 2024 17:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D725B54645;
+	Wed,  7 Feb 2024 17:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E8m1HfsY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VcSRj3k7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5A3823B8;
-	Wed,  7 Feb 2024 17:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F87823D4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 17:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707326798; cv=none; b=SkQr1rceGvGV8Q1I0FMlg+ZNEgRfGRB7iKDnn8zprFbWrDH2uERahGhyw+IXcbVvdH91r5MwHhYBXJVWL1PLoHsp4aF7zCVEfCWD5wc0O7RLiCAU1akOGgcaH63A9LS43cWSlxEkY5gVtNqjekrLbeGXXwI9BZydq5vp8KDN+ww=
+	t=1707328379; cv=none; b=hBE5rUtjuz+doiwphc+02soQ5uHg5rqRkAJGl8gdexH27WKZzvdU2Gq2gYkJ+NBhmoxpkhARqMQBUhr7pTh2u5VBJR33a9OS72v4CetCYkHScERor86FV4X1bKnI1GgAiCGcrpsYUctipAf3wLZr2BkKeFzFvCsjXISkILC76yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707326798; c=relaxed/simple;
-	bh=WJY7bRLc+6QBXlwk3j67JAGs1qGHaeAeWvs21rNTsDA=;
+	s=arc-20240116; t=1707328379; c=relaxed/simple;
+	bh=PCK7rAS3smCQWdrST4yYcL3jfyEQ8/s0/6qvkiLtfrI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=N67ZQLI3VDPaFFTr1TN8+HaqVl9+xfsNeU/snWwxrNWIAKBV7gckZKpNRqmH2NAcoJVvk8BhJj3K/4zdexrZlZJOein0i0Buwapu25B1KT7LFJX8Q9AWjyyHInz78Qv+EUlZBk2+0NnGKRapdPuM66YDxBKiZ5kM0ppfqT7+yrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E8m1HfsY; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Zyx2c6+RYzPuRSFLQUKaiqvmUxA+MfWxvNIDi7fmbz8AMnD/NjqrJvduXl2918MFwAFwD/1nGajjwWkF1mRFyX+JG+y05biDiDp19AsnDrytx5PWl7tvuYLJGXKHTg3zSEppY3Nby2zfvXmHJn+MHC+w/Bdbgd0IQK2F5bCMMnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VcSRj3k7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 417GLQ13005974;
-	Wed, 7 Feb 2024 17:26:16 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 417ElPFZ006570;
+	Wed, 7 Feb 2024 17:52:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IeY4ENqyM6DquNVGtOMdp371wYPINtiRe/4HRffDQ3c=; b=E8
-	m1HfsYNKB2wq3CjI6Xms8FjgW0KXlqJOdYl4rgYruitZFj3M6oiogwYWUPvjDVkg
-	zlUqEeI0XoZx5bf0KWFsI8g68K8tBvZMD3Lc29st+AjqB97OZuCMe2QGoyFNMD8r
-	zD0Xiam9xysQpJ6rqbLo35Ufpzae1xcdhmvm/U4CKCp4vYUoOotz+94RH2E8tWZE
-	rIR7DEi7k69ehWuqfm6QJ5A+d/aapIObr6X0JR4CAFYb4Mg6ZCugviZv4dySBdKO
-	KbbLNp03L2IVtlrQqkh3mRwIuHEatsDkryXQF2+VWqnu75hI3WR6rEgWMt1s47CW
-	CqFnw9mmsHwy7eDaOGug==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4021ssgh-1
+	qcppdkim1; bh=TZmShF+zuWyy0fDayloINV9p8eO6XunAmw4rhxYoHvQ=; b=Vc
+	SRj3k7v6AucfRTjxe2J7X9+yVtH6qFR0l8+HM3Jh9WKRj1Trz7iOhJx8reWtOeJ1
+	CHR73FqQV8NuK7acL8dXi1PmX9+R5oldMlqiSJoCQJArH68SDhxdex1azZbPQKDy
+	Dr9EXvAdpXThoT5lXGxzU25Qk8mfpVDFCSCZElXwSWy+qaJLz2KaODs6YkqqIyVB
+	dVZ9Enc+nuynMRbEkCy3mG99Q+kZpi2D+Zp0y3rOM4/r5AV3mKuaFLsFd6yjnQRQ
+	TxoRwWVAEDHRoiTs15Julbm3wRW6ruw1ZdfuFnVQJ6kYrIMC3R240W3O7TwgkQuN
+	CgxDGp74mF5Fbk8bZv0Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w46r8141a-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 17:26:16 +0000 (GMT)
+	Wed, 07 Feb 2024 17:52:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417HQ90x030684
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417Hqhj8016039
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 17:26:10 GMT
-Received: from [10.110.62.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Wed, 7 Feb 2024 17:52:43 GMT
+Received: from [10.110.9.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 7 Feb
- 2024 09:26:06 -0800
-Message-ID: <578b6a6e-83df-4113-9c1f-cdd7aa65f65e@quicinc.com>
-Date: Wed, 7 Feb 2024 09:26:05 -0800
+ 2024 09:52:43 -0800
+Message-ID: <f2e146a3-0825-3e92-a694-b2b947b92b66@quicinc.com>
+Date: Wed, 7 Feb 2024 09:52:42 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] net: stmmac: dwmac-qcom-ethqos: Enable TBS on all
- queues but 0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] drm/msm/dpu: remove CRTC frame event callback
+ registration
 Content-Language: en-US
-To: Abhishek Chauhan <quic_abchauha@quicinc.com>,
-        Vinod Koul
-	<vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        "Eric
- Dumazet" <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu
-	<joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring
-	<robh@kernel.org>
-CC: <kernel@quicinc.com>
-References: <20240207001036.1333450-1-quic_abchauha@quicinc.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20240207001036.1333450-1-quic_abchauha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231005220659.2404199-1-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231005220659.2404199-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ujof3VBVxrMBwZfiN1GFhhbJXa7VDHpK
-X-Proofpoint-GUID: Ujof3VBVxrMBwZfiN1GFhhbJXa7VDHpK
+X-Proofpoint-GUID: 3Qi8gpbeS4JldGeIkwuMnZeQroBVA69L
+X-Proofpoint-ORIG-GUID: 3Qi8gpbeS4JldGeIkwuMnZeQroBVA69L
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-07_09,2024-02-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 malwarescore=0 suspectscore=0
- phishscore=0 impostorscore=0 spamscore=1 clxscore=1011 adultscore=0
- mlxlogscore=212 mlxscore=1 lowpriorityscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402070129
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
+ spamscore=0 mlxscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402070132
 
-On 2/6/2024 4:10 PM, Abhishek Chauhan wrote:
-> TSO and TBS cannot co-exist. TBS requires special descriptor to be
-> allocated at bootup. Initialising Tx queues at probe to support
-> TSO and TBS can help in allocating those resources at bootup.
+
+
+On 10/5/2023 3:06 PM, Dmitry Baryshkov wrote:
+> The frame event callback is always set to dpu_crtc_frame_event_cb() (or
+> to NULL) and the data is always either the CRTC itself or NULL
+> (correpondingly). Thus drop the event callback registration, call the
+> dpu_crtc_frame_event_cb() directly and gate on the dpu_enc->crtc
+> assigned using dpu_encoder_assign_crtc().
 > 
-> TX queues with TBS can support etf qdisc hw offload.
+
+The idea behind the registration was for CRTC to register for events if 
+it wants to and perhaps have different callbacks for different events 
+through a common registration mechanism and encoder need not know each 
+dpu_crtc calls as most of the time we dont want encoder to go back to 
+crtc to look up what its APIs are.
+
+But, we are always registering today and have only one callback, so it 
+kind of makes it an additional redundant wrapper. So I guess, once again 
+one of those things which , seems not necessary with the current code 
+but nothing really wrong with it.
+
+Anyway, couple of comments below.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 > 
-> This is similar to the patch raised by NXP <3b12ec8f618e>
-> <"net: stmmac: dwmac-imx: set TSO/TBS TX queues default settings">
+> This patch was previously posted as a part of the [1]
+> 
+> Changes since v1:
+> - Rebased on top of linux-next
+> 
+> [1] https://patchwork.freedesktop.org/series/112353/
+> 
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 17 +--------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    | 14 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 41 +++------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 10 -----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h   |  4 --
+>   5 files changed, 21 insertions(+), 65 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 8ce7586e2ddf..dec5417b69d8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -669,18 +669,8 @@ static void dpu_crtc_frame_event_work(struct kthread_work *work)
+>   	DPU_ATRACE_END("crtc_frame_event");
+>   }
+>   
+> -/*
+> - * dpu_crtc_frame_event_cb - crtc frame event callback API. CRTC module
+> - * registers this API to encoder for all frame event callbacks like
+> - * frame_error, frame_done, idle_timeout, etc. Encoder may call different events
+> - * from different context - IRQ, user thread, commit_thread, etc. Each event
+> - * should be carefully reviewed and should be processed in proper task context
+> - * to avoid schedulin delay or properly manage the irq context's bottom half
+> - * processing.
+> - */
+> -static void dpu_crtc_frame_event_cb(void *data, u32 event)
+> +void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event)
+>   {
+> -	struct drm_crtc *crtc = (struct drm_crtc *)data;
+>   	struct dpu_crtc *dpu_crtc;
+>   	struct msm_drm_private *priv;
+>   	struct dpu_crtc_frame_event *fevent;
+> @@ -1102,9 +1092,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
+>   
+>   	dpu_core_perf_crtc_update(crtc, 0);
+>   
+> -	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+> -		dpu_encoder_register_frame_event_callback(encoder, NULL, NULL);
+> -
+>   	memset(cstate->mixers, 0, sizeof(cstate->mixers));
+>   	cstate->num_mixers = 0;
+>   
+> @@ -1143,8 +1130,6 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
+>   		 */
+>   		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
+>   			request_bandwidth = true;
+> -		dpu_encoder_register_frame_event_callback(encoder,
+> -				dpu_crtc_frame_event_cb, (void *)crtc);
+>   	}
+>   
+>   	if (request_bandwidth)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index 539b68b1626a..3aa536d95721 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -300,4 +300,18 @@ static inline enum dpu_crtc_client_type dpu_crtc_get_client_type(
+>   	return crtc && crtc->state ? RT_CLIENT : NRT_CLIENT;
+>   }
+>   
+> +/**
+> + * dpu_crtc_frame_event_cb - crtc frame event callback API
+> + * @crtc: Pointer to crtc
+> + * @event: Event to process
+> + *
+> + * CRTC module registers this API to encoder for all frame event callbacks like
+> + * frame_error, frame_done, idle_timeout, etc. Encoder may call different events
+> + * from different context - IRQ, user thread, commit_thread, etc. Each event
+> + * should be carefully reviewed and should be processed in proper task context
+> + * to avoid schedulin delay or properly manage the irq context's bottom half
+> + * processing.
+> + */
 
-note that there is a standard way to refer to a prior patch, in your case:
-3b12ec8f618e ("net: stmmac: dwmac-imx: set TSO/TBS TX queues default
-settings")
+This doc is no longer correct.
 
-(note this format is defined in the context of the Fixes tag at
-<https://www.kernel.org/doc/html/latest/process/submitting-patches.html#using-reported-by-tested-by-reviewed-by-suggested-by-and-fixes>)
+CRTC module no longer registers anything.
 
-/jeff
+> +void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
+> +
+>   #endif /* _DPU_CRTC_H_ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index d34e684a4178..709fffa4dfa7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -148,8 +148,6 @@ enum dpu_enc_rc_states {
+>    * @frame_busy_mask:		Bitmask tracking which phys_enc we are still
+>    *				busy processing current command.
+>    *				Bit0 = phys_encs[0] etc.
+> - * @crtc_frame_event_cb:	callback handler for frame event
+> - * @crtc_frame_event_cb_data:	callback handler private data
+>    * @frame_done_timeout_ms:	frame done timeout in ms
+>    * @frame_done_timer:		watchdog timer for frame done event
+>    * @disp_info:			local copy of msm_display_info struct
+> @@ -187,8 +185,6 @@ struct dpu_encoder_virt {
+>   	struct dentry *debugfs_root;
+>   	struct mutex enc_lock;
+>   	DECLARE_BITMAP(frame_busy_mask, MAX_PHYS_ENCODERS_PER_VIRTUAL);
+> -	void (*crtc_frame_event_cb)(void *, u32 event);
+> -	void *crtc_frame_event_cb_data;
+>   
+>   	atomic_t frame_done_timeout_ms;
+>   	struct timer_list frame_done_timer;
+> @@ -1377,28 +1373,6 @@ void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder *drm_enc,
+>   	}
+>   }
+>   
+> -void dpu_encoder_register_frame_event_callback(struct drm_encoder *drm_enc,
+> -		void (*frame_event_cb)(void *, u32 event),
+> -		void *frame_event_cb_data)
+> -{
+> -	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> -	unsigned long lock_flags;
+> -	bool enable;
+> -
+> -	enable = frame_event_cb ? true : false;
+> -
+> -	if (!drm_enc) {
+> -		DPU_ERROR("invalid encoder\n");
+> -		return;
+> -	}
+> -	trace_dpu_enc_frame_event_cb(DRMID(drm_enc), enable);
+> -
+> -	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+> -	dpu_enc->crtc_frame_event_cb = frame_event_cb;
+> -	dpu_enc->crtc_frame_event_cb_data = frame_event_cb_data;
+> -	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+> -}
+> -
+>   void dpu_encoder_frame_done_callback(
+>   		struct drm_encoder *drm_enc,
+>   		struct dpu_encoder_phys *ready_phys, u32 event)
+> @@ -1438,15 +1412,12 @@ void dpu_encoder_frame_done_callback(
+>   			dpu_encoder_resource_control(drm_enc,
+>   					DPU_ENC_RC_EVENT_FRAME_DONE);
+>   
+> -			if (dpu_enc->crtc_frame_event_cb)
+> -				dpu_enc->crtc_frame_event_cb(
+> -					dpu_enc->crtc_frame_event_cb_data,
+> -					event);
+> +			if (dpu_enc->crtc)
+> +				dpu_crtc_frame_event_cb(dpu_enc->crtc, event);
+>   		}
+>   	} else {
+> -		if (dpu_enc->crtc_frame_event_cb)
+> -			dpu_enc->crtc_frame_event_cb(
+> -				dpu_enc->crtc_frame_event_cb_data, event);
+> +		if (dpu_enc->crtc)
+> +			dpu_crtc_frame_event_cb(dpu_enc->crtc, event);
+>   	}
+>   }
+>   
+> @@ -2318,7 +2289,7 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
+>   		return;
+>   	}
+>   
+> -	if (!dpu_enc->frame_busy_mask[0] || !dpu_enc->crtc_frame_event_cb) {
+> +	if (!dpu_enc->frame_busy_mask[0] || !dpu_enc->crtc) {
+
+Why do we need !dpu_enc->crtc check for just printing this error log and 
+returning?
+
+>   		DRM_DEBUG_KMS("id:%u invalid timeout frame_busy_mask=%lu\n",
+>   			      DRMID(drm_enc), dpu_enc->frame_busy_mask[0]);
+>   		return;
+> @@ -2331,7 +2302,7 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
+>   
+>   	event = DPU_ENCODER_FRAME_EVENT_ERROR;
+>   	trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
+> -	dpu_enc->crtc_frame_event_cb(dpu_enc->crtc_frame_event_cb_data, event);
+> +	dpu_crtc_frame_event_cb(dpu_enc->crtc, event);
+>   }
+>   
+>   static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index 4c05fd5e9ed1..dfa8edeca925 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -55,16 +55,6 @@ void dpu_encoder_assign_crtc(struct drm_encoder *encoder,
+>   void dpu_encoder_toggle_vblank_for_crtc(struct drm_encoder *encoder,
+>   					struct drm_crtc *crtc, bool enable);
+>   
+> -/**
+> - * dpu_encoder_register_frame_event_callback - provide callback to encoder that
+> - *	will be called after the request is complete, or other events.
+> - * @encoder:	encoder pointer
+> - * @cb:		callback pointer, provide NULL to deregister
+> - * @data:	user data provided to callback
+> - */
+> -void dpu_encoder_register_frame_event_callback(struct drm_encoder *encoder,
+> -		void (*cb)(void *, u32), void *data);
+> -
+>   /**
+>    * dpu_encoder_prepare_for_kickoff - schedule double buffer flip of the ctl
+>    *	path (i.e. ctl flush and start) at next appropriate time.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> index c74b9be25e68..dc097e109fd2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+> @@ -346,10 +346,6 @@ DEFINE_EVENT(dpu_enc_id_enable_template, dpu_enc_vblank_cb,
+>   	TP_PROTO(uint32_t drm_id, bool enable),
+>   	TP_ARGS(drm_id, enable)
+>   );
+> -DEFINE_EVENT(dpu_enc_id_enable_template, dpu_enc_frame_event_cb,
+> -	TP_PROTO(uint32_t drm_id, bool enable),
+> -	TP_ARGS(drm_id, enable)
+> -);
+>   DEFINE_EVENT(dpu_enc_id_enable_template, dpu_enc_phys_cmd_connect_te,
+>   	TP_PROTO(uint32_t drm_id, bool enable),
+>   	TP_ARGS(drm_id, enable)
 
