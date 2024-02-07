@@ -1,131 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-10119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF8484D264
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 20:50:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F3E884D270
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 20:54:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC1C0B25CBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 19:50:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D41551F25A6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 19:54:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F07D086AC0;
-	Wed,  7 Feb 2024 19:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0892786AE3;
+	Wed,  7 Feb 2024 19:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i8xlVIq0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OhOTXLYF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DC78563E;
-	Wed,  7 Feb 2024 19:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546898563E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 19:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707335412; cv=none; b=nrHVOK02VTeoYMhUuTw0rDsMjpVI6lTU1ZDf83yE0SEQfdXy2djl0yrVJ4Po6e9Ee7Sfa+hRcQYTQGZOymi7yidurpY+ObRDAcAR6S0Ic3wtPJ+9OXa6hCqoVnp0aHGpizfll3iyJyIgtkLJgh81JAs2/n3ZNRhWw6WylEVLyU0=
+	t=1707335660; cv=none; b=NwAKqm9QvCsrDt2CBOyxdTphPUUkSgNUqXHGxlhzzrQk+dpnKVDg03icBRCZyKuvqWN2uXfrzTmDtRdVjDekYK3taytqH/wtr2U1V8vwVQ1Ne4vGSReNHrZKP/QkMHDtfEaL/MlVGThy+CPSQ8niz0Aza1nuyFD+Jbujvhz8mmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707335412; c=relaxed/simple;
-	bh=ld0v5IKipX0z4WIJUsjCxxvgvkg0Pde3guuCUD+uYOM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=vBfCDZM/Gx6nobAhUgcb5ukVZfconxuBG4SdpmPCFmyS9Civnq4XQyKZWN2hJ97aKX0xDFd0ffG/CbmfruQo50Jtekxd9UtPW09CXluIFtuzZf6+jN+h7ZF3W1Lz6Ipd52fwFBNz3cKTK/03GtTXTyE/UQgURo/5HdsFnqcgxvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i8xlVIq0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 417JUAwW011524;
-	Wed, 7 Feb 2024 19:50:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=19v/MYBJ0enODt8M0NKUCXuXoTIrqKdfwEHdOkfNrNA=; b=i8
-	xlVIq0pPv2pPi3rkBGxJCV7L3zxKG5KOT3cc++xclykuq5WI8iU/tp8haYS9dmwv
-	xp3gZ57kTyR0Jd+NRxZJ/ABr60SC/pDuXhfcjLgcpGsgjAHLxzIF/F6hIIaicvlT
-	+eqb5I2LYJp5jN7/nAUBzzYGG9HN4AgatiUYhthwTjvsUKz5lQ3jLLKGcCl8mNa1
-	HqMg8Z8x8rWHmsAMRTaMqv80X8kSKikENBpAdswdams6idqKY83LQ4CYhm/W9Nf7
-	l77HoG50sCwzqFC65qulkzwkJ37EbmXOBHg5L4TE084QlEZwZkLGPldabKmcR1qa
-	9/xK+LftmyQ9TG5/5CWw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4frwr2h4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 19:50:03 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417Jo2tV006897
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 19:50:02 GMT
-Received: from [10.110.9.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 7 Feb
- 2024 11:50:02 -0800
-Message-ID: <91af0f8e-bfc5-1fb7-ae76-45feb4c724c0@quicinc.com>
-Date: Wed, 7 Feb 2024 11:50:01 -0800
+	s=arc-20240116; t=1707335660; c=relaxed/simple;
+	bh=jWCS7vTWieaHmmI0xYRhP9xkHjDH0g/h0j4ZjlMz0g4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Qbrm4ac63QvZzSIVCWJFdH7hTIZ3+1WiflfmLtvuA+ZA5gzg1qSInASyyado+E+f3yDkfge2Xf5YzJvuBafZCUhXIJp10tWgh4HnA/eYJBoLcceo4HntGgorN/2s1ud/j6NpZvopsG4CNw4+69E69w1p6Mdc6xSrNAdX2EVyi0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OhOTXLYF; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d090c83d45so12317321fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 11:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707335655; x=1707940455; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i7SRBxYoK9LHUFD9hGgBcXZ8tzxyzNmubya79xIxsbE=;
+        b=OhOTXLYFOUuke31Ko95HfbadwwTCjMA6av47m3PFCrdiZjJ+M35Pcl7TKqd+UJr3rz
+         olzuDCpaGN4aOgGAi0HnHZQhHnu6C3Yq9wGwY08Qm8Y41EJEscDllBPeNWFeJ5HUSza5
+         dw96bQbZk7eSjt7VjCGWxvUeoBYzFo/6IIqrXMQ/vezjnJwJx4r3vTAD27sD0fw40+kz
+         br0/S7OfQloKwdygUz+Eo2aAVrHpUE0OSGAeF9O7On3I0J/Y2QJODohBx1Yov5eMRhcV
+         ONWDFCiFfYrdZjdq3lz2cjIg4h8E4ooN9aYN0Qyi671l5x4l2LUMOTAShKJUKjPxSElV
+         hkdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707335655; x=1707940455;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i7SRBxYoK9LHUFD9hGgBcXZ8tzxyzNmubya79xIxsbE=;
+        b=aVjrYK9zFjVsM+ZGTZyGATbDBbJE1bPM8LZtc0EIPX4M/v1KU/MwUeO0GTKBLgCcMo
+         eg/K56uexwcypnSti/pTLaaYzBARpQB1qpx0JAvIaaWcpNPsQAgcuoxpttAH5xFlGYJ4
+         dzpHW5G1rkhKczZTQ/BsocJGsEeH7xx9ri8qlCbaisFXSgmSzodZ/Fy3Z3Ta62NPmLik
+         NN4RZzhiVIeW1PJecTmdqm3v8yLCJLE2vK+/LgQ5LxM2pGL4WiW06O2ORRetSjnBfl4p
+         1kNYQfCYzYD0BJD9hP6Y8M2As6Qb76cpbDIhEE3CYErbh6Z467IV620ZTLk3TrI7gxn2
+         fLnQ==
+X-Gm-Message-State: AOJu0Yz8QcgrPcmVrKeN6hbx/8rc9QLRzGnwlX753+TxoyEKCSvI8R86
+	R6JTdVSvcpX3DvAwFMh6ySi7Mx/6GPTlbZp2U9Dvv8OdN8RFATnDODrO3201YkzY9VUFkAGDvcL
+	0aP78ny9gKu7YLZC84Fb3rmXCPBE=
+X-Google-Smtp-Source: AGHT+IF9HE8a4amqQHEhMM6t1EjO3V/7Fs2Qoo+grFeA0gYWq9zuo4Ne8b1XUnMBHprJIRWQoJ4WJd+LAwYLXstRifU=
+X-Received: by 2002:a05:651c:1250:b0:2d0:ce72:570b with SMTP id
+ h16-20020a05651c125000b002d0ce72570bmr953313ljh.48.1707335654873; Wed, 07 Feb
+ 2024 11:54:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 4/4] drm/msm/dpu: add support for SDM660 and SDM630
- platforms
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@somainline.org>
-References: <20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org>
- <20240106-fd-migrate-mdp5-v3-4-3d2750378063@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240106-fd-migrate-mdp5-v3-4-3d2750378063@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SL7cGHZa2ee3ZY4tRC6c0HtYXScyVk5a
-X-Proofpoint-GUID: SL7cGHZa2ee3ZY4tRC6c0HtYXScyVk5a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-07_09,2024-02-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
- clxscore=1011 lowpriorityscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402070148
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 7 Feb 2024 11:54:02 -0800
+Message-ID: <CAF6AEGvmW88vi3Ar6yw81t9X-MOL24NdqyZYjduMBfJoBNq5-A@mail.gmail.com>
+Subject: 
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Dave,
 
+A few fixes for v6.8, description below
 
-On 1/5/2024 3:34 PM, Dmitry Baryshkov wrote:
-> Bring in hardware support for the SDM660 and SDM630 platforms, which
-> belong to the same DPU generation as MSM8998.
-> 
-> Note, by default these platforms are still handled by the MDP5 driver
-> unless the `msm.prefer_mdp5=false' parameter is provided.
-> 
-> Co-developed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h | 291 +++++++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h | 225 ++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +
->   drivers/gpu/drm/msm/msm_drv.c                      |   2 +
->   6 files changed, 524 insertions(+)
-> 
+The following changes since commit d4ca26ac4be0d9aea7005c40df75e6775749671b:
 
-I cross-checked a few entries with the downstream sources but certainly 
-not all, but based on whatever I checked all the entries were correct in 
-the catalog.
+  drm/msm/dp: call dp_display_get_next_bridge() during probe
+(2023-12-14 09:27:46 +0200)
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2024-02-07
+
+for you to fetch changes up to 8d35217149daa33358c284aca6a56d5ab92cfc6c:
+
+  drm/msm/mdss: specify cfg bandwidth for SDM670 (2024-01-25 14:36:04 -0800)
+
+----------------------------------------------------------------
+Fixes for v6.8-rc4
+
+DPU:
+- fix for kernel doc warnings and smatch warnings in dpu_encoder
+- fix for smatch warning in dpu_encoder
+- fix the bus bandwidth value for SDM670
+
+DP:
+- fixes to handle unknown bpc case correctly for DP. The current code was
+  spilling over into other bits of DP configuration register, had to be
+  fixed to avoid the extra shifts which were causing the spill over
+- fix for MISC0 programming in DP driver to program the correct
+  colorimetry value
+
+GPU:
+- dmabuf vmap fix
+- a610 UBWC corruption fix (incorrect hbb)
+- revert a commit that was making GPU recovery unreliable
+
+----------------------------------------------------------------
+Abhinav Kumar (1):
+      drm/msm/dpu: check for valid hw_pp in dpu_encoder_helper_phys_cleanup
+
+Dmitry Baryshkov (1):
+      drm/msm/mdss: specify cfg bandwidth for SDM670
+
+Kuogee Hsieh (2):
+      drm/msms/dp: fixed link clock divider bits be over written in
+BPC unknown case
+      drm/msm/dp: return correct Colorimetry for DP_TEST_DYNAMIC_RANGE_CEA case
+
+Randy Dunlap (1):
+      drm/msm/dpu: fix kernel-doc warnings
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  8 ++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  3 ++-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            |  5 -----
+ drivers/gpu/drm/msm/dp/dp_link.c            | 22 ++++++++++++++--------
+ drivers/gpu/drm/msm/dp/dp_reg.h             |  3 +++
+ drivers/gpu/drm/msm/msm_mdss.c              |  1 +
+ 6 files changed, 22 insertions(+), 20 deletions(-)
 
