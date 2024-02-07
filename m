@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-10061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0459F84C41F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 05:53:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 356C084C422
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 05:53:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3647A1C21356
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 04:53:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8E04282999
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 04:53:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD9402E644;
-	Wed,  7 Feb 2024 04:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAC6F2E62B;
+	Wed,  7 Feb 2024 04:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pE9RTMj5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xz/0JLHc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A253E341BE;
-	Wed,  7 Feb 2024 04:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20AE3C08A;
+	Wed,  7 Feb 2024 04:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707281241; cv=none; b=uXWcHv2oOJSSmAAN3X07r4MCSRYWrjd+ArgBHHANqagELqj+n9XCfs88w9mr/Qwb+pZI+GlVDUIqCQvP6UMp6HlK3hmOsz9ymOM81sZbd5BymaD9AlWgkCcruAT2oibAZCjluFpPMsmBFtB+NGX76W9AtfYSWAH04VYr8m1PfLU=
+	t=1707281242; cv=none; b=gQmJvCF+0Xak1SyoV3qry0QAMuuSAiaSsDhncrGk+qRg16CTQQoRuutuHG2h1dzZZ2m2l/S9CbQROmVDBCMO6EhnJz3nmEVa0gpxwOlKY8J9FPp/x2/gpqJ4IlWp/T4MKFMfLGgKso3OvU9RFPwMmaCr3dq8nKqeHbWz1ivmid8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707281241; c=relaxed/simple;
-	bh=KU7wXRVFt/qU6993hWRw8w/omnWwkF8V+uS6yGfDnMA=;
+	s=arc-20240116; t=1707281242; c=relaxed/simple;
+	bh=7Hza4j++kZkh89ggGb5eb7llr4tXpgVVqNxV1OwDQfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IY7bz3CpkPjXIE9O4IFJoEp5X4xysca6I2ZhwdLXIUUlCN63CfJGQhSSCovThgbTAtpHFsXxrd0ZEGgF3ISerUVLGmpLMF6KUuAV7vZ517a2/AwJkiH7NUHD77MgjXNOlmHI8gkLQUxI/fvyzCT1i//cS6TltNj06kBYbVuzg4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pE9RTMj5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130FC43394;
-	Wed,  7 Feb 2024 04:47:20 +0000 (UTC)
+	 MIME-Version:Content-Type; b=P1s8+Yx2cgNvFQq1oA3lClLchqEKIuJ4QOo2BaDYQiZpDj8ErNtQ4xg8V0L/J0wm6FUMBQzmONIFSWacSJc4OMyitkGykagp5tmXb/bi7JFfAudoMDrqZHOf7rPoddKtWPbcl9+eu3Pj29N5xpp+G2TufhsSdAqKHW744e94OLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xz/0JLHc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44CAC433B2;
+	Wed,  7 Feb 2024 04:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707281241;
-	bh=KU7wXRVFt/qU6993hWRw8w/omnWwkF8V+uS6yGfDnMA=;
+	s=k20201202; t=1707281242;
+	bh=7Hza4j++kZkh89ggGb5eb7llr4tXpgVVqNxV1OwDQfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pE9RTMj54n7yRva2lnR/XyYhdokl67GxREI2ZiNUTFCuOyYHPErjLzQeOi6VgqcaQ
-	 65zP8XwyUqIuWaWvI/mM4p7r2OJ/MFv0n5qDVhl8F3VEun8UQZBAyax1LR5WgNXfD1
-	 qc5jC8lh0XMFTjB1ZICZ6nHZ8F4i2m4W0VFMP+AzVm02gXvj5Jf/TrW9wnV8W+UPbI
-	 +K1IJNibRh6t7vFmtp+BuSRv4ZUvwGJ2wyMBO3kclUPN1hpmQSVpnpHh4m4Sl2+v65
-	 YRD12RYahwmPtmuU44tzHcrWKby85OS4B/L7QkuctH2FshrMyRPYt4zcs/hIHEWnNW
-	 qa7hZhgeoH3wQ==
+	b=Xz/0JLHcX93AA/gU2x033Y3eYKcn/E4HCekfLRDMYCyKA2/b7gFzm9wv+XTJWv10y
+	 nMQIe4tmJeTuwt8yfuOwCZ6UVyvEgLUh3M8Cgo4duPf/A4w6YIkWYCWxXFg0TFkNKW
+	 Ku99srwbNXhfCq1GvXhfAI8LIzahjbE2O5sAD/55HQ/GJeNun3yCyn2tG1teJ0oxAx
+	 nhXjwhoxjKnIbIo/y6knOCrq3BdKYJbrLvEV85gTWXkEhV/wnYAdZNWLUDPMdiEo5E
+	 w9GulIhx1U7yQo1qEHeC5q0mPaCtBHBCNZhGWir5QkAaIKWp1Bsi14PD8QgXPnwoy0
+	 PZ2z0l5gDkicQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: agross@kernel.org,
-	cros-qcom-dts-watchers@chromium.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	luca.weiss@fairphone.com,
-	Maulik Shah <quic_mkshah@quicinc.com>
+To: konrad.dybcio@linaro.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	Ninad Naik <quic_ninanaik@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	quic_lsrao@quicinc.com
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Update domain-idle-states for cluster sleep
-Date: Tue,  6 Feb 2024 22:46:38 -0600
-Message-ID: <170728117677.479358.8880415787094538495.b4-ty@kernel.org>
+	quic_psodagud@quicinc.com,
+	quic_kprasan@quicinc.com,
+	kernel@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
+Date: Tue,  6 Feb 2024 22:46:39 -0600
+Message-ID: <170728117664.479358.8135138797036658763.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240109-qcm6490_cluster_sleep-v2-1-8f94f1ad188d@quicinc.com>
-References: <20240109-qcm6490_cluster_sleep-v2-1-8f94f1ad188d@quicinc.com>
+In-Reply-To: <20240125055134.7015-1-quic_ninanaik@quicinc.com>
+References: <20240125055134.7015-1-quic_ninanaik@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,21 +68,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 09 Jan 2024 21:28:52 +0530, Maulik Shah wrote:
-> QCM6490 uses Trustzone as firmware whereas SC7280 uses arm trusted firmware.
-> The PSCI suspend param and the number of domain-idle-states supported is
-> different in Trustzone for cluster sleep.
-> 
-> Move the arm trusted firmware supported domain-idle-states in chrome specific
-> sc7280-chrome-common.dtsi and add the Trustzone supported sleep states as default
-> domain-idle-states in sc7280.dtsi
+On Thu, 25 Jan 2024 11:21:34 +0530, Ninad Naik wrote:
+> New memory map layout changes (by Qualcomm firmware) have brought
+> in updates to base addresses and/or size for different memory regions
+> like cpcucp_fw, tz-stat, and also introduces new memory regions for
+> resource manager firmware. The updated memory map also fixes existing
+> issues pertaining to boot up failure while running memtest, thus
+> improving stability.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc7280: Update domain-idle-states for cluster sleep
-      commit: db5d137e81bcce6a2506c1d056e5834a53405a5e
+[1/1] arm64: dts: qcom: sa8775p: Add new memory map updates to SA8775P
+      commit: f9491ad2318d5c46383be91208620963e8cb13c0
 
 Best regards,
 -- 
