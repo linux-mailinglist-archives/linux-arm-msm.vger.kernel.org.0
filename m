@@ -1,86 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-10064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F27D484C428
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 05:53:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FFBD84C529
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 07:52:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A51851F27137
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 04:53:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 481B21C21D59
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 06:52:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16E843CF61;
-	Wed,  7 Feb 2024 04:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E08471CFBC;
+	Wed,  7 Feb 2024 06:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcsfBkXi"
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="CkTAmr4S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01A13CF46;
-	Wed,  7 Feb 2024 04:47:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464901CF99;
+	Wed,  7 Feb 2024 06:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707281245; cv=none; b=GD8pJDkYtYsR0nbzSVYLHwjHzaYoIs5pMzF8ESMioGLMqhvyUst0axbzbUdv5MKA96JXjSQdSgGbkpZbySLng8va2C22b1/ilpwHpHzQSOOhJIbJ56uNfSVfQnYSnZ0awfRqjgMbLSyMxgnr/QgT+12bNc+hiU8/+XmOn7I+qmg=
+	t=1707288720; cv=none; b=c2Y15W0IE6o+7QMUWPUSTg0GHjR/Zfu5er5ndlV6hPi6jDyrojBmc2IUdceKYePcersbitYqddMQH45RQQSlxTmQuc3qs5Xy4sfhi6s1OHxYtHhGuXQ9M9mnxtSwh+J228tJcCFHPJ6iyAgj+8ycNE9lE4xPGjDSwJvNpxvgM44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707281245; c=relaxed/simple;
-	bh=2GAuJRwwh6BMsQz6HsPuru1jdYnJC9ddYZoTVxvrj+M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PHrJd3V7rf1tIBYbArPllefRZe7sJf99TNXjlZg8BUYfz+b8GDZZ0ZvBKNCO4ah2CQm/mYA7ITJgNgBI3D/i1mc3olPO0yOpU663TQGMMFnvQ2yN8Zdge29jhRQxcqISwHPZDee0lfKnjU1wtF3x20HQEFbqqCNZzVxKou/s+vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcsfBkXi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19E5C433C7;
-	Wed,  7 Feb 2024 04:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707281244;
-	bh=2GAuJRwwh6BMsQz6HsPuru1jdYnJC9ddYZoTVxvrj+M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcsfBkXiVWdyWnbw2gwoKwB0xHL6EIl9e47fiFtIoPJsjicoIM+ychwJHiBcuKAAq
-	 MDsohCNJPTMOxoEtq1AIY6VtKP8IZ3HTXI5f4MW75E7pdEKT725oOBAEAbHXtExMTI
-	 Rj1gTosTBXIMR/EuTSDGCHwJHCJORUQZBZVHSgXWBRQRs7+z2KF0rW05qQOWIFHhAj
-	 n+5/NjbrKgQvT29IuJp+CjuODGVs/zqzk+4YugfnZ87TIL3Otl+EGg4BuGs/ZNEiBs
-	 cW1gTjht7/QK1W64PWIDz4C7ZzRZ6+M5qArvqSdb/CLDDczBLvnv2Pgl8GzGGSuYSO
-	 XVyu+6CM8UIeg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
+	s=arc-20240116; t=1707288720; c=relaxed/simple;
+	bh=xfJuk5EK3kY+kaejXnInyfN61eHdttxUa2l2rdBDTco=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TjS1n55T+yfLmX4bTq0zZTH94spJM0svKOVyUDYWAlJLlKLS6zcOKlWm4n+3omo0wUcDobdfIRuPML1crprwwQ6orITxcyjCoiNUB/ssuOk8YKFXG3G/aum69gT8W+mgb6eIufiORiebLmc42psESMlED+YMSA+Tq/6Uky7MdRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=CkTAmr4S; arc=none smtp.client-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+Received: from fpc.intra.ispras.ru (unknown [10.10.165.5])
+	by mail.ispras.ru (Postfix) with ESMTPSA id 8FEBD4076729;
+	Wed,  7 Feb 2024 06:51:49 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 8FEBD4076729
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1707288709;
+	bh=pLGumPzf4SnkMMXOZxsu4fQpASfZpE+/MTtI3Z2JftY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CkTAmr4SSItmwJIz7i0JJOF8It2sn5ADcCKXh6nsZdkDzt0hRJBDM0OEerEGNY6Ns
+	 0xYSPX7fudoG0hxj6zctyd6JsTBskxtlMonpsSsIN/vzp1FDkD29pD5wCKRGfWLM4n
+	 K9lN0CCKxV0U46Fz80I9mYQCHvvDFS2Cv7JriuRY=
+From: Fedor Pchelkin <pchelkin@ispras.ru>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Fedor Pchelkin <pchelkin@ispras.ru>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Sujeev Dias <sdias@codeaurora.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Siddartha Mohanadoss <smohanad@codeaurora.org>,
+	mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Vignesh Viswanathan <quic_viswanat@quicinc.com>
-Cc: quic_varada@quicinc.com,
-	quic_mdalam@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: Enable Inline Crypto Engine for MMC
-Date: Tue,  6 Feb 2024 22:46:41 -0600
-Message-ID: <170728117672.479358.6337685113940733695.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231215095339.3055554-1-quic_viswanat@quicinc.com>
-References: <20231215095339.3055554-1-quic_viswanat@quicinc.com>
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	lvc-project@linuxtesting.org
+Subject: [PATCH] bus: mhi: host: free buffer on error in mhi_alloc_bhie_table
+Date: Wed,  7 Feb 2024 09:51:36 +0300
+Message-Id: <20240207065136.18316-1-pchelkin@ispras.ru>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
+img_info->mhi_buf should be freed on error path in mhi_alloc_bhie_table().
+This error case is rare but still needs to be fixed.
 
-On Fri, 15 Dec 2023 15:23:39 +0530, Vignesh Viswanathan wrote:
-> Add Inline Crypto Engine reg and clocks in MMC node and enable CQE
-> support as Inline Crypto Engine requires CQE to be enabled.
-> 
-> 
+Found by Linux Verification Center (linuxtesting.org).
 
-Applied, thanks!
+Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+---
+ drivers/bus/mhi/host/boot.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-[1/1] arm64: dts: qcom: ipq9574: Enable Inline Crypto Engine for MMC
-      commit: 2ae5e34d93cfe5c46229274324e1b2d176a0b516
-
-Best regards,
+diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+index edc0ec5a0933..738dcd11b66f 100644
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -357,6 +357,7 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+ 	for (--i, --mhi_buf; i >= 0; i--, mhi_buf--)
+ 		dma_free_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
+ 				  mhi_buf->buf, mhi_buf->dma_addr);
++	kfree(img_info->mhi_buf);
+ 
+ error_alloc_mhi_buf:
+ 	kfree(img_info);
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.39.2
+
 
