@@ -1,168 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-10102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66BE384CEC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 17:21:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E13F84CED7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 17:26:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E0221C23A02
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 16:21:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 751F4B251A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 16:26:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15C4480BE6;
-	Wed,  7 Feb 2024 16:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A245A81212;
+	Wed,  7 Feb 2024 16:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B6KY5AWq"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="tEn9GZR2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F67F7D9;
-	Wed,  7 Feb 2024 16:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C2C811FD
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 16:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707322895; cv=none; b=sKgc6EazGWGAFwpi4L9GThYrE9oZCVhqlevKr/oX6kAalArWwAVqj1oCliJtEatQaMHlbwUMpLk4iOTltlxRBx762Jx8jBvLVQiB+GHpmfD/wtFXUk+54uBl5B9CAlf0MOYkj7q2Uj5X8z8qsTBLj0RHaVMrsd1RRAfI4DhHP0o=
+	t=1707323190; cv=none; b=IwngEeeDaJ3XhVZ3Vs3BbuSMMwbvvc5O38bR++aBy0MALdHIdwfRie65L+gvwThxbTKEtsisEX5slH4UM+JBLVL9PIFADpjlJtaLPfw0w+8toHuiN1V9H66b4XaLMiyshrw/ZoLyRRrAt9Tjvnm2auhul5wg99ZnrkvGct+wjh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707322895; c=relaxed/simple;
-	bh=B5gBP6x0enaNCeeJRYkY6ghg0l8S5AEmEd5S0eLp0Mg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=Br8idnv4sgQtxkEH6clYdh9mYMm4O4tetsfgroO3Y25LDoeJA+hA5u5ECy4toj5A6PRaaAWtkdzKKI+VbLltMpnfoAGnAG3gBLwvO7t4wByFwSNdaG7vsYbFUtxqJXma7g8WdH4NzR5f3j55IySaZvJ2wiTKYbCe1ZvWOLbVb78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B6KY5AWq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4173kN0L031923;
-	Wed, 7 Feb 2024 16:21:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=s1fFx4okONwAPqgvrtAAYHmQOYNk9SbYOu2KY6lFHhI=; b=B6
-	KY5AWqg9qpIkyZy0H3BmCMvjKjHItgXcAKuoTQlgt04kNtjyxkwRHCAxurvAMMht
-	qzUmmkI9ge8RayTwUoZlDPO+OUuA3hJPq/GRL0vgYH1LAmBzZTaLZAml0SzWHuXg
-	ko9GtE9juQA7GkA9t3RhHs3I5EksWsN26KUdxyoH40NJXD0Xuvq8KzFPIAXnYv2b
-	l0wginASVyPG7CZmeRsnYJN7E75tk3O+w/s9nRsUJNKD48eK00y4xc4TUBGIMqpK
-	CPnQg6hx6Yb8/FwTMRyJlSbRsoLbL9QZreBBWLiZX08udhFLQXYSi5Vz48vQesCZ
-	hRLVxqlHCBXwI11x5Gqg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3v9124m8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 16:21:26 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417GLPRA007792
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 16:21:25 GMT
-Received: from [10.50.40.120] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 7 Feb
- 2024 08:21:21 -0800
-Message-ID: <468b5a6d-53b7-4d75-8966-2fd48bb13d54@quicinc.com>
-Date: Wed, 7 Feb 2024 21:51:18 +0530
+	s=arc-20240116; t=1707323190; c=relaxed/simple;
+	bh=s/XBm+dZXo326rp4+k8nxRmZZap7vVe94gNKobiXRkE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Dey3T1GqjUwkpBepchP9MRr+7rgxQqokZ5Ccqk6Nx6iMO/KFEgSb/W7yLNa0KpWccHWepcBj+Woe9pY/m5zW9OkPeKCSsz+UcqH5wa9RFi8IPrQzi+8QFBOdNWxqy34ZiWtxc8a3fWucv7eNM84Pv+w2uP24OCVgq6D2BYP5ICg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=tEn9GZR2; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-46d2c1077easo239326137.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 08:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1707323188; x=1707927988; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WitkzYepwCuA/S4ttZlXhAljZ+JINQO7bz0r64E60hU=;
+        b=tEn9GZR2YW5QIUhpfy9WbjVoRZUSL8A4E2UxFn9joY8wr7taRtruBFS5ZDP8cbC/PE
+         +rY/R+HXqckBU0/cXttDcGD8TCgthunpbB4V+xxuVs64YsAYfzGTEsPkWv0siLLFEIJt
+         q3DRPVhLVBcUb5jBXacEuRnI5LYw3CQmqxcHc5jRCIqyXO9Rhtg1XmecZnDl43NRf/DZ
+         Ma9XYvgXTZFHFCFw4JMHkOKYtcBvEqC1yVzvOe6OgZF3+3A36F8PJYG6fEx6CLDNeUpA
+         GiD81yogPwnuljwzAB75RmxCo3njmj1PQmWCi6ASwK+B3pAMs3hRAFhoYC2KTb1nhvBd
+         uLEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707323188; x=1707927988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WitkzYepwCuA/S4ttZlXhAljZ+JINQO7bz0r64E60hU=;
+        b=t3If3A+BFWd0AMMFuaDUWIAs0XzCCvnCcvexR9JTOzuv6PgFHa3n20d/OoVnX0yI3M
+         k2gNjlARu1z/hJ9lHHsqpkAIIGLjYCFbJe6s0z0OVoc/HIsHirLwSWGe6aYvVA792x4U
+         QOQpXv5vZcc6DSAfQGCmn6OkA3aPibdKvn1qhrpDs73TvCtwqFkhgyX+aI2QGwMfKpWY
+         gKnRfvIDpv+3ZQElT79KQ2V66xVVikwTG37gmgZLIu7MLD2WeAFSsjgmWVg9oLe1D7Xa
+         7xGvDH9+loVOCYZLPGP3sHmQsumMUgST/WruQ7dcnP2F+Inqz6bdPh/0+JpNqEoY5FRE
+         whFQ==
+X-Gm-Message-State: AOJu0Yyz/0s67ihnwj0votdK3hpzcr+OqG+1ndOLsxaUaeQYOYnuZxDA
+	sFjv19/cZQcPCkRbt6iKU5/5r/2HN3jtGOPPFyi96NDf+/AzSIX0fW7MO3xLOB7EOu85wyLQstQ
+	VY+JHXtEAQE/CBXM00e0wjF6SC5sDLO+Xizjztw==
+X-Google-Smtp-Source: AGHT+IGUHF6vzAm6fF7RlJC8wV7QGPTkkEw3A+jO1stlUQVB3BJSXCPScQIS002+UPorZpqyfxR0CW3Oxe6kmokSvso=
+X-Received: by 2002:a67:f597:0:b0:46d:295d:1c5a with SMTP id
+ i23-20020a67f597000000b0046d295d1c5amr3129996vso.30.1707323187759; Wed, 07
+ Feb 2024 08:26:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] remoteproc: qcom: Add NOTIFY_FATAL event type to SSR
- subdevice
-Content-Language: en-US
-From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+References: <20240201155532.49707-1-brgl@bgdev.pl> <20240201155532.49707-9-brgl@bgdev.pl>
+ <7tbhdkqpl4iuaxmc73pje2nbbkarxxpgmabc7j4q26d2rhzrv5@ltu6niel5eb4>
+ <CAMRc=Md1oTrVMjZRH+Ux3JJKYeficKMYh+8V7ZA=Xz_X1hNd1g@mail.gmail.com> <2q5vwm7tgmpgbrm4dxfhypbs5pdggprxouvzfcherqeevpjhrj@6wtkv4za2gg5>
+In-Reply-To: <2q5vwm7tgmpgbrm4dxfhypbs5pdggprxouvzfcherqeevpjhrj@6wtkv4za2gg5>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 7 Feb 2024 17:26:16 +0100
+Message-ID: <CAMRc=MfsdsD4f3sC-BnR_sqvaHNEKWCZ+Xe+-ZhLU8vFYA06=w@mail.gmail.com>
+Subject: Re: Re: [RFC 8/9] PCI/pwrctl: add PCI power control core code
 To: Bjorn Andersson <andersson@kernel.org>
-CC: <agross@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mathieu.poirier@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_sjaganat@quicinc.com>
-References: <20230503062146.3891-1-quic_viswanat@quicinc.com>
- <egnmb647g7x7e74j4g2jddwho23ulmbap2q4eimcyj7y4qvdlz@zmaydxodu2a6>
- <509406eb-8093-4bcf-820f-8e5210e1539d@quicinc.com>
- <d3c3320b-8cc1-4d13-ae87-f2f8f46826e6@quicinc.com>
-In-Reply-To: <d3c3320b-8cc1-4d13-ae87-f2f8f46826e6@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pci@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VX-ZO5uVTwZJVmnJRfL-ARvni91ycUOZ
-X-Proofpoint-GUID: VX-ZO5uVTwZJVmnJRfL-ARvni91ycUOZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-07_07,2024-02-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- mlxlogscore=868 clxscore=1011 impostorscore=0 mlxscore=0 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402070120
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Feb 2, 2024 at 5:52=E2=80=AFPM Bjorn Andersson <andersson@kernel.or=
+g> wrote:
+>
+> On Fri, Feb 02, 2024 at 10:11:42AM +0100, Bartosz Golaszewski wrote:
+> > On Fri, Feb 2, 2024 at 4:53=E2=80=AFAM Bjorn Andersson <andersson@kerne=
+l.org> wrote:
+> [..]
+> > > > +             break;
+> > > > +     }
+> > > > +
+> > > > +     return NOTIFY_DONE;
+> > > > +}
+> > > > +
+> > > > +int pci_pwrctl_device_enable(struct pci_pwrctl *pwrctl)
+> > >
+> > > This function doesn't really "enable the device", looking at the exam=
+ple
+> > > driver it's rather "device_enabled" than "device_enable"...
+> > >
+> >
+> > I was also thinking about pci_pwrctl_device_ready() or
+> > pci_pwrctl_device_prepared().
+>
+> I like both of these.
+>
+> I guess the bigger question is how the flow would look like in the event
+> that we need to power-cycle the attached PCIe device, e.g. because
+> firmware has gotten into a really bad state.
+>
+> Will we need an operation that removes the device first, and then cut
+> the power, or do we cut the power and then call unprepared()?
+>
 
+How would the core be notified about this power-cycle from the PCI
+subsystem? I honestly don't know. Is there a notifier we could
+subscribe to? Is the device unbound and rebound in such case?
 
-On 11/25/2023 12:24 AM, Vignesh Viswanathan wrote:
-> 
-> 
-> On 9/4/2023 10:23 PM, Vignesh Viswanathan wrote:
->>
->>
->> On 7/16/2023 1:50 AM, Bjorn Andersson wrote:
->>> On Wed, May 03, 2023 at 11:51:46AM +0530, Vignesh Viswanathan wrote:
->>>> Currently the SSR subdevice notifies the client driver on crash of the
->>>> rproc from the recovery workqueue using the BEFORE_SHUTDOWN event.
->>>> However the client driver might be interested to know that the device
->>>> has crashed immediately to pause any further transactions with the
->>>> rproc. This calls for an event to be sent to the driver in the IRQ
->>>> context as soon as the rproc crashes.
->>>>
->>>
->>> Please make your argumentation more concrete, I can only guess what
->>> client driver you're referring to.
->>>
->>> You can do this either by spelling out which actual problem you're
->>> solving, or better yet, include some patches in the series that actually
->>> uses this interface.
->>>
->>
->> Hi Bjorn,
->>
->> Apologies for the delay in response.
->>
->> The client driver in my scenario is a Wi-Fi driver which is continuously
->> queuing data to the remoteproc and needs to know if remoteproc crashes
->> as soon as possible to stop queuing further data and also dump some debugstatistics on the driver side that could potentially help in debug
->> of why the remoteproc crashed.
->>
->> Also in the case with upcoming Wi-Fi 7 targets with multi-link operation, the driver might need to know that the remoteproc has crashed
->> instantly to handle some multi-link specific handling.
->>
->> The ath11k/ath12k WLAN drivers today partially have support for handling
->> such FATAL notification but it has not been upstreamed yet.
->>
->> Reference patch: https://git.codelinaro.org/clo/qsdk/oss/system/feeds/wlan-open/-/blob/win.wlan_host_opensource.1.0/mac80211/patches/031-ath11k-print-stats-on-crash.patch -- event SUBSYS_PREPARE_FOR_FATAL_SHUTDOWN.
->>
->> Also, Mukesh mentioned earlier that in some MSM targets with PCIe where latency cannot be tolerated, a similar downstream patch adds support for "early notifier". If this patch is accepted, the early notifier can also be replaced to use the same NOTIFY_FATAL event from SSR Subdevice
->>
->> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/7583d24de337aa1bf7c375a7da706af9b995b9a1#a840754ebb0e24e88adbf48177e1abd0830b72d2
->> https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/commit/257de41c63a5a51a081cc7887cdaa4a46e4d1744
-> 
-> Hi Bjorn,
-> 
-> Gentle reminder for this patch.
-> 
-> Thanks,
-> Vignesh
-
-Hi Bjorn,
-
-Could you please help review this patch and let me know if any comments.
-
-Thanks,
-Vignesh
->>
->> Thanks,
->> Vignesh
->>
->>> Regards,
->>> Bjorn
+Bart
 
