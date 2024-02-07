@@ -1,125 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-10075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6182184C6BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 09:57:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59E4584C6DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:07:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E5D1286EAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 08:57:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 009D01F245BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 09:07:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CFBB208CB;
-	Wed,  7 Feb 2024 08:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD220208BE;
+	Wed,  7 Feb 2024 09:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XH0+mwju"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AA9tlt0e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F2A200A8;
-	Wed,  7 Feb 2024 08:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9205320B03;
+	Wed,  7 Feb 2024 09:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707296247; cv=none; b=kP7FFb9U9eW7qWauGzUZlUQjALTSKYwFGyrTf+gehC04aaazh5vx2vGRMVoosf7TjV72Z0FZwPZhVbqo+9y9RDHhWuIsCzM0mrGrFv+dtCP6gpw4d0rUdZzqJex2PVxpt4mbaHf8Q0qLLgUjORvV5Doud600/ezWJPmSKXwJqGM=
+	t=1707296839; cv=none; b=J3nIfZmSTh4K5PDZRfBEBs7QteARQcwXnwm/nH5Qd8i5hQVcy1H6DkcCO4/Kh/acgCoD3p9qAQeQfV6pbPhbheLoe/8jrME0PtVSXOX7J9SreX6csEpkIOMchbGuqVsQK6pycvPUuKZpJwUEUN55gfEKy7M/6ycmbXTcp5YMI60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707296247; c=relaxed/simple;
-	bh=dtxrc2rAMyKVPz/unNsYEeFvD+b+Jdpn1j6aMu+PtME=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CfgxptfLyyfLD+PVRKydwWUNioWOLW3MmvbUSC/vhv9SN5Uka++KBctvEPeeiJiXc1TWI9QwVx8HvkcT7nInu1L3uSE+NFutsBkZ+8m563TwDV8yzM9SyhTFtIt7lBw6hJdFEKsQvkZOtND/McOiTHPBHvYG89N4bn0w76fxJPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XH0+mwju; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4178cQao024425;
-	Wed, 7 Feb 2024 08:57:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=dtxrc2rAMyKVPz/unNsYEeFvD+b+Jdpn1j6aMu+PtME=; b=XH
-	0+mwju/F7nYHyG6SFbSVzgBZ/2hILnayCqo3ijqgor1AAUhndXuZqIiEMxBxvEC2
-	7dLf5OGqLyaG5o2KiPeX34Uly+SOZOF93GjJt+Un/V+3fKk4t8UWL1W5jklFZpSd
-	8a0QcQyiuj6bYEA0U7rltMw04Zuhz0qlO3DMAat1tLOTzQzSjr69gg8y0G/LRhHU
-	0huQqGTauohbUfXzmwdGgubB5gJEii2iUQbzxnS2naA1u6HA0ItSZRqabop7VMrQ
-	2OA6qKi5XpRvHPxro6Ey60wl80bIM2+h2yTUe6z8vHi5bciSA3HBk0BkscQTtCLi
-	68HRgVkImDkhpgj54fwA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w42earh06-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Feb 2024 08:57:21 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4178vLNb025439
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Feb 2024 08:57:21 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 7 Feb
- 2024 00:57:19 -0800
-Message-ID: <a2c5e594-f485-4510-84ba-6cd022c4c774@quicinc.com>
-Date: Wed, 7 Feb 2024 14:27:16 +0530
+	s=arc-20240116; t=1707296839; c=relaxed/simple;
+	bh=vzywu5IswpNrXIxbT6TvtMwzem9EQ7EDDDB9P61uUzk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8ZBVeHpI/7jYjRBZTAHRPslIvO4uS7q5rSKwTXe06pn9vB0vwKXSrjoy93p/OYVLw5KWYJz3seP++k29LxxWcWNrnyjYn9KEPw+nE1piVvL1w7Sl4zmgR1v5L5VQUvnxsmkr9BlDw35anRhIpmwS7TJZql4PfYKY4bsgIzy3mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AA9tlt0e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B0CC433F1;
+	Wed,  7 Feb 2024 09:07:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707296839;
+	bh=vzywu5IswpNrXIxbT6TvtMwzem9EQ7EDDDB9P61uUzk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AA9tlt0eHXoJfI6RgIJl94FdEkz+Wnf2bgd2NhBMNyFdXngnzwLK9sNYTyuGxaCTg
+	 8+IDtMP4CNdjOTntGO7v/2OwFimJJJlkBQemOLepM5coJtMCfsHQtM5EtDZdVzZteU
+	 o+DQonhhCrTXkJJr292vmL0M/NMzFa4kD35H9RkLNmyWxLF4q6NdJXcWf4VVeGIXLp
+	 +TE1r7QBzGpyTFPdqLNTMtnwkhaPLenic35Z9eFanyEc6IgjyEu5Pqxu8lQEpe6UAM
+	 OKdzImvSfG5+k6nb+aqbXy7Fxs6AZdKC9hXup+wOrdStRbEWnWT4ttpaKKeFTDZ9Vr
+	 jLEd2am4c5cvQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rXdtv-000000005zh-09RT;
+	Wed, 07 Feb 2024 10:07:27 +0100
+Date: Wed, 7 Feb 2024 10:07:27 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v2 03/18] clk: qcom: reset: Ensure write completion on
+ reset de/assertion
+Message-ID: <ZcNIT-NxKSZ44NjZ@hovoldconsulting.com>
+References: <20240105-topic-venus_reset-v2-0-c37eba13b5ce@linaro.org>
+ <20240105-topic-venus_reset-v2-3-c37eba13b5ce@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 02/16] misc: fastrpc: Add support for unsigned PD
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
- <20240202064039.15505-3-quic_ekangupt@quicinc.com>
- <2024020248-improving-algorithm-a5f0@gregkh>
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <2024020248-improving-algorithm-a5f0@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kLoix7wrTK-sjhTOHGvJ76ZeqgZgxupK
-X-Proofpoint-ORIG-GUID: kLoix7wrTK-sjhTOHGvJ76ZeqgZgxupK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-07_02,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 malwarescore=0 mlxlogscore=503 phishscore=0
- adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402070066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240105-topic-venus_reset-v2-3-c37eba13b5ce@linaro.org>
 
+On Tue, Feb 06, 2024 at 07:43:36PM +0100, Konrad Dybcio wrote:
+> Trying to toggle the resets in a rapid fashion can lead to the changes
+> not actually arriving at the clock controller block when we expect them
+> to. This was observed at least on SM8250.
+> 
+> Read back the value after regmap_update_bits to ensure write completion.
+> 
+> Fixes: db1029814f1f ("clk: qcom: reset: Ensure write completion on reset de/assertion")
 
-On 2/2/2024 8:13 PM, Greg KH wrote:
-> On Fri, Feb 02, 2024 at 12:10:25PM +0530, Ekansh Gupta wrote:
->> Unsigned PD requires more initial memory to spawn.
-> What exactly is "Unsigned PD"?
->
-> And where are all of the userspace changes for this series so we can
-> verify they work properly?
->
-> thanks,
->
-> greg k-h
+This commit does not exist in mainline or linux-next it seems.
 
-Hi Greg,
-Unsigned PDs are sandboxed DSP processes used to offload computation
-workloads to the DSP. Unsigned PD have less privileges in terms of
-DSP resource access as compared to Signed PD.
-
-Unsigned PD can be enabled using userspace API:
-https://git.codelinaro.org/linaro/qcomlt/fastrpc/-/blob/master/src/fastrpc_apps_user.c?ref_type=heads#L1173
-
-For multimode invoke request(other feature) also I've shared the
-userspace changes with Srini which he will be pulling to userspace
-project.
-
-Please let me know if you have any other queries.
-
-Thanks
---ekansh
-
+Johan
 
