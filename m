@@ -1,187 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-10026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F71984C141
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 01:10:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB53784C144
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 01:11:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F9F5B25E6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:10:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 94498282955
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 00:10:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A03F98C07;
-	Wed,  7 Feb 2024 00:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B2A4DDA7;
+	Wed,  7 Feb 2024 00:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SGAFsKGy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Uw21QNs9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A611D8C10
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 00:10:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFC5DDA0;
+	Wed,  7 Feb 2024 00:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707264606; cv=none; b=iwdaj/QveKwEfJhw1ovl2KzbQjamM9eCmCygM7x1U7ICIDH70O7CWmKoYWdMyWBSy9bUKt5faa7A5bxSUBKjHuQ4HZZq+qPjSM/N46GlIroSfEuteiRZfsWKOUC3fY9qKGF7vFP47X1gPMnxQL4qzwa1C1rWKupsFjWYFEYYBxI=
+	t=1707264655; cv=none; b=HhYD4wsX4h5DaHsbSJ+d59G0fBrlQpAe2nSC+PQWJYxUtHaRb4odDIMhv0HaOJQ8rJIuI5xRPYwihGhYAhMhN+eQnAPfvpHAmcyuSstQbHqh42TDKvKHQ6pi0Ic/IaQyct/P51fIVuZn2dcvzjohjiBglciNx7Q2ek2CaeaO5TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707264606; c=relaxed/simple;
-	bh=Cdcap5uMXxvB1kBQ9xVZaxBupdA8BdwIYAkLrQteCBY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dF9donWlFENs5U9zRRS1E85T65WeayHEMAc1E+ZnCJmP0L6rbCf1zdZbkLTar957jowIPN5dSFmU7JJTozw4f8TkxPpHDSms5/Bkqc+a5BCoYQLhW6N0IIuXJwhNb3gaqW/F27VmJ3ucRiprCe9a9tb/5w4bb5Vkw3muovitFMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SGAFsKGy; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1707264603;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8PeIaiF8S8G4r3R+HzDgZLObyMgMOMMGNfccF3lVkkc=;
-	b=SGAFsKGyM/YxDlZ0vxuYhirr7GjwQlChD5Ep5iSrrW384v3oJ5+YSBqGbTeydEpPXNjCK+
-	LawelrJkucoPw5qceW3V5oykv+np81kgYwM0ZtxluUIZG4C0ZrvLvWIGdrnexnX+5oeqPh
-	qnFfxO8TvJwUTTBrDLmTuhyl27SQzug=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-177-ntUCPsddNnamYLY3gXETrQ-1; Tue, 06 Feb 2024 19:10:02 -0500
-X-MC-Unique: ntUCPsddNnamYLY3gXETrQ-1
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-680b48a8189so1078106d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Feb 2024 16:10:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707264601; x=1707869401;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8PeIaiF8S8G4r3R+HzDgZLObyMgMOMMGNfccF3lVkkc=;
-        b=Fv67lbsl8tYliYHvHOhQb3BBW5IwERkbxHHny1p8rEb970pIdd/MBEt3N2VfUwA9AZ
-         qjDgblN/yvPR7x9EKHCLjhK/BCdJZ4JSlaWcKkRK+aU+tbkwvuNGmM8N7hpBucVUjCV0
-         fQgkkEaZrSkEBsS+KAyYvbY1FYN9DfFonnVoJbW0xSOIiPRe/Du4G31/vmCfSFTLvkx1
-         BRtgfrG19u5gVXmK8al7brpzvUcyF+fkwVyxtW6423ASEK7jJUb2ZxXu7C1xtem7YTFW
-         JqCPhA4740AkgJb0QLNAieuVJM1ni1cc0k2mS7UI3UF6QWh+C1sEc2m7zSeulbDZF2xa
-         EgrQ==
-X-Gm-Message-State: AOJu0YzZJ7J4bCLLOxtHC/JgOGSna1deP/h1kU1YZ+4gnfoG17TyzwnR
-	uVOAyrQfkRUkSxMQWeMO+s5UpQ72GFgeSvJawHcjP3Y2hfh2jKpOYMYvGZbD23/qPe55fB0+RQq
-	/A9PYpTSAWWy5DY50gaMMjTZTXfT2lL4P6PEsctH+5v+VsZIrfDDpHMr/QLfg7X4=
-X-Received: by 2002:a05:6214:410e:b0:68c:49a1:5c95 with SMTP id kc14-20020a056214410e00b0068c49a15c95mr4407507qvb.55.1707264601666;
-        Tue, 06 Feb 2024 16:10:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFdJS1fYNbxcKarJ0njOQ0m9/eqTJtiD59/XUfeqwKtwbIQlfAhxokwVel6zXVbgv04fzCArA==
-X-Received: by 2002:a05:6214:410e:b0:68c:49a1:5c95 with SMTP id kc14-20020a056214410e00b0068c49a15c95mr4407481qvb.55.1707264601395;
-        Tue, 06 Feb 2024 16:10:01 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWvxIl6coLO1rbDQJ8RjF1D3gsUxXQJ9LrU9v6Bw0nQ4l0uUwnWpqCL/cwxq6ZJnGUyz5k1WcPlepJBLGpQ03D78Ghv/YzIBaWLaVQrW8zLkWPQhKFmVgMABZHxrfnf5sLsjbUpaJBQRgOC2RJIa90ukRmb2i5NKbAn5TTVjGlfA1SW5EMBwMvIYVy4BBS6ZV/CwO6/WnCU22wLEqeFUtsyRn1jaljfOsHmMADayBTiXUGm00RADK0B8WbRkpZ9Z4XLn/huGKJFmXhc8ooETwnsk8G5VIoiQi1kv1QTlkBgdPxKVSDpcCp1DObertMWC+7LGHgSIW7eNxfMyqG+7wk5L6SNkZ4cCY5e5QP8ImGMA85XfCkRTgS7xNOw4JxwDU07BTthNpnCrplEFCktBQVgMRQI9vhiMO5f7hwbICZqQPoO6to6WKuPP0dIvG5ax9I=
-Received: from fedora ([2600:1700:1ff0:d0e0::37])
-        by smtp.gmail.com with ESMTPSA id xq2-20020a05620a5ca200b00783534c512bsm21043qkn.32.2024.02.06.16.10.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 16:10:01 -0800 (PST)
-Date: Tue, 6 Feb 2024 18:09:58 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: neil.armstrong@linaro.org, 
-	Krishna Kurapati <quic_kriskura@quicinc.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, quic_ppratap@quicinc.com, 
-	quic_jackp@quicinc.com
-Subject: Re: Re: [PATCH 3/3] arm64: dts: qcom: sa8540-ride: Enable first port
- of tertiary usb controller
-Message-ID: <6q2ocvrujbli42rjddflyol74xianr7j47jwcgdnnmwjanv25d@uw2da7zulqqd>
-References: <20240206114745.1388491-1-quic_kriskura@quicinc.com>
- <20240206114745.1388491-4-quic_kriskura@quicinc.com>
- <23824242-1b37-4544-ae9a-0a5a0582580e@linaro.org>
- <CAA8EJpqbXvKMQktGsxMFJnR+fXoOz8hFmm+E3ROPTjjiD0QLvg@mail.gmail.com>
+	s=arc-20240116; t=1707264655; c=relaxed/simple;
+	bh=6reKaR74PsLEEhWXFF0eYoOTUvHn7NUWzmF0g9nPW+k=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=s/Lc4KHK6Puk241P9PI2hAg9DKofMGs5dQpieJzPidkhfixfvWqXSFcV0wyzkrVKQmYAz7pGz48xEtWBZ2FEpj/oDcgePf6VzNxjY2B0NKIMCAmQQuGUS+hyZwNTp1P1UQakWPl6T5bWhzt+hrPNUvxSswM3tmrubr5b2WML1tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Uw21QNs9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 416NISTZ010794;
+	Wed, 7 Feb 2024 00:10:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=Skg3HbQjq2/sqhBqmP0V
+	Z8miwYY04Us8dUh25zkVrRE=; b=Uw21QNs9FXkmcZGXLoDo2qZoXPcwQ0ZqwPNt
+	pabH1bIQXEqzBe1AeA/7kBvCRFhIi8S5hgjVBtG5M0Z9H5RBh88KA1vthCqYvicn
+	HRMCj2Xq6jky79/V1JKxIBfllnzY0OqII2Xu/YXa28/MxPa7n/MyvZtTtfVrrGfR
+	1gRqet3r9qSyl30SK1Rpwo8jWja0kxEYxI1GWGTvnynEXLynu+uc2vUts0gltE/K
+	C8FToJft24r1UMfLcEJ4KwJKT0/naAVer3rf0bkApjb7Fy+iMZN+LMi2uplPUBaQ
+	IhJowCUsW4fI7nj3YDJe22XvtVgVlMTFAIXwepsTypOCVOJ0kw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3ud2ree6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Feb 2024 00:10:38 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4170AbMC031971;
+	Wed, 7 Feb 2024 00:10:37 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3w37h10ecd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Feb 2024 00:10:37 +0000
+Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4170Ab4d031966;
+	Wed, 7 Feb 2024 00:10:37 GMT
+Received: from hu-devc-lv-u20-a-new.qualcomm.com (hu-abchauha-lv.qualcomm.com [10.81.25.35])
+	by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 4170AaGU031961
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Feb 2024 00:10:37 +0000
+Received: by hu-devc-lv-u20-a-new.qualcomm.com (Postfix, from userid 214165)
+	id 5216A22B62; Tue,  6 Feb 2024 16:10:36 -0800 (PST)
+From: Abhishek Chauhan <quic_abchauha@quicinc.com>
+To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+        Prasad Sodagudi <psodagud@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>
+Cc: kernel@quicinc.com
+Subject: [PATCH v2] net: stmmac: dwmac-qcom-ethqos: Enable TBS on all queues but 0
+Date: Tue,  6 Feb 2024 16:10:36 -0800
+Message-Id: <20240207001036.1333450-1-quic_abchauha@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqbXvKMQktGsxMFJnR+fXoOz8hFmm+E3ROPTjjiD0QLvg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pFMpKkgujDH8ky-4mt2LIGwBn_H2n5fc
+X-Proofpoint-GUID: pFMpKkgujDH8ky-4mt2LIGwBn_H2n5fc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-06_15,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ malwarescore=0 mlxscore=0 adultscore=0 mlxlogscore=801 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402060171
 
-On Tue, Feb 06, 2024 at 03:30:32PM +0200, Dmitry Baryshkov wrote:
-> On Tue, 6 Feb 2024 at 15:28, <neil.armstrong@linaro.org> wrote:
-> >
-> > On 06/02/2024 12:47, Krishna Kurapati wrote:
-> > > From: Andrew Halaney <ahalaney@redhat.com>
-> > >
-> > > There is now support for the multiport USB controller this uses so
-> > > enable it.
-> > >
-> > > The board only has a single port hooked up (despite it being wired up to
-> > > the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
-> > > which by default on boot is selected to mux properly. Grab the gpio
-> > > controlling that and ensure it stays in the right position so USB 2.0
-> > > continues to be routed from the external port to the SoC.
-> 
-> What is connected to the other port of the MUX?
+TSO and TBS cannot co-exist. TBS requires special descriptor to be
+allocated at bootup. Initialising Tx queues at probe to support
+TSO and TBS can help in allocating those resources at bootup.
 
-/me blows off the dust on the schematic
+TX queues with TBS can support etf qdisc hw offload.
 
-It's a 1:2 mux, and one option is the out the board, the other
-is a test point I believe if I'm reading things right, although its not
-labeled so I'm not sure anyone would actually find it on the board.
+This is similar to the patch raised by NXP <3b12ec8f618e>
+<"net: stmmac: dwmac-imx: set TSO/TBS TX queues default settings">
 
-> 
-> > >
-> > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > > Co-developed-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 21 +++++++++++++++++++++
-> > >   1 file changed, 21 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> > > index b04f72ec097c..eed1ddc29bc1 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> > > @@ -503,6 +503,18 @@ &usb_2_qmpphy0 {
-> > >       status = "okay";
-> > >   };
-> > >
-> > > +&usb_2 {
-> > > +     pinctrl-0 = <&usb2_en>;
-> > > +     pinctrl-names = "default";
-> > > +
-> > > +     status = "okay";
-> > > +};
-> > > +
-> > > +&usb_2_dwc3 {
-> > > +     phy-names = "usb2-port0", "usb3-port0";
-> > > +     phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
-> > > +};
-> > > +
-> > >   &xo_board_clk {
-> > >       clock-frequency = <38400000>;
-> > >   };
-> > > @@ -655,4 +667,13 @@ wake-pins {
-> > >                       bias-pull-up;
-> > >               };
-> > >       };
-> > > +
-> > > +     usb2_en: usb2-en-state {
-> > > +             /* TS3USB221A USB2.0 mux select */
-> > > +             pins = "gpio24";
-> > > +             function = "gpio";
-> > > +             drive-strength = <2>;
-> > > +             bias-disable;
-> > > +             output-low;
-> > > +     };
-> > >   };
-> >
-> > Isn't gpio-hog the preferred way to describe that ?
-> 
-> That depends. As this pinctrl describes board configuration, I'd agree
-> with Neil.
+Changes since v1:
+- Subject is changed as per upstream guidelines
+- Added a reference of a similar change done by NXP in
+  body of the commit message
 
-I unfortunately don't have the experience with gpio-hog to weigh in
-here, but wouldn't be opposed to Krishna switching it if that's what's
-recommended for this type of thing.
+Signed-off-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 31631e3f89d0..d2f9b8f6c027 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -728,7 +728,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	struct stmmac_resources stmmac_res;
+ 	struct device *dev = &pdev->dev;
+ 	struct qcom_ethqos *ethqos;
+-	int ret;
++	int ret, i;
+ 
+ 	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
+ 	if (ret)
+@@ -822,6 +822,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+ 	}
+ 
++	/*Enable TSO on queue0 and enable TBS on rest of the queues*/
++	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
++		plat_dat->tx_queues_cfg[i].tbs_en = 1;
++
+ 	return devm_stmmac_pltfr_probe(pdev, plat_dat, &stmmac_res);
+ }
+ 
+-- 
+2.25.1
 
 
