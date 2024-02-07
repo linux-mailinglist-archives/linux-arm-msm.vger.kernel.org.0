@@ -1,135 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-10087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53CCD84C926
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 12:05:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7157484C9E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 12:45:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03A5E1F27176
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:05:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC69DB2442C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:45:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4948179BE;
-	Wed,  7 Feb 2024 11:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 697601DA3D;
+	Wed,  7 Feb 2024 11:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sBJ8wESf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OAOzleU3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0202C1B7E3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 11:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A361D1D688
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 11:45:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707303907; cv=none; b=mUNDY1GBrwYbBSRXPjhm5rBmmNfPV3xJtK/gkZ8/8h/X5sftAPZCw6dFSxerayNM5I+pLd1JqGWyfMm71Vt/A4l52xqUOjp3XVXpl1cOYQyZaNPWMH7PAzC52WFE1xEdoFPc8+kWTLimizBVfWEuuDZ5vE34RYuFplIdiXACJR0=
+	t=1707306329; cv=none; b=JJp+ysamoqiOxWxnK4iWxwCMcymNSb+4rdmZWwwQFOB5tuYdp0xdR7ex1nfKE70MIiKjDT7BUhJV8naUE8kRxqRxkA51sI7WFEXueOfhTIHMQ1qx9IyKbxozSkqfg4/BCjU/vwfsPTM4u3808NGVmp5wqsS7INhyO4XQ8Fnnga4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707303907; c=relaxed/simple;
-	bh=0+Ct3FjmfiuZlfh/SzKNT+CbmGRaJsLMmVQW8wDoDsg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QSyvbogjE+Ad/eA2z/2Y2WlfzUjwrSrNcwPJ+XZfovQvzZiMNMhZNwONDsmTlCcA74q6rRx7y0lM+bFE1iMMcUfXb9NfIPph2LkqJMLZ3ptebJuYFu7VDOE9FvscT2u2IT00qyVydeigcceI8K9itrpZHiO0UtStDKGygX6M9CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sBJ8wESf; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1707306329; c=relaxed/simple;
+	bh=IXfFeG2/K8g7CfX5pVLPJBoqzXw4E/6hFgYmUY+wogI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Cni0oQHz89LSfp0pyV4ZkTaLMVULJodyZDNA165MFZKgvCQdqZ2VWcaGEq5Th9skrZpBadeCnlzmfr9+9rwgjt0KY+IAv4et6GQHz4z8k39X1Qe3kbYpAEe3ETrocuo5HNvnX2FDGV4NyJCbwr3i5serDkFM1Vg5x5pinFUeFJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OAOzleU3; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-33b1d7f736bso414372f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 03:05:05 -0800 (PST)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-604819d544cso5422727b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 03:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707303904; x=1707908704; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9JhdFREau9a6Lz9UlDo/svgNXxSvwHYR1LSN6sffUzI=;
-        b=sBJ8wESfVqXadoKjiKuxVf6OlJDDO7HRT+Ak7vsTkjIBRq0Aq+zQiEGAuaOO/0FA/4
-         OTDE+gBKIiP8dbF8sR3/QZLJQ+lADC4yrDTGo1v2HXG8OPLI6X1miZYS7JF4ygnnm23o
-         CSp8Nt+wITQxrpJiwWxpPDNKU4FpWlFKd8xuGLeNXk3xvKS4y4IBpyqUSWURYhWCVO/r
-         IPT9soOsFtVZ4GJT6o1Y/bzAXY86fCXmnCeCZJbi9s/CbAZnyQhZvv6LCgNH/PYztu9u
-         rvLPG6CsPadLHR+Cm1VrBgwW1WKzLbnyFORC4CzWZxH3d3TozuhJMPVyQkNDhC0X49HQ
-         0lJQ==
+        d=linaro.org; s=google; t=1707306326; x=1707911126; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0QJWHcQRNdZ++xNr9XAli49/YD9Wnzb7ytJ9y9YhSe4=;
+        b=OAOzleU32vC7Sa3seH6H7+sVmZGmXKPN3cSIRWV8/APSkmBiuuPAsIW/XKw6qVf7Yi
+         q+55aBfK/+0IAkI7pZrJyz+hPfuHbIdmEUoxcwA5BK52l3XAGMFCqgtn9Cme1PBCIvJk
+         6/0KMHNpce56tzTHzG0K5vad7JeZJieNAAhvIqkQK8jEwTJ9B6b2s7uDy4Cl7vDLQdjh
+         7SDQtvSi4wW6QhOWRZSyU1YSU8plOwX97P0WgKbCqpUrd0k33j7BBShDuJvqKhb9cYFO
+         59QsotuXaVs32u8Ezoes+jgjPnWStB7smxVatNbk+gKKxN1NZbxegey9aNooy8eb0GcX
+         eB5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707303904; x=1707908704;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9JhdFREau9a6Lz9UlDo/svgNXxSvwHYR1LSN6sffUzI=;
-        b=brcL6htY4wixv2BD3rvU5pS40+j0EnmowTdP81B4qeGmHzoCgyGhz5nfpNbj8x9XQl
-         NjXIsQ6qqkj89KsfKDewdbkP/x7JnAACB/Cqsm9KoWj7G/lPW7+4w1ki6mVaEhT9fmYS
-         FOTnPvfBVoPRG1yAJ7eRAXCEyOk2O4Fkf9DdK9IF2TXuvMZKlrV08cRlnOzZwgJaPCaK
-         7R5HFOhGfAmZj2pT9tJf4woIvnfGwtYYOiBXNcgsTF6TvBA5V+3YEz9wpiX68AOn0rDu
-         VeDI7zpMe9FQ7l4MDGwfmZI5/j1lu3XNwVvCkvP2rnle3r8Giv+zhzZ+cTeZPI4OTxyy
-         sxhg==
-X-Gm-Message-State: AOJu0YwFQEDu1Xqq8XuYTwDDJVc5W561k5Hvzi9kNd85JZPCazQNTWeT
-	hg2e2nW3p5Up5cL2TpN6VKISu2dECfADf/Br7DQkQ1xwwSt6z0GFuWqT9F5z2VI=
-X-Google-Smtp-Source: AGHT+IGNOZ+Ucmt/8ReBjQs9L2rBoNxgcsuKi3zDlKPcCubwuNeujFxUTR7VbZClTKUMfdsYf7R+WA==
-X-Received: by 2002:a5d:5f4c:0:b0:33a:e739:28bd with SMTP id cm12-20020a5d5f4c000000b0033ae73928bdmr3925870wrb.59.1707303904241;
-        Wed, 07 Feb 2024 03:05:04 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUIzDjQPQCruwsPLOJ4gl23f7Yhwci4/KG6rLDwv2k2dXmMNUjrT6Ji0sMcdjcUqRUMuorkoVFKzfSzRwDjKIA5GQ/kK2YcOKwAF/i6ijVHVHXOug8OHmXXYj5Y3eHbWgAX8chb2R+Qqr7y1uc8GF1jMDJQxQ+kdvEeWXC+pODREjGr6X876r1BrzRNKJQ8mmbVWYUbX1+GYAnsPy5jjqCageY+oCgTS8yA6ejjZOTwBcuig4jjwL6KyY0tFIWVv4XTaduACzx5M57+MAsXaMGMD3EbS9eK6zK8PVB+W4wZx30uAtvd+g5NU5dW0F8v1b8=
-Received: from [192.168.43.244] ([213.215.212.194])
-        by smtp.googlemail.com with ESMTPSA id f7-20020a5d4dc7000000b0033b51e2b9b8sm174122wru.23.2024.02.07.03.05.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Feb 2024 03:05:03 -0800 (PST)
-Message-ID: <c075f2f8-4fbf-4309-a478-a5cfb199fdd5@linaro.org>
-Date: Wed, 7 Feb 2024 11:05:02 +0000
+        d=1e100.net; s=20230601; t=1707306326; x=1707911126;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0QJWHcQRNdZ++xNr9XAli49/YD9Wnzb7ytJ9y9YhSe4=;
+        b=OKRWMfpwZcQpKbnm0KHVZGeZs9GNvJPqPAmYLKOedWLYGHFbRLw51W5R1YGVelziD3
+         FrI0BvGTPQKIl5xqlCjor/ArDZQULQbVHu/QKott1iokzgfYGfDl5DeJ3xXhBKyQHsSX
+         2b2h/vuGNPRtE0a8qb1QEiGCCZIsbh2k0ea6xH/NGtDOWWIyMQfM6IigFYD1KT+UVV9K
+         fr7JnmF9u3YUAnmw30HPi/hLgTCPpfjZXzhCg/4LlK5Uc2xbJEkUyQo7CwcZmxAM1EJg
+         76ptUW5bccZd4BsRIOtdd+lLWs+lzcMSJeLO+ZymK3UTFA8cdA43qjWNXtR8DHEwEpLa
+         d+1g==
+X-Gm-Message-State: AOJu0YyFSrDo7K1diAVu36oiGVTeiuxSsc4DX5DNXfaC3o7UnwTHZDl7
+	11/oXeFH3J16tgK58Q9eh5YpG68CpQr7gDGFz9gvyK/hR8n8144EtneRX2zrXN2XuVF6c/F4QvL
+	n28yzIzKs+FLxfBhl4UvIbuuTP8aedNXDLnvAQw==
+X-Google-Smtp-Source: AGHT+IH/o53PW2EBoUiu+Xx5ucqrkx2JVhwy9re+Mvcxtl2y/qEnzuhByDLE8rDyLEGdQlkM81L0zIoLvRmrkgLGS88=
+X-Received: by 2002:a05:690c:f8a:b0:5ff:4987:4ef3 with SMTP id
+ df10-20020a05690c0f8a00b005ff49874ef3mr5462398ywb.24.1707306326640; Wed, 07
+ Feb 2024 03:45:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: correct analogue
- microphone route
-Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>, Steev Klimaszewski <steev@kali.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240125154531.417098-1-krzysztof.kozlowski@linaro.org>
- <c34dd7ca-01b5-4424-a8ec-a525b8d722a3@linaro.org>
- <5497d428-cdc1-4057-afda-6861d2e3860a@linaro.org>
- <e9b6f790-831c-4df6-b16c-8d7a2f8ddc26@linaro.org>
- <CAKXuJqjDM3P4wOKz3CaAB9DUyemqQ6ks=FPnfL7OsHnnyoyn=A@mail.gmail.com>
- <ZcCX0hDGrWqRXr9R@hovoldconsulting.com>
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <ZcCX0hDGrWqRXr9R@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org>
+ <20240207-spmi-multi-master-support-v1-1-ce57f301c7fd@linaro.org>
+ <CAA8EJpqsJmv36=o1aTjVH6eMHXMg8BHNpiDvs+Q8YB23ezVGtQ@mail.gmail.com>
+ <ZcMvFtAwQQjAZhk6@linaro.org> <CAA8EJprqWLX7_yWZzKp3FAKFGkSkk041f9hj1uXuRBrbH5APyQ@mail.gmail.com>
+ <ZcNIddeG6VHxBEOQ@linaro.org>
+In-Reply-To: <ZcNIddeG6VHxBEOQ@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 7 Feb 2024 13:45:15 +0200
+Message-ID: <CAA8EJpo-16u34Yc6MLmHSqFrQ0VrZAq6TwGeVc5WFwMmhruqoA@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/2] spmi: Add support for multi-master
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks Steev,
+On Wed, 7 Feb 2024 at 11:08, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> On 24-02-07 09:23:09, Dmitry Baryshkov wrote:
+> > On Wed, 7 Feb 2024 at 09:19, Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
+> > > On 24-02-07 01:55:39, Dmitry Baryshkov wrote:
+> > > > On Wed, 7 Feb 2024 at 01:34, Abel Vesa <abel.vesa@linaro.org> wrote:
+> > > > >
+> > > > > Some newer SPMI controllers support multiple bus masters.
+> > > > > Such a master can control multiple slave devices. The generic
+> > > > > framework needs to be able to pass on the master id to the
+> > > > > controller-specific driver. So do that. The framework will
+> > > > > check if the devicetree child nodes are actually bus masters
+> > > > > and will register the devices for each master. The legacy
+> > > > > approach will still be supported for backwards compatibility.
+> > > >
+> > > > Please remind me, are those two actual bus musters driving a single
+> > > > bus in parallel or two SPMI buses being handled by a single device? In
+> > > > the latter case this implementation is incorrect. There should be
+> > > > multiple spmi_controller instances, one for each bus. Allocate them in
+> > > > a loop and set ctrl->dev.of_node after allocating.
+> > >
+> > > It's two SPMI buses (two sets of wires) handled by the same controller,
+> > > HW-wise.
+> > >
+> > > If we register two spmi controllers with the kernel framework, it will
+> > > be HW inaccurate, because there is just one controller which has
+> > > multiple masters.
+> >
+> > struct spmi_controller is a controller for a single bus. Inside your
+> > device you have two SPMI buses, each can be controlled by its own
+> > struct spmi_controller. Just like devices that control multiple I2C,
+> > SPI or USB busses register a separate instance of the bus controller.
+>
+> Well, this is what this patchset is trying to do in the generic part.
+> The SPMI controller supports multiple buses (HW-wise) and therefore SW
+> implementation shouldn't be tied to single bus requirement.
 
-On 05/02/2024 08:09, Johan Hovold wrote:
-> On Sun, Feb 04, 2024 at 11:30:54PM -0600, Steev Klimaszewski wrote:
->> On Mon, Jan 29, 2024 at 8:27 AM Krzysztof Kozlowski
->> <krzysztof.kozlowski@linaro.org> wrote:
-> 
->>> so I will go with that approach. Please ignore this DTS patch. I will
->>> send ASoC changes which won't affect sc8280xp.
-> 
->> I somehow missed that patchset or conversation; As an owner of an
->> X13s, which is sc8280xp, I can say, neither pre-dts patch, nor post,
->> seem to do much good.  When I attempt to do a voice chat in armcord,
->> the responses I get to how I sound when using the mic on the X13s
->> itself range from "You sound like hot trash" to "You sound like a
->> robot with hiccups".
+So, after the off-line discussion:
+- add new compatible string for sm8450+
+- register two spmi controller instances
+- drop the master-id from the SPMI interface
+- optionally: think about having a new separate driver for v7 SPMI.
 
-does arecord exhibit same issue?
+>
+> >
+> > >
+> > > I'm not saying it might not work. But, to me, it looks more like a hack.
+> > >
+> > > Basically, we would be mapping HW bus masters to kernel controllers.
+> >
+> > Buses, not just masters.
+> >
+> > >
+> > > >
+> > > > >
+> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > ---
+> > > > >  drivers/spmi/spmi-mtk-pmif.c |  6 ++--
+> > > > >  drivers/spmi/spmi-pmic-arb.c | 10 +++---
+> > > > >  drivers/spmi/spmi.c          | 76 ++++++++++++++++++++++++++++++--------------
+> > > > >  include/linux/spmi.h         | 10 +++---
+> > > > >  4 files changed, 67 insertions(+), 35 deletions(-)
+> > > >
+> > > > --
+> > > > With best wishes
+> > > > Dmitry
+> >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
-What is your setup looking like? I would like to reproduce this on my x13s.
 
-thanks,
-Srini
-> 
-> That's a separate issue entirely. Both the digital and analog microphone
-> (jack) is working on the X13s as long as you use pulseaudio.
-> 
-> As I've mentioned before, there are problems with both playback and
-> capture when you use pipewire however ("robot with hiccups" one could
-> indeed describe it as).
-> 
-> That suggests a more general problem with the Qualcomm audio drivers,
-> but that has nothing to do with the audio routing.
-> 
-> Johan
+
+-- 
+With best wishes
+Dmitry
 
