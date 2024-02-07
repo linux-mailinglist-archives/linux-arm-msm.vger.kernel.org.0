@@ -1,154 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-10080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A83CC84C7D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:47:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C30184C7F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:52:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B19FB2177A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 09:47:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F3241F26C7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 09:52:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F292122330;
-	Wed,  7 Feb 2024 09:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 894D62261B;
+	Wed,  7 Feb 2024 09:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxxdc8kl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ky96FDE7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A854523745;
-	Wed,  7 Feb 2024 09:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA63A208DC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Feb 2024 09:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707299247; cv=none; b=H9BcuogCvT8xWS0oL4atuIPBUWuWlAHCIWR4DxfUEG7DHWRyx9AdQ123C71uUI71QUiMbvG5qLb5YwXDAbC8ITnYGTkutIvpqYZd+IaW61NJlPBMxgGu3tuQGfiBNeb4Try5LDZDKC21qpEAtuSf3Hk5b1Wl230UJ4FzSDYGDEY=
+	t=1707299515; cv=none; b=LtQEO8Bnp418Ecf5uw7SU6X8Di2dq8M2c3h5uOf9pZChT+YHItD7TfwB31fsrzmXF2eyKqNZgCRUWLbKmCiCP26nTeN85uPwk9YlY3Egju5QQRkhIBQC5n9IQV/r/SBUUnkRcfDi+TW5riSLnbd+tn+by6OpQXVLOIT2mktsyxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707299247; c=relaxed/simple;
-	bh=3Guh8FFWdBHHjtk/64P3ZLJj+ITcekYysmUVlFzYeS4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QROWL7yS4vrQCGTn/7XzCN63XRghN/MzMnxveODzh4+i1Ievc1plF2cEd8LCrXpCpWl7w63TOC3fiHyMaS+Iw0TynWqIz7FgQXNJ+Iwyy3WN/as/RSnw4IEm1fqd5zk4F1Ajq/PXD6vUkbMSd0PlCAy3sleCKtBcUgiVk6sLy1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxxdc8kl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A5EC433F1;
-	Wed,  7 Feb 2024 09:47:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707299247;
-	bh=3Guh8FFWdBHHjtk/64P3ZLJj+ITcekYysmUVlFzYeS4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hxxdc8klnIy4ZDNB5BWD04rH+GMHbiNDBN6/hTxQc/vByYJ5XITJCX69MyWl1yYxf
-	 0UeJc615SI12VAM1ChmwiQgVXFRgRg6ODGum5sCfsC3a07JrFwHB60n1zKwo599D5P
-	 Advs1kA3wnh04DvGL0zsveVAJSN93LbtYq6UYwz4=
-Date: Wed, 7 Feb 2024 09:47:23 +0000
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	cros-qcom-dts-watchers@chromium.org,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 0/3] Fairphone 5 PMIC-GLINK support (USB-C, charger, fuel
- gauge)
-Message-ID: <2024020710-regulator-charging-7682@gregkh>
-References: <20231220-fp5-pmic-glink-v1-0-2a1f8e3c661c@fairphone.com>
- <8d042095-1e09-45cc-9762-909fe8d663a9@linaro.org>
- <CXTU5MLN0YDS.29PPV8KZF8G9R@fairphone.com>
- <CAA8EJpoD3x=kVLu4x2yLtAqCp=wmGSU4ssq5Oj_SD5VQ=GyAYQ@mail.gmail.com>
- <d2007240-2779-4881-8e9d-1c4f5daa55e5@linaro.org>
- <CXU22OZNAH2H.24YIQWBA4KE3C@fairphone.com>
- <2024010227-darn-litmus-4ddf@gregkh>
- <CY49JOEDOEZX.1KNYT91GHL3MX@fairphone.com>
- <2024010205-placidly-expire-221c@gregkh>
- <CYYDQ7RF0HB7.G7R6KHP1Z42U@fairphone.com>
+	s=arc-20240116; t=1707299515; c=relaxed/simple;
+	bh=KR2sG7J4c3ofHOmeepSU9gMmPKLoScOYxX43x3M1eFw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bVpJQtF8dPyXhBYdRK7blpKXE2cgZnFRn3TIK2UWZJILBaC2BD3tLtkGrd1imrlZiIDW+eFpW2ESALcC7NH8krvLQ14fahBGCmPxsgSyCXiC9A7bZzcWFXCQEdRYCHjqtzFdPuxEGI2JA0DH0umJYXh0N4jU1OUa2IdlfW1X25w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ky96FDE7; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-60406302a5eso4495417b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 01:51:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707299512; x=1707904312; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tL/r8AXFGxGMMcyM8KcarAKkFwTyeEeSx1AZSjKfuYU=;
+        b=ky96FDE7ziHgnLqlev77pd2UHXgEW/4rprecDW8MHgXeQm1ekDj+ud4MYzDUSCQKYf
+         hphTkXd/Dv8GneMsGkuv3lli+ylZ1o6efp3GBgg012nkDM4a0FqkgIrX4PDf3oyPlVlk
+         4KcXLYiUcGaYQC9wULjrHWmkEjyaFXTsbOalkZx7ZXTzQJFh9OIVRT+xiaIbhpdSy5Ro
+         za7r+XDZz8hp7etUYtCPzIHrruOHzj1Q6GdtfNGOYlsK9UwJzMO5Osk0LHs6mI1ui5dH
+         WYABlA5yxnPulYmBONbLUZ9A7CpPEv8Rckyi3xCOj1pOGm8vIaUMhBsJzdZiZ3/cSaTY
+         p6wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707299512; x=1707904312;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tL/r8AXFGxGMMcyM8KcarAKkFwTyeEeSx1AZSjKfuYU=;
+        b=jJoTRCwEzLR7cGP62BM7bEdtRzSn6PDYdAeX4mcbVe5J04frfy95KwCPFwgTRQSgL8
+         /l0OFHvuFjSm50WPepct1l3B3jbvF9TsaQ1L7bSoAfiQNVfNsdtR0/lWqXu1byhCWGK1
+         w292mwB2WEAB0TW+Op1kUFhAIxH7QrhtoptyZY3C+muijmLgRARAnwGocMnIYqGDUU2g
+         ttx4P8VpgJq8Q2XNyci4Uj9ikEGfjpEN4TzTCyzurhLXJvlMij+zL8R1ZUStwwUKyeU2
+         yfkZUMM3im4NjD80NSASXb3kqojnoAoohN0PIGxpZkFz0leeYfWkpbz4nvq/d8h7UXPT
+         Gz9Q==
+X-Gm-Message-State: AOJu0YzExM5Mozr90ftobvIPcF4UafTH2Nuo+ENnQetwLXoQJ3opXrdq
+	GM5SyBpyEsI2s9SG8lUoj9JBScJF3LRN5YkUEdiAzbAZ27gxLeVSp8+Ob8sRmAtKbTHzwMuec7S
+	dh9/1lcnIsV8DzxlAK7+e8n5tKHRHeTVPN/VY7A==
+X-Google-Smtp-Source: AGHT+IHijGzj8uRjINoynUtKvsODzePDZYI2IRClC5jIBfJbvgeat7fp8n2svTrjS5gczDAdT1OcKNi6CZuwYdJnwps=
+X-Received: by 2002:a81:cf08:0:b0:604:5415:b204 with SMTP id
+ u8-20020a81cf08000000b006045415b204mr3872325ywi.33.1707299512595; Wed, 07 Feb
+ 2024 01:51:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CYYDQ7RF0HB7.G7R6KHP1Z42U@fairphone.com>
+References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+ <d8e32f3d-1658-4dcd-a1dd-e37b664986ae@linaro.org> <41703424-f711-420e-bcb8-290f68a0aec9@quicinc.com>
+In-Reply-To: <41703424-f711-420e-bcb8-290f68a0aec9@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 7 Feb 2024 11:51:41 +0200
+Message-ID: <CAA8EJpqB4OG1n9maGuwo4BLRPctD6-nHJBvzauxoodS_Xji86g@mail.gmail.com>
+Subject: Re: [PATCH v1 00/16] Add missing features to FastRPC driver
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: neil.armstrong@linaro.org, srinivas.kandagatla@linaro.org, 
+	linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 07, 2024 at 12:20:00AM +0100, Luca Weiss wrote:
-> On Tue Jan 2, 2024 at 2:53 PM CET, Greg Kroah-Hartman wrote:
-> > On Tue, Jan 02, 2024 at 02:43:24PM +0100, Luca Weiss wrote:
-> > > On Tue Jan 2, 2024 at 2:36 PM CET, Greg Kroah-Hartman wrote:
-> > > > On Thu, Dec 21, 2023 at 02:45:26PM +0100, Luca Weiss wrote:
-> > > > > On Thu Dec 21, 2023 at 1:53 PM CET, Konrad Dybcio wrote:
-> > > > > > On 21.12.2023 11:34, Dmitry Baryshkov wrote:
-> > > > > > > On Thu, 21 Dec 2023 at 09:33, Luca Weiss <luca.weiss@fairphone.com> wrote:
-> > > > > > >>
-> > > > > > >> On Wed Dec 20, 2023 at 1:32 PM CET, Konrad Dybcio wrote:
-> > > > > > >>> On 20.12.2023 11:02, Luca Weiss wrote:
-> > > > > > >>>> This series adds all the necessary bits to enable USB-C role switching,
-> > > > > > >>>> charger and fuel gauge (all via pmic-glink) on Fairphone 5.
-> > > > > > >>>>
-> > > > > > >>>> One thing that could be made different is the pmic-glink compatible.
-> > > > > > >>>> I've chosen to use qcm6490 compatible for it and not sc7280 since
-> > > > > > >>>> there's plenty of firmware variety on sc7280-based platforms and they
-> > > > > > >>>> might require different quirks in the future, so limit this PDOS quirk
-> > > > > > >>>> to just qcm6490 for now.
-> > > > > > >>>>
-> > > > > > >>>> If someone thinks it should be qcom,sc7280-pmic-glink, please let me
-> > > > > > >>>> know :)
-> > > > > > >>> IMO it's best to continue using the "base soc" (which just so happened
-> > > > > > >>> to fall onto sc7280 this time around) for all compatibles, unless the
-> > > > > > >>> derivatives actually had changes
-> > > > > > >>
-> > > > > > >> Hi Konrad,
-> > > > > > >>
-> > > > > > >> I think at some point I asked Dmitry what he thought and he mentioned
-> > > > > > >> qcm6490. Even found the message again:
-> > > > > > >>
-> > > > > > >>> well, since it is a firmware thing, you might want to emphasise that.
-> > > > > > >>> So from my POV qcm6490 makes more sense
-> > > > > > >>
-> > > > > > >> But yeah since it's likely that sc7280 firmware behaves the same as
-> > > > > > >> qcm6490 firmware it's probably okay to use sc7280 compatible, worst case
-> > > > > > >> we change it later :) I'll send a v2 with those changes.
-> > > > > > > 
-> > > > > > > Worst case we end up with sc7280 which has yet another slightly
-> > > > > > > different UCSI / PMIC GLINK implementation, but the compatible string
-> > > > > > > is already taken.
-> > > > > > > I still suppose that this should be a qcm6490-related string.
-> > > > > > Right, let's keep qcm then
-> > > > > 
-> > > > > Ack from my side also. Thanks for the feedback!
-> > > >
-> > > > This doesn't apply to my tree, where should it be going through?
-> > > 
-> > > As far as I can see the dependency for the driver commit 1d103d6af241
-> > > ("usb: typec: ucsi: fix UCSI on buggy Qualcomm devices") was applied to
-> > > Bjorn's qcom tree, so 2/3 should also go there then.
-> > > 
-> > > Patch 3/3 (arm64 dts) definitely also Bjorn's qcom tree.
-> > > 
-> > > So that leaves patch 1/3 which Bjorn can probably pick up as well but
-> > > looking at git log you also picked up some for that file in the past,
-> > > dunno.
+On Wed, 7 Feb 2024 at 10:30, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
+>
+>
+> On 2/2/2024 1:41 PM, neil.armstrong@linaro.org wrote:
+> > Hi,
 > >
-> > Ok, for any remaining ones that want to be merged before 6.8-rc1 is out,
-> > feel free to add my:
+> > On 02/02/2024 07:40, Ekansh Gupta wrote:
+> >> This patch series adds the listed features that have been missing
+> >> in upstream fastRPC driver.
+> >>
+> >> - Redesign and improve remote heap management.
+> >> - Add static PD restart support for audio and sensors PD using
+> >>    PDR framework.
+> >> - Add changes to support multimode invocation ioctl request. This
+> >>    ioctl call facilitates multiple types of requests from user including
+> >>    CRC check, performance counters, shared context bank usage, etc.
+> >>    This series also carries patch to save and restore interrupted
+> >>    context.
+> >> - Add early wakeup support to allow DSP user to send early response
+> >>    to CPU and improve fastrpc performance.
+> >> - Add polling mode support with which driver polls on memory to avoid
+> >>    CPU from going to low power modes.
+> >> - Add notifications frameworks to provide users with the DSP PD status
+> >>    notifications.
+> >> - Add a control mechanism to allow users to clean up DSP user PD
+> >> - Add wakelock management support
+> >> - Add DSP signalling support
+> >> - Add check for untrusted applications and allow trusted processed to
+> >>    offload to system unsigned PD.
 > >
-> > Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Could you precise:
+> > - Which workload are you fixing
+> > - Which platforms are concerned
+> > - Which platforms were tested
 > >
-> > If they don't get picked up by 6.8-rc1, feel free to rebase and send it
-> > for me to take through my tree.
-> 
-> Hi Greg,
-> 
-> This applies cleanly on -next as of next-20240206 still.
-> 
-> Could you please pick it up for v6.9? I can also send a v2 with only
-> the two remaining patches (dts was applied to qcom by Bjorn already).
+> 1. This patch mostly consists of missing features from fastrpc driver and it doesn't
+> carry any bug fixes.
+> 2. We are not targeting these changes for any specific platform. These features are
+> applicable for most of the recent platforms .
 
-v2 with just the remaining patches would be great, thanks.
+Please define 'recent'. The upstream kernel supports a wide set of
+platforms. We have fastrpc supported since msm8916. Please make sure
+that your patches will not break on such platforms.
 
-greg k-h
+> 3. These changes were tested on SM8650 and QCM6490 platforms.
+>
+> > So far I've been trying to run the "getserial" on SM8550-QRD and
+> > SM8650-QRD without
+> > success, would those changes fix this ?
+>
+> Can you please help me with the "getserial" failure details? Or the steps that you are
+> running to get to the failure? I can have a look at that to understand the reason for
+> failure.
+>
+> > Is there any chance we could get an open-source minimal implementation
+> > of a fastRPC SDK using
+> > the open-source Hexagon LLVM like we have for the AIC100 ?
+> > It would definitely help validating the upstream fastRPC implementation.
+>
+> Generally Hexagon SDK is used to write and test fastRPC use-cases which is well documented.
+> Is there anything else that you can suggest would help here?
+
+Hexagon SDK is a closed source toolkit. Both in terms of toolchain,
+library code and generated code.
+The fastrpc_shell_N, which is used to handle loaded code, is also
+closed source. As such, it is nearly impossible to verify the code.
+Please consider the requirements for the drivers/accel/ subsystem: to
+have complete open source userspace. Qualcomm AIC100, for example,
+fulfills those requirements.
+
+>
+> >
+> > Thanks,
+> > Neil
+> >
+> Hi Neil, added my comments.
+>
+> --ekansh
+>
+> >>
+> >> Ekansh Gupta (16):
+> >>    misc: fastrpc: Redesign remote heap management
+> >>    misc: fastrpc: Add support for unsigned PD
+> >>    misc: fastrpc: Add static PD restart support
+> >>    misc: fastrpc: Add fastrpc multimode invoke request support
+> >>    misc: fastrpc: Add CRC support for remote buffers
+> >>    misc: fastrpc: Capture kernel and DSP performance counters
+> >>    misc: fastrpc: Add support to save and restore interrupted
+> >>    misc: fastrpc: Add support to allocate shared context bank
+> >>    misc: fastrpc: Add early wakeup support for fastRPC driver
+> >>    misc: fastrpc: Add polling mode support for fastRPC driver
+> >>    misc: fastrpc: Add DSP PD notification support
+> >>    misc: fastrpc: Add support for users to clean up DSP user PD
+> >>    misc: fastrpc: Add wakelock management support
+> >>    misc: fastrpc: Add DSP signal support
+> >>    misc: fastrpc: Restrict untrusted apk to spawn privileged PD
+> >>    misc: fastrpc: Add system unsigned PD support
+> >>
+> >>   drivers/misc/fastrpc.c      | 1949 +++++++++++++++++++++++++++++++----
+> >>   include/uapi/misc/fastrpc.h |  112 ++
+> >>   2 files changed, 1844 insertions(+), 217 deletions(-)
+> >>
+> >
+>
+
+
+-- 
+With best wishes
+Dmitry
 
