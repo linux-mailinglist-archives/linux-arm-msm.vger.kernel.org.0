@@ -1,108 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-10084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76AF484C864
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:16:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F18584C8DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 11:42:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A3E01F2368D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:16:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99E3E1F22770
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Feb 2024 10:42:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B452A250F2;
-	Wed,  7 Feb 2024 10:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CEA614A99;
+	Wed,  7 Feb 2024 10:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Chcv9I7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mO/hQ3qs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832A724B34;
-	Wed,  7 Feb 2024 10:16:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E76E14A89;
+	Wed,  7 Feb 2024 10:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707300984; cv=none; b=CxztSS2t/im/3Xw5zG42u3qVEMES95nVZ+wb5sdYtI4kpkUdCTke6YTMGfIAsm2Ttk5lPUf7FhMNYLiQpOulKkyi9bnJKOT4ONtiY3p9yDbxwCaibJIc6v3y9y1txoE9ZrlMQLjXVT2+v4NBgI/8woMRzOWW2MZOPbt6DaXL6Lg=
+	t=1707302540; cv=none; b=r/ILn6rT0qJ2dt5gsKoKkCS+sW7tJhC4q1y0zn0qAsw4OzgxUFlnEvdwZBI3negp2ObRXWXlxrfVNtaebCNNNndsXggxbOqHul+cETrl7BAd9pZYRlKp14gVdjL0ZLhaIEbwzvucDOGpTgxqE6NxfCVeCG8+aIM06lkSW9qlGcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707300984; c=relaxed/simple;
-	bh=O04xBB7jnsZDHGbei3HBZ/qO2slZ2cFBfcRAGrgWMGA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BFx3b5Dv+1kXujWoVr5jHtQXyY+7ExTEILjcD+UHAL5mF4JuG2bC1Hq9Pz6AfqfDKsmFlAB7sjy4isRtNZa67Kss0gRzFfNz7RJdojNwVPnDu7nQpDf62trvezzmGl0MnEwbnvtgJVcAZpdkbOciNWUZCTRAefJ7NuS/3B4Uw7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Chcv9I7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0F2C433F1;
-	Wed,  7 Feb 2024 10:16:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707300983;
-	bh=O04xBB7jnsZDHGbei3HBZ/qO2slZ2cFBfcRAGrgWMGA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=1Chcv9I76fqA58CzJhnC6834vmu/rCPhepxW1dU3gSIIb/UV9k2EQS2IH3igdQnqO
-	 1ipgUgxeac8jMik4ta+EKdszqKqEtdARVUd61yMK50nMCLcMU7OqDV7cul2Kc5N2nR
-	 ymWuEGKGVidQW8cicnKse6OqZONINuuL21hTKeMg=
-Date: Wed, 7 Feb 2024 10:16:20 +0000
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Fedor Pchelkin <pchelkin@ispras.ru>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Sujeev Dias <sdias@codeaurora.org>,
-	Siddartha Mohanadoss <smohanad@codeaurora.org>, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	lvc-project@linuxtesting.org
-Subject: Re: [PATCH] bus: mhi: host: free buffer on error in
- mhi_alloc_bhie_table
-Message-ID: <2024020709-familiar-slapping-a96a@gregkh>
-References: <20240207065136.18316-1-pchelkin@ispras.ru>
+	s=arc-20240116; t=1707302540; c=relaxed/simple;
+	bh=II47jwsuZLY/0YRKVtpUI0sbrhHp7KT8QYWiYIYnm64=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=jiHJ6ngut7ABZTMl1n8IvVE53LRz+SyOKcioxGb9Z9PIvwU7oXAyMpgJjtnUcL/TjdpeEO4huNc2mKBGpYSpXiuAOJNuNHXy6slVHVEA3TCRj9qrefbWliCrWfUtIChwiB+8s5ZezqD36MtVfpQMx2e7wp741c/BylbgS43dfAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mO/hQ3qs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 417AQCvF013143;
+	Wed, 7 Feb 2024 10:42:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=f4a
+	6QVU4hulFuG7QklOItbrc6hHNenm18VOdI1gRvJM=; b=mO/hQ3qsZ4NCjy6vB8h
+	7a8g10w6fApuzU7RUOC6n7rJwK0gxLthGHk8qp4BDmpFkBm0fnz/9RWfN1U99xZv
+	J53BsAZ+MUndGabJzXPMMAQpI2qpEsyvnLEkPly1204TV42ytQDFyfDkTsb2Df/J
+	MSqXdLmRfuHkKny7S2XYPkMrMED71J2RbYGBTceKGSlBXdwTeyTSpKvUiKgioOhn
+	HdPchDRdi90ycMsqclDXuBdf6MJc+5Auw4qSN+YVI+kKBsVZAXsgWBfXp2CqzOGD
+	Xic0cZYQ2rgLCDFv9fj/wdmHyDZOlp4k9kQXAMQexG/A/P/afQJEyP/FDisjHxAu
+	3dA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w3ub6hfnq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Feb 2024 10:42:02 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 417Ag13b003200
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 Feb 2024 10:42:01 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 7 Feb 2024 02:41:56 -0800
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Date: Wed, 7 Feb 2024 16:11:49 +0530
+Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240207065136.18316-1-pchelkin@ispras.ru>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAG1ew2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDIwNz3dS8xKSc1PiC5MxUXUvTJMMUMzNDoyQjcyWgjoKi1LTMCrBp0bG
+ 1tQDbjrJiXQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707302517; l=2092;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=II47jwsuZLY/0YRKVtpUI0sbrhHp7KT8QYWiYIYnm64=;
+ b=u2Wyoa7F0oRnHv37GNU4l5ZZUKYEDZyWQtH9gXoTyXrBkP3tWdwz3DG5YGmGiYGfxXGIqOQdz
+ Wu2/ku5afGnDK6vK/HMRwzBc2CIoCiER/U6gCqaKJouGC18XQcbPwnj
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8L8kUlVtulcoBfuJ32aTvlkce2y4ag-W
+X-Proofpoint-ORIG-GUID: 8L8kUlVtulcoBfuJ32aTvlkce2y4ag-W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-07_04,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=808 adultscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 phishscore=0 clxscore=1015
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402070079
 
-On Wed, Feb 07, 2024 at 09:51:36AM +0300, Fedor Pchelkin wrote:
-> img_info->mhi_buf should be freed on error path in mhi_alloc_bhie_table().
-> This error case is rare but still needs to be fixed.
-> 
-> Found by Linux Verification Center (linuxtesting.org).
-> 
-> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-> Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-> ---
->  drivers/bus/mhi/host/boot.c | 1 +
->  1 file changed, 1 insertion(+)
+Enable PCIe1 controller and its corresponding PHY nodes on
+qcs6490-rb3g2 platform.
 
-Hi,
+PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
+connected. For each endpoint a unique BDF will be assigned and should
+assign unique smmu id. So for each BDF add smmu id.
 
-This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
-a patch that has triggered this response.  He used to manually respond
-to these common problems, but in order to save his sanity (he kept
-writing the same thing over and over, yet to different people), I was
-created.  Hopefully you will not take offence and will fix the problem
-in your patch and resubmit it so that it can be accepted into the Linux
-kernel tree.
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-You are receiving this message because of the following common error(s)
-as indicated below:
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index 8bb7d13d85f6..0082a3399453 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
+ 	};
+ };
+ 
++&pcie1 {
++	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
++
++	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
++	pinctrl-names = "default";
++
++	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
++		    <0x100 &apps_smmu 0x1c81 0x1>,
++		    <0x208 &apps_smmu 0x1c84 0x1>,
++		    <0x210 &apps_smmu 0x1c85 0x1>,
++		    <0x218 &apps_smmu 0x1c86 0x1>,
++		    <0x300 &apps_smmu 0x1c87 0x1>,
++		    <0x400 &apps_smmu 0x1c88 0x1>,
++		    <0x500 &apps_smmu 0x1c89 0x1>,
++		    <0x501 &apps_smmu 0x1c90 0x1>;
++
++	status = "okay";
++};
++
++&pcie1_phy {
++	vdda-phy-supply = <&vreg_l10c_0p88>;
++	vdda-pll-supply = <&vreg_l6b_1p2>;
++
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -420,6 +446,22 @@ &qupv3_id_0 {
+ &tlmm {
+ 	gpio-reserved-ranges = <32 2>, /* ADSP */
+ 			       <48 4>; /* NFC */
++
++	pcie1_reset_n: pcie1-reset-n-state {
++		pins = "gpio2";
++		function = "gpio";
++		drive-strength = <16>;
++		output-low;
++		bias-disable;
++	};
++
++	pcie1_wake_n: pcie1-wake-n-state {
++		pins = "gpio3";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
+ };
+ 
+ &uart5 {
 
-- You have marked a patch with a "Fixes:" tag for a commit that is in an
-  older released kernel, yet you do not have a cc: stable line in the
-  signed-off-by area at all, which means that the patch will not be
-  applied to any older kernel releases.  To properly fix this, please
-  follow the documented rules in the
-  Documentation/process/stable-kernel-rules.rst file for how to resolve
-  this.
+---
+base-commit: 70d201a40823acba23899342d62bc2644051ad2e
+change-id: 20240207-enable_pcie-95b1d6612b27
 
-If you wish to discuss this problem further, or you have questions about
-how to resolve this issue, please feel free to respond to this email and
-Greg will reply once he has dug out from the pending patches received
-from other developers.
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-thanks,
-
-greg k-h's patch email bot
 
