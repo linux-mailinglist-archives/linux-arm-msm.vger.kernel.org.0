@@ -1,136 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-10157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C9E084DDC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:08:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8353F84DE27
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:24:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F7961C27F3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:08:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E41BFB2B5BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:24:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93FE171B43;
-	Thu,  8 Feb 2024 10:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D6B66F07B;
+	Thu,  8 Feb 2024 10:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VHeqwAoN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZRdGbNty"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641A16F52C;
-	Thu,  8 Feb 2024 10:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C5A6D1C9;
+	Thu,  8 Feb 2024 10:22:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707386557; cv=none; b=FgJey1UN89d3gyjIm0Pyi7TlRXn9l1XxTlLRr217alcWJ45RRfMN93ciGDTWw5fxHpQ89F+udupN1MI8uzKucS6joj9Dcc2TJxhlWk5oG2Sy1oBmnNKdtdmdhp1gQI3+MEOsgoIyN7cMqzEv8J3VCTiZBBz2UO+3IwMk9TakBTE=
+	t=1707387746; cv=none; b=uot6KCxYnIYSTP+orl7GQlDmRcCOCm7BM7b9La/bTnQftEa3WIXaPf36Zu5IcPAInMdpEUqdL9fkcm1pickcCzSFgq7tgJjlOmdhw4UuHBGLB8H9QPKRihu/EFKyiXXWUlwMCKNgVMALgHctzmJTr7NZwgna2u3CTF9mvlqWMug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707386557; c=relaxed/simple;
-	bh=D96AYJ0yVRf7SBQeHRHG9hGhNFiOxzG3tk5OOOiG5iI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VedGqiWrmlcm9NINqTNv0Vk2FlLSQZjDbEkyVdqyXMe/ScF1zq+KgDSurKQSIUjrUodU8EQy/zskx6a5G2dtUUwVO8vq2MdkoUsf8Ma2dLxfEXQ8nfwa+RVklqPuxHQyVjpIWItHdhgpEEKOKUDYwkV1jlZ6GjOT/hx+Z/+u+Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VHeqwAoN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33ADDC433F1;
-	Thu,  8 Feb 2024 10:02:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707386556;
-	bh=D96AYJ0yVRf7SBQeHRHG9hGhNFiOxzG3tk5OOOiG5iI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VHeqwAoNV7C/gX+AnZEx/HQqAh/y+NET+LhOfaOfSSEWMQXVj5Y6SpJgGXjQMUeZt
-	 gFTzmmmCA5hHb/LpelrqtBl0QK1JNu/9LkP//tgwsIdySN50IBdCQW42kgDGVkwY/R
-	 AcER4mY5OQ2OHqOW1E0U+Tdo+a1Ka3IJ627Xx1TQPQKpyAS5p/ClTaWnPqGHTaR3FK
-	 w0WJ0BLvHNgNhDT/A97tMRR5d6a7/m8Dz4Nxeg2b2akfBzXYXVO9Zr4YLw3dUx4gI1
-	 k56zrnrNv8MrjhoVUTEGsV4/XrV964hS28JhP2onb8qzNxwd4UskxtVnNaTtiXajs2
-	 d/NVwAAkPydpQ==
-Date: Thu, 8 Feb 2024 11:02:33 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
-	manivannan.sadhasivam@linaro.org, bryan.odonoghue@linaro.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Subject: Re: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-Message-ID: <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
-References: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
- <CAA8EJpqQtHDRK2pex+5F-fMRTosJuFCx59e89MWhnie1O3dHKA@mail.gmail.com>
- <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com>
+	s=arc-20240116; t=1707387746; c=relaxed/simple;
+	bh=PfLUmuXo0GEDMmnRiXHPOLXCNaYZZAjXgb0dXfGF/lw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LFacqUiDHY0N+QNBZF7cDt0olIcHz293+Dved++vpjcohhiqziBm+FGA0W4eCGS62J/JET2Z03yO7thiq5IDVYuGrFY5OMrIrVNw0WSN/yDqrfGUgUwCa3yUrS55V/MQn5r6UNTzWeop+gJf8+3myNstUjSqqykbaJePs1qfU/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZRdGbNty; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4187oU5T002432;
+	Thu, 8 Feb 2024 10:22:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=6j2DPWy54VnId1kVZnydmlSBxga3Rz9SWby7Pw3pcyE=; b=ZR
+	dGbNtyL8E2INdw8l18s34Kksahdy7oS+8NjgnbKXow+VSUyEHuQ8El46vydUaOmI
+	vODtjJYNU4vZTxSj6zlHrXA4hxYi7QaI0toa0nSSUgolgkA1Zi+1NBqg1LKUIOZe
+	uDTeZnkQdAyq6RILWx36VJDplWQB/un84ygFM8qFRuasT/5Hrx3MbqnNhY/CuweK
+	CHkE/2DTXJ7wo6EVJBmlmB6yAhMLpnzeEsM2LUBUEdCtY98fXhBpa3NQ5aEPf01x
+	yupxspvQSb2rSWLgkoNGoPlTFgZ9Au4IaUn2zY815mwuV0LNI/8/MhvcYX03ZXJ7
+	WybWEjRcX+TnNswYPZXA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4stxgkcp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 Feb 2024 10:22:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 418AMGMM017355
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 Feb 2024 10:22:16 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
+ 2024 02:22:11 -0800
+Message-ID: <1f0c2767-c489-58a6-e5ba-9f1974072bb7@quicinc.com>
+Date: Thu, 8 Feb 2024 15:52:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [RFC 1/7] dt-bindings: mailbox: qcom: Add CPUCP mailbox
+ controller bindings
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <sudeep.holla@arm.com>,
+        <cristian.marussi@arm.com>, <andersson@kernel.org>,
+        <jassisinghbrar@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
+        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-2-quic_sibis@quicinc.com>
+ <7bf729a4-f3ac-4751-9275-a2aa4d62c036@linaro.org>
+Content-Language: en-US
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <7bf729a4-f3ac-4751-9275-a2aa4d62c036@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4QNLi6la1u5zi_sYGFlZlGpXS4GzKd9A
+X-Proofpoint-ORIG-GUID: 4QNLi6la1u5zi_sYGFlZlGpXS4GzKd9A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-08_01,2024-02-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ malwarescore=0 mlxlogscore=534 spamscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402080054
 
-Hi Viken, Dmitry,
 
-On Fri, Feb 02, 2024 at 04:13:06PM +0530, Viken Dadhaniya wrote:
+
+On 1/18/24 01:23, Konrad Dybcio wrote:
 > 
-> On 2/1/2024 5:24 PM, Dmitry Baryshkov wrote:
-> > On Thu, 1 Feb 2024 at 12:13, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
-> > > 
-> > > For i2c read operation in GSI mode, we are getting timeout
-> > > due to malformed TRE basically incorrect TRE sequence
-> > > in gpi(drivers/dma/qcom/gpi.c) driver.
-> > > 
-> > > TRE stands for Transfer Ring Element - which is basically an element with
-> > > size of 4 words. It contains all information like slave address,
-> > > clk divider, dma address value data size etc).
-> > > 
-> > > Mainly we have 3 TREs(Config, GO and DMA tre).
-> > > - CONFIG TRE : consists of internal register configuration which is
-> > >                 required before start of the transfer.
-> > > - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
-> > > - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
-> > >                 of the transfer.
-> > > 
-> > > Driver calls GPI driver API to config each TRE depending on the protocol.
-> > > If we see GPI driver, for RX operation we are configuring DMA tre and
-> > > for TX operation we are configuring GO tre.
-> > > 
-> > > For read operation tre sequence will be as below which is not aligned
-> > > to hardware programming guide.
-> > > 
-> > > - CONFIG tre
-> > > - DMA tre
-> > > - GO tre
-> > > 
-> > > As per Qualcomm's internal Hardware Programming Guide, we should configure
-> > > TREs in below sequence for any RX only transfer.
-> > > 
-> > > - CONFIG tre
-> > > - GO tre
-> > > - DMA tre
-> > > 
-> > > In summary, for RX only transfers, we are reordering DMA and GO TREs.
-> > > Tested covering i2c read/write transfer on QCM6490 RB3 board.
-> > 
-> > This hasn't improved. You must describe what is the connection between
-> > TRE types and the geni_i2c_gpi calls.
-> > It is not obvious until somebody looks into the GPI DMA driver.
-> > 
-> > Another point, for some reason you are still using just the patch
-> > version in email subject. Please fix your setup so that the email
-> > subject also includes the `[PATCH` part in the subject, which is there
-> > by default.
-> > Hint: git format-patch -1 -v4 will do that for you without a need to
-> > correct anything afterwards.
-> > 
 > 
-> At high level, let me explain the I2C to GPI driver flow in general.
+> On 1/17/24 18:34, Sibi Sankar wrote:
+>> Add devicetree binding for CPUSS Control Processor (CPUCP) mailbox
+>> controller.
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
 > 
-> I2C driver calls GPI driver exposed functions which will prepare all the
-> TREs as per programming guide and
-> queues to the GPI DMA engine for execution. Upon completion of the Transfer,
-> GPI DMA engine will generate an
-> interrupt which will be handled inside the GPIO driver. Then GPI driver will
-> call DMA framework registered callback by i2c.
-> Upon receiving this callback, i2c driver marks the transfer completion.
 
-Any news about this? Dmitry do you still have concerns? We can
-add this last description in the commit log, as well, if needed.
+Hey Konrad,
 
-Andi
+Thanks for taking time to review the series.
+
+> [...]
+> 
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    mailbox@17430000 {
+>> +        compatible = "qcom,x1e80100-cpucp-mbox", "qcom,cpucp-mbox";
+>> +        reg = <0x17430000 0x10000>, <0x18830000 0x300>;
+> 
+> These reg spaces are quite far apart.. On 7280-8550, a similar
+> mailbox exists, although it's dubbed RIMPS-mbox instead. In
+> that case, I separated the mbox into tx (via
+> qcom-apcs-ipc-mailbox.c) and rx (with a simple driver). Still
+> haven't pushed or posted that anywhere, I'd need to access
+> another machine..
+> 
+> On (some of) these SoCs, one of the channels (rx[1], iirc?) clearly
+> bleeds into the CPUFREQ_HW/OSM register region, which gives an
+> impression of misrepresenting the hardware. X1E doesn't have a
+> node for cpufreq_hw defined, so I can't tell whether it's also the
+> case here.
+
+I am aware of ^^ discussion and the X1E doesn't have this problem.
+Both the regions described are only used for mailbox communication.
+X1E uses the scmi perf protocol for cpu dvfs.
+
+-Sibi
+
+> 
+> Konrad
 
