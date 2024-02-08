@@ -1,205 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-10160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0509B84DE75
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:39:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB2BC84DE9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:51:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB621284E33
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:39:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29C511C2545A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:51:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB6E856B6A;
-	Thu,  8 Feb 2024 10:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B9D6BFB6;
+	Thu,  8 Feb 2024 10:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BTxHRlOS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uUWIHf+d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3540E41A88;
-	Thu,  8 Feb 2024 10:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E1F6BFD1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 10:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707388750; cv=none; b=qGjp9qm7NLvgaenzvHg4lcZcQxRfud6DSjlAFODnUsJ8tII9/OktVz6a/PgSSRIdKHm6oWy8TRH9Y9vVUfHB9RM0I/RTTm7+eJdm3BxtoRjoGAlReHSGI+3OBTHoCjtoF7SCKOpcmD1FyVHPgJUpxvCkR6wnYJELOOWuw/gz73Q=
+	t=1707389464; cv=none; b=CYOn+HwTlY7ESq0CP4XCiWHoF6Lspn6ebzYsbzlqz8Ayb1FvBAxnxlpog5NvxyInmI4XifNC2TVRlt+Ilf1gq6jHDPBVcr277n8USvw+rF02mFxRj/lHKbKOyf/co3bq2lDndjgV59xb1Yw0f21BbGA7Nkg7Mj/I+jKtpPZKif0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707388750; c=relaxed/simple;
-	bh=ChPuBbqgOqqYPEaW2BwH6XzfhgpJTmqg/qylBBkB8Cw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KCtwPTSdyF634//UcECpEaZUYBdabC7ewtxApNZATTNcp8Sh6xLVQfm4rV3DjdP5dc3s84ahRa4/Q1UFFoqgwe1rYS3QiLnJU30cueEoL3xC/Ubx9wJoGnzdkAtjXdRfiC4NXKTBoPOPZGXjzQN6wD3c3kxg5+0FFEDlBKkDeP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BTxHRlOS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4188lplQ019681;
-	Thu, 8 Feb 2024 10:39:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=VCYj+6BYk05i84Jpje+CvtSGcyxK25vY9GPZ/O/U9wM=; b=BT
-	xHRlOSjprkzJnuek2e8MN9o5bBoRlZ7yHV1IgbiIH3KZlzQ8lAw0cBLEKKOHE8kQ
-	weEKkTH9M/l0NNIw7dClftn0a1DgFbnqN78yKWsTXy5pFTICL/+meI7ShhGDkWwD
-	xG49S0ow7Z9MYJt8JDZtrwsImvoaT22b8qn4FEyvKonwehYpWV1zoehwd5Eyflz7
-	QZnoo+rYDKzZ4Ms/k0kc/yxDLJGZtgjGtflc42q3HvLsMAfw7l4+LGWyjhuUr7Ik
-	b2cbUPPy6YICzTeOw0pymtpA3/Uuujq70WLN87HotYFkXiL0SkR3h1ty851VfmPK
-	HFoo/kK7Y/IBDsHziYng==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4frwsvq0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Feb 2024 10:39:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 418Ad336003983
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Feb 2024 10:39:03 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
- 2024 02:38:59 -0800
-Message-ID: <079ef9dc-fe21-2a28-9540-7395af0c4282@quicinc.com>
-Date: Thu, 8 Feb 2024 16:08:55 +0530
+	s=arc-20240116; t=1707389464; c=relaxed/simple;
+	bh=IWArNLZ3xDrsSDqWOXDxHf5p6Q90JkYqIDCD6gxy8vs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fjgaFgHaFQH/eEOeV0ky33e1EVCSeQaN8CKEdm6HCCAA+yuLmNPrBXNGiPq8DzcebKL3ePfBxnEddsfWTLOrkwxpA1mWgwlwyKV2SfoR+Lv1iyVOlwAnTpPC8j///WCsXQsnyej71kHsIZ0U+4bwA+UkzUkFoX3MbWV0IShcrNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uUWIHf+d; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33929364bdaso1099077f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 02:51:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707389461; x=1707994261; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5I3l4WhlIWRRaOY916CuXQO0MyuJYtjuOqUh0/NNez0=;
+        b=uUWIHf+dMIBKNxzXhe1ua0ARaTqOqGlmBkh8DC2gP5I6Bj80nPXl9Faf0qScKPqtv6
+         TEeJvKK9+TH1Cy5ooBcG5hVVgDSNBzG4EaTtKj3ITNfHl8hXFTFblcMGEyLIPvKvmKKI
+         5eSCcBkk2dIWXJm9+ZivTufLFolJpcjUlPZKpezlzVMuMrkPQrYCTKv+z6ulCeXy4+vy
+         Nzfioq4+bxsltXUuTEp7vhIn1wEAlQPUGTypTDr8/fPeiHvc6YKcK6AvUvsCJJQhX8vD
+         RI2KvXgwAM9TRUA6NOYAFIVMqryw/ifrmSwY62Q62Stpxsu9IpwzNFC7YyKu3hAfxpAg
+         XACQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707389461; x=1707994261;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5I3l4WhlIWRRaOY916CuXQO0MyuJYtjuOqUh0/NNez0=;
+        b=QSd4tldeueZQIol9XVRVIasnAovyAyDhiv+3Upu62fV2tdWzhszP7jOEOoYg1pG/QJ
+         ajXS4Phg2lnWf0FGfpjTzirTnBtH2Es0WEZBUSTuM1Zh6VEg1gXSFZAR9YT7yp6oH2l6
+         8Hl4/jCDBbRQxbtVdF0OgP85qEWwgulh64kT5x7Br/H8XVRXOfuAwPjz0/n6BWr69W4i
+         rFR+PURdxb/wqBUUBGVMB5+qAEbFux6czEiT/EVedg9R80cXPMh6dT2/xDIfQpTJcBmH
+         YHXR2BPiGd4WF3fgkKz9g2yeMB0LCK3jjgacihZEQjhRaWxJYFtYlDD4rRKY+mt8Hsfw
+         oKAA==
+X-Gm-Message-State: AOJu0YyoYrWSfn/WtaLrf/TKKyP9LvPfQg+RkiOrvYZHxUWgQ/uPeXSd
+	54cqqc+7Oh9Ki7Jv2oLeG8aEw26giWB4vmUk8Vj33Wj/Tx6nO/cfR+8lHzp51fo=
+X-Google-Smtp-Source: AGHT+IHm/6oo5GLFfJ1rN3KEeBopdXbRtYFMSOzZXcsC9Y77R7p2xScPw4PyeVgNgev7Lo2FxEtG8A==
+X-Received: by 2002:adf:e50b:0:b0:33b:4b01:cc94 with SMTP id j11-20020adfe50b000000b0033b4b01cc94mr4910006wrm.63.1707389460848;
+        Thu, 08 Feb 2024 02:51:00 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXhHJbwEUhsihpmwTQPsy9/9ymYTz3BnBONguKKNuGhV0fbeRQbqNX/jwLlp4yEEM5Y4Wk6DFJhneAwhrkitJ5p/U+wwrm1WrHn71cgNWvniWWVVTeAdyigoUUeXFNmbuFMs4U4QpwW4xAt6daWKPu8OyTODifkt2fbAZBnLmjbNDMY0bMzekfwPoF48XGMWTiqYYnEa2UghIfeHfrG5HSpC9cAeFuAVJm5uLOVLbfRcjkl
+Received: from krzk-bin.. ([178.197.222.62])
+        by smtp.gmail.com with ESMTPSA id s1-20020a5d69c1000000b0033b4719eb6esm3308283wrw.27.2024.02.08.02.50.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 02:51:00 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/6] interconnect: qcom: constify things
+Date: Thu,  8 Feb 2024 11:50:50 +0100
+Message-Id: <20240208105056.128448-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 3/3] remoteproc: qcom_q6v5_pas: Unload lite firmware on
- ADSP
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob
- Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240129-x1e80100-remoteproc-v1-0-15d21ef58a4b@linaro.org>
- <20240129-x1e80100-remoteproc-v1-3-15d21ef58a4b@linaro.org>
- <CAA8EJporoBQQtrRWL5SS4qwpmu0rF6UMpaZXQ5t-qdvoW53XOA@mail.gmail.com>
- <ZboTMVx7SN1BBoaz@linaro.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <ZboTMVx7SN1BBoaz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8IPKluktH-kK2P5TVffwT_SODUC4RHLr
-X-Proofpoint-GUID: 8IPKluktH-kK2P5TVffwT_SODUC4RHLr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-08_01,2024-02-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
- clxscore=1011 lowpriorityscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402080055
+Content-Transfer-Encoding: 8bit
 
+Still some things were left non-const.
 
+Krzysztof Kozlowski (6):
+  interconnect: qcom: msm8909: constify pointer to qcom_icc_node
+  interconnect: qcom: sa8775p: constify pointer to qcom_icc_node
+  interconnect: qcom: sm8250: constify pointer to qcom_icc_node
+  interconnect: qcom: sm6115: constify pointer to qcom_icc_node
+  interconnect: qcom: sa8775p: constify pointer to qcom_icc_bcm
+  interconnect: qcom: x1e80100: constify pointer to qcom_icc_bcm
 
-On 1/31/24 15:00, Abel Vesa wrote:
-> On 24-01-29 17:17:28, Dmitry Baryshkov wrote:
->> On Mon, 29 Jan 2024 at 15:35, Abel Vesa <abel.vesa@linaro.org> wrote:
->>>
->>> From: Sibi Sankar <quic_sibis@quicinc.com>
->>>
->>> The UEFI loads a lite variant of the ADSP firmware to support charging
->>> use cases. The kernel needs to unload and reload it with the firmware
->>> that has full feature support for audio. This patch arbitarily shutsdown
->>> the lite firmware before loading the full firmware.
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>> ---
->>>   drivers/remoteproc/qcom_q6v5_pas.c | 8 ++++++++
->>>   1 file changed, 8 insertions(+)
->>>
->>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->>> index 083d71f80e5c..4f6940368eb4 100644
->>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->>> @@ -39,6 +39,7 @@ struct adsp_data {
->>>          const char *dtb_firmware_name;
->>>          int pas_id;
->>>          int dtb_pas_id;
->>> +       int lite_pas_id;
->>>          unsigned int minidump_id;
->>>          bool auto_boot;
->>>          bool decrypt_shutdown;
->>> @@ -72,6 +73,7 @@ struct qcom_adsp {
->>>          const char *dtb_firmware_name;
->>>          int pas_id;
->>>          int dtb_pas_id;
->>> +       int lite_pas_id;
->>>          unsigned int minidump_id;
->>>          int crash_reason_smem;
->>>          bool decrypt_shutdown;
->>> @@ -210,6 +212,10 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
->>>          /* Store firmware handle to be used in adsp_start() */
->>>          adsp->firmware = fw;
->>>
->>> +       /* WIP: Shutdown the ADSP if it's running a lite version of the firmware*/
->>
->> Why is it still marked as WIP?
-> 
-> AFAIU, there was more to be done here w.r.t. preloaded lite version
-> firmware.
-> 
-> Later, was agreed that that is not case.
-> 
-> So maybe I just need to drop the comment.
-> 
-> Sibi, can you confirm?
+ drivers/interconnect/qcom/msm8909.c  |  6 +--
+ drivers/interconnect/qcom/sa8775p.c  | 56 ++++++++++++++--------------
+ drivers/interconnect/qcom/sm6115.c   | 12 +++---
+ drivers/interconnect/qcom/sm8250.c   |  2 +-
+ drivers/interconnect/qcom/x1e80100.c | 12 +++---
+ 5 files changed, 44 insertions(+), 44 deletions(-)
 
-ack, this is the best we can currently do. Please drop the comment when
-you re-spin the series. Thanks for sending this out.
+-- 
+2.34.1
 
--Sibi
-
-> 
->>
->>> +       if (adsp->lite_pas_id)
->>> +               ret = qcom_scm_pas_shutdown(adsp->lite_pas_id);
->>> +
->>>          if (adsp->dtb_pas_id) {
->>>                  ret = request_firmware(&adsp->dtb_firmware, adsp->dtb_firmware_name, adsp->dev);
->>>                  if (ret) {
->>> @@ -693,6 +699,7 @@ static int adsp_probe(struct platform_device *pdev)
->>>          adsp->rproc = rproc;
->>>          adsp->minidump_id = desc->minidump_id;
->>>          adsp->pas_id = desc->pas_id;
->>> +       adsp->lite_pas_id = desc->lite_pas_id;
->>>          adsp->info_name = desc->sysmon_name;
->>>          adsp->decrypt_shutdown = desc->decrypt_shutdown;
->>>          adsp->region_assign_idx = desc->region_assign_idx;
->>> @@ -990,6 +997,7 @@ static const struct adsp_data x1e80100_adsp_resource = {
->>>          .dtb_firmware_name = "adsp_dtb.mdt",
->>>          .pas_id = 1,
->>>          .dtb_pas_id = 0x24,
->>> +       .lite_pas_id = 0x1f,
->>>          .minidump_id = 5,
->>>          .auto_boot = true,
->>>          .proxy_pd_names = (char*[]){
->>>
->>> --
->>> 2.34.1
->>>
->>>
->>
->>
->> -- 
->> With best wishes
->> Dmitry
 
