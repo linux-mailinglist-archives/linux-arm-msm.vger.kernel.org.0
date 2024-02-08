@@ -1,161 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-10168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30AB584DEC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:54:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49D9884DF4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:07:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFE0928180C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:54:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED48528ED96
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BCA86E2C7;
-	Thu,  8 Feb 2024 10:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EC6E6E2AC;
+	Thu,  8 Feb 2024 11:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TcBpZ1Vm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bKrdyjPV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A210D6F06E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 10:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C206DD07
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 11:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707389536; cv=none; b=V9/rL11rZ9uM6E21vKzeL3P0EMpYG9EFTzm5FbMUC/SxSfsTC2iIchwq1a/U+DdsamPkHRaN18Vgmdq7CPq9URCd+tValCnwQrcBWFCtTfd3Of1YtmJ9cfNdOXGB0pmGyzmtpYthOBPYTnaqpaZIqNTwExBDxV74qWaULjgdHE0=
+	t=1707390268; cv=none; b=STLwZEOgCqCH0TX5pLe2BIYc8hGPpzOzk2/n7i3pQgmZVLSX4HmbtF3Z/tD5f4L6Wq2iMSy6HAVmvyhSbQfTaiWYkGC+UOkKSSdSz5EaLavyQYdi1pcK1nEJaVds8kR2xuVt3Qnksk5qDd5khIWsk6EdhtdkwZIeGU55kSsovSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707389536; c=relaxed/simple;
-	bh=l2e6xHPnxeolMkynb6+ddYEiVP/DYpZDRIJ0qSggCuw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sdpbBt0OatTt54I/5myjDJeK/YjN9V5YhDHR6Xu3MHaD7RS4UPDHJFf4xbMniuzcgEdOsVW1XilETWogp4XZFd8uksO3H4nMB05Rtz0LrVTo12XEaQgm79iSezrourkuIJnziAsIqqQyORdm5LQ8GnKJL0ulw/AlE0RSh3L5uQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TcBpZ1Vm; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1707390268; c=relaxed/simple;
+	bh=M+dRcp4Mdg3swizMqeWm8YTp95g9PXZ/wHhoSa3YnNw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HyGwUSYsRQSo54Qhz5shf159orvYoSyuWbC/vqGP6QSyKLJ2quGJ9l5woWwlbxFCCOaP62EM9XFbhRgg8o+B61AzYPXX8OrOnRwfJE5UI0jW4iXV5XU25wC4gXkZ9VjwApRR5iXOcnUopB28xsvkOJ99EP9hz5YXhPe6rBmeYKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bKrdyjPV; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-511717231bfso265191e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 02:52:14 -0800 (PST)
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dc6af9a988eso1365316276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 03:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707389533; x=1707994333; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZP3FlHWV5DcIHAA8crgDofJ0wKaD0glJWVtgw/kG33o=;
-        b=TcBpZ1VmGtRZtmeBjpht+RILe67UZZyjENyOmH1VzZEI09UJaYSVgetxvAvKGUi9sQ
-         w85okYxRkb/9ZM+rV/lYSyoTu7FFZaMYmdCDkBUoSPjo3s6rsnNHldR0cCUjfZIILxNp
-         s10HVsyuEMIB0DZJBQeRe0Lk0HxgYpq9HmtoJ+weVqSs13j2UkWoOtK1+q4eFGpEZHE9
-         OzZgXxXvioqwM6PkQ6jMQIZaap+95v4V7yolbnhuC8BTkJtZz8CKRin+6TIpk1/jWjpC
-         Jz61cFMBGGrNtfEETfyK9Xqh+Lv77KA7G3XUVwJdorQI/3Ome4sNBEXcFkxIST4ZKNBz
-         +1dQ==
+        d=linaro.org; s=google; t=1707390265; x=1707995065; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=E20n7hLeTsUtRZUlgw3etseFcnhWUpdK3reOyYMqK5E=;
+        b=bKrdyjPVW+/8ztLhVFJ5J5j8My1PmgpxfYr4pvL14Kx9cdV8qRajmh+ebUTwMIqnKc
+         /U8ZbT4+2RQtER1Q7Hdoy04dL9jzsZOj2GLz/6F5rqmCtgYeoUQkwiro3r7GXdhcc4tm
+         CmVThu0RtU1IvdtcooxLHyVB5KAvmln349KEw8LWrztc/xeZkCF17+kwHuDhBxK3Li7G
+         uq/VL0ChQOt/Za+Wq3Zdp+J+NrSJNQhWW34FDynHLzm/VsGzWwqp6J6v8S2mJlEAAhJB
+         gLtGz8ycvLvZzk6M5sWnvET9iZHBb7F4RvgYhRJ1viOm5h4/mRkAaCXY7OrCY01bnkxt
+         mijw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707389533; x=1707994333;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1707390265; x=1707995065;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZP3FlHWV5DcIHAA8crgDofJ0wKaD0glJWVtgw/kG33o=;
-        b=eqSbTuZxfK8jiyr+/iwAab43Ovs8i+lORbeLesciEYQhi2LUmwpRKDweOK5jDnMVL3
-         Dmujr6BrU+hTZjiA1vccwXZNs15pNsrjuQWI8Pq0EIUC43/44ZDeik7wM2zjbNyc3UPD
-         RUjKQpsxmtx7aBZ3EV+Ob5i4guxDwxNBmGxlhMHycHCf1xbhM3588yGiaYdD6/S6+yRG
-         Dq1XMG7q0t74hj4vcSnC/jIy8Gr8gglOQV6zW+yTHL67RPf4980MmqedrgM/kDzeD5ST
-         lBvyTTBHy2KQLBsK9EDDC940yqur1ea+vzeyaHEbSnUGO5V2O6KVxYgMoQd9qfmGK2oW
-         0/kA==
-X-Forwarded-Encrypted: i=1; AJvYcCUvX6sqe+y/OhSSMsUTerMyjOFVXruL3LkNvJ0F3IAZLZxs52RIrDvRDAOrsxA8rBN+jtVJMPp8jYb1aL1pUChEuS5menEEjZcKublVNw==
-X-Gm-Message-State: AOJu0YxRAd0lUj1Xr1ca295lWpsimaYugEqEKCRcVyRIbNNzFvTdeuko
-	iJNHRnxuXjA8uzgH13+kqGsuZ3JTWw67ix9bJCcCjP35knytjrGhORDAxD77Fj0=
-X-Google-Smtp-Source: AGHT+IHrm2+zRlDpxNBwxHUWjJm06fjlMdTzzH+qGUL8p8NjuGCwrCgVn/7DadJrJQQHORBTlVHvwg==
-X-Received: by 2002:a19:750e:0:b0:511:4d43:aadf with SMTP id y14-20020a19750e000000b005114d43aadfmr5954355lfe.21.1707389532826;
-        Thu, 08 Feb 2024 02:52:12 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWuceSPr9uSasIydA3iKZg8t4Cxfz210NO2SsmtZsOKmbu0SjK9gYp+0qZTOg911NmTFlTWPbeoLY4zhytQ6FP2hlEYvLHrm1u3BfNYOFZA1xomdICHtCR/Qd8nyy/oKwwlNYn35XMuQ1IZSHBhS8mo666IIPTG3t9JsVGi+r9/fwxxo7w6VeJkl1MJAW1mWksYBITcUZaYnlPxp7SdWWJJul88sTqzjHF8er+7+Nab3XkB8YPn7G/aVfaPXqifnWoyZZVLFyYe
-Received: from krzk-bin.. ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id o13-20020a05600c4fcd00b0041047382678sm505762wmq.1.2024.02.08.02.52.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 02:52:12 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: minor whitespace cleanup
-Date: Thu,  8 Feb 2024 11:52:08 +0100
-Message-Id: <20240208105208.128706-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=E20n7hLeTsUtRZUlgw3etseFcnhWUpdK3reOyYMqK5E=;
+        b=ubJ6zrJp6FG9qemqqYm9wejzAFgBvlsv2dQFSE2OHM9BrT/be8LoNkTRhqFHUhiOE8
+         e5DWxMKY+WScHFENrm99EVPTDckmsW5A75WuhZfcdm0L+mKciYYe5EsCjiHYEto7z0U2
+         m2y3Y7q7VLHUyuA/WJQ0qJlT4yGuVrLIYt7eJTocXOst9jBzWplELDho3d2r2hdSgNHq
+         VlA1tg9DI/LpdWfptBFUVwCBkCu/+o8Afbm4mhr0r+MZoxmEu0LBcIwS8V74ji/mhpWI
+         UZx4u5TxS6PHwbl0uSevAQLIG119P3F+ribBO9xDN1uEQdyUm83Zo4Epidgkdq6aSkPS
+         S57w==
+X-Forwarded-Encrypted: i=1; AJvYcCW5hS2exVaxhAyX1NaKLe+7OvHr6Pubr+JRxOAltBLwanUZADWETAjl2jiMFsXO5NdUV8kI42VkkVemgI0KrRSnNG1rGxAprwwZftuSxw==
+X-Gm-Message-State: AOJu0Yw8oKcMWKkhdXCKeXpOsqDwm1FrM+sU4tSPtXNw+GsnEZZb5Fer
+	/R3YHMNshPBu5saNgPmZxFe6wuZ0yzecTBXqcqovpNCBF0iAWhk3xywXitAiE3jwXgD4xQQIm39
+	2tAK/kwoM2dyMUMa3h1R4hENJa0xnmeONU8u8+g==
+X-Google-Smtp-Source: AGHT+IGH6rdGfZLnWOM4BwmqKZJ//O8CWQTsF9VAkaFLM7YEQKP6ujHgl3G6xP1O6Q/bGTCGVocyNtRUwa1dAw1KBgM=
+X-Received: by 2002:a05:6902:1243:b0:dc6:c2b2:c039 with SMTP id
+ t3-20020a056902124300b00dc6c2b2c039mr7995213ybu.41.1707390265487; Thu, 08 Feb
+ 2024 03:04:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
+ <CAA8EJpqQtHDRK2pex+5F-fMRTosJuFCx59e89MWhnie1O3dHKA@mail.gmail.com>
+ <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com> <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
+In-Reply-To: <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 8 Feb 2024 13:04:14 +0200
+Message-ID: <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
+Subject: Re: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+To: Andi Shyti <andi.shyti@kernel.org>
+Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, 
+	quic_bjorande@quicinc.com, manivannan.sadhasivam@linaro.org, 
+	bryan.odonoghue@linaro.org, quic_msavaliy@quicinc.com, 
+	quic_vtanuku@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-The DTS code coding style expects exactly one space before '{' and
-around '=' characters.
+On Thu, 8 Feb 2024 at 12:02, Andi Shyti <andi.shyti@kernel.org> wrote:
+>
+> Hi Viken, Dmitry,
+>
+> On Fri, Feb 02, 2024 at 04:13:06PM +0530, Viken Dadhaniya wrote:
+> >
+> > On 2/1/2024 5:24 PM, Dmitry Baryshkov wrote:
+> > > On Thu, 1 Feb 2024 at 12:13, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
+> > > >
+> > > > For i2c read operation in GSI mode, we are getting timeout
+> > > > due to malformed TRE basically incorrect TRE sequence
+> > > > in gpi(drivers/dma/qcom/gpi.c) driver.
+> > > >
+> > > > TRE stands for Transfer Ring Element - which is basically an element with
+> > > > size of 4 words. It contains all information like slave address,
+> > > > clk divider, dma address value data size etc).
+> > > >
+> > > > Mainly we have 3 TREs(Config, GO and DMA tre).
+> > > > - CONFIG TRE : consists of internal register configuration which is
+> > > >                 required before start of the transfer.
+> > > > - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
+> > > > - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
+> > > >                 of the transfer.
+> > > >
+> > > > Driver calls GPI driver API to config each TRE depending on the protocol.
+> > > > If we see GPI driver, for RX operation we are configuring DMA tre and
+> > > > for TX operation we are configuring GO tre.
+> > > >
+> > > > For read operation tre sequence will be as below which is not aligned
+> > > > to hardware programming guide.
+> > > >
+> > > > - CONFIG tre
+> > > > - DMA tre
+> > > > - GO tre
+> > > >
+> > > > As per Qualcomm's internal Hardware Programming Guide, we should configure
+> > > > TREs in below sequence for any RX only transfer.
+> > > >
+> > > > - CONFIG tre
+> > > > - GO tre
+> > > > - DMA tre
+> > > >
+> > > > In summary, for RX only transfers, we are reordering DMA and GO TREs.
+> > > > Tested covering i2c read/write transfer on QCM6490 RB3 board.
+> > >
+> > > This hasn't improved. You must describe what is the connection between
+> > > TRE types and the geni_i2c_gpi calls.
+> > > It is not obvious until somebody looks into the GPI DMA driver.
+> > >
+> > > Another point, for some reason you are still using just the patch
+> > > version in email subject. Please fix your setup so that the email
+> > > subject also includes the `[PATCH` part in the subject, which is there
+> > > by default.
+> > > Hint: git format-patch -1 -v4 will do that for you without a need to
+> > > correct anything afterwards.
+> > >
+> >
+> > At high level, let me explain the I2C to GPI driver flow in general.
+> >
+> > I2C driver calls GPI driver exposed functions which will prepare all the
+> > TREs as per programming guide and
+> > queues to the GPI DMA engine for execution. Upon completion of the Transfer,
+> > GPI DMA engine will generate an
+> > interrupt which will be handled inside the GPIO driver. Then GPI driver will
+> > call DMA framework registered callback by i2c.
+> > Upon receiving this callback, i2c driver marks the transfer completion.
+>
+> Any news about this? Dmitry do you still have concerns? We can
+> add this last description in the commit log, as well, if needed.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm4450.dtsi   | 2 +-
- arch/arm64/boot/dts/qcom/sm8650.dtsi   | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+I was looking for pretty simple addition to the commit message, that
+links existing commit message to the actual source code change: that
+geni_i2c_gpi(I2C_WRITE) results in the GO TRE and
+geni_i2c_gpi(I2C_READ) generates DMA TRE. But I haven't seen anything
+sensible up to now. So far we have a nice description of required
+programming sequence in terms of CONFIG, GO, DMA TREs and then source
+code change that seems completely unrelated to the commit message,
+unless one actually goes deep into the corresponding GPI DMA driver.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-index 3e7ae3bebbe0..603c962661cc 100644
---- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-@@ -17,7 +17,7 @@ / {
- 
- 	chosen { };
- 
--	clocks{
-+	clocks {
- 		xo_board: xo-board {
- 			compatible = "fixed-clock";
- 			clock-frequency = <76800000>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 62e6ae93a9a8..7f0b39a5cc6d 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -1233,7 +1233,7 @@ uart14: serial@898000 {
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S6_CLK>;
- 				clock-names = "se";
- 
--				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
- 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
- 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
- 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
-@@ -1255,7 +1255,7 @@ uart15: serial@89c000 {
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S7_CLK>;
- 				clock-names = "se";
- 
--				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
- 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
- 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
- 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 031aac702d3e..a8dc53b9da16 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -1216,7 +1216,7 @@ uart21: serial@894000 {
- 				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
- 				clock-names = "se";
- 
--				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
- 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
- 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
- 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
-@@ -4793,7 +4793,7 @@ qup_uart21_default: qup-uart21-default-state {
- 				/* TX, RX */
- 				pins = "gpio86", "gpio87";
- 				function = "qup2_se5";
--				drive-strength= <2>;
-+				drive-strength = <2>;
- 				bias-disable;
- 			};
- 		};
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
