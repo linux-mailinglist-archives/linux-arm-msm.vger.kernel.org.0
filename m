@@ -1,133 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-10227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A0F84E804
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 19:49:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B210E84E8BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 20:11:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 288481C2730E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 18:49:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC9521C23EE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 19:11:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79FBA25571;
-	Thu,  8 Feb 2024 18:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32C0434CFF;
+	Thu,  8 Feb 2024 19:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RfGJ3v2l"
+	dkim=pass (2048-bit key) header.d=marliere.net header.i=@marliere.net header.b="Zd/wgLaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE50620B34
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 18:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1018333CE7;
+	Thu,  8 Feb 2024 19:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707418158; cv=none; b=OJqak0Oh0WBfvLqNyDkUq3/wqGQvNfzJKpTjrqW0n5yPOTafABL2H9DEP5PEtpliQzLUBwJTtjqG4dsNkLbQZk/JShPoVMzD6YLKQGBk2nsnimQ2J8h2Ed12XtjLLhMSpgCa2DmFFM9/VXajURc8iWWYXeo+QBywQ4ogRUTAma8=
+	t=1707419503; cv=none; b=Rz6bxB5YwLXxK9vKJVOrWbmLU+L90scrMM9giXvKzfgtClo12EiVYPgndWVyBjmIMXwzpjrFHUaVdzZnzpUT7ElrI1jwPITd9ItU5wD/+OJkxYaLQczYFxQPkivoSvTcfMhvEHGxuORDxjAI6WfMTf7mZt01eK35E1bhX+zdutY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707418158; c=relaxed/simple;
-	bh=WDdjwDZFwhIIwgucOp90Tli+oKHy8FP9NYlF1hOfyfs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JHl4kBYJq5EsHUB/g7FtWgUjB/bAMRLWO9Ndsgn5VNM9WSaVQ4Pt0j06DUVKgtJl4jbZNwIXRCOLpixXFHrlf6jdMNWWov7hWpTw10tfubZ+ZR8rFtmD79IKgAuXgf38lmKYz1Ecs1KLW69Y6DkIJ7uLycKKkhqvOkN9B0PjnGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RfGJ3v2l; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 418HZpeZ006763;
-	Thu, 8 Feb 2024 18:49:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=QBqTvuDJPuu7iizUVoHoiNBzYUjWoKyMdKaS94JQEhU=; b=Rf
-	GJ3v2l0dggc9Qw1bn1L5HldPAM6pvPZcO+gMNF2lJuMTZgPQtU+PjVRBoQKHrhoK
-	lgwpV5zY5lor58d8PLUQyvjhMql+46ysqlnwyl48YC1R3EZ+4k+GKyZXGMm3G+vO
-	QKaIkDntj5zrSqLx3ZXqYKfF7bR2lXFuDd5+VOlyZmNT+cxkKabbeXNZ9lFv6FEU
-	r7oHayibhTURES0equHM/ivmNPwZWvQ26QLr6Evai8l8cdz2rhsomXRu/xVxdCm5
-	sIK58Wv0xJVS8/Ro3Vn+ToqikM6XiUewfn80rQBPGT+GiBaObK7wWIV9OYHPxhy+
-	3VAGOy+9vMYWdSva1dCw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4h0ujtb3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Feb 2024 18:49:06 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 418In6mA016465
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Feb 2024 18:49:06 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
- 2024 10:49:05 -0800
-Message-ID: <0c6a313b-c897-576d-ad74-8a5822622eab@quicinc.com>
-Date: Thu, 8 Feb 2024 10:49:05 -0800
+	s=arc-20240116; t=1707419503; c=relaxed/simple;
+	bh=aQEy3mSWaDeeTSuY1HAPfZhDAO2ymzOLonZei+6zUg4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fPE0tADQohLkwSOrMhdXhD03z2G1RC4GABDY36HqKUa0zk/6CsKaAQWE9g/TG4ImzA7oqEXvFce5RqMZPmBwcRMA/wdNHVcKWN31tmXypLoY5YnkOqRr6m6pxq5FcWks0HT90qmXGRz6YD8yg7c3qFMgPLeLzrpwqGF++P4Ubg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=marliere.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=marliere.net header.i=@marliere.net header.b=Zd/wgLaS; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d70b0e521eso1097335ad.1;
+        Thu, 08 Feb 2024 11:11:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707419500; x=1708024300;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:dkim-signature:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y1PL72wG+pTNKJ8ODm/IPBfg6h6zM4BQGA0MFJHp+QU=;
+        b=WDcw4qF0UgRI2dq8mnVe2007TllokYV1PfV6fjO2rw8rD2HFPNBazRbBVzkfYA5xIL
+         juRbbhdDUImECf0CNY64mLdOCUHJduN8MmWnaLXZlHz4QvWPU+vDdJESlRCOpKciywBR
+         L2E/fxb2LXhm7HZasGLHcus19up69nqS5PWzKMISvTzCEEAGXAxLzQZhZTfQhHQymTWm
+         gErbFyXBVJVOHkbaIlZbPEG3OPeOJBpDedz7MPlUJvImNd0oAED0aML41WgyucgjQ/mF
+         Y/PGNdgHXYTuFpg2q4FPt6qFUItDk96DV+HPWAb6guuw6xies7xfNzzssNG1fJs6ng7A
+         m3AQ==
+X-Gm-Message-State: AOJu0YypHcAnhMQx8SEs5rlKG1nwtK7J9xqKWGql5XkZcg1J4T/mtyET
+	dZMQD83NPFnjdcJW4t36MTPvLAEZpAxGUfgZytAvpGjxUV2TYkKz
+X-Google-Smtp-Source: AGHT+IESTJhHOIx4yxxdx6CBz3zZTjh5s95ewXfAPWbhN3a81Xm8y14s7O/v73CpE2tI4iBR2+1P/A==
+X-Received: by 2002:a17:902:d2c6:b0:1d9:3b54:d857 with SMTP id n6-20020a170902d2c600b001d93b54d857mr108412plc.23.1707419500141;
+        Thu, 08 Feb 2024 11:11:40 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWR20PWoX58eCA+IjlkLkegHMpsTBiRz0wymeIrC1g/6A0F9m8J+FIDXObHsKZsW2t3VA15MXktj3YBLWCLfpHsBrFTQyNrjmrtEKHZLHRlWWQmVuAr0uAXaZMT3SWCbAxdwzIBAkK8KDf/QI5Gep/groKElY6P72V6rbfb6ZmgydH+2yK4xok=
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id e16-20020a170902cf5000b001d77a0e1374sm97940plg.151.2024.02.08.11.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 11:11:35 -0800 (PST)
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2024; t=1707419490;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Y1PL72wG+pTNKJ8ODm/IPBfg6h6zM4BQGA0MFJHp+QU=;
+	b=Zd/wgLaShCIdHMzteS1tRduU/IrZqYTzM9XWZrgA4ijliNvFPOJpRzBIS15DzwJAtW95Ky
+	g8Mw03c0Hp4gqTUkJwyt34BSzz+zAty8XenUzyMbfgx+4C6oyopnFmUXpSCuDC9vjW71k2
+	BJaOCSz9rBcEc/GvewW6bItuJeMW417IS4r+jQwTcj5Q87aD81Lhd8jIFrF6tALJUPxJD+
+	/3JGZPGfc9cb9SihcEyK20HNubPrnCIYuDNuZ1nSP6DqYZEnxVOYZpfx8mEYN+wnnNohnp
+	A1RslDwEDTxzB9hI1zKiRHSJtbPjO/0HSpQPCJiCebYjj09zGyzN/XtmZ3sVtQ==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+Date: Thu, 08 Feb 2024 16:12:02 -0300
+Subject: [PATCH] bus: mhi: ep: make mhi_ep_bus_type const
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 4/5] drm/msm/dpu: move writeback's atomic_check to
- dpu_writeback.c
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-0-caf5dcd125c0@linaro.org>
- <20240208-fd_remove_phys_ops_atomic_mode_set-v4-4-caf5dcd125c0@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-4-caf5dcd125c0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Tp34sSLNQ77vkqV-J8bjeVLG3JstZCB1
-X-Proofpoint-GUID: Tp34sSLNQ77vkqV-J8bjeVLG3JstZCB1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-08_08,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
- bulkscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402080099
+Message-Id: <20240208-bus_cleanup-mhi-v1-1-ee80f4e71845@marliere.net>
+X-B4-Tracking: v=1; b=H4sIAIEnxWUC/x3MQQqAIBBA0avIrBNMC6yrRETaWANloRhBePek5
+ Vv8/0LEQBihZy8EvCnS6QvqioHdZr8ip6UYpJCNkEJzk+Jkd5x9uvixEbfOqUWrrjVaQ6mugI6
+ e/ziMOX9R+0XNYQAAAA==
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Ricardo B. Marliere" <ricardo@marliere.net>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1552; i=ricardo@marliere.net;
+ h=from:subject:message-id; bh=aQEy3mSWaDeeTSuY1HAPfZhDAO2ymzOLonZei+6zUg4=;
+ b=owEBbQKS/ZANAwAKAckLinxjhlimAcsmYgBlxSeEIdGbnUmuLq4798rs1q+lJxH4G/NRRqSYl
+ AS5e/NJF0eJAjMEAAEKAB0WIQQDCo6eQk7jwGVXh+HJC4p8Y4ZYpgUCZcUnhAAKCRDJC4p8Y4ZY
+ pjnQEACev8uaDbyRtMeSDrbIbSZgXFVgR0+fNGk1dDYWu4HrLblTHwG1I9a+bqqLOaTi35jntZO
+ tyyfq1EG1vHHeBi8TtbHbNNi1N8SeHq7Xox/U2UJlUzAWJLerqh3oaI4f+ygV2bGxiBEhbSRR/0
+ YMOyIEmCgIoTKpHS9/WiJhgwiywB9wXrvv3w7ZjG0fAL3yLc300ZRfXFDGdjJqoR/NV/aE3uTya
+ gm/jEMR/6JzX/W8pVSIQ7f8bLaBamMN6tlSxw7qqYidoaPhnZW1IJ602Rc9i3l21sLf6VwweTEc
+ sRkNNvQ9RewZeeKVtDZwEzP5WsScdKt3Q0aBZ1uXbrJWOquq0xXV70sreEQW9SJO6Qr8ufu56Rl
+ g/q2Ojcd58B9JiAKB0jow1EHAHnSLzlp0kjxKyANnPvnWnkSVO4ZCA1P6GBOlSeIEYGT8p5WBLE
+ joiCWqF1eYgCnXp/Dzt1J+7XuYGM2WcbVFZKXYQxn6f0ewzmfjbvVAP1DhKAj/04E07EbRcIluc
+ Uk0xrQpQ489eWGcLSah7rK1YUr/oK/e1fOXRFMekF0ojqy+I9Mj+nMtqS9foySWFEirktLP6m1p
+ oxMA5QfHYzWK3FFiBT8nz5TxYthluIx/C4sE4d9DxJTHmFbmBny5RY7lERlQHNoPx9XuVz0d6qR
+ ViTUoyBuinOnEqQ==
+X-Developer-Key: i=ricardo@marliere.net; a=openpgp;
+ fpr=030A8E9E424EE3C0655787E1C90B8A7C638658A6
 
+Now that the driver core can properly handle constant struct bus_type,
+move the mhi_ep_bus_type variable to be a constant structure as well,
+placing it into read-only memory which can not be modified at runtime.
 
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+---
+ drivers/bus/mhi/ep/internal.h | 2 +-
+ drivers/bus/mhi/ep/main.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-On 2/8/2024 7:20 AM, Dmitry Baryshkov wrote:
-> dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
-> Move corresponding checks to drm_writeback_connector's implementation
-> and drop the dpu_encoder_phys_wb_atomic_check() function.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 54 -------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  9 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c      | 61 +++++++++++++++++++++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h      |  3 +-
->   4 files changed, 68 insertions(+), 59 deletions(-)
-> 
+diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
+index 577965f95fda..512da7482acc 100644
+--- a/drivers/bus/mhi/ep/internal.h
++++ b/drivers/bus/mhi/ep/internal.h
+@@ -11,7 +11,7 @@
+ 
+ #include "../common.h"
+ 
+-extern struct bus_type mhi_ep_bus_type;
++extern const struct bus_type mhi_ep_bus_type;
+ 
+ #define MHI_REG_OFFSET				0x100
+ #define BHI_REG_OFFSET				0x200
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index 8d7a4102bdb7..a583038131d3 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -1716,7 +1716,7 @@ static int mhi_ep_match(struct device *dev, struct device_driver *drv)
+ 	return 0;
+ };
+ 
+-struct bus_type mhi_ep_bus_type = {
++const struct bus_type mhi_ep_bus_type = {
+ 	.name = "mhi_ep",
+ 	.dev_name = "mhi_ep",
+ 	.match = mhi_ep_match,
 
-<Snip>
+---
+base-commit: ceeb64f41fe6a1eb9fc56d583983a81f8f3dd058
+change-id: 20240208-bus_cleanup-mhi-cff3d8395b88
 
-> +
-> +	crtc = conn_state->crtc;
-> +	if (!crtc)
-> +		return 0;
-> +
+Best regards,
+-- 
+Ricardo B. Marliere <ricardo@marliere.net>
 
-This should fix the crash and rest of the change LGTM
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-
-Please give us a couple of days to re-test this and give our Tested-by 
-as we plan to rebase CDM over DP on top of this and post V2.
 
