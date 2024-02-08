@@ -1,88 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-10167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BDC584DEB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:52:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30AB584DEC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:54:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EC5B1C23068
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:52:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFE0928180C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 10:54:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A4066F537;
-	Thu,  8 Feb 2024 10:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BCA86E2C7;
+	Thu,  8 Feb 2024 10:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WnZep+P1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TcBpZ1Vm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B17871B38
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 10:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A210D6F06E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 10:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707389473; cv=none; b=BH19RqRLNDptQXzfeEPQvP+t904OyG9iHMN807dqDve1AkMw0BD5NLbKXo0MdbgWMrxBokF4Ze8e+y1vQbqOKmQDoIqF++Z/pa36qU2pv/t9WSnd4dCNYVXcqVYCGw0lnYQ7f/pN3GAXRuQ32O7Yj6Hwuphl10pj45MW8qJCDg4=
+	t=1707389536; cv=none; b=V9/rL11rZ9uM6E21vKzeL3P0EMpYG9EFTzm5FbMUC/SxSfsTC2iIchwq1a/U+DdsamPkHRaN18Vgmdq7CPq9URCd+tValCnwQrcBWFCtTfd3Of1YtmJ9cfNdOXGB0pmGyzmtpYthOBPYTnaqpaZIqNTwExBDxV74qWaULjgdHE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707389473; c=relaxed/simple;
-	bh=xJfnEJ+zVsCbj3Czpg60LPhMDPo5+HXP6lXubKlhf+E=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GtV0OfFgVBDDad1ppVXuxJL00VvZBnoJZTZgJwHLYFWD8ovGwkGnamvzrvVCqU9Qcup6UhSWvgwx5FoL53BRgCunPdQBK36dqQHzVO2ytKdGIdtzEsc39YLMx22Csl2y1n1sZhOaDa7jMXUvD/sOnkfjIMkQLdLeGS46vme/gMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WnZep+P1; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1707389536; c=relaxed/simple;
+	bh=l2e6xHPnxeolMkynb6+ddYEiVP/DYpZDRIJ0qSggCuw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sdpbBt0OatTt54I/5myjDJeK/YjN9V5YhDHR6Xu3MHaD7RS4UPDHJFf4xbMniuzcgEdOsVW1XilETWogp4XZFd8uksO3H4nMB05Rtz0LrVTo12XEaQgm79iSezrourkuIJnziAsIqqQyORdm5LQ8GnKJL0ulw/AlE0RSh3L5uQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TcBpZ1Vm; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40fe3141e1cso15616795e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 02:51:10 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-511717231bfso265191e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 02:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707389469; x=1707994269; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lkWzwIjo/uZaIYjgKgDNcnhcc1cwlKLdvZXvoZJLBm8=;
-        b=WnZep+P1F4+Nsn24SCC7jw8PnKUaajsse5HmxzZGZUM6Ye058QFnSXydVHVWcUkFax
-         oZhe5S/sPfWSN6QKYmUtDnBQIZJnEs4Z4f5kWGxSWSYvyfFyqCx/sF6w4NL4AsObpgJ+
-         wMvRChH86mLXAsEQkayxx8GYVc7DXOiad3/aDRH06NA/S6BAB7GIdCv2ZF6046n+d2CP
-         XeGzLpH434DX3b6Gq6/NnY38f69jBjBCsL9ndwZUhPlYZNaTOTtwdpE5S1GORK1BgHZr
-         eQwT3O9zc9xG4FncJbSRIn3D/UiEGo0zwPq/pqN+sFd3L1a0VnS0dXHbmEs4oZxwfQgn
-         l79g==
+        d=linaro.org; s=google; t=1707389533; x=1707994333; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZP3FlHWV5DcIHAA8crgDofJ0wKaD0glJWVtgw/kG33o=;
+        b=TcBpZ1VmGtRZtmeBjpht+RILe67UZZyjENyOmH1VzZEI09UJaYSVgetxvAvKGUi9sQ
+         w85okYxRkb/9ZM+rV/lYSyoTu7FFZaMYmdCDkBUoSPjo3s6rsnNHldR0cCUjfZIILxNp
+         s10HVsyuEMIB0DZJBQeRe0Lk0HxgYpq9HmtoJ+weVqSs13j2UkWoOtK1+q4eFGpEZHE9
+         OzZgXxXvioqwM6PkQ6jMQIZaap+95v4V7yolbnhuC8BTkJtZz8CKRin+6TIpk1/jWjpC
+         Jz61cFMBGGrNtfEETfyK9Xqh+Lv77KA7G3XUVwJdorQI/3Ome4sNBEXcFkxIST4ZKNBz
+         +1dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707389469; x=1707994269;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lkWzwIjo/uZaIYjgKgDNcnhcc1cwlKLdvZXvoZJLBm8=;
-        b=h+oHE7RHDy9Q1JSq+SHwUNU74jM/7jBlBCbSYrlsLIR0wKxqQDgXl/I07pGrNk1uRM
-         /P7NGbOt/c7Rxh7p14WIYJVv10PegBh+ufYVktOxVXh4YsohmajbyEtmFufxpDUA8kfk
-         LHKFdID8S6APjWX0kXDhDfSoaQV20Job9z0I7ye+uR+8N+OoKn5HRvbt2eCrIWo/sb1s
-         fKlDpQbOvvM7ggBY0lbe9a/1r2CSAd7k+hkxbM3u0KArVnLdLcblDBKQ8/o76R6IMEVt
-         acP4NB+CKpXpObR2xdgLa0lIMK3fhbVxYOofh4CdjsMe0nhWwF8KNWYtR5508J/qfbRR
-         /Gcw==
-X-Forwarded-Encrypted: i=1; AJvYcCXaQDPrRee+9nEz0C+8yUUC9d/cmqGP9FUGGBp11uO4/vo4EXELYZgd3i+h9ZXpRJaGrlpKUL+cz4wpkw81+3dyXL3lrECIvMNXeDZhkw==
-X-Gm-Message-State: AOJu0Ywk9OeXQ2v0Hhb0Sn8aPYbUWLICYHAT1rGzjpWaDViNzLPPy1wx
-	H0ID9vhnYhrwicjE40sxBSgib1Wf4n7K50bXZr4bpoLaxS6bGKxpmTNT1dTkwR4z9bm9k+t1boY
-	L
-X-Google-Smtp-Source: AGHT+IEDQm5VMj88QgMa7T2443WaR0z1L0cupYZAj6nJd5Y/yuIH6Y5K3aV/K/rbrptqrKJPbyMfpw==
-X-Received: by 2002:adf:a3d0:0:b0:33b:2100:3a44 with SMTP id m16-20020adfa3d0000000b0033b21003a44mr5785649wrb.39.1707389469321;
-        Thu, 08 Feb 2024 02:51:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXXdJz84ovdU6pVqpNw60wd7HVwL15lYcM+n6oKgtk++P2/cWs0wiEm4kCDeoSC295ABHv6ze6F0PqI/Vog2Kl9f5nws8pWwqCTIDOdU3oqLsabsMlEJt3WF7y93IGweLBiR6AAK3/44S/b9d9jJwhVUl0Gwp1olFjo978YBfnrMyvovgy4r9By/4HqInf/JKChViz9WnRTL4m5SbOAmlSP1O+CicgzP78T8B9TiCk/JRJ8
+        d=1e100.net; s=20230601; t=1707389533; x=1707994333;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZP3FlHWV5DcIHAA8crgDofJ0wKaD0glJWVtgw/kG33o=;
+        b=eqSbTuZxfK8jiyr+/iwAab43Ovs8i+lORbeLesciEYQhi2LUmwpRKDweOK5jDnMVL3
+         Dmujr6BrU+hTZjiA1vccwXZNs15pNsrjuQWI8Pq0EIUC43/44ZDeik7wM2zjbNyc3UPD
+         RUjKQpsxmtx7aBZ3EV+Ob5i4guxDwxNBmGxlhMHycHCf1xbhM3588yGiaYdD6/S6+yRG
+         Dq1XMG7q0t74hj4vcSnC/jIy8Gr8gglOQV6zW+yTHL67RPf4980MmqedrgM/kDzeD5ST
+         lBvyTTBHy2KQLBsK9EDDC940yqur1ea+vzeyaHEbSnUGO5V2O6KVxYgMoQd9qfmGK2oW
+         0/kA==
+X-Forwarded-Encrypted: i=1; AJvYcCUvX6sqe+y/OhSSMsUTerMyjOFVXruL3LkNvJ0F3IAZLZxs52RIrDvRDAOrsxA8rBN+jtVJMPp8jYb1aL1pUChEuS5menEEjZcKublVNw==
+X-Gm-Message-State: AOJu0YxRAd0lUj1Xr1ca295lWpsimaYugEqEKCRcVyRIbNNzFvTdeuko
+	iJNHRnxuXjA8uzgH13+kqGsuZ3JTWw67ix9bJCcCjP35knytjrGhORDAxD77Fj0=
+X-Google-Smtp-Source: AGHT+IHrm2+zRlDpxNBwxHUWjJm06fjlMdTzzH+qGUL8p8NjuGCwrCgVn/7DadJrJQQHORBTlVHvwg==
+X-Received: by 2002:a19:750e:0:b0:511:4d43:aadf with SMTP id y14-20020a19750e000000b005114d43aadfmr5954355lfe.21.1707389532826;
+        Thu, 08 Feb 2024 02:52:12 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWuceSPr9uSasIydA3iKZg8t4Cxfz210NO2SsmtZsOKmbu0SjK9gYp+0qZTOg911NmTFlTWPbeoLY4zhytQ6FP2hlEYvLHrm1u3BfNYOFZA1xomdICHtCR/Qd8nyy/oKwwlNYn35XMuQ1IZSHBhS8mo666IIPTG3t9JsVGi+r9/fwxxo7w6VeJkl1MJAW1mWksYBITcUZaYnlPxp7SdWWJJul88sTqzjHF8er+7+Nab3XkB8YPn7G/aVfaPXqifnWoyZZVLFyYe
 Received: from krzk-bin.. ([178.197.222.62])
-        by smtp.gmail.com with ESMTPSA id s1-20020a5d69c1000000b0033b4719eb6esm3308283wrw.27.2024.02.08.02.51.08
+        by smtp.gmail.com with ESMTPSA id o13-20020a05600c4fcd00b0041047382678sm505762wmq.1.2024.02.08.02.52.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 02:51:08 -0800 (PST)
+        Thu, 08 Feb 2024 02:52:12 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6/6] interconnect: qcom: x1e80100: constify pointer to qcom_icc_bcm
-Date: Thu,  8 Feb 2024 11:50:56 +0100
-Message-Id: <20240208105056.128448-7-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: minor whitespace cleanup
+Date: Thu,  8 Feb 2024 11:52:08 +0100
+Message-Id: <20240208105208.128706-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240208105056.128448-1-krzysztof.kozlowski@linaro.org>
-References: <20240208105056.128448-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,71 +88,73 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Pointers to struct qcom_icc_bcm are const.
+The DTS code coding style expects exactly one space before '{' and
+around '=' characters.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/interconnect/qcom/x1e80100.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm4450.dtsi   | 2 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi   | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/x1e80100.c b/drivers/interconnect/qcom/x1e80100.c
-index 281295a9a077..99824675ee3f 100644
---- a/drivers/interconnect/qcom/x1e80100.c
-+++ b/drivers/interconnect/qcom/x1e80100.c
-@@ -1542,7 +1542,7 @@ static struct qcom_icc_bcm bcm_sn4 = {
- 	.nodes = { &qnm_usb_anoc },
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+index 3e7ae3bebbe0..603c962661cc 100644
+--- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+@@ -17,7 +17,7 @@ / {
  
--static struct qcom_icc_bcm *aggre1_noc_bcms[] = {
-+static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
- };
+ 	chosen { };
  
- static struct qcom_icc_node * const aggre1_noc_nodes[] = {
-@@ -1730,7 +1730,7 @@ static const struct qcom_icc_desc x1e80100_gem_noc = {
- 	.num_bcms = ARRAY_SIZE(gem_noc_bcms),
- };
+-	clocks{
++	clocks {
+ 		xo_board: xo-board {
+ 			compatible = "fixed-clock";
+ 			clock-frequency = <76800000>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 62e6ae93a9a8..7f0b39a5cc6d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -1233,7 +1233,7 @@ uart14: serial@898000 {
+ 				clocks = <&gcc GCC_QUPV3_WRAP2_S6_CLK>;
+ 				clock-names = "se";
  
--static struct qcom_icc_bcm *lpass_ag_noc_bcms[] = {
-+static struct qcom_icc_bcm * const lpass_ag_noc_bcms[] = {
- };
+-				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+ 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+ 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+ 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+@@ -1255,7 +1255,7 @@ uart15: serial@89c000 {
+ 				clocks = <&gcc GCC_QUPV3_WRAP2_S7_CLK>;
+ 				clock-names = "se";
  
- static struct qcom_icc_node * const lpass_ag_noc_nodes[] = {
-@@ -1871,7 +1871,7 @@ static const struct qcom_icc_desc x1e80100_pcie_north_anoc = {
- 	.num_bcms = ARRAY_SIZE(pcie_north_anoc_bcms),
- };
+-				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+ 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+ 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+ 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 031aac702d3e..a8dc53b9da16 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -1216,7 +1216,7 @@ uart21: serial@894000 {
+ 				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
+ 				clock-names = "se";
  
--static struct qcom_icc_bcm *pcie_south_anoc_bcms[] = {
-+static struct qcom_icc_bcm * const pcie_south_anoc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const pcie_south_anoc_nodes[] = {
-@@ -1890,7 +1890,7 @@ static const struct qcom_icc_desc x1e80100_pcie_south_anoc = {
- 	.num_bcms = ARRAY_SIZE(pcie_south_anoc_bcms),
- };
- 
--static struct qcom_icc_bcm *system_noc_bcms[] = {
-+static struct qcom_icc_bcm * const system_noc_bcms[] = {
- 	&bcm_sn0,
- 	&bcm_sn2,
- 	&bcm_sn3,
-@@ -1928,7 +1928,7 @@ static const struct qcom_icc_desc x1e80100_usb_center_anoc = {
- 	.num_bcms = ARRAY_SIZE(usb_center_anoc_bcms),
- };
- 
--static struct qcom_icc_bcm *usb_north_anoc_bcms[] = {
-+static struct qcom_icc_bcm * const usb_north_anoc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const usb_north_anoc_nodes[] = {
-@@ -1944,7 +1944,7 @@ static const struct qcom_icc_desc x1e80100_usb_north_anoc = {
- 	.num_bcms = ARRAY_SIZE(usb_north_anoc_bcms),
- };
- 
--static struct qcom_icc_bcm *usb_south_anoc_bcms[] = {
-+static struct qcom_icc_bcm * const usb_south_anoc_bcms[] = {
- };
- 
- static struct qcom_icc_node * const usb_south_anoc_nodes[] = {
+-				interconnects =	<&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+ 						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+ 						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+ 						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+@@ -4793,7 +4793,7 @@ qup_uart21_default: qup-uart21-default-state {
+ 				/* TX, RX */
+ 				pins = "gpio86", "gpio87";
+ 				function = "qup2_se5";
+-				drive-strength= <2>;
++				drive-strength = <2>;
+ 				bias-disable;
+ 			};
+ 		};
 -- 
 2.34.1
 
