@@ -1,157 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-10177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18FE784E047
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:03:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2B9F84E077
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:14:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA462281FE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:03:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 803251F2894F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:14:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A52071B35;
-	Thu,  8 Feb 2024 11:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30C0E71B3B;
+	Thu,  8 Feb 2024 12:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JmlVmKcj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kvxcGrGP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8871B31;
-	Thu,  8 Feb 2024 11:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022E171B30;
+	Thu,  8 Feb 2024 12:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707393564; cv=none; b=SJp8JjPe+9Gt7j+Lwa6x2QNL/WhNDDLme4wo+q7Z/nBLX16gwDuCfcOMfIwHp881aszZKnz3bzs3TReCnAa9DXKj7Ql4OBiNlMTUQrjTjZ80MWwu+676OYBzkR1956yfgUI7Mo3NicVcX8JpJ3mhbuLOuR+EzAKmQ2mU4Q4TpCA=
+	t=1707394436; cv=none; b=tZtZYyjy9u1r5jdkM8+Sv8d0yFawwAkMUiMSZB4OeM37w2dtwyJ2st7e1DUN2yNQDgf45d1l8BsKLD/Kr9aWMKnTGEA/wE/1GX7SIhgFZzpsDyVLPBLfFogwyne+WSXznSc7gh1NpKJtWlLUg/5LhHnaKksBbv3s6peHRd4n/D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707393564; c=relaxed/simple;
-	bh=hOz4D9QVROMnk+YobsB5SY6criPkFQ4Mk/iTZIxP7dc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aRna0GZmYjNnaaW0up6G6vgv4bOWJkcQXTvtFGsW0mGUeefGLJhPohevkB6u54dktBFRLFUYAFHYeHrXiXMVzStVWNl38miSCiP8RNq4PZFqRmya0BA26TfILENC5d7vSNCO3evp2wBuxsahWjKCjfU4WpEw24Ud/Efq7ZGKoLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JmlVmKcj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DCEC43390;
-	Thu,  8 Feb 2024 11:59:22 +0000 (UTC)
+	s=arc-20240116; t=1707394436; c=relaxed/simple;
+	bh=MvlH4ndOdSzFUwm8GqHry7TYNDj279G1o15aCH4zOkA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Djr/dd1jwSwWVrAdb//mnYsTeP97yZ1dztaUsLb8xpRIwHEhkvDEmPoZxcGny9mT59Rve5JG241sRBlmh+fiftEXxF8EG8bUToGnEyGViybzilL0tVAEEBlhX+QJy+/adV7/ES+26HtpmKjrbH6ri5JZnh/fb7mxqwRq8IAw4Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kvxcGrGP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCBCC433C7;
+	Thu,  8 Feb 2024 12:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707393563;
-	bh=hOz4D9QVROMnk+YobsB5SY6criPkFQ4Mk/iTZIxP7dc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JmlVmKcjBmEmzvStnviibNXMQt0NnfZxJid7cqNo/Iv9Q9XkTpA+LQGAge7b1jU3F
-	 rdv6k9R8InvXTR2VHDBMWDFhb9C0ENzjgEAzo24E9Ngt2np5GUI9K6+rZiMKZwdPEK
-	 0Kdt0VA32ul5LahcbKR9uDRC9FSkZl+VWoshMADNfZjXcMEv5UD2WHEdJ9n8kaQ7ST
-	 92KRw2WL0WCKo/ZmG1jd0aR3aRYe1fJVl45y6fjQmCe8TpxV/XEMrxSR3DDCv6+B7R
-	 ykHxCNaRrQPGZrPfWh6d540CGpk8qrAinS0hbWoj+uCdI0GuWxK6wi9AAsO0vK7BA1
-	 yKSe/FsSj3YBA==
-Date: Thu, 8 Feb 2024 12:59:19 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
-	manivannan.sadhasivam@linaro.org, bryan.odonoghue@linaro.org, quic_msavaliy@quicinc.com, 
-	quic_vtanuku@quicinc.com
-Subject: Re: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-Message-ID: <cvzyvgb6vahlmrhaijsuyaosdl2p4q5cxhipmu4tujnkpjlbpm@6yu3sbpqha4m>
-References: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
- <CAA8EJpqQtHDRK2pex+5F-fMRTosJuFCx59e89MWhnie1O3dHKA@mail.gmail.com>
- <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com>
- <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
- <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
+	s=k20201202; t=1707394435;
+	bh=MvlH4ndOdSzFUwm8GqHry7TYNDj279G1o15aCH4zOkA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=kvxcGrGPAHDxiZe0WrrziSYopGe/0VsWAgEupIYMX7sLnATKYvGNzjPxxJVJz8rE7
+	 pjT2bHgHcIe9y7iHY3SerQzs2qBTx4iw/C81t0nuAEWIcZUC+XnE0BI2F391CO//mf
+	 g0e9iKQJkMImxQ94APAbY0Ml4kSbTgQIDeU4kRi8chMtVkpaKUNZ0qMQb1xbXWihhe
+	 RkDHhYNDGd1EuAp2hbDjXifLkvw69KhCAyGbFTdx1BRu9WnNesr2s6ssgx+lh8p12z
+	 UXiMsbxViyQbcRkBBES+AXuOyCwS1Hc0KOrH1OVEy/C4K7SDSp4nFwbDy9rJ86oloj
+	 vkgccAmOSvixw==
+From: Lee Jones <lee@kernel.org>
+To: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-leds@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ Martin Botka <martin.botka@somainline.org>, 
+ Jami Kettunen <jami.kettunen@somainline.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20240204-pm660l-lpg-v5-1-2f54d1a0894b@somainline.org>
+References: <20240204-pm660l-lpg-v5-1-2f54d1a0894b@somainline.org>
+Subject: Re: (subset) [PATCH v5] leds: qcom-lpg: Add PM660L configuration
+ and compatible
+Message-Id: <170739443256.968294.11874564929033098601.b4-ty@kernel.org>
+Date: Thu, 08 Feb 2024 12:13:52 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.3
 
-Hi Dmitry,
-
-On Thu, Feb 08, 2024 at 01:04:14PM +0200, Dmitry Baryshkov wrote:
-> On Thu, 8 Feb 2024 at 12:02, Andi Shyti <andi.shyti@kernel.org> wrote:
-> >
-> > Hi Viken, Dmitry,
-> >
-> > On Fri, Feb 02, 2024 at 04:13:06PM +0530, Viken Dadhaniya wrote:
-> > >
-> > > On 2/1/2024 5:24 PM, Dmitry Baryshkov wrote:
-> > > > On Thu, 1 Feb 2024 at 12:13, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
-> > > > >
-> > > > > For i2c read operation in GSI mode, we are getting timeout
-> > > > > due to malformed TRE basically incorrect TRE sequence
-> > > > > in gpi(drivers/dma/qcom/gpi.c) driver.
-> > > > >
-> > > > > TRE stands for Transfer Ring Element - which is basically an element with
-> > > > > size of 4 words. It contains all information like slave address,
-> > > > > clk divider, dma address value data size etc).
-> > > > >
-> > > > > Mainly we have 3 TREs(Config, GO and DMA tre).
-> > > > > - CONFIG TRE : consists of internal register configuration which is
-> > > > >                 required before start of the transfer.
-> > > > > - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
-> > > > > - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
-> > > > >                 of the transfer.
-> > > > >
-> > > > > Driver calls GPI driver API to config each TRE depending on the protocol.
-> > > > > If we see GPI driver, for RX operation we are configuring DMA tre and
-> > > > > for TX operation we are configuring GO tre.
-> > > > >
-> > > > > For read operation tre sequence will be as below which is not aligned
-> > > > > to hardware programming guide.
-> > > > >
-> > > > > - CONFIG tre
-> > > > > - DMA tre
-> > > > > - GO tre
-> > > > >
-> > > > > As per Qualcomm's internal Hardware Programming Guide, we should configure
-> > > > > TREs in below sequence for any RX only transfer.
-> > > > >
-> > > > > - CONFIG tre
-> > > > > - GO tre
-> > > > > - DMA tre
-> > > > >
-> > > > > In summary, for RX only transfers, we are reordering DMA and GO TREs.
-> > > > > Tested covering i2c read/write transfer on QCM6490 RB3 board.
-> > > >
-> > > > This hasn't improved. You must describe what is the connection between
-> > > > TRE types and the geni_i2c_gpi calls.
-> > > > It is not obvious until somebody looks into the GPI DMA driver.
-> > > >
-> > > > Another point, for some reason you are still using just the patch
-> > > > version in email subject. Please fix your setup so that the email
-> > > > subject also includes the `[PATCH` part in the subject, which is there
-> > > > by default.
-> > > > Hint: git format-patch -1 -v4 will do that for you without a need to
-> > > > correct anything afterwards.
-> > > >
-> > >
-> > > At high level, let me explain the I2C to GPI driver flow in general.
-> > >
-> > > I2C driver calls GPI driver exposed functions which will prepare all the
-> > > TREs as per programming guide and
-> > > queues to the GPI DMA engine for execution. Upon completion of the Transfer,
-> > > GPI DMA engine will generate an
-> > > interrupt which will be handled inside the GPIO driver. Then GPI driver will
-> > > call DMA framework registered callback by i2c.
-> > > Upon receiving this callback, i2c driver marks the transfer completion.
-> >
-> > Any news about this? Dmitry do you still have concerns? We can
-> > add this last description in the commit log, as well, if needed.
+On Sun, 04 Feb 2024 18:24:20 +0100, Marijn Suijten wrote:
+> Inherit PM660L PMIC LPG/triled block configuration from downstream
+> drivers and DT sources, consisting of a triled block with automatic
+> trickle charge control and source selection, three colored led channels
+> belonging to the synchronized triled block and one loose PWM channel.
 > 
-> I was looking for pretty simple addition to the commit message, that
-> links existing commit message to the actual source code change: that
-> geni_i2c_gpi(I2C_WRITE) results in the GO TRE and
-> geni_i2c_gpi(I2C_READ) generates DMA TRE. But I haven't seen anything
-> sensible up to now. So far we have a nice description of required
-> programming sequence in terms of CONFIG, GO, DMA TREs and then source
-> code change that seems completely unrelated to the commit message,
-> unless one actually goes deep into the corresponding GPI DMA driver.
+> 
 
-Agree. I can't take this patch until the commit message has a
-proper description and until Dmitry doesn't have any concerns
-pending.
+Applied, thanks!
 
-Thanks,
-Andi
+[1/1] leds: qcom-lpg: Add PM660L configuration and compatible
+      commit: 0e848bb4630e12099636fde050cadad33221045f
+
+--
+Lee Jones [李琼斯]
+
 
