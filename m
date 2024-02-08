@@ -1,88 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-10178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2B9F84E077
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:14:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEA0E84E0C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:35:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 803251F2894F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:14:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E6AD2822BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:35:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30C0E71B3B;
-	Thu,  8 Feb 2024 12:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9AED6EB4D;
+	Thu,  8 Feb 2024 12:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kvxcGrGP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f8W0zxW0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022E171B30;
-	Thu,  8 Feb 2024 12:13:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB59F1D525;
+	Thu,  8 Feb 2024 12:35:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707394436; cv=none; b=tZtZYyjy9u1r5jdkM8+Sv8d0yFawwAkMUiMSZB4OeM37w2dtwyJ2st7e1DUN2yNQDgf45d1l8BsKLD/Kr9aWMKnTGEA/wE/1GX7SIhgFZzpsDyVLPBLfFogwyne+WSXznSc7gh1NpKJtWlLUg/5LhHnaKksBbv3s6peHRd4n/D4=
+	t=1707395740; cv=none; b=mo9xmzYWM5Mlw+klxu1jm9A3LO+50P+hfHZaVcCuOKd2KyTou2hJerNpuUeDkJ4E26yMJi0mzueqOIsNAHZ4LrWsBI4iXrY55pbAL3tH+aeqwsyl7B0N6mv3WM18yYjAYLRExXz13/ScqQzVOxTqBgyUkZ2ZsUMMEuBAJtP5EkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707394436; c=relaxed/simple;
-	bh=MvlH4ndOdSzFUwm8GqHry7TYNDj279G1o15aCH4zOkA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Djr/dd1jwSwWVrAdb//mnYsTeP97yZ1dztaUsLb8xpRIwHEhkvDEmPoZxcGny9mT59Rve5JG241sRBlmh+fiftEXxF8EG8bUToGnEyGViybzilL0tVAEEBlhX+QJy+/adV7/ES+26HtpmKjrbH6ri5JZnh/fb7mxqwRq8IAw4Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kvxcGrGP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCBCC433C7;
-	Thu,  8 Feb 2024 12:13:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707394435;
-	bh=MvlH4ndOdSzFUwm8GqHry7TYNDj279G1o15aCH4zOkA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=kvxcGrGPAHDxiZe0WrrziSYopGe/0VsWAgEupIYMX7sLnATKYvGNzjPxxJVJz8rE7
-	 pjT2bHgHcIe9y7iHY3SerQzs2qBTx4iw/C81t0nuAEWIcZUC+XnE0BI2F391CO//mf
-	 g0e9iKQJkMImxQ94APAbY0Ml4kSbTgQIDeU4kRi8chMtVkpaKUNZ0qMQb1xbXWihhe
-	 RkDHhYNDGd1EuAp2hbDjXifLkvw69KhCAyGbFTdx1BRu9WnNesr2s6ssgx+lh8p12z
-	 UXiMsbxViyQbcRkBBES+AXuOyCwS1Hc0KOrH1OVEy/C4K7SDSp4nFwbDy9rJ86oloj
-	 vkgccAmOSvixw==
-From: Lee Jones <lee@kernel.org>
-To: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-leds@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, Johan Hovold <johan@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@somainline.org>, 
- Martin Botka <martin.botka@somainline.org>, 
- Jami Kettunen <jami.kettunen@somainline.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
- Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20240204-pm660l-lpg-v5-1-2f54d1a0894b@somainline.org>
-References: <20240204-pm660l-lpg-v5-1-2f54d1a0894b@somainline.org>
-Subject: Re: (subset) [PATCH v5] leds: qcom-lpg: Add PM660L configuration
- and compatible
-Message-Id: <170739443256.968294.11874564929033098601.b4-ty@kernel.org>
-Date: Thu, 08 Feb 2024 12:13:52 +0000
+	s=arc-20240116; t=1707395740; c=relaxed/simple;
+	bh=yfrto/Me4qW2MHQY54SNciFA0kVeMHFuyf7ci+k9tSY=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=rzmIr3h/Ps6SHBp22Nur5Q4qpyrvaVWgESapIXlA82Ox11rwZzGI8z788dVzm+CcKbeCE9gmD4HZ7uwv9kuNXyFX0AL+k0oknR4c3+6S0+GoEfKOBSPjv8wGng1YuKjsg9rY/Cy1fl6b4dXNi9I0Ej1H0JTaRrdF+kPY+Gu01tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f8W0zxW0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 418Akbvd028072;
+	Thu, 8 Feb 2024 12:35:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=ikMJYK2WAvNN
+	KXWt0Hgg52AE4P+Ye/pJr8QAkUFv0NQ=; b=f8W0zxW08WbA/IprkZBzMd5VuzhS
+	+H15aAaaoFyuRBbGE1QfjXEcyu78EXwkrotzaBLZR2OWZDBTJRS62MNYXZQJap6c
+	Mv0VBajbBOdXDnQ//mHn3bOvQ3xEBvbkKM05CzOPjMqtbyUDYoyECPhoATdji0sN
+	JqTr/bt8PS6IbTgLOCbTzgAu9V8A94vf0nOzaZqV/AIfgrEC1yFkXaqO0wOvCqlr
+	HilALapNQhAgNDwRJPEwfh8mwriUfWSh75iU+UgNkuhphzhNXDotsXWtS6qQ2kFP
+	M0yr8f1QnmafH51pU7RnHcqpP6sDz9NOAxmtQfvhmC0ViAXUPnTwPm4s2A==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4pavhcun-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 Feb 2024 12:35:34 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 418CZVVs014362;
+	Thu, 8 Feb 2024 12:35:31 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3w1ejm9s7a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 08 Feb 2024 12:35:31 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 418CZVNP014356;
+	Thu, 8 Feb 2024 12:35:31 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-audityab-hyd.qualcomm.com [10.147.244.159])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 418CZUqm014355;
+	Thu, 08 Feb 2024 12:35:31 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 207879)
+	id 9BC3E5001CE; Thu,  8 Feb 2024 18:05:29 +0530 (+0530)
+From: Auditya Bhattaram <quic_audityab@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Auditya Bhattaram <quic_audityab@quicinc.com>
+Subject: [PATCH v3] soc: qcom: mdt_loader: Add Upperbounds check for program header access
+Date: Thu,  8 Feb 2024 18:05:27 +0530
+Message-Id: <20240208123527.19725-1-quic_audityab@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Z6aUr7cHfi8mP0tq78xzmvJYc9DNKQLd
+X-Proofpoint-GUID: Z6aUr7cHfi8mP0tq78xzmvJYc9DNKQLd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-08_03,2024-02-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0 clxscore=1011
+ suspectscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2401310000 definitions=main-2402080066
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.3
 
-On Sun, 04 Feb 2024 18:24:20 +0100, Marijn Suijten wrote:
-> Inherit PM660L PMIC LPG/triled block configuration from downstream
-> drivers and DT sources, consisting of a triled block with automatic
-> trickle charge control and source selection, three colored led channels
-> belonging to the synchronized triled block and one loose PWM channel.
-> 
-> 
+hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
+is found. Add an upperbound check to phdrs to access within elf size.
 
-Applied, thanks!
+Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in any segment")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
+---
+Changes in v3:
+ - Corrected wrong patch versioning in the Subject.
+ - Added error prints for Invalid access.
+Link to v2 https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
+Link to v1 https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
+---
+ drivers/soc/qcom/mdt_loader.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-[1/1] leds: qcom-lpg: Add PM660L configuration and compatible
-      commit: 0e848bb4630e12099636fde050cadad33221045f
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 6f177e46fa0f..61e2377cc5c3 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+ 	if (phdrs[0].p_type == PT_LOAD)
+ 		return ERR_PTR(-EINVAL);
 
++	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
++		dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	for (i = 1; i < ehdr->e_phnum; i++) {
+ 		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
+ 			hash_segment = i;
 --
-Lee Jones [李琼斯]
+2.17.1
 
 
