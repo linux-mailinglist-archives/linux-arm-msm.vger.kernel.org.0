@@ -1,143 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-10187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D80CC84E374
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:50:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C2DC84E38E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:58:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D04D1F2701F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:50:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 155191F27B82
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0B6079926;
-	Thu,  8 Feb 2024 14:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1205E7B3C1;
+	Thu,  8 Feb 2024 14:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZYWDF5v3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eY7XQKBP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16EF1E89A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 14:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F307A738;
+	Thu,  8 Feb 2024 14:58:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707403835; cv=none; b=rCQSLzi9CJEWSj7LtXTPxonO4PkkR0GY9a8GB2/x1FjvSZVS8dN9urZ4yEs31cPk8M2EmIEbysHQJyu48ggnwKTcSnQEXqjma5HrjhxgyIEEAn8l4xIyv4hkXzoLDZabca572AVKSiPmf/u+cBlhCJPkCY3Kemp2jbBdbprgsTo=
+	t=1707404298; cv=none; b=spYxlXPYPcZkUo61lB+/9RV6iWLiAioJMcfPqy0jzQkgHxJmIvp62lEGjsOAbt3aEtx2uqePkgR1IpJRW5aU8CZJoFgdH/2Rld5hnbk6Ggzik+YTYsKIaNHq+7yn0NJEq5sfuhqe/HrtX0VOsbkR4kLa/jpnqyIkp/DWkQIm5XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707403835; c=relaxed/simple;
-	bh=x/YVZfjdNfpe+Sx6imXL9gORrTESWB+MUbneEnPObG4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=IbEzlLEfy7YK7ZQ6EDSfJi6rfJufccLcngUX8tp1x5sqsFPd407L7uXRHPkX+pEgo+HaTWlgLaRKqaq5vekeEEXTGWcH0tfyNBvAlazWP++xeWMm/T1OuQvpAemejRqYTCCrLhVuu7ByYBym/vwPZuZIUSE/v1MDUXozfA3MIXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZYWDF5v3; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d0b750518bso23066641fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 06:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707403832; x=1708008632; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=isFytFDXARzCh2Jm6b6WyMr5DRIgqurmR16IdjoLmWw=;
-        b=ZYWDF5v3IdJ4ij+F4pMxK0TSEOjpIiARZHLwGjv0UOkGRm2sVFoLtN7OckQhP89Apm
-         djuYs8i91Rdx1ZWyfhYYh/jiMiKeam9z7XFW4qS6Z9kqoGa2dw+7yfoI3MudEkhU37iR
-         623Jyvb/ftq5TA1vFiIWrccOAycNwhQVH/5dPxNuhINaC5J7YlyoWHriApCicXc+na4I
-         GH0WF5UTujG++lDWG6yiyFproZnRIlloT7Lbn2E6QU3qrrRY+qK/d/BJgRw9QhdfMOem
-         w386qHcW3mT6LHblB2baJE3tm3orYeNL//TH004tbaa9+xsfQ9IvaUwQo7q5Sb6ASexH
-         E33w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707403832; x=1708008632;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=isFytFDXARzCh2Jm6b6WyMr5DRIgqurmR16IdjoLmWw=;
-        b=HG1q2hxDi1sPDlyEvghWA9H5EFJ1KUk8Z+bxVnJ5JEJa8+3jw39ahDZ43E6Yf1RgfT
-         29KdvdnE5SBOKqh4tYVWqlYkwadKuBW5A6B4QOzGORn7WNSnqhd8qHrQoOtuIoS9zo8z
-         bjtvS75h6YupBjE52T1eao295tVYMURWd7AoEtVjPii+Tkk/Ahe9OmFFebFBe+914pQm
-         FFq2Ai9TTgrl/ovL0Cy4GGSNHh1C77XNU5DmWtFVznR8Qqo1vtg0OhPV8XOOdxjGEuv4
-         PBuHSqtEjnKwHAvXxbST0FnoZYaDMvNo7nHdSIagf8/XoREMhOpefLjj5MTOJHM/TDZW
-         ZrBw==
-X-Gm-Message-State: AOJu0Ywy4P/aPysXWPySEbRw3Wm1q9vma/cEwzKoNLCzk8m158RyzSat
-	WJjZU+uj/DOcpbKn980qAoNLdhHGegbXhD5UjFnxeL8hPaKBtdQxwHbgDIsB1+M=
-X-Google-Smtp-Source: AGHT+IE5P6J4KgAgsuL0CsQE8iHKVUyxpqlXKbhBUrR1OdOwxJGpw7JPp6luC1UX32OF+2q+jVtXsA==
-X-Received: by 2002:ac2:5e9d:0:b0:511:60eb:cb1e with SMTP id b29-20020ac25e9d000000b0051160ebcb1emr5468828lfq.67.1707403831789;
-        Thu, 08 Feb 2024 06:50:31 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU889DrDkoP2EL0AQ5Awe3MnvmaThnO6wNUDDSKLLdLcLXSO01+Opd6tk6yqykwTUZs9JGEyU9uLk6UkHKOH3b6QJMwN+eQWdxsfBkRUnh1E7ecjhQ6zhekL6kCkzBwfbDz+aOhfJ2wUw5BYx5M1SZzZWorGD6WDIf+g8KNLbxTGwiu8zO73rN4Y9/KEZlmoOKxEDXttleer9tkLti7m/sGiFhoaqEor+PbZHE7HuW3X/IPGh8obaRVHPDc3ihESzcXKOzc5xyPPMW/M6qQ4BsrzRQrxaXuKUoRGg13o4RdX+kTIb7U2DkxEyV8QD4aj27rFA1dE+1uSGppFVUy
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l4-20020ac25544000000b005114808a6a3sm18706lfk.168.2024.02.08.06.50.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 06:50:31 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 08 Feb 2024 16:50:27 +0200
-Subject: [PATCH v2] drm/msm/dpu: make "vblank timeout" more useful
+	s=arc-20240116; t=1707404298; c=relaxed/simple;
+	bh=ako2aJdiOkB48kPl7T8N9a20fA0l/yMwizdE0vbWTgs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=M3t2WZ9Io8TWhmHxQvNzk7EHEWZjqd69U5vm8gzakdILQZnQVSEycal5fuoK6d2FsiPaiDmVyH1nteGg1BaYLZXXr8itEI7GxLpCApaiTJ0XG0d8k+pvsd1k+djesuEknJSYuhgcek1OGvZjZoX8ftroj59MCEM00Y4uPS6dXSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eY7XQKBP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 418Acrhg000981;
+	Thu, 8 Feb 2024 14:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=76YPUW+4xtU+KjH5ZjMr6Yydl5/IkA1gxuA6u42Y6Ds=; b=eY
+	7XQKBPCIYIyPmtZx8z1wU8N4Jfk8vobiuzsNEIjYXrk++O5wWpyagQyhmfu7N3C6
+	CahIpggn0KgvCNfDwJ534S7rCgRp5sa06lr4AgydCxWeCCjlf+lXDd8VXcs6tcsY
+	ozSk+PPr5E3R0DoSX0Fvx+4CZT1ga79CWi4WAneQ3WpZQmFvK4waWldndecNeKVL
+	YROEIoCvKhrB2OW43tZy4gc4ugMnIxjD5mjSbndvNuOWVTZU1MXT8HlRkToQHn8S
+	YHIRRTD+KEw6gWMB3Hmb9cixq7YoA2HhX6ctbzSlIHdW0tuLsIrafQ3yvLjrQMrQ
+	5plAZcyjU4vwvQhuw8jA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4h0uj8dv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 Feb 2024 14:58:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 418EwB90026307
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 Feb 2024 14:58:11 GMT
+Received: from [10.216.50.187] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
+ 2024 06:58:06 -0800
+Message-ID: <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
+Date: Thu, 8 Feb 2024 20:28:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_parass@quicinc.com>
+References: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
+ <CAA8EJpqjm_2aE+7BtMkFUdet11q7v_jyHbUEpiDHSBSnzhndYA@mail.gmail.com>
+ <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
+ <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240208-fd-dpu-debug-timeout-v2-1-9f907f1bdd87@linaro.org>
-X-B4-Tracking: v=1; b=H4sIADLqxGUC/4WNQQ6CMBBFr0Jm7Zi2NgVccQ/DAugAkyglLW00h
- LtbuYDL95L//g6BPFOAe7GDp8SB3ZJBXQoY5m6ZCNlmBiWUFlIYHC3aNaKlPk648Ytc3JBqWY6
- iHyphbpCnq6eR32f20WaeOWzOf86XJH/2TzBJlGhsXRpVVdpo2Tx56by7Oj9BexzHFzdfS0C5A
- AAA
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1528;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=x/YVZfjdNfpe+Sx6imXL9gORrTESWB+MUbneEnPObG4=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlxOo3cq2IouUVB8De6f00vICVYzCDbalGwerEn
- 5b+e6Wey8WJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZcTqNwAKCRCLPIo+Aiko
- 1SpYB/9ulG3MmOsHSUbXR9H9Tq2M8lBcWigpdCj0CDDaOuXMQFDJk/Jjvu2xo9k6lT86PcKhf5x
- QEE4Z8EAZai7fDQ0ugBk83nfi5loCR30Val4odndfGz3nF6dQFK1RoYcIIhMXHHR7yo6g/8NA1q
- +R8lwDkp5TAT7KWWPk3siq/WbCgeOuYbUn+YdLgf6O5zFbBzvVFwYU+AdpZtu3YfqOl5da0g1wu
- VTO8PJx280w5XFuTwyuZ74g3JKENeY7y7h3p7bIlldy69AhFLbJZnn61Ll/TMf1ar2ZqWVcDRqU
- /CO85qi5PON2G/OoE5B5VxPqFK3vu5VgH20Ybw3esisaS8dy
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ihUM9dPdVjbYBgTWmRWoyx7pe9_TZkvu
+X-Proofpoint-GUID: ihUM9dPdVjbYBgTWmRWoyx7pe9_TZkvu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-08_05,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ spamscore=0 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 mlxlogscore=960 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402080080
 
-We have several reports of vblank timeout messages. However after some
-debugging it was found that there might be different causes to that.
-To allow us to identify the DPU block that gets stuck, include the
-actual CTL_FLUSH value into the timeout message and trigger the devcore
-snapshot capture.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Changes in v2:
-- Added a call to msm_disp_snapshot_state() to trigger devcore dump
-  (Abhinav)
-- Link to v1: https://lore.kernel.org/r/20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index d0f56c5c4cce..a8d6165b3c0a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -489,7 +489,8 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
- 		(hw_ctl->ops.get_flush_register(hw_ctl) == 0),
- 		msecs_to_jiffies(50));
- 	if (ret <= 0) {
--		DPU_ERROR("vblank timeout\n");
-+		DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
-+		msm_disp_snapshot_state(phys_enc->parent->dev);
- 		return -ETIMEDOUT;
- 	}
- 
+On 2/8/2024 12:21 PM, Dmitry Baryshkov wrote:
+> On Thu, 8 Feb 2024 at 08:14, Krishna Chaitanya Chundru
+> <quic_krichai@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/7/2024 5:17 PM, Dmitry Baryshkov wrote:
+>>> On Wed, 7 Feb 2024 at 12:42, Krishna chaitanya chundru
+>>> <quic_krichai@quicinc.com> wrote:
+>>>>
+>>>> Enable PCIe1 controller and its corresponding PHY nodes on
+>>>> qcs6490-rb3g2 platform.
+>>>>
+>>>> PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
+>>>> connected. For each endpoint a unique BDF will be assigned and should
+>>>> assign unique smmu id. So for each BDF add smmu id.
+>>>>
+>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
+>>>>    1 file changed, 42 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>> index 8bb7d13d85f6..0082a3399453 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>> @@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
+>>>>           };
+>>>>    };
+>>>>
+>>>> +&pcie1 {
+>>>> +       perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+>>>> +
+>>>> +       pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
+>>>> +       pinctrl-names = "default";
+>>>> +
+>>>> +       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+>>>> +                   <0x100 &apps_smmu 0x1c81 0x1>,
+>>>> +                   <0x208 &apps_smmu 0x1c84 0x1>,
+>>>> +                   <0x210 &apps_smmu 0x1c85 0x1>,
+>>>> +                   <0x218 &apps_smmu 0x1c86 0x1>,
+>>>> +                   <0x300 &apps_smmu 0x1c87 0x1>,
+>>>> +                   <0x400 &apps_smmu 0x1c88 0x1>,
+>>>> +                   <0x500 &apps_smmu 0x1c89 0x1>,
+>>>> +                   <0x501 &apps_smmu 0x1c90 0x1>;
+>>>
+>>> Is the iommu-map really board specific?
+>>>
+>> The iommu-map for PCIe varies if PCIe switch is connected.
+>> For this platform a PCIe switch is connected and for that reason
+>> we need to define additional smmu ID's for each BDF.
+>>
+>> For that reason we defined here as these ID's are applicable only
+>> for this board.
+> 
+> So, these IDs are the same for all boards, just being unused on
+> devices which have no bridges / switches connected to this PCIe host.
+> If this is correct, please move them to sc7280.dtsi.
+>
+Yes ID's will be same for all boards. we can move them sc7280.dtsi
+but the BDF to smmu mapping will be specific to this board only.
+if there is some other PCIe switch with different configuration is
+connected to different board of same variant in future again these
+mapping needs to updated.
 
----
-base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-change-id: 20240106-fd-dpu-debug-timeout-e917f0bc8063
+For that reason I tried to add it here.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+- Krishna Chaitanya.
+>>
+>> - Krishna Chaitanya.
+>>>> +
+>>>> +       status = "okay";
+>>>> +};
+>>>> +
+>>>> +&pcie1_phy {
+>>>> +       vdda-phy-supply = <&vreg_l10c_0p88>;
+>>>> +       vdda-pll-supply = <&vreg_l6b_1p2>;
+>>>> +
+>>>> +       status = "okay";
+>>>> +};
+>>>> +
+>>>>    &qupv3_id_0 {
+>>>>           status = "okay";
+>>>>    };
+>>>> @@ -420,6 +446,22 @@ &qupv3_id_0 {
+>>>>    &tlmm {
+>>>>           gpio-reserved-ranges = <32 2>, /* ADSP */
+>>>>                                  <48 4>; /* NFC */
+>>>> +
+>>>> +       pcie1_reset_n: pcie1-reset-n-state {
+>>>> +               pins = "gpio2";
+>>>> +               function = "gpio";
+>>>> +               drive-strength = <16>;
+>>>> +               output-low;
+>>>> +               bias-disable;
+>>>> +       };
+>>>> +
+>>>> +       pcie1_wake_n: pcie1-wake-n-state {
+>>>> +               pins = "gpio3";
+>>>> +               function = "gpio";
+>>>> +               drive-strength = <2>;
+>>>> +               bias-pull-up;
+>>>> +       };
+>>>> +
+>>>>    };
+>>>>
+>>>>    &uart5 {
+>>>>
+>>>> ---
+>>>> base-commit: 70d201a40823acba23899342d62bc2644051ad2e
+>>>> change-id: 20240207-enable_pcie-95b1d6612b27
+>>>>
+>>>> Best regards,
+>>>> --
+>>>> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>>
+>>>>
+>>>
+>>>
+> 
+> 
+> 
 
