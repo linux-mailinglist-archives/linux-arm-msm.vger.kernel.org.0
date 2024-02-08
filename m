@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-10198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E2E684E3F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 16:20:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C0FE84E3F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 16:20:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04A3B28CA3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:20:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30CCC1C22EB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C3657B3EA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FA147B3F4;
 	Thu,  8 Feb 2024 15:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AuzVgP5J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FsM998IR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23D87B3CE
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 15:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3276908
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707405648; cv=none; b=DwHYIu+mbghit4IElF+GtGZAWhOnshQbFLlfs/EF39obFlJnC7sIQlEuozO95dcODSIwheujjqCs02pyyxqx4C8ToGma5rGhawp0XM48C8mBoqrO27EWxPqL/HCB5HQbIAaTrJ697QWgavxNi9hfwlrsf5gj9d3cWj3UHTLBf3o=
+	t=1707405649; cv=none; b=ihiKe3QMxnZiVrpIQnnsneP7/DAjfWxPKCqPSjvHiPuwtcNibTIfa63EXzcN63jx0Xx+xmsnYaUtb65zXOPP/9jhictk07PMrOmoJXyi1DnKFCRRKIb8y3msy5z7N+XzKX+CgBYJazskVk9KAuYmgARb6sfDxpKGvm8gpvSJSV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707405648; c=relaxed/simple;
-	bh=zjZbYdMAqyu+oLAUzHy6Hmx+VEZSTigImPrKgFvEAZw=;
+	s=arc-20240116; t=1707405649; c=relaxed/simple;
+	bh=2rCn7C1YhtjsYqne1aRvV4AlIBM4M2R0IVdZGBbTf9w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QZIroTpS5CGmhXPZKJdeVXAp26QMyTl38w0NBep5+rjlA9GTcff5axRjZTG/FSix0V+zqtgEX942ANAJRMeS4o0/5c+v4g/xv4Z/GhoZ0jNp2Ae7gSi7BCddV3EwcRfXLs9P55eAm/HvZd9+qz6TRB+FY/NnxDt9mApi5aHENXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AuzVgP5J; arc=none smtp.client-ip=209.85.208.176
+	 In-Reply-To:To:Cc; b=K6opA9qHJEzB7SES8S34555xFkQ2SzkvKh4jThlUdYbHA8qu2CZQp73HVLqCIPxAGc1gB2tMsoINaXDLNey6AWl9CSeWGW/Um+5QDMw8lklIldnHbaZrQmWYNqgnWVvQQrbRoBx3tgxNFeRwPRTOxsLAnpacpxgQ0A+6jHFSSoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FsM998IR; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d0bc402c8eso10066691fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 07:20:46 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d0d798a33fso4559691fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 07:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1707405645; x=1708010445; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D67SHaFW97kK6G1v5sE/VNmdoJi9sv44R3pWMndVFYQ=;
-        b=AuzVgP5J6vXfNvbOftVkn9Eqr4M6tPkb7v5wYrz4LYZS+zrSnzZ2yM1/1uMPDUxc47
-         BzZxtaoqmTRKoA8hXdRdjj1duQPcTD6L8DysFa9IIdnqhsDlPzQYVAbh4HKi5bYj0cFB
-         DGinqdWsnG92Z2BCSyByFF8haVYI8tGkot9KZg/v4D7F3fyuK/LdEhvvOqfezFfTNgsm
-         IlF/A8Zokf94a/qPHGRhQ5/z0y7ECZ8gHGS27A/QTGcdR1Oa3J6HVOTeBCR6OeSD03qA
-         MgN+Vdw3rg/rdpGuEtBEXpbY24izrO40XETH5Vp/oimYQPJgpGPb7fLoPTnvAZeykMP+
-         9hbg==
+        bh=pC/PDWcQRheeYf8XjJmgksNYtRgJgVOixG33EFNcwjI=;
+        b=FsM998IRPfvEXOvngnuHbyjmlFcVOj6mHpB0ErlHtWuyFFwZvKpiB+YFiUqbBj39zP
+         wRM8IQqIGt5dSBGDjY7vHeHOkyd4w1ngVPc+uiIpw49gZnXCLNgGg6CGVuUkOFBsE5hg
+         b6uI1pYLKNCZMHNqD3NRn7+VRcbsxqpJb/N+OF4wChZDO3UhQHvV6rhnI3lAFjt5x4bz
+         Q4wKl5hzhnIByYlSi82uWtPN6x+y5hJpP9YZZfTVjTtMNikqb/WvAG78mEJozZ06mVAd
+         PBGnsqGHxqZjFxLrx7sDhp1aKJad2ATKbg6DI/cdI3j8gmL+kkkHuv3ty5ybn8UhZhsn
+         Wo6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707405645; x=1708010445;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=D67SHaFW97kK6G1v5sE/VNmdoJi9sv44R3pWMndVFYQ=;
-        b=j+Re9e//ahNGB1br/orh5W9zmUGoIivGjN8NpU2F6LaygNmGv68eSrwgGZj52YFOhX
-         6HdhofH7LIMw/1U8u1DtseUAsUBSqIukvgBZUwzDFUN12gY9OVnAMYTPGR/09Glj36na
-         UomROm0oFsZbLooWnfgjD3SxYlrScHnCWmJZo3UfxEBEfbqLMhXKr7GPbvd3A5++Jh1w
-         D+6Y1Q144kb6OdzffTAb7Q+JE8nxltvVanzkh8UE9Q7GZj858CTTE80E6IqeePRXQgSC
-         NqihFnhe7FUwnO8EpiwjBzt8OP50vYTrto9RUmBxK63s3Uid/bNwxZWmRUfJO6dUXavs
-         WiqA==
-X-Gm-Message-State: AOJu0YwfLFvcK5SXNKFhQ+LIprtjdxnlccgBI5ewElwjx18u603reTKN
-	Cf80JSWRAdaBZBCK8JnDcvQLA/ozqfccHZIjRvv981eTMTA1JzUlSAfrMT5g3qE=
-X-Google-Smtp-Source: AGHT+IH9A/ZhsSGXhJI3AvEfUGwKLfOMvZISJTSd9vZctnai1z9WUucY5FBPn2uD81GHgLA8a1cEzQ==
-X-Received: by 2002:a2e:90d0:0:b0:2d0:b3c7:ce03 with SMTP id o16-20020a2e90d0000000b002d0b3c7ce03mr1267781ljg.8.1707405644921;
-        Thu, 08 Feb 2024 07:20:44 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCURdqkJ2WRSXfdyEBttXogks7xwVwn87M1KqdeOYrfXikpeA61qO9FWjLDMnE6ovGiSqrAgcWDxoLA0EcAEDQ5ZyJsP4MJcYwt0zGGkZBvxcl+yG53txbu/iiTkUgmoUkpl4sMhl/gx+fdUmc4jlTCecEcPMRjbuNUe8or+SM5I821P/r4zUvXbWPJijLpxtGrQR/WPKFXh5MfcQHkZrFQu9WuFhJK6mrY1wJrGWihfJYCWEwXKsZluatJ5qSOAhuMYYkEipNBAOcCZtwfJ9qX8AB+cQox2AcSBw3OS5Hg2i/PVSKjPQU8lzXoinK24uUXDjxrRdNeamIFk+hc=
+        bh=pC/PDWcQRheeYf8XjJmgksNYtRgJgVOixG33EFNcwjI=;
+        b=vLD0weIsxhpWDicuvxUag10Y7ZpsxQxAhTz1PWXM5nfnhXM12P4ZNrC4R5RWximlgG
+         wrK0PpA/BUPos45m2Cs+1EPuHL1L5WPazfwZSMzZx9hdJpxq0FFmzRNs++fb4hcvyuS+
+         9OXeHSOy0avZdjsWSZf/PzOD4/dgF8jMvKCtuhAgzknBlwIfowpNpyCT91+8bN9jHmmY
+         sfEkNpLGUb4TayTVzMKgCAV3fdJiPWZSolg+/DRrxcocvi02x5/UVh/n4IKR6RD+IZoz
+         RxHYoN0TbUERAwoWxeixKR0lkHcNCq8dmdUbq3umrmBbjOIQIZsckgb456V9kKQv4eu/
+         F0Vg==
+X-Gm-Message-State: AOJu0YxiEODJlc23Wfom8/HgsD9/VOhG21Le6vXGuXUAcvmPhD4zDZSi
+	mUu5dAO95vd63AnS1p632BU6PPJJaCuFBatvm5FOZkEdmGV+aMuNWmI6b6eECHo=
+X-Google-Smtp-Source: AGHT+IGfkvIBl1tCwMg5S6aud6q+dr/3WHXR31fCRRsRnKqaJGem0mdsIVcVwnYFuH7kEKG14V1OUQ==
+X-Received: by 2002:a05:651c:40e:b0:2d0:b244:5f09 with SMTP id 14-20020a05651c040e00b002d0b2445f09mr6464940lja.51.1707405645506;
+        Thu, 08 Feb 2024 07:20:45 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWXfDRmeFtvjafuLJlpzLb6nxj2j5UcyZx7RPqnyhU3LWCLiiDzxIHShSK52CbLOxI3RYPAMrtJildE6cZJz09ucZ5JjQPYYWD2bzAnTWgISfE6NmyMtkQqoNmcLS8+QatnTALLnADvIPDh44CfbGuCnhF0S5Jaj65kz+jkdFMwcTKwZn/A0dWDDpZv+qcYS3PfjkR3ucqJKQApLqpDXACPGwMpSke1X5FaucJHkhHpD6J/q/IbuvrQcyomS+C7W8x2eiQQFPerYQcwtbm9l1gpC4uryjZpaGmhU56Vh48eEILhIYJDNiv5BAfm3T7XgK08rVJpNU3QURTz/ts=
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y4-20020a2e9d44000000b002d0d1caf26bsm22116ljj.7.2024.02.08.07.20.44
+        by smtp.gmail.com with ESMTPSA id y4-20020a2e9d44000000b002d0d1caf26bsm22116ljj.7.2024.02.08.07.20.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 07:20:44 -0800 (PST)
+        Thu, 08 Feb 2024 07:20:45 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 08 Feb 2024 17:20:43 +0200
-Subject: [PATCH v4 3/5] drm/msm/dpu: drop
- dpu_encoder_phys_ops.atomic_mode_set
+Date: Thu, 08 Feb 2024 17:20:44 +0200
+Subject: [PATCH v4 4/5] drm/msm/dpu: move writeback's atomic_check to
+ dpu_writeback.c
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-3-caf5dcd125c0@linaro.org>
+Message-Id: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-4-caf5dcd125c0@linaro.org>
 References: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-0-caf5dcd125c0@linaro.org>
 In-Reply-To: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-0-caf5dcd125c0@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -90,218 +90,255 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9079;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8940;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=zjZbYdMAqyu+oLAUzHy6Hmx+VEZSTigImPrKgFvEAZw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlxPFKrsE8LWDGMW9/nvqV4MfCMOgGTrO0ueVzR
- R0wCthAr8qJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZcTxSgAKCRCLPIo+Aiko
- 1SVqB/9cI+TTRJMkCqPPSd4FnVJasvzalLfLfSvZX/EWpGJkcizbEF1+rGdSf2Bf9bXXjXGzt/Y
- W2iV5XBhVce/i22hjCqLtG4G+ricH7BXLo0UDs8OoejQrlE8axMhEbkyMuuxm1ZXyH11CgvVQ4c
- KXT2UzPKiylPKgxjU8jxw3HqlChTn5kdkcIKubiyNXnGFbci5N2iWldJlRvcc7nsIO4/93065Aw
- KofzXRs2Kx6Kf7nBlNnBkey+0PmRQWg0OaE4OofPLD/URmMPWX++dxKMXrQlvCmPLmP4EBRmOPV
- ju/6/WaH/1IHBx9D7XFuU2RvzTRfYquVfP0aeTNFZGRZ9h0+
+ bh=2rCn7C1YhtjsYqne1aRvV4AlIBM4M2R0IVdZGBbTf9w=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlxPFKdlklz9ZdGTp6kloAC8JZdl6sbDcdFvOxT
+ 1pUkLWY2n+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZcTxSgAKCRCLPIo+Aiko
+ 1XTZB/9GLQx27iJL+ayqixz9YFJufLioA43Y5hINTMpvUvWgvFxgeAEslxPQX/fL4fejZFz9MuA
+ bcC36wv4WdBIZrPk71bd+KBZ9amJmLkCldzBC5gU0Bjsjqx/E0+nKmInWlyC0+uaJ+amu7SGsRu
+ 2rTnKw63cyIaZ/o5PuptNcE396cl6sksla29EjtREBTn4i8CHQbfwgRWldx1LyGfi32cSUyGLqV
+ 8OPHPqGH4hmhwryJ6+mVKDMA5wY1UhXolKnik9mjKptvlkOGblJwijI2EcYzGwC9Y4NUvXMByGk
+ TW/594NgkB33DvxZ+HTAy8BGchIsp3NRXnm3ISP4F3z+gHC8
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The atomic_mode_set() callback only sets the phys_enc's IRQ data. As the
-INTF and WB are statically allocated to each encoder/phys_enc, drop the
-atomic_mode_set callback and set the IRQs during encoder init.
+dpu_encoder_phys_wb is the only user of encoder's atomic_check callback.
+Move corresponding checks to drm_writeback_connector's implementation
+and drop the dpu_encoder_phys_wb_atomic_check() function.
 
-For the CMD panel usecase some of IRQ indexes depend on the selected
-resources. Move setting them to the irq_enable() callback.
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  5 ----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   | 32 ++++++++++------------
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 13 ++-------
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 11 +-------
- 5 files changed, 17 insertions(+), 46 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 54 -------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  9 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c      | 61 +++++++++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h      |  3 +-
+ 4 files changed, 68 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 6cf2e186a350..2da50ce0c999 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1152,8 +1152,6 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 		phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
- 
- 		phys->cached_mode = crtc_state->adjusted_mode;
--		if (phys->ops.atomic_mode_set)
--			phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index a0a28230fc31..8220cd920e6f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -354,59 +354,6 @@ static void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc)
  	}
  }
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index 8c5b0c853572..7eb8bdfe6bbe 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -69,8 +69,6 @@ struct dpu_encoder_phys;
-  * @is_master:			Whether this phys_enc is the current master
-  *				encoder. Can be switched at enable time. Based
-  *				on split_role and current mode (CMD/VID).
-- * @atomic_mode_set:		DRM Call. Set a DRM mode.
-- *				This likely caches the mode, for use at enable.
-  * @enable:			DRM Call. Enable a DRM mode.
-  * @disable:			DRM Call. Disable mode.
-  * @atomic_check:		DRM Call. Atomic check new DRM state.
-@@ -96,9 +94,6 @@ struct dpu_encoder_phys;
- struct dpu_encoder_phys_ops {
- 	void (*prepare_commit)(struct dpu_encoder_phys *encoder);
- 	bool (*is_master)(struct dpu_encoder_phys *encoder);
--	void (*atomic_mode_set)(struct dpu_encoder_phys *encoder,
--			struct drm_crtc_state *crtc_state,
--			struct drm_connector_state *conn_state);
- 	void (*enable)(struct dpu_encoder_phys *encoder);
- 	void (*disable)(struct dpu_encoder_phys *encoder);
- 	int (*atomic_check)(struct dpu_encoder_phys *encoder,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index de826f9745e5..fc1d5736d7fc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -142,23 +142,6 @@ static void dpu_encoder_phys_cmd_underrun_irq(void *arg)
- 	dpu_encoder_underrun_callback(phys_enc->parent, phys_enc);
- }
- 
--static void dpu_encoder_phys_cmd_atomic_mode_set(
+-/**
+- * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic states
+- * @phys_enc:	Pointer to physical encoder
+- * @crtc_state:	Pointer to CRTC atomic state
+- * @conn_state:	Pointer to connector atomic state
+- */
+-static int dpu_encoder_phys_wb_atomic_check(
 -		struct dpu_encoder_phys *phys_enc,
 -		struct drm_crtc_state *crtc_state,
 -		struct drm_connector_state *conn_state)
 -{
--	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
+-	struct drm_framebuffer *fb;
+-	const struct drm_display_mode *mode = &crtc_state->mode;
 -
--	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
+-	DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
+-			phys_enc->hw_wb->idx, mode->name, mode->hdisplay, mode->vdisplay);
 -
--	if (phys_enc->has_intf_te)
--		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
--	else
--		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
+-	if (!conn_state || !conn_state->connector) {
+-		DPU_ERROR("invalid connector state\n");
+-		return -EINVAL;
+-	} else if (conn_state->connector->status !=
+-			connector_status_connected) {
+-		DPU_ERROR("connector not connected %d\n",
+-				conn_state->connector->status);
+-		return -EINVAL;
+-	}
 -
--	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+-	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
+-		return 0;
+-
+-	fb = conn_state->writeback_job->fb;
+-
+-	DPU_DEBUG("[fb_id:%u][fb:%u,%u]\n", fb->base.id,
+-			fb->width, fb->height);
+-
+-	if (fb->width != mode->hdisplay) {
+-		DPU_ERROR("invalid fb w=%d, mode w=%d\n", fb->width,
+-				mode->hdisplay);
+-		return -EINVAL;
+-	} else if (fb->height != mode->vdisplay) {
+-		DPU_ERROR("invalid fb h=%d, mode h=%d\n", fb->height,
+-				  mode->vdisplay);
+-		return -EINVAL;
+-	} else if (fb->width > phys_enc->hw_wb->caps->maxlinewidth) {
+-		DPU_ERROR("invalid fb w=%d, maxlinewidth=%u\n",
+-				  fb->width, phys_enc->hw_wb->caps->maxlinewidth);
+-		return -EINVAL;
+-	}
+-
+-	return drm_atomic_helper_check_wb_connector_state(conn_state->connector, conn_state->state);
 -}
 -
- static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 		struct dpu_encoder_phys *phys_enc)
- {
-@@ -297,6 +280,14 @@ static void dpu_encoder_phys_cmd_irq_enable(struct dpu_encoder_phys *phys_enc)
- 					  phys_enc->hw_pp->idx - PINGPONG_0,
- 					  phys_enc->vblank_refcount);
- 
-+	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
-+	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
-+
-+	if (phys_enc->has_intf_te)
-+		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
-+	else
-+		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
-+
- 	dpu_core_irq_register_callback(phys_enc->dpu_kms,
- 				       phys_enc->irq[INTR_IDX_PINGPONG],
- 				       dpu_encoder_phys_cmd_pp_tx_done_irq,
-@@ -327,6 +318,10 @@ static void dpu_encoder_phys_cmd_irq_disable(struct dpu_encoder_phys *phys_enc)
- 	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_UNDERRUN]);
- 	dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
- 	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_PINGPONG]);
-+
-+	phys_enc->irq[INTR_IDX_CTL_START] = 0;
-+	phys_enc->irq[INTR_IDX_PINGPONG] = 0;
-+	phys_enc->irq[INTR_IDX_RDPTR] = 0;
- }
- 
- static void dpu_encoder_phys_cmd_tearcheck_config(
-@@ -706,7 +701,6 @@ static void dpu_encoder_phys_cmd_init_ops(
- 		struct dpu_encoder_phys_ops *ops)
- {
- 	ops->is_master = dpu_encoder_phys_cmd_is_master;
--	ops->atomic_mode_set = dpu_encoder_phys_cmd_atomic_mode_set;
- 	ops->enable = dpu_encoder_phys_cmd_enable;
- 	ops->disable = dpu_encoder_phys_cmd_disable;
- 	ops->control_vblank_irq = dpu_encoder_phys_cmd_control_vblank_irq;
-@@ -745,6 +739,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(struct drm_device *dev,
- 
- 	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
- 	phys_enc->intf_mode = INTF_MODE_CMD;
-+	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
-+
- 	cmd_enc->stream_sel = 0;
- 
- 	if (!phys_enc->hw_intf) {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 9743ec43d862..bc4ac7e2e4ba 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -349,16 +349,6 @@ static bool dpu_encoder_phys_vid_needs_single_flush(
- 	return phys_enc->split_role != ENC_ROLE_SOLO;
- }
- 
--static void dpu_encoder_phys_vid_atomic_mode_set(
--		struct dpu_encoder_phys *phys_enc,
--		struct drm_crtc_state *crtc_state,
--		struct drm_connector_state *conn_state)
--{
--	phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
 -
--	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
--}
--
- static int dpu_encoder_phys_vid_control_vblank_irq(
- 		struct dpu_encoder_phys *phys_enc,
- 		bool enable)
-@@ -686,7 +676,6 @@ static int dpu_encoder_phys_vid_get_frame_count(
- static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
- {
- 	ops->is_master = dpu_encoder_phys_vid_is_master;
--	ops->atomic_mode_set = dpu_encoder_phys_vid_atomic_mode_set;
- 	ops->enable = dpu_encoder_phys_vid_enable;
- 	ops->disable = dpu_encoder_phys_vid_disable;
- 	ops->control_vblank_irq = dpu_encoder_phys_vid_control_vblank_irq;
-@@ -725,6 +714,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(struct drm_device *dev,
- 
- 	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
- 	phys_enc->intf_mode = INTF_MODE_VIDEO;
-+	phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
-+	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
- 
- 	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->hw_intf->idx);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 602013725484..a0a28230fc31 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -539,15 +539,6 @@ static void dpu_encoder_phys_wb_irq_disable(struct dpu_encoder_phys *phys)
- 		dpu_core_irq_unregister_callback(phys->dpu_kms, phys->irq[INTR_IDX_WB_DONE]);
- }
- 
--static void dpu_encoder_phys_wb_atomic_mode_set(
--		struct dpu_encoder_phys *phys_enc,
--		struct drm_crtc_state *crtc_state,
--		struct drm_connector_state *conn_state)
--{
--
--	phys_enc->irq[INTR_IDX_WB_DONE] = phys_enc->hw_wb->caps->intr_wb_done;
--}
--
- static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
- 		struct dpu_encoder_phys *phys_enc)
- {
-@@ -784,7 +775,6 @@ static bool dpu_encoder_phys_wb_is_valid_for_commit(struct dpu_encoder_phys *phy
- static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
- {
+ /**
+  * _dpu_encoder_phys_wb_update_flush - flush hardware update
+  * @phys_enc:	Pointer to physical encoder
+@@ -777,7 +724,6 @@ static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
  	ops->is_master = dpu_encoder_phys_wb_is_master;
--	ops->atomic_mode_set = dpu_encoder_phys_wb_atomic_mode_set;
  	ops->enable = dpu_encoder_phys_wb_enable;
  	ops->disable = dpu_encoder_phys_wb_disable;
- 	ops->atomic_check = dpu_encoder_phys_wb_atomic_check;
-@@ -831,6 +821,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(struct drm_device *dev,
+-	ops->atomic_check = dpu_encoder_phys_wb_atomic_check;
+ 	ops->wait_for_commit_done = dpu_encoder_phys_wb_wait_for_commit_done;
+ 	ops->prepare_for_kickoff = dpu_encoder_phys_wb_prepare_for_kickoff;
+ 	ops->handle_post_kickoff = dpu_encoder_phys_wb_handle_post_kickoff;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 723cc1d82143..48728be27e15 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -630,23 +630,26 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
+ {
+ 	struct drm_encoder *encoder = NULL;
+ 	struct msm_display_info info;
++	const enum dpu_wb wb_idx = WB_2;
++	u32 maxlinewidth;
+ 	int rc;
  
- 	dpu_encoder_phys_wb_init_ops(&phys_enc->ops);
- 	phys_enc->intf_mode = INTF_MODE_WB_LINE;
-+	phys_enc->irq[INTR_IDX_WB_DONE] = phys_enc->hw_wb->caps->intr_wb_done;
+ 	memset(&info, 0, sizeof(info));
  
- 	atomic_set(&wb_enc->wbirq_refcount, 0);
+ 	info.num_of_h_tiles = 1;
+ 	/* use only WB idx 2 instance for DPU */
+-	info.h_tile_instance[0] = WB_2;
++	info.h_tile_instance[0] = wb_idx;
+ 	info.intf_type = INTF_WB;
  
++	maxlinewidth = dpu_rm_get_wb(&dpu_kms->rm, info.h_tile_instance[0])->caps->maxlinewidth;
++
+ 	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL, &info);
+ 	if (IS_ERR(encoder)) {
+ 		DPU_ERROR("encoder init failed for dsi display\n");
+ 		return PTR_ERR(encoder);
+ 	}
+ 
+-	rc = dpu_writeback_init(dev, encoder, wb_formats,
+-			n_formats);
++	rc = dpu_writeback_init(dev, encoder, wb_formats, n_formats, maxlinewidth);
+ 	if (rc) {
+ 		DPU_ERROR("dpu_writeback_init, rc = %d\n", rc);
+ 		return rc;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+index 2a5a68366582..16f144cbc0c9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <drm/drm_edid.h>
++#include <drm/drm_framebuffer.h>
+ 
+ #include "dpu_writeback.h"
+ 
+@@ -24,6 +25,61 @@ static int dpu_wb_conn_get_modes(struct drm_connector *connector)
+ 			dev->mode_config.max_height);
+ }
+ 
++static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
++				    struct drm_atomic_state *state)
++{
++	struct drm_writeback_connector *wb_conn = drm_connector_to_writeback(connector);
++	struct dpu_wb_connector *dpu_wb_conn = to_dpu_wb_conn(wb_conn);
++	struct drm_connector_state *conn_state =
++		drm_atomic_get_new_connector_state(state, connector);
++	struct drm_crtc *crtc;
++	struct drm_crtc_state *crtc_state;
++	const struct drm_display_mode *mode;
++	struct drm_framebuffer *fb;
++
++	DPU_DEBUG("[atomic_check:%d]\n", connector->base.id);
++
++	if (!conn_state || !conn_state->connector) {
++		DPU_ERROR("invalid connector state\n");
++		return -EINVAL;
++	} else if (conn_state->connector->status != connector_status_connected) {
++		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
++		return -EINVAL;
++	}
++
++	crtc = conn_state->crtc;
++	if (!crtc)
++		return 0;
++
++	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
++		return 0;
++
++	crtc_state = drm_atomic_get_crtc_state(state, crtc);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
++
++	mode = &crtc_state->mode;
++
++	fb = conn_state->writeback_job->fb;
++
++	DPU_DEBUG("[fb_id:%u][fb:%u,%u][mode:\"%s\":%ux%u]\n", fb->base.id, fb->width, fb->height,
++		  mode->name, mode->hdisplay, mode->vdisplay);
++
++	if (fb->width != mode->hdisplay) {
++		DPU_ERROR("invalid fb w=%d, mode w=%d\n", fb->width, mode->hdisplay);
++		return -EINVAL;
++	} else if (fb->height != mode->vdisplay) {
++		DPU_ERROR("invalid fb h=%d, mode h=%d\n", fb->height, mode->vdisplay);
++		return -EINVAL;
++	} else if (fb->width > dpu_wb_conn->maxlinewidth) {
++		DPU_ERROR("invalid fb w=%d, maxlinewidth=%u\n",
++			  fb->width, dpu_wb_conn->maxlinewidth);
++		return -EINVAL;
++	}
++
++	return drm_atomic_helper_check_wb_connector_state(conn_state->connector, conn_state->state);
++}
++
+ static const struct drm_connector_funcs dpu_wb_conn_funcs = {
+ 	.reset = drm_atomic_helper_connector_reset,
+ 	.fill_modes = drm_helper_probe_single_connector_modes,
+@@ -59,12 +115,13 @@ static void dpu_wb_conn_cleanup_job(struct drm_writeback_connector *connector,
+ 
+ static const struct drm_connector_helper_funcs dpu_wb_conn_helper_funcs = {
+ 	.get_modes = dpu_wb_conn_get_modes,
++	.atomic_check = dpu_wb_conn_atomic_check,
+ 	.prepare_writeback_job = dpu_wb_conn_prepare_job,
+ 	.cleanup_writeback_job = dpu_wb_conn_cleanup_job,
+ };
+ 
+ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+-		const u32 *format_list, u32 num_formats)
++		const u32 *format_list, u32 num_formats, u32 maxlinewidth)
+ {
+ 	struct dpu_wb_connector *dpu_wb_conn;
+ 	int rc = 0;
+@@ -73,6 +130,8 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+ 	if (!dpu_wb_conn)
+ 		return -ENOMEM;
+ 
++	dpu_wb_conn->maxlinewidth = maxlinewidth;
++
+ 	drm_connector_helper_add(&dpu_wb_conn->base.base, &dpu_wb_conn_helper_funcs);
+ 
+ 	/* DPU initializes the encoder and sets it up completely for writeback
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
+index 5a75ea916101..4b11cca8014c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.h
+@@ -18,6 +18,7 @@
+ struct dpu_wb_connector {
+ 	struct drm_writeback_connector base;
+ 	struct drm_encoder *wb_enc;
++	u32 maxlinewidth;
+ };
+ 
+ static inline struct dpu_wb_connector *to_dpu_wb_conn(struct drm_writeback_connector *conn)
+@@ -26,6 +27,6 @@ static inline struct dpu_wb_connector *to_dpu_wb_conn(struct drm_writeback_conne
+ }
+ 
+ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+-		const u32 *format_list, u32 num_formats);
++		const u32 *format_list, u32 num_formats, u32 maxlinewidth);
+ 
+ #endif /*_DPU_WRITEBACK_H */
 
 -- 
 2.39.2
