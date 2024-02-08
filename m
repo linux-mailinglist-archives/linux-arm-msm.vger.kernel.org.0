@@ -1,216 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-10231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C61884EA65
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 22:24:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC21584EBC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 23:41:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12075B2B8BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 21:22:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51E69B233CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 22:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3096B4EB4F;
-	Thu,  8 Feb 2024 21:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C983C50261;
+	Thu,  8 Feb 2024 22:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L5BmvqcR"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="a9Eqzi1W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06E14EB41;
-	Thu,  8 Feb 2024 21:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C9750252
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 22:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707427314; cv=none; b=fxdd+HHzJHTxaghotfTMXvAzN8CGf6b7cV6hX4h//TwZB0/vRJFu+RYLna5+Cz+ZIJJ2StsXI7SHOBpnmDDk0sU+HA4C4qMnWsWP7zZiylhnliXKiEXcAb3MjmTMZ1nEpnsZ4ncrMoCpQt2DlT0aoKGW4uBhR7Y8k1eFcr4F4w8=
+	t=1707432034; cv=none; b=Dg3YXUyrJUnhh6e6b1sZuYSpG16H1VwQ6yk6tSKYlWQkjDBvFVy9PWHI+UGBVX3T/pWgatvMIInabhF4mbHbwovPTsTVqI7uYbPOt3kOaRrU87/PcBhwabhuvwAlxKxz8sIMCj0W3hrQqOFa/vFcAiFNXX4Fp6MXmUBpzeuIj+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707427314; c=relaxed/simple;
-	bh=oqvxtofftemHVkqCtUvTHWJMUcVkNerevyhL33rOVTg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=kFm9B1Bt+I4Sv0mkNHoT2A1hykScHR2o9Fc0wJbIJe6SR7bihC/v7ye0rQ71a6D/sLT2mkiM79M3Q3HZbu9cuW0Tq1U5pp77e3nHLblaq7avENDbs7GltNiuxizVdmUjwvw/yb/5FP3TVX9w0xkSKZe81MeFQEAth3Q45exXITY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L5BmvqcR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289CDC433F1;
-	Thu,  8 Feb 2024 21:21:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707427313;
-	bh=oqvxtofftemHVkqCtUvTHWJMUcVkNerevyhL33rOVTg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=L5BmvqcRkgnwQazmD6GNbT/V4WhBK5Jh6gNZcDqvZtq3vD3bjm4E5j4iLEoOGBSf2
-	 9F9jyrrWriCDl5Wu0BAXPhkb1g056buOTe2Ztq7rnNXkEo1LQlxR/MS5DrRDwOGECL
-	 PzXvkI3prpHFsJQ85rgk8WagJHAGPijl/nL+cwohJK5pgSdWN4EVlzkTj2GSjD78+U
-	 Do4/ScbKYtsrkZ/UX5X3+BMEO6gp6SsFMVnpleSnv3fJUOOdIaypIpDthmOW76tyzt
-	 Evsw5NI06O+Mh6/qIrxzDT3P++ocGhgYPwbeQwHydxaTl96OS/0UKdfbCWCgOU5q38
-	 wcv+IJzWFU9dQ==
-From: Mark Brown <broonie@kernel.org>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: kernel@pengutronix.de, Moritz Fischer <mdf@kernel.org>, 
- Wu Hao <hao.wu@intel.com>, Xu Yilun <yilun.xu@intel.com>, 
- Tom Rix <trix@redhat.com>, linux-fpga@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Alexander Aring <alex.aring@gmail.com>, 
- Stefan Schmidt <stefan@datenfreihafen.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- linux-wpan@vger.kernel.org, netdev@vger.kernel.org, 
- Lars-Peter Clausen <lars@metafoo.de>, 
- Michael Hennerich <Michael.Hennerich@analog.com>, 
- Jonathan Cameron <jic23@kernel.org>, linux-iio@vger.kernel.org, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, linux-input@vger.kernel.org, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Ulf Hansson <ulf.hansson@linaro.org>, 
- Martin Tuma <martin.tuma@digiteqautomotive.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org, 
- Sergey Kozlov <serjk@netup.ru>, Arnd Bergmann <arnd@arndb.de>, 
- Yang Yingliang <yangyingliang@huawei.com>, linux-mmc@vger.kernel.org, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
- Rob Herring <robh@kernel.org>, 
- Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>, 
- Amit Kumar Mahapatra via Alsa-devel <alsa-devel@alsa-project.org>, 
- linux-mtd@lists.infradead.org, Simon Horman <horms@kernel.org>, 
- Ronald Wahl <ronald.wahl@raritan.com>, Benson Leung <bleung@chromium.org>, 
- Tzung-Bi Shih <tzungbi@kernel.org>, Guenter Roeck <groeck@chromium.org>, 
- chrome-platform@lists.linux.dev, Michal Simek <michal.simek@amd.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, linux-spi@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- linux-mediatek@lists.infradead.org, Thomas Zimmermann <tzimmermann@suse.de>, 
- Javier Martinez Canillas <javierm@redhat.com>, 
- Sam Ravnborg <sam@ravnborg.org>, dri-devel@lists.freedesktop.org, 
- linux-fbdev@vger.kernel.org, linux-staging@lists.linux.dev, 
- Viresh Kumar <vireshk@kernel.org>, Rui Miguel Silva <rmfrfs@gmail.com>, 
- Johan Hovold <johan@kernel.org>, Alex Elder <elder@kernel.org>, 
- greybus-dev@lists.linaro.org, Peter Huewe <peterhuewe@gmx.de>, 
- Jarkko Sakkinen <jarkko@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
- linux-integrity@vger.kernel.org, Herve Codina <herve.codina@bootlin.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-usb@vger.kernel.org, Helge Deller <deller@gmx.de>, 
- Dario Binacchi <dario.binacchi@amarulasolutions.com>, 
- Kalle Valo <kvalo@kernel.org>, Dmitry Antipov <dmantipov@yandex.ru>, 
- libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org, 
- Jonathan Corbet <corbet@lwn.net>, Bjorn Helgaas <bhelgaas@google.com>, 
- James Clark <james.clark@arm.com>, linux-doc@vger.kernel.org
-In-Reply-To: <cover.1707324793.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1707324793.git.u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v3 00/32] spi: get rid of some legacy macros
-Message-Id: <170742729486.2266792.11643460714402047207.b4-ty@kernel.org>
-Date: Thu, 08 Feb 2024 21:21:34 +0000
+	s=arc-20240116; t=1707432034; c=relaxed/simple;
+	bh=WgiBKEizJ1Nr9/P0edOywoED0tE3kc/R7lk7Gr4hXN0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pysvXFL3TYlNXca5Fx88alBUkpwiH1MVrxWh0H97mMtw2bmtPO1xMF5xIL9//BJvvqszuvWXWJHrFizXBKKZeT3qUzfiTVBIQT8GnC5C1BAS1pLLfo10Bz0PFyQfdipfC/xjQiY7Ui+FUMNPOiUnQ6M/xhTceOaiaEVImkHfWS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=a9Eqzi1W; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1707432031;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2ycEPqZLGpnCnzCxSi4khqVSrV3LcSojgaxf6ZNumZw=;
+	b=a9Eqzi1WqkbsqlZuBYyvm/g6bXo/IGSisiVP94Ksz8S2FL+ta3vH6V9lLul8mO7ec/dHY0
+	NRGkvZluD7eAxTuX54xUbDL5jiJu0DAqJskWfUcowPaIqF3/ziYrUFG1UUFq1kcFxUG7pX
+	/FMRymoVDX4zWHYtVPt2oDSx/ZzSAcc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-THGrriQxNPCKSwUHdqxyag-1; Thu, 08 Feb 2024 17:40:27 -0500
+X-MC-Unique: THGrriQxNPCKSwUHdqxyag-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-68c53f2816dso3601006d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 14:40:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707432027; x=1708036827;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2ycEPqZLGpnCnzCxSi4khqVSrV3LcSojgaxf6ZNumZw=;
+        b=jVaIUBYTzYQmA0mbcfNjqRHEoXESMfkmB3qa9GX6ZvEEEfbrliYDYw1fGuR/cHxD7W
+         GtRN+MrVZbXs3fg3WrS+a6C7su+tBAzwCC8ZVI/r8sKqTP6dVtfP1aLHonUL7jDYGo9B
+         1EhmeqIsC206+/jL7kqNyXBCsRnMoq/UpLFBvag1w0qZSTAVBJrT1spiGssz/VPEV11c
+         FanMbSHg0Qbtb7gEQ+1gftbxJg3ftbsYU/JMTM5S5ERfkZkGxr0Z9IbgWqAo7W1Qr61C
+         saSGs5ZUeUK0sKQ5iddoPp7cW46+b5poFlc+Xz+KD82zbpDQpIQPzCSlWAamabck4Gq/
+         euPg==
+X-Forwarded-Encrypted: i=1; AJvYcCXBkijjDy4sHQc+SRTMGak8fnC9/f8ih53Xc0LhcOWnaK+mufbLl0VHBpCdUQNqJnb7xChhOhUBxFDZki1862ul8EqU/eZPrAdSXUxi1w==
+X-Gm-Message-State: AOJu0YyUfmCkfbVRCwTgyJghdZmYrUlse1ZY3iec3L20NPHTSrLMwXnk
+	Rr47EnDgPl5kknFyLHYGwOGv0zKPmS6ws98teqoSVqpsRyStZ6w+X++atS2eZzgVJavTCIqPvzX
+	Zomc7VrssGZJ4kJLavTU+TnfyvQxBlqyHrIbDqmPRPojmKThzxIUxGY/xw8DFLTA=
+X-Received: by 2002:a0c:9d4d:0:b0:68c:5d4d:d823 with SMTP id n13-20020a0c9d4d000000b0068c5d4dd823mr641117qvf.17.1707432027182;
+        Thu, 08 Feb 2024 14:40:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVY9IMW/luM8KccH5a1J718sjNe4/VebAq7wJPEa3L5YO/q6oi3fkBE6P6MyZ/xcQrXdWztA==
+X-Received: by 2002:a0c:9d4d:0:b0:68c:5d4d:d823 with SMTP id n13-20020a0c9d4d000000b0068c5d4dd823mr641106qvf.17.1707432026955;
+        Thu, 08 Feb 2024 14:40:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVcKABkyvg/1h3Ln4j2HcqyFpJCJb0KMDbQu/7iAEzOv6TR/hAltgVR9+04P75FiGBPNQ1uqOqHsoC5dLmP0z5QPbp0XKO+6UehmiGqkPu76K2xWEbOJuS2IF3YQs24EGfSIKqcOBthXTms0UQtUybxl9kYUyDJ1Y0lZmrc66R72o+JH589LgofwkVEQimbYfTMGd29KPSbfKEtxyPnSV+qnulT+tIh2sfTl5AK2QzX/X+4
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id ly10-20020a0562145c0a00b0068cc62f3409sm220698qvb.23.2024.02.08.14.40.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 14:40:26 -0800 (PST)
+Date: Thu, 8 Feb 2024 16:40:24 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/6] interconnect: qcom: constify things
+Message-ID: <fikip5ecdzcsud6jh5rk2kvp372atme4kz47jj47eopzasg73u@ziqlnp7zupu2>
+References: <20240208105056.128448-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.13-dev-0438c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240208105056.128448-1-krzysztof.kozlowski@linaro.org>
 
-On Wed, 07 Feb 2024 19:40:14 +0100, Uwe Kleine-König wrote:
-> Changes since v2
-> (https://lore.kernel.org/linux-spi/cover.1705944943.git.u.kleine-koenig@pengutronix.de):
+On Thu, Feb 08, 2024 at 11:50:50AM +0100, Krzysztof Kozlowski wrote:
+> Still some things were left non-const.
+
+These changes all look good to me.
+
+    Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
 > 
->  - Drop patch "mtd: rawnand: fsl_elbc: Let .probe retry if local bus is
->    missing" which doesn't belong into this series.
->  - Fix a build failure noticed by the kernel build bot in
->    drivers/spi/spi-au1550.c. (I failed to catch this because this driver
->    is mips only, but not enabled in a mips allmodconfig. That's a bit
->    unfortunate, but not easily fixable.)
->  - Add the Reviewed-by: and Acked-by: tags I received for v2.
+> Krzysztof Kozlowski (6):
+>   interconnect: qcom: msm8909: constify pointer to qcom_icc_node
+>   interconnect: qcom: sa8775p: constify pointer to qcom_icc_node
+>   interconnect: qcom: sm8250: constify pointer to qcom_icc_node
+>   interconnect: qcom: sm6115: constify pointer to qcom_icc_node
+>   interconnect: qcom: sa8775p: constify pointer to qcom_icc_bcm
+>   interconnect: qcom: x1e80100: constify pointer to qcom_icc_bcm
 > 
-> [...]
-
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[01/32] fpga: ice40-spi: Follow renaming of SPI "master" to "controller"
-        commit: 227ab73b89d66e3064b3c2bcb5fe382b1815763d
-[02/32] ieee802154: ca8210: Follow renaming of SPI "master" to "controller"
-        commit: 167b78446706bb4d19f7dd93ca320aed25ae1bbd
-[03/32] iio: adc: ad_sigma_delta: Follow renaming of SPI "master" to "controller"
-        commit: 2780e7b716a605781dbee753ef4983d775a65427
-[04/32] Input: pxspad - follow renaming of SPI "master" to "controller"
-        commit: a78acec53b8524593afeed7258a442adc3450818
-[05/32] Input: synaptics-rmi4 - follow renaming of SPI "master" to "controller"
-        commit: 1245633c61baf159fcc1303d7f0855f49831b9c1
-[06/32] media: mgb4: Follow renaming of SPI "master" to "controller"
-        commit: 2c2f93fbfba7186cc081e23120f169eac3b5b62a
-[07/32] media: netup_unidvb: Follow renaming of SPI "master" to "controller"
-        commit: cfa13a64bd631d8f04a1c385923706fcef9a63ed
-[08/32] media: usb/msi2500: Follow renaming of SPI "master" to "controller"
-        commit: dd868ae646d5770f80f90dc056d06eb2e6d39c62
-[09/32] media: v4l2-subdev: Follow renaming of SPI "master" to "controller"
-        commit: d920b3a672b7f79cd13b341234aebd49233f836c
-[10/32] misc: gehc-achc: Follow renaming of SPI "master" to "controller"
-        commit: 26dcf09ee5d9ceba2c627ae3ba174a229f25638f
-[11/32] mmc: mmc_spi: Follow renaming of SPI "master" to "controller"
-        commit: b0a6776e53403aa380411f2a43cdefb9f00ff50a
-[12/32] mtd: dataflash: Follow renaming of SPI "master" to "controller"
-        commit: 44ee998db9eef84bf005c39486566a67cb018354
-[13/32] net: ks8851: Follow renaming of SPI "master" to "controller"
-        commit: 1cc711a72ae7fd44e90839f0c8d3226664de55a2
-[14/32] net: vertexcom: mse102x: Follow renaming of SPI "master" to "controller"
-        commit: 7969b98b80c0332f940c547f84650a20aab33841
-[15/32] platform/chrome: cros_ec_spi: Follow renaming of SPI "master" to "controller"
-        commit: 85ad0ec049a771c4910c8aebb2d0bd9ce9311fd9
-[16/32] spi: bitbang: Follow renaming of SPI "master" to "controller"
-        commit: 2259233110d90059187c5ba75537eb93eba8417b
-[17/32] spi: cadence-quadspi: Don't emit error message on allocation error
-        commit: e71011dacc3413bed4118d2c42f10736ffcd762c
-[18/32] spi: cadence-quadspi: Follow renaming of SPI "master" to "controller"
-        commit: 28e59d8bf1ace0ddf05f989a48d6824d75731267
-[19/32] spi: cavium: Follow renaming of SPI "master" to "controller"
-        commit: 1747fbdedba8b6b3fd459895ed5d57e534549884
-[20/32] spi: geni-qcom: Follow renaming of SPI "master" to "controller"
-        commit: 14cea92338a0776c1615994150e738ac0f5fbb2c
-[21/32] spi: loopback-test: Follow renaming of SPI "master" to "controller"
-        commit: 2c2310c17fac13aa7e78756d7f3780c7891f9397
-[22/32] spi: slave-mt27xx: Follow renaming of SPI "master" to "controller"
-        commit: 8197b136bbbe64a7cab1020a4b067020e5977d98
-[23/32] spi: spidev: Follow renaming of SPI "master" to "controller"
-        commit: d934cd6f0e5d0052772612db4b07df60cb9da387
-[24/32] staging: fbtft: Follow renaming of SPI "master" to "controller"
-        commit: bbd25d7260eeeaef89f7371cbadcd33dd7f7bff9
-[25/32] staging: greybus: spi: Follow renaming of SPI "master" to "controller"
-        commit: ee3c668dda3d2783b0fff4091461356fe000e4d8
-[26/32] tpm_tis_spi: Follow renaming of SPI "master" to "controller"
-        commit: b6af14eacc8814b0986e20507df423cebe9fd859
-[27/32] usb: gadget: max3420_udc: Follow renaming of SPI "master" to "controller"
-        commit: 8c716f4a3d4fcbec976247e3443d36cbc24c0512
-[28/32] video: fbdev: mmp: Follow renaming of SPI "master" to "controller"
-        commit: b23031e730e72ec9067b7c38c25e776c5e27e116
-[29/32] wifi: libertas: Follow renaming of SPI "master" to "controller"
-        commit: 30060d57cee194d6b70283f2faf787e2fdc61b6e
-[30/32] spi: fsl-lib: Follow renaming of SPI "master" to "controller"
-        commit: 801185efa2402dce57828930e9684884fc8d62da
-[31/32] spi: Drop compat layer from renaming "master" to "controller"
-        commit: 620d269f29a569ba37419cc03cf1da2d55f6252a
-[32/32] Documentation: spi: Update documentation for renaming "master" to "controller"
-        commit: 76b31eb4c2da3ddb3195cc14f6aad24908adf524
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+>  drivers/interconnect/qcom/msm8909.c  |  6 +--
+>  drivers/interconnect/qcom/sa8775p.c  | 56 ++++++++++++++--------------
+>  drivers/interconnect/qcom/sm6115.c   | 12 +++---
+>  drivers/interconnect/qcom/sm8250.c   |  2 +-
+>  drivers/interconnect/qcom/x1e80100.c | 12 +++---
+>  5 files changed, 44 insertions(+), 44 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
+> 
 
 
