@@ -1,202 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-10141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CA1F84DA67
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 07:51:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EB3684DA75
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 08:00:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D89A82876C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 06:51:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0BAF1C22BC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 07:00:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D156B69307;
-	Thu,  8 Feb 2024 06:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 138AC692EE;
+	Thu,  8 Feb 2024 07:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bh5n7kun"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i/sI9zqb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B12767E7F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 06:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F3A692FA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 07:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707375093; cv=none; b=LTrGLM0EodrY1OI8NYvxhGtal4PrRnGbQU5p6o/ke6839rEji7b1l6n0npkgnuR1YQ0pQjlHaf50oUBFtzQFROJZNxCUo76DoDmozIzbBswep4PxJn0AEzIJyH4tWhQHznbvNfL42RPva4qefciOaJxiea8fkgJa7QYNAQaNZTU=
+	t=1707375619; cv=none; b=A3+GKyBGiGo+wzuZ/LLAW43hYZPMaTlgN1PEjsdBZVnWnHIgA/JDf4NnUBkt/mfBYbaTlpq7Y1tBTUPhg/kzX0aZO8vJAJlIrarSTxL2TgN6IooZHXCLvo9cmM/R4HWL1IeCAd5kWDoxIPkmmXo26uHJhEA11Sdvq3yKGgsPxPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707375093; c=relaxed/simple;
-	bh=Yk0TRtNDlKvfwOBR1gNtMnOcYp6d38zf8nmp/hyix24=;
+	s=arc-20240116; t=1707375619; c=relaxed/simple;
+	bh=HdW46PmYFY/U2koHlqQYLlKz8MMgMac1hAcgaMNd+Is=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JFGbBgvpwL5xOd4AW1uvhLaIqeC4VFyz9e1f0FJiW+JPFLbPMJGKmjgLTBTLMVBFYsFS0ZFdolZL2bKSWHKp56j4lcrZEH1KuNEpISmk0y+1ct02bIvBucI5dDnTgsevpkSh7BMKEWf7ZgIcIlVdZ7/mmUyC8QQnpo4HvnO4lNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bh5n7kun; arc=none smtp.client-ip=209.85.128.179
+	 To:Cc:Content-Type; b=MANXnaTkR+nFc5NI6xnqzW/0DZC3Kz5sPj/55jJ6hDoJCD21nKdiJGGQLU5A/0Xz+ZgkSwWsNdip37vbgpMXTs+ux36/1mTcDij1tIzTeynE+LAe3LXoJu6Pp2AKUkY07YJuEZ1jRQhVoM4NFwmmkEa4QPQU1RS2gXp1qkR1JNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i/sI9zqb; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6049fc02a19so7360427b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 22:51:30 -0800 (PST)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5edfcba97e3so16188557b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Feb 2024 23:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707375090; x=1707979890; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707375607; x=1707980407; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=o78Bc5zbieHqZojFNoz3PnZDBrhr2V8K7hMKKM0imP4=;
-        b=bh5n7kunezuHNLxNTvkYv3T3UUCrfeF6+BlXh69Es3WsCkMMEQmzbqlTrXnm0FluD0
-         vA3k4W55AcZmFWJAkkdM+VJsclI5LKWWJCnCcB+PZDg0A4hiVS3ABPmJZuekZ7owcoNY
-         mGxGvcVYU6TqO7rqACU2WKafTrksGoi4FsqZJviXyi22l4vDGi4Nx0BB+lswKGbTnEY0
-         FKbnALfnCPJbroRqYwh2Wj7NFLH8TMVs8f5kjibq5dpTF2iBkyIY54TlEFkCRS7yGJFD
-         aU0YB18n10tQV4kkT8OwPtfrC+oAqc1iWF9JfnCxw7Q4HPGccmZF+vYeVPg9R+k73rFg
-         r7oA==
+        bh=eByR5GQoGX+Bs//9xgHnZ7HhZOW4ltAO5NoiyDJIpLc=;
+        b=i/sI9zqb9t2vJIwU7gvZ6cRZC+/v4IeSJ24h+IZy8LcHB+vL6AokZJZFjey+7ANh7u
+         89pMGfbfEz4EoKBVGGwSARl4q8nj2QzbN2wqypVYEGlwQRmcXgy7Vw6lHkP8IAWFjK/+
+         6fdslD1Emj5vJgMQ6ungQJTVVdnUAu1LhgD9opzUBYADKyF8fbkzqmuauBwsIwJdoQau
+         846drm5ySY0a9k+To1ynmWO295o5OH11PskAUQBTHXJkCFx2NCcN/xm+8TpDO+jdAMsN
+         aGWP4+zYhBcdlu504YXoFVTT6qydB+kxiQlVpAhUfnMizagVcSTLsUoe/xxg1RKf/QPZ
+         2u4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707375090; x=1707979890;
+        d=1e100.net; s=20230601; t=1707375607; x=1707980407;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=o78Bc5zbieHqZojFNoz3PnZDBrhr2V8K7hMKKM0imP4=;
-        b=OpJMB7d3mIX+7Z552IeD1UQTXzi0W+jHTwTY+ouCcHPlruQ4OmLlS1oiZ7j55pobXM
-         uc7H0wcRN2pz74ij9jVhvo4vZAGLpmFqrqB7jzBt2dFhRgi7cOGyp6s7OkD4hx6EIuv5
-         8lb1xgvLF7LYplIhJJ6a6iraO/YItJD4KZWVSfEuFEtUQg3WbXsl7kJNTZfoVgaPKwkm
-         AOD7enbLTT3L0wY7jZmFc9vBHFRO25p/kCj5ZByQKEMP+BL7MobUKrhBj3YbW7IZovxH
-         FzAtu6gQ5ylNwbwVZcfN4bpLsseTpXX//ij5t/r3Hs2a8snShUZ6E+jNe43YQcK69FAW
-         ziDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVa25ODGL53KGNZd2oNPyztaSwyPjFf09KqEpZDRp7/fNjFHtTm2001TcTy9NBma+UYxFjHnkgCP0/G26Nndc5e31qAxXf8dcvldmPHHQ==
-X-Gm-Message-State: AOJu0YxPLVJwVByRBKN8tnCjaE0bMPsq85rWDPGNf7MXBg+JmXu6D/xG
-	pp0Y1USejrqKfRj874WgxfhVvB3NDP4yy52Jw1M/SllnMHhQXXgOrdrnCa5Q1Q/3YsgU48AkcwU
-	GHV2qRyUQSL08WrWda9rGy8buzWQO5oBZ+C69/w==
-X-Google-Smtp-Source: AGHT+IFYoAgIj16RV+Hjgu8xiheQRQLmSX+VIaEO8RTToWv4LX4d36aDiFFyAN6OEF9ccIK7GmIVlD0dzJ7rubpa5w4=
-X-Received: by 2002:a81:7606:0:b0:600:3a38:a815 with SMTP id
- r6-20020a817606000000b006003a38a815mr7511795ywc.35.1707375090000; Wed, 07 Feb
- 2024 22:51:30 -0800 (PST)
+        bh=eByR5GQoGX+Bs//9xgHnZ7HhZOW4ltAO5NoiyDJIpLc=;
+        b=S7FQolwjW7K0zoGmEcWSBg7q3URmPvcJwL5dtBsieMHI4cnJcTNPmdxKp3fuHz6NKJ
+         T3+laACbNac/L4gepN8HLTEeTs3LuuzLwXXcgmEaCbSo6CYnWIOOyJaHh/aay1XnyyYE
+         kBMjFAAyFCuNOQRUJWyzCk1/6tp91X41QgaCwhzdm9OSE3r/wELvdfp/HsL7J3HJBk2M
+         i+Rzufk3qFPv39C4uBiYpDPKskEY6C7Beb/8qXj4ShcLb4U3WcnbhkseWXmVkay/bTqN
+         ycJ+/FNOtOtEwPDnLCwn3v7BRk5aFk4I1htD0NY2x2izCqqOsLSWRhomjttI+QETjfay
+         pSBw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8vZwxhTpu5b+1bDYtCRwQSLUnNMxHhkP8SaHkdc2PDqlYnm4UVbHbZpFHdRJ9GVxe452S+LronbE2sCcThEWwb25UMl+Jw6hb5SS6Sg==
+X-Gm-Message-State: AOJu0Yy+JWNv2mT8HGOrD19rp2VqkCMzF+E+6E2Nn31U8T+hRo7w77NH
+	UpJxA8uvwbhatNfNXmTDZw2YA2e9J4SUBSaCuCJWBAOzsN5QaI83dj9Sy0AO4qkfrfva+TWm3AR
+	LifXzZPjlBle59OAqpk318Rh/P5WWW6wrBeudgA==
+X-Google-Smtp-Source: AGHT+IGm34qOlpbHetB6jIH/phC+hvmN9qPvqCv6koH3ApB3V3uhPCKOnQYCKQ/aKUMRl8jP02VpYUq/dGK1Myuht5E=
+X-Received: by 2002:a0d:e504:0:b0:604:999a:3992 with SMTP id
+ o4-20020a0de504000000b00604999a3992mr3591745ywe.35.1707375607622; Wed, 07 Feb
+ 2024 23:00:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
- <CAA8EJpqjm_2aE+7BtMkFUdet11q7v_jyHbUEpiDHSBSnzhndYA@mail.gmail.com> <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
-In-Reply-To: <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
+References: <20240208062836.19767-1-quic_tdas@quicinc.com> <20240208062836.19767-2-quic_tdas@quicinc.com>
+In-Reply-To: <20240208062836.19767-2-quic_tdas@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 8 Feb 2024 08:51:18 +0200
-Message-ID: <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com, 
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com, quic_skananth@quicinc.com, 
-	quic_parass@quicinc.com
+Date: Thu, 8 Feb 2024 08:59:56 +0200
+Message-ID: <CAA8EJpoF7ii59WuY0WaMkdbs3+GE8UFPmbxdvohfjUfwqC4c0Q@mail.gmail.com>
+Subject: Re: [PATCH 1/5] bindings: clock: qcom: Add "qcom,adsp-skip-pll" property
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Stephen Boyd <sboyd@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 8 Feb 2024 at 08:14, Krishna Chaitanya Chundru
-<quic_krichai@quicinc.com> wrote:
+On Thu, 8 Feb 2024 at 08:29, Taniya Das <quic_tdas@quicinc.com> wrote:
 >
->
->
-> On 2/7/2024 5:17 PM, Dmitry Baryshkov wrote:
-> > On Wed, 7 Feb 2024 at 12:42, Krishna chaitanya chundru
-> > <quic_krichai@quicinc.com> wrote:
-> >>
-> >> Enable PCIe1 controller and its corresponding PHY nodes on
-> >> qcs6490-rb3g2 platform.
-> >>
-> >> PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
-> >> connected. For each endpoint a unique BDF will be assigned and should
-> >> assign unique smmu id. So for each BDF add smmu id.
-> >>
-> >> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
-> >>   1 file changed, 42 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> >> index 8bb7d13d85f6..0082a3399453 100644
-> >> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> >> @@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
-> >>          };
-> >>   };
-> >>
-> >> +&pcie1 {
-> >> +       perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> >> +
-> >> +       pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
-> >> +       pinctrl-names = "default";
-> >> +
-> >> +       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
-> >> +                   <0x100 &apps_smmu 0x1c81 0x1>,
-> >> +                   <0x208 &apps_smmu 0x1c84 0x1>,
-> >> +                   <0x210 &apps_smmu 0x1c85 0x1>,
-> >> +                   <0x218 &apps_smmu 0x1c86 0x1>,
-> >> +                   <0x300 &apps_smmu 0x1c87 0x1>,
-> >> +                   <0x400 &apps_smmu 0x1c88 0x1>,
-> >> +                   <0x500 &apps_smmu 0x1c89 0x1>,
-> >> +                   <0x501 &apps_smmu 0x1c90 0x1>;
-> >
-> > Is the iommu-map really board specific?
-> >
-> The iommu-map for PCIe varies if PCIe switch is connected.
-> For this platform a PCIe switch is connected and for that reason
-> we need to define additional smmu ID's for each BDF.
->
-> For that reason we defined here as these ID's are applicable only
-> for this board.
+> When remoteproc is used to boot the LPASS the ADSP PLL should not be
+> configured from the high level OS.
 
-So, these IDs are the same for all boards, just being unused on
-devices which have no bridges / switches connected to this PCIe host.
-If this is correct, please move them to sc7280.dtsi.
+Why?
 
+> Thus add support for property to
+> avoid configuring the LPASS PLL.
 >
-> - Krishna Chaitanya.
-> >> +
-> >> +       status = "okay";
-> >> +};
-> >> +
-> >> +&pcie1_phy {
-> >> +       vdda-phy-supply = <&vreg_l10c_0p88>;
-> >> +       vdda-pll-supply = <&vreg_l6b_1p2>;
-> >> +
-> >> +       status = "okay";
-> >> +};
-> >> +
-> >>   &qupv3_id_0 {
-> >>          status = "okay";
-> >>   };
-> >> @@ -420,6 +446,22 @@ &qupv3_id_0 {
-> >>   &tlmm {
-> >>          gpio-reserved-ranges = <32 2>, /* ADSP */
-> >>                                 <48 4>; /* NFC */
-> >> +
-> >> +       pcie1_reset_n: pcie1-reset-n-state {
-> >> +               pins = "gpio2";
-> >> +               function = "gpio";
-> >> +               drive-strength = <16>;
-> >> +               output-low;
-> >> +               bias-disable;
-> >> +       };
-> >> +
-> >> +       pcie1_wake_n: pcie1-wake-n-state {
-> >> +               pins = "gpio3";
-> >> +               function = "gpio";
-> >> +               drive-strength = <2>;
-> >> +               bias-pull-up;
-> >> +       };
-> >> +
-> >>   };
-> >>
-> >>   &uart5 {
-> >>
-> >> ---
-> >> base-commit: 70d201a40823acba23899342d62bc2644051ad2e
-> >> change-id: 20240207-enable_pcie-95b1d6612b27
-> >>
-> >> Best regards,
-> >> --
-> >> Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> >>
-> >>
-> >
-> >
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  .../devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml   | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> index deee5423d66e..358eb4a1cffd 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+> @@ -49,6 +49,11 @@ properties:
+>        peripheral loader.
+>      type: boolean
+>
+> +  qcom,adsp-skip-pll:
+> +    description:
+> +      Indicates if the LPASS PLL configuration is to be skipped.
+> +    type: boolean
 
+This property describes OS behaviour rather than the hardware. Such
+things are generally not acceptable.
+
+> +
+>  required:
+>    - compatible
+>    - reg
+> --
+> 2.17.1
+>
+>
 
 
 -- 
