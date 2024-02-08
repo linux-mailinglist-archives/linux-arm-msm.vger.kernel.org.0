@@ -1,140 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-10181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C609184E1DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:22:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8C3684E210
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:38:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82D6A283D24
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:22:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA0E81F22F8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:38:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3638079937;
-	Thu,  8 Feb 2024 13:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132F376408;
+	Thu,  8 Feb 2024 13:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tsvUCmr3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IJE+vHof"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873BB79941
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 13:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A871763FF
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 13:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707398358; cv=none; b=l0ymHbNCF3+4xr+bgCwrhzXhgll4/w1U8yQrmas631puoKburJW/WaNcseKMK6h7lzFdM9HQ81NsAeYYOhJn86o7tsHmgqrN2RWOj0+Pe23ukn+ao0wOee9JomyQpMLpXI0hcis9BABJ6YyZyfZMRbZhXMObCxyZLfgchN8Q8dw=
+	t=1707399477; cv=none; b=mvkDD2ea+QJRGGEwNJti+xcYv2opN/rMTZPeD/CJA0CEFghyowt7man4Jpcrqn+hAtfkia/cZfTfza48K/wzodHttTuy0ouM1TZ3UnYWh/58W8qrCytP7mlZWeN3/d1thgBElu3UZyyR0MV9eMv/0o1tLeExZ3KhMwIuzMNLAyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707398358; c=relaxed/simple;
-	bh=sIPGsvhd2TtbFsqAJ9mYSFI45ZdoGvLsIFDOkHIlirk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VzCWX5VFVGyrzL/f7PT7i3K+ohEdy2PvV9j9ONDsjtW+sWLjsaj2qo8gCuA+mpsv9T2Ks2F9uaURq/CpIX0Bvifh/20f6Hr0+U1h70vd5VpWlmF2Mv7fG6/A1xd2pjLS899d9d1J7SlzZcxmjOSVgzDEilIw2smCpp02SUVb3vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tsvUCmr3; arc=none smtp.client-ip=209.85.208.41
+	s=arc-20240116; t=1707399477; c=relaxed/simple;
+	bh=sLHaNsZhVrwA4g8QeNjpXSri5z5j7yj78v7VenZiXNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sLSofY/TzDtbWfVqyzN27y+P00MFdsV4wmGG9bRsZk1Ckl7++AI+IvgOWG9uFF1TYg1K9QxEEtQE5Q+RL+N+8UrmSyW4+Ht5ugZbk90r55ImUg1kO7CtLOaWV3hMbgEc3GPWpnfUAn/7D34e3hw7Tw2U8iiHHBi464ep1u9NWYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IJE+vHof; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-560037b6975so2039792a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 05:19:15 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55fe4534e9bso2206748a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 05:37:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707398354; x=1708003154; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v68PZCp8DaDB0hniw0EzBktgIOKF0gHNVLVOyA5QvOs=;
-        b=tsvUCmr3QxnflSiJ6D4YyrhBqO58SYZeisUGs9AQscPXJ4wR5GRbeprup0RoVhcgzN
-         GrKtH32SHu3mpFpAWmDHdikFyuNhGA6AWq/VXbuKhKGFUts2j0e+ea/nLDzkbKPd0PnI
-         yp6Byqpzd1FFT+kV9TLv8e+YLtwn8vIGjfcquML0cB7NMN66Ehhg39okjNELLPKiReed
-         pDp+PfGyGaXk276JAknb5Yx+T6nONEhk1ZU1XZW4ZWuKpdWPTX1K6Se98Kk+hs2XKatk
-         BYW61P/cDcNjiqQMIggsefoIJamZvZzcLqLJTwP7g6OnYz0Y3YWoAFxeEQrogy1TcchL
-         MP9A==
+        d=linaro.org; s=google; t=1707399473; x=1708004273; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=p28vv63s2/cv9zUdQKuXCFX/dJkkk/3pPlOtbrZYMXE=;
+        b=IJE+vHofhGlBr+vp8qPSVHcKSUA1Ab9fBb5P0Oi4rW8PTMKrT+K1H8L4w8RIFqTJ2q
+         MmPrAa0DJGXZDbYFKBfB3HkmTOXu97UL7Z6S0PrXK7V0NrSkJ8HlRufDrypU14C9BC3N
+         bSs0XFsPdD4zXLEM4mxB452ckpTseQH0Gc3XUI0EvKqw7yYzGHNWCrS0CKm9sAjvEkoJ
+         c/QnOrgA3XTLEsyTOvAwb5lq9C383dTylAbSZ7oGu5HHZxR29t19Ucx1j/RtHPba49Er
+         XpbSfWIXXEVw99OUrJpi8eju3tk8lQlITEWve2ztWPJeydeY1MnxNKJu04AsL6QZc+3F
+         5RXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707398354; x=1708003154;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v68PZCp8DaDB0hniw0EzBktgIOKF0gHNVLVOyA5QvOs=;
-        b=osUdHPJgyP4pv805g0OVMKHvk4E/0NVeOlgfOWPjwLCXlXAYWVBAAFOapj5SQskoBV
-         T87p7gE3xoK2FsSU5+57Z+XkmBx2rCumVtTL5KZnbd8MLRZ1iH1RIQHMkDDeQ/lQeE1n
-         jwv5YoF5o19BhoE2r0hUIpDSNk0lXaXRG13+sUUZodUImpP4fIsBr1OLKLrDAISv9UUx
-         Ux4bEloQz/7gaFp2bBmD9kYWYCjMQFzmxXpGc1ot2XzKQTaH/X2BHBiNcLxLkFxxN5W7
-         Hc29dvWQJoy/te08FA7BQyRgYOw5EkiR+01KWAe+eQztSbRnVKiLio6H+s/upGX9HpfU
-         hiHQ==
-X-Gm-Message-State: AOJu0YxJqw3pMcy6J20ZJYpScvONQZk8P+QlfRxwfFIp3ufFnyCd1NaJ
-	pt6SocWNQjhzKeHQE1P++ltCqcCR7OmMvqsZlxZ//lSL1GJlVC3b9MqDcu3W5bM=
-X-Google-Smtp-Source: AGHT+IEPcJU57x0q0lQK6QuoSHTUoDEnFxbfYEHK7CLWVfxVxrnbrTPMUYyHi+C7GvGeTQnNZxqDKA==
-X-Received: by 2002:aa7:ca5a:0:b0:55f:cca3:e89e with SMTP id j26-20020aa7ca5a000000b0055fcca3e89emr6308984edt.21.1707398353765;
-        Thu, 08 Feb 2024 05:19:13 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVDzJNR05Js1uILClJym/TFreZGmW64f7ze6W9uFnz3xx3mxpQ9aD2sMdf8sn3oQT3ZLy4soEejFCWoA5zdkm8fIX4gy5Bc+vTp9LehJW6IkE0DBiWd2OYu1pUaQWACZ4pOrPEXEOX9fMo1Pj1uwrbbTzCUEfnR08YrHe8UD57ZmM3XhuDSVo64C/IkVGAdgI5oGb9DzvirZ59r4Lc9GVG1IJgoyvMsP7tDHfgLBwUMsRz8jHs8FLNPdfeAKAy45zc1/Rn6/ZjY/aE=
-Received: from [127.0.1.1] ([62.231.97.49])
-        by smtp.gmail.com with ESMTPSA id n9-20020a056402434900b0055f0b3ec5d8sm793059edc.36.2024.02.08.05.19.12
+        d=1e100.net; s=20230601; t=1707399473; x=1708004273;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p28vv63s2/cv9zUdQKuXCFX/dJkkk/3pPlOtbrZYMXE=;
+        b=Tb5YVPmPAceKE+/wx2lKgg9zzLQZt1gF6rwRHHYdDpE88BDoDYj7UCZ9yjmGXdfaTP
+         pFZ+0LVXlqrET0twV8sFy8j9m7unfQyH9g1donSVprheo2UaPQI+opgFPgjTX7r4rPwH
+         O0urH/ChgkFmlIumjwM6Z1hkPgMiPNvWJRvqpracyQjRFdjsstvfLT2iFRf6sCW/UvXn
+         iETuCqaiUJwnP1uAXdl7ip8GuqumILUTvzLOr4DzQ5D/AUnTjmYnzoR0jkpmJ/G4Uv71
+         wLUD099PdSIUnCD88v6331rZ7pqB8R84k4GZ5B6Kpu+fzV7jyDqPAUAdXGzsBcBKbxfl
+         sC1Q==
+X-Gm-Message-State: AOJu0YwJB+iZvpraOZmxp2etcRAheArp814S8CVc+L16MF5EyKb0ZOz5
+	u4+MyIdtnXSQj25/JrAxRV7roRkKiwrvpl5AApt90kMwV360xAezg4kuQ49OgqI=
+X-Google-Smtp-Source: AGHT+IGp93U2IHf7DpwYHNPt1pK52y49QAMI+oxxjZGbDXXT5TsL+pX9I6v9sXTEdNzAMlaNpb7vXg==
+X-Received: by 2002:a05:6402:322:b0:561:123f:a98f with SMTP id q2-20020a056402032200b00561123fa98fmr1059559edw.24.1707399473378;
+        Thu, 08 Feb 2024 05:37:53 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXRIw9jXsWnTERowFWcTJ0k/8IDzNxP1SXRPVN3mJF3KKZEqIsZc0PMSakI45/4EZJ0p3Mgc4IhE0Ye3F2hvLSYLGrWdUJyA6cYS+kqh0dp7G4e9IbWst4U9GW9yemCzPUhZW4PpkN8ZZiSMMrzjNcVeOO+mFyO+vlX3PcQcHOT6CcFs6qsAt2iHlFU/G0x9/SqyMQM5QuHpAOLN0cvW03GUFNcuc4qux9c4/zdghGh186h537IYCtYA+Tqr4vLFHnytths282McRT+p4Oyfsu853wSYw4pBSEZNn1Je+kZdw7QjwitwhOkuuugDQMxXLddDQthywjrNS9LkHim7ZauTOpCa8cLs7EE/asP+4Inc3N0B48isV0so6q+nYdUjnDKNtDRlr/ANc18VzrIrZUhH/zDdjsUF0DTKK4G1NrvjEcCRlC6Od1inTZPw//0lHbHTkp8MJu39aatmMXowyyy3pCRKfBDa9xjQVvdKV4B/eRLwVX33eYZprycBpdniM31hbBJgU1onF180ALj47HGFPA/ez/DMepBiVbelzpbcFKzZMT77MEma4SWhdL9EHBHJ85rCpiHRZAWTZZPmxpZJdzkXEmWfo5KXfdz1RZ5FVbD0MzCQBNNFsEgJNw3CBpk0Vvfo86oOXWcIw==
+Received: from linaro.org ([62.231.97.49])
+        by smtp.gmail.com with ESMTPSA id ev12-20020a056402540c00b00560f611ce2bsm813058edb.10.2024.02.08.05.37.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 05:19:13 -0800 (PST)
+        Thu, 08 Feb 2024 05:37:52 -0800 (PST)
+Date: Thu, 8 Feb 2024 15:37:51 +0200
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Thu, 08 Feb 2024 15:19:00 +0200
-Subject: [PATCH] arm64: defconfig: Enable X1E80100 multimedia clock
- controllers configs
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/5] drm/msm: mdss: Add X1E80100 support
+Message-ID: <ZcTZL+fls7A8O9P0@linaro.org>
+References: <20240129-x1e80100-display-v1-0-0d9eb8254df0@linaro.org>
+ <20240129-x1e80100-display-v1-3-0d9eb8254df0@linaro.org>
+ <CAA8EJponbo2vvuj2ftCQuxtrZp0w7JQqJ_ADF80Wd2y1V74BzA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240208-x1e80100-configs-v1-1-9e027bee5209@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMPUxGUC/x2NQQqDQAwAvyI5N5CsSku/UnqI26wGJJYNLYL49
- y49zsAwB4RW04B7d0DVr4Vt3oAvHeRFfFa0V2NIlHpOxLiz3oiJMG9ebA4UKsNI1yypF2jZJKE
- 4VfG8tNA/69rku2qx/f95PM/zB80x4QZ3AAAA
-To: Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=986; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=sIPGsvhd2TtbFsqAJ9mYSFI45ZdoGvLsIFDOkHIlirk=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlxNTJCLFVTGi3QsawTLc/XMbUeuf3HeFDJPTIv
- hgUkuWr8eqJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZcTUyQAKCRAbX0TJAJUV
- VnwJEACse3LhWNh+AXLY43en5GgBVTTUOOYvDOtiAAWYsZeGTNn+LCmENfgi0POx2ycsJoRuiPQ
- R02gvIlJ+PC8/EmEWfSXDhWnyvYxCPu+kBkq8qykc/no1agfKgy7p1mjGXXgccCmJwxoS1Yxsce
- TVVaxX7xcxAaKZqOCX5Vf3vOrbay5X1+TAfIVQbIMx+reSxOeclVghMu5j8HeeT10khWqh++Q9C
- FUlCe4bvAKqTMvc0VBwAQB42iYLROPLpYUE2oTAeJZVxBdXtXOFqh8FAlJO2Dm9B75j+dD+bNV2
- b7MyNJpOdiy9Ge00Ab7oh/Xg5cPRJ98YenG2nUoWPo67mgtjQ0ALdACyhHhCfmWyg2w0nPJoQf8
- gvOaoiVklzvm7iGgwpiOcw4MtRAr2YlnL6d8M9qmDCXe9YH4kKXVPA8oejTdnR09YO0oUe5KsDk
- R1aBEoZvLikZIEL7qC9LKfxHk8wH1VaCYyukG6mj9WeiRKpn5aK7zCziARaMIcqBFrMQ3ipg0Bv
- ZgHbPOE6Y9Tlem5yiCETYa9+b+c7N6SkGBXsC+J87F05OpGYmXnM3DNYAZMkbQwZLgEkMQiDJZX
- 6z2VQszO3okaFAiNP+A5+bCEoOoj/N0Cywk+tu0WH4z8cYMY3BHFR3EjYShSYxr3rfJPnZ7aRDV
- 5lMBl+Gzg8YnAyw==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJponbo2vvuj2ftCQuxtrZp0w7JQqJ_ADF80Wd2y1V74BzA@mail.gmail.com>
 
-Enable as modules the CAM, GPU, DISP and TCSR clock controllers for
-Qualcomm X1E80100 platform.
+On 24-01-29 17:11:25, Dmitry Baryshkov wrote:
+> On Mon, 29 Jan 2024 at 15:19, Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > Add support for MDSS on X1E80100.
+> >
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/msm_mdss.c | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> > index 455b2e3a0cdd..eddf7fdbb60a 100644
+> > --- a/drivers/gpu/drm/msm/msm_mdss.c
+> > +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> > @@ -564,6 +564,15 @@ static const struct msm_mdss_data sdm670_data = {
+> >         .highest_bank_bit = 1,
+> >  };
+> >
+> > +static const struct msm_mdss_data x1e80100_data = {
+> > +       .ubwc_enc_version = UBWC_4_0,
+> > +       .ubwc_dec_version = UBWC_4_3,
+> > +       .ubwc_swizzle = 6,
+> > +       .ubwc_static = 1,
+> > +       .highest_bank_bit = 2,
+> > +       .macrotile_mode = 1,
+> 
+> Missing .reg_bus_bw, LGTM otherwise
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+Dmitry, I do not have the exact value yet.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index f44b3abf3cef..c9c1b1aa4625 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1253,7 +1253,11 @@ CONFIG_COMMON_CLK_MT8192_SCP_ADSP=y
- CONFIG_COMMON_CLK_MT8192_VDECSYS=y
- CONFIG_COMMON_CLK_MT8192_VENCSYS=y
- CONFIG_COMMON_CLK_QCOM=y
-+CONFIG_CLK_X1E80100_CAMCC=m
-+CONFIG_CLK_X1E80100_DISPCC=m
- CONFIG_CLK_X1E80100_GCC=y
-+CONFIG_CLK_X1E80100_GPUCC=m
-+CONFIG_CLK_X1E80100_TCSRCC=y
- CONFIG_QCOM_A53PLL=y
- CONFIG_QCOM_CLK_APCS_MSM8916=y
- CONFIG_QCOM_CLK_APCC_MSM8996=y
+Can I come back with a subsequent (different) patch to add it at a later stage
+when I have that information?
 
----
-base-commit: b1d3a0e70c3881d2f8cf6692ccf7c2a4fb2d030d
-change-id: 20231201-x1e80100-configs-a0f4507ca23a
+I see no point in holding display support any further since it works
+fine with the default bandwith.
 
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+If yes, I'll respin this series right away, but without the reg_bus_bw.
 
+> 
+> > +};
+> > +
+> >  static const struct msm_mdss_data sdm845_data = {
+> >         .ubwc_enc_version = UBWC_2_0,
+> >         .ubwc_dec_version = UBWC_2_0,
+> > @@ -655,6 +664,7 @@ static const struct of_device_id mdss_dt_match[] = {
+> >         { .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
+> >         { .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
+> >         { .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
+> > +       { .compatible = "qcom,x1e80100-mdss", .data = &x1e80100_data},
+> >         {}
+> >  };
+> >  MODULE_DEVICE_TABLE(of, mdss_dt_match);
+> >
+> > --
+> > 2.34.1
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
