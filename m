@@ -1,146 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-10185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91BAF84E328
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:29:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43A2C84E337
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:31:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 30C671F22E83
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:29:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 762871C2205F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 14:31:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E6B676413;
-	Thu,  8 Feb 2024 14:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C45667A01;
+	Thu,  8 Feb 2024 14:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hGdscU2q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImokAwqW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EA02EB14;
-	Thu,  8 Feb 2024 14:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE959200D2;
+	Thu,  8 Feb 2024 14:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707402589; cv=none; b=bCrK7KS6qBfsGgdG6SdsrV5IbStYNXGvPp8Uw7AFYVF4zf12ZZxIcZGwYznsMDhRMk0snkf/FLVuq3HkhFptTsqJqwUCCf/53ixf81/wMffVCNK5+QToXEAHbNQVudPq9gxFqLvfvYWOFHEWPLdobxoxtxCoCyTkJix99bzfi7s=
+	t=1707402707; cv=none; b=sO9K9V0Kvm0Uj6gMRul8+SO/Oq7ahm5oSEYyvzpxEFr+xc9H5Tiauz9WvJSS1LMFXckiI/GuQsWAi8tWDMnvBz/V32zx4yECg//CqLPDSX0b0ZQ8Wca0DuhQM3csy6Yiwd59Nh6U3C7Q7+AIlC4RFpWGdcGNSFlaA8yR24WK8os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707402589; c=relaxed/simple;
-	bh=BjhD4pm+ohrOgBwpHnJBgVialPzyURLLtifb2JZRcvA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=npotn9jDbR/d0NKX9u0O4rwBu4lVFC2lwENvTkOzCzNCE5c14/t5lslbunDGeEE0VyGWmxvUhDe6T1ggeDjx6bAOk988eLKd7YpYU828pvO/IdXQGv9Dfftkl6IHP/O1mB5vNhN8q8yZsSiWWE1gdS7BawQVWc0x8A4yHGvVfDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hGdscU2q; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4185Do4c025038;
-	Thu, 8 Feb 2024 14:29:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=pqOQ0pk1w4ZIPMpcW3wgFsiH/QfkfRueUw7WRbNFp/8=; b=hG
-	dscU2qq7Ic0Y0NtjNeSa5QCTQrb6PSzTkJHnr++4IRXVWAGLEwcktx0Bth5QEkG0
-	XlywtN8eNwDRmcn6V9mv93s2hvmy7JRxdTlsV2hgdtfsZ/nIeT7pHOccUwFjToZ2
-	AMHMtViXlNVCdQ6BgJB8HPINcmQtNeqJo3FjdR6PvIObwoj6WsiVRqDToxv69jE8
-	522tK+6nBeMFNAtZjMmrM8KEygaMZksuyIOel49kcdLBceSAvy5fsCrANKelj47r
-	MQjMviUCYMDTYKoHGlmB4+8yzk4EX0dg0t7EoYnLWC+PbfjKuDPuLp7vr/fc49QN
-	FLKDH7BN9CFNobwpbQSg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4h0uj6h7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Feb 2024 14:29:37 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 418ETbXG005314
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Feb 2024 14:29:37 GMT
-Received: from [10.216.60.50] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
- 2024 06:29:34 -0800
-Message-ID: <b1991baf-e642-f811-14b0-ccd7c0cd56ec@quicinc.com>
-Date: Thu, 8 Feb 2024 19:59:20 +0530
+	s=arc-20240116; t=1707402707; c=relaxed/simple;
+	bh=I3KyQ/QgQFzOr93h4IxaJwGTFCBd9ZOO9qHDg18SGoM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iMJ2WFBikFo4xmmLgowhHu6vl3Y4XuHxoQpte6V2fnLWhkjHl6EE6iq5CUjjLBeziRJ1FgqrlXadUKajRMi7Xkyp0TjNdISOZifpoYLDo69aGrIaOXg9OCaWQlFn1YbPOuOCuDArvSeeJbtfGF6h0BuoBi6RcO0Ip5y0vRLGPzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImokAwqW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8952CC433C7;
+	Thu,  8 Feb 2024 14:31:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707402706;
+	bh=I3KyQ/QgQFzOr93h4IxaJwGTFCBd9ZOO9qHDg18SGoM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ImokAwqW4mjomuflcDGQ5wTs+rZrsZbysZrBjqs+5J6rAc65rq21Cr3zh1nGuq2u8
+	 sHztjKgok5lVULu1IW+yvPMBHUvAlbBOdVwyjdZnfUqIFN5Ug4SaNZVOV8cUldeA2w
+	 yd33VvLQ9uXzdCpuaJFFB7Tz6osCDiNTGYHCwh9ndpnBrb6IGKX3HqEGINWKCqSPOI
+	 CsS/CXnO1IVhttIm0yvrwS4uf0k2Z0RQizZ2Cb0x16lC5RsAZaKNtnHBPYP34JyCbv
+	 T1iC4plsm9N/9Z00I0wdqW9xh2Uh0ZyaH1Em896Id/DkmkF0GMMnk8+DoAVT0kMQLh
+	 CatFU53NuZlkA==
+Date: Thu, 8 Feb 2024 14:31:40 +0000
+From: Lee Jones <lee@kernel.org>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: daniel.thompson@linaro.org, jingoohan1@gmail.com, pavel@ucw.cz,
+	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, andersson@kernel.org, quic_kgunda@quicinc.com,
+	dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: backlight: qcom-wled: Fix bouncing email
+ addresses
+Message-ID: <20240208143140.GU689448@google.com>
+References: <20240202180151.4116329-1-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3] soc: qcom: mdt_loader: Add Upperbounds check for
- program header access
-Content-Language: en-US
-To: Auditya Bhattaram <quic_audityab@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20240208123527.19725-1-quic_audityab@quicinc.com>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20240208123527.19725-1-quic_audityab@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KxJzfQkUXXq8Ut2NX3OHB5BcGof4Gp04
-X-Proofpoint-GUID: KxJzfQkUXXq8Ut2NX3OHB5BcGof4Gp04
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-08_05,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
- bulkscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402080077
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240202180151.4116329-1-quic_jhugo@quicinc.com>
 
+On Fri, 02 Feb 2024, Jeffrey Hugo wrote:
 
-
-On 2/8/2024 6:05 PM, Auditya Bhattaram wrote:
-> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
-> is found. Add an upperbound check to phdrs to access within elf size.
+> Bjorn is no longer at Linaro.  Update his email address to @kernel to
+> match the .mailmap entry.
 > 
-> Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in any segment")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
+> The servers for @codeaurora are long retired and messages sent there
+> will bounce.  Update Kiran's email address to match the .mailmap entry.
+> 
+> This will help anyone that is looking to reach out about this binding
+> and is not using .mailmap to pre-process their message.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > ---
-> Changes in v3:
->   - Corrected wrong patch versioning in the Subject.
->   - Added error prints for Invalid access.
-> Link to v2 https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
-> Link to v1 https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
-> ---
->   drivers/soc/qcom/mdt_loader.c | 5 +++++
->   1 file changed, 5 insertions(+)
+>  .../devicetree/bindings/leds/backlight/qcom-wled.yaml         | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index 6f177e46fa0f..61e2377cc5c3 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
->   	if (phdrs[0].p_type == PT_LOAD)
->   		return ERR_PTR(-EINVAL);
-> 
-> +	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
+> diff --git a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> index 5f1849bdabba..a8490781011d 100644
+> --- a/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> +++ b/Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml
+> @@ -7,8 +7,8 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  title: Qualcomm Technologies, Inc. WLED driver
+>  
+>  maintainers:
+> -  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> -  - Kiran Gunda <kgunda@codeaurora.org>
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Kiran Gunda <quic_kgunda@quicinc.com>
+>  
+>  description: |
+>    WLED (White Light Emitting Diode) driver is used for controlling display
 
-This change is valid only if somehow, ehdr->e_phnum gets corrupted or 
-changed via some engineering means and results in out-of-bounds access.
+Applied, thanks
 
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
-> +		dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
-
-Should it print ehdr->e_phnum as well to be more valid?
-
--Mukesh
-
-> +		return ERR_PTR(-EINVAL);
-> +	}
-> +
->   	for (i = 1; i < ehdr->e_phnum; i++) {
->   		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
->   			hash_segment = i;
-> --
-> 2.17.1
-> 
-> 
+-- 
+Lee Jones [李琼斯]
 
