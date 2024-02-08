@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-10189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DD2184E396
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 16:01:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 682AD84E39A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 16:01:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFCBDB2608C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:01:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 21602B261BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 15:01:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B073C7B3C9;
-	Thu,  8 Feb 2024 15:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B767B3D9;
+	Thu,  8 Feb 2024 15:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iWe47Jbk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Do1dmkKk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE178678
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116EE79941
 	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Feb 2024 15:01:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707404474; cv=none; b=sF9ycxtvJek98DnC4ALFXCG4zI89EerrKk4Wpq+GFTBPr17tVjNZsDmsINopVsdjtHZ1up2tUpnH5t5+9DcnIBfXwCOaJpSoBTlC5YyVocjreRtEZ7Jb+dUTHSFQoOjBfoHbQLc8LYTtmF+F8VyZT8768oM6B5DF0Adfcjt82JU=
+	t=1707404474; cv=none; b=cRA7muwT967G8JVi0dyQFa3a0SyvmunSkT6gxX5cn5pLAMLK0IguS6gJmc8WnqkutMqCIUEwG3j4MTJ7Te6RvCoP+Q3OwLQYagSHMfEvp7ETwrEK6p3ylfwqEYrxywe8DS4awxTBNr1kxhORIKLw7Z3ayVvUWoRa8Z/DUyZq6LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707404474; c=relaxed/simple;
-	bh=MCk8TcMF3O/ehJXQorsy1MIsvwzkk22sxP1KJNAZZKI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UWD+HVSgJmTe9DZLFWrqXINu8ceL0X7cfNS6qkT08HXL73ySSxtpvREtIKdNe8bAZb2smMjXnNUin8bIR6UIwkOJhNEwI4EtKJtR4A8LbreMDlVlwORwbjiYMDE0PY1rIIpBFDKnPG55Vmv65vRMaJhTEJYxr69Ki0TCFTaTiZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iWe47Jbk; arc=none smtp.client-ip=209.85.167.50
+	bh=wQrgj28WhABziCXeR2PKfGgoe/NHpSXiGLfXEY2pn/0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nT8LDe2qPOk9klj6pXjuRrbMeqjt0TzmjL61+dwfYNe61NVVnxexOkhKHbUMpkDv0Wv6CPqwzNdwlTpVic6A6A8Qg8Aiuhi8Oq0jpJVuSbLh2FS+hy1deNl2DlLPoOrBFHk2liigrGd9oCTAxY+dpUCFySS8UIr4z5ClUwtXNqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Do1dmkKk; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5116063585aso2440397e87.1
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-51172803eecso441618e87.3
         for <linux-arm-msm@vger.kernel.org>; Thu, 08 Feb 2024 07:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707404470; x=1708009270; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZTtnfYDI+dbV96lodd3k1eOzoNAGIDmd9/t7DM5xr5U=;
-        b=iWe47Jbk7FykTU6AJfSgMJVZRT8CHmKUi4msaHhm1LIxRqmhpQ+Ds/3muIC1hH6/qY
-         yoJd3H6K2p8dHIISSB6Xt/0XUGOdYg/6O6l8EJoM/qVVQ9zM7CqrzNB/cMXDUh/FvDF4
-         C6UDw4YdXrSZnYdO8BuIJnLNTgnmLfZAVUYiLOU9HhxnjzP98N5VVnrbG/ECbBOtL9Qq
-         YnQY0kvG4guNQV959xGphMJjx33tIyVL9IzvhGnakl08WNWoPp/bCYRNES8PldMfS095
-         XhFUW16Y5G4pc3i9h1J3ncw/J3VITmofb6vuhjFObFPcyaZfDU2Ouoftm+i+v2NypDme
-         xQ9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707404470; x=1708009270;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1707404471; x=1708009271; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZTtnfYDI+dbV96lodd3k1eOzoNAGIDmd9/t7DM5xr5U=;
-        b=Oe73sX9zoFUc9/Hlft+YmywlcBkwONj751ILi5jVWrLxz7Z9OKr6ogS0UeXsD4VpW3
-         HGD69SzM8MgX2xDwvQdbCfoN4H27j82/eW514T6jkBN5XPiOUcUde6B6Hx7wuZZBtZLn
-         K5YyP/krYwQf+2CsO3vlY/yTsjIjfy3SYX0dqoGwjpuAcUk91TvclffqvcXuELzrENo3
-         DcySFSIx63kdUWxoJseFwzWMMTupi5baSehoMq3AxCsS0hKYBFfdETnzwMTD92/E+dHv
-         cHxqJ24IVuZ3Q2TM48nLugjtrn8ruWtTv+oNrQRP5HoVTWMNhSbQRARcsyY8Crb9XtBA
-         WduQ==
-X-Gm-Message-State: AOJu0Yw6elWwgYHvotyuNSiL0A/Hvv7hzP/E2IYwlR2V376vG974jHCh
-	donV9qtO9pQpAC4Ck6oGZVhQj9YT4JTq50ReIs4IxJELIoD3728lR05X683hyWjCp9uTNuN2qaO
-	l
-X-Google-Smtp-Source: AGHT+IEWNqAPAd4/Tx7KBe0TnltU8DpVH4WsddMb++0Dnv69LUnzXOr7UVZvd5UM1ziBkOQpw3KTjA==
-X-Received: by 2002:a05:6512:ac5:b0:511:7202:3938 with SMTP id n5-20020a0565120ac500b0051172023938mr965672lfu.63.1707404470455;
-        Thu, 08 Feb 2024 07:01:10 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV1+I3+J6AmT9zFJbIKgFnxWT7arsbxY6VugE9g2+q2I3pwlzpC9lBrAqspia5D3K8hWCw2sEb+PJZXTiZhRREga9cAV1p2S+V8sQcfuQ5VwWOIYRPBzzrMnbJBeiO9ySl1MC4X5hsJD3RfrlddGTszd2qPTezP+SgAv5MHoHKRYfyg4Lluh/HLR5o2E2zYuT5pkmYYhrkBbY0r448IDrc+t6O6uCmV5XgSNgP9vz+jFEoOesTyVkG0vjj9XkAsC5arfj6OQJr0E8P895tKRjZb526XeN31K52/VVWNHL/U5TxQvgeQZ22EO0IKzlxNViHcKriA377fCbaqtLzwezl0Gu7Wvhs3ObX3BUyc9qR9R6GSk/FYnCrQdqjVzhDVXeT4F+nVA1oblVxFIqIXIojalvSZxVE60nPKo5rHqzr5Md0HRADAlAmB
+        bh=09TNoOVLZlsGmnIXste9R4IHFqjQ++tBbpkcO+S4Xzc=;
+        b=Do1dmkKkgRpwa5PBzmATCL1HtSX7TaI34cvEDYyXlrtAzGKGMm71+EJ1F8Uz0tm2Mh
+         aji+4oWkAeGRjJUdROlF117lQcXvoslfCOnrOicwSaKdBMJtUS7KxKuCcC++i6kN7+X2
+         tkMy3dwTCU/KN36K1jdrkVnSm0e/vkEYMsjAF03BW7i2Lrcoz+z/7qEA9squBRQAdYwS
+         SnxRJoNxfRlnU3O47BYGl8U1A0NlLYj+BigYGk5iNJtdMMpe9R4cqt4u7z0k1m+THYpy
+         6a4IZLIGiuk1oOPfPhCQLoQBZWdz77JY649yaL/rzFwKUwJeMzjHQKZrz2VkD4CC8GU/
+         JGoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707404471; x=1708009271;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=09TNoOVLZlsGmnIXste9R4IHFqjQ++tBbpkcO+S4Xzc=;
+        b=qooY3RmWAo/KQNh6XjuhivtffK5iAKFQ9x3ryvVOWUus+Lg+oioNCeFBjDdEbHG0Xn
+         7lR1rcsnYxfmFC8rETDY++u1CbGiIFmZ58rs3WfzCA7XrwUe9q4afc7YMRAv4JrRidES
+         /vtIyjDgH2IZGnLQJGif0Vjizc3DOSJ1LsW0UR0CmJGFVR5Vq/H1DXoBYR7B21bfDpaE
+         4zajLT3GSVZHWWEkA2H60oB0iCjU2KTLNCKFSmCGGhZ5GnRxFntpuQZgSfTtu9kZIYcX
+         USg4d+3d3UmSe6xu640QGBBflT5csexE95nI5JfrhAB74d5Clas3NNxUCCqb0p2QYFwX
+         r4NA==
+X-Gm-Message-State: AOJu0YxTpE6IVALuXHSEA2aI8qn94MT3xm4IUh4CODT+RDBdPjg07/Jv
+	QaR4qrwzNWPf+blJba5kQqSsaCHFtg/R087cupRDOnEnPlGtGtdiqoA2XwGmp6I=
+X-Google-Smtp-Source: AGHT+IH997+Lfu4GrhYkgBcSCTznvkjiDvla5YKZrQcgsmhSieA7XDDwBqk0Ic8gCVYezKWNZFXtvg==
+X-Received: by 2002:ac2:46cd:0:b0:511:554c:71a8 with SMTP id p13-20020ac246cd000000b00511554c71a8mr5672529lfo.37.1707404471078;
+        Thu, 08 Feb 2024 07:01:11 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW8CIqsKS2MoC8IQIhHYrx25g7m3GhsQKEu4Gi+Jgrn8YB7SJYEUaUbOkBytY9JQDPqFaMV+iIVvv/IPw5PbLx5v4PISua+xLGpZFa9V95v4EFussmVHaWy3s8CCVHji2967gtRzmKlx113VF0JP1TZ7JdjrTweA86p7YWPpXmOt3T58tYAh+KRU2YDxxu6uCX6BHEk9YXkyXWuVj3cFv1J0VdMsUb/wTgF/euF2UBp7GV8TsznJGHd/tBUEGI5Lvb/0izy/Wo9mIqnrUv5YVCiWXVFf2hKMcSXM+1VabR0/RwDIUwcmIG+xvSmytRmIK3Vs4JrjgO0Pbv/SapB
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x18-20020a19f612000000b00511498107b8sm22444lfe.65.2024.02.08.07.01.09
+        by smtp.gmail.com with ESMTPSA id x18-20020a19f612000000b00511498107b8sm22444lfe.65.2024.02.08.07.01.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 08 Feb 2024 07:01:10 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v4 0/4] drm/msm: provide migration path from MDP5 to DPU
- driver
-Date: Thu, 08 Feb 2024 17:01:07 +0200
-Message-Id: <20240208-fd-migrate-mdp5-v4-0-945d08ef3fa8@linaro.org>
+Date: Thu, 08 Feb 2024 17:01:08 +0200
+Subject: [PATCH v4 1/4] drm/msm/mdss: generate MDSS data for MDP5 platforms
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,120 +78,121 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALPsxGUC/2XOQQqDMBCF4auUrDsyyagpXfUepYtoog6tRiYil
- eLdq4VCoct/8T7eS6UgHJI6H15KwsyJ47BFfjyounNDG4D91sqgyVFjAY2HnltxU4DejwWUzjh
- X6Ko+UaW21Sih4edHvN62biT2MHUS3NchjVhqImswM7nV1iJo8D1PsmSVkyV19zhfHjw4iVmUd
- mc7TlOU5fNzph3/Xir/Ls0ECOSNLZDsCUv6tW7rur4BtEcZYvYAAAA=
+Message-Id: <20240208-fd-migrate-mdp5-v4-1-945d08ef3fa8@linaro.org>
+References: <20240208-fd-migrate-mdp5-v4-0-945d08ef3fa8@linaro.org>
+In-Reply-To: <20240208-fd-migrate-mdp5-v4-0-945d08ef3fa8@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
  David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Stephen Boyd <swboyd@chromium.org>, Carl Vanderlip <quic_carlv@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@somainline.org>
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4293;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2849;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=MCk8TcMF3O/ehJXQorsy1MIsvwzkk22sxP1KJNAZZKI=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlxOy1+2nbSjt69H/MX4GkzpIAjy60yI4a6iXp5
- OrfFQxwtxuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZcTstQAKCRCLPIo+Aiko
- 1T58B/9IdoASMAnnqawZzGDLlvyAZBvq4F6oyugJYZXZBb9NNZeXQtjonO30DWh5NvxpWBGIp95
- i05S8aUG46Q7cmlyii1LBCia8bl2nxRGtQYen0PkKgsggl9nA3q442+p/cNji9v7PQvAVsQ2J02
- /NxK81NNp6K3//yeXjLhO3IfZZedlA8RgDiuCNvcAxcFG7TP29HTnVC6PZ1s58Tl1tiZ+NKr2XT
- SSR7lN+/VjXYh3TqKG5e750iANaH3UyHfzj6C2njVAFd6VaENTvPNNUW8/rIDiFeu17w5OnfKfz
- eWHkMJxFMns7Olmw8P+a0h2jUpioBKWHKPtViFRhTSwMKtkI
+ bh=wQrgj28WhABziCXeR2PKfGgoe/NHpSXiGLfXEY2pn/0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBlxOy1CdGwLI2jETK9ta5GNVMwZIFrQNtb/S0MN
+ 93oDS77A2CJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZcTstQAKCRCLPIo+Aiko
+ 1WUjB/9cN0J33e4f7b+V8sC0ssXT1eF1ytulLSvWSvYkddvySGtXG/ck06ixKue7dP4BJjwnY1g
+ ldINIUbCjJs3mOGhJRNDKkWdc62itbQ+D1cH92OBp7dGfoCP3+VQ9/78mV0pIEM9aHHN9hluoRV
+ dO21fMcf96nM9dcqs6Hdj1EdKdd8oh3vagVjiINzxikl2THxFc5aKxzuRN9Fo+N1i+FFbr2wd9D
+ Dm8y3ClXQdNhB/DEPx7KcDtwoGogz0idnNgGqc7Ucx1F8j5Hmw4QJGyJhyIRoZxPKUMqIneURFG
+ flGm4ZfQw0BTKV4khUwcggfcgWyZbfy5x2sxs7LjLQKya5Dh
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Over the last several years the DPU driver has been actively developed,
-while the MDP5 is mostly in the maintenance mode. This results in some
-features being available only in the DPU driver. For example, bandwidth
-scaling, writeback support, properly supported bonded DSI aka dual DSI
-support, DSC (display stream compression).
+Older (mdp5) platforms do not use per-SoC compatible strings. Instead
+they use a single compat entry 'qcom,mdss'. To facilitate migrating
+these platforms to the DPU driver provide a way to generate the MDSS /
+UBWC data at runtime, when the DPU driver asks for it.
 
-All the pre-SDM845 platforms were originally supported by the MDP5
-driver only. However it is possible and easy to support some of the
-older SoCs in the DPU driver. For example in the v5.18 it got
-support for MSM8998.  This can not be considered as a proper migration,
-since there msm8998.dtsi didn't describe the display hardware
-beforehand. Instead new bindings were added, making MSM8998 just another
-display hardware to be supported by the DPU driver.
+It is not possible to generate this data structure at the probe time,
+since some platforms might not have MDP_CLK enabled, which makes reading
+HW_REV register useless and prone to possible crashes.
 
-This series provides a way to gradually migrate support for several
-existing and well-supported SoCs from the MDP5 to the DPU driver without
-changing the DT. From the user experience point of view this is
-facilitated by the `msm.prefer_mdp5' kernel param. If the parameter is
-set to `true' (current default), all `shared' platforms will be handled
-by the MDP5 driver. If the switch is flipped to `false' (or if the MDP5
-driver is disabled), these platforms will be handled by the DPU driver.
-Handling this by the modparam (rather than solely by kernel config)
-allows one to easly switch between the drivers, simplifying testing.
-
-This series implements support for two DPU 3.n platforms, SDM660 and
-SDM630. The MSM8996 support was a part of the previous iterations of
-this patchset, but it was removed in v3. It requires additional
-development and testing.
-
-In theory after additional testing we can drop most of migration code
-and some parts of MDP5 driver. The proposed boundary is to move all
-platforms supporting cursor planes to the DPU driver, while limiting
-MDP5 to support only the older platforms which implement cursor as a
-part of the LM hardware block (MSM8974, APQ8084, MSM8x26, MSM8x16 and
-MSM8x39).
-
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v4:
-- Fixed param name for the msm_disp_drv_should_bind() stub (Carl
-  Vanderlip)
-- Fixed the SoC name for MDP5 version 0x1010 (1.0.16), it is MSM8953
-  (Abhinav)
-- Rewored commit message for the msm_mdss change to mention possible
-  crash on the unclocked HW_REV read (Abhinav)
-- Fixed dpu_kms_mmap_mdp5() to call dev_is_platform() on the parent of
-  the DPU device (Abhinav)
-- Link to v3: https://lore.kernel.org/r/20240106-fd-migrate-mdp5-v3-0-3d2750378063@linaro.org
+ drivers/gpu/drm/msm/msm_mdss.c | 51 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-Changes in v3:
-- Rebased on top of linux-next
-- After additional consideration dropped MSM8996 patch. It will be
-  reiterated later, once the generic migration framework is accepted
-  (and after we implement scalers support for that platform).
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 35423d10aafa..65657230bbff 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2018, The Linux Foundation
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/interconnect.h>
+@@ -213,6 +214,49 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
+ 	}
+ }
+ 
++#define MDSS_HW_MAJ_MIN		GENMASK(31, 16)
++
++#define MDSS_HW_MSM8996		0x1007
++#define MDSS_HW_MSM8937		0x100e
++#define MDSS_HW_MSM8953		0x1010
++#define MDSS_HW_MSM8998		0x3000
++#define MDSS_HW_SDM660		0x3002
++#define MDSS_HW_SDM630		0x3003
++
++/*
++ * MDP5 platforms use generic qcom,mdp5 compat string, so we have to generate this data
++ */
++static const struct msm_mdss_data *msm_mdss_generate_mdp5_mdss_data(struct msm_mdss *mdss)
++{
++	struct msm_mdss_data *data;
++	u32 hw_rev;
++
++	data = devm_kzalloc(mdss->dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return NULL;
++
++	hw_rev = readl_relaxed(mdss->mmio + HW_REV);
++	hw_rev = FIELD_GET(MDSS_HW_MAJ_MIN, hw_rev);
++
++	if (hw_rev == MDSS_HW_MSM8996 ||
++	    hw_rev == MDSS_HW_MSM8937 ||
++	    hw_rev == MDSS_HW_MSM8953 ||
++	    hw_rev == MDSS_HW_MSM8998 ||
++	    hw_rev == MDSS_HW_SDM660 ||
++	    hw_rev == MDSS_HW_SDM630) {
++		data->ubwc_dec_version = UBWC_1_0;
++		data->ubwc_enc_version = UBWC_1_0;
++	}
++
++	if (hw_rev == MDSS_HW_MSM8996 ||
++	    hw_rev == MDSS_HW_MSM8998)
++		data->highest_bank_bit = 2;
++	else
++		data->highest_bank_bit = 1;
++
++	return data;
++}
++
+ const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev)
+ {
+ 	struct msm_mdss *mdss;
+@@ -222,6 +266,13 @@ const struct msm_mdss_data *msm_mdss_get_mdss_data(struct device *dev)
+ 
+ 	mdss = dev_get_drvdata(dev);
+ 
++	/*
++	 * We could not do it at the probe time, since hw revision register was
++	 * not readable. Fill data structure now for the MDP5 platforms.
++	 */
++	if (!mdss->mdss_data && mdss->is_mdp5)
++		mdss->mdss_data = msm_mdss_generate_mdp5_mdss_data(mdss);
++
+ 	return mdss->mdss_data;
+ }
+ 
 
-Changes in v2:
-- Dropped accepted patches
-- Rebased on top of updated [1]
-- Added defines for MDSS hw revisions (Stephen)
-- Changed msm_mdss_generate_mdp5_mdss_data() to return const struct
-  pointer (Stephen)
-- Fixed error handling in msm_ioremap_mdss() (Stephen)
-
-[1] https://patchwork.freedesktop.org/series/119804/
-
----
-Dmitry Baryshkov (4):
-      drm/msm/mdss: generate MDSS data for MDP5 platforms
-      drm/msm/dpu: support binding to the mdp5 devices
-      drm/msm: add a kernel param to select between MDP5 and DPU drivers
-      drm/msm/dpu: add support for SDM660 and SDM630 platforms
-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_2_sdm660.h | 291 +++++++++++++++++++++
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_3_3_sdm630.h | 225 ++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 103 ++++++--
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |   3 +
- drivers/gpu/drm/msm/msm_drv.c                      |  33 +++
- drivers/gpu/drm/msm/msm_drv.h                      |   4 +
- drivers/gpu/drm/msm/msm_io_utils.c                 |  13 +
- drivers/gpu/drm/msm/msm_mdss.c                     |  51 ++++
- 10 files changed, 706 insertions(+), 21 deletions(-)
----
-base-commit: b1d3a0e70c3881d2f8cf6692ccf7c2a4fb2d030d
-change-id: 20240105-fd-migrate-mdp5-6a2aa51bc83b
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
