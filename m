@@ -1,82 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-10176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B531D84E00C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:54:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18FE784E047
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 13:03:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 66D921F280BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 11:54:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA462281FE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Feb 2024 12:03:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F1806F518;
-	Thu,  8 Feb 2024 11:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A52071B35;
+	Thu,  8 Feb 2024 11:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Kgn/J5XC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JmlVmKcj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03935427E;
-	Thu,  8 Feb 2024 11:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8871B31;
+	Thu,  8 Feb 2024 11:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707393262; cv=none; b=KcAfxgFyjaA/YVXwEBUU+tT4f9OaFcKZ8H6TvBMOtOW+l+d0rhpTXz0HV0RLG0g6Ktrc83ueSq+hX1aqEu36vN74ZcIWbmk+RrJWjhqJaQdJOSO9WoY57IOxvYgnZtNtxBcKRJD/vIA79x+QtT//Drgl+wKY77Oe10H7Bb01YMw=
+	t=1707393564; cv=none; b=SJp8JjPe+9Gt7j+Lwa6x2QNL/WhNDDLme4wo+q7Z/nBLX16gwDuCfcOMfIwHp881aszZKnz3bzs3TReCnAa9DXKj7Ql4OBiNlMTUQrjTjZ80MWwu+676OYBzkR1956yfgUI7Mo3NicVcX8JpJ3mhbuLOuR+EzAKmQ2mU4Q4TpCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707393262; c=relaxed/simple;
-	bh=uXOrZiz482AvVYpv/HDQooQIBOQg2tudhsP5/yy4RpM=;
+	s=arc-20240116; t=1707393564; c=relaxed/simple;
+	bh=hOz4D9QVROMnk+YobsB5SY6criPkFQ4Mk/iTZIxP7dc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cbcKvE93dqcEL9rFQJugQQMToTWuRHv1k8wGBx+z8IJ1sipLarKuM8cgiLWFyv402TZPzia+ACLie7iZgiJrX4HY0+H/L3LRVW1q0Q0KQpARCCoIc6aDl1NXAjyIdOxvER7Tv36WijoTadZShP9te4HahCORuiEaxvCA6uZ2tXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Kgn/J5XC; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707393261; x=1738929261;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=uXOrZiz482AvVYpv/HDQooQIBOQg2tudhsP5/yy4RpM=;
-  b=Kgn/J5XCM+QdutdSms2CcakI0fYPMl0F951dhdRqb0Zt/NIMZ9eIMvH+
-   qQbo4CKBL8+86bu2l+Xu4RUsJ5RO6DjHVK5nrFnsx/Gp2+2pVuHaLyudS
-   dffK1kCRUlQvWoEBUCauQcp1niVSoNhPep6StkQJN5hdCYpIGNoKbCf++
-   LRt5cHrs92fGkFm7tGFygs3Ul6oKqoJArGDfZ3QlnQVu3TSKUIH+zGv5T
-   /DZtMSXHGOrw8Uvceje9ZJ6Eo/js9KvezfrhWFzg44R49TVcGBdBfBmu1
-   1rpnJYpxsveUoJOHA20ULJYv1WXDuEfAHIH/s6srLsOqG7TXMPIStbD6/
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10977"; a="4985163"
-X-IronPort-AV: E=Sophos;i="6.05,253,1701158400"; 
-   d="scan'208";a="4985163"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2024 03:54:20 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10977"; a="934111721"
-X-IronPort-AV: E=Sophos;i="6.05,253,1701158400"; 
-   d="scan'208";a="934111721"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 08 Feb 2024 03:54:14 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 08 Feb 2024 13:54:14 +0200
-Date: Thu, 8 Feb 2024 13:54:14 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=aRna0GZmYjNnaaW0up6G6vgv4bOWJkcQXTvtFGsW0mGUeefGLJhPohevkB6u54dktBFRLFUYAFHYeHrXiXMVzStVWNl38miSCiP8RNq4PZFqRmya0BA26TfILENC5d7vSNCO3evp2wBuxsahWjKCjfU4WpEw24Ud/Efq7ZGKoLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JmlVmKcj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DCEC43390;
+	Thu,  8 Feb 2024 11:59:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707393563;
+	bh=hOz4D9QVROMnk+YobsB5SY6criPkFQ4Mk/iTZIxP7dc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JmlVmKcjBmEmzvStnviibNXMQt0NnfZxJid7cqNo/Iv9Q9XkTpA+LQGAge7b1jU3F
+	 rdv6k9R8InvXTR2VHDBMWDFhb9C0ENzjgEAzo24E9Ngt2np5GUI9K6+rZiMKZwdPEK
+	 0Kdt0VA32ul5LahcbKR9uDRC9FSkZl+VWoshMADNfZjXcMEv5UD2WHEdJ9n8kaQ7ST
+	 92KRw2WL0WCKo/ZmG1jd0aR3aRYe1fJVl45y6fjQmCe8TpxV/XEMrxSR3DDCv6+B7R
+	 ykHxCNaRrQPGZrPfWh6d540CGpk8qrAinS0hbWoj+uCdI0GuWxK6wi9AAsO0vK7BA1
+	 yKSe/FsSj3YBA==
+Date: Thu, 8 Feb 2024 12:59:19 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Guenter Roeck <linux@roeck-us.net>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH v3 3/6] usb: typec: qcom-pmic-typec: add support for
- PMI632 PMIC
-Message-ID: <ZcTA5hbcladmKuLh@kuha.fi.intel.com>
-References: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
- <20240130-pmi632-typec-v3-3-b05fe44f0a51@linaro.org>
- <CAA8EJpqhfWsmUxwmBLtdtx-aFOmTo24erdNfRyz2ymi_y=yidw@mail.gmail.com>
+Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
+	manivannan.sadhasivam@linaro.org, bryan.odonoghue@linaro.org, quic_msavaliy@quicinc.com, 
+	quic_vtanuku@quicinc.com
+Subject: Re: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
+Message-ID: <cvzyvgb6vahlmrhaijsuyaosdl2p4q5cxhipmu4tujnkpjlbpm@6yu3sbpqha4m>
+References: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
+ <CAA8EJpqQtHDRK2pex+5F-fMRTosJuFCx59e89MWhnie1O3dHKA@mail.gmail.com>
+ <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com>
+ <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
+ <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,28 +64,94 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpqhfWsmUxwmBLtdtx-aFOmTo24erdNfRyz2ymi_y=yidw@mail.gmail.com>
+In-Reply-To: <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
 
-On Wed, Feb 07, 2024 at 11:54:50AM +0200, Dmitry Baryshkov wrote:
-> On Tue, 30 Jan 2024 at 21:33, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+Hi Dmitry,
+
+On Thu, Feb 08, 2024 at 01:04:14PM +0200, Dmitry Baryshkov wrote:
+> On Thu, 8 Feb 2024 at 12:02, Andi Shyti <andi.shyti@kernel.org> wrote:
 > >
-> > The PMI632 PMIC support Type-C port handling, but lacks USB
-> > PowerDelivery support. The TCPM requires all callbacks to be provided
-> > by the implementation. Implement a special, 'stub' Qcom PD PHY
-> > implementation to enable the PMI632 support.
+> > Hi Viken, Dmitry,
 > >
-> > Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > On Fri, Feb 02, 2024 at 04:13:06PM +0530, Viken Dadhaniya wrote:
+> > >
+> > > On 2/1/2024 5:24 PM, Dmitry Baryshkov wrote:
+> > > > On Thu, 1 Feb 2024 at 12:13, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
+> > > > >
+> > > > > For i2c read operation in GSI mode, we are getting timeout
+> > > > > due to malformed TRE basically incorrect TRE sequence
+> > > > > in gpi(drivers/dma/qcom/gpi.c) driver.
+> > > > >
+> > > > > TRE stands for Transfer Ring Element - which is basically an element with
+> > > > > size of 4 words. It contains all information like slave address,
+> > > > > clk divider, dma address value data size etc).
+> > > > >
+> > > > > Mainly we have 3 TREs(Config, GO and DMA tre).
+> > > > > - CONFIG TRE : consists of internal register configuration which is
+> > > > >                 required before start of the transfer.
+> > > > > - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
+> > > > > - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
+> > > > >                 of the transfer.
+> > > > >
+> > > > > Driver calls GPI driver API to config each TRE depending on the protocol.
+> > > > > If we see GPI driver, for RX operation we are configuring DMA tre and
+> > > > > for TX operation we are configuring GO tre.
+> > > > >
+> > > > > For read operation tre sequence will be as below which is not aligned
+> > > > > to hardware programming guide.
+> > > > >
+> > > > > - CONFIG tre
+> > > > > - DMA tre
+> > > > > - GO tre
+> > > > >
+> > > > > As per Qualcomm's internal Hardware Programming Guide, we should configure
+> > > > > TREs in below sequence for any RX only transfer.
+> > > > >
+> > > > > - CONFIG tre
+> > > > > - GO tre
+> > > > > - DMA tre
+> > > > >
+> > > > > In summary, for RX only transfers, we are reordering DMA and GO TREs.
+> > > > > Tested covering i2c read/write transfer on QCM6490 RB3 board.
+> > > >
+> > > > This hasn't improved. You must describe what is the connection between
+> > > > TRE types and the geni_i2c_gpi calls.
+> > > > It is not obvious until somebody looks into the GPI DMA driver.
+> > > >
+> > > > Another point, for some reason you are still using just the patch
+> > > > version in email subject. Please fix your setup so that the email
+> > > > subject also includes the `[PATCH` part in the subject, which is there
+> > > > by default.
+> > > > Hint: git format-patch -1 -v4 will do that for you without a need to
+> > > > correct anything afterwards.
+> > > >
+> > >
+> > > At high level, let me explain the I2C to GPI driver flow in general.
+> > >
+> > > I2C driver calls GPI driver exposed functions which will prepare all the
+> > > TREs as per programming guide and
+> > > queues to the GPI DMA engine for execution. Upon completion of the Transfer,
+> > > GPI DMA engine will generate an
+> > > interrupt which will be handled inside the GPIO driver. Then GPI driver will
+> > > call DMA framework registered callback by i2c.
+> > > Upon receiving this callback, i2c driver marks the transfer completion.
+> >
+> > Any news about this? Dmitry do you still have concerns? We can
+> > add this last description in the commit log, as well, if needed.
 > 
-> Heikki, Gunter, Gret, is there anything left on my side to get these patches in?
+> I was looking for pretty simple addition to the commit message, that
+> links existing commit message to the actual source code change: that
+> geni_i2c_gpi(I2C_WRITE) results in the GO TRE and
+> geni_i2c_gpi(I2C_READ) generates DMA TRE. But I haven't seen anything
+> sensible up to now. So far we have a nice description of required
+> programming sequence in terms of CONFIG, GO, DMA TREs and then source
+> code change that seems completely unrelated to the commit message,
+> unless one actually goes deep into the corresponding GPI DMA driver.
 
-Nothing from me. Do you want Greg to pick these?
+Agree. I can't take this patch until the commit message has a
+proper description and until Dmitry doesn't have any concerns
+pending.
 
-thanks,
-
--- 
-heikki
+Thanks,
+Andi
 
