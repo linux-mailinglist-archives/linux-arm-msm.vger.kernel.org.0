@@ -1,64 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-10431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 698A88500B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 00:22:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 947F48500BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 00:25:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C22FBB267F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 23:22:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB5E11C239B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 23:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E40D2376F8;
-	Fri,  9 Feb 2024 23:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 125BC381BF;
+	Fri,  9 Feb 2024 23:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aty1sJbu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXeEL+c5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C6636AEF;
-	Fri,  9 Feb 2024 23:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D935681;
+	Fri,  9 Feb 2024 23:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707520917; cv=none; b=Hz1u5iTQ+YqCxdGKUVDw00KNOlXHECtR2jqf6+xSHbYfAwLKjOERrdIXwe6drLqKhMCE3y4I179fpkXdIjHeb3VYgI6atd8ZPfv4hikgQhA7Gv0cSwAPZUTGMh4YrQ75T+I8zoThRn3w63OYxJU2poqwhWnBJ9kr479x0ikadBU=
+	t=1707521146; cv=none; b=o5ZvjxZY6IZzI0mJCP5R6xMOWrJ5yutZc8/ztQ0mN6CUpneL/RQ5JQcLZ9u6xjRVWgE2gTe7575qI/YrZ0BbfBA9x6KDbv+N0pHEDkzOncPzJVoTfWEcERq4BHqLdsmYmf2zTwKX3iefi/BibQf7dyDHHy7Dov6pOG1nbxyDkVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707520917; c=relaxed/simple;
-	bh=JIhHPCLub+GIlJ4MJ6tsKD5RtbEyFnsXJnH4vNKqDqA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=bRojCzv4YrCaDTTBbyMo7C1lOOIyP+Crm4NgYPpvPm8ybmD7dZT60s1zo7w1Rm2n5KkmizUrv+Xc6awLlzlRKk/D700BtAJ3dkfc8Tas8VRDjMJy2rJ0sJ8TDvVwmQU6jV5jQzNERxb/ygQqCjt7NORK+gC3L2q2BoqqY3oNVn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aty1sJbu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 419NGKCY018192;
-	Fri, 9 Feb 2024 23:21:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=cv5
-	SkJuNqt3ewpDLnxOENQWIUMdt2pVQ9B0+/buE1X4=; b=aty1sJbu/a8RHThCtxx
-	zSdhunB9uZ69YCWA2LY8jnjFdhRCjQn99V+SopdNZzZeSgbV1c1gTQKkNN2ytSqL
-	r46f8+vSGbIH2xw8sF1nkoiHWBMV3aOZhLzc9aA8ZsWzqRhOlNY/7QidoThI69dL
-	p8/9h9jsVJexHF+yZiBzt3X6f2CbekB42PXy0Uxmg/TyJKZ/vxOjXTGgUOV7FQyW
-	hhJ1qFXbTlt3irW3ZBs7aA+wvIcmtKmiMzhWaOj/tlJjYiRsrfCCNKd+YbyKVY37
-	1NuLZVs6WD6yNFiLMihkm5B91LjxowSMZkqnhKMuE5js5Y1VPHXcy7MNcCtFYemv
-	DwQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w5pgprwjs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Feb 2024 23:21:50 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 419NLnel028427
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 Feb 2024 23:21:49 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 9 Feb
- 2024 15:21:48 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Fri, 9 Feb 2024 15:21:48 -0800
-Subject: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: Declare GCC clocks
- protected
+	s=arc-20240116; t=1707521146; c=relaxed/simple;
+	bh=YjYh59NyNLxveT0n0gaRWjC/sGWqJ+ue3luZIoGiKRI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=maDPapL8jjBILLRtu5UQFd0BB4oz7qDCv2n4EtJYUQrKvVLHYFpgGauLAcvU5BrXymRxXyxiSnEWk9hdP8ZbxHm2w0TR/yfEgLCO5Yj1E3HFDMBRww3tzQeDiArA8pCt8qKchsUbJZzoeLFBThBWY9E92AZqqVtNpUeFIfQJuuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VXeEL+c5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7819C433F1;
+	Fri,  9 Feb 2024 23:25:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707521145;
+	bh=YjYh59NyNLxveT0n0gaRWjC/sGWqJ+ue3luZIoGiKRI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VXeEL+c5vf/2DhtylAwKH1BL0K9ClK7yeu2THpNuOc05fAePm+YMsYcDdWq0Z/TP8
+	 2zMEexxPMuqEj2pZDV21BlFw6m0z77fnRcxWEuoX52Idul84eXrbugHG7M0mMecYon
+	 6J7eCQsNUTUbY58XMJ30DFOj6IgFrN4dNEWM0dYcohtWUROGMl/3mjJ8ko+VzmTXFT
+	 hZLgOhTC//PxtJvQIYxlbC6pjqWptx3+puBTIN4lcL9MdZ5KidX6hG+gv1n2McE0aM
+	 vKzJinGmdgIPz1DGn3dHmy3zx+zXl1EGgbHGF+7+X79oUi2PebJ9LWZvPBTZn2FtKh
+	 6PveylI/ptk4g==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: (subset) [PATCH v3 0/6] usb: typec: qcom-pmic-typec: enable support for PMI632 PMIC
+Date: Fri,  9 Feb 2024 17:25:41 -0600
+Message-ID: <170752113829.579753.17045888138787272852.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
+References: <20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,112 +74,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240209-qcm6490-gcc-protected-clocks-v2-1-11cd5fc13bd0@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAIuzxmUC/43NQQ6CMBCF4auQrh3TFgRh5T0MCzodYKJQaJFoC
- He3cgKX31v8bxOBPFMQVbIJTysHdmOEPiUC+2bsCNhGCy11JrUsYcYhz0oJHSJM3i2EC1nAp8N
- HAKJL27TWFLlJRUxMnlp+H/l7Hd1zWJz/HG+r+q1/hlcFCoxNs2thNBVG3eYXI494RjeIet/3L
- 4WuG37KAAAA
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Luca Weiss <luca.weiss@fairphone.com>,
-        "Bjorn
- Andersson" <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707520908; l=2379;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=JIhHPCLub+GIlJ4MJ6tsKD5RtbEyFnsXJnH4vNKqDqA=;
- b=oxOaWPD9bzFyxLTLusdZS7WLGJXt3FT5Z2Nzp9WkCleMwZRAuH0qbFAIDg8vUmHkJkomB/zzP
- 49pO8QvI9h+Di8RnisP2Bd2hMlLtk8YjDHB4F8hjxLHZMJTFHKoY8m7
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: y3XU2iUZMLsYXCszu7rQ59-sa0ONYbD9
-X-Proofpoint-GUID: y3XU2iUZMLsYXCszu7rQ59-sa0ONYbD9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-09_19,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 clxscore=1015 impostorscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=775 bulkscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402090171
+Content-Transfer-Encoding: 8bit
 
-The SC7280 GCC binding describes clocks which, due to the difference in
-security model, are not accessible on the RB3gen2 - in the same way seen
-on QCM6490.
 
-Mark these clocks as protected, to allow the board to boot. In contrast
-to the present QCM6490 boards GCC_EDP_CLKREF_EN is left out, as this
-does not need to be "protected" and is used on the RB3Gen2 board.
+On Tue, 30 Jan 2024 21:32:53 +0200, Dmitry Baryshkov wrote:
+> The Qualcomm PMI632 PMIC (found on Qualcomm Robotics RB2 platform)
+> doesn't support USB Power Delivery. However this PMIC still supports
+> handling of the Type-C port (orientation detection, etc). Reuse exiting
+> qcom-pmic-typec driver to support Type-C related functionality of this
+> PMIC. Use this to enable USB-C connector support on the RB2 platform.
+> 
+> 
+> [...]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
-I did notice Taniya's patch [1] after writing this patch. I'd prefer to
-merge this minimal set asap, to make the board boot, unless there's a
-strong argument for including those other clocks in the protected list.
+Applied, thanks!
 
-[1] https://lore.kernel.org/linux-arm-msm/20240208062836.19767-6-quic_tdas@quicinc.com/
----
-Changes in v2:
-- Dropped GCC_EDP_CLKREF_EN from the list and expanded the commit
-  message to cover this descrepancy from QCM6490 devices.
-- Corrected SC7180 to SC7280 in commit message.
-- Link to v1: https://lore.kernel.org/r/20240209-qcm6490-gcc-protected-clocks-v1-1-bd3487b2e7b1@quicinc.com
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 8bb7d13d85f6..ebbe2c1123f6 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -413,6 +413,23 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&gcc {
-+	protected-clocks = <GCC_CFG_NOC_LPASS_CLK>,
-+			   <GCC_MSS_CFG_AHB_CLK>,
-+			   <GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>,
-+			   <GCC_MSS_OFFLINE_AXI_CLK>,
-+			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
-+			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
-+			   <GCC_MSS_SNOC_AXI_CLK>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-+			   <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_SEC_CTRL_CLK_SRC>,
-+			   <GCC_WPSS_AHB_BDG_MST_CLK>,
-+			   <GCC_WPSS_AHB_CLK>,
-+			   <GCC_WPSS_RSCP_CLK>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-
----
-base-commit: b1d3a0e70c3881d2f8cf6692ccf7c2a4fb2d030d
-change-id: 20240209-qcm6490-gcc-protected-clocks-ee5fafdb76b3
+[4/6] arm64: dts: qcom: pmi632: define USB-C related blocks
+      commit: f69b3e40f46e8cf568809eb05a2e07bfea45b672
+[5/6] arm64: dts: qcom: sm6115: drop pipe clock selection
+      commit: 7e3a1f6470f7243c81156d2ead60f87da1184225
+[6/6] arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling
+      commit: a06a2f12f9e2fa9628a942efd916cf388b19c6ce
 
 Best regards,
 -- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
-
+Bjorn Andersson <andersson@kernel.org>
 
