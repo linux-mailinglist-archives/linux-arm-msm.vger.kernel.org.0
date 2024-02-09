@@ -1,168 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-10350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25A4184FA6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 18:00:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76C7F84FAB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 18:10:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 933A71F24395
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 17:00:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C7FB9B22F13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 17:10:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EED52E632;
-	Fri,  9 Feb 2024 16:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E71C27B3F3;
+	Fri,  9 Feb 2024 17:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+mpLagT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/Ntb0GA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA1276027
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 16:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52FE6DD18;
+	Fri,  9 Feb 2024 17:10:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707497952; cv=none; b=ChAIJ72TdERUmLOAW+IOiTYxJ5zjIW/PEn5jdYcIpOyIbkZPVscFgw13bSlC7vJZr5I9G/pdjtmM3ZDEbGZCCUdSecpW1Ag4nPb4GhGuSn4bZzkPVvJoVZKwyAsk2BfcGzrXl6NKJDXuAbqmajUduj4DVy+YNkgES8WgFUnTvVc=
+	t=1707498634; cv=none; b=qIWDCNk4BJM14cIAZks0epRFB+I7z0jAJF+Yi/OzrSFJxIFRjH+imfjx7SESsFih/wbGlsc0hosQ+F0y7tjz5d1P2vJmT+b9bFiD4ybK7cJP8Ts69uTBlwVYsR/BdONA2L8Ia/2e9YDiwAxr2DGBf6hbq+PbeKJ59H+8O4Xn8sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707497952; c=relaxed/simple;
-	bh=HSkd3gG6bfww/nT3M6MV7Xc8AQ9F1ffmK1r1nTA7oqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Bbx0EwxOtH/L0AulyXpUDwKH5GKtjSLqkg1ta0DI6aTvI07024JHQm5DxsMTn77f5kHNlMUJqKb8X/rgSx3k0lhtIwz3VEkMpmWpuSa7MaI31VZ/V5VYtj0ldhjiZOGCmZo/VDnBpbK++8JaWcSJ/n0gMVJb/UUaW4BNCV8mf/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K+mpLagT; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55ff5f6a610so1444731a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 08:59:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707497949; x=1708102749; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qjAZJUl692p6CGKzzwOgIgdtmA0+IsSLhcfPdiLRgGc=;
-        b=K+mpLagTkOYxj49Sosph9ST6JU4kzEy1gpUAhTmK7OAmK5Re0QqG2z4wOUUISUA7hn
-         ehyzad46q0H+O+nfmODCPFEk965IaXYdz9RWtevUmThq1H9b6xcH0PtAPudtRVxbQN06
-         keyXxd43ACZVN3arLtzzoqcc0UgWUQvpfjBtieGAf5NSbE4Wq2e3kmTKsZy0HHnH2JvX
-         3XN9QuW5H2KALoONhlWkK15SC7C+zoFHYyvCRXqdq4xvcfOc72fxVqifWUns2LnY6i5V
-         HD3gdMS8HkAg+5d0jgS2iqalsNabG2TCEkxdUBUDM97yXMjzD9umB/MRyOEMLo4sEoMo
-         0jRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707497949; x=1708102749;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qjAZJUl692p6CGKzzwOgIgdtmA0+IsSLhcfPdiLRgGc=;
-        b=Dm8OYRgUx56cMKNR1tlU4mVLMUiUiq5/Y0JKrxkR4Fk4xKmFiJTUeBeGLQT2qdtDTf
-         RZR88gOZfGCo1AstI20+sWd8QgWEiJTHneVzE6u8XjMZgFFIVfWQw8xhAXEQLKzUySvH
-         ApaUrJAQnj8NQkB312zOAjFkz9hqoqCsXoicZLVA662cWuyY7B/Nqtz26+s7sbHKehuN
-         WoheGMWU2g21YOKHj0WWxwPi3KE0nO9BOdBAJVIUujVpN/aJ65A6smSUXjEJhy2eL8Ah
-         XbSLE/30sg8LPF0Ia7n6IdjnSFCFml687fqWjLiSLITylDvi2GbFPtY9IfeHVpAJmUEn
-         gYFA==
-X-Forwarded-Encrypted: i=1; AJvYcCVTqdFrpgD7yaRLmDl6ZjPAJ12HyHAtDRPjn3NoNrlo/RC0vmt8FXqd11p66NT6ySx5h8tXofsj4Bi0XTZ2sXOSZY24IozbPJUWcgJAdg==
-X-Gm-Message-State: AOJu0YxbAEWW8Faq0fCBY/ufaWhl5dDFjQKnJlob7QH/XEPNn3nK0pDd
-	OVXEicpfuc2OzuP3mxFBq8GzjNzNTkhVSe4RoB08PtBwuA1sWjJ1kUPSyf4LGQo=
-X-Google-Smtp-Source: AGHT+IFX8x+RZNJfUhDBAZS0uwBbshJEhHmpKgn1gYNDdH7f74qT3t/7aYKnMAF0sPu2Ny5idKa6/Q==
-X-Received: by 2002:a50:ee12:0:b0:55f:957b:132f with SMTP id g18-20020a50ee12000000b0055f957b132fmr1635919eds.25.1707497949099;
-        Fri, 09 Feb 2024 08:59:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWo6xk1rvwiotz67poG6T4ZQR2YaGisl06Qa4xGVI4jMpvV8dtLEQ5aB1BKhhH1hWWQqEq0+Lj8q035d/aBNSb5Fa6MhPrg4I5LQU27Y8KQhrZ4NacFi6es6BbcvvQZGLDkV1SWHWva78unDGrua0HV+3wjWJAX9U6M9J/VAWelgvV/AwNMfAb7f4JKCUd+sRmSG7S79FY9DcG/S5caJ/GqiKsJTVaSwEy0A3UwB9k63Px/oCMbjpxEQxwClAaHJa6bnmCm7u+5eANI4yn2k20jBnXxbG+l1AA6GB5TAEH/UBXwmdE9gs4W0z1kCaZ+WI4LaQl2HzQUP5f9C4syfyWSBtkftXHS6Fph2WisBCKsrAnFnlb8k1/sMOi7ZH+iypBPQ9XM+FhdFFOtNBQftCfH4Y4LTZcmDEomKazqMgSo92c7pdw7Ujmn1qW1BVtnsb/63Azyeq5Of9CXfEYFuyNpIpyKrSvz7A0N8xwJwIVluXgpu69URIwMF8H0VAsPVZILI8B04B4PTZFcHl6num6l5xPh
-Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id r20-20020aa7cfd4000000b00560fa14c0b7sm937112edy.33.2024.02.09.08.59.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Feb 2024 08:59:08 -0800 (PST)
-Message-ID: <e660af3f-60ed-4386-b00e-98db61ee84c4@linaro.org>
-Date: Fri, 9 Feb 2024 17:59:06 +0100
+	s=arc-20240116; t=1707498634; c=relaxed/simple;
+	bh=1DJyQGZWkyINk+0P2VsSNjoETpjN/mE2UKBByCakbuc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=QUdFuQXXx0oV0s4UARDZryBv8s0GSm54hMEbICMBL6PopFWdsVL+BEIT6enDcPOxFZ1MD4nf3hHvTu7IImAyCVZrJhXg35jHyO3lpBp/83BMh6Fzmxi1XHfl5skZ+C458d8oFhqEhLpWTp6ULvVEdFWBOEENG+sC6N2oEVkXRzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/Ntb0GA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2009C433F1;
+	Fri,  9 Feb 2024 17:10:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707498634;
+	bh=1DJyQGZWkyINk+0P2VsSNjoETpjN/mE2UKBByCakbuc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=b/Ntb0GAdQuPhorZNPOqkKxNKtS8/IC3CPaCzUNDjuhbYzgUQQpN1nmdSRvATUagt
+	 qR9FDSA7njDGtlOYo+Zr0LP43Yo+UHHd20nwenjRUDNlOxOJcwoh4KlYQ5IGHF6Vdu
+	 niQeED7H47m8v8MBn/PUy5rKWUTsf6A1c1IKtB0fAm75YTEE+pqEhfcoe67FWUJlZN
+	 FJlS+9EPDJKcR+ZnaskzZ3CYg7565Pehp9v35jt2ROMid1UdTUNQX0yBUEfpo5VObV
+	 v86ez5zUEaMr2Ym5FD/N5JAAciRcNcGrxxCM3Kn+eU0e5awsgmKEyLUo5ltCbxn+NR
+	 qlATClLOoxEzA==
+Date: Fri, 9 Feb 2024 11:10:32 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Serge Semin <fancer.lancer@gmail.com>
+Cc: Mrinmay Sarkar <quic_msarkar@quicinc.com>, vkoul@kernel.org,
+	jingoohan1@gmail.com, conor+dt@kernel.org, konrad.dybcio@linaro.org,
+	manivannan.sadhasivam@linaro.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
+	quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+	quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	mhi@lists.linux.dev
+Subject: Re: [PATCH v1 3/6] PCI: dwc: Add HDMA support
+Message-ID: <20240209171032.GA1004885@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
- pins
-Content-Language: en-US
-To: Marijn Suijten <marijn.suijten@somainline.org>, g@somainline.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>,
- Martin Botka <martin.botka@somainline.org>,
- Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
- <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
- <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
- <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <oa76ts3zqud7mtkpilbo4uub7gazqncnbh6rma26kaz6wt6fch@ufv672fgrcgj>
 
-On 6.02.2024 23:36, Marijn Suijten wrote:
-> On 2024-02-06 19:58:50, Konrad Dybcio wrote:
->> On 21.01.2024 23:33, Marijn Suijten wrote:
->>> Add the pinctrl states for SDC1 and use them on sdhc_1.
->>>
->>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->>> ---
->>
->> [...]
->>
->>
->>> @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
->>>  				 <&gcc GCC_SDCC1_APPS_CLK>,
->>>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
->>>  			clock-names = "iface", "core", "xo";
->>> +
->>> +			pinctrl-names = "default", "sleep";
->>> +			pinctrl-0 = <&sdc1_on_state>;
->>> +			pinctrl-1 = <&sdc1_off_state>;
->>
->> -names should go last
-> 
-> Per the cover letter:
-> 
->     - Moved pinctrl-names before pinctrl-N (Konrad);
-> 
-> You explicitly requested this in https://lore.kernel.org/linux-arm-msm/60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org/#t
-> but we also backtracked on it somewhat for consistency with other -names, and the general state of this file.
+On Sat, Feb 03, 2024 at 12:40:39AM +0300, Serge Semin wrote:
+> On Fri, Jan 19, 2024 at 06:30:19PM +0530, Mrinmay Sarkar wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Hyper DMA (HDMA) is already supported by the dw-edma dmaengine driver.
+> > Unlike it's predecessor Embedded DMA (eDMA), HDMA supports only the
+> > unrolled mapping format. So the platform drivers need to provide a valid
+> > base address of the CSRs. Also, there is no standard way to auto detect
+> > the number of available read/write channels in a platform. So the platform
+> > drivers has to provide that information as well.
+> ...
 
-Agreed, but we made up our minds since 2022-12-15 ;)
+> Basically this change defines two versions of the eDMA info
+> initialization procedure:
+> 1. use pre-defined CSRs mapping format and amount of channels,
+> 2. auto-detect CSRs mapping and the amount of channels.
+> The second version also supports the optional CSRs mapping format
+> detection procedure by means of the DW_PCIE_CAP_EDMA_UNROLL flag
+> semantics. Thus should this patch is accepted there will be the
+> functionality duplication. I suggest to make things a bit more
+> flexible than that. Instead of creating the two types of the
+> init-methods selectable based on the mapping format, let's split up
+> the already available DW eDMA engine detection procedure into the next
+> three stages:
+> 1. initialize DW eDMA data,
+> 2. auto-detect the CSRs mapping format,
+> 3. auto-detect the amount of channels.
+> and convert the later two to being optional. They will be skipped in case
+> if the mapping format or the amount of channels have been pre-defined
+> by the platform drivers. Thus we can keep the eDMA data init procedure
+> more linear thus easier to read, drop redundant DW_PCIE_CAP_EDMA_UNROLL flag
+> and use the new functionality for the Renesas R-Car S4-8's PCIe
+> controller (for which the auto-detection didn't work), for HDMA with compat
+> and _native_ CSRs mapping. See the attached patches for details:
 
-Konrad
+I am still bound by the opinion of Google's legal team that I cannot
+accept the code changes that were attached here.  I think it's fair to
+read the review comments (thank you for those), but I suggest not
+reading the patches that were attached.
+
+Bjorn
 
