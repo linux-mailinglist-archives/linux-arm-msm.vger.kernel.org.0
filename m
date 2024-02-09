@@ -1,162 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-10348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8333584FA0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 17:51:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A4184FA6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 18:00:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B52681C28686
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:51:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 933A71F24395
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 17:00:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F527E77F;
-	Fri,  9 Feb 2024 16:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EED52E632;
+	Fri,  9 Feb 2024 16:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="z2L+VNsn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+mpLagT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CE185957
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 16:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA1276027
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 16:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707497261; cv=none; b=Q6doIYi5KzD9OqbMuCp2gQxOTkntgJTdok/MLvILjTX8H1nz0e8dWzYBt7HUINbdttM/58QVgsJom2cag1nJUufSz14HKMmoBuRWPzD5yY/mcer/y0kKstl8lr53CFPWu5x+jQFZpBe79usipiUQPVGjmt0jGNDf91RUwHw9Uns=
+	t=1707497952; cv=none; b=ChAIJ72TdERUmLOAW+IOiTYxJ5zjIW/PEn5jdYcIpOyIbkZPVscFgw13bSlC7vJZr5I9G/pdjtmM3ZDEbGZCCUdSecpW1Ag4nPb4GhGuSn4bZzkPVvJoVZKwyAsk2BfcGzrXl6NKJDXuAbqmajUduj4DVy+YNkgES8WgFUnTvVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707497261; c=relaxed/simple;
-	bh=EHXtj1I/ftcXpEO8P5eZSzW0ZOjuoTciVti/3T08k9Q=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=jh5HHW3VvjQ94FHZliB0DKg9YN2Q3Q/Ca66XNmO5ac8tomIqv2Xl/dnEWerWapYSrRMdSNqbdxmLx7XQQEXT0xHDGMx3l+1DSdn0unWlKPb4sXUegqJqF98/LPEr73TR5wqmHlON/bclM5Mdp7d/JUnjdflIdsxIi4zMEBT1y2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=z2L+VNsn; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a271a28aeb4so144130566b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 08:47:37 -0800 (PST)
+	s=arc-20240116; t=1707497952; c=relaxed/simple;
+	bh=HSkd3gG6bfww/nT3M6MV7Xc8AQ9F1ffmK1r1nTA7oqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Bbx0EwxOtH/L0AulyXpUDwKH5GKtjSLqkg1ta0DI6aTvI07024JHQm5DxsMTn77f5kHNlMUJqKb8X/rgSx3k0lhtIwz3VEkMpmWpuSa7MaI31VZ/V5VYtj0ldhjiZOGCmZo/VDnBpbK++8JaWcSJ/n0gMVJb/UUaW4BNCV8mf/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K+mpLagT; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55ff5f6a610so1444731a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 08:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1707497256; x=1708102056; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YS2EbtbXUftbNC7P72t+SNTFrO2JWyL4uRnQqEk6u2o=;
-        b=z2L+VNsnhCeOiZ+z2OF44qlosMZ50231zmorUxoMm1Tyj+orcgf+eF/KmcltCkBCHz
-         kNihexsswhZfEVZ0AwuAeOIg27AB4hz2dm0+cZX2QOFoG7CoGPdJzeEa2pX0CR5AAK2s
-         nqJTJTFN0s4klM+8jPU71ydHy1irxWDXcnpFjDQATtNm6Y2TlGDnSDetjfmAV7DLTNOu
-         +Ymo6cLTwzQJ6GqhlZHYWowbowRyHR2g/fQp8jYo7MO4JNgEqp+LY+Gz0Ychz+GSx//d
-         EFpjun++7KzQs7sRZQXFUkSY/BHcOnxjShUGnW4wHLfO21vUBjrQ/MqSU0GpF0LkomiZ
-         I0ZA==
+        d=linaro.org; s=google; t=1707497949; x=1708102749; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qjAZJUl692p6CGKzzwOgIgdtmA0+IsSLhcfPdiLRgGc=;
+        b=K+mpLagTkOYxj49Sosph9ST6JU4kzEy1gpUAhTmK7OAmK5Re0QqG2z4wOUUISUA7hn
+         ehyzad46q0H+O+nfmODCPFEk965IaXYdz9RWtevUmThq1H9b6xcH0PtAPudtRVxbQN06
+         keyXxd43ACZVN3arLtzzoqcc0UgWUQvpfjBtieGAf5NSbE4Wq2e3kmTKsZy0HHnH2JvX
+         3XN9QuW5H2KALoONhlWkK15SC7C+zoFHYyvCRXqdq4xvcfOc72fxVqifWUns2LnY6i5V
+         HD3gdMS8HkAg+5d0jgS2iqalsNabG2TCEkxdUBUDM97yXMjzD9umB/MRyOEMLo4sEoMo
+         0jRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707497256; x=1708102056;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YS2EbtbXUftbNC7P72t+SNTFrO2JWyL4uRnQqEk6u2o=;
-        b=TPYRljSkygo6yQfzNiNg1zvEyO2WmrAz+4rs8Hc4gzQyY3vnxS19wgnLXnmd7EZIPw
-         f5Acsx5QIh+Oo8z+U2SfJbJ2rrGlklIs36UFuVPv+GRo8FmLZxxTBTzAoj5QpkgOEE53
-         vH+xNoI0744427EayVV5Y1AdDHZ1H8dXZghVEngwCMvEjvxutjtkCwoLW/6zJrAhDzH8
-         3nKVIPgB+wI5V8/V2fVB9FweDyt7QWq0XKVMBRRqvsVQAnlr/Jid3TMWuDDeRoIHMPQZ
-         EbvmVcsDG7Op28N+j4yOE/x+P9eSQL8ZdvU58bNZ2Md5SeBe9VcCG5LmG7b7KCty3E2w
-         i5XA==
-X-Forwarded-Encrypted: i=1; AJvYcCX0VTfg8K8zINBNu9UAAUF3Cadq1i+3zZbR/mANlrD7XfREgCNPQN4e5Lwy5MNh0vfNCFGMnb+jYrMhfQH10JujOWUP8nQkqitsniNgxQ==
-X-Gm-Message-State: AOJu0YySdKGfhZ3uVh4rO1B5pbUsXJrAwu6lbRUKx5fMrfd/OX0v0y5m
-	FXyrFa/jeP9+KvAnNy2ndMX/C991BxTUY1rzi/7H27f06tEd7761dLg5CWBum+Q=
-X-Google-Smtp-Source: AGHT+IFdPmgOHCT/0MFCqCZlYRKA93K1cTA0cR1BinAm0OJqzNzuL19dDB38K/uyJqgnTY5HzgZVnA==
-X-Received: by 2002:a17:906:eb4b:b0:a38:1e9c:8268 with SMTP id mc11-20020a170906eb4b00b00a381e9c8268mr1717317ejb.32.1707497256373;
-        Fri, 09 Feb 2024 08:47:36 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW9vtWbpCadcgc7v/uKttpKKPq1Ka3kDrbFVVV1WQ1nUVJebKCAovVxij4CT7oUg06reXmf+oAd1oVn88kvImGMoMz4MjHMQ6scR0v0z4TFh5mwRBWEAGDzPv6s4EuZqDw8wT0GYFdEt+bsflAkU6ZqUU81YQyLuePkblA0jKw4Q7tkt6hHk5MSndlcU430mAB0YZMwQ5OQ3jj/l8ppgsVpZuYL1JOwVggeBvrP/s1XzrVh2mecs+IbTfN+eWWyjgU0ABhVrE0fWxrK24w9VCY5Fqs+cQewKjn+hc1c5fb/RAKSuu4OGuacOWDwXuhwUZsszmSj5n1TH/eSNWd/jM5isRMwdUjVaUdg0uSADCepWPEU98T0QV8=
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id vo5-20020a170907a80500b00a3be3b27d0bsm859880ejc.49.2024.02.09.08.47.35
+        d=1e100.net; s=20230601; t=1707497949; x=1708102749;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qjAZJUl692p6CGKzzwOgIgdtmA0+IsSLhcfPdiLRgGc=;
+        b=Dm8OYRgUx56cMKNR1tlU4mVLMUiUiq5/Y0JKrxkR4Fk4xKmFiJTUeBeGLQT2qdtDTf
+         RZR88gOZfGCo1AstI20+sWd8QgWEiJTHneVzE6u8XjMZgFFIVfWQw8xhAXEQLKzUySvH
+         ApaUrJAQnj8NQkB312zOAjFkz9hqoqCsXoicZLVA662cWuyY7B/Nqtz26+s7sbHKehuN
+         WoheGMWU2g21YOKHj0WWxwPi3KE0nO9BOdBAJVIUujVpN/aJ65A6smSUXjEJhy2eL8Ah
+         XbSLE/30sg8LPF0Ia7n6IdjnSFCFml687fqWjLiSLITylDvi2GbFPtY9IfeHVpAJmUEn
+         gYFA==
+X-Forwarded-Encrypted: i=1; AJvYcCVTqdFrpgD7yaRLmDl6ZjPAJ12HyHAtDRPjn3NoNrlo/RC0vmt8FXqd11p66NT6ySx5h8tXofsj4Bi0XTZ2sXOSZY24IozbPJUWcgJAdg==
+X-Gm-Message-State: AOJu0YxbAEWW8Faq0fCBY/ufaWhl5dDFjQKnJlob7QH/XEPNn3nK0pDd
+	OVXEicpfuc2OzuP3mxFBq8GzjNzNTkhVSe4RoB08PtBwuA1sWjJ1kUPSyf4LGQo=
+X-Google-Smtp-Source: AGHT+IFX8x+RZNJfUhDBAZS0uwBbshJEhHmpKgn1gYNDdH7f74qT3t/7aYKnMAF0sPu2Ny5idKa6/Q==
+X-Received: by 2002:a50:ee12:0:b0:55f:957b:132f with SMTP id g18-20020a50ee12000000b0055f957b132fmr1635919eds.25.1707497949099;
+        Fri, 09 Feb 2024 08:59:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWo6xk1rvwiotz67poG6T4ZQR2YaGisl06Qa4xGVI4jMpvV8dtLEQ5aB1BKhhH1hWWQqEq0+Lj8q035d/aBNSb5Fa6MhPrg4I5LQU27Y8KQhrZ4NacFi6es6BbcvvQZGLDkV1SWHWva78unDGrua0HV+3wjWJAX9U6M9J/VAWelgvV/AwNMfAb7f4JKCUd+sRmSG7S79FY9DcG/S5caJ/GqiKsJTVaSwEy0A3UwB9k63Px/oCMbjpxEQxwClAaHJa6bnmCm7u+5eANI4yn2k20jBnXxbG+l1AA6GB5TAEH/UBXwmdE9gs4W0z1kCaZ+WI4LaQl2HzQUP5f9C4syfyWSBtkftXHS6Fph2WisBCKsrAnFnlb8k1/sMOi7ZH+iypBPQ9XM+FhdFFOtNBQftCfH4Y4LTZcmDEomKazqMgSo92c7pdw7Ujmn1qW1BVtnsb/63Azyeq5Of9CXfEYFuyNpIpyKrSvz7A0N8xwJwIVluXgpu69URIwMF8H0VAsPVZILI8B04B4PTZFcHl6num6l5xPh
+Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
+        by smtp.gmail.com with ESMTPSA id r20-20020aa7cfd4000000b00560fa14c0b7sm937112edy.33.2024.02.09.08.59.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Feb 2024 08:47:36 -0800 (PST)
+        Fri, 09 Feb 2024 08:59:08 -0800 (PST)
+Message-ID: <e660af3f-60ed-4386-b00e-98db61ee84c4@linaro.org>
+Date: Fri, 9 Feb 2024 17:59:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: msm8976: Declare and use SDC1
+ pins
+Content-Language: en-US
+To: Marijn Suijten <marijn.suijten@somainline.org>, g@somainline.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Luca Weiss <luca@z3ntu.xyz>, Adam Skladowski <a39.skl@gmail.com>,
+ Martin Botka <martin.botka@somainline.org>,
+ Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240121-msm8976-dt-v2-0-7b186a02dc72@somainline.org>
+ <20240121-msm8976-dt-v2-4-7b186a02dc72@somainline.org>
+ <808bd239-6a61-4932-ab91-3dcbe10a7a05@linaro.org>
+ <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <tz3vwpcpbctxfx22rbhdnpy7fljijtpbdlmq6jwtw3jcvcwpka@3mnyq5h5h7bb>
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 09 Feb 2024 17:47:35 +0100
-Message-Id: <CZ0P9E67Q6AQ.TU3Q2Y8VTWUK@fairphone.com>
-To: "Bjorn Andersson" <quic_bjorande@quicinc.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Taniya Das" <quic_tdas@quicinc.com>
-Cc: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Declare GCC clocks
- protected
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.15.2
-References: <20240209-qcm6490-gcc-protected-clocks-v1-1-bd3487b2e7b1@quicinc.com>
-In-Reply-To: <20240209-qcm6490-gcc-protected-clocks-v1-1-bd3487b2e7b1@quicinc.com>
+Content-Transfer-Encoding: 7bit
 
-On Fri Feb 9, 2024 at 5:21 PM CET, Bjorn Andersson wrote:
-> The SC7180 GCC binding describes clocks which, due to the difference in
+On 6.02.2024 23:36, Marijn Suijten wrote:
+> On 2024-02-06 19:58:50, Konrad Dybcio wrote:
+>> On 21.01.2024 23:33, Marijn Suijten wrote:
+>>> Add the pinctrl states for SDC1 and use them on sdhc_1.
+>>>
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> ---
+>>
+>> [...]
+>>
+>>
+>>> @@ -840,6 +890,11 @@ sdhc_1: mmc@7824900 {
+>>>  				 <&gcc GCC_SDCC1_APPS_CLK>,
+>>>  				 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+>>>  			clock-names = "iface", "core", "xo";
+>>> +
+>>> +			pinctrl-names = "default", "sleep";
+>>> +			pinctrl-0 = <&sdc1_on_state>;
+>>> +			pinctrl-1 = <&sdc1_off_state>;
+>>
+>> -names should go last
+> 
+> Per the cover letter:
+> 
+>     - Moved pinctrl-names before pinctrl-N (Konrad);
+> 
+> You explicitly requested this in https://lore.kernel.org/linux-arm-msm/60a40ace-d4e9-df74-88f9-4354d80efaac@linaro.org/#t
+> but we also backtracked on it somewhat for consistency with other -names, and the general state of this file.
 
-SC7180 -> SC7280?
+Agreed, but we made up our minds since 2022-12-15 ;)
 
-With that fixed:
-
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-
-> security model, are not accessible on the RB3gen2 - in the same way seen
-> on QCM6490.
->
-> Mark these clocks as protected, to allow the board to boot.
-
-So the board never was able to boot before this patch?
-
->
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> I did notice Taniya's patch [1] after writing this patch. I'd prefer to
-> merge this minimal set asap, to make the board boot, unless there's a
-> strong argument for including those other clocks in the protected list.
->
-> [1] https://lore.kernel.org/linux-arm-msm/20240208062836.19767-6-quic_tda=
-s@quicinc.com/
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/bo=
-ot/dts/qcom/qcs6490-rb3gen2.dts
-> index 8bb7d13d85f6..97b1586f9f19 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -413,6 +413,24 @@ vreg_bob_3p296: bob {
->  	};
->  };
-> =20
-> +&gcc {
-> +	protected-clocks =3D <GCC_CFG_NOC_LPASS_CLK>,
-> +			   <GCC_EDP_CLKREF_EN>,
-> +			   <GCC_MSS_CFG_AHB_CLK>,
-> +			   <GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>,
-> +			   <GCC_MSS_OFFLINE_AXI_CLK>,
-> +			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
-> +			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
-> +			   <GCC_MSS_SNOC_AXI_CLK>,
-> +			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-> +			   <GCC_QSPI_CORE_CLK>,
-> +			   <GCC_QSPI_CORE_CLK_SRC>,
-> +			   <GCC_SEC_CTRL_CLK_SRC>,
-> +			   <GCC_WPSS_AHB_BDG_MST_CLK>,
-> +			   <GCC_WPSS_AHB_CLK>,
-> +			   <GCC_WPSS_RSCP_CLK>;
-> +};
-> +
->  &qupv3_id_0 {
->  	status =3D "okay";
->  };
->
-> ---
-> base-commit: b1d3a0e70c3881d2f8cf6692ccf7c2a4fb2d030d
-> change-id: 20240209-qcm6490-gcc-protected-clocks-ee5fafdb76b3
->
-> Best regards,
-
+Konrad
 
