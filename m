@@ -1,160 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-10310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08D3B84EFFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 06:46:08 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4599284F0BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 08:28:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B91A9289896
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 05:46:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF4AA1F25426
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 07:28:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D56B56B86;
-	Fri,  9 Feb 2024 05:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04C49657C9;
+	Fri,  9 Feb 2024 07:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S1+O7agG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D0TY7ONo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E6F56B63;
-	Fri,  9 Feb 2024 05:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22CD657B1;
+	Fri,  9 Feb 2024 07:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707457562; cv=none; b=cfrEGcEtTcmRBrzqFXHLrcvDx4iKLUhuFo64COZYuV5aBwJXmauyNLPnODrq2EiroccppgbI/ABro/4RQtxdpnFDPnWZBkSZcc7+xI6YgWnHGWPs30538Tg/hy9gzETEaeP9/ou5Es1NvYPtWYc8L+1XvK5YkRnCeug0w4oeULg=
+	t=1707463711; cv=none; b=j3rPL6Irpt2FoVH4N2oXHYc1t0avOv0bfPytLh9FcgD4mcs8rDuFSNYxfcWSfWCT27YzpDWr/kVc0VwpI+iGlQDOjvzsHvaLp7Y7N1AdhkzHynamj2ds4iYav23YIbr9SgBUR7mC7zJb9blWQPP0Z9AWR4J50hanwkFfx5fgUso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707457562; c=relaxed/simple;
-	bh=ytZogGHJ89xBKc3Tv9qyqwQ+gu5ReSiLlM0x399+j9w=;
+	s=arc-20240116; t=1707463711; c=relaxed/simple;
+	bh=P1xJ8sKPXwvCAM9GQOzqx5nOqlNR4AJfnRDwSoBHvqI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mokIdE68HR/X+mXHIScRDA+ZPdVADG3dnH5/yPxbjuja27GkIG2zHTHfTtKMRgLKgv94V2hMfISD4pH9TpnkcsLPhnxA8SzcjArCQXhzyAu6YSP3hhLcMvrIoc32957gN3QaXK0pUG9ARUVCqiXRuLrwpNU1IF80x2iHpSm9ysU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S1+O7agG; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=PnjFCqcvh94FM2hRqVMxfurbVbOa2OzBPPJnRVWUoJ7PRi0MVR1Nls9ji9mOnsiZPMY2+EPb7yoGFORozZG68TBxXavIzKM+LJEJpv7G3izcdKrls+b3ETXENQE7mY4sHI96beIKvBHLn/SRqIiR71nRVTU48+H1GZnmybnIRLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D0TY7ONo; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4195jvOb005382;
-	Fri, 9 Feb 2024 05:45:57 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4194PvMJ023980;
+	Fri, 9 Feb 2024 07:28:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RmHl5Ylvj5X+p+kpgbitx3Q3WlejEr4zXeM7PwNWL0Y=; b=S1
-	+O7agG/1LOCdOYnpy9coEMEvovEftFxj/8+dQvu8wlXPkUHPrqc4D2z8swhTO9ou
-	TyqqHOffKjwovwctrSWyBNJ73K423opqWAc9zGMXbGfxKHesuB9kF+yj8zwP3xtD
-	Ovj7BiAiLYUOv8wuiE/4bw+6uV6tIoOKHRS5k7dHa6QHl8SbxHuDc+NjqJ1GjkiM
-	tcSqgSc+aFpyzkhhwTgUz2httDZg8klbfToBt8K00s80f0FZ4iSSb9mUkCQ47T8v
-	r00sWrXs6IoQ8A4suA3XlDAi4qDmrCE/03bfsnaU/lWZiNp4QRCQz3KHfNAd2kmW
-	USd9MQbmfG8Fni1izxTw==
+	qcppdkim1; bh=v4t0e8PHCfrAGxEvMThUV11S+56I7Pcp7j/QBbTNNzg=; b=D0
+	TY7ONo3So7UhI+Rs4SursYKISCY1d/WFdnmx63ontDxklDJqRROm4I4y4qCb4fgx
+	YQdhnUJBgk1h3DfB0oW1em22CLjJM3EzUUgU5H3PX6pdLiR+RfZyYoJ+GXqbY+By
+	gk6cUdCa6qyXuSGgZrDW+toQAPcs+++ywHCq02NX9djxsITrbB5pTBuV6PyHa2ot
+	UORmysnI0je5SvNJRsILz07n03ezG7tszczgpqoDlJSVa073szGGdAvoKwW59h+m
+	j4XqYN6f0AiE03EKloCVtrOObaV7D1fnnjKlD/gPG8/iro04g2UCnFCT9WdT7HHl
+	yAmTdZHGA10tx8hxFp0g==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4sudjv57-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4rk83ap9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Feb 2024 05:45:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4195juwc011843
+	Fri, 09 Feb 2024 07:28:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4197SOKk016252
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 Feb 2024 05:45:56 GMT
-Received: from [10.214.18.146] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 9 Feb 2024 07:28:24 GMT
+Received: from [10.216.50.187] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
- 2024 21:45:53 -0800
-Message-ID: <1c91c653-cebe-4407-bdd6-cfc73b64c0fb@quicinc.com>
-Date: Fri, 9 Feb 2024 11:15:50 +0530
+ 2024 23:28:18 -0800
+Message-ID: <c8be2bbf-a51c-a38f-6e6f-a88801f953d5@quicinc.com>
+Date: Fri, 9 Feb 2024 12:58:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] soc: qcom: mdt_loader: Add Upperbounds check for
- program header access
-To: Mukesh Ojha <quic_mojha@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20240208123527.19725-1-quic_audityab@quicinc.com>
- <b1991baf-e642-f811-14b0-ccd7c0cd56ec@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
 Content-Language: en-US
-From: Auditya Bhattaram <quic_audityab@quicinc.com>
-In-Reply-To: <b1991baf-e642-f811-14b0-ccd7c0cd56ec@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_parass@quicinc.com>
+References: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
+ <CAA8EJpqjm_2aE+7BtMkFUdet11q7v_jyHbUEpiDHSBSnzhndYA@mail.gmail.com>
+ <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
+ <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
+ <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
+ <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wAUIgYonGwOsUz7OjLk2-WRiyUItKySa
-X-Proofpoint-ORIG-GUID: wAUIgYonGwOsUz7OjLk2-WRiyUItKySa
+X-Proofpoint-GUID: vy5LU8xy0StRrkh2EaO_UQTzZXxc-45Q
+X-Proofpoint-ORIG-GUID: vy5LU8xy0StRrkh2EaO_UQTzZXxc-45Q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-09_03,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 mlxscore=0 bulkscore=0 phishscore=0
- mlxlogscore=999 clxscore=1015 priorityscore=1501 adultscore=0
- malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402090039
+ definitions=2024-02-09_04,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402090052
 
 
 
-On 2/8/2024 7:59 PM, Mukesh Ojha wrote:
+On 2/8/2024 8:49 PM, Dmitry Baryshkov wrote:
+> On Thu, 8 Feb 2024 at 16:58, Krishna Chaitanya Chundru
+> <quic_krichai@quicinc.com> wrote:
+>> On 2/8/2024 12:21 PM, Dmitry Baryshkov wrote:
+>>> On Thu, 8 Feb 2024 at 08:14, Krishna Chaitanya Chundru
+>>> <quic_krichai@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 2/7/2024 5:17 PM, Dmitry Baryshkov wrote:
+>>>>> On Wed, 7 Feb 2024 at 12:42, Krishna chaitanya chundru
+>>>>> <quic_krichai@quicinc.com> wrote:
+>>>>>>
+>>>>>> Enable PCIe1 controller and its corresponding PHY nodes on
+>>>>>> qcs6490-rb3g2 platform.
+>>>>>>
+>>>>>> PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
+>>>>>> connected. For each endpoint a unique BDF will be assigned and should
+>>>>>> assign unique smmu id. So for each BDF add smmu id.
+>>>>>>
+>>>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>>>> ---
+>>>>>>     arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
+>>>>>>     1 file changed, 42 insertions(+)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>>>> index 8bb7d13d85f6..0082a3399453 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>>>>>> @@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
+>>>>>>            };
+>>>>>>     };
+>>>>>>
+>>>>>> +&pcie1 {
+>>>>>> +       perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+>>>>>> +
+>>>>>> +       pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
+>>>>>> +       pinctrl-names = "default";
+>>>>>> +
+>>>>>> +       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+>>>>>> +                   <0x100 &apps_smmu 0x1c81 0x1>,
+>>>>>> +                   <0x208 &apps_smmu 0x1c84 0x1>,
+>>>>>> +                   <0x210 &apps_smmu 0x1c85 0x1>,
+>>>>>> +                   <0x218 &apps_smmu 0x1c86 0x1>,
+>>>>>> +                   <0x300 &apps_smmu 0x1c87 0x1>,
+>>>>>> +                   <0x400 &apps_smmu 0x1c88 0x1>,
+>>>>>> +                   <0x500 &apps_smmu 0x1c89 0x1>,
+>>>>>> +                   <0x501 &apps_smmu 0x1c90 0x1>;
+>>>>>
+>>>>> Is the iommu-map really board specific?
+>>>>>
+>>>> The iommu-map for PCIe varies if PCIe switch is connected.
+>>>> For this platform a PCIe switch is connected and for that reason
+>>>> we need to define additional smmu ID's for each BDF.
+>>>>
+>>>> For that reason we defined here as these ID's are applicable only
+>>>> for this board.
+>>>
+>>> So, these IDs are the same for all boards, just being unused on
+>>> devices which have no bridges / switches connected to this PCIe host.
+>>> If this is correct, please move them to sc7280.dtsi.
+>>>
+>> Yes ID's will be same for all boards. we can move them sc7280.dtsi
+>> but the BDF to smmu mapping will be specific to this board only.
+>> if there is some other PCIe switch with different configuration is
+>> connected to different board of same variant in future again these
+>> mapping needs to updated.
 > 
-> 
-> On 2/8/2024 6:05 PM, Auditya Bhattaram wrote:
->> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
->> is found. Add an upperbound check to phdrs to access within elf size.
->>
->> Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in 
->> any segment")
->> Cc: <stable@vger.kernel.org>
->> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
->> ---
->> Changes in v3:
->>   - Corrected wrong patch versioning in the Subject.
->>   - Added error prints for Invalid access.
->> Link to v2 
->> https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
->> Link to v1 
->> https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
->> ---
->>   drivers/soc/qcom/mdt_loader.c | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/mdt_loader.c 
->> b/drivers/soc/qcom/mdt_loader.c
->> index 6f177e46fa0f..61e2377cc5c3 100644
->> --- a/drivers/soc/qcom/mdt_loader.c
->> +++ b/drivers/soc/qcom/mdt_loader.c
->> @@ -145,6 +145,11 @@ void *qcom_mdt_read_metadata(const struct 
->> firmware *fw, size_t *data_len,
->>       if (phdrs[0].p_type == PT_LOAD)
->>           return ERR_PTR(-EINVAL);
->>
->> +    if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
-> 
-> This change is valid only if somehow, ehdr->e_phnum gets corrupted or 
-> changed via some engineering means and results in out-of-bounds access.
-> 
-> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> 
->> +        dev_err(dev, "Invalid phdrs access: %s\n", fw_name);
-> 
-> Should it print ehdr->e_phnum as well to be more valid?
-> 
-> -Mukesh
-> 
+> Could you possibly clarify this? Are they assigned one at a time
+> manually? Or is it somehow handled by the board's TZ code, which
+> assigns them sequentially to the known endpoints? And is it done via
+> probing the link or via some static configuration?
 
-Sure, planning to add fw->size as well.
-dev_err(dev, "Invalid phdrs access for fw: %s, e_phnum: %hu, fw->size: 
-%zu \n", fw_name, ehdr->e_phnum, fw->size);
+There is no assignment of SID's in TZ for PCIe.
+PCIe controller has BDF to SID mapping table which we need to
+program with the iommu map table.
 
->> +        return ERR_PTR(-EINVAL);
->> +    }
->> +
->>       for (i = 1; i < ehdr->e_phnum; i++) {
->>           if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == 
->> QCOM_MDT_TYPE_HASH) {
->>               hash_segment = i;
->> -- 
->> 2.17.1
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-qcom.c?h=v6.8-rc3#n997
+
+Based upon switch the BDF to SID table will change for example I had two 
+switches with one switch has 2 PCIe ports and other has 3 ports one
+embedded port which supports multiple functions.
+
+For the first switch the BDF's are
+	- 0x000(root complex),
+	- 0x100(USP),
+	- 0x208(DSP 0),
+	- 0x210(DSP 1),
+	- 0x300(endpoint connected to DSP 0),
+	- 0x400( endpoint connected to DSP 1).
+
+For 2nd switch the BDF's are
+	- 0x000(root complex),
+	- 0x100(USP),
+	- 0x208(embeeded DSP 0),
+	- 0x210(DSP 1),
+	- 0x218 (DSP 2),
+	- 0x300(embedded endpoint function 0),
+	- 0x301 (embedded endpoint function 1)
+	- 0x400( endpoint connected to DSP 1)
+	- 0x500(endpoint connected to DSP2).
+
+For these two switches we need different BDF to SID table so for that
+reason we are keeping iommu map here as this is specific to this board.
+
+- Krishna Chaitanya.
+
 >>
+>> For that reason I tried to add it here.
 >>
+>> - Krishna Chaitanya.
+>>>>
+>>>> - Krishna Chaitanya.
+>>>>>> +
+>>>>>> +       status = "okay";
+>>>>>> +};
+>>>>>> +
+>>>>>> +&pcie1_phy {
+>>>>>> +       vdda-phy-supply = <&vreg_l10c_0p88>;
+>>>>>> +       vdda-pll-supply = <&vreg_l6b_1p2>;
+>>>>>> +
+>>>>>> +       status = "okay";
+>>>>>> +};
+>>>>>> +
+>>>>>>     &qupv3_id_0 {
+>>>>>>            status = "okay";
+>>>>>>     };
+>>>>>> @@ -420,6 +446,22 @@ &qupv3_id_0 {
+>>>>>>     &tlmm {
+>>>>>>            gpio-reserved-ranges = <32 2>, /* ADSP */
+>>>>>>                                   <48 4>; /* NFC */
+>>>>>> +
+>>>>>> +       pcie1_reset_n: pcie1-reset-n-state {
+>>>>>> +               pins = "gpio2";
+>>>>>> +               function = "gpio";
+>>>>>> +               drive-strength = <16>;
+>>>>>> +               output-low;
+>>>>>> +               bias-disable;
+>>>>>> +       };
+>>>>>> +
+>>>>>> +       pcie1_wake_n: pcie1-wake-n-state {
+>>>>>> +               pins = "gpio3";
+>>>>>> +               function = "gpio";
+>>>>>> +               drive-strength = <2>;
+>>>>>> +               bias-pull-up;
+>>>>>> +       };
+>>>>>> +
+>>>>>>     };
+>>>>>>
+>>>>>>     &uart5 {
+>>>>>>
+>>>>>> ---
+>>>>>> base-commit: 70d201a40823acba23899342d62bc2644051ad2e
+>>>>>> change-id: 20240207-enable_pcie-95b1d6612b27
+>>>>>>
+>>>>>> Best regards,
+>>>>>> --
+>>>>>> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>>>>
+>>>>>>
+>>>>>
+>>>>>
+>>>
+>>>
+>>>
+> 
+> 
+> 
 
