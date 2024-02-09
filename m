@@ -1,156 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-10340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0366284F892
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:30:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41E0E84FA63
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 17:59:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE1FB1F26665
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 15:30:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4E6A28CDF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:59:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD2D071B3A;
-	Fri,  9 Feb 2024 15:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F29928562A;
+	Fri,  9 Feb 2024 16:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lzceSyQ4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OST7RopP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CB04EB3B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 15:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4276414;
+	Fri,  9 Feb 2024 16:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707492617; cv=none; b=YODHv61odxAGie92Rbryw75dLv0dnTTKWifDrXOIGJHeVqXomtwh5YTXwMZrXn5Paj4snh63wzhs51EITyOYSAkK6mHx3pv3XwDpCx8AV5PZnVDNOW69ipV0clEdLJAwsll0GZuOZpisKV6m0O1xWX6uYnm0iT3mh1XqgHov9Hk=
+	t=1707497796; cv=none; b=e+57wdxRRYLMJczKIsx8A9FarLMu6LhhOdQ209Kq342OxlEHripL279OTRRkgnSamgVDot/CgdcKaWBW9p+H+G8J2dJuKRRBSxDPGzTR0Y0nQyos2gg2xtK2QA3xWXds2M1XF/pLXnOPkq4k1PV6U+Ai8Rr/IBownE2PDPaBhV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707492617; c=relaxed/simple;
-	bh=UqDosga1xC4Eo58FYnE3NbWtCialyNbi3wKAbIbdzRk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KWBTeQUmHrLyDKRP834qjcMp+a3hJzdxLVXgCXR9lgfHCZvY/JxB6t1pdPO3h2JRplzxwZx9L3ouriTXgc3ON8azEbteitOIE7aKbJzBgHNUgOoQ1tLn3Q4DdBrqwCTjUIvXVoWtUFApQ7HsvJrzoFV3U9jvAV0KF2ANN1E7EOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lzceSyQ4; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6049ffb9cedso13023947b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 07:30:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707492615; x=1708097415; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DwPyne/Srr/E0bqYu1xMZ7k+F7q7JB1awfFG2iwj5SM=;
-        b=lzceSyQ4FApxjhpXFcUKulGr2Bg+YaO4RooXHeWRKmqQcPfXMxbzBTt4Lu93vNQ+HE
-         H0mwuz/zHHcBysPPuT1p4E/HsE+YZ9cE0xw4Skb2YTkS2tBSk8JcXvxZ6BPxwI0o4fkN
-         Txd2DpyBpVBne8pYj/+WDsVO7qO6lknBNCUndx6vv2IQQZE2ogO/CMyF9HdaX1U7ZPIo
-         q0Q/cFn1M9NwBGoEgubnILbRQwDnPcGfX3YfAh8eX0fSKka0cthSAs3cYJ76Qz2yv+Xh
-         qM3ydZEHcKLHo4thBSoFDlgSukvKrOAkv3axTOqBZvmmfBPBYeoHa9bZ9rTLUFynkWD4
-         a0OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707492615; x=1708097415;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DwPyne/Srr/E0bqYu1xMZ7k+F7q7JB1awfFG2iwj5SM=;
-        b=ipkC+I1ObJElgILz033wxlc5Aa3wCrs3gKP/3jWNU0eh2tAebNNr5xQRKCJDVZCBX4
-         H6vk2DP7iV0FHVdjtlh59RSpS6r85g7fUo7aq+o3PBw2KS6vCRQXazSHBtWu8oL87Yt0
-         Q+s5L5o/E3uJlzW3QC8su6gLqx3vcigS0+6N4UyRpXWSZLmlu2kyl/yO+lo1z4kTGXJO
-         PfMe8j5qNKnJHkirSG91OcQ/i6ZZEE4xiZwCs7ZM7gjzg5ZsNGf7wsMCeqAHhaLssoxY
-         xLaEzFm235mYMV8cDIyXcE+3dCThYKseXhUhOl3F9LV846Tbq1gPJ9Yl1EjCbPOLRHO1
-         S6DA==
-X-Gm-Message-State: AOJu0YzEu5H+enM7sMvQc5+qlG9eWMcVtiTQv15XGs2NXdvCGXQFTvMn
-	mP7oxyWCCmH4N9a0lk6lxKuaD0uCEYafIzkdglpoWTjrSm//OdUmHWd0nocQn13DqhmhkZjOAyJ
-	8gu1ll3xygsSztGZ21KD3pKrrEMffLtu2XpG5+w==
-X-Google-Smtp-Source: AGHT+IHKpJlDohaMbxRWC+5/t8hSxuj+YTX27ZF5QMSJPTcosnKN65Lc9QOWzjA950A7MwAeqivc87GvLixD28RNDbI=
-X-Received: by 2002:a05:690c:2711:b0:604:cb07:b37 with SMTP id
- dy17-20020a05690c271100b00604cb070b37mr958456ywb.33.1707492613963; Fri, 09
- Feb 2024 07:30:13 -0800 (PST)
+	s=arc-20240116; t=1707497796; c=relaxed/simple;
+	bh=J/MfZTMY7vJ/FmpWNtX0rTMAuzY/Rbc8mm8OmM8h5jc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gypr9OSV2QTGzlfy2SJ3ZGLA0g2fCceCJN0TvsfyaxbY4EBCXmgN937UsOKsHcAvXd+GZ3aKhY92tqVaek9xUgISltV6Vu7c4OkuZVU0A5hdUMd55LNXnx4twoCPw5oK7dCnzgxGTfq3m3U5I9qU1IZwERVxdg3Ic3EGZQGRozs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OST7RopP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 419COmGT027518;
+	Fri, 9 Feb 2024 16:09:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=c2ziwPPJ87pqspr3WW8ns7hCbOA/kOJcRJXPUxtM2LU=; b=OS
+	T7RopPKnRrAnS6trbo7n7HJdy6ojZ8g46+4pMzhPWVIQIrehb7yIvH4qzUFrO9uJ
+	z2HLmmpN4S/i3lo2qWPY26fAIWdoCcDRNh1DvBAIlQzLDVrO/MF6rxpFPI2LbUaB
+	aVeRLKxsYHv7pdzeuZJElAwRDvMC4goElV3zAf8u+AVE78jwm+VIcZcZOXMpU0hm
+	aR4ZqY1RlkuWjtC7NI9N38RZgi3QIYOasBDUh8OU8d3Aditdg77VJXNa/tVAE/P+
+	ZZspIsJ3463jHwbun1t9y3DhHtHlldn3xiF2s6t67fqF7K6Iq9fLezsHskA1dNg1
+	A3SZd6281Ov4q/eogC2A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w5m158f2m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Feb 2024 16:09:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 419G9Uxn019459
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 9 Feb 2024 16:09:30 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 9 Feb
+ 2024 08:09:29 -0800
+Message-ID: <c175684d-01e2-8603-d9c6-d9354b001143@quicinc.com>
+Date: Fri, 9 Feb 2024 09:09:28 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240209-phy-qualcomm-eusb2-repeater-smb2360-v1-0-af2ca4d95a67@linaro.org>
- <20240209-phy-qualcomm-eusb2-repeater-smb2360-v1-2-af2ca4d95a67@linaro.org>
-In-Reply-To: <20240209-phy-qualcomm-eusb2-repeater-smb2360-v1-2-af2ca4d95a67@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 9 Feb 2024 17:30:02 +0200
-Message-ID: <CAA8EJppwOjKaRJXj2Re0mugcguAcTZnvEqp_6x-FANrJ__PRTw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] phy: qualcomm: phy-qcom-eusb2-repeater: Add support
- for SMB2360
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] MAINTAINERS: Update bouncing @codeaurora addresses
+Content-Language: en-US
+To: Ritesh Harjani <ritesh.list@gmail.com>, <adrian.hunter@intel.com>,
+        <quic_asutoshd@quicinc.com>, <quic_bjorande@quicinc.com>
+CC: <linux-mmc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <87il33mn3n.fsf@doe.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <87il33mn3n.fsf@doe.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 34i71qS6LTjMNEERIwtULtBvVG8oNTDG
+X-Proofpoint-ORIG-GUID: 34i71qS6LTjMNEERIwtULtBvVG8oNTDG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-09_13,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ bulkscore=0 mlxlogscore=516 lowpriorityscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402090119
 
-On Fri, 9 Feb 2024 at 17:14, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> The SMB2360 PMICs contain the same eUSB2 repeater as the PM8550B,
-> so add dedicated compatible for SMB82360.
+On 2/4/2024 11:39 PM, Ritesh Harjani wrote:
+> Jeffrey Hugo <quic_jhugo@quicinc.com> writes:
+> 
+>> The @codeaurora email domain's servers have been decommissioned for a
+>> long while now, and any emails addressed there will bounce.
+>>
+>> Asutosh has an entry in .mailmap pointing to a new address, but
+>> MAINTAINERS still lists an old @codeaurora address.  Update MAINTAINERS
+>> to match .mailmap for anyone reading the file directly.
+>>
+>> Ritesh appears to have changed jobs, but looks to be still active in the
+>> community.  Update Ritesh's address to the one used in recient community
+>> postings.
+>>
+> 
+> Thanks Jeffrey for the cc. Since I am not really active in linux-mmc
+> anymore, I would like to propose to have a Reviewer entry (R:) for
+> myself which I can try to help with.
+> 
+> Is that ok?
 
-"...same repeater as the PM8550B, but requiring different settings..."
+I see no problem with that.  Will send a v2
 
-With that fixed:
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> index a43e20abb10d..68cc8e24f383 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-> @@ -88,6 +88,12 @@ static const u32 pm8550b_init_tbl[NUM_TUNE_FIELDS] = {
->         [TUNE_USB2_PREEM] = 0x5,
->  };
->
-> +static const u32 smb2360_init_tbl[NUM_TUNE_FIELDS] = {
-> +       [TUNE_IUSB2] = 0x5,
-> +       [TUNE_SQUELCH_U] = 0x3,
-> +       [TUNE_USB2_PREEM] = 0x2,
-> +};
-> +
->  static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
->         .init_tbl       = pm8550b_init_tbl,
->         .init_tbl_num   = ARRAY_SIZE(pm8550b_init_tbl),
-> @@ -95,6 +101,13 @@ static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
->         .num_vregs      = ARRAY_SIZE(pm8550b_vreg_l),
->  };
->
-> +static const struct eusb2_repeater_cfg smb2360_eusb2_cfg = {
-> +       .init_tbl       = smb2360_init_tbl,
-> +       .init_tbl_num   = ARRAY_SIZE(smb2360_init_tbl),
-> +       .vreg_list      = pm8550b_vreg_l,
-> +       .num_vregs      = ARRAY_SIZE(pm8550b_vreg_l),
-> +};
-> +
->  static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
->  {
->         int num = rptr->cfg->num_vregs;
-> @@ -271,6 +284,10 @@ static const struct of_device_id eusb2_repeater_of_match_table[] = {
->                 .compatible = "qcom,pm8550b-eusb2-repeater",
->                 .data = &pm8550b_eusb2_cfg,
->         },
-> +       {
-> +               .compatible = "qcom,smb2360-eusb2-repeater",
-> +               .data = &smb2360_eusb2_cfg,
-> +       },
->         { },
->  };
->  MODULE_DEVICE_TABLE(of, eusb2_repeater_of_match_table);
->
-> --
-> 2.34.1
->
->
-
-
--- 
-With best wishes
-Dmitry
+-Jeff
 
