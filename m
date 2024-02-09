@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-10297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A314F84EE9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 02:35:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AB9E84EEC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 03:00:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB3DB1C219E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 01:35:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81D6C1F26143
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 02:00:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0519A34;
-	Fri,  9 Feb 2024 01:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA258EA4;
+	Fri,  9 Feb 2024 02:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z6xDGvsN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DA4qlwvZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25404A28;
-	Fri,  9 Feb 2024 01:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EF11368;
+	Fri,  9 Feb 2024 02:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707442520; cv=none; b=r2/9fE/0oPzXTyLKr/eqCGbV4UnqxcRxQTgqPs0PCTi9cgcRR3MMcFw0g5zfe/m5jfjqP3BSUzzU1X58rN0xq00RWp/Yl2WhySaGGsqk81h1uC9ZXqM0Rqqyz9fyof0BJjNjfWvlWQ0prqXSD4SoEeIayoKYfa3GhlFSTs+DAC8=
+	t=1707444043; cv=none; b=rjdPgaB6dcHwLZbyaTKKSG1J908gmxq6quFAdONdkHYbaHc13TtV02LAkUbqkMTdyEasFPXr3B36MXuU9PO4AeWuHt2ILwd0Y/t0AWtUADetgnaHyoH/E6+JeG7UGQuT7UAKRzyzBVsSHwGebgzqY7BJ49UdCnAK9u5lBfezYgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707442520; c=relaxed/simple;
-	bh=uE0f9w+M4vDE5kJEDgbSE6hWoUYXcNZ7V4Tb8blpJmU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=QdcfXS/uYRaxkzzqVaknsrwrijVryMBlwxofG5t2kpZdLPKPh6JYAqBgJE1ICHewgeh/RbiOpwYOeN9qbZbPnYPOD9aBCjnHH0rmsEkl2MhKrHI3rEdf3Ve2Jiymieq5HsbKBS5qLHDpHyeInZyjSMRYuI98INp2Um5p6TciZNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z6xDGvsN; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1707444043; c=relaxed/simple;
+	bh=+wcDFFazTAih6M0I3X/kEqFY8bwxCIFWui8YBFb8oNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HNmla0HA0mj/rd99UbNBXykETsV7pseSn2/IjexsQF74pw3ithWOFzyECikxdxHbHMaJrxaBqF7R97RSkARuMZqwAMeIiEYly51t6mP7yLd9qU7HgtMT/ZHe34VJgxI6QCgtnKaNOhOFY18+y01sG7fGATubX7SOtE3KV7PhuSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DA4qlwvZ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4191TNYb006729;
-	Fri, 9 Feb 2024 01:35:03 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 419201aI014974;
+	Fri, 9 Feb 2024 02:00:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:references:from
+	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zWj7ztsoZE7+/uyJu/2pUz+z0PRwsVAMoPW2j4KL3FU=; b=Z6
-	xDGvsN8GUW6SFkPVVxSeuB9b051xH/zVa7ijBxAHrEce8sGymwa8qSwLSNVoxb3F
-	WWLWtw29mDAE/u4JI1VsQiae2MT1rs8x/kTVD3a45XlzflKBVQKL7EsVZXn3VpfJ
-	vThAZQbtXVT8x2SA2zRKlil2TwZX5aX2M3Lp69AYIqG0xGNe6ww06+MjSsXL0OBV
-	fllctx9BDMxvAM2lL1rQW0QzPr2QXdby51VPndWHsIIhqRHkigd1if3MJ20hBTh5
-	q1d+mXzh5nD6bQjc/P0nKrYA+vft5t7kCgxpWLr1OzOHYwQJsz3iUOaRSEGd8tUz
-	lu+F8cb2R+jz6gZXNNUw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4h0ukjpr-1
+	qcppdkim1; bh=U9Jj/g+FOBdzUcfSgSgTQta5JtNLD2HQfpITIRxWLEI=; b=DA
+	4qlwvZTke7dM3r4ZG7wG+yfsyZo9u6F36NKlyr3aaZ5Dl35pNOrqB+kIY8xXu4gn
+	BLUDaZRRf8L+AxlAHZ1Qh42+YmrwD+tje9FQNrfygwlVtHSVlXs/SqB2wnp2Iby8
+	d059JCk2KBOmQYaurbvZu5Jzso/zkl4R6W4VsIOjtIHXSdmlXCxRMRqXCcI1EWw9
+	MDqBPNfH5JL4FGBdsuN4JV6XUaDQu9GP/+wVdyjjuZ5UdVjVd/98xQ5Fx+miN74R
+	OTAg9S7Pz5+q/3McCBh5TFAoKETW+FxI7oUAWF8So4FKZyRD5KWH74btVecQ5/BK
+	lG1Rd15a02+wXNGqbLeg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4stxjhjc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Feb 2024 01:35:02 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4191Z1Y0023450
+	Fri, 09 Feb 2024 02:00:21 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41920Kgr003879
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 Feb 2024 01:35:01 GMT
-Received: from [10.71.111.207] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 9 Feb 2024 02:00:20 GMT
+Received: from [10.216.50.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 8 Feb
- 2024 17:34:58 -0800
-Message-ID: <09ef60d6-8404-4a2f-b2f5-8cd77668e4f0@quicinc.com>
-Date: Thu, 8 Feb 2024 17:34:57 -0800
+ 2024 18:00:15 -0800
+Message-ID: <af73110d-e13e-4183-af11-aed869ac0a31@quicinc.com>
+Date: Fri, 9 Feb 2024 07:30:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,409 +65,188 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] drm/panel: add samsung s6e3fa7 panel driver
-Content-Language: en-US
-To: Richard Acayan <mailingradian@gmail.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>, David Airlie
-	<airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
+Subject: Re: [PATCH v14 2/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20240209001639.387374-6-mailingradian@gmail.com>
- <20240209001639.387374-8-mailingradian@gmail.com>
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20240209001639.387374-8-mailingradian@gmail.com>
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+        "quic_jackp@quicinc.com" <quic_jackp@quicinc.com>
+References: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
+ <20240206051825.1038685-3-quic_kriskura@quicinc.com>
+ <20240208234154.6jq2oah6ondn3jlq@synopsys.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <20240208234154.6jq2oah6ondn3jlq@synopsys.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: whfAwEecYt5boIDs4BRxrmtfJ9rWJ_UO
-X-Proofpoint-GUID: whfAwEecYt5boIDs4BRxrmtfJ9rWJ_UO
+X-Proofpoint-GUID: TL6DtjOCziYIUOWjhN6C4RsmCfNXUaPG
+X-Proofpoint-ORIG-GUID: TL6DtjOCziYIUOWjhN6C4RsmCfNXUaPG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-08_13,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 mlxscore=0 suspectscore=0 phishscore=0 malwarescore=0
- bulkscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402090009
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402090012
 
 
 
-On 2/8/2024 4:16 PM, Richard Acayan wrote:
-> The S6E3FA7 display controller is enabled in every Pixel 3a (non-XL)
-> variant. Add the driver for it, generated by
-> linux-mdss-dsi-panel-driver-generator.
+On 2/9/2024 5:12 AM, Thinh Nguyen wrote:
+> On Tue, Feb 06, 2024, Krishna Kurapati wrote:
+>> Currently Multiport DWC3 controllers are host-only capable.
+>> Temporarily map XHCI address space for host-only controllers and parse
+>> XHCI Extended Capabilities registers to read number of usb2 ports and
+>> usb3 ports present on multiport controller. Each USB Port is at least HS
+>> capable.
+>>
+>> The port info for usb2 and usb3 phy are identified as num_usb2_ports
+>> and num_usb3_ports. The intention is as follows:
+>>
+>> Wherever we need to perform phy operations like:
+>>
+>> LOOP_OVER_NUMBER_OF_AVAILABLE_PORTS()
+>> {
+>> 	phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
+>> 	phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
+>> }
+>>
+>> If number of usb2 ports is 3, loop can go from index 0-2 for
+>> usb2_generic_phy. If number of usb3-ports is 2, we don't know for sure,
+>> if the first 2 ports are SS capable or some other ports like (2 and 3)
+>> are SS capable. So instead, num_usb2_ports is used to loop around all
+>> phy's (both hs and ss) for performing phy operations. If any
+>> usb3_generic_phy turns out to be NULL, phy operation just bails out.
+>> num_usb3_ports is used to modify GUSB3PIPECTL registers while setting up
+>> phy's as we need to know how many SS capable ports are there for this.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/core.c | 62 +++++++++++++++++++++++++++++++++++++++++
+>>   drivers/usb/dwc3/core.h |  5 ++++
+>>   2 files changed, 67 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index 3b68e8e45b8b..965eaad195fb 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -39,6 +39,7 @@
+>>   #include "io.h"
+>>   
+>>   #include "debug.h"
+>> +#include "../host/xhci-ext-caps.h"
+>>   
+>>   #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
+>>   
+>> @@ -1882,10 +1883,57 @@ static int dwc3_get_clocks(struct dwc3 *dwc)
+>>   	return 0;
+>>   }
+>>   
+>> +static int dwc3_read_port_info(struct dwc3 *dwc)
 > 
-> There are other panels connected to the same S6E3FA7 display controller,
-> such as the AMS604NL01 panel, which are incompatible with this driver.
-> Name the device tree compatible after the panel model according to
-> iFixit.
+> I think it may fit better to leave this function definition in host.c.
+> But you can also argue to leave it here. Let me know what you think.
+
+I'd like to keep it here for now.
+
 > 
-> Link: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
-> Link: https://android.googlesource.com/kernel/msm/+/7fda1cd7b64710dafac5f34899611c6d35eb4cd2/arch/arm64/boot/dts/google/dsi-panel-s6e3fa7-1080p-cmd.dtsi
-> Link: https://github.com/msm8953-mainline/linux/blob/v6.6.12-r0/drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c
-> Link: https://www.ifixit.com/Guide/Image/meta/muyjtLQTHu6MDkhK
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->   drivers/gpu/drm/panel/Kconfig                 |   9 +
->   drivers/gpu/drm/panel/Makefile                |   1 +
->   drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c | 285 ++++++++++++++++++
->   3 files changed, 295 insertions(+)
->   create mode 100644 drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c
+>> +{
+>> +	void __iomem *base;
+>> +	u8 major_revision;
+>> +	u32 offset;
+>> +	u32 val;
+>> +
+>> +	/*
+>> +	 * Remap xHCI address space to access XHCI ext cap regs since it is
+>> +	 * needed to get information on number of ports present.
+>> +	 */
+>> +	base = ioremap(dwc->xhci_resources[0].start,
+>> +		       resource_size(&dwc->xhci_resources[0]));
+>> +	if (IS_ERR(base))
 > 
-> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-> index 8f3783742208..a693b03f680e 100644
-> --- a/drivers/gpu/drm/panel/Kconfig
-> +++ b/drivers/gpu/drm/panel/Kconfig
-> @@ -577,6 +577,15 @@ config DRM_PANEL_SAMSUNG_DB7430
->   	  DB7430 DPI display controller used in such devices as the
->   	  LMS397KF04 480x800 DPI panel.
->   
-> +config DRM_PANEL_SAMSUNG_S6E3FA7
-> +	tristate "Samsung S6E3FA7 panel driver"
-> +	depends on OF
-> +	depends on DRM_MIPI_DSI
-> +	depends on BACKLIGHT_CLASS_DEVICE
-> +	help
-> +	  Say Y here if you want to enable support for the Samsung S6E3FA7
-> +	  1920x2220 panel.
-> +
->   config DRM_PANEL_SAMSUNG_S6D16D0
->   	tristate "Samsung S6D16D0 DSI video mode panel"
->   	depends on OF
-> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-> index d94a644d0a6c..560b62129f68 100644
-> --- a/drivers/gpu/drm/panel/Makefile
-> +++ b/drivers/gpu/drm/panel/Makefile
-> @@ -59,6 +59,7 @@ obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D16D0) += panel-samsung-s6d16d0.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D27A1) += panel-samsung-s6d27a1.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D7AA0) += panel-samsung-s6d7aa0.o
-> +obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E3FA7) += panel-samsung-s6e3fa7.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E3HA2) += panel-samsung-s6e3ha2.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E63J0X03) += panel-samsung-s6e63j0x03.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E63M0) += panel-samsung-s6e63m0.o
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c b/drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c
-> new file mode 100644
-> index 000000000000..10bc8fb5f1f9
-> --- /dev/null
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e3fa7.c
-> @@ -0,0 +1,285 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Driver for the Samsung S6E3FA7 panel.
-> + *
-> + * Copyright (c) 2022-2024, The Linux Foundation. All rights reserved.
-
-
-Hi Richard,
-
-Not really sure about the copyright dates -- since this is a completely 
-new file to this tree, wouldn't the year be just 2024?
-
-The rest LGTM.
-
-Thanks,
-
-Jessica Zhang
-
-> + * Generated with linux-mdss-dsi-panel-driver-generator from vendor device tree:
-> + * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-> + */ > +
-> +#include <linux/backlight.h>
-> +#include <linux/delay.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +
-> +#include <video/mipi_display.h>
-> +
-> +#include <drm/drm_mipi_dsi.h>
-> +#include <drm/drm_modes.h>
-> +#include <drm/drm_panel.h>
-> +
-> +struct s6e3fa7_panel {
-> +	struct drm_panel panel;
-> +	struct mipi_dsi_device *dsi;
-> +	struct gpio_desc *reset_gpio;
-> +};
-> +
-> +static inline struct s6e3fa7_panel *to_s6e3fa7_panel(struct drm_panel *panel)
-> +{
-> +	return container_of(panel, struct s6e3fa7_panel, panel);
-> +}
-> +
-> +static void s6e3fa7_panel_reset(struct s6e3fa7_panel *ctx)
-> +{
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +	usleep_range(1000, 2000);
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 11000);
-> +}
-> +
-> +static int s6e3fa7_panel_on(struct s6e3fa7_panel *ctx)
-> +{
-> +	struct mipi_dsi_device *dsi = ctx->dsi;
-> +	struct device *dev = &dsi->dev;
-> +	int ret;
-> +
-> +	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
-> +		return ret;
-> +	}
-> +	msleep(120);
-> +
-> +	ret = mipi_dsi_dcs_set_tear_on(dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to set tear on: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	mipi_dsi_dcs_write_seq(dsi, 0xf0, 0x5a, 0x5a);
-> +	mipi_dsi_dcs_write_seq(dsi, 0xf4,
-> +			       0xbb, 0x23, 0x19, 0x3a, 0x9f, 0x0f, 0x09, 0xc0,
-> +			       0x00, 0xb4, 0x37, 0x70, 0x79, 0x69);
-> +	mipi_dsi_dcs_write_seq(dsi, 0xf0, 0xa5, 0xa5);
-> +	mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x20);
-> +
-> +	ret = mipi_dsi_dcs_set_display_on(dsi);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to set display on: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e3fa7_panel_prepare(struct drm_panel *panel)
-> +{
-> +	struct s6e3fa7_panel *ctx = to_s6e3fa7_panel(panel);
-> +	struct device *dev = &ctx->dsi->dev;
-> +	int ret;
-> +
-> +	s6e3fa7_panel_reset(ctx);
-> +
-> +	ret = s6e3fa7_panel_on(ctx);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to initialize panel: %d\n", ret);
-> +		gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e3fa7_panel_unprepare(struct drm_panel *panel)
-> +{
-> +	struct s6e3fa7_panel *ctx = to_s6e3fa7_panel(panel);
-> +
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e3fa7_panel_disable(struct drm_panel *panel)
-> +{
-> +	struct s6e3fa7_panel *ctx = to_s6e3fa7_panel(panel);
-> +	struct mipi_dsi_device *dsi = ctx->dsi;
-> +	struct device *dev = &dsi->dev;
-> +	int ret;
-> +
-> +	ret = mipi_dsi_dcs_set_display_off(dsi);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to set display off: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to enter sleep mode: %d\n", ret);
-> +		return ret;
-> +	}
-> +	msleep(120);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct drm_display_mode s6e3fa7_panel_mode = {
-> +	.clock = (1080 + 32 + 32 + 78) * (2220 + 32 + 4 + 78) * 60 / 1000,
-> +	.hdisplay = 1080,
-> +	.hsync_start = 1080 + 32,
-> +	.hsync_end = 1080 + 32 + 32,
-> +	.htotal = 1080 + 32 + 32 + 78,
-> +	.vdisplay = 2220,
-> +	.vsync_start = 2220 + 32,
-> +	.vsync_end = 2220 + 32 + 4,
-> +	.vtotal = 2220 + 32 + 4 + 78,
-> +	.width_mm = 62,
-> +	.height_mm = 127,
-> +};
-> +
-> +static int s6e3fa7_panel_get_modes(struct drm_panel *panel,
-> +				 struct drm_connector *connector)
-> +{
-> +	struct drm_display_mode *mode;
-> +
-> +	mode = drm_mode_duplicate(connector->dev, &s6e3fa7_panel_mode);
-> +	if (!mode)
-> +		return -ENOMEM;
-> +
-> +	drm_mode_set_name(mode);
-> +
-> +	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
-> +	connector->display_info.width_mm = mode->width_mm;
-> +	connector->display_info.height_mm = mode->height_mm;
-> +	drm_mode_probed_add(connector, mode);
-> +
-> +	return 1;
-> +}
-> +
-> +static const struct drm_panel_funcs s6e3fa7_panel_funcs = {
-> +	.prepare = s6e3fa7_panel_prepare,
-> +	.unprepare = s6e3fa7_panel_unprepare,
-> +	.disable = s6e3fa7_panel_disable,
-> +	.get_modes = s6e3fa7_panel_get_modes,
-> +};
-> +
-> +static int s6e3fa7_panel_bl_update_status(struct backlight_device *bl)
-> +{
-> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
-> +	u16 brightness = backlight_get_brightness(bl);
-> +	int ret;
-> +
-> +	ret = mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e3fa7_panel_bl_get_brightness(struct backlight_device *bl)
-> +{
-> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
-> +	u16 brightness;
-> +	int ret;
-> +
-> +	ret = mipi_dsi_dcs_get_display_brightness_large(dsi, &brightness);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return brightness;
-> +}
-> +
-> +static const struct backlight_ops s6e3fa7_panel_bl_ops = {
-> +	.update_status = s6e3fa7_panel_bl_update_status,
-> +	.get_brightness = s6e3fa7_panel_bl_get_brightness,
-> +};
-> +
-> +static struct backlight_device *
-> +s6e3fa7_panel_create_backlight(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	const struct backlight_properties props = {
-> +		.type = BACKLIGHT_RAW,
-> +		.brightness = 1023,
-> +		.max_brightness = 1023,
-> +	};
-> +
-> +	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
-> +					      &s6e3fa7_panel_bl_ops, &props);
-> +}
-> +
-> +static int s6e3fa7_panel_probe(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	struct s6e3fa7_panel *ctx;
-> +	int ret;
-> +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return -ENOMEM;
-> +
-> +	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-> +	if (IS_ERR(ctx->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
-> +				     "Failed to get reset-gpios\n");
-> +
-> +	ctx->dsi = dsi;
-> +	mipi_dsi_set_drvdata(dsi, ctx);
-> +
-> +	dsi->lanes = 4;
-> +	dsi->format = MIPI_DSI_FMT_RGB888;
-> +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO_BURST |
-> +			  MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_LPM;
-> +
-> +	drm_panel_init(&ctx->panel, dev, &s6e3fa7_panel_funcs,
-> +		       DRM_MODE_CONNECTOR_DSI);
-> +	ctx->panel.prepare_prev_first = true;
-> +
-> +	ctx->panel.backlight = s6e3fa7_panel_create_backlight(dsi);
-> +	if (IS_ERR(ctx->panel.backlight))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
-> +				     "Failed to create backlight\n");
-> +
-> +	drm_panel_add(&ctx->panel);
-> +
-> +	ret = mipi_dsi_attach(dsi);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
-> +		drm_panel_remove(&ctx->panel);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void s6e3fa7_panel_remove(struct mipi_dsi_device *dsi)
-> +{
-> +	struct s6e3fa7_panel *ctx = mipi_dsi_get_drvdata(dsi);
-> +	int ret;
-> +
-> +	ret = mipi_dsi_detach(dsi);
-> +	if (ret < 0)
-> +		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
-> +
-> +	drm_panel_remove(&ctx->panel);
-> +}
-> +
-> +static const struct of_device_id s6e3fa7_panel_of_match[] = {
-> +	{ .compatible = "samsung,s6e3fa7-ams559nk06" },
-> +	{ /* sentinel */ }
-> +};
-> +MODULE_DEVICE_TABLE(of, s6e3fa7_panel_of_match);
-> +
-> +static struct mipi_dsi_driver s6e3fa7_panel_driver = {
-> +	.probe = s6e3fa7_panel_probe,
-> +	.remove = s6e3fa7_panel_remove,
-> +	.driver = {
-> +		.name = "panel-samsung-s6e3fa7",
-> +		.of_match_table = s6e3fa7_panel_of_match,
-> +	},
-> +};
-> +module_mipi_dsi_driver(s6e3fa7_panel_driver);
-> +
-> +MODULE_AUTHOR("Richard Acayan <mailingradian@gmail.com>");
-> +MODULE_DESCRIPTION("DRM driver for Samsung S6E3FA7 command mode DSI panel");
-> +MODULE_LICENSE("GPL");
-> -- 
-> 2.43.0
+> ioremap returns NULL on errors.
 > 
+
+Can we keep the above for now if the v14 series goes well. I'll post a 
+patch later for this. Incase it turns out I need v15 I will make this 
+change in v15.
+
+>> +		return PTR_ERR(base);
+>> +
+>> +	offset = 0;
+>> +	do {
+>> +		offset = xhci_find_next_ext_cap(base, offset,
+>> +						XHCI_EXT_CAPS_PROTOCOL);
+>> +		if (!offset)
+>> +			break;
+>> +
+>> +		val = readl(base + offset);
+>> +		major_revision = XHCI_EXT_PORT_MAJOR(val);
+>> +
+>> +		val = readl(base + offset + 0x08);
+>> +		if (major_revision == 0x03) {
+>> +			dwc->num_usb3_ports += XHCI_EXT_PORT_COUNT(val);
+>> +		} else if (major_revision <= 0x02) {
+>> +			dwc->num_usb2_ports += XHCI_EXT_PORT_COUNT(val);
+>> +		} else {
+>> +			dev_warn(dwc->dev,
+>> +				 "unrecognized port major revision %d\n",
+>> +							major_revision);
+>> +		}
+>> +	} while (1);
+>> +
+>> +	dev_dbg(dwc->dev, "hs-ports: %u ss-ports: %u\n",
+>> +		dwc->num_usb2_ports, dwc->num_usb3_ports);
+>> +
+>> +	iounmap(base);
+>> +
+>> +	return 0;
+>> +}
+>> +
 > 
+>>   static int dwc3_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device		*dev = &pdev->dev;
+>>   	struct resource		*res, dwc_res;
+>> +	unsigned int		hw_mode;
+>>   	void __iomem		*regs;
+>>   	struct dwc3		*dwc;
+>>   	int			ret;
+>> @@ -1969,6 +2017,20 @@ static int dwc3_probe(struct platform_device *pdev)
+>>   			goto err_disable_clks;
+>>   	}
+>>   
+>> +	/*
+>> +	 * Currently only DWC3 controllers that are host-only capable
+>> +	 * support Multiport.
+>> +	 */
+>> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+>> +	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
+>> +		ret = dwc3_read_port_info(dwc);
+> 
+> The function name here can be reworded as it does more than reading the
+> port info. Perhaps dwc3_get_num_ports()?
+> 
+I am fine either ways. I'll change the func name in v15.
+
+Regards,
+Krishna,
 
