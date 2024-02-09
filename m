@@ -1,228 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-10335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F1DA84F7C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 15:42:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7677284F83C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:10:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5914D280D4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 14:42:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76D3B1C2439B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 15:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D6293F9FD;
-	Fri,  9 Feb 2024 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3041D6DD1E;
+	Fri,  9 Feb 2024 15:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZP+vmwU"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="u3hVr4aS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42418374C2
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 14:41:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC632E3F9
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 15:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707489710; cv=none; b=PuZMrRf38WneZEwl0VoU87e3QpC0p2CoH7ZBuW0y8vEf51mINr+l0qrKv72khvJ/Qy9OVspYVUEFQII53rIJWWiOsbwB3D2DidjId5tnhkrIqB9EAOgzOnxCDMSAwWa7PkFsmWMbrLS9RHCcgl2LbcQGxXCZUWW8LrjWQ0gVnwc=
+	t=1707491423; cv=none; b=sdo3md11lQ4dvPd7mWgUZ4kN1nKyE/v0XVV5chY/vlcqoeJkRIDEKvIKtlTUlsb9+FC/C+9RvNjDTH8ufCquovRKw8svO+mQUekSTS9AaM97moelHReNbetd/qm/Yn7QTJQB4rYGVU+77lf1R3EwLZhksFoy+hlglzlmigOxdPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707489710; c=relaxed/simple;
-	bh=O3fPupjybPNP/dAIj6BFB3nob2bLvZX2H43dvr8aJ7A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dqH/s8+RTVR3VPDqYu3pxSMYEUxQobugbEuvobcgo8YusnmORHK9v0WNrP2NBJ8SrVK5Agc1jyc6jsnVqZvgOHBFXd3ygiZDvNMAHOhCuqxR/Tan5NnBXaMZOIxBqMdgFkC+njR2ZVM1115M4a/+hgbzZGot3IhpdUZ21GUj2mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZP+vmwU; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a37721e42feso137011666b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 06:41:49 -0800 (PST)
+	s=arc-20240116; t=1707491423; c=relaxed/simple;
+	bh=qtUK2RUPjq9zDcyg4Ds+2K42jq2xEZ+Gn6WwDqcikrs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=nS10Jb1QRC3/kGmvSCCRYyZcyZXjn0/r3auGCOngxb4rwbtX8QUXZwGVLCylJEY3OMapxzuK4qQHj5dgFUuxToq2rGiCvnCiFqAJbwxKlax4mzYE6rl036+i+h0WAt4f1rshKHgCP4rWwGK3RcCa/FXCyWO35eNjYU1ooe6Eyxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca; spf=none smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=u3hVr4aS; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ndufresne.ca
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-783f3d27bfbso46061485a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 07:10:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707489707; x=1708094507; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sHcakeR8gPCEeI7V8ObSzY3NEW4IWCujMtndFKNvu38=;
-        b=PZP+vmwUkhlIFZxJlGrnn4bnIvEUblcfumX2OVdD8j4SR07btrcQzatqBkz4aToFZF
-         v8CVTxb08j7VRoTpHb6LxNv8I4TsAPIj1rUjwbg8yUVO7RkhuqweVhodLNu5LFZ/6mS8
-         IhCt53XXzlhf2RbcqnkEEacFrGz3nKojtwYR8EePfH7KJEYdkAVbT9Fou1cUuWcCn3Tc
-         Iv8rYbeOlJRp8QhY+dZcIBtGYjNMnlwqUWQy5SJnhCD31iL7d8iJblE1puiBjUNHWd9D
-         GL9wQMO9XSQDMTInlQ9/FU+ndGJslGz+VQLvp/P8Ybiuc6NoiQYDVEtIw6rjHOFWtX8T
-         73ew==
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1707491420; x=1708096220; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5jZoYn0SqLJVfeFn7JEaR0g9woQE+L+0Od2YAlUn5xo=;
+        b=u3hVr4aSeiXDVV7KEL5xBT7b+XrKLOH6eKjBD2ik/2BnKFAMhbFVVK6/zy/XrD2ix6
+         /oLrNPGsxbP3CrJX6SqJOUqosP8+Cuk2gBS+Iu2ypZ1Z2uxflChDm0FqmqkAE4IK2OMr
+         UPSTcsEY/07o90eWGpHKXPe2BJVZBm/j9jaAAs6GZ2ozeKmxWW+ADp6JgNAluj6MCKkU
+         v0RRVrEeW/Xh9gb8WNI+2gPom795eFxHPIYYnNXVHYf6weXIYaizYhHxYR8eWwB8Tl24
+         tyVvnS1TaNPfH9IcjljlbxaJwCYi4a8OeceEifZLAzUosHVp9l1m8mFA1mE3EWWc9mru
+         fygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707489707; x=1708094507;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sHcakeR8gPCEeI7V8ObSzY3NEW4IWCujMtndFKNvu38=;
-        b=Kb0/XJBARi4zmCN76N3dGfrjTZTEWunM7RGZdFD+jf3L2ZfnfaTbEZpx/N2PffA7t7
-         PfcpFfO9HlXBhP5copXC3pzzKRFk2e9G2U517LeYjUKmsAWPzsx+wcB4SNlrBbA6nje8
-         KRd8NRV3RCy/An2hdsXGUwFvXfkj5TpOWojwM4OtDFfWoGSJnywYPPUIKdJAttdmPKMh
-         9QW3/rTPt4rBdrN8Pm48fXtfzHhSDYAvdBUX59FmfBrV9qUNY+YXvLZv7d05uUsqowUo
-         EnrKq5XbXaxmMKeTnEVprCavW2JkXMqKlzKHWfGts8usatJEAMMdvtmPc2AiQi0ARgGL
-         kuIg==
-X-Gm-Message-State: AOJu0YyoeoKEyOGPHeeNy16fFuML/KLgLWlVqezGDtWWSxp6qQcxJcom
-	jk2IKqOphGdjcwVFGo9Wchz8mgNaRO38r2OJhLEoyrI/fkGGZabqTZWoyv+UlY7tlyxRBC0nJk4
-	A
-X-Google-Smtp-Source: AGHT+IFPSqvMuQ7qRahNz276ExL9mkaHwlnaG19hlPXL0sWl9KvvkSgcsTGOPjwNhiOcDbbFCba3ZQ==
-X-Received: by 2002:a17:906:fa14:b0:a3b:ea1e:c395 with SMTP id lo20-20020a170906fa1400b00a3bea1ec395mr1215338ejb.28.1707489707353;
-        Fri, 09 Feb 2024 06:41:47 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU/JYp/TUOFfArAHs9PgPg3ZetUV3f8hxfFPsKUwP/60xcfd5NQoc9u0sZq+2USXNgXmpA5X/AtCHcSoKyN2a1Ql92xg1/XFmkm+OIYTklYuHZmdRxL0BAah9qJdFnBPsTzAK6NagPzY7mN+jFCsm4rv/mU5kUZFwVxTCiyC1f43/faHtLQ4C/KJXsEO6SgXfrivgi84qJJb9oiyTZU1mvFcZL6AUPK9HU8wndvpBn6vJ7KYjQZLhHY73mstEnBI1/xohoiYEvudhJVq+7iwDB8DSLXP7wAfZXLK4lXWdYO0idIBSQ7rK7RPiw570KbS+7NImLKIJSdSjJ5UskJyE3z3gAK+RU+VG2NxAjIOnTNUtAjTgAkYwJmRJCjxvNjiy1IbASHsltaMYQ++fUwmzo0+scsksaPoporqnAEaJ9sbRzEng/B5DY54zKdzBJSMwD0gdLfVnVtkAE=
-Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id g19-20020a170906521300b00a3bb098ffcbsm827300ejm.89.2024.02.09.06.41.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Feb 2024 06:41:46 -0800 (PST)
-Message-ID: <aa7a28a7-59c6-4783-a6de-9a46721a8bf6@linaro.org>
-Date: Fri, 9 Feb 2024 15:41:43 +0100
+        d=1e100.net; s=20230601; t=1707491420; x=1708096220;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5jZoYn0SqLJVfeFn7JEaR0g9woQE+L+0Od2YAlUn5xo=;
+        b=DbVJ0q+5GrR2QvA5Rb9Wh3/IZIscgbMFZRiHU8fauuvjhGytwfslIA0h81pRWlmTsu
+         VtMLXMuPGYGp82dDDmhz4HgK8CDj0HBseXwisCFLbFiHkRo6NwLUzCD6c03gF+RtpNZA
+         8ZUxJN9ecmey3qEax2otzv+SeULMz0oFRNGu3pWrRzSBlIsTMZS+vdevBsLznBorVrPc
+         tymxZRZ9MVItSBCR5CD+h1E/xntaIS8AMdcFNhRyNxz7XymnbWFEuw0eq+a7Xc1d4RfL
+         fRSvJ9LN2lMGIkkx301BRIMlRalNSAUQ7wTw0jERfhm1uVrOqyRP1OjVJuLA1kPVnoCq
+         IZuQ==
+X-Gm-Message-State: AOJu0Yw9mPhEGPTC+SF+GlP1IDhi0YifQd7qhpGp3rdpEbBHQM6cIL9y
+	tek2uA3oXDaQZeD2iGQae2KyUSYsHEO9+O/vD0c+KBhtEZ0VVRww+EvCuSIa1Kw=
+X-Google-Smtp-Source: AGHT+IGJujCOaBUh3+oOR5ApSS6lvEa3a0jxNEBbqxn0JlqDSpYkF/buTzCRYwtvZMYQKa3lmxc9mw==
+X-Received: by 2002:a05:620a:268b:b0:785:9516:e18e with SMTP id c11-20020a05620a268b00b007859516e18emr2146194qkp.74.1707491419707;
+        Fri, 09 Feb 2024 07:10:19 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVvDdCfhFiryxWiYoJ2gBpV2oU/ctUCfE12dXwi2MCN5uEKO+MzA6EyjHUcEdauLIMu/Dhu39NM91HuTSdFlFqTQs1uigFEsJ6VdHtifb1WG2boHZV++LMH5/2PlduQGZ3Xfo1GPPUtLjAu5SuBx104V6/YlQ1W90oJH4QK0wlM9/zB6kMw2p03qMVMgU5F06FYfv1e9g96JfriQzsgfAYpSyHC9t7+4u5JN4JhhSTVJ+LGFW3tye2eH8mqomknTNbUylun83aBCPrvRImIZojgO2ICF6CFEp7FGQODOLSI1Q8RY6oFzQXAhAniujYJyIhgxQcCMdtuFQeTgIyos4CO0NJ9Vvs/zc9BjxzWtjWcHlG1bOs/uFri+QsOP8IBcRsNtBnBLoLTAVb0eu97DUt80Vcr
+Received: from nicolas-tpx395.localdomain ([2606:6d00:11:3354::7a9])
+        by smtp.gmail.com with ESMTPSA id c6-20020a05620a0ce600b0078565ed2bc6sm790938qkj.124.2024.02.09.07.10.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Feb 2024 07:10:18 -0800 (PST)
+Message-ID: <7322a22591ab18a664c9b6fa07957a163fceaa2d.camel@ndufresne.ca>
+Subject: Re: [PATCH v2 1/2] media: v4l2-ctrls: add encoder maximum bitrate
+ control
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Sachin Kumar Garg <quic_sachinku@quicinc.com>, hverkuil-cisco@xs4all.nl,
+  Mauro Carvalho Chehab <mchehab@kernel.org>, Stanimir Varbanov
+ <stanimir.k.varbanov@gmail.com>,  Vikash Garodia
+ <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>,  Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Date: Fri, 09 Feb 2024 10:10:17 -0500
+In-Reply-To: <20240130112400.2636143-2-quic_sachinku@quicinc.com>
+References: <20240130112400.2636143-1-quic_sachinku@quicinc.com>
+	 <20240130112400.2636143-2-quic_sachinku@quicinc.com>
+Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual; keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [V3] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-To: Andi Shyti <andi.shyti@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com,
- manivannan.sadhasivam@linaro.org, bryan.odonoghue@linaro.org,
- quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-References: <20240201101323.13676-1-quic_vdadhani@quicinc.com>
- <CAA8EJpqQtHDRK2pex+5F-fMRTosJuFCx59e89MWhnie1O3dHKA@mail.gmail.com>
- <60b5e755-352b-476d-8c6e-2170594ae80d@quicinc.com>
- <uswznu3h53gcefpdc4vxozz32ecdcjvzmr7admwc4h54o27bfy@qqoevrl3dcyt>
- <CAA8EJpqzdp4xYSp+JCExP+Oeu9KhLpsXNUbDxfZ0g+C07xR6dg@mail.gmail.com>
- <cvzyvgb6vahlmrhaijsuyaosdl2p4q5cxhipmu4tujnkpjlbpm@6yu3sbpqha4m>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <cvzyvgb6vahlmrhaijsuyaosdl2p4q5cxhipmu4tujnkpjlbpm@6yu3sbpqha4m>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 8.02.2024 12:59, Andi Shyti wrote:
-> Hi Dmitry,
-> 
-> On Thu, Feb 08, 2024 at 01:04:14PM +0200, Dmitry Baryshkov wrote:
->> On Thu, 8 Feb 2024 at 12:02, Andi Shyti <andi.shyti@kernel.org> wrote:
->>>
->>> Hi Viken, Dmitry,
->>>
->>> On Fri, Feb 02, 2024 at 04:13:06PM +0530, Viken Dadhaniya wrote:
->>>>
->>>> On 2/1/2024 5:24 PM, Dmitry Baryshkov wrote:
->>>>> On Thu, 1 Feb 2024 at 12:13, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
->>>>>>
->>>>>> For i2c read operation in GSI mode, we are getting timeout
->>>>>> due to malformed TRE basically incorrect TRE sequence
->>>>>> in gpi(drivers/dma/qcom/gpi.c) driver.
->>>>>>
->>>>>> TRE stands for Transfer Ring Element - which is basically an element with
->>>>>> size of 4 words. It contains all information like slave address,
->>>>>> clk divider, dma address value data size etc).
->>>>>>
->>>>>> Mainly we have 3 TREs(Config, GO and DMA tre).
->>>>>> - CONFIG TRE : consists of internal register configuration which is
->>>>>>                 required before start of the transfer.
->>>>>> - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
->>>>>> - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
->>>>>>                 of the transfer.
->>>>>>
->>>>>> Driver calls GPI driver API to config each TRE depending on the protocol.
->>>>>> If we see GPI driver, for RX operation we are configuring DMA tre and
->>>>>> for TX operation we are configuring GO tre.
->>>>>>
->>>>>> For read operation tre sequence will be as below which is not aligned
->>>>>> to hardware programming guide.
->>>>>>
->>>>>> - CONFIG tre
->>>>>> - DMA tre
->>>>>> - GO tre
->>>>>>
->>>>>> As per Qualcomm's internal Hardware Programming Guide, we should configure
->>>>>> TREs in below sequence for any RX only transfer.
->>>>>>
->>>>>> - CONFIG tre
->>>>>> - GO tre
->>>>>> - DMA tre
->>>>>>
->>>>>> In summary, for RX only transfers, we are reordering DMA and GO TREs.
->>>>>> Tested covering i2c read/write transfer on QCM6490 RB3 board.
->>>>>
->>>>> This hasn't improved. You must describe what is the connection between
->>>>> TRE types and the geni_i2c_gpi calls.
->>>>> It is not obvious until somebody looks into the GPI DMA driver.
->>>>>
->>>>> Another point, for some reason you are still using just the patch
->>>>> version in email subject. Please fix your setup so that the email
->>>>> subject also includes the `[PATCH` part in the subject, which is there
->>>>> by default.
->>>>> Hint: git format-patch -1 -v4 will do that for you without a need to
->>>>> correct anything afterwards.
->>>>>
->>>>
->>>> At high level, let me explain the I2C to GPI driver flow in general.
->>>>
->>>> I2C driver calls GPI driver exposed functions which will prepare all the
->>>> TREs as per programming guide and
->>>> queues to the GPI DMA engine for execution. Upon completion of the Transfer,
->>>> GPI DMA engine will generate an
->>>> interrupt which will be handled inside the GPIO driver. Then GPI driver will
->>>> call DMA framework registered callback by i2c.
->>>> Upon receiving this callback, i2c driver marks the transfer completion.
->>>
->>> Any news about this? Dmitry do you still have concerns? We can
->>> add this last description in the commit log, as well, if needed.
->>
->> I was looking for pretty simple addition to the commit message, that
->> links existing commit message to the actual source code change: that
->> geni_i2c_gpi(I2C_WRITE) results in the GO TRE and
->> geni_i2c_gpi(I2C_READ) generates DMA TRE. But I haven't seen anything
->> sensible up to now. So far we have a nice description of required
->> programming sequence in terms of CONFIG, GO, DMA TREs and then source
->> code change that seems completely unrelated to the commit message,
->> unless one actually goes deep into the corresponding GPI DMA driver.
-> 
-> Agree. I can't take this patch until the commit message has a
-> proper description and until Dmitry doesn't have any concerns
-> pending.
+Hi Scahin,
 
-And please, please, include the word PATCH in the square brackets in
-the subject, it's landing in the wrong email folders for a number of
-folks..
+Le mardi 30 janvier 2024 =C3=A0 16:53 +0530, Sachin Kumar Garg a =C3=A9crit=
+=C2=A0:
+> Introduce V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control to
+> limit the frame level maximum bit rate.
+> Encoder will choose appropriate quantization parameter and
+> do the smart bit allocation to set the frame maximum bitrate
+> level as per the Bitrate value configured.
+>=20
+> Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
+> ---
+>  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 2 ++
+>  drivers/media/v4l2-core/v4l2-ctrls-defs.c                 | 1 +
+>  include/uapi/linux/v4l2-controls.h                        | 1 +
+>  3 files changed, 4 insertions(+)
+>=20
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/=
+Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index 2a165ae063fb..05ef4a70e3f5 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -576,6 +576,8 @@ enum v4l2_mpeg_video_bitrate_mode -
+>        - Constant bitrate
+>      * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_CQ``
+>        - Constant quality
+> +    * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_MBR``
+> +      - Maximum bitrate
 
-Konrad
+I'm afraid for this one your documentation is too short. I believe your com=
+mit
+message helps, but this is not what our uAPI users will read.
+
+My understanding is that this feature is a form of constant quality (smart =
+bit
+allocation) but with a maximum rate guaranty. Using a specific mode (rather=
+ then
+a constraint on top of a constant quality mode) is a Qualcomm specific desi=
+gn. I
+think presets are generally easier to use, so I kind of like it. What is mi=
+ssing
+(arguably all these modes documentation are also missing it) is the rate
+observation window. Would be nice to check if there is a way to specify tha=
+t (or
+even configure it, if so add a cross reference).
+
+So I'd like to see some proper documentation for this one, remember that V4=
+L2
+documentation is also a specification and will serve to ensure drivers conf=
+orms
+to the preset expectations.
+
+regards,
+Nicolas
+
+> =20
+> =20
+> =20
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c b/drivers/media/v4=
+l2-core/v4l2-ctrls-defs.c
+> index 8696eb1cdd61..e0597b61ffb9 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> @@ -154,6 +154,7 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+>  		"Variable Bitrate",
+>  		"Constant Bitrate",
+>  		"Constant Quality",
+> +		"Maximum Bitrate",
+>  		NULL
+>  	};
+>  	static const char * const mpeg_stream_type[] =3D {
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2=
+-controls.h
+> index 99c3f5e99da7..7c74d6c417d1 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -393,6 +393,7 @@ enum v4l2_mpeg_video_bitrate_mode {
+>  	V4L2_MPEG_VIDEO_BITRATE_MODE_VBR =3D 0,
+>  	V4L2_MPEG_VIDEO_BITRATE_MODE_CBR =3D 1,
+>  	V4L2_MPEG_VIDEO_BITRATE_MODE_CQ  =3D 2,
+> +	V4L2_MPEG_VIDEO_BITRATE_MODE_MBR =3D 3,
+>  };
+>  #define V4L2_CID_MPEG_VIDEO_BITRATE		(V4L2_CID_CODEC_BASE+207)
+>  #define V4L2_CID_MPEG_VIDEO_BITRATE_PEAK	(V4L2_CID_CODEC_BASE+208)
+
 
