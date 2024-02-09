@@ -1,213 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-10417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC63484FFD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 23:24:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECA9884FFD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 23:26:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0BB61C22A75
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 22:24:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7592280C03
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 22:26:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B279F210E7;
-	Fri,  9 Feb 2024 22:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C4F421350;
+	Fri,  9 Feb 2024 22:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jkMAJ1i1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VeuEIQhh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2065.outbound.protection.outlook.com [40.107.243.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013A21350
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 22:23:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.65
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707517436; cv=fail; b=fORqCEVB1hngjpGIDONWwnGnZZ78dAPVL17IdLK6dLwB9ob0B7ulJpRJ+zGYyOxADiXvyul1+l+mr8gBPgmj0f0ncn/XhY4qtkGny0O9mvuAQYx5XuliHie8W0e2Oe53IvgO/CgouEgU7Bmxn39o59XKbOmJYgI80ptWW7IFT0k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707517436; c=relaxed/simple;
-	bh=Vi5QiqX+4Z92hoVenkft8vbY17OjI2jMCnyZFXfvIVk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=nbfmWePkZbm8jmNMYNDLzV+Xmzidm6pROk4ar07hIME6PivdQ9ZVZT7Y/ErBoD4DsdjcHJY1rLadvMk7SHbki1PYoItzNWWzpNU2iNlMZd574l9c9HHcScg7j1cQlfTcpYWQ4nW2Ay7LkBmQ9zoDyGzyT02g+0x95WO97nE1MdY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jkMAJ1i1; arc=fail smtp.client-ip=40.107.243.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XQkrjJFQsjHk03uSBq969FN4xrg4qXuz1I5aHN1bxw1Jn94UphUzKVjn9QCvu7M+uBNBgW2D46gcMpgO5+UTWQxiyAZN6iotPKNpz4VI4UHoDsctr8UDVobaZTC/JXfnpkrXNTuoHKNeEJhS4sD8LYjpjiHBTV76rwhD8J7staJi/lab402kLKnrN15VmGE3HdPKlkOp2kIiC4VXGwfDPgZi6BH8W8sr1jd8gUbCWtDMhLRsjqro/rwCv9ZEVcQ/6+Yybf183dkVAY1FjKRCV8DXKgjQPOE1H9BfHUiFNFpNBEnwDKTybm7Qh5BVXWijVCpPm3tKOTmQ8PbIG5+RgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WOeP9blMIkyObTnCRL+Ny7gI4tOl9Wuv7MTo0bRA/oc=;
- b=Ton/qXy6YzpoibF/l4q530tDHYUWx7wN+cBGzDgLXTvwKki1WN9rMECMyq+IjJCQHIuvw0H/Zd769ZEWyI0N7p4ojg+HLQy7j2ze6SGYfuX5+p94eruwPzFlc1Hfa9fTM2826n2Yvr7tt7wLrYUUahAEZMbS7eDrDU+1MeKCKZDbtMLzomCCXDDV+4ySLgqiNWUf/0MB+lvFu9680/88MJZzm1uHF8jwH9f0RbhROI7KsM+DwC+fMDQQfFFOkQh/xFrBtMjX8Q43Xl+26a+YZShChQ2U1p37VHW2+Qy5QKgGAQtt2UjMLhETjgspB0LSHAoS1O8Dnh4ostq8huSvyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WOeP9blMIkyObTnCRL+Ny7gI4tOl9Wuv7MTo0bRA/oc=;
- b=jkMAJ1i1F/l54mFliSWGz7BhZLbWtcni1h8OKr3bOqaDa4OO9PSdQR3+Ybm7g4RTTti/fqUjlgttBEUcM+LU0Gi9ogVyBt1rVuxoToi2wYQ/eePlMVSRr7Ee5gODUE2MkEU4Sn/eaQlULzC4Tom7qr4j1FKxCzHsy3QVGT8sxFWo3PJG+4Q/tVgEawnkrqTw3z0VpwkJ+ioHXHBDmjWvmOBMpVI9GreB2TP7kQUn1/nTBz62Bq0aP0NHynPlkJE2GPmmVDtfQdDgjR6+l5ordU4EiJRxytvaS3IY3ybFeJyMYJEKL+p5XgHYBhYoLJRCLLxxh3L9aXbP87JsrYuHEQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by CH3PR12MB8511.namprd12.prod.outlook.com (2603:10b6:610:15c::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.14; Fri, 9 Feb
- 2024 22:23:51 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7270.012; Fri, 9 Feb 2024
- 22:23:51 +0000
-Date: Fri, 9 Feb 2024 18:23:49 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: iommu@lists.linux.dev, joro@8bytes.org,
-	linux-arm-kernel@lists.infradead.org, nicolinc@nvidia.com,
-	robin.murphy@arm.com, will@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] iommu/arm-smmu: Convert to domain_alloc_paging()
-Message-ID: <20240209222349.GA923780@nvidia.com>
-References: <5-v2-c86cc8c2230e+160bb-smmu_newapi_jgg@nvidia.com>
- <20240209200538.917366-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240209200538.917366-1-dmitry.baryshkov@linaro.org>
-X-ClientProxiedBy: SA9PR13CA0135.namprd13.prod.outlook.com
- (2603:10b6:806:27::20) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E2718053
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 22:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707517571; cv=none; b=I3mCNXpnqCTuQlTIePEfPycdMjt870tbTVB2ZfWGQ+RUXwS/pHOQZREewUPoZf+in14Ad744LwaTGwWjTJWRBJrI2B6jlB62SaFY6Bm/v5il0RTe71vKRH8agfCUiiOe7Yc6a8ihcjVdwvplbiN6IavFQoUhNOJOkEjpY9hRwKc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707517571; c=relaxed/simple;
+	bh=hrlixnvfaMKcR+Mz2pLMiXCcHS4q6KYRBYEA3ptrVPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cp3InvoBW1U9ed8gyfFanxS5rm++a6DuL6yjdKTk8Q6x/jSVUKB+WSdym3SieuEU2QCXjqn3eVnBB0gz3rsu+342BtAhw8XbQLHUS84YjIFgzHWuXL0AIOornno1pGoCV5V33wsCO4ujEUr+FsCzR8cg4YUky+NluY9bUGIX1gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VeuEIQhh; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5114c05806eso2332341e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 14:26:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707517567; x=1708122367; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yphHxXwb0WbMrWU82ru1cxhNr1b3+e/qN26jPPunEow=;
+        b=VeuEIQhhhQp1nBVfGs5TEIzl0D6wWxJF5voMbei6OQLW0RZFC27tH29+Z3g0c9+vR5
+         nu2MRtaYXD7RcdW71exa/UpdmZiVvrFu9Tmu43O/Y27BR7U/oIiqL/KA6TFXZmQW3MBB
+         U/mj/KB8CELriJomKEuJZ1w9ZlLfWpz8HKnYuyCh/bgTqAY5fXC6RJZmTiGg9xQZLhvK
+         EgsZay9UyMKq/apvRpK2d/8bNEepeKxuH6nM+VjzHs7H12MZNlrpfaQw5DNAGLdlNoUp
+         J/V9W4JudaOCSWfGNsTQ94CGtOGycwR/xOkRhSh6+bxvnrfwOUz3mf4MZT3cHH+IltfW
+         oe6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707517567; x=1708122367;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yphHxXwb0WbMrWU82ru1cxhNr1b3+e/qN26jPPunEow=;
+        b=Gyrp+B0uybW1/Mm28P+Zn5vwmIfyqqblPwrunAD66GA7B8VhjmWojxIfBRhOwUrNBT
+         c/z5m5uwQOCNWdiNAzGUOtkuO+POO13/LAT2uqKrBK3D2TIiUQPitTsukd26O2T20XnM
+         nGNye8uTCpVKjzjavOqNagts6wGgZqnE5ixLEqUuaUPnU6tcu1RvUjMxaKxohkuoZ/i8
+         akzXwg5SvlmPJR4uuucjcN5hWOCj1yWQQhXQi7vPs1NPhaqfcUkN/VMdjobARuk/iKq9
+         5yoaRowvtc/n8157e6RNXEsKWvbaRgqsdrd9PfgZUFEYAH0Rg1tedvof8jWD12RKZpE9
+         hHVA==
+X-Gm-Message-State: AOJu0YxF16a9rxZIIcZaWRigPVgBz4QFoBngQV00zr/+CAQMsIKPzZh5
+	uWjraVPAW9FyMhIipYJjoy1BBSx/TH/QMRjKu0acDt3QcjRuEY7PQcIIAZAhGyk=
+X-Google-Smtp-Source: AGHT+IFU5eAqt0XT0MXQ016FSr6wKNINoKdQ+iMslKY4+vdsWpXkEZpHelFbpxspwtMeN9/ZCsvm1Q==
+X-Received: by 2002:ac2:5465:0:b0:511:5f08:f147 with SMTP id e5-20020ac25465000000b005115f08f147mr236251lfn.25.1707517566884;
+        Fri, 09 Feb 2024 14:26:06 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVY5NCtz7AXZMav2qJqqGxlPLXdA/uqK6c597CF51AQLfvl981I+6K2TTblLnh9pwIKtgNO4DLoARMSW/qEhiKtlRx/fI0g2qbnLsJWB31CYMfGZyhfrQUstb5N699OZ/ARY28YlIRReGkNcVGQubSHlXrstyoA/zTffsPpdVaoO1Q218ZnSEUoK/fW9Zd8zUPKmboC/6c/IGZ8ml+ntVnzaz3dLn7e7kfLn759NZzsjfHmoQsMLTOaawI+d7rehiHYg8++CeV8MTbn4zYT6+3ICOrXby9A8UNHDLWhF8qoKjTqIw8b+xcRi/HdGpvyzeo/5QTGDhz8TMIn7Ea5RLFgSkCgcI/dnvX2jDsXKpXN+wdsHcsdO3dUZhlTJd2y5+8LeN7RYqZyzzLIZO56sdc2blFotd2gT3TSG/d1UWKt+5fxyAotPsNzaGMjihPhyLViXVx+b2yrOLpxxJ7gbJNTlRelttTP2gA27ZD5Ciiupcm9lD9AEWKg2Co0rTOGg5inF/YgvVUDDndkxk9YAavDyn7HHMNvMiRnig56o6o/wg9q8bGp029uoMsmev/VfwO3kvPysJI1yHjANsUgz4tT/ltUyEqsHUZuiQriKOENtg==
+Received: from [192.168.192.207] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
+        by smtp.gmail.com with ESMTPSA id hw13-20020a170907a0cd00b00a3820ec721csm1167406ejc.8.2024.02.09.14.26.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Feb 2024 14:26:06 -0800 (PST)
+Message-ID: <ea493d76-900a-492a-87f6-365453e8bea0@linaro.org>
+Date: Fri, 9 Feb 2024 23:26:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|CH3PR12MB8511:EE_
-X-MS-Office365-Filtering-Correlation-Id: aa83132f-8c6e-4e8f-ba5e-08dc29bdcaf8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	sg0IgKT/ewT27dN7A0arEsZ8247lgBOc/kncJz/mLTwJ2SbtP5FwzGNB2yl15xFnKB9onAFdiGU/U8axEIyyMKN3bPkhII3k01YlF92uigi6zY0FtBB5LrZhOptwzN5rByaGIW2l0xzl2ETo35QeEoay9TcU3nwa9o4oRfQMcc+41YxgM6ATuSUw7wnsnw4wy+1GlXy9zbhPwKTQKg8MRyDxWlczZjrhtbPH+y7czNHTBMGvK1IavUuzQwMldJ2lsuefvFqDCzhisY5cOES2qMikxrNrKUtSZjY/nMCkAB4nvphXUFhtyxqrQTqzqjg90ywjecw6AUCw4oI8nF34/1XVaCtUMaHbMFZBfI/MoMgP3DetzSBD3JFudeXYb0Ugj9sAEwFbgPruwqSmYPndqqsG+K2OoadNhIP6UluN7BWqE0BSj3XqRLfUc8SZV7QGhklku/SLytI0Efye2sUi/57jlryhzzFzJCM5iUDGZkXCRzDNMgqvAimrmaIi01SAIbRR1rwIPBohaV6iG6aS1/duQGrOLDkRRmZaa1MKMVpUbzZgEgpYsj11EfMGTi+5
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(346002)(396003)(39860400002)(366004)(230922051799003)(64100799003)(1800799012)(186009)(451199024)(478600001)(6506007)(86362001)(6486002)(316002)(33656002)(66476007)(2906002)(38100700002)(66946007)(66556008)(41300700001)(6916009)(5660300002)(2616005)(26005)(1076003)(8676002)(6512007)(83380400001)(4326008)(36756003)(8936002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?yKvNuss1SOyBwdWbVeS4LDxk5mNpxcw1o5GPXDl4RefHTkj/2R24YFbnIWqg?=
- =?us-ascii?Q?xz3XVrx7MTqXpwglNeSiig1EUvQcfRgrZE5GsiwQl7aXiaA32ueugZz/mKOM?=
- =?us-ascii?Q?h5p5NB7rqgCN+pMBO55bP/oEjUMK0K2cw+sP2R5KR8VX/qf4VoEPhLnuSrkT?=
- =?us-ascii?Q?uIdtCOokyF0FCaPpJ1bSHerL2wjlPv0cdQhU37yQ+dagMF4rcLLzuaBEXiTY?=
- =?us-ascii?Q?nQhdZx9KVPaUyxzameGjdA8AhrUFQ4gR8va23yqd4oeeI861JOBlxZafZ4+7?=
- =?us-ascii?Q?HOM4SYL9QyvS1SvL1wHMtFG3+Qkw5E0nPpE40m+pWd6SeXfcAfj5awGRXLco?=
- =?us-ascii?Q?K5JJrfvuc13zxOs8On5XaMi7vb7dmr2xb1bWc2wd7+qWr5E6vVl3eqGd8TRl?=
- =?us-ascii?Q?Nll9Wzyui3CmruZugKoqLWJRKpw5Tlr0vzsba4ZWZT9Ys8MDS5teZir4yVKW?=
- =?us-ascii?Q?uymqZfpZX7HzXyfrU0xRJ5TUs4zUshuLzi4Y3HwrrblKBDDFOBybPG8tr1uo?=
- =?us-ascii?Q?EwhEJ5EH93Y01yYHqGQqJGXGbtweHyZ6EjlYo5Ox478hfvkCzRA7l2NcRU1u?=
- =?us-ascii?Q?TxQFfBvFC2mi9CvhzhihiBXU1EDrZesg9XwAlYYulJq1QNsTT7HMysmiZpI3?=
- =?us-ascii?Q?7aRlSku6cyPRPs4hlY4lxD9LoWRyUsKbIKmRgUgZlDQnGHeCQCqnuel3clET?=
- =?us-ascii?Q?xVWEeMryFBO6sK0H6Kr5XvUGcJrZ/3J6UYBfRFwXdxdbhxvL5LYM6aZyJbRv?=
- =?us-ascii?Q?AgM/696kd7oZMMBvwaNHxB2JEHNuunk9ZKtTl+a+0QCFcRMOxJDkWQwnsQ9s?=
- =?us-ascii?Q?Jn61fnHoI7GUJ+aQl7JxcW2vOgHPdG5fyLSP1TCGOswrlH/Gm0CCx6KL9czF?=
- =?us-ascii?Q?ZwqooazfcnOIN/v/We/yBkgqYGvxlx3SSx4HIduW0irWCj1lvG8eYZPNgzW3?=
- =?us-ascii?Q?g8AXDXW6zTGRr/SXGgtu7pR1pnB0o/VUUlWGoIcetAhQbiCmScH/IgEZ6Jic?=
- =?us-ascii?Q?Na3ckLI+EUDhL1O4Dmflf62seon9b2I3EQ/BuzbMuL3LaeBujJnrWNROnXjq?=
- =?us-ascii?Q?D/+rATdI86Edq8m7Eb4x10Ae7jKs5QelrAuoszwPjZIneyB/L1LGzg+Zy40Q?=
- =?us-ascii?Q?aIKfYE6EZm21c5XNW2eM46WglbaIf/zXYRHvjVuaUL/rNloUHgV/83IpgbW7?=
- =?us-ascii?Q?fGX2WP3ljwm6NRZ9L4RLMoa7206K1cfpuCzFArpMlnL3fTJO5Mf7wm3lnfve?=
- =?us-ascii?Q?/dcI/sZr+NeW122G72PXV39kYk8zPDWdXVqtjFgG32X/zICudcUf6dC2tUWr?=
- =?us-ascii?Q?gSZTL0HkdH2Ggv1tYJYzooGQL2NCvDKnC7Ir7OjhQefpKEOZCO+OFiaVSrV1?=
- =?us-ascii?Q?a2bSP+ZqQCUh0SSmRxHx50w4xocFRMkCiP0IgXgLIbS3UoiztaK4Xu2Zk5+8?=
- =?us-ascii?Q?Sd+4k5ph13yQQKB1WTGpL5ZoPVBkSW8UIvf8JIejAybXWyrRjrzTsmc1pKHu?=
- =?us-ascii?Q?V7CSy1z+2MIaP5bbUygt3tR5mRpK+0QZAPBoeHTp3sLFK3cp8Drw6xeVjrVV?=
- =?us-ascii?Q?z1nDXz0E4D7vWccaAxc=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aa83132f-8c6e-4e8f-ba5e-08dc29bdcaf8
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Feb 2024 22:23:51.2000
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: B24bu6mC//pZ2r7gbNAkZb3QIsGhCA0XSPnBiNf6NiGwwr83Yi1+PXLfr8AQ9uVP
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8511
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] scsi: ufs: qcom: provide default cycles_in_1us value
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, Can Guo <quic_cang@quicinc.com>,
+ Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <andy.gross@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240209-msm8996-fix-ufs-v1-0-107b52e57420@linaro.org>
+ <20240209-msm8996-fix-ufs-v1-2-107b52e57420@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240209-msm8996-fix-ufs-v1-2-107b52e57420@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 09, 2024 at 10:05:38PM +0200, Dmitry Baryshkov wrote:
-> On Tue, 17 Oct 2023 Jason Gunthorpe <jgg@nvidia.com> wrote:
-> > Now that the BLOCKED and IDENTITY behaviors are managed with their own
-> > domains change to the domain_alloc_paging() op.
-> > 
-> > The check for using_legacy_binding is now redundant,
-> > arm_smmu_def_domain_type() always returns IOMMU_DOMAIN_IDENTITY for this
-> > mode, so the core code will never attempt to create a DMA domain in the
-> > first place.
-> > 
-> > Since commit a4fdd9762272 ("iommu: Use flush queue capability") the core
-> > code only passes in IDENTITY/BLOCKED/UNMANAGED/DMA domain types. It will
-> > not pass in IDENTITY or BLOCKED if the global statics exist, so the test
-> > for DMA is also redundant now too.
-> > 
-> > Call arm_smmu_init_domain_context() early if a dev is available.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >  drivers/iommu/arm/arm-smmu/arm-smmu.c | 21 +++++++++++++++------
-> >  1 file changed, 15 insertions(+), 6 deletions(-)
+On 9.02.2024 22:50, Dmitry Baryshkov wrote:
+> The MSM8996 DT doesn't provide frequency limits for the core_clk_unipro
+> clock, which results in miscalculation of the cycles_in_1us value.
+> Provide the backwards-compatible default to support existing MSM8996
+> DT files.
 > 
-> For some reason this patch breaks booting of the APQ8096 Dragonboard820c
-> (qcom/apq8096-db820c.dts). Dispbling display subsystem (mdss) and venus
-> devices makes the board boot in most of the cases. Most frequently the
-> last parts of the log loog in a following way:
+> Fixes: b4e13e1ae95e ("scsi: ufs: qcom: Add multiple frequency support for MAX_CORE_CLK_1US_CYCLES")
+> Cc: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-It is surprising we tested this patch on some tegra systems with this
-iommu and didn't hit anything..
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-The only real functional thing this changes is to move the domain
-initialization up in time, potentially a lot in time in some
-cases. That function does alot of things including touching HW so
-possibly there is some surprising interaction with something else.
-
-So, I would expect this to not WARN_ON and to make it work the same as
-before the patch:
-
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -875,7 +875,9 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
-        mutex_init(&smmu_domain->init_mutex);
-        spin_lock_init(&smmu_domain->cb_lock);
- 
--       if (dev) {
-+       WARN_ON(using_legacy_binding);
-+
-+/*     if (dev) {
-                struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
- 
-                if (arm_smmu_init_domain_context(smmu_domain, cfg->smmu, dev)) {
-@@ -883,7 +885,7 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
-                        return NULL;
-                }
-        }
--
-+*/
-        return &smmu_domain->domain;
- }
-
-Then I'd ask you to remove the comment and do:
-
-@@ -878,7 +878,9 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
-        if (dev) {
-                struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
- 
-+               WARN_ON(true);
-                if (arm_smmu_init_domain_context(smmu_domain, cfg->smmu, dev)) {
-+                       printk("Allocation failure in arm_smmu_domain_alloc_paging()\n");
-                        kfree(smmu_domain);
-                        return NULL;
-                }
-
-
-And then we may get a clue from the backtraces it generates. I only
-saw one iommu group reported in your log so I'd expect one trace?
-
-Thanks,
-Jason
+Konrad
 
