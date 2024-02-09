@@ -1,153 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-10357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE17684FBE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 19:32:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69CF984FBEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 19:34:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5511C28A0F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 18:32:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C8C41C22C76
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 18:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 166B11272B0;
-	Fri,  9 Feb 2024 18:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27B2B53398;
+	Fri,  9 Feb 2024 18:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwctSo9K"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OJiGkqzI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A9D1272A4;
-	Fri,  9 Feb 2024 18:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF0E44C75
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 18:34:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707503501; cv=none; b=SMYjFtkLNdbJa+iU9v+oOJdh0f/tbiUBqUxao0JEh9dgroVIa/nkkWp4b7eY0Dtt+HuKX6qdRv6tgU/3xRPY0dkbDru+sy/oOAVB8sMwnqAhJfTu3McyBwS6kIQZA+u8PICJFm4v2offFsGhS8EfsmE2/hTaA+dAvzXq5pnDBX8=
+	t=1707503666; cv=none; b=BlGl8lGOqcpHKCf0gYISwVtoQ6RFmIYHCW0iz9BblxqriCFZAvZV5vj3yvZtra6W5NBkZA70k5KhVBQfAbKHUzpmo4r7J3jH3O5kYZAT3xHbCxHop4a+xd6490TO7yPR/cyYvBxW1+OwqSsUkZjRskrg3hVjsvoOFMsTJmyqCfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707503501; c=relaxed/simple;
-	bh=2IlRMX/ieZtxo3cdQw6/VrlKIfCnRzjHLu40pTVewHE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lk4H/AoxJbdH6vs9dSkBuQsajLrPzfDvma9OOAv1PTEzH9oZN0sZIK7ytbyG4Qa/ultIYFjnWLr3JOd/XjWhZA3m4LQLE180IlM0LrH8YRhqIgY3io0zNuq0Orv5JOrmGaBujjBEWsbwCc5Dkxre28deIyyQX3x8K4mC7BSVzX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwctSo9K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A52C43394;
-	Fri,  9 Feb 2024 18:31:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707503500;
-	bh=2IlRMX/ieZtxo3cdQw6/VrlKIfCnRzjHLu40pTVewHE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwctSo9KPwrHWOplC+5/FYlnyyjRlGoxxhTeJNxK4sYB8TBw/HJprLy4bYSHDriOo
-	 H1PUEmhNIlkZV4L85E5/8hOzjGc8MzoGd8wb4YwckaBc1nJ/00Kiez0QDL8KHpa4S0
-	 WJ8FZLTBBO6p4apt6VI1GjFAU2f4Cnf2fBYmQ2kK4LLjh78Honq2VDmFJkiZWe5a+h
-	 PS35cl4ywVzlFSXZqJspacolT1aswK3+W61ctNtSfvOR2npoyr4NWX3+kAB5hoW5AS
-	 Tu+dkU8L3bpKs+HTY2SjolAR1CIICdNgZDQebquy6x4/nFpHXkLrlw2MJwELBxS0Pc
-	 DIiJZEDgSBy3A==
-From: Will Deacon <will@kernel.org>
-To: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Rutland <mark.rutland@arm.com>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Khuong Dinh <khuong@os.amperecomputing.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Frank Li <Frank.li@nxp.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	linux-kernel@vger.kernel.org,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>
-Subject: Re: [PATCH 00/18] perf: Convert to platform remove callback returning void
-Date: Fri,  9 Feb 2024 18:31:13 +0000
-Message-Id: <170749437153.2624333.6691453190868131616.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1702648124.git.u.kleine-koenig@pengutronix.de>
+	s=arc-20240116; t=1707503666; c=relaxed/simple;
+	bh=S6m3vL6QyXZsDjDbZr7SYaadL67hmjMcaurDmZvXreQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uXpTu218r+PsZNuOMZfKgvZWiuTMW62J83JyiSw+9jV0bKz7WJ/WMJVAnSCpI3sW25j91eHBuPA9fjTVFr8DLUSZU/h1Y6ZmtlhiZ4lKsRE9gLwajF49NoW7YybRdMzhqOWaUsQpzCpWJ3VbCOZl3FuroQIttMfY9PDhc4YJp3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OJiGkqzI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 419IUA2R003482;
+	Fri, 9 Feb 2024 18:34:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=S6m3vL6QyXZsDjDbZr7SYaadL67hmjMcaurDmZvXreQ=; b=OJ
+	iGkqzI8gUuaoLbqOBpFt7ZGOQhG3mAS3DiFKr5PrRK721CXs4xHwmZiuZRZfLEJA
+	EDdxdzRIj8qOLdMRXCv0oPNKGQTsSaanZDtVFsApRihCHtRxQ8lPrqJEIqX0pyZP
+	80/mN+yU4fSE4ts/En4tXLGqhVA7kL6QZ6aXD/9HGHnjk4v1s/RQmNPmuLLA/EfF
+	Darz0wZg5psnqHB+Ol502MiNLscqBozp2TAGbEhOFb9EYXannXlmLhTEifKAi36+
+	OTfM5JVPrzqFlwffBE1+Wd6rQTQKmH9reUHUY1QrB9OBsTjPPtIPBaQguPGT5Qki
+	/QJVuPNw3gct3ijFWODQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w4rk84s0h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Feb 2024 18:34:17 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 419IYDG4029053
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 9 Feb 2024 18:34:13 GMT
+Received: from [10.110.105.190] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 9 Feb
+ 2024 10:34:12 -0800
+Message-ID: <047c2ca6-ef4a-a912-3d17-df56e5bd4657@quicinc.com>
+Date: Fri, 9 Feb 2024 10:34:12 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 5/5] drm/msm/dpu: drop
+ dpu_encoder_phys_ops::atomic_check()
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-0-caf5dcd125c0@linaro.org>
+ <20240208-fd_remove_phys_ops_atomic_mode_set-v4-5-caf5dcd125c0@linaro.org>
+From: Paloma Arellano <quic_parellan@quicinc.com>
+In-Reply-To: <20240208-fd_remove_phys_ops_atomic_mode_set-v4-5-caf5dcd125c0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GN-IVNZU2GDXl6XZCGsBjpOJDx2XKp-7
+X-Proofpoint-ORIG-GUID: GN-IVNZU2GDXl6XZCGsBjpOJDx2XKp-7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-09_16,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 impostorscore=0 mlxlogscore=701 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402090135
 
-On Fri, 15 Dec 2023 14:59:00 +0100, Uwe Kleine-König wrote:
-> this series converts all drivers below drivers/perf to use
-> .remove_new(). See commit 5c5a7680e67b ("platform: Provide a remove
-> callback that returns no value") for an extended explanation and the
-> eventual goal. The TL;DR; is to make it harder for driver authors to
-> leak resources without noticing.
-> 
-> I based the patches on today's next, I had to revert commits
-> 3115ee021bfb ("arm64: perf: Include threshold control fields in
-> PMEVTYPER mask") and 816c26754447 ("arm64: perf: Add support for event
-> counting threshold") to compile test on ARCH=arm (this is a problem in
-> next, not in my patch series).
-> 
-> [...]
 
-Applied to will (for-next/perf), thanks!
+On 2/8/2024 7:20 AM, Dmitry Baryshkov wrote:
+> Writeback was the last user of dpu_encoder_phys_ops's atomic_check()
+> callback. As the code was moved to the dpu_writeback.c, the callback
+> becomes unused. Drop it now.
+>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[01/18] perf: alibaba_uncore_drw: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/3bc9d71775ee
-[02/18] perf: amlogic: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/94843f269abd
-[03/18] perf: arm-cci: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/4df3bddf8707
-[04/18] perf: arm-ccn: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/0767f1a48532
-[05/18] perf: arm-cmn: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/3909cb3b5f8d
-[06/18] perf: arm_cspmu: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/79dc1570b322
-[07/18] perf: arm_dmc620: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/ca1e01c8d34a
-[08/18] perf: arm_dsu: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/02d77ac1ac7e
-[09/18] perf: arm_smmuv3: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/d67c3a61f063
-[10/18] perf: arm_spe: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/e63b3aef186b
-[11/18] perf: fsl_imx8_ddr: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/1bb639382d3f
-[12/18] perf: fsl_imx9_ddr: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/78da2a93b55b
-[13/18] perf: hisilicon: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/e07486a832bb
-[14/18] perf: marvell_cn10k_ddr: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/c802bd9e354f
-[15/18] perf: marvell_cn10k_tad: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/86e8963f9dba
-[16/18] perf: qcom_l2: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/8a2e438e710c
-[17/18] perf: thunderx2: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/d4c5cef73b25
-[18/18] perf: xgene: Convert to platform remove callback returning void
-        https://git.kernel.org/will/c/b07ebe8f1428
 
-Cheers,
--- 
-Will
+Tested-by: Paloma Arellano <quic_parellan@quicinc.com>
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+
 
