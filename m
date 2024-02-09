@@ -1,90 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-10318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96B5F84F1C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 09:55:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4E8584F1DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 10:04:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C93491C24016
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 08:55:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CA811F2909E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 09:04:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8692F664B4;
-	Fri,  9 Feb 2024 08:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="tOzjRwCT"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EC44664B9;
+	Fri,  9 Feb 2024 09:04:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC37664AC;
-	Fri,  9 Feb 2024 08:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E37664BD;
+	Fri,  9 Feb 2024 09:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.240
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707468897; cv=none; b=k8AYCT1OA/2dH8KttWuuPWws13sXjZxAFt1pWGDxcNtQyg6aukukO9n8Hy5/OVGWmFs+O66q8Tjn1MTJ+NGjnBwRVtJYi6VhW1ks01wIX6wPCdBfQsMd+fhhXg4edrt7SD4gtc+mf552x/UdjHThfXweQAEZL2NqVUi/7v61kio=
+	t=1707469479; cv=none; b=Ek/COwWCJGeT4MKX70+zsFGyBYoRgcBBnpM/3GLdDpZKkASb95FsABiXZfPN501vkayXSA4aXAGmGnVOu1euTiH5nejrQ62uAcn4zCjTNXZLAj9JoTDB48ga3TDlrW1KaFWf0IL3Zhr1y6+rJLMXRf2OBRgleG0PWzT+50B17I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707468897; c=relaxed/simple;
-	bh=J3H5m350c/j2c/Zrss1AfOjAUuFtB5wq5BaVux2rSjY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WmBD/enBprRxylNbl9UZAqa/5k2EmsKXRoRm51f2ZVGTqMtcNKs09GsZpb3MOfRqWiHN6SeLihZsZdmpWMrW6mO/cO8n14cFmU6SC0kIGqk9RUOakeK9Zr2sOwBPHZoLHaeIoQCJ2CkidtUvhfLE9BvOAdZzq4Kic/u2BpIlHMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=tOzjRwCT; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1707468894;
-	bh=J3H5m350c/j2c/Zrss1AfOjAUuFtB5wq5BaVux2rSjY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tOzjRwCTskl0m39IDIy/L/aNlDlFkIu4falBaJCTSLVxNjbhVBFAfjotBZayI7yAz
-	 5FYMpzOaroeI4ItVolGfhqDGRHV1WfBoqstg5R5DuharkhrTTbURPDe9cVMcu1V/U0
-	 4OLnF7yC0H7CiauX9PQDfkrX3WS1eMo9fBRB3d/JM0T/BVSYPR+uoSrJetjqF3dZHq
-	 Uesux8liqjHnrV3rcLEX5KQnFbubuj4H1oRwmNRDTmElqlDARWlMVxUcW1wPB1v3Lj
-	 yF4fcj+cAjqyJ4SjvKaMX36BDWeyLxgdGt1SrWf9F8/Afnj3OIKJyp7qC+9DOpueFh
-	 ilrPLanSsSo3Q==
-Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 6107737809D0;
-	Fri,  9 Feb 2024 08:54:53 +0000 (UTC)
-Message-ID: <90e0e76c-7bc9-4aa3-8d5e-4fe96c2687e4@collabora.com>
-Date: Fri, 9 Feb 2024 09:54:53 +0100
+	s=arc-20240116; t=1707469479; c=relaxed/simple;
+	bh=WDlbkaEhExeSC6m6O4mA/Olpggr5HL955m2MFzYt5XY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZJmWwd5+C39B15Eans5KmeXgbzk5+vcU67kVXZKmpTE1FnazAoJT+aniAfVZLJnZpv942J+Fz0+NBziwP9PJPnn0CaVVtjbagMs8olWoDQmPw1l/X7QX41ZZiaV0TS+iiQ0dFVOv3o5K7CJwRWv2/VZdzwUNa4inLZ0HDDb8lZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.78.240
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout2.hostsharing.net (Postfix) with ESMTPS id 352F72800C91D;
+	Fri,  9 Feb 2024 10:04:33 +0100 (CET)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 240BE4E7B09; Fri,  9 Feb 2024 10:04:33 +0100 (CET)
+Date: Fri, 9 Feb 2024 10:04:33 +0100
+From: Lukas Wunner <lukas@wunner.de>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: Re: [RFC 8/9] PCI/pwrctl: add PCI power control core code
+Message-ID: <20240209090433.GA18651@wunner.de>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
+ <20240201155532.49707-9-brgl@bgdev.pl>
+ <7tbhdkqpl4iuaxmc73pje2nbbkarxxpgmabc7j4q26d2rhzrv5@ltu6niel5eb4>
+ <CAMRc=Md1oTrVMjZRH+Ux3JJKYeficKMYh+8V7ZA=Xz_X1hNd1g@mail.gmail.com>
+ <2q5vwm7tgmpgbrm4dxfhypbs5pdggprxouvzfcherqeevpjhrj@6wtkv4za2gg5>
+ <CAMRc=MfsdsD4f3sC-BnR_sqvaHNEKWCZ+Xe+-ZhLU8vFYA06=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/19] power: reset: mt6323-poweroff: Use
- devm_register_sys_off_handler(POWER_OFF)
-Content-Language: en-US
-To: Andrew Davis <afd@ti.com>, Sebastian Reichel <sre@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Sean Wang
- <sean.wang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
-References: <20240208170410.67975-1-afd@ti.com>
- <20240208170410.67975-12-afd@ti.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20240208170410.67975-12-afd@ti.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MfsdsD4f3sC-BnR_sqvaHNEKWCZ+Xe+-ZhLU8vFYA06=w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Il 08/02/24 18:04, Andrew Davis ha scritto:
-> Use device life-cycle managed register function to simplify probe and
-> exit paths.
+On Wed, Feb 07, 2024 at 05:26:16PM +0100, Bartosz Golaszewski wrote:
+> On Fri, Feb 2, 2024 at 5:52???PM Bjorn Andersson <andersson@kernel.org> wrote:
+> > On Fri, Feb 02, 2024 at 10:11:42AM +0100, Bartosz Golaszewski wrote:
+> > > I was also thinking about pci_pwrctl_device_ready() or
+> > > pci_pwrctl_device_prepared().
+> >
+> > I like both of these.
+> >
+> > I guess the bigger question is how the flow would look like in the event
+> > that we need to power-cycle the attached PCIe device, e.g. because
+> > firmware has gotten into a really bad state.
+> >
+> > Will we need an operation that removes the device first, and then cut
+> > the power, or do we cut the power and then call unprepared()?
 > 
-> Signed-off-by: Andrew Davis <afd@ti.com>
+> How would the core be notified about this power-cycle from the PCI
+> subsystem? I honestly don't know. Is there a notifier we could
+> subscribe to? Is the device unbound and rebound in such case?
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+To power-manage the PCI device for runtime PM (suspend to D3cold)
+or system sleep, you need to amend:
 
+  platform_pci_power_manageable()
+  platform_pci_set_power_state()
+  platform_pci_get_power_state()
+  platform_pci_refresh_power_state()
+  platform_pci_choose_state()
 
+E.g. platform_pci_power_manageable() would check for presence of a
+regulator in the DT and platform_pci_set_power_state() would disable
+or enable the regulator.
+
+To reset the device by power cycling it, amend pci_reset_fn_methods[]
+to provide a reset method which disables and re-enables the regulator.
+Then you can choose that reset method via sysfs and power-cycle the
+device.  The PCI core will also automatically use that reset method
+if there's nothing else available (e.g. if no Secondary Bus Reset
+is available because the device has siblings or children, or if FLR
+is not supported).
+
+Thanks,
+
+Lukas
 
