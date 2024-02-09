@@ -1,184 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-10336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7677284F83C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:10:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED6BC84F848
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 16:14:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76D3B1C2439B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 15:10:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D228D2825EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Feb 2024 15:14:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3041D6DD1E;
-	Fri,  9 Feb 2024 15:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 053DA6EB4A;
+	Fri,  9 Feb 2024 15:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="u3hVr4aS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sa2vrYdZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC632E3F9
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 15:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EC66A018
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Feb 2024 15:14:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707491423; cv=none; b=sdo3md11lQ4dvPd7mWgUZ4kN1nKyE/v0XVV5chY/vlcqoeJkRIDEKvIKtlTUlsb9+FC/C+9RvNjDTH8ufCquovRKw8svO+mQUekSTS9AaM97moelHReNbetd/qm/Yn7QTJQB4rYGVU+77lf1R3EwLZhksFoy+hlglzlmigOxdPE=
+	t=1707491663; cv=none; b=Yf/wdwCzrQsxa2tbPf0fBfj+sMiK11g2SUY3CG6UoJThwsdkFAyrF9IL/M6UJ9w2EXhXrq/ZWQDngnDoAy0WEaUM+tNwEvJGb/zK7ZWbY0fy8qPVCcbQtKDq6pgKkq+o+zeR/MmDbSpG7XXQ20Av43vPyE4IAPC4HJGFOyrvmuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707491423; c=relaxed/simple;
-	bh=qtUK2RUPjq9zDcyg4Ds+2K42jq2xEZ+Gn6WwDqcikrs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=nS10Jb1QRC3/kGmvSCCRYyZcyZXjn0/r3auGCOngxb4rwbtX8QUXZwGVLCylJEY3OMapxzuK4qQHj5dgFUuxToq2rGiCvnCiFqAJbwxKlax4mzYE6rl036+i+h0WAt4f1rshKHgCP4rWwGK3RcCa/FXCyWO35eNjYU1ooe6Eyxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca; spf=none smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=u3hVr4aS; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ndufresne.ca
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-783f3d27bfbso46061485a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 07:10:20 -0800 (PST)
+	s=arc-20240116; t=1707491663; c=relaxed/simple;
+	bh=JnQWgOa5RsKDLidoGwqHhBQEnjeKf7MhKMdfRKVLKYE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=k2Llu47GoKsZldDVF4IsOdG1JTOs8Avd1FQa57qx/7MbE8JtHVrbrYGt+XPdhxHzkzv+p0xVl6ukkcUrCWiC6dFoEGAJRJmUdbPuXG+Rn1rsjwGc12px03f80wgYQ4oA8sXemjSO8TRRLsFV3iITeJTPIfU0pWFxJu3QHSQfPtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sa2vrYdZ; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-55c2cf644f3so1486975a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Feb 2024 07:14:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1707491420; x=1708096220; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5jZoYn0SqLJVfeFn7JEaR0g9woQE+L+0Od2YAlUn5xo=;
-        b=u3hVr4aSeiXDVV7KEL5xBT7b+XrKLOH6eKjBD2ik/2BnKFAMhbFVVK6/zy/XrD2ix6
-         /oLrNPGsxbP3CrJX6SqJOUqosP8+Cuk2gBS+Iu2ypZ1Z2uxflChDm0FqmqkAE4IK2OMr
-         UPSTcsEY/07o90eWGpHKXPe2BJVZBm/j9jaAAs6GZ2ozeKmxWW+ADp6JgNAluj6MCKkU
-         v0RRVrEeW/Xh9gb8WNI+2gPom795eFxHPIYYnNXVHYf6weXIYaizYhHxYR8eWwB8Tl24
-         tyVvnS1TaNPfH9IcjljlbxaJwCYi4a8OeceEifZLAzUosHVp9l1m8mFA1mE3EWWc9mru
-         fygg==
+        d=linaro.org; s=google; t=1707491660; x=1708096460; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ssqSDwTHA+Cg2ijKB5pjXoS992iHVcyLNIc1aZBV/UQ=;
+        b=Sa2vrYdZk0+AltfAYcoM1y+ILrLWI8DtlALn953YzoZhLvqTzkZaMQh0HBGsYp2k8C
+         6lLVJr5v8qdupSDvImDp32HuFjTINoBsYdxIYVvCbPAanQgzGlnSfL2ZzccCKbsnd1vx
+         Kq3ej4cPygn5PbqKDviPcbFFubK93WSHzCyYOoRHrP0eD2DZAImM4TGmIkCJVv87wCHz
+         DtWyVT/6b50f+ewHv4hG0dlGUYjxz67wJTjw9EnqbZDDrTGoGQ7a4pc9LdN6xPNgpovu
+         QczPq1LQgPYuCj/gHMjo+b0vEkjTqkRpVCq4j1M+eSVa2+TAf2g9WfNs5jaY5sf8q+Kn
+         ooiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707491420; x=1708096220;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5jZoYn0SqLJVfeFn7JEaR0g9woQE+L+0Od2YAlUn5xo=;
-        b=DbVJ0q+5GrR2QvA5Rb9Wh3/IZIscgbMFZRiHU8fauuvjhGytwfslIA0h81pRWlmTsu
-         VtMLXMuPGYGp82dDDmhz4HgK8CDj0HBseXwisCFLbFiHkRo6NwLUzCD6c03gF+RtpNZA
-         8ZUxJN9ecmey3qEax2otzv+SeULMz0oFRNGu3pWrRzSBlIsTMZS+vdevBsLznBorVrPc
-         tymxZRZ9MVItSBCR5CD+h1E/xntaIS8AMdcFNhRyNxz7XymnbWFEuw0eq+a7Xc1d4RfL
-         fRSvJ9LN2lMGIkkx301BRIMlRalNSAUQ7wTw0jERfhm1uVrOqyRP1OjVJuLA1kPVnoCq
-         IZuQ==
-X-Gm-Message-State: AOJu0Yw9mPhEGPTC+SF+GlP1IDhi0YifQd7qhpGp3rdpEbBHQM6cIL9y
-	tek2uA3oXDaQZeD2iGQae2KyUSYsHEO9+O/vD0c+KBhtEZ0VVRww+EvCuSIa1Kw=
-X-Google-Smtp-Source: AGHT+IGJujCOaBUh3+oOR5ApSS6lvEa3a0jxNEBbqxn0JlqDSpYkF/buTzCRYwtvZMYQKa3lmxc9mw==
-X-Received: by 2002:a05:620a:268b:b0:785:9516:e18e with SMTP id c11-20020a05620a268b00b007859516e18emr2146194qkp.74.1707491419707;
-        Fri, 09 Feb 2024 07:10:19 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVvDdCfhFiryxWiYoJ2gBpV2oU/ctUCfE12dXwi2MCN5uEKO+MzA6EyjHUcEdauLIMu/Dhu39NM91HuTSdFlFqTQs1uigFEsJ6VdHtifb1WG2boHZV++LMH5/2PlduQGZ3Xfo1GPPUtLjAu5SuBx104V6/YlQ1W90oJH4QK0wlM9/zB6kMw2p03qMVMgU5F06FYfv1e9g96JfriQzsgfAYpSyHC9t7+4u5JN4JhhSTVJ+LGFW3tye2eH8mqomknTNbUylun83aBCPrvRImIZojgO2ICF6CFEp7FGQODOLSI1Q8RY6oFzQXAhAniujYJyIhgxQcCMdtuFQeTgIyos4CO0NJ9Vvs/zc9BjxzWtjWcHlG1bOs/uFri+QsOP8IBcRsNtBnBLoLTAVb0eu97DUt80Vcr
-Received: from nicolas-tpx395.localdomain ([2606:6d00:11:3354::7a9])
-        by smtp.gmail.com with ESMTPSA id c6-20020a05620a0ce600b0078565ed2bc6sm790938qkj.124.2024.02.09.07.10.18
+        d=1e100.net; s=20230601; t=1707491660; x=1708096460;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ssqSDwTHA+Cg2ijKB5pjXoS992iHVcyLNIc1aZBV/UQ=;
+        b=gSYntHni11TQ3CJamB9I6D6F8eOy7Z/pl/Elw5QI+EyUGMLwNPfxC/PiBgUkWWV1PA
+         RbliULihSjh/PeHRyCcBPfF6on7gNZVduV2hkdoG0uO3p9+LZuFzjvXG4qv6C/ifBf6K
+         ExuPh+lDLBxvcqZhB93rT5GIyB6BdG7ywzFitUZHb1T8Vp53qfYVBvkGjMgl9tfrvZ+2
+         W0DEbkx+glKNUlixiIem16iW1uLlOG4v62EGMpKwJiN3G4h+XDHLTn4ZjGBceFCTw+lv
+         b/j1EpSAaIi5f67SoaNXJkJ17eyBhaEyGy88AG3jr8oC4iKrtkKEmj9JzsoSYzSg+AwD
+         jE5Q==
+X-Gm-Message-State: AOJu0Yz5A/C542ZjQApg0Cuqh46pKbkbI54jhuucXMz1uAYd5NYbFTS8
+	AJgiSf1GY7MITrnqp/wndMIz8Dv3lnSWmyaSfYUGNF50KqsXbQB78az54PrOTGc=
+X-Google-Smtp-Source: AGHT+IHu9PVQg/r3sWuJHx1k2qkljpt+JWg2pF6vB0xvRGdbHye6OBmqU3LXCloNZ8Tem8RH0C6CTA==
+X-Received: by 2002:a05:6402:5172:b0:560:1c4:cb31 with SMTP id d18-20020a056402517200b0056001c4cb31mr1769965ede.17.1707491660328;
+        Fri, 09 Feb 2024 07:14:20 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXmZi9YsbyFKpWiZF4EXJr6enGQRn8co107vnc7hb4OYlCmiE4G/sQCGNg3B0WgqNPmQw8MkwSQGzK8cWdouIv5MedArdXKISw9tRbzTsTEnL47/a7m8HQMskWg06/CLDm5qGKJT/hSfzHG0PRDOevZjKwaeDh4s7FUmbTa3a4KWyg6A6uF7I1fRbsDE1anVtXsYiGNu8x8GjqoYbN27J3ZlipLfx1tKxSzqudwO7xonA7Y98S62U6ig6zQundfkGpJKNAQNnxcfr3c0xVov38Vh7r4iHt3UFhcYBvGYC8euYAz0KHx14VK43Z/Wk1t2LJXYe6Pt/arKH3+b7XA6rwNzlUzQmDLhm1mRcTFYGpiuHz80ShKE/lmk1GANu8hRziZP4+a2Q==
+Received: from [127.0.1.1] ([62.231.97.49])
+        by smtp.gmail.com with ESMTPSA id k6-20020a05640212c600b0055ef56f4575sm860240edx.39.2024.02.09.07.14.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Feb 2024 07:10:18 -0800 (PST)
-Message-ID: <7322a22591ab18a664c9b6fa07957a163fceaa2d.camel@ndufresne.ca>
-Subject: Re: [PATCH v2 1/2] media: v4l2-ctrls: add encoder maximum bitrate
- control
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Sachin Kumar Garg <quic_sachinku@quicinc.com>, hverkuil-cisco@xs4all.nl,
-  Mauro Carvalho Chehab <mchehab@kernel.org>, Stanimir Varbanov
- <stanimir.k.varbanov@gmail.com>,  Vikash Garodia
- <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>, Bjorn
- Andersson <andersson@kernel.org>,  Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Date: Fri, 09 Feb 2024 10:10:17 -0500
-In-Reply-To: <20240130112400.2636143-2-quic_sachinku@quicinc.com>
-References: <20240130112400.2636143-1-quic_sachinku@quicinc.com>
-	 <20240130112400.2636143-2-quic_sachinku@quicinc.com>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual; keydata=mQGiBEUQN0MRBACQYceNSezSdMjx7sx6gwKkMghrrODgl3B0eXBTgNp6c431IfOOEsdvkoOh1kwoYcQgbg4MXw6beOltysX4e8fFWsiRkc2nvvRW9ir9kHDm49MkBLqaDjTqOkYKNMiurFW+gozpr/lUW15QqT6v68RYe0zRdtwGZqeLzX2LVuukGwCg4AISzswrrYHNV7vQLcbaUhPgIl0D+gILYT9TJgAEK4YHW+bFRcY+cgUFoLQqQayECMlctKoLOE69nIYOc/hDr9uih1wxrQ/yL0NJvQCohSPyoyLF9b2EuIGhQVp05XP7FzlTxhYvGO/DtO08ec85+bTfVBMV6eeY4MS3ZU+1z7ObD7Pf29YjyTehN2Dan6w1g2rBk5MoA/9nDocSlk4pbFpsYSFmVHsDiAOFje3+iY4ftVDKunKYWMhwRVBjAREOByBagmRau0cLEcElpf4hX5f978GoxSGIsiKoDAlXX+ICDOWC1/EXhEEmBR1gL0QJgiVviNyLfGJlZWnPjw6xhhmtHYWTDxBOP5peztyc2PqeKsLsLWzAr7RDTmljb2xhcyBEdWZyZXNuZSAoQi4gU2MuIEluZm9ybWF0aXF1ZSkgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPohgBBMRAgAgBQJFlCyOAhsDBgsJCAcDAgQVAggDBBYCAwECHgECF4AACgkQcVMCLawGqBwhLQCgzYlrLBj6KIAZ4gmsfjXD6ZtddT8AoIeGDicVq5WvMHNWign6ApQcZUihtElOaWNvbGFzIER1ZnJlc25lIChCLiBTYy4gSW5mb3JtYXRpcXVlKSA8bmljb2xhcy5kdWZyZXNuZUBjb2xsYWJvcmEuY28udWs+iGIEExECACIFAkuzca8CGwMGCwkIBwMCBhUIAgkKCwQWA
- gMBAh4BAheAAAoJEHFTAi2sBqgcQX8An2By6LDEeMxi4B9hUbpvRnzaaeNqA J9Rox8rfqHZnSErw9bCHiBwvwJZ77QxTmljb2xhcyBEdWZyZXNuZSA8bmljb2xhcy5kdWZyZXNuZUBjb2xsYWJvcmEuY29tPohiBBMRAgAiBQJNzZzPAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBxUwItrAaoHLlxAKCYAGf4JL7DYDLs/188CPMGuwLypwCfWKc9DorA9f5pyYlD5pQo6SgSoiC0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPohiBBMRAgAiBQJVwNwgAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBxUwItrAaoHCZ4AJ0QwU6/G4c7h9CkMBT9ZxGLX4KSnQCgq0P7CX7hv/M7HeyfMFZe8t3vAEW0RE5pY29sYXMgRHVmcmVzbmUgKEIuIFNjLiBJbmZvcm1hdGlxdWUpIDxuaWNvbGFzZEBibHVlc3RyZWFrdGVjaC5jb20+iGAEExECACAFAkZjGzoCGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRBxUwItrAaoHBl7AJ0d2lrzshMmJaik/EaDEakzEwqgxQCg0JVZMZm9gRfEou1FvinuZxwf/mu0R05pY29sYXMgRHVmcmVzbmUgKEIgU2MuIEluZm9ybWF0aXF1ZSkgPG5pY29sYXMuZHVmcmVzbmVAdXNoZXJicm9va2UuY2E+iGAEExECACAFAkUQN0MCGwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRBxUwItrAaoHPTnAJ0WGgJJVspoctAvEcI00mtp5WAFGgCgr+E7ItOqZEHAs+xabBgknYZIFPW5Ag0ERRA3UhAIAJ0rxl2HsVg/nSOAUt7U/T/W+RKzVAlD9orCB0pRVvyWNxSr8MHcH
- mWCxykLuB34ouM4GuDVRKfGnqLzJRBfjs7Ax9K2FI3Odund9xpviLCt1jFC0K XL04RebrFT7xjDfocDaSLFvgxMVs/Jr2/ckKPId1oKvgYgt/o+MzUabKyFB8wIvq4GMtj3LoBKLCie2nCaSt7uVUt6q2t5bNWrd3lO6/mWn7YMc5Hsn33H9pS0+9szw6m3dG08eMKNueDlt72QxiYl2rhjzkT4ltKEkFgYBdyrtIj1UO6eX+YXb4E1rCMJrdjBSgqDPK1sWHC7gliy+izr+XTHuFwlfy8gBpsAAwUIAJJNus64gri4HAL632eqVpza83EphX1IuHzLi1LlMnQ9Tm7XKag46NhmJbOByMG33LwBsBdLjjHQSVkYZFWUifq+NWSFC/kqlb72vW8rBAv64+i3QdfxK9FWbweiRsPpvuHjJQuecbPDJpubLaxKbu2aqLCN5LuHXvdQr6KiXwabT+OJ9AJAqHG7q4IEzg4RNUVn9AS6L8bxqMSocjqpWNBCY2efCVd/c6k4Acv6jXu+wDAZEbWXK+71uaUHExhigBYBpiHGrobe32YlTVE/XEIzKKywhm/Hkn5YKWzumLte6xiD9JhKabmD7uqIvLt2twUpz4BdPzj0dvGlSmvFcaaISQQYEQIACQUCRRA3UgIbDAAKCRBxUwItrAaoHJLyAKDeS3AFowM3f1Y3OFU6XRCTKK2ZhwCfT/7P9WDjkkmiq5AfeOiwVlpuHtM=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
+        Fri, 09 Feb 2024 07:14:19 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] phy: qcom: eusb2-repeater: Add support for SMB2360
+Date: Fri, 09 Feb 2024 17:14:08 +0200
+Message-Id: <20240209-phy-qualcomm-eusb2-repeater-smb2360-v1-0-af2ca4d95a67@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEBBxmUC/x2NywrCMBAAf6Xk7EKykSL+injIY2sCSVp3jSil/
+ 27wOHOY2ZUQZxJ1nXbF9M6S1zbAnCYVkmsPghwHK9RojUGELX3h2V0Ja61AXTwC00buRQxSPdp
+ Zg9NLnHW0FwxnNUreCYFn10IardZLGXJjWvLnv77dj+MHSpZdtIoAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=674; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=JnQWgOa5RsKDLidoGwqHhBQEnjeKf7MhKMdfRKVLKYE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlxkFCjPFNGqQEAHDMm8un4UpzIPoMi/I8tkss3
+ P6g/EWAxs2JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZcZBQgAKCRAbX0TJAJUV
+ VkwJEAC5puaTIct3iYSEkrfTs/4Q04IUUS2TENsfwEEq39VB0Znx7YbU4aMr68tgNt4eVTLtRy+
+ aCqGdYGN1TCAHHn4VutMZLuh2tbzKwTtWUga8XGCDknU9hdZSrmiSI8z69eg8Qda4AW0CVWWhtA
+ 6RpCH/uRyoaV+M0pZQZOvnRn2O9enAwM52BCryNx+NyyZHUGa8E7+fYPuYe89oPUlE7MB2XRjkE
+ w97PvUNwRMJabXmdbTcvBwZblyP1x4Vi+nBWs/4AjEEZ7IAbeoS27AG+C3gp020VCS13hTWuOfP
+ d8JkrxTMB73pvnSXcsEMvo9fL6l/98LPLQon/a5XYuNxE0AaYXdB0trdS6WA4PzYwWeTfZbagyI
+ JCEtBTIA06tjEYZknf+QyLL9feXyLczCSrZRgnimIp64uWobxZbIeQ7jSMvRY4WGniBXZgAUTBL
+ 2PtvRlPGUlmbC6aYl1ZzavmmDDtzwOj36q5raxkTPcmrmkMlnUd2Orn33/1hcsIx1ngBS7ftbfh
+ BelVrvQUDjj7Y98Zz1UYsF7c9lpsXjP3DHYqOz8Ko2yn8M+zryURDlTQs0T140stp7g+kPq/dAA
+ e+AzKiU8zAxa3hGhnOEoVL1m6bpJMbkKabmdJerSmx9j88zxyPOQclHNBmS/MkKNIJj4B6v5RWl
+ 5nkQ1urMr/baffQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Hi Scahin,
+This patchset adds support for the eUSB2 repeater provided
+by the SMB2360 PMICs.
 
-Le mardi 30 janvier 2024 =C3=A0 16:53 +0530, Sachin Kumar Garg a =C3=A9crit=
-=C2=A0:
-> Introduce V4L2_MPEG_VIDEO_BITRATE_MODE_MBR rate control to
-> limit the frame level maximum bit rate.
-> Encoder will choose appropriate quantization parameter and
-> do the smart bit allocation to set the frame maximum bitrate
-> level as per the Bitrate value configured.
->=20
-> Signed-off-by: Sachin Kumar Garg <quic_sachinku@quicinc.com>
-> ---
->  Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst | 2 ++
->  drivers/media/v4l2-core/v4l2-ctrls-defs.c                 | 1 +
->  include/uapi/linux/v4l2-controls.h                        | 1 +
->  3 files changed, 4 insertions(+)
->=20
-> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/=
-Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> index 2a165ae063fb..05ef4a70e3f5 100644
-> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
-> @@ -576,6 +576,8 @@ enum v4l2_mpeg_video_bitrate_mode -
->        - Constant bitrate
->      * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_CQ``
->        - Constant quality
-> +    * - ``V4L2_MPEG_VIDEO_BITRATE_MODE_MBR``
-> +      - Maximum bitrate
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      dt-bindings: phy: qcom,snps-eusb2-repeater: Add compatible for SMB2360
+      phy: qualcomm: phy-qcom-eusb2-repeater: Add support for SMB2360
 
-I'm afraid for this one your documentation is too short. I believe your com=
-mit
-message helps, but this is not what our uAPI users will read.
+ .../bindings/phy/qcom,snps-eusb2-repeater.yaml          |  1 +
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c          | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
+---
+base-commit: 445a555e0623387fa9b94e68e61681717e70200a
+change-id: 20231122-phy-qualcomm-eusb2-repeater-smb2360-a0fd60d382c4
 
-My understanding is that this feature is a form of constant quality (smart =
-bit
-allocation) but with a maximum rate guaranty. Using a specific mode (rather=
- then
-a constraint on top of a constant quality mode) is a Qualcomm specific desi=
-gn. I
-think presets are generally easier to use, so I kind of like it. What is mi=
-ssing
-(arguably all these modes documentation are also missing it) is the rate
-observation window. Would be nice to check if there is a way to specify tha=
-t (or
-even configure it, if so add a cross reference).
-
-So I'd like to see some proper documentation for this one, remember that V4=
-L2
-documentation is also a specification and will serve to ensure drivers conf=
-orms
-to the preset expectations.
-
-regards,
-Nicolas
-
-> =20
-> =20
-> =20
-> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c b/drivers/media/v4=
-l2-core/v4l2-ctrls-defs.c
-> index 8696eb1cdd61..e0597b61ffb9 100644
-> --- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
-> +++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
-> @@ -154,6 +154,7 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->  		"Variable Bitrate",
->  		"Constant Bitrate",
->  		"Constant Quality",
-> +		"Maximum Bitrate",
->  		NULL
->  	};
->  	static const char * const mpeg_stream_type[] =3D {
-> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2=
--controls.h
-> index 99c3f5e99da7..7c74d6c417d1 100644
-> --- a/include/uapi/linux/v4l2-controls.h
-> +++ b/include/uapi/linux/v4l2-controls.h
-> @@ -393,6 +393,7 @@ enum v4l2_mpeg_video_bitrate_mode {
->  	V4L2_MPEG_VIDEO_BITRATE_MODE_VBR =3D 0,
->  	V4L2_MPEG_VIDEO_BITRATE_MODE_CBR =3D 1,
->  	V4L2_MPEG_VIDEO_BITRATE_MODE_CQ  =3D 2,
-> +	V4L2_MPEG_VIDEO_BITRATE_MODE_MBR =3D 3,
->  };
->  #define V4L2_CID_MPEG_VIDEO_BITRATE		(V4L2_CID_CODEC_BASE+207)
->  #define V4L2_CID_MPEG_VIDEO_BITRATE_PEAK	(V4L2_CID_CODEC_BASE+208)
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
