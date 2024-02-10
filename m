@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-10497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1A6F8503BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:45:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 69AE48503BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:52:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3091F1C2116D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 09:45:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8E7371C21958
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 09:52:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5883E36113;
-	Sat, 10 Feb 2024 09:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D12C3611A;
+	Sat, 10 Feb 2024 09:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="huCDsEr6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O/pLwCnU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9EE32C6C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 09:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5632C9C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 09:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707558300; cv=none; b=StHjgr7n4mS66fsa3RV2ECeItUfNoMx3/izWDlcHWZ+DAA9vmysW2NoNr0Kldw7BiIQfthzw5jywqHfuKH6Uhxl5zj46jhnQ8Iujnn1Px6wC+7dCmhIwDc85dVBpU+WRTGl5XdjR/A+ECrIc0tS31eO6Utu1j8B1AugQzOuZbcQ=
+	t=1707558748; cv=none; b=fkNS0b8sxPy8lgOr+vku2Yi9VPeCM7GIAN9XPSFIyfkEjTk5bzEWlsdi/d0K3kR1HeoB4UMenNJhx/HNlsYA8MhmChYclcZTSsPmLuwUBiDk80eckA569bpq8vjA83to64kaycO74VkIzzpREhMumCjzFg/YA8l8C1ohpDax1dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707558300; c=relaxed/simple;
-	bh=OVl4cFWfuiCvufXQ1gEFYs55wC/9EBgV+DKCTQzKEXw=;
+	s=arc-20240116; t=1707558748; c=relaxed/simple;
+	bh=PoW1EUylIqEHP0uV5CWKEzAM2tzU0ggZ/+eK7jog+4E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pM7POAGI69wEhyPlcRoh/M43GdpX989LcP9VUEh86qz7rmUQQp50d1Y06j//YR0r88C2erRHC/f4egRanPHDkQ6QLl+x5WsDLc10sX2rNoTTiZ8mqXBla7NePn+Ycbg6bVDWR/LnWx+HWMa2SgYFH3Lj3UQCPY7zbykEUAMMDJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=huCDsEr6; arc=none smtp.client-ip=209.85.219.171
+	 To:Cc:Content-Type; b=YOWk6iXbfqObI9nib+IXTstTZao0CRz9Vl16NFbGBGMhahU1JLE4oJJCcC6eH9y/KcmX7lkcTzbH+/BFnaJiNfsIKOLT7eoG7pC3rqQhTws6+lQpK4WJUAGGJnBibs5OMQA4nA9P4471y/P9DemqsetvYJevj5uzDrRZ/pnmnuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O/pLwCnU; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc238cb1b17so1713676276.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 01:44:58 -0800 (PST)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc755afdecfso1296997276.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 01:52:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707558297; x=1708163097; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707558745; x=1708163545; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wZ6CRidteOeNsDNsYH3R4IcXLfOLzQiLCa4L+raUHnI=;
-        b=huCDsEr6DTnCgsn7U0LBFjT9o1k8jCYgJrnvgT2wfYbFVcxSVo+Dhs5zUQsv1D2ley
-         qbbf2BP6fAbmhkZ9T2VnhGWJwXKxLiy6NV81aYhQHkcLVtnJUsoIGvZyulHm2HAfWLbi
-         CzJUWpvFtLUeJKHuM+2bRSKANPxnhnJXaLjDaJralR3gxlvcH/vrK5wNXwslsRwGkh/z
-         6Vb2s3LXtIphS4GQUg/STd2Z4IeoccbMknreVnntAulMqjdnDrKRWQjifh9lYjOaRz+C
-         9l+1lwlAocuGeRf8WiqlKluNXDWRI2wda4PhSEE+kiU9lXU/ILOThAc6Of9yhrgeTy8y
-         e/3A==
+        bh=/rSrkLEnZ/NnQ2Np+XYCh7vhWSFNxT7YNWrrjOmWEs4=;
+        b=O/pLwCnUlDAxAGjS47U7NZH5ZG5Je1GRJJHAgP+Y5zhUid2zwBnT2YOgM0qDnVVfhJ
+         w4lR934hkXV23uJKJ2S/AXjJ6Q1ybLNUgfbY9NFLcF7AGpWBiMV3rfP2sfbzDHYVVHJT
+         agHvByW8mFay3Sus/U9IaVqkL1z/ehUmNQ7ARpd0k7LJwRMWg27eQVr2/xj/cUXfNGeZ
+         xxUv7Ckek1Ad6wbvwUx34LGG5rKcS/i075BnlOiQRGoEFxUhWzmpiMZUcGg4QxK97gty
+         1/rI5IF6aDNq84pzlTaDo+xLXmeBilCKLPL7NKRNagi5JXM6lK/G3FIbdyrwQ61Y3AAT
+         OHRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707558297; x=1708163097;
+        d=1e100.net; s=20230601; t=1707558745; x=1708163545;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wZ6CRidteOeNsDNsYH3R4IcXLfOLzQiLCa4L+raUHnI=;
-        b=KcyQool28Xjvi0zAn7EpXhVtMp4H7D8MWvnG0Z9Z+wy9sPSQ+9bUXv0V0yLp7Xp15Y
-         +9UjW8noiGwhNRaSe93l+7NkNrLwGHVgMUjOtkaxl+rEhAJlD9HuaNaeuFY3caPHUB7v
-         1HuF0+t8h1XAkA71w+RT7K3ZqjxbJR0vMB5oV2ZD6GMkPmv3oHGcmzyHjCzCIgjJFemJ
-         I2wm9V+cJXz1ZRbri0zz9bydgKN35Smh9bozwBDmwEuNDTpYui7zMIjfKXVppfhxGIch
-         1fpZSaxKAv/bffC47PRVTfCm2TUi6m7ykZ3u9ewrq5GTB/ltX2WKooEwmn2uc467bAbl
-         QCeg==
-X-Forwarded-Encrypted: i=1; AJvYcCWk3srMqTX1R1jMQxTZ+LPxYpPn8GVWERj5B4MNVbvoxJbdFS6dpiDrpAx8qgUm/Y7cserWAHh6vBCw7HM1GZNeHpew3Y7EJeaKprw4aw==
-X-Gm-Message-State: AOJu0Ywb7VizjxHWpG8SfD0wBs5afbW4vIxKQY8DIrsyv4ZGAOE280uF
-	4bDM4ex2X4kkw1T0t6zZY8cmec2YaQlB1xwRiOhO6rWP/czLOcUvzqs/zh6+JmFumuW6SWozqgb
-	KvyBOzvgRdJvJwaMw2hXD+eiStyVlmEsfP3gu1g==
-X-Google-Smtp-Source: AGHT+IF0eF6lGAv+TUyybyGNECGzCMVsbLQbS6zL7lEgkfBkLiiZ3utg1bX7sy4VZtcBLvZgXXa1fnVTapkwH3o8UVY=
-X-Received: by 2002:a25:b89:0:b0:dc7:481f:f578 with SMTP id
- 131-20020a250b89000000b00dc7481ff578mr1613461ybl.40.1707558297705; Sat, 10
- Feb 2024 01:44:57 -0800 (PST)
+        bh=/rSrkLEnZ/NnQ2Np+XYCh7vhWSFNxT7YNWrrjOmWEs4=;
+        b=m1SaDN+9UDsWkw3UiR+AbSMDmguMJqNqbJ0MzHMrSmN9Qes/zRx9oi8PWgcjjxVN4x
+         YUPXxqg5xRCoFhAU6hYy/Kav+ES+yS/6O+KWfQotY4l6JpuIqzbR5JGugnZKGwZ0ImJd
+         zC5shjVJWPLm4/5BfiqKwUVevWrZNNjz866kH3vNDlpjwtEKNMViv8PIbicRooMYoGRS
+         uWHG1nV1/O5Ve4LSWgYiT3fUc1fK6fb0htu4te04GB57jwjW/tvy4PDY7V3PY3l3zlPA
+         oycDlQMv+qDu7JLpnFDIdGGOYnWaLbwrAQomDOxOFKZ3n1J/8Ske4TI6C8cn6J2X2W3G
+         hgYw==
+X-Gm-Message-State: AOJu0YxPSVPgl5LjIGilYQ9DSLSbztVxNPm5nO3atBDfr495lODKpBAX
+	Jt17bJM7Jt0490dRIUkv0mghhLZjvOW3vmeoH0ovHZ3Md6yfbujsSeTEQ2QNirrbYRo3OV25qrE
+	GlJFZdcmLl8VO5uV1YzqzAaVXYjv6Fca5xQKV/Q==
+X-Google-Smtp-Source: AGHT+IEglTdZGiXWk/+m1AJcXQ0fjrneGALl1T3mcJqvkGKmXiD4oxFb+/K2jTdnhOFjYDnniCk51B2y0hARKWKhywY=
+X-Received: by 2002:a05:6902:543:b0:dc7:4bab:c390 with SMTP id
+ z3-20020a056902054300b00dc74babc390mr1113002ybs.61.1707558745587; Sat, 10 Feb
+ 2024 01:52:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210015223.24670-1-quic_parellan@quicinc.com> <20240210015223.24670-11-quic_parellan@quicinc.com>
-In-Reply-To: <20240210015223.24670-11-quic_parellan@quicinc.com>
+References: <20240210015223.24670-1-quic_parellan@quicinc.com>
+ <20240210015223.24670-3-quic_parellan@quicinc.com> <CAA8EJponSr=EgVe6m-KBWxvjz1bL-0Tczj=fGKZZrevJ3DZzbQ@mail.gmail.com>
+In-Reply-To: <CAA8EJponSr=EgVe6m-KBWxvjz1bL-0Tczj=fGKZZrevJ3DZzbQ@mail.gmail.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 11:44:47 +0200
-Message-ID: <CAA8EJpoh3E0b_rNCN4drhB65_xkDN1QJhPLBHWouQaKOLBKCQA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/19] drm/msm/dp: program config ctrl for YUV420 over DP
+Date: Sat, 10 Feb 2024 11:52:14 +0200
+Message-ID: <CAA8EJppXmr3QAtv3kOj+VyGrxtBULQFJEFm-Yz+ERHkYN1SuUQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/19] drm/msm/dp: add an API to indicate if sink
+ supports VSC SDP
 To: Paloma Arellano <quic_parellan@quicinc.com>
 Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
 	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
@@ -84,21 +85,90 @@ Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
 	neil.armstrong@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 10 Feb 2024 at 03:53, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+On Sat, 10 Feb 2024 at 11:37, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Change relevant DP controller related programming for YUV420 cases.
-> Program the configuration control register to indicate YUV420.
+> On Sat, 10 Feb 2024 at 03:53, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+> >
+> > YUV420 format is supported only in the VSC SDP packet and not through
+> > MSA. Hence add an API which indicates the sink support which can be used
+> > by the rest of the DP programming.
+> >
+> > Changes in v2:
+> >         - Move VSC SDP support check API from dp_panel.c to
+> >           drm_dp_helper.c
+> >
+> > Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/display/drm_dp_helper.c | 21 +++++++++++++++++++++
+> >  include/drm/display/drm_dp_helper.h     |  1 +
+> >  2 files changed, 22 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+> > index d72b6f9a352c1..c6ee0f9ab5f8f 100644
+> > --- a/drivers/gpu/drm/display/drm_dp_helper.c
+> > +++ b/drivers/gpu/drm/display/drm_dp_helper.c
+> > @@ -2917,6 +2917,27 @@ void drm_dp_vsc_sdp_log(const char *level, struct device *dev,
+> >  }
+> >  EXPORT_SYMBOL(drm_dp_vsc_sdp_log);
+> >
+> > +/**
+> > + * drm_dp_vsc_sdp_supported() - check if vsc sdp is supported
+> > + * @aux: DisplayPort AUX channel
+> > + * @dpcd: DisplayPort configuration data
+> > + *
+> > + * Returns true if vsc sdp is supported, else returns false
+> > + */
+> > +bool drm_dp_vsc_sdp_supported(struct drm_dp_aux *aux, const u8 dpcd[DP_RECEIVER_CAP_SIZE])
+> > +{
+> > +       u8 rx_feature;
+> > +
+> > +       if (drm_dp_dpcd_readb(aux, DP_DPRX_FEATURE_ENUMERATION_LIST, &rx_feature) != 1) {
+> > +               drm_dbg_dp(aux->drm_dev, "failed to read DP_DPRX_FEATURE_ENUMERATION_LIST\n");
+> > +               return false;
+> > +       }
+> > +
+> > +       return (dpcd[DP_DPCD_REV] >= DP_DPCD_REV_13) &&
+> > +               !!(rx_feature & DP_VSC_SDP_EXT_FOR_COLORIMETRY_SUPPORTED);
 >
-> Changes in v2:
->         - Create a new patch only for configuration control programming
+> Nit: we don't even need  the `!!` here. I'll probably drop it while applying.
 >
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
->  1 file changed, 3 insertions(+)
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Also the prefix should be drm/display/dp, not drm/msm/dp.
 
+Could you please send this patch separately to dri-devel, fixing the
+prefix, dropping double inversion and adding Intel people to cc? We'd
+need an ack from the drm core team to get this applied.
+
+>
+>
+> > +}
+> > +EXPORT_SYMBOL(drm_dp_vsc_sdp_supported);
+> > +
+> >  /**
+> >   * drm_dp_get_pcon_max_frl_bw() - maximum frl supported by PCON
+> >   * @dpcd: DisplayPort configuration data
+> > diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+> > index 863b2e7add29e..948381b2b0b1b 100644
+> > --- a/include/drm/display/drm_dp_helper.h
+> > +++ b/include/drm/display/drm_dp_helper.h
+> > @@ -100,6 +100,7 @@ struct drm_dp_vsc_sdp {
+> >
+> >  void drm_dp_vsc_sdp_log(const char *level, struct device *dev,
+> >                         const struct drm_dp_vsc_sdp *vsc);
+> > +bool drm_dp_vsc_sdp_supported(struct drm_dp_aux *aux, const u8 dpcd[DP_RECEIVER_CAP_SIZE]);
+> >
+> >  int drm_dp_psr_setup_time(const u8 psr_cap[EDP_PSR_RECEIVER_CAP_SIZE]);
+> >
+> > --
+> > 2.39.2
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
 
 
 
