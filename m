@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-10439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16F61850181
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 02:20:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DBED8501AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 02:25:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB9361F27A03
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 01:20:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FFBC1C26F5F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 01:25:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5255F1FDB;
-	Sat, 10 Feb 2024 01:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7B23FF4;
+	Sat, 10 Feb 2024 01:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="qmlD7rnc"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="PrvHJSfz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573121FD7;
-	Sat, 10 Feb 2024 01:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCECC2116;
+	Sat, 10 Feb 2024 01:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707528037; cv=none; b=gnZgVsTkH6O7RiXVnBqC4AsQeBcSexd7+kdRH2NY0OnezxXZB21OfDkDPr6IgKSQweyOC1gHQXYKYtmLbOeESRtAgwz1sSKiKwBQsZvNqIaPaq2lPinISoKejAGSIivKtZn2bS6LknUWriJ2q4t8BLVigqh7m/mV8p66HfSBdX8=
+	t=1707528112; cv=none; b=WCjh2JneRDEjiV0g4LuNqZn8glYzRCPw+hfWQu/CrRA6Y8gjN6c95HBj9pUDNtzPmnfklqyqiCkHQbKIp0VoQ3mnCtm6CZ0+rs6PAKNDADjSsDLEh5ioaT9viPK8DMm2zkDQyClfzYh4movq/IPsL3iXVcwv4VutYrF/AmdYKg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707528037; c=relaxed/simple;
-	bh=UKdOgTJS3khtpazw1OpYocuod3sMdQ1N4G70EeNn+5A=;
+	s=arc-20240116; t=1707528112; c=relaxed/simple;
+	bh=TIxZzeC/0GfDChnEMsFu4j1ALJeXBgp2+03IEBDMtcw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lno0cC2pIx35x2qBuIcaFPTG1evGlIRqhwe8WrkWi8saZoKqHBIXSnU8QldN2MpqCdQOcIv++9qa4SuANArPy6gmlprVMcG8TL6p1QisCB8k34UzJ/Uz8IP5Bc1932RWdYGwEB6g8g09t8Y6cYNn4fqQqPXxN7f95PQQALspGcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=qmlD7rnc; arc=none smtp.client-ip=156.67.10.101
+	 Content-Type:Content-Disposition:In-Reply-To; b=h+Qz9M13htk/SPYHlUN6ipxmuKlkb9Xfk4hn+ZZRhZaTIGNMCX+w/9/f1L/1RqbNMZM+EWbl/cjhDZKmtDUFEmopcllt9Gm9IJO95V1gfLHljokWk4nnFajdEOBLHmLvbEwGWKD/09NvsQ+Gx4sFIgjJlW9DJHTb8ig/5d32zRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=PrvHJSfz; arc=none smtp.client-ip=156.67.10.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
@@ -36,13 +36,13 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
 	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
 	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=kQUhYTxFugDn5/h0NeviHtOes30s2gaxQ9TVCrFash0=; b=qmlD7rnc/jz5FlypoXXSVvLyJQ
-	cJGjxVa+TxDBmRqp1hEkyDYDpXNTJys8l0ZDx59eT9enwgLzF3pofJJS7mVQewFuy6wL+aNl5QNLg
-	kLeITLcQ7J0rgIv5th81H5mDznq52rml8XVv1ITH3+RMBCrIXbx2IG1PKEdBjgnIlKoM=;
+	bh=dPJKmCY+cDQ7TBoc33Wmx47Gh+WQuX27uqcB77Gr2Jo=; b=PrvHJSfzIOohp+nFsDgvOARVud
+	HfUm4CeSrqcO31y0f4JQN9zJH2CkWWR5TYAqe4NHZmMEmgqPpBkEzl2E9S2gUfcSWQdCizQbEjzUA
+	UEI2TfLnqGAH+7KLhiENe/wTt/5DdNA6wXPhV0fnliP2uayXz06L3nBOrbThNjL3Nx2E=;
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
 	(envelope-from <andrew@lunn.ch>)
-	id 1rYc2f-007Qq6-0X; Sat, 10 Feb 2024 02:20:29 +0100
-Date: Sat, 10 Feb 2024 02:20:29 +0100
+	id 1rYc3u-007Qqu-GJ; Sat, 10 Feb 2024 02:21:46 +0100
+Date: Sat, 10 Feb 2024 02:21:46 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Christian Marangi <ansuelsmth@gmail.com>
 Cc: "David S. Miller" <davem@davemloft.net>,
@@ -60,11 +60,11 @@ Cc: "David S. Miller" <davem@davemloft.net>,
 	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v7 03/10] net: phy: add devm/of_phy_package_join
- helper
-Message-ID: <1787d720-1890-4ee4-82ab-5eb973c279d6@lunn.ch>
+Subject: Re: [net-next PATCH v7 04/10] net: phy: qcom: move more function to
+ shared library
+Message-ID: <76460a45-2109-4600-9c87-414f88c76bc9@lunn.ch>
 References: <20240206173115.7654-1-ansuelsmth@gmail.com>
- <20240206173115.7654-4-ansuelsmth@gmail.com>
+ <20240206173115.7654-5-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,22 +73,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240206173115.7654-4-ansuelsmth@gmail.com>
+In-Reply-To: <20240206173115.7654-5-ansuelsmth@gmail.com>
 
-On Tue, Feb 06, 2024 at 06:31:06PM +0100, Christian Marangi wrote:
-> Add devm/of_phy_package_join helper to join PHYs in a PHY package. These
-> are variant of the manual phy_package_join with the difference that
-> these will use DT nodes to derive the base_addr instead of manually
-> passing an hardcoded value.
-> 
-> An additional value is added in phy_package_shared, "np" to reference
-> the PHY package node pointer in specific PHY driver probe_once and
-> config_init_once functions to make use of additional specific properties
-> defined in the PHY package node in DT.
-> 
-> The np value is filled only with of_phy_package_join if a valid PHY
-> package node is found. A valid PHY package node must have the node name
-> set to "ethernet-phy-package".
+On Tue, Feb 06, 2024 at 06:31:07PM +0100, Christian Marangi wrote:
+65;7402;1c> Move more function to shared library in preparation for introduction of
+> new PHY Family qca807x that will make use of both functions from at803x
+> and qca808x as it's a transition PHY with some implementation of at803x
+> and some from the new qca808x.
 > 
 > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 
