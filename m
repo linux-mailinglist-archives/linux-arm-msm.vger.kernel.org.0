@@ -1,111 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-10520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B10828504B4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 15:23:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 466028504F6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 16:40:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1E551C20D2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 14:23:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03FE3284044
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 15:40:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C236953E3D;
-	Sat, 10 Feb 2024 14:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DAA55BAE0;
+	Sat, 10 Feb 2024 15:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wrpaDEIo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6T7GiZT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF0354659
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 14:23:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A90A5381A;
+	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707574998; cv=none; b=pT5xliqgzkJJJtq9HyLhdgO2LxeEdV8qGMpYs1HxQfd6is4hmZK9SIA659Trtys0DFPXGREL2hzCN01rRey796qj4/Ezvae8G4IHj1AJdi3t0MRBMbS7C2QVXbI9xMOHwfDxw8AG6SemaUl4itkDnNdbgGHhYmgHDgvYV3fxinw=
+	t=1707579632; cv=none; b=CHoKc1ihGXnW1t27LoWFjt9tkF7OiPNJ4U5nCHCAjUg+T/cHtvkMAk/OOvKc3iEPpukQ87UaIBVehCQw6o5Uzjqk/ZOeNdvRXB/kJ6j1IfD8MF0DD1O6HOb/IlkM8lH0S/4RpjRXic2wCFi6P1yzuA/bm9Hcq5yuOvBRWosEf9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707574998; c=relaxed/simple;
-	bh=DaI34cmoQ2TTjezX6O9uXpwQhRxq41aFstLGILeGAGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pFWJAIJjEaLUdSzdTVut5X8hCe2SxL0iwu2qewy+UtYU9jY2wqHFMzxGwYvqJscs83O03EHAmgpGxDkJudiaHbKwzvf/m6eNrZA8B7h6vKGJb7CPmBeLpSFIr/9NSzA1p4FjvcRmBzi1NOn7ehtoh8VfaQf/OaXEBprSG9unNCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wrpaDEIo; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a30f7c9574eso220728466b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 06:23:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707574995; x=1708179795; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E4HO4hLAzbgJmOVEY8MO0LN738x8Cz2lxnox/JBlwZw=;
-        b=wrpaDEIoEfZ6CvTreW7HMqeGmUiT+lNGKLlkeSu6zeFbdVZXXCdSLbO9zj37qc4aZF
-         iqGi4Lh0iP98qA/13t25XNM3LKius6SP+9x4eBBCkDt4fvc8aX+OupO7v2ay1p5bzyTQ
-         Ez8lOM82ntvl2ozKNYQHsb/jTLjdfnwLqXNBLIOuyb+GW9IB0uAgcHvAnE82OhF60fL/
-         tLiXaVFhQygaZrxokbYPjGJp1CUYlw/S01ImyA3vic50aWYv4qm2JM4D0DXoU1qOPXbX
-         1ev0Rc6+9yrt+G/CF4BHbo6iSzxJz3M6vys6VxdDnTpyxyxEu48k6Y2fUjvqvnEMpZAq
-         DMlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707574995; x=1708179795;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E4HO4hLAzbgJmOVEY8MO0LN738x8Cz2lxnox/JBlwZw=;
-        b=X1cLjbHsH/83guDhd7QT8NvKpstAFTrIvqdcAcIskkgPaeSmHZiIP2d/DNryhN6gAZ
-         5TuUNqpstFY5c7vUh/KnFzvguo/Cm0/MOOEnpH3/6ceyi6Ap6B/C0LPPvBl5icj0V2u9
-         +9FOG81wSLXDr/6PyF4xz95CQ1fGfDzItdHaEany7+CopyUdW+tss79O0E7mwWUOTzFh
-         wcRkCcuZ2d+n5WH+wlTVw/E7ebRjLzDrKBQG6FYYdE29l8yg5Vc+Injh6RUGIChmQuAc
-         RXJMZCJv/3EQMHod1Fqz9afhTZCBTMP/TLlxx3h/DPQZ0io5cQDlVPJpa5aQ83gFR4zH
-         IE6Q==
-X-Gm-Message-State: AOJu0Yx1lmCQVbgs1NZdm89caQD1XjDUZMVZGdqPci6uh6ecL7BSfXci
-	3MAPIvGzdiiOju36j/V0XpjFEyQeEf/tOOpDfop6W4B7Fzgu9zjl4KU1QbVlxnY=
-X-Google-Smtp-Source: AGHT+IEJZtlhHoDZ5lAeCtmu7+okxoXyvoQMZqadchssc7Ffm8NwFqahbNXqLhMwFKdEQU7UwQkTSA==
-X-Received: by 2002:a17:906:2789:b0:a3c:4503:f72e with SMTP id j9-20020a170906278900b00a3c4503f72emr620585ejc.22.1707574995136;
-        Sat, 10 Feb 2024 06:23:15 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW+CqreWMjIfkQHM7lVlY9oTvW1YpdcnimBkIIejPItqBzmLjSfvYQEj6mBODYLt8dPX2VmVbmRbWe8DYKIb9R6CbpHVV98CYSpcZPxncrMTyAf2t7hOOZ8qTtNX0syvlT/xq2EyLX5Op92EGljvqQ+cucSsaulV7BUJZOOIfKCVDEuf+eydSe03EkjNY4Mf5LtZvhdDmaQpR8a/ecLZ+HLikQ+wKJw6nv/WtoOYdkUzi/7sg3PhWhQD8ugQe0FB1ZZHaUCaX1eCd9Ab7gMjSVHA8RcVq+8ELQouZ8DTpqgvIfhFyNOyssY5q0516SX+lCmCDOflEtY5+u25QIbiNy4fLwLm7MuyYnFKgfvNuDdYbyxeyn5xHbFRCtsmpMZrGxrw+Q2Xa4ihNnNKU0fjWtDdTY9JHfeEW4aoiEElvMb7QnHGQUMa0V4HoZFijsqkViY83SygbPRIfkRfSKh8ohuXR/s7OBo9SvzeZ2O3uwBMg==
-Received: from [192.168.1.116] (abyl12.neoplus.adsl.tpnet.pl. [83.9.31.12])
-        by smtp.gmail.com with ESMTPSA id k6-20020a1709061c0600b00a387d9d6dc5sm1858412ejg.174.2024.02.10.06.23.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Feb 2024 06:23:14 -0800 (PST)
-Message-ID: <38722fc3-b340-4ba0-9573-21eae476d2b3@linaro.org>
-Date: Sat, 10 Feb 2024 15:23:08 +0100
+	s=arc-20240116; t=1707579632; c=relaxed/simple;
+	bh=o90dBGsaOc4h8XZXjOy2Vf5kYvkiA8PHxCs2WzXIIkE=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=XgcXOW00RADCfs5lRzqMm2plwTZnB7M94Orrbd1OGVJDa3ZZYkj2udTVsOk0BYP/R/39v11A30I0hRxN7toXjNJO6g9cECi6QEPU3wEkNGXc9ByoVKZ8bqHxvtZXiB7sCOrRgxJhWUvQWhd0lGpNICaOxwzH07DD9e697jOojp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6T7GiZT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 59049C43390;
+	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707579631;
+	bh=o90dBGsaOc4h8XZXjOy2Vf5kYvkiA8PHxCs2WzXIIkE=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=f6T7GiZTni50nnfBV1omFsyGeirpUSqU6elXu7ewt73RCq5+HOh7VkVrdRvFRHFXO
+	 jv/YxV4p119HjSnoK6JdqiqM2se0/BLhlu/K6z+glLLEJHnfWWuLzXOCPJtgBp/o2w
+	 tF2MawnXCGeor1yXB1IzOu3WSKSRwVk8/7LP3QkA+fzNPGE36vA+3s9beLRJ4tLU/t
+	 hJWl5aUoOkdvlFUIOG6/b0OwmVA+2dAlMGRMOtyyLdohaX6m0UxwcH3fzhK7W2dUtr
+	 9V/FXrJt4dFSdAnF9jCaKjiMQpdnnvGvSyxX9opVSY8ubbVEM1jzm2Is+qPH/0Abcf
+	 Ex1Gz38JgLzDA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3E5E6E2F2F0;
+	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] pmdomain: qcom: rpmpd: Add MSM8974PRO+PMA8084 power
- domains
-Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
- Stephan Gerhold <stephan@gerhold.net>,
- =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20240210-msm8974-rpmpd-v1-0-de9355e6842a@z3ntu.xyz>
- <20240210-msm8974-rpmpd-v1-3-de9355e6842a@z3ntu.xyz>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240210-msm8974-rpmpd-v1-3-de9355e6842a@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [net-next PATCH v7 00/10] net: phy: Introduce PHY Package concept
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170757963125.14284.2496460448206023966.git-patchwork-notify@kernel.org>
+Date: Sat, 10 Feb 2024 15:40:31 +0000
+References: <20240206173115.7654-1-ansuelsmth@gmail.com>
+In-Reply-To: <20240206173115.7654-1-ansuelsmth@gmail.com>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+ andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+ florian.fainelli@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
+ robert.marko@sartura.hr, netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 
+Hello:
 
+This series was applied to netdev/net-next.git (main)
+by David S. Miller <davem@davemloft.net>:
 
-On 2/10/24 15:12, Luca Weiss wrote:
-> Add the power domains CX & GFX found on MSM8974 devices that use PMA8084
-> instead of the standard PM8841+PM8941 combo.
+On Tue,  6 Feb 2024 18:31:03 +0100 you wrote:
+> Idea of this big series is to introduce the concept of PHY package in DT
+> and give PHY drivers a way to derive the base address from DT.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+> The concept of PHY package is nothing new and is already a thing in the
+> kernel with the API phy_package_join/leave/read/write.
+> 
+> What is currently lacking is describing this in DT and better reference
+> a base address to calculate offset from.
+> 
+> [...]
 
-Same comment as p2, gfx_ao may not make much sense on this
-platform
+Here is the summary with links:
+  - [net-next,v7,01/10] dt-bindings: net: document ethernet PHY package nodes
+    https://git.kernel.org/netdev/net-next/c/8453c88c7a15
+  - [net-next,v7,02/10] net: phy: add support for scanning PHY in PHY packages nodes
+    https://git.kernel.org/netdev/net-next/c/385ef48f4686
+  - [net-next,v7,03/10] net: phy: add devm/of_phy_package_join helper
+    https://git.kernel.org/netdev/net-next/c/471e8fd3afce
+  - [net-next,v7,04/10] net: phy: qcom: move more function to shared library
+    https://git.kernel.org/netdev/net-next/c/737eb75a815f
+  - [net-next,v7,05/10] dt-bindings: net: Document Qcom QCA807x PHY package
+    https://git.kernel.org/netdev/net-next/c/dd87eaa13787
+  - [net-next,v7,06/10] net: phy: provide whether link has changed in c37_read_status
+    https://git.kernel.org/netdev/net-next/c/9b1d5e055508
+  - [net-next,v7,07/10] net: phy: qcom: add support for QCA807x PHY Family
+    https://git.kernel.org/netdev/net-next/c/d1cb613efbd3
+  - [net-next,v7,08/10] net: phy: qcom: move common qca808x LED define to shared header
+    https://git.kernel.org/netdev/net-next/c/ee9d9807bee0
+  - [net-next,v7,09/10] net: phy: qcom: generalize some qca808x LED functions
+    https://git.kernel.org/netdev/net-next/c/47b930d0dd43
+  - [net-next,v7,10/10] net: phy: qca807x: add support for configurable LED
+    https://git.kernel.org/netdev/net-next/c/f508a226b517
 
-Konrad
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
