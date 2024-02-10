@@ -1,186 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-10503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 365918503D8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 11:17:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 916AE850401
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 11:44:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83DC4B22B54
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:17:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18C5F1F212C5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6647F24214;
-	Sat, 10 Feb 2024 10:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609BE36138;
+	Sat, 10 Feb 2024 10:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xJl9J41S"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T/vpNaM/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7D733CFD
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 10:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D082030B;
+	Sat, 10 Feb 2024 10:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707560220; cv=none; b=pr3DXUKxq8fkrDxybszTDZNhG6GiiDJ2q6CxQ/IExRPOpDbvqsFEve8fytDHPZyBpFOS1sve4xAZVo+KvsUo8K4x9n1hPeInrqwPCap0qDuqjKKEzZhcgqiAldwUsxLx3npAcNv+tEK1RibOkYpYhu2IFrlpGPa82l0ZMAphCoo=
+	t=1707561857; cv=none; b=BxLJKaB8cnWV/bCKngkYO0P1EQBqI6VgO7/nQbmAsG2J16ip31x6/bbN6X/qwaUvKFuwPtorxngYzhvh9ZRE6a0hBZHKmYYTushYomtmQJz1gItG53C9kGfpQHJQcQTPJljrFysLjE0oRZUdiZWur1m1WzamPXVFo39fljv/3rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707560220; c=relaxed/simple;
-	bh=ZRKnSeiySrTWu9DgvuhU2PoItGPXD1cGMsocRIq3oic=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=anrftpzh36PPCy4cC6OuiqWY5zzjcV2rg//Xg+0bO23UQT1QhlEwL0rL/8FyytiJVhDpGKZ+rFbOmYlDtXbXU637PKESjW0tsjc9Z+N/doNz1Ty3ku4GQMjumGyGVvZwEdG7GbQF8L/TGodayAZ3WfRn4XVp9eHVTggkvcLJ2XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xJl9J41S; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dc755afdecfso1307160276.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 02:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707560217; x=1708165017; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=C3MtzCYDqA/NU9qAlKY3Nym0nximObQq5aVuIq2lscI=;
-        b=xJl9J41SNfnsqhgne2QNoHkU9+qDijxskQk+9XANVJTSsyhsPD0I45gwJGYV1Uox0z
-         No2Hog2QIr4gY8RVtl+3XdQIX2feVqdvcFRQOQJbKMk7R3d6RFlxFJAkx03Jov+sfVaE
-         QGNwmZMHLCEPD2PLU5mofxhUMWUFgPlIq/edeQNo2Z6WybA0NKslEPG7vZlF3G0mIfPi
-         lXixmP27yz+psm5I0zhScR5I4rikNW69zWIzo1aKAGBcIah6HRCnrkKn8yxR4YPeh5Io
-         mRpmRIzLc8I8b5ChzoMx/7GmvwN/9/gRDOHIgP02qIqY3Lame0q4BZFGPzz/X0rgem0z
-         btIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707560217; x=1708165017;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C3MtzCYDqA/NU9qAlKY3Nym0nximObQq5aVuIq2lscI=;
-        b=Rs6P+Cx8OGVq3cNcYy06tSVkmW8nHdNwYKcHBJru2jU0vb0xWS54gVB5j0tSHUwYcF
-         icaBgFmzztKKnPSMCU+RFwCTA1/iWYl7hR56F7baThVddMDcbY5nsDIjMIA4h2LSG4kf
-         UnLz/3NwnBSxNB/OMYdHf4BWGP3bPVE6YbE5Yo2QCTqoZCnEZSZW3Eh+IJRrBMKMyy/9
-         I6oLArJL5n1O1+4ZY24Ez2PvptbpNCLnvKCK/CMb7uZO74YsP41ZyZbqoDKdJ9L0TWzp
-         bOMbQWl8NEhMmfMxSuucxHbnIky79PmzDv0lAA8xHla7IHZYvPmOMoKUKW2ytyPkg19h
-         PH0w==
-X-Forwarded-Encrypted: i=1; AJvYcCV0B75i0FHkwtx6IrHmoavQhHMy5omtfdVMDQ7tv7n4NUu60JkrFUhJzzZ4vnf/87MGnF+tO/+FpwPIhU45yDtN64K1isiwYlWEQkcvLg==
-X-Gm-Message-State: AOJu0YyhoVvOt1XN3wWj3Zppvc76v2JrduOR0DnBqu36Xazl/6mDwNyV
-	4TXoHHoitOAGK2ujHmpnIM9qSQqXc6zpNXvuE8cjr9zwYbwovF1pJUzmJwJwnZFtnfQfzUi25lg
-	E52CJeH+16mesPQb1SsbIgWZ1eAdnOCrUa+7dgA==
-X-Google-Smtp-Source: AGHT+IHdeAwmz3vGqp+XhFSJbc9rlyCFILsXvjJJGq4rBxVBKBCiDLH6H086hg5mXLncPgLUg/Kv5DUESDy6lfLssVs=
-X-Received: by 2002:a25:fc02:0:b0:dc6:4b66:2636 with SMTP id
- v2-20020a25fc02000000b00dc64b662636mr1324733ybd.19.1707560217563; Sat, 10 Feb
- 2024 02:16:57 -0800 (PST)
+	s=arc-20240116; t=1707561857; c=relaxed/simple;
+	bh=HdoGJKfM4IdFF97CvlZ7u9IYY/5htVYwh9r2vlaTMWM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KWtqj7CdNLoOAae/pHJpnvK2nMejkDj9ZJz8UIyeH/tJAZJjyjXiCB3eMqPvwn67zMhe00l62OM5jLSluTYgLBIdASwHvUHoxIz/LzZy+HbpfQ4cd9u6gA7wTP6DR0NLMiZ3Oup8nEwdxfdVtcxHASY+yg0U6Uqk4jT4yCczZ7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T/vpNaM/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41AAfFDC018067;
+	Sat, 10 Feb 2024 10:44:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=UYh6Vys92a+IOZW81ElMcn3EE5XcVQKjyrgj0qy6/9k=; b=T/
+	vpNaM/eYQRs8mfiz9h7/9Rj+FTnCmM6hL3aBTTzasvbA1kcJrV5ih27OO0Pbn5p6
+	PVxQlsi3EEIOZNJ5qFAPt8bIM8fhonTh5mZyw+7cz72PhoKMxvPAyC+i/Pf6PwZ9
+	0F9Y2YI22hbUqfgOJrO68JFpa91SC9rElaLbstUrAVWZ4AZ4a1yQds53YhRMTuzJ
+	cVPTBbtOV9NoFTDBXlPSruWn6hGz1XjlHJE5LaxHMqVcpK490U7m6wUGoERB1r6d
+	4sibxEI8jt5N3QsffRKLnv0V2BLhQW6UlMJpFCyCFnVb0ddwyJr6zG9yjli9aiBS
+	rH/7Me8mxh1mrar+ZN0w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w62pv8bwc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 10 Feb 2024 10:44:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41AAi2lK029254
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 10 Feb 2024 10:44:02 GMT
+Received: from [10.216.17.117] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 10 Feb
+ 2024 02:43:56 -0800
+Message-ID: <b5c25274-9af0-4b3e-ade7-9a55d3cecd29@quicinc.com>
+Date: Sat, 10 Feb 2024 16:13:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210015223.24670-1-quic_parellan@quicinc.com> <20240210015223.24670-16-quic_parellan@quicinc.com>
-In-Reply-To: <20240210015223.24670-16-quic_parellan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 12:16:46 +0200
-Message-ID: <CAA8EJpqq+H1gdy2pJo0Up=5w0mYTPRu2_1swEBNfyAMXztQanA@mail.gmail.com>
-Subject: Re: [PATCH v2 15/19] drm/msm/dp: enable SDP and SDE periph flush update
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sa8540-ride: Enable first port of
+ tertiary usb controller
+To: Andrew Halaney <ahalaney@redhat.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
+References: <20240206114745.1388491-1-quic_kriskura@quicinc.com>
+ <20240206114745.1388491-4-quic_kriskura@quicinc.com>
+ <23824242-1b37-4544-ae9a-0a5a0582580e@linaro.org>
+ <CAA8EJpqbXvKMQktGsxMFJnR+fXoOz8hFmm+E3ROPTjjiD0QLvg@mail.gmail.com>
+ <6q2ocvrujbli42rjddflyol74xianr7j47jwcgdnnmwjanv25d@uw2da7zulqqd>
+ <CAA8EJpr6k8c5C54S9xxQgZvd9NYFoxi5qQrOTz2AMrp0xeZZpw@mail.gmail.com>
+ <baw3wxbdvzpkqqb6a7iut2wpt6jgzyqii5uyfkzptzt4ryjvao@4tpee6nqup5w>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <baw3wxbdvzpkqqb6a7iut2wpt6jgzyqii5uyfkzptzt4ryjvao@4tpee6nqup5w>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gLWvh4piTatOfY9fqLXs4PyYmy-tI6LZ
+X-Proofpoint-ORIG-GUID: gLWvh4piTatOfY9fqLXs4PyYmy-tI6LZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-10_10,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 clxscore=1011 mlxlogscore=999 adultscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402100090
 
-On Sat, 10 Feb 2024 at 03:52, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
-> DP controller can be setup to operate in either SDP update flush mode or
-> peripheral flush mode based on the DP controller hardware version.
->
-> Starting in DP v1.2, the hardware documents require the use of
-> peripheral flush mode for SDP packets such as PPS OR VSC SDP packets.
->
-> In-line with this guidance, lets program the DP controller to use
-> peripheral flush mode starting DP v1.2
->
-> Changes in v2:
->         - Use the original dp_catalog_hw_revision() function to
->           correctly check the DP HW version
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_catalog.c | 17 +++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    |  1 +
->  drivers/gpu/drm/msm/dp/dp_reg.h     |  2 ++
->  4 files changed, 21 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 0f28a4897b7b7..bc64dde5b7459 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -440,6 +440,23 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog,
->         dp_write_link(catalog, REG_DP_MISC1_MISC0, misc_val);
->  }
->
-> +void dp_catalog_setup_peripheral_flush(struct dp_catalog *dp_catalog)
-> +{
-> +       u32 mainlink_ctrl, hw_revision;
-> +       struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +                               struct dp_catalog_private, dp_catalog);
-> +
-> +       mainlink_ctrl = dp_read_link(catalog, REG_DP_MAINLINK_CTRL);
-> +
-> +       hw_revision = dp_catalog_hw_revision(dp_catalog);
-> +       if (hw_revision >= DP_HW_VERSION_1_2)
-> +               mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE;
-> +       else
-> +               mainlink_ctrl |= DP_MAINLINK_FLUSH_MODE_UPDATE_SDP;
-> +
-> +       dp_write_link(catalog, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
-> +}
-> +
->  void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
->                                         u32 rate, u32 stream_rate_khz,
->                                         bool fixed_nvid, bool is_ycbcr_420)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> index 5b3a7ba40d55f..9e2b05544f610 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> @@ -98,6 +98,7 @@ void dp_catalog_ctrl_config_ctrl(struct dp_catalog *dp_catalog, u32 config);
->  void dp_catalog_ctrl_lane_mapping(struct dp_catalog *dp_catalog);
->  void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog, bool enable);
->  void dp_catalog_ctrl_psr_mainlink_enable(struct dp_catalog *dp_catalog, bool enable);
-> +void dp_catalog_setup_peripheral_flush(struct dp_catalog *dp_catalog);
->  void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
->  void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
->                                 u32 stream_rate_khz, bool fixed_nvid, bool is_ycbcr_420);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index beef86b1aaf81..f1e7b0a5ee5d1 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -170,6 +170,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
->
->         dp_catalog_ctrl_lane_mapping(ctrl->catalog);
->         dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
-> +       dp_catalog_setup_peripheral_flush(ctrl->catalog);
->
->         dp_ctrl_config_ctrl(ctrl);
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-> index 2983756c125cd..6ac66532b47a4 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-> @@ -102,6 +102,8 @@
->  #define DP_MAINLINK_CTRL_ENABLE                        (0x00000001)
->  #define DP_MAINLINK_CTRL_RESET                 (0x00000002)
->  #define DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER   (0x00000010)
-> +#define DP_MAINLINK_FLUSH_MODE_UPDATE_SDP      (0x00800000)
-> +#define DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE       (0x01800000)
+> Krishna, when you make v2 can you update the wording about the USB 2.0
+> mux? Maybe something like "which by default on boot is selected to mux
+> to the external port on the board (with the other option being a test
+> point)." instead of the wording I originally had? That way the
+> information Dmitry requested here is easily accessible in the future.
+> 
+>>
+>>>
 
-Just one bit here, please.
+[...]
 
->  #define DP_MAINLINK_FB_BOUNDARY_SEL            (0x02000000)
->
->  #define REG_DP_STATE_CTRL                      (0x00000004)
-> --
-> 2.39.2
->
+>>>>>>    };
+>>>>>
+>>>>> Isn't gpio-hog the preferred way to describe that ?
+>>>>
+>>>> That depends. As this pinctrl describes board configuration, I'd agree
+>>>> with Neil.
+>>>
+>>> I unfortunately don't have the experience with gpio-hog to weigh in
+>>> here, but wouldn't be opposed to Krishna switching it if that's what's
+>>> recommended for this type of thing.
+>>
+>> Quoting gpio.txt:
+>>
+>> The GPIO chip may contain GPIO hog definitions. GPIO hogging is a mechanism
+>> providing automatic GPIO request and configuration as part of the
+>> gpio-controller's driver probe function.
+>>
+>> See sdm845-pinctrl.yaml for an example of the gpio-hog node.
+> 
+> Thanks, that seems like the way to go. Krishna please take note of this
+> for v2!
+> 
+
+Hi Andrew,
+
+  Can you help test the following patch. It is just an add-on to your 
+original one. I don't have a SA8540P Ride at the moment and getting one 
+might take time. Incase you can confirm this patch is working. I can 
+push v2 of this series.
 
 
--- 
-With best wishes
-Dmitry
+diff --git 
+a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml 
+b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
+index ed344deaf8b9..aa42ac5a3197 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
+@@ -36,6 +36,10 @@ patternProperties:
+              $ref: "#/$defs/qcom-sc8280xp-tlmm-state"
+          additionalProperties: false
+
++  "-hog(-[0-9]+)?$":
++    required:
++      - gpio-hog
++
+  $defs:
+    qcom-sc8280xp-tlmm-state:
+      type: object
+diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts 
+b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+index b04f72ec097c..aa0cec0b4cc2 100644
+--- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
++++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+@@ -503,6 +503,18 @@ &usb_2_qmpphy0 {
+         status = "okay";
+  };
+
++&usb_2 {
++       pinctrl-0 = <&usb2_en_state>;
++       pinctrl-names = "default";
++
++       status = "okay";
++};
++
++&usb_2_dwc3 {
++       phy-names = "usb2-port0", "usb3-port0";
++       phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
++};
++
+  &xo_board_clk {
+         clock-frequency = <38400000>;
+  };
+@@ -655,4 +667,19 @@ wake-pins {
+                         bias-pull-up;
+                 };
+         };
++
++       usb2-en-hog {
++               gpio-hog;
++               gpios = <24 GPIO_ACTIVE_LOW>;
++               output-low;
++       };
++
++       usb2_en_state: usb2-en-state {
++               /* TS3USB221A USB2.0 mux select */
++               pins = "gpio24";
++               function = "gpio";
++               drive-strength = <2>;
++               bias-disable;
++               output-low;
++       };
+
+
+Regards,
+Krishna,
 
