@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-10511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1068850449
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 12:51:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62A0B85044B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 12:51:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EE0A1F2397D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 11:51:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5BC52864D1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 11:51:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 781DF3D552;
-	Sat, 10 Feb 2024 11:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC7BF3AC01;
+	Sat, 10 Feb 2024 11:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="neiCbBrU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eD49aTLr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57413D54E
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 11:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E463D552
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 11:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707565890; cv=none; b=dz4FDlgs95znTlaXFlB1DdLhjE3yaHYcVc/oDEE/a6SRZaloJ0l005BP7jYBK326q59FptngR3sMic9wEqqvVTqqPOPo4pHVgrzOQdWaVNBgDRAXZR7h/UPL1SHC7Y6IzSIKhFlT74c78FUST0EKEo+L5fVkEabF1P2H8Bv2pvg=
+	t=1707565913; cv=none; b=iUTU1IZMYgnT92d2GD5cI5wNdtxW2jCNluKlfbcPY8zwNruw6BNGti+JpTFXCc6xFk68f199oOYY7egtExl02qMJheOIlJJO7O5swY0hetAC2swK1u2iMfio3XAQ3UnakR3YOmF8sJHAkJD4aBM38RBNvI+CkdoGF7G0UYPTXpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707565890; c=relaxed/simple;
-	bh=d2bhTf4Z57WSx4lUzzEf8y7rKj3Hg0um3/bM2pKPVCY=;
+	s=arc-20240116; t=1707565913; c=relaxed/simple;
+	bh=7rc3pZKZQ3h12KuocOBjke7RPf57CY1ulO+EwZZN21A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b9w+7yFpm7MpVl+UEIUNc7D4IxLguP4cI/XHf2r7kFxKgMhNEC/kBh5Ly14OpOJ8cvli8rPAQkkQFfVmV8AxP7q+SJXn/Ma8nJvXFxS7MuULpSX4QNmWi6v3ua7Fp9+SOdRj9MhJhsSd0rWwAZ0ovJfmnpVzlwKscsFUh4Mz0g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=neiCbBrU; arc=none smtp.client-ip=209.85.219.179
+	 To:Cc:Content-Type; b=GourNhyEJnZhLkpMFLXN1kjwT/IoovK24corHwkHoUYIJIvE83v1h5N15cL3WLAT8oselyvAU7WowXDqG89B5yEiP6JggsgEv2/kLzYAEhLKv8GGgZpENPtXrj/UC6x0s4AAmukBpcks1wrRemv+g9fqHSlhiX85EcCAupsW6Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eD49aTLr; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6d8bd618eso1835969276.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 03:51:28 -0800 (PST)
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-db3a09e96daso1619142276.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 03:51:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707565887; x=1708170687; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707565911; x=1708170711; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=n4hzqQK2jDc7gwYXhpJIcj9gdQgitPUMD4wx3zzHzg8=;
-        b=neiCbBrUQyJQ/QNNTUBuVi5wH2JMVXcM8/83ZSn7a/lKETQnwkGvV9311cV6YkDMgZ
-         7bzvkG3v19r1q4i+SsCqS27qL6RMMA+zQLLA4Ah7YpxIlBcxjO3VDyMJPAyIL5HvEbwd
-         bN9RuzdeIlc/jSRNH59ixi72b3JEQ3lZsYsA2FWDDr/hAjpWDbtWPiaBDmUyKR335j+J
-         /o4BfHbhI476O695g6wndimKRwS4Cz6Xe+oMg3ZUAUfapwrCe/SXrKFRkJo3qizC/BnQ
-         a3QGEMXS3z3LC6nR7HBTayrqWLdp52z0yqQ7NdWcrzeUfVygnGRRiQLB58A4ZCQFWwAJ
-         6OkQ==
+        bh=/RWQV9SF+U2wQY2whqhrKlZUzNhMlpaeidneMuAvWr8=;
+        b=eD49aTLrjo1zBpbcKWa8Lp0I4bGsaRtsLcf4Amke/MSnEmX5dR9p6Ll52L7u0pu1yh
+         yswivvSj4gKsx3pI/BVfbRTk7zkeLofnZUAiEDj0gf60H9Txjf92qhNygA3bV4kTHjgm
+         JUuBr42exz9qGl/I5sGty/5dMkKSNpbC1JeMNmcComR7mzRV39jcnZ8ol2Z4RJGSvtwS
+         S6eME+fCDoOonXv7vPj1xEuHnpphETVNaV+uAMDrJ6rBiYHOsPn6Yk371DKg2w4xAVsm
+         JmJWW1576y9qoms7OGT9DvGRPUx+5UIh/dByFapO/BOMyMlgeR21Y9nonWRrfzyRzznt
+         OfpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707565887; x=1708170687;
+        d=1e100.net; s=20230601; t=1707565911; x=1708170711;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=n4hzqQK2jDc7gwYXhpJIcj9gdQgitPUMD4wx3zzHzg8=;
-        b=pEnkju37ctzBrZaUeLSjGC/l5Gy5S2VA1Krp+PDNCDQGTRlsaWGU8z6EF2nCUxHYcL
-         qic8IYU67aet1qIHETTAN6k6qZpCcimV/Rn9ejHnTAkZrCyTYhX1QTknG8txmh3OKlnu
-         wxSgiU+kTukxJqWzmkkWa8eCPRD0KmuoBWjSkQtsMq4QFoZqg2cPe6WAZnmZ6ePWXcow
-         ZQ+ZQ7pWFgMIGhbwGGcpr2UR43x7wq6lfJfwP1tWldlU/UO3l8vyhePkvSDDXck05wRX
-         Wge/2+9uswieTi+2PHv+VLcm3A0rG9lD5km+Ai7XBJ8BJzcknIWqHB8aRSLQXAcK+41n
-         P7qA==
-X-Gm-Message-State: AOJu0YxTJuiNt62/r5Xe+qAM42VWEGSI8tihQYIBfITMa7RIpGpwwkXW
-	UieyNqQ6AXqoNTESPLPBz8YkGtdmyZlOu1+3LVXjQiGzOMZkgYisEB5eerak4pNdJEgpqrUqenj
-	tngtb/56Gh6wBwW7zVrAs1gw6/wDrhEQ+oE/lDQ==
-X-Google-Smtp-Source: AGHT+IHmuc9OItSNKtDEBBJS+z3L3A0n3p2TRNTXhKRlXEx8mZXeoTapnJ3NEc5+DGezVvje2FB644OYHRQtnMjnuYE=
-X-Received: by 2002:a25:ab8f:0:b0:dc6:ebca:c2e8 with SMTP id
- v15-20020a25ab8f000000b00dc6ebcac2e8mr1458918ybi.5.1707565887676; Sat, 10 Feb
- 2024 03:51:27 -0800 (PST)
+        bh=/RWQV9SF+U2wQY2whqhrKlZUzNhMlpaeidneMuAvWr8=;
+        b=abBGmfN95ORCEKI09Ct+QGvriFVAN3usCr5T+gQeBdaPekoxMnf0neS4U0k8Gs0mK1
+         MYJqBZ3uHv3c/y1dERXN35HolyiYHfO3qRlCY69yiAQqKau8VG3Tfh/sX5sQ6WkDamb3
+         NlMKvVsRHlvxKfQlGZfAptcczQPHXf1Z3s4JUkH9kj23iC3yDlcgriz5twW45NxKwjPL
+         kCWvy93bUgP5qELb3DU9GLDy+rT8u+ZvhG/MS0SKxyPBKWDWIWPil1H0H+Z+CrVmEAmy
+         Abdi7aZddiE/eycQWrbvrG+HeCzDeYIIpGpQNNJRr5oYNaEYVAJ7KNdOZEyf4UPUc2Ef
+         FkgA==
+X-Gm-Message-State: AOJu0YzG3bJS+fJ/68/tEZyxIIJT7cRjX2lRm9ykPDV/KewVj65GDm3X
+	jTB4nFjvHC1e66enMcxtCTVq5uVSOygq6p0ckt/YJzsmdxYZSxs2RqFrKAa/Um67kKf8RBrZc57
+	XWh1fnTq1i1gkJsox7xDwWWew2fxiyiwNyeMZyIyp76an9/PvD/E=
+X-Google-Smtp-Source: AGHT+IHFyIHD774MV2fP+SnSwgZs21+HYOwYBlaQnlLEfF4zRO80UDtJtaZAZIQJ+wWMOfEhJRsDBXclS9ily9CzMOU=
+X-Received: by 2002:a25:bf8c:0:b0:dbd:2b6:6cfd with SMTP id
+ l12-20020a25bf8c000000b00dbd02b66cfdmr1415270ybk.2.1707565910913; Sat, 10 Feb
+ 2024 03:51:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-20-swboyd@chromium.org>
-In-Reply-To: <20240210070934.2549994-20-swboyd@chromium.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-21-swboyd@chromium.org>
+In-Reply-To: <20240210070934.2549994-21-swboyd@chromium.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 13:51:16 +0200
-Message-ID: <CAA8EJpp2wqK3vEkU7Y3BxUKsSn11B0-X7LNF-w+sJ91bPTAVhw@mail.gmail.com>
-Subject: Re: [PATCH 19/22] arm64: dts: qcom: sc7180: quackingstick: Disable
- instead of delete usb_c1
+Date: Sat, 10 Feb 2024 13:51:40 +0200
+Message-ID: <CAA8EJpoS3+NJCMnR3HhGrh73W39ivz9O6PX3Fov_an3cY+sLLw@mail.gmail.com>
+Subject: Re: [PATCH 20/22] arm64: dts: qcom: sc7180: pazquel: Add missing
+ comment header
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
@@ -89,10 +89,9 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 10 Feb 2024 at 09:16, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> It's simpler to reason about things if we disable nodes instead of
-> deleting them. Disable the second usb type-c connector node on
-> quackingstick instead of deleting it so that we can reason about ports
-> more easily.
+> We put a header before modifying pinctrl nodes defined in
+> sc7180-trogdor.dtsi in every other file. Add one here so we know that
+> this section is for pinctrl modifications.
 >
 > Cc: <cros-qcom-dts-watchers@chromium.org>
 > Cc: Andy Gross <agross@kernel.org>
@@ -106,11 +105,10 @@ On Sat, 10 Feb 2024 at 09:16, Stephen Boyd <swboyd@chromium.org> wrote:
 > Cc: Pin-yen Lin <treapking@chromium.org>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  .../arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 
 
 -- 
