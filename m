@@ -1,129 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-10437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2DEB85016B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 02:14:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5736885017A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 02:18:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F6091F25FC1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 01:14:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6A3B1F24108
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 01:18:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 108E41FD1;
-	Sat, 10 Feb 2024 01:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 618261FD1;
+	Sat, 10 Feb 2024 01:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JlwpXcht"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="KltL2qzH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881791FB3;
-	Sat, 10 Feb 2024 01:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACA71FB5;
+	Sat, 10 Feb 2024 01:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707527676; cv=none; b=Y5tPpORPUkI2S7Q9u013fcxMHpNrsw8E4Z+OQ/r5SYN1TQEADyGAsZCBlHfq2PleNLb8Sv0mR2z3YRvo2zJv8EWzaeRlfo+RqPtb8J7KzWUZWrP7FhXM6x0UTdeJYBpOj44EQGXCOoox90uuUG1J9jsW0l9SeGSfJaDzF2wcIXY=
+	t=1707527883; cv=none; b=BF86QIFjfCn2QkhRH68Uf4Ez3mJhxaP24FE39EdyaosFoYEN5DyMp50v5hdEOu6+xcflWn6tVgwZPyIv9CHu+b1xtNDRCyEQ7bIWYf9KidhxXRaJJ3ffelvp4gG7ZKmxcUbo0/gU+RaBdrHHotY7Honmm0IkVo3rXxvB69Ey8RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707527676; c=relaxed/simple;
-	bh=LPf6setH9WEOkCjciKfgUU5wH8txXxqhbaBTC04gmSY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZI+KOb8jgSzk0AtGRdtugyQ74MuBnCNtd43V4AaIXVPnk+3Jv2EjWH7vt2NRt0hdJMpqHsdEdkTz9v5MChrtU7g3PHldm/TpNiTR857cluKOnN7jxne827wzII8WqMBHrbpq4qQAHXnbk78WN2fKnYz72t33fWmos1FG9n/7rmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JlwpXcht; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41A18UF7017880;
-	Sat, 10 Feb 2024 01:14:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=IeTSwMc
-	8UI7TSis9jWY58rowq+KOqu90WsRTs09DlDQ=; b=JlwpXcht8PHkVk2i8qt5EIh
-	uUu5yqVBQbq68+nvD9VS3d2iVY/QtT0w1NBimcR79g+C8bq16T2Is8pG66Z6Xm8M
-	IJYuAoYftCC8div5LmxBYF55L9mYRvxsJXaLc70vyzZyMRGcZBPfHV/AqqUDhbgh
-	sT0j1I6gA169tG1+6x18kY0ClE/a4LgaMvNemGVmHWROgLSFJVdwveBArT6rSYIT
-	rA1K1qlBg06zURms93aHAOcp8iP/CroZwftIJhfeSob2Aj5+ahBFFZADx/B17Tee
-	ebpWKMqIpmMtF0f3Kj+Ynnr/iPNHpDuRsMa3NhLVl11UpKWmi8vwC/r77Wctsdw=
-	=
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w5u2k8dng-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 10 Feb 2024 01:14:29 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41A1ESAN016768
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 10 Feb 2024 01:14:28 GMT
-Received: from hu-uchalich-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 9 Feb 2024 17:14:26 -0800
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Elliot Berman <quic_eberman@quicinc.com>
-Subject: [PATCH v2] soc: qcom: llcc: Check return value on Broadcast_OR reg read
-Date: Fri, 9 Feb 2024 17:14:15 -0800
-Message-ID: <20240210011415.3440236-1-quic_uchalich@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1707527883; c=relaxed/simple;
+	bh=722mtAfkEpvZBuy7Xfc4E88QMXpjqaGfvRDCUn4uIe0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jKMswnos3VrmNyl+kap28nkSDUjfEptSc3WXkrHOdIyv5sLTdQDEtiYn9aCE2d+wkr6tRcvFfY+aneA5Sgs4Wd8h4Yk02Msv+q7EogbJippEQmyDZvDi3K+dzf4ogTmwa9j0YiZ4QX7XKumJZ0d8abcGcVIYbA9BXeux60r6GZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=KltL2qzH; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=zKZdt/8G3k78mhaP+G1gSjq1dpGWlCzfFW6IRY7O1d4=; b=KltL2qzHCtRfERU6iAOhacpaIj
+	sSiBQSbGur8Y2zKUTDTwpR52i68tsgLN0BBp2CFZClKNwSuEBrsAXheCFK0YVTj1h2SpF+HCdAVhv
+	IeZJzn6GxEq/GRLpLUnhmc7oNdl+i+fXb+kkfUpO/9VynMVtPHxaUto7h91fDDrms7Kw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rYc04-007Qow-GA; Sat, 10 Feb 2024 02:17:48 +0100
+Date: Sat, 10 Feb 2024 02:17:48 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v7 02/10] net: phy: add support for scanning PHY
+ in PHY packages nodes
+Message-ID: <5531e16b-4bd3-4ffd-82b5-0dda7942bb5b@lunn.ch>
+References: <20240206173115.7654-1-ansuelsmth@gmail.com>
+ <20240206173115.7654-3-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jQU3TXkvaYKW6hh6zZD0x4D7LoWYTr8F
-X-Proofpoint-GUID: jQU3TXkvaYKW6hh6zZD0x4D7LoWYTr8F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-09_20,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 suspectscore=0 mlxlogscore=991 bulkscore=0
- impostorscore=0 malwarescore=0 mlxscore=0 priorityscore=1501 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402100007
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240206173115.7654-3-ansuelsmth@gmail.com>
 
-Commit c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
-introduced a new 4.1 if statement in llcc_update_act_ctrl() without
-considering that ret might be overwritten. So, adding return value check
-after Broadcast_OR register read in llcc_update_act_ctrl().
+On Tue, Feb 06, 2024 at 06:31:05PM +0100, Christian Marangi wrote:
+> Add support for scanning PHY in PHY package nodes. PHY packages nodes
+> are just container for actual PHY on the MDIO bus.
+> 
+> Their PHY address defined in the PHY package node are absolute and
+> reflect the address on the MDIO bus.
+> 
+> mdio_bus.c and of_mdio.c is updated to now support and parse also
+> PHY package subnode by checking if the node name match
+> "ethernet-phy-package".
+> 
+> As PHY package reg is mandatory and each PHY in the PHY package must
+> have a reg, every invalid PHY Package node is ignored and will be
+> skipped by the autoscan fallback.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 
-Fixes: c72ca343f911 ("soc: qcom: llcc: Add v4.1 HW version support")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-
----
-Changes in v2:
-- Referenced right commit to be fixed in the commit message.
-- Added Elliot's R-B tag.
-- Modified commit message to better explain problem statement.
-- Link to v1: https://lore.kernel.org/all/20240202-fix_llcc_update_act_ctrl-v1-1-d36df95c8bd5@quicinc.com/
-
----
- drivers/soc/qcom/llcc-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 4ca88eaebf06..cbef0dea1d5d 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -859,6 +859,8 @@ static int llcc_update_act_ctrl(u32 sid,
- 	ret = regmap_read_poll_timeout(drv_data->bcast_regmap, status_reg,
- 				      slice_status, !(slice_status & status),
- 				      0, LLCC_STATUS_READ_DELAY);
-+	if (ret)
-+		return ret;
- 
- 	if (drv_data->version >= LLCC_VERSION_4_1_0_0)
- 		ret = regmap_write(drv_data->bcast_regmap, act_clear_reg,
--- 
-2.25.1
-
+    Andrew
 
