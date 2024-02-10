@@ -1,116 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-10521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 466028504F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 16:40:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 353AF850527
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 17:30:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03FE3284044
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 15:40:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DC111C21AC5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 16:30:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DAA55BAE0;
-	Sat, 10 Feb 2024 15:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C1605C5EF;
+	Sat, 10 Feb 2024 16:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6T7GiZT"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="2QQ17jfR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A90A5381A;
-	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DC0364BF;
+	Sat, 10 Feb 2024 16:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707579632; cv=none; b=CHoKc1ihGXnW1t27LoWFjt9tkF7OiPNJ4U5nCHCAjUg+T/cHtvkMAk/OOvKc3iEPpukQ87UaIBVehCQw6o5Uzjqk/ZOeNdvRXB/kJ6j1IfD8MF0DD1O6HOb/IlkM8lH0S/4RpjRXic2wCFi6P1yzuA/bm9Hcq5yuOvBRWosEf9w=
+	t=1707582597; cv=none; b=NSg69TkyuiawWTaMj9Uu8VfNMGn4/+krh8ZW+puER5LmzEgi0mZIrFuOW28S8ukcyrxu5C/7AIMs5qsrPv18kYjNH5ndXvMJReFfxfOyl7+cSrFKh3oj/5RAniTpsZXK8wz3AzRd+ii520fUhtgDUsm9rXzPo8aiaZhQYQhBQSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707579632; c=relaxed/simple;
-	bh=o90dBGsaOc4h8XZXjOy2Vf5kYvkiA8PHxCs2WzXIIkE=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=XgcXOW00RADCfs5lRzqMm2plwTZnB7M94Orrbd1OGVJDa3ZZYkj2udTVsOk0BYP/R/39v11A30I0hRxN7toXjNJO6g9cECi6QEPU3wEkNGXc9ByoVKZ8bqHxvtZXiB7sCOrRgxJhWUvQWhd0lGpNICaOxwzH07DD9e697jOojp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6T7GiZT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 59049C43390;
-	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707579631;
-	bh=o90dBGsaOc4h8XZXjOy2Vf5kYvkiA8PHxCs2WzXIIkE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=f6T7GiZTni50nnfBV1omFsyGeirpUSqU6elXu7ewt73RCq5+HOh7VkVrdRvFRHFXO
-	 jv/YxV4p119HjSnoK6JdqiqM2se0/BLhlu/K6z+glLLEJHnfWWuLzXOCPJtgBp/o2w
-	 tF2MawnXCGeor1yXB1IzOu3WSKSRwVk8/7LP3QkA+fzNPGE36vA+3s9beLRJ4tLU/t
-	 hJWl5aUoOkdvlFUIOG6/b0OwmVA+2dAlMGRMOtyyLdohaX6m0UxwcH3fzhK7W2dUtr
-	 9V/FXrJt4dFSdAnF9jCaKjiMQpdnnvGvSyxX9opVSY8ubbVEM1jzm2Is+qPH/0Abcf
-	 Ex1Gz38JgLzDA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3E5E6E2F2F0;
-	Sat, 10 Feb 2024 15:40:31 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1707582597; c=relaxed/simple;
+	bh=IAULVgXcV4yTsqI0dDqXRkB38uG90/GIQjySUkSdNXE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QeDYcnX3/3Pyd4kZf6f1BiZ9n85zYEhatldZOiaUiglDb6hDDfUR5LySXiTp431LWeBILYvswoiAqxXQoJ5U+MVli0+PbG+WL19d4ullakE8sgsqmvrdsKpK1L+PK2d6g47HIbAOZossF7s9CHmylgzsUvEMfytUFnu2BrqlEh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=2QQ17jfR; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1707582593; bh=IAULVgXcV4yTsqI0dDqXRkB38uG90/GIQjySUkSdNXE=;
+	h=From:Subject:Date:To:Cc;
+	b=2QQ17jfRjSQ0Iz642llM+UfhJ8aEGsfQra26tPgH1kckvweFW1qdMhWwPJTSxH6Ly
+	 45Cc4EaIsbAqQKl+cbJ6TbBWVzL/kvcbfDt7eIIdt78dKPGkqcig5aFOUxHG5O41vE
+	 ckot9xTKCmyEi0Sh+2/+9hy5u9KV/vhyxJnEkKBA=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH v2 0/3] Bring up more CPU cores on MSM8226
+Date: Sat, 10 Feb 2024 17:28:51 +0100
+Message-Id: <20240210-msm8226-cpu-v2-0-5d9cb4c35204@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [net-next PATCH v7 00/10] net: phy: Introduce PHY Package concept
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <170757963125.14284.2496460448206023966.git-patchwork-notify@kernel.org>
-Date: Sat, 10 Feb 2024 15:40:31 +0000
-References: <20240206173115.7654-1-ansuelsmth@gmail.com>
-In-Reply-To: <20240206173115.7654-1-ansuelsmth@gmail.com>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
- florian.fainelli@broadcom.com, bcm-kernel-feedback-list@broadcom.com,
- robert.marko@sartura.hr, netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+X-B4-Tracking: v=1; b=H4sIAEOkx2UC/23MOw7CMBBF0a1EUzPIHqPIomIfKAWOBzJFPrITK
+ x9575jUlPdJ7xwQOQhHuFcHBE4SZRxK0KWCtnsNH0bxpYEUGU3KYB97S1RjOy1olXbsHHtrayi
+ PKfBb1lN7NqU7ifMYthNP+rf+d5JGhV5btsbclDP02M0wL9d126HJOX8BoVrXw6YAAAA=
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>, 
+ =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>, 
+ Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1163; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=IAULVgXcV4yTsqI0dDqXRkB38uG90/GIQjySUkSdNXE=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlx6R5r8qe5fRNeseT6VBwQWvB6o/YvJKhNCeDV
+ ZhKYmDF2XCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZcekeQAKCRBy2EO4nU3X
+ VsINEADLvZDpcJ4FCpORafNmljwjN4fhw5Dl7ASHPW/XDozABDtZrfyVFLpDQwAjCDg9fmQ0mzJ
+ GPJd5ZJxyUhl9gjKo3JC705jYUEYbhGaBrMpm+nyHbTE+eU14fBG9NaraXdtchYrCv/4N4ntVWO
+ Dl8FixbJ5KjxlchD2pB+7KyvOqKpf6rlTKiYOA1nR062xP7D/3dATG+VeeBWZ0Ey+h6ZJ40BoT2
+ b1FWRWhm0f0AxPSerz+yg9ZhCQyxvkjPdx06pSuLlPDOs4QI4Blx0usIXp01QEMyWKr5L2EJ4o1
+ FO+PUvuZpLyIcV6IyHQIdsls10CAQnguTKk9J13TAz3U2T7ThVKyUNwUV6+lD8Kx4ecgLmbO74e
+ LVwGUg2bHWgwFaMaFjDOgnFfjdrBNG15XgVCdwSY2ELbA6eCcuBtXpf+CWtq/eYIPyu+9o7b0+G
+ pN4BOQA0pFLa3YG+1hE7b5ojeWrqTw0fUo5hZJcajdJ24AYjwbSbzmlNeuKpAo4e2BVQq0CupEe
+ yT+xL5xULGRfgLROjjw4WNdj2nMkL/ysXeJHeqjftQw/SSgQEsD1E8XO9p0rTxYbuegF4+bw0BY
+ yq0uRXuwKxxGCPpBLB1Tcel0KOx9VdRFJLrTYrY+zx1uQf2lyweoy7JK+LUX57nGJ96S73FRVUg
+ DG3+3idf67XeegQ==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Hello:
+Add some nodes to bring up SMP on msm8226 SoC. Another commit to fix the
+sorting of the nodes is also included since the ordering is currently a
+bit all over the place.
 
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+The bindings patch depends on the following series:
+https://lore.kernel.org/linux-arm-msm/20240102-saw2-spm-regulator-v7-0-0472ec237f49@linaro.org/
 
-On Tue,  6 Feb 2024 18:31:03 +0100 you wrote:
-> Idea of this big series is to introduce the concept of PHY package in DT
-> and give PHY drivers a way to derive the base address from DT.
-> 
-> The concept of PHY package is nothing new and is already a thing in the
-> kernel with the API phy_package_join/leave/read/write.
-> 
-> What is currently lacking is describing this in DT and better reference
-> a base address to calculate offset from.
-> 
-> [...]
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Changes in v2:
+- Add saw_l2 node with bindings
+- Rebase on linux-next
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20231203-msm8226-cpu-v1-0-d18e83340b32@z3ntu.xyz
 
-Here is the summary with links:
-  - [net-next,v7,01/10] dt-bindings: net: document ethernet PHY package nodes
-    https://git.kernel.org/netdev/net-next/c/8453c88c7a15
-  - [net-next,v7,02/10] net: phy: add support for scanning PHY in PHY packages nodes
-    https://git.kernel.org/netdev/net-next/c/385ef48f4686
-  - [net-next,v7,03/10] net: phy: add devm/of_phy_package_join helper
-    https://git.kernel.org/netdev/net-next/c/471e8fd3afce
-  - [net-next,v7,04/10] net: phy: qcom: move more function to shared library
-    https://git.kernel.org/netdev/net-next/c/737eb75a815f
-  - [net-next,v7,05/10] dt-bindings: net: Document Qcom QCA807x PHY package
-    https://git.kernel.org/netdev/net-next/c/dd87eaa13787
-  - [net-next,v7,06/10] net: phy: provide whether link has changed in c37_read_status
-    https://git.kernel.org/netdev/net-next/c/9b1d5e055508
-  - [net-next,v7,07/10] net: phy: qcom: add support for QCA807x PHY Family
-    https://git.kernel.org/netdev/net-next/c/d1cb613efbd3
-  - [net-next,v7,08/10] net: phy: qcom: move common qca808x LED define to shared header
-    https://git.kernel.org/netdev/net-next/c/ee9d9807bee0
-  - [net-next,v7,09/10] net: phy: qcom: generalize some qca808x LED functions
-    https://git.kernel.org/netdev/net-next/c/47b930d0dd43
-  - [net-next,v7,10/10] net: phy: qca807x: add support for configurable LED
-    https://git.kernel.org/netdev/net-next/c/f508a226b517
+---
+Ivaylo Ivanov (1):
+      ARM: dts: qcom: msm8226: Add CPU and SAW/ACC nodes
 
-You are awesome, thank you!
+Luca Weiss (1):
+      dt-bindings: soc: qcom: qcom,saw2: add msm8226 l2 compatible
+
+Matti Lehtimäki (1):
+      ARM: dts: qcom: msm8226: Sort and clean up nodes
+
+ .../devicetree/bindings/soc/qcom/qcom,saw2.yaml    |   1 +
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           | 756 ++++++++++++---------
+ 2 files changed, 427 insertions(+), 330 deletions(-)
+---
+base-commit: b9fed7419cce45b97bc3217f07920751a6ff9a18
+change-id: 20231203-msm8226-cpu-801bebbed886
+
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Luca Weiss <luca@z3ntu.xyz>
 
 
