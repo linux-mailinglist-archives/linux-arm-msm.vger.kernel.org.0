@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-10495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CC998503B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:41:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 170F38503B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 10:44:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7471B1C2116D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 09:41:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A9F21B24727
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 09:44:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CEF224214;
-	Sat, 10 Feb 2024 09:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57F712B9CF;
+	Sat, 10 Feb 2024 09:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vxn7BrbO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="agezzqaQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC8F2EAF9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 09:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB12225610
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 09:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707558116; cv=none; b=f9EwKiwtr+eMnRCRHn910A7ndn0w/fh49v9x7Yb5j3hL/l1LWObrUsEpz1QyXY2ilZe4kIiKrBmmstWmsRv/yBqbp0/vdj81I+g6FA9Er4hav34ypP2ILgd8Cd7vE05H25qJoO06cbMOe0bxHWHJFeab7Q1ozXTgsu+xjNi2hw0=
+	t=1707558241; cv=none; b=CtADuAm6otsy96SlDrBvwJRr2l4hXRmCZaecQrfEgVLJ0ahsPEOdLeg+J6mbo7LL2PrgcZlkuaneeKLIropScAIOaW302zWLDVthJReICDSALz/xzpIVEq6SA5rejtVuX8lcjQXy/9mhJns83rCZuGoFIOVeUYdgtRKTqj1UB78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707558116; c=relaxed/simple;
-	bh=+AxlR6NTEp71ei9dNRta1iEjNgVh63l24UAGkr/8cMU=;
+	s=arc-20240116; t=1707558241; c=relaxed/simple;
+	bh=zPS5ASXeJxmsZk5+aJtSTxHGAfQQfBhC+eveE5Dd6HA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OGI3oiFvMKl8WQ+n+YIvkncetiro0s+zKN++65/L+ahPVnV+M8b2RtJRmPQ7VpEme7g4eJ5LyH24PqViHUlnlrdcQ9NqU2Pm3OazazxLqsvxFenm1E4PSaQfS4A/Rb1Dt2NyZPlHMfXLTK7rZk/C4HVfUvPOk78wDvhtaNCXAsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vxn7BrbO; arc=none smtp.client-ip=209.85.219.182
+	 To:Cc:Content-Type; b=qF3o6zI+SZb8FHuxtlfoqSVmu+fYjV7VwT9DbVZ3BgOerOWT1ONEYaPKXgMR+Igkaf2wu1IJl+AJkvbjdRMXiD02LeI8hLgMnSs3P8ATaEC/khF/K1wc0xIylQx/PQUaj3b88WBBQL3zSnWCfD2SzoLUcVmvcyMebDb0swdt7T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=agezzqaQ; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dc75c5e3151so601432276.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 01:41:54 -0800 (PST)
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dc745927098so1521949276.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 01:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707558113; x=1708162913; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707558238; x=1708163038; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FmQjmWLV7DJRRFljU/pPBQtvGGLrbs70ePm8J5kL2KY=;
-        b=vxn7BrbOrNEGHLyIVO4NHuB8TBUlAbRkycRcHoMe4Zz7qm90LzbQKTBPoDu4uPcme3
-         TjPzas4g/cX2V3BJUy5bnjqOrIh57hb5pZVbXJD7iwGEXxf8WDSOmePy3MB//sOXWe89
-         NKV2k+uXnVoqWvLPk5GCh9YbxH6lRtFV/6tJ8H9ynQeiJS3TYgyqX5NBk6srhHblMVwA
-         wWnOblBAP2Kj3Ha4MSFUE2PAzSyMywxT94MAjiQG64g6EljsV1uGHNU5WnylIKSHItiP
-         YQgaejAewuCYi7DvaihLHZrfE/DyKHSmcUYVp23I94kgT9I8x9JRR87CY1L8dPzLX7kb
-         b67A==
+        bh=+RI3dWBvWyqq/yEA1r1jf7HN95TUMuR4sMgCLHlYNCo=;
+        b=agezzqaQVddThfnPMW34K1oUFzZTa7qMs95Gsw/RMoJAOXP0EVKjU6XEur6FRzBNzd
+         71REQpcNJqjndAKUO0o6qfELTo4Ttjw4/u9Kz/sXkTxuv+D87ZfXGYeeUhRXEOvZ1/YT
+         Rway+hK/G39ljO/qTp1DF2LQHVUXZIaMjvbqKmhV4iZWyaCoZluhTt3BbYcBWoqSIzfk
+         UlrKM7WNqwazsmpt95cPbGtF+14psbuPqbOCvuvduxcsK1zwzQho5sKpvjE6uJeGI6pr
+         hBLqUBmGW0Rn2e7IKDoGmqJkVrm75K6qQ13cVFfTRVldAr1uS/76XjTQ6MxGq9rfpC5z
+         VP7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707558113; x=1708162913;
+        d=1e100.net; s=20230601; t=1707558238; x=1708163038;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FmQjmWLV7DJRRFljU/pPBQtvGGLrbs70ePm8J5kL2KY=;
-        b=fjcJeiwikAqLI6+6cOaU4aXJkVvy5IYcA/I2HIfwX+kRUp/M1N5SoPiZHPgkqibV9S
-         FTSNCfqCWoSd6WQ8UsSfDoNWwb5OI3ObzD09lLc9e8IcULCxk0leKWh93RwKDL/Qrr2P
-         4SEj27uLnW32epi1E3/+qTX4ZQPkQ8Lb7V0xZzRVzss56n1weTIIVeXQEB9+IKtA102x
-         PUcIrp3tKoBwy4GfmRP/8IDg7gCAn0gRYPQyNsnIuQjY86kYY8sTieH4UFefsP4TuW7D
-         OJ//9/7OkmRyk8SczoJfreqtdMVhj/pwEEj0++MGityMiwQJU1cLMTxzrtTlmjFK42h0
-         06nA==
-X-Gm-Message-State: AOJu0YzClbC6eFxq5Me8s2PPClxAirNkNiO5ZoYuNpasPL0LD2se0rGc
-	ZE4dS+PTYiIBKzSVfVqvoxkW+2W9oHHRg5sKnYgeNqdEHeilSuSqW5ccOMmZOSL4ZbqXa5rU/51
-	4QQhg4KigkqoIxnqC+ZYZvyXxlTEuzvZb0VKMWA==
-X-Google-Smtp-Source: AGHT+IE54M281Vieh3wZ0YBgqDx/AuBch5Pznwg9hx0yJY6dS7xj/fAxE3wJf/efdw9syQBI4/GbJ8uHf0sc1c5S73U=
-X-Received: by 2002:a05:6902:1b0b:b0:dc2:3237:ee61 with SMTP id
- eh11-20020a0569021b0b00b00dc23237ee61mr1873660ybb.53.1707558113541; Sat, 10
- Feb 2024 01:41:53 -0800 (PST)
+        bh=+RI3dWBvWyqq/yEA1r1jf7HN95TUMuR4sMgCLHlYNCo=;
+        b=SrRBaXxvkv60xCwHcOJ6FaBFr/M0WsB2HPFzsnRAb0nU3zUNO5BguL+SXKAj3yHkZK
+         mfNdWrZTKRqgKoP7q9RPU8vKujaIG/aKNteusIr5+mWgZ4vQFq9xDjosLB0GLrd02PBH
+         82uJI4Y5q5lVF+ELPU65enCq46Nh9RlZ1f/UsnTdC03mdB5xjn+SPBm7jmvfI7vuyrKX
+         xey7pCeA4auN74pFy0rD+jO+ZtT7VZkccGvHGeSNWZItuoQq589+O6VZsMalUnV8ZNvw
+         idROD+wJNt/2cZy537BqDi62H9LubjHhAUoM2zcQ7NLblBB9g/1a8tz3kFuNW1Ok70rD
+         6aKw==
+X-Gm-Message-State: AOJu0YyLtiR1FbFyY+xIhMLGeZHnKk1AopNIbIZ3LlR/43Lzihl1QYAO
+	4QTDNVMPIsllBqjypH8xDuHNgvhSFEqmK9nA/I2nqO1ZV80xLpEI8WpAWPH+Ga523CNbdXD/ZOt
+	k7Yku5FTpjfjIMVZLqUuW84XFsKjJrWD0rdyuCg==
+X-Google-Smtp-Source: AGHT+IGxEsODyIQpa3+puvUQSQAHWgFROHjBlYgNuoD0UH4Y1xDQcQ9joz75lQkRTpTguUXW4Z8MIDNAxAlhshGy4+E=
+X-Received: by 2002:a25:246:0:b0:dbd:4883:44ce with SMTP id
+ 67-20020a250246000000b00dbd488344cemr1345322ybc.32.1707558238734; Sat, 10 Feb
+ 2024 01:43:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210015223.24670-1-quic_parellan@quicinc.com> <20240210015223.24670-5-quic_parellan@quicinc.com>
-In-Reply-To: <20240210015223.24670-5-quic_parellan@quicinc.com>
+References: <20240210015223.24670-1-quic_parellan@quicinc.com> <20240210015223.24670-9-quic_parellan@quicinc.com>
+In-Reply-To: <20240210015223.24670-9-quic_parellan@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 11:41:42 +0200
-Message-ID: <CAA8EJprduMsCwuXBOR2rATKJp+2+1R-L8+xSL6yBRE9CmdZnzg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/19] drm/msm/dpu: allow dpu_encoder_helper_phys_setup_cdm
- to work for DP
+Date: Sat, 10 Feb 2024 11:43:47 +0200
+Message-ID: <CAA8EJprtCLn2s3xj1VeOZ4-Ot79PGNfk2Bv8fqPLeGWD71+XNg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/19] drm/msm/dp: check if VSC SDP is supported in DP programming
 To: Paloma Arellano <quic_parellan@quicinc.com>
 Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
 	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
@@ -86,18 +85,13 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 10 Feb 2024 at 03:52, Paloma Arellano <quic_parellan@quicinc.com> wrote:
 >
-> Generalize dpu_encoder_helper_phys_setup_cdm to be compatible with DP.
+> In the DP driver, check if VSC SDP is supported and propagate this value
+> to dp_panel. In dp_display's dp_mode, the out_fmt_is_yuv_420 parameter
+> must also utilize this value since YUV420 is only allowed when VSC SDP
+> is supported.
 >
 > Changes in v2:
->         - Minor formatting changes
->         - Move the modification of the dimesions for CDM setup to a new
->           patch
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 +--
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 27 ++++++++++---------
->  2 files changed, 16 insertions(+), 15 deletions(-)
+>         - Move DP programming when VSC SDP is supported to this patch
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
