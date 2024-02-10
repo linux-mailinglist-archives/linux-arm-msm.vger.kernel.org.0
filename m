@@ -1,135 +1,511 @@
-Return-Path: <linux-arm-msm+bounces-10513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBEBC85044F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 12:53:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB39D850492
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 15:10:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C24561C222E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 11:53:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13D3F2837D8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 14:10:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82DCE3D553;
-	Sat, 10 Feb 2024 11:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 455602030B;
+	Sat, 10 Feb 2024 14:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g65cUGgn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BXwhu+Dm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E6F3D54E
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 11:53:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03088537E5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 14:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707566009; cv=none; b=dgwUi5k0N0ZspwmaWtmOe4/MgUPgri9Z5mNty+Yoiz5+SLcBHLyxMu9VuEt3yEILbMmK/zc3dcNnEK6sN3ahZLlz6uSl9LJSM2UiST57dSoTDsOX9S12jHBP9aU4WeTCNTG2nkEmSAoUWWgvZ7IH7GZc0TNHySbuzb2WLgiisFw=
+	t=1707574247; cv=none; b=YCb9IEvxcgMsmnHNE1tuPBl6mg08/C9uTVLMQVUBLxxHPCK2neFcWgqG1SfsA6ttYuW+/t95VvgIJgQxjQK2fMiYM3pu0oPU08gKRLAlvFn6f7sP539JwA5MXGKSLChRg49mq7ifomWpAHsxHGn5Sw10+z0wXlnoZBqYT6BwX2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707566009; c=relaxed/simple;
-	bh=9bQZqD23DARa5dmQXwWYHcnI+MX2yoHshObqALvEMWE=;
+	s=arc-20240116; t=1707574247; c=relaxed/simple;
+	bh=JH2l/F47E+Shk45U5CPuHOdYmrRlrIxIp2DDNWAmuo8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bdTIAHEUYWS56XT/eVIWNjUTz+WIqsRRallNHz/hD3JTQqZ+9v4Q94mHAo5rKyTHpUJXEtY9t564Yn2OeKs97AjLoaoMvmcYoha11jh3oCHeZVdZHmbM/NMzW+LbBkcWCxl14N2LLLy7Mc8UeIuTuS+miL77SCd1vCF0EnhblJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g65cUGgn; arc=none smtp.client-ip=209.85.219.180
+	 To:Cc:Content-Type; b=WKQqP2vNeYC1qPm6UYfey8BGK3lBUiPdbmQX26dEJJqj33XiisD6E8GsIXc6czpTSByFNMeE34RQv8mr/SQejY7jFSHsxyNRvARjnPQIkxVOAFHAJ3Wpj51Px5Ho+iKYQsPLoMxWtCLjiWm78N2O+DqV8axZyNLmnb7+bW23HnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BXwhu+Dm; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-db3a09e96daso1619419276.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 03:53:27 -0800 (PST)
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso1820672276.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 06:10:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707566007; x=1708170807; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707574244; x=1708179044; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XWXgSyVP+N1LKifAWR9rUMalj+Xn0R6HoByIzflb0PQ=;
-        b=g65cUGgnt8WSSlUdeP2L/iLZFyWEir3GrpronbNIwF2WoY/SLTOpxO0Rd+bMgxSzrs
-         o7JD+hYTFmmbKaWA3icuqL8Ge4/e7n8IEw4ixeZZJutGxDeuWP4juQAQvHcRkZkAK8WM
-         cnFhJFcwSUgxj7S6hrRFZq0JfMEYCC8wasIY1ay+1DQmSLL3Z/4k5vRsrvK0s0C9Pf3J
-         guX6XcSx+dXj/b0F+kAN+FsYs4L44Hz3NUWHS3Q50LJXitq3s4SqlsfmHj1PsnamsoCT
-         e/d3m8Hs6Kp5unzNtCArX8Z7yTbwR8p8TLkCabenR/ZnafW9SZXRuugUwCwXHAL+/aRw
-         P0Dw==
+        bh=x/j1nrgyUuRkpp75x3KBXMusSKHdoxymJpmPHYvTa44=;
+        b=BXwhu+DmFwkCe9KMlLmMN37gB0zMnU+SB5/IJ6ZNswXxY+z5H5aJlQp+BkSYP5oFLn
+         TPB//WVAi9bZTswpyiAiIfvH0OyVTwKwxh1t3AUEn+DQiVK81CrI4+HbBKb+lzV7Dokc
+         dXAOA/hi7eh7qNHu1KoMOW6LUjA4+9jKUu78l5P9KVcrDv+TOrYxIm/kJ6KNRX3h6E7I
+         3i8JLHgV+2Zrm4cFNyuAY6SnEM9jugemW/dJlKaqsevNQYbI1Tfv+gc6Ftzr5oq6xYEn
+         6LQjeBjn8wNbYthyeS0yeqHeo6jBglpORsiCCuBXe10JiEBzZueexhikOo11656i8gXg
+         9tLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707566007; x=1708170807;
+        d=1e100.net; s=20230601; t=1707574244; x=1708179044;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XWXgSyVP+N1LKifAWR9rUMalj+Xn0R6HoByIzflb0PQ=;
-        b=e6MA4CPZWDi7ZaSaTsfHRJjMc2hyRlCdf5ZftN6g+umZhGCZptt6v7KA0Qmf0xsNgZ
-         6371+G4d4o0cZaEzllowcRr9zpqYmYrsRooTIn7yiBCVR+YXkBv4qiHQ+5e6kTCuXIne
-         LIt4MiiYf2vfWEJanmmwNBrLQo0+g/XxG8/qJwIqwwXHD/dcJgzthHG5vyja0HVOfQDD
-         1QaVgEaUy+5CVdc4toRGeVzC+0i/P0ZKTjodWv7D3p/vOdiA0o8UN2WUErVnniEDw7WR
-         9Ot7uoDyZX/29K9ZzeWQLunKbMpbotswjcensp+YNZgKIjc6joRChp44QLRBHe1iO0pk
-         Zjug==
-X-Gm-Message-State: AOJu0YwZYBdUYm9gBnlPc3Y0ONkvXnOFufNwe30HC5Jzs3uZ8TxHcvbt
-	VkwmeiUMBpqWvES97p/66ER7Kegnvf/WtFSrjeeQVCm6LAQBLod9OfuCsyGI3coMTAwA2khT9j+
-	2+xV9KG2fIG50ASIHSVDMurG/439optDDEXS+CA==
-X-Google-Smtp-Source: AGHT+IFMW08q299IizgKGdLgUOVbSLepSnMhrSOl8xiICHLdby/JMn0zC+h9YOLRZctZ72Bz13hmpDHWTJ95DQfia/Y=
-X-Received: by 2002:a25:8686:0:b0:dc7:47b7:6d69 with SMTP id
- z6-20020a258686000000b00dc747b76d69mr1199763ybk.60.1707566006887; Sat, 10 Feb
- 2024 03:53:26 -0800 (PST)
+        bh=x/j1nrgyUuRkpp75x3KBXMusSKHdoxymJpmPHYvTa44=;
+        b=xFgWNCh/RL7bMwNurORi38a2OSTNbzq6zebpDEF+A205MZw9MSJise4PBlCdPO6zcV
+         z1vnnwtiMAWQglka9CsBE5V93j4SNlwEJa39qG0Zf9P5ZXtfUjVIriK0/RgnbyJDaeL6
+         uqUiTmxLTonJeb4hFbfMqny5TrJKMZYmTM5514wQfQKddzFTxuVUa3kfDhSMPPdRy0bK
+         CSdb2dX1sRI5xHACqAaQxP05dHrdMudkGMJAmIVmxlEd2rwklgSO5l3b9qHT6naAfA/o
+         jaXFUnVfWnCKUcV3Q1Op6xVJFrswtIek6moesDEyZOn9555vunsRLEOlSGgM8PgY2jk0
+         OdkQ==
+X-Gm-Message-State: AOJu0YxF7WOzJmcwdllg96MYtgfTXzrA7II0RX1fdLUkac21M8jqUl/e
+	CeVfmXmcejxhLIxbNGtbZMK29oaq3/VALyyzK08aGQAPnVJJY4Qs3zLD7vYvEToAyaXdjqFvA2x
+	IysgRvwP41kYhyI7Rc/P941lKd87+QstLer+aPg==
+X-Google-Smtp-Source: AGHT+IGUFCUpZYFmT0nhN7Y2aAsAAJ4oh/v1ASKOupC/USl3HtOdHYOhex2CdX6Rc/ro39U5yRXM1iuAbnP0BYN7PEw=
+X-Received: by 2002:a05:6902:230c:b0:dc7:483c:7e64 with SMTP id
+ do12-20020a056902230c00b00dc7483c7e64mr2207839ybb.54.1707574242451; Sat, 10
+ Feb 2024 06:10:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-22-swboyd@chromium.org>
-In-Reply-To: <20240210070934.2549994-22-swboyd@chromium.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-15-swboyd@chromium.org>
+In-Reply-To: <20240210070934.2549994-15-swboyd@chromium.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 13:53:16 +0200
-Message-ID: <CAA8EJprROcMa5U0Q8fMk_aJpk6ecMoDKhtD31CCss-bHu2S+7Q@mail.gmail.com>
-Subject: Re: [PATCH 21/22] arm64: dts: qcom: sc7180-trogdor: Make
- clamshell/detachable fragments
+Date: Sat, 10 Feb 2024 16:10:31 +0200
+Message-ID: <CAA8EJpo1g9QKq1skibqSj9yc3mNSfkcts9oVf_vGjVjDzVZwiA@mail.gmail.com>
+Subject: Re: [PATCH 14/22] platform/chrome: cros_typec_switch: Add support for
+ signaling HPD to drm_bridge
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
 	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
 	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+	Prashant Malani <pmalani@chromium.org>, Benson Leung <bleung@chromium.org>, 
+	Tzung-Bi Shih <tzungbi@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 10 Feb 2024 at 09:17, Stephen Boyd <swboyd@chromium.org> wrote:
+On Sat, 10 Feb 2024 at 09:14, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> At a high-level, detachable Trogdors (sometimes known as Strongbads)
-> don't have a cros_ec keyboard, while all clamshell Trogdors (only known
-> as Trogdors) always have a cros_ec keyboard. Looking closer though, all
-> clamshells have a USB type-A connector and a hardwired USB camera. And
-> all detachables replace the USB camera with a MIPI based one and swap
-> the USB type-a connector for the detachable keyboard pogo pins.
+> We can imagine that logically the EC is a device that has some number of
+> DisplayPort (DP) connector inputs, some number of USB3 connector inputs,
+> and some number of USB type-c connector outputs. If you squint enough it
+> looks like a USB type-c dock. Logically there's a crossbar pin
+> assignment capability within the EC that can assign USB and DP lanes to
+> USB type-c lanes in the connector (i.e. USB type-c pin configurations).
+> In reality, the EC is a microcontroller that has some TCPCs and
+> redrivers connected to it over something like i2c and DP/USB from the AP
+> is wired directly to those ICs, not the EC.
 >
-> Split the detachable and clamshell bits into different files so we can
-> describe these differences in one place instead of in each board that
-> includes sc7180-trogdor.dtsi. For now this is just the keyboard part,
-> but eventually this will include the type-a port and the pogo pins.
+> This design allows the EC to abstract many possible USB and DP hardware
+> configurations away from the AP (kernel) so that the AP can largely deal
+> with USB and DP without thinking about USB Type-C much at all. The DP
+> and USB data originate in the AP, not the EC, so it helps to think that
+> the EC takes the DP and USB data as input to mux onto USB type-c ports
+> even if it really doesn't do that. With this split design, the EC
+> forwards the DP HPD state to the AP via a GPIO that's connected to the
+> DP phy.
 >
-> Cc: <cros-qcom-dts-watchers@chromium.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Cc: <devicetree@vger.kernel.org>
+> Having that HPD state signaled directly to the DP phy uses precious
+> hardware resources, a GPIO or two and a wire, and it also forces the
+> TCPM to live on the EC. If we want to save costs and move more control
+> of USB type-c to the kernel it's in our interest to get rid of the HPD
+> GPIO entirely and signal HPD to the DP phy some other way. Luckily, the
+> EC already exposes information about the USB Type-C stack to the kernel
+> via the host command interface in the "google,cros-ec-typec" compatible
+> driver, which parses EC messages related to USB type-c and effectively
+> "replays" those messages to the kernel's USB typec subsystem. This
+> includes the state of HPD, which can be interrogated and acted upon by
+> registering a 'struct typec_mux_dev' with the typec subsystem.
+>
+> On DT based systems, the DP display pipeline is abstracted via a 'struct
+> drm_bridge'. If we want to signal HPD state within the kernel we need to
+> hook into the drm_bridge framework somehow to call
+> drm_bridge_hpd_notify() when HPD state changes in the typec framework.
+> Make a drm_bridge in the EC that attaches onto the end of the DP bridge
+> chain and logically moves the display data onto a usb-c-connector.
+> Signal HPD when the typec HPD state changes, as long as this new
+> drm_bridge is the one that's supposed to signal HPD. Do that by
+> registering a 'struct typec_mux_dev' with the typec framework and
+> associating that struct with a usb-c-connector node and a drm_bridge.
+>
+> To keep this patch minimal, just signal HPD state to the drm_bridge
+> chain. Later patches will add more features. Eventually we'll be able to
+> inform userspace about which usb-c-connector node is displaying DP and
+> what USB devices are connected to a connector. Note that this code is
+> placed in the cros_typec_switch driver because that's where mode-switch
+> devices on the EC are controlled by the AP. Logically this drm_bridge
+> sits in front of the mode-switch on the EC, and if there is anything to
+> control on the EC the 'EC_FEATURE_TYPEC_AP_MUX_SET' feature will be set.
+>
+> Cc: Prashant Malani <pmalani@chromium.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> Cc: <chrome-platform@lists.linux.dev>
 > Cc: Pin-yen Lin <treapking@chromium.org>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  .../boot/dts/qcom/sc7180-trogdor-clamshell.dtsi      |  9 +++++++++
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  5 +----
->  .../boot/dts/qcom/sc7180-trogdor-detachable.dtsi     | 12 ++++++++++++
->  .../arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi |  7 +------
->  .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts      |  2 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  3 +--
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  2 +-
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  2 +-
->  .../boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi  |  7 +------
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts       |  2 +-
->  .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi    |  5 +----
->  11 files changed, 30 insertions(+), 26 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
+>  drivers/platform/chrome/Kconfig             |   3 +-
+>  drivers/platform/chrome/cros_typec_switch.c | 218 ++++++++++++++++++--
+>  2 files changed, 204 insertions(+), 17 deletions(-)
 >
+> diff --git a/drivers/platform/chrome/Kconfig b/drivers/platform/chrome/Kconfig
+> index 7a83346bfa53..910aa8be9c84 100644
+> --- a/drivers/platform/chrome/Kconfig
+> +++ b/drivers/platform/chrome/Kconfig
+> @@ -287,7 +287,8 @@ config CHROMEOS_PRIVACY_SCREEN
+>
+>  config CROS_TYPEC_SWITCH
+>         tristate "ChromeOS EC Type-C Switch Control"
+> -       depends on MFD_CROS_EC_DEV && TYPEC && ACPI
+> +       depends on MFD_CROS_EC_DEV
+> +       depends on TYPEC
+>         default MFD_CROS_EC_DEV
+>         help
+>           If you say Y here, you get support for configuring the ChromeOS EC Type-C
+> diff --git a/drivers/platform/chrome/cros_typec_switch.c b/drivers/platform/chrome/cros_typec_switch.c
+> index 769de2889f2f..d8fb6662cf8d 100644
+> --- a/drivers/platform/chrome/cros_typec_switch.c
+> +++ b/drivers/platform/chrome/cros_typec_switch.c
+> @@ -10,6 +10,7 @@
+>  #include <linux/delay.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/module.h>
+> +#include <linux/of.h>
+>  #include <linux/platform_data/cros_ec_commands.h>
+>  #include <linux/platform_data/cros_ec_proto.h>
+>  #include <linux/platform_device.h>
+> @@ -18,6 +19,15 @@
+>  #include <linux/usb/typec_mux.h>
+>  #include <linux/usb/typec_retimer.h>
+>
+> +#include <drm/drm_bridge.h>
+> +#include <drm/drm_print.h>
+> +
+> +struct cros_typec_dp_bridge {
+> +       struct cros_typec_switch_data *sdata;
+> +       bool hpd_enabled;
+> +       struct drm_bridge bridge;
+> +};
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Is there any chance that you can use drm_dp_hpd_bridge_register() /
+drm_aux_hpd_bridge_notify() instead of implementing another
+drm_bridge?
+If something is missing from the existing implementation we can
+probably work that out.
+
+> +
+>  /* Handles and other relevant data required for each port's switches. */
+>  struct cros_typec_port {
+>         int port_num;
+> @@ -30,7 +40,9 @@ struct cros_typec_port {
+>  struct cros_typec_switch_data {
+>         struct device *dev;
+>         struct cros_ec_device *ec;
+> +       bool typec_cmd_supported;
+>         struct cros_typec_port *ports[EC_USB_PD_MAX_PORTS];
+> +       struct cros_typec_dp_bridge *typec_dp_bridge;
+>  };
+>
+>  static int cros_typec_cmd_mux_set(struct cros_typec_switch_data *sdata, int port_num, u8 index,
+> @@ -143,13 +155,60 @@ static int cros_typec_configure_mux(struct cros_typec_switch_data *sdata, int po
+>         return 0;
+>  }
+>
+> +static int cros_typec_dp_port_switch_set(struct typec_mux_dev *mode_switch,
+> +                                        struct typec_mux_state *state)
+> +{
+> +       struct cros_typec_port *port;
+> +       const struct typec_displayport_data *dp_data;
+> +       struct cros_typec_dp_bridge *typec_dp_bridge;
+> +       struct drm_bridge *bridge;
+> +       bool hpd_asserted;
+> +
+> +       port = typec_mux_get_drvdata(mode_switch);
+> +       typec_dp_bridge = port->sdata->typec_dp_bridge;
+> +       if (!typec_dp_bridge)
+> +               return 0;
+> +
+> +       bridge = &typec_dp_bridge->bridge;
+> +
+> +       if (state->mode == TYPEC_STATE_SAFE || state->mode == TYPEC_STATE_USB) {
+> +               if (typec_dp_bridge->hpd_enabled)
+> +                       drm_bridge_hpd_notify(bridge, connector_status_disconnected);
+> +
+> +               return 0;
+> +       }
+> +
+> +       if (state->alt && state->alt->svid == USB_TYPEC_DP_SID) {
+> +               if (typec_dp_bridge->hpd_enabled) {
+> +                       dp_data = state->data;
+> +                       hpd_asserted = dp_data->status & DP_STATUS_HPD_STATE;
+> +
+> +                       if (hpd_asserted)
+> +                               drm_bridge_hpd_notify(bridge, connector_status_connected);
+> +                       else
+> +                               drm_bridge_hpd_notify(bridge, connector_status_disconnected);
+> +               }
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+>  static int cros_typec_mode_switch_set(struct typec_mux_dev *mode_switch,
+>                                       struct typec_mux_state *state)
+>  {
+>         struct cros_typec_port *port = typec_mux_get_drvdata(mode_switch);
+> +       struct cros_typec_switch_data *sdata = port->sdata;
+> +       int ret;
+> +
+> +       ret = cros_typec_dp_port_switch_set(mode_switch, state);
+> +       if (ret)
+> +               return ret;
+>
+>         /* Mode switches have index 0. */
+> -       return cros_typec_configure_mux(port->sdata, port->port_num, 0, state->mode, state->alt);
+> +       if (sdata->typec_cmd_supported)
+> +               return cros_typec_configure_mux(port->sdata, port->port_num, 0, state->mode, state->alt);
+> +
+> +       return 0;
+>  }
+>
+>  static int cros_typec_retimer_set(struct typec_retimer *retimer, struct typec_retimer_state *state)
+> @@ -201,12 +260,77 @@ static int cros_typec_register_retimer(struct cros_typec_port *port, struct fwno
+>         return PTR_ERR_OR_ZERO(port->retimer);
+>  }
+>
+> +static int
+> +cros_typec_dp_bridge_attach(struct drm_bridge *bridge,
+> +                           enum drm_bridge_attach_flags flags)
+> +{
+> +       if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
+> +               DRM_ERROR("Fix bridge driver to make connector optional!\n");
+> +               return -EINVAL;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static struct cros_typec_dp_bridge *
+> +bridge_to_cros_typec_dp_bridge(struct drm_bridge *bridge)
+> +{
+> +       return container_of(bridge, struct cros_typec_dp_bridge, bridge);
+> +}
+> +
+> +static void cros_typec_dp_bridge_hpd_enable(struct drm_bridge *bridge)
+> +{
+> +       struct cros_typec_dp_bridge *typec_dp_bridge;
+> +
+> +       typec_dp_bridge = bridge_to_cros_typec_dp_bridge(bridge);
+> +       typec_dp_bridge->hpd_enabled = true;
+> +}
+> +
+> +static void cros_typec_dp_bridge_hpd_disable(struct drm_bridge *bridge)
+> +{
+> +       struct cros_typec_dp_bridge *typec_dp_bridge;
+> +
+> +       typec_dp_bridge = bridge_to_cros_typec_dp_bridge(bridge);
+> +       typec_dp_bridge->hpd_enabled = false;
+> +}
+> +
+> +static const struct drm_bridge_funcs cros_typec_dp_bridge_funcs = {
+> +       .attach = cros_typec_dp_bridge_attach,
+> +       .hpd_enable = cros_typec_dp_bridge_hpd_enable,
+> +       .hpd_disable = cros_typec_dp_bridge_hpd_disable,
+> +};
+> +
+> +static int cros_typec_register_dp_bridge(struct cros_typec_switch_data *sdata,
+> +                                        struct fwnode_handle *fwnode)
+> +{
+> +       struct cros_typec_dp_bridge *typec_dp_bridge;
+> +       struct drm_bridge *bridge;
+> +       struct device *dev = sdata->dev;
+> +
+> +       typec_dp_bridge = devm_kzalloc(dev, sizeof(*typec_dp_bridge), GFP_KERNEL);
+> +       if (!typec_dp_bridge)
+> +               return -ENOMEM;
+> +
+> +       typec_dp_bridge->sdata = sdata;
+> +       sdata->typec_dp_bridge = typec_dp_bridge;
+> +       bridge = &typec_dp_bridge->bridge;
+> +
+> +       bridge->funcs = &cros_typec_dp_bridge_funcs;
+> +       bridge->of_node = dev->of_node;
+> +       bridge->type = DRM_MODE_CONNECTOR_DisplayPort;
+> +       bridge->ops |= DRM_BRIDGE_OP_HPD;
+> +
+> +       return devm_drm_bridge_add(dev, bridge);
+> +}
+> +
+>  static int cros_typec_register_port(struct cros_typec_switch_data *sdata,
+>                                     struct fwnode_handle *fwnode)
+>  {
+>         struct cros_typec_port *port;
+>         struct device *dev = sdata->dev;
+>         struct acpi_device *adev;
+> +       struct device_node *np;
+> +       struct fwnode_handle *port_node;
+>         u32 index;
+>         int ret;
+>         const char *prop_name;
+> @@ -218,9 +342,12 @@ static int cros_typec_register_port(struct cros_typec_switch_data *sdata,
+>         adev = to_acpi_device_node(fwnode);
+>         if (adev)
+>                 prop_name = "_ADR";
+> +       np = to_of_node(fwnode);
+> +       if (np)
+> +               prop_name = "reg";
+>
+> -       if (!adev)
+> -               return dev_err_probe(fwnode->dev, -ENODEV, "Couldn't get ACPI handle\n");
+> +       if (!adev && !np)
+> +               return dev_err_probe(fwnode->dev, -ENODEV, "Couldn't get ACPI/OF device handle\n");
+>
+>         ret = fwnode_property_read_u32(fwnode, prop_name, &index);
+>         if (ret)
+> @@ -232,41 +359,84 @@ static int cros_typec_register_port(struct cros_typec_switch_data *sdata,
+>         port->port_num = index;
+>         sdata->ports[index] = port;
+>
+> +       port_node = fwnode;
+> +       if (np)
+> +               fwnode = fwnode_graph_get_port_parent(fwnode);
+> +
+>         if (fwnode_property_present(fwnode, "retimer-switch")) {
+> -               ret = cros_typec_register_retimer(port, fwnode);
+> -               if (ret)
+> -                       return dev_err_probe(dev, ret, "Retimer switch register failed\n");
+> +               ret = cros_typec_register_retimer(port, port_node);
+> +               if (ret) {
+> +                       dev_err_probe(dev, ret, "Retimer switch register failed\n");
+> +                       goto out;
+> +               }
+>
+>                 dev_dbg(dev, "Retimer switch registered for index %u\n", index);
+>         }
+>
+> -       if (!fwnode_property_present(fwnode, "mode-switch"))
+> -               return 0;
+> +       if (fwnode_property_present(fwnode, "mode-switch")) {
+> +               ret = cros_typec_register_mode_switch(port, port_node);
+> +               if (ret) {
+> +                       dev_err_probe(dev, ret, "Mode switch register failed\n");
+> +                       goto out;
+> +               }
+>
+> -       ret = cros_typec_register_mode_switch(port, fwnode);
+> -       if (ret)
+> -               return dev_err_probe(dev, ret, "Mode switch register failed\n");
+> +               dev_dbg(dev, "Mode switch registered for index %u\n", index);
+> +       }
+>
+> -       dev_dbg(dev, "Mode switch registered for index %u\n", index);
+>
+> +out:
+> +       if (np)
+> +               fwnode_handle_put(fwnode);
+>         return ret;
+>  }
+>
+>  static int cros_typec_register_switches(struct cros_typec_switch_data *sdata)
+>  {
+>         struct device *dev = sdata->dev;
+> +       struct fwnode_handle *devnode;
+>         struct fwnode_handle *fwnode;
+> +       struct fwnode_endpoint endpoint;
+>         int nports, ret;
+>
+>         nports = device_get_child_node_count(dev);
+>         if (nports == 0)
+>                 return dev_err_probe(dev, -ENODEV, "No switch devices found\n");
+>
+> -       device_for_each_child_node(dev, fwnode) {
+> -               ret = cros_typec_register_port(sdata, fwnode);
+> -               if (ret) {
+> +       devnode = dev_fwnode(dev);
+> +       if (fwnode_graph_get_endpoint_count(devnode, 0)) {
+> +               fwnode_graph_for_each_endpoint(devnode, fwnode) {
+> +                       ret = fwnode_graph_parse_endpoint(fwnode, &endpoint);
+> +                       if (ret) {
+> +                               fwnode_handle_put(fwnode);
+> +                               goto err;
+> +                       }
+> +                       /* Skip if not a type-c output port */
+> +                       if (endpoint.port != 2)
+> +                               continue;
+> +
+> +                       ret = cros_typec_register_port(sdata, fwnode);
+> +                       if (ret) {
+> +                               fwnode_handle_put(fwnode);
+> +                               goto err;
+> +                       }
+> +               }
+> +       } else {
+> +               device_for_each_child_node(dev, fwnode) {
+> +                       ret = cros_typec_register_port(sdata, fwnode);
+> +                       if (ret) {
+> +                               fwnode_handle_put(fwnode);
+> +                               goto err;
+> +                       }
+> +               }
+> +       }
+> +
+> +       if (fwnode_property_present(devnode, "mode-switch")) {
+> +               fwnode = fwnode_graph_get_endpoint_by_id(devnode, 0, 0, 0);
+> +               if (fwnode) {
+> +                       ret = cros_typec_register_dp_bridge(sdata, fwnode);
+>                         fwnode_handle_put(fwnode);
+> -                       goto err;
+> +                       if (ret)
+> +                               goto err;
+>                 }
+>         }
+>
+> @@ -280,6 +450,7 @@ static int cros_typec_switch_probe(struct platform_device *pdev)
+>  {
+>         struct device *dev = &pdev->dev;
+>         struct cros_typec_switch_data *sdata;
+> +       struct cros_ec_dev *ec_dev;
+>
+>         sdata = devm_kzalloc(dev, sizeof(*sdata), GFP_KERNEL);
+>         if (!sdata)
+> @@ -288,6 +459,12 @@ static int cros_typec_switch_probe(struct platform_device *pdev)
+>         sdata->dev = dev;
+>         sdata->ec = dev_get_drvdata(pdev->dev.parent);
+>
+> +       ec_dev = dev_get_drvdata(&sdata->ec->ec->dev);
+> +       if (!ec_dev)
+> +               return -EPROBE_DEFER;
+> +
+> +       sdata->typec_cmd_supported = cros_ec_check_features(ec_dev, EC_FEATURE_TYPEC_AP_MUX_SET);
+> +
+>         platform_set_drvdata(pdev, sdata);
+>
+>         return cros_typec_register_switches(sdata);
+> @@ -308,10 +485,19 @@ static const struct acpi_device_id cros_typec_switch_acpi_id[] = {
+>  MODULE_DEVICE_TABLE(acpi, cros_typec_switch_acpi_id);
+>  #endif
+>
+> +#ifdef CONFIG_OF
+> +static const struct of_device_id cros_typec_switch_of_match_table[] = {
+> +       { .compatible = "google,cros-ec-typec-switch" },
+> +       {}
+> +};
+> +MODULE_DEVICE_TABLE(of, cros_typec_switch_of_match_table);
+> +#endif
+> +
+>  static struct platform_driver cros_typec_switch_driver = {
+>         .driver = {
+>                 .name = "cros-typec-switch",
+>                 .acpi_match_table = ACPI_PTR(cros_typec_switch_acpi_id),
+> +               .of_match_table = of_match_ptr(cros_typec_switch_of_match_table),
+>         },
+>         .probe = cros_typec_switch_probe,
+>         .remove_new = cros_typec_switch_remove,
+> --
+> https://chromeos.dev
+>
+>
 
 
 -- 
