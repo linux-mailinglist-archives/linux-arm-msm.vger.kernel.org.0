@@ -1,225 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-10461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0EB285020F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 02:53:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A419850248
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 04:01:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D7D9285D3A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 01:53:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1372288126
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Feb 2024 03:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A1745C99;
-	Sat, 10 Feb 2024 01:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34F39443F;
+	Sat, 10 Feb 2024 03:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lvLPDIZd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vq75Suos"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7194A442C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 01:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F538149E12;
+	Sat, 10 Feb 2024 03:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707529979; cv=none; b=c3Flx1sWJHx48aGyP46xR5llqXwMJuVhZ2mL5k+e84HaTDvfDMQu3eR8vlcAIphEu11EG/rIlVrEOqL9H/44wnf2/ECSu7alw+dwyzFrsdb3tS6qK0kqwsiXfmWPA5nomVkZBfN9W5YKaaIuSbXBLQN8CP2yQSTmnn+MthUfWvw=
+	t=1707534057; cv=none; b=MYI/YtlY8iQit8SnmUjyRqcZdlMCH41b8m81KC++wX0gpExgJqo3+mItwwyTIKn6HwpFu61DIWMFd5QdAbUKKIzE40X34P7fyNkvUg+yitauZVhWgDmA9bCAPuv5J3IhE4WBrXbTZOWfdpLy6ud0LtmlaNjtp+fgkpE5M5rijKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707529979; c=relaxed/simple;
-	bh=H/TpQQC7YCk0AGAQhDSn6Hhi/RbSHqFNvt1gBlWPjYI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XrlEjSVccHuCvflgNBI0wX4/BPg7UcU0PAnIUYSY4EmqOfVUiZNy3qNAs3ED50/E7lLdSvZ769mJJ0Pd7aRowg5XUE3MpwogoBa6pwcKwkyQDLGxZtARnBLB4deAOAnowSDdftgZSJgY/mhOT+BSfYeGc+WW75rXamF15FXnz2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lvLPDIZd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41A0xQuh030469;
-	Sat, 10 Feb 2024 01:52:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=ikbGUJMj1X3THwesThhH4DlzjL3+2JasAu99FZb44K4=; b=lv
-	LPDIZdy6krP055iM5a6I4xs9L2Vcr2TB4vfkZpVN1QQ6MkppRoxz4l486JsVediR
-	qQWr5zmgox7B1vuFsyUwgwbMdsHZpcn1FUmx2NXG2OE0xGGeJfj7xheCvzgBm+nt
-	5Wl2y+u/3sUqLpQvg00ge8Alsyv4OqJSDWGrWh1Zg5nQdByXhwonSRpAu1zsxd7h
-	PLzE/I8HK/J5HbGfHdqipUGhmk2DIXH7vSvF0KTQj2KgDHUAIh5amWW12RvV3I4q
-	aGW9xCpzVzh94BxC0XPMc0E+AYze4Vq/Gr9TtfWhouqKYk5XcVoxOJAYW7LNNY5V
-	rXgzjJSiq7mcQ31SaY1w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w5gk2hxhm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 10 Feb 2024 01:52:52 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41A1qp9s022611
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 10 Feb 2024 01:52:51 GMT
-Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 9 Feb 2024 17:52:51 -0800
-From: Paloma Arellano <quic_parellan@quicinc.com>
-To: <freedreno@lists.freedesktop.org>
-CC: Paloma Arellano <quic_parellan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-Subject: [PATCH v2 19/19] drm/msm/dp: allow YUV420 mode for DP connector when CDM available
-Date: Fri, 9 Feb 2024 17:52:10 -0800
-Message-ID: <20240210015223.24670-20-quic_parellan@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240210015223.24670-1-quic_parellan@quicinc.com>
-References: <20240210015223.24670-1-quic_parellan@quicinc.com>
+	s=arc-20240116; t=1707534057; c=relaxed/simple;
+	bh=s+6djX/WTXkTUm/OOJnyCT2c88+8AQe3/IE6cDatMww=;
+	h=Date:Message-Id:From:To:Cc:Subject:In-Reply-To; b=JfkdFkxXpiNVLVjRUEhrjhHnCtnl+6z2czb1h0IVOa/ZkZa+0WmBXwGEndWC6Xf5cmlUZnSzdtZBLm6WhNdxLRAmAjlYUDgkRHtAZHPTFjSPSMnSDvZaHcomn/HRymmEMhGtfT47qiuxmm/t0vXanob9GCkl2GnkYG/hSq5j5l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vq75Suos; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d934c8f8f7so13912765ad.2;
+        Fri, 09 Feb 2024 19:00:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707534054; x=1708138854; darn=vger.kernel.org;
+        h=in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=R3IJGWTJWIPw+M65843DklH9eyEFW7vwcdstM0zz4C4=;
+        b=Vq75Suosfs/NrgPk5JainipgJkiZwF9l9FL4LSzXz7jzZ+Pov7rWib8DreKFk4QQnF
+         7G5R+qh5NCoPKEwWEXN/d+fX8KOluV7BSmdJ8FcD0NMDu/AwgoZs4LT+ZPIcQwhh/gJV
+         tH+OLNsrHdAJDXUCB5hz3ipM7SDc8m+yJ5sf8LLclgN0GM7fQQ11BJSVyFHkJ6GqbrrX
+         ZwFqH0uTz1mZ6EC2RzLVtoTNUsHWV7QhuLs+AewZ20uenWaOwKmiIe52uTm8D61UBGEz
+         g0/KSZvQg5zp65TEzagIYBvuHs7Ka+hidh2pAK0Eo9FGbsOiwT/SJku9DfkL/kVyOuRe
+         GgaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707534054; x=1708138854;
+        h=in-reply-to:subject:cc:to:from:message-id:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R3IJGWTJWIPw+M65843DklH9eyEFW7vwcdstM0zz4C4=;
+        b=eX0nV4ZGhybU544rl9Mq0nwO4PYfy0o9x0rN1zqiamphiGzP8s9Yy7JwZuh/W4bfP7
+         Pz7rURB5HgZAutjVAXPcybbPQurRljumS3DegxyjaqwstrhqGs1GCogSL/pQrWZohUyC
+         kdVcm/5/EAM3KawTR9kABbjsBwWFVFWL9mfEhqmTEpFA+KS5iztd/GmtUJuVuG2xeH1p
+         r4KV/1/puhQUg3+on37f2i3rN1VR0UqQWHHv94JTA06BpVa80OMXxqsGde+K7KDyY6PR
+         ze3sOunf0o6aJzSHyBNvg6ntNpI3lkObBhSO/lqMWzseODrP8qJnwQMd2Z+NQw/Jz5V9
+         IPnw==
+X-Forwarded-Encrypted: i=1; AJvYcCXlGDH6HQAvgXoymRXefbhrsm8hpIIMFirI1xFjfcmEcVJF5NEtZ11UfK0blIIa1K8eS/sj3mJt8tkjmIoTKuR+wESosK7PhtkgtgxAM+hmDEqXJkjzbNlSIvsJXjqgz6SypLucxRmbsGMytA==
+X-Gm-Message-State: AOJu0YzhZ4yHhrujOsZqKU48GUiDwU1mjgBfOGoPj7T4vupsQCcInHIS
+	dNIZGv+xRHFztSnV00c/jX5NxItJn03v/ca28fAHO8da2a+otfzp
+X-Google-Smtp-Source: AGHT+IHUNt3lZOFNPsZ7DhYo9HuUfhWqlZhn6AHJ+/w7nIfoM+7ydXiUbGUVtQF9GQ2R73aeCQyPCQ==
+X-Received: by 2002:a17:902:b688:b0:1d9:c86c:39c2 with SMTP id c8-20020a170902b68800b001d9c86c39c2mr1115476pls.14.1707534054302;
+        Fri, 09 Feb 2024 19:00:54 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXtoL/jA1UuRhntMmsM4MTDQXi+O2ERiHQ92g3p5uymlaKsD5mJEmRvgXy9G6DDqfRkMytcfx9ZfgIudCR86GW2x/2gTg201T5LFcJxjXwecaP55iW9/WUJ/PKYrBYavGij35dSTDBg/BerrQa7UPU8YKLr6VVX6lEKwMW1wpZWNg18LS5su/7+0gRL6VkaOnSSayiazSpLnf6ARR8k1McJ+LGZ5+oVMr2J7qR4eQyjfoZ3ZZi6dC6H7+U=
+Received: from dw-tp ([171.76.84.200])
+        by smtp.gmail.com with ESMTPSA id q2-20020a170902edc200b001d91b617718sm2193534plk.98.2024.02.09.19.00.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Feb 2024 19:00:53 -0800 (PST)
+Date: Sat, 10 Feb 2024 08:30:27 +0530
+Message-Id: <874jehc9bo.fsf@doe.com>
+From: Ritesh Harjani <ritesh.list@gmail.com>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, adrian.hunter@intel.com, quic_asutoshd@quicinc.com, quic_bjorande@quicinc.com
+Cc: linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH v2] MAINTAINERS: Update bouncing @codeaurora addresses
+In-Reply-To: <20240209160934.3866475-1-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ierV0HC7Z6yUOO-H4uFNT86fjsxWiIR5
-X-Proofpoint-GUID: ierV0HC7Z6yUOO-H4uFNT86fjsxWiIR5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-10_01,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- phishscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 impostorscore=0
- suspectscore=0 clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402100012
 
-All the components of YUV420 over DP are added. Therefore, let's mark the
-connector property as true for DP connector when the DP type is not eDP
-and when there is a CDM block available.
+Jeffrey Hugo <quic_jhugo@quicinc.com> writes:
 
-Changes in v2:
-	- Check for if dp_catalog has a CDM block available instead of
-	  checking if VSC SDP is allowed when setting the dp connector's
-	  ycbcr_420_allowed parameter
+> The @codeaurora email domain's servers have been decommissioned for a
+> long while now, and any emails addressed there will bounce.
+>
+> Asutosh has an entry in .mailmap pointing to a new address, but
+> MAINTAINERS still lists an old @codeaurora address.  Update MAINTAINERS
+> to match .mailmap for anyone reading the file directly.
+>
+> Ritesh appears to have changed jobs, but looks to be still active in the
+> community.  Update Ritesh's address to the one used in recient community
+> postings.  Also Ritesh has indicated their entry should be changed from
+> Maintainer (M:) to Reviewer (R:) so make that update while we are making
+> changes to the entry.
 
-Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 +++-
- drivers/gpu/drm/msm/dp/dp_display.c     | 4 ++--
- drivers/gpu/drm/msm/dp/dp_drm.c         | 8 ++++++--
- drivers/gpu/drm/msm/dp/dp_drm.h         | 3 ++-
- drivers/gpu/drm/msm/msm_drv.h           | 5 +++--
- 5 files changed, 16 insertions(+), 8 deletions(-)
+Thank Jeffrey.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 723cc1d821431..beeaabe499abf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -565,6 +565,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
- {
- 	struct drm_encoder *encoder = NULL;
- 	struct msm_display_info info;
-+	bool yuv_supported;
- 	int rc;
- 	int i;
- 
-@@ -583,7 +584,8 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
- 			return PTR_ERR(encoder);
- 		}
- 
--		rc = msm_dp_modeset_init(priv->dp[i], dev, encoder);
-+		yuv_supported = !!(dpu_kms->catalog->cdm);
-+		rc = msm_dp_modeset_init(priv->dp[i], dev, encoder, yuv_supported);
- 		if (rc) {
- 			DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
- 			return rc;
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index ebcc76ef1d590..9b9f5f2921903 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1471,7 +1471,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- }
- 
- int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
--			struct drm_encoder *encoder)
-+			struct drm_encoder *encoder, bool yuv_supported)
- {
- 	struct dp_display_private *dp_priv;
- 	int ret;
-@@ -1487,7 +1487,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 		return ret;
- 	}
- 
--	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
-+	dp_display->connector = dp_drm_connector_init(dp_display, encoder, yuv_supported);
- 	if (IS_ERR(dp_display->connector)) {
- 		ret = PTR_ERR(dp_display->connector);
- 		DRM_DEV_ERROR(dev->dev,
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 46e6889037e88..ab0d0d13b5e2c 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -353,7 +353,8 @@ int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
- }
- 
- /* connector initialization */
--struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
-+struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder,
-+					    bool yuv_supported)
- {
- 	struct drm_connector *connector = NULL;
- 
-@@ -361,8 +362,11 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct dr
- 	if (IS_ERR(connector))
- 		return connector;
- 
--	if (!dp_display->is_edp)
-+	if (!dp_display->is_edp) {
- 		drm_connector_attach_dp_subconnector_property(connector);
-+		if (yuv_supported)
-+			connector->ycbcr_420_allowed = true;
-+	}
- 
- 	drm_connector_attach_encoder(connector, encoder);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-index b3d684db2383b..45e57ac25a4d9 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.h
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-@@ -19,7 +19,8 @@ struct msm_dp_bridge {
- 
- #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
- 
--struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
-+struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder,
-+					    bool yuv_supported);
- int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder);
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index b876ebd48effe..37335777f5c09 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -385,7 +385,7 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
- int __init msm_dp_register(void);
- void __exit msm_dp_unregister(void);
- int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
--			 struct drm_encoder *encoder);
-+			 struct drm_encoder *encoder, bool yuv_supported);
- void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
- bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
- 			       const struct drm_display_mode *mode);
-@@ -403,7 +403,8 @@ static inline void __exit msm_dp_unregister(void)
- }
- static inline int msm_dp_modeset_init(struct msm_dp *dp_display,
- 				       struct drm_device *dev,
--				       struct drm_encoder *encoder)
-+				       struct drm_encoder *encoder,
-+				       bool yuv_supported)
- {
- 	return -EINVAL;
- }
--- 
-2.39.2
+Acked-by: Ritesh Harjani <ritesh.list@gmail.com>
 
+>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>
+> v2: Change Ritesh to R: per Ritesh's suggestion
+>
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4be2fd097f26..56b3311e51de 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -7832,8 +7832,8 @@ F:	drivers/media/usb/em28xx/
+>  
+>  EMMC CMDQ HOST CONTROLLER INTERFACE (CQHCI) DRIVER
+>  M:	Adrian Hunter <adrian.hunter@intel.com>
+> -M:	Ritesh Harjani <riteshh@codeaurora.org>
+> -M:	Asutosh Das <asutoshd@codeaurora.org>
+> +M:	Asutosh Das <quic_asutoshd@quicinc.com>
+> +R:	Ritesh Harjani <ritesh.list@gmail.com>
+>  L:	linux-mmc@vger.kernel.org
+>  S:	Supported
+>  F:	drivers/mmc/host/cqhci*
+> -- 
+> 2.34.1
 
