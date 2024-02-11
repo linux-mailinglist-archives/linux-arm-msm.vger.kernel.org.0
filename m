@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-10566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0EC85096F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 14:39:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4799B85098C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 15:02:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17E291F21CD7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 13:39:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C65B1B21545
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 14:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5A0B5B5BE;
-	Sun, 11 Feb 2024 13:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D7D65B5BB;
+	Sun, 11 Feb 2024 14:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vdIFcBMJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xec1oan8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D3C5B1FD
-	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Feb 2024 13:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF45A7A3
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Feb 2024 14:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707658783; cv=none; b=vBrsPiPGT80OF0Lh49u2LI7IyvUPDuBzjvLBtrLqucwfKESP6x/uKWWhkqgH97NVBGV7TZ/if7CfdJ4QdTHPbxVkFPhhpnCtq+FkbShRbyoRnW56m5pkzEQtHuzr48aB1M515DuRf+HTHpF6FJvSKjQ3y1zqM4qfKHTNU/vwkvg=
+	t=1707660131; cv=none; b=h5tmmj0XiUatzOlbpIEJnpaNGu6hCv2EOqYIX7jKwjv1pPd7cGn/4lI2xHllQdhUUrr+TmJwTTNKJ9FN+UUeW5419jgGd7N5+F1kB0BDU25kRFW0wnW212th0cQxmnjThG4KkJC00hsSIkssDi/uqiNfPmgprFCfzduaF5UrXUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707658783; c=relaxed/simple;
-	bh=KFXA3+R8s3SRSrnMPGr4IKA8IpENg695bBUFqWDk888=;
+	s=arc-20240116; t=1707660131; c=relaxed/simple;
+	bh=uolM5cNnSQVvJyH665m1YzWBscW8SurboetXEIW+yac=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k7480noC23DuCNbQdekdAM1s93XcbRO7vVJMXBKBh4CqBI1F+S6AjUQMpcis7PFuCU8SpNOcUK7IquWw8s75guG3A7ZdTBuKIw7cpW12Uie8ovAMlMTly1mZAhbaTYezMWM4sQWzWKYtPfe4yGKT+xvASChdVxYfx27P7A+aAm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vdIFcBMJ; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:Content-Type; b=IVLcMWfgjuT1IbIv1bY1Lq4g1cAPghlD5C0eWuGVwUZhHDGyQHEB55SKRsLbhtnUbQRe85YUnDv6kGuWnlsAQ+TCf/z/chSCiXec8vInuUgVzxFmajzZfeTxIeEVO8n7QAI+vTZSE0YOYvqee0ITzH5cc/NY//IoVBho7heuIi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xec1oan8; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-41087ec7067so10276415e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Feb 2024 05:39:40 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-511831801f3so870289e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Feb 2024 06:02:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707658778; x=1708263578; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707660128; x=1708264928; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6G9u/3Fv5PjWFy9vLWBNpDOe87eSjSZPsXbRj18KFs8=;
-        b=vdIFcBMJpTeIbykH9RIIj3s2tJfUwjLY+liZ0oO/FqCBxlwxfHEK4T68mptubBNF8I
-         3RngXlsBr2WIEew9mZt67fAe9viA7/zrm65R73zPzQhi4YSbseaIQGXrsqbu1fRZj+EI
-         K69F7T6HBQ4jI0BwtmgYeZDAKKVQ3Kkq7jfCBA1RAQeh/RgOaWnaFdhr2JbffYHf9OFd
-         I8UvTO25m2JCrPHtpjroCCIYlv+Cgm4sN02858J7LQz7EqNpHeAcX/th86FykXqgTEBB
-         +X/JwOYB2Fw38FhouvaQ+C1h+yTW8nviQTrFEo5sJqAwJki7ggEGVlwI4D27UcyINfEU
-         SoWA==
+        bh=DEpRo3ZggIX9g5kXsq9qVrRRUWMCmjE5JkWjKuuxLn8=;
+        b=xec1oan8vaO/YLzwzQxcVuhaL3KOBGVO42qVMBYp6Sj6DG9elxjroK/7RSbbcY7VLX
+         Vwzk8aMUB4saLm8krGdwzUpYYYFnU+V5pberzFgK145zMg5bVJn4dTf8PYl9yk2GpB8f
+         GuHo1wUNiU/X2llHySfOLGejoJoOkWYoYX/TH1ibMaAzrWPSxpIv1F/l2DVka2OP1MzL
+         PiWZo672XXD3xgOJg6K8u5si7PBXxtoRX5JIBOv8dflL4iXesqhALH8xUIJVcgSMNTjU
+         M+os7RANbXsCX3s0zGlDa/CIW0nGg6fxDXCPAmxBaur/kunMzNehrjvtgt/AOOyyTwUD
+         6/Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707658778; x=1708263578;
+        d=1e100.net; s=20230601; t=1707660128; x=1708264928;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6G9u/3Fv5PjWFy9vLWBNpDOe87eSjSZPsXbRj18KFs8=;
-        b=hPGgpTCeWE4vS2CB5SifUcY37k3yJKXIjOd1HOknpgUYDy9wzpYswRB+o778DI+A2+
-         jhY4WDbrmw6jAYWpl6+CqETP8GuaPmsyUDRScUzBy3mWA5mJVfNJ4Ivinsej3UQOq8jd
-         z8QMdDcpSueBi10iQ/ijl58k0lGTmVAvsKwqnQx3hnzrva1eHt3GCRreDQbR9wI9hUjI
-         9ngGUFpd3dHkKboZtV3R9ZfugD/0NxHOo/vwGQSM203RG+8RqLJW96SMQ2sf7KBz9/i+
-         RFcoYzVxyYzpiESFBh1asey3NbYwtxXJFnVzd6vbxukpVJQ+603xxDWjMoq5qMa3h73y
-         TSpw==
-X-Forwarded-Encrypted: i=1; AJvYcCXqSmuDOXybOrVnhguddkcrR3bJkkRWVkxJbCtpegp2+TxUyTBokyIfHG8wTT7yWwenYVO0vuvkph8bwaPCYBbgRJ//aOGiySk6BgkYqg==
-X-Gm-Message-State: AOJu0Yyk0BbOjbYVGgf/DWrfAVygpbSUli9SnkebE2lyCfqfZ9YmhW6T
-	N+0r1ReGWwih32pKbQH889Vj5TZyN24ybJQuyE8w7EkNnLMYmwnTNk1lVWBbBwc=
-X-Google-Smtp-Source: AGHT+IFhKe1Ykkm1DMRUxBcpjsBg4xpnvNk23OIVIgnQlMx0Ax0hAYhxRnQLZMqoPn7GtxgmI6HcaQ==
-X-Received: by 2002:a05:600c:1548:b0:40f:d25c:41d0 with SMTP id f8-20020a05600c154800b0040fd25c41d0mr4205573wmg.29.1707658778513;
-        Sun, 11 Feb 2024 05:39:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX4punkyvwAWYEniQVwYVWbB/v6b+g/PXt7uDYTIxJstOipFWEm7iWnAZn5ShkiRbYtOlTmEL2ePa1gLfuyYDYvfke0pN0THBEMVxJADXdih1B7pKpPQm8zpDd+auAvCvNZWuDiJece1udC1Im02ybYLzd8YocKCdHcauBXN2zQlMXshLWdB44QZ0h2fCk/il8Gj2c2bmyIc5lbqiZsP/C0q3Okwgxz2Iyuk4laObqp65Kc9XBSfMmwTxWJA0rClYWk7cyuBcp5rq9wD1RsO+XTkHOtqJXvhddwSjyLtgld+2HUJmESyyz/HVm0uFNmPAAG8IfkPd7yUX60NP9dj9LcGjzOLD55oTQ9XAQW2d0u85FG+cgVjmuvi8z2t7mmhxxVpE24l+zndY0Oeooilei3HSNJs9OeNrpBXiblLydzOC4HjwhMs36D3kH309Bh0C63IZudNC3h21Z4+uZzh1qDO2DodA6oBP4aZ7vTsuI=
+        bh=DEpRo3ZggIX9g5kXsq9qVrRRUWMCmjE5JkWjKuuxLn8=;
+        b=GMdstmme7E+WCGPVrLLIxBa8ghCGkYZFkqYKn2KhdkzC82YPuR1cqktNAwDGwFLd+x
+         HvgxugKpuh+e9b1NUNAsGIxJBhC2b9IVzyh+yFfSoF+CeIaLgXN4L2t5RVwmNxUX1cZz
+         HsEVXmFSuNdtxmdKQXCtR1YdF9lrLSrd98jP+rU5MpBI4aAeDi3CH4MwjPEIciJA0jUM
+         AeDt3qvEI4wsMpPlsCmBZ3Srzup6OC8qQQ/s2TGhcFJY36pnpb3Og8zWmKG7pwz5jddR
+         Gq7b0UPysNGR0b0suYMvmK7RYleLYmWyUYoR7KudLstMfXRVxCy2E6FDlsEdpLSznDrI
+         gqpg==
+X-Gm-Message-State: AOJu0YxWUzqpqMXPmKwnHWon9iGBw6XDqYa6cmjT3XzgUTav6DC2U24v
+	dOORJCZXRguiFb0jHiGlTaMNTAxQ2kdy6lmhqKLafp11wRmcu+MPh9+gBomixBM=
+X-Google-Smtp-Source: AGHT+IHoWAGqQISq55MozqAxC/fe4t3KNXLkGWg+Rx5PqZ7/N20Xg4Fn21542+o+qEGkHII01JA1pA==
+X-Received: by 2002:a05:6512:3b82:b0:511:6764:a8c7 with SMTP id g2-20020a0565123b8200b005116764a8c7mr3263216lfv.10.1707660127654;
+        Sun, 11 Feb 2024 06:02:07 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWYQZ6suB7go1tqVx30CofLlR7kXp9G1WhXVT3QtadQpD06aUqZic0s4ngZP3Qz96UvYR1Iml2A98tzZk4f4RlvajkvdBi4AIYzXUlLWzo/5Y47iQaJApNwrMlE0usrTAOxfjO9Tn522Pni/uftpxPrY0lFwyfv20sqze76zNlZk9xrfkM1iQ/L9I+IHE6WAp1JVIJr8afDsmu4M8Bf02UlwmBCDFAXi3WzrLkENvSEOT2QmFK1GIdoLC2xvpMcifAxz9FL3FMorOhAv4PFQx3DgxTxRGNCZ5vL9y6Wgk+eu7hjrMEFEfOYBtuQNVs+mpHs/hA0I420gks/Ld7LOJNZmOw8UjlDPXJgi9L+CnXbw6cYd420Xd4vhguTZvkgR+h0LmKsoBZ/HHNByrmOfLG0znoa9SrvqVty0K+XPWXkzGW7AazXvZbSCTW9RbNJyb4U7+f+BRM4oHGP7IWZjcaVfrfItAu9Id/sFRfvEiKEUvUp/VCU7rLLPsAUMJmlLtKpzoG5zJT2kXhHV3D4JXcMlrOl8luV6QpvMklkbyCnbe90vLkjfPgBmZv3ge30yaJTgmW0hw9nMkJGv2zSmPovhDOSNeo+zdpOY7FXIMH6aWeksU8DYk/QYxxJGeCzzxSovA/CFuLmhEmS
 Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id v1-20020a05600c214100b00410395dc7d1sm5828918wml.7.2024.02.11.05.39.37
+        by smtp.gmail.com with ESMTPSA id o1-20020a05600c4fc100b0040ff583e17csm5961987wmq.9.2024.02.11.06.02.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Feb 2024 05:39:38 -0800 (PST)
-Message-ID: <18ac05fb-a78d-4e95-a73d-461f509cdc5f@linaro.org>
-Date: Sun, 11 Feb 2024 14:39:36 +0100
+        Sun, 11 Feb 2024 06:02:07 -0800 (PST)
+Message-ID: <6dd8b54e-8334-4bc7-a6c5-7a81c04ed8bb@linaro.org>
+Date: Sun, 11 Feb 2024 15:02:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +76,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/22] dt-bindings: chrome: Add binding for ChromeOS Pogo
- pin connector
+Subject: Re: [PATCH 1/8] dt-bindings: ufs: qcom,ufs: add second RX lane on
+ MSM8996 platform
 Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, chrome-platform@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
- Pin-yen Lin <treapking@chromium.org>, Rob Herring <robh+dt@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, Can Guo <quic_cang@quicinc.com>,
+ Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
+ Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
- Guenter Roeck <groeck@chromium.org>
-References: <20240210070934.2549994-1-swboyd@chromium.org>
- <20240210070934.2549994-19-swboyd@chromium.org>
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <andy.gross@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240209-msm8996-fix-ufs-v1-0-107b52e57420@linaro.org>
+ <20240209-msm8996-fix-ufs-v1-1-107b52e57420@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -135,112 +141,40 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240210070934.2549994-19-swboyd@chromium.org>
+In-Reply-To: <20240209-msm8996-fix-ufs-v1-1-107b52e57420@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/02/2024 08:09, Stephen Boyd wrote:
-> Describe the set of pins used to connect the detachable keyboard on
-> detachable ChromeOS devices. The set of pins is called the "pogo pins".
-> It's basically USB 2.0 with an extra pin for base detection. We expect
-> to find a keyboard on the other side of this connector with a specific
-> vid/pid, so describe that as a child device at the port of the usb
-> device connected upstream.
+On 09/02/2024 22:50, Dmitry Baryshkov wrote:
+> Describe the second RX lane used by the UFS controller on MSM8996
+> platform.
 > 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 462c5c0aa798 ("dt-bindings: ufs: qcom,ufs: convert to dtschema")
+
+Your commit msg does not explain why this is a fix.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../chrome/google,pogo-pin-connector.yaml     | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> new file mode 100644
-> index 000000000000..5ba68fd95fcd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> @@ -0,0 +1,61 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Google Pogo Pin Connector
-> +
-> +maintainers:
-> +  - Stephen Boyd <swboyd@chromium.org>
-> +
-
-Missing description describing the hardware.
-
-> +properties:
-> +  compatible:
-> +    const: google,pogo-pin-connector
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  port:
-> +    $ref: /schemas/graph.yaml#/properties/port
-> +    description: Connection to USB2 port providing USB signals
-> +    required:
-> +      - endpoint
-
-Drop required.
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index 10c146424baa..f1de3244b473 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -43,11 +43,11 @@ properties:
+>  
+>    clocks:
+>      minItems: 8
+> -    maxItems: 11
+> +    maxItems: 12
+>  
+>    clock-names:
+>      minItems: 8
+> -    maxItems: 11
+> +    maxItems: 12
 
 
-> +
-> +patternProperties:
-> +  "^keyboard@[0-9a-f]{1,2}$":
-> +    description: The detachable keyboard
-
-If this is detachable why do you define it in DT? Only hard-wired USB
-devices, which need some sort of special handling. are described in DT.
-
-> +    type: object
-> +    $ref: /schemas/usb/usb-device.yaml
-
-On this level:
-unevaluatedProperties: false
-
-> +
-> +required:
-> +  - compatible
-> +  - '#address-cells'
-> +  - '#size-cells'
-
-Use one type of quotes, either ' or ".
-
-> +  - port
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    connector {
-> +        compatible = "google,pogo-pin-connector";
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        keyboard@2 {
-> +          compatible = "usb18d1,504c";
-
-Messed indentation.
-
-> +          reg = <2>;
-> +        };
-> +
 Best regards,
 Krzysztof
 
