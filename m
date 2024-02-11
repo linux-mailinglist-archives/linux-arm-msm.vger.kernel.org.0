@@ -1,175 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-10552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2226A8507BF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 05:37:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C19B48507EA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 07:15:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C742A28447F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 04:37:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB3571C214EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Feb 2024 06:15:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889EB1095B;
-	Sun, 11 Feb 2024 04:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C21AB23BE;
+	Sun, 11 Feb 2024 06:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pOnI5HGU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wTyS9Rgj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598B817D5;
-	Sun, 11 Feb 2024 04:37:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60FF171A5
+	for <linux-arm-msm@vger.kernel.org>; Sun, 11 Feb 2024 06:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707626253; cv=none; b=csqDVk8ULuYZfSEZGAPng229arhgPOlOKrGj62b+vuGjiAoBC86mVhYCMmuTl/PyVcFtbrceqVfk7Bq299uQie3MSsKAelbZZF+VHGYKGz9wLdv0q7bezUTIux/7JlK2G/i5Gjgf9n9W8xzmTQcF2bxjA1RdqbKHk3ZINdFeQYc=
+	t=1707632146; cv=none; b=rgjkRYu5BM16xdXctwxmDzMFsmpBNawkKIw8DHVk+ay/B7aaI1NP4abhWnqvoGmzpXj8jM1HAPo7roLULMRnkGHdKR4k1ph+96AX65K7khD5pSEAoIyQLZ7A4/mvo6f/0gDVhXFmuqo/sVqya+7O0w7HoS0lCO5y1yIFDiO7le8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707626253; c=relaxed/simple;
-	bh=7Tgpfgy2gZK7gG0Vu57dji3vdBwL3zjCkXajRYIQiEc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Mx/Y8fPnULeXjYGulR4DtkxZCfV8VLrFG3wBrlNOYrh2Bh5Ds57opyn974Smvzz+w51tIb++b2wKFIK15FCD51hWjuqyKCe7vdmzlB3uejaQaePX+NFwavYV4M8JyV0kqZArxnNW/afUR1vUW4h/H330kGaflPkkolIc3AAO7MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pOnI5HGU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CE828C43394;
-	Sun, 11 Feb 2024 04:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707626252;
-	bh=7Tgpfgy2gZK7gG0Vu57dji3vdBwL3zjCkXajRYIQiEc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=pOnI5HGUNJoLJtuXDQKaPUAiwdcrwlWOMsba7NMOE560N96lOOB4oVSXhgoNiN+l5
-	 WKi23x933LfRp/IRX+8urCfqBjcv7D6lmUpHAlDIfoUkKMrBDRrfkzLo3gEQ6d5TvY
-	 RW/wSRMb1h0RtvTKqMxZ3Ym48oOk15fFe5y7hJ20Vr3dduZmWJzehZHnrWyitrbJbU
-	 cvMsxrVUFNmfxGV/oTxYM/XsCxetaKihxufvNIePOugBRxMAS69dz8WhjNIlxlrODe
-	 OjiR8qmWNq8NfkYacnMuCygwWhWRlW6QngkeLMWTEejzistOmBkxwm1nl/irPKWEkZ
-	 hI4OOXnyODthQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB3CBC4829F;
-	Sun, 11 Feb 2024 04:37:32 +0000 (UTC)
-From:
- Bjorn Andersson via B4 Relay <devnull+quic_bjorande.quicinc.com@kernel.org>
-Date: Sat, 10 Feb 2024 20:42:00 -0800
-Subject: [PATCH 2/2] arm64: dts: qcom: sc8280xp-pmics: Define adc for
- temp-alarms
+	s=arc-20240116; t=1707632146; c=relaxed/simple;
+	bh=D5f0o/64CrQmu0qw/KgXLcsvgz62KoMjaJb9cCxaK1M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HHsXdHhQXs/7ySVceM3B7Q9eBSRC5TdDeepN2aeGUf5o9K3pQv41AZ0jW2xB1WyGzyO5/IlH+EpokuQDD6v0ByoXbKbx6AiIO4WIt72jfxo+7EinTNbX+umjHHviVg/scTUCTXjI9/e8bTfVZNM2B/hYRb9hLYaTGwVhJ0m2XQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wTyS9Rgj; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso2211292276.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Feb 2024 22:15:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707632142; x=1708236942; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=trk0dkputcQ407fqLqvyMZsSbdzpr/uv3VO7AAyaZ88=;
+        b=wTyS9Rgj7ZZjAGLtfPgiZsTVJkAPmPPsqFLgxdr1d+153koeJXMDFIb6h7EFR6DdSL
+         3GmRPLkIP0Q4q7u4+fGJHTClfQcEfOegaZJbQoMmiktJsFXx84VQTKIr3Wxkx9oQeQlg
+         +009k0XLlGk0kVIw0Zj497siRZL/rfBM8qDVmz7VHDGPG3VaKhyYTGOLSId3B5QUK/ok
+         83wHxvHo6ewclirCGdU3Fzv/rfdXqnuWAldudOP3Cah+pjd+pGmnRBysMGTpNdUB0VaA
+         DRhaEjJEV9u393zTcS8uO4+5fZLZ7C96LomQ2KhsI980L+MaiwDFMpvZGAQ7pQ/NoY3d
+         W77A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707632142; x=1708236942;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=trk0dkputcQ407fqLqvyMZsSbdzpr/uv3VO7AAyaZ88=;
+        b=pARFRlATaWz2eSz40ygfcCN0bzOJTnS8R9kCyaD7mWovTH2aLfe1a7ecjRj5Leah3i
+         UBJ0Ik7iawSRLTdOXyTQvBMkAfnjQcdquCRA+8f473fjuUU3f6Rj1cieqsTP6DFSKTsc
+         nXy68PzLvNXqZVFDuULgNlq1S9cLyVvGxpXuNg+nkpC7ZEB/7m3DayljN+yd3fSEy/Cl
+         Jy3qNvL0qQJc5LYBx9rMiibV+LP5hzl/wCgb4/W6g4dE5W/FWpSmxor5UCndeaA6uf9z
+         zO+pxex/Jgb1sdj3oAI/pdZuoI1sum9uS76PPPdEf6/q3/YsGxvBDoTZBlDHfXWz5rJ4
+         1S/g==
+X-Forwarded-Encrypted: i=1; AJvYcCULVAfjJkp7L6bIu/a0RYJkgpFpqXQc/o2kKhTjOkuqDUdRdw+vaknXssujahqEYeSu6MViZsbYGAGoRKCrnd7Ydjm5uclCXqZhCFO1pg==
+X-Gm-Message-State: AOJu0YwWX/PzsrFfXkeF25W5LsWBW5PE73QjtDNRMzgon0QGtgPjyS7F
+	ZTuGtHbtreJbr7VoinQRC+tNM36UQy/eJzNOM1E2q9nAEsk9up7KJ3Y9I5u+ByMFQxocTCPO5aa
+	49m0SstREdZn7s9cBL1U1atgptmHvsisAcuJNoQ==
+X-Google-Smtp-Source: AGHT+IEh0UmJTYu0DCUGecrs4dysYDET4hFznvF9X1J/6uldo3hjxrpVHwEqlkPNhr1uryxrJjpumO3UOreBEWQDHa8=
+X-Received: by 2002:a5b:c0b:0:b0:dc6:ae0f:503b with SMTP id
+ f11-20020a5b0c0b000000b00dc6ae0f503bmr2582622ybq.24.1707632142600; Sat, 10
+ Feb 2024 22:15:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240210-sc8280xp-pmic-thermal-v1-2-a1c215a17d10@quicinc.com>
-References: <20240210-sc8280xp-pmic-thermal-v1-0-a1c215a17d10@quicinc.com>
-In-Reply-To: <20240210-sc8280xp-pmic-thermal-v1-0-a1c215a17d10@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2888;
- i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=K7rQywm19ZMJOEqTCjhdaKmYaGUNjH5+Bg7BEu/x3tU=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBlyFAXylL8zK5qj0ajAD7+jN8JFAwl72hjdDBAR
- evaltzZSm6JAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZchQFxUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcUwFhAAp6X19C1/915JgP6bSfzLi13eAGiI3IFxPXxGKP1
- Cg91LS/4pyv0OygvGP8BrhXm9R5fNyMIxjbhRAjazIfkWdPriIGdMEUUTBco+2BFrB4vEGkiXH+
- 98DDKC4UErvnb3c0rodDZkvycqsbMKhKeo/8y/GeisD58oMWSqMV8nCv0lifkO2tD2IYak7MOcZ
- SZH9xN1q6p2YSYi5kerWUWrgjf1Q7OjRtYavFmBWn9+nPnvItCRNd2GW8/H72WOvtEHKHgjYT60
- 1gTRNGZnk3L4sciH+5DRceJpD0GmA8uCJmWf2HPbc5KYai+ThNu2ieRcwGVMZ9rASSH7BOVkd9c
- VVkQCfHmq2aj7WtRcG4m9bRutSI9A7TyFIAEcJojJXP+E2esmq7xGRhnN7MjMnFEVVYc4C1G+5g
- +0naX0Myh24lJLzA7EcJK9D1BiW3Xwm1Hr7/UhFMccptwfZ2HJdZ9aFjcIeCM+HXlkSVsp8QCIh
- ZEQVCKJRrKdr3GKyhCmO3+3LlqJ1KkwWvTBZKIimsRrmI2hxIt9Qlk8aF9X+Kf4zc/YXQEsDJId
- 7ZjtCI9mWgcIlOxY0NsWr8bhv8/rZyJRnnKBtf3I03q68HWiMqgQD1DFPDt85Uzl26X762jHzik
- jmEe1WS8LdIxgSvxVL5YpBKbgdEtK8gcnsbTalMyWtMs=
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
-X-Endpoint-Received:
- by B4 Relay for quic_bjorande@quicinc.com/default with auth_id=118
-X-Original-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reply-To: <quic_bjorande@quicinc.com>
+References: <20240210015223.24670-1-quic_parellan@quicinc.com>
+ <20240210015223.24670-16-quic_parellan@quicinc.com> <CAA8EJpqq+H1gdy2pJo0Up=5w0mYTPRu2_1swEBNfyAMXztQanA@mail.gmail.com>
+ <1664d096-d258-72fc-8352-7d088000fcc1@quicinc.com> <CAA8EJpqE6BEvo1wwKMuSmR4a=VkGzRAuPk_Yw_imeYtTag+Hpg@mail.gmail.com>
+ <2ca5624e-1cf4-9712-f8d8-6a609d95cad2@quicinc.com>
+In-Reply-To: <2ca5624e-1cf4-9712-f8d8-6a609d95cad2@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 11 Feb 2024 08:15:31 +0200
+Message-ID: <CAA8EJpo2UBX_N6FA2oQkkvE2AgQCfc0iETDLK1-MN87410NE_w@mail.gmail.com>
+Subject: Re: [PATCH v2 15/19] drm/msm/dp: enable SDP and SDE periph flush update
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
+	marijn.suijten@somainline.org, neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+On Sun, 11 Feb 2024 at 06:12, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 2/10/2024 2:11 PM, Dmitry Baryshkov wrote:
+> > On Sat, 10 Feb 2024 at 23:49, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 2/10/2024 2:16 AM, Dmitry Baryshkov wrote:
+> >>> On Sat, 10 Feb 2024 at 03:52, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+> >>>>
+> >>>> DP controller can be setup to operate in either SDP update flush mode or
+> >>>> peripheral flush mode based on the DP controller hardware version.
+> >>>>
+> >>>> Starting in DP v1.2, the hardware documents require the use of
+> >>>> peripheral flush mode for SDP packets such as PPS OR VSC SDP packets.
+> >>>>
+> >>>> In-line with this guidance, lets program the DP controller to use
+> >>>> peripheral flush mode starting DP v1.2
+> >>>>
+> >>>> Changes in v2:
+> >>>>           - Use the original dp_catalog_hw_revision() function to
+> >>>>             correctly check the DP HW version
+> >>>>
+> >>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> >>>> ---
+> >>>>    drivers/gpu/drm/msm/dp/dp_catalog.c | 17 +++++++++++++++++
+> >>>>    drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
+> >>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c    |  1 +
+> >>>>    drivers/gpu/drm/msm/dp/dp_reg.h     |  2 ++
+> >>>>    4 files changed, 21 insertions(+)
+> >>>>
+> >>
+> >> <Snip>
+> >>
+> >>>>
+> >>>> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> >>>> index 2983756c125cd..6ac66532b47a4 100644
+> >>>> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> >>>> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> >>>> @@ -102,6 +102,8 @@
+> >>>>    #define DP_MAINLINK_CTRL_ENABLE                        (0x00000001)
+> >>>>    #define DP_MAINLINK_CTRL_RESET                 (0x00000002)
+> >>>>    #define DP_MAINLINK_CTRL_SW_BYPASS_SCRAMBLER   (0x00000010)
+> >>>> +#define DP_MAINLINK_FLUSH_MODE_UPDATE_SDP      (0x00800000)
+> >>>> +#define DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE       (0x01800000)
+> >>>
+> >>> Just one bit here, please.
+> >>>
+> >>
+> >> hmm .... so the periph flush bits are 24:23 and we need a value of 3 to
+> >> select peripheral flush which translates to 0x01800000.
+> >>
+> >> How do you suggest to break this up?
+> >
+> > Then FIELD_PREP(something_mask, 3). Otherwise it is too easy to
+> > consider it to be DP_MAINLINK_FLUSH_MODE_UPDATE_SDP | BIT(24)
+> >
+>
+> Sure, FIELD_PREP() works. I was confused when you said one bit :)
 
-sc8280xp-pmics define the two thermal zones "pm8280-1-thermal" and
-"pm8280-2-thermal", but the related temp-alarm instances are not tied to
-any adc channels, and as such continuously report the bogus temperature
-of 37C.
+I was also confused, as I wrote, thus I thought that there are one-bit
+values in this reg.
 
-After previously defining these adc channels across all boards using
-sc8280xp-pmics.dtsi, we can now add these references.
+>
+> >>
+> >>>>    #define DP_MAINLINK_FB_BOUNDARY_SEL            (0x02000000)
+> >>>>
+> >>>>    #define REG_DP_STATE_CTRL                      (0x00000004)
+> >>>> --
+> >>>> 2.39.2
+> >>>>
+> >>>
+> >>>
+> >
+> >
+> >
 
-This does however mean that we have a non-disabled node referencing
-default-disabled nodes, requiring each board to enable the pmk8280_vadc.
-Avoid this by marking pmk8280_vadc okay.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                  | 4 ----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 --
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi               | 5 ++++-
- 3 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 22f10813aa3c..ffc4406422ae 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -604,10 +604,6 @@ rtc_offset: rtc-offset@bc {
- 	};
- };
- 
--&pmk8280_vadc {
--	status = "okay";
--};
--
- &qup0 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index ce2564a6c26e..ad42966c94e5 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -851,8 +851,6 @@ rtc_offset: rtc-offset@bc {
- };
- 
- &pmk8280_vadc {
--	status = "okay";
--
- 	channel@144 {
- 		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
- 		qcom,hw-settle-time = <200>;
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index 58fea376f0e2..945de77911de 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -87,7 +87,6 @@ pmk8280_vadc: adc@3100 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			#io-channel-cells = <1>;
--			status = "disabled";
- 
- 			channel@3 {
- 				reg = <PMK8350_ADC7_DIE_TEMP>;
-@@ -160,6 +159,8 @@ pm8280_1_temp_alarm: temp-alarm@a00 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0xa00>;
- 			interrupts-extended = <&spmi_bus 0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			io-channels = <&pmk8280_vadc PM8350_ADC7_DIE_TEMP(1)>;
-+			io-channel-names = "thermal";
- 			#thermal-sensor-cells = <0>;
- 		};
- 
-@@ -212,6 +213,8 @@ pm8280_2_temp_alarm: temp-alarm@a00 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0xa00>;
- 			interrupts-extended = <&spmi_bus 0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			io-channels = <&pmk8280_vadc PM8350_ADC7_DIE_TEMP(3)>;
-+			io-channel-names = "thermal";
- 			#thermal-sensor-cells = <0>;
- 		};
- 
 
 -- 
-2.43.0
-
+With best wishes
+Dmitry
 
