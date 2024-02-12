@@ -1,196 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-10586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3973850FEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 10:47:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7C8E851040
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 11:03:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E771B1C20FD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 09:47:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B2341F21396
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 10:03:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61FE7179BF;
-	Mon, 12 Feb 2024 09:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 645EC17BCA;
+	Mon, 12 Feb 2024 10:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZbIdRbB3"
+	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="LWzQNVJn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B836A79FD;
-	Mon, 12 Feb 2024 09:47:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B446D17BBE;
+	Mon, 12 Feb 2024 10:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.149.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707731257; cv=none; b=cyUOW0hFRshtBWDmtewfA9y5h8m+D2HMHnkCZnc89j+ziNcS5VakcHdDWelhkl4qhxGy5okxm6ofs4BH51m6G8ZfUGa/SYvbxG9qFwKROFjYk/kIDxJMC/mNdDEhoq+Xm4z1WFl/t4Kiuf2DnSj27JzuynKgK+Wf/0TFnyOQSOM=
+	t=1707732211; cv=none; b=oyhC3faMFGsPqY/skv5NjH5cJMhPWaNw53BO0C3DOqNr6SWrnu0YfNZ9ecKspZzIFILiSVQ+i6i1W0tZzjFGiuaahaUYW8b/B2TdZXgldlDYPQLbHw8TAKocE5MPCX9bUb4aJkR+/fHZ+9e9ekX/E5yxcl2IiUFmTuOMdv+dXZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707731257; c=relaxed/simple;
-	bh=T07jFuDWwQSFTWtgFD7tQZldLom+Reu5SVY4LzAOFVw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=M+oSDwyqli1y9oQn+WhoJ25nuxMjCSqDag8jZFJAD3/hzp+3kwXGPud+i6QwoPQz0Q8pWh9jszgmWl53Xn4X0/3ORquUaV/2ctbqMo0qzgmAiRDH6tslQWr0zmB53K34eBUfLAFR86dRzN8OVwfsHLOh6OuVmfLkQshjHDeJcZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZbIdRbB3; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41C8ZD7B007061;
-	Mon, 12 Feb 2024 09:47:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=J+7SKv+KgDjifMQXwtNiG9w7gSbJwI2AMpdlLFDIN+E=; b=Zb
-	IdRbB3g03oCeqZBjrSkuRliPDph9L+PCwO4xyVEpBUiQ0xRonhcmK9qHOjqgUc9I
-	MpjFF+kvOOy52fO1cSD4DkLcr2pjb8Zj7ocF/x3y2laeDpsMYU6HjVMqPsk6op3S
-	gpRtO973+GHSXK0eVsXvuAvRhLShkMgdfp9NGAvPdZdtoqvmupzJs4k/2vf6VcRC
-	IOsVEGbr7QQA2lgkTzW32wVAMGE0KdpYOXw1qEbuaYRcdzofqxunmehrj/JQzwVB
-	3ccvs/z0QuQ1bbVWAjYmgF4XkP/+LhnIrQEk4bHTZz8Uo24i0ljJqLXfPrE1hjM1
-	rtJtykaVbEo00zxcsPZw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w62ps2wp2-1
+	s=arc-20240116; t=1707732211; c=relaxed/simple;
+	bh=EUaMkEUqz4qgROvxBCIDolmNlZRkFxJ7hUO/k+Lveu0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ut4W3DEFOcsvv8fjCktwAQ3YrjXi5ruUdp3GBIY2+k5G3XEjATiSvnSOnCKCVnGOH2KjchQv7CRtFtMcNULBsQvHQXee3qAA6LCGeorQSGRFuUGiUw1b20blwzkZWNj8596oK6lGyS6wmucyLpAN2y5SCgeBBn1FeXuxOGG3t/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=LWzQNVJn; arc=none smtp.client-ip=67.231.149.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+	by mx0a-001ae601.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41C7sVo4016307;
+	Mon, 12 Feb 2024 04:02:21 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=PODMain02222019; bh=WLF2X+j3Bn92Q1D
+	DaV05/unswsO5ahBS+1WWPqaApW4=; b=LWzQNVJn8q7dcq0Bd+TtMxT1lIBoGiw
+	yD0TsejCsoABuy8AggRDJW06Q1z2xJlky/ztkU9ADIkffObtOL0UuCQv3Beh4nhA
+	Put6Ypu2vVivviEJ6Oil+cEfW1Q27QM+O9ltZ623dvQO4anhr/dZNovMzxP3lw+a
+	LhOj5jub+y3fjAvlvXTHjliMbTrYlMFuhJHFxHorIs5Vl5GjaGvKHU61HqyF2Ni8
+	oMyxoPUphkMgU1KFNxi+kfuEZzYoo4jyVm3Qy64lf8Glce+CGjlLDllqFwliGFC9
+	RTpYBk2a8X7avMhCql6FZ7NmoU/tVg544Z1TluPmt36M8g8y3w06Uow==
+Received: from ediex02.ad.cirrus.com ([84.19.233.68])
+	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 3w67e21nee-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Feb 2024 09:47:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41C9lRRd001122
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Feb 2024 09:47:27 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 12 Feb 2024 04:02:21 -0600 (CST)
+Received: from ediex02.ad.cirrus.com (198.61.84.81) by ediex02.ad.cirrus.com
+ (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
- 2024 01:47:22 -0800
-Message-ID: <58cdf104-acda-6215-cbaa-188c304da9f3@quicinc.com>
-Date: Mon, 12 Feb 2024 15:17:19 +0530
+ 2024 10:02:18 +0000
+Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
+ anon-ediex02.ad.cirrus.com (198.61.84.81) with Microsoft SMTP Server id
+ 15.2.1118.40 via Frontend Transport; Mon, 12 Feb 2024 10:02:18 +0000
+Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPS id 70E1F820242;
+	Mon, 12 Feb 2024 10:02:18 +0000 (UTC)
+Date: Mon, 12 Feb 2024 10:02:17 +0000
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+        Peng Fan
+	<peng.fan@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Nishanth Menon
+	<nm@ti.com>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter
+	<jonathanh@nvidia.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "Laurent
+ Pinchart" <laurent.pinchart@ideasonboard.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, Russell King
+	<linux@armlinux.org.uk>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>, "Jaroslav
+ Kysela" <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, <linux-clk@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <patches@opensource.cirrus.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        NXP Linux Team
+	<linux-imx@nxp.com>,
+        <linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-renesas-soc@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
+        <linux-omap@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <alsa-devel@alsa-project.org>,
+        <linux-sound@vger.kernel.org>
+Subject: Re: [PATCH] clk: constify the of_phandle_args argument of
+ of_clk_provider
+Message-ID: <ZcnsqaIftZXcNaUA@ediswmail9.ad.cirrus.com>
+References: <20240208163710.512733-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC 7/7] arm64: dts: qcom: x1e80100: Enable LLCC/DDR dvfs
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
-        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>
-References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
- <20240117173458.2312669-8-quic_sibis@quicinc.com>
- <CAA8EJpo5F==whKMVFgPAM+=DpB+=KzPhKt-poGXuHxy-KSxe8Q@mail.gmail.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <CAA8EJpo5F==whKMVFgPAM+=DpB+=KzPhKt-poGXuHxy-KSxe8Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RUtiWEuVGOGZlx9UZZ3-skcSgvMcFCtD
-X-Proofpoint-GUID: RUtiWEuVGOGZlx9UZZ3-skcSgvMcFCtD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-12_06,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 spamscore=0 phishscore=0 suspectscore=0
- mlxscore=0 priorityscore=1501 adultscore=0 clxscore=1015 mlxlogscore=690
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402120072
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240208163710.512733-1-krzysztof.kozlowski@linaro.org>
+X-Proofpoint-ORIG-GUID: NzDJLMtFiatrdGDskmwX3IMPmG4MYizJ
+X-Proofpoint-GUID: NzDJLMtFiatrdGDskmwX3IMPmG4MYizJ
+X-Proofpoint-Spam-Reason: safe
 
+On Thu, Feb 08, 2024 at 05:37:10PM +0100, Krzysztof Kozlowski wrote:
+> None of the implementations of the get() and get_hw() callbacks of
+> "struct of_clk_provider" modify the contents of received of_phandle_args
+> pointer.  They treat it as read-only variable used to find the clock to
+> return.  Make obvious that implementations are not supposed to modify
+> the of_phandle_args, by making it a pointer to const.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  drivers/clk/clk-lochnagar.c                   |  2 +-
 
+For the Lochnagar bits:
 
-On 1/18/24 02:17, Dmitry Baryshkov wrote:
-> On Wed, 17 Jan 2024 at 19:37, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->>
->> Enable LLCC/DDR dvfs through the Qualcomm's SCMI vendor protocol.
-> 
-> Could you please post DT bindings?
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-ack, will include it in the next re-spin.
-
-> 
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 48 ++++++++++++++++++++++++++
->>   1 file changed, 48 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> index 6856a206f7fc..3dc6f32fbb4c 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> @@ -329,6 +329,54 @@ scmi_dvfs: protocol@13 {
->>                                  reg = <0x13>;
->>                                  #clock-cells = <1>;
->>                          };
->> +
->> +                       scmi_vendor: protocol@80 {
->> +                               reg = <0x80>;
->> +
->> +                               memlat {
-> 
-> This doesn't look like a generic node name.
-> 
->> +                                       #address-cells = <1>;
->> +                                       #size-cells = <0>;
-> 
->> +
->> +                                       memory@0 {
->> +                                               reg = <0x0>; /* Memory Type DDR */
->> +                                               freq-table-khz = <200000 4224000>;
->> +
->> +                                               monitor-0 {
->> +                                                       qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
-> 
-> 
-> 
->> +                                                       qcom,cpufreq-memfreq-tbl = < 999000 547000 >,
->> +                                                                                  < 1440000 768000 >,
->> +                                                                                  < 1671000 1555000 >,
->> +                                                                                  < 2189000 2092000 >,
->> +                                                                                  < 2156000 3187000 >,
->> +                                                                                  < 3860000 4224000 >;
-> 
-> These tables should be rewritten as OPP tables. >
-> 
->> +                                               };
->> +
->> +                                               monitor-1 {
->> +                                                       qcom,compute-mon;
->> +                                                       qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                                                       qcom,cpufreq-memfreq-tbl = < 1440000 200000 >,
->> +                                                                                  < 2189000 768000 >,
->> +                                                                                  < 2156000 1555000 >,
->> +                                                                                  < 3860000 2092000 >;
->> +                                               };
->> +                                       };
->> +
->> +                                       memory@1 {
->> +                                               reg = <0x1>; /* Memory Type LLCC */
->> +                                               freq-table-khz = <300000 1067000>;
->> +
->> +                                               monitor-0 {
->> +                                                       qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                                                       qcom,cpufreq-memfreq-tbl = < 999000 300000 >,
->> +                                                                                  < 1440000 466000 >,
->> +                                                                                  < 1671000 600000 >,
->> +                                                                                  < 2189000 806000 >,
->> +                                                                                  < 2156000 933000 >,
->> +                                                                                  < 3860000 1066000 >;
->> +                                               };
->> +                                       };
->> +                               };
->> +                       };
->>                  };
->>          };
->>
->> --
->> 2.34.1
->>
->>
-> 
-> 
-> --
-> With best wishes
-> Dmitry
+Thanks,
+Charles
 
