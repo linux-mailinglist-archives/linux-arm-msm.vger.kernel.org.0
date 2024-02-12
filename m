@@ -1,161 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-10724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E99F851CA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:25:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8432851CAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:26:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD0F71F22486
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 18:25:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FA692846FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 18:26:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 081553FB38;
-	Mon, 12 Feb 2024 18:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p0gse1X6"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9222040C0C;
+	Mon, 12 Feb 2024 18:26:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4AB3F9E6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 18:25:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F51405FD;
+	Mon, 12 Feb 2024 18:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707762340; cv=none; b=hES4LNWHpfoPIZA2DemjgIeRs3Zk/tyBwmBlIzBF3P4dmVM5w9M0ZsaKnUuNeAUWomtJb6vOT4bOP+VBMEGSyPgEh//D40ouy5HTElsA/J7NdiXOYmXill8mBz8cu+gx5jV1sGLQi5j7zIneBK+gWIPavG+iZiomUkZkrw2l7ew=
+	t=1707762369; cv=none; b=RZoS5n0QWMo+qX93mKge6qoKuxfVBYl28WDUPQS7b9Mlg+40msbWVwfN0NUBgLVyg5R6IRwzfExXEDgXVbXG6Y0hkYDSx/43RV3xV55Xm9ARFqg7n2N1cj05Caif3fVH+qyP7PBUF8EHJQ6TnmiP2o/bqHFvfRBQN96q4Ehi+w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707762340; c=relaxed/simple;
-	bh=QCAdiSixOOAfTV1OL+MhLQmlhBjr4llZChybdPe8JKI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=HjPNaNwl15+10iqZTT2pL4oNi1keWoC2EWYM/gHu16/uorhZzLlsGvOfnkFO3WsQ2bkMEb+vKeuH7Y9Y+n5Dd4E5A6tQoyoBQ9Z+1l76Q2UcJSEn2bYtjNfQ2VmJ1yCVcieHMzGxAI7+Fjjm1oM1C9rviYsVF5xkO9tzcAe85XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p0gse1X6; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33b7e136a48so805089f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 10:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707762337; x=1708367137; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l6GRYGgHR/F8CWf9D6N6HBpJsxEZ9YDwSZEX5rV9iIU=;
-        b=p0gse1X6OVwvs70rZz0PPInaxAuIrj+MlsleVhC/gPNWTNW1f5kwlL0R+dnHnI8Nfr
-         2gon2H7TG4gMbj2cMHnE7JxjEtXDrXIGp21oNEL7YlppNf7VWIrSpbfOFknkf0ar1k+G
-         wJgIX/IuXpRo2upaCChOxyyo2Vv2PcIZOKeoYb2xX9L9RRrbCDxJYDDhXwAq5e5asym2
-         8PcfGBd1Bw8zx7cDpbJLtuTvMbACs5fHRo2SgG1DRL7OsALtY5fZP9/gzuFYW0Mikqhl
-         6AXTVS9Mk2HUq+QeYwj53OdHaxk0UoTOQZhlmNYzPeJe3YXlV3aplK3qDBWf4Nlo3kbH
-         KUBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707762337; x=1708367137;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l6GRYGgHR/F8CWf9D6N6HBpJsxEZ9YDwSZEX5rV9iIU=;
-        b=k8yhm7urWCVZyjGCPSt3aHfOwLSC1xKWAFnaARunPhv7CTtM/AhluVQ4xFGsxnvwjB
-         XwugiJPGNsMPNSznVE6eOlt/gVQBzfNPTdbTZNV7fQRrCjVzHQ7RRrtL3ByaLALkLCII
-         UrVv7LKlxXiCCkUXYb69qAYKtBpd1DkySquDn9tsmpcUV9XER1LdMK2s+1jl6Nc+xT2u
-         lyR7/Tc/5TxnU95+WMWRFysPzPRRmvqhTD+/X4T6QDzQNJcF1bEdjD8Kyye62ZWO5lJE
-         Jsa1t657AldGtlPYkK0Dcf/qo7bvEdKpq/jd53EUzqDxYp7K1aFY2++uElYDogrmNL5V
-         AhGg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9KETTi/VutW/eWau2Awo4CxNv7WjV9IIQQDnXiHJI0iPcQH9yTXXl3/zEVKt/H+oxRK3CVNjODEu5IimnrewldKBOuIXeqAMwHdAlbA==
-X-Gm-Message-State: AOJu0YzBhh0K19fa9guGX/cU+pgoOiV0by7OfQuau9HW/Ff14RlfNG3I
-	d6CePMVRh6qhIRKAR+mKvk685ArXHie5Dm6Y3qgw4CUFn7PjCGODRu1iYUUwMqTYS6nw7lNw8FE
-	H
-X-Google-Smtp-Source: AGHT+IGFep+eHR6QtfJDvvDfeSHaUH1yvtmJCeV9pK5e4nMMYJZObzzpihqYx9RQK/LNclGU4fMBzg==
-X-Received: by 2002:a05:6000:1a88:b0:33b:74a3:db94 with SMTP id f8-20020a0560001a8800b0033b74a3db94mr7349571wry.2.1707762337683;
-        Mon, 12 Feb 2024 10:25:37 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWci51KCqwBP5hE4mrR+zkOWQs1zKBwyGxzvMYPtWNcRvtgvitTEnxeiFruW+R5TVqVtsyxYD2ufnxvxF5rXxxQpjbfQhxp9udE6tTqzfSwCrPP5koSSxpINk79M2f1WmEl+6jb5kiiJBeweqjb5tx+fTI+6fBsMGKBSlQWZtwMmiGeW/vGoX/fcrMDdZShBkFSmYrgFvGL0wncVnOQHdyVajdtsYS7aQAu5shA2HGpZQjF1quL/9twPelruey9BgKkuYT4R2OeUPcK6tu319VYPHBqMkykrwEfuGNBXciiAq6+v7w8OA==
-Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id e9-20020a056000120900b0033ae54cdd97sm7422735wrx.100.2024.02.12.10.25.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Feb 2024 10:25:37 -0800 (PST)
-Message-ID: <b8c52d6e-2e02-4c53-9ec0-e06460a098e7@linaro.org>
-Date: Mon, 12 Feb 2024 19:25:35 +0100
+	s=arc-20240116; t=1707762369; c=relaxed/simple;
+	bh=RVBiiKt71wjFsnRdAFPjF0d4lGi7IogOJgAvmxhOfIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=movyyexd2AphoO4XQ6o34tBxiFu9z9t5/M8ualL5x/ukshP4uzVIrj4gVzCczu/pnSGJQIuaUyWRfRprBizWaEdFRxbrl9HJ2EBFK6I/FNE1ZGzRisR1OeLXYu6iLd8r1993uftu/byayeDgjjwO0WebhtHV/ZrFMYVrwnxpf7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA73C43399;
+	Mon, 12 Feb 2024 18:26:07 +0000 (UTC)
+Date: Mon, 12 Feb 2024 13:26:49 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Masami Hiramatsu
+ <mhiramat@kernel.org>, "Manivannan Sadhasivam"
+ <manivannan.sadhasivam@linaro.org>, <linux-kernel@vger.kernel.org>,
+ <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+ <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+ <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+ <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>
+Subject: Re: [PATCH v11] bus: mhi: host: Add tracing support
+Message-ID: <20240212132649.767e9b87@gandalf.local.home>
+In-Reply-To: <20240206-ftrace_support-v11-1-3f71dc187544@quicinc.com>
+References: <20240206-ftrace_support-v11-1-3f71dc187544@quicinc.com>
+X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: add sound card
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240207085615.27187-1-krzysztof.kozlowski@linaro.org>
- <46785ff5-2cac-4d77-be8a-c005d85b5947@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <46785ff5-2cac-4d77-be8a-c005d85b5947@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 09/02/2024 22:26, Konrad Dybcio wrote:
-> On 7.02.2024 09:56, Krzysztof Kozlowski wrote:
->> Add sound card to X1E80100-CRD board and update DMIC supply.
->> Full schematics are not available and the limited available parts
->> suggest that DMIC0-1 use BIAS3 and DMIC2-3 use BIAS1.  The DMIC supply
->> is unknown except one remark for VREG_L1B that it is "used for DMIC if
->> no WCD".
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
-> 
-> I have little idea how these things are connected, but brain compiler
-> says it looks sane..
-> 
+On Tue, 6 Feb 2024 10:02:05 +0530
+Krishna chaitanya chundru <quic_krichai@quicinc.com> wrote:
 
-I managed to get DMICs working (to my surprise!), so I will send v2 with
-Rb tag and updates.
 
-Best regards,
-Krzysztof
 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index abb561db9ae1..2d38f6005da6 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -15,6 +15,7 @@
+>  #include <linux/skbuff.h>
+>  #include <linux/slab.h>
+>  #include "internal.h"
+> +#include "trace.h"
+>  
+>  int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
+>  			      void __iomem *base, u32 offset, u32 *out)
+> @@ -493,11 +494,8 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>  
+>  	state = mhi_get_mhi_state(mhi_cntrl);
+>  	ee = mhi_get_exec_env(mhi_cntrl);
+> -	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
+> -		TO_MHI_EXEC_STR(mhi_cntrl->ee),
+> -		mhi_state_str(mhi_cntrl->dev_state),
+> -		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
+>  
+> +	trace_mhi_intvec_states(mhi_cntrl, ee, state);
+>  	if (state == MHI_STATE_SYS_ERR) {
+>  		dev_dbg(dev, "System error detected\n");
+>  		pm_state = mhi_tryset_pm_state(mhi_cntrl,
+> @@ -838,6 +836,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+>  	while (dev_rp != local_rp) {
+>  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+>  
+> +		trace_mhi_ctrl_event(mhi_cntrl, local_rp);
+> +
+>  		switch (type) {
+>  		case MHI_PKT_TYPE_BW_REQ_EVENT:
+>  		{
+> @@ -1003,6 +1003,8 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+>  	while (dev_rp != local_rp && event_quota > 0) {
+>  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+>  
+> +		trace_mhi_data_event(mhi_cntrl, local_rp);
+> +
+>  		chan = MHI_TRE_GET_EV_CHID(local_rp);
+>  
+>  		WARN_ON(chan >= mhi_cntrl->max_chan);
+> @@ -1243,6 +1245,7 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>  	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
+>  	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
+>  
+> +	trace_mhi_gen_tre(mhi_cntrl, mhi_chan, mhi_tre);
+>  	/* increment WP */
+>  	mhi_add_ring_element(mhi_cntrl, tre_ring);
+>  	mhi_add_ring_element(mhi_cntrl, buf_ring);
+> @@ -1337,9 +1340,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+>  	enum mhi_cmd_type cmd = MHI_CMD_NOP;
+>  	int ret;
+>  
+> -	dev_dbg(dev, "%d: Updating channel state to: %s\n", mhi_chan->chan,
+> -		TO_CH_STATE_TYPE_STR(to_state));
+> -
+> +	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, "Updating");
+
+The string above "Updating"
+
+>  	switch (to_state) {
+>  	case MHI_CH_STATE_TYPE_RESET:
+>  		write_lock_irq(&mhi_chan->lock);
+> @@ -1406,9 +1407,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+>  		write_unlock_irq(&mhi_chan->lock);
+>  	}
+>  
+> -	dev_dbg(dev, "%d: Channel state change to %s successful\n",
+> -		mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
+> -
+> +	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, "Updated");
+
+And here "Updated"
+
+>  exit_channel_update:
+>  	mhi_cntrl->runtime_put(mhi_cntrl);
+>  	mhi_device_put(mhi_cntrl->mhi_dev);
+
+Please add them to the printk_formats (like RCU trace events do).
+
+#define TPS(x)	tracepoint_string(x)
+
+Then the above should have:
+
+	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, TPS("Updating"));
+
+and
+
+	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, TPS("Updated"));
+
+> +DECLARE_EVENT_CLASS(mhi_update_channel_state,
+> +
+> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state,
+> +		 const char *reason),
+> +
+> +	TP_ARGS(mhi_cntrl, mhi_chan, state, reason),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, mhi_cntrl->mhi_dev->name)
+> +		__field(int, ch_num)
+> +		__field(int, state)
+> +		__field(const char *, reason)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
+> +		__entry->ch_num = mhi_chan->chan;
+> +		__entry->state = state;
+> +		__entry->reason = reason;
+> +	),
+> +
+> +	TP_printk("%s: chan%d: %s state to: %s\n",
+> +		  __get_str(name),  __entry->ch_num, __entry->reason,
+> +		  __print_symbolic(__entry->state, MHI_CH_STATE_TYPE_LIST))
+> +);
+
+The above print fmt has "%s" on __entry->reason which is just an internal
+kernel pointer to the string that is saved in the ring buffer. User space
+tools like perf and trace-cmd will not report them. It will just show some
+internal kernel address. By adding the TPS() logic above, those addresses
+will be mapped to strings:
+
+ ~# grep RCU /sys/kernel/tracing/printk_formats 
+ 0xffffffffb069a4e0 : "End RCU core"
+ 0xffffffffb069a520 : "Start RCU core"
+
+As RCU uses direct string pointers in its name space, it has the TPS()
+logic that allows perf and ftrace to map the addresses that are saved in
+the ring buffer to the strings they represent.
+
+-- Steve
+
+
+> +
+> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_start,
+> +
+> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state,
+> +		 const char *reason),
+> +
+> +	TP_ARGS(mhi_cntrl, mhi_chan, state, reason)
+> +);
+> +
+> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_end,
+> +
+> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state,
+> +		 const char *reason),
+> +
+> +	TP_ARGS(mhi_cntrl, mhi_chan, state, reason)
+> +);
+> +
 
