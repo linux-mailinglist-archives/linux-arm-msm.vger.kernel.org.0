@@ -1,140 +1,398 @@
-Return-Path: <linux-arm-msm+bounces-10645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16C0A851534
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 14:32:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBB0A851543
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 14:34:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFCE51F21937
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:32:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8358A2848C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:34:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF5E73A8FE;
-	Mon, 12 Feb 2024 13:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872B83F9CA;
+	Mon, 12 Feb 2024 13:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bZ0qYLvi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CQ7nBvEO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24A13A8F6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEDE3F9C3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707744001; cv=none; b=dk0+uzeg7yFKu6z4fYjeuQ12JjV3P3XHJyYYniZheSeVrsC5K4mTWNyn9e+0Zx7V/Q4pT2krBLBlRvm18v5WODIwDlE2FFfbNJ5T2zMKkUkh/3CFFci7/8pvOmgobn+gXnJmG+eG6m7o0gva095TsUxQEcr5NXah9LRXrQM3IIU=
+	t=1707744183; cv=none; b=C5BHIlAEEGDywYYcVTeEaUxe6Y2KekNDMzeIegcBOCZaHwzHT8uZJDbBDLk/W6koTPmW+h//nPojnfVjNsPJuZqBnGlqMl+XK+UL717BHJNS89vznbejUps8VKLarR9StBo8EcxrgcQ81wdPDQh7NDoqvL7k6qnMjK/dhVUl5wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707744001; c=relaxed/simple;
-	bh=MiDZ9q4E4B0uRmbXb/ZjZr/uFijMH3jgqXxs5YhkZbk=;
+	s=arc-20240116; t=1707744183; c=relaxed/simple;
+	bh=hgZBYdK3u7WdsN9oj+8KcDSkVgg4v9o6LesLZ5f1+0U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G+tG3s8kqtIJAdbo2VcBpyKjphwJ42ePTTddw4qZ/FSrjINSq/faqWi0br511WeJ0jOktr2SNF7g0pcad8fX+Uxgb00U5JY7SntJeuijBz5Q3G8t9mppvLtuc1mC/JeQcHw+9momsxfiBiNXkh5VRnvwfaAKquh6KlhKsRNg0SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bZ0qYLvi; arc=none smtp.client-ip=209.85.219.174
+	 To:Cc:Content-Type; b=ohpYdPEb/BAv2nb1xpPaSXj+lVW/LJGIipeoAuqAPSwh5w0HMSybCmNVNlJ9LNPqKezeBvo5Ikml3EWzl2Gb35+OPyg7k7a+7FcNEzX9e77JY757tII/4Txt19+q4IQEBDVzIArVZqjMGtEaocCEYrYH2m0UkbC7B3bx/fc24eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CQ7nBvEO; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc6dcd9124bso2843264276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 05:19:59 -0800 (PST)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dc75c5e3151so1879717276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 05:23:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707743999; x=1708348799; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707744180; x=1708348980; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=G3Ap4U+w+TMZMJlT3gtIEPowqPUkZyKtzXWA3sqYoeA=;
-        b=bZ0qYLvil+MOKd1hF4Cnq00KA+PBnKLjibplTbpluRIxDhEoeoBivTQMY+PsvW43o4
-         I1dQZwML2Xvkstv98wHQ4fO8sreMS3qJM+YPiE/vw4Np4pcfcvUfFakpn3XsEp2foDOj
-         QwlG1jmrpU6XdhSmSRDLeu8BReGZjwlj/oR5ojudj7OwzZ03rgV6CoO5YD7CS5ngnCbI
-         SNRfIWGh2EgZ/AZLkivYvNV6YBIP2kI9d+OM7TnSzy/NQfGvCeLaQMp0gFQXlWMeF3Vm
-         ZxIiTLhSKk7z+nqmuxj9TaxaFU50uFGC4nPS7IHQNMguobuDPomxEElZDk5X4NanJIyw
-         913g==
+        bh=ohK73ZlViFpR7kUkijJnUO0JZVw/Yr0/hymWJUVBw3U=;
+        b=CQ7nBvEORdnxW1zBAExmdqYucNfGXBQjhliVNcsgPV+k3GNYTDpoC55vU4NRVHm8oU
+         d0ZMsU39Y0cghUifsc3OAGOn2WVbXf8qnT/S2qXE7t0enRJGUtV1cIrNMb+Q7mKKbEV3
+         GP+BrUcDmPMRvAqcgIfN/S4LVEgXlnzvMT1XLuwHM4M8X2T22eX9wnG5cGAZI6AK07pG
+         0ZlGjPuULJbu8wqwjvXY9Q+pWHiKMHE5qTs5W4iFXRk0fClZahDmdrYSHMbC+7mYV0El
+         UI05dgZJCLlPvCCWydof2W3cokOGbZCSfskZZftAbpNjLicq5F2SSYi7z6tHQYD9Kdos
+         3UKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707743999; x=1708348799;
+        d=1e100.net; s=20230601; t=1707744180; x=1708348980;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G3Ap4U+w+TMZMJlT3gtIEPowqPUkZyKtzXWA3sqYoeA=;
-        b=llzydUxAd/CZKi/OCjeverUSEg1YXMR3mQLm1rrU970htxQdrD5zubirxN+k6B98EV
-         niF/2DASTnT6xKgHY/63sejEDAaenGfGJAdI7/kMoydG+i25I7hk0Ou9yQYCMjz+SO02
-         ezd/Laj2y1+lBbFCxTUBd7dx1FMxXIdcVncNimo0ifOHxL4fav6ox/+P2GNtk0bOE9UZ
-         duURMkmSqBXzTRc1WOCjuNwNlJxbszdy2yZqAYCRHwIMPr1BBYlHX0g3RzpQNbTi6pyp
-         2F+fPxEHxp0nz/mgKkpkjGv3mgHpzrsWvMtt0mj/mImLxNgo30/1QWRFvF3vrXJ0Iage
-         Owog==
-X-Forwarded-Encrypted: i=1; AJvYcCXnwdSL6xQNo8IrIqnhBsTPl7vacTCZ5Zjkj2dQ5xNHyL4adFGB2KdF7qho90JzX/5NAPm9YkTTvoasMggnYHjg/kXneWBZtRhGwvSTPQ==
-X-Gm-Message-State: AOJu0YyTQXJmqwBQ93Fz30zU9JAuIZjgkBiEDOBMpL9TpTJmHOQFLvd0
-	y8DSKNhc/JJSGhQEGMK9qagvxURtHneVflYBrMahYagUeYz5Uqq/cULZh9FOvFWN/kwoZfzrF7Z
-	vkwWZ2+LXgMjPYat7RHFimR/LllQG+UI9QG+79w==
-X-Google-Smtp-Source: AGHT+IGqUIFO5vVPLAS4fp5yQ7MhqKZGG2SnCArwCgMR3tqqtlHsLSayAuhno80bIasDuonbKvwDKJ2Tqwo4xgzrov8=
-X-Received: by 2002:a25:b212:0:b0:dc7:46ab:9f5e with SMTP id
- i18-20020a25b212000000b00dc746ab9f5emr5777858ybj.29.1707743998897; Mon, 12
- Feb 2024 05:19:58 -0800 (PST)
+        bh=ohK73ZlViFpR7kUkijJnUO0JZVw/Yr0/hymWJUVBw3U=;
+        b=XfM+vt3CNmSNK4U0JFezEdbdZaTvONC0W10XTaB8H7lfYq0A4Nk4kU/u8cDcMHwkVm
+         cnYT+35vW27xZ5hgK9KhBt+zudR4pjXjBHP02HtUy3M2LKGSO1a0gVNDfCp1POrggRWL
+         YlksdDV1A/UQaaKfEw1GMSuRqaHiQ0a5T1P1eXFjgY0tk8B6ddZTX2m047mXOEYe3F+X
+         Ayq7G5UmbTTuAkilZjLymuSwY5KYP8lnB6isFKxUp2HXNVKXz+GOIlButDMJNyIqjpvv
+         w5h82iA2aY7xtM4Z72GdQk0SwNWYFubYpi0Yl+x/a0u7485GLclt64GsYC5oxr5zTZUM
+         wGGg==
+X-Forwarded-Encrypted: i=1; AJvYcCXKK5DlWjyAdfrvELYi6jzmkFCCrwqoP+S4QslpvSYLPjMQ1KIAGCcS0WnQ/EvspRTDGzVQr+kPVhO9975tNVg7ZVjBjIuHp3cZRN3vYw==
+X-Gm-Message-State: AOJu0YwW9cFD/EhuhqIqryV65eg/szqLrevECEOoEhoHjaKs9FnE/7b7
+	y2cofOIJ+gj0qVcXxYGJnOzvaoiN11nnP0H7n+MdpA3vz7KOzRiZHl+4R3lDqK0NSwxG/QDFv9m
+	jNzojOjH0K2LIKUm+yjNWjxNO/eOYKjPlNPCHvg==
+X-Google-Smtp-Source: AGHT+IGXA61bIdJsTnlkmCl+pkCsbebIrN7AhidOcuaepMDxCCAHREyt3NmcZ4dG+zMXnz/g7yaQ26Z0banvcKYyMt0=
+X-Received: by 2002:a25:a28d:0:b0:dc6:db0c:4ff0 with SMTP id
+ c13-20020a25a28d000000b00dc6db0c4ff0mr5356971ybi.32.1707744180516; Mon, 12
+ Feb 2024 05:23:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240212125239.7764-1-quic_vdadhani@quicinc.com>
-In-Reply-To: <20240212125239.7764-1-quic_vdadhani@quicinc.com>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-5-quic_sibis@quicinc.com> <CAA8EJpr8qLZ8Y7PjU05ZoxSHWOf=q-KtM+s-tnR5X2t96rFWhw@mail.gmail.com>
+ <0adaa065-3883-ebfe-8259-05ebdbd821eb@quicinc.com>
+In-Reply-To: <0adaa065-3883-ebfe-8259-05ebdbd821eb@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 12 Feb 2024 15:19:48 +0200
-Message-ID: <CAA8EJpriONTWmdvhtuR+a3=PFs6ScO-EffCWqbt+3y9zBmwOcA@mail.gmail.com>
-Subject: Re: [PATCH v4] i2c: i2c-qcom-geni: Correct I2C TRE sequence
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andi.shyti@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, vkoul@kernel.org, quic_bjorande@quicinc.com, 
-	manivannan.sadhasivam@linaro.org, bryan.odonoghue@linaro.org, 
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Date: Mon, 12 Feb 2024 15:22:49 +0200
+Message-ID: <CAA8EJpqjqCVs6DEaUQowk2d3yS66cSC8vnVQzv+MxhvobeNvEg@mail.gmail.com>
+Subject: Re: [RFC 4/7] soc: qcom: Utilize qcom scmi vendor protocol for bus dvfs
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, 
+	Amir Vajid <avajid@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 12 Feb 2024 at 14:52, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
+On Mon, 12 Feb 2024 at 12:24, Sibi Sankar <quic_sibis@quicinc.com> wrote:
 >
-> For i2c read operation in GSI mode, we are getting timeout
-> due to malformed TRE basically incorrect TRE sequence
-> in gpi(drivers/dma/qcom/gpi.c) driver.
 >
-> I2C driver has geni_i2c_gpi(I2C_WRITE) function which generates GO TRE and
-> geni_i2c_gpi(I2C_READ)generates DMA TRE. Hence to generate GO TRE before
-> DMA TRE, we should move geni_i2c_gpi(I2C_WRITE) before
-> geni_i2c_gpi(I2C_READ) inside the I2C GSI mode transfer function
-> i.e. geni_i2c_gpi_xfer().
 >
-> TRE stands for Transfer Ring Element - which is basically an element with
-> size of 4 words. It contains all information like slave address,
-> clk divider, dma address value data size etc).
+> On 1/18/24 02:11, Dmitry Baryshkov wrote:
+> > On Wed, 17 Jan 2024 at 19:36, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+> >>
+> >> From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> >>
+> >> This patch introduces a client driver that interacts with the SCMI QCOM
+> >
+> > git grep This.patch Documentation/process/
+> >
+> >> vendor protocol and passes on the required tuneables to start various
+> >> features running on the SCMI controller.
+> >
+> > Is there any word about the 'memlat'? No. Unless one  reads into the
+> > patch, one can not come up with the idea of what is being introduced.
 >
-> Mainly we have 3 TREs(Config, GO and DMA tre).
-> - CONFIG TRE : consists of internal register configuration which is
->                required before start of the transfer.
-> - DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
-> - GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
->                of the transfer.
+> ack, will fix it in the re-spin.
 >
-> I2c driver calls GPI driver API to config each TRE depending on the
-> protocol.
+> >
+> >>
+> >> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+> >> Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+> >> Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+> >> Co-developed-by: Amir Vajid <avajid@quicinc.com>
+> >> Signed-off-by: Amir Vajid <avajid@quicinc.com>
+> >> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+> >> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> >> ---
+> >>   drivers/soc/qcom/Kconfig            |  10 +
+> >>   drivers/soc/qcom/Makefile           |   1 +
+> >>   drivers/soc/qcom/qcom_scmi_client.c | 486 ++++++++++++++++++++++++++++
+> >
+> > Should it go to drivers/firmware/arm_scmi instead? Or maybe to drivers/devfreq?
 >
-> For read operation tre sequence will be as below which is not aligned
-> to hardware programming guide.
+> I don't think it should go into arm_scmi unless Sudeep wants it there.
+> As for drivers/devfreq, I would have moved it there if this driver
+> benfitted being classified as a devfreq device. We can't use any of
+> the available governors on it and the tuneables appear way too custom.
+> These are the reasons why I placed it in drivers/soc/qcom instead.
 >
-> - CONFIG tre
-> - DMA tre
-> - GO tre
+> >
+> >>   3 files changed, 497 insertions(+)
+> >>   create mode 100644 drivers/soc/qcom/qcom_scmi_client.c
+> >>
+> >> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> >> index c6ca4de42586..1530558aebfb 100644
+> >> --- a/drivers/soc/qcom/Kconfig
+> >> +++ b/drivers/soc/qcom/Kconfig
+> >> @@ -264,6 +264,16 @@ config QCOM_ICC_BWMON
+> >>            the fixed bandwidth votes from cpufreq (CPU nodes) thus achieve high
+> >>            memory throughput even with lower CPU frequencies.
+> >>
+> >> +config QCOM_SCMI_CLIENT
+> >> +       tristate "Qualcomm Technologies Inc. SCMI client driver"
+> >> +       depends on QCOM_SCMI_VENDOR_PROTOCOL || COMPILE_TEST
+> >> +       default n
+> >> +       help
+> >> +         SCMI client driver registers for SCMI QCOM vendor protocol.
+> >> +
+> >> +         This driver interacts with the vendor protocol and passes on the required
+> >> +         tuneables to start various features running on the SCMI controller.
+> >> +
+> >>   config QCOM_INLINE_CRYPTO_ENGINE
+> >>          tristate
+> >>          select QCOM_SCM
+> >> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> >> index 05b3d54e8dc9..c2a51293c886 100644
+> >> --- a/drivers/soc/qcom/Makefile
+> >> +++ b/drivers/soc/qcom/Makefile
+> >> @@ -32,5 +32,6 @@ obj-$(CONFIG_QCOM_APR) += apr.o
+> >>   obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+> >>   obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=        kryo-l2-accessors.o
+> >>   obj-$(CONFIG_QCOM_ICC_BWMON)   += icc-bwmon.o
+> >> +obj-$(CONFIG_QCOM_SCMI_CLIENT) += qcom_scmi_client.o
+> >>   qcom_ice-objs                  += ice.o
+> >>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)        += qcom_ice.o
+> >> diff --git a/drivers/soc/qcom/qcom_scmi_client.c b/drivers/soc/qcom/qcom_scmi_client.c
+> >> new file mode 100644
+> >> index 000000000000..418aa7900496
+> >> --- /dev/null
+> >> +++ b/drivers/soc/qcom/qcom_scmi_client.c
+> >> @@ -0,0 +1,486 @@
+> >> +// SPDX-License-Identifier: GPL-2.0-only
+> >> +/*
+> >> + * Copyright (c) 2024, The Linux Foundation. All rights reserved.
+> >> + */
+> >> +
+> >> +#include <linux/cpu.h>
+> >> +#include <linux/err.h>
+> >> +#include <linux/errno.h>
+> >> +#include <linux/init.h>
+> >> +#include <linux/kernel.h>
+> >> +#include <linux/module.h>
+> >> +#include <linux/of.h>
+> >> +#include <linux/platform_device.h>
+> >> +#include <linux/qcom_scmi_vendor.h>
+> >> +#include <linux/scmi_protocol.h>
+> >> +
+> >> +#define MAX_MEMORY_TYPES       3
+> >> +#define MEMLAT_ALGO_STR                0x74616C6D656D /* "memlat" */
+> >> +#define INVALID_IDX            0xFF
+> >> +#define MAX_NAME_LEN           20
+> >> +#define MAX_MAP_ENTRIES                6
+> >> +#define MAX_MONITOR_CNT                4
+> >> +#define SCMI_VENDOR_MSG_START  3
+> >> +#define SCMI_VENDOR_MSG_MODULE_START   16
+> >> +
+> >> +enum scmi_memlat_protocol_cmd {
+> >> +       MEMLAT_SET_LOG_LEVEL = SCMI_VENDOR_MSG_START,
+> >> +       MEMLAT_FLUSH_LOGBUF,
+> >> +       MEMLAT_SET_MEM_GROUP = SCMI_VENDOR_MSG_MODULE_START,
+> >> +       MEMLAT_SET_MONITOR,
+> >> +       MEMLAT_SET_COMMON_EV_MAP,
+> >> +       MEMLAT_SET_GRP_EV_MAP,
+> >> +       MEMLAT_ADAPTIVE_LOW_FREQ,
+> >> +       MEMLAT_ADAPTIVE_HIGH_FREQ,
+> >> +       MEMLAT_GET_ADAPTIVE_CUR_FREQ,
+> >> +       MEMLAT_IPM_CEIL,
+> >> +       MEMLAT_FE_STALL_FLOOR,
+> >> +       MEMLAT_BE_STALL_FLOOR,
+> >> +       MEMLAT_WB_PCT,
+> >> +       MEMLAT_IPM_FILTER,
+> >> +       MEMLAT_FREQ_SCALE_PCT,
+> >> +       MEMLAT_FREQ_SCALE_CEIL_MHZ,
+> >> +       MEMLAT_FREQ_SCALE_FLOOR_MHZ,
+> >> +       MEMLAT_SAMPLE_MS,
+> >> +       MEMLAT_MON_FREQ_MAP,
+> >> +       MEMLAT_SET_MIN_FREQ,
+> >> +       MEMLAT_SET_MAX_FREQ,
+> >> +       MEMLAT_GET_CUR_FREQ,
+> >> +       MEMLAT_START_TIMER,
+> >> +       MEMLAT_STOP_TIMER,
+> >> +       MEMLAT_GET_TIMESTAMP,
+> >> +       MEMLAT_MAX_MSG
+> >> +};
+> >> +
+> >> +struct map_table {
+> >> +       u16 v1;
+> >> +       u16 v2;
+> >> +};
+> >> +
+> >
+> > Any documentation for these structures? It won't bite you, but it will
+> > help reviewers and other developers.
 >
-> As per Qualcomm's internal Hardware Programming Guide, we should configure
-> TREs in below sequence for any RX only transfer.
+> ack
 >
-> - CONFIG tre
-> - GO tre
-> - DMA tre
+> >
+> >> +struct map_param_msg {
+> >> +       u32 hw_type;
+> >> +       u32 mon_idx;
+> >> +       u32 nr_rows;
+> >> +       struct map_table tbl[MAX_MAP_ENTRIES];
+> >> +} __packed;
+> >> +
+> >> +struct node_msg {
+> >> +       u32 cpumask;
+> >> +       u32 hw_type;
+> >> +       u32 mon_type;
+> >> +       u32 mon_idx;
+> >> +       char mon_name[MAX_NAME_LEN];
+> >> +};
+> >> +
+> >> +struct scalar_param_msg {
+> >> +       u32 hw_type;
+> >> +       u32 mon_idx;
+> >> +       u32 val;
+> >> +};
+> >> +
+> >> +enum common_ev_idx {
+> >> +       INST_IDX,
+> >> +       CYC_IDX,
+> >> +       FE_STALL_IDX,
+> >> +       BE_STALL_IDX,
+> >> +       NUM_COMMON_EVS
+> >> +};
+> >> +
+> >> +enum grp_ev_idx {
+> >> +       MISS_IDX,
+> >> +       WB_IDX,
+> >> +       ACC_IDX,
+> >> +       NUM_GRP_EVS
+> >> +};
+> >> +
+> >> +#define EV_CPU_CYCLES          0
+> >> +#define EV_INST_RETIRED                2
+> >> +#define EV_L2_D_RFILL          5
+> >> +
+> >> +struct ev_map_msg {
+> >> +       u32 num_evs;
+> >> +       u32 hw_type;
+> >> +       u32 cid[NUM_COMMON_EVS];
+> >> +};
+> >> +
+> >> +struct cpufreq_memfreq_map {
+> >> +       unsigned int                    cpufreq_mhz;
+> >> +       unsigned int                    memfreq_khz;
+> >> +};
+> >> +
+> >> +struct scmi_monitor_info {
+> >> +       struct cpufreq_memfreq_map *freq_map;
+> >> +       char mon_name[MAX_NAME_LEN];
+> >> +       u32 mon_idx;
+> >> +       u32 mon_type;
+> >> +       u32 ipm_ceil;
+> >> +       u32 mask;
+> >> +       u32 freq_map_len;
+> >> +};
+> >> +
+> >> +struct scmi_memory_info {
+> >> +       struct scmi_monitor_info *monitor[MAX_MONITOR_CNT];
+> >> +       u32 hw_type;
+> >> +       int monitor_cnt;
+> >> +       u32 min_freq;
+> >> +       u32 max_freq;
+> >> +};
+> >> +
+> >> +struct scmi_memlat_info {
+> >> +       struct scmi_protocol_handle *ph;
+> >> +       const struct qcom_scmi_vendor_ops *ops;
+> >> +       struct scmi_memory_info *memory[MAX_MEMORY_TYPES];
+> >> +       int memory_cnt;
+> >> +};
+> >> +
+> >> +static int get_mask(struct device_node *np, u32 *mask)
+> >> +{
+> >> +       struct device_node *dev_phandle;
+> >> +       struct device *cpu_dev;
+> >> +       int cpu, i = 0;
+> >> +       int ret = -ENODEV;
+> >> +
+> >> +       dev_phandle = of_parse_phandle(np, "qcom,cpulist", i++);
+> >> +       while (dev_phandle) {
+> >> +               for_each_possible_cpu(cpu) {
+> >> +                       cpu_dev = get_cpu_device(cpu);
+> >> +                       if (cpu_dev && cpu_dev->of_node == dev_phandle) {
+> >> +                               *mask |= BIT(cpu);
+> >> +                               ret = 0;
+> >> +                               break;
+> >> +                       }
+> >> +               }
+> >
+> > There is of_cpu_node_to_id(). No need to reinvent it.
 >
-> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
-> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165-rb5
-> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> ack
+>
+> >
+> >> +               dev_phandle = of_parse_phandle(np, "qcom,cpulist", i++);
+> >> +       }
+> >> +
+> >> +       return ret;
+> >> +}
+> >> +
+> >> +static struct cpufreq_memfreq_map *init_cpufreq_memfreq_map(struct device *dev,
+> >> +                                                           struct device_node *of_node,
+> >> +                                                           u32 *cnt)
+> >> +{
+> >> +       int len, nf, i, j;
+> >> +       u32 data;
+> >> +       struct cpufreq_memfreq_map *tbl;
+> >> +       int ret;
+> >> +
+> >> +       if (!of_find_property(of_node, "qcom,cpufreq-memfreq-tbl", &len))
+> >> +               return NULL;
+> >> +       len /= sizeof(data);
+> >> +
+> >> +       if (len % 2 || len == 0)
+> >> +               return NULL;
+> >> +       nf = len / 2;
+> >> +
+> >> +       tbl = devm_kzalloc(dev, (nf + 1) * sizeof(struct cpufreq_memfreq_map),
+> >> +                          GFP_KERNEL);
+> >> +       if (!tbl)
+> >> +               return NULL;
+> >> +
+> >> +       for (i = 0, j = 0; i < nf; i++, j += 2) {
+> >> +               ret = of_property_read_u32_index(of_node, "qcom,cpufreq-memfreq-tbl",
+> >> +                                                j, &data);
+> >> +               if (ret < 0)
+> >> +                       return NULL;
+> >> +               tbl[i].cpufreq_mhz = data / 1000;
+> >> +
+> >> +               ret = of_property_read_u32_index(of_node, "qcom,cpufreq-memfreq-tbl",
+> >> +                                                j + 1, &data);
+> >> +               if (ret < 0)
+> >> +                       return NULL;
+> >> +
+> >> +               tbl[i].memfreq_khz = data;
+> >> +               pr_debug("Entry%d CPU:%u, Mem:%u\n", i, tbl[i].cpufreq_mhz,
+> >> +                        tbl[i].memfreq_khz);
+> >> +       }
+> >> +       *cnt = nf;
+> >> +       tbl[i].cpufreq_mhz = 0;
+> >
+> > This looks like a lame version of the OPP table.
+>
+> I didn't know listing multiple frequencies in a opp was allowed. We can
+> probably get away with it here since we just parse the data here and not
+> populate data in the opp core.
 
-Thank you,
+You are describing driver behaviour. DT describes hardware. So, the
+proper way to describe this kind of data is the OPP table.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
 
