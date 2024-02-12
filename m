@@ -1,116 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-10615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15ADA851228
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:25:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BA00851247
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:31:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E63DB25BBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 11:25:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA9C1B27C69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 11:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99F2338DE4;
-	Mon, 12 Feb 2024 11:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B447038FB2;
+	Mon, 12 Feb 2024 11:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eVJB/3bP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94CEE28DDE;
-	Mon, 12 Feb 2024 11:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181E838FA0;
+	Mon, 12 Feb 2024 11:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707737140; cv=none; b=Dmt0c9W4zWx1pVQdRUeYYjTHd6tgKRWMAtvI+TFQboVpZP8+RN1jR8w8/+xN2hhx8K7P/s2UjSG613vdgPnGFIHNickpp9yfWGvPXLBJGoeNcUA96AgVZPy0WKDAWnFTZV2QZzxmbMxWsw/jPEgnjaOaEJ0AjH94eireJ7cdqyI=
+	t=1707737509; cv=none; b=MPTDgc9ki81BHta0Y3ZsrEfATCx5kjLvBKM7a2VgDqintbTTJzIcVOKlouvz7RVlMmE7JFVIzZs10l/eRWRdaX+wsFgtDMEdwWD6PKsUhKTmOwURQF9LbUdOoqd24e0GmksvSpIWxaa30ZLMOC6/iy1BqP66JD/Eap/qMnxRUhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707737140; c=relaxed/simple;
-	bh=oX9zawn8w42iSe548Q/L408crulfgqh73G2TUKXYY4A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tSXPfPY4t4usBtSqXS5I0pq8cm7nODV8wNXD25bHBNgHMRZ/YQ/e9cDBJe1PRaF1T/fonESbiRSBYKc+JKG45wsGXjgIC5rkUYvoIuSNRqDTNkbUiG4RyZpu1sqe6MKk8vKonSI8cE/KhuvevazbRiPbqmIPi5pZkadAzHzOo18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9DD70DA7;
-	Mon, 12 Feb 2024 03:26:19 -0800 (PST)
-Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 7A1403F762;
-	Mon, 12 Feb 2024 03:25:35 -0800 (PST)
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Konrad Dybcio <konradybcio@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Tao Zhang <quic_taozha@quicinc.com>,
-	Mike Leach <mike.leach@linaro.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Jinlong Mao <quic_jinlmao@quicinc.com>,
-	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	Tingwei Zhang <quic_tingweiz@quicinc.com>,
-	linux-arm-kernel@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Song Chai <quic_songchai@quicinc.com>,
-	linux-kernel@vger.kernel.org,
-	coresight@lists.linaro.org,
-	Leo Yan <leo.yan@linaro.org>,
-	andersson@kernel.org,
-	Trilok Soni <quic_tsoni@quicinc.com>
-Subject: Re: [PATCH v7 00/10] Add support to configure TPDM CMB subunit
-Date: Mon, 12 Feb 2024 11:25:29 +0000
-Message-Id: <170773624998.2157180.11126865505279178953.b4-ty@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <1707024641-22460-1-git-send-email-quic_taozha@quicinc.com>
-References: <1707024641-22460-1-git-send-email-quic_taozha@quicinc.com>
+	s=arc-20240116; t=1707737509; c=relaxed/simple;
+	bh=VoBUN0aollmxYMv8gO1z43fBi/mUksY3u3S6lW72neM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=q7VZzBEN89Gy0EcaDr0usD6B0XoxC9R5vE8rGNd/Sx5OV+L4sbhsEmOgXLIm2otJqFso/IW+jwtIzgZ+1pHhV4Q7HhFTtTxyZ9UD1ZOss+RkhlTypA1En1kze70wfsheGedhY59rw4qbuVDmr5Cvi6gW6CEvUbcO+6V87t7bsGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eVJB/3bP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41CBK8mi024678;
+	Mon, 12 Feb 2024 11:31:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=y127VQqW3ggnrY8DwnNEDlppLPa31FdwBRhZF/TEXMs=; b=eV
+	JB/3bPPknBV5ycrVYMCorelus1ASxMNNM/hMvEzaxEY8tPrDMFBRo8d6YugkSGhw
+	FzRzQ0c4K9OOM8PWv7Z3xSNzZ9d0jD6iyX6qr97wTELvzQO7rbbw92dipuv3GZ6S
+	FTW916MK7iQPGELiWDSvhCAL8wZsUd6cHB5aD+51QzS8SykNkfXmJBQIhKoJo0l7
+	WWgkMlAHIqHIqXB+HjnNQinXkgpW9gcCIGtF+LkbtK2exY+U7n0r1+5x3rOcr3mu
+	QnMKVSdgBhUzk0C5m5/CLnmzkaS4Zgzu933unKfCe+v+I4fmWVcgPcAPwiMUr58p
+	JeaUwFe4ngr0AExJL2vg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7gse08ab-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 11:31:44 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41CBVhZ2022324
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 11:31:43 GMT
+Received: from [10.253.10.1] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
+ 2024 03:31:37 -0800
+Message-ID: <7edfed88-d84f-41e1-8c10-4af6efe53c4c@quicinc.com>
+Date: Mon, 12 Feb 2024 19:31:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add dma-coherent property
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>
+CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>, <kernel@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Aiqun Yu
+ (Maria)" <quic_aiquny@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>
+References: <20240125102413.3016-1-quic_lxu5@quicinc.com>
+ <20240125102413.3016-3-quic_lxu5@quicinc.com>
+ <069b82ac-b59c-4665-8a77-6c11a2463faa@linaro.org>
+ <690e64d6-8888-4f99-9ee0-c731aeea7762@linaro.org>
+From: Ling Xu <quic_lxu5@quicinc.com>
+In-Reply-To: <690e64d6-8888-4f99-9ee0-c731aeea7762@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: o93DF_q9D-83hJsYug4rKSEAiA7JF0UV
+X-Proofpoint-ORIG-GUID: o93DF_q9D-83hJsYug4rKSEAiA7JF0UV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_08,2024-02-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 adultscore=0 spamscore=0 clxscore=1011 phishscore=0
+ malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=617 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402120087
 
-On Sun, 4 Feb 2024 13:30:31 +0800, Tao Zhang wrote:
-> Introduction of TPDM CMB(Continuous Multi Bit) subunit
-> CMB subunit is responsible for creating a dataset element, and is also
-> optionally responsible for packing it to fit multiple elements on a
-> single ATB transfer if possible in the configuration. The TPDM Core
-> Datapath requests timestamps be stored by the TPDA and then delivering
-> ATB sized data (depending on ATB width and element size, this could
-> be smaller or larger than a dataset element) to the ATB Mast FSM.
-> The CMB makes trace elements in two modes. In �continuous� mode, every
-> valid data cycle creates an element. In �trace on change� mode, when
-> valid data changes on the bus, a trace element is created. In
-> continuous mode, all cycles where this condition is true create trace
-> elements. In trace on change mode, a data element is only when the
-> previously sampled input is different from the current sampled input.
+在 2024/2/12 19:10, Krzysztof Kozlowski 写道:
+> On 12/02/2024 12:00, Krzysztof Kozlowski wrote:
+>> On 25/01/2024 11:24, Ling Xu wrote:
+>>> Add dma-coherent property to fastRPC context bank nodes to pass dma
+>>> sequence test in fastrpc sanity test, ensure that data integrity is
+>>> maintained during DMA operations.
+>>>
+>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 13 +++++++++++++
+>>
+>> This wasn't ever tested:
+>>
+>> sm8650-qrd.dtb: remoteproc@32300000: glink-edge:fastrpc:compute-cb@1:
+>> 'dma-coherent' does not match any of the regexes: 'pinctrl-[0-9]+'
+>>
+>> Ling,
+>> How is this testing-patches-before-sending work in different teams? Do
+>> you have such requirement?
 > 
-> [...]
-
-Applied, thanks!
-
-[01/10] coresight-tpdm: Optimize the store function of tpdm simple dataset
-        https://git.kernel.org/coresight/c/9f0ea8e8344b
-[02/10] coresight-tpdm: Optimize the useage of tpdm_has_dsb_dataset
-        https://git.kernel.org/coresight/c/f021801c418e
-[03/10] dt-bindings: arm: qcom,coresight-tpdm: Add support for CMB element size
-        https://git.kernel.org/coresight/c/4ed57f75898c
-[04/10] coresight-tpdm: Add CMB dataset support
-        https://git.kernel.org/coresight/c/a1705ffcce52
-[05/10] coresight-tpda: Add support to configure CMB element
-        https://git.kernel.org/coresight/c/e6d7f5252f73
-[06/10] coresight-tpdm: Add support to configure CMB
-        https://git.kernel.org/coresight/c/2d9ab11c262e
-[07/10] coresight-tpdm: Add pattern registers support for CMB
-        https://git.kernel.org/coresight/c/53d4a017a524
-[08/10] coresight-tpdm: Add timestamp control register support for the CMB
-        https://git.kernel.org/coresight/c/dc6ce57e2aa0
-[09/10] dt-bindings: arm: qcom,coresight-tpdm: Add support for TPDM CMB MSR register
-        https://git.kernel.org/coresight/c/19bfaff38457
-[10/10] coresight-tpdm: Add msr register support for CMB
-        https://git.kernel.org/coresight/c/8e8804145a46
-
-Best regards,
+> No clue if the original DTS change should be reverted or these are in
+> fact DMA coherent, but let's choose one path...
+> 
+> https://lore.kernel.org/linux-devicetree/254c1d14-25e3-4f4c-9e79-4ef7cec4d22f@linaro.org/T/#t
+> 
+> Best regards,
+> Krzysztof
+> 
+Hi Krzysztof,
+Add dma-coherent: true in this file: Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml at line number 89 can pass the DTcheck.
 -- 
-Suzuki K Poulose <suzuki.poulose@arm.com>
+Thx and BRs,
+Ling Xu
+
 
