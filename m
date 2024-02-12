@@ -1,117 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-10733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11D7F851D9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 20:11:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35F1F851DA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 20:13:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 453FC1C21719
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:11:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8FAC1F23B2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:13:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9EC47F69;
-	Mon, 12 Feb 2024 19:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="iOKhKaEO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6ADF46448;
+	Mon, 12 Feb 2024 19:12:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp47.i.mail.ru (smtp47.i.mail.ru [95.163.41.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EC04596E;
-	Mon, 12 Feb 2024 19:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.85
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 215C14642A;
+	Mon, 12 Feb 2024 19:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707765067; cv=none; b=hEwJDEmez5HuVLMPLiQ7a2eRQGcOrm1tjnK6VV336vJljcmJgCg5YceVfKxNl+5a6c/JyTgiAxb2z7ZSZbiSkD/Lda+qE0mpBpLuNrTf5/xvuNTu6EykBaD4xGXSL5zfPFIAKpJXEC4fRGV6vgvEh3cpiNwti/STMd/V1D3Y9ug=
+	t=1707765151; cv=none; b=cr+DszMHbHrGsFzUOy1Us+THb6RI1ww9c9mwSe2pHcxFrZU63QrdZMNeOu/oBBe1lVHu7KRAEpTiIEA3+ZqX5wsf40rXADJlh3sm8SwB3pEef4ghGamMZAWIeq8kwqy74/W/riGjkf9SxoHoF+EcyY6w95hj++QPWYO/7zTiUyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707765067; c=relaxed/simple;
-	bh=F6luEYIaTSAkrOcTBt+ARmZuZydYyQ7t4z09gM3I7JA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ROs+bx0GD7EyQOH5cUdrqd/9vZIbfOx5y6IO4WuGy5v9Fu/EsWKncaIoN/I5yTiSrfBgOu/KefTNThPDWY5A+RP0Q1yU0TEgrMen8+pcBuvdcNPXod4JPMu7/FzcvKAFfkKtHSaJO2VyzuMaszK2kZSe3sQeyOX19/TN3hJvrxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=iOKhKaEO; arc=none smtp.client-ip=95.163.41.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=OY1uDnbX5zsfBR8YEJfJsduikAiYEld5Wg2jUIrZZPU=; t=1707765061; x=1707855061; 
-	b=iOKhKaEOr9NjERI2qSYgHMVXQdDfi3nBg5jSRgnc8pEwviBAC/L73/diOvp/k+aG0jrzkb1dJtO
-	JRjE5t3MdpbZ+EhV8VjR5DaSJMXN9Zf0BjT+wN/s16LAyIA2vjDguZigTWtaBCdE/HluSxaOBP+YA
-	Zgvg8sEkqvCh28q70rs=;
-Received: by smtp47.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1rZbhc-00000006gZh-1Kxn; Mon, 12 Feb 2024 22:10:52 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	linus.walleij@linaro.org,
-	robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	vkoul@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH 2/2] pinctrl: qcom: sm8450: Add pll_clk to pin group 98 for SM8475
-Date: Mon, 12 Feb 2024 22:10:46 +0300
-Message-ID: <20240212191046.77013-3-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240212191046.77013-1-danila@jiaxyga.com>
-References: <20240212191046.77013-1-danila@jiaxyga.com>
+	s=arc-20240116; t=1707765151; c=relaxed/simple;
+	bh=y8IklKVtf4og+m4D1vQAnedpSDWQJGvNYLzT+zZyz78=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GlBkDp+5Sbd7xl+enkUtML6vkCrwaVCkfAVeK6F904vFFTiGUNPGDAjfJHdUmw/+59EkeiRJ2+u5/AjfsH5jrxGITNSGZerm6o2bXRApBXW7zuIoXbFvhPBYyipCa/zv6723E/zPVvVO2cbcGdmqX7yv8QyRHlJA1aqrMYrfo20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6B7FFDA7;
+	Mon, 12 Feb 2024 11:13:09 -0800 (PST)
+Received: from [10.57.48.89] (unknown [10.57.48.89])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7635E3F5A1;
+	Mon, 12 Feb 2024 11:12:25 -0800 (PST)
+Message-ID: <680f9ba7-1f32-4365-abd1-771b8c78e844@arm.com>
+Date: Mon, 12 Feb 2024 19:12:20 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp47.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD96201AD55A1C8F7DBBAC036D50690886005017D7DFF4CC2B7182A05F538085040E77BE5391BA0202B2EB5D77EF37489D1A62B0989FE57A36EE51B3825F593DFF22B0BC4687570E331
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7544B1CCE26E01C74EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637E149C29A36E092738638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D82B81A79E632A6A5B6F91843850D5FF6A55C8D6C5E6BBFF8ACC7F00164DA146DAFE8445B8C89999728AA50765F7900637A7F6C2AE60409FEF389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC882B967D547A19D2FF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CCF7CD7A0D5AA5F2503F1AB874ED890284AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3FF13C91C9B60D64ABA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C30AD616FF17A999CF35872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-87b9d050: 1
-X-C1DE0DAB: 0D63561A33F958A5FBC5FF506208C50D5002B1117B3ED696217FA40ECE3BBC1E54BB1175C6E7DD94823CB91A9FED034534781492E4B8EEAD85CCBA673D36D1A4C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF1D21BD3B795911A3F12235A73B6A52E2BDD8544A59BB600B70FCA418E1C632388657CCA151A12AF5233AFEF422F2DFF9F67683D4860108565D44EE695255846BA35D2239673AA59642BF32D1DA1046D202C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj1UUEhvrYbM2VTK9+NJrm2A==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981983862166B6422287FC47A557B39A39B8EDB258A799B3002B5E3F83EFC32AB642C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/10] dt-bindings: iommu: Add Translation Buffer Unit
+ bindings
+To: Rob Herring <robh@kernel.org>, Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc: krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org,
+ joro@8bytes.org, iommu@lists.linux.dev, devicetree@vger.kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, robdclark@gmail.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
+ quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com,
+ djakov@kernel.org
+References: <20240201210529.7728-1-quic_c_gdjako@quicinc.com>
+ <20240201210529.7728-2-quic_c_gdjako@quicinc.com>
+ <20240202211749.GA1467077-robh@kernel.org>
+Content-Language: en-GB
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20240202211749.GA1467077-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add pll_clk to pin group 98 for compatibility with SM8475.
+On 2024-02-02 9:17 pm, Rob Herring wrote:
+> On Thu, Feb 01, 2024 at 01:05:20PM -0800, Georgi Djakov wrote:
+>> Add common bindings for the TBUs to describe their properties. The
+>> TBUs are modelled as child devices of the IOMMU and each of them is
+>> described with their compatible, reg and stream-id-range properties.
+>> There could be other implementation specific properties to describe
+>> any resources like clocks, regulators, power-domains, interconnects
+>> that would be needed for TBU operation. Such properties will be
+>> documented in a separate vendor-specific TBU schema.
+>>
+>> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/iommu/arm,smmu.yaml   | 14 ++++++++++
+>>   .../devicetree/bindings/iommu/tbu-common.yaml | 28 +++++++++++++++++++
+>>   2 files changed, 42 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/iommu/tbu-common.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> index a4042ae24770..ba3237023b39 100644
+>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> @@ -235,6 +235,20 @@ properties:
+>>         enabled for any given device.
+>>       $ref: /schemas/types.yaml#/definitions/phandle
+>>   
+>> +  '#address-cells':
+>> +    enum: [ 1, 2 ]
+>> +
+>> +  '#size-cells':
+>> +    enum: [ 1, 2 ]
+>> +
+>> +  ranges: true
+>> +
+>> +patternProperties:
+>> +  "^tbu@[0-9a-f]+$":
+>> +    description: TBU child nodes
+>> +    type: object
+>> +    $ref: tbu-common.yaml#
+> 
+>         additionalProperties: false
+> 
+> 
+> However, that's going to break with the extra QCom properties. In
+> json-schema, you can't have 2 schemas and extend the properties of
+> their child nodes. The validator doesn't "see" the child node schemas at
+> the same time. You are going to have to move QCom SMMU to its own schema
+> and remove it from arm,smmu.yaml.
 
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- drivers/pinctrl/qcom/pinctrl-sm8450.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Although this common binding is pretty pointless - sorry I missed the 
+previous discussion, but these TBU registers are on obscure debugging 
+feature of Qualcomm's own invention and definitely not generic. The 
+internal topology of the unmodified Arm MMU-500 implementation isn't 
+software-visible at all without getting into its own integration and 
+debug registers (and maybe to a lesser extent the PMU), and even then 
+everything is proxied through the TCU via an internal AXI stream 
+interconnect, so there aren't really any TBU-owned resources which would 
+warrant describing as such in DT. If anything, the way this binding is 
+defined as an MMIO bus with "ranges" would actively *prevent* being able 
+to describe the standard hardware this way, since the internal debug 
+stuff all wants to refer to TBUs by numerical index.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450.c b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-index 617286711695..45ac8e72c1c7 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8450.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-@@ -957,7 +957,7 @@ static const char * const pll_bist_groups[] = {
- };
- 
- static const char * const pll_clk_groups[] = {
--	"gpio107",
-+	"gpio98", "gpio107",
- };
- 
- static const char * const pri_mi2s_groups[] = {
-@@ -1511,7 +1511,7 @@ static const struct msm_pingroup sm8450_groups[] = {
- 	[95] = PINGROUP(95, pcie0_clkreqn, cmu_rng, phase_flag, _, _, _, _, _, _),
- 	[96] = PINGROUP(96, cmu_rng, phase_flag, _, _, _, _, _, _, _),
- 	[97] = PINGROUP(97, cmu_rng, phase_flag, _, _, _, _, _, _, _),
--	[98] = PINGROUP(98, pcie1_clkreqn, phase_flag, _, _, _, _, _, _, _),
-+	[98] = PINGROUP(98, pcie1_clkreqn, phase_flag, pll_clk, _, _, _, _, _, _),
- 	[99] = PINGROUP(99, phase_flag, cri_trng, _, _, _, _, _, _, _),
- 	[100] = PINGROUP(100, cam_mclk, qdss_gpio, _, _, _, _, _, _, _),
- 	[101] = PINGROUP(101, cam_mclk, qdss_gpio, _, _, _, _, _, _, _),
--- 
-2.43.0
+Conversely, given that the Qualcomm TBU registers seem to be describing 
+their own entirely independent resources and inheriting nothing from the 
+parent node, I'm not sure it's necessarily worth all the bother of 
+describing and supporting them them as children at all, when they could 
+just as well be standalone nodes with a phandle to associate an SMMU 
+instance.
 
+Thanks,
+Robin.
 
