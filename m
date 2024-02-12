@@ -1,286 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-10751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A389E851F71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 22:19:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38C34851F75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 22:20:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B35D1F230C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 21:19:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E3D91C20C1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 21:20:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8DA24C63F;
-	Mon, 12 Feb 2024 21:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C80347A7A;
+	Mon, 12 Feb 2024 21:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Oo+NH91d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sovZvO1K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240A34C631
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 21:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA95543AA8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 21:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707772795; cv=none; b=uK1DXZy2ZjVet7DTBafajWlCHWaD6O9e0/dPbWvK27P1hiutJj29mqD/YwqRXk+oL4OOW1bluLyJkARe9+iE6op0HA6j8gJFIhHzqJVYLi7ASvQIs+x4crlugvtcUvt1j049B7c/voW6BKmPLcdgD1oqK2/5RIokQRmfpYYeg20=
+	t=1707772851; cv=none; b=W2hVS3eCg+g+NJeFgkSg3IA5+mWFD0hubj3EkKj62AFjHDQfHASjHWIi8NOUF5wTBXKTVoTU1VOCf4G8Pd/TSo6uypVKY/kWUrWxxFYl6q/8SYL3QQa6QbopUrltaceffagNJh8zOOM7NfEVS5pulPcNvTTabXJAmcY12/8Q5A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707772795; c=relaxed/simple;
-	bh=rYsfzNffWLW01EY7MGQrWhKqam8qwQaEofXUk3u4V5Y=;
+	s=arc-20240116; t=1707772851; c=relaxed/simple;
+	bh=rRFYj9QasQBmuaF4ddoDM2EyjDQEoOQb55Anv83h1mg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eYkBm7V2vTV/U0cqb8+ReW6J91cPSDlZNIB+8TnTrOBr1QmIyPfFBvT1puCtIbxMoKOxa34mWmC7eSco8raymSmkYnJlohsbRtxivkrIV262FfAFNdThVJzEeTX8j8jgS6cxc3coog1Zf1funJFG+qrdMY8qMiQ4tK4iV+EYXS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Oo+NH91d; arc=none smtp.client-ip=209.85.219.181
+	 To:Cc:Content-Type; b=ExP3ua8Feb3ZacOn3mQWM3nyk078nCtVnPgww+pJFVgMiFjeEAQCPCdFpSSavnAf2TUUv3VyU8u27WpG6lfkatrdgVPb83jnCKiufSuSxavkouHiH2gzRy+u3Qjm7JDfYzsrGEG5eZ/eKLCi8i7ih43HQfaYI+ZCAFcm0s5r0Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sovZvO1K; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc6d24737d7so3347047276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:19:53 -0800 (PST)
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcbef31a9dbso445141276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:20:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707772793; x=1708377593; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707772848; x=1708377648; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=s+yo91KC9lZLq+Z5GCcZqguGz6BSCI7TGH/G2qxr2oA=;
-        b=Oo+NH91d2EVv5zcXZAC8XrKOA9K4XAn/CHIuANe+A5tY08y+ttpBLx96ckYQMv2F63
-         q9cWWCeJUo6DyQaQJrz1YAH5AHKHXlStGY1+jQaEPsRySP4XHfamsyO7R0jDRfZcZ21W
-         +Bwz0fq8+IWlaz/v4qMb1r0NVM9hVjKeV5O1QmRbzdf6xZKEWEtRlEkkczKOGcGMyvcD
-         ZfuQBEUleY9bKzs5OtTlva3++j9knSq33jgoYS+VbCaWPkseozOtYDx0tKaR2A+7bJdg
-         GJILSpdws9O46EssOsC5HX6qt+X7obZblNGNkFKV9qhzl4ClgMVqhYejuXF1++iOyo4m
-         tHXA==
+        bh=iV9U9eXYCJcvJrj6H/0WsRlgw1HkWWp0lw6ZqsXTu3w=;
+        b=sovZvO1KNlsFAQ5hzFKzL08eheFP9+dFjiMFJQrhnApGSLUHwLSdXfl1RfGeMeAVYG
+         qAVE/XI9nCj9X4KSFtPKMNfvlTLNmKpsddEg2JZvTS21FBhmD4FA+8Bua4mtIGHdyfCw
+         1nsa0oIPBt4BRjsErs+ae66UJ1Os1Xx6oLxbt26ih07ek2YwXVJ30GroIH01kzyXLEDJ
+         Z3B6aCuP1GTeTDQW+S1dhbdjXK3J14xliqn0Nk14RKlXwoGhzuHtz2EDxPUmN9hTa1VZ
+         Kp3sAQ+eAnE/Cr5gpbb5LqMBHuwhJGTguBRs2AbDqhqrwJsgbxUvVeyn266MqMsvdzhf
+         L3OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707772793; x=1708377593;
+        d=1e100.net; s=20230601; t=1707772848; x=1708377648;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s+yo91KC9lZLq+Z5GCcZqguGz6BSCI7TGH/G2qxr2oA=;
-        b=pw5Swb/joEdAsMOt25aEThgHpwOLaOruO6Hg3HwrkjUdJLYCbLyULTo/2i6xyQHiw9
-         nkFriaMQPbdzy5ZX9K82tRmJ/igZOVE+wK8U1gwQZDYWDtcibmH7ll1ApI18oNiIRgk+
-         vcjb47ifa1m/sHoLQX8Kzl0wG4wwHJCSrJ87NnOCP7zSpe5Dp01K6SVpdKNUTAaLaZoA
-         JXQjkMEN51Fek7qtEmkSap9N/TH9FhtfKcvkw0E835i0cQqziOqkGGzTMhz8CnBiDjKz
-         zRav/pFALS0LeUtm0txt8UJP7wVXOGoPe1nZPw2erAUXB5swXndso2SmJ1n/QBormprB
-         aVBw==
-X-Forwarded-Encrypted: i=1; AJvYcCX41MYca/wm/JmL0eP71coRw9PwEHKYEDn/9zUjPT93F2zv6HEHneyOshXW5RGeKgUepgEeW8Xvk1Fk95X4wfPWRwjf9o8lHSroahIXVg==
-X-Gm-Message-State: AOJu0Yw9SDUD4N6vu7ZJI7EUNCCBOJa2yhPVy8lqdJni1izWF/pgyg7b
-	7wCUsf6AcxxlalO2HssGizIakUm3u0C5xTZoQZSl0rIYWkKMlBnOE9iY0NqdIRa0qYjiy8ZVPj9
-	JCzuK6NruJBZTmXZBF+0K71syRsuyFa0whHYGRw==
-X-Google-Smtp-Source: AGHT+IGwm8pe4MDgVQAlL+pAAjsmuB8Vmf6/8xdDR9vTdvZ1WSoansH5OsLECcjcw7mpfMBcfPn6TQuPKeq7UPMEiT0=
-X-Received: by 2002:a25:adc7:0:b0:dcb:fe58:a08b with SMTP id
- d7-20020a25adc7000000b00dcbfe58a08bmr1251061ybe.15.1707772792830; Mon, 12 Feb
- 2024 13:19:52 -0800 (PST)
+        bh=iV9U9eXYCJcvJrj6H/0WsRlgw1HkWWp0lw6ZqsXTu3w=;
+        b=FWQiQDYMFWtoUbUyw92TpdSMvk7wrkXjY1HIMNdgPs8HmtNwz1lkiqFkKwIStVrzyY
+         obSfxWiVvqtJzMIu7PYj4msgCtQAE2uwrID5tjypb2edKGuZZNiA8kFLLFEql/VwDk26
+         yImQ2m6yYe/5+FU3udTjhfJGK6Sa6Zov1Do7OY4UxslwWQcWA08k1QyYSopdr09CE9wf
+         8qDoEGt/QusxIZ5xRDwiBC+RlkkuXQEw2S5tuK8sz6mt4/Bs7iRjSe7GqX1dlDDjeXo3
+         6vAsdUZQBqWwq6+CUXhKmIESng6Ps3z+i90jk9VzPoHIekjNEJS25uk3EWoO1fcHEfF2
+         nlwA==
+X-Forwarded-Encrypted: i=1; AJvYcCWq9Fn8uCrDlYGRqZu+oAwr/BEYz4GeU3dEye8mx5u1Q615LFtdyI/xJZ2jfCKVR4NqAhU9QjygRQmsaazBFtO6qwRwv4zeen4SWS0uyA==
+X-Gm-Message-State: AOJu0YxeJrCQsB3OjZFEFJQGur4uDCWlNqMgGRWUeyHoSM3JxnoRNlF3
+	KPkdJ8BOWqpkirjr7eUS/JwmbaANtqplQufghoyhml9eJ2AbusKaYp8uYArLKXxd6XOwZ+S3Oqm
+	Wcu33jLIWRzl2ZLLwwVYu+xpNdqND2w3v5ycwPg==
+X-Google-Smtp-Source: AGHT+IESmQ7wY2Dyevaw+NSSNF8ORzP3IV5t3PljHIorAJTXf9UszM0B7+uTaQmBATW5GJM+KBdolgUJ9P3K+CL8P/c=
+X-Received: by 2002:a25:b11a:0:b0:dcc:32cb:cb3b with SMTP id
+ g26-20020a25b11a000000b00dcc32cbcb3bmr657729ybj.44.1707772848660; Mon, 12 Feb
+ 2024 13:20:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240212-topic-j606f_periphs-v1-1-5dcacd483e28@linaro.org>
-In-Reply-To: <20240212-topic-j606f_periphs-v1-1-5dcacd483e28@linaro.org>
+References: <20240210015223.24670-1-quic_parellan@quicinc.com>
+ <20240210015223.24670-20-quic_parellan@quicinc.com> <CAA8EJpq15w_Gjx+rPzN8vBg5Z8PGzABAztqmLpfnafuvNVLmRw@mail.gmail.com>
+ <56e521ab-ae57-9296-59a1-0bdbad60f882@quicinc.com> <CAA8EJprUeJvL_mP0x19YQCdTbErzy-RRF6GmSOK_eApsRiTALw@mail.gmail.com>
+ <04df55f1-9430-727b-426b-81d762b3b2e6@quicinc.com>
+In-Reply-To: <04df55f1-9430-727b-426b-81d762b3b2e6@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 12 Feb 2024 23:19:40 +0200
-Message-ID: <CAA8EJppHv9g4HnEFaEaCH=FnvJdnFfnr+rt=Onyqh-er8UA6TQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115p-j606f: Add some peripherals
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Mon, 12 Feb 2024 23:20:33 +0200
+Message-ID: <CAA8EJpqZT+Z-1oH6pRs05kZj16XdUyzi15ko3W3cS1DGC36pew@mail.gmail.com>
+Subject: Re: [PATCH v2 19/19] drm/msm/dp: allow YUV420 mode for DP connector
+ when CDM available
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
+	marijn.suijten@somainline.org, neil.armstrong@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 12 Feb 2024 at 15:44, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Mon, 12 Feb 2024 at 23:13, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> This tablet features quite a bunch of I2C-connected devices, such as
-> a Richtek RT1715 USB-C controller, a MM8013 fuel gauge, FSA4480 Type-C
-> audio mux, TPS65132 regulator and some more.
 >
-> Add the aforementioned ones and document others.
 >
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi              |   7 ++
->  arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 103 +++++++++++++++++++++-
->  2 files changed, 109 insertions(+), 1 deletion(-)
+> On 2/10/2024 1:17 PM, Dmitry Baryshkov wrote:
+> > On Sat, 10 Feb 2024 at 21:19, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 2/10/2024 3:33 AM, Dmitry Baryshkov wrote:
+> >>> On Sat, 10 Feb 2024 at 03:52, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+> >>>>
+> >>>> All the components of YUV420 over DP are added. Therefore, let's mark the
+> >>>> connector property as true for DP connector when the DP type is not eDP
+> >>>> and when there is a CDM block available.
+> >>>>
+> >>>> Changes in v2:
+> >>>>           - Check for if dp_catalog has a CDM block available instead of
+> >>>>             checking if VSC SDP is allowed when setting the dp connector's
+> >>>>             ycbcr_420_allowed parameter
+> >>>>
+> >>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> >>>> ---
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 +++-
+> >>>>    drivers/gpu/drm/msm/dp/dp_display.c     | 4 ++--
+> >>>>    drivers/gpu/drm/msm/dp/dp_drm.c         | 8 ++++++--
+> >>>>    drivers/gpu/drm/msm/dp/dp_drm.h         | 3 ++-
+> >>>>    drivers/gpu/drm/msm/msm_drv.h           | 5 +++--
+> >>>>    5 files changed, 16 insertions(+), 8 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>>> index 723cc1d821431..beeaabe499abf 100644
+> >>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> >>>> @@ -565,6 +565,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+> >>>>    {
+> >>>>           struct drm_encoder *encoder = NULL;
+> >>>>           struct msm_display_info info;
+> >>>> +       bool yuv_supported;
+> >>>>           int rc;
+> >>>>           int i;
+> >>>>
+> >>>> @@ -583,7 +584,8 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+> >>>>                           return PTR_ERR(encoder);
+> >>>>                   }
+> >>>>
+> >>>> -               rc = msm_dp_modeset_init(priv->dp[i], dev, encoder);
+> >>>> +               yuv_supported = !!(dpu_kms->catalog->cdm);
+> >>>
+> >>> Drop parentheses please.
+> >>>
+> >>>> +               rc = msm_dp_modeset_init(priv->dp[i], dev, encoder, yuv_supported);
+> >>>>                   if (rc) {
+> >>>>                           DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+> >>>>                           return rc;
+> >>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> >>>> index ebcc76ef1d590..9b9f5f2921903 100644
+> >>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> >>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> >>>> @@ -1471,7 +1471,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+> >>>>    }
+> >>>>
+> >>>>    int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+> >>>> -                       struct drm_encoder *encoder)
+> >>>> +                       struct drm_encoder *encoder, bool yuv_supported)
+> >>>>    {
+> >>>>           struct dp_display_private *dp_priv;
+> >>>>           int ret;
+> >>>> @@ -1487,7 +1487,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+> >>>>                   return ret;
+> >>>>           }
+> >>>>
+> >>>> -       dp_display->connector = dp_drm_connector_init(dp_display, encoder);
+> >>>> +       dp_display->connector = dp_drm_connector_init(dp_display, encoder, yuv_supported);
+> >>>>           if (IS_ERR(dp_display->connector)) {
+> >>>>                   ret = PTR_ERR(dp_display->connector);
+> >>>>                   DRM_DEV_ERROR(dev->dev,
+> >>>> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >>>> index 46e6889037e88..ab0d0d13b5e2c 100644
+> >>>> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> >>>> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> >>>> @@ -353,7 +353,8 @@ int dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> >>>>    }
+> >>>>
+> >>>>    /* connector initialization */
+> >>>> -struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
+> >>>> +struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder,
+> >>>> +                                           bool yuv_supported)
+> >>>>    {
+> >>>>           struct drm_connector *connector = NULL;
+> >>>>
+> >>>> @@ -361,8 +362,11 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct dr
+> >>>>           if (IS_ERR(connector))
+> >>>>                   return connector;
+> >>>>
+> >>>> -       if (!dp_display->is_edp)
+> >>>> +       if (!dp_display->is_edp) {
+> >>>>                   drm_connector_attach_dp_subconnector_property(connector);
+> >>>> +               if (yuv_supported)
+> >>>> +                       connector->ycbcr_420_allowed = true;
+> >>>
+> >>> Is there any reason to disallow YUV420 for eDP connectors?
+> >>>
+> >>>> +       }
+> >>>>
+> >>
+> >> Major reason was certainly validation but thinking about it more
+> >> closely, I need to check whether CDM over eDP is even possible.
+> >>
+> >> Historically, CDM could output only to HDMI OR WB using the bit we
+> >> program while setting up CDM and the same HDMI path is being used by DP
+> >> as well. But I need to check whether CDM can even output to eDP with the
+> >> same DP path. I dont have any documentation on this part yet.
+> >
+> > I had the feeling that the DP / eDP difference on the chips is mostly
+> > on the PHY and software side. So I assumed that it should be possible
+> > to output YUV data to the eDP port in the same way as it is done for
+> > the DP port.
+> >
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index ee65ab073ba6..7df7b2045b71 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -1676,6 +1676,13 @@ usb_dwc3_ss: endpoint {
->                                                         remote-endpoint = <&usb_qmpphy_usb_ss_in>;
->                                                 };
->                                         };
-> +
-> +                                       port@2 {
-> +                                               reg = <2>;
-> +
-> +                                               usb_dwc3_sbu: endpoint {
-> +                                               };
+> This is true. I was not worried about DP / eDP controller but mostly
+> whether eDP spec really allows YUV. From what I can read, it does.
+>
+> So this check shall remain only because CDM has not been validated with eDP.
+>
+> Do you need a TODO here and if we ever get a eDP panel which supports
+> that, we can validate and relax this.
 
-The SBU lines are not connected to the DWC3 port
-
-> +                                       };
->                                 };
->                         };
->                 };
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> index 54da053a8042..eb65c2806345 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> @@ -73,6 +73,81 @@ zap-shader {
->         };
->  };
->
-> +&gpi_dma0 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c0 {
-> +       clock-frequency = <400000>;
-> +       status = "okay";
-> +
-> +       /* Some devices use FUSB302(@22) instead of the RT1715. */
-> +
-> +       rt1715: typec-portc@4e {
-> +               compatible = "richtek,rt1715";
-> +               reg = <0x4e>;
-> +               interrupts-extended = <&tlmm 97 IRQ_TYPE_LEVEL_LOW>;
-> +               pinctrl-0 = <&typec_int>;
-> +               pinctrl-names = "default";
-> +
-> +               usb_con: connector {
-> +                       compatible = "usb-c-connector";
-> +                       label = "USB-C";
-> +                       data-role = "dual";
-> +
-> +                       /* TODO: Add a proper PD setup */
-> +                       typec-power-opmode = "default";
-> +                       try-power-role = "sink";
-> +                       power-role = "dual";
-> +                       pd-disable;
-> +
-> +                       port {
-> +                               rt1715_hs_ep: endpoint {
-> +                                       remote-endpoint = <&usb_dwc3_hs>;
-
-Most likely this port should have the SBU endpoint connected to
-fsa4480. Also, if SS lines are connected, there should be a link
-between this connector and the QMP PHY.
-
-> +                               };
-> +                       };
-> +               };
-> +       };
-> +
-> +       fuel-gauge@55 {
-> +               compatible = "mitsumi,mm8013";
-> +               reg = <0x55>;
-> +       };
-> +
-> +       /* AW882xx speaker amp @ 34, 35, 36, 37 (CHIP_ID = 0x1852) */
-> +       /* HID-over-I2C for the touchpad on keyboard folio @ 60 */
-> +};
-> +
-> +&i2c1 {
-> +       clock-frequency = <400000>;
-> +       status = "okay";
-> +
-> +       tps65132@3e {
-> +               compatible = "ti,tps65132";
-> +               reg = <0x3e>;
-> +       };
-> +
-> +       fsa4480: typec-mux@42 {
-> +               compatible = "fcs,fsa4480";
-> +               reg = <0x42>;
-> +               interrupts-extended = <&tlmm 89 IRQ_TYPE_LEVEL_LOW>;
-> +               orientation-switch;
-> +               mode-switch;
-> +
-> +               port {
-> +                       fsa4480_sbu_mux: endpoint {
-> +                               remote-endpoint = <&usb_dwc3_sbu>;
-> +                       };
-> +               };
-> +       };
-> +
-> +       /* PM8008 @ 8, 9 */
-> +       /* SMB1355 @ c */
-> +       /* SGM37604A WLED driver @ 36 */
-> +       /* ES7210 audio ADC @ 40 */
-> +       /* HID-over-I2C for the keyboard on keyboard folio @ 61 */
-> +};
-> +
->  &mdss {
->         status = "okay";
->  };
-> @@ -129,6 +204,10 @@ &pon_resin {
->         status = "okay";
->  };
->
-> +&qupv3_id_0 {
-> +       status = "okay";
-> +};
-> +
->  &remoteproc_adsp {
->         firmware-name = "qcom/sm6115/LENOVO/J606F/adsp.mbn";
->         status = "okay";
-> @@ -309,6 +388,12 @@ &sleep_clk {
->         clock-frequency = <32764>;
->  };
->
-> +&spi2 {
-> +       status = "okay";
-> +
-> +       /* HIMAX83102P or NT36523W touchscreen */
-> +};
-> +
->  &tlmm {
->         gpio-reserved-ranges = <14 4>;
->
-> @@ -337,6 +422,14 @@ mdss_dsi_active: dsi-active-state {
->                 drive-strength = <8>;
->                 bias-disable;
->         };
-> +
-> +       typec_int: typec-int-state {
-> +               pins = "gpio97";
-> +               function = "gpio";
-> +               drive-strength = <2>;
-> +               bias-pull-up;
-> +               input-enable;
-> +       };
->  };
->
->  &ufs_mem_hc {
-> @@ -360,12 +453,20 @@ &usb {
->
->  &usb_dwc3 {
->         maximum-speed = "high-speed";
-> -       dr_mode = "peripheral";
-> +       dr_mode = "otg";
->
->         phys = <&usb_hsphy>;
->         phy-names = "usb2-phy";
->  };
->
-> +&usb_dwc3_hs {
-> +       remote-endpoint = <&rt1715_hs_ep>;
-> +};
-> +
-> +&usb_dwc3_sbu {
-> +       remote-endpoint = <&fsa4480_sbu_mux>;
-> +};
-> +
->  &usb_hsphy {
->         vdd-supply = <&pm6125_l4>;
->         vdda-pll-supply = <&pm6125_l12>;
->
-> ---
-> base-commit: ae00c445390b349e070a64dc62f08aa878db7248
-> change-id: 20240212-topic-j606f_periphs-87dd893e105c
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
->
-
+Just move it out of the eDP check.
 
 -- 
 With best wishes
