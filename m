@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-10619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B4FB851282
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:45:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72BDA851288
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:46:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C2E01C2108C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 11:45:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A58421C2069E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 11:46:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4339A39859;
-	Mon, 12 Feb 2024 11:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A659839861;
+	Mon, 12 Feb 2024 11:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K6CKNWch"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aZw/WB0/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0EC39AC3;
-	Mon, 12 Feb 2024 11:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD4039857
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 11:46:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707738317; cv=none; b=hGQBTOJ5kH1el/z1eksKw0jvn/xMRILtt1vp4AqYeIEMygFjskyrRIQYPcHRHbl4vFpT0zyDl26uxG+zffA2BCxCtB63kFtz45OWcSS1ddIl0fw4VEgG/k4WzmVs8WDCBGNRS0zI39XiD3F7XzyQu0oEU89GCn+Wgd4qe8ecEyk=
+	t=1707738406; cv=none; b=Qw+6vk8KExA/kIcaygr+iox8cpwBK/GnyaeR/WS6aUU/ahpUQsc5hiZeS6PY8twxLQJFaSAVjWzBux2I68N9mywmiIMtksuSa7FuokEHpZM5jUOHEomVlKK6R/He84Zph2VkY19sXFkTwlUQY486tdgr53mViU5n48VSBpA/NS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707738317; c=relaxed/simple;
-	bh=sM9JdWac8EQctajM8GcYhhS6Gz2/rcvrg0+gVYZXE9w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=AIj3wLGdYwbGm9i+ZlhIBpgJUyMFB/ToWKaq1Griewqei4mzovJgxa9TBnawdEwL1SS5o3PxKqLV3o9Gnq2EopHeBn5AVjvinYsrOIncdfm9Yr/8uPjzZ+qIOpU7Kp86RMmiBgsUIqKb9FqkTD2HWZNYB08uGHNo1S669kND4jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K6CKNWch; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41CB7nll030374;
-	Mon, 12 Feb 2024 11:45:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bVXESDt5VUA7sbwEoMSiKvR75YpbBHREXJRI0oKkbP4=; b=K6
-	CKNWch/KMBtcObKafHH/Pz8ft06HWXhKQM9sBOu++/sSZ4qV9B8QBrHmsyzddYZr
-	7L2TfKQGrS/VKQLxo/Zkx7gTjwC2zzv/R2rRQ4sMp555AqOK8LBtZnvLtDWqRcwC
-	AWQTT9NweElSVjToGwntwqGNf9y2C5FI5iufLvfR9INwQmbgZJMJLZ92G8xi02FY
-	qOKslFewAg9eShOE6/LsEw9a24SeAY9s24xWSCQkwfzh0MRvAzoVGb0TEwz88GOq
-	H+CsEHM/bXHgidzJ7qFVaQcdamBsCItRjMHH9DGsjmWoh+K1S+VkvjsdJzR0hD5A
-	h+OhCeplpKI9gilAnQsg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7gvjg83b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Feb 2024 11:45:10 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41CBj9YM021092
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Feb 2024 11:45:09 GMT
-Received: from [10.253.10.1] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
- 2024 03:45:03 -0800
-Message-ID: <73cdc81b-f58f-4eb5-b6ad-3011768781bd@quicinc.com>
-Date: Mon, 12 Feb 2024 19:45:00 +0800
+	s=arc-20240116; t=1707738406; c=relaxed/simple;
+	bh=YZI0iWYIs4Bh/cvrE2Q1viIQKQR4G93YPr/aYKc/beU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nXwDkZ/I4k9gEE4ecI9Birjrou5V9fbG/0BpOo7GPuPvOY2O/MWH2a+eHtTXM+md8Y6KrT3ltsE3clYAtKSrv8JTtXdgDK/TkgvDq+Fu0hOfjMIUmIySkGgFvWeWLB2PRR7yxNoUm+zy1FwVa2gnC4A6LnSDySzxM5OG7fa9KVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aZw/WB0/; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a26f73732c5so418761666b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 03:46:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707738403; x=1708343203; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6igGhHE0Wmh8X+D47XGNFybq2+vq3ZSP8U8DuXuJZOc=;
+        b=aZw/WB0/rh0e1jYG5gy0a2HmuzCKO3EK1talVplqzjknYMuL3EdsWRD7Jmk0/ES/Hf
+         bL4ygnnT1ujZgSmJzEDOruLqWv1iyXaSKzlLGrkIzk/1S13N0vHCnxx1WPtqPoSt55V4
+         VkhXvjKOwp/XA4QEOuP72f3HE25CFp9x3sf2LKkt6/wcXMwHaejLnY3zXD0Uz0faoyvk
+         fJBOuUo8Krx6E4pkBVjmtJ5O1yoggZpi7tTWwl6KIfHQ8BEmwHEaRmeycgtNIS4epEYE
+         0q/WFexvdi3ZKDDmHkjrPlvBl2wCKv8nPqHVdkDe7K4YwluP4Egi7X4ho+Fw97iMLoW4
+         AOow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707738403; x=1708343203;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6igGhHE0Wmh8X+D47XGNFybq2+vq3ZSP8U8DuXuJZOc=;
+        b=lVXbit7wiXHryETwhEfiVesghESfL2lcuXnOGnD5dmdFi1dcfErMoM7uSkeqHVGCM5
+         8e6xfkMcTLJCqN7dSlssmukBye307UH/vtZKkrTh88vdIo+hkfjH6yuhiYXHr4YBDlR8
+         UFReASf15pBQYZutr7xIlDBzHltst53nUSnoCsJoilLwcEBBUcC3pRzKt2enm+znncIs
+         rvFj5cHkQ85RFCHl0uTbvYCfamJXEVjWaAopyvSi9QFlxzoczifE7P9YGmOqGTN9O0ZS
+         qDcajVF4oI1wkw3l6pj/OJUnYLL3nN017iPPKznfjcNby1RN14wV0q+upz8qv7zxKppU
+         Zd7Q==
+X-Gm-Message-State: AOJu0Yzx6Nr/zYGTvl0kLnrW5q7MxZELhf5GQvQ+R5ggFM1iIRnUNMp3
+	3i2jCzw9riLcw4UA8nLPngP/dlIwbbXuuRmBXLSsrNLdUUjoOXbrBlSmgdYU5+g=
+X-Google-Smtp-Source: AGHT+IHGzo4sHaLedr+44j8i0CpRIflOiERJvsFJv4QUFXqbEUpmTMuFNNAQAEL0ft1qo1x2nqwMSg==
+X-Received: by 2002:a17:906:a40b:b0:a3c:31d0:592b with SMTP id l11-20020a170906a40b00b00a3c31d0592bmr4115764ejz.11.1707738403323;
+        Mon, 12 Feb 2024 03:46:43 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW1ckIQODXy+qKYxw91D/0Nx4qkO/v4gxJqN9uP1xnHXUoSiusk11lug9xaJyWdt/mqkOPekkvZPBErqzVwRCEJsQjD9+v/HfMqbVrPsCrC/CYN42P9n0KmGWPIdTlJJgSyQxruf7wlq7wj7lEIunhIxHFnW+na1rEmQZc8+iuoAAWByK2G0JDQ2qgbIr42Bp2fzfZaOTAQZYKJMpA/mLZ+yyOAmah5Rix0vzgPhurFy8XIDvV7sHcu0LjmtZcKzOY3oGROSu2m0nn7IvXpnZro1MDfPihpF0088Ov1IvJbnqH+SDpJyAEwO/oPeYp6JRHLPtFLrXDtw/CW2dt4OBv0pnwxJ9fgavqXYmTk2qVEwg0yO6VVlYMcjEUFH1Jykd920n7vIOebWrqfpRAMU+CLW5XX1j7zNC12CMUvUOlyXkNAQD212GVvyZCLkp8NGPENopOgMsvXubTVR18prMUOjts8Fz51kVEQdw4msB7Pcd8gY6kIeX3TSW5gLy+S
+Received: from [192.168.192.135] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
+        by smtp.gmail.com with ESMTPSA id f17-20020a1709067f9100b00a3c89e226f7sm123069ejr.181.2024.02.12.03.46.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Feb 2024 03:46:42 -0800 (PST)
+Message-ID: <2341b472-4a3b-49a2-af5a-9cc94fe977aa@linaro.org>
+Date: Mon, 12 Feb 2024 12:46:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,87 +76,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add dma-coherent property
+Subject: Re: [PATCH RFC 3/4] arm64: dts: qcom: qrb2210-rb1: add firmware-name
+ qualifier to WiFi node
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Aiqun Yu
- (Maria)" <quic_aiquny@quicinc.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>
-References: <20240125102413.3016-1-quic_lxu5@quicinc.com>
- <20240125102413.3016-3-quic_lxu5@quicinc.com>
- <069b82ac-b59c-4665-8a77-6c11a2463faa@linaro.org>
- <690e64d6-8888-4f99-9ee0-c731aeea7762@linaro.org>
- <7edfed88-d84f-41e1-8c10-4af6efe53c4c@quicinc.com>
- <ed9bf914-8b3e-401e-93c0-77eae97e2ab8@linaro.org>
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <ed9bf914-8b3e-401e-93c0-77eae97e2ab8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9ge81GHtuyasV-qE9JHWdynI3q_lkEDk
-X-Proofpoint-ORIG-GUID: 9ge81GHtuyasV-qE9JHWdynI3q_lkEDk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-12_08,2024-02-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 mlxlogscore=639 adultscore=0
- bulkscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402120087
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Kalle Valo <kvalo@kernel.org>, Jeff Johnson <quic_jjohnson@quicinc.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org>
+ <20240130-wcn3990-firmware-path-v1-3-826b93202964@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240130-wcn3990-firmware-path-v1-3-826b93202964@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-在 2024/2/12 19:41, Krzysztof Kozlowski 写道:
-> On 12/02/2024 12:31, Ling Xu wrote:
->> 在 2024/2/12 19:10, Krzysztof Kozlowski 写道:
->>> On 12/02/2024 12:00, Krzysztof Kozlowski wrote:
->>>> On 25/01/2024 11:24, Ling Xu wrote:
->>>>> Add dma-coherent property to fastRPC context bank nodes to pass dma
->>>>> sequence test in fastrpc sanity test, ensure that data integrity is
->>>>> maintained during DMA operations.
->>>>>
->>>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 13 +++++++++++++
->>>>
->>>> This wasn't ever tested:
->>>>
->>>> sm8650-qrd.dtb: remoteproc@32300000: glink-edge:fastrpc:compute-cb@1:
->>>> 'dma-coherent' does not match any of the regexes: 'pinctrl-[0-9]+'
->>>>
->>>> Ling,
->>>> How is this testing-patches-before-sending work in different teams? Do
->>>> you have such requirement?
->>>
->>> No clue if the original DTS change should be reverted or these are in
->>> fact DMA coherent, but let's choose one path...
->>>
->>> https://lore.kernel.org/linux-devicetree/254c1d14-25e3-4f4c-9e79-4ef7cec4d22f@linaro.org/T/#t
->>>
->>> Best regards,
->>> Krzysztof
->>>
->> Hi Krzysztof,
->> Add dma-coherent: true in this file: Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml at line number 89 can pass the DTcheck.
+On 30.01.2024 17:38, Dmitry Baryshkov wrote:
+> Add firmware-name property to the WiFi device tree node to specify
+> board-specific lookup directory.
 > 
-> I don't understand your comment. Did you read the link above?
-> 
-> Anyway, I was asking: are you testing the patches before sending?
-> 
-> Best regards,
-> Krzysztof
-> 
-Yes, I tested before sending.
--- 
-Thx and BRs,
-Ling Xu
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 
