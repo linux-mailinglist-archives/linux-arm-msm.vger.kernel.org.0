@@ -1,91 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-10663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B638851759
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 15:52:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 704FB851795
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 16:06:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEB401F221C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 14:52:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B9ED280EB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 15:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0470C3B2A1;
-	Mon, 12 Feb 2024 14:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02993BB5E;
+	Mon, 12 Feb 2024 15:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="HhoKQms/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p7m+9gvy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0AB3BB34;
-	Mon, 12 Feb 2024 14:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE153BB50
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 15:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707749522; cv=none; b=Ha+TiAyJeRDnb8aNrc1nSaJewFkqgxumKbSp6yujTu68fvgg4fgWRDXdhZmOHKOxsbxrycfpfpTPI3KIH3Sf9apeC2cqpB0tYo1zzAi0Q2sPHDh0DhC5guahpY+16EaYD/Wa4YmqT4LP9hGHD0ERwJyNlAQRcms84GWjzFB2QlM=
+	t=1707750364; cv=none; b=AQg1ej87+el/jeH02NH+gqmK3g3cm5BFS4yp9Uk83zEAM8aXMzM3fdYaFvDNR1fYcIo1IhogXgqrP0xweJLYoKYvMcrYqkKM/gILqBAUNt2em57yQEalEjLmMpauhIsSlcaZVrBi/sIV6lh+cLKJPIjsXrOrnAllunOF8ivDmyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707749522; c=relaxed/simple;
-	bh=CvO5h22bIICO9OVAqHSfrziFGOjtF4BmJIiYlm8gKqk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ix4wViamBw69YY+MbFyZMsNxD8rNArWxueM2Q1gM7+Veb6FMYGnKxXskZ07ufJXkWptDHJailcOs3iP9etSQBWXhIKbLOnHRMGxxUC4PeaL9sAJgp+XKpWPanZ0wpSB2GHJserMiccK9GQ+0lGANsgw+ACQOfcj2i3/NWimtIDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=HhoKQms/; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=8V/n6mYnmYAVnrBX94RlW3GjICZYM1XfZBGebC4iOsg=; b=HhoKQms/prSYZqTTcb2AcWxa8q
-	PExcu4ZShC/u3ut6nS1RttBsqvdv34EBXZ0FXqlQ5R4GmhpAgZXlRIO7nGWijaM59K/7cghvtcT+o
-	2KVPJO+4zqCLhXhBl0nUmcMAmNFiIo3wcxg164WHrTey7BzQoK6QcvKYzJWcwnigk0d4=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rZXf4-007aEq-Tx; Mon, 12 Feb 2024 15:51:58 +0100
-Date: Mon, 12 Feb 2024 15:51:58 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Robert Marko <robimarko@gmail.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, hkallweit1@gmail.com,
-	linux@armlinux.org.uk, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, ansuelsmth@gmail.com,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	s=arc-20240116; t=1707750364; c=relaxed/simple;
+	bh=jPajhqOmFKfyYBx4nGkBrnnNp9aW0JQUFwS8L+jDgWs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=X4+TG8xSCYUFwBwph2GKOrfUZrw7q2IYgU/OdycwGyFtobFLAbQa4nz17gghPUynvoUq2XRDUu/pW+r8qlAFaDqy7CuoBz+kMk/kwkeh31dUvl7Iien8NRK5E7uIEIlxC13xrsEw7yVSvlmSgqZY638mZL/F3tUd7YqQtFFU5mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p7m+9gvy; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-411a5b8765bso1826075e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 07:06:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707750361; x=1708355161; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YHJkvFek5nskp8YFkfahH/rV0FpJ+iXEjjaNhn1yFHI=;
+        b=p7m+9gvybtZoNME7Bw015BmjZ/krijqJu9zSec2RufQTfD/9o2wWeGfMl4Y+aEwgUs
+         zlfc2xQGXnNksF/D4UEiF5LqQX5E9uGXeurBNBPbPvqR7KPhD9wo1rXIomqpSiaMraRS
+         6fs3NHl8LCZtbd38ns2T1mQFk5XqoJYRrU6z3NlvuYM0JdUWky2SueGx4BhvOUAeRzD7
+         KxHf/mq+ZF8nKH1imOBm0SMJ7HbZMhdgd77DjOKfIq7kp4yoCuF8WwX5ruRc6ovhyIUr
+         pyWZAFes8f9Lp3bJ2jHy1zvQHpygCsrMz6eMYGHNLgopOfEgmXbCS7khuqap2W6TO/9F
+         wEsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707750361; x=1708355161;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YHJkvFek5nskp8YFkfahH/rV0FpJ+iXEjjaNhn1yFHI=;
+        b=mnGqjMchyg4eH2SR7AOJPSzaAeKNT4h0siz26XVIU4mdssgaRWObYJqWQxRAn11uwc
+         ZML01YDwiskWrFsQMDJWtp7aHeoqjxdHWMnRzc9H42gqLY6DRscAsT7bjYVOMCszPaa5
+         bzftgfvAsnPyZ0Wuw9y5/PQRw4Ado1asvQpbUiiEtXYlo7z4JrYLLAatkzniTjBEOhQR
+         dvQurV1YKqnsQ6W6CbasnXWFeBeK9adjt9lViDNxy7F4j67WDNEV/kFE+BqKWyOHCUys
+         nNYLbK3cSGN9f6kvrtDCPv4DuhoT8mEZB+Edtq1eOuDXp2fhA5vaewE0J9IK9oTJuS+8
+         ig7A==
+X-Gm-Message-State: AOJu0Yyd5lo+jRW582vF4sMfNmQr2uBDEDwrG53OBMZb3SDNI2zBPITz
+	yFcrQXRELvxdBptdHEhdTDEj5iG58wZI4ca5wAITcxcTfMMdKbdsEeamd2wgW8s=
+X-Google-Smtp-Source: AGHT+IF7rSSg95nQoo2b+8KCj6TBkuLX3+NRVXSWaWYHqrguy3TZPywsPWzP+6EAAdZlO6egxgo/5w==
+X-Received: by 2002:a05:600c:1c85:b0:410:ebdf:73af with SMTP id k5-20020a05600c1c8500b00410ebdf73afmr1547417wms.7.1707750361294;
+        Mon, 12 Feb 2024 07:06:01 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUACKApFvJJVxUQMCHD0+UnXJmj9tUOuCj/KyGj7SBipKo5FtkdZOS7UUbfB1SWPJXybQ6L2ULyxmRopRfojiO1pK0egJLqd4SxdQurb3S5fUZFoXvmYvrXte4Q2m7ehvMjExg94fTQ+G3y6C1gMn7o8YCAbzmFUeExVVRU6r7jy+JRy1dr+U/9RTPoPpmbi5OwfIWQwDA1oeJMb2+RMVDdQxGdaOSZj0VTUourLhIrtE55ue+9eShli1qBKQlws0xzm0kZA00B
+Received: from krzk-bin.. ([178.197.223.6])
+        by smtp.gmail.com with ESMTPSA id cl3-20020a5d5f03000000b0033b7ce8b496sm4437959wrb.108.2024.02.12.07.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Feb 2024 07:06:00 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: phy: qca807x: move interface mode check to
- .config_init_once
-Message-ID: <c97d10fa-39c5-4e5e-93ce-1610635cb4d4@lunn.ch>
-References: <20240212115043.1725918-1-robimarko@gmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: ssm7125-xiaomi: drop incorrect UFS phy max current
+Date: Mon, 12 Feb 2024 16:05:58 +0100
+Message-Id: <20240212150558.81896-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240212115043.1725918-1-robimarko@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 12, 2024 at 12:49:34PM +0100, Robert Marko wrote:
-> Currently, we are checking whether the PHY package mode matches the
-> individual PHY interface modes at PHY package probe time, but at that time
-> we only know the PHY package mode and not the individual PHY interface
-> modes as of_get_phy_mode() that populates it will only get called once the
-> netdev to which PHY-s are attached to is being probed and thus this check
-> will always fail and return -EINVAL.
-> 
-> So, lets move this check to .config_init_once as at that point individual
-> PHY interface modes should be populated.
+Neither bindings nor UFS phy driver use properties like
+'vdda-phy-max-microamp' and 'vdda-pll-max-microamp':
 
-Just for my own understanding, not directly about this patch...
+  sm7125-xiaomi-curtana.dtb: phy@1d87000: 'vdda-phy-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: 'pinctrl-[0-9]+'
 
-priv->package_mode is about PSGMII vs QSGMII for one of the SERDES
-interfaces? We expect the individual PHYs sharing that interface to
-also indicate PSGMII or QSGMII?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm7125-xiaomi-common.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-But what about the other SERDES, which can be connected to an SFP
-cage. You would normally set that to SGMII, or 1000BaseX. When an SFP
-module is inserted, the correct interface mode is then determined from
-the contests of the EEPROM and the PCS needs to be reconfigured. So
-i'm just wondering how this check works in this situation?
+diff --git a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-common.dtsi
+index 0dfd1e3730e9..29289fa41b13 100644
+--- a/arch/arm64/boot/dts/qcom/sm7125-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm7125-xiaomi-common.dtsi
+@@ -421,8 +421,6 @@ &ufs_mem_hc {
+ &ufs_mem_phy {
+ 	vdda-phy-supply = <&vreg_l4a_0p88>;
+ 	vdda-pll-supply = <&vreg_l3c_1p23>;
+-	vdda-phy-max-microamp = <62900>;
+-	vdda-pll-max-microamp = <18300>;
+ 	status = "okay";
+ };
+ 
+-- 
+2.34.1
 
-    Andrew
 
