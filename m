@@ -1,93 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-10756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2E42852153
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 23:22:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F1DB85219B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 23:42:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77AFE1F21D73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 22:22:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA2E7B23039
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 22:42:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F0C44D9FA;
-	Mon, 12 Feb 2024 22:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A95424DA1C;
+	Mon, 12 Feb 2024 22:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hmgv4A+B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QCuOld+X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A2F4C627;
-	Mon, 12 Feb 2024 22:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D187D4D5A5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 22:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707776555; cv=none; b=ETwMEaG3ikpT17amhe2Pk5t/C7VUAFfrDxEy9WzazjJP/4KQXxl5/zXUeW0nMDQPJuQOEW2m3z1SsATCK2T99NZRGEkrELLYs0UqCxx25OYyEqAEVCTvUP2VXX1BZxaeK2SUYnfW2W2vqSKjpYfmb3mPhNmYOZZw5PBH/asXaUc=
+	t=1707777729; cv=none; b=G+FgSLZFMJDFGj6MzLIBGRavxN5BNXmEQrxSIk1N8VRa5V5N2XBRvNwe8T5X+Mz06BK9CMFkVlljcHXXSbEEjamm/+bk6uFrrRFr7i7wLvm6zWkvyLM9KJq7FFJDh2pvH5oLmLTHQ64Yx48WFJzvHE8aCvdPj11L94/xAXr/4Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707776555; c=relaxed/simple;
-	bh=0IusXPQHXi66v5j+nmnkJrxK8Pdqo4Ksu739OrYknrQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IS5kin9jbzH0BtJN0po1WDA3YKHclY7wMwNhSEd5yFVJG7T74AXHjB0pkG4cgZH+dPkWYrmFMfuOh8AjBcjVZPrJJhZQPSo7cVyTMtloQZxkMzqfrjSslEoRup/jvLsOTw81ahA7hSd+Nv/S+2ge6qhPoaevX2ZwzudKxKnULbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hmgv4A+B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D63C433C7;
-	Mon, 12 Feb 2024 22:22:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707776554;
-	bh=0IusXPQHXi66v5j+nmnkJrxK8Pdqo4Ksu739OrYknrQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Hmgv4A+BeRMvlSjxes5DlqJTRfGXFLA4EQJFae22u5pAp8YsBpncoyUnMRysNiogZ
-	 lsX/d5Whk/aBo4JZqiVapBKNf6OuyE3DBHR5NWX1hyAhZZojukhq3f4Lhl6EVPqhFp
-	 BbvIqBZ9a3zoU75koZjO8f+ALB8hU4tr2vjFa6uUYNv+A77uLjEfUWdX4qXX63aMZZ
-	 xtHMBUsAu8woT1hbyp4mh62luHt6uq+CZVP8NpZkgRayGj+O1KVkBRdwUU5J0SB5yb
-	 WutQATu4qOrMHZ9vnIItqGyRbEujU+WBGNHwDBADHex9zQBS67PwiXBxg1FsxYKDuE
-	 J22waLRABKb1w==
-Date: Mon, 12 Feb 2024 16:22:32 -0600
-From: Rob Herring <robh@kernel.org>
-To: David Wronek <davidwronek@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v4 2/8] dt-bindings: ufs: qcom: Add SC7180 compatible
- string
-Message-ID: <20240212222232.GB2655166-robh@kernel.org>
-References: <20240121-sm7125-upstream-v4-0-f7d1212c8ebb@gmail.com>
- <20240121-sm7125-upstream-v4-2-f7d1212c8ebb@gmail.com>
+	s=arc-20240116; t=1707777729; c=relaxed/simple;
+	bh=3vgcjHLfq/00X/yUP8BO5uRZWk5ZVbqXQ+PqVJG2mXE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HhQYlZpf4Qbs2F/UhEAA3V2n1aOJrWEp0N6rUUdAA6NpWuemuDrUuQtoz5gDc/A1Gmtr+aztCq9GuurjL5BLTGzxPkHaCojfplXbzAjWBYcYWM3a37/d93mxPymwZKE0PBMy6I+c2iH5X+SGp2X8bFbXFyjknMYi+7nTbMN0kuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QCuOld+X; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-561ed6b3db7so205686a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 14:42:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707777726; x=1708382526; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+NC5nXZUhD7OgbbLjAWuedjAC2AnjYG2VXHEAtTQZ1k=;
+        b=QCuOld+XYO0cYJbfJKRJt1AzB96r8vn/zf2Hih01Id1oB1f1g8aUAM57keDxrLp6Ak
+         +wNyfAkwYpnfLKpYCkWmep2/lBPFqqUICdvx7jA+ygPthqoZ84Xnb5rvSnjbfzByutBH
+         PSMEmD44a0ODoc8Bimzl6Aq8Ks34WcC7vzNXgxGXV204/msdIk/484Xf3+ETqeVY87mo
+         hekQ9IsnkQBMQk8lAjYqrXUJA1hb1ZmEs8ghNOVVzaELYlyb/yrjOPMhgziWz3Rnj8P/
+         jYKhEbE/YhAe/6/gEsySNB0CC1KVWmi4WUUncYG5wr0I/StiOGFJpnu++MzJoLuVYWrG
+         6iYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707777726; x=1708382526;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+NC5nXZUhD7OgbbLjAWuedjAC2AnjYG2VXHEAtTQZ1k=;
+        b=VkQ90prf0ro2DJb6tNVlCFKliqpRFY55ZBaknNEVVy7jHFe/WAfkxJQPPG+tG05Uk7
+         CMIB5LybkmpaMl2n29wwJNXPbKe8oMUugATU7ZI5m250/BvR1yLqdtFBIpopaDRHbT/N
+         qoHweoQsMcj/rJArO5t/I5aLllGk6vVAoJ9Pxka3TyszVexd40LJz2i3VIJIKmn5vEFu
+         M093VMbMUjEUpmPoZzOblEkxj0vA/kJKdcGrmL02Gn05h6xRGCujL8NELKS/MEgXyCq+
+         9GMlQBPXri1P1km9CrOpViWTb+qUGO6nmw8T6h3z4KLQjuJUg4B49tRo9oMQyVFssiaw
+         Mu/Q==
+X-Gm-Message-State: AOJu0Yw5q5woPINHBl2X82SlRhhDlui+rkIuOplEKbaCwClp0I46QYw2
+	sGCnok7A9PI4n0yYG4l/q1tWql7JF4kNPbyG8VZuBMW5hOV/MG0l622AaAeGqng=
+X-Google-Smtp-Source: AGHT+IFnrOmQoo6eJe1/RxznBdECXPfen0HdUphSAC9KrCi2m89MpvKcbiuhkfeA9VZKPwLLLd5Y1g==
+X-Received: by 2002:aa7:d614:0:b0:55f:2f0a:d959 with SMTP id c20-20020aa7d614000000b0055f2f0ad959mr5696422edr.37.1707777726065;
+        Mon, 12 Feb 2024 14:42:06 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWOI5WW/OVCweeWd3zCJ9WQtpFTgK5uz7v2v3QjvO2e+u2RQH6A+nRA3G+I/CbKdMoiHvD78DHdo2ZYR52UOJOANaw/f4hhreVUsTAtN03QsVSBBrFMK7Q5DcoRdaO7sGarH4YgMW2Bxs2+wtEftIz/0ivBsawQD+Cm6kLklCy1Y0Z9rRrjo933mti9HjNR6x026Ya5TGTqka+3yy2Ju2SE4BNkj6YOSR91+vTSIyzztz+ExVy7Y8DV7ANbJq0BUdoIJ8thM02wdrI/FBbjG8kcPgXj/vPKcNqPYn/EZcoHJAMigVG8ujKTn2x8VE1tjw==
+Received: from [192.168.192.135] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
+        by smtp.gmail.com with ESMTPSA id ig4-20020a056402458400b0056098a293cdsm3107887edb.69.2024.02.12.14.42.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Feb 2024 14:42:05 -0800 (PST)
+Message-ID: <f108d588-c6ba-4efd-9792-bd4dbd68fb7d@linaro.org>
+Date: Mon, 12 Feb 2024 23:42:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240121-sm7125-upstream-v4-2-f7d1212c8ebb@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115p-j606f: Add some peripherals
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240212-topic-j606f_periphs-v1-1-5dcacd483e28@linaro.org>
+ <CAA8EJppHv9g4HnEFaEaCH=FnvJdnFfnr+rt=Onyqh-er8UA6TQ@mail.gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CAA8EJppHv9g4HnEFaEaCH=FnvJdnFfnr+rt=Onyqh-er8UA6TQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jan 21, 2024 at 05:57:42PM +0100, David Wronek wrote:
-> Document the compatible for the UFS found on SC7180.
+On 12.02.2024 22:19, Dmitry Baryshkov wrote:
+> On Mon, 12 Feb 2024 at 15:44, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> This tablet features quite a bunch of I2C-connected devices, such as
+>> a Richtek RT1715 USB-C controller, a MM8013 fuel gauge, FSA4480 Type-C
+>> audio mux, TPS65132 regulator and some more.
+>>
+>> Add the aforementioned ones and document others.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+
+[...]
+
+>> +                       /* TODO: Add a proper PD setup */
+>> +                       typec-power-opmode = "default";
+>> +                       try-power-role = "sink";
+>> +                       power-role = "dual";
+>> +                       pd-disable;
+>> +
+>> +                       port {
+>> +                               rt1715_hs_ep: endpoint {
+>> +                                       remote-endpoint = <&usb_dwc3_hs>;
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: David Wronek <davidwronek@gmail.com>
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> Most likely this port should have the SBU endpoint connected to
+> fsa4480. Also, if SS lines are connected, there should be a link
+> between this connector and the QMP PHY.
 
-Should have been picked up by SCSI/UFS maintainers, but it 
-hasn't, so I applied it.
+I wish there was usb3. Unless lenovo did that in hw and didn't hook it up
+in software, but that's just wishful thinking. I'll give it a shot anyway :P
 
-Rob
+Konrad
 
