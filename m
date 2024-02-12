@@ -1,162 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-10730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34E97851D3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:50:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EACA5851D9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 20:11:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C3D41F2451E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 18:50:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 929701F21E0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 19:11:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF67441233;
-	Mon, 12 Feb 2024 18:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D56F4644F;
+	Mon, 12 Feb 2024 19:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AKeXn7s2"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="am4SrgKM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp47.i.mail.ru (smtp47.i.mail.ru [95.163.41.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215B440BED
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 18:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF63F3EA78;
+	Mon, 12 Feb 2024 19:10:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.85
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707763675; cv=none; b=cCSmrHR9GhBXZxoeGT1ceewSmwlJDYJqCQPrWZbo1XPAViLjKO1Y7hNW9ibbSPwh17HobCWC4DKPib92IrwKU6uNPzk9ZAekwS9EM7xA1kUKp4sQZY0ioXo8J1rpzxkZqLHhm68g+6JtyBwGJRIb4LLs+8G0ZVTDz7L2GsWnEt0=
+	t=1707765064; cv=none; b=b/1a03YvwpaeJ2PUDmPRiPVYa0jUsTLurV+V+I8WkEoB4MbA+DmD2Hv0L+eZ09nbfysbd3slEcA6QKQSckEyxFvCXDTslBVmT7eoZw2ppyrOTaRfGDiu6/5dV75yTsLBzIDPzw8X+7xU5B/WAkCZD0nuaxPD+kCjKyv99EbJLmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707763675; c=relaxed/simple;
-	bh=BFJjN8ONCgkmsa4PW9qUxSQnQuER8UwLgYKkgYkqKj4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CFMMXcKJvoKDRm3h0CmBB4rJWZbvGrcYtFibMQ2ITgzHa2Gr6MuvvsEWf45QIcoQrq8uBpsPOTKIpBJxMgNW9BiiTU5DoREHXY42KwEJmR2mm/hhgmIkheqtI0Y6n4frM5UyGDIa9ZVeM5OLv9gX6mbdzgqIbhDui4sSEYzIpkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AKeXn7s2; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-411a5a86078so3633075e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 10:47:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707763672; x=1708368472; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SYWSvZSGyZd1GI0l4m1/e99sDhaFp9G5rCeC7L8H0xo=;
-        b=AKeXn7s2XHzMfdkaUYQUPeaQlu9K/JC2qHQi0hdhB3TNxeuO45Nkp2q1HDqO4JVguk
-         7on6H5EKe1ZWYmGhhTIaz7wny799slBwadw4ugsiTX+pxs5WFwjs+l22F6LuH3GOPnf8
-         90DemL9+wKU3WldQGj/4qw5NXBb8ukM8Mlquz/Ond3mKBC20k6O0+sYfhAZpRUenJnA4
-         1y3KA8aO2sOvh8Yu4IHnOzrbGhPKfcPpDbMihK0rtu1h2PQp1qwS3qG374HbUWB8Ip+G
-         PZHUpgZIR/lIlLgqNU1wgtCDe0TCVTyxiUfaYBTcBGQEjppnX7EwjRInqx22UbLqvjMX
-         Hdyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707763672; x=1708368472;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SYWSvZSGyZd1GI0l4m1/e99sDhaFp9G5rCeC7L8H0xo=;
-        b=wRihRULZ7+NHiJn50VceeyJ6FuUtWx5eX6U3NBc0Ke0u6WCtr7pHU8mF326u6uytB9
-         4IQRaO9fuPZlb2WToAxSH9PgaRQ1h64pUp+818sz9JeMdwc8FRtwIkgpx/gi/NnQinuX
-         7BlKJTrC1efEqWPK4xfOBJx6zbKXetV9xkVbi3LjHd6ky8R+vdzExWU4FqBrE+9H6ml+
-         qucKxbpC4Q6brZtH6yoiu5NB43zX6ffCp/foKQk4TYAvcA9Fymt7UkGSsT8KSvPFKg4+
-         KlLk97VHApqGislDdTMpMRBgBZntNtLhQ0+4EQ17QgozeAE3VuTLdsoDQycg8JpIbJz5
-         9ZFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXfrRrGf23s9My1+RKRaYUWI1e3EZT3ujAZngzCGENncxcVZCBi+WqGmVufNbi+3t8DCgXeBsE+falYYuKS5kmDN6hPM515yxvYY109/g==
-X-Gm-Message-State: AOJu0YxINKY8K0iIzJETWwSwc2AdL7Gh5x2L6WRpPvpVCkjLyZUJ/iJM
-	R0Bt4SEhmDsVyNJAIH2XO2nnOjgIVloBZuntCUTHIyGKARxqDM4yzKfiOSF/w5Y=
-X-Google-Smtp-Source: AGHT+IE0ArX+pv8YDqS8Zzy/USZGC+ffgmfFlW3LkewjS26gDJQVwoHo+wq4KsMfWrkLlPw3YuDanA==
-X-Received: by 2002:a05:600c:45c6:b0:410:4a3:1ae7 with SMTP id s6-20020a05600c45c600b0041004a31ae7mr6383316wmo.17.1707763672400;
-        Mon, 12 Feb 2024 10:47:52 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUESZbskZAkeimcJbyMJK1tBzW6vO3rcPrK/aTQVfNFkN1ZmZep48UQlLeihUE7Xu8uzyZrUVOlu9hDWPmhIk4E1/kVmCnBpfaNV90oJJn2zFQY5tVKKy3D9JrlIAx4FcCIpykS31AL3qt9Vd60eGdfkP/E662yXmh9eafM9Vw6OXdZFtAl4WvAA9cbdUIDz46IdyjtKim/babwPjqnhfmxOA2JgOmJVH2TJqy/Xe6rYLWSrxVreLBz5HeOx6vtZv/OSb2ndzgXtzSDKEegoV1QnyKR5WN5LLfcRzDXEp1t3SKuG7IuENIbH8WV784Ap+oKtOH16Y0EAanL98cIFyj6MoA1oqgYW5WFh+VHfr+4oJdQn/UIUELiyPmDi8pofxALewo1d8ygmkee/3xFjdN7xR+4KHqWhShPYtPzu5eVhxothTvHn8oGx907nocOlNg616jqhFh29L+QknsCfGZ/zJ10ksH5s+ksNujQioSNO1WGGaWzWhU1WaHeC+Iz04oYY7E=
-Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id v8-20020a5d43c8000000b0033b512b2031sm7466475wrr.114.2024.02.12.10.47.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Feb 2024 10:47:51 -0800 (PST)
-Message-ID: <44eec61f-5294-4f2f-b80e-56b8a9f220fa@linaro.org>
-Date: Mon, 12 Feb 2024 19:47:50 +0100
+	s=arc-20240116; t=1707765064; c=relaxed/simple;
+	bh=pufIjUalkJOUuQI62GHNy6tzjDh11aWkPFy25ZLPkFo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tcOvKY+6U8Lv3BiYsDskue/SXnoY/GdpBTv1n1nvWfuOxYLqKqpjhPzScngTqPcu7JUu2HpecipxVIzuVZuIT/cFKDcXFrPlCSFoDhFmu2/iRw6q/OqREA3U4ckWfnrkKQVTJMQ68NmsZXkCsRHky16ETQeCJKCJaChvn4r0fN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=am4SrgKM; arc=none smtp.client-ip=95.163.41.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=iA8Wl86EoCHuOnRPeH06uMKkPJEBJBHggtb9rh5PkDk=; t=1707765059; x=1707855059; 
+	b=am4SrgKMucsMThX9flRVPLmqOKl188woWGZyi4cyFYL1U1R+6onpkdKhUzzhHR5tSUmuI6sInMC
+	Gt7+2IkcfUvpOh6HB7j5Uy4KuMY8tfgF0sOqAnzocCo8hR5vbVRpaCWRZ3jc5ukjzoNPNlxOpGHeL
+	mygwZNhOnhjerd9Lido=;
+Received: by smtp47.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rZbhY-00000006gZh-2skK; Mon, 12 Feb 2024 22:10:49 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	linus.walleij@linaro.org,
+	robh@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH 0/2] pinctrl: qcom: Add SM8475 support
+Date: Mon, 12 Feb 2024 22:10:44 +0300
+Message-ID: <20240212191046.77013-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,sm8250: Allow up to 8 codec DAIs
-Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240212183800.243017-1-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240212183800.243017-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp47.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD96201AD55A1C8F7DBA68A15D1D35E5CC5CF7D7F77DA5535F2182A05F5380850404BAAE315F9C669162EB5D77EF37489D1A8A3064AB119E1FDE51B3825F593DFF20C8629FDE0E8EB2A
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7BCC85671EC7A750CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063702DFA59B3C994360EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B73AB1701401CD8718E4E89096DE07AD7FA8D73926623C3E3AA32EDAE551AB609A471835C12D1D9774AD6D5ED66289B5278DA827A17800CE73CD73D99384BA5CA9FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C3A367EA73E0D98AAD117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFFFA21EE48555ABE0BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6922E583744E2C36876E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249957A4DEDD2346B42E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B690A324785FE7B950089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-87b9d050: 1
+X-C1DE0DAB: 0D63561A33F958A558C1EF4E60FD35075002B1117B3ED696EC0DA9C4757FAEBFAD0703CEB2EF9A27823CB91A9FED034534781492E4B8EEADC3194D76C41E9723C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFD41107F383D4208A08443702DC345A5AE3975F14A4B398A39D1AEA5FA8D32351673DC415E80A8BD9233AFEF422F2DFF9F6B0B1ADEAF281FA5D44EE695255846BFD7CDB12671657C842BF32D1DA1046D202C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXiSGYHknyUbxBfnTB+P1lvX
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981983862166B642228ED188C5D0CCD93D4A95D4247FF2147493A3B37D2368DB9712C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 
-On 12/02/2024 19:38, Krzysztof Kozlowski wrote:
-> Sound card on Qualcomm X1E80100 CRD board has eight DAIs in one DAI
-> link (for WSA speakers).  Boards with older SoCs could technically have
-> similar setup, even if it was not observed on mainlined devices.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> DTS with X1E80100 sound card using this:
-> https://lore.kernel.org/linux-devicetree/20240212172335.124845-5-krzysztof.kozlowski@linaro.org/T/#u
+After comparing waipio (taro) and cape pinctrl in downstream, I found that
+these are the only differences. Let's just add this as it shouldn't cause
+issues on the SM8450 instead of writing a separate driver.
 
-Apologies, wrong link:
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 
-https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/
+Danila Tikhonov (2):
+  dt-bindings: pinctrl: qcom,sm8450-tlmm: Add compatible for SM8475
+  pinctrl: qcom: sm8450: Add pll_clk to pin group 98 for SM8475
 
-This is not a dependency, just providing relevant work for reference.
+ .../devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml      | 7 ++++++-
+ drivers/pinctrl/qcom/pinctrl-sm8450.c                      | 4 ++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+2.43.0
 
 
