@@ -1,149 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-10743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B207C851EDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 21:48:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 20BF8851EF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 21:55:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64A6F1F22ABC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 20:48:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9AB31F22FF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 20:55:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF470482FF;
-	Mon, 12 Feb 2024 20:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AFDA4C604;
+	Mon, 12 Feb 2024 20:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a+Yb7tEC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fBkNmUXj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D8747F7A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 20:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597BB4C60B;
+	Mon, 12 Feb 2024 20:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707770883; cv=none; b=gikoJ/AhRIYA50cKRHZLNMuB7vGHxNNIL+XMj2E14PD0+mE1u70SjSD7PrN0NQsN1KvEn1nfiegpCa8OGsgJe/ustxuBq0wkaMw/V5B3EKFWMRR6Hd+BhhM6uzcQgr04pFGsUelmVn1kMlUsKKkug8xVrFmR4vC9bf7xezxTmGw=
+	t=1707771335; cv=none; b=eLgozy8cQe7xBV6hcUJFOW4q090f8TP+X2YExjBPHzpF1Kve7zH7RrcwUlI1KHTk8u0lL35zLRrv+3Jfbntg8JpUKUVP1jLBxjjJroy2qfxmUHNEXHdszp6zs00rBRPvzR7pDdTz1WAT+Yr6PUVwHi5sL/f3hPwUlsC+ZqdT1Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707770883; c=relaxed/simple;
-	bh=sMYBJYjLm8YsiiGaWfwhHa/Xio+UaZ439FcuhwQ9JVg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LeJuxKnLYIllzbP/uR9mtKuKspZjEN/Gp4GkBxV6O2DJQ/aLuni9YLgeQLjV7otpOI2x5f32zkl97NaufSKFnJ6cJ15zc85gmzhA7idONaThW+SsM6Yx6gIyJaIGE4iYQHMYi6IUH895Y78+9iC8AOpWEg38/BEbMSDpnzKtqLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a+Yb7tEC; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dc74897bf61so3681978276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 12:48:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707770881; x=1708375681; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PY3cqSsBwNpTxKZXjc6hWsn0tIs/KUkTAVHRiL48yE4=;
-        b=a+Yb7tECEsxUlJG9pZBQ4yYsQJfwSb8/Dp7q9QQg/oUfwoRoVm7+sAHVAPASxRcUO4
-         jnfIjeb/hO2y3ZxtQZUcFVB7T9nv0p3SHMmAhI4++ZlDRp4Lf2/JBYBt1sn27BXWHRIH
-         //eg1gydfBzXBgUcScNBllJ9VXAceIq+IJG0miyzlR85sSSl7F9NtMmmRt3J2rfKTzvs
-         ErPJtzQLXWAWNN2di9UwfCUoudZO2FTHZ8g9RZjQfHRk0KGFcLRhOnX9Gpvc44YfZhAg
-         nAJ+CzzXA/N45fz67vDcWlUGXrHxlsL2xzsrtTHkQKMMtrm84syYBNZKJV4HiiPhyOtS
-         rUew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707770881; x=1708375681;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PY3cqSsBwNpTxKZXjc6hWsn0tIs/KUkTAVHRiL48yE4=;
-        b=XglCrqMQtBRP23dEoDiHMVOHme/uoQY9VspElMzvW1VOjF/Y4g6Xk2rXQseZLKOw8a
-         IUDyP2mh04DU3xMcXy9WzBg4WZmM46nGytFSCaEcDTnzcPq5Eehpf5qlZk6TLgfxlMoN
-         5XFTjSwCTV3dIoTbTb8jxnpm3/3xcIrMwVVxE5VKLNF+9rCmqHaEQPnuTWJMftZYk6h7
-         cLT31Aed+gkVBY5dmqH9mrtjI09NyaYcxcfwXYWTng51wAChLI/+ztVE/6DuEMdVqcGG
-         PmeQx7fCK7tcGAqXDgJ3gqL72qBYNqibpxolHCyeq6mpZ5T+7NnSioliHqGjQwltl0AX
-         0RZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4A/nSH+LopSMxfXOMinJ7wucLxXTXDty5iE08pznLdXXfP04T9PnqDb0SufA46trSGLdIH6qZKHKXVziFz74aK2rGn2U1w0en8pT1dQ==
-X-Gm-Message-State: AOJu0YzEpNWNlcHQnpz0QJ+pI+k3qVbKvS9X6Ja17b6wzXnL9u/nNnC8
-	s24l9WdBnYRVZK0u4XreAoeswVz6xkxFOulppAwKRQsh4krMUgGUIq3yAiH3qFz5OW7XrCnhLwi
-	fZ26ZGvfdThapQunlg9r6JI4+lmAn6tqnWSStrQ==
-X-Google-Smtp-Source: AGHT+IHpuGZC6SrLdNnZki7WawOfEUwxb557/rUhxkGHMzuDzurgn+uKQ9WrdUdXaiN7gnBNgrqdYeHN6a/77FI22dc=
-X-Received: by 2002:a25:ad82:0:b0:dc2:2f4f:757 with SMTP id
- z2-20020a25ad82000000b00dc22f4f0757mr6478822ybi.7.1707770880839; Mon, 12 Feb
- 2024 12:48:00 -0800 (PST)
+	s=arc-20240116; t=1707771335; c=relaxed/simple;
+	bh=udLAq+saMaR2IQ15F+puQ3OPkAdrYlIAwaS55xxmXrg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=svlVU2uMBCL/sX0CThYKpsjvx/8quA0KZ2zK+DrqzUjCE1NA2TRm19n/kAp0vvjo16vYtu/VS12fcuYLlDujQuJ8n7sCwMH62ik/kGKpTEB+N+Trqk4/3x7IdTSQ5kHXI1mE43pZSYyqPapDdsHmH8LMP4pCnKF8zvlqSOhYPJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fBkNmUXj; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41C7uL7k002953;
+	Mon, 12 Feb 2024 20:55:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=N1PUPiyBIlZSjD/hp9pIkB45FKKaRz7iaLkieyjcLns=; b=fB
+	kNmUXjAzTlK3pFHsoSXPjUJYfKY6HLTF0l2UUnpm+W/qV/mrUIA+lJPPQgZ7SLk1
+	HBoKrffYbIXYPmrAhUz5QSM93pFdgWxXhsRqXYcfVunbO+MT3JYnXNj3yHL7WxLI
+	5teIM7pJY7qWf6tS2C0z1/Dr3/WZjUpJRi/1c5kSEnY8CYcBDWXATiP8Ei4NOKNZ
+	L0IIFwLy/Ygx2riWNSbJADa/CwjUJ2WOsH1gcj8GDEwf98XbkLRubHKxWsQsyPdT
+	tphRVlt0ofsn1c6Dw8ks8pEjDzPHEFfi8sPWKT+5YNOlE9SakTpATHWuDCKIGJ/2
+	KTD4idOao8N2a+HaqLUw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w62q2vcyj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 20:55:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41CKtNVS015036
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 20:55:23 GMT
+Received: from [10.227.110.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
+ 2024 12:55:22 -0800
+Message-ID: <7768c61f-3f5d-4a2c-9b33-b585b3cf8dcc@quicinc.com>
+Date: Mon, 12 Feb 2024 12:55:21 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org> <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240129115216.96479-5-krzysztof.kozlowski@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 12 Feb 2024 21:47:49 +0100
-Message-ID: <CACRpkdbMFHPK0SBSxiZ3FOqChQFCBdOny0yYG--6V+1S=CKgiw@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] reset: Instantiate reset GPIO controller for
- shared reset-gpios
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand <frowand.list@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Chris Packham <chris.packham@alliedtelesis.co.nz>, Sean Anderson <sean.anderson@seco.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] wifi: ath10k: fix board file loading for wcn3990
+ devices
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalle Valo
+	<kvalo@kernel.org>
+CC: <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Yongqin Liu <yongqin.liu@linaro.org>
+References: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <20240130-wcn3990-board-fw-v1-0-738f7c19a8c8@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: W9_w4qNM404UuunX2UT29pd0mqoEorCG
+X-Proofpoint-GUID: W9_w4qNM404UuunX2UT29pd0mqoEorCG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_16,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 mlxscore=0 mlxlogscore=966 clxscore=1011
+ malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402120162
 
-On Mon, Jan 29, 2024 at 12:53=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On 1/29/2024 10:47 PM, Dmitry Baryshkov wrote:
+> The ath10k driver fails to properly handle fallback from board-2.bin to
+> board.bin for WCN3990 cards. This happens because the
+> ath10k_hw_params_list doesn't include .fw.board* parameters for the
+> WCN3990 platform.
+> 
+> Add board data configuration for WCN3990. While we are at it, merge
+> common pieces of BDF support: drop .board and .eboard names from struct
+> ath10k_hw_params_fw and use the common name instead.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Dmitry Baryshkov (3):
+>       wifi: ath10k: populate board data for WCN3990
+>       wifi: ath10k: drop chip-specific board data file name
+>       wifi: ath10k: drop fw.eboard file name
+> 
+>  drivers/net/wireless/ath/ath10k/core.c      | 32 ++++-------------------------
+>  drivers/net/wireless/ath/ath10k/hw.h        | 14 ++-----------
+>  drivers/net/wireless/ath/ath10k/pci.c       | 10 ++++-----
+>  drivers/net/wireless/ath/ath10k/targaddrs.h |  3 +++
+>  4 files changed, 14 insertions(+), 45 deletions(-)
+> ---
+> base-commit: 596764183be8ebb13352b281a442a1f1151c9b06
+> change-id: 20240129-wcn3990-board-fw-a2d97507a712
+> 
+> Best regards,
 
-> Devices sharing a reset GPIO could use the reset framework for
-> coordinated handling of that shared GPIO line.  We have several cases of
-> such needs, at least for Devicetree-based platforms.
->
-> If Devicetree-based device requests a reset line, while "resets"
-> Devicetree property is missing but there is a "reset-gpios" one,
-> instantiate a new "reset-gpio" platform device which will handle such
-> reset line.  This allows seamless handling of such shared reset-gpios
-> without need of changing Devicetree binding [1].
->
-> To avoid creating multiple "reset-gpio" platform devices, store the
-> Devicetree "reset-gpios" GPIO specifiers used for new devices on a
-> linked list.  Later such Devicetree GPIO specifier (phandle to GPIO
-> controller, GPIO number and GPIO flags) is used to check if reset
-> controller for given GPIO was already registered.
->
-> If two devices have conflicting "reset-gpios" property, e.g. with
-> different ACTIVE_xxx flags, this would allow to spawn two separate
-> "reset-gpio" devices, where the second would fail probing on busy GPIO
-> request.
->
-> Link: https://lore.kernel.org/all/YXi5CUCEi7YmNxXM@robh.at.kernel.org/ [1=
-]
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
-> Cc: Sean Anderson <sean.anderson@seco.com>
-> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-
-I can't think of anything better, that is reasonable to ask for.
-
-I feel slightly icky about the way the code reaches into gpiolib, and I thi=
-nk
-regulators should be able to reuse the code, but unfortunately only the day
-they have no board files left :/
-
-I do feel the core code handling "reset-gpios" could as well have been
-used to handle "enable-gpios" in regulators, just that the regulator code
-has more requirements, and would be really hard to rewrite, and deals
-with descriptors passed in from drivers instead of centralizing it.
-
-Like regulators, reset grows core support for handling GPIO for resets
-which is *long due*, given how common it must be. We really need
-something like this, and this is certainly elegant enough to do the job.
-
-Yours,
-Linus Walleij
+This series looks OK to me, but would like Kalle to review as well
 
