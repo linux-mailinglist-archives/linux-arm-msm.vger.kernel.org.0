@@ -1,973 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-10641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 371EE851447
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 14:13:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AAF4851520
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 14:30:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3931A1C21DC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:13:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20881285C5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:30:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B84463A1D0;
-	Mon, 12 Feb 2024 13:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 140163CF5B;
+	Mon, 12 Feb 2024 13:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NCFYkqm1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HKqs7Zx2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117543A1CE
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CFB3A8D8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 13:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707743439; cv=none; b=dC4axbID4FGtpPghV8DtOhD8Hbzrbn7CQa+WUClKmSoW30Wc0NlhMNFfrD3JuQ6F45MjiSQHdsYmEVmkNDK2awJtuZGMhBljmLKQy8lAXM0b2itmzzcy+Fe2C3ZcpvMmZHniF6czc4en8vchFXkveJgRSVNYY8OcxhMmkNhwzwM=
+	t=1707743763; cv=none; b=sZstVxmqtZJbZSTxidB8RUHpTt2F8dq/g7NlqkLigVOj1m+MFJkQtFHuPt9qyVZvmgK/uZCBdPu40Kok4tsi19tqgzmncuFu3nkkpmO3Isg4JCAlQjtqpATk32mz0R15DD/q0FUWbyhRAu51S7QhGBsmHL1+nuUEN4FyafuPoEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707743439; c=relaxed/simple;
-	bh=RKTKSpnq7umb+4fU+UBs7880UjfiZvFKMpd6xVM+qMs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZGhv6Hzz7TkbJOYPPRZrrY2fB6rTquMk5CH7CynyX/0+gbFDj2HUUH6XS5Gbu79EsodkZo1Lc9qIsFzPP4ccc6Rh70vl6FwE7spxeE69lq3V5rReM+iocff1wUldOW/ZluR+mvcm6WqoV6G9SIAat0bFmAzw6WtdICDS4jURab0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NCFYkqm1; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1707743763; c=relaxed/simple;
+	bh=54HbHFwCCbg3M+0SBKCgliN6Fh7ZVO5xk5OXJIIAeL0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oY8EEaaN660qEsNdlBkMEpBCgSQqgaE9VhGrYr5niZatqKp3PwJh1j5mUOhWzFXcKYg/yy5zQJuI/izCKXi/69LC3Sz5ltC+jZQEEASI4U8CB2XIkTdEvYoqfK+Eo7lT7M0IcDt6MHLreWZF8bcdLaQJxsxswZW8/L8BeOVKY6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HKqs7Zx2; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-557dcb0f870so4093445a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 05:10:36 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6e09ea155c5so1374637b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Feb 2024 05:16:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707743435; x=1708348235; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nEpC85HaJHjps7u9qXX2iFK9E/1tRVU1sKPhZz4k634=;
-        b=NCFYkqm1LOXZPEurpteyyqVfyEkwqjX8RrnPA85DHzCDAlCOOFxwaRw0HQEeGy2Q9K
-         6l2u5uZzVMZO9BhYepNWIrCr8OsqhrrdfpqbO6QM+mLG224jnlUPxh84vN1vmfY4pxNs
-         vLHLJTY7r4xzvPOnWCjClc+ZAOF9cRhxZHyv5zEAcNwyu81/290sxILR3jKn+l7g+1us
-         iKHx7ozQ3quUmmM27zzLyWnd2CiQd2DMfBIczQB7eEjep0+xhqQTpeFGJ1XIzKteptZW
-         cS24fkgQKvtohtoS6R07gxmCFM/Cu0m2tKcm3ukYOW2nO0xhFGxpxKDlH69BwT5naLe6
-         QP1g==
+        d=linaro.org; s=google; t=1707743759; x=1708348559; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OeXYUde/gNeerB7H1YgPniVL9J1+gk3sOmdNHfWxiOI=;
+        b=HKqs7Zx2UPHK7N7T7o+TILjKcFQ/dWsOJJM79yiXosfgDMt29amrtIoeBUvLMAmoLC
+         SzfvmiGUDqfwgmsPBH8RBpQgGgGwZpgXDFMyM7SF+KVBeibJkxuuwrAnhp0ix0pZIrK3
+         9ztUrigwfrU0rrEkKi+qzogmpdw2tfq+Yg5P47sj0EexSnl+8KHu7ZbZxautSu/mrwps
+         wAyszKHBZQZ2s6RMliP1pnbTLdjiL07xPl23SPpA6etEE/+SuYo8mmgrycye2hti24jA
+         UYnvEvWhWRjMZttVkS6UwMzKVg7MW5xBifT6iJn+XQTtynAEC40Qdj7zERFxQoOE9f5T
+         gEqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707743435; x=1708348235;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nEpC85HaJHjps7u9qXX2iFK9E/1tRVU1sKPhZz4k634=;
-        b=OWa+nQNAxPopHZk8C2nKrpjMIX+IUsTCwX34d5INTFGfw20E12rRuJjVNMbTP2IGMr
-         69fviUzb5B5x6BDmHDkXCR9/+Baz1gri6C7Ih77IzNIYwRQSo0TpaIYxAmBscJL2Sgo7
-         s3mS06MmMLBvOuWH5D7eenv/EQL+7HdflSP5vRAdjb5GRUwE+ABH1TLS27qYEa/BPruN
-         Syj73J3iAuJqas3UjNKgMmmXX+jspupTgVkircQeieqIeZFwvVtOL4Lzgh8mmtqBkcxs
-         EeDUySUni/FpwKL8poJnRbEFJSTAt7KUpWBKYeOMpKJxqzCqqXfLTwRVOlH+aQdn7/9K
-         Af9Q==
-X-Gm-Message-State: AOJu0Yx5Lk5u2GTldqU9r/KnF4nQR9m0JnE1vFLmZ2V5s1zpjULTgxQ+
-	l4j+kgk+7YG9XDha2Fb6x6CUrI9JYnTOEdbB8TBHsW6YrQPuNgmheSt6bs4WP2A=
-X-Google-Smtp-Source: AGHT+IEsaTnMH3oMopizAu6CA7GTle7EL46mSKQT1n2c9WcXwr+zfYdrr0YLFuqMIk6UdOLR8yEK2g==
-X-Received: by 2002:a17:906:1c4b:b0:a3c:4f51:19a0 with SMTP id l11-20020a1709061c4b00b00a3c4f5119a0mr3614232ejg.56.1707743435149;
-        Mon, 12 Feb 2024 05:10:35 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXqrWAWAd9uPdRq5fWKunrlfWqNYL+rJxz71Mpoh6I4C5Ikh9KVFj2Xm2+iPt1WdZDdYE2BrnuW89FEPxx+xefGPLqI0y62UWmf4t36llu0u2VV7BzsLjQXET2N+K8avKHzuYLNEyLTG7N8s4wwvcy5oa2KVpPKq9I2vezqdT3QvAJOcdZGr0Se21yW0QolfB6R7dd90ofNX/AdaTrSIY2MtAqlQJQXOlsU4bC4Nrd/TKTtupROWb1Tgn1SvUg5poJ1JnP+0MfSlo8OTA4iq7eLXl9xKXPsTEmIQwvpEXIuJOEyu29zpEEcs17EAYbw9p77AWZesDKiYtaU2DOleSIdJcPqJ/Iboex3yPwU3JFgWJQr+Nq7H67uUc22MAbJ3s+L9xAvMWf0pFEv6tDSRtwimzEiL9OQmRq5sTs0l7nEoaLysw9Dbg5tXAmEiyoL8TpfmvUpYpDDdJtJ0v0K9pPDPsEAFOkwo4JEshgE4r2MC6KkgWC00+maGZMRt6tk4ua10vL870BZwZ204MAln9j1VKRLhE8hQoTNE1b+iXO5E0pxX17z934EBTbJhFTXA7/MgRaW6rOhHlH2nLt3kHVccdVQ+gBmZf5sXdcyg5jOyboYKe/CVUMdoQs+Y4QLhmYKMai0PUmZHPfeVo11lhyQBjzjRt+P1O82lz8wTlCx2AfGJjZRh2OUwk79sroP4yCV+EnZI9a2CGat2ttbXDudsQn+EI18kEbOjREgj49piz+eQZUT2LqNkr/e87vql6dbu/BtaE3SYB98e1rQyHnM6C/IVW/CUxC9lL1zEM9Zv3n06hZxCYzwsVWEwIA3m6pC2Y2Zoz/x1sFZtKhjMKUPR8ZW
-Received: from [10.167.154.1] (037008245233.garwolin.vectranet.pl. [37.8.245.233])
-        by smtp.gmail.com with ESMTPSA id gz9-20020a170906f2c900b00a3515b35be4sm193052ejb.104.2024.02.12.05.10.32
+        d=1e100.net; s=20230601; t=1707743759; x=1708348559;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OeXYUde/gNeerB7H1YgPniVL9J1+gk3sOmdNHfWxiOI=;
+        b=aT5DN4fLV9EOJB/WNHb3rhqkWmJFyMqIa47xr0+KNbRiPI2lXm+Bx/0IHFiEOUQvQq
+         XLNo18dMIC/dGC+vi8PXDDKU7cB47JSzJNn2rT8a/7c8c8XYwuaxjWSW64H/fljIVmRs
+         MmqrIXdEBddH17fGYmPI07RJYNF+JCIz4I/R3agg5vhlOGmg8E2r2+em3l4gIbpCyNV2
+         1+zQrJBIdjUyY5qN0pbGv6WRM9NXPRWhOwlxPvHWD8UdczUflc2fYKm6FkqJhaMTROOn
+         hP9Vv65j9gRX5gdLKvAqMQ+Sl9eBdodKCm4BX++jZtJkuiW3Kx+tlmrlMjG2sPw8xUFv
+         v09A==
+X-Forwarded-Encrypted: i=1; AJvYcCWZQgpd2cwU2dtRkljAAmGiHSOYHkUIW82NudPsNH4JmS9XgFQrNVR6+/D7cSrxfrzhHgcLSXukM1c/sUCBx77MJqabGBF9FUuAfjFAHg==
+X-Gm-Message-State: AOJu0YyRG4KjTpMGAAw4gM/iq+JlxCV8khpeyP+EAtRZxFBV9dbrkSDG
+	8LYCtZ4aAADliTkLsfVavFYQHPHcut8Enn+3l1mBSdTLfmnA2LFn9KE31XjK1g==
+X-Google-Smtp-Source: AGHT+IFx2bU7kb7bF79qJannuNFleEh92fqeRBaFnMU41WmOB0rVr1FOwMQ6/fxnr4f/shsPm3fAzw==
+X-Received: by 2002:a05:6a00:10c9:b0:6dd:da40:948d with SMTP id d9-20020a056a0010c900b006ddda40948dmr6719847pfu.25.1707743759476;
+        Mon, 12 Feb 2024 05:15:59 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXV+xO1Brck8IFlcfDhCO5DPss2bxQv9p2ySYPe0AWoUymv5Nbfko/WfjN5j5WANkzLIbkvWkeJneeqVgUaX7RxaX/NmpAoeM43meCmgnMTIOZlVYWy9bU0EjtPl0AR97uiH9h6uxbBjjHBdobffkgzAKYL7IzgZXUIjwbSCxW0hiVz0sgjes6CL55lMau+/k0d/6QlyesUbOU+mxk9CGa52hvSI5sHkq+EbForMesAIv5ojZGsfQYdHtAgjs6neLt9Rp+KHO55GKH2LgN06D8SsnwpOb/jD7dasJeHghXbE7Daq36CjcRFczIjNKX9M317AzFrNZL1Gh6kwL5INGfDFQuF3k3nR35IQxjJMJzegu755I52ajUa8rvXP5YpGLTFkRw5PwCI1vl7kUKA+uMjR6AatGYaTL7xPqPn2tKJdZW8FAUBIigqf2qfMlSjLS7MzEfESV37OexI1aIShARvowhJAl9mEF1GaM3ilVkCnAtavp7npxoDuY7Ubp9lLXMifo7rRU4=
+Received: from thinkpad ([117.193.211.169])
+        by smtp.gmail.com with ESMTPSA id w12-20020a056a0014cc00b006e03c68ae9asm5665844pfu.16.2024.02.12.05.15.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Feb 2024 05:10:34 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Mon, 12 Feb 2024 14:10:15 +0100
-Subject: [PATCH 7/7] arm64: dts: qcom: Add SM8550 Xperia 1 V
+        Mon, 12 Feb 2024 05:15:59 -0800 (PST)
+Date: Mon, 12 Feb 2024 18:45:51 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+Message-ID: <20240212131551.GA74465@thinkpad>
+References: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
+ <CAA8EJpqjm_2aE+7BtMkFUdet11q7v_jyHbUEpiDHSBSnzhndYA@mail.gmail.com>
+ <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
+ <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
+ <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
+ <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
+ <c8be2bbf-a51c-a38f-6e6f-a88801f953d5@quicinc.com>
+ <20240209075716.GA12035@thinkpad>
+ <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240210-topic-1v-v1-7-fda0db38e29b@linaro.org>
-References: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
-In-Reply-To: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
-To: James Schulman <james.schulman@cirrus.com>, 
- David Rhodes <david.rhodes@cirrus.com>, 
- Richard Fitzgerald <rf@opensource.cirrus.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>, 
- Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Sai Prakash Ranjan <quic_saipraka@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>, 
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-hardening@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707743413; l=21987;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=RKTKSpnq7umb+4fU+UBs7880UjfiZvFKMpd6xVM+qMs=;
- b=n80aZUcqcoyBgIg9eJD2vDXcrnfKyj/yR9bB4HnAHKOhFsfFsPkmtlMJOKVILVrZPktBymQCi
- 603ICmpAMWZBWkX0yVjbR257zY4oXTCmAw28KK12CeFhyI+tBycQjpo
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
 
-Add support for Sony Xperia 1 V, a.k.a PDX234. This device is a part
-of the SoMC SM8550 Yodo platform.
+On Fri, Feb 09, 2024 at 12:56:18PM +0200, Dmitry Baryshkov wrote:
+> On Fri, 9 Feb 2024 at 09:57, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > On Fri, Feb 09, 2024 at 12:58:15PM +0530, Krishna Chaitanya Chundru wrote:
+> > >
+> > >
+> > > On 2/8/2024 8:49 PM, Dmitry Baryshkov wrote:
+> > > > On Thu, 8 Feb 2024 at 16:58, Krishna Chaitanya Chundru
+> > > > <quic_krichai@quicinc.com> wrote:
+> > > > > On 2/8/2024 12:21 PM, Dmitry Baryshkov wrote:
+> > > > > > On Thu, 8 Feb 2024 at 08:14, Krishna Chaitanya Chundru
+> > > > > > <quic_krichai@quicinc.com> wrote:
+> > > > > > >
+> > > > > > >
+> > > > > > >
+> > > > > > > On 2/7/2024 5:17 PM, Dmitry Baryshkov wrote:
+> > > > > > > > On Wed, 7 Feb 2024 at 12:42, Krishna chaitanya chundru
+> > > > > > > > <quic_krichai@quicinc.com> wrote:
+> > > > > > > > >
+> > > > > > > > > Enable PCIe1 controller and its corresponding PHY nodes on
+> > > > > > > > > qcs6490-rb3g2 platform.
+> > > > > > > > >
+> > > > > > > > > PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
+> > > > > > > > > connected. For each endpoint a unique BDF will be assigned and should
+> > > > > > > > > assign unique smmu id. So for each BDF add smmu id.
+> > > > > > > > >
+> > > > > > > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > > > > > > > ---
+> > > > > > > > >     arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
+> > > > > > > > >     1 file changed, 42 insertions(+)
+> > > > > > > > >
+> > > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > index 8bb7d13d85f6..0082a3399453 100644
+> > > > > > > > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > @@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
+> > > > > > > > >            };
+> > > > > > > > >     };
+> > > > > > > > >
+> > > > > > > > > +&pcie1 {
+> > > > > > > > > +       perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> > > > > > > > > +
+> > > > > > > > > +       pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
+> > > > > > > > > +       pinctrl-names = "default";
+> > > > > > > > > +
+> > > > > > > > > +       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+> > > > > > > > > +                   <0x100 &apps_smmu 0x1c81 0x1>,
+> > > > > > > > > +                   <0x208 &apps_smmu 0x1c84 0x1>,
+> > > > > > > > > +                   <0x210 &apps_smmu 0x1c85 0x1>,
+> > > > > > > > > +                   <0x218 &apps_smmu 0x1c86 0x1>,
+> > > > > > > > > +                   <0x300 &apps_smmu 0x1c87 0x1>,
+> > > > > > > > > +                   <0x400 &apps_smmu 0x1c88 0x1>,
+> > > > > > > > > +                   <0x500 &apps_smmu 0x1c89 0x1>,
+> > > > > > > > > +                   <0x501 &apps_smmu 0x1c90 0x1>;
+> > > > > > > >
+> > > > > > > > Is the iommu-map really board specific?
+> > > > > > > >
+> > > > > > > The iommu-map for PCIe varies if PCIe switch is connected.
+> > > > > > > For this platform a PCIe switch is connected and for that reason
+> > > > > > > we need to define additional smmu ID's for each BDF.
+> > > > > > >
+> > > > > > > For that reason we defined here as these ID's are applicable only
+> > > > > > > for this board.
+> > > > > >
+> > > > > > So, these IDs are the same for all boards, just being unused on
+> > > > > > devices which have no bridges / switches connected to this PCIe host.
+> > > > > > If this is correct, please move them to sc7280.dtsi.
+> > > > > >
+> > > > > Yes ID's will be same for all boards. we can move them sc7280.dtsi
+> > > > > but the BDF to smmu mapping will be specific to this board only.
+> > > > > if there is some other PCIe switch with different configuration is
+> > > > > connected to different board of same variant in future again these
+> > > > > mapping needs to updated.
+> > > >
+> > > > Could you possibly clarify this? Are they assigned one at a time
+> > > > manually? Or is it somehow handled by the board's TZ code, which
+> > > > assigns them sequentially to the known endpoints? And is it done via
+> > > > probing the link or via some static configuration?
+> > >
+> > > There is no assignment of SID's in TZ for PCIe.
+> > > PCIe controller has BDF to SID mapping table which we need to
+> > > program with the iommu map table.
+> > >
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-qcom.c?h=v6.8-rc3#n997
+> > >
+> > > Based upon switch the BDF to SID table will change for example I had two
+> > > switches with one switch has 2 PCIe ports and other has 3 ports one
+> > > embedded port which supports multiple functions.
+> > >
+> > > For the first switch the BDF's are
+> > >       - 0x000(root complex),
+> > >       - 0x100(USP),
+> > >       - 0x208(DSP 0),
+> > >       - 0x210(DSP 1),
+> > >       - 0x300(endpoint connected to DSP 0),
+> > >       - 0x400( endpoint connected to DSP 1).
+> > >
+> > > For 2nd switch the BDF's are
+> > >       - 0x000(root complex),
+> > >       - 0x100(USP),
+> > >       - 0x208(embeeded DSP 0),
+> > >       - 0x210(DSP 1),
+> > >       - 0x218 (DSP 2),
+> > >       - 0x300(embedded endpoint function 0),
+> > >       - 0x301 (embedded endpoint function 1)
+> > >       - 0x400( endpoint connected to DSP 1)
+> > >       - 0x500(endpoint connected to DSP2).
+> > >
+> > > For these two switches we need different BDF to SID table so for that
+> > > reason we are keeping iommu map here as this is specific to this board.
+> > >
+> >
+> > I don't understand why the SID table has to change between PCIe devices. The SID
+> > mapping should be part of the SoC dtsi, where a single SID would be defined for
+> > the devices under a bus. And all the devices under the bus have to use the same
+> > SID.
+> 
+> This sounds like a sane default, indeed. Nevertheless, I see a point
+> in having per-device-SID assignment. This increases isolation and can
+> potentially prevent security issues. However in such case SID
+> assignment should be handled in some automagic way. In other words,
+> there must be no need to duplicate the topology of the PCIe bus in the
+> iommu-maps property.
+> 
 
-This commit brings support for:
-* Remoteprocs (sans modem for now)
-* Flash LED (the notification LED is gone :((((()
-* SD Card
-* USB (*including SuperSpeed*) + PMIC_GLINK (it's funky, requires a replug
-  with an cable flip sometimes..)
-* Most regulators
-* Part of I2C-connected peripherals (notably no touch due to a
-driver bug)
-* PCIe0 (PCIe1 is unused)
+Yes, address space isolation is the primary motive behind this patch. But as
+you said, we should not do it by hardcoding the SIDs in the board DTS. It won't
+scale and is not a proper solution.
 
-Do note display via simplefb is not supported, as the display is blanked
-upon exiting XBL.
+Instead, the issue should be addressed in the IOMMU layer by working with the
+IOMMU folks.
 
-To create a working boot image, you need to run:
-cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/sm8550-sony-xperia-\
-yodo-pdx234.dtb > .Image.gz-dtb
+It should be noted that we _cannot_ use any arbitrary SID for PCIe bus. HYP/TZ
+will fault the transactions coming with different SIDs than the ones assigned
+to them. So we still need to pass that info from DT to IOMMU layer.
 
-mkbootimg \
---kernel .Image.gz-dtb \
---ramdisk some_initrd.img \
---pagesize 4096 \
---base 0x0 \
---kernel_offset 0x8000 \
---ramdisk_offset 0x1000000 \
---tags_offset 0x100 \
---cmdline "SOME_CMDLINE" \
---dtb_offset 0x1f00000 \
---header_version 2 \
--o boot.img-sony-xperia-pdx234
-
-Then, you need to flash it on the device and get rid of all the
-vendor_boot/dtbo mess:
-
-// You have to either pull vbmeta{"","_system"} from
-// /dev/block/bootdevice/by-name/ or build one as a part of AOSP build process
-fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
-fastboot --disable-verity --disable-verification flash vbmeta_system \
-vbmeta_system.img
-
-fastboot flash boot boot.img-sony-xperia-pdx234
-fastboot erase vendor_boot
-fastboot erase recovery
-fastboot flash dtbo emptydtbo.img
-fastboot erase init_boot // ? I don't remember if it's necessary, sorry
-fastboot continue
-
-Where emptydtbo.img is a tiny file that consists of 2 bytes (all zeroes), doing
-a "fastboot erase" won't cut it, the bootloader will go crazy and things will
-fall apart when it tries to overlay random bytes from an empty partition onto a
-perfectly good appended DTB.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts    | 779 +++++++++++++++++++++
- 2 files changed, 780 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f7c5662213e4..9bbea531660d 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -237,6 +237,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-sony-xperia-yodo-pdx234.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
-new file mode 100644
-index 000000000000..85e0d3d66e16
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
-@@ -0,0 +1,779 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/firmware/qcom,scm.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/cs35l45.h>
-+#include "sm8550.dtsi"
-+#include "pm8010.dtsi"
-+#include "pm8550.dtsi"
-+#include "pm8550b.dtsi"
-+#define PMK8550VE_SID 5
-+#include "pm8550ve.dtsi"
-+#include "pm8550vs.dtsi"
-+#include "pmk8550.dtsi"
-+/* TODO: Only one SID of PMR735D seems accessible? */
-+
-+/delete-node/ &hwfence_shbuf;
-+/delete-node/ &mpss_mem;
-+/delete-node/ &rmtfs_mem;
-+/ {
-+	model = "Sony Xperia 1 V";
-+	compatible = "sony,pdx234", "qcom,sm8550";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		i2c0 = &i2c0;
-+		i2c4 = &i2c4;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c16 = &i2c_hub_2;
-+		serial0 = &uart7;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
-+		pinctrl-names = "default";
-+
-+		key-camera-focus {
-+			label = "Camera Focus";
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			gpios = <&pm8550b_gpios 8 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+
-+		key-camera-snapshot {
-+			label = "Camera Snapshot";
-+			gpios = <&pm8550b_gpios 7 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
-+		orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss_in: endpoint {
-+						remote-endpoint = <&usb_dp_qmpphy_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	reserved-memory {
-+		mpss_mem: mpss-region@89800000 {
-+			reg = <0x0 0x89800000 0x0 0x10800000>;
-+			no-map;
-+		};
-+
-+		splash@b8000000 {
-+			reg = <0x0 0xb8000000 0x0 0x2b00000>;
-+			no-map;
-+		};
-+
-+		hwfence_shbuf: hwfence-shbuf-region@e6440000 {
-+			reg = <0x0 0xe6440000 0x0 0x2dd000>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: memory@f8b00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0 0xf8b00000 0x0 0x280000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
-+
-+		ramoops@ffd00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xffd00000 0x0 0xc0000>;
-+			console-size = <0x40000>;
-+			record-size = <0x1000>;
-+			pmsg-size = <0x40000>;
-+			ecc-size = <16>;
-+		};
-+
-+		rdtag-store-region@ffdc0000 {
-+			reg = <0x0 0xffdc0000 0x0 0x40000>;
-+			no-map;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8550-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		pm8550_bob1: bob1 {
-+			regulator-name = "pm8550_bob1";
-+			regulator-min-microvolt = <3416000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* TODO: bob2 @ 2.704-3.008V doesn't fall into the vreg driver constraints */
-+
-+		pm8550_l1: ldo1 {
-+			regulator-name = "pm8550_l1";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l2: ldo2 {
-+			regulator-name = "pm8550_l2";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L4 exists in cmd-db, but the board seems to crash on access */
-+
-+		pm8550_l5: ldo5 {
-+			regulator-name = "pm8550_l5";
-+			regulator-min-microvolt = <3104000>;
-+			regulator-max-microvolt = <3104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l6: ldo6 {
-+			regulator-name = "pm8550_l6";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l7: ldo7 {
-+			regulator-name = "pm8550_l7";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l8: ldo8 {
-+			regulator-name = "pm8550_l8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l9: ldo9 {
-+			regulator-name = "pm8550_l9";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l10: ldo10 {
-+			regulator-name = "pm8550_l10";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l11: ldo11 {
-+			regulator-name = "pm8550_l11";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l12: ldo12 {
-+			regulator-name = "pm8550_l12";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l13: ldo13 {
-+			regulator-name = "pm8550_l13";
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l14: ldo14 {
-+			regulator-name = "pm8550_l14";
-+			regulator-min-microvolt = <3304000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l15: ldo15 {
-+			regulator-name = "pm8550_l15";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l16: ldo16 {
-+			regulator-name = "pm8550_l16";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550_l17: ldo17 {
-+			regulator-name = "pm8550_l17";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8550vs-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		pm8550vs_0_l1: ldo1 {
-+			regulator-name = "pm8550vs_0_l1";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_0_l3: ldo3 {
-+			regulator-name = "pm8550vs_0_l3";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pm8550vs-rpmh-regulators";
-+		qcom,pmic-id = "d";
-+
-+		pm8550vs_1_l1: ldo1 {
-+			regulator-name = "pm8550vs_1_l1";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		/* L3 exists in cmd-db, but the board seems to crash on access */
-+	};
-+
-+	regulators-3 {
-+		compatible = "qcom,pm8550vs-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		pm8550vs_2_s4: smps4 {
-+			regulator-name = "pm8550vs_2_s4";
-+			regulator-min-microvolt = <904000>;
-+			regulator-max-microvolt = <984000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_2_s5: smps5 {
-+			regulator-name = "pm8550vs_2_s5";
-+			regulator-min-microvolt = <1010000>;
-+			regulator-max-microvolt = <1120000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_2_l1: ldo1 {
-+			regulator-name = "pm8550vs_2_l1";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_2_l2: ldo2 {
-+			regulator-name = "pm8550vs_2_l2";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_2_l3: ldo3 {
-+			regulator-name = "pm8550vs_2_l3";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-4 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "f";
-+
-+		pm8550ve_s4: smps4 {
-+			regulator-name = "pm8550ve_s4";
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <700000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550ve_l1: ldo1 {
-+			regulator-name = "pm8550ve_l1";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550ve_l2: ldo2 {
-+			regulator-name = "pm8550ve_l2";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550ve_l3: ldo3 {
-+			regulator-name = "pm8550ve_l3";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-5 {
-+		compatible = "qcom,pm8550vs-rpmh-regulators";
-+		qcom,pmic-id = "g";
-+
-+		pm8550vs_3_s1: smps1 {
-+			regulator-name = "pm8550vs_3_s1";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_s2: smps2 {
-+			regulator-name = "pm8550vs_3_s2";
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1036000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_s3: smps3 {
-+			regulator-name = "pm8550vs_3_s3";
-+			regulator-min-microvolt = <300000>;
-+			regulator-max-microvolt = <1004000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_s4: smps4 {
-+			regulator-name = "pm8550vs_3_s4";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1352000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_s5: smps5 {
-+			regulator-name = "pm8550vs_3_s5";
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1004000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_s6: smps6 {
-+			regulator-name = "pm8550vs_3_s6";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_l1: ldo1 {
-+			regulator-name = "pm8550vs_3_l1";
-+			regulator-min-microvolt = <1144000>;
-+			regulator-max-microvolt = <1256000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_l2: ldo2 {
-+			regulator-name = "pm8550vs_3_l2";
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		pm8550vs_3_l3: ldo3 {
-+			regulator-name = "pm8550vs_3_l3";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* TODO: Unknown PMIC @ k, l, PM8010 @ m, n */
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
-+&gpi_dma2 {
-+	status = "okay";
-+};
-+
-+&i2c_hub_2 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	pmic@75 {
-+		compatible = "dlg,slg51000";
-+		reg = <0x75>;
-+		dlg,cs-gpios = <&pm8550vs_g_gpios 4 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&cam_pwr_a_cs>;
-+		pinctrl-names = "default";
-+
-+		regulators {
-+			slg51000_a_ldo1: ldo1 {
-+				regulator-name = "slg51000_a_ldo1";
-+				regulator-min-microvolt = <2400000>;
-+				regulator-max-microvolt = <3300000>;
-+			};
-+
-+			slg51000_a_ldo2: ldo2 {
-+				regulator-name = "slg51000_a_ldo2";
-+				regulator-min-microvolt = <2400000>;
-+				regulator-max-microvolt = <3300000>;
-+			};
-+
-+			slg51000_a_ldo3: ldo3 {
-+				regulator-name = "slg51000_a_ldo3";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <3750000>;
-+			};
-+
-+			slg51000_a_ldo4: ldo4 {
-+				regulator-name = "slg51000_a_ldo4";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <3750000>;
-+			};
-+
-+			slg51000_a_ldo5: ldo5 {
-+				regulator-name = "slg51000_a_ldo5";
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+
-+			slg51000_a_ldo6: ldo6 {
-+				regulator-name = "slg51000_a_ldo6";
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+
-+			slg51000_a_ldo7: ldo7 {
-+				regulator-name = "slg51000_a_ldo7";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <3750000>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c_master_hub_0 {
-+	status = "okay";
-+};
-+
-+&i2c0 {
-+	clock-frequency = <1000000>;
-+	status = "okay";
-+
-+	/* NXP NFC @ 28 */
-+};
-+
-+&i2c4 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* LX Semi SW82907 touchscreen @ 28 */
-+};
-+
-+&i2c10 {
-+	clock-frequency = <1000000>;
-+	status = "okay";
-+
-+	/* Cirrus Logic CS40L25A boosted haptics driver @ 40 */
-+};
-+
-+&i2c11 {
-+	clock-frequency = <1000000>;
-+	status = "okay";
-+
-+	cs35l41_l: speaker-amp@30 {
-+		compatible = "cirrus,cs35l45";
-+		reg = <0x30>;
-+		interrupts-extended = <&tlmm 182 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
-+		cirrus,asp-sdout-hiz-ctrl = <(CS35L45_ASP_TX_HIZ_UNUSED | CS35L45_ASP_TX_HIZ_DISABLED)>;
-+		#sound-dai-cells = <1>;
-+
-+		cirrus,gpio-ctrl2 {
-+			gpio-ctrl = <0x2>;
-+		};
-+	};
-+
-+	cs35l41_r: speaker-amp@31 {
-+		compatible = "cirrus,cs35l45";
-+		reg = <0x31>;
-+		interrupts-extended = <&tlmm 182 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 183 GPIO_ACTIVE_HIGH>;
-+		cirrus,asp-sdout-hiz-ctrl = <(CS35L45_ASP_TX_HIZ_UNUSED | CS35L45_ASP_TX_HIZ_DISABLED)>;
-+		#sound-dai-cells = <1>;
-+
-+		cirrus,gpio-ctrl2 {
-+			gpio-ctrl = <0x2>;
-+		};
-+	};
-+};
-+
-+&pcie0 {
-+	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&pcie0_default_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	vdda-phy-supply = <&pm8550vs_2_l1>;
-+	vdda-pll-supply = <&pm8550vs_2_l3>;
-+
-+	status = "okay";
-+};
-+
-+&pm8550_flash {
-+	status = "okay";
-+
-+	led-0 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <1>, <4>;
-+		led-max-microamp = <500000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <0>;
-+	};
-+
-+	led-1 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_YELLOW>;
-+		led-sources = <2>, <3>;
-+		led-max-microamp = <500000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <1>;
-+	};
-+};
-+
-+&pm8550_gpios {
-+	vol_down_n: volume-down-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	sdc2_card_det_n: sd-card-det-n-state {
-+		pins = "gpio12";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-down;
-+		output-disable;
-+		input-enable;
-+	};
-+};
-+
-+&pm8550b_gpios {
-+	snapshot_n: snapshot-n-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+
-+	focus_n: focus-n-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pm8550vs_g_gpios {
-+	cam_pwr_a_cs: cam-pwr-a-cs-state {
-+		pins = "gpio4";
-+		function = "normal";
-+		power-source = <0x01>;
-+		drive-push-pull;
-+		output-low;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+	};
-+};
-+
-+&pm8550b_eusb2_repeater {
-+	qcom,tune-usb2-disc-thres = /bits/ 8 <0x6>;
-+	qcom,tune-usb2-amplitude = /bits/ 8 <0xf>;
-+	qcom,tune-usb2-preem = /bits/ 8 <0x7>;
-+	vdd18-supply = <&pm8550_l15>;
-+	vdd3-supply = <&pm8550_l5>;
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEUP>;
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sm8550/Sony/yodo/adsp.mbn",
-+			"qcom/sm8550/Sony/yodo/adsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8550/Sony/yodo/cdsp.mbn",
-+			"qcom/sm8550/Sony/yodo/cdsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_HIGH>;
-+	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
-+	pinctrl-names = "default", "sleep";
-+	vmmc-supply = <&pm8550_l9>;
-+	vqmmc-supply = <&pm8550_l8>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <32 8>;
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_dwc3_ss {
-+	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&pm8550vs_2_l1>;
-+	vdda12-supply = <&pm8550vs_2_l3>;
-+	phys = <&pm8550b_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy {
-+	vdda-phy-supply = <&pm8550vs_2_l3>;
-+	vdda-pll-supply = <&pm8550ve_l3>;
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss_in>;
-+};
-+
-+&usb_dp_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
-+};
-+
-+&xo_board {
-+	clock-frequency = <76800000>;
-+};
+- Mani
 
 -- 
-2.43.1
-
+மணிவண்ணன் சதாசிவம்
 
