@@ -1,242 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-10625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E6EC85132F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:12:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3511485138C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 13:29:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 438A31C21231
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:12:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E911428743D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 12:29:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A793BB47;
-	Mon, 12 Feb 2024 12:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D58A239FD5;
+	Mon, 12 Feb 2024 12:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fNEs7VKf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QARv9sdM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D253EA68;
-	Mon, 12 Feb 2024 12:07:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707739637; cv=fail; b=PXRH9YU4rAjkUlC+n0s9oTuViCINV1JRV0fWKH2lHw/Ew5kV9K/aZlV89zi6lvjipbBVmveDS1EZOgDaBL4eNBH4HckNJk/gAdzx07Ez5zDX+3ONHEujLZM0FaHVsqBqIWGuNBSr++6oZsK1AOOy0TylOe0m5u2HNCi+YVTeNuc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707739637; c=relaxed/simple;
-	bh=Mq7g6ETgf8RmZvRbrT0tTK+FDqyI+vfdIw9QDNtCV90=;
-	h=Date:From:To:CC:Subject:Message-ID:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ICMFU0NiGVJFx+cBqU0zoZbfAnft2hnoPSfkKS1U3SpLqZuhsADfeu2Gjaq1mPG212IAPvrUMFhLdI2IgLuf4b3dqb/eZBPOAPxQUD29qSo0cH/qnBxm1y01eaADsEtvfR5/8wE5Rfd+swhHiSS1ztarOXcbCRtWaCIKT2iArLA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fNEs7VKf; arc=fail smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707739635; x=1739275635;
-  h=date:from:to:cc:subject:message-id:in-reply-to:
-   mime-version;
-  bh=Mq7g6ETgf8RmZvRbrT0tTK+FDqyI+vfdIw9QDNtCV90=;
-  b=fNEs7VKfU7rkyO1eYg2Ioma4UrmNXlK+9kL0nZe+FJoor68BEQtOVhNU
-   +U10c4O541dVyqdUtPOOLTi3Ut24bWlsL+yAuBY89GOJHFNWGjgCCsRTL
-   OP8LGZKjbRlS7dy+zIRRGIoICzBixaVnuwxJ3QrzulV7ACqvrmbnGzbIj
-   K6r+0O2hIlU1en0wOsIv9HeIzXuj/qwHIu4etJgtlvjmNMrW+880dFDaA
-   etNYHmaIpQXGsMl5iLMWE6MiXau8hH8oyru0hE77eqW+JloIH7fCTCbcg
-   BrFichyWcQKTSN3cWyMLJPChLnSDOV5HeXpDGEQxf68YMFYm2mdlQkcL7
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10981"; a="1590248"
-X-IronPort-AV: E=Sophos;i="6.06,263,1705392000"; 
-   d="scan'208";a="1590248"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2024 04:07:14 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,263,1705392000"; 
-   d="scan'208";a="2870489"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 12 Feb 2024 04:07:14 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 12 Feb 2024 04:07:13 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 12 Feb 2024 04:07:13 -0800
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 12 Feb 2024 04:07:13 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.169)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 12 Feb 2024 04:06:18 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XzEIxr9s8HJ4nu+xY/LR32hW2gP1BGhNmIlMirC3Cs0h1ChqW4sizzKnY6jpz0jaFJo30qXCww1Cwt1RBdYqA0oTr8+RAkQMtbFPbPfKSEyXyQz+Uj8gWMNBbEz9tfeUlC8pDOSwi2AwK3CYF81EHA4PHk8UYbImtu1UAGBZi5ustgpuZKbf6X+nlQ9IE4TBg/bxwuDliEtNDjKyNLN2kmT2XbWhINyC09a6uW9XBKwDgkY8Tdj0qNqAA40Quxv1XCMuEBNPTevRO7ae8qDuBjy0uceviqdmUKb7FDrS1aGaZ51c8wPIpNMqbboB3AZ+wwzKOm5boxfqwOcp4vyFjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gflPAGqk2qHONdDDqEUHI+8m+VeNwYL+lLCI6FldUEk=;
- b=l9NrRC3VvRmO4YOa4nO6EgxWxx/yB1Agib1SvIReAz/45R/tW3vojgv5Zoyz+epnQePpZr0iZIDG9hxHvIcRS2qcthpczUAgaYBZe8U3h1GUA2L2GyYXsui8PQlIxUJaAjsFWsgeUYW91TS5Zz2otYWJrRlbRmf5QpXYgwSpZS+KtxGrELyyfVExxsSepgdz05Z3atgdhmOMkK8e1eT/ye7NLFiZ0NOggWf/1YPyhLw4M7I4AkDX3fX1Af02nXN0POJdT4gHp80Gkoecb+xTVBOJhS21m0jBE0cOZUsTOM6hyURmdAEZ795huqmEqp2ypQr8fMzsN2TJ0xsnvJ3j0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH3PR11MB8414.namprd11.prod.outlook.com (2603:10b6:610:17e::19)
- by SA0PR11MB4687.namprd11.prod.outlook.com (2603:10b6:806:96::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.35; Mon, 12 Feb
- 2024 12:06:15 +0000
-Received: from CH3PR11MB8414.namprd11.prod.outlook.com
- ([fe80::ed34:4cf2:df58:f708]) by CH3PR11MB8414.namprd11.prod.outlook.com
- ([fe80::ed34:4cf2:df58:f708%4]) with mapi id 15.20.7270.033; Mon, 12 Feb 2024
- 12:06:15 +0000
-Date: Mon, 12 Feb 2024 20:06:03 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Davis <afd@ti.com>, Sebastian Reichel <sre@kernel.org>, "Manivannan
- Sadhasivam" <manivannan.sadhasivam@linaro.org>, Cristian Ciocaltea
-	<cristian.ciocaltea@gmail.com>, Florian Fainelli
-	<florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, Scott Branden
-	<sbranden@broadcom.com>, Bjorn Andersson <andersson@kernel.org>, "Konrad
- Dybcio" <konrad.dybcio@linaro.org>, Sean Wang <sean.wang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>
-CC: <oe-kbuild-all@lists.linux.dev>, <linux-pm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-actions@lists.infradead.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-mediatek@lists.infradead.org>, Andrew Davis <afd@ti.com>
-Subject: Re: [PATCH v3 13/19] power: reset: msm-poweroff: Use
- devm_register_sys_off_handler(RESTART)
-Message-ID: <ZcoJq8o/ZeJEQjis@rli9-mobl>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240208170410.67975-14-afd@ti.com>
-X-ClientProxiedBy: SG2PR04CA0165.apcprd04.prod.outlook.com (2603:1096:4::27)
- To CH3PR11MB8414.namprd11.prod.outlook.com (2603:10b6:610:17e::19)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158191864C;
+	Mon, 12 Feb 2024 12:28:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707740941; cv=none; b=bsGsq+81TSQ8ZEROHS5QT+ViRmkUsiKMqrObCMOly7HItD7zgW2j2bQhvLBZ6k/TE4Fudx8eEWOQZo7MK3Pj/mc1l/M5KBk4ZfGeOaoiwb7ptrj6/uduaPduv+Ncy4KaD0EfGdvMNg77Sp4M+lzz17uZj0o6wgQKfys4dJKR6C0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707740941; c=relaxed/simple;
+	bh=7PJj2msmk4dQMXOL4dv5NOIOGOF0PXOzFte4+3Icwfc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=d2RuBj23oZ2gwcO6uFwYjuaFGuVoEEoKoHGK+2fEZCYYyXjR9/NDe+7XLjqRLQtNgC65OJRdO97O5/gaSIYla3gaaqBK0a/C4Nge3lnmdtT8DS7Ykj2oVDGZTMWTFCqYQC2+bz5D63iQhL9MUWUHsbsG9VkcnigYK8lGsQ2uH+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QARv9sdM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41CBcwY7028412;
+	Mon, 12 Feb 2024 12:28:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=LyAR9Ky0LhG2Wb408/zQXSn+8a0n2Xf9kdFtUVe/EH0=; b=QA
+	Rv9sdMCt1eM7klTxSydUAnffWPU32OVqBENpWdlH/xJPmZ/BHRbE3TmBUtDV6yuj
+	8tXPKlLDPXAvPc4pURbvgOrbjCUVlcnDtbIbUnaqfgyw9/+rSv+BrduCh/7Bi59x
+	IDvpJhX0HSXYu0K/hFeWMTpW9KlhcAvjlULXVKSwe7748ghd1uJySWFm7ij8hMez
+	7w4rpilbNhCSB+iJBDPfXI57g5D/5nhuBpItL/pPPkMzcrT8+6kRxKVdsUgptzYm
+	pJ2S9XSzQJg1xuN1vTh434OYOWMxlaXJQ7P8BafWPGVFRU8hRF3HpNmRNe//5p9i
+	5XWDwNbB7RS0ubtGqgzg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w62nwk90q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 12:28:39 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41CCScEA014931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 12:28:38 GMT
+Received: from [10.204.67.124] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
+ 2024 04:28:32 -0800
+Message-ID: <7932ccbb-3b41-49e2-bb88-9c2633002a0d@quicinc.com>
+Date: Mon, 12 Feb 2024 17:58:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR11MB8414:EE_|SA0PR11MB4687:EE_
-X-MS-Office365-Filtering-Correlation-Id: fa08c101-2c65-40fa-2bf8-08dc2bc30358
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: D8+SWQr+jgp1rNf2Uni/XnrL5AmYEljBOm4lM8u/akuBaUZMYl2Uuxym8K7FsqSCkBFEG/gyiOKEOGc+3nHhOWVvhZPxC7k9neW/fXOkcbpLZnVxD1420S6BZ/znWVOwfCG2+H9++XafpZciXsFbDr5o5WJs+zh/h0FV58TVh9FZ9csM/Tc8gfcULEEdqRRUo+v+Ehzw7c543mnGVHEAM9cZluAlsXcFWTbUuo/CtdF9PeROjwZYuQ5hi2wchIXWwog9qpBOxhQfWpScPWkKcLp3Tjze/p0IFmghlwtijCYn7g2UkzIJC7aRU6mc+12snwj215iW0paIN38UobSef6bJKEzJna5ZvouDSrn9KQ66/J7QJmyuhDOCDTGiCr0+xhIwbZ3NSXIb3jFUKNC0S00VrGYEN8Xz9OTW5uJM9jDpTo5kWCDOIPJ4QPZQage9duvA9qZZ1J8UaEeqBYBsOmrxQ2fPmw+XkdyAH6le7JOOmJuDjaoUKSFssG2gxIQHLov5oEviMqz5AnVZ7ZS4MVV8hq8SO0N7PgKpMiC8fIPyc2ile2hfS/4WgNwshS2+yaHiegy4UiJzyL4IIh/UZzBVlAx94VOlANhPPqvmMjvFU4bcEcwoqcOmj0a+koIn
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB8414.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(7916004)(39860400002)(136003)(396003)(346002)(376002)(366004)(230273577357003)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(9686003)(478600001)(6512007)(6486002)(966005)(41300700001)(33716001)(7416002)(8936002)(4326008)(8676002)(2906002)(5660300002)(110136005)(66476007)(6506007)(6666004)(316002)(66946007)(66556008)(83380400001)(86362001)(921011)(82960400001)(26005)(38100700002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5HPLLbewf0+f8bm9/rmfa+nUGm6T6xl0/yaV0U4xJY8vxgSdcFPQ84tusyMQ?=
- =?us-ascii?Q?n8J1iHrtgy0FpD64255Q1J1VH74ZCACad2c9MF7kYpsmGPAsot5xYfoOAws7?=
- =?us-ascii?Q?hwYTubDUuRIQzRIdv8pu8nYp3TXUujIuBk8PAbmbsKpLo4SgQQCx1NSpZWYm?=
- =?us-ascii?Q?+UyVML90czB7Vid6g6DmoHQMVn/v3+RnX5F+TygeViWFn5uQFwz7cMu9sida?=
- =?us-ascii?Q?T3FH1lxIe7yNnKZEEaolhZRjMTY2BtIOD81v+DqIjjQ2pTGCaEkYU3YdsM3d?=
- =?us-ascii?Q?UQNvkr7tPXji6Om22LN0CbEpYRrJknbPzn5os+ozoBtpz//jPHLyNMkEBuJW?=
- =?us-ascii?Q?Rh6P1zhdoSvEnVvs2DAOoD6ZMXaP3/s6C0iHacqLb495oRB8e60xyOEFvIaL?=
- =?us-ascii?Q?pzZ85hKFnG08rMglgi801TbiVp3o4gOaWEuXKXJrEmINij5PvS9Yg4XGgQpv?=
- =?us-ascii?Q?RV2tsxEqMnvysDY0xV3Lgem8tcKY4kK5lg+Bxh/Cg2wgsA4iTeYNBiTIUrlO?=
- =?us-ascii?Q?HOliCRPgJL5LQESeWSZ94x10TPcjLnJJr+Xe1zXxLzdDP2Zt4vwSd7bSrC+d?=
- =?us-ascii?Q?Kkp5TsGf4oPm17DFmfZdXKc4gnGzImsvAguU+inlk2G0xbh3cSEhbjBbFkZV?=
- =?us-ascii?Q?M9zNotqmZRoWcENr8BFpt8FspHJPrghtl5BUTOaqlFPCwIyH3Xwiujf7n0Wm?=
- =?us-ascii?Q?11yKN/+MLAa6iVVI6hPHaNLt5xJthGiXRV7PGXaEwN+8hBHWecsrVwd/wQBj?=
- =?us-ascii?Q?uDyG3QSU93EHEdYIZwTwzqWUQWlm3c4qi0lBB8CqdK8PqOq1iy/fj3JW+snc?=
- =?us-ascii?Q?irfkpocxexDYdy6sDX/UZ0mB4EEjKKu4xL4TK4RWgBpM4p7eJkrFr4+OSTQK?=
- =?us-ascii?Q?U/DU0Yx/Ob+avW3ntXk0B245rzD3RluZlO6Rg8gQEm6wOgXjodvmCg7BCY7C?=
- =?us-ascii?Q?7ZIcNFuCUAC2v5BPeILlpa2hbShEt+90f1bnACDKdhzXocHQhJHr1kN4LVE3?=
- =?us-ascii?Q?p9WGR2xBtyMX0EJgxISgjzSSyf3A+4RKiowuryG2fssFh7wofwWhD9TGrmi4?=
- =?us-ascii?Q?Jghl0hZiivngx71TobCq5bCGTStPk6KM3nA1cxtodHKED2tiQ4EkmmhFGLcz?=
- =?us-ascii?Q?SjPmr4/s4V7vhX8bNAUWMvXo0qZ841fpjXQ6bbEwp/PcrMdXKk+UcmsifLKv?=
- =?us-ascii?Q?vzLq4664c4Qp70+AWe/QLATumKe2uyHuCv3g7ICoy6s5Gv4pcFsjoV2uig/b?=
- =?us-ascii?Q?MQTO2zRxCXtKBjqLnhSfTuGitscOelZ60VQzjlaIBWfu12zP/ft85GkYzGvJ?=
- =?us-ascii?Q?YdGbmP1zSOjJ9f9GJVNlF3Kj/Tyh4RAM8074kDRTt2BE3ZqT+UyGnrtXl0j4?=
- =?us-ascii?Q?9unrF/Oxlvr8LAa/A2EEVGjCysIFLfpFriyKam1XS8q/bZS9hKU4SuB9rgYK?=
- =?us-ascii?Q?9WUDOzESBDYHnqGkSsrgenxj5IhahivYTX/BOIFIWELK1GE+EHcd8+AXqAXb?=
- =?us-ascii?Q?X2e4uyquhn3WPWu5j4VYt0Bw3YNB9JUs8736VBYqAwp+Ku0HCBOIfp0tbduO?=
- =?us-ascii?Q?ueQEmOXYoEeW7pKyQZ6L8jE5nJhnNJpZVENT6pCp2y8IRD5KZdB9OiUnFPCx?=
- =?us-ascii?Q?tA=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa08c101-2c65-40fa-2bf8-08dc2bc30358
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB8414.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2024 12:06:15.7388
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: t9XLQe7DQk3fK/y0FayohSI2NjwPKBF2kqDCKbZ9HiHvSE8X5pZM/bElkVKo+yLCS2KFedRRCXZ2E9fmlBxU7Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4687
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <quic_bjorande@quicinc.com>, <geert+renesas@glider.be>,
+        <arnd@arndb.de>, <neil.armstrong@linaro.org>,
+        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_abhinavk@quicinc.com>, <quic_rajeevny@quicinc.com>,
+        <quic_vproddut@quicinc.com>
+References: <20240116094935.9988-1-quic_riteshk@quicinc.com>
+ <20240116094935.9988-3-quic_riteshk@quicinc.com>
+ <20a8efd1-e243-434e-8f75-aa786ac8014f@linaro.org>
+ <CAA8EJpqQVuS+yqXQ2y5sNQrRVg7tcQAJ3ywsEjg+O=7TkUZWLQ@mail.gmail.com>
+ <99a9a562-9f6f-411c-be1c-0a28fc2524dd@quicinc.com>
+ <CAA8EJppj+cDnw7p4yANvF0FmEhX3+L5xUq8w3TeevAGhcpo1Yg@mail.gmail.com>
+ <9d1c684f-51ac-4d9c-a189-940ff65e0cab@linaro.org>
+From: Ritesh Kumar <quic_riteshk@quicinc.com>
+In-Reply-To: <9d1c684f-51ac-4d9c-a189-940ff65e0cab@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ERe9fjQUvxdTw12Qkc_kIo02E4PHDDAu
+X-Proofpoint-ORIG-GUID: ERe9fjQUvxdTw12Qkc_kIo02E4PHDDAu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_09,2024-02-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ adultscore=0 bulkscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 clxscore=1011 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402120092
 
-Hi Andrew,
 
-kernel test robot noticed the following build warnings:
+On 1/23/2024 11:34 PM, Konrad Dybcio wrote:
+>
+>
+> On 1/23/24 16:12, Dmitry Baryshkov wrote:
+>> On Tue, 23 Jan 2024 at 15:43, Ritesh Kumar <quic_riteshk@quicinc.com> 
+>> wrote:
+>>>
+>>>
+>>> On 1/16/2024 6:27 PM, Dmitry Baryshkov wrote:
+>>>
+>>>> On Tue, 16 Jan 2024 at 14:06, Konrad Dybcio 
+>>>> <konrad.dybcio@linaro.org> wrote:
+>>>>>
+>>>>>
+>>>>> On 1/16/24 10:49, Ritesh Kumar wrote:
+>>>>>> Enable Display Subsystem with Novatek NT36672E Panel
+>>>>>> on qcm6490 idp platform.
+>>>>>>
+>>>>>> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+>>>>>> ---
+>>>>>>     arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 100 
+>>>>>> +++++++++++++++++++++++
+>>>>>>     1 file changed, 100 insertions(+)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts 
+>>>>>> b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>>> index 2a6e4907c5ee..efa5252130a1 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>>>>>> @@ -9,6 +9,7 @@
+>>>>>>     #define PM7250B_SID 8
+>>>>>>     #define PM7250B_SID1 9
+>>>>>>
+>>>>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>>>>>     #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>>>>>     #include "sc7280.dtsi"
+>>>>>>     #include "pm7250b.dtsi"
+>>>>>> @@ -38,6 +39,25 @@
+>>>>>>                 stdout-path = "serial0:115200n8";
+>>>>>>         };
+>>>>>>
+>>>>>> +     lcd_disp_bias: lcd-disp-bias-regulator {
+>>>>>> +             compatible = "regulator-fixed";
+>>>>>> +             regulator-name = "lcd_disp_bias";
+>>>>>> +             regulator-min-microvolt = <5500000>;
+>>>>>> +             regulator-max-microvolt = <5500000>;
+>>>>>> +             gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
+>>>>>> +             enable-active-high;
+>>>>>> +             pinctrl-names = "default";
+>>>>>> +             pinctrl-0 = <&lcd_disp_bias_en>;
+>>>>> property-n
+>>>>> property-names
+>>>>>
+>>>>> all throughout the patch
+>>>
+>>> Thanks, I will update in the new version.
+>>>
+>>>>>> +&gpu {
+>>>>>> +     status = "disabled";
+>>>>>> +};
+>>>>> Hm.. generally we disable the GPU in the SoC DT, but that doesn't
+>>>>> seem to have happened here..
+>>>>>
+>>>>> Thinking about it more, is disabling it here necessary? Does it
+>>>>> not fail gracefully?
+>>>> Missed this.
+>>>>
+>>>> I'd say, I don't see a reason to disable it at all. The GPU should be
+>>>> working on sc7280 / qcm4290.
+>>>
+>>> With GPU device node enabled, adreno_bind failure is seen as the
+>>> "speed_bin" was not populated on QCM6490 target which leads to display
+>>> bind failure.
+>>
+>> Excuse me please. The GPU node for sc7280 already has speed_bin, which
+>> points to qfprom + 0x1e9, bits 5 to 9.
+>>
+>> Do you mean that qcm6490 uses different speed bin location? Or
+>> different values for the speed bins?
+>>
+>>> Spoke with GPU team and on QCM6490 board, only CPU rendering is
+>>> supported for now and there is no plan to enable GPU rendering in near
+>>> future.
+>>
+>> This sounds like having the feature disabled for no particular reason.
+>> Both the kernel and Mesa have supported the Adreno 635 for quite a
+>> while.
+>
+> 643 [1], [2]
+>
+>>
+>>> In this regard, what do you suggest
+>>>
+>>> 1) Disable GPU in QCM6490 DT (as per the current patch)
+>>> 2) Disable GPU in the SoC DT, but enable it in other platform DTs. 
+>>> (This
+>>> will prompt change in all the dt's and we don't have all the devices to
+>>> test)
+>>
+>> The second option definitely follows what is present on other platforms.
+>>
+>>> Please let me know your views on it.
+>>
+>> Please enable the GPU instead.
+>
+> +1
+>
+> Konrad
+>
+> [1] 
+> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/25408/diffs?commit_id=b1e851d66c3a3e53f1a464023f675f3f6cbd3503
+> [2] 
+> https://patches.linaro.org/project/linux-arm-msm/cover/20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org/
 
-[auto build test WARNING on sre-power-supply/for-next]
-[also build test WARNING on mani-mhi/mhi-next soc/for-next linus/master v6.8-rc4 next-20240209]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Thanks for the help. After applying missing patches from series 
+https://patches.linaro.org/project/linux-arm-msm/cover/20230926-topic-a643-v1-0-7af6937ac0a3@linaro.org/
+in my local build, GPU is working fine. GPU disablement change is not 
+needed. I will send new version of patch removing GPU part and 
+addressing other review comments.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Andrew-Davis/power-reset-atc260x-poweroff-Use-devm_register_sys_off_handler-RESTART/20240209-011655
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/sre/linux-power-supply.git for-next
-patch link:    https://lore.kernel.org/r/20240208170410.67975-14-afd%40ti.com
-patch subject: [PATCH v3 13/19] power: reset: msm-poweroff: Use devm_register_sys_off_handler(RESTART)
-:::::: branch date: 4 days ago
-:::::: commit date: 4 days ago
-config: arm64-randconfig-r131-20240211 (https://download.01.org/0day-ci/archive/20240212/202402121342.7WgNqBu9-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20240212/202402121342.7WgNqBu9-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/r/202402121342.7WgNqBu9-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/power/reset/msm-poweroff.c:18:41: sparse: sparse: incorrect type in initializer (different address spaces) @@     expected void [noderef] __iomem *msm_ps_hold @@     got void *cb_data @@
-   drivers/power/reset/msm-poweroff.c:18:41: sparse:     expected void [noderef] __iomem *msm_ps_hold
-   drivers/power/reset/msm-poweroff.c:18:41: sparse:     got void *cb_data
->> drivers/power/reset/msm-poweroff.c:33:61: sparse: sparse: incorrect type in argument 5 (different address spaces) @@     expected void *cb_data @@     got void [noderef] __iomem *msm_ps_hold @@
-   drivers/power/reset/msm-poweroff.c:33:61: sparse:     expected void *cb_data
-   drivers/power/reset/msm-poweroff.c:33:61: sparse:     got void [noderef] __iomem *msm_ps_hold
-   drivers/power/reset/msm-poweroff.c:37:39: sparse: sparse: incorrect type in argument 5 (different address spaces) @@     expected void *cb_data @@     got void [noderef] __iomem *msm_ps_hold @@
-   drivers/power/reset/msm-poweroff.c:37:39: sparse:     expected void *cb_data
-   drivers/power/reset/msm-poweroff.c:37:39: sparse:     got void [noderef] __iomem *msm_ps_hold
-
-vim +18 drivers/power/reset/msm-poweroff.c
-
-78be3176c4335b Abhimanyu Kapur 2013-07-30  15  
-bc460fab0b719d Andrew Davis    2024-02-08  16  static int do_msm_poweroff(struct sys_off_data *data)
-78be3176c4335b Abhimanyu Kapur 2013-07-30  17  {
-bc460fab0b719d Andrew Davis    2024-02-08 @18  	void __iomem *msm_ps_hold = data->cb_data;
-bc460fab0b719d Andrew Davis    2024-02-08  19  
-78be3176c4335b Abhimanyu Kapur 2013-07-30  20  	writel(0, msm_ps_hold);
-78be3176c4335b Abhimanyu Kapur 2013-07-30  21  	mdelay(10000);
-18a702e0de9879 Pramod Gurav    2014-09-25  22  
-18a702e0de9879 Pramod Gurav    2014-09-25  23  	return NOTIFY_DONE;
-78be3176c4335b Abhimanyu Kapur 2013-07-30  24  }
-78be3176c4335b Abhimanyu Kapur 2013-07-30  25  
-78be3176c4335b Abhimanyu Kapur 2013-07-30  26  static int msm_restart_probe(struct platform_device *pdev)
-78be3176c4335b Abhimanyu Kapur 2013-07-30  27  {
-bc460fab0b719d Andrew Davis    2024-02-08  28  	void __iomem *msm_ps_hold = devm_platform_ioremap_resource(pdev, 0);
-78be3176c4335b Abhimanyu Kapur 2013-07-30  29  	if (IS_ERR(msm_ps_hold))
-78be3176c4335b Abhimanyu Kapur 2013-07-30  30  		return PTR_ERR(msm_ps_hold);
-78be3176c4335b Abhimanyu Kapur 2013-07-30  31  
-bc460fab0b719d Andrew Davis    2024-02-08  32  	devm_register_sys_off_handler(&pdev->dev, SYS_OFF_MODE_RESTART,
-bc460fab0b719d Andrew Davis    2024-02-08 @33  				      128, do_msm_poweroff, msm_ps_hold);
-18a702e0de9879 Pramod Gurav    2014-09-25  34  
-521ef776c49589 Andrew Davis    2024-02-08  35  	devm_register_sys_off_handler(&pdev->dev, SYS_OFF_MODE_POWER_OFF,
-521ef776c49589 Andrew Davis    2024-02-08  36  				      SYS_OFF_PRIO_DEFAULT, do_msm_poweroff,
-521ef776c49589 Andrew Davis    2024-02-08  37  				      msm_ps_hold);
-18a702e0de9879 Pramod Gurav    2014-09-25  38  
-78be3176c4335b Abhimanyu Kapur 2013-07-30  39  	return 0;
-78be3176c4335b Abhimanyu Kapur 2013-07-30  40  }
-78be3176c4335b Abhimanyu Kapur 2013-07-30  41  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
-
+Thanks,
+Ritesh
 
