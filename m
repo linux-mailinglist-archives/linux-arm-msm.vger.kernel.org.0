@@ -1,102 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-10715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C8F5851B66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 18:29:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E659851B6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 18:30:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 464F7B2140B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 17:29:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E177E1F2286B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Feb 2024 17:30:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 250CA3E478;
-	Mon, 12 Feb 2024 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4409E3E478;
+	Mon, 12 Feb 2024 17:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uS+qO6QF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XhoQwY6c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADCF3D978;
-	Mon, 12 Feb 2024 17:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21A3F8D0;
+	Mon, 12 Feb 2024 17:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707758969; cv=none; b=OQ5H09ppn+wMcjYHoe+bxJ1wTMNGSWKCw9RNkVcKWaNHlTX2nKerPg2izqdN5LnNC4COFUVLbXqHKRcdfN+bZByB7lI5pt3c5pF3VzYZtit2ZoNIfulmdXPdsjC/hS+CqV9Ixe67B+rpvFPZyuEzrr7DSZln2BcyOuELFztnsb8=
+	t=1707759024; cv=none; b=bh6TpMOWeZ6iabcPs5WiDEoYu4YlTibLgJsCh7XgCScp9TBSarGk/Gh3k+eC6lsRM3d0EnOGjeWcQ6NFy1akcokcvI+FA+oAXgD1Q3+sa7v2jGL1jbEqPJAO3gEyyuro9ML0PyK5ouROI3QUISXmNGg9Ch16D82RVCPfYpAHjyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707758969; c=relaxed/simple;
-	bh=U7CTxMmAqUerbF35qfZn9i9xTreBxXVXMPA1ApyuvAU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pYh2tP0YpbgQMbsj468yG6hAmBCrOPrCcYrKOC771HmJrWKu6adoDTutF2CZY95XbBZBjhifMUIOvqUfrXWEYM/VS1Y7Fcrs+yMw86IhcUH1CE8PbZLAfJ1xw1qqWx3tLgId0HdrkldK6x4xZj0GYNj90JCzzeyVdDCFMfzzc+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uS+qO6QF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6B6C4166D;
-	Mon, 12 Feb 2024 17:29:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707758968;
-	bh=U7CTxMmAqUerbF35qfZn9i9xTreBxXVXMPA1ApyuvAU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uS+qO6QFqybuxg93e/+WVVRfdxiJ2UzBuLNYzbgXEKM8DV7rBzbxR/824K9E2GC8c
-	 zRPdbPwh1aEKnu9C22q+Bw18Glrc49CooqxLTcW7DCwl30V2uxfGKap4az0KySZqE8
-	 IRIazPCjORKfPy76EvMVtilQmoHk6pfINOE3zl4lvQIv1qcYkASUiHLRN/z7rrksp2
-	 3JVdmc848+QjDI1MOGvyDGItAjeNPXuPkpJ1PdeQBfCtai1op2WsAsFpEkkLDW/cQd
-	 iJwA7odq3K4196oZKnc7j5mgKbcG2ISBpnYV3GLUu9mdX3IfVqev2aJvso7LLoexFc
-	 EGHQYiCuYgozw==
-Date: Mon, 12 Feb 2024 17:29:24 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Amol Maheshwari <amahesh@qti.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: misc: qcom,fastrpc: Compute callbacks
- can be DMA coherent
-Message-ID: <20240212-veneering-playback-a846c91c6f66@spud>
-References: <20240212110827.59302-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1707759024; c=relaxed/simple;
+	bh=ZHz2/Ii2ezqNSyAK1WHFHID3r78PJgY7A/ovJL/qKVs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=jmTSR4mlhIzMxwCKl7bgT+36ScVYSpnRNXsjGd74trdIFiYtvRpGXqy/Y1yTi4CrmiG7XZjZclNG27VRu42ycFHyMnT6kMrCCV9mfJ9DAOpy86u1yMBGHFXVjsYmdOjCmMSnOOkmTgDRSuk2MqK2c+YFcNRVN9Br1TlkXUdVjhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XhoQwY6c; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41CDWMM2029846;
+	Mon, 12 Feb 2024 17:30:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:from:subject:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=mFP93yrNCBsj8NEPJw3QpaEx/+1X39HZCQ2vhvFATU4=; b=Xh
+	oQwY6cFCoNr21eQv9CMDQAUN7ZiaLKUEdtxPi3MgdyjEdOuwPlLIHKWehZ9u8xCL
+	sjxkBxx6GIaP3s+LGEywfy87A0U4WWgXCWcyA9/hlHAUqlKHR/TaBDULqOeTZRzo
+	tMltdFXGh7to9XIi8kwIcSPUO4Z/axOC5RdlyyiGW2763+2dGDql2TYioJOQwdlv
+	ze9sVhH4Nq3a8jRUD3jwLcihDTMdZwlGPPlxfkP3UHNrcdzvW5ZJCHw/7Lfdj5a6
+	cvMKKBUAxyQmtoBgx9aYxkzvkA8cXWh+UjKa9hXh+UKHWFrw2aeS42E+QRVdMMgS
+	cbQvmBe8NPNwKQk/fbDA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7ju78t7h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 17:30:01 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41CHU0wC027045
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 17:30:00 GMT
+Received: from [10.216.55.125] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
+ 2024 09:29:53 -0800
+Message-ID: <13da9cd9-218d-4b3f-98f8-62edcd91a23e@quicinc.com>
+Date: Mon, 12 Feb 2024 22:59:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="G+lOA8hp6GVjNZIV"
-Content-Disposition: inline
-In-Reply-To: <20240212110827.59302-1-krzysztof.kozlowski@linaro.org>
+User-Agent: Mozilla Thunderbird
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Subject: Re: [PATCH v4 03/10] iommu/arm-smmu-qcom: Add support for TBUs
+To: <quic_c_gdjako@quicinc.com>
+CC: <andersson@kernel.org>, <conor+dt@kernel.org>,
+        <devicetree@vger.kernel.org>, <djakov@kernel.org>,
+        <iommu@lists.linux.dev>, <joro@8bytes.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cgoldswo@quicinc.com>, <quic_pdaly@quicinc.com>,
+        <quic_sudaraja@quicinc.com>, <quic_sukadev@quicinc.com>,
+        <robdclark@gmail.com>, <robh+dt@kernel.org>, <robin.murphy@arm.com>,
+        <will@kernel.org>
+References: <20240201210529.7728-4-quic_c_gdjako@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20240201210529.7728-4-quic_c_gdjako@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9AwD145O5tY5kb5MEBPsEImeSD339Gw-
+X-Proofpoint-GUID: 9AwD145O5tY5kb5MEBPsEImeSD339Gw-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_14,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402120133
 
+Hi
 
---G+lOA8hp6GVjNZIV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The following patch would introduce a use-after-free bug which was found 
+during KASAN testing on qcm6490 with the patch.
 
-On Mon, Feb 12, 2024 at 12:08:27PM +0100, Krzysztof Kozlowski wrote:
-> Apparently on Qualcomm SM8550 and SM8650 the FastRPC compute callbacks
-> are DMA coherent:
->=20
->   sm8650-qrd.dtb: fastrpc: compute-cb@2: 'dma-coherent' does not match an=
-y of the regexes: 'pinctrl-[0-9]+'
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+diff 
+<https://lore.kernel.org/all/20240201210529.7728-4-quic_c_gdjako@quicinc.com/#iZ2e.:20240201210529.7728-4-quic_c_gdjako::40quicinc.com:1drivers:iommu:arm:arm-smmu:arm-smmu-qcom.c> 
+--git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
+b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c index 
+8b04ece00420..ca806644e6eb 100644 --- 
+a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c +++ 
+b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c @@ -1,12 +1,14 @@   // SPDX-License-Identifier: GPL-2.0-only
+  /*
+   * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved    */
+  
+  #include <linux/acpi.h>
+  #include <linux/adreno-smmu-priv.h>
+  #include <linux/delay.h>
+  #include <linux/of_device.h>
++#include <linux/of_platform.h>   #include <linux/firmware/qcom/qcom_scm.h>
+  
+  #include "arm-smmu.h"
+@@ -446,6 +448,7 @@ static struct arm_smmu_device 
+*qcom_smmu_create(struct arm_smmu_device *smmu,   	const struct device_node *np = smmu->dev->of_node;
+  	const struct arm_smmu_impl *impl;
+  	struct qcom_smmu *qsmmu;
++ int ret;   
+  	if (!data)
+  		return ERR_PTR(-EINVAL);
+@@ -469,6 +472,12 @@ static struct arm_smmu_device 
+*qcom_smmu_create(struct arm_smmu_device *smmu,   	qsmmu->smmu.impl = impl;
+  	qsmmu->cfg = data->cfg;
+  
++ INIT_LIST_HEAD(&qsmmu->tbu_list); + mutex_init(&qsmmu->tbu_list_lock); 
++ ret = devm_of_platform_populate(smmu->dev); // smmu has been freed by 
+devm_krealloc() above but is being accessed here again later. This 
+causes use-after-free bug. + if (ret) + return ERR_PTR(ret); +   	return &qsmmu->smmu;
+  }
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Can it be done like below?
+  	qsmmu->smmu.impl = impl;
+  	qsmmu->cfg = data->cfg;
+  
++ INIT_LIST_HEAD(&qsmmu->tbu_list); + mutex_init(&qsmmu->tbu_list_lock); 
++ ret = devm_of_platform_populate(qsmmu->smmu.dev);// Using the struct 
+to which smmu was copied instead of freed ptr. Thanks, Pratyush
 
-Cheers,
-Conor.
-
---G+lOA8hp6GVjNZIV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZcpVdAAKCRB4tDGHoIJi
-0o7uAQDW3lR5HFdqqIunG7TTZ11uZObObONkWhQlhMxcfi6cGQD+KWfidZJPDjr5
-oKmF3GoKh3PZX35ntdcI1YtOS81LYgg=
-=5Twe
------END PGP SIGNATURE-----
-
---G+lOA8hp6GVjNZIV--
 
