@@ -1,136 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-10903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED8E785335F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:42:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C93085336B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:43:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BC781C20A77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:42:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 836F11C228D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:43:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 787F357875;
-	Tue, 13 Feb 2024 14:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F89357893;
+	Tue, 13 Feb 2024 14:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="EXm3UUHH"
+	dkim=pass (2048-bit key) header.d=marliere.net header.i=@marliere.net header.b="l5smCoRw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACADA54646
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 14:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F365757873;
+	Tue, 13 Feb 2024 14:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707835332; cv=none; b=ncL8+mQsD6JqHBxQdUnE010CPsr+dgAX4u8hSOwO8QXzOkViuOcXoFxNpcj9f/v7fxkyNudYhW/NvLMRRwH1pPrmzKQtFPXw7QRLq17lM7EUbsgB95Ljcq82jcwf06TDGCuVwk9Bml0MHchJLOH6ELj5TKhtLrI0HocLZ2vSH8Q=
+	t=1707835407; cv=none; b=ZJS/CrAsJ6S/wfcwn2pR2Pga/GbCu5vg03HYDeuxNA+CQynbxKPQM2v4vOqZg5sdHJ8FYc3azrQJY78GBXoly1+QCHx6/XDED2pioJcQJLb1grJGgHkP5XFDwFU3+ocydM+pv+C7LcfZmCC+my+ILDC1TSOM52mV1z46wR/aowU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707835332; c=relaxed/simple;
-	bh=dGCo5O1zuXivuV35bP/mp9Fz8NV3YZDD4lKLvTu/AoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XNnd9kwx43qlZjDDtPgroUC6fp+qllTKgDWU6a7ogzh4ueDtVVvk/h3vR2CZNnxWVJQxpEh34IQ7NsqUcVnp8eU7DYb5NpY4GOM78R7nKGH9QEDJz9RKD5wGxRPQOfe+ld0+iyWMoamjvFhHWfoFttMD1AMyiP9+NKfLb5xGtQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=EXm3UUHH; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6e2e58feaefso478702a34.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 06:42:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1707835329; x=1708440129; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3VCFBkygL/6eJOKkXAgrZmI3b3/D/n5FCeZU3c3PKSI=;
-        b=EXm3UUHHS9YEFa4unCPIwVsPQMPTs0ypmseZvXl1QwLWniYhaRxToksvT2Ez/nhmYE
-         8V0JrtWDVXbZkLvJ/kRqzxdjucVxgAyz6f8x1lBpIPzaYcDDQ6kk70kW6sDzDFp7yFjr
-         B2DdiMRkNsV4h5anbz8jconCdxLbbWbVIuckVeIcLVOWBmD2QH52nraZxYogpWyodmB7
-         adRY8wjY6yj/uHFWXM5/djN9ryCDz2FIu6U9G+HIj6mtidvziqPB/mdjmmvGGtyJ1bXD
-         UL7LNFnRqIFFlgoFw0sj/gJHuOINmL3MT9uwM2QeGjwInYkGATmAxrSW1vKP1iwi0cha
-         8X0w==
+	s=arc-20240116; t=1707835407; c=relaxed/simple;
+	bh=WNpttQEDrqvt8dFJV77xZZnD8lcLZbyCkaxL6f/dDNg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=CqFloXaVDBUiSN8khC1ZmSW/fUbMg55ZGH9cc3htPiQXyT0Q/ydkicq86n6sfKV/5JpxtA3hyYFj23oxMWm5XK0EisHzFziOM2A4KYotGWFjiXCMJM4kBK/+aO+V5AXA9vMIsnB1/YsoWs68DQV7Ve3B6oWc3RI+t0bkAluj84M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=marliere.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=marliere.net header.i=@marliere.net header.b=l5smCoRw; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-6e0a5472e7cso1700101b3a.2;
+        Tue, 13 Feb 2024 06:43:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707835329; x=1708440129;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1707835405; x=1708440205;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:dkim-signature:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3VCFBkygL/6eJOKkXAgrZmI3b3/D/n5FCeZU3c3PKSI=;
-        b=ZhR+b9QPseoNTlncgZfWQ/pD8trXEys5dXvpNIg2zfp1vSW8na9aULZnpnJuVKSZ2e
-         QRzPEFCvhQz93GfmuvUCHeAd658qeL/+1tzGY5oJgPthFkOyVbl4Dw47i7YvghzoHfZQ
-         u6NOOKyonmJanxr56bm3G/XbhaB/uF6a0JBP99HnLAszaysMy3rJS1vGzazjYXpLliY3
-         6wA+q+AH/m5ZpwtAByujjvX2en8m7M4yDwMzbh/yH7gjojFA+wbX2l55iysQ9Op8QBMR
-         Y/N5K0sma79ekpMkTl+phFJ0JxhTCfqXNNzYdPmvCidXRIYiise4Yr8dZ7t4r5BjByrw
-         5mDA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKUo74GX660zf1h5isjG+/6oYk5UXCQP4R91Awrr4LgENJfCPEfHo8B/xZSaFAXq6saoCnDDDHCE66+vNlfZeQz75S0+4rHIYW28JLPw==
-X-Gm-Message-State: AOJu0YzGtd6pKYXRkOvR3M61hMI2mKfx/ev67sISiCbRV6vz6ywiCfmj
-	6J7KIcGwiNb9KddaG4dn/AfWXbW5BeIYojjiM5QugvCaSFLg676gzdXEAcPGstI=
-X-Google-Smtp-Source: AGHT+IEev1ENW2z4nIyP0krgZKDnpV0XiwBvzjiKIgCGC5osYXFrnDkIC+NoX8PX+UjSiiAxpJuTtA==
-X-Received: by 2002:a9d:62c6:0:b0:6e2:e506:748d with SMTP id z6-20020a9d62c6000000b006e2e506748dmr6090754otk.12.1707835329736;
-        Tue, 13 Feb 2024 06:42:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUew+4emMEaTUg5O6y6uIZUs/k5DUoPaOpH4gZzdbJULcYM2c2T2sHO0jE0TF3yiZUGZvbI+wYzKMipBvgt3vtPABVLp4ntzKQ6oGmaUkDEg8uq4hud5115K6VSY+lzwlTz09lhpbDiozcoKgj4VtcSuapRxf6cAGUS047fbzgnClqB0KCbKnIyUOz2HAkjZ+hDAaMdKX2hzJqg37lviWNRPlv/vYhB8eNQXDTOKLn5Cjp0RDJwDKDa9EvvW+7SNBrkmXT5TTU=
-Received: from ziepe.ca (hlfxns017vw-142-68-80-239.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.80.239])
-        by smtp.gmail.com with ESMTPSA id bf10-20020a056830354a00b006e2f7ddf4eesm136171otb.28.2024.02.13.06.42.08
+        bh=FYNucHgPMrt9ZK1QrIVWntmjSqYfyys/m1XF/v5jsto=;
+        b=ZLD+ELwgfnfRDX0wGiSux4tQdaFgRgnRb9VRVTW4bbLU6SB0Co++hRmzqZ21BXhMvg
+         F0/mQVhav2Jvfwpma+HY973w5YiBKbYkqDg2enSVJXOiQIKeLceunXQA1ZtkKmRYeuOK
+         ck57yRaKL1JcFzoN+OfHkU+gFmy9So2v3trSNp0TOBI5OvCfdLfIaMEVTln48nv6gUbV
+         2kHtIlSZhjeAdmuqxUetoaEXUaRnBAzIDzAYcVO5M72yoi4SuCXVmPBFoKx8/nuhGNg8
+         FhsFLveO14foj/yoW9TrPXjrv1H5TozuLu0+5Og0uqJXIqn9BpIPriAHWVKmwrh3zcI9
+         aMgg==
+X-Forwarded-Encrypted: i=1; AJvYcCVueWSirDsOEoIzQ2oL4DRyt4WtjoCwFfradmuDtymsNlxPa45ZbX3xTgIZHCuNLI0K0S3AnX++Fwocc/XM5p0lzdnZjv+4cdvb45OtBNWE6ZODygnqTW8wvTQNJFdTYO0ztpGFBAmaPSPADA==
+X-Gm-Message-State: AOJu0YwNWC17o6/nXcHj4VvHX8c7yQToh6gUdmB0BJ+eSlJjxv7Zerqe
+	dzVikXjwmu+mO2xudx+mdA4lzMepRigRJOjs+1/M1E2u9M+75xQ1
+X-Google-Smtp-Source: AGHT+IHLLGlo70VhjAv4z5ov36ZrZKFq8nDNMCqLQZYEXHlALKW6yInWY/9G7HaH9+IuoqUeK7+Y3g==
+X-Received: by 2002:a05:6a20:ce47:b0:19c:93b3:c669 with SMTP id id7-20020a056a20ce4700b0019c93b3c669mr8122107pzb.29.1707835405253;
+        Tue, 13 Feb 2024 06:43:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW4zBhh7yrmLk5zu+RrfnMjm/6ZEH6JfqqMa/JIvOBxWQhZW+wzh6usqXGWcwMUagazDoJJGAkLZEYCozTpKub2l4senvn+V8FphaQAQiiSDfFZvkVdEO9czIVLZpFekJ8E8CTbCBhS6qpOysUOtnJd0Pr7Ldn0IuKaqqe5LTLYGq/81T3cqeWqo+pp00fjqK9SGMGwApeArmdoPWQkZoKDrTJ+DbWEhfqIRs3LRZ26tSGvl/Vg+mzHyef12XTJT5pDiATujcy055BrcvTl
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id z5-20020a62d105000000b006e08437d2c6sm8099904pfg.12.2024.02.13.06.43.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 06:42:09 -0800 (PST)
-Received: from jgg by wakko with local (Exim 4.95)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1rZtz6-004WEV-5n;
-	Tue, 13 Feb 2024 10:42:08 -0400
-Date: Tue, 13 Feb 2024 10:42:08 -0400
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Will Deacon <will@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Rob Clark <robdclark@gmail.com>,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-Message-ID: <20240213144208.GL765010@ziepe.ca>
-References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
- <20240213121257.GI765010@ziepe.ca>
- <20240213121934.GA28726@willie-the-truck>
- <20240213125303.GJ765010@ziepe.ca>
- <20240213125951.GB28844@willie-the-truck>
- <20240213134726.GK765010@ziepe.ca>
- <20240213140900.GE28926@willie-the-truck>
+        Tue, 13 Feb 2024 06:43:24 -0800 (PST)
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2024; t=1707835403;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=FYNucHgPMrt9ZK1QrIVWntmjSqYfyys/m1XF/v5jsto=;
+	b=l5smCoRwvk1Mx5BdQFCdQtU/3ZsJ1FNBT66X17YgwebdIbuSshfBM3SXwxe8hYvs7LGKf6
+	5FM4DbiGVuXj22gYOtU9H88lu0RNr/b7f8I0N2lYdX4skI6p0MDtGCE6dqlQ3Z61h2xGIk
+	v045CjiSyBnCALlcewuUAfLibBQDuWhzSEYZF0eCdRHTSmr0/ojheAnrURXmTayNdPd4x1
+	9QbAzG2iube256TVDuBdfYQQVzG8RlJNgmOxtCVTuw2ev/25yPNpo9ih2sTFlasDMqHEqI
+	SWgB4SGxSFzVIP10zrLAuEFIsRmiSGr6LvYUuqu8Xqb7UVK7zGM7g06pWYk/hw==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+Date: Tue, 13 Feb 2024 11:44:01 -0300
+Subject: [PATCH] soc: qcom: apr: make aprbus const
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213140900.GE28926@willie-the-truck>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240213-bus_cleanup-apr-v1-1-50c824eec06d@marliere.net>
+X-B4-Tracking: v=1; b=H4sIADCAy2UC/x3MQQqAIBBA0avIrBPUCrKrRITZWANhohhBePek5
+ Vv8/0LCSJhgZC9EvCnR5Stkw8Aexu/IaasGJVQnlGz5mtNiTzQ+B25C5K3o3aCdFv1goVYhoqP
+ nP05zKR8fLAWPYQAAAA==
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Ricardo B. Marliere" <ricardo@marliere.net>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1661; i=ricardo@marliere.net;
+ h=from:subject:message-id; bh=WNpttQEDrqvt8dFJV77xZZnD8lcLZbyCkaxL6f/dDNg=;
+ b=owEBbQKS/ZANAwAKAckLinxjhlimAcsmYgBly4Azba+yedlJSxrLcdV5QSQIj/y/UhcAHPfbF
+ dDVyANESOeJAjMEAAEKAB0WIQQDCo6eQk7jwGVXh+HJC4p8Y4ZYpgUCZcuAMwAKCRDJC4p8Y4ZY
+ phWnD/9rAPaaWWA6BJ6yJMPj/UIdqpENn4eB0nlph7th67CZFFwn3Q5o8lddz4AEEo4p7tPB5AB
+ cgp4O7LA7iCH/ExEypmt6bMZzwVFCkgBABtGEYWq+9gE1s5iAZGPl/0Y6EdiHEhXHe6MSHcA/YG
+ aWFlXIxp4liOhyVy1FQHtxakUUaCAFsFkrv+A5sEzCDp+EjV0NrHA6j/OtnMgIuCRqD27yDkSSp
+ P0651lFbSuJPSowMFTHWZ/7jWjF3stF29rIt0JLJ8il0P2frbyA+zBp3AteLjduDCaikJQ3Tk1o
+ GoV8uQcBRbfDU6Z07X/LO8rZ5Z8pXTQpIwpme5c3M2+dBIOFcscOYfVd4+s6Gzdfm66vAWy/bRA
+ ibktmLZzaNWOQrldMnT1AvtL/QWDh3d4tFTapi7DFZX0KklDllYtHSuw4Pt7ctX9Jmj0+MBYCtg
+ 3+WiMBTC1bNUgkOlfB5sOdtB50t2qzmQUjHv8WVn8oD/sXQBXLmZ3iSNrfakyXmooAa95AqbXjI
+ V0wlpBlIaFtWal8Lbjl5SufroglOceEYPwJ5FzQ2z/aj3oUFDMJO1BrNA9EPFdEOSKu65sZmVS3
+ D9co0V2ciBHfFcmaS0YIXv21Fg5j+hOoN27LTF+nfrWZ+qucYMTubmd6xoZaOuFGdpxHCHqbUyq
+ ND+n/BJP/jpCp3A==
+X-Developer-Key: i=ricardo@marliere.net; a=openpgp;
+ fpr=030A8E9E424EE3C0655787E1C90B8A7C638658A6
 
-On Tue, Feb 13, 2024 at 02:09:00PM +0000, Will Deacon wrote:
-> Hey Jason,
-> 
-> On Tue, Feb 13, 2024 at 09:47:26AM -0400, Jason Gunthorpe wrote:
-> > On Tue, Feb 13, 2024 at 12:59:52PM +0000, Will Deacon wrote:
-> > > > The typical kernel standard is to fix bugs in patches and only reach
-> > > > for a wholesale revert if the community is struggling with bug
-> > > > fixing. Dmitry already tested removing that hunk, Robin explained the
-> > > > issue, we understand the bug fix is to remove the
-> > > > arm_smmu_init_domain_context() call. Nothing justifies a full scale
-> > > > revert.
-> > > 
-> > > I can't say I'm aware of any consensus for how to handle this, to be
-> > > completely honest with you. 
-> > 
-> > Well, I work in a lot of subsystems and this is a surprise to me and
-> > not something I've seen before. Fix the bug, move forward. Reverts are
-> > a cultural admission of failure. I use threats of a revert as a hammer
-> > to encourage people to pay attention to the bugs. I hardly ever
-> > actually revert things. What does reverting their code say to my
-> > submitters???
-> 
-> Huh. I guess I'm lucky never to have worked in a environment where that
-> is the case. In fact, my experience is quite the opposite: revert first
-> so that things get back to a working state and the developer/submitter
-> has some breathing room to rework the broken code. It's actually fairly
-> blameless if you get it right and when you have a half-functional CI it's
-> pretty much a necessity. Anyway, I digress...
+Since commit d492cc2573a0 ("driver core: device.h: make struct
+bus_type a const *"), the driver core can properly handle constant
+struct bus_type, move the aprbus variable to be a constant
+structure as well, placing it into read-only memory which can not be
+modified at runtime.
 
-Fascinating, I am glad we had this discussion because I was pretty put
-off by this talk of revert in this and the other thread. Cultural
-differences!
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+---
+ drivers/soc/qcom/apr.c       | 2 +-
+ include/linux/soc/qcom/apr.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
-Jason
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index 1f8b315576a4..50749e870efa 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -399,7 +399,7 @@ static int apr_uevent(const struct device *dev, struct kobj_uevent_env *env)
+ 	return add_uevent_var(env, "MODALIAS=apr:%s", adev->name);
+ }
+ 
+-struct bus_type aprbus = {
++const struct bus_type aprbus = {
+ 	.name		= "aprbus",
+ 	.match		= apr_device_match,
+ 	.probe		= apr_device_probe,
+diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
+index be98aebcb3e1..7161a3183eda 100644
+--- a/include/linux/soc/qcom/apr.h
++++ b/include/linux/soc/qcom/apr.h
+@@ -9,7 +9,7 @@
+ #include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/soc/qcom,gpr.h>
+ 
+-extern struct bus_type aprbus;
++extern const struct bus_type aprbus;
+ 
+ #define APR_HDR_LEN(hdr_len) ((hdr_len)/4)
+ 
+
+---
+base-commit: f7b0172f074a435a34bc0902b6cdbf1a3e935e27
+change-id: 20240213-bus_cleanup-apr-305f89f9058c
+
+Best regards,
+-- 
+Ricardo B. Marliere <ricardo@marliere.net>
+
 
