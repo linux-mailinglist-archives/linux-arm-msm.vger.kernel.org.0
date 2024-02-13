@@ -1,142 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-10840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A63A1852D15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 10:54:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D41E852D24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 10:56:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A4031F26DE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:54:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D109B28138
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2968C39FE6;
-	Tue, 13 Feb 2024 09:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2DB62261A;
+	Tue, 13 Feb 2024 09:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jjB0/Tk6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ct2nbt0W"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ECE39FDA;
-	Tue, 13 Feb 2024 09:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C6A22615;
+	Tue, 13 Feb 2024 09:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707817883; cv=none; b=t8hFjpcLfQ2mmK0f4G/MMdqL+mD/q8ySKPej/a75YJ0kj2bw35aN7FmAtuqMeel3JU8TREoZrTItgtjXkB3+QmP6ZLflt0AUz8awn6O+dhx4kzn8TH4zD4hRn0KASQw+aqaGZlTDbzw94dRsyL6DlDFOHXy2i7agfQHOoRAzscc=
+	t=1707818141; cv=none; b=XFBXYx5UMFNkuBIZF/DLhrCp6h/wqE7tQB2FgwzTUWmB5BxwFCVeSMj2HRtV59EuBshllROr/NrazthMOkJgTH0zqafWphh2uVOfx4fgDltoWlmgGYbuhARBjDzaI9gzo1otusECeuvJrNb2jgSYe7Ag4iKiwx4eCOkrpLxXtdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707817883; c=relaxed/simple;
-	bh=9lRUh6+nf6rRUkRuDEgbxLNFISG29zSAHH9fpqqsAIo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OFuv2vr9l/4OrFGJxJuY52A2bkTHFes109ByRs5VGPeBoQO+UxDKiT6VLTAkVP68F1rU5mw/5Sop38fMw30RmYy9mDzn1EcyZWV13iLWnWGxcjvv9jgt8Y5Tw+Rjx9OwQ5cvyjny5iiKRXd2ZUHngzUaGiJkcnPUtYI1jKQbpqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jjB0/Tk6; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1707818141; c=relaxed/simple;
+	bh=C4iNBZPrjL46Oaov232LSgom1YmPp5ylrGEfTx2JReM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PTHwAI2zgy54NGh+8jHA8cWd+WaYSRNSX5iUBLzrJMRCwHKoE7YF5++b24ZIEUD7XpQX1MTXlH8hrlZZmzVLu4OrSAa/gXmf/hSS8asgyA06c64tBMdUofusLVNdMkFf4VDGC6dufMDwSdSoo2cVssC846PU0Ex14YaOUNs3djg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ct2nbt0W; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D9VqQE029331;
-	Tue, 13 Feb 2024 09:51:18 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D5mNa6010919;
+	Tue, 13 Feb 2024 09:55:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bf69VGDVwFoPu6tmc5FcL69h7xGtSS3ikkJnZ40Cf78=; b=jj
-	B0/Tk6G/5Qy0zNCmQZ7qXL51XM+xYlWvn0/nR1WYjOclvnnL8I91flDfdmGGg4V2
-	3Ine9FtzkTjEGFEzXQ/rg06h6nUtpURlQeq8acvikzy7JrDHsrYryRoB3DooZogU
-	FFyLQ/2hmXTOz5D35yDuw2oOHumvSShbVJfBLYyD7kBsApII7gCeiiLqrvxdQGcO
-	lLlJGeF/pcpJNzaemIgRZv5axWU12GNUR6G8gCim36Cup+Cv3V8aElXbBVeqc5Wm
-	pATsYrANOboq26jgltP7mfGeEn2UwXsB2H1Z5g/OtaDlCdwP1ohWUlitzNo35jBG
-	t+Plh83Z7BmklnBQdEFQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7ju7abv8-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=C4iNBZP
+	rjL46Oaov232LSgom1YmPp5ylrGEfTx2JReM=; b=Ct2nbt0Wyxotfy1d6oQQ9E1
+	j20woGh1x52AdSJM7HayKn5UrJB1xCMOWPw+saFARYgqmfRs+/QEySHA7yUqmiLb
+	Mjp2x4xl1vWUGB3bX3+gz6onbotCRUrluJ9zUJ+IeaVtDSKjhC+a3S35jrOwUlc/
+	yE4kbpTUwgSWGgTE1jGUsf8ly19eoh8jhE6zmypeGUDVsIiBYDePuktEh5DBA+2g
+	xAcT/+PRWOCHcArI3U4fjoX3NmtcvF+H9WS5S8ospNWoLxFXTR71GwVSbmxKAr2n
+	KRcAvr06wkboZBj4oxGxDslsypmzYhlgHpZ5SI7XP9KzfHnGveGpedBKux4jF3Q=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7hewaj1d-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 09:51:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D9pHuZ031528
+	Tue, 13 Feb 2024 09:55:22 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D9tLUN017535
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 09:51:17 GMT
-Received: from [10.218.34.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 13 Feb
- 2024 01:51:13 -0800
-Message-ID: <6c7dc71c-9251-4c84-a134-82104b5f924e@quicinc.com>
-Date: Tue, 13 Feb 2024 15:21:09 +0530
+	Tue, 13 Feb 2024 09:55:21 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 13 Feb 2024 01:55:17 -0800
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Geert Uytterhoeven
+	<geert+renesas@glider.be>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Marek Szyprowski" <m.szyprowski@samsung.com>,
+        Udit Kumar <u-kumar1@ti.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v2] arm64: defconfig: Enable GCC and interconnect for QDU1000/QRU1000
+Date: Tue, 13 Feb 2024 15:24:59 +0530
+Message-ID: <20240213095459.18402-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] soc: qcom: rpmh-rsc: Enhance check for VRM in-flight
- request
-To: Mukesh Ojha <quic_mojha@quicinc.com>,
-        Subbaraman Narayanamurthy
-	<quic_subbaram@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_collinsd@quicinc.com>, <quic_eberman@quicinc.com>,
-        <quic_lsrao@quicinc.com>, <stable@vger.kernel.org>
-References: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
- <20240213035203.2492516-1-quic_subbaram@quicinc.com>
- <9ad7967f-0a6a-96ed-1433-832f76752059@quicinc.com>
-Content-Language: en-US
-From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
-In-Reply-To: <9ad7967f-0a6a-96ed-1433-832f76752059@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rVDi3cE8v9WeVVlNZehbWNcaF_IJ1OOi
-X-Proofpoint-GUID: rVDi3cE8v9WeVVlNZehbWNcaF_IJ1OOi
+X-Proofpoint-GUID: BReBCKfLj1rHPq_nItU412pvFvLwtLlo
+X-Proofpoint-ORIG-GUID: BReBCKfLj1rHPq_nItU412pvFvLwtLlo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-13_04,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=732 lowpriorityscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402130076
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ adultscore=0 bulkscore=0 clxscore=1011 mlxlogscore=625 priorityscore=1501
+ malwarescore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130077
 
-Hi,
+Add the QDU1000/QRU1000 GCC and interconnect drivers as built-in.
+These are necessary for the Qualcomm QDU1000/QRU1000 platform to boot
+to shell.
 
-On 2/13/2024 11:24 AM, Mukesh Ojha wrote:
-> 
-> 
-> On 2/13/2024 9:22 AM, Subbaraman Narayanamurthy wrote:
->> Hi Maulik,
->>
->>> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
->>> +{
->>
->> <snip>
->>
->>> +    if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
->>> +        && VRM_ADDR(addr1) == VRM_ADDR(addr2))
->>> +        return true;
->>> +    else if (addr1 == addr2)
->>> +        return true;
->>> +    else
->>> +        return false;
->>
->> Minor..it would be better if you modify it as following.
->>
->> +    if (addr1 == addr2)
->> +        return true;
->> +    else if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
->> +        && VRM_ADDR(addr1) == VRM_ADDR(addr2))
->> +        return true;
->> +
->> +    return false;
-> 
-> Even better if it becomes one statement for true rest with
-> false..
+Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Rebased on top of 6.8-rc4
+- Collected acked by tag
+- Link to v1: https://lore.kernel.org/all/20230822132333.17580-1-quic_kbajaj@quicinc.com/
+---
+ arch/arm64/configs/defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks for the review.
-
-I will fix in v4, will wait for sometime if there are any other comments 
-to take care along with this.
-
-Thanks,
-Maulik
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index e6cf3e5d63c3..f121716cd883 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1265,6 +1265,7 @@ CONFIG_MSM_MMCC_8998=m
+ CONFIG_QCM_GCC_2290=y
+ CONFIG_QCM_DISPCC_2290=m
+ CONFIG_QCS_GCC_404=y
++CONFIG_QDU_GCC_1000=y
+ CONFIG_SC_CAMCC_8280XP=m
+ CONFIG_SC_DISPCC_8280XP=m
+ CONFIG_SA_GCC_8775P=y
+@@ -1552,6 +1553,7 @@ CONFIG_INTERCONNECT_QCOM_MSM8996=m
+ CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+ CONFIG_INTERCONNECT_QCOM_QCM2290=m
+ CONFIG_INTERCONNECT_QCOM_QCS404=m
++CONFIG_INTERCONNECT_QCOM_QDU1000=y
+ CONFIG_INTERCONNECT_QCOM_SA8775P=y
+ CONFIG_INTERCONNECT_QCOM_SC7180=y
+ CONFIG_INTERCONNECT_QCOM_SC7280=y
+--
+2.42.0
 
 
