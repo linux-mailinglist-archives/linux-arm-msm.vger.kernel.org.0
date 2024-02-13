@@ -1,124 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-10816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB6E58527E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 04:53:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96C15852823
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 06:12:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83AE4B2250A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 03:53:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B2821F246B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 05:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF698F72;
-	Tue, 13 Feb 2024 03:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D5CC11724;
+	Tue, 13 Feb 2024 05:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kfEOYefG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VxKh36by"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B8233F2;
-	Tue, 13 Feb 2024 03:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED786816;
+	Tue, 13 Feb 2024 05:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707796390; cv=none; b=XrNap9e4HCmuNdM9bN2DUZKGVSErcTCFtPC7H2aTZa7su5Xs0NhCrsqmZL19J2p+oKFRAY0biiZlfMKYkrxEC1Usjq73xyPZhLhW0c9XKdf/PWqJubowvMLkX9r+c3JW7Iyoli28vqpHPEWNeku24o1lGyBn+9RUkO7uAkvznss=
+	t=1707801114; cv=none; b=OK1rWs8QSBtPjB1n2ZmGOT5xfR9r33XoVe+LXOekVxlVEJSFWqxCZEn6zwXyKC/9bWGIqSQDbk72/3NIdyJ6UVGCLMQWZ7t77O32U31zQhOz7Ya8SJe2Y5RwqFkNu83eZyCEmp9h9CS3s6XZwSkXocV7zwQJZSuNdIAhkXN3Muo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707796390; c=relaxed/simple;
-	bh=0vaubSGu7gCAoSqrp4lajT42MHYD3qmoQox23k+o7mM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JgTdCPMoTh3Kj0JuYqf0r0EMfQ5rK9RjtpwWXSJUb3/jOL+TIL1VEg6eb81q5o7fvnszECzGfr1KEOoaW3yguCUs4SaXKDkYEDOqCwze879BrcUOVrqe4TUzfFao4YDZcOo7qBle2FnecMPryJcqLhTvQBJn00Q7aILE5OlINzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kfEOYefG; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1707801114; c=relaxed/simple;
+	bh=2cRg5PTMD1OekiCwTi9/R6UfME4t4DHHZMMym8ELcmc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nvD8Mx2xtenKquModrDWi+teUvK3QgmvtSi0K+n/fjlNbLUt2j+AS6b1QLAUkqz79ITHlhMhvAUtSebIhJSbrVZ6pc71YjcwSnxym7+m5XZWgEiJTWYc2MLzln361IMyshuHG4CfR4TbUBBo4iJ3GHNnovrYUZG+BGit3lMnjsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VxKh36by; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D2w0IX000471;
-	Tue, 13 Feb 2024 03:52:53 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D51RC9015011;
+	Tue, 13 Feb 2024 05:11:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=9l07FK8iA3FHEksQiWuc9dxFREf//NDwM0FUVNltkCo=; b=kf
-	EOYefGbMFPyGF5PlzUHT4wpxq6T7Hy5P6MJJ9YJzmjDft0sEZN9Euhe7Irth1vdh
-	Yb/ghLJdCKbu9b30asfvVNWw/do6BVt8qDlC9sj20AS7lPsRfZPJdRaIg6FTrRIu
-	FI3FZrbemHv+oocCO1kNmXaerPO3vqhg/BMY64kaOnQJBijjkLvVzd6cJe0rjMRt
-	yd9yYCoxjUxDZHiS0LMBisKek636FJTqqkMU/QSeTf4+n1DOdpyD/pwVuXnIypoY
-	w5BPhVpcRBljRmG4sayryfQ9h6fOJgZHTDW/+jG5tk/sEo27zxa6X09CzlpuE2F1
-	YOjkP7+IfJyIweSd3xbg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7ww5r8r4-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=imfofRntNZMlx4asuGo431nZornTV50xVbosiKaTmpA=; b=Vx
+	Kh36bySIvF/3r8olVx+GrjCiUelxG802o90wucEsWDHA99I7gm4RMPhZ5PXbX7Lz
+	UB/7s7YJ0cRjQT2qNElW1UAfRJfM5t6D9yOP1lkfVrvjN+vgGwjzJWeWWsugyDYO
+	CneAJ8/0MWUTiAId2sX/yyOvmt5yrivjCaOdPeFHskxYYCKnA1+/6RxuMAZe1ktV
+	HolAoMULs+nJaFiM/NQfrwBl+xKuEnTBA4sfsomBXk6E6pkbjTn8HS1LaTBgX6kw
+	JtP/6fjA/bjqOUbW8w0Oyw1r/6B2yrtXPbsRky3LAlkHhCZ2IkUH7FEQ8HStt1Gu
+	mlLprBu8nF4XeTJ1lbDg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7gs1j68e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 03:52:53 +0000 (GMT)
+	Tue, 13 Feb 2024 05:11:40 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D3qDo0032663
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D5BeXp011945
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 03:52:13 GMT
-Received: from hu-subbaram-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 12 Feb 2024 19:52:12 -0800
-From: Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-To: <quic_mkshah@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_collinsd@quicinc.com>, <quic_eberman@quicinc.com>,
-        <quic_lsrao@quicinc.com>, <stable@vger.kernel.org>
-Subject: Re: [PATCH v3] soc: qcom: rpmh-rsc: Enhance check for VRM in-flight request
-Date: Mon, 12 Feb 2024 19:52:03 -0800
-Message-ID: <20240213035203.2492516-1-quic_subbaram@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
-References: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
+	Tue, 13 Feb 2024 05:11:40 GMT
+Received: from [10.216.7.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 12 Feb
+ 2024 21:11:35 -0800
+Message-ID: <690e4b4f-ae93-4458-88cb-131cb98574c4@quicinc.com>
+Date: Tue, 13 Feb 2024 10:41:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sa8540-ride: Enable first port of
+ tertiary usb controller
+To: Andrew Halaney <ahalaney@redhat.com>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
+References: <20240206114745.1388491-1-quic_kriskura@quicinc.com>
+ <20240206114745.1388491-4-quic_kriskura@quicinc.com>
+ <23824242-1b37-4544-ae9a-0a5a0582580e@linaro.org>
+ <CAA8EJpqbXvKMQktGsxMFJnR+fXoOz8hFmm+E3ROPTjjiD0QLvg@mail.gmail.com>
+ <6q2ocvrujbli42rjddflyol74xianr7j47jwcgdnnmwjanv25d@uw2da7zulqqd>
+ <CAA8EJpr6k8c5C54S9xxQgZvd9NYFoxi5qQrOTz2AMrp0xeZZpw@mail.gmail.com>
+ <baw3wxbdvzpkqqb6a7iut2wpt6jgzyqii5uyfkzptzt4ryjvao@4tpee6nqup5w>
+ <b5c25274-9af0-4b3e-ade7-9a55d3cecd29@quicinc.com>
+ <stci5fykvlstgvblrtqd33f2mgbnwlc4rwguwfybqm3awbasmq@uo2qqszrgz2s>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <stci5fykvlstgvblrtqd33f2mgbnwlc4rwguwfybqm3awbasmq@uo2qqszrgz2s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n8nnk09KEUI1r4MUoFc9KOOQmLitkdWT
-X-Proofpoint-ORIG-GUID: n8nnk09KEUI1r4MUoFc9KOOQmLitkdWT
+X-Proofpoint-GUID: Q4Lxcsdu5tMoJF_ZwMVaRRXSkJwcpL17
+X-Proofpoint-ORIG-GUID: Q4Lxcsdu5tMoJF_ZwMVaRRXSkJwcpL17
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-12_20,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 mlxscore=0 phishscore=0 mlxlogscore=322 bulkscore=0
- spamscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402130027
+ definitions=2024-02-13_02,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=725
+ suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130036
 
-Hi Maulik,
 
-> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
-> +{
 
-<snip>
+On 2/13/2024 12:47 AM, Andrew Halaney wrote:
 
-> +	if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
-> +	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
-> +		return true;
-> +	else if (addr1 == addr2)
-> +		return true;
-> +	else
-> +		return false;
+>>
+>> Hi Andrew,
+>>
+>>   Can you help test the following patch. It is just an add-on to your
+>> original one. I don't have a SA8540P Ride at the moment and getting one
+>> might take time. Incase you can confirm this patch is working. I can push v2
+>> of this series.
+> 
+> I just realized that unfortunately I no longer have access to a
+> sa8540p-ride, and I'm not sure if I'll regain access.
+> 
+> So I would not be opposed to dropping this patch altogether and someone
+> dealing with sa8540p-ride when they can test it :/
+> 
 
-Minor..it would be better if you modify it as following.
+Hi Andrew,
 
-+	if (addr1 == addr2)
-+		return true;
-+	else if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
-+	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
-+		return true;
-+
-+	return false;
+  It would take time for me to get my hands on one of them. I can take 
+up this patch once I get access to hw. In the meantime I can push the 
+first two and get this series with.
 
--Subbaraman
-
---
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Regards,
+Krishna,
 
