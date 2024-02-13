@@ -1,64 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-10893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA7A88531D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:27:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C23A85320A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:35:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5EE891F214EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:27:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3095A1C229EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:35:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179B055C1B;
-	Tue, 13 Feb 2024 13:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EB7256440;
+	Tue, 13 Feb 2024 13:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="OpSulyfP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8kUuA8D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C5B200A9;
-	Tue, 13 Feb 2024 13:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1159B55E72;
+	Tue, 13 Feb 2024 13:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707830854; cv=none; b=tsR3/QQC3Gv08gIujkcdbRzE7j/POGgrb6joN3AWyRDYZdWvmWGF02JCUWF8cDJGtlDKK84vqlKjwo6r2LhJjFdBPshHm34gB4tlb0YV+tJ4rFY95ScPGhzzicAKBdM9E/RJvOnryiPY1T8iUkevPkip2ZFSdKZk4L8eRhOiLQE=
+	t=1707831318; cv=none; b=d27zEm8di3JfeC6BC9kRa1/JfoX1mQtt8ELrg6kM7YXRqSmz+TxyESze+8cErmkRJxSUIY3MglxGAr+C7JjcT1zQgjs35vQUpB9seTFlRt+4GykMJdY1Cx8Dbe3Z/T71CU5i6S3E8Fqg8yVpfM2IQPk+DrWmZCkZlC/btWmvOEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707830854; c=relaxed/simple;
-	bh=GVfwibTK2AcJ+JgDKTu6n0xOvxOoa1ffq21TFqsOxls=;
+	s=arc-20240116; t=1707831318; c=relaxed/simple;
+	bh=hWYB7hzE02nmcZir4gyGszu+ssGzykhABiMcXYZhWc4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pq3oJYNgsPepTVq9HbRv5atA1vatHoAJ8+aqLlq7olcbe5tC0it3Nt++crhARNnatFP9SOxlKg7WsSPyfTEs8kwurfPC9j1yGNtnNPFTOno13XMPLuNuwXezvDzDExxSsmMSlYv5xAHH8nkL7GRKqF74uEOY2mjxZ0ypmSL7CoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=OpSulyfP; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=9oaXODuupT5BC/MIB3MV43QgTWz6N6vq/Qj6YnkKRmE=; b=OpSulyfPq9UjTf6N3SEC812nKs
-	H0BUtTMy8+Acorj3pLGzP+l0Fk4VdjCfyXCtc04BJj07sBSyLsl2IeT46hElXqZKRI1pplcZcw9xq
-	fP55U4jGTOguMX+QfzWEehPe7PFcaUHmehzqdZeJx+wJ450sE25HMSJmrQVbZ7KQzhmQ=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rZsou-007gGZ-Uu; Tue, 13 Feb 2024 14:27:32 +0100
-Date: Tue, 13 Feb 2024 14:27:32 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Robert Marko <robimarko@gmail.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, hkallweit1@gmail.com,
-	linux@armlinux.org.uk, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: phy: qca807x: move interface mode check to
- .config_init_once
-Message-ID: <4210645b-4e03-4147-aa03-6fa55786f690@lunn.ch>
-References: <20240212115043.1725918-1-robimarko@gmail.com>
- <c97d10fa-39c5-4e5e-93ce-1610635cb4d4@lunn.ch>
- <CAOX2RU6OwiymM_O_62VETgkBNUQP1TuOKJmm0D1ZUXBA7ZPJNA@mail.gmail.com>
- <7c5dd47c-26b9-4a12-af93-6139ae85e864@lunn.ch>
- <CAOX2RU79o_5KRJZUJKA_++rrFXn66oLU0jOVHZnA1wHf2kA7RA@mail.gmail.com>
- <65cb6864.5d0a0220.9cdaa.2449@mx.google.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nsd/b2je9nM8dr1XW08NV5C4hogmSaEEoXG1uHnkiel/S2LR2RxVd/lH5rtSyJsjecd+5BqMkIFANcsqwxzM3IbjGd9CUIw9djQI63hVWoiyZu6nFH2h6ebzejOes1TyTzLQJpOw5IfsQnf2Au8GxmXT9ojKBXAx16/zLpv6Ez0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8kUuA8D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9E5C433C7;
+	Tue, 13 Feb 2024 13:35:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707831317;
+	bh=hWYB7hzE02nmcZir4gyGszu+ssGzykhABiMcXYZhWc4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=h8kUuA8DVRrTOU30krCZjESSXRmrvf8X3glSUNjwzAmH3Mlp+o50Kutkc3E+xXYAQ
+	 Jn359JgRelrX8ncdBaRxUOEN7L8i0KkgEHFLWhhszwwEFIfE51haAi8WL5gJjKdqeX
+	 AtcJSQIabuPyLnn2/TZIMZUmPaxrCOuAOaaRUbWJQ5FrmNbEdijdVaJ8gcdyVc6179
+	 yIgUHdpXo5qGq9x4TPW8rGZ7S9N1FPW889Wo7ebQPSH873yGII2goqvufDv40rOtJD
+	 03Wm36B+MqXlIhoIACQgHajYz8Y9ikpevYcf2e7ywr+mEP5FIIcBeVzoi8elc4EEGJ
+	 qILZr4nkCg34A==
+Date: Tue, 13 Feb 2024 07:35:15 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Amol Maheshwari <amahesh@qti.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: misc: qcom,fastrpc: Compute callbacks
+ can be DMA coherent
+Message-ID: <170783131383.1076615.17145419971543353598.robh@kernel.org>
+References: <20240212110827.59302-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,56 +63,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <65cb6864.5d0a0220.9cdaa.2449@mx.google.com>
+In-Reply-To: <20240212110827.59302-1-krzysztof.kozlowski@linaro.org>
 
-> > Yes, that is correct and when SFP is plugged in it will be reconfigured
-> > by the driver into combo mode as that port can actually be used for fiber and
-> > copper at the same time by changing the priority.
-> >
+
+On Mon, 12 Feb 2024 12:08:27 +0100, Krzysztof Kozlowski wrote:
+> Apparently on Qualcomm SM8550 and SM8650 the FastRPC compute callbacks
+> are DMA coherent:
 > 
-> Hi Andrew, just to make sure this doesn't get confused.
+>   sm8650-qrd.dtb: fastrpc: compute-cb@2: 'dma-coherent' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
-> There is a HW limitation here and it's described in Documentation:
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> - In QSGMII mode the SFP Cage can't be connected or mounted physically
->   as in this mode only 5 copper port can be connected, it would go
->   against the HW design of the chip. In this configuration the first 4
->   port are qsgmii and the 5th port is sgmii. (we enforce qsgmii on all
->   ports out of simplicity to make sure we have a sane configuration in
->   DT)
+> ---
 > 
-> - In PSGMII mode the 5th port is always a combo port that can either be
->   a copper port or a fiber port (with SFP cage). To set the 5th port to
->   fiber mode, the mode has to be switched but the other 4 port are
->   always copper.
->   Also it's ok to set the initial PSGMII mode to 5 copper port as it
->   will be changed as soon as a SFP cage is connected. (can't happen to
->   have a device with both a copper port and a SFP cage connected to the
->   5th port, it's one or the other. Again it would go against the HW
->   design.
+> Changes in v2:
+> 1. Add missing subject prefix.
+> ---
+>  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> Hope it's clear now why the check was introduced and the HW limitation
-> of it as with the previous message one might think the 5th port is
-> totally separated and can go to his own mode (PSGMII or QSGMII)
 
-Thanks for the explanation
+Applied, thanks!
 
-I'm more used to it being like:
-
-&eth2 {
-        /* ethernet@34000 */
-        bm,pool-long = <3>;
-        bm,pool-short = <1>;
-        buffer-manager = <&bm>;
-        managed = "in-band-status";
-        phys = <&comphy5 1>;
-        phy-mode = "sgmii";
-        sfp = <&sfp0>;
-        status = "okay";
-};
-
-Here phy-mode is set to one of the modes the SFP will use, either
-sgmii or 1000baseX. But i don't think it matters what value is used.
-
-      Andrew
 
