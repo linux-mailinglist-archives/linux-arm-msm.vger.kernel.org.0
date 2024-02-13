@@ -1,70 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-10900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B5458532F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:22:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C4088532F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:22:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FB771F234B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:22:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3C181F24A3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7162257868;
-	Tue, 13 Feb 2024 14:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 360C558124;
+	Tue, 13 Feb 2024 14:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j26fZM4J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tDoOvZka"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAD758103;
-	Tue, 13 Feb 2024 14:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062DA5810A;
+	Tue, 13 Feb 2024 14:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707834150; cv=none; b=lluKPLielhSUMbkem6sp7OXyeF9rRhL7rcI22F5oo+rnNn9cryPhtstGYhU2EZtOB6M2sJConaCqZAsLKjkBMp+KlJFk8Sa5dDdGyIND0IGOjEuZkJ7Qko1ZKi4Mu5ddUJCgRti1/Nmwem8KAFvvfAId+87EiDFU10RoHqkqckM=
+	t=1707834153; cv=none; b=FlkZ4HFO+I9L61ZI3Qn4bMmu1L0y9Vb19ZkW8ommb1Ybk24KlzM345H4jnHcuhRoCyPp+XueaM49W9xXdypXvzmayHd8JY2QETdU+Zm7Ef2DXqGN7rr194GcDQs6vLwb+ccLyWr2iSHYEjDsrwnyGtUxI+gm+h+InoDVdylmvto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707834150; c=relaxed/simple;
-	bh=yqTyD/OjND337wp33t22PMtWJVzfs0J8AnORHF+7GG4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=DbuUMgWFAAWNHEn7xJB+s90M4uqzhdNOIOAsvW9j/4/rpOqx1waspl8zJ2Y/wQUyMFxNebaImHxaUVjINm6kpaw0+cwA4kmDykpBHUNjAnl7fNNpEeFpkGvcj53nUWGec6/4hk7PD8Kct1AJ4vxvujZTCT2GoFnI9S5Mk/7ItYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j26fZM4J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8057CC433C7;
-	Tue, 13 Feb 2024 14:22:25 +0000 (UTC)
+	s=arc-20240116; t=1707834153; c=relaxed/simple;
+	bh=MLO0eNfubsVaZ3+NJ0NwxvzUo8z9vzkOQ/E+hy/RX9w=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=hcIoxddFmYzmUkO8BFcG0nOIOBuHh6WH8Z0G0+/yJkNH1qCUO//XesdrThXylL5UJH5F1ResqNF6Wu5oL2b85z6QKO+DgrrzV6E+nxz8pDaSXicaUJiethmMdVGxfOlDHRUGFclX850EhEAiurElD6EeGfMZKj/4vpUHWd3ofuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tDoOvZka; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46611C43394;
+	Tue, 13 Feb 2024 14:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707834149;
-	bh=yqTyD/OjND337wp33t22PMtWJVzfs0J8AnORHF+7GG4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=j26fZM4JKyiZxhBok+sG84VvBt/MqBNn/AAUNCtYmbLqbII24bzx0mocMC/hifs26
-	 MymKA4NA/GocKd74u3tAEK7Wo9LnGSc2NrCM5ikCaVbclHgMJYLXvK2yEfhVsqzKvV
-	 0GDasPHFiXxHI9hYg2qlI2S85z6a82kZaKQKII1EvxtfTNoCMlNpv94hCVRoRhR12s
-	 rxpE6evzJqiHsg9zZMDsGEefXZBAOQCeyIqtWGm5GzikcW8lRXVH9ncgTgcJECZCaE
-	 PlamdIcJGZCTw1yV7lpCJ9+xs3FYwhkz1wGjrQklAGjP6wYJef1s6Yxq9rkzHWHsdy
-	 B+jkLkhJftv4A==
+	s=k20201202; t=1707834152;
+	bh=MLO0eNfubsVaZ3+NJ0NwxvzUo8z9vzkOQ/E+hy/RX9w=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=tDoOvZkavXJ2LFx03CzHfgMW3Swnt/rBeFpIem9eB9Wjdx7m6xxbT3fANKkR+s29z
+	 AgKNEYnIeSYsr0s5FO4i8NZ3soCnTCJpi6hhnbFQdTdx3mDr1yl6qsnbJAwBpDNP0M
+	 CLmDu+EHr4kaKnyIa2Qou3RcGN0AZgyLffQFOH7jmmp3L5ikOQRadHHRStZ/WKQ3QN
+	 x32j1JePN9+bi31ZgnbhtBDixZ2E9UXSDgxo12PZl2i/qD88mgcYi4fh+2xm5n8CPQ
+	 GX8GzZgXnVkRiC887oe2EJqjb7jEURzlbgnVdymRwlBhIG8w9edDnSRHmb0UGMvk9/
+	 dQMHnV0uJDW3w==
 From: Mark Brown <broonie@kernel.org>
-To: James Schulman <james.schulman@cirrus.com>, 
- David Rhodes <david.rhodes@cirrus.com>, 
- Richard Fitzgerald <rf@opensource.cirrus.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>, 
- Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Sai Prakash Ranjan <quic_saipraka@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>, 
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-hardening@vger.kernel.org
-In-Reply-To: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
-References: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
-Subject: Re: (subset) [PATCH 0/7] Xperia 1 V support
-Message-Id: <170783414525.38232.9788370045735417740.b4-ty@kernel.org>
-Date: Tue, 13 Feb 2024 14:22:25 +0000
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240212183800.243017-1-krzysztof.kozlowski@linaro.org>
+References: <20240212183800.243017-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,sm8250: Allow up to 8 codec
+ DAIs
+Message-Id: <170783415002.38232.15876437530916950935.b4-ty@kernel.org>
+Date: Tue, 13 Feb 2024 14:22:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,11 +68,10 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13-dev-a684c
 
-On Mon, 12 Feb 2024 14:10:08 +0100, Konrad Dybcio wrote:
-> DTS for the phone and some fly-by fixes
-> 
-> Patch 1 for Mark/sound
-> Rest for qcom
+On Mon, 12 Feb 2024 19:38:00 +0100, Krzysztof Kozlowski wrote:
+> Sound card on Qualcomm X1E80100 CRD board has eight DAIs in one DAI
+> link (for WSA speakers).  Boards with older SoCs could technically have
+> similar setup, even if it was not observed on mainlined devices.
 > 
 > 
 
@@ -89,8 +81,8 @@ Applied to
 
 Thanks!
 
-[1/7] dt-bindings: ASoC: cs35l45: Add interrupts
-      commit: d0611f617d823a87f04186ad165e2990208c040b
+[1/1] ASoC: dt-bindings: qcom,sm8250: Allow up to 8 codec DAIs
+      commit: d4a00d16f8367e09e8b8fb03028f22333fc368a5
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
