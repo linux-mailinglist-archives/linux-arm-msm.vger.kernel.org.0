@@ -1,195 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-10921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F5A085374C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 18:24:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 023AE853918
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 18:56:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB500283807
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 17:23:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0420F1C21D4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 17:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 074485FEF1;
-	Tue, 13 Feb 2024 17:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D613660BB9;
+	Tue, 13 Feb 2024 17:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dK4klttw"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1gErUWs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711BF5FBB5;
-	Tue, 13 Feb 2024 17:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0E960BB7;
+	Tue, 13 Feb 2024 17:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845037; cv=none; b=LAepyukHRI1EK9eFu8yvvdIis/WTnOrAwjknEInK1VNt6qef/SzK0tEcVy4LFSwrMeGXHFqGkb+71W687vMwnjuBjbcy5FV+Im+nxiXa8NQR40qZaFCVnWcHBAmB6+Bi8mL9Zv7fFSbPpXLnYAqH0vfig4CL1boJ5IjCEfzWBsA=
+	t=1707846883; cv=none; b=sNEgp8oLjMXCIpLgRFn9ksYhL7rGkix3hJsFZXa70106sTo1UXsPBclhmyDr8dlvHe3ppty+JHPO8U9bsGf3o8dvWDbFJUTfLOazmCNEE+YBMc+grwHazkTizO45d8acHy86ZDA088CtsULoYFGI/Uxo2I2OHXz48GPPOuT/eJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845037; c=relaxed/simple;
-	bh=dDpCLvWQKOk3BjtpUjlDBZpyD2zOJJDETC/CzEEyr0k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fOdYBMxmUs04PEpabJlysQq3/YaN5v9cDqkvyrIgRIJpPOvs3y9vHBCq7PvbhrO0N+e3Av4ruM3Pc5r636NhT3dnpxuyxXkUc7SxkOKgQ3Kmt2JfwHpdLg58CtQoLsDCLXyXU2g8bSZRhZOtItKhP0Hno85gI7BK/jsAUOMSBZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dK4klttw; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d746856d85so34470335ad.0;
-        Tue, 13 Feb 2024 09:23:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707845036; x=1708449836; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FLsvLF6QUYIuVDvvapHTNMgjuAm/e6T5t1iBfk2PvVA=;
-        b=dK4klttwb+EYPPLDqBEsqX9jvSq+9mt/xie3lNOB9ZcudJPCSNiN/L5QVA5pooqINf
-         szP6+o1qo6LNK4e6B4/LUFEwJHIS5tBeaDvbIYHxaccsXgX0z72pdSgQYQd0hgL8zRCh
-         Oga5t0cZVSD9V/F7dL8j3n/WSBvZffqZd1taKZ6UOv4oOHaVOa7/eAY7BkV3WJA72k0A
-         FuSfS/sa5E8XE4M58TO64nHfnCUDN6PwASs9Hk02IJ2miYDwR7Zd1/ROWEM0sBKvfIzX
-         F0SpR6ZWtP9X5swHiCkCgD/ls9l4i0E2/gQVC/s9baJDYN7L2HFjOjBlhMIfPsaFympl
-         b/nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707845036; x=1708449836;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FLsvLF6QUYIuVDvvapHTNMgjuAm/e6T5t1iBfk2PvVA=;
-        b=xKTheJG5/bEjryS8e3rtb+9X8dnnqZ85AZhmL7zi1Ytf9+JJ6iU98eJTf9dtE45JYM
-         NhOvG+BCzvY4xMKD7a+MiiOXPzeHgYsNH4E1oR8ddPoLRu70/3dCA4/RJ2aYQcmigqXf
-         KGbvImMjYoD7wz0zjbuRxAHOVXgZd8124cfPBgxV8q8+VewJ1RMio6h2BoZYREnbzpnB
-         JS/WTCji07a3IpO8hK85gi3k23DFL8NjlQoZjxRrT0OkgxRj3FS1Tvr+nKsipEOs0l2X
-         12UIFAg+nQrFVbJwkm57VUObL/ndFyVhqnLDvEEwvVjeBq0Ry2qMk9kxIkHj2/Tx/rAO
-         znzA==
-X-Forwarded-Encrypted: i=1; AJvYcCUWzz5V5TCdp3P0R+HZxXglzcN51sO2TseB3rOSMMLSvKaSKZc+06uVtQE0uN5rH0UDRhxJpVnXdXlksZjq13QdBFmioySlpAH1GN0RbB15XSjCGuKxtBKYaYL4TPCpDLL9TyvwSrPT68+kDw==
-X-Gm-Message-State: AOJu0YzMWjTWTrdM1WKyUJ7hLgPs0JYULyI7lHPlddUogI7UjOBieJj3
-	pF7YUgoH6BmUnAOnb6xVXbBZxQ/PFjAb/jk9blsSbIEaBiBzVPBL
-X-Google-Smtp-Source: AGHT+IFdCtLRJdOgW5lz/LKUTdPO1GdknYEPgh4plB438nRYmiTFekiGe0mNbi1gtuZvBC3Wkqh5tg==
-X-Received: by 2002:a17:902:a513:b0:1d9:95c5:2975 with SMTP id s19-20020a170902a51300b001d995c52975mr125039plq.26.1707845035585;
-        Tue, 13 Feb 2024 09:23:55 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUAFLBoxwayfeJdOdJaLCxj9/95+M2cVx1lDK2IAY9ThXhNwuF4KeCLrS4JDMp0iqN6EfuCmO7l9e8PHQAgmy3E0INegBYNWJgFxtaMPbuNpnhagHlEdJ6w8MAWCkocA6iKwrLBZ/wa4OVpGCszewOZbb4FxAaqYzYPZ3V3r9UTPEA2r14cjRHEWiHjD1tJnIU0AET3h7j8BUGrmfH6ob9zZdonbDEw6/SvphIu1Q3gf3efi0ZbAa/6w3sTHtJOBigYsnFgwURz0IFUQ/oJ0Wul/6JAduUtId73OTDJzZO6P4Uz2X/ax7dQ16lTv6Warszu7FYFcFBH7NX0fO2BL4cDh2jcFpFGTj+PRNM8l6n8GeO7lHnyd/kFm5wgX95qfYF8FkrsTLG9KLVz7V0KgSpteOgN/js64aATrk/3gZgiCOEPtlWY+TfgePm25yXld+liWX9G/TeIIfpiWyK1doIj/kptuDHMSI9srQ==
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id q2-20020a170902bd8200b001d9fc826522sm2321775pls.239.2024.02.13.09.23.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 09:23:55 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
+	s=arc-20240116; t=1707846883; c=relaxed/simple;
+	bh=OdZ/Y9zBfSGNYm4w6+scC4UUyi2R5zySwbdcyI1Rv/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dHcn6IpHyUxs/1zKppo9XfMW9pulOQ6ibfTVeBSsDR7bsbgwkYWx+0D00Yg7os4ZV7u+SPGMTVrzRFEv4/GWsLKKuWWHQA81DfJhUKJgPYV9v5bLj3hnRv5CTTZPxombCmubElreRys6VFJDGz0pNHe6rO2ZoEDIUP+PqkseqIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1gErUWs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DB7C433C7;
+	Tue, 13 Feb 2024 17:54:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707846883;
+	bh=OdZ/Y9zBfSGNYm4w6+scC4UUyi2R5zySwbdcyI1Rv/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=A1gErUWsOg8gH/lvFWBbzLLxlU1jyvekZ1tBQvuTJDyrYwpwuGaPu+tpxzOBKyE75
+	 mBIs1z+RfZuuRITnmkhKkQEofH39UwFRCg1ArduHot2GjVf3JgotXfjJuvWv+dOxqS
+	 i8cjNfsnToqCSbLecN4NelHVBzSxcAXMFiIm0OgY=
+Date: Tue, 13 Feb 2024 18:29:10 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Ricardo B. Marliere" <ricardo@marliere.net>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Jordan Crouse <jordan@cosmicpenguin.net>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Wire up tlb ops
-Date: Tue, 13 Feb 2024 09:23:40 -0800
-Message-ID: <20240213172340.228314-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: apr: make aprbus const
+Message-ID: <2024021301-request-residence-74d6@gregkh>
+References: <20240213-bus_cleanup-apr-v1-1-50c824eec06d@marliere.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240213-bus_cleanup-apr-v1-1-50c824eec06d@marliere.net>
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue, Feb 13, 2024 at 11:44:01AM -0300, Ricardo B. Marliere wrote:
+> Since commit d492cc2573a0 ("driver core: device.h: make struct
+> bus_type a const *"), the driver core can properly handle constant
+> struct bus_type, move the aprbus variable to be a constant
+> structure as well, placing it into read-only memory which can not be
+> modified at runtime.
+> 
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
 
-The brute force iommu_flush_iotlb_all() was good enough for unmap, but
-in some cases a map operation could require removing a table pte entry
-to replace with a block entry.  This also requires tlb invalidation.
-Missing this was resulting an obscure iova fault on what should be a
-valid buffer address.
-
-Thanks to Robin Murphy for helping me understand the cause of the fault.
-
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: b145c6e65eb0 ("drm/msm: Add support to create a local pagetable")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_iommu.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index 5cc8d358cc97..d5512037c38b 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -21,6 +21,8 @@ struct msm_iommu_pagetable {
- 	struct msm_mmu base;
- 	struct msm_mmu *parent;
- 	struct io_pgtable_ops *pgtbl_ops;
-+	const struct iommu_flush_ops *tlb;
-+	struct device *iommu_dev;
- 	unsigned long pgsize_bitmap;	/* Bitmap of page sizes in use */
- 	phys_addr_t ttbr;
- 	u32 asid;
-@@ -201,11 +203,33 @@ static const struct msm_mmu_funcs pagetable_funcs = {
- 
- static void msm_iommu_tlb_flush_all(void *cookie)
- {
-+	struct msm_iommu_pagetable *pagetable = cookie;
-+	struct adreno_smmu_priv *adreno_smmu;
-+
-+	if (!pm_runtime_get_if_in_use(pagetable->iommu_dev))
-+		return;
-+
-+	adreno_smmu = dev_get_drvdata(pagetable->parent->dev);
-+
-+	pagetable->tlb->tlb_flush_all((void *)adreno_smmu->cookie);
-+
-+	pm_runtime_put_autosuspend(pagetable->iommu_dev);
- }
- 
- static void msm_iommu_tlb_flush_walk(unsigned long iova, size_t size,
- 		size_t granule, void *cookie)
- {
-+	struct msm_iommu_pagetable *pagetable = cookie;
-+	struct adreno_smmu_priv *adreno_smmu;
-+
-+	if (!pm_runtime_get_if_in_use(pagetable->iommu_dev))
-+		return;
-+
-+	adreno_smmu = dev_get_drvdata(pagetable->parent->dev);
-+
-+	pagetable->tlb->tlb_flush_walk(iova, size, granule, (void *)adreno_smmu->cookie);
-+
-+	pm_runtime_put_autosuspend(pagetable->iommu_dev);
- }
- 
- static void msm_iommu_tlb_add_page(struct iommu_iotlb_gather *gather,
-@@ -213,7 +237,7 @@ static void msm_iommu_tlb_add_page(struct iommu_iotlb_gather *gather,
- {
- }
- 
--static const struct iommu_flush_ops null_tlb_ops = {
-+static const struct iommu_flush_ops tlb_ops = {
- 	.tlb_flush_all = msm_iommu_tlb_flush_all,
- 	.tlb_flush_walk = msm_iommu_tlb_flush_walk,
- 	.tlb_add_page = msm_iommu_tlb_add_page,
-@@ -254,10 +278,10 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- 
- 	/* The incoming cfg will have the TTBR1 quirk enabled */
- 	ttbr0_cfg.quirks &= ~IO_PGTABLE_QUIRK_ARM_TTBR1;
--	ttbr0_cfg.tlb = &null_tlb_ops;
-+	ttbr0_cfg.tlb = &tlb_ops;
- 
- 	pagetable->pgtbl_ops = alloc_io_pgtable_ops(ARM_64_LPAE_S1,
--		&ttbr0_cfg, iommu->domain);
-+		&ttbr0_cfg, pagetable);
- 
- 	if (!pagetable->pgtbl_ops) {
- 		kfree(pagetable);
-@@ -279,6 +303,8 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- 
- 	/* Needed later for TLB flush */
- 	pagetable->parent = parent;
-+	pagetable->tlb = ttbr1_cfg->tlb;
-+	pagetable->iommu_dev = ttbr1_cfg->iommu_dev;
- 	pagetable->pgsize_bitmap = ttbr0_cfg.pgsize_bitmap;
- 	pagetable->ttbr = ttbr0_cfg.arm_lpae_s1_cfg.ttbr;
- 
--- 
-2.43.0
-
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
