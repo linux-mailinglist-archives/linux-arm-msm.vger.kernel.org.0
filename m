@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-10865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75141852F18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:24:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50144852F29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:26:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 000B72822BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:24:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3ABA28BC84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:26:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D00524AD;
-	Tue, 13 Feb 2024 11:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6B6C5475D;
+	Tue, 13 Feb 2024 11:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mkoTpQjl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pxZ9kvPh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382CF51C49
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36143A1A3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707823301; cv=none; b=Q6IZjeAY44WztKwHKZv9rtV1TSQZmkp4MjTmdGI8Q2e0wRljpqT4KNix/JJAy6u7djUMKl7wbAYenUfK+9WXA8tV7+iYGOFivKmHze5iArfwvM7U2n/oJ3Czwa/LZxMSgdjfF48i64x+0sPij8mu80tYELg/UmOqcMFEUsvMLco=
+	t=1707823324; cv=none; b=aOAnGq9roOGlwr6uo3iTbxQZc1M9YV/3YT0DUw7Rbq4UzvzotzietGDocPTWwB6yv0erkwa36WadXnua/skQmTkF2kETlzsMjlirXiDVDqsfZ+hPKYGWc9jQHdIqR/1EZ2pNgo2z89joCHdYSPEhplPdp2cOQOHzB1jm4f5lKcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707823301; c=relaxed/simple;
-	bh=E/MH+y6TEKPyCEaTZoFzK1+I1nEXs5zapLHFnAW9WWo=;
+	s=arc-20240116; t=1707823324; c=relaxed/simple;
+	bh=1q7bAQxHQhZGMtiVBQm0LFBFB/VW4rFEkAOj06GXDl4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WUbD+Vh1HiuRb9qcUB5iteo/w9wdFCuycG9MnFcVy8LC/bhDI+zwh2zLmHl+OcckmHAIHnY7i6ge7/pieaxvZOaGvQE+8Ak3rBjWo1DDb4SEf+QR+oRR8zd3zAgXCX883a+m5es58m7ftyfum+iYMPpx44zQ9yEP72hLbev30sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mkoTpQjl; arc=none smtp.client-ip=209.85.221.51
+	 In-Reply-To:Content-Type; b=aoV4JpWaXTVY8aJKNipCrAzXBrpyLbNPuotxYqkoH56XG+8nUxV3agt7SCDCaovq8A7sdRXG0RdrWQcUNRCn2Wf9/MH6Y8wosIQEYswXxDWgYP1v1hbuzW4G+id4gd3Y1ZAv/O/uFdV808G2J+FSpHy2CsWqypciZoWc+b99xXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pxZ9kvPh; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-33cdeee752aso158962f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 03:21:39 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33b401fd72bso2793104f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 03:22:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707823298; x=1708428098; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707823321; x=1708428121; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZwJM8W1yq1JtwPkFDokQV9gTBoLw3sc+SISnD390BVE=;
-        b=mkoTpQjlaULllc8Lrm1YA81ye9ugzGrmW8fKdGaJMnS1wch52vCGMA08q6GJwCuV5Y
-         jB75W/W6VkELFSwuRODZI78esg1SgeNvfulu+PMWcLMtEaEvMECLkpd3pkaQx/goql6P
-         LbShCaMAFzGc0EsEEeH4wbEOTPqgJKdD1kT4gLUevePDvyqm52KIKKraHVS94Zb3Tzs1
-         HJjmf0OQfZ/9Kt6GX3XZXDeZcB8rXGtc3lsKzFVqK5H4yGx2F7ZFH8QEJWWEM0uq6P9B
-         Y8YlRkfe4VRo3CedgTDy20CJyqBeFi0Kcxiq9FVTPVUO7eG76upHwWJvw4Qr8DxskzRt
-         oSGg==
+        bh=SjiLjqD5OULMevxuEv823FXK9KsYza3OTYosWoBshto=;
+        b=pxZ9kvPhTs3Y16FWMJ1INc14azkcpQq2e5Cu7zecyEgw6fbGC8mGgxxGm+WFQVNp6C
+         ikA+wAj7V23odQIWzkKXocT5zOc1PrYjOkrj5MYUhv8/A/o+OayS4gq4xj9EZ1yXOrkK
+         /fp2vRNe7poT2QP/YvYIatx4h9lfbOLlVAT9CE4zxu0UdcnjSVpJDtFOSKPbyllJNb7j
+         kPAACUTzDRMxm6FP8ns8SMIGV5U4s5/pJOdrMi1cWwuybXVWm+80qvt6DEaQadzRYpfu
+         WI8pTaUtb3Nky/0lrasBBjQH1cmWxiJHw6+T1fHG2jxvoelhBbw3LV86QvwfTpQvuMCL
+         4yKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707823298; x=1708428098;
+        d=1e100.net; s=20230601; t=1707823321; x=1708428121;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZwJM8W1yq1JtwPkFDokQV9gTBoLw3sc+SISnD390BVE=;
-        b=OMolx6HrHu3ElQ2NWpqClZqC+Nl0NcVnsk4hj2k/4aAdbxCFqqw37F6jf5VcMUuk0N
-         Exx5lvYCGtmTVwJiG+AVgMy04V4EhVSRyL4ZBySYYZhn0YMiXXpprhugwE446NZ50/0D
-         BmMvhfAEKqs9OjJjBMZgpPQknVlSNshigtYlLjluP/IqY63zKvx4lSE5VFTP1+kfK+OB
-         a4A5y5JSshlMp30+/Ygt2X8jfehsFx3VqQiE/nSXIxKHD+VAUnj/JFAapLfun7l+prG/
-         VB4RmjUMxQCV08d6pZhl5DM1uePSmYYOKhif8GZiDEuBp+Lv6254TmHdaGBr72van1Yy
-         bQyw==
-X-Gm-Message-State: AOJu0YyK0pQFOFSltFXaHQpl9/MBtQMu/ZoYTx62vLCombuvHl6cNkca
-	8dBvO2V9U0tTorAZjbNACQ39YCLYOcZDk2DgbyTj9BK3b53e4BEF0GrLO2mrup0=
-X-Google-Smtp-Source: AGHT+IHlPJHwR5q+JFrphVeuRd8/uPI8ffAIkfJZ60S+xsdnSPX0H7+SdWZ31HCCtVOn0vEF+rMHYQ==
-X-Received: by 2002:adf:f1cf:0:b0:33b:5725:e516 with SMTP id z15-20020adff1cf000000b0033b5725e516mr6721500wro.51.1707823298499;
-        Tue, 13 Feb 2024 03:21:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUzYiJlRwoEGRPR3ACaDYhrZWUNFScEBW5fkT7ucYfJv2cfUvf+p/JPEXxEdbPnYAlfgdjGfCsNg0xf5s2C5JX2HDhk0yQxGvlFULY8f3Q8skLt1EJgC/92/mdK0VwVVdC+1j2kpGQqxXFRSujeW/V/FCnYEmmulPjgC2yF1qOFMDBINqWqktJqaPWZsLLr7O/P1P2N4VAH75F3uvlKYBk2UoA0Qse8UW8/zpuQhWGEOjIC3vlQemmV7LJrpEYvWJez0QL2CfMtGtHs+4NH1oaq0vgaJig7xlpq22qcmeqAYO3OpTP+aXZUyI1334xRPRObNOpv
+        bh=SjiLjqD5OULMevxuEv823FXK9KsYza3OTYosWoBshto=;
+        b=Io6k9DZYdTW86FOa1wR0GOgUcnwrexkJ1fzDqtP4x/C32PAQRRz260gNrZymDuMsuI
+         VxMQR8QrEVHMjkzitqU/uK0w1CwWQ6fIHB2RooD2fkmlM53CpY2hXPzaIWbG8atgxhmk
+         TnaEavCy9fLyfznh+onAWS/Xri7GsKl64ty+IMLEWBVh964mzDa6M6zvmb8MK74VaFeg
+         0GhQB8qnRavIs/pQZ9TsU45QAH/LW6/mqQLQ159gjmcInUYJc7VGhkOw/v3cmKOovgrg
+         1HxcJykGMBExEptyd1BYS8LcJTIlhLVdCfaCcHhe6epB4onN5Id6p2hlo91uJy3gkqMw
+         Hjtg==
+X-Gm-Message-State: AOJu0YzOVQ/9IdiktShjPQqw3s4uI7Qvc+lPfahCHhc4Ax9Pbv91Skpo
+	RUAHKPwOc6hjEvT5GCKU/jCdohz5URi7Vm3x8xfJHMju2u2JnqtlHgaFkO4ubAc=
+X-Google-Smtp-Source: AGHT+IFhn35PB6MCR2TqlKMZXsj6pkZTrujBAr4tROj+7XSj64/cNLpE4xYOPdXfCpQ291RRJcVh0Q==
+X-Received: by 2002:a5d:6a11:0:b0:33c:da5f:1781 with SMTP id m17-20020a5d6a11000000b0033cda5f1781mr949866wru.15.1707823321278;
+        Tue, 13 Feb 2024 03:22:01 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVNRPZ4dA3Ds5N3bUSGVcXySQhBoz2bVl1xnZzkEGQQYVaFilW8aPJt6/X2/0KeU16K6Jssixef4TUi4gK2IzOJR+bz9Pvsax4kp+3d05/21g5P+WxHOHIgWXkmMmsF4nhkYx2dsplnrwidTsgq6IlUL/48AC+uTIUhFioDLd0FuWrgSjtBoV/ekEs9YPsvdeGLZ2tWjXN2GapEk7AJa69pPbj8uuDILg4DMXApD4jtLAhKgsvjXo5Dzm/EMz+oliRgrXnvVb8jW5RGu2WTyj+kdeh1PhwDRlmURZj4aZZyyo5jtLC8dCDLq2s1n4sZo2oV3LPI
 Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm9435420wrb.22.2024.02.13.03.21.37
+        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm9435420wrb.22.2024.02.13.03.22.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Feb 2024 03:21:37 -0800 (PST)
-Message-ID: <6b24ce0a-94d8-40d7-aa77-de88d597fa45@linaro.org>
-Date: Tue, 13 Feb 2024 12:21:36 +0100
+        Tue, 13 Feb 2024 03:22:00 -0800 (PST)
+Message-ID: <811db1bd-6ef2-493c-99c0-b040721e1053@linaro.org>
+Date: Tue, 13 Feb 2024 12:22:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] ARM: dts: qcom: msm8974: Split out common part of
- samsung-klte
+Subject: Re: [PATCH v3 4/4] ARM: dts: qcom: msm8974: Add DTS for Samsung
+ Galaxy S5 China (kltechn)
 Content-Language: en-US
 To: Rong Zhang <i@rong.moe>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
@@ -86,7 +86,7 @@ To: Rong Zhang <i@rong.moe>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Icenowy Zheng <uwu@icenowy.me>
 References: <20240213110137.122737-1-i@rong.moe>
- <20240213110137.122737-2-i@rong.moe>
+ <20240213110137.122737-5-i@rong.moe>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,24 +132,22 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240213110137.122737-2-i@rong.moe>
+In-Reply-To: <20240213110137.122737-5-i@rong.moe>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 13/02/2024 11:58, Rong Zhang wrote:
-> Samsung Galaxy S5 has many variants. Variants that support LTE use klte*
-> as their codename. Currently, the only supported one is the one without
-> any suffix, namely, klte. It is known that other klte* variants have
-> only minor differences compared to klte and can mostly work with the
-> klte DTB.
-> 
-> Split the common part into a common DTSI so that it can be imported in
-> the DTS of klte and other klte* variants.
+> The only difference between Samsung Galaxy S5 China (kltechn) and klte
+> is the gpio pins of i2c_led_gpio. With pins corrected, the LEDs and WiFi
+> are able to work properly.
 > 
 > Signed-off-by: Rong Zhang <i@rong.moe>
 > ---
->  ... qcom-msm8974pro-samsung-klte-common.dtsi} |   7 +-
->  .../dts/qcom/qcom-msm8974pro-samsung-klte.dts | 833 +-----------------
+>  arch/arm/boot/dts/qcom/Makefile                  |  1 +
+>  .../dts/qcom/qcom-msm8974pro-samsung-kltechn.dts | 16 ++++++++++++++++
+>  2 files changed, 17 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-kltechn.dts
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
