@@ -1,314 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-10864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64E42852EF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:18:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75141852F18
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:24:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF4491F20D67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:18:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 000B72822BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:24:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93C9F364B6;
-	Tue, 13 Feb 2024 11:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D00524AD;
+	Tue, 13 Feb 2024 11:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d3PvwoIo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mkoTpQjl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1C8364A3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382CF51C49
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:21:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707823096; cv=none; b=WYRyqYRSYkpoT+968mErhBQw9MrQ15OUafkxbecsESN4KvMVZP4Z47qVLMmTNYE9f36gdB+TaJXYZznDwG17nSNH/iveEWUSOB6rcxN16QrjPDhaw1M/Hvr03+ZE3Kg+G6DSLbM0TuIPd7ewKDVUzb9ldVpigmaoq7veoOTRVQY=
+	t=1707823301; cv=none; b=Q6IZjeAY44WztKwHKZv9rtV1TSQZmkp4MjTmdGI8Q2e0wRljpqT4KNix/JJAy6u7djUMKl7wbAYenUfK+9WXA8tV7+iYGOFivKmHze5iArfwvM7U2n/oJ3Czwa/LZxMSgdjfF48i64x+0sPij8mu80tYELg/UmOqcMFEUsvMLco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707823096; c=relaxed/simple;
-	bh=FthklSLXB2Gvouk6aluW9TYnxhA/T7a9jT2QvI6T/IU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pVqlgi5SVtGIDD3B7WVZXknXW0timRVw2riANjStxm0tmXEO67j5z+2LprjLVq4SrnJn/opIozy819zN165OKcfW//4g14YLQlGXDDWN8bfLsAqezQwdoHEdOcGfZbPfrBVBmpfNy64NcudfQ09ioSJ+58LSri/Grju1rAhpPag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d3PvwoIo; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1707823301; c=relaxed/simple;
+	bh=E/MH+y6TEKPyCEaTZoFzK1+I1nEXs5zapLHFnAW9WWo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WUbD+Vh1HiuRb9qcUB5iteo/w9wdFCuycG9MnFcVy8LC/bhDI+zwh2zLmHl+OcckmHAIHnY7i6ge7/pieaxvZOaGvQE+8Ak3rBjWo1DDb4SEf+QR+oRR8zd3zAgXCX883a+m5es58m7ftyfum+iYMPpx44zQ9yEP72hLbev30sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mkoTpQjl; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dcc6fc978ddso465161276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 03:18:14 -0800 (PST)
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-33cdeee752aso158962f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 03:21:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707823093; x=1708427893; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f6L9sPVuw/xEO6Dhj1zgSlfDhHIbvMMFflBRHa07Z3s=;
-        b=d3PvwoIoL2BfcUm4DlnJzZbmxbLp1JZLNZmcJu2k0pgnM7plWC52hoK036gkU4NiC9
-         dUN/Sbr1Xw41GrGPhF7j2+4QYybjxutrlP/X+LOb2v+iNivdoW2nI8JTb698JZwUUp87
-         i+j1H4NiXL1ICXaTH33s/DBgmo+IEZrSN5Krp88wx7Pn/fo7KyT2PYPGN0jodAjtlPtf
-         ijH7BRWN24gIXIUh39S/pWN9XBlNVqPWP9Zv42FysjLRzFk1TBJaa5SyRaLrkVquQ07b
-         KUJt4zC8rnqQM2DgEcaBx+8k16Ov39vWHT5KwR/eqg5f5889hi7MIfsPTIAfWANqgw5U
-         X2rA==
+        d=linaro.org; s=google; t=1707823298; x=1708428098; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZwJM8W1yq1JtwPkFDokQV9gTBoLw3sc+SISnD390BVE=;
+        b=mkoTpQjlaULllc8Lrm1YA81ye9ugzGrmW8fKdGaJMnS1wch52vCGMA08q6GJwCuV5Y
+         jB75W/W6VkELFSwuRODZI78esg1SgeNvfulu+PMWcLMtEaEvMECLkpd3pkaQx/goql6P
+         LbShCaMAFzGc0EsEEeH4wbEOTPqgJKdD1kT4gLUevePDvyqm52KIKKraHVS94Zb3Tzs1
+         HJjmf0OQfZ/9Kt6GX3XZXDeZcB8rXGtc3lsKzFVqK5H4yGx2F7ZFH8QEJWWEM0uq6P9B
+         Y8YlRkfe4VRo3CedgTDy20CJyqBeFi0Kcxiq9FVTPVUO7eG76upHwWJvw4Qr8DxskzRt
+         oSGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707823093; x=1708427893;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f6L9sPVuw/xEO6Dhj1zgSlfDhHIbvMMFflBRHa07Z3s=;
-        b=nndSTAdH4QzUYEDan+sHN8QEPOP4d5evkIiJL3fuqJIIShbOEorT9Ubh7+vhYWMDkC
-         L5nKBeLo66pwlMdWmde0yHWNexO1DPszHQPK8qrIjbrnvN2jQnmy//8tn8AWlDlnB4Hw
-         uFEzfVVu+UDBKkpEM+hQH/LBVzelRg/aqqEpYZAVNhCZgreAKlJvzHliHocBnICeYMJj
-         PG5HLoDGW7NLrI7woQcCCX2rZ9nTdOCsGXwNmUj/qcU2LgWWHG6qiv59BW4W7TmWgWxH
-         scSva3itOfbXVYcDIoWLPI6Jt3OgMj1vuhtjqtR+hQ67XbGeG7WL+/MbLWabKkI6b8k2
-         sBkA==
-X-Forwarded-Encrypted: i=1; AJvYcCX0rUZlIBd7Ws1/zUYm5KSy+v79yDnuBiFwdnzA3RysFT3LCMfZol1vz7k6GknshC9BfOOoHBCjvgdLQ2Zs+/f9msAlxeZLKl862oT08w==
-X-Gm-Message-State: AOJu0Yzlkr8L4GOx2wJytQNan+TR3L7AdTppeycxf9Qm8X+6ynJdii6K
-	UzXehhWtq9iFcGqDZ32ueNCGaHB9BM7xAGZi/2TefuC1QsAq8hjePx6jSR6vhMJhVRQvJGswXRw
-	a2CW3CuyFdNhHBxbPpCUKj2yOOGzh4j6vZWxyrw==
-X-Google-Smtp-Source: AGHT+IFg4epJvCP1Qw8gt9ZyFhF+q9oJBh/4R2edV6TBPLI//eGf4oeTN91oQKPOcGjYVXfTHUvqHl1GDBNQODY+ums=
-X-Received: by 2002:a25:6e03:0:b0:dc6:c252:75fe with SMTP id
- j3-20020a256e03000000b00dc6c25275femr1453941ybc.10.1707823093581; Tue, 13 Feb
- 2024 03:18:13 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707823298; x=1708428098;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZwJM8W1yq1JtwPkFDokQV9gTBoLw3sc+SISnD390BVE=;
+        b=OMolx6HrHu3ElQ2NWpqClZqC+Nl0NcVnsk4hj2k/4aAdbxCFqqw37F6jf5VcMUuk0N
+         Exx5lvYCGtmTVwJiG+AVgMy04V4EhVSRyL4ZBySYYZhn0YMiXXpprhugwE446NZ50/0D
+         BmMvhfAEKqs9OjJjBMZgpPQknVlSNshigtYlLjluP/IqY63zKvx4lSE5VFTP1+kfK+OB
+         a4A5y5JSshlMp30+/Ygt2X8jfehsFx3VqQiE/nSXIxKHD+VAUnj/JFAapLfun7l+prG/
+         VB4RmjUMxQCV08d6pZhl5DM1uePSmYYOKhif8GZiDEuBp+Lv6254TmHdaGBr72van1Yy
+         bQyw==
+X-Gm-Message-State: AOJu0YyK0pQFOFSltFXaHQpl9/MBtQMu/ZoYTx62vLCombuvHl6cNkca
+	8dBvO2V9U0tTorAZjbNACQ39YCLYOcZDk2DgbyTj9BK3b53e4BEF0GrLO2mrup0=
+X-Google-Smtp-Source: AGHT+IHlPJHwR5q+JFrphVeuRd8/uPI8ffAIkfJZ60S+xsdnSPX0H7+SdWZ31HCCtVOn0vEF+rMHYQ==
+X-Received: by 2002:adf:f1cf:0:b0:33b:5725:e516 with SMTP id z15-20020adff1cf000000b0033b5725e516mr6721500wro.51.1707823298499;
+        Tue, 13 Feb 2024 03:21:38 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUzYiJlRwoEGRPR3ACaDYhrZWUNFScEBW5fkT7ucYfJv2cfUvf+p/JPEXxEdbPnYAlfgdjGfCsNg0xf5s2C5JX2HDhk0yQxGvlFULY8f3Q8skLt1EJgC/92/mdK0VwVVdC+1j2kpGQqxXFRSujeW/V/FCnYEmmulPjgC2yF1qOFMDBINqWqktJqaPWZsLLr7O/P1P2N4VAH75F3uvlKYBk2UoA0Qse8UW8/zpuQhWGEOjIC3vlQemmV7LJrpEYvWJez0QL2CfMtGtHs+4NH1oaq0vgaJig7xlpq22qcmeqAYO3OpTP+aXZUyI1334xRPRObNOpv
+Received: from [192.168.1.20] ([178.197.223.6])
+        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm9435420wrb.22.2024.02.13.03.21.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 03:21:37 -0800 (PST)
+Message-ID: <6b24ce0a-94d8-40d7-aa77-de88d597fa45@linaro.org>
+Date: Tue, 13 Feb 2024 12:21:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210015223.24670-1-quic_parellan@quicinc.com> <20240210015223.24670-17-quic_parellan@quicinc.com>
-In-Reply-To: <20240210015223.24670-17-quic_parellan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 13 Feb 2024 13:18:02 +0200
-Message-ID: <CAA8EJprttbMgM=HEwctePZOwKny+nM2=qRJsPWmP4Ar0H8ATEg@mail.gmail.com>
-Subject: Re: [PATCH v2 16/19] drm/msm/dpu: modify encoder programming for CDM
- over DP
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] ARM: dts: qcom: msm8974: Split out common part of
+ samsung-klte
+Content-Language: en-US
+To: Rong Zhang <i@rong.moe>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Icenowy Zheng <uwu@icenowy.me>
+References: <20240213110137.122737-1-i@rong.moe>
+ <20240213110137.122737-2-i@rong.moe>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240213110137.122737-2-i@rong.moe>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, 10 Feb 2024 at 03:53, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
-> Adjust the encoder format programming in the case of video mode for DP
-> to accommodate CDM related changes.
->
-> Changes in v2:
->         - Move timing engine programming to a separate patch from this
->           one
->         - Move update_pending_flush_periph() invocation completely to
->           this patch
->         - Change the logic of dpu_encoder_get_drm_fmt() so that it only
->           calls drm_mode_is_420_only() instead of doing additional
->           unnecessary checks
->         - Create new functions msm_dp_needs_periph_flush() and it's
->           supporting function dpu_encoder_needs_periph_flush() to check
->           if the mode is YUV420 and VSC SDP is enabled before doing a
->           peripheral flush
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+On 13/02/2024 11:58, Rong Zhang wrote:
+> Samsung Galaxy S5 has many variants. Variants that support LTE use klte*
+> as their codename. Currently, the only supported one is the one without
+> any suffix, namely, klte. It is known that other klte* variants have
+> only minor differences compared to klte and can mostly work with the
+> klte DTB.
+> 
+> Split the common part into a common DTSI so that it can be imported in
+> the DTS of klte and other klte* variants.
+> 
+> Signed-off-by: Rong Zhang <i@rong.moe>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 35 +++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 13 +++++++
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 19 ++++++++++
->  drivers/gpu/drm/msm/dp/dp_display.c           | 18 ++++++++++
->  drivers/gpu/drm/msm/msm_drv.h                 | 17 ++++++++-
->  5 files changed, 101 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 7e7796561009a..6280c6be6dca9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -222,6 +222,41 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->         15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->  };
->
-> +u32 dpu_encoder_get_drm_fmt(struct dpu_encoder_phys *phys_enc)
-> +{
-> +       struct drm_encoder *drm_enc;
-> +       struct dpu_encoder_virt *dpu_enc;
-> +       struct drm_display_info *info;
-> +       struct drm_display_mode *mode;
-> +
-> +       drm_enc = phys_enc->parent;
-> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +       info = &dpu_enc->connector->display_info;
-> +       mode = &phys_enc->cached_mode;
-> +
-> +       if (drm_mode_is_420_only(info, mode))
-> +               return DRM_FORMAT_YUV420;
-> +
-> +       return DRM_FORMAT_RGB888;
-> +}
-> +
-> +bool dpu_encoder_needs_periph_flush(struct dpu_encoder_phys *phys_enc)
-> +{
-> +       struct drm_encoder *drm_enc;
-> +       struct dpu_encoder_virt *dpu_enc;
-> +       struct msm_display_info *disp_info;
-> +       struct msm_drm_private *priv;
-> +       struct drm_display_mode *mode;
-> +
-> +       drm_enc = phys_enc->parent;
-> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
-> +       disp_info = &dpu_enc->disp_info;
-> +       priv = drm_enc->dev->dev_private;
-> +       mode = &phys_enc->cached_mode;
-> +
-> +       return phys_enc->hw_intf->cap->type == INTF_DP && phys_enc->hw_cdm &&
+>  ... qcom-msm8974pro-samsung-klte-common.dtsi} |   7 +-
+>  .../dts/qcom/qcom-msm8974pro-samsung-klte.dts | 833 +-----------------
 
-Do we really need to check for phys_enc->hw_cdm here?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> +              msm_dp_needs_periph_flush(priv->dp[disp_info->h_tile_instance[0]], mode);
-> +}
->
->  bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
->  {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> index f43d57d9c74e1..211a3d90eb690 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> @@ -341,6 +341,19 @@ static inline enum dpu_3d_blend_mode dpu_encoder_helper_get_3d_blend_mode(
->   */
->  unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc);
->
-> +/**
-> + * dpu_encoder_get_drm_fmt - return DRM fourcc format
-> + * @phys_enc: Pointer to physical encoder structure
-> + */
-> +u32 dpu_encoder_get_drm_fmt(struct dpu_encoder_phys *phys_enc);
-> +
-> +/**
-> + * dpu_encoder_needs_periph_flush - return true if physical encoder requires
-> + *     peripheral flush
-> + * @phys_enc: Pointer to physical encoder structure
-> + */
-> +bool dpu_encoder_needs_periph_flush(struct dpu_encoder_phys *phys_enc);
-> +
->  /**
->   * dpu_encoder_helper_split_config - split display configuration helper function
->   *     This helper function may be used by physical encoders to configure
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index f562beb6f7971..3f102b2813ca8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -413,8 +413,15 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
->  static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
->  {
->         struct dpu_hw_ctl *ctl;
-> +       struct dpu_hw_cdm *hw_cdm;
-> +       const struct dpu_format *fmt = NULL;
-> +       u32 fmt_fourcc = DRM_FORMAT_RGB888;
->
->         ctl = phys_enc->hw_ctl;
-> +       hw_cdm = phys_enc->hw_cdm;
-> +       if (hw_cdm)
-> +               fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc);
+Best regards,
+Krzysztof
 
-Please move if(hw_cdm) inside dpu_encoder_get_drm_fmt().
-
-> +       fmt = dpu_get_dpu_format(fmt_fourcc);
-
-Can this be moved into dpu_encoder_helper_phys_setup_cdm() ? Or maybe
-we can move both calls into the helper? I mean, fmt_fourcc is not used
-at all if the CDM is not used.
-
->
->         DPU_DEBUG_VIDENC(phys_enc, "\n");
->
-> @@ -423,6 +430,8 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
->
->         dpu_encoder_helper_split_config(phys_enc, phys_enc->hw_intf->idx);
->
-> +       dpu_encoder_helper_phys_setup_cdm(phys_enc, fmt, CDM_CDWN_OUTPUT_HDMI);
-> +
->         dpu_encoder_phys_vid_setup_timing_engine(phys_enc);
->
->         /*
-> @@ -438,6 +447,16 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
->         if (ctl->ops.update_pending_flush_merge_3d && phys_enc->hw_pp->merge_3d)
->                 ctl->ops.update_pending_flush_merge_3d(ctl, phys_enc->hw_pp->merge_3d->idx);
->
-> +       if (ctl->ops.update_pending_flush_cdm && phys_enc->hw_cdm)
-> +               ctl->ops.update_pending_flush_cdm(ctl, hw_cdm->idx);
-> +
-> +       /*
-> +        * Peripheral flush must be updated whenever flushing SDP packets is needed.
-> +        * SDP packets are required for any YUV format (YUV420, YUV422, YUV444).
-> +        */
-> +       if (ctl->ops.update_pending_flush_periph && dpu_encoder_needs_periph_flush(phys_enc))
-> +               ctl->ops.update_pending_flush_periph(ctl, phys_enc->hw_intf->idx);
-> +
->  skip_flush:
->         DPU_DEBUG_VIDENC(phys_enc,
->                 "update pending flush ctl %d intf %d\n",
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 4b04388719363..ebcc76ef1d590 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1397,6 +1397,24 @@ void __exit msm_dp_unregister(void)
->         platform_driver_unregister(&dp_display_driver);
->  }
->
-> +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
-> +                              const struct drm_display_mode *mode)
-> +{
-> +       struct dp_display_private *dp;
-> +       const struct drm_display_info *info;
-> +
-> +       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +       info = &dp_display->connector->display_info;
-> +
-> +       return dp->panel->vsc_sdp_supported && drm_mode_is_420_only(info, mode);
-> +}
-> +
-> +bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
-> +                              const struct drm_display_mode *mode)
-> +{
-> +       return msm_dp_is_yuv_420_enabled(dp_display, mode);
-> +}
-> +
->  bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->  {
->         struct dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 16a7cbc0b7dd8..b876ebd48effe 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -387,7 +387,10 @@ void __exit msm_dp_unregister(void);
->  int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->                          struct drm_encoder *encoder);
->  void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
-> -
-> +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
-> +                              const struct drm_display_mode *mode);
-> +bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
-> +                              const struct drm_display_mode *mode);
->  bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
->
->  #else
-> @@ -409,6 +412,18 @@ static inline void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm
->  {
->  }
->
-> +static inline bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
-> +                                            const struct drm_display_mode *mode)
-> +{
-> +       return false;
-> +}
-> +
-> +static inline bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
-> +                                            const struct drm_display_mode *mode)
-> +{
-> +       return false;
-> +}
-> +
->  static inline bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->  {
->         return false;
-> --
-> 2.39.2
->
-
-
--- 
-With best wishes
-Dmitry
 
