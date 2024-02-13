@@ -1,188 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-10881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ED0E853059
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:18:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E4D3853063
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:19:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 918C1B218DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:18:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90D1B1C223AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:19:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8AA3A1D9;
-	Tue, 13 Feb 2024 12:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47FD52BB0A;
+	Tue, 13 Feb 2024 12:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BgCj2Olw";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="W8XscNEP";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BgCj2Olw";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="W8XscNEP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SPgyDukr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FCC381A0;
-	Tue, 13 Feb 2024 12:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216C8482C5;
+	Tue, 13 Feb 2024 12:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707826685; cv=none; b=IIjZ72OX8lPRvQzVpTx3PPJtVgyyisDbNSNG2I0rOEcbp57gzIvY3lU0IFEKtBQFbyKCEup6FsSBlPcXoDEDRt/IhCq0Lxxjh+3tOzXtEUDgM/ZIeIkhyi0nxJTNzy960EIkscfGk4qmBMj7+Xq2BGlc24Wh6h+zbJsI5hEUvRw=
+	t=1707826780; cv=none; b=dLhzPXdlIsvaW14c+72N00va6iKzvP/5pTGtkqH58b1pNxu/9FyT+O4HIF826NeABII7L/NeYQ1IR9ScpJ9lSbYNF5ENOZ66QQd1Me81KlFcu/NbQ5s+RMfRYHvlCgc5ncuFJemlWGzgDQZXoEL4Qa4+HKUO5Cshr0lbbgt/3Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707826685; c=relaxed/simple;
-	bh=TNsmmxa+6HeFCAOCpipUzX2RGd7pxLJG/+tp3ucMPnc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pm77CD3lwDcWTfEsh1Hj9fjscqXNGySwYk+co/LBACsG++5amED0GEHkY+Og7s1pV1OniRGYeaEcj5WFflmUjm5x6UkMBgL9xjXuzRjL5+8f/kMolOHWJCBdjRZ1p8Q7sRSH7orWIvuTfvBJzCf2cfR+UqkxMCdEQOdNtBKWfmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=BgCj2Olw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=W8XscNEP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=BgCj2Olw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=W8XscNEP; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B656A1FCA1;
-	Tue, 13 Feb 2024 12:18:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707826681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OenRm4KDcWLHzJQS8tkPl+f9jR79iIvkYkLzvmSq+jQ=;
-	b=BgCj2Olw566Htu1EG2uF4EUwJZX2KMFBPnMyUuNwpbspUfqPlZCrVcM+5f4d9F1JjJ4zBl
-	KV4iug0fvq/hE34snF6uaTD8kGQOfXEOdncvZ4OAr63p3vPOHonWljidbMGbOxFR+KiArC
-	up6sUx6mW6fZPM1R/pzPK0TGsvBG5bU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707826681;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OenRm4KDcWLHzJQS8tkPl+f9jR79iIvkYkLzvmSq+jQ=;
-	b=W8XscNEPtOb8qP2wQeAZwA9zewFvjRHHl52AQn5bsIQEvWUltf3QWdCfya5b5TY8A6Mrwd
-	+TWbSDJRKATZNkCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1707826681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OenRm4KDcWLHzJQS8tkPl+f9jR79iIvkYkLzvmSq+jQ=;
-	b=BgCj2Olw566Htu1EG2uF4EUwJZX2KMFBPnMyUuNwpbspUfqPlZCrVcM+5f4d9F1JjJ4zBl
-	KV4iug0fvq/hE34snF6uaTD8kGQOfXEOdncvZ4OAr63p3vPOHonWljidbMGbOxFR+KiArC
-	up6sUx6mW6fZPM1R/pzPK0TGsvBG5bU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1707826681;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OenRm4KDcWLHzJQS8tkPl+f9jR79iIvkYkLzvmSq+jQ=;
-	b=W8XscNEPtOb8qP2wQeAZwA9zewFvjRHHl52AQn5bsIQEvWUltf3QWdCfya5b5TY8A6Mrwd
-	+TWbSDJRKATZNkCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6AEFA1370C;
-	Tue, 13 Feb 2024 12:18:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id J4IgGPldy2XVBgAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 13 Feb 2024 12:18:01 +0000
-Date: Tue, 13 Feb 2024 13:18:01 +0100
-Message-ID: <87o7cky2va.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: <srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<corbet@lwn.net>,
-	<lgirdwood@gmail.com>,
-	<andersson@kernel.org>,
-	<krzysztof.kozlowski+dt@linaro.org>,
-	<gregkh@linuxfoundation.org>,
-	<Thinh.Nguyen@synopsys.com>,
-	<broonie@kernel.org>,
-	<bgoswami@quicinc.com>,
-	<tiwai@suse.com>,
-	<robh+dt@kernel.org>,
-	<konrad.dybcio@linaro.org>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>,
-	<alsa-devel@alsa-project.org>
-Subject: Re: [PATCH v15 46/50] ALSA: usb-audio: Add USB offloading capable kcontrol
-In-Reply-To: <20240213005422.3121-47-quic_wcheng@quicinc.com>
-References: <20240213005422.3121-1-quic_wcheng@quicinc.com>
-	<20240213005422.3121-47-quic_wcheng@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1707826780; c=relaxed/simple;
+	bh=v5AyhBHiPceSmCW8rRAmmmf/JyydM9xR7xdvhgLspEc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jLPJGXdc7CcAXrvlKfsyf/uTDcSLsKtyTg5tcnNwBx1HvsJ40Q1wYrhJGgr9osOjj4poKy4edQTYOThMOYx5azhL3vyPqVRvN7FYACvzA9FnZUWNcvLNPCTbgAxahACigHXsxxw6i/akwX8cJGznO1ltco3RBE17Z8ysPJKdtog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SPgyDukr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A29C433F1;
+	Tue, 13 Feb 2024 12:19:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707826779;
+	bh=v5AyhBHiPceSmCW8rRAmmmf/JyydM9xR7xdvhgLspEc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SPgyDukrRgBR67Qehh9MEuOh3j2u+r6Is90V7S2dUGhg6le3gVL7Y3rYg+hold838
+	 XPbW4/eg+hgSUtZm4YFQrBk1L4JunvuY7hjQN2Qx+GAXLMAfDizQ4AyM/BNNzxUv+5
+	 Y0dLRjkZBwwteX6wABlKR9MiujJ0NR8++aFK6PsKxV2fBJeZCIyV2Kzjorh+g0z69d
+	 iZSC7MMoWG3ZwiTMlhYeiSXpgrhvkppei/g65SK81b98KU/bImeEBYJneFi+iylFbc
+	 TLII3pE4E37iwSIyC32wkvIZQCXSj9C82TJ/N7b2JdhZj1QeBml9rF5G2pjJTgBGCA
+	 a7ZcOVJXKvtDA==
+Date: Tue, 13 Feb 2024 12:19:34 +0000
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+	Rob Clark <robdclark@gmail.com>,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
+Message-ID: <20240213121934.GA28726@willie-the-truck>
+References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
+ <20240213121257.GI765010@ziepe.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [2.18 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 BAYES_HAM(-0.22)[72.28%];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[dt];
-	 MIME_GOOD(-0.10)[text/plain];
-	 R_RATELIMIT(0.00)[to_ip_from(RLjs3ec4aura4kmsd6wxjjm4hg)];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 RCPT_COUNT_TWELVE(0.00)[23];
-	 MID_CONTAINS_FROM(1.00)[];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,quicinc.com,suse.com,vger.kernel.org,alsa-project.org];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
-X-Spam-Level: **
-X-Spam-Score: 2.18
-X-Spam-Flag: NO
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240213121257.GI765010@ziepe.ca>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, 13 Feb 2024 01:54:18 +0100,
-Wesley Cheng wrote:
+On Tue, Feb 13, 2024 at 08:12:57AM -0400, Jason Gunthorpe wrote:
+> On Tue, Feb 13, 2024 at 01:31:56PM +0200, Dmitry Baryshkov wrote:
+> > This reverts commit 9b3febc3a3da ("iommu/arm-smmu: Convert to
+> > domain_alloc_paging()"). It breaks Qualcomm MSM8996 platform. Calling
+> > arm_smmu_write_context_bank() from new codepath results in the platform
+> > being reset because of the unclocked hardware access.
+> > 
+> > Fixes: 9b3febc3a3da ("iommu/arm-smmu: Convert to domain_alloc_paging()")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.c | 17 ++++++-----------
+> >  1 file changed, 6 insertions(+), 11 deletions(-)
 > 
-> --- a/sound/usb/Makefile
-> +++ b/sound/usb/Makefile
-> @@ -22,6 +22,7 @@ snd-usb-audio-objs := 	card.o \
->  			stream.o \
->  			validate.o
->  
-> +snd-usb-audio-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
->  snd-usb-audio-$(CONFIG_SND_USB_AUDIO_MIDI_V2) += midi2.o
->  snd-usb-audio-$(CONFIG_SND_USB_AUDIO_USE_MEDIA_CONTROLLER) += media.o
+> Please no, as I said in the other email the only thing that should be
+> reverted is this:
+> 
+> > @@ -875,15 +879,6 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
+> >  	mutex_init(&smmu_domain->init_mutex);
+> >  	spin_lock_init(&smmu_domain->cb_lock);
+> >  
+> > -	if (dev) {
+> > -		struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
+> > -
+> > -		if (arm_smmu_init_domain_context(smmu_domain, cfg->smmu, dev)) {
+> > -			kfree(smmu_domain);
+> > -			return NULL;
+> > -		}
+> > -	}
+> > -
+> >  	return &smmu_domain->domain;
+> >  }
+> 
+> Everything else is fine, you already tested with that arrangement.
 
-This puts the code into snd-usb-audio driver, and that causes a
-dependency mess, since...
+Partial reverts are a recipe for confusion, so I'll take this and if you'd
+like to bring back some of the hunks, please can you send a patch on top
+that does that?
 
-> +snd_usb_offload_available_get(struct snd_kcontrol *kcontrol,
-> +		      struct snd_ctl_elem_value *ucontrol)
-> +{
-> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
-> +	int ret;
-> +
-> +	ret = snd_soc_usb_device_offload_available(sysdev);
+Cheers,
 
-... here you call snd_soc_usb_*() stuff that belongs to snd-soc-usb.
-That is, with this patch, snd-usb-audio driver will depend on
-snd-soc-usb, while snd-soc-usb also depends on snd-usb-audio for its
-helpers again.
-
-I believe the better way would be to move this whole miser_usb_offload
-code into sound/usb/qcom/.  You need only usb_device and snd_card
-objects at the creation, and you can get them in qcom driver side,
-too.
-
-
-thanks,
-
-Takashi
+Will
 
