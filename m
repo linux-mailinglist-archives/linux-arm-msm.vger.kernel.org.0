@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-10908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796DC853415
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:03:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86F808534A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:30:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EFCA1F2ADB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:03:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5C521C20C72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:30:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 291875EE81;
-	Tue, 13 Feb 2024 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15F5B5E208;
+	Tue, 13 Feb 2024 15:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6dM+pCT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ptp4cskL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968D5EE60;
-	Tue, 13 Feb 2024 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D437D5B672;
+	Tue, 13 Feb 2024 15:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707836464; cv=none; b=d+zE5ewbX2ZGT/A3ukNp2VmOGgcN8ntqGQEmnHLOyUwy2D7vxMxim/490R8hLJGyCUN/VfklIptXwyKD8TEffUokwngdh8PXVpFPyimSrmUA+DCTc3N/HSDWPtGjyGbQDMXoWFIHSVPL8fkFB+cME9XxQFw/zH+CKzPYYAhOX5I=
+	t=1707838202; cv=none; b=JKDn+kH4sM7CMP23Of3iBAUN207xrshc34UFreXg2KFZkJ2XBhOpGFBBH2G+E+w7htGSDpsX8C0Us2flMeSutny+W4x8jHJQMSBnJd1d8TJ0DiC+TZHgAJn4MJpL0PQogLi55FrQImeNEKz/JP589+j7FF4KkkLlss7fNh3XPZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707836464; c=relaxed/simple;
-	bh=uHJ8QMuS8ivI4WXQ9n9PNE82twukstL8Xzx1tgomXCE=;
+	s=arc-20240116; t=1707838202; c=relaxed/simple;
+	bh=Wolp+E2RuuY50dt6mNKnn9ygbDFRB5Z1r6QtpNHkTzw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lbbAHWYJ0RGFTJojn52M/vezUcfITUPa7Dv1G4SApTDHoP3yD31OnyZVpe8ntPXtqpR4UJ5POrN5QpEQ/kFipvnjFkgEyoCXfn1vkbXdu5VwmQ5q+k7NQzwhkKDhr+YxuFcojOZGI/ToxdzeelJ9l2dqcw89EDekavYZlr1EgIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6dM+pCT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FD8C433F1;
-	Tue, 13 Feb 2024 15:01:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y3tw0GYQZ926Mpic9di7qKjmoLojSFU0jmJIamG/POJBp3R4D159X1wYKpn2V2ApbU10LGo1sqZVSZkHedsxd8HWQx0KKcTk/iwqgr4bS0Uo4hgCmQKHzdHEZlPKmj3wmULgSIcvD6XHDe/W9QqjoNPBvd749SwObLiYpZubkH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ptp4cskL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E60C433F1;
+	Tue, 13 Feb 2024 15:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707836463;
-	bh=uHJ8QMuS8ivI4WXQ9n9PNE82twukstL8Xzx1tgomXCE=;
+	s=k20201202; t=1707838201;
+	bh=Wolp+E2RuuY50dt6mNKnn9ygbDFRB5Z1r6QtpNHkTzw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h6dM+pCT9QqTKsIRTYvJPtYFp/lx2ZogzuCbx2tKGnYUK6IAX8MaD1O6TV2xiLSKe
-	 w8eqqBU1OiQ7GeQdhQKtz5D2yRrYTBhIPa7MMd0mwCiYRCQnjFtB0/rGZEgSvVC4gj
-	 zPYrQkb1Vm696S7hTnFWb+uKN1uVXjRJ4G1fp9hXm/u+xErzTdv/tAtgtZUZ1KTb1j
-	 Zhp+INdOkmFHESjQl92xg3pm+AQb5fCWoPEFmR2+YrMZ/XQZdDiWbiUutZUN2BQau+
-	 c4hsOdWf8U9rSKyV6ePBkGgpVopu0pd0A5KIqcjgq7yzypCCfHkVrz+To+MK4u9Gkt
-	 4NqcUq1O6TI7Q==
-Date: Tue, 13 Feb 2024 09:01:01 -0600
+	b=ptp4cskLAjbQwPs9slYJTx1Sodnnf+zTUAOGPx+BAQc8gs88zf0+QWq4BmUAb733k
+	 c63CFwP0PVCXaFp+YOeOY/1g1cYj1O27g6LlRAY0KfVfwAVeerJ+POxjFB3ur3+kHc
+	 QG4DDT3X1jHWDJC58s/Ci+ldxDeSVA/4gUMeI87CJOHSbSQ/ZdYsXjRp4PSEG23Pcx
+	 wXJf+h1E0rwSWP9kBWMGus8fNUpW73S+hIo72Nxg3rXgdO/AzEI6r28/jylyj50X5b
+	 71eb6HzfvzsSeI/C04zIf8muWwCmhx8/nKCoT+R6dyZ8J75EuUO3XGetXMOxlBOLQc
+	 8FyB8z29A9giQ==
+Date: Tue, 13 Feb 2024 09:29:59 -0600
 From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] dt-bindings: PCI: qcom: move to dedicated schema
- (part two)
-Message-ID: <20240213150101.GA1186205-robh@kernel.org>
-References: <20240205-dt-bindings-pci-qcom-split-continued-v1-0-c333cab5eeea@linaro.org>
+	quic_ppratap@quicinc.com, Felipe Balbi <balbi@kernel.org>,
+	quic_jackp@quicinc.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH v14 1/9] dt-bindings: usb: Add bindings for multiport
+ properties on DWC3 controller
+Message-ID: <170783819870.1408892.1824537443967859624.robh@kernel.org>
+References: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
+ <20240206051825.1038685-2-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,36 +68,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240205-dt-bindings-pci-qcom-split-continued-v1-0-c333cab5eeea@linaro.org>
+In-Reply-To: <20240206051825.1038685-2-quic_kriskura@quicinc.com>
 
-On Mon, Feb 05, 2024 at 04:58:00PM +0100, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> Please take this patchset and its dependency via PCI tree.
-> 
-> Dependency
-> ==========
-> This depends on:
-> https://lore.kernel.org/all/20240126-dt-bindings-pci-qcom-split-v3-0-f23cda4d74c0@linaro.org/
-> 
-> DTS fixes for interrupts will be send separately.
-> 
-> Description
-> ===========
-> The qcom,pcie.yaml containing all devices results in huge allOf: section
-> with a lot of if:then: clauses making review and changes quite
-> difficult.
-> 
-> Split individual devices into their own files, so we get rid of
-> multiple if:then: clauses.
 
-The downside to this is the resource names don't live next to each 
-other. Then it is just a free-for-all on making up names with little 
-attempt at alignment.
+On Tue, 06 Feb 2024 10:48:17 +0530, Krishna Kurapati wrote:
+> Add bindings to indicate properties required to support multiport
+> on Synopsys DWC3 controller.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  .../devicetree/bindings/usb/snps,dwc3.yaml          | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+> 
 
-OTOH, I give up and your mess to maintain...
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-Acked-by: Rob Herring <robh@kernel.org>
-
-Rob
 
