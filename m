@@ -1,231 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-10832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1073852B24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:28:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C926852B3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:30:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7BCD284461
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:28:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AE1C1F2177D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:30:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1921718AED;
-	Tue, 13 Feb 2024 08:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE08E182A1;
+	Tue, 13 Feb 2024 08:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ekIk+xBU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SQDdGGw8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBEF21364;
-	Tue, 13 Feb 2024 08:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544C518657;
+	Tue, 13 Feb 2024 08:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707812872; cv=none; b=WIWLWIYqlSCgifdTC+M1TxD/aKgrdGUsgyJ/03BEOcnmanmMGZqSzvdMd6Ri4oj+0vF8vxyRVydtH5CwBXuAbPA5fOGgePbuKfFDiwznXVhKeZpoAgkibBSspEgGyCaY9NEpTkrNp6vDWSNMb1G8O+O8CHuaXqtpjGtbE2+Z/vY=
+	t=1707813026; cv=none; b=bAxfKarLTgyDjGRkkGuVEQUf3sA1PTP3MeI69bH/csQN3tRxsIZYkDxbwo92g+IC3ad8tgNVFEMgpFEKj2RLP5ovKRXoA1IIYtq3mEOwyJxySUzwFlrj2bB7YiVS4cCvjuiVZCLaFEBVIruO4oNbVGajtvEG9PtalT2bNTKpR+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707812872; c=relaxed/simple;
-	bh=q/hQM3vLKQ0kH5wHz/078deb+2M0ui5GWzSIObPddmM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=baeS95pObkKGvrAlBeMh8afWxl/WjquUnL5SxTmjGSYCG+uruZUiW1uAmw8weC9gshEBj09mxKgHQwxdlfXd7HqhzaiIVIKP8Sn6qktG5VykytuI2nFUffwYLTNPOsLsjSqkTkHIekttqAXU+BBXOoYRiuRqMZgATmxEuSCGy3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ekIk+xBU; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1707813026; c=relaxed/simple;
+	bh=G6GFe/xxnU+wCJI9L6Xwt03DepEVKkpZr/GK2WjqDDk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=eQz2OMF4UeQgVzJ/Dft6f6kSUUtQXBulpCz7xubCgVdXItkBN1vB8MnatcF7Fy0Mk6rHOENlpVpt1/+QXlmqyVv9wPVjf8D84FnaaERv6GphJcY6iQC6+xu5+7CiWMoYjmhLa340JcaP2gMGBpNmB06pwtzPNXXgqEYWiYYV7to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SQDdGGw8; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D7WNgl021522;
-	Tue, 13 Feb 2024 08:27:47 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D7sqBM021912;
+	Tue, 13 Feb 2024 08:30:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=ebEnLGtxdvQ9BU1aamNWVJHMtfALLgzEIZ/kTA0keJM=; b=ek
-	Ik+xBU1YEUM0khvudIKU/uWlQVvJEgkAqUQY9iIBiJF2bFd7WJiexzV3sx3Opvtt
-	KOuvZxPoPiclwV8GO4mHKgwwqWMfjaWmcgIpWC2rj9B60HRLeDzOVhBadS+G4zB/
-	Da/PjtymnpVZl2TRjiNA/ohth34s/mlEx4b5qzZ/a4wyJlSmMNgrZ4nIP0OQJJ3P
-	WtGMGV/TfAXo0hDD00ldxnmF+a7eOXYYQpWmxOVKaz2uZd7eJxEntuEFn9aRDw93
-	bPkOYjd8aPFsB2pbI07XcBXGPjOE3eiJZIy5LcamRCqfARf9NGTacW4576AnmGc6
-	3v24FGl7Q+Mmd6qfKZQg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8448r2wa-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=G67nKLCfr69ua9V5FD95/88WYmttYaFQ1WldH+6JbI0=; b=SQ
+	DdGGw8OFWs1sbi1pnkn+ZCMg+C2jy3WTJ/wgN/VMEfmsEbgSaKt8yrCyePn3z6V5
+	cp1A7s2lVlHDiBDocsg/k6teuzbB4DTDaMaqazA90bVep1AxkAENMTNuoNLO1rDv
+	xYx1visa/BiluY2RO+0kVV4Jc3TZB1Z/6Bwb9A7CbyKIaKSFFhr0zXnxa6lUAkDX
+	cTdYQipPhCCOGdxMplwes3MLUE6uQT6lJB3lqktVjfQ6EgJv4IT6YiI0fXmof++A
+	RTmjH3daHVb8A1LdLA2rXdeB2R/v+V/B2Kys4KXIbwEGycz8/sgkSzsqwkW1Dw5h
+	75nnbcUF1LTlljGbT1YQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7tans216-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 08:27:47 +0000 (GMT)
+	Tue, 13 Feb 2024 08:30:17 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D8RkXR031258
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D8UFXa017426
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Feb 2024 08:27:46 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 13 Feb 2024 00:27:42 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB ports
-Date: Tue, 13 Feb 2024 13:57:24 +0530
-Message-ID: <20240213082724.1789096-3-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
-References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
+	Tue, 13 Feb 2024 08:30:15 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 13 Feb
+ 2024 00:30:11 -0800
+Message-ID: <b57c6699-92f8-192c-34b6-97c04cd18fb4@quicinc.com>
+Date: Tue, 13 Feb 2024 14:00:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/3] firmware: arm_scmi: Add support for marking certain
+ frequencies as boost
+Content-Language: en-US
+To: Sudeep Holla <sudeep.holla@arm.com>
+CC: <cristian.marussi@arm.com>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <morten.rasmussen@arm.com>, <dietmar.eggemann@arm.com>,
+        <lukasz.luba@arm.com>, <sboyd@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <nm@ti.com>
+References: <20240117110443.2060704-1-quic_sibis@quicinc.com>
+ <20240117110443.2060704-3-quic_sibis@quicinc.com>
+ <20240131112507.fu355wnolbsoiqxn@bogus>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20240131112507.fu355wnolbsoiqxn@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5YjYtrDPVf7EICzgwMu8AI4kZe-4iSet
-X-Proofpoint-GUID: 5YjYtrDPVf7EICzgwMu8AI4kZe-4iSet
+X-Proofpoint-GUID: 0BgYND4qgUQPRb4w_MYqK9jjanG_uF7u
+X-Proofpoint-ORIG-GUID: 0BgYND4qgUQPRb4w_MYqK9jjanG_uF7u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-13_04,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=622
- phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402130065
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 impostorscore=0
+ mlxlogscore=999 bulkscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130065
 
-Multiport USB controller (host-only) of SA8295 ADP has 4 Type-A ports
-exposed for connecting peripherals. The VBUS to these peripherals is
-provided by TPS2559QWDRCTQ1 regulators connected to these ports. Each
-regulator has an enable pin controlled by PMM8540. Since these regulators
-are GPIO controlled regulators, model them as fixed regulators and keep
-them Always-On at boot since we are wakeup capable and we don't need to
-turn them off on suspend. Also since we don't enter device mode, these
-regulators can be kept on.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
- 1 file changed, 83 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-index fd253942e5e5..49418843c214 100644
---- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-@@ -9,6 +9,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/spmi/spmi.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- 
- #include "sa8540p.dtsi"
- #include "sa8540p-pmics.dtsi"
-@@ -108,6 +109,46 @@ edp3_connector_in: endpoint {
- 			};
- 		};
- 	};
-+
-+	regulator-usb2-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB2_VBUS";
-+		gpio = <&pmm8540c_gpios 9 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb2_en>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+		regulator-always-on;
-+	};
-+
-+	regulator-usb3-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB3_VBUS";
-+		gpio = <&pmm8540e_gpios 5 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb3_en>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+		regulator-always-on;
-+	};
-+
-+	regulator-usb4-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB4_VBUS";
-+		gpio = <&pmm8540g_gpios 5 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb4_en>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+		regulator-always-on;
-+	};
-+
-+	regulator-usb5-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB5_VBUS";
-+		gpio = <&pmm8540g_gpios 9 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb5_en>;
-+		pinctrl-names = "default";
-+		enable-active-high;
-+		regulator-always-on;
-+	};
- };
- 
- &apps_rsc {
-@@ -584,6 +625,10 @@ &usb_1_qmpphy {
- 	status = "okay";
- };
- 
-+&usb_2 {
-+	status = "okay";
-+};
-+
- &usb_2_hsphy0 {
- 	vdda-pll-supply = <&vreg_l5a>;
- 	vdda18-supply = <&vreg_l7g>;
-@@ -636,6 +681,44 @@ &xo_board_clk {
- 
- /* PINCTRL */
- 
-+&pmm8540c_gpios {
-+	usb2_en: usb2-en-state {
-+		pins = "gpio9";
-+		function = "normal";
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pmm8540e_gpios {
-+	usb3_en: usb3-en-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pmm8540g_gpios {
-+	usb4_en: usb4-en-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+
-+	usb5_en: usb5-en-state {
-+		pins = "gpio9";
-+		function = "normal";
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
- &tlmm {
- 	pcie2a_default: pcie2a-default-state {
- 		clkreq-n-pins {
--- 
-2.34.1
+On 1/31/24 16:55, Sudeep Holla wrote:
+> On Wed, Jan 17, 2024 at 04:34:42PM +0530, Sibi Sankar wrote:
+>> All opps above the sustained level/frequency are treated as boost, so mark
+>> them accordingly.
+>>
+>> Suggested-by: Sudeep Holla <sudeep.holla@arm.com>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>   drivers/firmware/arm_scmi/perf.c | 11 ++++++++++-
+>>   1 file changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+>> index e286f04ee6e3..d3fb8c804b3d 100644
+>> --- a/drivers/firmware/arm_scmi/perf.c
+>> +++ b/drivers/firmware/arm_scmi/perf.c
+>> @@ -811,7 +811,7 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+>>   				     struct device *dev, u32 domain)
+>>   {
+>>   	int idx, ret;
+>> -	unsigned long freq;
+>> +	unsigned long freq, sustained_freq;
+>>   	struct dev_pm_opp_data data = {};
+>>   	struct perf_dom_info *dom;
+>>   
+>> @@ -819,12 +819,21 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+>>   	if (IS_ERR(dom))
+>>   		return PTR_ERR(dom);
+>>   
+>> +	if (!dom->level_indexing_mode)
+>> +		sustained_freq = dom->sustained_perf_level * dom->mult_factor;
+>> +	else
+>> +		sustained_freq = dom->sustained_freq_khz * dom->mult_factor;
+>> +
+> 
+> Can't we just use dom->sustained_freq_khz * 1000UL in both the cases ?
 
+sure, I retained sustained_perf_level because I wasn't sure how the
+sustained_perf_level would be populated in systems not using level
+indexing mode.
+
+> 
+> Other than that this series looks good to me but it would be good to
+> explain how you would use this. Since it is enabled by default, do you
+> plan to disable boost at time and when ? If it is for thermal reasons,
+> why your other series handling thermal and limits notification from the
+> firmware not sufficient.
+
+Boost frequencies defined in X1E are achievable by only one CPU in a
+cluster i.e. either the other CPUs in the same cluster should be in low
+power mode or offline. So it's mostly for book keeping i.e. we wouldn't
+to intimate incorrectly that the CPUs are running at max possible
+frequency when it's actually running at a lower frequency.
+
+-Sibi
+
+> 
 
