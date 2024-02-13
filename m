@@ -1,123 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-10876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68BC3852FA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:38:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BCDE852FB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 12:42:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 083BE1F24E7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:38:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10F7BB25C02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 11:42:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 851B6376FB;
-	Tue, 13 Feb 2024 11:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3996376FA;
+	Tue, 13 Feb 2024 11:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGgT/ET7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C884C376F7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA393376F3;
+	Tue, 13 Feb 2024 11:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707824291; cv=none; b=m+GYVnMHiImDzB4yFWkDuRiYEdBZIpgOv+ILS3jcu+7K9NQEW2S6JqmkCM5DxK4cEDubHOe8DgpG0voOifegEq2YMFp57T0OFlm3X8zKlnd1zAy7xZ8R6AEanD1AdV+Y57syjxYoE8rh2lqOVpvBndbEHX+b/HmYbcsbghh3WwI=
+	t=1707824521; cv=none; b=KJmIemVvSu9Ih3vwwjBscVbZtCSKu172ys2eLgh6K5NCv7s+dIll4x524zdlPCD+7LTWpRGd5xOBi1mtkVe9UObFZJ3HFdjigtDEQ6Nizjrt28YuJ54HIvAVN7IMxIYZz759pEcblGMOTTPpYmlKExwsZSgBPn9kp3TAk012Y1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707824291; c=relaxed/simple;
-	bh=0xhQ5imjyroJnZ2WvTMgqWRCONVg/qtTrWTIMVL9xpg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AgXWMmJLnJzEaccnloNznjKIAALkAXOxKOHte/1QslhvCosiu5QHU/7QiMijhH2BLAX9LUb680F74l9RF8Dk7AOthqhum2388KPJ28c8LzXA4YWM3n/9MlMLfgc7FNi3roa6WWvlwKh1HIMZpaYCRgM4l9Nta9JKPeghs1gJ2HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 90BF2DA7;
-	Tue, 13 Feb 2024 03:38:50 -0800 (PST)
-Received: from [10.57.49.48] (unknown [10.57.49.48])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 28DCF3F5A1;
-	Tue, 13 Feb 2024 03:38:07 -0800 (PST)
-Message-ID: <02a590bd-6379-455a-8184-d631ae88e63a@arm.com>
-Date: Tue, 13 Feb 2024 11:38:08 +0000
+	s=arc-20240116; t=1707824521; c=relaxed/simple;
+	bh=1GtEqKV+wQs0MT2SIs+9S6c4LRpp7sxXEmK272Gtxpg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=S32zIvEFuX6zTXkA5Qg9jiaUT8nleJrj8N0vi7s4otDpvMiU8qowEtlENoDSAqdhhUAsDeZKlUmKPqosq2ItYwAWI/jTwe6w3skbv9eVMEDrDKn2axadAcX68Cs071oeZ0+Pg/a4WoeXI/65xUlCjqu75ohduPWkxbn5jfmTVmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGgT/ET7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED0DC433C7;
+	Tue, 13 Feb 2024 11:42:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707824521;
+	bh=1GtEqKV+wQs0MT2SIs+9S6c4LRpp7sxXEmK272Gtxpg=;
+	h=Date:From:To:Cc:Subject:From;
+	b=ZGgT/ET7ls9NrBGdLxIAC0UWI4xJYDbxoV9/v+C/uAWRn0JFRVxM93plQwxAKyLBb
+	 Hly2wL+syAtopYQ6Vb0znNINhkDdxjsOgd6XDrJ/vYfJnBPNgL70AQ6H4UdXSvYzRn
+	 Zx1Qzk++dZx9WWT/Iuwgjuo7p5Fd0dchYjhkL2a9GRD1nLavEoBWbEp0L4ySefp8Zf
+	 HN1WV6a5QHbOLs1Ffj2qyxMCx3LgyOW0TfSGwARG1bByAPHEJ0DBI4EhmkzsduosLi
+	 9E6eiG7fR899DrgOlWWMXVGz+feqhf4OLNnJi8uOoR6VgK9cWa1nfDbJADd58FIJDz
+	 OCMMIQT1kIujA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rZrB2-000000007yd-1wrs;
+	Tue, 13 Feb 2024 12:42:17 +0100
+Date: Tue, 13 Feb 2024 12:42:16 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: drm/msm: DisplayPort regressions in 6.8-rc1
+Message-ID: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-Content-Language: en-GB
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Rob Clark <robdclark@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org
-References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
-From: Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 2024-02-13 11:31 am, Dmitry Baryshkov wrote:
-> This reverts commit 9b3febc3a3da ("iommu/arm-smmu: Convert to
-> domain_alloc_paging()"). It breaks Qualcomm MSM8996 platform. Calling
-> arm_smmu_write_context_bank() from new codepath results in the platform
-> being reset because of the unclocked hardware access.
+Hi,
 
-Acked-by: Robin Murphy <robin.murphy@arm.com>
+Since 6.8-rc1 the internal eDP display on the Lenovo ThinkPad X13s does
+not always show up on boot.
 
-> Fixes: 9b3febc3a3da ("iommu/arm-smmu: Convert to domain_alloc_paging()")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu.c | 17 ++++++-----------
->   1 file changed, 6 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index 68b6bc5e7c71..6317aaf7b3ab 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -859,10 +859,14 @@ static void arm_smmu_destroy_domain_context(struct arm_smmu_domain *smmu_domain)
->   	arm_smmu_rpm_put(smmu);
->   }
->   
-> -static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
-> +static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
->   {
->   	struct arm_smmu_domain *smmu_domain;
->   
-> +	if (type != IOMMU_DOMAIN_UNMANAGED) {
-> +		if (using_legacy_binding || type != IOMMU_DOMAIN_DMA)
-> +			return NULL;
-> +	}
->   	/*
->   	 * Allocate the domain and initialise some of its data structures.
->   	 * We can't really do anything meaningful until we've added a
-> @@ -875,15 +879,6 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
->   	mutex_init(&smmu_domain->init_mutex);
->   	spin_lock_init(&smmu_domain->cb_lock);
->   
-> -	if (dev) {
-> -		struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
-> -
-> -		if (arm_smmu_init_domain_context(smmu_domain, cfg->smmu, dev)) {
-> -			kfree(smmu_domain);
-> -			return NULL;
-> -		}
-> -	}
-> -
->   	return &smmu_domain->domain;
->   }
->   
-> @@ -1600,7 +1595,7 @@ static struct iommu_ops arm_smmu_ops = {
->   	.identity_domain	= &arm_smmu_identity_domain,
->   	.blocked_domain		= &arm_smmu_blocked_domain,
->   	.capable		= arm_smmu_capable,
-> -	.domain_alloc_paging	= arm_smmu_domain_alloc_paging,
-> +	.domain_alloc		= arm_smmu_domain_alloc,
->   	.probe_device		= arm_smmu_probe_device,
->   	.release_device		= arm_smmu_release_device,
->   	.probe_finalize		= arm_smmu_probe_finalize,
-> 
-> ---
-> base-commit: 46d4e2eb58e14c8935fa0e27d16d4c62ef82849a
-> change-id: 20240213-iommu-revert-domain-alloc-fa729e537df5
-> 
-> Best regards,
+The logs indicate problems with the runtime PM and eDP rework that went
+into 6.8-rc1:
+
+	[    6.006236] Console: switching to colour dummy device 80x25
+	[    6.007542] [drm:dpu_kms_hw_init:1048] dpu hardware revision:0x80000000
+	[    6.007872] [drm:drm_bridge_attach [drm]] *ERROR* failed to attach bridge /soc@0/phy@88eb000 to encoder TMDS-31: -16
+	[    6.007934] [drm:dp_bridge_init [msm]] *ERROR* failed to attach panel bridge: -16
+	[    6.007983] msm_dpu ae01000.display-controller: [drm:msm_dp_modeset_init [msm]] *ERROR* failed to create dp bridge: -16
+	[    6.008030] [drm:_dpu_kms_initialize_displayport:588] [dpu error]modeset_init failed for DP, rc = -16
+	[    6.008050] [drm:_dpu_kms_setup_displays:681] [dpu error]initialize_DP failed, rc = -16
+	[    6.008068] [drm:dpu_kms_hw_init:1153] [dpu error]modeset init failed: -16
+	[    6.008388] msm_dpu ae01000.display-controller: [drm:msm_drm_kms_init [msm]] *ERROR* kms hw init failed: -16
+	
+and this can also manifest itself as a NULL-pointer dereference:
+
+	[    7.339447] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+	
+	[    7.643705] pc : drm_bridge_attach+0x70/0x1a8 [drm]
+	[    7.686415] lr : drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
+	
+	[    7.769039] Call trace:
+	[    7.771564]  drm_bridge_attach+0x70/0x1a8 [drm]
+	[    7.776234]  drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
+	[    7.781782]  drm_bridge_attach+0x80/0x1a8 [drm]
+	[    7.786454]  dp_bridge_init+0xa8/0x15c [msm]
+	[    7.790856]  msm_dp_modeset_init+0x28/0xc4 [msm]
+	[    7.795617]  _dpu_kms_drm_obj_init+0x19c/0x680 [msm]
+	[    7.800731]  dpu_kms_hw_init+0x348/0x4c4 [msm]
+	[    7.805306]  msm_drm_kms_init+0x84/0x324 [msm]
+	[    7.809891]  msm_drm_bind+0x1d8/0x3a8 [msm]
+	[    7.814196]  try_to_bring_up_aggregate_device+0x1f0/0x2f8
+	[    7.819747]  __component_add+0xa4/0x18c
+	[    7.823703]  component_add+0x14/0x20
+	[    7.827389]  dp_display_probe+0x47c/0x568 [msm]
+	[    7.832052]  platform_probe+0x68/0xd8
+
+Users have also reported random crashes at boot since 6.8-rc1, and I've
+been able to trigger hard crashes twice when testing an external display
+(USB-C/DP), which may also be related to the DP regressions.
+
+I've opened an issue here:
+
+	https://gitlab.freedesktop.org/drm/msm/-/issues/51
+
+but I also want Thorsten's help to track this so that it gets fixed
+before 6.8 is released.
+
+#regzbot introduced: v6.7..v6.8-rc1
+
+The following series is likely the culprit:
+
+	https://lore.kernel.org/all/1701472789-25951-1-git-send-email-quic_khsieh@quicinc.com/
+
+Johan
 
