@@ -1,161 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-10895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 920CB853215
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:38:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 927E6853237
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:47:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B631A1C213F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:38:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DE7A2811B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 13:47:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E11E56440;
-	Tue, 13 Feb 2024 13:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8186E5646D;
+	Tue, 13 Feb 2024 13:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lMZaZzs5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSwRpVIz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B335755E7F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 13:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9D256465;
+	Tue, 13 Feb 2024 13:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707831509; cv=none; b=r29H8uBU8RjnALw+Sf377CGKBZpYF8SOzhvsuve22QUsRma6nZI9eo/IGL+STQdmN6ef6Bux1I3GOfzsMXXpjdl10zpBCBfEtc2nEA/4VXN1u70cE9sdbi+QlBv89jWKeQFrbgW/osBunrEmsAX2B9sJPze1CdSwJnE9mm9Kw0E=
+	t=1707832042; cv=none; b=ScnJMz/ae5uFyBFeOxqyi+ppuwnQ/EbEyHx77iQEzQb2DVHdhv74sahqKiWzXUAy1KBBAyihtR44dnthjScIqf850aDuAUAZlsOWrhExkWeaKGMQx9qFAxEmiU2BR8lPaWYOgZAfRaBPAWgxjJPag5DEJpNNB8Dv3l8pCiWz4hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707831509; c=relaxed/simple;
-	bh=5/iWu1j4QnIEs8QxSJD+hdSrsVOH41rvGwDOCY2SnYw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LrQnSPMIvQ06bKxiZRYUjNXadzRNXPRQKAzLbu1Z/wnN+/nAyqOYj549xNc/rQX6suM+K2EQKsKKEGJ59WP1Wq+FxeHowor/E/SUQ/zne4X8L+45xS6eTcpx384J8JrWJLyiOmVJwi8lINnK/chgD6m4mwXBcu1Zii9mNDsC7r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lMZaZzs5; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-511490772f6so5376594e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 05:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707831506; x=1708436306; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Zb8wAvFeeorGx6LWVz5UtbVfmgXSiLzvpa9AtKSuSg=;
-        b=lMZaZzs5kV1cEJzasgdwh7rNp2ehoS4gLt7iT+sf3J7ihc+b6Q9m7riOsGFaPUgXcz
-         ND0JbU7PkoKrn/vXJ7OKOvgkORHu8oDcWQScwWLECrDfv5GYYMf6OgoT2TdgZxJOMm6N
-         h10uWtIZbOQEu9gc/FGIYWANGZ3NEaox07+M0/Oj6CoOUaQK986DrOg99LYj+G75qD9c
-         HDFDP7Fh+4m9s38jRR2BhhNBr7PmUacW2hc0OGmE+ZWC/iXA6rInKTXDCM7PGPfa4Xgr
-         jw0m4MlqDaOHqfJ9mCJqM02kVe5ZlsAypC7FU2rBuIDVAIxn8+c4C+iPaaWzxhxL5vaU
-         FcvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707831506; x=1708436306;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4Zb8wAvFeeorGx6LWVz5UtbVfmgXSiLzvpa9AtKSuSg=;
-        b=vd12zdKlWpApzOkngIvi4AhfkGXYlnw0IBAd6oZa6gjwQbYBMuzyMpLluQX2Nu5tZ3
-         dyYvLTlIvZs4jpwCnG2DszFJ/y+hT1rupVQiMlPMlrZjDbM8rb1Qjh/GUMxL62K/QIaF
-         W3kl9SRXzNESLV++nPXvRzr2oml6kg//f3dSOzYdFZ5sho05mXg1GXOKI+tXAvf4dHrt
-         M7SwEcZZbFVVHbtbZ9ktDfH/e8GYSOlznGClKeC0o7np52HTHSiE+qkh1apY0fk1kMp9
-         u6gewQX4kEGjI/y4GmTbSVZI98xuvFW8iwv897Be8ejs5OtrCU0+PkShXUmbAw5hgc4t
-         HAmw==
-X-Forwarded-Encrypted: i=1; AJvYcCVyXznN93OiUMZaVwdO32WplyYhxyEJvsuuEirMReDiHHr4E9x7EjcXhuv3IQG5EZlnOjRCQm9LdeVbx84g7yY/0d0cGWk2LwHT0E1iPw==
-X-Gm-Message-State: AOJu0YwxfJDcI00sElBMpxlo2MKCSNooxmSby5f8HXyhGSrV1V+tAi6X
-	4kdR5uEdts7LwxFG4H9WidUFFClo35J6o8bhRZhiAf4xBwxBtb1ExXMjBl8d/6XssSdoTAoEUry
-	7
-X-Google-Smtp-Source: AGHT+IE7yw/lFv7KE85EgKrLu+fqIGLfS6/cTqI1wzx7FRZK261L2SlKG1mPKKPHgc6SYCq79Zdvmw==
-X-Received: by 2002:ac2:41c2:0:b0:511:7021:9418 with SMTP id d2-20020ac241c2000000b0051170219418mr6331796lfi.69.1707831505809;
-        Tue, 13 Feb 2024 05:38:25 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCURggPapZEk2u9sEIEP05tNN+oit4tz750l3gXkjJuiQ8zV+3bvMFkOWt+mIns2GmitMJT9g8QjgCEhxqqxgndP1yc/qHjnlYmll5EH2hBER0QR0i0BfRA4QKeLCN9Sx/MNHN/+SvZLIL3fI+WhOdeaNHzHDH9gbDOpeqPglJvzTa/dFgNVOPMfkyMbRaRzODQuESa1NXz8N/2O50psNdE3Xjk8BvBoGECmbsM=
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d30-20020a0565123d1e00b00511907736fdsm685142lfv.105.2024.02.13.05.38.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 05:38:25 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: [PATCH] phy: qcom-qmp-usb: fix v3 offsets data
-Date: Tue, 13 Feb 2024 15:38:24 +0200
-Message-Id: <20240213133824.2218916-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1707832042; c=relaxed/simple;
+	bh=0haMYFvkv9oRSevwsnTH0KPqSIE/ntXnuv7VSZm9rQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f5o+uzYVpzNSp1n/VyDIG3IO1M1fCXcPbwOhCkw6GWYPS2LqWpVoYoDPN/jT33cwLdI3IZFsQufNQQdRxTn+tB9ka1ai2No/qB1SFn4wU5MIw0Pck48+wngujdTpKi+rE9YxZ8eKWJfM1xQfQr37ydafoYifFOsOXyBP2Aipurc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSwRpVIz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1ABC433F1;
+	Tue, 13 Feb 2024 13:47:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707832041;
+	bh=0haMYFvkv9oRSevwsnTH0KPqSIE/ntXnuv7VSZm9rQQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bSwRpVIzMPTyS4AI7y6/gI/nE+9YiP71nhDxFYlmn6wigUj+hUhRxC66t6PbYOnk6
+	 /ZRmNpRLXX1Jz1KdOQpr1JvjzCNdO9GugwBL4xFSucXY6tDRfLibLgSWaJHNoGBH+x
+	 3J+4VkwB2aFX0h/jGnArc2jo8HOLt+zhNRErXPDRCe6ksXkSLUSSi4yW5ZTTWsbpzD
+	 SwrzomUVDgxFrwjd2QMEWpFWwBJkDk3QcWvChzjuVUymKYW92hSWSJTP05+tKVfOan
+	 Lbt0XLemE0x2MNmuPzmUPEjLQv3H8eXiJq3u/wpTEibEttktym56I6q8TCBJ3yqH+D
+	 7aZFzW2XPOmxQ==
+Date: Tue, 13 Feb 2024 13:47:14 +0000
+From: Will Deacon <will@kernel.org>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
+	konrad.dybcio@linaro.org, jsnitsel@redhat.com,
+	quic_bjorande@quicinc.com, mani@kernel.org,
+	quic_eberman@quicinc.com, robdclark@chromium.org,
+	u.kleine-koenig@pengutronix.de, robh@kernel.org,
+	vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com,
+	quic_molvera@quicinc.com, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	saravanak@google.com
+Subject: Re: [PATCH v9 4/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
+Message-ID: <20240213134714.GC28926@willie-the-truck>
+References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
+ <20240123144543.9405-5-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240123144543.9405-5-quic_bibekkum@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-The MSM8996 platform has registers setup different to the rest of QMP v3
-USB platforms. It has PCS region at 0x600 and no PCS_MISC region, while
-other platforms have PCS region at 0x800 and PCS_MISC at 0x600.  This
-results in the malfunctioning USB host on some of the platforms.  The
-commit f74c35b630d4 ("phy: qcom-qmp-usb: fix register offsets for
-ipq8074/ipq6018") fixed the issue for IPQ platforms, but missed the
-SDM845 which has the same register layout.
+On Tue, Jan 23, 2024 at 08:15:42PM +0530, Bibek Kumar Patro wrote:
+> Add ACTLR data table for SM8550 along with support for
+> same including SM8550 specific implementation operations.
+> 
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 90 ++++++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 6004c6d9a7b2..db15b1eade97 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -23,6 +23,86 @@
+> 
+>  #define CPRE			(1 << 1)
+>  #define CMTLB			(1 << 0)
+> +#define PREFETCH_SHIFT		8
+> +#define PREFETCH_DEFAULT	0
+> +#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
+> +#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
+> +#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
+> +#define PREFETCH_SWITCH_GFX	(5 << 3)
+> +
+> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
+> +	{ 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +	{ 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +	{ 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+> +	{ 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+> +	{ 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> +	{ 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> +	{ 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +	{ 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +	{ 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +	{ 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +	{ 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +	{ 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
 
-To simplify future platform addition and to make the driver more future
-proof, rename qmp_usb_offsets_v3 to qmp_usb_offsets_v3_msm8996 (to mark
-its peculiarity), rename qmp_usb_offsets_ipq8074 to qmp_usb_offsets_v3
-and use it for SDM845 platform.
+[...]
 
-Fixes: 2be22aae6b18 ("phy: qcom-qmp-usb: populate offsets configuration")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Isn't this effectively hard-coding the topology of the SoC in the driver?
+Wouldn't it better describing higher-level prefetch properties in the DT
+nodes corresponding to the upstream devices?
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 6621246e4ddf..5c003988c35d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1556,7 +1556,7 @@ static const char * const qmp_phy_vreg_l[] = {
- 	"vdda-phy", "vdda-pll",
- };
- 
--static const struct qmp_usb_offsets qmp_usb_offsets_ipq8074 = {
-+static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
- 	.serdes		= 0,
- 	.pcs		= 0x800,
- 	.pcs_misc	= 0x600,
-@@ -1572,7 +1572,7 @@ static const struct qmp_usb_offsets qmp_usb_offsets_ipq9574 = {
- 	.rx		= 0x400,
- };
- 
--static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
-+static const struct qmp_usb_offsets qmp_usb_offsets_v3_msm8996 = {
- 	.serdes		= 0,
- 	.pcs		= 0x600,
- 	.tx		= 0x200,
-@@ -1624,7 +1624,7 @@ static const struct qmp_usb_offsets qmp_usb_offsets_v7 = {
- static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
- 	.lanes			= 1,
- 
--	.offsets		= &qmp_usb_offsets_ipq8074,
-+	.offsets		= &qmp_usb_offsets_v3,
- 
- 	.serdes_tbl		= ipq9574_usb3_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
-@@ -1642,7 +1642,7 @@ static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
- static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
- 	.lanes			= 1,
- 
--	.offsets		= &qmp_usb_offsets_ipq8074,
-+	.offsets		= &qmp_usb_offsets_v3,
- 
- 	.serdes_tbl		= ipq8074_usb3_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(ipq8074_usb3_serdes_tbl),
-@@ -1678,7 +1678,7 @@ static const struct qmp_phy_cfg ipq9574_usb3phy_cfg = {
- static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
- 	.lanes			= 1,
- 
--	.offsets		= &qmp_usb_offsets_v3,
-+	.offsets		= &qmp_usb_offsets_v3_msm8996,
- 
- 	.serdes_tbl		= msm8996_usb3_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(msm8996_usb3_serdes_tbl),
--- 
-2.39.2
+Looking back at the prior revisions of this series, it seems like others
+were in favour of this approach, so if that's the general consensus, then
+so be it. But is this _really_ what we want in the SMMU driver? It would
+be good to have an Ack from Robin and a DT maintainer on this mechanism.
 
+It just all feels a bit like a step back into the bad old world of
+platform data to me, where we end up trying to maintain a bunch of random
+constants that supposedly make things faster for somebody :/
+
+Will
 
