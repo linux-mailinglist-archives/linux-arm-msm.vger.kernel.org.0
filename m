@@ -1,117 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-10899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B15B8532AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:09:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B5458532F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:22:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C989B231C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:09:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FB771F234B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 14:22:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4413056770;
-	Tue, 13 Feb 2024 14:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7162257868;
+	Tue, 13 Feb 2024 14:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JfPJsc4t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j26fZM4J"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7F43EA78;
-	Tue, 13 Feb 2024 14:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAD758103;
+	Tue, 13 Feb 2024 14:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707833346; cv=none; b=oYUb9SjiYEFh3CM0ZnYAriLMqVatlcFsX8pbFouAFnpsynFTUxJzSBdmsUBg+cZLW/iraR+RuU2kgqj/o0LhIy2a4SpJ40B9Lph1HZBm9/hWe4CidJOCwfsDP2xZISoGJu4IqJVFGbOlQpfnTIPBgLz4d6M5svSJ41Rbo9ag/hI=
+	t=1707834150; cv=none; b=lluKPLielhSUMbkem6sp7OXyeF9rRhL7rcI22F5oo+rnNn9cryPhtstGYhU2EZtOB6M2sJConaCqZAsLKjkBMp+KlJFk8Sa5dDdGyIND0IGOjEuZkJ7Qko1ZKi4Mu5ddUJCgRti1/Nmwem8KAFvvfAId+87EiDFU10RoHqkqckM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707833346; c=relaxed/simple;
-	bh=KauqY3cWRLjrsFmvQRweVXmrIR/tzXa9xEDDCF5RmTY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S3p7yeBEWCMUhdOurwpGmEy54Ssy6zh2fhqivPp05idetooJZ3NN5EufX47w9uOruHEbDJg8JbXsDcrQgByG9PlIBrcnuXw7h4dAVoqHz5yqLb1Sv0cHjbeQvDTrrQWK0AqXlKr8zqGxnVE7xzNEVIy/v2AladYm4rsChMfQ9DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JfPJsc4t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54829C433F1;
-	Tue, 13 Feb 2024 14:09:04 +0000 (UTC)
+	s=arc-20240116; t=1707834150; c=relaxed/simple;
+	bh=yqTyD/OjND337wp33t22PMtWJVzfs0J8AnORHF+7GG4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=DbuUMgWFAAWNHEn7xJB+s90M4uqzhdNOIOAsvW9j/4/rpOqx1waspl8zJ2Y/wQUyMFxNebaImHxaUVjINm6kpaw0+cwA4kmDykpBHUNjAnl7fNNpEeFpkGvcj53nUWGec6/4hk7PD8Kct1AJ4vxvujZTCT2GoFnI9S5Mk/7ItYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j26fZM4J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8057CC433C7;
+	Tue, 13 Feb 2024 14:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707833345;
-	bh=KauqY3cWRLjrsFmvQRweVXmrIR/tzXa9xEDDCF5RmTY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JfPJsc4tHt1vRcYsCv/Iuh2B274CXD4S3svxVg+lOcdSNxQq3XwmdXQRiZyxa0tEu
-	 aVupTh6IQi1LKFZegUnHRPDws834gXq81F2Yhwsumgoo51FmijBVtRvz/zdD9wUmzV
-	 3a8UYniU9RkLCZWcq36k0J0zB8pIxGNFcoUDcIcx5Ec1MEr5NGvDghr733KDxxWV2+
-	 WPNEKhVRnueehTBi92bEk61hvkX3fm6HxxVKNopuOUd5Yp3ehsTPEoHL4v9McejeTe
-	 pQ6NAeKPjWJIvNu7r81oGB54GGLy8hcZZsFzGRomEz3VSRq2jeNEq9C53vkU3TC8Or
-	 VgIt3eCwZ5O7w==
-Date: Tue, 13 Feb 2024 14:09:00 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Rob Clark <robdclark@gmail.com>,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-Message-ID: <20240213140900.GE28926@willie-the-truck>
-References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
- <20240213121257.GI765010@ziepe.ca>
- <20240213121934.GA28726@willie-the-truck>
- <20240213125303.GJ765010@ziepe.ca>
- <20240213125951.GB28844@willie-the-truck>
- <20240213134726.GK765010@ziepe.ca>
+	s=k20201202; t=1707834149;
+	bh=yqTyD/OjND337wp33t22PMtWJVzfs0J8AnORHF+7GG4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=j26fZM4JKyiZxhBok+sG84VvBt/MqBNn/AAUNCtYmbLqbII24bzx0mocMC/hifs26
+	 MymKA4NA/GocKd74u3tAEK7Wo9LnGSc2NrCM5ikCaVbclHgMJYLXvK2yEfhVsqzKvV
+	 0GDasPHFiXxHI9hYg2qlI2S85z6a82kZaKQKII1EvxtfTNoCMlNpv94hCVRoRhR12s
+	 rxpE6evzJqiHsg9zZMDsGEefXZBAOQCeyIqtWGm5GzikcW8lRXVH9ncgTgcJECZCaE
+	 PlamdIcJGZCTw1yV7lpCJ9+xs3FYwhkz1wGjrQklAGjP6wYJef1s6Yxq9rkzHWHsdy
+	 B+jkLkhJftv4A==
+From: Mark Brown <broonie@kernel.org>
+To: James Schulman <james.schulman@cirrus.com>, 
+ David Rhodes <david.rhodes@cirrus.com>, 
+ Richard Fitzgerald <rf@opensource.cirrus.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>, 
+ Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+ Sai Prakash Ranjan <quic_saipraka@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-hardening@vger.kernel.org
+In-Reply-To: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
+References: <20240210-topic-1v-v1-0-fda0db38e29b@linaro.org>
+Subject: Re: (subset) [PATCH 0/7] Xperia 1 V support
+Message-Id: <170783414525.38232.9788370045735417740.b4-ty@kernel.org>
+Date: Tue, 13 Feb 2024 14:22:25 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213134726.GK765010@ziepe.ca>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-a684c
 
-Hey Jason,
-
-On Tue, Feb 13, 2024 at 09:47:26AM -0400, Jason Gunthorpe wrote:
-> On Tue, Feb 13, 2024 at 12:59:52PM +0000, Will Deacon wrote:
-> > > The typical kernel standard is to fix bugs in patches and only reach
-> > > for a wholesale revert if the community is struggling with bug
-> > > fixing. Dmitry already tested removing that hunk, Robin explained the
-> > > issue, we understand the bug fix is to remove the
-> > > arm_smmu_init_domain_context() call. Nothing justifies a full scale
-> > > revert.
-> > 
-> > I can't say I'm aware of any consensus for how to handle this, to be
-> > completely honest with you. 
+On Mon, 12 Feb 2024 14:10:08 +0100, Konrad Dybcio wrote:
+> DTS for the phone and some fly-by fixes
 > 
-> Well, I work in a lot of subsystems and this is a surprise to me and
-> not something I've seen before. Fix the bug, move forward. Reverts are
-> a cultural admission of failure. I use threats of a revert as a hammer
-> to encourage people to pay attention to the bugs. I hardly ever
-> actually revert things. What does reverting their code say to my
-> submitters???
-
-Huh. I guess I'm lucky never to have worked in a environment where that
-is the case. In fact, my experience is quite the opposite: revert first
-so that things get back to a working state and the developer/submitter
-has some breathing room to rework the broken code. It's actually fairly
-blameless if you get it right and when you have a half-functional CI it's
-pretty much a necessity. Anyway, I digress...
-
-So if you see me appearing to be heavy-handed with reverts when dealing
-with regressions, it's really nothing tactical. Rather, it's purely
-about keeping the driver in a known functional state.
-
-> > > I'll send another patch if you want, but it seems like a waste of all
-> > > our time.
-> > 
-> > It's a bug fix, of course it's a waste of time! We're talking minutes
-> > though, right?
+> Patch 1 for Mark/sound
+> Rest for qcom
 > 
-> It becomes hard for maintainers to juggle the tress since you have to
-> send the revert to -rc and the fix on top of the rc to next. Again, I
-> will send the patch, just discussing.
+> 
 
-I've never had any difficulty managing that, so I think we'll be ok.
-Worst case, I can merge my fixes queue into my next queue.
+Applied to
 
-Will
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/7] dt-bindings: ASoC: cs35l45: Add interrupts
+      commit: d0611f617d823a87f04186ad165e2990208c040b
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
