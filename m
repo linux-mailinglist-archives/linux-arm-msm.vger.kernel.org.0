@@ -1,65 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-10910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 341788534B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:32:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 178E58534DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:38:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72FC5B2212C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:32:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 21A651C22929
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:38:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E61DB5EE6D;
-	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C36095D91C;
+	Tue, 13 Feb 2024 15:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTDiGHXV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nOHqXeQf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63CE5EE62;
-	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFADE5DF3E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 15:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707838345; cv=none; b=OmBcAwCEH1dc89kQDEyMSRhg1o7hy/dQ1Yw3UKY9RgrbXfWcI5JFlSihBlifDWsqk8Gj1kHmuLv24u5ruWn6VAw8Fb5B1Xsjp6fngVXIOPU9sw/7lFY4sz3bs7/qWy4L2Fz5HjHg2b+Mc0R12criMu7dzm2jybULTElA5DfSRBM=
+	t=1707838701; cv=none; b=jtBL4dhLdEU16uQCaM37AeJ6r/BpHejlhvz6cdEliADszNpqBmei8gZBzkkpuoxOj9Df4ogRsE6DalE7YqR9mtS0YIFBEybIglM8DaskFH7fdOFo+nPN2QdYGwmwgpqT7/GQA4kfzq29FJAss3cXVuwcT81s7J/o+ZyJCiHlKN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707838345; c=relaxed/simple;
-	bh=/9+yZy9vqCMDyXJC6a9Rn+/0ekeUlaGK/0cw1Q1T5/8=;
+	s=arc-20240116; t=1707838701; c=relaxed/simple;
+	bh=R/PIz0dmSoBARaPtfEZzOeEWJp99ALWMBVYnlckJ/3M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=buRi/Syq8cZnI0By9y1yTcq4mm+6b+upqqjuTF1DhBQiXFjoPGb7JUZXF/10a5KIFGSO9WY2OavqS3A5f74RiipPvgluR6t/hNYb71Wx9VF/RB6/fLlMxV2wAXEcvxS0s/raPdhijnsN0Kfg+GWxPI/BRkJlB55vZOGv0oHGB+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTDiGHXV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644E0C433F1;
-	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707838345;
-	bh=/9+yZy9vqCMDyXJC6a9Rn+/0ekeUlaGK/0cw1Q1T5/8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fTDiGHXVrDbi/P30WJStoHW6bpcHZ/3WbrqEbbIdXUy0VpdVMiMNhEUkIGoO1jIGx
-	 DzLnROy4Vnm0s8CXsX8u1SAo8slhaUUG7Bsfno8CYGmy1hFNzSORMVQFokiCHPErBM
-	 Xy/hMtze3wk/g35NhJDxMPM3V0zb+UIavYUtdTcgwhlIf791HdXwgLH0003u7nznN9
-	 RhF47qP9ojtwDQ+UqSNPD7I+bO//P//dBidD+IsRHmTUH2TQDzSoJZCnqSi1+OT43f
-	 SPSkMQoq8RzQVJlDn1yPBOX7i9syTQwZIlXpTQ7HRKtKJ/834Qf1bs6/8CvFfcdrZU
-	 u6TNKV3PQCveg==
-Date: Tue, 13 Feb 2024 09:32:23 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=czKHf/Eew9Vg6pkQILl2dcXjJRg5Y8SgW7loyAyYRzdLySBw93nK544osII5ycTqbrSlWxDDB9iXKbjwgg2WLC5+nbjQ7Um49hl+PBRetEX5bYzulVuKVv96GPXleRyzDHsblwByN212P2nKHHb3wuXJdSZ/aN4Z+RtdYEZX7fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nOHqXeQf; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a3d1151b497so77767266b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 07:38:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707838698; x=1708443498; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZnXQ4qxGwQr7q5GWes7/A5mpaC/moLlsxNk7QmOMeyM=;
+        b=nOHqXeQf7zGIRTu0BLSEgUlcor3dzNsSFDmRm8c/GuJ3F53mGbd68v3zYmSM2jlV4g
+         or1zsX+TPU17hzgU7A+EIYZENy4Tqy6YGZCBv63J4J2m/XFd3Cp+iTGo9edJJu5dQL4D
+         1BmT40FE5We/G7XaVyvNQIeFROG+FXE6bssSdEoPqrUbHHr0mL3PxVCbL5HSnAni+1d8
+         WaJ1R1GCpvOxjd+4+3IHxTVWD77GQzLi/+LjaBE3GsRCYM/YXnPccRoNZHvakFLinXiY
+         /pBDqZOh1NLjv0Gm5+jDPiJ7UukD0NbzfDZI4BW00EBcZZ9xILa6g+HKmWL2niuhr+ML
+         m4SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707838698; x=1708443498;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZnXQ4qxGwQr7q5GWes7/A5mpaC/moLlsxNk7QmOMeyM=;
+        b=Lzo60e2aitMH4tG1WqeSEBKv1X2pH2qkQjpv4cE24WyN13S10e7SCBbvy9Q8Ko77ml
+         pVCVXzvbZmDEtjaH/Whn8aVZ3KHcIR6nY4LWE3674M7JkX9xEAG4wfkKm4Oplhnzpd7F
+         3fEmyljujCff2vPdPr3/0Koo/UD8Wrj4/zWuSCv/XloyY+HYHe3nBwSgDwpMDjXbkHzv
+         uihJ6nqNKwgLNSL1SuiHNOUt3Ik6q9gXkAse6VIF/h1Dd35ExwMkzW6SCJSwLdD4GCsm
+         osSikTd0eTcJu4npbIOGsJRpPgfoQuhuaVG42y6/KZrtAQELl1hIRoZHNLNpZJdpoYbU
+         TO9A==
+X-Forwarded-Encrypted: i=1; AJvYcCVY/rJK2YL1vAOQl24NdJMB/CVWY3Qcw0jNY1NZd49ZoBF9VTD649fcvwzsDHRrIIw57dWQMDKtzbbkDXLHKtxXoyQPjQ/pguxSrn71aA==
+X-Gm-Message-State: AOJu0YybCkHyGgXiXaR//R8zm+hgbfmGCavnTgo8MYBxIMRdYtG4pgjE
+	AsCug/kWuinzbXe0/+GrJfw1E2NfJH4m8yv7tmMSc27KYBH07ATqv0VbhfF/zLA=
+X-Google-Smtp-Source: AGHT+IFQPTEKE8GIeujTWJ+O7gJLgC7eeIg5F4CoqdCggtkdMtrG1xNaY7Am/TaD9442Xsd9gV9GdQ==
+X-Received: by 2002:a17:906:80d8:b0:a3c:d7a3:2eb5 with SMTP id a24-20020a17090680d800b00a3cd7a32eb5mr3320186ejx.13.1707838697905;
+        Tue, 13 Feb 2024 07:38:17 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV/Jt54FkQUGvaJcgjM5EAn1v2bu/9jkN1Lj7ipBbd8b7vQr9GOqVEmhmnkf4cbsGZpY1XTQRUPRjPzVJOIuhUBC4O5pfQ8AsFP79gtsrG24IdttNeH8rAjoyrCJFXr6DOcwI/BkBKh4ORs4E48oXm2HjaNdLOENfJE5ZYRYsSoNWLi2Ndnfzng0SgaWdxjnkUdLb9HtTYLs+EXVJL5n+NyFJcW+/nvh0+a1f6Lk2w48tyDDCbIU75Bw1S8ASIMpdgmOUO14ndWZz8J8F9f0aQtQyJ2CT/DKqdevCXGcnvY1DEBXR7Zbicfpl2CpoEn5hMIjP9smT30sVxkLv4Zo1o8ZN5zuQasvrazBLjVfoWfiMYveQ77MIxTJYnw2Cq7qRM0PovQZ4Z/+chjXR//XwB68d+7WucPhdqEDfr8m6bkIy8VMs0JCDHTsxjZl3yt4oBYgBb4pxt2f4UK27GzOxGGmPRq
+Received: from linaro.org ([188.24.162.93])
+        by smtp.gmail.com with ESMTPSA id tx9-20020a1709078e8900b00a3d23a4e8fdsm169762ejc.90.2024.02.13.07.38.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Feb 2024 07:38:17 -0800 (PST)
+Date: Tue, 13 Feb 2024 17:38:16 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v14 5/9] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-Message-ID: <20240213153223.GA1409056-robh@kernel.org>
-References: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
- <20240206051825.1038685-6-quic_kriskura@quicinc.com>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH RFC v2] spmi: pmic-arb: Add support for multiple buses
+Message-ID: <ZcuM6ChFFN6pIlrf@linaro.org>
+References: <20240213-spmi-multi-master-support-v2-1-b3b102326906@linaro.org>
+ <3fcb9f16-61f8-4544-a319-20496d5eb106@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,64 +91,220 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240206051825.1038685-6-quic_kriskura@quicinc.com>
+In-Reply-To: <3fcb9f16-61f8-4544-a319-20496d5eb106@linaro.org>
 
-On Tue, Feb 06, 2024 at 10:48:21AM +0530, Krishna Kurapati wrote:
-> Add the compatible string for SC8280 Multiport USB controller from
-> Qualcomm.
+On 24-02-13 15:55:56, Neil Armstrong wrote:
+> On 13/02/2024 15:41, Abel Vesa wrote:
+> > The v7 HW supports currently 2 buses. So register each bus as a separate
+> > spmi controller and adapt all ops to use the bus instead of the
+> > arbitrator. Legacy mode is still supported as long as there is no child
+> > node that represents a bus, instead all nodes are expected to be actual
+> > slave devices.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > Changes in v2:
+> > - Reworked it so that it registers a spmi controller for each bus
+> >    rather than relying on the generic framework to pass on the bus
+> >    (master) id.
 > 
-> There are 4 power event irq interrupts supported by this controller
-> (one for each port of multiport). Added all the 4 as non-optional
-> interrupts for SC8280XP-MP
+> Thanks, I think this is better.
 > 
-> Also each port of multiport has one DP and oen DM IRQ. Add all DP/DM
-> IRQ's related to 4 ports of SC8280XP Teritiary controller.
+> > - Link to v1: https://lore.kernel.org/r/20240207-spmi-multi-master-support-v1-0-ce57f301c7fd@linaro.org
+> > ---
+> >   drivers/spmi/spmi-pmic-arb.c | 950 ++++++++++++++++++++++++++-----------------
+> >   1 file changed, 585 insertions(+), 365 deletions(-)
+> > 
+> > diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> > index 9ed1180fe31f..eced35b712b4 100644
+> > --- a/drivers/spmi/spmi-pmic-arb.c
+> > +++ b/drivers/spmi/spmi-pmic-arb.c
 > 
-> Also added ss phy irq for both SS Ports.
+> <snip>
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  .../devicetree/bindings/usb/qcom,dwc3.yaml    | 33 +++++++++++++++++++
->  1 file changed, 33 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> index 63d150b216c5..cc7cf592c029 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> @@ -30,6 +30,7 @@ properties:
->            - qcom,sc7180-dwc3
->            - qcom,sc7280-dwc3
->            - qcom,sc8280xp-dwc3
-> +          - qcom,sc8280xp-dwc3-mp
->            - qcom,sdm660-dwc3
->            - qcom,sdm670-dwc3
->            - qcom,sdm845-dwc3
-> @@ -282,6 +283,7 @@ allOf:
->            contains:
->              enum:
->                - qcom,sc8280xp-dwc3
-> +              - qcom,sc8280xp-dwc3-mp
->                - qcom,x1e80100-dwc3
->      then:
->        properties:
-> @@ -470,6 +472,37 @@ allOf:
->              - const: dm_hs_phy_irq
->              - const: ss_phy_irq
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sc8280xp-dwc3-mp
-> +    then:
-> +      properties:
-> +        interrupts:
-> +          maxItems: 18
+> > +static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
+> > +				  struct device_node *node,
+> > +				  struct spmi_pmic_arb *pmic_arb)
+> > +{
+> > +	int bus_index = pmic_arb->buses_available;
+> > +	struct spmi_pmic_arb_bus *bus = &pmic_arb->buses[bus_index];
+> > +	struct device *dev = &pdev->dev;
+> > +	struct spmi_controller *ctrl;
+> > +	void __iomem *intr;
+> > +	void __iomem *cnfg;
+> > +	int index, ret;
+> > +	u32 irq;
+> > +
+> > +	ctrl = devm_spmi_controller_alloc(dev, sizeof(*ctrl));
+> > +	if (IS_ERR(ctrl))
+> > +		return PTR_ERR(ctrl);
+> > +
+> > +	ctrl->cmd = pmic_arb_cmd;
+> > +	ctrl->read_cmd = pmic_arb_read_cmd;
+> > +	ctrl->write_cmd = pmic_arb_write_cmd;
+> > +
+> > +	bus = spmi_controller_get_drvdata(ctrl);
+> > +	bus->spmic = ctrl;
+> > +
+> > +	bus->ppid_to_apid = devm_kcalloc(dev, PMIC_ARB_MAX_PPID,
+> > +					 sizeof(*bus->ppid_to_apid),
+> > +					 GFP_KERNEL);
+> > +	if (!bus->ppid_to_apid)
+> > +		return -ENOMEM;
+> > +
+> > +	bus->apid_data = devm_kcalloc(dev, pmic_arb->max_periphs,
+> > +				      sizeof(*bus->apid_data),
+> > +				      GFP_KERNEL);
+> > +	if (!bus->apid_data)
+> > +		return -ENOMEM;
+> > +
+> > +	/* Optional property for v7: */
+> > +	of_property_read_u32(node, "qcom,bus-id", &bus_index);
+> 
+> Not sure what bindings you plan to use, but this should be the reg property.
+> 
 
-Need 'minItems: 18' as well.
+This is already part of the old bindings (and implementation) and it's
+only used for cases where some platforms would have two separate DT
+nodes (one for each bus, v7 only) as it would specify which bus id it
+is.
 
-With that,
+None of the upstream platforms use the qcom,bus-id with any other value
+than 0, currently.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+TBH, I think it should be dropped entirely.
+
+Also, just realized that if any platforms is using two separate
+controller nodes for each bus, this new approach will break the second
+instance as it will expect the qcom,bus-id value to still be 0.
+
+> > +	if (bus_index != pmic_arb->buses_available) {
+> > +		dev_err(dev, "wrong bus-id value");
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	index = of_property_match_string(node, "reg-names", "cnfg");
+> > +	if (index < 0) {
+> > +		dev_err(dev, "cnfg reg region missing");
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	cnfg = devm_of_iomap(dev, node, index, NULL);
+> > +	if (IS_ERR(cnfg))
+> > +		return PTR_ERR(cnfg);
+> > +
+> > +	index = of_property_match_string(node, "reg-names", "intr");
+> > +	if (index < 0) {
+> > +		dev_err(dev, "intr reg region missing");
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	intr = devm_of_iomap(dev, node, index, NULL);
+> > +	if (IS_ERR(intr))
+> > +		return PTR_ERR(intr);
+> > +
+> > +	irq = of_irq_get_byname(node, "periph_irq");
+> > +	if (irq < 0)
+> > +		return irq;
+> > +
+> > +	bus->pmic_arb = pmic_arb;
+> > +	bus->intr = intr;
+> > +	bus->cnfg = cnfg;
+> > +	bus->irq = irq;
+> > +	bus->id = bus_index;
+> > +
+> > +	ret = pmic_arb->ver_ops->init_apid(bus, index);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
+> > +
+> > +	bus->domain = irq_domain_add_tree(dev->of_node,
+> > +					  &pmic_arb_irq_domain_ops, bus);
+> > +	if (!bus->domain) {
+> > +		dev_err(&pdev->dev, "unable to create irq_domain\n");
+> > +		return -ENOMEM;
+> > +	}
+> > +
+> > +	irq_set_chained_handler_and_data(bus->irq,
+> > +					 pmic_arb_chained_irq, bus);
+> > +
+> > +	bus->spmic->dev.of_node = node;
+> > +	dev_set_name(&bus->spmic->dev, "spmi-%d", bus_index);
+> > +
+> > +	ret = devm_spmi_controller_add(dev, bus->spmic);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	pmic_arb->buses_available++;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int spmi_pmic_arb_register_buses(struct spmi_pmic_arb *pmic_arb,
+> > +					struct platform_device *pdev)
+> > +{
+> > +	struct device *dev = &pdev->dev;
+> > +	struct device_node *node = dev->of_node;
+> > +	struct device_node *child;
+> > +	int ret;
+> > +
+> > +	for_each_available_child_of_node(node, child)
+> > +		if (of_node_name_eq(child, "bus")) {
+> 
+> It seems you use "bus" subnodes, it seems you should also submit a new
+> bindings scheme for v7 controllers with subnodes
+
+Yep, will do that.
+
+> 
+> > +			ret = spmi_pmic_arb_bus_init(pdev, child, pmic_arb);
+> > +			if (ret)
+> > +				return ret;
+> > +		}
+> > +
+> > +	if (!pmic_arb->buses_available)
+> > +		ret = spmi_pmic_arb_bus_init(pdev, node, pmic_arb);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static void spmi_pmic_arb_deregister_buses(struct spmi_pmic_arb *pmic_arb)
+> > +{
+> > +	int i;
+> > +
+> > +	for (i = 0; i < pmic_arb->buses_available; i++) {
+> > +		struct spmi_pmic_arb_bus *bus = &pmic_arb->buses[i];
+> > +
+> > +		irq_set_chained_handler_and_data(bus->irq,
+> > +						 NULL, NULL);
+> > +		irq_domain_remove(bus->domain);
+> > +	}
+> > +}
+> > +
+> 
+> <snip>
+> 
+> Overall the patch is __huge__, could you split it ? Like move the bus handling
+> then add the multi-bus support in separate patches ?
+
+Sure thing.
+
+> 
+> But first please add new bindings first so we know what you expect from DT.
+
+Yep, will add another example to the existing bindings schema.
+
+> 
+> Thanks,
+> Neil
+> 
+> > 
+> > ---
+> > base-commit: 445a555e0623387fa9b94e68e61681717e70200a
+> > change-id: 20240207-spmi-multi-master-support-832a704b779b
+> > 
+> > Best regards,
+> 
 
