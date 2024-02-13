@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-10909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86F808534A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:30:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 341788534B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:32:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5C521C20C72
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:30:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72FC5B2212C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 15:32:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15F5B5E208;
-	Tue, 13 Feb 2024 15:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E61DB5EE6D;
+	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ptp4cskL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTDiGHXV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D437D5B672;
-	Tue, 13 Feb 2024 15:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63CE5EE62;
+	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707838202; cv=none; b=JKDn+kH4sM7CMP23Of3iBAUN207xrshc34UFreXg2KFZkJ2XBhOpGFBBH2G+E+w7htGSDpsX8C0Us2flMeSutny+W4x8jHJQMSBnJd1d8TJ0DiC+TZHgAJn4MJpL0PQogLi55FrQImeNEKz/JP589+j7FF4KkkLlss7fNh3XPZw=
+	t=1707838345; cv=none; b=OmBcAwCEH1dc89kQDEyMSRhg1o7hy/dQ1Yw3UKY9RgrbXfWcI5JFlSihBlifDWsqk8Gj1kHmuLv24u5ruWn6VAw8Fb5B1Xsjp6fngVXIOPU9sw/7lFY4sz3bs7/qWy4L2Fz5HjHg2b+Mc0R12criMu7dzm2jybULTElA5DfSRBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707838202; c=relaxed/simple;
-	bh=Wolp+E2RuuY50dt6mNKnn9ygbDFRB5Z1r6QtpNHkTzw=;
+	s=arc-20240116; t=1707838345; c=relaxed/simple;
+	bh=/9+yZy9vqCMDyXJC6a9Rn+/0ekeUlaGK/0cw1Q1T5/8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y3tw0GYQZ926Mpic9di7qKjmoLojSFU0jmJIamG/POJBp3R4D159X1wYKpn2V2ApbU10LGo1sqZVSZkHedsxd8HWQx0KKcTk/iwqgr4bS0Uo4hgCmQKHzdHEZlPKmj3wmULgSIcvD6XHDe/W9QqjoNPBvd749SwObLiYpZubkH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ptp4cskL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E60C433F1;
-	Tue, 13 Feb 2024 15:30:01 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=buRi/Syq8cZnI0By9y1yTcq4mm+6b+upqqjuTF1DhBQiXFjoPGb7JUZXF/10a5KIFGSO9WY2OavqS3A5f74RiipPvgluR6t/hNYb71Wx9VF/RB6/fLlMxV2wAXEcvxS0s/raPdhijnsN0Kfg+GWxPI/BRkJlB55vZOGv0oHGB+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTDiGHXV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644E0C433F1;
+	Tue, 13 Feb 2024 15:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707838201;
-	bh=Wolp+E2RuuY50dt6mNKnn9ygbDFRB5Z1r6QtpNHkTzw=;
+	s=k20201202; t=1707838345;
+	bh=/9+yZy9vqCMDyXJC6a9Rn+/0ekeUlaGK/0cw1Q1T5/8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ptp4cskLAjbQwPs9slYJTx1Sodnnf+zTUAOGPx+BAQc8gs88zf0+QWq4BmUAb733k
-	 c63CFwP0PVCXaFp+YOeOY/1g1cYj1O27g6LlRAY0KfVfwAVeerJ+POxjFB3ur3+kHc
-	 QG4DDT3X1jHWDJC58s/Ci+ldxDeSVA/4gUMeI87CJOHSbSQ/ZdYsXjRp4PSEG23Pcx
-	 wXJf+h1E0rwSWP9kBWMGus8fNUpW73S+hIo72Nxg3rXgdO/AzEI6r28/jylyj50X5b
-	 71eb6HzfvzsSeI/C04zIf8muWwCmhx8/nKCoT+R6dyZ8J75EuUO3XGetXMOxlBOLQc
-	 8FyB8z29A9giQ==
-Date: Tue, 13 Feb 2024 09:29:59 -0600
+	b=fTDiGHXVrDbi/P30WJStoHW6bpcHZ/3WbrqEbbIdXUy0VpdVMiMNhEUkIGoO1jIGx
+	 DzLnROy4Vnm0s8CXsX8u1SAo8slhaUUG7Bsfno8CYGmy1hFNzSORMVQFokiCHPErBM
+	 Xy/hMtze3wk/g35NhJDxMPM3V0zb+UIavYUtdTcgwhlIf791HdXwgLH0003u7nznN9
+	 RhF47qP9ojtwDQ+UqSNPD7I+bO//P//dBidD+IsRHmTUH2TQDzSoJZCnqSi1+OT43f
+	 SPSkMQoq8RzQVJlDn1yPBOX7i9syTQwZIlXpTQ7HRKtKJ/834Qf1bs6/8CvFfcdrZU
+	 u6TNKV3PQCveg==
+Date: Tue, 13 Feb 2024 09:32:23 -0600
 From: Rob Herring <robh@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Rob Herring <robh+dt@kernel.org>,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	quic_ppratap@quicinc.com, Felipe Balbi <balbi@kernel.org>,
-	quic_jackp@quicinc.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH v14 1/9] dt-bindings: usb: Add bindings for multiport
- properties on DWC3 controller
-Message-ID: <170783819870.1408892.1824537443967859624.robh@kernel.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v14 5/9] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+Message-ID: <20240213153223.GA1409056-robh@kernel.org>
 References: <20240206051825.1038685-1-quic_kriskura@quicinc.com>
- <20240206051825.1038685-2-quic_kriskura@quicinc.com>
+ <20240206051825.1038685-6-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,19 +68,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240206051825.1038685-2-quic_kriskura@quicinc.com>
+In-Reply-To: <20240206051825.1038685-6-quic_kriskura@quicinc.com>
 
-
-On Tue, 06 Feb 2024 10:48:17 +0530, Krishna Kurapati wrote:
-> Add bindings to indicate properties required to support multiport
-> on Synopsys DWC3 controller.
+On Tue, Feb 06, 2024 at 10:48:21AM +0530, Krishna Kurapati wrote:
+> Add the compatible string for SC8280 Multiport USB controller from
+> Qualcomm.
+> 
+> There are 4 power event irq interrupts supported by this controller
+> (one for each port of multiport). Added all the 4 as non-optional
+> interrupts for SC8280XP-MP
+> 
+> Also each port of multiport has one DP and oen DM IRQ. Add all DP/DM
+> IRQ's related to 4 ports of SC8280XP Teritiary controller.
+> 
+> Also added ss phy irq for both SS Ports.
 > 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
->  .../devicetree/bindings/usb/snps,dwc3.yaml          | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    | 33 +++++++++++++++++++
+>  1 file changed, 33 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index 63d150b216c5..cc7cf592c029 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -30,6 +30,7 @@ properties:
+>            - qcom,sc7180-dwc3
+>            - qcom,sc7280-dwc3
+>            - qcom,sc8280xp-dwc3
+> +          - qcom,sc8280xp-dwc3-mp
+>            - qcom,sdm660-dwc3
+>            - qcom,sdm670-dwc3
+>            - qcom,sdm845-dwc3
+> @@ -282,6 +283,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,sc8280xp-dwc3
+> +              - qcom,sc8280xp-dwc3-mp
+>                - qcom,x1e80100-dwc3
+>      then:
+>        properties:
+> @@ -470,6 +472,37 @@ allOf:
+>              - const: dm_hs_phy_irq
+>              - const: ss_phy_irq
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc8280xp-dwc3-mp
+> +    then:
+> +      properties:
+> +        interrupts:
+> +          maxItems: 18
+
+Need 'minItems: 18' as well.
+
+With that,
 
 Reviewed-by: Rob Herring <robh@kernel.org>
-
 
