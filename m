@@ -1,166 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-10835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B030B852B42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:32:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AFA5852B46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:36:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38DD31F21F98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:32:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46AC52823F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:35:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52F681865B;
-	Tue, 13 Feb 2024 08:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 855821772F;
+	Tue, 13 Feb 2024 08:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bnvGbFPo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EVoz4Dn5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1944920DF8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 08:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DB114271;
+	Tue, 13 Feb 2024 08:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707813116; cv=none; b=Yx549s/YpbOvIURj/FMOeVyD2wtX2QcQVEbig6sEpSUEykPohFZSES3n9fRAzsHf0lOz2nDOQPVQT61+3ikApdjM8avlgGPSOPC99TTDnINbQstu3uQXfUiVgyFLgr9gIX6u15+7dqSFiRtZ4FeFKvXUJaE08GICKi6bNI4wjYk=
+	t=1707813357; cv=none; b=jZJE6NzLIRhENVEvDbakDfJLThUEbNLrwpH9vKfXENtYugLiuXutPQ1Oc9WeamVAdZAf3rwtBKih/0iYM1Ae/nTSqTY+OcxWl/YiqTAsVMxBLI+6lxJuCwZ1hBl504wWuLu06RguMu9C24TZnLiTvSZGYSRQqUurAEddE4TN6rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707813116; c=relaxed/simple;
-	bh=LyBIaArFIcO2x6uNyD6g6ihvCa/mFgvkSZZsFZNh2cI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M0Yq/diMMJbh4rWKwRBqod4nOi+zZRkuTfxZyf6Ba14Px01TfXCnWT1oj95Zeh4G3ofbjnlYS/BpLPOsPEAJ4buOZDvmID6hAIOmtH57ioKIgKNHuqJ6CGRfxzfqWhsJdBq5j1vM269dMRSD47zXsSTqrmmgOO/eZXZ5+4+TJoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bnvGbFPo; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-411cce9ac9aso15565e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 00:31:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707813111; x=1708417911; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dde3EbS6VWJqvGKjav4KSnBK0JRdRxmSb9vh6mKuzWo=;
-        b=bnvGbFPo7iB+nx1Eb/95nPeSE3ayr8srjZktKvRC86q0tWdZEywKdxqFcB4jQ+Vu79
-         T5V6tQJPTp9GNW/hTyuZsEZhSbYLnLJgLWbIPG6ap9OXPOITJ/srDMFNZo+jIVeCnoI1
-         L+rA11zb1ArrgR8SP6vRCNtruNTOh0lNOnBhla2cQLytmmBVr5boIMxAMJtPWuXhHDO0
-         IzhXQbuKTLOf0jo0ziZWq1CpwM1nQB32WiYpRX0gQbJTmC/kKTiPWgLeYh+wmWUAXh4v
-         UIXxJ71pnhJncc+ERN0njD4S+lwcyxzmVkWAnBVooVe5ZZ7Q0FUIh7RRxg5BOCDhZXFo
-         RpAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707813111; x=1708417911;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dde3EbS6VWJqvGKjav4KSnBK0JRdRxmSb9vh6mKuzWo=;
-        b=BW99Gl06QO/Ai6sE8Xfz1exU4vFhVDi6e0SM1a7h4wlyNrYaQCK/hTOpqouf6QgcMR
-         NU0CQVNZYtoswvHh9hIvE2b6drKjJToBsHAcDQoS+LtxIFts5j7M7D4Cq41K58Ur7To6
-         O4t6TQeC0wWpLc5LkisgCVQ9iQsuOVVV9i+NC+nwqKG6ziCf79KJjaWRudNyzF2t2F6X
-         hM5RZWMsHybNQe7Bpj+ptXX9xxhE4MbvhN2biRsVELt6dcbh0pzElMhxRah6IO3JHTx3
-         3Tvs1k80LTBVPzfalso7yiNE0VWVocjRhLctK5qiUnlUsf7rnJs73rP+PPclJWPyw3Rt
-         65jA==
-X-Gm-Message-State: AOJu0YwKxRZ7368MjttcCO0V5oiR2oGYMtjmmzvOhqzJ8xKtjQr03nHC
-	AmQ4+6eyUGXJGyIPW+qDGgQ55arg7Ru6iEzxdxKOrpgBBehQ9VRG4ts+Tx08EZw=
-X-Google-Smtp-Source: AGHT+IHpvUw/qDTTMCNzLOjJTulKDkhaY2ngH6JlcBNuwoR0OBe3hQ8tB56KDVOclzwa4Zlj+2IXEQ==
-X-Received: by 2002:a05:600c:1c91:b0:410:218d:8a21 with SMTP id k17-20020a05600c1c9100b00410218d8a21mr8254548wms.20.1707813111421;
-        Tue, 13 Feb 2024 00:31:51 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCULwES8tzyOa95T8WU12zOZkyS3mQOXSGaWVgro+ADdbnq5f1aL0M1/J44JxMPh7turmFZrXD/svj6Pp5Z08dpdb/vOZATOAoMpboQScgU++dE6tnn4namSgb/tDxGNdWYM0dfcxgEReBWqRxR1POSko7DRvxfLoUV8e/mBA8q0VcDjm/e8S8BNMLO3KQhu09ep1p1VZU0c0Ocqh8/1sdIjC2u2hgLa7ByDfVlVMhETYlJFDMrIuFgwSAFcPcwEjd0c5QXjWvS7GPWjkK5+/mUtHpsMyBNKt4UUBfE9EKgN4DRJmV8bn42XgrKVAnweeKn3lOO3Ntf6GqeNMncioWqnHWPNaKEO1sBJQtFCfji6z5WjNTcvnftUqclG4PTB+19IMaS1ksECHVI=
-Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id e12-20020a05600c4e4c00b00411c9c0ede4sm308961wmq.7.2024.02.13.00.31.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Feb 2024 00:31:51 -0800 (PST)
-Message-ID: <72ab2968-5e35-41c1-a689-6353a1d43b82@linaro.org>
-Date: Tue, 13 Feb 2024 09:31:49 +0100
+	s=arc-20240116; t=1707813357; c=relaxed/simple;
+	bh=3hSD/Ts4z8au2F6bCOeibfMwFtuh88HvEP7ks4mhQB4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LHKykn/SaDPKy+wgQcaMNQ2QXd0CVvPA3SNBx3so8VpTW15w3+CzJI/cEnGDEaHtwGoIH19h6R1zE3H4IWjohulg1Te0L14WxbFdPke3VYszPuTVn6P3kDm7yYFarhsstaUx/jSkfhGDouwWw+6o55uwjrh53VegP5Yqyixufq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EVoz4Dn5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D5Bt0w018721;
+	Tue, 13 Feb 2024 08:35:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=5VlOp9s6RWEnlxHGCNNtLxbUChTO7sBk0SVwHCFI4Yc=; b=EV
+	oz4Dn5XvoFZpaXNtrGusPvh06dPsJU5wGPfPlGNgNceq5D+ac2oVNdIyRT3OlpNs
+	e5j2MGqq/+ijWSm2fwiMvqGgD0DCoawTCvPDSmmkCG0HndafLkWL+lwI8+Fo82+s
+	dT781rAAf883omT9xRuM0F3l3MzavpHXfPgRMezICSY1WnThjYZvCeXYBCrBAXOa
+	0y7E6vGpMZvffIzrAK0rxw8L0q2DJlbekU1dxROg43mpccBzDJ+Rnao8pdjjcqrK
+	Loj/LbzZ+Z2eRXRUVLxMyqFQ0dLk3Lt9xpPk3Uv8XAYGNOF1TK91JLcKlI//pPqr
+	MG8FhFXa7xxkiKnaghsg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7q2y1jhp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 08:35:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D8ZiZ4009545
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 08:35:44 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 13 Feb
+ 2024 00:35:40 -0800
+Message-ID: <01b3d0ed-3fd3-86c6-7b0f-48d34a5d9ba8@quicinc.com>
+Date: Tue, 13 Feb 2024 14:05:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] pinctrl: qcom: sm8450: Add pll_clk to pin group 98
- for SM8475
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/3] cpufreq: scmi: Add boost frequency support
 Content-Language: en-US
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, vkoul@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240212191046.77013-1-danila@jiaxyga.com>
- <20240212191046.77013-3-danila@jiaxyga.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240212191046.77013-3-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
+To: Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Sudeep Holla
+	<sudeep.holla@arm.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+CC: <cristian.marussi@arm.com>, <rafael@kernel.org>,
+        <morten.rasmussen@arm.com>, <lukasz.luba@arm.com>, <sboyd@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <nm@ti.com>
+References: <20240117110443.2060704-1-quic_sibis@quicinc.com>
+ <20240123060827.a3vszziftj6pszt3@vireshk-i7> <Za-RtBrSxI-j4Jdx@bogus>
+ <e968092a-dc2b-4351-9489-acf874bbc7b6@arm.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <e968092a-dc2b-4351-9489-acf874bbc7b6@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: A9k6MrupdilpPwfFiwx62WxJAfh9gT_v
+X-Proofpoint-ORIG-GUID: A9k6MrupdilpPwfFiwx62WxJAfh9gT_v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-13_04,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ adultscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130066
 
-On 12/02/2024 20:10, Danila Tikhonov wrote:
-> Add pll_clk to pin group 98 for compatibility with SM8475.
 
-I don't understand this. What compatibility? Is it valid on SM8450? Ifi
-so, then this would be fix. If not, then you just introduced incorrect
-group for SM8450 and called it compatibility.
+
+On 1/31/24 20:37, Dietmar Eggemann wrote:
+> On 23/01/2024 11:15, Sudeep Holla wrote:
+>> On Tue, Jan 23, 2024 at 11:38:27AM +0530, Viresh Kumar wrote:
+>>> On 17-01-24, 16:34, Sibi Sankar wrote:
+>>>> This series adds provision to mark dynamic opps as boost capable and adds
+>>>> boost frequency support to the scmi cpufreq driver.
+>>>>
+>>>> Depends on:
+>>>> HW pressure v4: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240109164655.626085-1-vincent.guittot@linaro.org/
+>>>> scmi notification v2: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240117104116.2055349-1-quic_sibis@quicinc.com/
+>>>>
+>>>> Sibi Sankar (3):
+>>>>    OPP: Extend dev_pm_opp_data with turbo support
+>>>>    firmware: arm_scmi: Add support for marking certain frequencies as
+>>>>      boost
+>>>>    cpufreq: scmi: Enable boost support
+>>>
+>>> Sudeep, please lemme know if you are okay with the changes. Will apply
+>>> them.
+>>
+>> I was planning to look at it once Lukasz/Dietmar confirm that this concept
+>> doesn't change anything fundamental in the way EAS related changes work
+>> today. I know I suggested the change as that seem to be right way to do
+>> but I haven't analysed if this has any negative impact on the existing
+>> features as this change will impact all the existing platform with OPPs
+>> above sustained performance/frequency advertised from the SCMI platform
+>> firmware.
+> 
+> I was mostly concerned about the settings for the CPU frequency
+> invariance implementation in [drivers/base/arch_topology.c]:
+> 
+> #define arch_scale_freq_capacity topology_get_freq_scale
+> 
+> But per_cpu(capacity_freq_ref, cpu) is still set to
+> 'policy->cpuinfo.max_freq' in init_cpu_capacity_callback()
+> which stays the same.
+> 
+> With some extra debugging I get the following on Juno-r0 [L b b L L L]:
+> 
+> root@juno:~# dmesg -w | grep -i "freq\|boost\|noti\|OPP\|cap"
+> 
+> [    1.768414] arm-scmi firmware:scmi: SCMI Notifications - Core Enabled.
+> [    1.793084] [1][LITTLE_CPU]:: Registered OPP[0] 450000000
+> [    1.798624] [1][LITTLE_CPU]:: Registered OPP[1] 575000000
+> [    1.804131] [1][LITTLE_CPU]:: Registered OPP[2] 700000000
+> [    1.809552] scmi_dvfs_device_opps_add() sustained_freq=700000000 freq=775000000
+> [    1.816971] [1][LITTLE_CPU]:: Registered OPP[3] 775000000
+> [    1.822392] scmi_dvfs_device_opps_add() sustained_freq=700000000 freq=850000000
+> [    1.829800] [1][LITTLE_CPU]:: Registered OPP[4] 850000000
+> [    1.835268] enabled boost: 0
+> [    1.838173] init_cpu_capacity_callback() cpu=0 max_freq=850000
+> [    1.844032] init_cpu_capacity_callback() cpu=3 max_freq=850000
+> [    1.849886] init_cpu_capacity_callback() cpu=4 max_freq=850000
+> [    1.855743] init_cpu_capacity_callback() cpu=5 max_freq=850000
+> [    1.866324] cpufreq_update_pressure() cpu=0 cpufreq_pressure=0
+> [    1.872178] cpufreq_update_pressure() cpu=3 cpufreq_pressure=0
+> [    1.878026] cpufreq_update_pressure() cpu=4 cpufreq_pressure=0
+> [    1.883874] cpufreq_update_pressure() cpu=5 cpufreq_pressure=0
+> [    1.890633] [0][BIG_CPU]:: Registered OPP[0] 450000000
+> [    1.895892] [0][BIG_CPU]:: Registered OPP[1] 625000000
+> [    1.901129] [0][BIG_CPU]:: Registered OPP[2] 800000000
+> [    1.906286] scmi_dvfs_device_opps_add() sustained_freq=800000000 freq=950000000
+> [    1.906381] [0][BIG_CPU]:: Registered OPP[3] 950000000
+> [    1.917377] scmi_dvfs_device_opps_add() sustained_freq=800000000 freq=1100000000
+> [    1.917468] [0][BIG_CPU]:: Registered OPP[4] 1100000000
+> [    1.939237] enabled boost: 0
+> [    1.942134] init_cpu_capacity_callback() cpu=1 max_freq=1100000
+> [    1.948078] init_cpu_capacity_callback() cpu=2 max_freq=1100000
+> [    1.959003] cpufreq_update_pressure() cpu=1 cpufreq_pressure=0
+> [    1.964853] cpufreq_update_pressure() cpu=2 cpufreq_pressure=0
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
+> 1
+> 0
+> 0
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# cat policy*/scaling_available_frequencies policy*/scaling_boost_frequencies
+> 450000 575000 700000
+> 450000 625000 800000
+> 775000 850000
+> 950000 1100000
+> 
+> If I disable system-wide boost I see the correct influence on
+> 'cpufreq_pressure':
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > boost
+> 
+> [  439.466682] cpufreq_update_pressure() cpu=1 cpufreq_pressure=280
+> [  439.472797] cpufreq_update_pressure() cpu=2 cpufreq_pressure=280
+> [  439.478889] cpufreq_update_pressure() cpu=0 cpufreq_pressure=79
+> [  439.484852] cpufreq_update_pressure() cpu=3 cpufreq_pressure=79
+> [  439.490843] cpufreq_update_pressure() cpu=4 cpufreq_pressure=79
+> [  439.499621] cpufreq_update_pressure() cpu=5 cpufreq_pressure=79
+> 
+> reflecting the max frequency change from '1100000 to 800000' on CPU1,2
+> and from '850000 to 700000' on CPU0,3-5.
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
+> 
+> [ 2722.693113] cpufreq_update_pressure() cpu=1 cpufreq_pressure=0
+> [ 2722.699041] cpufreq_update_pressure() cpu=2 cpufreq_pressure=0
+> [ 2722.704962] cpufreq_update_pressure() cpu=0 cpufreq_pressure=0
+> [ 2722.710842] cpufreq_update_pressure() cpu=3 cpufreq_pressure=0
+> [ 2722.719644] cpufreq_update_pressure() cpu=4 cpufreq_pressure=0
+> [ 2722.728224] cpufreq_update_pressure() cpu=5 cpufreq_pressure=0
+> 
+> What doesn't work for me is to disable boost per policy:
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy0/boost
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy1/boost
+> 
+> Here I don't see 'cpufreq_pressure' changes.
+> 
+> BTW, what's the use case you have in mind for this feature? Is it to cap
+> high OPPs for CPUs in a certain CPUfreq policy?
+
+Yeah, that's exactly the use case for X1E. Boost frequencies defined in
+the SoC are achievable by only one CPU in a cluster i.e. either the
+other CPUs in the same cluster should be in low power mode or offline.
+So it's mostly for book keeping i.e. we wouldn't to intimate incorrectly
+that the CPUs are running at max possible frequency when it's actually
+running at a lower frequency.
+
+-Sibi
 
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
->  drivers/pinctrl/qcom/pinctrl-sm8450.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450.c b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-> index 617286711695..45ac8e72c1c7 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8450.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-> @@ -957,7 +957,7 @@ static const char * const pll_bist_groups[] = {
->  };
->  
->  static const char * const pll_clk_groups[] = {
-> -	"gpio107",
-> +	"gpio98", "gpio107",
-
-
-Best regards,
-Krzysztof
-
 
