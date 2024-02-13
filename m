@@ -1,144 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-10943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF9F8853B9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 20:49:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16A1D853C37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 21:27:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CB4B28233A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 19:49:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93C5DB25917
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 20:27:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA7A71CAA9;
-	Tue, 13 Feb 2024 19:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95C160B95;
+	Tue, 13 Feb 2024 20:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sf+s4a71"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lPFkxYPR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCB260889
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 19:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC8E1097D;
+	Tue, 13 Feb 2024 20:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707853769; cv=none; b=CgTeJGMTlypqALGWdnFd9bYI6bLcDw8vALORzBdbXChbdTKNqX2fBsNHJMKtxHli+oMhmNKMILHDYL6756piZ47P2sgzkQPxt7wKBdUWJXtVId4acR43E/8azaA3Simv4Jwzovua1GvnG6xP7DEjQ47z7TKKuJs971NoSSqOJ7w=
+	t=1707856023; cv=none; b=W44FPD8nVvRomyLSYWa/sAXRLj9b3M38FXp7DeTOwmNN+up397WCkB5zsuxrGrOL+3IloghQiDwSs4IuZ45o0v61VBXQVFA2cd7Jgo+aovy9475BDCocGk3wi5SWCLxMRbJiTbAghqF2sRFaPBEQR9OT+ik4Zyw5Gd05Q+6ip9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707853769; c=relaxed/simple;
-	bh=ffe9gO7KVRYtww3F4xBFEwBZh1a+Hx77aSa0ag65tzY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WYGadrf99YWHneo4xE/498g5Uqc1J1x6cxWilL+zt2KlElWC/u0yUdymKh5PWVBHHQmUaCux3a+q5X6Rdpe2AL0lH4qxBk+4OoxVvQZecY7/JqGZtH6mjfng9AO3i2/+zvp0XAMrosKaofpMCBf0nykn2Nx9x3ZhsnSr5ah13C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sf+s4a71; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc80d6006aso1031082276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 11:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707853767; x=1708458567; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2r+d4SYUIyHT5gjIoPbw+SmalguQNzVZTPSSC+Kv4LI=;
-        b=sf+s4a71CJRmxsXX3quhk+GmzS6/i174begNDcclXKUFdwBvzwFh4hX/Sjwx6a8K0r
-         xgnKa2SaVbN+zy3gJ/vZrW5LGce4l26iuo7GsxSNa92O4aASsWk88rmOix93GAVnvvnO
-         32rf+C+Usl8eBkX78oebkun82uuIGY/jNxbC9sa+xw8MeIYrBRWYDgAWdq4pndtR2LJl
-         mby0BOXMdxALNJ5pye3hRUYl+zBmHs6YIqOp0hG7/qsJBCPevynbB1PAR4lHC8fbfPr9
-         jlpVEWB2CdcBHfOtxhBaS/zqeiKh+KttwKEvOTNn2EZYhDAazLDgXOQiQs4aPUHV4r8g
-         QtAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707853767; x=1708458567;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2r+d4SYUIyHT5gjIoPbw+SmalguQNzVZTPSSC+Kv4LI=;
-        b=E6tgdzR8FBFhrBkOJhBzPeJ4bgTZ/jPi9Ozv2VQ1C1Z1rHwlwcUjJmRGVB1cEjwzDA
-         DTaCxcTUuiOzHflcLZd3jtURy16ZoZiUmRH920xyRCTwtdrZ3CSxfvEfRXcdL22nodUQ
-         wDy599LgrMcXidWUsOB+cwp+3kwWUYk8o1rJZKN3ImaaYjq+niW3vNbPwvmdT3TF/SJB
-         I2I36oHAjuFwOPbn7Z9KPzuT/kOYTMlJAJdu5Rb53AygxLPzdS1qzifzPOL4nkdWMhTJ
-         ovX6/Xi51A+LoPoxflBHsKL4xU0dKZ2qBTXmeByGJ1W7kpHMEzzayVr9ZtHOkQj8TPsb
-         hUxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUgrWTk3/ulUGi+pyasLvzJbZS17VqJLma/+jmWTqbRPer5/V/QovMYK2SFloqnOBcIcjgC6xvPLK/c8gKBDW4QQ8rjmOaQenJrZZCn9Q==
-X-Gm-Message-State: AOJu0YwVYPXDdR7bhZF/p8pr17D2etXJuZCvNeKikxq2TwEuCS1JsI00
-	ry37B68RbEdNbrDHaaNrrAggF1BQHopS828o70dbZ/j/XHSfzHRBoznwHN/FHtNZpGp8W+WL29x
-	g12rxxgGf7X9DXitNHnBfd9d5rGhKTV9VZ3IqOJuzsOBs8GyB
-X-Google-Smtp-Source: AGHT+IHuIaFQMbrirEhKz395nV1OIhvnXj/ek6dLuUYdk+Akp/if7FLIKl+E3i3xejAUx3dzSeFO9Q7CHQjo/bLGoJQ=
-X-Received: by 2002:a05:6902:2608:b0:dc2:1f56:11e4 with SMTP id
- dw8-20020a056902260800b00dc21f5611e4mr403120ybb.24.1707853766831; Tue, 13 Feb
- 2024 11:49:26 -0800 (PST)
+	s=arc-20240116; t=1707856023; c=relaxed/simple;
+	bh=wr2SPv5Ld/DSkoS5vcAzZJ9Df9CxqcjpNgsKUEXsmMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hlJplD7J9TgmdqwIxGJcBQAJy0AOrIxN5j2YL98JZ9YGQJMVH8qNdxPhXgGUQy0gRvceaicH3Y8UIrQRAj2oXmo54V0yRS7maLxq2djwO29QmcHqjeTlPqyGs2lN9pK6AmF2fgT5O3wo7NANmMSHS1LXjNoTMgQMVpviUKC0SWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lPFkxYPR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEE0C433F1;
+	Tue, 13 Feb 2024 20:26:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707856023;
+	bh=wr2SPv5Ld/DSkoS5vcAzZJ9Df9CxqcjpNgsKUEXsmMg=;
+	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
+	b=lPFkxYPR0J3NXG1zdBfo423wECnKhWMgXPxCg52F3jS4QKKMEyqjBhXaUGKE3tgG6
+	 37ZF1eFh/KlF2KXEvZh8+5akK0hqsrS1FZnabOENmkW6SqKVRepSFJf7g6xxh7ojEV
+	 jnkdi6FQUiy1uKshzEZhLb5yve1bg3+EMiWyulcWid6e7LMamsxlhTvq2275lGDRVd
+	 PYq1svZG2Lc2X9dtgFRoH1KjCqQDhIoYjVbGHKXP+VJjE7rPkT9HdKzpsCs5RzEGYP
+	 ef1gd/J3wmRP/+qW2yBa+bsr9UVpRx1oatwybDxzT9Hk3Wx4NArI6+dQLf7ihqU6h7
+	 NgaQAYTbgz0rQ==
+Date: Tue, 13 Feb 2024 20:26:51 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: soc@kernel.org, Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+	Antoine Tenart <atenart@kernel.org>, Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Stefan Agner <stefan@agner.ch>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	=?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
+	Tony Lindgren <tony@atomide.com>, Chanho Min <chanho.min@lge.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Linus Walleij <linusw@kernel.org>, Imre Kaloz <kaloz@openwrt.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH 0/6] dts: Fix dtc interrupt warnings
+Message-ID: <20240213-wafer-garnish-88287bc5d4a5@spud>
+References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
- <20240213121257.GI765010@ziepe.ca> <20240213121934.GA28726@willie-the-truck>
- <20240213125303.GJ765010@ziepe.ca> <20240213125951.GB28844@willie-the-truck>
-In-Reply-To: <20240213125951.GB28844@willie-the-truck>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 13 Feb 2024 21:49:15 +0200
-Message-ID: <CAA8EJppWpLgX_kfk6O11k0uwyiq507pp_d+QtDogSgJqgiGviw@mail.gmail.com>
-Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-To: Will Deacon <will@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>, Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
-	Rob Clark <robdclark@gmail.com>, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="4XczAmSSxV0XIpGO"
+Content-Disposition: inline
+In-Reply-To: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
 
-On Tue, 13 Feb 2024 at 14:59, Will Deacon <will@kernel.org> wrote:
->
-> On Tue, Feb 13, 2024 at 08:53:03AM -0400, Jason Gunthorpe wrote:
-> > On Tue, Feb 13, 2024 at 12:19:34PM +0000, Will Deacon wrote:
-> > > > > @@ -875,15 +879,6 @@ static struct iommu_domain *arm_smmu_domain_alloc_paging(struct device *dev)
-> > > > >         mutex_init(&smmu_domain->init_mutex);
-> > > > >         spin_lock_init(&smmu_domain->cb_lock);
-> > > > >
-> > > > > -       if (dev) {
-> > > > > -               struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
-> > > > > -
-> > > > > -               if (arm_smmu_init_domain_context(smmu_domain, cfg->smmu, dev)) {
-> > > > > -                       kfree(smmu_domain);
-> > > > > -                       return NULL;
-> > > > > -               }
-> > > > > -       }
-> > > > > -
-> > > > >         return &smmu_domain->domain;
-> > > > >  }
-> > > >
-> > > > Everything else is fine, you already tested with that arrangement.
-> > >
-> > > Partial reverts are a recipe for confusion, so I'll take this and if you'd
-> > > like to bring back some of the hunks, please can you send a patch on top
-> > > that does that?
-> >
-> > The typical kernel standard is to fix bugs in patches and only reach
-> > for a wholesale revert if the community is struggling with bug
-> > fixing. Dmitry already tested removing that hunk, Robin explained the
-> > issue, we understand the bug fix is to remove the
-> > arm_smmu_init_domain_context() call. Nothing justifies a full scale
-> > revert.
->
-> I can't say I'm aware of any consensus for how to handle this, to be
-> completely honest with you. I just personally see a lot of benefit in
-> reverting to a known-good state, especially when the revert has been
-> posted by the bug reporter. Then we can add stuff on top of that known
-> good state without having to worry about any other problems that we're
-> yet to uncover. Doesn't really sound controversial...
 
-Well, I'm open to any patch set that ends up fixing the issue. I won't
-insist on landing the revert first, it's up to Will and Robin, I'd
-say.
+--4XczAmSSxV0XIpGO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If there are any patches for this matter, please Cc me and
-linux-arm-msm@, so that we can reply with the Tested-by trailer.
+On Tue, Feb 13, 2024 at 01:34:24PM -0600, Rob Herring wrote:
+> I had a branch with most of these changes sitting in my tree for some=20
+> time. Geert's asking about some errors not getting found prompted me to=
+=20
+> clean it up and send it out. This series fixes all* interrupt related=20
+> warnings and enables the check by default.=20
+>=20
+> SoC maintainers, Can you please take this series directly.=20
+>=20
+> Rob
+>=20
+> *There's a few Renesas warnings still Geert said he would fix.
+>=20
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> Rob Herring (6):
+>       arm64: dts: freescale: Disable interrupt_map check
+>       arm: dts: Fix dtc interrupt_provider warnings
+>       arm64: dts: Fix dtc interrupt_provider warnings
+>       arm: dts: Fix dtc interrupt_map warnings
+>       arm64: dts: qcom: Fix interrupt-map cell sizes
+>       dtc: Enable dtc interrupt_provider check
 
-> > I'll send another patch if you want, but it seems like a waste of all
-> > our time.
->
-> It's a bug fix, of course it's a waste of time! We're talking minutes
-> though, right?
->
-> Will
--- 
-With best wishes
-Dmitry
+Only fixing it for arm, Sadge.
+
+Co-incidentally I noticed there was one for riscv while looking at
+Krzysztof's underscore in node name patch earlier, so I'd already
+written a patch to fix it :)
+
+--4XczAmSSxV0XIpGO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZcvQiwAKCRB4tDGHoIJi
+0iKoAP9EkRpfMdcQD2Rxy6EyQrFHOf9aK1XBqWvwsM+uYWZVZAD9El92XfSbd1tC
+IcCJORhtpqwWl2bRDhMSRtSpWpqRygA=
+=9Yjc
+-----END PGP SIGNATURE-----
+
+--4XczAmSSxV0XIpGO--
 
