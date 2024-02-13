@@ -1,121 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-10815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63E488526F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 02:49:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB6E58527E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 04:53:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 963B51C25871
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 01:49:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83AE4B2250A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 03:53:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B2B17758;
-	Tue, 13 Feb 2024 01:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF698F72;
+	Tue, 13 Feb 2024 03:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kfEOYefG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8191714010;
-	Tue, 13 Feb 2024 01:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B8233F2;
+	Tue, 13 Feb 2024 03:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707787829; cv=none; b=e7Bi0P1VzUiFxDzsVRv/snh/FAL6brTjpnQ01T2Hg1sF8Tq9IyG6YdoKU5jBPguCk5sYJkeym+i515St7R2LOWMG+gyk8adiNZLfn7Wn19YZEP6Sbnb2HzVJfZfcJ9ehexb4MWm3W1iMonv6LbZaq01Tie8ImDmp8DDKhSH/ag4=
+	t=1707796390; cv=none; b=XrNap9e4HCmuNdM9bN2DUZKGVSErcTCFtPC7H2aTZa7su5Xs0NhCrsqmZL19J2p+oKFRAY0biiZlfMKYkrxEC1Usjq73xyPZhLhW0c9XKdf/PWqJubowvMLkX9r+c3JW7Iyoli28vqpHPEWNeku24o1lGyBn+9RUkO7uAkvznss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707787829; c=relaxed/simple;
-	bh=5YUUpkVeGZf2ULKeV0s8gYOnI9Ho0baFiYcgz1YGhG0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=oCJt2fUNs23O/PW/fTbIh8khKEtnvSC4rqYqnr834+d5RCtTqAE3ujaA1nzi0QPc4QQAPkkD5p4s0Wjyc9vx4iDUEVlbqrS/xPYv0BFZmcp4bs5lhRtjiLpv5w6OnSfREZ+CUlHDCJv7hbr3KM/MIm1dxOfBl/Bf+aQOX8jZgPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4349C43390;
-	Tue, 13 Feb 2024 01:30:28 +0000 (UTC)
-Received: by mercury (Postfix, from userid 1000)
-	id 9E53A106A041; Tue, 13 Feb 2024 02:30:25 +0100 (CET)
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Sebastian Reichel <sre@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Cristian Ciocaltea <cristian.ciocaltea@gmail.com>, 
- Florian Fainelli <florian.fainelli@broadcom.com>, 
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sean Wang <sean.wang@mediatek.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Andrew Davis <afd@ti.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
-In-Reply-To: <20240212162831.67838-1-afd@ti.com>
-References: <20240212162831.67838-1-afd@ti.com>
-Subject: Re: [PATCH v4 00/19] Remove pm_power_off use in
- drivers/power/reset
-Message-Id: <170778782561.1080348.15486414819584613989.b4-ty@collabora.com>
-Date: Tue, 13 Feb 2024 02:30:25 +0100
+	s=arc-20240116; t=1707796390; c=relaxed/simple;
+	bh=0vaubSGu7gCAoSqrp4lajT42MHYD3qmoQox23k+o7mM=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JgTdCPMoTh3Kj0JuYqf0r0EMfQ5rK9RjtpwWXSJUb3/jOL+TIL1VEg6eb81q5o7fvnszECzGfr1KEOoaW3yguCUs4SaXKDkYEDOqCwze879BrcUOVrqe4TUzfFao4YDZcOo7qBle2FnecMPryJcqLhTvQBJn00Q7aILE5OlINzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kfEOYefG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D2w0IX000471;
+	Tue, 13 Feb 2024 03:52:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:in-reply-to:references
+	:mime-version:content-transfer-encoding:content-type; s=
+	qcppdkim1; bh=9l07FK8iA3FHEksQiWuc9dxFREf//NDwM0FUVNltkCo=; b=kf
+	EOYefGbMFPyGF5PlzUHT4wpxq6T7Hy5P6MJJ9YJzmjDft0sEZN9Euhe7Irth1vdh
+	Yb/ghLJdCKbu9b30asfvVNWw/do6BVt8qDlC9sj20AS7lPsRfZPJdRaIg6FTrRIu
+	FI3FZrbemHv+oocCO1kNmXaerPO3vqhg/BMY64kaOnQJBijjkLvVzd6cJe0rjMRt
+	yd9yYCoxjUxDZHiS0LMBisKek636FJTqqkMU/QSeTf4+n1DOdpyD/pwVuXnIypoY
+	w5BPhVpcRBljRmG4sayryfQ9h6fOJgZHTDW/+jG5tk/sEo27zxa6X09CzlpuE2F1
+	YOjkP7+IfJyIweSd3xbg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7ww5r8r4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 03:52:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41D3qDo0032663
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 03:52:13 GMT
+Received: from hu-subbaram-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 12 Feb 2024 19:52:12 -0800
+From: Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+To: <quic_mkshah@quicinc.com>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_collinsd@quicinc.com>, <quic_eberman@quicinc.com>,
+        <quic_lsrao@quicinc.com>, <stable@vger.kernel.org>
+Subject: Re: [PATCH v3] soc: qcom: rpmh-rsc: Enhance check for VRM in-flight request
+Date: Mon, 12 Feb 2024 19:52:03 -0800
+Message-ID: <20240213035203.2492516-1-quic_subbaram@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
+References: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.4
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n8nnk09KEUI1r4MUoFc9KOOQmLitkdWT
+X-Proofpoint-ORIG-GUID: n8nnk09KEUI1r4MUoFc9KOOQmLitkdWT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_20,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 phishscore=0 mlxlogscore=322 bulkscore=0
+ spamscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130027
 
+Hi Maulik,
 
-On Mon, 12 Feb 2024 10:28:12 -0600, Andrew Davis wrote:
-> Use of pm_power_off is considered legacy and should be replaced with
-> register_sys_off*(). Same for register_restart_handler(). Do this
-> for the drivers/power/reset subsystem for all trivial cases.
-> 
-> Thanks,
-> Andrew
-> 
-> [...]
+> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
+> +{
 
-Applied, thanks!
+<snip>
 
-[01/19] power: reset: atc260x-poweroff: Use devm_register_sys_off_handler(RESTART)
-        commit: f22e835028902b01915f584d2912cc25a397c84e
-[02/19] power: reset: atc260x-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: ab1439b05168dc73539e78d8b3100a0336a83bca
-[03/19] power: reset: xgene-reboot: Use devm_platform_ioremap_resource() helper
-        commit: 7ddfd33c6ee58ee915d09177a7dbac2c5be7b536
-[04/19] power: reset: xgene-reboot: Use devm_register_sys_off_handler(RESTART)
-        commit: 6af1ee028537be0a43ce939eb8f5321096208667
-[05/19] power: reset: tps65086-restart: Use devm_register_sys_off_handler(RESTART)
-        commit: e68b71812ebf385317c5bcf82674c109806be452
-[06/19] power: reset: tps65086-restart: Remove unneeded device data struct
-        commit: 11d2642e14ad022de13f261370ccddd33693c045
-[07/19] power: reset: brcm-kona-reset: Use devm_register_sys_off_handler(RESTART)
-        commit: 45079f206e635a08cba395a08dd3fd7629dbb24d
-[08/19] power: reset: axxia-reset: Use devm_register_sys_off_handler(RESTART)
-        commit: ad8d7b8002a1d3a673f2d6f110b378d137f61037
-[09/19] power: reset: rmobile-reset: Use devm_platform_ioremap_resource() helper
-        commit: 0867276eb12230a5e94ec2b28eba718e76b77eb1
-[10/19] power: reset: rmobile-reset: Use devm_register_sys_off_handler(RESTART)
-        commit: ba1188ea8be80a7bc091073792d404ab54b187b1
-[11/19] power: reset: mt6323-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: 6ab9137719a719f39e000aa62887ae25e1194815
-[12/19] power: reset: msm-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: b5711ff9171325261a7d6406b3c2b3c7752b6b8a
-[13/19] power: reset: msm-poweroff: Use devm_register_sys_off_handler(RESTART)
-        commit: 00ae86ebf893e0c89a7af6bfd270259e3ded93d1
-[14/19] power: reset: regulator-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: 77b61173c2d0ff42e5d609dc1fad137f1229f03b
-[15/19] power: reset: as3722-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: 348fde771ce7f5219a73750bd7a0d4c4497b1223
-[16/19] power: reset: gemini-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: b6475c3f81c13d6d69113f69a668c96af3a5af51
-[17/19] power: reset: restart-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: c3ede0b6f7dd345d8986cb69b861cadb9976782f
-[18/19] power: reset: syscon-poweroff: Move device data into a struct
-        commit: ffa212831289f15a92fe295a371157290619bb8f
-[19/19] power: reset: syscon-poweroff: Use devm_register_sys_off_handler(POWER_OFF)
-        commit: 14c5678720bdee7c5b582839a8dbcffd0c50de5c
+> +	if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
+> +	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
+> +		return true;
+> +	else if (addr1 == addr2)
+> +		return true;
+> +	else
+> +		return false;
 
-Best regards,
--- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
+Minor..it would be better if you modify it as following.
 
++	if (addr1 == addr2)
++		return true;
++	else if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
++	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
++		return true;
++
++	return false;
+
+-Subbaraman
+
+--
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project.
 
