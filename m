@@ -1,102 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-10838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49208852B69
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:44:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1DDA852D13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 10:54:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E19A12828AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:44:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04A5BB278EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:54:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B674818657;
-	Tue, 13 Feb 2024 08:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 485D4381D0;
+	Tue, 13 Feb 2024 09:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JGCdbIvx"
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="CQiIePV5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImQV3ToI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB3E1B273;
-	Tue, 13 Feb 2024 08:43:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EB1381BF;
+	Tue, 13 Feb 2024 09:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707813824; cv=none; b=qqkjKzdHQk+6Zd1gxI+Y4GAYVmhLFVO/L5VH/D2Jygcct1XT0bSTPrhZWLAzWWSC1rmOuan10hfOw4+JTbEGOJcnGpHzR8LGzg2drAJTX8ycvy2eCdj/Hy7G7Fe4/771bj7Slu2i/+AXwBoe7kXy9cmVk3ba9lOvRxGcMrZDcKY=
+	t=1707817862; cv=none; b=f3/FXloa1OMlncWJqcPoHnP0bIVFWG6qJ7P8wHX/pdX+Pf1fwSXXidTPLWIsLkca0gUdkDj0J1w5W8VQvIAq066AThesPZjKuj8rkHnUq7nbdq69rDq359yO5cehv4TXlM0ZwSiGy4jrKeopW8nzH840L/aavFD2mQdCnSuomOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707813824; c=relaxed/simple;
-	bh=t94qRvoG9XvZt4w8+pQ/h1zUY4fDFCFi3+W/4fbxLbI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d56pt494CPPHKfxfxSMbZOjQOpkGnsgEWK4CL4TK0PZp9es7WMLvWO9IMFY+58Qt1KZVZ7CdlAbLCmfW5nyane7J6WgMdAtWxy64jMFq91OXc0SAFQ3gvisnL0xwklfLXP1LnTlzjeqOgHc0dweG3LoY82v8BrWT2UXD5NpGcHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JGCdbIvx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F48C433F1;
-	Tue, 13 Feb 2024 08:43:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707813823;
-	bh=t94qRvoG9XvZt4w8+pQ/h1zUY4fDFCFi3+W/4fbxLbI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JGCdbIvxYqyVxQRggpOK4zccva+hcOr691mh1ljEtU2xVg5a5nqdhTTst6fywAA3S
-	 O0p5+Y0wAu6i11zXAYmRdbNtP/+aegMAgwwkVxFmOPtjnv7qoZIWP44Fgm8i5m4VBd
-	 e7cuqze0ZatK0V0FaqikevPuVE9fC8XmPqgcaWDM3IShkL+pR7vC/qSQ+xGXwLsSnp
-	 pdY0ENdL+h2hn3hQJcgKizuYp4/HEZxk70lWkQ4iuD+ltDE8RQaJba21JG3vENkOi8
-	 QhbYzfKL/Izfq/FddQdNkcG51Wdx6eMYI5haMBP4Zgo1IaWL0uzopWp1fjCuU3PMqN
-	 Ugoa+55U2pckQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rZoOU-000000003tE-3yZT;
-	Tue, 13 Feb 2024 09:43:59 +0100
-Date: Tue, 13 Feb 2024 09:43:58 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 0/2] Add DT support for Multiport controller on
- SC8280XP
-Message-ID: <Zcsrzr4RtH6CNB5l@hovoldconsulting.com>
-References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1707817862; c=relaxed/simple;
+	bh=du5IWnetsbefdXGP7RTt9oa3EydqVOtEqT7mUA/DKPM=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=pLjZDJJc+DrAzTaGiAYrRdKL8+yVBAcvz/licZYCh2Fkyd6lBioAnRGm8dx5GDoCzd/LLQa8TAG5aiwtSdX5o96WvJMryCI8G2z6ILEBdXCqqGKsKS8IpYb/am0w3RYGBdQOlmUNoM446VB2OXEWyBEucNQHSpxz8aMo0lAXNYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=CQiIePV5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImQV3ToI; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id CD29E1800092;
+	Tue, 13 Feb 2024 04:50:56 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Tue, 13 Feb 2024 04:50:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1707817856; x=1707904256; bh=lHYsTK1bfv
+	xaz8ZLnxtMiOszwDEbZ3X5lHEYDDbn/s4=; b=CQiIePV5jYKolbhb+hZq6ezei6
+	Wtv+RrejZ+2KBZJy8yq2wk1h/pKErRHX/0afATPyG8zEIuqVvH9xMzssrPftbTri
+	4P/cU32EASZA4yUv/4HOUQXkxfl5tjyJH2SzluKJ/RHCgzIt4JTOLYO4L0UdXjft
+	V0ztrpdwdQXyGvGArBPS71XPPYRcHMoE3V+jpzpixBVZA+3qN+aGasQrhW4eeD5p
+	oqOIvFyKpDC+kBOd45QmnOnqZw2oRpsZbAtX1QA1QOujVs/TJKhy57itdo1r2EwR
+	knQXmQ0CV+PlVcgUPzySY5pIL1mwUqWff6ioVUP0+/d4JEdOtnx79ci35EGg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1707817856; x=1707904256; bh=lHYsTK1bfvxaz8ZLnxtMiOszwDEb
+	Z3X5lHEYDDbn/s4=; b=ImQV3ToIG2iFqj7LvNzhWlLy0JJpcQkwHH8CPhHvPF5M
+	fcGH6tgJDeM7mdornTeX3N/rp2b5+IiQrDku4RKRz4eibn98+wIbH95xgHOYhUhP
+	KRFXplMeo6lmUMEhxttLPiKIw38XzeOvdhDup6drNVtf597M1NzwUA5gKRUlDCkr
+	qNVPENfarayqRCd7xfPZFs0ZDHKsyHxEGWZllgpSGqgcloLNb0WexWxnkSzNNnSu
+	CR6Sjo5tjhX4KM9YlzTJRRBICQWPh76iOok3n6w51prR+0qx8iDZp/VS2PWmzaZR
+	BMG8EfBslDyJB7EPKvHhRbq3Z8bwZeGDgHobwJWF1A==
+X-ME-Sender: <xms:gDvLZfHHHEVOk9EVqJDdwZqjypKSMXu9MV_5mkY0WkB9kufUQ705YQ>
+    <xme:gDvLZcXDBeElJo3nFjgPksrliMVjZBMpXeJLcJuqKAWcu7nRNkZV8VJNTd7nTolTe
+    pLUeSVR2_KW5de04J4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehgddtjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+    hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:gDvLZRKxU0SaVK-LVEq_Aihz8OxEqONY9ITHaoAiKT5BTqsPiY4wtQ>
+    <xmx:gDvLZdH8M2Z93jqDfmKi8QDO-FyZk_FbrJWJw8op6zgsZzF2Py4LXw>
+    <xmx:gDvLZVUvNsTvd9l76WHdGPV-aKNFdj4BTkqcK_9Uqm0wnjIxdzLH_w>
+    <xmx:gDvLZafzJYs9f85v-Xjcw_OAiHiVON9oOLpKGDs687AFRn7oe_C44YxTmoQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id F075FB6008D; Tue, 13 Feb 2024 04:50:55 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
+Message-Id: <7723c9f1-fda7-4dc9-bb5a-e12d4908becf@app.fastmail.com>
+In-Reply-To: <1707024641-22460-9-git-send-email-quic_taozha@quicinc.com>
+References: <1707024641-22460-1-git-send-email-quic_taozha@quicinc.com>
+ <1707024641-22460-9-git-send-email-quic_taozha@quicinc.com>
+Date: Tue, 13 Feb 2024 10:50:35 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Tao Zhang" <quic_taozha@quicinc.com>,
+ "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+ "Suzuki K Poulose" <suzuki.poulose@arm.com>,
+ "Alexander Shishkin" <alexander.shishkin@linux.intel.com>,
+ "Konrad Dybcio" <konradybcio@gmail.com>,
+ "Mike Leach" <mike.leach@linaro.org>, "Rob Herring" <robh+dt@kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+ regressions@lists.linux.dev
+Cc: "Mao Jinlong" <quic_jinlmao@quicinc.com>, "Leo Yan" <leo.yan@linaro.org>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ "Tingwei Zhang" <quic_tingweiz@quicinc.com>,
+ "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
+ "Trilok Soni" <quic_tsoni@quicinc.com>,
+ "Song Chai" <quic_songchai@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ "Bjorn Andersson" <andersson@kernel.org>
+Subject: Re: [PATCH v7 08/10] coresight-tpdm: Add timestamp control register support
+ for the CMB
+Content-Type: text/plain
 
-On Tue, Feb 13, 2024 at 01:57:22PM +0530, Krishna Kurapati wrote:
-> Series [1] introduces binding and driver support for DWC3 Multiport
-> controllers. This series adds support for tertiary controller of SC8280
-> and enabled multiport controller for SA8295P-ADP platform.
+On Sun, Feb 4, 2024, at 06:30, Tao Zhang wrote:
+
+> @@ -910,7 +1014,7 @@ static struct attribute *tpdm_dsb_patt_attrs[] = {
+>  	DSB_PATT_MASK_ATTR(5),
+>  	DSB_PATT_MASK_ATTR(6),
+>  	DSB_PATT_MASK_ATTR(7),
+> -	&dev_attr_enable_ts.attr,
+> +	DSB_PATT_ENABLE_TS,
+>  	&dev_attr_set_type.attr,
+>  	NULL,
+>  };
+> @@ -964,6 +1068,7 @@ static struct attribute *tpdm_cmb_patt_attrs[] = {
+>  	CMB_PATT_ATTR(1),
+>  	CMB_PATT_MASK_ATTR(0),
+>  	CMB_PATT_MASK_ATTR(1),
+> +	CMB_PATT_ENABLE_TS,
+>  	NULL,
+>  };
 > 
-> Till v13 the DT was pushed along with driver code. Separate the DT changes
-> from driver update and pushing it as this series.
-
-Then this is version 15, don't reset the version number and hide all the
-work that has gone into getting where we are today (e.g. by removing the
-changelog).
-
-> Changes in v2:
-> SA8540 Ride related code changes have been dropped and will pushed later
-> due to unavailability of hardware with either Andrew or me for testing the
-> gpio hog changes suggested in v1.
-> Implemented vbus boost regulators as fixed regulators instead of modelling
-> their enable pins as pinctrl nodes.
+> @@ -158,6 +175,10 @@
+>  		tpdm_simple_dataset_rw(tpmr##nr,		\
+>  		DSB_PATT_MASK, nr)
 > 
-> Link to v1:
-> https://lore.kernel.org/all/20240206114745.1388491-1-quic_kriskura@quicinc.com/
-> 
-> [1]: https://lore.kernel.org/all/20240206051825.1038685-1-quic_kriskura@quicinc.com/
+> +#define DSB_PATT_ENABLE_TS					\
+> +		tpdm_patt_enable_ts(enable_ts,			\
+> +		DSB_PATT)
+> +
+>  #define DSB_MSR_ATTR(nr)					\
+>  		tpdm_simple_dataset_rw(msr##nr,			\
+>  		DSB_MSR, nr)
 
-Also make sure to include reviewers that have spend time on your series
-as I'm sure I've asked you before.
+This is causing build failures in linux-next now:
 
-Please fix in a v16.
+drivers/hwtracing/coresight/coresight-tpdm.c:1055:2: error: missing field 'idx' initializer [-Werror,-Wmissing-field-initializers]
+ 1055 |         DSB_PATT_ENABLE_TS,
+      |         ^
+drivers/hwtracing/coresight/coresight-tpdm.h:184:3: note: expanded from macro 'DSB_PATT_ENABLE_TS'
+  184 |                 tpdm_patt_enable_ts(enable_ts,                  \
+      |                 ^
+drivers/hwtracing/coresight/coresight-tpdm.h:156:5: note: expanded from macro 'tpdm_patt_enable_ts'
+  156 |            }                                                    \
+      |            ^
+drivers/hwtracing/coresight/coresight-tpdm.c:1109:2: error: missing field 'idx' initializer [-Werror,-Wmissing-field-initializers]
+ 1109 |         CMB_PATT_ENABLE_TS,
+      |         ^
+drivers/hwtracing/coresight/coresight-tpdm.h:208:3: note: expanded from macro 'CMB_PATT_ENABLE_TS'
+  208 |                 tpdm_patt_enable_ts(enable_ts,                  \
+      |                 ^
+drivers/hwtracing/coresight/coresight-tpdm.h:156:5: note: expanded from macro 'tpdm_patt_enable_ts'
+  156 |            }                                                    \
+      |            ^
 
-Johan
+Not sure what is going on, so I reverted your patch locally
+for my test setup.
+Can you send a fix to make it build again?
+
+      Arnd
 
