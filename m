@@ -1,124 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-10913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFF01853586
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 17:03:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D80DB853596
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 17:06:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E8D21F21DA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:03:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 777EA1F232EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 16:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 163095F547;
-	Tue, 13 Feb 2024 16:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F2A5FB9A;
+	Tue, 13 Feb 2024 16:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KKCU/dDh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eCa/zNsB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA04F5F48A;
-	Tue, 13 Feb 2024 16:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC2E5FB8D;
+	Tue, 13 Feb 2024 16:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707840180; cv=none; b=XnoSBgjADhEwHOKrRQaDiDidNArNsME1+dKa5NgwxJLfXmT24LjeuKBh1pwLnSacExI1BsFDAytcGfZmYCexfbQOMpST45oQSx6SdRSJEAiYZw23Eaxn1uuhaZcgEPrHQFsH1PpCNGniHz9bxT8+Hg4XN1KEFycHpAvm0nfxh4Y=
+	t=1707840355; cv=none; b=hoqOC2BvyDi7oNPb8agV95yGDQfWNx9zjgFOIE2+iDtqZb2S5/dnDUmCzuhQ7Isw/fhFX9wfhTOurqGhNEDwLE1+8nD9KVQTxHzth2oJk6qVGotJp8ExPGO/TqHtMCXCz2dkuaT1a/IoFsdeS6ZbSmGSddFyrsJMvQRiCKj7dn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707840180; c=relaxed/simple;
-	bh=raewERgjnOaT1e4+EDmQFCjp+2Q+nD/RhhrjpVO2oiA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=humhp7feYN5H0bUtlYb/4pggrEEJoRN66/Y2cSWkkzU5dpB2/DS5QG7Ka6Ahm/KvqoS4OrUqBlZxx6ix4gc1Sh+BRiZNILU+WBnA/f8kArRwGVCg8GuZyISSwIM1qNsw0IJnp9zR+NiTBKj+AFjQXNfpt7RIPUW9TfGKYQVkXGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KKCU/dDh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E84C433F1;
-	Tue, 13 Feb 2024 16:02:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707840179;
-	bh=raewERgjnOaT1e4+EDmQFCjp+2Q+nD/RhhrjpVO2oiA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KKCU/dDhcjf0FYDMeJlnF2d1lTWHBDod3yoygbRluKaVtF2rNY0FqBkPP3ihYEhxe
-	 MduQWcNBtMVSAEB2FPalhUAeV7tR0wd93T/iob7anoMyfGj/wHM0c5p56fXYxFl6K+
-	 xzZYE7E2PDu+x1g6LE4IZY72wFLBp4HWBtJRiwrynhTZFbpxxhuuAW7/Li71TBQIzu
-	 fKFZm9dCMp2FuUmo65A/nZ2k3XnnmWG15H6S1ZQPUokMz92sHgDDLeLNTxWL243RTJ
-	 7fdaSQbAjve1e8C5yYV7PWyQVAXyxvsVU8Itn4RADKLXkU/hyISFQ9Tn/oIheRh3OL
-	 9kadbBY5NJ6Og==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rZvFb-000000001ga-3I2Y;
-	Tue, 13 Feb 2024 17:03:15 +0100
-Date: Tue, 13 Feb 2024 17:03:15 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Matthias Kaehlcke <mka@chromium.org>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Doug Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZcuSwy0quwKoZkkm@hovoldconsulting.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <Zct_tB-y7HbZU1dp@hovoldconsulting.com>
- <ZcuQ2qRX0zsLSVRL@google.com>
+	s=arc-20240116; t=1707840355; c=relaxed/simple;
+	bh=uMcRI6AGrJm0s+87WXTb7ztcpujligYNic9LZD/J/g4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AoaffuiZYVZekQS1EYLObkhBk5cW1Oeim4tjGfS1ggCBNoEkT76qv70sAYD4vMus/rO6BYLClXLcqySdqKMMsDHNVau9Va/1AV/FlXhUcgE/jDrJX5UhO7vDMjaP6IbB82Ek7Fcbxr+l6rSyX2SPuISyWVnOUUx9Dd/yIaS7CSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eCa/zNsB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41DEMYMk017977;
+	Tue, 13 Feb 2024 16:05:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Rnm9gaj
+	as+B3WYbpQ/+ZSa+PKnnpl5dm6jgMymLFYeE=; b=eCa/zNsBdqaRB5yXu2oq6HU
+	tljn5Azx3CZm5z9w1KhOkt/d4ZmdS3ov4zwN48xOJHmb3NAfFiD9EgTvU6BRPZrS
+	S6vLNz+QZ9uogV10Twm3F8LnQcRrfxySO9bQ/2NWY58YIMTofMBAONzVXxN/kY6V
+	/oUEdQJ5ykjhhFeNV1Hw+00uXZjPrAxwEFAuFerkTbWxEX6r7XMZBZWQ6pEXqsD3
+	nLaO/GCAevctXKHtkJOeKkTDCL8p3FmeOREwVTO/EbfQ/qeb8bRWwdUWATbi8CgH
+	yE3MSWmQq6EYwT9QCBbMleNFOhuxPW/vtoWJH2xoFI8mLsKvMh860WnzRMNA5Gg=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7ww5sjvr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 16:05:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41DG5XVv000924
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 16:05:33 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 13 Feb 2024 08:05:32 -0800
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Mao
+ Jinlong" <quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 0/2] coresight: tpdm: Change qcom,dsb-element-size to qcom,dsb-elem-bits
+Date: Tue, 13 Feb 2024 08:05:16 -0800
+Message-ID: <20240213160521.15925-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZcuQ2qRX0zsLSVRL@google.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Az3vrLrOb0HTvj_a8-1BlTtjlurCfDSq
+X-Proofpoint-ORIG-GUID: Az3vrLrOb0HTvj_a8-1BlTtjlurCfDSq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-13_08,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxscore=0 phishscore=0 mlxlogscore=749 bulkscore=0
+ spamscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130126
 
-On Tue, Feb 13, 2024 at 03:55:06PM +0000, Matthias Kaehlcke wrote:
-> On Tue, Feb 13, 2024 at 03:41:56PM +0100, Johan Hovold wrote:
-> > On Wed, Dec 27, 2023 at 07:03:06PM +0100, Johan Hovold wrote:
-> > > The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-> > > device address in MSB order when setting it using the
-> > > EDL_WRITE_BD_ADDR_OPCODE command.
+As unit of dsb element size is bit, change qcom,dsb-element-size to
+qcom,dsb-elem-bits.
 
-> > > Reverse the little-endian address before setting it to make sure that
-> > > the address can be configured using tools like btmgmt or using the
-> > > 'local-bd-address' devicetree property.
-> > > 
-> > > Note that this can potentially break systems with boot firmware which
-> > > has started relying on the broken behaviour and is incorrectly passing
-> > > the address via devicetree in MSB order.
-> > > 
-> > > Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
-> > > Cc: stable@vger.kernel.org      # 5.1
-> > > Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-> > > Cc: Matthias Kaehlcke <mka@chromium.org>
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > Can we go ahead and merge this one to get this fixed in 6.8?
-> > 
-> > I've spoken to Bjorn Andersson at Qualcomm about this and he is in
-> > favour of doing so. The only people actually using the devicetree
-> > property should be the Chromium team and they control their own boot
-> > firmware and should be able to update it in lockstep (and Android uses
-> > some custom hacks to set the address that are not in mainline).
-> 
-> Unfortunately it's not as trivial as it sounds for Chrome OS. The boot
-> firmware is controlled by Chrome OS, however for any baseboard (e.g.
-> 'trogdor') there is a larger number binary firmware packages, one
-> for every model derived from that baseboard. There can be dozens of
-> models. Chrome OS Firmware releases are qualified and rolled out per
-> model. FW qual may involve the ODM, usually there are multiple ODMs
-> per board. In an absolute emergency it would be possible to coordinate
-> a qual and synced rollout for all models, but it's definitely
-> non-trivial in terms of operations.
+Mao Jinlong (2):
+  dt-bindings: arm: qcom,coresight-tpdm: Rename qcom,dsb-element-size
+  coresight-tpda: Change qcom,dsb-element-size to qcom,dsb-elem-bits
 
-Ok, fair enough.
+ .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml          | 4 ++--
+ drivers/hwtracing/coresight/coresight-tpda.c                  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Could you please provide a list of the compatible strings that you guys
-currently use and I can add new compatible strings for those, while
-keeping the current ones for backwards compatibility with older boot
-firmware?
+-- 
+2.41.0
 
-Johan
 
