@@ -1,128 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-10826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30255852A50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:54:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB4C0852A5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 09:00:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91A09B22A81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 07:54:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC20C1C21A3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 08:00:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 823641775C;
-	Tue, 13 Feb 2024 07:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2CE9175B5;
+	Tue, 13 Feb 2024 08:00:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Eva6ASnJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E92117743;
-	Tue, 13 Feb 2024 07:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E46917983;
+	Tue, 13 Feb 2024 08:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707810800; cv=none; b=Noss5BMsnFlJjNnyYLv1W3ADUXNdpb/bnbjPljDBLhpQz5BtdgeSG+XrU+bBpILrkaAgvnyYnqG0z8sxYgZMOXzTPxIr4PxZbROD/PtWoIy92hnbc4Y7Egm86y4lRvkSdvEefLCynEPRgx8KsToEZeX5VcRefuzfkx0DLwRRheo=
+	t=1707811223; cv=none; b=cc839eTCAGy4QtkcqYBUkREXNAJMM/j2IxFY9qWN7dp15xKJ3E9EroWaoEWPkERKZWERDwwnHnyu/joOZN7v8X48GVU+bAQ4jFjNgWb1fSXePXSkM+jqkWhpUPj8ndVKkxBs6Tao/8gZssHyUIZqeunwy4Yf6fGoLSLx3sbBfk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707810800; c=relaxed/simple;
-	bh=h2mcc3tinXFTTUlzRS/uHQRAwxsDtAwyOZUFiyrUldQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=flBgj2nXH8WZopqddbBcqJI2VGjaYqyaGGOWCH5EH30oTgssBpzC4Uo8piLsPEnAlNQS59K9zihPmm2oWp2cMNSu4QuQKfQc78NLazn8btCaPBFUjNuHnzuYXx/SNRZxctX2+n6ZVUajaQiFXmjj7hPPK/JnSryuPVl13PHtSuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71F0C433C7;
-	Tue, 13 Feb 2024 07:53:10 +0000 (UTC)
-Date: Tue, 13 Feb 2024 13:23:06 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Serge Semin <fancer.lancer@gmail.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>, vkoul@kernel.org,
-	jingoohan1@gmail.com, conor+dt@kernel.org, konrad.dybcio@linaro.org,
-	robh+dt@kernel.org, quic_shazhuss@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	quic_parass@quicinc.com, quic_schintav@quicinc.com,
-	quic_shijjose@quicinc.com,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	mhi@lists.linux.dev
-Subject: Re: [PATCH v1 3/6] PCI: dwc: Add HDMA support
-Message-ID: <20240213075232.GA5067@thinkpad>
-References: <oa76ts3zqud7mtkpilbo4uub7gazqncnbh6rma26kaz6wt6fch@ufv672fgrcgj>
- <20240209171032.GA1004885@bhelgaas>
- <qppxhhlbjqmop2vmaa6b5zjesgry75hapllokcmllgfwti4tbo@55aeewwp23cq>
+	s=arc-20240116; t=1707811223; c=relaxed/simple;
+	bh=VoMnRaSamnWIppKxRAr8QX4lMcoE34DxAKai2ygPKGQ=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=toqHhpLYA5ADOfmOY2qeGUv8PvSKHwN+Ma2z1BbD71bi3YsUIIGxjUJILRORrzxE8Pq/b3deYJQybXQniUgEBb5NUfaOvKCG7uQkpxoe080Sk1JDv+jyUGbkVOK9/V+IDv+8djp+QAJVm1eHWS+/9v3f7NU8i3JJE5hmfhJ11BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Eva6ASnJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41D6P2xg017338;
+	Tue, 13 Feb 2024 08:00:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=cVkgK/2fBVNS
+	K//CdIwIUFNslMWRKP83ena1wl35pqw=; b=Eva6ASnJ/+uvxdORYUlhxc75S/EE
+	RnyOk3YRMDJK4/Uf80JnPJZ5lsUJkdXCRubMKEdiInYGu/YfI7+O8IkBZCkqyhoW
+	vQj/eyRClAI5eUtHaYPDYInEDRs8pOuyq61P2657HBg/ZwVL51yQxnAP5Q15s3k0
+	ZNsBEn09upuLzpDlMhNfQJ7Lmbhw0Hd+ZOHs1oCcpWtPqHNTrHNdDV+YznwTe3Eq
+	oOiNkWQ3Mg8AyENhy63isacTlswZ6LFg2R+O1qOwQXJ1cUI6qsYFOP+igYDjtrxH
+	X0bF+Br5yuP0LKeOZt25jvvqMLucTasFecAkRIJAd+jmwU6kvzE3YapP8Q==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7tans0eh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Feb 2024 08:00:18 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41D7w88S023112;
+	Tue, 13 Feb 2024 08:00:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3w627kkfnn-1;
+	Tue, 13 Feb 2024 08:00:13 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41D80Dqk025478;
+	Tue, 13 Feb 2024 08:00:13 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-audityab-hyd.qualcomm.com [10.147.244.159])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 41D80DOw025473;
+	Tue, 13 Feb 2024 08:00:13 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 207879)
+	id 38B835001A8; Tue, 13 Feb 2024 13:30:12 +0530 (+0530)
+From: Auditya Bhattaram <quic_audityab@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Auditya Bhattaram <quic_audityab@quicinc.com>
+Subject: [PATCH v4] soc: qcom: mdt_loader: Add Upperbounds check for program header access
+Date: Tue, 13 Feb 2024 13:30:10 +0530
+Message-Id: <20240213080010.16924-1-quic_audityab@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8CyY1HOmZj5bcnTO8AYUO7CFp0KxC2eU
+X-Proofpoint-ORIG-GUID: 8CyY1HOmZj5bcnTO8AYUO7CFp0KxC2eU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-13_04,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 impostorscore=0
+ mlxlogscore=999 bulkscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402130061
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <qppxhhlbjqmop2vmaa6b5zjesgry75hapllokcmllgfwti4tbo@55aeewwp23cq>
 
-On Sun, Feb 11, 2024 at 10:37:43PM +0300, Serge Semin wrote:
-> On Fri, Feb 09, 2024 at 11:10:32AM -0600, Bjorn Helgaas wrote:
-> > On Sat, Feb 03, 2024 at 12:40:39AM +0300, Serge Semin wrote:
-> > > On Fri, Jan 19, 2024 at 06:30:19PM +0530, Mrinmay Sarkar wrote:
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > 
-> > > > Hyper DMA (HDMA) is already supported by the dw-edma dmaengine driver.
-> > > > Unlike it's predecessor Embedded DMA (eDMA), HDMA supports only the
-> > > > unrolled mapping format. So the platform drivers need to provide a valid
-> > > > base address of the CSRs. Also, there is no standard way to auto detect
-> > > > the number of available read/write channels in a platform. So the platform
-> > > > drivers has to provide that information as well.
-> > > ...
-> > 
-> > > Basically this change defines two versions of the eDMA info
-> > > initialization procedure:
-> > > 1. use pre-defined CSRs mapping format and amount of channels,
-> > > 2. auto-detect CSRs mapping and the amount of channels.
-> > > The second version also supports the optional CSRs mapping format
-> > > detection procedure by means of the DW_PCIE_CAP_EDMA_UNROLL flag
-> > > semantics. Thus should this patch is accepted there will be the
-> > > functionality duplication. I suggest to make things a bit more
-> > > flexible than that. Instead of creating the two types of the
-> > > init-methods selectable based on the mapping format, let's split up
-> > > the already available DW eDMA engine detection procedure into the next
-> > > three stages:
-> > > 1. initialize DW eDMA data,
-> > > 2. auto-detect the CSRs mapping format,
-> > > 3. auto-detect the amount of channels.
-> > > and convert the later two to being optional. They will be skipped in case
-> > > if the mapping format or the amount of channels have been pre-defined
-> > > by the platform drivers. Thus we can keep the eDMA data init procedure
-> > > more linear thus easier to read, drop redundant DW_PCIE_CAP_EDMA_UNROLL flag
-> > > and use the new functionality for the Renesas R-Car S4-8's PCIe
-> > > controller (for which the auto-detection didn't work), for HDMA with compat
-> > > and _native_ CSRs mapping. See the attached patches for details:
-> > 
-> > I am still bound by the opinion of Google's legal team that I cannot
-> > accept the code changes that were attached here.  I think it's fair to
-> > read the review comments (thank you for those), but I suggest not
-> > reading the patches that were attached.
-> 
-> Em, the review comment and the resultant patches were my own private
-> researches and developments. Is Google now blocking even individual
-> contributors?
-> 
-> In anyway if you are agree with the changes suggested above you can
-> set to the patches any author you think would be acceptable. My only
-> concern was to maintain the cleanness of the driver code developed by
-> me and which is going to be affected in the framework of this series.
-> 
+hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
+is found. Add an upperbound check to phdrs to access within elf size.
 
-I take the patch authorship seriously, so I won't change the author of your
-patches. Instead, I'll just create my own patches based on your comments above.
+Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in any segment")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+Changes in v4:
+ - Added additional prints incase of Invalid access.
+Link to v3 https://lore.kernel.org/stable/1c91c653-cebe-4407-bdd6-cfc73b64c0fb@quicinc.com
+Link to v2 https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
+Link to v1 https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
+---
+ drivers/soc/qcom/mdt_loader.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-- Mani
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 6f177e46fa0f..1a79a7bba468 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -145,6 +143,13 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+ 	if (phdrs[0].p_type == PT_LOAD)
+ 		return ERR_PTR(-EINVAL);
 
--- 
-மணிவண்ணன் சதாசிவம்
++	if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + fw->size)) {
++		dev_err(dev,
++			"Invalid phdrs access for fw: %s, e_phnum: %u, fw->size: %zu\n",
++			fw_name, ehdr->e_phnum, fw->size);
++		return ERR_PTR(-EINVAL);
++	}
++
+ 	for (i = 1; i < ehdr->e_phnum; i++) {
+ 		if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == QCOM_MDT_TYPE_HASH) {
+ 			hash_segment = i;
+--
+2.17.1
+
 
