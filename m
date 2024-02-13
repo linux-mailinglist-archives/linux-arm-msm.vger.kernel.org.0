@@ -1,108 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-10929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D124E8539AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 19:14:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A64BD853990
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 19:12:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0148B2C261
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 18:10:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1919C1F249F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Feb 2024 18:12:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CBF7605C2;
-	Tue, 13 Feb 2024 18:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EBF0604C0;
+	Tue, 13 Feb 2024 18:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t/+ScJC2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VpaXiTQR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA7B605C3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 18:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E59605A9;
+	Tue, 13 Feb 2024 18:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707847800; cv=none; b=S1l+46Lo//9jSd4UsVVcs7fq35a9O6BliHPX2uq9z+EDOyONrmkDuudXOtQd/vz5C0QgHSXX17qg0FF+VYKychBumZC9gPhqILh8Bd/uEkVIGyRB6w2d4uJkAwVp6iAqhdQCqI9PAWULWnsa6P3kbftHSlazH4MOjZvZCj9FdgE=
+	t=1707847926; cv=none; b=q79Hy4CSTPg0NCcAnxypbV2zw1UjgozCjNEMXJPx/pnnIO2UxgE9RG+lo3Lk6CgqSIRYUShXMWhi1oanl5lWFxTJmzjBcnD8eFA+XKf7BjqxzjD4QC+5MJ+bX4iOz0/t/bj9OgKgnkdK+TeaTDIT38WdogNXbK3LDw5hlCUD5Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707847800; c=relaxed/simple;
-	bh=Y6o1Lji1Q8/hQyG4UJ4sM5x73l/Dpj78gVauywLn6mU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=rpRV10Cp5ONoMBZdDqZB5R8ibZicFJa3pDb/XjcIgLfktJNUahsgGo93/LZL98oGkhIjQEbNKrLmR4KVmYH+z3Jz4TdGkUiDEX5Bkaj1npBIby+ovL9U6TgYCjjdmj2EFXWo6l12OZ106qbxQMJQoR9AqNtEsMUq+Jni26hs5C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t/+ScJC2; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a28a6cef709so631007566b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 10:09:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707847797; x=1708452597; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mh0Ixr9X//q92qq2wBm6KwNXwHZwG0zZGkn/hz3Mm7g=;
-        b=t/+ScJC2T0YIB6BEjPrXgfiVwaxcuNG2RpuQizPJ+wQz0//MakuAHmvd7aTgno8j17
-         iy+CilySMmBe4hBD2dg5I+Vpe+aXoDSbE5Lm8B9q7NsQip8jtKqMlEbfgByK/80eT6qw
-         MjjmXOHDspVFFgzcSiz+/oaMrihzOmwDQ6ZhrupOAvWa1j64q+/w0hpJv4uTeKW6b5Bh
-         oyxKu2yRizk86/Q5GLo8xGNiwcy5UPvzX0qsP//VV9XFsesFbg1UJvFEKR8VrGegufpo
-         uGhPw/WVvQITOyZB/T/u+t/H39oa1HJDvA0qso5vpi3XH2bvRpa+Rdf0Hh2SW2ffDT5h
-         Y+uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707847797; x=1708452597;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mh0Ixr9X//q92qq2wBm6KwNXwHZwG0zZGkn/hz3Mm7g=;
-        b=VxHidJS6SmhHeZl8pn1YdDzk+SKKHGKtEKMb4p4DFYjGnlpUSzpA19Gpkg0FrMOFfW
-         3ogfqPAmtOC30ZJOm2pyhXwIa+nC1of8Dk+QWCQYf3lDPZli7fsx6CF4ilKtjr0IGgSp
-         F2igKLM46MuvYqrCshuyEUUXiX7+0YlJ3a2XrANN6ecAsJCAq4dukG+SN4t5JbnGUwfD
-         Kymi8udMxuaBnCSi9kcsQ4WqyvaNSy+iol9bbcUek6Yw8yyr/6pLAx95KUcrRSxl6fyB
-         4Rg7QCjeKygDA4eUy+5kyZxYHl2XcGmFQYH9ffA4ZSCJIZ1/FtAa6NtpWD3IjUtoFb/e
-         nzHQ==
-X-Gm-Message-State: AOJu0YxogNZzz+/mmi5AJ9nv5cw09C5IU14huQ5g6hWgnbT1jckZO6xm
-	znhDrLz8zuJKksaaD98XVCwjdLVgaNFXytkW0C71HbZ2PD9rSu+FyLTf7kulJBQ=
-X-Google-Smtp-Source: AGHT+IHJykz+k2He7BaCvsqj2dWYamq7K+/vZc2T32yxyQ1CbMYSDNaCJBGbFY4K/6Dc76v2ecseew==
-X-Received: by 2002:a17:906:749:b0:a37:b8fb:50e0 with SMTP id z9-20020a170906074900b00a37b8fb50e0mr68785ejb.52.1707847795826;
-        Tue, 13 Feb 2024 10:09:55 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUqS8Y4lHY/ySiiu1ZIPjBRsbWFJEQdE6Na2j3TjyYBJqKdSqsQrt+HEJLaWsfOi8mF/jy9gPvQgwbbJH5ZjQAco9oqBQBsY9M=
-Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id vw3-20020a170907a70300b00a36c5b01ef3sm1518830ejc.225.2024.02.13.10.09.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 10:09:55 -0800 (PST)
-Date: Tue, 13 Feb 2024 21:09:48 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: dmitry.baryshkov@linaro.org
-Cc: linux-arm-msm@vger.kernel.org
-Subject: [bug report] drm/msm/dpu: drop dpu_encoder_phys_ops.atomic_mode_set
-Message-ID: <ef7bf5e6-3ac5-4dac-8e2b-4ed52a9cc0d8@moroto.mountain>
+	s=arc-20240116; t=1707847926; c=relaxed/simple;
+	bh=iKy4z4zbKIkEBLCIqbOOas6HQLerzLx+0jCCkBHBKZQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DbrJ2evyg/xfgSGHgV1cUNjUEby8d6BEKZboE5seiA+zBHovIVGRc25YPfV+wKp0pT3k2IOf1WJNRwv6pwENRFThRmkG0fLqf35KVYgf/5jCvfjdYeoy/D6JUnC4xctbMbXSeP6MsQ3lHi1qK3SBv8iWM489iEqdC5MTFh9WJo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VpaXiTQR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FEBC43399;
+	Tue, 13 Feb 2024 18:12:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707847925;
+	bh=iKy4z4zbKIkEBLCIqbOOas6HQLerzLx+0jCCkBHBKZQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=VpaXiTQRZg0ZnhTOPSLiTS1eVkEjhPem+tuLW+dpBxbdW1/zwKPLqoD5WcVrKV9GN
+	 KAmQnYLIKVPtJ4cVaRg0y3MyYaa/HG7w5plt0NU7g1CrfkjiY5C1vMP+0mlPQI9lbc
+	 uCNk4tkjvAtodbZVXzC44ulWdQEC2PdpqUyzjIUfzf3cuO6ddcm/0Yh9e+6gigtUL4
+	 yX1S3zHv5DaXqUO5jyldY1ynnS9ao8JpUr8rOwM1oPlf1v6fzC3yZE34/s/TCczVwS
+	 cavEw7tRNDQiVG5HPZ9+gTjDiBuv4qYNrBpYdwh+sV+RMREETZiT80tldloTh+H/LY
+	 dHqfKk6i/GcIQ==
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d0fd07ba8bso26444361fa.1;
+        Tue, 13 Feb 2024 10:12:05 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVcoy0CMjwZYNdrLramCnrNtWb7qQMcFREcQ6Y3L2IibcPmrzAnQI9BUSTJJpDHhVSEOxpGxnOZaT/ndyKmu6yYVb1Zmws3vFWMXW776yU4dGC2007xVBRGZf7bRk8eJPuccVuXdRyG3kWMpOsaZrk6pocdIGuiyRgBlo2GYJLMHzmhlzuKFP+ztsNv4SqbN94ECuw/hSI1KDCfr3y6YtT1hRVZjz1KfwtXgGi7UrO+8txxtPMTRZAp0IISpb4NNgYK
+X-Gm-Message-State: AOJu0YzlTxJ9ZSB0K9C56uq5c4j33vw5vIQYC8R477tSNFoC2Of0mRuO
+	vQpJDX+068svuqvFjxXgubAehU1mm/+/v+GghhAFV3tNUdp3jd4LnaqKRy+tgMUaLItn5c/3xBt
+	RgFJFMQ2laVpwsCh2R6WlG0VsJw==
+X-Google-Smtp-Source: AGHT+IFoI2nIw8HIgZSb58YNqQnldThBVqDuYOeRmmQBRueJPhHiaK9E85g01QPZR04/VBn2+u4CxK0TcwjK6Jta0Xg=
+X-Received: by 2002:a05:651c:b07:b0:2d1:1440:56f0 with SMTP id
+ b7-20020a05651c0b0700b002d1144056f0mr30600ljr.15.1707847923891; Tue, 13 Feb
+ 2024 10:12:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240121-sm7125-upstream-v4-0-f7d1212c8ebb@gmail.com>
+ <20240121-sm7125-upstream-v4-2-f7d1212c8ebb@gmail.com> <20240212222232.GB2655166-robh@kernel.org>
+ <CAA8EJpoymmOBc3CfNHJKBT8BNje_s2a5uGPde3QHYv3vQ97=-Q@mail.gmail.com>
+In-Reply-To: <CAA8EJpoymmOBc3CfNHJKBT8BNje_s2a5uGPde3QHYv3vQ97=-Q@mail.gmail.com>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 13 Feb 2024 18:11:50 +0000
+X-Gmail-Original-Message-ID: <CAL_JsqLGVBjiYt5tG0GFxxeHmNDD1PgJx3ab-n2x0nHPEaX9iQ@mail.gmail.com>
+Message-ID: <CAL_JsqLGVBjiYt5tG0GFxxeHmNDD1PgJx3ab-n2x0nHPEaX9iQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/8] dt-bindings: ufs: qcom: Add SC7180 compatible string
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: David Wronek <davidwronek@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-phy@lists.infradead.org, ~postmarketos/upstreaming@lists.sr.ht, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello Dmitry Baryshkov,
+On Tue, Feb 13, 2024 at 4:30=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 13 Feb 2024 at 00:22, Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Sun, Jan 21, 2024 at 05:57:42PM +0100, David Wronek wrote:
+> > > Document the compatible for the UFS found on SC7180.
+> > >
+> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Signed-off-by: David Wronek <davidwronek@gmail.com>
+> > > ---
+> > >  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> >
+> > Should have been picked up by SCSI/UFS maintainers, but it
+> > hasn't, so I applied it.
+>
+> And it now triggers schema warnings, because sc7180-ufshc has 7 clocks
+> and 1 reg entries.
 
-This is a semi-automatic email about new static checker warnings.
+And now dropped... Perhaps the dts changes should be too.
 
-    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c:746 dpu_encoder_phys_cmd_init()
-    warn: variable dereferenced before check 'phys_enc->hw_intf' (see line 742)
+Maybe QCom maintainers should require a report of dtbs_check on new
+boards. My comparisons of Linus vs. next warnings often show an
+increase in QCom warnings. Like right now:
 
-drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-   741		phys_enc->intf_mode = INTF_MODE_CMD;
-   742		phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
-                                                   ^^^^^^^^^^^^^^^^^
-The patch adds an unchecked dereference
+linus: arch/arm64/boot/dts/qcom:1990:265
+next: arch/arm64/boot/dts/qcom:1610:298
 
-   743	
-   744		cmd_enc->stream_sel = 0;
-   745	
-   746		if (!phys_enc->hw_intf) {
-                    ^^^^^^^^^^^^^^^^^^
-Too late
+First number is total warnings. Second number is unique warnings
+(stripping dtb name). Some of this is just mismatch between schemas
+and dts changes showing up in next, but it doesn't tend to go to 0 as
+the merge window approaches. I've seen this several cycles. All the
+data is available from my CI jobs, and I regularly look at the diff
+with this:
 
-   747			DPU_ERROR_CMDENC(cmd_enc, "no INTF provided\n");
-   748			return ERR_PTR(-EINVAL);
+$ less ~/bin/gl-diff-dtb-warnings
+#!/bin/sh
 
-regards,
-dan carpenter
+[ -z "$1" ] && { echo "Missing arch!"; exit 1; }
+
+arch=3D"$1"
+
+job=3D"job-dtbs-check"
+logfile=3D"platform-warnings.log"
+
+# url <branch> <arch>
+url() {
+        local branch=3D"$1"
+        local arch=3D"$2"
+        echo "https://gitlab.com/robherring/linux-dt/-/jobs/artifacts/${bra=
+nch}/raw/${logfile}?job=3D${job}%3A+%5B${arch}%5D"
+
+}
+
+curl -Ls -o orig.log $(url linus ${arch})
+curl -Ls -o next.log $(url next ${arch})
+meld orig.log next.log
 
