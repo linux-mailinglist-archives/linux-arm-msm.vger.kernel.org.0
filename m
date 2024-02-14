@@ -1,209 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-10969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 570208542DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:36:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72D4585439D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 08:47:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF5221F27035
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 06:36:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 965371C2031F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:47:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655FB1119C;
-	Wed, 14 Feb 2024 06:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2106F18635;
+	Wed, 14 Feb 2024 07:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eq6AOaj9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w8WMKcLS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DC4DDA6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 06:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2749218628
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 07:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707892564; cv=none; b=mK9s7S7TskovirZzocfPfRT9tYFqsUcIX9tVZm5sE22Yri8sMj4Wa8c2wH2zvkRVdMcoHBgBX5Cj2XiBSliwXyIcHvQiyKdhj6gJ9caq4TQrTWAK2uGnH5evXtA16cqDDK9Z7IxM8+B6CdZ6b0Jbs1O7fLyKem9rwJv09CMceDI=
+	t=1707896813; cv=none; b=rRzLajVQgksj4APHNm7xkZit7eX2rXxSfL5mRZqdY6xypKy7ENMUQU3MGztGKxclgupw4Nf6X7UmLHMttRnHKi+RCJEFRTsnshgs0RuV5gTfDFXgoOBwVR/rJiXIbOXje1XJzq5/TtTTkVfpMXO494HdPzsJ8IEgW6iIHJqyCps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707892564; c=relaxed/simple;
-	bh=S0n0jL6+mRYRMYvMwHnUkELzPpbyDPaR1URF6rkE1lQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BPOwW2USXXV7BgngcUnD0d8yUvNPIAaiMHfbDGLiIEltW3POEywHmL3EXphtZghAjhqvpXOBUI7lmx+5XMa5Qw0fho6nTQ0kGJZbWB88UJKi2dYhtm/y8D7vauaYFPtN/FsFG+q+HVA5Tbe7Z6cVDQRj+7QsGliQd7x3rCGa+SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eq6AOaj9; arc=none smtp.client-ip=209.85.215.169
+	s=arc-20240116; t=1707896813; c=relaxed/simple;
+	bh=yqB2XdwA6UHCegZCB9/lVXiW3YWDwxrPU4imydmilIQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ifeg5I3npJkrNC5RNscyUe/Q1cQfrqpuyhvlLzr4DE+0pT+PXoLNGkKdMQfDiHr80owktB/EBHN7OzAVv0THI0GAB+0rZ3IsP1GgNxb+nBzGPkjPZ1yeaXjCLTsqCrYpqlZ+SeQSdj7eFGPh8amNkDWj9ixabkVf2No5etCHD+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w8WMKcLS; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-5d8df34835aso339007a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 22:36:01 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-560037b6975so5768286a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 23:46:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707892561; x=1708497361; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QGcxOyI3gqRHqjaeGgz6cLsEEU9nKKLG3Qcn8Q9LRis=;
-        b=eq6AOaj9OPoWEtHfaR+s6/ZYiKHPPsLCOMfZsKHuupE2/tFbjaE71L4zUq3e3o+bT6
-         MCfflegwlpOXAMMGYTFaRZNxOMIxxVVPt5qanA2uIsxZlwUV0X0Ju8E17zpZug/+a79H
-         1xY9EIPQ291ms549zlTN0z6bfQiLXAWxlMN6Lx78g+GXUcRrNGgLVRIIxlkJntEC6Ymt
-         OGKaFrgof2GLlATs94EjhU0uPydQZCXQ92obUS/FVVpwBDDu/PWfWHeuFPmrnFN5ZUyX
-         YTW3HmJH1lBfkBSPor/YP7SG5XggbWldg1l4FZGXD+lihR2q1kU4JIdbXN3ZoIXtd/iJ
-         5e0A==
+        d=linaro.org; s=google; t=1707896809; x=1708501609; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B0R4c1Ylk8xxreF7nNGXS85UtN57qLPiI5PzupAO4is=;
+        b=w8WMKcLSzIe/ZW5SHuL5Uza48FfctvU0cXX3VLiP9p2aOdzdT7OwBm2eRjZfJWgRAC
+         7o6VIYcT+AqHErViaGoTSPDKncIeRCs+xZQD0zOI1n6/rrWQxHaOHuDdCPrqser7LGwO
+         jAig9P7ejdDcWpCUtjwikwed8SZpaXPS8r766Dn7pOQssiTAFPh9Quhayo+1Dqbt82pm
+         vDhjP7TA1wJmcNnboDFO7BLYAyKiRBhrhLUvpiWdOt17yCFoWSjWiLu5hOLel7zCHuZw
+         y48cMBRM6pGIXvhKY5A6+veX6A4x8IwjQSJOQp1gVxPSGacAk8VJjbwTdnFoNafwGVHj
+         ONPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707892561; x=1708497361;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1707896809; x=1708501609;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QGcxOyI3gqRHqjaeGgz6cLsEEU9nKKLG3Qcn8Q9LRis=;
-        b=uViPWnSU9vsfkAcx8DgxEQ43oQy0GngJSapCN7YkZmh4uDeL08FZTZdsXOKEiCvles
-         LqGK9WMpfml1pcbiugUVn2aAPoR9WYfmCQXGrAomGAecUawN2bvXRFsDVnonuEdnoZ1B
-         7ewba7jdbjVqlJr9ns7F36nGePKQN8w1ETyNdB6XoPKpI8gCYVuyfjOhNoaBfqgGFGgT
-         lyHjxLJl7VG1XjE61xmCUbggYo7p7g8OTXGTJCQYw19HKh1s1QYGj2FIRhrMCVdEcE5R
-         Y0kiQe34ARn9rB494zbgvDrrDO8l6LJmdoFGcq230kVR2AvRto5akH7HCNtb5UJH8H2W
-         XZ4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVZuRU+8mxnCzTBQE69Agt7d/zWJe9VyaL6G0WV+0iNIDyh8E3H+UdV22OH51jO6B+o6cG+7PC6S6rKNCh3/TJz+ox5jUGxOXsQ7VofJQ==
-X-Gm-Message-State: AOJu0Yxm0Z48ZktK485F3uum/zAW7LDODBcml6gc7Z9vNkzFp9VEeCaR
-	4/dk85NGHE0uHJHxlhRO9WXsT47+bVQfxT8c10s/Z6Rk6EqLlXkaFk3LN9MgGA==
-X-Google-Smtp-Source: AGHT+IEaCZgvXP49NlvjV+Z1BkxQbusXcCEQreHzCFLxhaXcni5m5Fu/GlhKKaqiQHs2Wc0a1/f5Fg==
-X-Received: by 2002:a17:90a:df86:b0:296:66a4:2e6c with SMTP id p6-20020a17090adf8600b0029666a42e6cmr1576120pjv.23.1707892560535;
-        Tue, 13 Feb 2024 22:36:00 -0800 (PST)
-Received: from thinkpad ([103.28.246.124])
-        by smtp.gmail.com with ESMTPSA id d30-20020a17090a6f2100b0029899165611sm643285pjk.35.2024.02.13.22.35.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 22:36:00 -0800 (PST)
-Date: Wed, 14 Feb 2024 12:05:54 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/10] arm64: dts: qcom: sc8280xp: enable GICv3 ITS for
- PCIe
-Message-ID: <20240214063554.GC4618@thinkpad>
-References: <20240212165043.26961-1-johan+linaro@kernel.org>
+        bh=B0R4c1Ylk8xxreF7nNGXS85UtN57qLPiI5PzupAO4is=;
+        b=CJ8ENVObC1d+hT/aEjzaWO7WVPfWyIsbij+0OJwPiMey3JSdpd6qZlcORcjdllwDev
+         PqQhwhjyux2T1bImpCN4kWI1ezHjwexnD+uyuygPzmuqmGzxXAvuOfLdDFkFpeIWwIxH
+         Js3vSuf5XjQ2PTrqTBHKZf4ve4Sb9Mvz/Dt6yuDu3PzPEE2X+8GbWfeIrHOyXBApQhDU
+         p9dCQtgLSvwr+EZK4DAtC81srXcLjLuXU4czeeNNH3fsIL/6wUUMle+8vHKNxnQtxHYo
+         1qUcQYwkrKcaHSLrVwKF761TmRAYNf8OWUgu2Kx1lvaaWLhFAhVP8CU9AspxJZjwZl4v
+         sIPA==
+X-Forwarded-Encrypted: i=1; AJvYcCWWm3y5vfbtEUY1EdwUnd2EshvAIGz0EJBi1558asiQmVB+yvGzis2q47XMDd0mf1DIDFkna876xU+wtje4bAK/b69Az5F4/8YSzYb3jA==
+X-Gm-Message-State: AOJu0YwG7aLlBaJmrljGN9pe+IzTmMx1g5sy+rkDUWhGsePHToPqnX+k
+	q7BdD2p7V5/sDmodc0lkj/hd9n5zjXeiLEz8GCD07TeF/K9IaEJ3YRc74QNJPa0=
+X-Google-Smtp-Source: AGHT+IFNERq4Pu0oUowuFY7XJnZIaUf0PIqtAYp2ZpdJ45uNhu4a+E9OoFBYAFugw5+I/njxHcUUyg==
+X-Received: by 2002:a17:906:1997:b0:a38:7541:36f6 with SMTP id g23-20020a170906199700b00a38754136f6mr1155720ejd.21.1707896809126;
+        Tue, 13 Feb 2024 23:46:49 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWXy07FRHQZQsUwtOQUQeSP5tZae8wDnNB8QFQmIDKOkkbMPwHrHy5ivMIR9fEYbPIE2VECpzcYwuL46XgVkfFXEFz0qgAO4gIO/HvP+OAtjtxapDiqXeRdJsy0+5kuUboimTZJKHUiO5qi+A==
+Received: from [192.168.86.110] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ty8-20020a170907c70800b00a3d09d09e90sm1278993ejc.59.2024.02.13.23.46.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 23:46:48 -0800 (PST)
+Message-ID: <0e03d788-a4d1-494e-a103-9f57ad81b016@linaro.org>
+Date: Wed, 14 Feb 2024 07:46:46 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240212165043.26961-1-johan+linaro@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 04/16] misc: fastrpc: Add fastrpc multimode invoke
+ request support
+Content-Language: en-US
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
+References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
+ <20240202064039.15505-5-quic_ekangupt@quicinc.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240202064039.15505-5-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 12, 2024 at 05:50:33PM +0100, Johan Hovold wrote:
-> This series addresses a few problems with the sc8280xp PCIe
-> implementation.
+
+
+On 02/02/2024 06:40, Ekansh Gupta wrote:
+> Multimode invocation request is intended to support multiple
+> different type of requests. This will include enhanced invoke
+> request to support CRC check and performance counter enablement.
+> This will also support few driver level user controllable
+> mechanisms like usage of shared context banks, wakelock support,
+> etc. This IOCTL is also added with the aim to support few
+> new fastrpc features like DSP PD notification framework,
+> DSP Signalling mechanism etc.
 > 
-> The DWC PCIe controller can either use its internal MSI controller or an
-> external one such as the GICv3 ITS. Enabling the latter allows for
-> assigning affinity to individual interrupts, but results in a large
-> amount of Correctable Errors being logged on both the Lenovo ThinkPad
-> X13s and the sc8280xp-crd reference design.
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> ---
+>   drivers/misc/fastrpc.c      | 176 ++++++++++++++++++++++++++----------
+>   include/uapi/misc/fastrpc.h |  26 ++++++
+>   2 files changed, 154 insertions(+), 48 deletions(-)
 > 
-> It turns out that these errors are always generated,
+...
 
-How did you confirm this?
+> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+> index f33d914d8f46..45c15be1de58 100644
+> --- a/include/uapi/misc/fastrpc.h
+> +++ b/include/uapi/misc/fastrpc.h
+> @@ -16,6 +16,7 @@
+>   #define FASTRPC_IOCTL_INIT_CREATE_STATIC _IOWR('R', 9, struct fastrpc_init_create_static)
+>   #define FASTRPC_IOCTL_MEM_MAP		_IOWR('R', 10, struct fastrpc_mem_map)
+>   #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
+> +#define FASTRPC_IOCTL_MULTIMODE_INVOKE	_IOWR('R', 12, struct fastrpc_ioctl_multimode_invoke)
+>   #define FASTRPC_IOCTL_GET_DSP_INFO	_IOWR('R', 13, struct fastrpc_ioctl_capability)
+>   
+>   /**
+> @@ -80,6 +81,31 @@ struct fastrpc_invoke {
+>   	__u64 args;
+>   };
+>   
+> +struct fastrpc_enhanced_invoke {
+> +	struct fastrpc_invoke inv;
+> +	__u64 crc;
+> +	__u64 perf_kernel;
+> +	__u64 perf_dsp;
+> +	__u32 reserved[8];	/* keeping reserved bits for new requirements */
+> +};
+> +
+> +struct fastrpc_ioctl_multimode_invoke {
+This struct needs some documentation.
 
-> but for some yet to
-> be determined reason, the AER interrupts are never received when using
-> the internal MSI controller, which makes the link errors harder to
-> notice.
-> 
+> +	__u32 req;
+we use req here and then in next few lines we define the same as 
+fastrpc_multimode_invoke_type. I would recommend to make this type 
+instead of req.
 
-If you manually inject the errors using "aer-inject", are you not seeing the AER
-errors with internal MSI controller as well?
+> +	__u32 rsvd;		/* padding field */
+reserved?
 
-> On the X13s, there is a large number of errors generated when bringing
-> up the link on boot. This is related to the fact that UEFI firmware has
-> already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
-> link at Gen3 generates a massive amount of errors until the Wi-Fi
-> firmware is restarted.
-> 
-> A recent commit enabling ASPM on certain Qualcomm platforms introduced
-> further errors when using the Wi-Fi on the X13s as well as when
-> accessing the NVMe on the CRD. The exact reason for this has not yet
-> been identified, but disabling ASPM L0s makes the errors go away. This
-> could suggest that either the current ASPM implementation is incomplete
-> or that L0s is not supported with these devices.
-> 
+<---
+> +	__u64 invparam;
+> +	__u64 size;
+-->
+Isn't size obvious when we know request type?
 
-What are those "further errors" you are seeing with ASPM enabled? Are those
-errors appear with GIC ITS or with internal MSI controller as well?
+This is also opening up a path for userspace to pass some random structures.
 
-> Note that the X13s and CRD use the same Wi-Fi controller, but the errors
-> are only generated on the X13s. The NVMe controller on my X13s does not
-> support L0s so there are no issues there, unlike on the CRD which uses a
-> different controller. The modem on the CRD does not generate any errors,
-> but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
-> when not used, which could indicate that there are bigger problems with
-> the ASPM implementation. I don't have a modem on my X13s so I have not
-> been able to test whether L0s causes an trouble there.
-> 
-> Enabling AER error reporting on sc8280xp could similarly also reveal
-> existing problems with the related sa8295p and sa8540p platforms as they
-> share the base dtsi.
-> 
-> The last four patches, marked as RFC, adds support for disabling ASPM
-> L0s in the devicetree and disables it selectively for the X13s Wi-Fi
-> and CRD NVMe. If it turns out that the Qualcomm PCIe implementation is
-> incomplete, we may need to disable ASPM (L0s) completely in the driver
-> instead.
-> 
+It makes more sense to have a union of all the request structures.
 
-If the device is not supporting L0s, then it as to be disabled in the device,
-not in the PCIe controller, no?
+Why not add all the enhanced invoke uapi structures as part of this patch?
 
-> Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
-> significant impact on the power consumption 
-> 
-> The DT bindings and PCI patch are expected to go through the PCI tree,
-> while Bjorn A takes the devicetree updates through the Qualcomm tree.
-> 
+> +	__u32 reserved[8];	/* keeping reserved bits for new requirements */
+> +};
+> +
+> +enum fastrpc_multimode_invoke_type {
+> +	FASTRPC_INVOKE			= 1,
+> +	FASTRPC_INVOKE_ENHANCED	= 2,
+> +	FASTRPC_INVOKE_CONTROL = 3,
+> +	FASTRPC_INVOKE_DSPSIGNAL = 4,
+> +	FASTRPC_INVOKE_NOTIF = 5,
+> +	FASTRPC_INVOKE_MULTISESSION = 6,
 
-Since I took a stab at enabling the GIC ITS previously, I noticed that the NVMe
-performance got a slight dip. And that was one of the reasons (apart from AER
-errors) that I never submitted the patch.
+All of these needs a proper documentation. Its impossible to understand 
+what they actually mean.
 
-Could you share the NVMe benchmark (fio) with this series?
+This applies to all the enums that are added as part of other patches to 
+the uapi headers.
 
-> Johan
-> 
-> 
-> Johan Hovold (10):
->   dt-bindings: PCI: qcom: Allow 'required-opps'
->   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
->   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
->   arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
->   arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
->   arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
+thanks,
+Srini
 
-Is this patch based on the version I shared with you long back? If so, I'd
-expect to have some credit. If you came up with your own version, then ignore
-this comment.
 
-- Mani
-
->   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
->   PCI: qcom: Add support for disabling ASPM L0s in devicetree
->   arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for NVMe
->   arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for Wi-Fi
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  6 +++++-
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  4 ++++
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  3 +++
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 17 +++++++++++++++-
->  drivers/pci/controller/dwc/pcie-qcom.c        | 20 +++++++++++++++++++
->  5 files changed, 48 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.43.0
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> +};
+> +
+>   struct fastrpc_init_create {
+>   	__u32 filelen;	/* elf file length */
+>   	__s32 filefd;	/* fd for the file */
 
