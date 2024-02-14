@@ -1,113 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-11111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24274855589
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:07:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 715608555BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:28:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8E6AB22E37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:07:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1782B25993
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:28:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 767F7141988;
-	Wed, 14 Feb 2024 22:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 242121419B1;
+	Wed, 14 Feb 2024 22:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="btJEAflX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxv8HS1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB9613EFFE;
-	Wed, 14 Feb 2024 22:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1E13EFF6;
+	Wed, 14 Feb 2024 22:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707948425; cv=none; b=tO1sN1g3RDOfZU56s7XLr0uj2l1owcvDAtoJxFY3w5OWzqd0DjJdKtKFCppIonk4yNf95ppDqyOaNH8BGBl2tH11dH3aJqzgjnpeQ/idaBwL5Qo8bq0gS9vizoTa6kl9rtKzPRIKfIz3rcYJ8UHIna68zTssXSY02EO7D51siYA=
+	t=1707949702; cv=none; b=u+1utU3SMnRNu+pRmxCH+dgPQ26gKoBYJBoaoJSd71L46b/SsicUZmqVMrtZ3h/cYnhGGAUDH73E4jE2ih7qQXCMk6wvzFyTvm9WC3Kyn2RkoUHNpHehs8au73FXGByVkWtT1zRGSyKBkIyn6qoDgCBSs4ItsCAxoZTQfqflqp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707948425; c=relaxed/simple;
-	bh=aix0FqqDegJfqcNO9XdPVBl5grLqx3B0T2kNMQA0DFw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p/e5dwGVl9AZc1CwJzKWbO94zS36pb65CW0TK7AssPOlcf86no/3KsxeapJLcCgrmV7uzON68sEQcwE4ooLZ7bK49LI20nNqrTpEBuuXS96DngyUn4vR2DDpv0xGkk/p1C6cYTtqD6RgCBCTBYJpkomS1XiTqx1/6hAt8Br8ZLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=btJEAflX; arc=none smtp.client-ip=45.79.88.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 6E01742A45
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1707948417; bh=aix0FqqDegJfqcNO9XdPVBl5grLqx3B0T2kNMQA0DFw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=btJEAflXWsVdFlM1rBcmrSGNyYw1KQKJl1Z3VRcjZgbPQKfaET71njsfQC92EoCtx
-	 tXtCNeOr4KZxVotQRbXMBYSNp/vdURLGapdKsl8+iEUEu89FBq8lj5OlzEV+08cY5l
-	 yPIhBTh41svqSp0ioORWG2/ae/ybiYU75zbcoX6Op9vo0X0BxYtodCwd9gDEJlTGKD
-	 SWe2nBj0gDq7+jjPRBhLu1H8KnJOfm3LHhFAS9JPDIDHLqpjCduXBg+7u7WS2wMjdN
-	 d02vMko2CSPDayIUtlzNBhQTyHh7i1OCWb8qUE9U48fr+5OCIIaXhQgrynqEdh/aqz
-	 KYps049pOiPeA==
-Received: from localhost (unknown [IPv6:2601:280:5e00:625:67c:16ff:fe81:5f9b])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 6E01742A45;
-	Wed, 14 Feb 2024 22:06:57 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Trilok Soni <quic_tsoni@quicinc.com>, Carlos Bilbao
- <carlos.bilbao@amd.com>, Greg KH <gregkh@linuxfoundation.org>, Jeffrey
- Hugo <quic_jhugo@quicinc.com>
-Cc: avadhut.naik@amd.com, alexs@kernel.org, iyanteng@loongson.cn,
- 2023002089@link.tyut.edu.cn, quic_bjorande@quicinc.com,
- linux-arm-msm@vger.kernel.org, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Documentation: embargoed-hardware-issues.rst: Fix
- Trilok's email
-In-Reply-To: <4d36cb5f-141b-5e01-783e-47059d0d5083@quicinc.com>
-References: <20240202164119.4090703-1-quic_jhugo@quicinc.com>
- <2024020223-eskimo-armoire-a517@gregkh>
- <78af3df9-693f-49a5-b6bd-02a146506e7e@amd.com>
- <4d36cb5f-141b-5e01-783e-47059d0d5083@quicinc.com>
-Date: Wed, 14 Feb 2024 15:06:56 -0700
-Message-ID: <87plwyzon3.fsf@meer.lwn.net>
+	s=arc-20240116; t=1707949702; c=relaxed/simple;
+	bh=qbQIPkDF9enNBpDUcaaAm6aTN+NTrShN/xw24zMiJqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=gP9+/VWvDFEzmOxRoaWOWrkDBYNTaqqxKvmJ4C/N6mA8MdbD4Qov2N3Rs4eLhMEz3SXFfZcJ7eWaubitmFf8eHf740cdCRD2hxfdKnwOlY61/tnl+z1umcFD/H6eGV06lgfCdyk1pENN4bQvVB3VxAizqlMg11+8bo+YEB2rd/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxv8HS1F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D5AC433C7;
+	Wed, 14 Feb 2024 22:28:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707949701;
+	bh=qbQIPkDF9enNBpDUcaaAm6aTN+NTrShN/xw24zMiJqU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=cxv8HS1FjcAFAG6g4L5UUkAfOcC5oRq4VLve5CyWif/eJO7ftzpQYRp+ymW0bXA6c
+	 r/c/183kvkTOMOCO+vfiey1KJA/OasI+2CsXImsX6p2aXkLFLlpyT5D3g/Ih4lcwfI
+	 xQebTOgZ2QFP+Rv5vwXn4X5EhWPtAM+TX36D3ZWuA1y5MSeC86Znw3Qek8qMimRAz3
+	 k0JstiTGweUcoNexA91Gkop+DjQ18SUhZYki3jjvz4NVH9SHl0umbVQpbGMCzuIQgK
+	 fDHdVqafGYHKgedJL+ni+wpY5J5RDauoHmh+BUgHLf7UDjmVNIQRc/Fc3DnlWiz00U
+	 BFMAuYP2AHd7w==
+Date: Wed, 14 Feb 2024 16:28:19 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
+Message-ID: <20240214222819.GA1269395@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26015e7a-5e3f-471c-aa98-46a0dfb4d155@linaro.org>
 
-Trilok Soni <quic_tsoni@quicinc.com> writes:
+On Wed, Feb 14, 2024 at 10:35:16PM +0100, Konrad Dybcio wrote:
+> On 12.02.2024 22:17, Bjorn Helgaas wrote:
+> > Maybe include the reason in the subject?  "Read back" is literally
+> > what the diff says.
+> > 
+> > On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
+> >> To ensure write completion, read the PARF_LTSSM register after setting
+> >> the LTSSM enable bit before polling for "link up".
+> > 
+> > The write will obviously complete *some* time; I assume the point is
+> > that it's important for it to complete before some other event, and it
+> > would be nice to know why that's important.
+> 
+> Right, that's very much meaningful on non-total-store-ordering
+> architectures, like arm64, where the CPU receives a store instruction,
+> but that does not necessarily impact the memory/MMIO state immediately.
 
-> On 2/2/2024 9:06 AM, Carlos Bilbao wrote:
->> On 2/2/24 10:48, Greg KH wrote:
->>> On Fri, Feb 02, 2024 at 09:41:19AM -0700, Jeffrey Hugo wrote:
->>>> The servers for the @codeaurora domain have long been retired and any
->>>> messages addressed to @codeaurora will bounce.
->>>>
->>>> Trilok has an entry in .mailmap, but the raw documentation files still
->>>> list an old @codeaurora address.=C2=A0 Update the address in the
->>>> documentation files for anyone reading them.
->>>>
->>>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->>>> ---
->>>> =C2=A0 Documentation/process/embargoed-hardware-issues.rst=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2 +-
->>>> =C2=A0 .../translations/sp_SP/process/embargoed-hardware-issues.rst=C2=
-=A0=C2=A0=C2=A0 | 2 +-
->>>> =C2=A0 .../translations/zh_CN/process/embargoed-hardware-issues.rst=C2=
-=A0=C2=A0=C2=A0 | 2 +-
->>>> =C2=A0 .../translations/zh_TW/process/embargoed-hardware-issues.rst=C2=
-=A0=C2=A0=C2=A0 | 2 +-
->>>> =C2=A0 4 files changed, 4 insertions(+), 4 deletions(-)
->>>
->>> I think we need an ack from Trilok for this :)
->>=20
->> Assuming ack from Trilok, regarding the Spanish documentation,
->>=20
->> Reviewed-by: Carlos Bilbao <carlos.bilbao@amd.com>
->
-> Looks good to me. Thank you.
->
-> Reviewed-by: Trilok Soni <quic_tsoni@quicinc.com>=20
+I was hinting that maybe we could say what the other event is, or what
+problem this solves?  E.g., maybe it's as simple as "there's no point
+in polling for link up until after the PARF_LTSSM store completes."
 
-Applied, thanks.
+But while the read of PARF_LTSSM might reduce the number of "is the
+link up" polls, it probably wouldn't speed anything up otherwise, so I
+suspect there's an actual functional reason for this patch, and that's
+what I'm getting at.
 
-jon
+Bjorn
 
