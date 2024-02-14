@@ -1,148 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-11008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1730854B39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:18:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC6C3854B64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:29:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D49F8B213F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:18:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B5CF1C21982
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:29:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA7155778;
-	Wed, 14 Feb 2024 14:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8269755E4A;
+	Wed, 14 Feb 2024 14:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bnGo2ZFd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVXjPJU0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183029437;
-	Wed, 14 Feb 2024 14:18:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE5454BC9;
+	Wed, 14 Feb 2024 14:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707920330; cv=none; b=OiL8suyfTEBjgujuAkTGXgPLXkr3qftcWL4DzFBNICKHvCVeJpbfAp01l4mnCmTwxVQu5rTS7Su4gvfeva5cRrPL7jy/YcGTez1SqgWgBqaUfaG6m5teH/ew6d1brxZt9kvyw36aUR8aeab7kMFylv/sxk5sgyjnRvaQq2P0zYE=
+	t=1707920947; cv=none; b=YlaVR1nH4Qm95VwD6+FKyRHA1w+XgDOpdYgL7MpnDeSaHmdIHw+baT+Svfv/qlyBQFJB/rSLLawkGeOK9fA5XK98a91+Tvdr+RrCkT5IhJNfFd2Cqrkfx/tGkqKeh1Y1qjXutuLPpHuwKqY04Xro8XiTV6dnH/oR2R38HxmKkVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707920330; c=relaxed/simple;
-	bh=PIuaAUi/HzNr4VIVJ5ZGwCFEsvTBUElTsmJcUcDltIA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LjpbkRzKoEFOcU7M2f7wxo+sFgzk2wle+tcLdGoN0erMU0wbtPiGjYPr8w+XmavgLt97z+leoB9c9UPTRPgwMI9n4gtw3bzQ6GMyYtvM7nd+0DTFPfCt3UCII7u1t+GIAOWbI4VCcEhDOKsYWY9sN0Te8EJYyeRIcwWtLA6F/v0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bnGo2ZFd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EDgeuc031838;
-	Wed, 14 Feb 2024 14:18:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Yi7PoTcuUFdMcrMmHrp4lMRyH4ZMSNadhMdkORqgv98=; b=bn
-	Go2ZFdRWmIkxDYakQ8s+BTC2FQfnBaEdXtWTBy4KYITzp1RFs0129inOMHOmNKrY
-	qp/UDJy95D8hV33tUxX2WgMZK7Qo8Ig3JbuebXuecNaS9tEgLPwdO0dPDlNKf1sR
-	LaDmt9ZroHBRSgDk0rp6Zl6zgqZfMhD2FyOpjF9VMIbNdt1s4+vcPmdEw0k/4d51
-	xnkOPt33SEQa3SDEoVt4KNGXAwtNQW74sFAayh6F7a+HDolxi476h/GGdbq362O1
-	z6x/s5sRQHUSQTIhaDsWpJfkKRUnKkATKqT3lO4GwKLClHeysGVvSauEXpKYdWO/
-	eNKHJFl9rv9a/1G6yvFg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8enn9u9w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 14:18:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EEIQiS010082
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 14:18:26 GMT
-Received: from [10.253.37.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 06:18:23 -0800
-Message-ID: <162256e1-416f-46ea-9698-9de507768cb0@quicinc.com>
-Date: Wed, 14 Feb 2024 22:18:20 +0800
+	s=arc-20240116; t=1707920947; c=relaxed/simple;
+	bh=4PZnpdOC7nL7iSy6IqRjbXbXnr5kNh4hCRe0YlxfpbY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dU92+VZOvKtbCHFw0r5NGCotM3lDH86kNrB/hosjUQAE6DiRwMbQ6i2vsLoErlHEadD335JhCE7FECWA7+hVRzOyK/4xv0PvlwtoIDpNtqU+Wec5op+P8Nc6ZYyj0/6TW/E0gBXEwXdExjBKboK8iAmLt1dl0Ih9bw2Y91RVaUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVXjPJU0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7AA6C433F1;
+	Wed, 14 Feb 2024 14:29:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707920946;
+	bh=4PZnpdOC7nL7iSy6IqRjbXbXnr5kNh4hCRe0YlxfpbY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hVXjPJU0NBcOWMTf39vw8+II4IjZ6ZS1xuxWZCaEPpMRtVrcpjvdSZ5pbQbrzfyl5
+	 5p+9MWOmLWaPsr7LOgqJVuXpNEGu9HP5o6oHpfYm48mw/cwuZA2rOiL0TSqwgjNwtz
+	 Te7GoztDlKGI1AjilnKM5j4xJ++Ihif+bCcL80YZs2PpixddZDzKfANZjpMNrMTAKA
+	 m1PIhUC8uWSafZPkoiTw++ALnHkJPvW96yiRupPJsd6ECJAQnxwBqtTMY8b5ucoUh3
+	 icNpqgGguQ5ARz4ENnmS+uuUsuFTn88qiMgy7Lk72p/ca5ZczM4VSsbR95m3vy8ro5
+	 PVL/t1eKkJnZQ==
+Date: Wed, 14 Feb 2024 19:58:56 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Arnd Bergmann <arnd@arndb.de>, Abel Vesa <abel.vesa@linaro.org>,
+	Lukas Wunner <lukas@wunner.de>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: Re: Re: [RFC 8/9] PCI/pwrctl: add PCI power control core code
+Message-ID: <20240214142856.GG4618@thinkpad>
+References: <20240201155532.49707-1-brgl@bgdev.pl>
+ <20240201155532.49707-9-brgl@bgdev.pl>
+ <7tbhdkqpl4iuaxmc73pje2nbbkarxxpgmabc7j4q26d2rhzrv5@ltu6niel5eb4>
+ <CAMRc=Md1oTrVMjZRH+Ux3JJKYeficKMYh+8V7ZA=Xz_X1hNd1g@mail.gmail.com>
+ <2q5vwm7tgmpgbrm4dxfhypbs5pdggprxouvzfcherqeevpjhrj@6wtkv4za2gg5>
+ <20240208113201.GA17587@thinkpad>
+ <ycorratd3jxzg5nijbpgk6hrlgq5rl66cttfg7wv4oyyxivfm4@kfbhrlytiafe>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom,coresight-tpdm: Rename
- qcom,dsb-element-size
-Content-Language: en-US
-To: James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>
-CC: Mike Leach <mike.leach@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240213160521.15925-1-quic_jinlmao@quicinc.com>
- <20240213160521.15925-2-quic_jinlmao@quicinc.com>
- <20240213222957.GA2502642-robh@kernel.org>
- <a062ce8d-638a-4a33-8afa-45ad47efcd72@quicinc.com>
- <df3162c0-4b29-77a2-20b5-b36637fb11cf@arm.com>
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <df3162c0-4b29-77a2-20b5-b36637fb11cf@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8V3cEsuZeHlInIBshwPCyrtxSdRR6O96
-X-Proofpoint-ORIG-GUID: 8V3cEsuZeHlInIBshwPCyrtxSdRR6O96
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=935
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402140109
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ycorratd3jxzg5nijbpgk6hrlgq5rl66cttfg7wv4oyyxivfm4@kfbhrlytiafe>
 
+On Fri, Feb 09, 2024 at 05:43:56PM -0600, Bjorn Andersson wrote:
+> On Thu, Feb 08, 2024 at 05:02:01PM +0530, Manivannan Sadhasivam wrote:
+> > On Fri, Feb 02, 2024 at 10:52:11AM -0600, Bjorn Andersson wrote:
+> > > On Fri, Feb 02, 2024 at 10:11:42AM +0100, Bartosz Golaszewski wrote:
+> > > > On Fri, Feb 2, 2024 at 4:53 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> > > [..]
+> > > > > > +             break;
+> > > > > > +     }
+> > > > > > +
+> > > > > > +     return NOTIFY_DONE;
+> > > > > > +}
+> > > > > > +
+> > > > > > +int pci_pwrctl_device_enable(struct pci_pwrctl *pwrctl)
+> > > > >
+> > > > > This function doesn't really "enable the device", looking at the example
+> > > > > driver it's rather "device_enabled" than "device_enable"...
+> > > > >
+> > > > 
+> > > > I was also thinking about pci_pwrctl_device_ready() or
+> > > > pci_pwrctl_device_prepared().
+> > > 
+> > > I like both of these.
+> > > 
+> > > I guess the bigger question is how the flow would look like in the event
+> > > that we need to power-cycle the attached PCIe device, e.g. because
+> > > firmware has gotten into a really bad state.
+> > > 
+> > > Will we need an operation that removes the device first, and then cut
+> > > the power, or do we cut the power and then call unprepared()?
+> > > 
+> > 
+> > Currently, we don't power cycle while resetting the devices. Most of the drivers
+> > just do a software reset using some register writes. Part of the reason for
+> > that is, the drivers themselves don't control the power to the devices and there
+> > would be no way to let the parent know about the firmware crash.
+> > 
+> 
+> I don't know what the appropriate design for this is, but we do have a
+> need for being able to recover from this state by the means of
+> power-cycling the device.
+> 
+> If it's not possible to let the device do it (in any fashion), then
+> perhaps a user-space-assisted model is needed?
+> 
+> Turning on power is an important first step, but please do consider the
+> full scope of the known problem space.
+> 
 
-On 2/14/2024 5:36 PM, James Clark wrote:
->
-> On 14/02/2024 01:43, Jinlong Mao wrote:
->> On 2/14/2024 6:29 AM, Rob Herring wrote:
->>> On Tue, Feb 13, 2024 at 08:05:17AM -0800, Mao Jinlong wrote:
->>>> Change qcom,dsb-element-size to qcom,dsb-element-bits as the unit is
->>>> bit.
->>> That may be, but this is an ABI and you are stuck with it. Unless, you
->>> can justify why that doesn't matter. (IIRC, this is new, so maybe no
->>> users yet?)
->> Hi Rob,
->>
->> Because for CMB type, it uses qcom,cmb-element-bits. So I change the
->> format to be the same as
->> CMB.
->>
->> Thanks
->> Jinlong Mao
->>
-> I think what Rob was trying to say was that in the interest of not
-> breaking existing DTs it's best to leave the existing names as they are,
-> even if they aren't technically correct. And to only add new parameters
-> with the -bits suffix, even if it's inconsistent with what's already there.
+Agree. I'm not ignoring this issue, but this is a separate topic IMO (or an
+incremental change). Because, power cycling the device in the event of a
+firmware crash or even upon receiving AER Fatal errors is valid for platforms
+not making use of this driver and an existing issue.
 
-Hi Rob & James,
+For sure we can accomodate that functionality in this series itself, but that's
+going to drag this series to many releases (you already know how long it took
+for us to get to the current state). Instead, I'd recommend to merge it in its
+current form and have Bartosz or someone work on incremental features such as:
 
-There is no tpdm nodes in any DT as of now. So I want to make this 
-change before any tpdm
-node is added in DT.
+1. Runtime/System PM
+2. Resetting the device in the event of fw crash etc...
 
-Thanks
-Jinlong Mao
+Wdyt?
 
->
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
