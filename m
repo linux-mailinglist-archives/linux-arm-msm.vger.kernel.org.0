@@ -1,124 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-11001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C4D1854A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:31:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B6B854A88
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:31:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E26C428DCFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:31:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62EB628DF83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADE045472A;
-	Wed, 14 Feb 2024 13:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="fwcGPp+r"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B270552F85;
+	Wed, 14 Feb 2024 13:31:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBA654BC7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED011CA80
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:31:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707917468; cv=none; b=qo2oHuViPWUL+riah+S/nMIrUQs9ZZRsKrorQKtIXBZupgU5aU103hJRGD+/0wYghIfBJDsvLiS43fS6ShJK/4neLMdP813yZbON7G2vYamZvSa+QmtnJPSuSc2S+9TVkCgSaZT95PUaREva0PEAQrSh5wZHi4q6WNFofdAK0go=
+	t=1707917504; cv=none; b=pA+Tar/bGDqn6aPTCyqhCezpdMYApMTzotp7avDXdu7euaJ306QoJjYKxTxXYGEGASAzPkSMFkTiXqw3KqLPlSV4Di5duuFPBNGlNd0tIqnqBjM1LLExyF255jNDzremPQDGoC6n5fvzQcVoOolW7XLdlyjsaUISXEu5NatfsNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707917468; c=relaxed/simple;
-	bh=fU/LrTKEOEr5qvUuOXDDcynEiayORw54tUhot/f1gRA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d4mjNIZE7UOQAvkzmSG/Zi3GNKFWpj2etaJJHOdxjIM5X/xwHuR5YX88VEepGvFx5LpxoqgNTEzGY1jfBdNRoDv+2BtDCO2KICbWu1Dgo925bLH1MlqQf1eI9PKYC4Wf9VvFd0PjwXLAFUqyLdUU8E2SjBrFo09mZpIuUeZFIG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=fwcGPp+r; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1707917462;
-	bh=fU/LrTKEOEr5qvUuOXDDcynEiayORw54tUhot/f1gRA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fwcGPp+rtBiSfVOn3UpxTB+PoBw3/Vlj0xLtM0e3+noBcIw6s8e42LOe6v/QdZzyy
-	 JDVdgdDBK01sheQTF4e2Eian70HHDtLKgc8mpFGVvDNDvZWNxZ4Tn7H/wUz9w571Zn
-	 oo+Bv0Z3aJM1K5ocKcyiJ/p+IskkWPTyxPnM8LXOQIKs+ZsHJ6BRM2LjoYqZXOkANL
-	 c/ZGxSIYuGhQMGCGvihDvmsqFLDHcqisxGKpVcJEDj6NvNCPNj3G6sNbjRcQ60MxCH
-	 DoJUzJsBQTZQ8SrNvTsV1od1nzElIKUWyjyHrAJwbiIjaLDQuzI5fajIhLD5yRj5iA
-	 fFr9wL7n7Kulw==
-Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: koike)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 7DC0E378203F;
-	Wed, 14 Feb 2024 13:30:58 +0000 (UTC)
-Message-ID: <c1078d13-5375-4c3f-93b7-40a1ea22f0dc@collabora.com>
-Date: Wed, 14 Feb 2024 10:30:51 -0300
+	s=arc-20240116; t=1707917504; c=relaxed/simple;
+	bh=g7+dYMrf4hQ0Bbepi6j5xfvu9bdIju/3TxK2e2upb9Q=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=U2O1vZNexliK5nCo7aS9oiWSzwZnY8KkXZP2YxC63Gws3S7us7HdLUwqIM2EPBc10yLWIeeLLrf7SSU8pfog6VBetpip8Fxin0JKw0mQtLTkFgJANlervrCs6yffauVz6bssJwLqX5VWOzVXPux+QxP8JYrD7hfmIOqyFz78QpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1raFM1-0005aN-6M; Wed, 14 Feb 2024 14:31:13 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1raFLy-000hZq-4h; Wed, 14 Feb 2024 14:31:10 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1raFLy-000ARF-0F;
+	Wed, 14 Feb 2024 14:31:10 +0100
+Message-ID: <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
+Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Stanimir Varbanov
+ <stanimir.k.varbanov@gmail.com>, Vikash Garodia
+ <quic_vgarodia@quicinc.com>,  Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>,  Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, Stanimir Varbanov
+	 <stanimir.varbanov@linaro.org>, Mauro Carvalho Chehab
+	 <mchehab+huawei@kernel.org>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Wed, 14 Feb 2024 14:31:09 +0100
+In-Reply-To: <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+	 <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm: ci: use clk_ignore_unused for apq8016
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Javier Martinez Canillas <javierm@redhat.com>
-References: <20240214083708.2323967-1-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
-From: Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <20240214083708.2323967-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
 
+On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
+> All of the resets are toggled together. Use the bulk api to save on some
+> code complexity.
+>=20
+> The delay between resets is now correctly determined by the reset
+> framework.
 
-On 14/02/2024 05:37, Dmitry Baryshkov wrote:
-> If the ADV7511 bridge driver is compiled as a module, while DRM_MSM is
-> built-in, the clk_disable_unused congests with the runtime PM handling
-> of the DSI PHY for the clk_prepare_lock(). This causes apq8016 runner to
-> fail without completing any jobs ([1]). Drop the BM_CMDLINE which
-> duplicate the command line from the .baremetal-igt-arm64 clause and
-> enforce the clk_ignore_unused kernelarg instead to make apq8016 runner
-> work.
-> 
-> [1] https://gitlab.freedesktop.org/drm/msm/-/jobs/54990475
-> 
-> Fixes: 0119c894ab0d ("drm: Add initial ci/ subdirectory")
-> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If this is a recent change, could you reference the commit?
 
-Acked-by: Helen Koike <helen.koike@collabora.com>
-
-Thanks
-Helen
-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> 
-> Changes in v2:
-> - Added a comment, describing the issue and a way to reproduce it
->    (Javier)
-> 
-> ---
->   drivers/gpu/drm/ci/test.yml | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
-> index 7ffb620d7398..e64205286a27 100644
-> --- a/drivers/gpu/drm/ci/test.yml
-> +++ b/drivers/gpu/drm/ci/test.yml
-> @@ -119,7 +119,10 @@ msm:apq8016:
->       DRIVER_NAME: msm
->       BM_DTB: https://${PIPELINE_ARTIFACTS_BASE}/arm64/apq8016-sbc-usb-host.dtb
->       GPU_VERSION: apq8016
-> -    BM_CMDLINE: "ip=dhcp console=ttyMSM0,115200n8 $BM_KERNEL_EXTRA_ARGS root=/dev/nfs rw nfsrootdebug nfsroot=,tcp,nfsvers=4.2 init=/init $BM_KERNELARGS"
-> +    # disabling unused clocks congests with the MDSS runtime PM trying to
-> +    # disable those clocks and causes boot to fail.
-> +    # Reproducer: DRM_MSM=y, DRM_I2C_ADV7511=m
-> +    BM_KERNEL_EXTRA_ARGS: clk_ignore_unused
->       RUNNER_TAG: google-freedreno-db410c
->     script:
->       - ./install/bare-metal/fastboot.sh
+>  drivers/media/platform/qcom/venus/core.c       | 15 ++++++++++-----
+>  drivers/media/platform/qcom/venus/core.h       |  4 ++--
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 15 +++------------
+>  3 files changed, 15 insertions(+), 19 deletions(-)
+>=20
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
+tform/qcom/venus/core.c
+> index 873affe17537..ff5601a5ce77 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -328,11 +328,16 @@ static int venus_probe(struct platform_device *pdev=
+)
+>  	if (ret)
+>  		return ret;
+> =20
+> -	for (i =3D 0; i < res->resets_num; i++) {
+> -		core->resets[i] =3D devm_reset_control_get_exclusive(dev, res->resets[=
+i]);
+> -		if (IS_ERR(core->resets[i]))
+> -			return PTR_ERR(core->resets[i]);
+> -	}
+> +	core->resets =3D devm_kcalloc(dev, res->resets_num, sizeof(*core->reset=
+s), GFP_KERNEL);
+
+Since VIDC_RESETS_NUM_MAX is only 2, I don't think a separate
+allocation is worth it.
+
+> +	if (res->resets_num && !core->resets)
+> +		return -ENOMEM;
+> +
+> +	for (i =3D 0; i < res->resets_num; i++)
+> +		core->resets[i].id =3D res->resets[i];
+> +
+> +	ret =3D devm_reset_control_bulk_get_exclusive(dev, res->resets_num, cor=
+e->resets);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to get resets\n");
+> =20
+>  	ret =3D venus_get_resources(core);
+>  	if (ret)
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/pla=
+tform/qcom/venus/core.h
+> index 6ecaa3e38cac..2376b9cbdf2c 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -130,7 +130,7 @@ struct venus_format {
+>   * @pmdomains:	a pointer to a list of pmdomains
+>   * @opp_dl_venus: an device-link for device OPP
+>   * @opp_pmdomain: an OPP power-domain
+> - * @resets: an array of reset signals
+> + * @resets: a reset_control_bulk_data array of hardware reset signals
+>   * @vdev_dec:	a reference to video device structure for decoder instance=
+s
+>   * @vdev_enc:	a reference to video device structure for encoder instance=
+s
+>   * @v4l2_dev:	a holder for v4l2 device structure
+> @@ -183,7 +183,7 @@ struct venus_core {
+>  	struct dev_pm_domain_list *pmdomains;
+>  	struct device_link *opp_dl_venus;
+>  	struct device *opp_pmdomain;
+> -	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
+> +	struct reset_control_bulk_data *resets;
+
+Any reason not to just keep this as an array[VIDC_RESETS_NUM_MAX]?
+
+>  	struct video_device *vdev_dec;
+>  	struct video_device *vdev_enc;
+>  	struct v4l2_device v4l2_dev;
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/med=
+ia/platform/qcom/venus/pm_helpers.c
+> index 9df8f2292c17..170fb131cb1e 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -865,21 +865,12 @@ void vcodec_domains_put(struct venus_core *core)
+>  static int core_resets_reset(struct venus_core *core)
+>  {
+>  	const struct venus_resources *res =3D core->res;
+> -	unsigned int i;
+>  	int ret;
+> =20
+> -	for (i =3D 0; i < res->resets_num; i++) {
+> -		ret =3D reset_control_assert(core->resets[i]);
+> -		if (ret)
+> -			goto err;
+> -
+> -		usleep_range(150, 250);
+> -		ret =3D reset_control_deassert(core->resets[i]);
+> -		if (ret)
+> -			goto err;
+> -	}
+> +	ret =3D reset_control_bulk_reset(res->resets_num, core->resets);
+> +	if (ret)
+> +		dev_err(core->dev, "Failed to toggle resets: %d\n", ret);
+> =20
+> -err:
+>  	return ret;
+
+Could be simplified to:
+
+	return reset_control_bulk_reset(res->resets_num, core-
+>resets);
+
+regards
+Philipp
 
