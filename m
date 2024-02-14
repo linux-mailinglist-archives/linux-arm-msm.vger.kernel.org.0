@@ -1,58 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-11040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03508855129
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:02:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FE0285516C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:05:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A978E1F21B55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:02:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9B53B2D8DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:02:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2449712E1CF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B28F012E1FB;
 	Wed, 14 Feb 2024 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M4i2Q0Xi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oir38ZIT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF78B12DDB9;
-	Wed, 14 Feb 2024 17:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA9512E1F3;
+	Wed, 14 Feb 2024 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707933488; cv=none; b=LPtbhyaXCZvfk400V2++M8VYNrML2Zw7ZSO0U/VX2yLCCJNyqUmpfP+DhlxzRt7yQYiB9k/aZafxtdBCUkBd7X90bazXDA46+KcuY2V11rik2F2Tk04Arhp83CeNzjrlfDpZ34utD0OojTOFktoJkoyA4NnNsswMmRfBeB2PnrY=
+	t=1707933488; cv=none; b=NNkYVSh8yFmkNnsjjLulAXef0svRoY/ZPKcCEpv++ScKFW783KIYg85zE+/8NQOdzjPJvS3AksWi/GUBsExND3lnK6e/QbPs5nnewhzbWFY/53rqzbS57x38EkwpFCYdvXF29Na6BI7qfWQKyy9fYHwpT+iB6ylUuPS39LTOy7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707933488; c=relaxed/simple;
-	bh=sLNZ/NFnZZwzLk8k0mE6Ia0nxw25NgDOMktTDhoHscs=;
+	bh=kVBd+BtpmJAzLk+pvXIPtTsiW8c8s/3lPu+YZRz4zAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ElsO3C9aZt7whvxqn05n2EKy+L+bwxTBy5PcixdrMF0gxEralm/wsNmLDBCqA8UZV21ROvvrmwb6B3RiaVZOWLYmmaDeX5inXAzXtqeveOYJOg+wkdpXs1+D4D1ds5p77jTalEYHhK+Y24IO0Bzrmr7UCfS6ueIabus5kOFeqQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M4i2Q0Xi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B48C43141;
-	Wed, 14 Feb 2024 17:58:06 +0000 (UTC)
+	 MIME-Version:Content-Type; b=sTs6e/8WXhgXBr7pI23Sni1a35aNdcs9jnhdkPm5+uVnOB5Q3RqiIcxmzE2AARsre3fQJu6iIcZPElQuo6vrkDerDsQQVkEZwFX/YJ5qn8it/DcQ6xpnROX3ciga26Q/+rAxiJQn25tsr8X3sZv8pvgdaB/RaTiLLz4EJY7E02I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oir38ZIT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE2C433C7;
+	Wed, 14 Feb 2024 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707933487;
-	bh=sLNZ/NFnZZwzLk8k0mE6Ia0nxw25NgDOMktTDhoHscs=;
+	s=k20201202; t=1707933488;
+	bh=kVBd+BtpmJAzLk+pvXIPtTsiW8c8s/3lPu+YZRz4zAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4i2Q0XiqrI/OFAWhylvoVRwI+3oxv0jh8JFtYeoVTnRbtr5rskXlTxbNCi8Xfr3H
-	 oB4PeneOfJJHDok04Dir1dOzq4QS5AhyYvEpBJKM0Ool4wO3FaSrapJFtll9xIGCCd
-	 nbB+FThpWpqZge2j7xYe1lmDjm+g68ugTIIw4RNsasEz+ANR/cAOATEBNrU2vgJcwk
-	 NA/p69gJwltrIw4jlNfXbnD2gu1wyCYeNchAEAVsy7Kw9A/0XrxHgyEyYEVr4idFDI
-	 tkvw752wPtSpKhdJg+eVYE5qn/a3S6Go4P2O5tU01pyGw2jiQZPTJ4ZPTNwakLYx2d
-	 RTWljBHaH4mSA==
+	b=oir38ZITyBXci6YfGr1zY33u5kKiIDlw2MEz0vXbP+t6jXTRr0MCOqX9U4U/JV/dL
+	 O8rMbQmb7To1EDAtSG/WmSnt4E4gJaxKdKjmNR2NmFdiNY+FPE6WV3V0qHzcRYGX8I
+	 jf5NrqKcw2DkX6wL8yXUb9G3tF3Bbcw6IDeVhQn30yLk4Q+YpJ5e0U0GXje9pFqHuB
+	 Lmlpbl9sG69Iebl0sx9bpnEKaPETU3MkDVdU1322QHXxLTgtYd4FI1C8YWtokGACXK
+	 15da2EiDkuztE0IG+u10B6bdo2axKLX5+/eI8NnfQZcGcrsNueM/52AGzrai3R7QBs
+	 zzzhPvfxM2Lrw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: deconfig: enable Goodix Berlin SPI touchscreen driver as module
-Date: Wed, 14 Feb 2024 11:57:35 -0600
-Message-ID: <170793345829.27225.7630789789345289123.b4-ty@kernel.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: sc8280xp: Make pmic thermal-zones report temperature
+Date: Wed, 14 Feb 2024 11:57:36 -0600
+Message-ID: <170793345800.27225.16430532154168719897.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240203-topic-sm8x50-upstream-goodix-spi-defconfig-v1-1-b69ed85ddd05@linaro.org>
-References: <20240203-topic-sm8x50-upstream-goodix-spi-defconfig-v1-1-b69ed85ddd05@linaro.org>
+In-Reply-To: <20240210-sc8280xp-pmic-thermal-v1-0-a1c215a17d10@quicinc.com>
+References: <20240210-sc8280xp-pmic-thermal-v1-0-a1c215a17d10@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,16 +67,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 03 Feb 2024 21:20:17 +0100, Neil Armstrong wrote:
-> enable Goodix Berlin SPI driver as module since used on the
-> Qualcomm SM8550 QRD and SM8650 QRD platforms.
+On Sat, 10 Feb 2024 20:41:58 -0800, Bjorn Andersson wrote:
+> The "pm8280-[12]-thermal" thermal zones always report 37C, fix this.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: deconfig: enable Goodix Berlin SPI touchscreen driver as module
-      commit: 95af34a4c25c2e5429bf76643cdab9c2d3cde6e3
+[1/2] arm64: dts: qcom: sc8280xp-crd: Add PMIC die-temp vadc channels
+      commit: 6cca740cf345e24fa6bdfeae9236bfb4c6f90c3b
+[2/2] arm64: dts: qcom: sc8280xp-pmics: Define adc for temp-alarms
+      commit: a36a566b5365ab96ed8cfc195478be77811c8708
 
 Best regards,
 -- 
