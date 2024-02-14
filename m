@@ -1,107 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-11007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272F2854B2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:13:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1730854B39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:18:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE5CD281618
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:13:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D49F8B213F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686F65644F;
-	Wed, 14 Feb 2024 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA7155778;
+	Wed, 14 Feb 2024 14:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnyLrP5u"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bnGo2ZFd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EDF5644D;
-	Wed, 14 Feb 2024 14:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183029437;
+	Wed, 14 Feb 2024 14:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707919997; cv=none; b=hiTRNW8IF/LvBENc+3SOPH6dmFU38krdI4y2sdjsI8Ok5XvKLXDbtFB9h6pTSKGQG6dxRCANLL/xoitN17qnNQ+JG3rarnQIAo7aTRSyuuzgp/rMmJRZAkcv5+eNBfrcQxAMekJG2M7HojVoN8cS662TGyJft5XUJepknHoI/T0=
+	t=1707920330; cv=none; b=OiL8suyfTEBjgujuAkTGXgPLXkr3qftcWL4DzFBNICKHvCVeJpbfAp01l4mnCmTwxVQu5rTS7Su4gvfeva5cRrPL7jy/YcGTez1SqgWgBqaUfaG6m5teH/ew6d1brxZt9kvyw36aUR8aeab7kMFylv/sxk5sgyjnRvaQq2P0zYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707919997; c=relaxed/simple;
-	bh=qKI0Mq/4mMW7dk4aVLjXDj9clhixJedgDgBhRCMhH4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FOqZ3+dcqBI14MXh+zidrma0JG0B27/NSglYTJeNUv+KhwOXA2tNBgjAwaB/vpyFf9JGTnqgIHn0GNiE1W4wv5wR2AX1bzMbCkwp1lmRCrZPUnbrSOu7aieuK1qHJmU9dkxq74cr5I05ECJ+XcCw8NNZi0HIqFyENr71EP0XYY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnyLrP5u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D4CC433C7;
-	Wed, 14 Feb 2024 14:13:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707919996;
-	bh=qKI0Mq/4mMW7dk4aVLjXDj9clhixJedgDgBhRCMhH4I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tnyLrP5uyM2E/dBXZaUe+qjhiXIzutbb3XiPxok0lcmQbIWnAHst5J3FpTEhhBy6s
-	 PaH2lSF/mjNKCVii2Qgy7EgbY9XouzyMIMEJNXsbza1jAzVWpFrLl//6P8q0TbbNue
-	 +ivnnvnkJUkRxp1OzPixGjRJD+ZRBEoZjLSuOD3DmohhQpbmGMSTxdUJZyR4DyQrZe
-	 jel/SygS69q0TNhti5wgulYC4EP201J883AchgyfHK9Kmp0YiPbqb+K7Db9cxJzhNS
-	 utgcHL3T+hX8y+MpRXERqiHXALiOuDH0YV5uxbdH6daup457bB+FnVLSJvFT5+mUeO
-	 scFi2/1f/Lv+Q==
-Date: Wed, 14 Feb 2024 14:13:11 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com,
-	quic_fenglinw@quicinc.com, quic_collinsd@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: qcom-rpmh: Fix pm8010 pmic5_pldo502ln minimum
- voltage
-Message-ID: <dcce3fa9-ecf3-42be-adf6-ca653a79ba2e@sirena.org.uk>
-References: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
- <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
- <f38468b4-8b16-4180-9738-0a2b557651a1@linaro.org>
+	s=arc-20240116; t=1707920330; c=relaxed/simple;
+	bh=PIuaAUi/HzNr4VIVJ5ZGwCFEsvTBUElTsmJcUcDltIA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LjpbkRzKoEFOcU7M2f7wxo+sFgzk2wle+tcLdGoN0erMU0wbtPiGjYPr8w+XmavgLt97z+leoB9c9UPTRPgwMI9n4gtw3bzQ6GMyYtvM7nd+0DTFPfCt3UCII7u1t+GIAOWbI4VCcEhDOKsYWY9sN0Te8EJYyeRIcwWtLA6F/v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bnGo2ZFd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EDgeuc031838;
+	Wed, 14 Feb 2024 14:18:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Yi7PoTcuUFdMcrMmHrp4lMRyH4ZMSNadhMdkORqgv98=; b=bn
+	Go2ZFdRWmIkxDYakQ8s+BTC2FQfnBaEdXtWTBy4KYITzp1RFs0129inOMHOmNKrY
+	qp/UDJy95D8hV33tUxX2WgMZK7Qo8Ig3JbuebXuecNaS9tEgLPwdO0dPDlNKf1sR
+	LaDmt9ZroHBRSgDk0rp6Zl6zgqZfMhD2FyOpjF9VMIbNdt1s4+vcPmdEw0k/4d51
+	xnkOPt33SEQa3SDEoVt4KNGXAwtNQW74sFAayh6F7a+HDolxi476h/GGdbq362O1
+	z6x/s5sRQHUSQTIhaDsWpJfkKRUnKkATKqT3lO4GwKLClHeysGVvSauEXpKYdWO/
+	eNKHJFl9rv9a/1G6yvFg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8enn9u9w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 14:18:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EEIQiS010082
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 14:18:26 GMT
+Received: from [10.253.37.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
+ 2024 06:18:23 -0800
+Message-ID: <162256e1-416f-46ea-9698-9de507768cb0@quicinc.com>
+Date: Wed, 14 Feb 2024 22:18:20 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vLUCGveXzK8CcVf7"
-Content-Disposition: inline
-In-Reply-To: <f38468b4-8b16-4180-9738-0a2b557651a1@linaro.org>
-X-Cookie: Available while quantities last.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom,coresight-tpdm: Rename
+ qcom,dsb-element-size
+Content-Language: en-US
+To: James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>
+CC: Mike Leach <mike.leach@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240213160521.15925-1-quic_jinlmao@quicinc.com>
+ <20240213160521.15925-2-quic_jinlmao@quicinc.com>
+ <20240213222957.GA2502642-robh@kernel.org>
+ <a062ce8d-638a-4a33-8afa-45ad47efcd72@quicinc.com>
+ <df3162c0-4b29-77a2-20b5-b36637fb11cf@arm.com>
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <df3162c0-4b29-77a2-20b5-b36637fb11cf@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8V3cEsuZeHlInIBshwPCyrtxSdRR6O96
+X-Proofpoint-ORIG-GUID: 8V3cEsuZeHlInIBshwPCyrtxSdRR6O96
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=935
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402140109
 
 
---vLUCGveXzK8CcVf7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 2/14/2024 5:36 PM, James Clark wrote:
+>
+> On 14/02/2024 01:43, Jinlong Mao wrote:
+>> On 2/14/2024 6:29 AM, Rob Herring wrote:
+>>> On Tue, Feb 13, 2024 at 08:05:17AM -0800, Mao Jinlong wrote:
+>>>> Change qcom,dsb-element-size to qcom,dsb-element-bits as the unit is
+>>>> bit.
+>>> That may be, but this is an ABI and you are stuck with it. Unless, you
+>>> can justify why that doesn't matter. (IIRC, this is new, so maybe no
+>>> users yet?)
+>> Hi Rob,
+>>
+>> Because for CMB type, it uses qcom,cmb-element-bits. So I change the
+>> format to be the same as
+>> CMB.
+>>
+>> Thanks
+>> Jinlong Mao
+>>
+> I think what Rob was trying to say was that in the interest of not
+> breaking existing DTs it's best to leave the existing names as they are,
+> even if they aren't technically correct. And to only add new parameters
+> with the -bits suffix, even if it's inconsistent with what's already there.
 
-On Wed, Feb 14, 2024 at 02:07:13PM +0000, Bryan O'Donoghue wrote:
-> On 14/02/2024 13:25, Mark Brown wrote:
-> > On Wed, Feb 14, 2024 at 12:16:14PM +0000, Bryan O'Donoghue wrote:
+Hi Rob & James,
 
-> > >   	.voltage_ranges = (struct linear_range[]) {
-> > > -		REGULATOR_LINEAR_RANGE(1800000, 0,  2,  200000),
-> > > +		REGULATOR_LINEAR_RANGE(1808000, 0,  2,  200000),
+There is no tpdm nodes in any DT as of now. So I want to make this 
+change before any tpdm
+node is added in DT.
 
-> > This will also offset all other voltages that get set, is that expected
-> > and desired?
+Thanks
+Jinlong Mao
 
-> Yep, looks typo in the original submission.
-
-> ldo3, ldo4 and ldo6 should all be 1.808.
-
-Not just that but also note that every voltage step in the range will
-have the 8mV offset added.
-
---vLUCGveXzK8CcVf7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXMynYACgkQJNaLcl1U
-h9DLuQf/Z0YYpkjqyW5+exh6l/SA5rqqrxawOT0BgtGEljrdTuxUknHpS4UAuWTb
-KAQNpzO5dh9HNHFjUbeaRb5H1Dqqmr8WohegUr1+sntz1aj3VSk29SOSMiQKgYWi
-18R6b8hPxOyWUT0Bzg67PxYaXFLpOguH/0R3ZKrTWOWemGT/m5xxvuq84OVWHyHM
-5TC6CrqiACcEVSsiJM832GZzkEpSXjkXMZRRTrmgscDNEpp1qjVIpJ5Jb92IGmrb
-QSk8cq4koap9Ex/+ctmUCBvS59c8tpPL/Jum51UawfChocAoRnC2oTzMWPm2OkkK
-bCxeJZsiXiiV5yxGJJNZBCwfZqBJIg==
-=0gZW
------END PGP SIGNATURE-----
-
---vLUCGveXzK8CcVf7--
+>
+> _______________________________________________
+> CoreSight mailing list -- coresight@lists.linaro.org
+> To unsubscribe send an email to coresight-leave@lists.linaro.org
 
