@@ -1,154 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-11119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCC978556DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:05:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3FAD85577D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:51:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EEE961C22827
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:05:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99D6328C78B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76E6913DB90;
-	Wed, 14 Feb 2024 23:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA27C1420D0;
+	Wed, 14 Feb 2024 23:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L4y8Ewfv"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="OM9jhaoz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADAD65191;
-	Wed, 14 Feb 2024 23:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D11420B6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 23:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707951906; cv=none; b=UlZaG5sj/GWeYhWPeDHJdANAiSacKt4WsvHH8W/NN3FZbnzADbaDwzWdgZZkBso65IV81ljsDABTyg/QK5hKSKQkhNpBPNCzVGC9ImZ/W6SkiaNJtyIDtNuI9iBNz309R+oRvQl2Q3wTnXVzjvsKbPhTTIdEGfsP3SpnDHraUhI=
+	t=1707954682; cv=none; b=bTnWGyybY8xqTWB3D4Jqw5JY9p3oi2PZL8a4U5+GBYmlfv3lfMs+fkTwMDLstGVdXB/iUyZmxy0Vz+iEmKHR4blUHD0xBRYAJW9y0j8A3b9BfMvn4Y6ZJEA8yHXepT4S7CqoRmpBc+ggsjnVQISf8BSLIb/u8/nY/lJyGX+sd1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707951906; c=relaxed/simple;
-	bh=NF5NUr80OtbglWaZRPMW8XuNliEAQsYjfE/zJTAavQA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jn6ML6+dL+wX6qny7cF8GnG0t09035jbx+F3wOAC6MJkzhEkjimjvpHoFsDV0shyGx2KhCvT2w6u3fvUfBTKYpk9H0ZI3EikfKlEm2dYJ2UOhgFovzVxfcktw8gFnXP6gWDw8C7RHwoxAS125QcwupCvLyumqSJjr1vL5+R6Io4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L4y8Ewfv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EMWmtR004681;
-	Wed, 14 Feb 2024 23:04:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=y0Uz8mXSkjvYpXhQtlSAFEFG7yr5QWKHlI01ir09dWQ=; b=L4
-	y8EwfvWY/MSIRk9KRaT27rQwH0bU8zFAw2ylQSlnqaMws8FoKxCNU1E7FKG3PKQD
-	U69vxyTl+s7Gq8sA72GkfOvu48EXZeBEjDZfdcq9ITlMY5N+cYcYDwLzy3YUqVtH
-	IZdPC5Rbm9S11S8pq0AQDtbieP1lGuH/EQbtqL6WjI9LDIlylGTs7USbsqfp0qBK
-	ezREmJDaAP92qaGK2mxaocOpjqtToMsu6A9mmbCPFznTtDowSpYyKLNSaH0B+1XY
-	JjzCDd5o6fmx2R453ESMwOpRRySCPeTkBeUB77dcz+ZXbR+nXvmTFjwcNaL46JW+
-	rLbeB4Bi7TF8ZlhRfojg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9435raed-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 23:04:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EN4kmI001141
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 23:04:46 GMT
-Received: from [10.71.114.103] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 15:04:45 -0800
-Message-ID: <ecec5590-1a96-9363-1209-342b4735096c@quicinc.com>
-Date: Wed, 14 Feb 2024 15:04:45 -0800
+	s=arc-20240116; t=1707954682; c=relaxed/simple;
+	bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eX/U2ih+Ln4uh21+JchetcDKxmXz57e/FPS24BjDWYYsGc6z5nRKSEJBOqddzrAYSujJd95MQFkgFlt7xOAeCP6MkmYYDItU0p/Vk9qnbL7aE6pVpAuBLsUchqkE5Gi+7OYvj9nAxc0+MlSb5V7wfuJWLQquWN6ei7J6CcjzSds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=OM9jhaoz; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5116ec49365so342360e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 15:51:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1707954678; x=1708559478; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
+        b=OM9jhaozeUM0qJdXcnYNfoZ5rOWPSyeUqfGlWFjFhhuUw+PFX71ToeEPbz3XF29S+i
+         QJpWT9uDbkEJRy36Nxtcrp6Q/cpe26tKTXHvQJY3p+2enE+OIX84Afhks6re1yumjvZM
+         DaVoJS0iLYfFeO9yS74w156tz+VGL/BwmeVCc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707954678; x=1708559478;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
+        b=hvwmrw8txicNwre9ggUKtxLh6jOk3Bp5QCYK2TApsRE2EFmVKuK3AljDeotrSc5azi
+         itTNM2oV8XnHsBi0Cgr+E/8prOyG2bfE31tgwJclZjK+GiBMQM/5oCJHPJyVNAvAaRbn
+         igo5d68tR4sKmZcJXEo+MCytEu7lvXr2gIhi86ALXAHkh/2EeVNRpByG/xRpIkBbhWX6
+         zzux56+mu9m14ReRGIe0qJLf/nCFxaT0AeNBKXKCsAvD7thOV3rvvYWbYfCv6/vm6q2A
+         VRVPdcQVTjI+tHQDbP7GyCiGj5Qkzp6dX3Eo6aN1xrrtsR0iEPzefas51/FgU9pYoKzU
+         MI4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWBXV5vXGMUOWgj7OCst7bgpLyTw/N7ZErxgkPt+/VL5OUO0c9qFcuxyxLcEEOG4pIVODwb/Bu4pI0nxTNQPxGO+qEmSkf2yctLKK4z+A==
+X-Gm-Message-State: AOJu0YyTVdT8cW0KR6O8Z7CvquA5QHdMJTvxSp+kKMRBW6FaL+aLrQsK
+	yrKiOklWqqMZ3KT4SkeD5puIX5hLBZYmMgGO38rWMQt2JvU/N/Fp1gBld2LnB3dHk6Gtb49JVeG
+	97GCHjTub+rO6kYaBAl66HcJA63Aw1wNKoDm9
+X-Google-Smtp-Source: AGHT+IHY6HUhss7mHx1ExihADt6J1OI5zkXYcKo2xuLwjQ63JGNlMqWZ5oVvebM0eOWq56qXmv8DOgdu6dbCXc/ooo8=
+X-Received: by 2002:a05:6512:3ca5:b0:511:87c6:3060 with SMTP id
+ h37-20020a0565123ca500b0051187c63060mr321912lfv.12.1707954678054; Wed, 14 Feb
+ 2024 15:51:18 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 14 Feb 2024 15:51:17 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v15 18/50] ASoC: Add SOC USB APIs for adding an USB
- backend
-Content-Language: en-US
-To: Takashi Iwai <tiwai@suse.de>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>
-References: <20240213005422.3121-1-quic_wcheng@quicinc.com>
- <20240213005422.3121-19-quic_wcheng@quicinc.com>
- <87zfw4y717.wl-tiwai@suse.de>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87zfw4y717.wl-tiwai@suse.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JuSmwtbiiWjb1-tzjemz6pa5NF-cujTB
-X-Proofpoint-ORIG-GUID: JuSmwtbiiWjb1-tzjemz6pa5NF-cujTB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_14,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 mlxlogscore=999
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402140174
+In-Reply-To: <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-5-swboyd@chromium.org>
+ <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 14 Feb 2024 15:51:17 -0800
+Message-ID: <CAE-0n51b9=BJv6PMmsdLDT7tcgKT63qrqNknp-CQd5BOb1dhjA@mail.gmail.com>
+Subject: Re: [PATCH 04/22] usb: core: Set connect_type of ports based on DT node
+To: Doug Anderson <dianders@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Pin-yen Lin <treapking@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, linux-usb@vger.kernel.org, 
+	maciek swiech <drmasquatch@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Takashi,
+Quoting Doug Anderson (2024-02-13 16:03:11)
+> Hi,
+>
+> On Fri, Feb 9, 2024 at 11:09=E2=80=AFPM Stephen Boyd <swboyd@chromium.org=
+> wrote:
+> >
+> > When a USB hub is described in DT, such as any device that matches the
+> > onboard-hub driver, the connect_type is set to "unknown" or
+> > USB_PORT_CONNECT_TYPE_UNKNOWN. This makes any device plugged into that
+> > USB port report their 'removable' device attribute as "unknown". Improv=
+e
+> > the connect_type attribute for ports, and in turn the removable
+> > attribute for USB devices, by looking for child devices with a reg
+> > property or an OF graph when the device is described in DT.
+> >
+> > If the graph exists, endpoints that are connected to a remote node must
+> > be something like a usb-{a,b,c}-connector compatible node, or an
+> > intermediate node like a redriver, and not a hardwired USB device on th=
+e
+> > board. Set the connect_type to USB_PORT_CONNECT_TYPE_HOT_PLUG in this
+> > case because the device is going to be plugged in. Set the connect_type
+> > to USB_PORT_CONNECT_TYPE_HARD_WIRED if there's a child node for the por=
+t
+> > like 'device@2' for port2. Set the connect_type to USB_PORT_NOT_USED if
+> > there isn't an endpoint or child node corresponding to the port number.
+>
+> The above sounds good, but then I look at patch #18 ("dt-bindings:
+> chrome: Add binding for ChromeOS Pogo pin connector") and patch #22
+> ("arm64: dts: qcom: sc7180-trogdor: Wire up USB and DP to
+> usb-c-connectors") and it makes my Spidey Sense tingle.
+>
+> Specifically, I _think_ if a port is "hard wired" that can sometimes
+> tell the system that the port is a bit more trusted. In the case of
+> the "pogo" pins on detachables, though, I don't _think_ there's
+> anything that prevents someone from making a "pogo to USB A port"
+> adapter and then you could plug anything you wanted into the pogo
+> port. If there's any extra trust given to these "internal" ports a
+> nefarious attacker could presumably abuse that trust for the pogo
+> pins.
 
-On 2/13/2024 2:48 AM, Takashi Iwai wrote:
-> On Tue, 13 Feb 2024 01:53:50 +0100,
-> Wesley Cheng wrote:
->>
->> --- a/sound/soc/Kconfig
->> +++ b/sound/soc/Kconfig
->> @@ -76,6 +76,15 @@ config SND_SOC_UTILS_KUNIT_TEST
->>   config SND_SOC_ACPI
->>   	tristate
->>   
->> +config SND_SOC_USB
->> +	bool "SoC based USB audio offloading"
->> +	help
->> +	  Enable this option if an ASoC platform card has support to handle
->> +	  USB audio offloading.  This enables the SoC USB layer, which will
->> +	  notifies the ASoC USB DPCM backend DAI link about available USB audio
->> +	  devices.  Based on the notifications, sequences to enable the audio
->> +	  stream can be taken based on the design.
-> 
-> This should be tristate, and...
-> 
->> --- a/sound/soc/Makefile
->> +++ b/sound/soc/Makefile
->> @@ -31,6 +31,10 @@ endif
->>   
->>   obj-$(CONFIG_SND_SOC_ACPI) += snd-soc-acpi.o
->>   
->> +ifneq ($(CONFIG_SND_SOC_USB),)
->> +snd-soc-core-objs += soc-usb.o
->> +endif
-> 
-> ... split it to an individual module, i.e.:
-> 
-> snd-soc-usb-objs := soc-usb.o
-> obj-$(CONFIG_SND_SOC_USB) += snd-soc-usb.o
-> 
-> Otherwise it'll lead to a hard-dependency to snd-soc-core on
-> snd-usb-audio, which is utterly unnecessary for most of other
-> devices.
-> 
+The pogo pins on detachables are connected via the OF graph, so they are
+only ever going to be either "not connected" or "hotplug". They can't
+become "hard wired" because they're not a child node with a reg property
+corresponding to the USB port.
 
-Got it...getting this to compile as its own separate module also 
-required some changes to the other layers I had.  Anyway, I've reworked 
-some of the dependencies with other drivers and is working fine now.
+>
+> I have no idea if this is a realistic concern or not. I'm about 95%
+> sure that hardwired "PCIe" ports get extra trust and get "deferred
+> IOMMU flush" enabled and, in the case of PCIe, that actually is a real
+> security hole. For USB, though, I think the system is more isolated by
+> the USB host controller so I'm not sure that there is any extra trust
+> given to "hard wired" ports. ...so maybe the answer here is to just
+> ignore my rambling. ...or maybe the answer here is that everything is
+> fine but patches #18 and #22 should be modified not to cause the pogo
+> pins to be considered as "hard wired" since they really aren't...
+>
 
-Thanks
-Wesley Cheng
+Pogo pins should be considered hot plug with this patch series, but I
+will double check that I didn't mess up that logic.
 
