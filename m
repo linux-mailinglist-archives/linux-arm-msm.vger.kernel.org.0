@@ -1,95 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-10979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AB70854635
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 10:36:46 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3F1E854651
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 10:43:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD83E1F27586
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 09:36:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 301961C21AC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 09:43:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16B4110A35;
-	Wed, 14 Feb 2024 09:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4856216415;
+	Wed, 14 Feb 2024 09:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="yfTWt3rT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47058171A8;
-	Wed, 14 Feb 2024 09:36:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE9A13AD8;
+	Wed, 14 Feb 2024 09:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707903377; cv=none; b=p/tmF+whNaZ+K6VJ93Gp75eeEI8Fe6xYxthshDfZ0oxmvuxXAYTY04eWs2RWGxw7/Jh7A56wpv210VwjsOnJBEEQr6wYAxSHDKdF8Aqu86mF3xXYlPK3wC6iwwweg18aSPENUrrjYhwS9yxqlhF+H38qLyfkBwWZ6zOqxcf60aw=
+	t=1707903792; cv=none; b=aCf/+rjO8d+iIzR2qAIFZ5PSBIInjBGBP1LZtAb5QTiM4WUpKCYrO2384UAV70JGMIQeO17vpYVMR6jq3tXfOrcCX6qrGnDw3mRZMl9LPpBEwa39wtHM4Fd1WBC2ITRQTXiP3rXglyJ1PX2NpLKiUGZ33dkB5y9IX6kXaw9U4UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707903377; c=relaxed/simple;
-	bh=5kLoz2/KdhnPXN8zihUJoO8TpE72NNonn4kqQWWIPzI=;
+	s=arc-20240116; t=1707903792; c=relaxed/simple;
+	bh=/5hVSHktuXKBdFSneU+sqS55ktsDEcZtWY02THLUTWE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MAjeUHOSUYNvYNZuk68RGPih6MijVCg0kZuQSltxQkOyFrO8KKS0pkYAxzmGXi1NLDGOe0z0kcQW4+Z2PsO0IN05wj1rUxO4ocZeVIRNh+RnHeR4xKjksdzDiYx5CUZYRJVd9q14Ha8TXsJByh8KEJF4SUTTaUKXQzoMUauT3ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B92B31FB;
-	Wed, 14 Feb 2024 01:36:54 -0800 (PST)
-Received: from [192.168.1.100] (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A55553F766;
-	Wed, 14 Feb 2024 01:36:11 -0800 (PST)
-Message-ID: <df3162c0-4b29-77a2-20b5-b36637fb11cf@arm.com>
-Date: Wed, 14 Feb 2024 09:36:10 +0000
+	 In-Reply-To:Content-Type; b=p9ZodUoNGWc5S0Ef9fmPvCqDDMDZfVYNNAF1VWfH+65vi35K2tbIu2v9FAVU0WPfipxmgbGVbycE8/E0fU9fORbIPvjAX2cvzE+Q6lycqUSjtHvnp45webS09atIDfsHjhR98k71md91CMkc2HyXHvoqCfSDhDzoCbSoJUmHh4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=yfTWt3rT; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1707903788;
+	bh=/5hVSHktuXKBdFSneU+sqS55ktsDEcZtWY02THLUTWE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=yfTWt3rThwEwUs2ZhQXKOg/ftYHcebsEIvFiVe9kcFlJsq3PvOoV5aTO1Ut0cTEb+
+	 4LpagApuIW8w6OMGDwh/OFgCdSgzZ+Pl6Rvh9l+9Svfv5yZBcmUThzaqS12BLBP986
+	 5Kn3zsAPkhY/4Asr5Azpq/DFjitOUdoLq88z5P00ESykYqhZXXvvCD1D/dCizNpyqr
+	 CGwG6rXsUKk4C4NvWCi5V7GXqB19sVHXfFTK8P+hlqeIWYS2YU6u7a4G/04Kro5fbX
+	 ta9AZTeZatefM84NA0SvCaSfIhCejpWRssvwGIGJRcslQ2YRVm2jbD3uUSjeCVhrf4
+	 tXmJ9S86cqstA==
+Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 81E293781FEF;
+	Wed, 14 Feb 2024 09:43:05 +0000 (UTC)
+Message-ID: <50342623-9955-4471-869c-1343abe4a2c0@collabora.com>
+Date: Wed, 14 Feb 2024 10:43:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom,coresight-tpdm: Rename
- qcom,dsb-element-size
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] arm64: dts: Fix dtc interrupt_provider warnings
 Content-Language: en-US
-To: Jinlong Mao <quic_jinlmao@quicinc.com>, Rob Herring <robh@kernel.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
- Mike Leach <mike.leach@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Rob Herring <robh@kernel.org>, soc@kernel.org,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Tao Zhang <quic_taozha@quicinc.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240213160521.15925-1-quic_jinlmao@quicinc.com>
- <20240213160521.15925-2-quic_jinlmao@quicinc.com>
- <20240213222957.GA2502642-robh@kernel.org>
- <a062ce8d-638a-4a33-8afa-45ad47efcd72@quicinc.com>
-From: James Clark <james.clark@arm.com>
-In-Reply-To: <a062ce8d-638a-4a33-8afa-45ad47efcd72@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+ Conor Dooley <conor+dt@kernel.org>,
+ Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+ Antoine Tenart <atenart@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Andrew Lunn <andrew@lunn.ch>,
+ Gregory Clement <gregory.clement@bootlin.com>,
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Stefan Agner <stefan@agner.ch>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ =?UTF-8?Q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>,
+ Tony Lindgren <tony@atomide.com>, Chanho Min <chanho.min@lge.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Linus Walleij <linusw@kernel.org>,
+ Imre Kaloz <kaloz@openwrt.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor
+ <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>
+Cc: linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-omap@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kbuild@vger.kernel.org
+References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
+ <20240213-arm-dt-cleanups-v1-3-f2dee1292525@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20240213-arm-dt-cleanups-v1-3-f2dee1292525@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+Il 13/02/24 20:34, Rob Herring ha scritto:
+> The dtc interrupt_provider warning is off by default. Fix all the warnings
+> so it can be enabled.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-
-On 14/02/2024 01:43, Jinlong Mao wrote:
-> 
-> On 2/14/2024 6:29 AM, Rob Herring wrote:
->> On Tue, Feb 13, 2024 at 08:05:17AM -0800, Mao Jinlong wrote:
->>> Change qcom,dsb-element-size to qcom,dsb-element-bits as the unit is
->>> bit.
->> That may be, but this is an ABI and you are stuck with it. Unless, you
->> can justify why that doesn't matter. (IIRC, this is new, so maybe no
->> users yet?)
-> 
-> Hi Rob,
-> 
-> Because for CMB type, it uses qcom,cmb-element-bits. So I change the
-> format to be the same as
-> CMB.
-> 
-> Thanks
-> Jinlong Mao
-> 
-
-I think what Rob was trying to say was that in the interest of not
-breaking existing DTs it's best to leave the existing names as they are,
-even if they aren't technically correct. And to only add new parameters
-with the -bits suffix, even if it's inconsistent with what's already there.
+Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com> # 
+MediaTek
 
 
