@@ -1,154 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-11050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81DA85518C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:08:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A46E985519B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:09:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB0491C20D5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:08:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0305C1F25326
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:09:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8182C12BF11;
-	Wed, 14 Feb 2024 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCAA612CD84;
+	Wed, 14 Feb 2024 18:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TdLmQ0K5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lv4Zf9Yu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34B91292CC;
-	Wed, 14 Feb 2024 18:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0280C12C7E3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 18:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707933774; cv=none; b=utAyTJ9liAM+g5TTWwEr9ERObO+faKxXEDXTrDpuydyr8pLWsxwl/tow/eyCVE0tBlkdGqVwkoIpWxHhIUSQ/OKd44z6WfDQ1MtNp2BmfWOPoOqmVYRLCnFBZvcmfygvcRosRAFt597HYB+KziqDT5C3Nfq/CBZVNr8Oh6bsJ44=
+	t=1707933859; cv=none; b=Y4xZJp0K5+Ks0CSy48172SZYiF+wK8kMyQIX3+q/SNB0IXAEBe5OAvPf5JkpG50/OGGtec8UhA5n1RJDPK9JHQzkHfzyK7XX/4Hj3VCJ1jsCnNG0kJwDM1I0+ANqhxfuRoTtUaARnIPqNbcUxDQFAVVhhTAHuAlGdUqj+x6NV5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707933774; c=relaxed/simple;
-	bh=XNSWQVAKioEdiIWsSLtpNc/QmIthNVyXFka5sud+Oeo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rlXcX5qIwQ+y+cZCPqaby+M7FeuTftnF4poW+xhjjpMo3eZdxCUbQW/ufItGUROpFYYeg7PfowKtDOMzvwQgeTDqP54WSiWje9/21W6pvG4G4vA78kMY4bVT2kHqFvcbVO4sg9mpendWqgk+eplPM2XoW2pJGkjhZyPtLIsXsCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TdLmQ0K5; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1707933859; c=relaxed/simple;
+	bh=AyOQfIpD4uziJU/rMIxfH5PXbsP8Vc+2/pnELkRVoLk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Jxi02pRI40ylBJVyyJQRf6gHMAp64nYml6nANxbV8sWRZUYksQA+6ktwB18JW80g9SVMK0R7HX3m3U61qbucTTmut0p+4rOT4ixTjVsHv1hZYiLq4myXgUebEsQwcnlhBc7MPnM1Ex9oAl3E0B5yoNdQoepoIWG+Qt+bumTIBRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lv4Zf9Yu; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EHPS46029136;
-	Wed, 14 Feb 2024 18:02:35 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41ECj9kI023312;
+	Wed, 14 Feb 2024 18:04:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=QoMDsaCSkkb16GXrIH1bJHTndnxHaOKSYN4y2bjArSc=; b=Td
-	LmQ0K54PsMs37BGTPVqoe1qWW3ToSayaEHXmQUP1ebSGFYBDGUUYMjnhunVMJH1C
-	uS4E6JZa0DaJn4RBrlanFP7tn1Uo0cTwrRsGSi4c0hw0TrmSCQIyy9zcyfbzXYMQ
-	VF+A4my/eGgPp8JOOyBwZedT3HC+1KObN25LLxi2rvMjdSYMdy9grAHNfXGMb+Ec
-	qYhfeadggdBFxrYOs8ogxgamoQCQITcxYo8205+matQH94XrAEEVt8IkBFPqRcM8
-	jZ/kzV/NXCou5dZ1hZ/d3ME/wGtTnYVv7IORPYqwlkPRBTBDb5+7NmG0a6r+c9lq
-	BBy78fZcACVle+GVU3YQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8myg1rxs-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=MlwUdWq
+	2xcVfINmjaa4JvheiJqdVeHPJ3zhI6K2Rtes=; b=lv4Zf9YuyhD6oqLrfVFvwl2
+	8gWoo2zCP8fmj3dVSryq8B7dOI5NnNLDw0QV7PE0Hp6leWgdwYHv2v7Olh1rIV05
+	yNcqEaJNvfv6aepb8ge7AfsM8bqj0cmtYQv1chCx9dzqdGBL/qD5uXdaYW0hx9i5
+	hGtVu52T/y8dVB5VYa7lmflKE/Om1Zbdci4u2Tnn5lvYZtSTHmnp/lkzaXHQjPti
+	G33ZfjSCyT50PuXJiYVcKmqbGWPjdW646TXznyIipfWrKwoJyojr1ueHmtObnyfP
+	b/2nMalSKjNkXX28e+O7Hlu4qCIJ9B5bjzfvYwfwvm+7Qd/3Ga0rwWBP/kwo8tw=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8kkrhw2v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 18:02:34 +0000 (GMT)
+	Wed, 14 Feb 2024 18:04:04 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EI2E5C009061
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EI42fN009168
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 18:02:14 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 10:02:13 -0800
-Message-ID: <1cb90bff-ce5b-c6d1-a3df-24f6306f833a@quicinc.com>
-Date: Wed, 14 Feb 2024 10:02:12 -0800
+	Wed, 14 Feb 2024 18:04:02 GMT
+Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 14 Feb 2024 10:04:01 -0800
+From: Paloma Arellano <quic_parellan@quicinc.com>
+To: <freedreno@lists.freedesktop.org>
+CC: Paloma Arellano <quic_parellan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
+Subject: [PATCH v3 00/19] Add support for CDM over DP
+Date: Wed, 14 Feb 2024 10:03:22 -0800
+Message-ID: <20240214180347.1399-1-quic_parellan@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] drm/msm/dpu: make "vblank timeout" more useful
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20240208-fd-dpu-debug-timeout-v2-1-9f907f1bdd87@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240208-fd-dpu-debug-timeout-v2-1-9f907f1bdd87@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tQaPJv5Iy1j9aGOR7INtSGMYbv6ZM4fi
-X-Proofpoint-ORIG-GUID: tQaPJv5Iy1j9aGOR7INtSGMYbv6ZM4fi
+X-Proofpoint-GUID: E8F3v4xJgtXvR4510sJgErJSqwUfxv7S
+X-Proofpoint-ORIG-GUID: E8F3v4xJgtXvR4510sJgErJSqwUfxv7S
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-14_10,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402140141
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402140141
 
+The Chroma Down Sampling (CDM) block is a hardware component in the DPU
+pipeline that includes a CSC block capable of converting RGB input from
+the DPU to YUV data.
 
+This block can be used with either HDMI, DP, or writeback interfaces.
+This series adds support for the CDM block to be used with DP in
+YUV420 mode format.
 
-On 2/8/2024 6:50 AM, Dmitry Baryshkov wrote:
-> We have several reports of vblank timeout messages. However after some
-> debugging it was found that there might be different causes to that.
-> To allow us to identify the DPU block that gets stuck, include the
-> actual CTL_FLUSH value into the timeout message and trigger the devcore
-> snapshot capture.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Added a call to msm_disp_snapshot_state() to trigger devcore dump
->    (Abhinav)
-> - Link to v1: https://lore.kernel.org/r/20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index d0f56c5c4cce..a8d6165b3c0a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -489,7 +489,8 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
->   		(hw_ctl->ops.get_flush_register(hw_ctl) == 0),
->   		msecs_to_jiffies(50));
->   	if (ret <= 0) {
-> -		DPU_ERROR("vblank timeout\n");
-> +		DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
-> +		msm_disp_snapshot_state(phys_enc->parent->dev);
+This series allows selection of the YUV420 format for monitors which support
+certain resolutions only in YUV420 thus unblocking the validation of many
+other resolutions which were previously filtered out if the connector did
+not support YUV420.
 
+This was validated using a DP connected monitor requiring the use of
+YUV420 format.
 
-There is no rate limiting in this piece of code unfortunately. So this 
-will flood the number of snapshots.
+This series is dependent on [1], [2], and [3]:
+[1] https://patchwork.freedesktop.org/series/118831/
+[2] https://patchwork.freedesktop.org/series/129395/
+[3] https://patchwork.freedesktop.org/series/129864/
 
-Short-term solution is you can go with a vblank_timeout_cnt and reset it 
-in the enable() like other similar error counters.
+Changes in v3:
+	- Change ordering of the header byte macros in dp_utils.h
+	- Create a new struct, msm_dp_sdp_with_parity
+ 	- Utilize drm_dp_vsc_sdp_pack() from a new added dependency of
+	  series [3] to pack the VSC SDP data into the new
+	  msm_dp_sdp_with_parity struct instead of packing only for
+	  YUV420
+	- Modify dp_catalog_panel_send_vsc_sdp() so that it sends the VSC SDP data
+	  using the new msm_dp_sdp_with_parity struct
+	- Clear up that the DP_MAINLINK_FLUSH_MODE_SDE_PERIPH_UPDATE macro is setting
+	  multiple bits and not just one
+	- Move the connector's ycbcr_420_allowed parameter so it is no longer
+	  dependent on if the dp_display is not eDP
 
-long-term solution is we need to centralize these error locations to one 
-single dpu_encoder_error_handler() with a single counter and the error 
-handler will print out the error code along with the snapshot instead of 
-the snapshot being called from all over the place.
+Changes in v2:
+	- Minor formatting changes throughout
+	- Move 'fixes' patch to the top
+	- Move VSC SDP support check API from dp_panel.c to drm_dp_helper.c
+	- Create a separate patch for modifying the dimensions for CDM setup to be
+	  non-WB specific
+	- Remove a patch that modified the INTF_CONFIG2 register in favor of having
+	  this series be dependent on [2]
+	- Separate configuration ctrl programming from clock related programming into
+	  two patches
+	- Add a VSC SDP check in dp_bridge_mode_valid()
+	- Move parity calculation functions to new files dp_utils.c and dp_utils.h
+	- Remove dp_catalog_hw_revision() changes and utilize the original version of
+	  the function when checking the DP hardware version
+	- Create separate packing and programming functions for the VSC SDP
+	- Make the packing header bytes function generic so it can be used with
+	  dp_audio.c
+	- Create two separate enable/disable VSC SDP functions instead of having one
+	  with the ability to do both
+	- Move timing engine programming to a separate patch from original encoder
+	  programming patch
+	- Move update_pending_flush_periph() code to be in the same patch as the
+	  encoder programming
+	- Create new API's to check if the dpu encoder needs a peripheral flush
+	- Allow YUV420 modes for the DP connector when there's a CDM block available
+	  instead of checking if VSC SDP is supported
 
+Kuogee Hsieh (1):
+  drm/msm/dpu: add support of new peripheral flush mechanism
 
+Paloma Arellano (18):
+  drm/msm/dpu: allow certain formats for CDM for DP
+  drm/msm/dpu: add division of drm_display_mode's hskew parameter
+  drm/msm/dpu: pass mode dimensions instead of fb size in CDM setup
+  drm/msm/dpu: allow dpu_encoder_helper_phys_setup_cdm to work for DP
+  drm/msm/dpu: move dpu_encoder_helper_phys_setup_cdm to dpu_encoder
+  drm/msm/dp: rename wide_bus_en to wide_bus_supported
+  drm/msm/dp: store mode YUV420 information to be used by rest of DP
+  drm/msm/dp: check if VSC SDP is supported in DP programming
+  drm/msm/dpu: move widebus logic to its own API
+  drm/msm/dp: program config ctrl for YUV420 over DP
+  drm/msm/dp: change clock related programming for YUV420 over DP
+  drm/msm/dp: move parity calculation to dp_utils
+  drm/msm/dp: add VSC SDP support for YUV420 over DP
+  drm/msm/dp: enable SDP and SDE periph flush update
+  drm/msm/dpu: modify encoder programming for CDM over DP
+  drm/msm/dpu: modify timing engine programming for YUV420 over DP
+  drm/msm/dpu: reserve CDM blocks for DP if mode is YUV420
+  drm/msm/dp: allow YUV420 mode for DP connector when CDM available
 
->   		return -ETIMEDOUT;
->   	}
->   
-> 
-> ---
-> base-commit: 39676dfe52331dba909c617f213fdb21015c8d10
-> change-id: 20240106-fd-dpu-debug-timeout-e917f0bc8063
-> 
-> Best regards,
+ drivers/gpu/drm/msm/Makefile                  |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 164 +++++++++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |   4 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  26 ++-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  33 +++-
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 100 +----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c    |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  17 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  10 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   4 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c             | 101 ++---------
+ drivers/gpu/drm/msm/dp/dp_catalog.c           | 135 +++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h           |  10 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  17 +-
+ drivers/gpu/drm/msm/dp/dp_display.c           |  82 ++++++---
+ drivers/gpu/drm/msm/dp/dp_drm.c               |   6 +-
+ drivers/gpu/drm/msm/dp/dp_drm.h               |   3 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c             |  56 ++++++
+ drivers/gpu/drm/msm/dp/dp_panel.h             |   2 +
+ drivers/gpu/drm/msm/dp/dp_reg.h               |   8 +
+ drivers/gpu/drm/msm/dp/dp_utils.c             | 121 +++++++++++++
+ drivers/gpu/drm/msm/dp/dp_utils.h             |  40 +++++
+ drivers/gpu/drm/msm/msm_drv.h                 |  22 ++-
+ 23 files changed, 725 insertions(+), 241 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_utils.c
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_utils.h
+
+-- 
+2.39.2
+
 
