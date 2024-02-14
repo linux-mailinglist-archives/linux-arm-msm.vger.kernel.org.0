@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-11005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27133854AF6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:01:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76524854B14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A0B71C2834E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:01:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10AD51F2367E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:07:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE50554F8B;
-	Wed, 14 Feb 2024 13:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5310754BC7;
+	Wed, 14 Feb 2024 14:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ljkXjH4C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fGy/DMD6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0011D5C8FE;
-	Wed, 14 Feb 2024 13:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE4C54BFC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 14:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707919154; cv=none; b=dNitJRw7i4/1AuTlv25dktPnOAn9KFNMQ28sd+zo8s7hneX2evl2LMTv9dKc3gxfoyCpBLeZPOHLOIrJRfQwG1C6LT+6EHLujzVzQDwz4P+/yX/HIvLZkGJfB15Y+UihSc2R0DY78EH/22Y0cVDz7u/1a7jEGyEFIPw0+R0IViU=
+	t=1707919639; cv=none; b=UW4s8Gg27hRfPt2MX9/k2gFxYzQXNBDtkcb8vUzvS4Bm8jkq8jssPHTer46scoUkUcHalfrV5Vam3hviHwAqpRISTZsZY6Lk04Q9e/BXVTBIAMbP+ULwgzKBOmosEJlaBadYUEEkk7mKTdq0ENQgftJXlZVrCs7A1cj2NFF+vI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707919154; c=relaxed/simple;
-	bh=gvJJZ/u+oFmJe9o1bdHtO/O/5u2N3evyh8Zop5iY370=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XjFBcmmXx8L/Xp5ybq9KjVWh7XmwuCo/xhGtLhmMH/jdBNL9j6LuDt0Tgwf4Uq2K+K59apnRFNvlNvkFlSAIOk/G82vFF2tFknogr6GP/30CAtYl+ro81VsZ1ygHOY+oeTfozKFVQ+Uryib5G/OhKnQuN11ggyDFewUhPEuumLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ljkXjH4C; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EAxMXw001851;
-	Wed, 14 Feb 2024 13:58:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=UsRN04YgdttuRzXuuaPeRfbR90rptVxiln+xXdu7HOM=; b=lj
-	kXjH4CFDMWOxTHHPA+dFro8BHptRBBZHD55vn6e728Un0kpyEwCNNbi3yTPzcfvc
-	Z9frQZ9CfyqnIIhH74EPauBaZ3rDqjUJNFld/Id7QQWQdhQ5wecheYYbd7YbuSDR
-	Mnv2ufEeexLbxdSdavuVptXyzF4txem6Lqui8MwrHw+62A41sesLPlxJFrj2VcPh
-	s0vHwftM3XG+yMIREDFZdXnwGNyuKgGdsBPa+80rkGsDn1Mn+7g3fRmHjY08+67d
-	6JaehgHgm/7Iw/eTsppRD/aYr30qLAWPAjzEPc5R80O6HArRaAlRRfJxViAekSKX
-	MEmdMrhl5CLvunNSykKQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8jn9hb6j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 13:58:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EDwjva016998
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 13:58:45 GMT
-Received: from [10.216.19.164] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 05:58:31 -0800
-Message-ID: <e5a5b32c-bc9d-42b7-b1a8-90e22b957915@quicinc.com>
-Date: Wed, 14 Feb 2024 19:28:26 +0530
+	s=arc-20240116; t=1707919639; c=relaxed/simple;
+	bh=7Ubyxpypb5WJzZVN2u8TTtK5nY9p7eYOo9MXL9hwfsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TUKU9cDTXctmwdRaihwj0xP2+rX6pW0Nr9UwF+bv0dpPmETwccILtDY+dhSk9eYeqFIN0ne6eObTGci0/YNa8XDHCX8zmvF2/yASoh6G6QqhFUk2CJIiSlunLPzJQdUEcD6tJhw0gqwBcbY0Wwd43iUDqIpmzJ5GvWH0iUp7iMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fGy/DMD6; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-410e676c6bbso15669825e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 06:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707919636; x=1708524436; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mzLCkT3Edbyo2kgMkRX8HzJIBRMOGYcfnWVhdPfle+4=;
+        b=fGy/DMD6wOJVj8U99P54R3mUM6u23eGaYZDL/kbxIjZeaETJbwt1KL+wOGPZJX3vG2
+         FvHHLOL00siVvoqfHoSYLUR/pghW3VxBnPUZ3MM1ugB+wT/CYZAvv9G3BfjKwVXwaHfX
+         rdSWy/8V/uQMkysjlSnmR9E54TOUtz2uz/neOrCU0McH/TT6QxvcVfooHsxD34s9qPMW
+         7i4ANBwbqRwqzVykJJ/TROXfFyGBhwbAgJbnBpQBT292cJEMsAOZ5mG2gVHVRmfnz9L5
+         brZE4hwxhA84sA0oV7743FjnteK7aQUXN0FKZW6unC5YVub2iEWsynEYHEQgKdG4iwf0
+         mAAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707919636; x=1708524436;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mzLCkT3Edbyo2kgMkRX8HzJIBRMOGYcfnWVhdPfle+4=;
+        b=c4CVGKFSiR7Bzbdmx8pQUI/xcCtqYE8ToNedH/dCUVtuifhDrsre9o8/CGEZzcaMLa
+         RqxMd1mPPuS6uPGuIITC9Oyha5acYlVjG3jsstzf6V5X13yueJI411JPzrwUIMe4nQk+
+         LitMSUXL6EbiNR3fxYwab6fJNWe7cvzIzJwWaGmQbTywQjPMx9DGPu+0Znn/zHgAVJsO
+         UIp7u5KQ2JdLU7fhvcReTmkQIzO7a4cWpUCD85ZzVtopKMrto7zFeo4BZYvWYR3yOUDM
+         /1+BCub3YTrO85Zad/kt25lBI6yarej2Mc0pntJzApRetqHAQgsURrXfYmE1lK7NDg4W
+         0Swg==
+X-Forwarded-Encrypted: i=1; AJvYcCVuiQcK9cj8k+0iCalblv6cpFa0JvSuZoyFWJzg1lp+HoKO/HY/cKxoxQRD/IFvfNtwo6HAwyadF9pV6gzxf3DJwa8ON8QtU5jjFgg2dw==
+X-Gm-Message-State: AOJu0YwOM4aj6GzgeNYmIRNa0lntF90Axxc4rahuE7s+V9/maxgqQ/75
+	T/AC1MqFuFDS6F8x7QeiVaCIMHsB9mSGJ/PoYQnm7kNsX/AVUN2H4mV0QPHO/44=
+X-Google-Smtp-Source: AGHT+IGAuh0C9NPqIXTbCFmGeR0IHyJc8CaKb0LJGgi0HwGox1I1a0QhshP6cFVf20f/7NiuTP/wMg==
+X-Received: by 2002:a05:600c:5103:b0:410:3bb2:67b4 with SMTP id o3-20020a05600c510300b004103bb267b4mr1963930wms.28.1707919635730;
+        Wed, 14 Feb 2024 06:07:15 -0800 (PST)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id c25-20020a05600c0ad900b0040ffd94cd27sm2018672wmr.45.2024.02.14.06.07.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Feb 2024 06:07:15 -0800 (PST)
+Message-ID: <f38468b4-8b16-4180-9738-0a2b557651a1@linaro.org>
+Date: Wed, 14 Feb 2024 14:07:13 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,114 +76,34 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <jic23@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <lee@kernel.org>,
-        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
-        <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
-        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
-        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
-        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
-        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-4-quic_jprakash@quicinc.com>
- <CAA8EJpr4q7pFF44oUjJSWGYKgiUCB_23zVHw6J3a3mwn7cKgyg@mail.gmail.com>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Fix pm8010 pmic5_pldo502ln minimum
+ voltage
 Content-Language: en-US
-From: Jishnu Prakash <quic_jprakash@quicinc.com>
-In-Reply-To: <CAA8EJpr4q7pFF44oUjJSWGYKgiUCB_23zVHw6J3a3mwn7cKgyg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jDzhMT2m9_qcniAuUC2Ibd9s1FWU_QVo
-X-Proofpoint-ORIG-GUID: jDzhMT2m9_qcniAuUC2Ibd9s1FWU_QVo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501 clxscore=1011
- phishscore=0 suspectscore=0 malwarescore=0 spamscore=0 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402140108
+To: Mark Brown <broonie@kernel.org>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com,
+ quic_fenglinw@quicinc.com, quic_collinsd@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
+ <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Dmitry,
+On 14/02/2024 13:25, Mark Brown wrote:
+> On Wed, Feb 14, 2024 at 12:16:14PM +0000, Bryan O'Donoghue wrote:
+> 
+>>   	.voltage_ranges = (struct linear_range[]) {
+>> -		REGULATOR_LINEAR_RANGE(1800000, 0,  2,  200000),
+>> +		REGULATOR_LINEAR_RANGE(1808000, 0,  2,  200000),
+> 
+> This will also offset all other voltages that get set, is that expected
+> and desired?
 
-On 12/31/2023 11:16 PM, Dmitry Baryshkov wrote:
-> On Sun, 31 Dec 2023 at 19:13, Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
->> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
->> with all SW communication to ADC going through PMK8550 which
->> communicates with other PMICs through PBS.
+Yep, looks typo in the original submission.
 
->> +static int adc_tm_register_tzd(struct adc5_chip *adc)
->> +{
->> +       unsigned int i, channel;
->> +       struct thermal_zone_device *tzd;
->> +
->> +       for (i = 0; i < adc->nchannels; i++) {
->> +               channel = V_CHAN(adc->chan_props[i]);
->> +
->> +               if (!adc->chan_props[i].adc_tm)
->> +                       continue;
->> +               tzd = devm_thermal_of_zone_register(adc->dev, channel,
->> +                       &adc->chan_props[i], &adc_tm_ops);
-> It is _very_ useful to register a hwmon too by calling
-> devm_thermal_add_hwmon_sysfs(). However this becomes tricky, as this
-> function is not defined in one of the global headers.
->
-> This actually points out an issue. You have the ADC driver fused
-> together with the thermal driver. Can I suggest using the aux device
-> to split the thermal functionality to the separate driver?
->
-> This way it would be possible to use the ADC without any thermal
-> monitoring in place.
+ldo3, ldo4 and ldo6 should all be 1.808.
 
-
-There are a couple of issues which may make it harder to split the 
-thermal functionality from this driver into an auxiliary driver as you 
-mentioned.
-
-For one, we use the same set of registers (offsets 0x4f-0x55) for both 
-VADC function(requesting an immediate channel reading) and ADC_TM 
-function (setting upper/lower thermal thresholds on a channel). To avoid 
-any race conditions, we would need to share a mutex between the 
-top-level ADC driver and the auxiliary ADC_TM thermal driver to avoid 
-concurrently accessing these or any other shared registers.
-
-In addition, the device has only one interrupt with one interrupt 
-handler, and it gets triggered for both VADC and ADC_TM  events (end of 
-conversion and threshold violation, respectively). The handler checks 
-for both types of event and handles it as required.
-
-For the shared interrupt, we may be able to keep the interrupt handler 
-in the top-level driver and just notify the auxiliary TM driver if a 
-threshold violation is detected. For the shared mutex, I think the 
-auxiliary driver may be able to access the parent driver's mutex, but 
-I'll need to check more for the implementation in both of these cases.
-
-Please let me know if you see any problems with this kind of 
-implementation or if you have any additional comments.
-
-Thanks,
-
-Jishnu
-
->> +
->> +               if (IS_ERR(tzd)) {
->> +                       if (PTR_ERR(tzd) == -ENODEV) {
->> +                               dev_warn(adc->dev, "thermal sensor on channel %d is not used\n",
->> +                                        channel);
->> +                               continue;
->> +                       }
->> +
->>
->
+---
+bod
 
