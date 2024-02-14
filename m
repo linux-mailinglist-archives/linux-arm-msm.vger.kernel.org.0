@@ -1,64 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-11024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E5F9854F51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:02:01 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3640A8550FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:58:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F3523B2119B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 17:00:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9B911F214D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 17:58:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2E2605DF;
-	Wed, 14 Feb 2024 17:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 491AA128839;
+	Wed, 14 Feb 2024 17:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VLzgymvi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cP1IkrtS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408E604AA;
-	Wed, 14 Feb 2024 17:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EC3128804;
+	Wed, 14 Feb 2024 17:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707930040; cv=none; b=XihySHYiF+Z/zkZNySMpo8C1f66Un6q3bhtVCdDz1IruwQJQpyf0DjGq9H7HBComRicBHsw3AHrcmUAES6QZ2i6Vw2hP+jPqAKHHNJSMTBcr4DR/plHMwbcavXJYVlbs4Bv7tl3DBqDlrD/txLuFKu4TdHbS5Ybd8/tP0obbm6A=
+	t=1707933467; cv=none; b=raX7YMBDYa6FuKLipfiIm8UgL323zJeBKH9INf/rG9MtHRAd5/t7pIJxN7Y3uvNYiqG4GySxFKQ8Xa5RE0Cgpm9LIOYR4l3gDYdla8XnLOYcN7PFf8ao/Rm/o9jUDgJINdyIOZE0I5fm2UEJ+3kuY4P1fosy8dxfSoW0vUb8tiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707930040; c=relaxed/simple;
-	bh=SBXvlj/pv3bXj7iz6+7oO/3tACndnmQVR4G2KMScMxI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IGr+aVciRpoYe4egD0P/fCb0dPE8vCkMW18qJzlOyeEv9ZD6kY72E9tsQGKzQbux5tBu95LvKukaetwW+hEGHVqeYCnhKYdW+GHjW1VnaakNFLWng/23gs8BgK1jrpUhRX7DurVwxHEdNjPr5J40T0DKNCfd9TXDFlk1oyHm7zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VLzgymvi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2A6C433F1;
-	Wed, 14 Feb 2024 17:00:37 +0000 (UTC)
+	s=arc-20240116; t=1707933467; c=relaxed/simple;
+	bh=jHQyAtk+n7f8D2fSMf+yAfUum8YxNu1gvdkzioXdQis=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cqRL/KzXg6eUy/Dsl8j4PJvAZgtNL8t5k/K6qz8+NBfKEYVnqQsg50kwqchlRNyYwzPAL3C9spJAg0BHaolzaXEOXgnf+IArWuhs1pWIi02turio6vR6xKJIYQmIp+Hx8XR/j8ix+QAYau3h62UuOblMVaNqcytCL/Px3E0YENo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cP1IkrtS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151C9C433F1;
+	Wed, 14 Feb 2024 17:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707930040;
-	bh=SBXvlj/pv3bXj7iz6+7oO/3tACndnmQVR4G2KMScMxI=;
+	s=k20201202; t=1707933466;
+	bh=jHQyAtk+n7f8D2fSMf+yAfUum8YxNu1gvdkzioXdQis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLzgymvi/0g7CgSK1EPdFxNHNf71qXRiX/VkFEuuLPWCc3K9Fv/QV4SVf4aMfuJds
-	 Ih+2AlSsvZ7QBZoaGkWsLZB27hcWLPv2aa5ryqz3pcRKHLa/tOo3lFK5dn9+GnVF9e
-	 1cxC437KYaE7xssmo1EEnKOe/XJps/CLn+6fG1j3UHtSppHq92Y8xbGeOplaoBTZ05
-	 4tkFhkIyMrC5FVgf8HzbWYKqLyQCFsAjyrPEQpfAcSWPYXcFQW47vP3C/mexXxr1H0
-	 ++4GpekVy8AtHgWdR3cdcXRxbQnfOM9JOHZLWeC0Ki4EMNoXfA3M2P0yzvqaBowX61
-	 5XtkZ2D+h+MwA==
-From: Will Deacon <will@kernel.org>
-To: Joerg Roedel <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
+	b=cP1IkrtSmoLoY84o9LL+1nnxffZgfypp8mIs8sCPy6G8iGoMzOW9Ik88BZylIWOgm
+	 o4NYdVKkzPzVV0rpY9mvZ6vFlJWRr8qkxDa/vUSfrkevJEogKKdTeqJguflna4sla7
+	 dcQHiq4O42PxTgii9fcF1LQdeNzbTA8Sf50siBoiNJpXXG4+p/eX9YAHsgTx9TXljK
+	 at9/Qkvp6wh5q4L/0TqD6VqkgEn9Suhbkuv2EICUCQGDaFyedR2weVz9hgdRUX/+1D
+	 3QTuh1eoko5S6FLBfa70uhGT3geR2vN6TZduOK7PbEpWjpWOubtmRDDs/JGVADTrP9
+	 B1XBaQrQq2YRA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	iommu@lists.linux.dev
-Subject: Re: [PATCH] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-Date: Wed, 14 Feb 2024 17:00:34 +0000
-Message-Id: <170782679599.2166016.11725176923934129944.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
-References: <20240213-iommu-revert-domain-alloc-v1-1-325ff55dece4@linaro.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: Enable X1E80100 multimedia clock controllers configs
+Date: Wed, 14 Feb 2024 11:57:20 -0600
+Message-ID: <170793345828.27225.16242770102119393725.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240208-x1e80100-configs-v1-1-9e027bee5209@linaro.org>
+References: <20240208-x1e80100-configs-v1-1-9e027bee5209@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,24 +64,19 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Tue, 13 Feb 2024 13:31:56 +0200, Dmitry Baryshkov wrote:
-> This reverts commit 9b3febc3a3da ("iommu/arm-smmu: Convert to
-> domain_alloc_paging()"). It breaks Qualcomm MSM8996 platform. Calling
-> arm_smmu_write_context_bank() from new codepath results in the platform
-> being reset because of the unclocked hardware access.
+
+On Thu, 08 Feb 2024 15:19:00 +0200, Abel Vesa wrote:
+> Enable as modules the CAM, GPU, DISP and TCSR clock controllers for
+> Qualcomm X1E80100 platform.
 > 
 > 
 
-Applied to will (for-joerg/arm-smmu/fixes), thanks!
+Applied, thanks!
 
-[1/1] Revert "iommu/arm-smmu: Convert to domain_alloc_paging()"
-      https://git.kernel.org/will/c/b419c5e2d978
+[1/1] arm64: defconfig: Enable X1E80100 multimedia clock controllers configs
+      commit: 1734e725ef512c1f9def3febc5920ef43decbe93
 
-Cheers,
+Best regards,
 -- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+Bjorn Andersson <andersson@kernel.org>
 
