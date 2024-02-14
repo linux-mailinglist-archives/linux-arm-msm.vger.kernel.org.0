@@ -1,194 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-11002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8B6B854A88
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:31:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF516854A9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:39:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62EB628DF83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:31:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B6D5B20EDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:39:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B270552F85;
-	Wed, 14 Feb 2024 13:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD22C54745;
+	Wed, 14 Feb 2024 13:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g4PgU3+J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED011CA80
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35FD54673
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707917504; cv=none; b=pA+Tar/bGDqn6aPTCyqhCezpdMYApMTzotp7avDXdu7euaJ306QoJjYKxTxXYGEGASAzPkSMFkTiXqw3KqLPlSV4Di5duuFPBNGlNd0tIqnqBjM1LLExyF255jNDzremPQDGoC6n5fvzQcVoOolW7XLdlyjsaUISXEu5NatfsNc=
+	t=1707917942; cv=none; b=uo479ijdZ3JsL9e0c06qDNkz+aCs7lvlY9u1Kel4Hs4sgGsMiyLFxsumddQBphadhhFPwxSFGZcg/aEX1izDxO7CCkmtGbAm8Mad3V2zZyHXlyc4QxgPQR6e+iqgqDxtu/IgaKafG5paZJtjrFV3iPGDlnFgsMCE8ogei6ghQUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707917504; c=relaxed/simple;
-	bh=g7+dYMrf4hQ0Bbepi6j5xfvu9bdIju/3TxK2e2upb9Q=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=U2O1vZNexliK5nCo7aS9oiWSzwZnY8KkXZP2YxC63Gws3S7us7HdLUwqIM2EPBc10yLWIeeLLrf7SSU8pfog6VBetpip8Fxin0JKw0mQtLTkFgJANlervrCs6yffauVz6bssJwLqX5VWOzVXPux+QxP8JYrD7hfmIOqyFz78QpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1raFM1-0005aN-6M; Wed, 14 Feb 2024 14:31:13 +0100
-Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1raFLy-000hZq-4h; Wed, 14 Feb 2024 14:31:10 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1raFLy-000ARF-0F;
-	Wed, 14 Feb 2024 14:31:10 +0100
-Message-ID: <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
-Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Stanimir Varbanov
- <stanimir.k.varbanov@gmail.com>, Vikash Garodia
- <quic_vgarodia@quicinc.com>,  Bryan O'Donoghue
- <bryan.odonoghue@linaro.org>, Andy Gross <agross@kernel.org>, Bjorn
- Andersson <andersson@kernel.org>,  Mauro Carvalho Chehab
- <mchehab@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, Stanimir Varbanov
-	 <stanimir.varbanov@linaro.org>, Mauro Carvalho Chehab
-	 <mchehab+huawei@kernel.org>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date: Wed, 14 Feb 2024 14:31:09 +0100
-In-Reply-To: <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
-	 <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1707917942; c=relaxed/simple;
+	bh=7m8FgKYenpbcQV+utnPx5tYHSqTgQ+N6XM820y2I76w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rzXDpa/5aWVcchw+j6B1AcYkHRHAURM8GKRl+uRDvAFdN9IOAGn7ZU37HNHEz1qxs82C4jqJoMOCYyamwPIq0O/5JbEa+CvoEdGPBfjNb3NRBr8gsCmWgSrjCNfrZ+zRxdeiE1zJgU/iil4co4ua7/81zWm7r9raOs6o3qWIjzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g4PgU3+J; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a26f73732c5so788369466b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 05:39:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707917939; x=1708522739; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Xl8fdjNkOnOLzOdA3INQoYZq3zTCdkc/JpETQWx04dE=;
+        b=g4PgU3+JNBdD9XtKfcu5JuDpxTJKycOZduEkVn/hL+hR01J3Ifo2cIZAtnRKC0+Orr
+         +xX2v+tkv7/YHDabik6O5QG6qATKoIXMHKIxkJOH8P+L5NxL5ANKWCzL98Qowjar3Yib
+         W4oNYpgbpWG8nzRAfG1L68L+Ti0LzPFWJas1K75l/69nXGCq8gcrAgPCvqxlm01BRAfJ
+         KgbSGu7LkG81FFQwZ/PPw5IcY4MmRgvGRHGexk8yDx5F3w6QJBJA+iSxE+c+8q/m6BSP
+         gAEHH7bcE8QyfdZn1X4MkHH8g+E2yFuwZzpfWJ7w4abTN8uLAKMGDdWhGI/T/nBOJvqq
+         UErg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707917939; x=1708522739;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xl8fdjNkOnOLzOdA3INQoYZq3zTCdkc/JpETQWx04dE=;
+        b=CFRVNcldLWLnXJ+f+5TovGQsoA6dhuGA37fcdd7rQa90qnmHSI8EHTUBeRAvCA6FjN
+         avxQ92Np7hOdcOkZJ/4GkpWfqX18svaRaVzz26RQU8Qs0RlAOx9+qDIYujR7rO+BV/Dv
+         MSYmiijqWRd7COkzVuEjWXHOazeDIaUDcBSVjPEV78IoUFk4T/h5+sEl1kCHIwWQcHEB
+         sIIuh7O08fM8+poAspiiFHE0caG7PCzOuUSzp/wmufsYsyGACGho6Ryx/Mp63zgcsPGd
+         ZEu69wRX1lzuiR1oHbhTDR9cjM9hM8H37gBAOVKgftYfShDtNcb8qKFAMtsemcD0v2sb
+         q8hA==
+X-Forwarded-Encrypted: i=1; AJvYcCWQqTxCxn12N6g9VDrbSTusP8ZF1EvxWdZ95x+Tj7awtbnpPNG+mHVJahCkFceYJDUxEXjmY9d3VLBYSh88S3wn6ZURdTbHaDg9bw4NyA==
+X-Gm-Message-State: AOJu0Ywet8FnI0PxjVIkBzjvCRKzwH+DwQJ8k3EKsVAJdt4M7MAgK9H1
+	hL0qUoNntHAdQNR6q7AVnRrRDjL4R7wuiPm3zB0tV+7fMe/5Z1uNhoRLEZrLcaA=
+X-Google-Smtp-Source: AGHT+IF44O3lJTfCP6eOt0ZcLCXWtiMF4tmyCTUbIV05jahWoL5XKoVoJ8TihVtEPkQQWbiVUTIBHQ==
+X-Received: by 2002:a17:906:d10a:b0:a3d:2392:b025 with SMTP id b10-20020a170906d10a00b00a3d2392b025mr1776457ejz.50.1707917939141;
+        Wed, 14 Feb 2024 05:38:59 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW/VPB0bBip8Y19tYjb13eVOw4gZeMb4PXsejWTzIAoHHUyZXUDK4xI/c1o6R98uZC6MQrs0Z9+AlKE1g1d084AQJoGH/I3pIuMVwTdIlkJHXlrXRpcT2D1t9BW3Hgw9jmry0MVN/6G5VN/58k0iMbb0RBgKFYOvTh1sig/51HEo7an6k4uLHDl8I1Q5HN9PycOAyBqJyKsBi3WrpLmYnhK3Ut49r+3lRv0yt8iFnbt+ykXzy68dOw2xu1KdKKFFQ239Tk2GPW04zcmlT1n/oePcKJgAZG9OzCuFq0hh4eSMOGmptElBFAKDggQVkXryIZFptY/cdNzN3qHMEr4WxUhVFM9UTXuBgXeKaGjmu/2Naf6WLw+SI8EyAG7xgKRbqx9MoblQ+ZB702r3WFiTSGV5bHry8Sx8mvrbVvb3Sc+ZKg0gJYLkszXBlaXg9Yq9SjaKXXQjvhOPakvUpDLRbwO+njo6Ss1Rh4lSu8wUteREEhEL76ISnc=
+Received: from [192.168.0.22] ([78.10.207.130])
+        by smtp.gmail.com with ESMTPSA id ty8-20020a170907c70800b00a3d09d09e90sm1561399ejc.59.2024.02.14.05.38.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Feb 2024 05:38:58 -0800 (PST)
+Message-ID: <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
+Date: Wed, 14 Feb 2024 14:38:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Do not require
+ 'msi-map-mask'
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240212165043.26961-1-johan+linaro@kernel.org>
+ <20240212165043.26961-3-johan+linaro@kernel.org>
+ <e396cf20-8598-4437-b635-09a4a737a772@linaro.org>
+ <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Konrad,
+On 14/02/2024 13:54, Johan Hovold wrote:
+> On Wed, Feb 14, 2024 at 01:01:20PM +0100, Krzysztof Kozlowski wrote:
+>> On 12/02/2024 17:50, Johan Hovold wrote:
+>>> Whether the 'msi-map-mask' property is needed or not depends on how the
+>>> MSI interrupts are mapped and it should therefore not be described as
+>>> required.
+>>
+>> I could imagine that on all devices the interrupts are mapped in a way
+>> you need to provide msi-map-mask. IOW, can there be a Qualcomm platform
+>> without msi-map-mask?
+> 
+> I don't have access to the documentation so I'll leave that for you guys
+> to determine. I do note that the downstream DT does not use it and that
+> we have a new devicetree in linux-next which also does not have it:
+> 
+> 	https://lore.kernel.org/r/20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org
+> 
+> But at least the latter looks like an omission that should be fixed.
 
-On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
-> All of the resets are toggled together. Use the bulk api to save on some
-> code complexity.
->=20
-> The delay between resets is now correctly determined by the reset
-> framework.
+Hm, either that or the mask for sm8450 was not needed as well. Anyway,
+thanks for explanation, appreciated!
 
-If this is a recent change, could you reference the commit?
 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.c       | 15 ++++++++++-----
->  drivers/media/platform/qcom/venus/core.h       |  4 ++--
->  drivers/media/platform/qcom/venus/pm_helpers.c | 15 +++------------
->  3 files changed, 15 insertions(+), 19 deletions(-)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
-tform/qcom/venus/core.c
-> index 873affe17537..ff5601a5ce77 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -328,11 +328,16 @@ static int venus_probe(struct platform_device *pdev=
-)
->  	if (ret)
->  		return ret;
-> =20
-> -	for (i =3D 0; i < res->resets_num; i++) {
-> -		core->resets[i] =3D devm_reset_control_get_exclusive(dev, res->resets[=
-i]);
-> -		if (IS_ERR(core->resets[i]))
-> -			return PTR_ERR(core->resets[i]);
-> -	}
-> +	core->resets =3D devm_kcalloc(dev, res->resets_num, sizeof(*core->reset=
-s), GFP_KERNEL);
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Since VIDC_RESETS_NUM_MAX is only 2, I don't think a separate
-allocation is worth it.
+Best regards,
+Krzysztof
 
-> +	if (res->resets_num && !core->resets)
-> +		return -ENOMEM;
-> +
-> +	for (i =3D 0; i < res->resets_num; i++)
-> +		core->resets[i].id =3D res->resets[i];
-> +
-> +	ret =3D devm_reset_control_bulk_get_exclusive(dev, res->resets_num, cor=
-e->resets);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to get resets\n");
-> =20
->  	ret =3D venus_get_resources(core);
->  	if (ret)
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/pla=
-tform/qcom/venus/core.h
-> index 6ecaa3e38cac..2376b9cbdf2c 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -130,7 +130,7 @@ struct venus_format {
->   * @pmdomains:	a pointer to a list of pmdomains
->   * @opp_dl_venus: an device-link for device OPP
->   * @opp_pmdomain: an OPP power-domain
-> - * @resets: an array of reset signals
-> + * @resets: a reset_control_bulk_data array of hardware reset signals
->   * @vdev_dec:	a reference to video device structure for decoder instance=
-s
->   * @vdev_enc:	a reference to video device structure for encoder instance=
-s
->   * @v4l2_dev:	a holder for v4l2 device structure
-> @@ -183,7 +183,7 @@ struct venus_core {
->  	struct dev_pm_domain_list *pmdomains;
->  	struct device_link *opp_dl_venus;
->  	struct device *opp_pmdomain;
-> -	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
-> +	struct reset_control_bulk_data *resets;
-
-Any reason not to just keep this as an array[VIDC_RESETS_NUM_MAX]?
-
->  	struct video_device *vdev_dec;
->  	struct video_device *vdev_enc;
->  	struct v4l2_device v4l2_dev;
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/med=
-ia/platform/qcom/venus/pm_helpers.c
-> index 9df8f2292c17..170fb131cb1e 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -865,21 +865,12 @@ void vcodec_domains_put(struct venus_core *core)
->  static int core_resets_reset(struct venus_core *core)
->  {
->  	const struct venus_resources *res =3D core->res;
-> -	unsigned int i;
->  	int ret;
-> =20
-> -	for (i =3D 0; i < res->resets_num; i++) {
-> -		ret =3D reset_control_assert(core->resets[i]);
-> -		if (ret)
-> -			goto err;
-> -
-> -		usleep_range(150, 250);
-> -		ret =3D reset_control_deassert(core->resets[i]);
-> -		if (ret)
-> -			goto err;
-> -	}
-> +	ret =3D reset_control_bulk_reset(res->resets_num, core->resets);
-> +	if (ret)
-> +		dev_err(core->dev, "Failed to toggle resets: %d\n", ret);
-> =20
-> -err:
->  	return ret;
-
-Could be simplified to:
-
-	return reset_control_bulk_reset(res->resets_num, core-
->resets);
-
-regards
-Philipp
 
