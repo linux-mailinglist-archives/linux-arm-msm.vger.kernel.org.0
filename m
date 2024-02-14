@@ -1,265 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-10968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A09558542A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:08:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 570208542DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:36:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5FF61C268CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 06:08:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF5221F27035
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 06:36:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB8910A25;
-	Wed, 14 Feb 2024 06:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655FB1119C;
+	Wed, 14 Feb 2024 06:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liPVWZFh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eq6AOaj9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B310A24;
-	Wed, 14 Feb 2024 06:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DC4DDA6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 06:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707890926; cv=none; b=XFlSfXAaTIS493bATDGSBBeZ0JkqzLYkaGshueUHEvfEbsU35uOotW7+B07s88R98WTwqqaZ4Qxwv1VWNAbJmyChcHjR+J+PtH+PPKDX+/nFD2Zjw7CuaPKmQ719gXrc6qHQdmrjTnPBZLQCZYsWjZfEh8K/X4xTUaw/xX4Xbwc=
+	t=1707892564; cv=none; b=mK9s7S7TskovirZzocfPfRT9tYFqsUcIX9tVZm5sE22Yri8sMj4Wa8c2wH2zvkRVdMcoHBgBX5Cj2XiBSliwXyIcHvQiyKdhj6gJ9caq4TQrTWAK2uGnH5evXtA16cqDDK9Z7IxM8+B6CdZ6b0Jbs1O7fLyKem9rwJv09CMceDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707890926; c=relaxed/simple;
-	bh=26qLiOXzYeED5IFqKrSHmZtbA31FiyeXrlDpVXVqkyE=;
+	s=arc-20240116; t=1707892564; c=relaxed/simple;
+	bh=S0n0jL6+mRYRMYvMwHnUkELzPpbyDPaR1URF6rkE1lQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jVKhwRHtnQXYQiWLDPAxcjn+BjWbzilH+ViiRS82aEJy1gkfSgNMwDVo73+/nrVCWSlSlK5/TP1rpuUL9IuWWQNiZCE+aacYzGIQE38JQJKl5LGw2Sly/FJ07aYUquplol/Bo/2tiKiAVJcf2WFVBfvJZLJ7w93NgcCXWmIQs2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liPVWZFh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4A0C433F1;
-	Wed, 14 Feb 2024 06:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707890926;
-	bh=26qLiOXzYeED5IFqKrSHmZtbA31FiyeXrlDpVXVqkyE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=liPVWZFhHJpyNajvbqJtbbY+aBqy8k6HWFKYVurNV/BUVIybLsxhd2RwvJTkxIEK5
-	 xUoevEOXM5Lr4uEoHoBjNGF8di97/+LePaaGwCQuvEaCbtdpIFKKG+rPkLYosMPu0P
-	 fT+4dRxSjEeD5YkeVT1J0LbjFhKBXFGhh17HEEYyT69/sjgG1WtG8djQ6uqWU+vWrN
-	 pN/OdyErb6W4/PcxTYdqiVrwvETH/4y/irRCofAsQdSpl/IE3akjlgaSzpFRymohgJ
-	 V+1DovqQuiw3Q98kVJXqqphCXKw01RpyFAY2W45C9PkYE3Yr3r756nhUkJDM4zZy/h
-	 BHY2bXVWMIhkg==
-Date: Wed, 14 Feb 2024 00:08:43 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Maulik Shah <quic_mkshah@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_eberman@quicinc.com, 
-	quic_collinsd@quicinc.com, quic_lsrao@quicinc.com, stable@vger.kernel.org
-Subject: Re: [PATCH v3] soc: qcom: rpmh-rsc: Enhance check for VRM in-flight
- request
-Message-ID: <sizizst7xkexl3dd26sssgxtjhk7mcrawswbs76vdutsxsm6qh@mvilvzwydjpm>
-References: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=BPOwW2USXXV7BgngcUnD0d8yUvNPIAaiMHfbDGLiIEltW3POEywHmL3EXphtZghAjhqvpXOBUI7lmx+5XMa5Qw0fho6nTQ0kGJZbWB88UJKi2dYhtm/y8D7vauaYFPtN/FsFG+q+HVA5Tbe7Z6cVDQRj+7QsGliQd7x3rCGa+SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eq6AOaj9; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-5d8df34835aso339007a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 22:36:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707892561; x=1708497361; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QGcxOyI3gqRHqjaeGgz6cLsEEU9nKKLG3Qcn8Q9LRis=;
+        b=eq6AOaj9OPoWEtHfaR+s6/ZYiKHPPsLCOMfZsKHuupE2/tFbjaE71L4zUq3e3o+bT6
+         MCfflegwlpOXAMMGYTFaRZNxOMIxxVVPt5qanA2uIsxZlwUV0X0Ju8E17zpZug/+a79H
+         1xY9EIPQ291ms549zlTN0z6bfQiLXAWxlMN6Lx78g+GXUcRrNGgLVRIIxlkJntEC6Ymt
+         OGKaFrgof2GLlATs94EjhU0uPydQZCXQ92obUS/FVVpwBDDu/PWfWHeuFPmrnFN5ZUyX
+         YTW3HmJH1lBfkBSPor/YP7SG5XggbWldg1l4FZGXD+lihR2q1kU4JIdbXN3ZoIXtd/iJ
+         5e0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707892561; x=1708497361;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QGcxOyI3gqRHqjaeGgz6cLsEEU9nKKLG3Qcn8Q9LRis=;
+        b=uViPWnSU9vsfkAcx8DgxEQ43oQy0GngJSapCN7YkZmh4uDeL08FZTZdsXOKEiCvles
+         LqGK9WMpfml1pcbiugUVn2aAPoR9WYfmCQXGrAomGAecUawN2bvXRFsDVnonuEdnoZ1B
+         7ewba7jdbjVqlJr9ns7F36nGePKQN8w1ETyNdB6XoPKpI8gCYVuyfjOhNoaBfqgGFGgT
+         lyHjxLJl7VG1XjE61xmCUbggYo7p7g8OTXGTJCQYw19HKh1s1QYGj2FIRhrMCVdEcE5R
+         Y0kiQe34ARn9rB494zbgvDrrDO8l6LJmdoFGcq230kVR2AvRto5akH7HCNtb5UJH8H2W
+         XZ4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVZuRU+8mxnCzTBQE69Agt7d/zWJe9VyaL6G0WV+0iNIDyh8E3H+UdV22OH51jO6B+o6cG+7PC6S6rKNCh3/TJz+ox5jUGxOXsQ7VofJQ==
+X-Gm-Message-State: AOJu0Yxm0Z48ZktK485F3uum/zAW7LDODBcml6gc7Z9vNkzFp9VEeCaR
+	4/dk85NGHE0uHJHxlhRO9WXsT47+bVQfxT8c10s/Z6Rk6EqLlXkaFk3LN9MgGA==
+X-Google-Smtp-Source: AGHT+IEaCZgvXP49NlvjV+Z1BkxQbusXcCEQreHzCFLxhaXcni5m5Fu/GlhKKaqiQHs2Wc0a1/f5Fg==
+X-Received: by 2002:a17:90a:df86:b0:296:66a4:2e6c with SMTP id p6-20020a17090adf8600b0029666a42e6cmr1576120pjv.23.1707892560535;
+        Tue, 13 Feb 2024 22:36:00 -0800 (PST)
+Received: from thinkpad ([103.28.246.124])
+        by smtp.gmail.com with ESMTPSA id d30-20020a17090a6f2100b0029899165611sm643285pjk.35.2024.02.13.22.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Feb 2024 22:36:00 -0800 (PST)
+Date: Wed, 14 Feb 2024 12:05:54 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/10] arm64: dts: qcom: sc8280xp: enable GICv3 ITS for
+ PCIe
+Message-ID: <20240214063554.GC4618@thinkpad>
+References: <20240212165043.26961-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240212165043.26961-1-johan+linaro@kernel.org>
 
-On Mon, Feb 12, 2024 at 10:18:08AM +0530, Maulik Shah wrote:
-> Each RPMh VRM accelerator resource has 3 or 4 contiguous 4-byte aligned
-> addresses associated with it. These control voltage, enable state, mode,
-> and in legacy targets, voltage headroom. The current in-flight request
-> checking logic looks for exact address matches. Requests for different
-> addresses of the same RPMh resource as thus not detected as in-flight.
+On Mon, Feb 12, 2024 at 05:50:33PM +0100, Johan Hovold wrote:
+> This series addresses a few problems with the sc8280xp PCIe
+> implementation.
 > 
-> Add new cmd-db API cmd_db_match_resource_addr() to enhance the in-flight
-> request check for VRM requests by ignoring the address offset.
+> The DWC PCIe controller can either use its internal MSI controller or an
+> external one such as the GICv3 ITS. Enabling the latter allows for
+> assigning affinity to individual interrupts, but results in a large
+> amount of Correctable Errors being logged on both the Lenovo ThinkPad
+> X13s and the sc8280xp-crd reference design.
 > 
-> This ensures that only one request is allowed to be in-flight for a given
-> VRM resource. This is needed to avoid scenarios where request commands are
-> carried out by RPMh hardware out-of-order leading to LDO regulator
-> over-current protection triggering.
+> It turns out that these errors are always generated,
+
+How did you confirm this?
+
+> but for some yet to
+> be determined reason, the AER interrupts are never received when using
+> the internal MSI controller, which makes the link errors harder to
+> notice.
 > 
-> Fixes: 658628e7ef78 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM SoCs")
-> cc: stable@vger.kernel.org
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 
-This says, "Elliot first certified the origin of the patch, then Maulik
-took and certified the origin of the patch". But according to the From:
-the author of the patch is you, Maulik.
+If you manually inject the errors using "aer-inject", are you not seeing the AER
+errors with internal MSI controller as well?
 
-How was Elliot able to certify the patch's origin before you, when
-you're the author?
-
-If the two of you collaborated, also add Co-developed-by: Elliot above
-his s-o-b.
-
-> ---
-> Changes in v3:
-> - Fix s-o-b chain
-> - Add cmd-db API to compare addresses
-> - Reuse already defined resource types in cmd-db
-> - Add Fixes tag and Cc to stable
-> - Retain Reviewed-by tag of v2
-> - Link to v2: https://lore.kernel.org/r/20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com
-> Changes in v2:
-> - Use GENMASK() and FIELD_GET()
-> - Link to v1: https://lore.kernel.org/r/20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com
-> ---
->  drivers/soc/qcom/cmd-db.c   | 41 +++++++++++++++++++++++++++++++++++------
->  drivers/soc/qcom/rpmh-rsc.c |  3 ++-
->  include/soc/qcom/cmd-db.h   | 10 +++++++++-
->  3 files changed, 46 insertions(+), 8 deletions(-)
+> On the X13s, there is a large number of errors generated when bringing
+> up the link on boot. This is related to the fact that UEFI firmware has
+> already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
+> link at Gen3 generates a massive amount of errors until the Wi-Fi
+> firmware is restarted.
 > 
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index a5fd68411bed..e87682b9755e 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -1,6 +1,10 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
-> -/* Copyright (c) 2016-2018, 2020, The Linux Foundation. All rights reserved. */
-> +/*
-> + * Copyright (c) 2016-2018, 2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
->  
-> +#include <linux/bitfield.h>
->  #include <linux/debugfs.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
-> @@ -15,8 +19,8 @@
->  
->  #define NUM_PRIORITY		2
->  #define MAX_SLV_ID		8
-> -#define SLAVE_ID_MASK		0x7
-> -#define SLAVE_ID_SHIFT		16
-> +#define SLAVE_ID(addr)		FIELD_GET(GENMASK(19, 16), addr)
-> +#define VRM_ADDR(addr)		FIELD_GET(GENMASK(19, 4), addr)
->  
->  /**
->   * struct entry_header: header for each entry in cmddb
-> @@ -221,9 +225,34 @@ const void *cmd_db_read_aux_data(const char *id, size_t *len)
->  EXPORT_SYMBOL_GPL(cmd_db_read_aux_data);
->  
->  /**
-> - * cmd_db_read_slave_id - Get the slave ID for a given resource address
-> + * cmd_db_match_resource_addr - Compare if both Resource addresses are same
-
-() after the function name, please.
-
-> + *
-> + * @addr1: Resource address to compare
-> + * @addr2: Resource address to compare
-> + *
-> + * Return: true on matching addresses, false otherwise
-
-"Return: true if the two addresses refer to the same resource"
-
-> + */
-> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
-> +{
-> +	/*
-> +	 * Each RPMh VRM accelerator resource has 3 or 4 contiguous 4-byte
-> +	 * aligned addresses associated with it. Ignore the offset to check
-> +	 * for VRM requests.
-> +	 */
-> +	if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
-> +	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
-
-One line please, it's just 83 characters.
-
-> +		return true;
-> +	else if (addr1 == addr2)
-> +		return true;
-> +	else
-> +		return false;
-> +}
-> +EXPORT_SYMBOL_GPL(cmd_db_match_resource_addr);
-> +
-> +/**
-> + * cmd_db_read_slave_id - Get the slave ID for a given resource name
->   *
-> - * @id: Resource id to query the DB for version
-> + * @id: Resource id to query the DB for slave id
-
-Although trivial, it's unrelated to the newly introduced logic. Please
-submit a separate patch. Please also then add the () after the function
-name.
-
-Regards,
-Bjorn
-
->   *
->   * Return: cmd_db_hw_type enum on success, CMD_DB_HW_INVALID on error
->   */
-> @@ -238,7 +267,7 @@ enum cmd_db_hw_type cmd_db_read_slave_id(const char *id)
->  		return CMD_DB_HW_INVALID;
->  
->  	addr = le32_to_cpu(ent->addr);
-> -	return (addr >> SLAVE_ID_SHIFT) & SLAVE_ID_MASK;
-> +	return SLAVE_ID(addr);
->  }
->  EXPORT_SYMBOL_GPL(cmd_db_read_slave_id);
->  
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index a021dc71807b..daf64be966fe 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
->   * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
-> @@ -557,7 +558,7 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
->  		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
->  			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
->  			for (k = 0; k < msg->num_cmds; k++) {
-> -				if (addr == msg->cmds[k].addr)
-> +				if (cmd_db_match_resource_addr(msg->cmds[k].addr, addr))
->  					return -EBUSY;
->  			}
->  		}
-> diff --git a/include/soc/qcom/cmd-db.h b/include/soc/qcom/cmd-db.h
-> index c8bb56e6852a..47a6cab75e63 100644
-> --- a/include/soc/qcom/cmd-db.h
-> +++ b/include/soc/qcom/cmd-db.h
-> @@ -1,5 +1,8 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
-> -/* Copyright (c) 2016-2018, The Linux Foundation. All rights reserved. */
-> +/*
-> + * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
->  
->  #ifndef __QCOM_COMMAND_DB_H__
->  #define __QCOM_COMMAND_DB_H__
-> @@ -21,6 +24,8 @@ u32 cmd_db_read_addr(const char *resource_id);
->  
->  const void *cmd_db_read_aux_data(const char *resource_id, size_t *len);
->  
-> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2);
-> +
->  enum cmd_db_hw_type cmd_db_read_slave_id(const char *resource_id);
->  
->  int cmd_db_ready(void);
-> @@ -31,6 +36,9 @@ static inline u32 cmd_db_read_addr(const char *resource_id)
->  static inline const void *cmd_db_read_aux_data(const char *resource_id, size_t *len)
->  { return ERR_PTR(-ENODEV); }
->  
-> +static inline bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
-> +{ return false; }
-> +
->  static inline enum cmd_db_hw_type cmd_db_read_slave_id(const char *resource_id)
->  { return -ENODEV; }
->  
+> A recent commit enabling ASPM on certain Qualcomm platforms introduced
+> further errors when using the Wi-Fi on the X13s as well as when
+> accessing the NVMe on the CRD. The exact reason for this has not yet
+> been identified, but disabling ASPM L0s makes the errors go away. This
+> could suggest that either the current ASPM implementation is incomplete
+> or that L0s is not supported with these devices.
 > 
-> ---
-> base-commit: 615d300648869c774bd1fe54b4627bb0c20faed4
-> change-id: 20240210-rpmh-rsc-fixes-372a79ab364b
+
+What are those "further errors" you are seeing with ASPM enabled? Are those
+errors appear with GIC ITS or with internal MSI controller as well?
+
+> Note that the X13s and CRD use the same Wi-Fi controller, but the errors
+> are only generated on the X13s. The NVMe controller on my X13s does not
+> support L0s so there are no issues there, unlike on the CRD which uses a
+> different controller. The modem on the CRD does not generate any errors,
+> but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
+> when not used, which could indicate that there are bigger problems with
+> the ASPM implementation. I don't have a modem on my X13s so I have not
+> been able to test whether L0s causes an trouble there.
 > 
-> Best regards,
+> Enabling AER error reporting on sc8280xp could similarly also reveal
+> existing problems with the related sa8295p and sa8540p platforms as they
+> share the base dtsi.
+> 
+> The last four patches, marked as RFC, adds support for disabling ASPM
+> L0s in the devicetree and disables it selectively for the X13s Wi-Fi
+> and CRD NVMe. If it turns out that the Qualcomm PCIe implementation is
+> incomplete, we may need to disable ASPM (L0s) completely in the driver
+> instead.
+> 
+
+If the device is not supporting L0s, then it as to be disabled in the device,
+not in the PCIe controller, no?
+
+> Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
+> significant impact on the power consumption 
+> 
+> The DT bindings and PCI patch are expected to go through the PCI tree,
+> while Bjorn A takes the devicetree updates through the Qualcomm tree.
+> 
+
+Since I took a stab at enabling the GIC ITS previously, I noticed that the NVMe
+performance got a slight dip. And that was one of the reasons (apart from AER
+errors) that I never submitted the patch.
+
+Could you share the NVMe benchmark (fio) with this series?
+
+> Johan
+> 
+> 
+> Johan Hovold (10):
+>   dt-bindings: PCI: qcom: Allow 'required-opps'
+>   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+>   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+>   arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
+>   arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
+>   arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
+
+Is this patch based on the version I shared with you long back? If so, I'd
+expect to have some credit. If you came up with your own version, then ignore
+this comment.
+
+- Mani
+
+>   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+>   PCI: qcom: Add support for disabling ASPM L0s in devicetree
+>   arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for NVMe
+>   arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for Wi-Fi
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  6 +++++-
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  4 ++++
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  3 +++
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 17 +++++++++++++++-
+>  drivers/pci/controller/dwc/pcie-qcom.c        | 20 +++++++++++++++++++
+>  5 files changed, 48 insertions(+), 2 deletions(-)
+> 
 > -- 
-> Maulik Shah <quic_mkshah@quicinc.com>
+> 2.43.0
 > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
