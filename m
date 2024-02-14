@@ -1,89 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-11048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8720C85516B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:04:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DA998551F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:20:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 394D71F2239F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:04:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D4AFBB30522
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 18:07:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E94130AC3;
-	Wed, 14 Feb 2024 17:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E37412AAFF;
+	Wed, 14 Feb 2024 17:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ES9QI0tv"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="2HNwF6UK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1799D12FF9F;
-	Wed, 14 Feb 2024 17:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45F129A74;
+	Wed, 14 Feb 2024 17:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707933496; cv=none; b=o0duMjPkV7i8Mad9yrUePLCzk3kcLA8IQwYEUyzdO3Q/Pulrmd5Khd2tl7Trb4cATwfhqscSl1X6VGXxu5fCR4eteFGbx0VG+mqN6tihXd3XF6uniwRyEqIeT5ObLpIxQ+N+k60FQVTmyo9LuHMNqK01pl+VFI7I1G4LW2O8d4Y=
+	t=1707933592; cv=none; b=ZMVT+IDGZ4PAirn8YRK/MS/pUyKWkHYHpG9H5yt0zHlGnPewzOwIy/Tbxyki79OWEbYJZhiHyz+sMUZ2T2UqId4tyMXykO9JdqNRNwAc/40oBORRT67mlpKKswEeZNskwkI8I34JlTAjeZKh2p4wqwvIcYujX/FS2xDAbIsX//k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707933496; c=relaxed/simple;
-	bh=Ya63E65YcbVHL4uPFHoX6f2hfQp8l81yI8tgBeiUBTQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rRQ8DZL9WOuuTtm9IEEYqe7R6w4d/7TKd+gJShZ5d6Xs9IT/CnxekjaqhkQVst82hbWeFfrYXKocAOxhv7Qi9uh3m+/iuy4BAVo1MeZ6ZRcp0DoILDnnvLvnfTiAG06BYXttQWnzo+q5edgYAMuOhYQrC/uZu4Hu7vXqYTTKaVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ES9QI0tv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D31C43399;
-	Wed, 14 Feb 2024 17:58:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707933495;
-	bh=Ya63E65YcbVHL4uPFHoX6f2hfQp8l81yI8tgBeiUBTQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES9QI0tvnxYax7I47IMhhicFTT2aMY48oIwFFHJ/Wijy4Hu3oYkVQnNoOqz3Xyvw/
-	 lGX902/OBlx+wdojjI+nGnafPoODeJ4qjH9op4UFeGvIQR3nJQvUU+kCh3m2c5piXz
-	 otLpUOiMEwdjItne7De007uN0ux4pTycKuSbsAPXcAHu9e7NXw59hqPHr6Qk7nfxJy
-	 P+A1Gvcdba4N5ZrvNFjoQdQ4p6LugU/PydSs52AEKmLOXmxs5KqJlt3XbQqVgfGbSl
-	 xItZI0kdF5G7oDUeMTuCyrHw4KQVvXvMZBmHIP1/pvcmjMcyM5EfXS1SXPP0lU1bnp
-	 Yr52C31wK7jUQ==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yassine Oudjana <y.oudjana@protonmail.com>
-Cc: Yassine Oudjana <yassine.oudjana@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	s=arc-20240116; t=1707933592; c=relaxed/simple;
+	bh=Dw80zWF0tvaZHmJNlHE2DtcVDtrIsNwJTAzdsUiupMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hmi+R7X4iyR/puFj4SEBaDG5whrj+phDYIv8vtOAdWMc3TLRRQKCzbZmjweI8yR89LHWOz16Iybb+y/DhpsyC+3SQUvjrGvPXo0SeMtsPYF00jptC+s8+EUSD8iPw5bOygujxOA+baa4G73rNs64yaHtA4JTwoSLorzswsHsPCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=2HNwF6UK; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=yjuukyO4NH4wsNzuTW5ue6r+n30kuSgrhuoOPD109OA=; b=2HNwF6UKBKiic0namuggXLVlyU
+	4qjx0KcFXgjRJPIwjskhhQ6QMSfPRGDmRixexwIvmhQuvBEjXgLW2uposRZOQFQG6hExTpRrpOzDN
+	DD+avU+cZ/c7VFh9iu9N9h+QWrPSkXSlHyv/PU/2fKLhc1n3sjikVNaQT7iaagCgHcvM=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1raJY1-007oVd-O1; Wed, 14 Feb 2024 18:59:53 +0100
+Date: Wed, 14 Feb 2024 18:59:53 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Robert Marko <robimarko@gmail.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, hkallweit1@gmail.com,
+	linux@armlinux.org.uk, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, ansuelsmth@gmail.com,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Define UFS UniPro clock limits
-Date: Wed, 14 Feb 2024 11:57:43 -0600
-Message-ID: <170793345802.27225.14414738389431861403.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231218133917.78770-1-y.oudjana@protonmail.com>
-References: <20231218133917.78770-1-y.oudjana@protonmail.com>
+Subject: Re: [PATCH net-next] net: phy: qca807x: move interface mode check to
+ .config_init_once
+Message-ID: <6fd8e93d-a391-4417-b282-e2018338d077@lunn.ch>
+References: <20240212115043.1725918-1-robimarko@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240212115043.1725918-1-robimarko@gmail.com>
 
-
-On Mon, 18 Dec 2023 13:39:42 +0000, Yassine Oudjana wrote:
-> These limits were always defined as 0, but that didn't cause any issue
-> since the driver had hardcoded limits. In commit b4e13e1ae95e ("scsi: ufs:
-> qcom: Add multiple frequency support for MAX_CORE_CLK_1US_CYCLES") the
-> hardcoded limits were removed and the driver started reading them from DT,
-> causing UFS to stop working on MSM8996. Add real UniPro clock limits to fix
-> UFS.
+On Mon, Feb 12, 2024 at 12:49:34PM +0100, Robert Marko wrote:
+> Currently, we are checking whether the PHY package mode matches the
+> individual PHY interface modes at PHY package probe time, but at that time
+> we only know the PHY package mode and not the individual PHY interface
+> modes as of_get_phy_mode() that populates it will only get called once the
+> netdev to which PHY-s are attached to is being probed and thus this check
+> will always fail and return -EINVAL.
 > 
-> [...]
+> So, lets move this check to .config_init_once as at that point individual
+> PHY interface modes should be populated.
+> 
+> Fixes: d1cb613efbd3 ("net: phy: qcom: add support for QCA807x PHY Family")
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-Applied, thanks!
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-[1/1] arm64: dts: qcom: msm8996: Define UFS UniPro clock limits
-      commit: 68c4c20848d71b0e69c3403becb5dd23e89e5896
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+    Andrew
 
