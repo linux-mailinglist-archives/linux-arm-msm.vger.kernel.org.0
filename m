@@ -1,144 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-10994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D535F8549C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:56:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CE118549C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:57:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59DC9B286A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 12:56:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1A66B2899F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 12:57:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B518252F75;
-	Wed, 14 Feb 2024 12:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5473E537F6;
+	Wed, 14 Feb 2024 12:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EFc3LRbK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gGSZ4C4C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1CF487BC;
-	Wed, 14 Feb 2024 12:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB0C52F82
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 12:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707915383; cv=none; b=fJihn8LkEtPfwDlweawxyUG8XVmyR6wjsPAhKruLRzEHWuiQ8llZjY82InDnvBfeo8YNzJRwbKTqkYCPm31rCgP860Fh+BfQ0YywCvyl8c+dJ7Ui3C6NeewWVdeguB0HTc7f6JzeKl8dYIy0kXcWC3FWg6an6vh76eo9Zhf/Blo=
+	t=1707915395; cv=none; b=IrCMBd/FzwTZcQYJL9seLIkF1Kd5TI8/M6NOvZ123s7PkJKVBpe0tOTqe0sMQ4qx1z8j8NKIn0kL0fVxr1u3eeM4rtwZffcqY2D/mdyQGL5WvgORvslI1TW9BigzdcsSBJS8RO3kxR3yv4wDKH+JR36ElRgMhw65uvUHhBwLzy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707915383; c=relaxed/simple;
-	bh=6DR0P/WQ+fKVZKkQryKokxeT6znavJmaWnFd7byWnkc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=iDNYWHcEbXy12cK4vssvDMwhVDc03kN8igpJRTxgy/tT2sDXfXDsVLpqOOR34/JtiFPxQExMYN+nbwII6kAyTJgBo9sp+5Z3fFdTMNKxawpftdtEiJN2E/Lb5dDjEcFSJRKhQSs3RAUmpgRSB7t7fKXXWkH5CHZ/L8/+HKSbCqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EFc3LRbK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41E6q01Z027945;
-	Wed, 14 Feb 2024 12:56:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=IqeTyFlzG5Lbc99OW9HRKNNfQNLD+RGgkxJvm4oKLAI=; b=EF
-	c3LRbKYJhnk8C1CCCe3TrG/gmzRlh7kBJsxHSXvXv/66oK5Wey/mpHGMASWvD0aV
-	OhJ4J1PGqLHwgUSPY1im0/XBlZbaaPaaRkm0tUh6sgSAh3NOBo4lRuIdX0HyBK1L
-	CyOhsvDwVW79UVIl5DrvpolUA96RQVN3jCQLeD+qiaojlK1kW2lIXlbznhTTHiUC
-	hHdUBPanEGniRX0VgchpIoD7Uvjm3zCFlZyEtSd4pAxxrQ8loXY+FZeGBsiZMFp/
-	YuNmvLD48Ux9SumJ7b3/YtqvUc+9M1YMjYT1VgRWnyi4mvEfUP78BKX2mLyXi/QZ
-	BV6l/FAoLovjoHAYKBCg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8myg1165-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 12:56:17 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41ECuG3j008259
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 12:56:16 GMT
-Received: from [10.214.225.222] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 04:56:09 -0800
-Message-ID: <a930a3d6-0846-a709-8fe9-44335fec92ca@quicinc.com>
-Date: Wed, 14 Feb 2024 18:26:06 +0530
+	s=arc-20240116; t=1707915395; c=relaxed/simple;
+	bh=Sa+1BolWChYiZB2NgR3V5OISkN3sIY1zdycmekza9Dw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=doJQVkZcDssdSmH2SGWoMuMAKY9Z5S1SE/+DS+795ONSigfjYYOVWbXzs7EwGli5PKUi4ZaDNsztLq1rPxJEODZouXTzGo/UdVWvZJEzIZy7AjjNcFrZmM96cT0B+ROSOYgXMk4WZHcltiOYAIT9bxDdG3mXKE07PIvqq2WYHgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gGSZ4C4C; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-339289fead2so3524007f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 04:56:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707915391; x=1708520191; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0CVEfoeXX7i2NsSM9t4AdPWCDJc7K0DfQ2BA7RsZvK8=;
+        b=gGSZ4C4CvCYLKvf3/DVknXF7hcOz3/YnVpKpnkDV38+eSlJMlWf3Tsv2cuSJ5ZsdvV
+         9mJQXltIyRcDx+JzcBhL86DFf1Oj29R4baDLPtCWUldzCMXy0+KPOmtDE/mnqKHsNZtJ
+         9lRUUDOUyscuPTKqXmGcP+dgLjnGGL/nq8avSTcx35hiJPlCKDoc5Y6v+K4UrOCKTJss
+         jV2SExkCmCR4b+lSdbhkqZZImmCAbPcOl/siSB8JI5+Ho/FS9KmmmyHD83Zyw6iQWRTe
+         ebMfbJsicK4/BOjGrOXB9bndWY07xLKKrCbVxsF0NaQvVqytCdjKXa5hpNasGfdrlTar
+         eUtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707915391; x=1708520191;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0CVEfoeXX7i2NsSM9t4AdPWCDJc7K0DfQ2BA7RsZvK8=;
+        b=pCVShPcLOypuTF/bdXpS0T4k51E4O3ghL78wRTQm5plH6/lCROny/gJKns3X2efqtQ
+         BAwo3USUxZgzYAHKYjEftRFHt/Edp4xuiPVAMvPfmOLe4bNzv+JEvgG/m4dM70CvhVLi
+         tiAszD5eW16hHxE5jaDlEeXMBWqILcf7s9KoJy7/MeR8EC7crCtlHaIxx38mEOhxjPHA
+         vMOEUgmS+AUBK2c7xx90BFwizpkv1z69wbWp+kzb+ji+14QE6KcKKjeQM8AMGThuo79z
+         13FoqqnFh4yxEJ4im46q1PLJQNK3wKCKMsQp5iy1Wh3iD0l/ctI1Fp5oLJAZsauoHQvJ
+         pPcA==
+X-Forwarded-Encrypted: i=1; AJvYcCVEszWJPCRb1RyRYP7PZ2hzc4gJmX1kch5ULqFribVoxSevcLhHSs8+kZN3szX2r1wy0txhhqUYmUNGQKlor6+iW2EuHPK1xiavkVV1Jg==
+X-Gm-Message-State: AOJu0Yx88RrVS8FeNfxHe17LbfL9VbHx7MkXYqMY7e8YdxIV3DU1JAeR
+	7sEaUsjg10svtTUzme3COjSt/UHN9zSqasuc2wmajo1NjcePL/3MjG/e2hLoyTc=
+X-Google-Smtp-Source: AGHT+IFVfyk3IYiL2cRlnX2EJ3RxS7YdOGPnx5x8KGnLQ4fcHD6UiYs8VGR1b8IpJGlUasIrJb5/lg==
+X-Received: by 2002:a5d:67cf:0:b0:33b:48ee:8a35 with SMTP id n15-20020a5d67cf000000b0033b48ee8a35mr1592835wrw.3.1707915391609;
+        Wed, 14 Feb 2024 04:56:31 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWhaAFj95gzjw6GIy3yd6sgKrJFZvsXJq7O0a9v7Ng5Hl2RD8aD0joMjbQNBx8ikZX+cGAgaDjo3Bmt6Lo+jbiG+yXdsSF/xdztgL9WCvJa/o86Rmq2Me4qGljVQgxUaNbnl9TvC0GruhA3+ZSrMqbXU4fms/WSxBTMmWS95kclBmRfa/HPa/ymqaSc2qRKB0kyq5Vt2S0v2Cs/wxSdpfJvC0ROG08D5G5NKs3+viuKdsWGuQr5OeYv+ZneWFr3FU99ogezmwj3/Z31JIItL4+jguHcc3ThzuyrQFIHoA+VXfyD/RXGhhqez14473Tptk5P+w2xZfZQLosw8jYSIr3BTtJjsTH48H4mJeq/ckXoiFGodholkg7BJCJT2N0bA+oHkMtFenpb2jq/s8l1XQ3qGbVePdUBIRBuKVws0WdYOYzpgsYzYXeilEIlLYUW6QTlUKCXpHqU+/IlxNPeJNtBnkZuOwjtpgkCDRQ=
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm12557887wrb.22.2024.02.14.04.56.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Feb 2024 04:56:31 -0800 (PST)
+Message-ID: <c12ce98f-d5af-4c54-a453-2416b85b4a5d@linaro.org>
+Date: Wed, 14 Feb 2024 12:56:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 0/2] Add board-id support for multiple DT selection
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/20] Venus cleanups
 Content-Language: en-US
-From: Amrit Anand <quic_amrianan@quicinc.com>
-To: Rob Herring <robh@kernel.org>
-CC: <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <1705749649-4708-1-git-send-email-quic_amrianan@quicinc.com>
- <20240124145631.GA873781-robh@kernel.org>
- <b929f0cd-89b6-c48d-d466-db6bbed621b5@quicinc.com>
-In-Reply-To: <b929f0cd-89b6-c48d-d466-db6bbed621b5@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: k8sSZjfZbDmNnlavKhPAmg49Bqb6K69a
-X-Proofpoint-ORIG-GUID: k8sSZjfZbDmNnlavKhPAmg49Bqb6K69a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_05,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 priorityscore=1501 impostorscore=0 bulkscore=0 mlxscore=0
- adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402140099
 
-On 2/2/2024 10:30 AM, Amrit Anand wrote:
-<snip>
->> There's a similar issue for EFI boot with how to select an OS installed
->> DTB[1]. You might not care now, but users may later on (like we have
->> already with QCom devices with fixed bootloaders). If you do this
->> board-id route, then no doubt that compatible values won't be specific
->> enough or have suitable fallbacks to be used. Then EFI boot can't use
->> compatible either and needs to use this QCom specific logic. It may be a
->> common property name, but all the types you defined are QCom specific
->> and the matching logic is pretty much undocumented. I'm not saying we
->> have to use compatible. There wasn't even agreement to use it for EFI
->> boot case. This does need to work for multiple vendors and multiple boot
->> scenarios.
->>
-> Agree, given so many hardware identifiers Qcom uses to find the DT 
-> based on a best and exact match algorithm, it may not work as is for 
-> other vendors/users outside the scope of Qcom.
-> Since we have none to very limited visibility into complete set of DT 
-> selection identifiers being used by other users or into their 
-> selection algorithms since it is mostly undocumented,
-> designing a perfectly generic solution (one-size-fits-all) could be 
-> far-fetched. The number of board files in Qcom DT selection software 
-> package often reaches over 100 DT files due to multiple SoCs and
-> board types being supported out of a single software package and these 
-> multiple hardware identifiers helps to pick the closest best match DT 
-> within a very large pool of DTs.
-> Not to affect other users/vendors who would be using their own set of 
-> identifiers and an entirely different algorithm for DT selection, 
-> would it make more sense to define these Qcom specific
-> identifiers within Qcom specific bindings (qcom.yaml), along with 
-> detailed documentation on our DT selection algorithm?
+On 09/02/2024 21:09, Konrad Dybcio wrote:
+> Definitely needs testing on:
+> 
+> - SDM845 with old bindings
+> - SDM845 with new bindings or 7180
 
+I can do 8916 for you but, I think we have these boards available 
+remotely on qc.lab.
 
-I have written a patch for defining Qcom specific identifiers within 
-Qcom specific bindings (qcom.yaml) along with documentation on DT 
-selection algorithm, would it be okay to send for review?
+Could you test those boards out remotely yourself ?
 
->
-> Thanks,
-> Amrit
->
->>
->> Rob
->>
->> [1] https://lore.kernel.org/u-boot/20231114232012.GD6601@bill-the-cat/#r
+---
+bod
 
