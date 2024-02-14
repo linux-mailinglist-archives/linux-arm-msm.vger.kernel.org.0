@@ -1,137 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-11004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DE25854ABF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:52:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27133854AF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:01:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35B1128B150
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:51:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A0B71C2834E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:01:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A0354792;
-	Wed, 14 Feb 2024 13:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE50554F8B;
+	Wed, 14 Feb 2024 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rO2Y0P/r"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ljkXjH4C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753ED1CABA;
-	Wed, 14 Feb 2024 13:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0011D5C8FE;
+	Wed, 14 Feb 2024 13:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707918707; cv=none; b=h+Yo1DRkcuCIptGZu+MhkwjXSuo2s/3ctEiDuR+fHFjlUifktHOjclxro0Wk4aYochd0cuPREkrszIkhh99FmGSstqdtboNl9nSnC7SsqbAUkc5huyksK13u0PtNV4sk19eBWkd7M+MNvgj0V1wlQYZ0OYcN709EmL/iK5erRBM=
+	t=1707919154; cv=none; b=dNitJRw7i4/1AuTlv25dktPnOAn9KFNMQ28sd+zo8s7hneX2evl2LMTv9dKc3gxfoyCpBLeZPOHLOIrJRfQwG1C6LT+6EHLujzVzQDwz4P+/yX/HIvLZkGJfB15Y+UihSc2R0DY78EH/22Y0cVDz7u/1a7jEGyEFIPw0+R0IViU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707918707; c=relaxed/simple;
-	bh=Qq4RI3/eNvGIvnkvbEhKzEkeUXbVPZq7+5c0G9BM++I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LA93RMMLJwUrJ9peN0K4SSJ5/9Tp6Jnse0x7sVG+iABrQjbhOUGKJJ5SRUGWi8T5IHkrY7PoRExlNh1XU+Fhq9U/57LiiI90bLUvPsL5N6ojXFHjcuU+2QtpK5X+UWeGxvM9Szpw7H61DuOpDq5af8DmHeqesxJGht46SjbNgjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rO2Y0P/r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A38C433F1;
-	Wed, 14 Feb 2024 13:51:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707918706;
-	bh=Qq4RI3/eNvGIvnkvbEhKzEkeUXbVPZq7+5c0G9BM++I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rO2Y0P/rIMwckSI4l41akdMEhZtEl+Kno80nEh/FOlEu7LHwVqzr0gHSGb4rxy46h
-	 wbIn8eX2z8YkjpATs0FKPYzqCLGxqDHTm8cq8aFD6cJcrHNFv38mSRCd6GK3LEcSaU
-	 iR6e45a8NtmMSeCggrS/dEcwl/FPrhMXzzm4LfIzJ3FRVh/ANgrmWP/c8fJr3sawIp
-	 u7gI3lmObcKNatscXsV6qohUPs/nwil/IKwjHFjnszp10/MitkFSNiZEwf0c465CDs
-	 wX+BNxgYVQfwmiCR7EhqC9Ij0lDBz3uRo3SirfmLB1C7ZPp1QbOyeoXwe3k5LGZsKV
-	 oL0mcq15CVDTQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1raFgD-000000005BW-1E73;
-	Wed, 14 Feb 2024 14:52:06 +0100
-Date: Wed, 14 Feb 2024 14:52:05 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: drm/msm: DisplayPort regressions in 6.8-rc1
-Message-ID: <ZczFhVjHIm55JTfO@hovoldconsulting.com>
-References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
- <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
+	s=arc-20240116; t=1707919154; c=relaxed/simple;
+	bh=gvJJZ/u+oFmJe9o1bdHtO/O/5u2N3evyh8Zop5iY370=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XjFBcmmXx8L/Xp5ybq9KjVWh7XmwuCo/xhGtLhmMH/jdBNL9j6LuDt0Tgwf4Uq2K+K59apnRFNvlNvkFlSAIOk/G82vFF2tFknogr6GP/30CAtYl+ro81VsZ1ygHOY+oeTfozKFVQ+Uryib5G/OhKnQuN11ggyDFewUhPEuumLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ljkXjH4C; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EAxMXw001851;
+	Wed, 14 Feb 2024 13:58:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=UsRN04YgdttuRzXuuaPeRfbR90rptVxiln+xXdu7HOM=; b=lj
+	kXjH4CFDMWOxTHHPA+dFro8BHptRBBZHD55vn6e728Un0kpyEwCNNbi3yTPzcfvc
+	Z9frQZ9CfyqnIIhH74EPauBaZ3rDqjUJNFld/Id7QQWQdhQ5wecheYYbd7YbuSDR
+	Mnv2ufEeexLbxdSdavuVptXyzF4txem6Lqui8MwrHw+62A41sesLPlxJFrj2VcPh
+	s0vHwftM3XG+yMIREDFZdXnwGNyuKgGdsBPa+80rkGsDn1Mn+7g3fRmHjY08+67d
+	6JaehgHgm/7Iw/eTsppRD/aYr30qLAWPAjzEPc5R80O6HArRaAlRRfJxViAekSKX
+	MEmdMrhl5CLvunNSykKQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8jn9hb6j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 13:58:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EDwjva016998
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 13:58:45 GMT
+Received: from [10.216.19.164] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
+ 2024 05:58:31 -0800
+Message-ID: <e5a5b32c-bc9d-42b7-b1a8-90e22b957915@quicinc.com>
+Date: Wed, 14 Feb 2024 19:28:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <jic23@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <lee@kernel.org>,
+        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
+        <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
+        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
+        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
+ <20231231171237.3322376-4-quic_jprakash@quicinc.com>
+ <CAA8EJpr4q7pFF44oUjJSWGYKgiUCB_23zVHw6J3a3mwn7cKgyg@mail.gmail.com>
+Content-Language: en-US
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <CAA8EJpr4q7pFF44oUjJSWGYKgiUCB_23zVHw6J3a3mwn7cKgyg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jDzhMT2m9_qcniAuUC2Ibd9s1FWU_QVo
+X-Proofpoint-ORIG-GUID: jDzhMT2m9_qcniAuUC2Ibd9s1FWU_QVo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501 clxscore=1011
+ phishscore=0 suspectscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402140108
 
-On Tue, Feb 13, 2024 at 10:00:13AM -0800, Abhinav Kumar wrote:
+Hi Dmitry,
 
-> I do agree that pm runtime eDP driver got merged that time but I think 
-> the issue is either a combination of that along with DRM aux bridge 
-> https://patchwork.freedesktop.org/series/122584/ OR just the latter as 
-> even that went in around the same time.
+On 12/31/2023 11:16 PM, Dmitry Baryshkov wrote:
+> On Sun, 31 Dec 2023 at 19:13, Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
+>> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
+>> with all SW communication to ADC going through PMK8550 which
+>> communicates with other PMICs through PBS.
 
-Yes, indeed there was a lot of changes that went into the MSM drm driver
-in 6.8-rc1 and since I have not tried to debug this myself I can't say
-for sure which change or changes that triggered this regression (or
-possibly regressions).
+>> +static int adc_tm_register_tzd(struct adc5_chip *adc)
+>> +{
+>> +       unsigned int i, channel;
+>> +       struct thermal_zone_device *tzd;
+>> +
+>> +       for (i = 0; i < adc->nchannels; i++) {
+>> +               channel = V_CHAN(adc->chan_props[i]);
+>> +
+>> +               if (!adc->chan_props[i].adc_tm)
+>> +                       continue;
+>> +               tzd = devm_thermal_of_zone_register(adc->dev, channel,
+>> +                       &adc->chan_props[i], &adc_tm_ops);
+> It is _very_ useful to register a hwmon too by calling
+> devm_thermal_add_hwmon_sysfs(). However this becomes tricky, as this
+> function is not defined in one of the global headers.
+>
+> This actually points out an issue. You have the ADC driver fused
+> together with the thermal driver. Can I suggest using the aux device
+> to split the thermal functionality to the separate driver?
+>
+> This way it would be possible to use the ADC without any thermal
+> monitoring in place.
 
-The fact that the USB-C/DP PHY appears to be involved
-(/soc@0/phy@88eb000) could indeed point to the series you mentioned.
 
-> Thats why perhaps this issue was not seen with the chromebooks we tested 
-> on as they do not use pmic_glink (aux bridge).
-> 
-> So we will need to debug this on sc8280xp specifically or an equivalent 
-> device which uses aux bridge.
+There are a couple of issues which may make it harder to split the 
+thermal functionality from this driver into an auxiliary driver as you 
+mentioned.
 
-I've hit the NULL-pointer deference three times now in the last few days
-on the sc8280xp CRD. But since it doesn't trigger on every boot it seems
-you need to go back to the series that could potentially have caused
-this regression and review them again. There's clearly something quite
-broken here.
+For one, we use the same set of registers (offsets 0x4f-0x55) for both 
+VADC function(requesting an immediate channel reading) and ADC_TM 
+function (setting upper/lower thermal thresholds on a channel). To avoid 
+any race conditions, we would need to share a mutex between the 
+top-level ADC driver and the auxiliary ADC_TM thermal driver to avoid 
+concurrently accessing these or any other shared registers.
 
-> On 2/13/2024 3:42 AM, Johan Hovold wrote:
+In addition, the device has only one interrupt with one interrupt 
+handler, and it gets triggered for both VADC and ADC_TM  events (end of 
+conversion and threshold violation, respectively). The handler checks 
+for both types of event and handles it as required.
 
-> > Since 6.8-rc1 the internal eDP display on the Lenovo ThinkPad X13s does
-> > not always show up on boot.
+For the shared interrupt, we may be able to keep the interrupt handler 
+in the top-level driver and just notify the auxiliary TM driver if a 
+threshold violation is detected. For the shared mutex, I think the 
+auxiliary driver may be able to access the parent driver's mutex, but 
+I'll need to check more for the implementation in both of these cases.
 
-> > 	[    6.007872] [drm:drm_bridge_attach [drm]] *ERROR* failed to attach bridge /soc@0/phy@88eb000 to encoder TMDS-31: -16
-	
-> > and this can also manifest itself as a NULL-pointer dereference:
-> > 
-> > 	[    7.339447] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-> > 	
-> > 	[    7.643705] pc : drm_bridge_attach+0x70/0x1a8 [drm]
-> > 	[    7.686415] lr : drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
-> > 	
-> > 	[    7.769039] Call trace:
-> > 	[    7.771564]  drm_bridge_attach+0x70/0x1a8 [drm]
-> > 	[    7.776234]  drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
-> > 	[    7.781782]  drm_bridge_attach+0x80/0x1a8 [drm]
-> > 	[    7.786454]  dp_bridge_init+0xa8/0x15c [msm]
-> > 	[    7.790856]  msm_dp_modeset_init+0x28/0xc4 [msm]
-> > 	[    7.795617]  _dpu_kms_drm_obj_init+0x19c/0x680 [msm]
-> > 	[    7.800731]  dpu_kms_hw_init+0x348/0x4c4 [msm]
-> > 	[    7.805306]  msm_drm_kms_init+0x84/0x324 [msm]
-> > 	[    7.809891]  msm_drm_bind+0x1d8/0x3a8 [msm]
-> > 	[    7.814196]  try_to_bring_up_aggregate_device+0x1f0/0x2f8
-> > 	[    7.819747]  __component_add+0xa4/0x18c
-> > 	[    7.823703]  component_add+0x14/0x20
-> > 	[    7.827389]  dp_display_probe+0x47c/0x568 [msm]
-> > 	[    7.832052]  platform_probe+0x68/0xd8
-> > 
-> > Users have also reported random crashes at boot since 6.8-rc1, and I've
-> > been able to trigger hard crashes twice when testing an external display
-> > (USB-C/DP), which may also be related to the DP regressions.
+Please let me know if you see any problems with this kind of 
+implementation or if you have any additional comments.
 
-Johan
+Thanks,
+
+Jishnu
+
+>> +
+>> +               if (IS_ERR(tzd)) {
+>> +                       if (PTR_ERR(tzd) == -ENODEV) {
+>> +                               dev_warn(adc->dev, "thermal sensor on channel %d is not used\n",
+>> +                                        channel);
+>> +                               continue;
+>> +                       }
+>> +
+>>
+>
 
