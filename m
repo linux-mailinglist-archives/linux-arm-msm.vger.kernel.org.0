@@ -1,176 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-11003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF516854A9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:39:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DE25854ABF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:52:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B6D5B20EDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:39:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35B1128B150
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:51:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD22C54745;
-	Wed, 14 Feb 2024 13:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A0354792;
+	Wed, 14 Feb 2024 13:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g4PgU3+J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rO2Y0P/r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35FD54673
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753ED1CABA;
+	Wed, 14 Feb 2024 13:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707917942; cv=none; b=uo479ijdZ3JsL9e0c06qDNkz+aCs7lvlY9u1Kel4Hs4sgGsMiyLFxsumddQBphadhhFPwxSFGZcg/aEX1izDxO7CCkmtGbAm8Mad3V2zZyHXlyc4QxgPQR6e+iqgqDxtu/IgaKafG5paZJtjrFV3iPGDlnFgsMCE8ogei6ghQUo=
+	t=1707918707; cv=none; b=h+Yo1DRkcuCIptGZu+MhkwjXSuo2s/3ctEiDuR+fHFjlUifktHOjclxro0Wk4aYochd0cuPREkrszIkhh99FmGSstqdtboNl9nSnC7SsqbAUkc5huyksK13u0PtNV4sk19eBWkd7M+MNvgj0V1wlQYZ0OYcN709EmL/iK5erRBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707917942; c=relaxed/simple;
-	bh=7m8FgKYenpbcQV+utnPx5tYHSqTgQ+N6XM820y2I76w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rzXDpa/5aWVcchw+j6B1AcYkHRHAURM8GKRl+uRDvAFdN9IOAGn7ZU37HNHEz1qxs82C4jqJoMOCYyamwPIq0O/5JbEa+CvoEdGPBfjNb3NRBr8gsCmWgSrjCNfrZ+zRxdeiE1zJgU/iil4co4ua7/81zWm7r9raOs6o3qWIjzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g4PgU3+J; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a26f73732c5so788369466b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 05:39:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707917939; x=1708522739; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xl8fdjNkOnOLzOdA3INQoYZq3zTCdkc/JpETQWx04dE=;
-        b=g4PgU3+JNBdD9XtKfcu5JuDpxTJKycOZduEkVn/hL+hR01J3Ifo2cIZAtnRKC0+Orr
-         +xX2v+tkv7/YHDabik6O5QG6qATKoIXMHKIxkJOH8P+L5NxL5ANKWCzL98Qowjar3Yib
-         W4oNYpgbpWG8nzRAfG1L68L+Ti0LzPFWJas1K75l/69nXGCq8gcrAgPCvqxlm01BRAfJ
-         KgbSGu7LkG81FFQwZ/PPw5IcY4MmRgvGRHGexk8yDx5F3w6QJBJA+iSxE+c+8q/m6BSP
-         gAEHH7bcE8QyfdZn1X4MkHH8g+E2yFuwZzpfWJ7w4abTN8uLAKMGDdWhGI/T/nBOJvqq
-         UErg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707917939; x=1708522739;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xl8fdjNkOnOLzOdA3INQoYZq3zTCdkc/JpETQWx04dE=;
-        b=CFRVNcldLWLnXJ+f+5TovGQsoA6dhuGA37fcdd7rQa90qnmHSI8EHTUBeRAvCA6FjN
-         avxQ92Np7hOdcOkZJ/4GkpWfqX18svaRaVzz26RQU8Qs0RlAOx9+qDIYujR7rO+BV/Dv
-         MSYmiijqWRd7COkzVuEjWXHOazeDIaUDcBSVjPEV78IoUFk4T/h5+sEl1kCHIwWQcHEB
-         sIIuh7O08fM8+poAspiiFHE0caG7PCzOuUSzp/wmufsYsyGACGho6Ryx/Mp63zgcsPGd
-         ZEu69wRX1lzuiR1oHbhTDR9cjM9hM8H37gBAOVKgftYfShDtNcb8qKFAMtsemcD0v2sb
-         q8hA==
-X-Forwarded-Encrypted: i=1; AJvYcCWQqTxCxn12N6g9VDrbSTusP8ZF1EvxWdZ95x+Tj7awtbnpPNG+mHVJahCkFceYJDUxEXjmY9d3VLBYSh88S3wn6ZURdTbHaDg9bw4NyA==
-X-Gm-Message-State: AOJu0Ywet8FnI0PxjVIkBzjvCRKzwH+DwQJ8k3EKsVAJdt4M7MAgK9H1
-	hL0qUoNntHAdQNR6q7AVnRrRDjL4R7wuiPm3zB0tV+7fMe/5Z1uNhoRLEZrLcaA=
-X-Google-Smtp-Source: AGHT+IF44O3lJTfCP6eOt0ZcLCXWtiMF4tmyCTUbIV05jahWoL5XKoVoJ8TihVtEPkQQWbiVUTIBHQ==
-X-Received: by 2002:a17:906:d10a:b0:a3d:2392:b025 with SMTP id b10-20020a170906d10a00b00a3d2392b025mr1776457ejz.50.1707917939141;
-        Wed, 14 Feb 2024 05:38:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW/VPB0bBip8Y19tYjb13eVOw4gZeMb4PXsejWTzIAoHHUyZXUDK4xI/c1o6R98uZC6MQrs0Z9+AlKE1g1d084AQJoGH/I3pIuMVwTdIlkJHXlrXRpcT2D1t9BW3Hgw9jmry0MVN/6G5VN/58k0iMbb0RBgKFYOvTh1sig/51HEo7an6k4uLHDl8I1Q5HN9PycOAyBqJyKsBi3WrpLmYnhK3Ut49r+3lRv0yt8iFnbt+ykXzy68dOw2xu1KdKKFFQ239Tk2GPW04zcmlT1n/oePcKJgAZG9OzCuFq0hh4eSMOGmptElBFAKDggQVkXryIZFptY/cdNzN3qHMEr4WxUhVFM9UTXuBgXeKaGjmu/2Naf6WLw+SI8EyAG7xgKRbqx9MoblQ+ZB702r3WFiTSGV5bHry8Sx8mvrbVvb3Sc+ZKg0gJYLkszXBlaXg9Yq9SjaKXXQjvhOPakvUpDLRbwO+njo6Ss1Rh4lSu8wUteREEhEL76ISnc=
-Received: from [192.168.0.22] ([78.10.207.130])
-        by smtp.gmail.com with ESMTPSA id ty8-20020a170907c70800b00a3d09d09e90sm1561399ejc.59.2024.02.14.05.38.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 05:38:58 -0800 (PST)
-Message-ID: <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
-Date: Wed, 14 Feb 2024 14:38:57 +0100
+	s=arc-20240116; t=1707918707; c=relaxed/simple;
+	bh=Qq4RI3/eNvGIvnkvbEhKzEkeUXbVPZq7+5c0G9BM++I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LA93RMMLJwUrJ9peN0K4SSJ5/9Tp6Jnse0x7sVG+iABrQjbhOUGKJJ5SRUGWi8T5IHkrY7PoRExlNh1XU+Fhq9U/57LiiI90bLUvPsL5N6ojXFHjcuU+2QtpK5X+UWeGxvM9Szpw7H61DuOpDq5af8DmHeqesxJGht46SjbNgjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rO2Y0P/r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A38C433F1;
+	Wed, 14 Feb 2024 13:51:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707918706;
+	bh=Qq4RI3/eNvGIvnkvbEhKzEkeUXbVPZq7+5c0G9BM++I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rO2Y0P/rIMwckSI4l41akdMEhZtEl+Kno80nEh/FOlEu7LHwVqzr0gHSGb4rxy46h
+	 wbIn8eX2z8YkjpATs0FKPYzqCLGxqDHTm8cq8aFD6cJcrHNFv38mSRCd6GK3LEcSaU
+	 iR6e45a8NtmMSeCggrS/dEcwl/FPrhMXzzm4LfIzJ3FRVh/ANgrmWP/c8fJr3sawIp
+	 u7gI3lmObcKNatscXsV6qohUPs/nwil/IKwjHFjnszp10/MitkFSNiZEwf0c465CDs
+	 wX+BNxgYVQfwmiCR7EhqC9Ij0lDBz3uRo3SirfmLB1C7ZPp1QbOyeoXwe3k5LGZsKV
+	 oL0mcq15CVDTQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1raFgD-000000005BW-1E73;
+	Wed, 14 Feb 2024 14:52:06 +0100
+Date: Wed, 14 Feb 2024 14:52:05 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: drm/msm: DisplayPort regressions in 6.8-rc1
+Message-ID: <ZczFhVjHIm55JTfO@hovoldconsulting.com>
+References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
+ <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Do not require
- 'msi-map-mask'
-Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240212165043.26961-1-johan+linaro@kernel.org>
- <20240212165043.26961-3-johan+linaro@kernel.org>
- <e396cf20-8598-4437-b635-09a4a737a772@linaro.org>
- <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
 
-On 14/02/2024 13:54, Johan Hovold wrote:
-> On Wed, Feb 14, 2024 at 01:01:20PM +0100, Krzysztof Kozlowski wrote:
->> On 12/02/2024 17:50, Johan Hovold wrote:
->>> Whether the 'msi-map-mask' property is needed or not depends on how the
->>> MSI interrupts are mapped and it should therefore not be described as
->>> required.
->>
->> I could imagine that on all devices the interrupts are mapped in a way
->> you need to provide msi-map-mask. IOW, can there be a Qualcomm platform
->> without msi-map-mask?
+On Tue, Feb 13, 2024 at 10:00:13AM -0800, Abhinav Kumar wrote:
+
+> I do agree that pm runtime eDP driver got merged that time but I think 
+> the issue is either a combination of that along with DRM aux bridge 
+> https://patchwork.freedesktop.org/series/122584/ OR just the latter as 
+> even that went in around the same time.
+
+Yes, indeed there was a lot of changes that went into the MSM drm driver
+in 6.8-rc1 and since I have not tried to debug this myself I can't say
+for sure which change or changes that triggered this regression (or
+possibly regressions).
+
+The fact that the USB-C/DP PHY appears to be involved
+(/soc@0/phy@88eb000) could indeed point to the series you mentioned.
+
+> Thats why perhaps this issue was not seen with the chromebooks we tested 
+> on as they do not use pmic_glink (aux bridge).
 > 
-> I don't have access to the documentation so I'll leave that for you guys
-> to determine. I do note that the downstream DT does not use it and that
-> we have a new devicetree in linux-next which also does not have it:
-> 
-> 	https://lore.kernel.org/r/20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org
-> 
-> But at least the latter looks like an omission that should be fixed.
+> So we will need to debug this on sc8280xp specifically or an equivalent 
+> device which uses aux bridge.
 
-Hm, either that or the mask for sm8450 was not needed as well. Anyway,
-thanks for explanation, appreciated!
+I've hit the NULL-pointer deference three times now in the last few days
+on the sc8280xp CRD. But since it doesn't trigger on every boot it seems
+you need to go back to the series that could potentially have caused
+this regression and review them again. There's clearly something quite
+broken here.
 
+> On 2/13/2024 3:42 AM, Johan Hovold wrote:
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Since 6.8-rc1 the internal eDP display on the Lenovo ThinkPad X13s does
+> > not always show up on boot.
 
-Best regards,
-Krzysztof
+> > 	[    6.007872] [drm:drm_bridge_attach [drm]] *ERROR* failed to attach bridge /soc@0/phy@88eb000 to encoder TMDS-31: -16
+	
+> > and this can also manifest itself as a NULL-pointer dereference:
+> > 
+> > 	[    7.339447] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+> > 	
+> > 	[    7.643705] pc : drm_bridge_attach+0x70/0x1a8 [drm]
+> > 	[    7.686415] lr : drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
+> > 	
+> > 	[    7.769039] Call trace:
+> > 	[    7.771564]  drm_bridge_attach+0x70/0x1a8 [drm]
+> > 	[    7.776234]  drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
+> > 	[    7.781782]  drm_bridge_attach+0x80/0x1a8 [drm]
+> > 	[    7.786454]  dp_bridge_init+0xa8/0x15c [msm]
+> > 	[    7.790856]  msm_dp_modeset_init+0x28/0xc4 [msm]
+> > 	[    7.795617]  _dpu_kms_drm_obj_init+0x19c/0x680 [msm]
+> > 	[    7.800731]  dpu_kms_hw_init+0x348/0x4c4 [msm]
+> > 	[    7.805306]  msm_drm_kms_init+0x84/0x324 [msm]
+> > 	[    7.809891]  msm_drm_bind+0x1d8/0x3a8 [msm]
+> > 	[    7.814196]  try_to_bring_up_aggregate_device+0x1f0/0x2f8
+> > 	[    7.819747]  __component_add+0xa4/0x18c
+> > 	[    7.823703]  component_add+0x14/0x20
+> > 	[    7.827389]  dp_display_probe+0x47c/0x568 [msm]
+> > 	[    7.832052]  platform_probe+0x68/0xd8
+> > 
+> > Users have also reported random crashes at boot since 6.8-rc1, and I've
+> > been able to trigger hard crashes twice when testing an external display
+> > (USB-C/DP), which may also be related to the DP regressions.
 
+Johan
 
