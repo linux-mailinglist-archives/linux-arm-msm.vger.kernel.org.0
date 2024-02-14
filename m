@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-11095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFDEC85549A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:21:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C850F8554AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:24:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 322AAB216D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 21:21:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 543E11F21E30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 21:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D48713EFF4;
-	Wed, 14 Feb 2024 21:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0F0813EFEF;
+	Wed, 14 Feb 2024 21:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E88bNEtL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xQ6hkxi3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989213EFEB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 21:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111081B7E2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 21:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707945662; cv=none; b=E020+xvhfdO7PBLk1LNyWU7a5ppzMXzWuq1VONam1KBFUj5oQMmYDrpxoLmI6kXgIJDAGri/Zw+Px9inGvOYqIsa4KCc8DkHkIbYYVaXhyZkAA1VIDPHzGZxP7dmSY2iwvkwBVcuwX3tMTn3gSpSKN1hqHfRJEJavjaNt2YWwiY=
+	t=1707945874; cv=none; b=YaDbTaFut0PycgqbKGKF/PcPBNO2c3AvroHcQV6UkrPvJZuj5fTJgtbafGf5e5/xAR1Nmi8Yq+kcYstMxl5sBwguQLUkqUQyWAFPOS4xx/n4I+ZJNcdfuY3tyfEDv8GrlyajvaBtrJcgW7WF54rgo1u51dEq008EbRRdpJvt8RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707945662; c=relaxed/simple;
-	bh=UH20tkUJPZTtnE+bVLwhS0oDXXvWrOablcK+6ybpZF8=;
+	s=arc-20240116; t=1707945874; c=relaxed/simple;
+	bh=IGf0qRv4MvRX2Ks9nCU59UJLv4yaBbrr5plZ5rYitn4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cCcmYvl9K4O8/DYHQapIcEn7OYw61xO9gyKeHquYWaVzDRdNpKNW1zQZgNlvZux8Ogt7Ei6t70JphYtjT28Xn0sxB3stVak41W7IwyU6Sg+E1gaU7eQpSQL41rpiN3Dp1IADCSPLaMzFfr+EZlRyZ0Kt3Yg0kvIRa8kxwIF/lv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E88bNEtL; arc=none smtp.client-ip=209.85.167.43
+	 In-Reply-To:Content-Type; b=MGeMYDRwOKJW1fIn+zRAFwbUyB75W6cEGRzxK4XAU+dxafqKNP7Tj8d4woNd0jHKQfK48Q0oVoKrwS43CoGKsBW5NPjmLRZyyyBBIh68hYoe6+B8MKpLp8L37byHY4eRbD/B8sHRrrMKhfx6tcq9OnzOXrRb3T4W2Nv2/ue+2GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xQ6hkxi3; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-51147d0abd1so194712e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:21:00 -0800 (PST)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d0d7985dfdso1972671fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707945658; x=1708550458; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707945871; x=1708550671; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KOS2B7sbqxhq5r87RRG1TrTI32jzxgx2gbxZryh0k5k=;
-        b=E88bNEtL97yVZVZz8p+PQ7XWCH4i6plpMWfAlyDVX35zqJVlHQUq/pklvZvW7o7QDW
-         flG0flAZU+38fmy3jePSLUqyiTPEoeL9PkDBbm/NDwvsekzmBLLVACk9wZmFPyf0N2hw
-         GQpJBI3v0LBefbxo3IbNsLl5AbKTAR04Mk3SxbcojwtwJpk8QLAjTEyHagEfqzAAu3ow
-         faqnzJK10h8sY2vApYfUfJ4XeRgvK8tsEL3OVCaM3FiZa0276f4j1fkq72KHuRv7jcrJ
-         fBADUWjMetJugX7fLIc8Oo013zn2wyrpT6X1Ij6QC4nuf9QbwMmrbR0tY9WNNE5vmERj
-         KMCw==
+        bh=l0QX2MbWN702W7ms/dTTAq3ESpiDX9cRPpztlNssmgQ=;
+        b=xQ6hkxi3Me/wb+sYv4Fz0/pTrNSr7x2yPEYsPsSq8Pb8mWq4OOvzUSvjbcERxaui0E
+         NOLII9xZ2cgWKSSOsdC2Bw+6vOceuUJZWsOhIqGZgz6KwNMIbmTI/R2d6znCsnCEZVsx
+         jdkEMXe3Q85y4m9HLouAQZaCgIjppyV5kD4rjOSLpoPyiXE/NOCsRGN9W0uEMOn8G2/u
+         CyBLQBEr9QlsLz7z+l3lrIlCmHrdc7QnD38XOvlyR9RovNj7QferYr5GEkcTNhCL5u0d
+         fbbLKgE3WzejqlNhImB2tEnV+9CyCl0pMDMwcMBn9G7r9dnqGioOlRFYsgqOmuqtNLb5
+         e0fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707945658; x=1708550458;
+        d=1e100.net; s=20230601; t=1707945871; x=1708550671;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KOS2B7sbqxhq5r87RRG1TrTI32jzxgx2gbxZryh0k5k=;
-        b=stBCcMgj2FZl2q5Jb0uD2wJ/5eJtDCWgJOH9HW2yGXwcwBzp3IiNhuN53g4w1AxC8V
-         GpwrysUhSYg6jZ0ORb06COTeaB8AYQNWC/x4fHlMkBbzvF6Uwo1X6lmPp5Aq84rp77Px
-         ZNgzvXldhV627bMmqF1HV3Gt/9nuiEAmV4Qno2VKiYUBAlf6Xa4PGPAw+Mwuh3Jr24vM
-         7kqrpaaR6vhe/7wUg0jHGfc0WiFFoPjvTzbR8yE1JZSo89EbAi7eKlJUSs6iaeX+2zYk
-         fckbut1Ziuv0QvqTKnsFH3HYlFZ/LTwPCvf0LG7xnDGEc10qPCKR+IM70q1CblSIY351
-         ArWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXp1HOH6UzPxeyfTl5D6/GQYcgKZcFbv13hyesq5AT8MRxRxUXJC19pqnirCbSKvyq22/7tvMs37dXsfdvybnyQfoSmjX8dC2ftMOxOXQ==
-X-Gm-Message-State: AOJu0Yzo4ZYPP43ASzgzG9F2sxJLeGiKlTcI2+RSIO4NiZmHQJdFGvxS
-	qTArxtjjMkciDmEOBMb5m3s6huyQ4rtN5U5qO0WatCfr+YqrvE/j8hHFVBWpkfU=
-X-Google-Smtp-Source: AGHT+IESSnAcoYGoUyHNkZHb6JzZCxOglkyOOBU1GX+rmYmsiuzPmbFGDYr5lywvK7ZqTp+8RlXZYA==
-X-Received: by 2002:a05:6512:2354:b0:511:940b:fc62 with SMTP id p20-20020a056512235400b00511940bfc62mr27362lfu.1.1707945658283;
-        Wed, 14 Feb 2024 13:20:58 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUpvVKqGEGGnhNvXeluHoQkMPQaJN6hxC2jAk15VH9Gua3GJH/JM21CZRj07Hi1c4NzVC6baHex9pWOcG+YMKMCwcnf4njUApyuUS7olSB0BHtSPvq6rR3ZudCE5qtQM/MkZlN+Gh8DEhkr9dvCzXOLdOs9rMJeg62UOvRPDifj7T4HNCJIr+rCjtGay6b3qg/oFO4A3aETiIrfciJD5hE3ZM/eJRf8dGi26pcBkEYxsi4HbydC5h6R0ZABUkS/T0V6DeRuAd8RdbrXd0wODs6WUfwUYP813cuhXumb3Cvz8R/HCRFT/J2wIpVzWxlwzq4A1zPJt57ESL9SaHZ3F5e+ILy1JPfXQaTC0KUGkQgEc11RKPVigY3I8Md1YbEI9AxrVLPQa+juP+QnWkNZlsVBtvwA8ZuXzse689jmrSAqCB1eQoOOG9/JckadZiRG5KpVS+wReXo1EsT7uaFPyLjLWCyUGxvWFsfnmI19Zh6O
+        bh=l0QX2MbWN702W7ms/dTTAq3ESpiDX9cRPpztlNssmgQ=;
+        b=LJ6VbVDCbPLgmWWrqVUkN9ZUxAJHyO4qMz+8tMrU0KdTZU7tLvuDnkeodxZz4J7QQP
+         JgNSX2XiKr2Dc7EnAkJ2rb3ML3j/bL1HMp8tGeRitHr+1Hk2JCPsQmIbmrM+SGGt8sqI
+         Nh1nJXGik2Ow4rYOQcTdTMi/spajhEOxVPMd6FLbqwQUewsCIZ284nbTjL1z7f4wds9z
+         F47R/6B27oa4ftLFaEh5QOyypyNkUqQlAZieg6Iox/Ba1yndjQbKwiM4P5mibcKtjJ1Z
+         JXCwRv03icri6ktrpnA58UmZEZ+pBuej0jCWcihNW6adCHw0jwUJ6kqd7fz5SzDze+RN
+         LD2A==
+X-Gm-Message-State: AOJu0YzSi9CX+W45qsCB79mS9B9llr3uh/DaQKKRcSIhozVfS23XHLXJ
+	RhAqUsKi8j9U0k+PcAPxxFsZYo9zfJ3DzwFaBaVCWmAy0mglTPWnz6/pF61F8Jw=
+X-Google-Smtp-Source: AGHT+IFSkPCLKL4sZs66B2sXrwTEpGpguFRHwoP1IAFO/tMcdCI41Nq68cS5gLRZtiiJNq6sEZizWw==
+X-Received: by 2002:a05:651c:60f:b0:2d0:c77a:599c with SMTP id k15-20020a05651c060f00b002d0c77a599cmr2624880lje.4.1707945871124;
+        Wed, 14 Feb 2024 13:24:31 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV9jjkpHnMenB0hCpQURltlOfwNLdMYhRghNpOTXDr6GlZwMVSSMsrdE6QVOT/EStNn05dVF3OsiQqxO7C7R0I0dWVjQaX/U5QWmm3p7oyePwptUfzIQ2BqUsumo8fy7J6kJiN5N6y3DfekycfkDCI8a4Ekg1S6YxEO0Oc25D/6VvuDL4+9rvOxGmVowwpZ4ZPjghabyLfijKiSapMaTYoSuy+Lvzjdv2SM6rL787dxg2G5UcxVOtbs5QwOX9gzhJZq5Gy8xIUbhIiCs4wE7TVAiFPEYj+4NC15msrLPLbZmzjHMm5XMeTbQ99GhhG/4Xn2c6gx/pkDwYJ4t8x11wb3pKU5+AK8uFxxXx07hdkOofagjQCKWIxsD6zhPYb3m4CQwMOfHD7MM7GM2Z8N8dpHaWnlhGOLmgsULB7SAYOc92MDPbJNFlibl0DqWriHhWOjBvfkA1LRyRhxagvJftcGZ1UnGxR51d0SRxiF1Y6Gy5OKlwtR3ORkPlzSlM1kSs0LcxTHBYCojtmZtV508GWPsfe0sUBOWBx22D3JvGVRaOZYFiXzQHVLIxiixyvxrmApXMrPAyHy/Zs=
 Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id vw7-20020a170907a70700b00a3d73e6b2f9sm294407ejc.46.2024.02.14.13.20.56
+        by smtp.gmail.com with ESMTPSA id cs12-20020a0564020c4c00b00561e675a3casm2193381edb.68.2024.02.14.13.24.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 13:20:57 -0800 (PST)
-Message-ID: <ad20b872-0b50-4a16-b342-582d2f33eeca@linaro.org>
-Date: Wed, 14 Feb 2024 22:20:55 +0100
+        Wed, 14 Feb 2024 13:24:30 -0800 (PST)
+Message-ID: <a0f7de54-7e6b-473e-94ac-bece804bd6e8@linaro.org>
+Date: Wed, 14 Feb 2024 22:24:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,23 +76,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
+Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: msm8996: specify UFS core_clk
+ frequencies
 Content-Language: en-US
-To: Philipp Zabel <p.zabel@pengutronix.de>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
- <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Nitin Rawat <quic_nitirawa@quicinc.com>, Can Guo <quic_cang@quicinc.com>,
+ Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ Andy Gross <agross@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240213-msm8996-fix-ufs-v2-0-650758c26458@linaro.org>
+ <20240213-msm8996-fix-ufs-v2-3-650758c26458@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -130,49 +131,36 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
+In-Reply-To: <20240213-msm8996-fix-ufs-v2-3-650758c26458@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14.02.2024 14:31, Philipp Zabel wrote:
-> Hi Konrad,
+On 13.02.2024 12:22, Dmitry Baryshkov wrote:
+> Follow the example of other platforms and specify core_clk frequencies
+> in the frequency table in addition to the core_clk_src frequencies. The
+> driver should be setting the leaf frequency instead of some interim
+> clock freq.
 > 
-> On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
->> All of the resets are toggled together. Use the bulk api to save on some
->> code complexity.
->>
->> The delay between resets is now correctly determined by the reset
->> framework.
+> Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Fixes: 57fc67ef0d35 ("arm64: dts: qcom: msm8996: Add ufs related nodes")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> If this is a recent change, could you reference the commit?
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 80d83e01bb4d..401c6cce9fec 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -2072,7 +2072,7 @@ ufshc: ufshc@624000 {
+>  				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
+>  			freq-table-hz =
+>  				<100000000 200000000>,
+> -				<0 0>,
+> +				<100000000 200000000>,
 
-It's a series that recently landed in -next [1]
-
-[...]
-
-> 
-> Since VIDC_RESETS_NUM_MAX is only 2, I don't think a separate
-> allocation is worth it.
-
-It's 2 today, anyway. I wanted to keep it flexible
-
-[...]
-
->> +	ret = reset_control_bulk_reset(res->resets_num, core->resets);
->> +	if (ret)
->> +		dev_err(core->dev, "Failed to toggle resets: %d\n", ret);
->>  
->> -err:
->>  	return ret;
-> 
-> Could be simplified to:
-> 
-> 	return reset_control_bulk_reset(res->resets_num, core-
->> resets);
-
-I intentionally kept the if (ret) to print a specific error message
-in case the call fails, this driver doesn't go a good job of telling
-the user/developer what went wrong.
+That's bus_clk, no?
 
 Konrad
+
 
