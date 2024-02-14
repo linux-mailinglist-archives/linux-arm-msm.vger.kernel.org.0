@@ -1,187 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-10967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36060854291
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 06:59:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A09558542A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:08:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF3EB282DEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 05:59:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5FF61C268CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 06:08:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174CC10958;
-	Wed, 14 Feb 2024 05:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB8910A25;
+	Wed, 14 Feb 2024 06:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KacCDt4v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liPVWZFh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267911185;
-	Wed, 14 Feb 2024 05:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B310A24;
+	Wed, 14 Feb 2024 06:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707890345; cv=none; b=gVcSIfFu0MWlzk9nmMkRwV6Tg0fuT1NYKwJAXr+ZNxBVFZ5/gZV6GvxV2f1rcfkIj95WUMQroodh4Fryk3wgvfpigkRTWC7h2Fh+9kVqkkKo4AYfmyxpvdNkhuJ9fJanYa6ePX7k4P79vV3UeG+Lb4uAgIgg8nJ6YXOR/mN/oXE=
+	t=1707890926; cv=none; b=XFlSfXAaTIS493bATDGSBBeZ0JkqzLYkaGshueUHEvfEbsU35uOotW7+B07s88R98WTwqqaZ4Qxwv1VWNAbJmyChcHjR+J+PtH+PPKDX+/nFD2Zjw7CuaPKmQ719gXrc6qHQdmrjTnPBZLQCZYsWjZfEh8K/X4xTUaw/xX4Xbwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707890345; c=relaxed/simple;
-	bh=yt5cR8sRNfxAE2BrcvV/xTGqOwh/nhpAq4LH4WO4HXM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Tw2t07Xdowt3vi0YVV94H/xaipGQ7MaRt2L0ugtp/IlU+Lh9juR3Klq3f8ppNRUjpFiUvdPhPuyb8OR7bbhsLFsrPe3kx590Y5F3Pprq52fynDYYDMEKRKW6/9rxw1KFe6+RWgCBhPl0bHVXw45JAs+DO8E/lmoSTrd8VZp409s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KacCDt4v; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41E5GV8m032216;
-	Wed, 14 Feb 2024 05:58:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=UPUbFMGxqekMpGyBpqMvhSAyTmMWs4IW1Gxf/FboSgA=; b=Ka
-	cCDt4vb9wrO5W1TMbxSDFfEHPw1esmd95Q8d4SVfIKuz2PCloskuHM1SwPsfSuPJ
-	wjeTBR+ZUSewIcrvqgFxJ+TNNOZmfp4YucPDIAId/PzvIE9zgQDv8w8Sg7LS19uj
-	xeFCrSSaSgOemGEjrI7nLgxG2DoRKLXN0KxWNAai/zwutlgtkzer+tUaWes+a0IK
-	1cM2e00qeFibqiuWG4K94P+Mgmbwy76QVDY2Q/Tex6fHV8fEkfszmmLSAVkrKeUM
-	huhCk0m/2enzmb9kwcQ3hPIcSbgwyP6eqjRyNYio3lzSwoSnlWNTofNSroi1jXBk
-	otAY76kHiZ6FxQsDc1QQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w88gq1w1e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 05:58:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41E5wv9W022502
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 05:58:57 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 13 Feb
- 2024 21:58:51 -0800
-Message-ID: <28db06e1-e5a3-4b49-bb7a-fb3fbfe5e5d0@quicinc.com>
-Date: Wed, 14 Feb 2024 11:28:48 +0530
+	s=arc-20240116; t=1707890926; c=relaxed/simple;
+	bh=26qLiOXzYeED5IFqKrSHmZtbA31FiyeXrlDpVXVqkyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jVKhwRHtnQXYQiWLDPAxcjn+BjWbzilH+ViiRS82aEJy1gkfSgNMwDVo73+/nrVCWSlSlK5/TP1rpuUL9IuWWQNiZCE+aacYzGIQE38JQJKl5LGw2Sly/FJ07aYUquplol/Bo/2tiKiAVJcf2WFVBfvJZLJ7w93NgcCXWmIQs2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liPVWZFh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4A0C433F1;
+	Wed, 14 Feb 2024 06:08:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707890926;
+	bh=26qLiOXzYeED5IFqKrSHmZtbA31FiyeXrlDpVXVqkyE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=liPVWZFhHJpyNajvbqJtbbY+aBqy8k6HWFKYVurNV/BUVIybLsxhd2RwvJTkxIEK5
+	 xUoevEOXM5Lr4uEoHoBjNGF8di97/+LePaaGwCQuvEaCbtdpIFKKG+rPkLYosMPu0P
+	 fT+4dRxSjEeD5YkeVT1J0LbjFhKBXFGhh17HEEYyT69/sjgG1WtG8djQ6uqWU+vWrN
+	 pN/OdyErb6W4/PcxTYdqiVrwvETH/4y/irRCofAsQdSpl/IE3akjlgaSzpFRymohgJ
+	 V+1DovqQuiw3Q98kVJXqqphCXKw01RpyFAY2W45C9PkYE3Yr3r756nhUkJDM4zZy/h
+	 BHY2bXVWMIhkg==
+Date: Wed, 14 Feb 2024 00:08:43 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Maulik Shah <quic_mkshah@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_eberman@quicinc.com, 
+	quic_collinsd@quicinc.com, quic_lsrao@quicinc.com, stable@vger.kernel.org
+Subject: Re: [PATCH v3] soc: qcom: rpmh-rsc: Enhance check for VRM in-flight
+ request
+Message-ID: <sizizst7xkexl3dd26sssgxtjhk7mcrawswbs76vdutsxsm6qh@mvilvzwydjpm>
+References: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: camcc-sm8650: Add camera clock controller
- driver for SM8650
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Michael
- Turquette" <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Ajit Pandey" <quic_ajipan@quicinc.com>
-References: <20240206113145.31096-1-quic_jkona@quicinc.com>
- <20240206113145.31096-5-quic_jkona@quicinc.com>
- <edc9fa59-5f39-4f47-8647-242a9b0a8cb4@linaro.org>
- <e5c484cc-7624-40fd-a527-8cfcbf7784fe@quicinc.com>
- <CAA8EJpqjU-RDwPH6xGLa7xzcyxmU+86mX0X+DL09SJ0uVB5_CQ@mail.gmail.com>
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <CAA8EJpqjU-RDwPH6xGLa7xzcyxmU+86mX0X+DL09SJ0uVB5_CQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sPJKVCWJu9w7pdcXYn3piAzit1h7TF6M
-X-Proofpoint-ORIG-GUID: sPJKVCWJu9w7pdcXYn3piAzit1h7TF6M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-13_16,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- suspectscore=0 impostorscore=0 clxscore=1015 bulkscore=0 phishscore=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402140045
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240212-rpmh-rsc-fixes-v3-1-1be0d705dbb5@quicinc.com>
 
-
-
-On 2/12/2024 6:46 PM, Dmitry Baryshkov wrote:
-> On Mon, 12 Feb 2024 at 15:09, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->>
->>
->>
->> On 2/7/2024 6:41 PM, Bryan O'Donoghue wrote:
->>> On 06/02/2024 11:31, Jagadeesh Kona wrote:
->>>> Add support for the camera clock controller for camera clients to be
->>>> able to request for camcc clocks on SM8650 platform.
->>>>
->>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>
->>>> +static struct clk_rcg2 cam_cc_mclk1_clk_src = {
->>>> +    .cmd_rcgr = 0x1501c,
->>>> +    .mnd_width = 8,
->>>> +    .hid_width = 5,
->>>> +    .parent_map = cam_cc_parent_map_1,
->>>> +    .freq_tbl = ftbl_cam_cc_mclk0_clk_src,
->>>> +    .clkr.hw.init = &(const struct clk_init_data) {
->>>> +        .name = "cam_cc_mclk1_clk_src",
->>>> +        .parent_data = cam_cc_parent_data_1,
->>>> +        .num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
->>>> +        .flags = CLK_SET_RATE_PARENT,
->>>> +        .ops = &clk_rcg2_shared_ops,
->>>
->>> Nice.
->>>
->>> I compared this to WIP for x1e80100 which looks nearly register
->>> compatible. Use of the shared_ops indicates to me you've thought about
->>> which clocks should not be switched all the way off.
->>>
->>
->> Thanks Bryan for your review, We want all RCG's to be parked at safe
->> config(XO) when they are disabled, hence using shared ops for all the
->> RCG's.
+On Mon, Feb 12, 2024 at 10:18:08AM +0530, Maulik Shah wrote:
+> Each RPMh VRM accelerator resource has 3 or 4 contiguous 4-byte aligned
+> addresses associated with it. These control voltage, enable state, mode,
+> and in legacy targets, voltage headroom. The current in-flight request
+> checking logic looks for exact address matches. Requests for different
+> addresses of the same RPMh resource as thus not detected as in-flight.
 > 
-> What is the reason for parking it instead of fully disabling the clock?
+> Add new cmd-db API cmd_db_match_resource_addr() to enhance the in-flight
+> request check for VRM requests by ignoring the address offset.
 > 
-
-We don't do anything explicit in RCG disable, normally when all branch 
-clocks are disabled, RCG gets disabled in HW. But as per the HW design 
-recommendation, RCG needs to be parked at a safe clock source(XO) during 
-disable path, hence we use shared_ops to achieve the same. After parking 
-at XO, RCG gets disabled as all the branches are disabled.
-
-Thanks,
-Jagadeesh
-
->>
->>
->>>> +static struct platform_driver cam_cc_sm8650_driver = {
->>>> +    .probe = cam_cc_sm8650_probe,
->>>> +    .driver = {
->>>> +        .name = "cam_cc-sm8650",
->>>
->>> That said .. please fix the name here "cam_cc-sm8650". The title of your
->>> series is "camcc-sm8650" which IMO is a much more appropriate name.
->>>
->>> The admixture of hyphen "-" and underscore "_" is some kind of
->>> tokenisation sin.
->>>
->>
->> Sure, will fix this in next series.
->>
->> Thanks,
->> Jagadeesh
->>
->>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>
+> This ensures that only one request is allowed to be in-flight for a given
+> VRM resource. This is needed to avoid scenarios where request commands are
+> carried out by RPMh hardware out-of-order leading to LDO regulator
+> over-current protection triggering.
 > 
+> Fixes: 658628e7ef78 ("drivers: qcom: rpmh-rsc: add RPMH controller for QCOM SoCs")
+> cc: stable@vger.kernel.org
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+
+This says, "Elliot first certified the origin of the patch, then Maulik
+took and certified the origin of the patch". But according to the From:
+the author of the patch is you, Maulik.
+
+How was Elliot able to certify the patch's origin before you, when
+you're the author?
+
+If the two of you collaborated, also add Co-developed-by: Elliot above
+his s-o-b.
+
+> ---
+> Changes in v3:
+> - Fix s-o-b chain
+> - Add cmd-db API to compare addresses
+> - Reuse already defined resource types in cmd-db
+> - Add Fixes tag and Cc to stable
+> - Retain Reviewed-by tag of v2
+> - Link to v2: https://lore.kernel.org/r/20240119-rpmh-rsc-fixes-v2-1-e42c0a9e36f0@quicinc.com
+> Changes in v2:
+> - Use GENMASK() and FIELD_GET()
+> - Link to v1: https://lore.kernel.org/r/20240117-rpmh-rsc-fixes-v1-1-71ee4f8f72a4@quicinc.com
+> ---
+>  drivers/soc/qcom/cmd-db.c   | 41 +++++++++++++++++++++++++++++++++++------
+>  drivers/soc/qcom/rpmh-rsc.c |  3 ++-
+>  include/soc/qcom/cmd-db.h   | 10 +++++++++-
+>  3 files changed, 46 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+> index a5fd68411bed..e87682b9755e 100644
+> --- a/drivers/soc/qcom/cmd-db.c
+> +++ b/drivers/soc/qcom/cmd-db.c
+> @@ -1,6 +1,10 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+> -/* Copyright (c) 2016-2018, 2020, The Linux Foundation. All rights reserved. */
+> +/*
+> + * Copyright (c) 2016-2018, 2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+>  
+> +#include <linux/bitfield.h>
+>  #include <linux/debugfs.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+> @@ -15,8 +19,8 @@
+>  
+>  #define NUM_PRIORITY		2
+>  #define MAX_SLV_ID		8
+> -#define SLAVE_ID_MASK		0x7
+> -#define SLAVE_ID_SHIFT		16
+> +#define SLAVE_ID(addr)		FIELD_GET(GENMASK(19, 16), addr)
+> +#define VRM_ADDR(addr)		FIELD_GET(GENMASK(19, 4), addr)
+>  
+>  /**
+>   * struct entry_header: header for each entry in cmddb
+> @@ -221,9 +225,34 @@ const void *cmd_db_read_aux_data(const char *id, size_t *len)
+>  EXPORT_SYMBOL_GPL(cmd_db_read_aux_data);
+>  
+>  /**
+> - * cmd_db_read_slave_id - Get the slave ID for a given resource address
+> + * cmd_db_match_resource_addr - Compare if both Resource addresses are same
+
+() after the function name, please.
+
+> + *
+> + * @addr1: Resource address to compare
+> + * @addr2: Resource address to compare
+> + *
+> + * Return: true on matching addresses, false otherwise
+
+"Return: true if the two addresses refer to the same resource"
+
+> + */
+> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
+> +{
+> +	/*
+> +	 * Each RPMh VRM accelerator resource has 3 or 4 contiguous 4-byte
+> +	 * aligned addresses associated with it. Ignore the offset to check
+> +	 * for VRM requests.
+> +	 */
+> +	if (SLAVE_ID(addr1) == CMD_DB_HW_VRM
+> +	    && VRM_ADDR(addr1) == VRM_ADDR(addr2))
+
+One line please, it's just 83 characters.
+
+> +		return true;
+> +	else if (addr1 == addr2)
+> +		return true;
+> +	else
+> +		return false;
+> +}
+> +EXPORT_SYMBOL_GPL(cmd_db_match_resource_addr);
+> +
+> +/**
+> + * cmd_db_read_slave_id - Get the slave ID for a given resource name
+>   *
+> - * @id: Resource id to query the DB for version
+> + * @id: Resource id to query the DB for slave id
+
+Although trivial, it's unrelated to the newly introduced logic. Please
+submit a separate patch. Please also then add the () after the function
+name.
+
+Regards,
+Bjorn
+
+>   *
+>   * Return: cmd_db_hw_type enum on success, CMD_DB_HW_INVALID on error
+>   */
+> @@ -238,7 +267,7 @@ enum cmd_db_hw_type cmd_db_read_slave_id(const char *id)
+>  		return CMD_DB_HW_INVALID;
+>  
+>  	addr = le32_to_cpu(ent->addr);
+> -	return (addr >> SLAVE_ID_SHIFT) & SLAVE_ID_MASK;
+> +	return SLAVE_ID(addr);
+>  }
+>  EXPORT_SYMBOL_GPL(cmd_db_read_slave_id);
+>  
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index a021dc71807b..daf64be966fe 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #define pr_fmt(fmt) "%s " fmt, KBUILD_MODNAME
+> @@ -557,7 +558,7 @@ static int check_for_req_inflight(struct rsc_drv *drv, struct tcs_group *tcs,
+>  		for_each_set_bit(j, &curr_enabled, MAX_CMDS_PER_TCS) {
+>  			addr = read_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], i, j);
+>  			for (k = 0; k < msg->num_cmds; k++) {
+> -				if (addr == msg->cmds[k].addr)
+> +				if (cmd_db_match_resource_addr(msg->cmds[k].addr, addr))
+>  					return -EBUSY;
+>  			}
+>  		}
+> diff --git a/include/soc/qcom/cmd-db.h b/include/soc/qcom/cmd-db.h
+> index c8bb56e6852a..47a6cab75e63 100644
+> --- a/include/soc/qcom/cmd-db.h
+> +++ b/include/soc/qcom/cmd-db.h
+> @@ -1,5 +1,8 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+> -/* Copyright (c) 2016-2018, The Linux Foundation. All rights reserved. */
+> +/*
+> + * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+>  
+>  #ifndef __QCOM_COMMAND_DB_H__
+>  #define __QCOM_COMMAND_DB_H__
+> @@ -21,6 +24,8 @@ u32 cmd_db_read_addr(const char *resource_id);
+>  
+>  const void *cmd_db_read_aux_data(const char *resource_id, size_t *len);
+>  
+> +bool cmd_db_match_resource_addr(u32 addr1, u32 addr2);
+> +
+>  enum cmd_db_hw_type cmd_db_read_slave_id(const char *resource_id);
+>  
+>  int cmd_db_ready(void);
+> @@ -31,6 +36,9 @@ static inline u32 cmd_db_read_addr(const char *resource_id)
+>  static inline const void *cmd_db_read_aux_data(const char *resource_id, size_t *len)
+>  { return ERR_PTR(-ENODEV); }
+>  
+> +static inline bool cmd_db_match_resource_addr(u32 addr1, u32 addr2)
+> +{ return false; }
+> +
+>  static inline enum cmd_db_hw_type cmd_db_read_slave_id(const char *resource_id)
+>  { return -ENODEV; }
+>  
+> 
+> ---
+> base-commit: 615d300648869c774bd1fe54b4627bb0c20faed4
+> change-id: 20240210-rpmh-rsc-fixes-372a79ab364b
+> 
+> Best regards,
+> -- 
+> Maulik Shah <quic_mkshah@quicinc.com>
 > 
 
