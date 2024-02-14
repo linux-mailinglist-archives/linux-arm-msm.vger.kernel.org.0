@@ -1,138 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-11011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6FB5854BB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:41:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C004D854BBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 15:44:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48D0FB239E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:41:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C2362831D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:44:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537625A107;
-	Wed, 14 Feb 2024 14:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C0945A78C;
+	Wed, 14 Feb 2024 14:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="hoeqEQIw"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="xoeUcrDv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8D95A0F8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 14:41:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4A4535DA;
+	Wed, 14 Feb 2024 14:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707921700; cv=none; b=RzkzA8sfsr/ByVfadXXqargoI+NeEMP7bLxjFC4xPyN2ESThQ+xP6fW3SK9d9zAioV73vyVfVMeV3DY3iFDrJiQV1oRg4HophDSdmsJft1+R3iZuGucgi0aEDATv/pUEpLJzDOIvUlssg2uq4j0OmfHaYf3/JBrzJt/4/ry5358=
+	t=1707921878; cv=none; b=K/Zr3CPkxjrSBUISYnllwGHne/vQbBK5pflhawXYbr1ehnTwesGcxXQP3tmURahrpN1QTumJNPov+GG3fOrWsWIOd4/yV+ydfKT12eR2HKhHQRuxfeCEPlU9jlRhdI6hodTucKHGrb+aSHnk913CcmqsEeeB9w3MIm8Ze5lIx24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707921700; c=relaxed/simple;
-	bh=Ocfp1vuV0hUuPSty8ZYkGXTPlL3oc2sSfjxCcl/aI1A=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Lrruvj3mTru8k2qqbX0OWSflOcmF58ozuysMumSgvrL8WU/zU/n9lVKnTFMKIQcTzaovFZCcX+heGBdoWeY6+9LUwNdsj+kbcx5/jJvDP4+mVkMiaoasWVVk1AsQ1ghy5aEpm5zFnBpJwBOedjAxf1sYBYHgaJW8sSxuzPqIOgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=hoeqEQIw; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1707921696;
-	bh=Ocfp1vuV0hUuPSty8ZYkGXTPlL3oc2sSfjxCcl/aI1A=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=hoeqEQIw8SUOo0Gn2BN46rR1Ii0EoznEFldQrYi8vYtnw2WKNGHm92g1qzuoC3Wny
-	 inJcZM/feEceQRzFbz9jtNf1xSF7lJxljMTw3wAj8oa8qXS9zv63/1ugdH/78L/RoA
-	 pcnkbGWYxy5a5CYIchVXd9j0uVbgsiFT0UQKo8pU3Is0V/aoo+4flbB+3evE9fI03b
-	 OCpJVa42i/ZG0K4r8TMlab879c659fDOYHAfcDZWKl3RvNOsSBHpfLnP4i74/KqlOn
-	 gG3QQg7fgmA67ub1snQOW/5LKwAoJivJsveGBN96JOUJfxHCtK4mFqbxcxQ25qBX6C
-	 bOP2E8kzKYZaw==
-Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: koike)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CA6E03782081;
-	Wed, 14 Feb 2024 14:41:32 +0000 (UTC)
-Message-ID: <7aa0bdd0-ae2d-4e0d-b3f3-7cb0880061d8@collabora.com>
-Date: Wed, 14 Feb 2024 11:41:29 -0300
+	s=arc-20240116; t=1707921878; c=relaxed/simple;
+	bh=/aCJdNcQ2gUxVbvYr+aiPG/bK475wx4EPI5asZy5xw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q7gFScb9CIwF+mGJPkEba9SjaOt3T0lrfeNLRxv0yMd9mtCIFVCESn+mRZsn4uXSJqcXSQ8u97Qex2tKEacz2tWVajno5oQcQyuT3TCilXfjpTzBxqRSTbpSwUnOW5SKKFoyamQOsePQMIeYIU7CuSv+5xbquCHE42ZwdTobDkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=xoeUcrDv; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=0tpb0RNPezxVKElZqD1Rek43u032J0ugCVH6syrQd1I=; b=xoeUcrDvq4K+OUZK+djhAC7gJ1
+	11TLVVHjWpUL4i6Z6jFB971SBtiREh9bHQ/wNyHswz2ICvD7uGd2px2KTu/3+0e0xca47GMxoE1wA
+	BMlc076ALUy9PHehfLJpfAiWjvdKIj5d7ccFN3wWgrUDJSO65JXRZkOh413JJSdRrLYk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1raGV5-007nGX-4G; Wed, 14 Feb 2024 15:44:39 +0100
+Date: Wed, 14 Feb 2024 15:44:39 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Message-ID: <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm: ci: use clk_ignore_unused for apq8016
-Content-Language: en-US
-From: Helen Koike <helen.koike@collabora.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Javier Martinez Canillas <javierm@redhat.com>
-References: <20240214083708.2323967-1-dmitry.baryshkov@linaro.org>
- <c1078d13-5375-4c3f-93b7-40a1ea22f0dc@collabora.com>
-In-Reply-To: <c1078d13-5375-4c3f-93b7-40a1ea22f0dc@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
 
-
-
-On 14/02/2024 10:30, Helen Koike wrote:
+On Wed, Feb 14, 2024 at 02:49:41PM +0530, Kathiravan Thirumoorthy wrote:
 > 
 > 
-> On 14/02/2024 05:37, Dmitry Baryshkov wrote:
->> If the ADV7511 bridge driver is compiled as a module, while DRM_MSM is
->> built-in, the clk_disable_unused congests with the runtime PM handling
->> of the DSI PHY for the clk_prepare_lock(). This causes apq8016 runner to
->> fail without completing any jobs ([1]). Drop the BM_CMDLINE which
->> duplicate the command line from the .baremetal-igt-arm64 clause and
->> enforce the clk_ignore_unused kernelarg instead to make apq8016 runner
->> work.
->>
->> [1] https://gitlab.freedesktop.org/drm/msm/-/jobs/54990475
->>
->> Fixes: 0119c894ab0d ("drm: Add initial ci/ subdirectory")
->> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> On 1/26/2024 1:35 AM, Andrew Lunn wrote:
+> > On Mon, Jan 22, 2024 at 11:26:58AM +0530, Kathiravan Thirumoorthy wrote:
+> > > gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk are
+> > > enabled by default and it's RCG is properly configured by bootloader.
+> > 
+> > Which bootloader? Mainline barebox?
 > 
-> Acked-by: Helen Koike <helen.koike@collabora.com>
-
-Applied to drm-misc-next.
-
-Regards,
-Helen
-
 > 
-> Thanks
-> Helen
+> Thanks for taking time to review the patches. I couldn't get time to respond
+> back, sorry for the delay.
 > 
->> ---
->>
->> Changes in v2:
->> - Added a comment, describing the issue and a way to reproduce it
->>    (Javier)
->>
->> ---
->>   drivers/gpu/drm/ci/test.yml | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
->> index 7ffb620d7398..e64205286a27 100644
->> --- a/drivers/gpu/drm/ci/test.yml
->> +++ b/drivers/gpu/drm/ci/test.yml
->> @@ -119,7 +119,10 @@ msm:apq8016:
->>       DRIVER_NAME: msm
->>       BM_DTB: 
->> https://${PIPELINE_ARTIFACTS_BASE}/arm64/apq8016-sbc-usb-host.dtb
->>       GPU_VERSION: apq8016
->> -    BM_CMDLINE: "ip=dhcp console=ttyMSM0,115200n8 
->> $BM_KERNEL_EXTRA_ARGS root=/dev/nfs rw nfsrootdebug 
->> nfsroot=,tcp,nfsvers=4.2 init=/init $BM_KERNELARGS"
->> +    # disabling unused clocks congests with the MDSS runtime PM 
->> trying to
->> +    # disable those clocks and causes boot to fail.
->> +    # Reproducer: DRM_MSM=y, DRM_I2C_ADV7511=m
->> +    BM_KERNEL_EXTRA_ARGS: clk_ignore_unused
->>       RUNNER_TAG: google-freedreno-db410c
->>     script:
->>       - ./install/bare-metal/fastboot.sh
+> I was referring to the U-boot which is delivered as part of the QSDK. I will
+> call it out explicitly in the next patch.
+
+I've never used QSDK u-boot, so i can only make comments based on my
+experience with other vendors build of u-boot. That experience is, its
+broken for my use cases, and i try to replace it as soon as possible
+with upstream.
+
+I generally want to TFTP boot the kernel and the DT blob. Sometimes
+vendor u-boot has networking disabled. Or the TFTP client is
+missing. If it is there, the IP addresses are fixed, and i don't want
+to modify my network to make it compatible with the vendor
+requirements. If the IP addresses can be configured, sometimes there
+is no FLASH support so its not possible to actually write the
+configuration to FLASH so that it does the right thing on reboot
+etc...
+
+Often the vendor u-boot is a black box, no sources. Can you give me a
+git URL for the u-boot in QSDK? If the sources are open, i could at
+least rebuild it with everything turned on.
+
+But still, it is better that Linux makes no assumptions about what the
+boot loader has done. That makes it much easier to change the
+bootloader.
+
+> > > Some of the NSS clocks needs these clocks to be enabled. To avoid
+> > > these clocks being disabled by clock framework, drop these entries
+> > > from the clock table and enable it in the driver probe itself.
+> > 
+> > If they are critical clocks, i would expect a device to reference
+> > them. The CCF only disabled unused clocks in late_initcall_sync(),
+> > which means all drivers should of probed and taken a reference on any
+> > clocks they require.
+> 
+> 
+> Some of the NSSCC clocks are enabled by bootloaders and CCF disables the
+> same (because currently there are no consumers for these clocks available in
+> the tree. These clocks are consumed by the Networking drivers which are
+> being upstreamed).
+
+If there is no network drivers, you don't need clocks to the
+networking hardware. So CCF turning them off seems correct.
+
+Once you have actual drivers, this should solve itself, the drivers
+will consume the clocks.
+
+> However looking back, gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
+> gcc_nssnoc_nsscc_clk are consumed by the networking drivers only. So is it
+> okay to drop these clocks from the GCC driver and add it back once the
+> actual consumer needs it?
+
+But why should you remove them. If nothing is using them, they should
+be turned off.
+
+   Andrew
 
