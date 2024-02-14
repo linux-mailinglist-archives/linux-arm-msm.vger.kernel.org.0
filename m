@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-11103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1CB98554D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:33:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEDE48554E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:35:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6875F1F22DDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 21:33:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 732561F24389
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 21:35:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445A813EFEF;
-	Wed, 14 Feb 2024 21:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02B0A13F00A;
+	Wed, 14 Feb 2024 21:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ui2XcTJW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xJX2R8SM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A85F1DDD1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 21:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3486613F008
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 21:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707946405; cv=none; b=rlFaWg7WB1HHMmTrbwXQm5JPoODjPM5vrUEuXI/lJ2JKRp5UiS26tIwwibPumOsaGJ0ftxuRj8iJRMN79CNP8gIvsxzXSVfWhjduKeKtfO9RJbBeBJ8fCjqramFEQiHRndMtmw5sYQP3Qxp0h3kXRbRZEln8l7A8grVgVi6UHfQ=
+	t=1707946521; cv=none; b=Gz4gPoyTyeJp7M8wVmq7VQkba1bM9JNcdpcCSOlVDhS8iA3vGPe5LiA2Ry4PFYysj7CwM586XWQBcZffGNHfRfoIZngLKbFGifovGKctDoX/f6Zsmpmd+4yAljqQMpLbaEAMMaT6n79BJwOcIdFvnJZW3bqEI8ldVyGp8gjF+l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707946405; c=relaxed/simple;
-	bh=xxyACrWt2PwJkS0pdU4dWiP6K7ZzMm9WVJSfh/427dM=;
+	s=arc-20240116; t=1707946521; c=relaxed/simple;
+	bh=Ordcg0/SZituwraob8gVWOitjCR9zHa3yn1RsgecL5M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N9icroBE8k/w55amJB691kPhunjAeSKULcorOQFMUKfsaUyY+HuBHEZEPnOpu8pLGuyoBIOnPx4RCxuX85bDp+krroA7GxiF4CfKt45K/r6qfZ+bLkIR3yi/xHhFp53d8XJJcf1qrwXpZb2ZcsKvHGMW46IszBPpzTDXA8BCzMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ui2XcTJW; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=F46zxb/f+RID+jKF5H8xrRWhQLC+Bj+rj2REd+EevV14Ke+CSzlFwwoZwLGHtU9LzNE7wbMTp4NZtfLYB/SAwpj4X20gZrHTNN7jTjjDIOMptwubct3fyd9TUt6aPwR8rKF5BZKWyNGmMkSPZdEboHZbTQAbAGf3oN4lVWBnKlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xJX2R8SM; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5620f15c3e5so231943a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:33:23 -0800 (PST)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5600c43caddso251897a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:35:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707946402; x=1708551202; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1707946518; x=1708551318; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FUHzAymlINFHw4AT1ThDN8yqkHJxGPn+LrVpBC58mtc=;
-        b=Ui2XcTJWlnCKiCK9wTmt1fClG1Jr0CCieLV3JxtESualYR86iXtTFwFFyu1rF49Cnh
-         ATns1+2nPxkeGfxaCVZcfJwFWgGRD19ihTAe7zZ7tAq75OFdR4oCAAvGlfd+Hq3kGmj0
-         GvWWVbZ5knc+p2ZtHT30Ey+8Yd2BzQ5F5Y5U4eKzB3e6pdJjckD//HJdMkSa94cqdX/I
-         +NBwo8QH1NWhvi1w+NX4er7eHMpAk/t1pNZ8Rj6FaxYp64Oyuf9TojLEifHDc9GqDMs+
-         tsDJ8/H1PcgGZNhEIRliKMeCATbSEpaftuGDM///VWkh5zMVaXvUCWWGmEJrnPhKw6x2
-         cRxw==
+        bh=kdvjajy/m8WQq582LYwS0Ial7lo5kPNQuYwBh1wlPaY=;
+        b=xJX2R8SM0luOhBl4RlTOBwyeYW5LwT6QRMNY+AYjeLlEfVKx70Nixmt71Zs+nWA+QG
+         woPBfJE3iOfCNqG9WPfXM38or7YRSvc7RJsF9N/JubooPaBegc33RXvpN8SWLobMOquj
+         7tez9hQyykCe25tWlwwl2jhq0s+XM/w4GA0bpZy1L4zWpfqwjsa+2+0pj0EwZW/PnN3l
+         evMik/PXrBE64Bu1GIob+8XCpTym/CeZZuxuyxescT4J/huza/OXGFlTSbTdkURsEN2i
+         i7QHc/EHJCLh5v2nqH7u3x6OQgIJSZJJI8NAn2BfC+EZoeXkTrQNAyXW4lARhrTt8jxu
+         9S4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707946402; x=1708551202;
+        d=1e100.net; s=20230601; t=1707946518; x=1708551318;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FUHzAymlINFHw4AT1ThDN8yqkHJxGPn+LrVpBC58mtc=;
-        b=Eg9dYCJSnxuJYtW6E98AiG7rocAQMOKzUhOIzsaRkmfWRFZa2Qtwe8JVw/1lDsBHN3
-         I1N6LaTCT9nJA8XmyDMsiRn/DyzU1Hdb7qDtsOXmQ+EoSGMI2pnMSefsy+u2LkV/AAA7
-         vv0/VVEH7K3L/Pkk4zKO4gfrU3Y0JwFF1Tc/YPC+gFqY8EEgDRBGuLqN74xV5fNQUqJs
-         bTWoAu27okJtM8r0DnONGPB52s1d70du4LcXtA8qk6tZg2AgEzA49a31Z20AHRk1J07t
-         KoqKnCDT773pWZajUaOiDexaf9YxEuAFl8JtF7+U+azFOYRdDFGi6ZWPwMNOC3OV/S4G
-         pbvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUnfrBz+vgX96ThgPw+xjGK9qJPMm9vA4nF8ZDUOOTigwEC8M5MKjiT7MNKVcnheg8PKDlNyi7z9u73XgROK0BbhSErxCcvfoAAJHA1A==
-X-Gm-Message-State: AOJu0YyZ7pLfmyxjSrKaWjsXUFJxFMpQbRmWsFdKYyNKmlh/kgfc1/Z8
-	pB4L8rNHF1da7SfUki4Vgssf2H+P9zReNbT9whtcgOV5nLoULSdKd0Wld+YgsC8=
-X-Google-Smtp-Source: AGHT+IH6oW3hMniMs7BZaUCXOI7d7wMy8AfX3ii+mWNpaRLanp1gpdeeS4h2MkrK+l8K1r2rsQL2zg==
-X-Received: by 2002:a05:6402:22ca:b0:562:9e4f:6bd1 with SMTP id dm10-20020a05640222ca00b005629e4f6bd1mr2095725edb.9.1707946401721;
-        Wed, 14 Feb 2024 13:33:21 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV+Y3B+Y40sfv2m3w7vtPBrJH3hXIBXNY7dZUsceCxzt2z7Qps2IJ5AGUnvODHwj98JB3VjhvYKqM71fmtxpXg1rUG1Arb8RWZKUy+NmIrRyxSTTjR3rf0QEobGyFkEd4Kgeocr4k6LZ3XPbYLbEWuIHSjC1rX4LMggc4DQ40q9EMmeNC/ECJwwsIMZSIkTRB5RElp8O1ys8vJjAB8iQ0pdYTKPxT5y2boe7u8LZn2B+EwzJdJq9SMzQkiXOxRz8DaqrWVV1Ir8nJijSaE86v2gWveuXfinBfWQKGTReb8OcV9dBdwt7PmcyaY5hZzkxPFgdFy9Eb3UfYJwNbTIly213RGojN27SSoedBHOEWSfAM+RX6wHEtMI8PvoJK63TuXqfmrLJC5nDI2GfnyfsOQOI6V9kV8SdnZQHgZD0/Xp
+        bh=kdvjajy/m8WQq582LYwS0Ial7lo5kPNQuYwBh1wlPaY=;
+        b=fhWMJcDNqS8xPYi6DCIjDJRWc/goUHgKy7wUrOt2kVbCJWciT0/lqu1GhltzIFewVF
+         qy4rSq54ksMneAELqhqMrOGR0PbCMrN74YqCcqyDQVfg/QRx042VCEUGz7a7kbS/JInt
+         ySQqZKkXJoNOxVxaCRkF0PWS5lYqmtSic7bbT+mb19CIINSPBCYhx/juZEJg77z+nyK6
+         ziQG401xKIu7IFz05p9qLiAVuVExyEYKSGRkszQezjwY9QgT+k/XBA8qvp/PUB0KjH7S
+         koxKB2lws8DlOB70FfCdBj3jHkNVZc7JlHV04Zq7I/JGqnbzfdJHkF17sETCNU1MASmL
+         QhTA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTGj/FT4MAL8c3rAM3vMSIwJi8qd0neq7RTapbU2JahAjHjDHqJEIf/618zzLwlm++2XhycEuxhivYC+yoB08fRmcNyI2PQtmhY5zdIA==
+X-Gm-Message-State: AOJu0Yyr22YtGhdUM7ugNoFH+EjF+A5WZGByysdkRyLSRtXscOv4it6u
+	7/0bFALUcbTFDVOUT0mnQU9rBAZmCzbVX9TvtywnFhUoJj61OubAGxhACdCT/AA=
+X-Google-Smtp-Source: AGHT+IEvjEFDuyialvCzqpnCT1km5fx24sWbsQ0l2amvxfgmzusDS6C1NrfrsqUKRXLYHikLfmZNNA==
+X-Received: by 2002:a17:906:408c:b0:a3c:c11b:e260 with SMTP id u12-20020a170906408c00b00a3cc11be260mr2414974ejj.68.1707946518406;
+        Wed, 14 Feb 2024 13:35:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXM8km0OZWEuOrPr0p/jvnXfD02vFpBJnfmEIAFkT/zO1xCp6k0ZUYyz7nQjhn0CUWRviZS1ZagYUQ23viySYui2TsFNGP38uvvEksQKG26iel2B373tftuPS4X9sbF723qopxtUNqt/aJxy8U2fbO/vs4rLCgGJDemaYdQ2xbWe74jySij+qKlrD+3CmxuVjl/Q9DyDa5Fp9qG3dQ31FfVU6uITMD14WYDLA4Wd6gZ8eHE5L6HX5bPAheJsdRmEO47bnlyPx6YjDE4iDCtbGwW7rWRPRZNHPL2DrqvZmdif1XozKXiJez18+4+/u+fe6Kzf4JriV2PXnh6TNiF71IXEuOrgad/l5r7upylUN5sk/Ok23Msk26duQzgUMRpTtHXDO6Q
 Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id j2-20020aa7de82000000b005621b45daffsm1159426edv.28.2024.02.14.13.33.20
+        by smtp.gmail.com with ESMTPSA id tk6-20020a170907c28600b00a381ca0e589sm2666887ejc.22.2024.02.14.13.35.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 13:33:21 -0800 (PST)
-Message-ID: <27560098-ced3-4672-bc60-6c1b7c0dc807@linaro.org>
-Date: Wed, 14 Feb 2024 22:33:19 +0100
+        Wed, 14 Feb 2024 13:35:18 -0800 (PST)
+Message-ID: <26015e7a-5e3f-471c-aa98-46a0dfb4d155@linaro.org>
+Date: Wed, 14 Feb 2024 22:35:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] PCI: qcom: properly implement RC shutdown/power up
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
 Content-Language: en-US
 To: Bjorn Helgaas <helgaas@kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -87,9 +87,8 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
  Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
  linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240212213216.GA1145794@bhelgaas>
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240212211703.GA1145714@bhelgaas>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -126,82 +125,25 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240212213216.GA1145794@bhelgaas>
+In-Reply-To: <20240212211703.GA1145714@bhelgaas>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12.02.2024 22:32, Bjorn Helgaas wrote:
-> "Properly" is a noise word that suggests "we're doing it right this
-> time" but doesn't hint at what actually makes this better.
+On 12.02.2024 22:17, Bjorn Helgaas wrote:
+> Maybe include the reason in the subject?  "Read back" is literally
+> what the diff says.
 > 
-> On Sat, Feb 10, 2024 at 06:10:07PM +0100, Konrad Dybcio wrote:
->> Currently, we've only been minimizing the power draw while keeping the
->> RC up at all times. This is suboptimal, as it draws a whole lot of power
->> and prevents the SoC from power collapsing.
+> On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
+>> To ensure write completion, read the PARF_LTSSM register after setting
+>> the LTSSM enable bit before polling for "link up".
 > 
-> Is "power collapse" a technical term specific to this device, or is
-> there some more common term that could be used?  I assume the fact
-> that the RC remains powered precludes some lower power state of the
-> entire SoC?
+> The write will obviously complete *some* time; I assume the point is
+> that it's important for it to complete before some other event, and it
+> would be nice to know why that's important.
 
-That's spot on, "power collapse" commonly refers to shutting down as many
-parts of the SoC as possible, in order to achieve miliwatt-order power draw.
-
-
-> 
->> Implement full shutdown and re-initialization to allow for powering off
->> the controller.
->>
->> This is mainly indended for SC8280XP with a broken power rail setup,
->> which requires a full RC shutdown/reinit in order to reach SoC-wide
->> power collapse, but sleeping is generally better than not sleeping and
->> less destructive suspend can be implemented later for platforms that
->> support it.
-> 
-> s/indended/intended/
-> 
->>  config PCIE_QCOM
->>  	bool "Qualcomm PCIe controller (host mode)"
->>  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
->> +	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
-> 
-> Just out of curiosity since I'm not a Kconfig expert, what does
-> "depends on X || X=n" mean?  
-
-"not a module"
-
-> 
-> I guess it's different from
-> "depends on (QCOM_COMMAND_DB || !QCOM_COMMAND_DB)", which I also see
-> used for QCOM_RPMH?
-
-Yep
-
-> 
-> Does this reduce compile testing?  I see COMPILE_TEST mentioned in a
-> few other QCOM_COMMAND_DB dependencies.
-
-I can add "&& COMPILE_TEST", yeah
-
-> 
->> +	ret_l23 = readl_poll_timeout(pcie->parf + PARF_PM_STTS, val,
->> +				     val & PM_ENTER_L23, 10000, 100000);
-> 
-> Are these timeout values rooted in some PCIe or Qcom spec?  Would be
-> nice to have a spec citation or other reason for choosing these
-> values.
-> 
->> +	reset_control_assert(res->rst);
->> +	usleep_range(2000, 2500);
-> 
-> Ditto, some kind of citation would be nice.
-
-Both are magic values coming from Qualcomm BSP, that we suppose
-we can safely assume (and that's a two-level assumption at this
-point, I know..) is going to work fine, as it does so on millions
-of shipped devices.
-
-Maybe Mani or Bjorn A can find something interesting in the documentation.
+Right, that's very much meaningful on non-total-store-ordering
+architectures, like arm64, where the CPU receives a store instruction,
+but that does not necessarily impact the memory/MMIO state immediately.
 
 Konrad
 
