@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6142585566B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:58:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EBCA8556CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:02:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B00F28A236
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:58:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 887851C209E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:02:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89B8413B7BB;
-	Wed, 14 Feb 2024 22:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81E03128378;
+	Wed, 14 Feb 2024 23:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b0TWz7o/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cNlDOk92"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D6057872;
-	Wed, 14 Feb 2024 22:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC731250F6;
+	Wed, 14 Feb 2024 23:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707951498; cv=none; b=EhLKQ3AFOWmfqNF9W+iMZ9FAlRCrjfcKbEC+p7Jv9S5qB9CXG/XRrkJC2QbsmwhZqBg9wFtHr63Jyh6RYT84vHICzPywPdNihAvVMxnNyqzkzFP2x5u3sS4zhsy1WflKmGHKwR7DTnhvy/yaSLefNf/Zyrpj3KZPmS/79/sCgSQ=
+	t=1707951762; cv=none; b=McMhktluIeqMVhhQKgnYO+y1HRnv9HuaIcskTqtHfDN6kPApjWdJTXkT6IvhteNTPYx/2LOT49hiEEZrRstfyYx1DXWT6fTGFZoUHXFijKdMz6JDdKjBq5dl22fpgLPX8DHx9zf3GS2tjlyeCzxnLSff2wIq6Ks94vNW5vXoW3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707951498; c=relaxed/simple;
-	bh=gSUvTrZr3rXl9rxa9h+n04kX3glePcNe2dBEl2CvPt4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=hp+7g7h6SbsZIvaxzzznNjUZL49xFkTxqQXf5PwzCOm0gclBd7pmrkFyRFGbMUZwl0L5bljuFbNpSB/yI1ZdRRC158GEUm/Ea1rFaZKFFK+HCHC8+KKaCuW9clj/h7Q1k5nzOl/fTzqDsXlAQAx0lMV4BZC+wj2240soanIQBfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b0TWz7o/; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1707951762; c=relaxed/simple;
+	bh=02cTatai7GPs5v344TM5mzOOIQyekqpuUW+YGxDlxWc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LvrKsYYvItPA7P/T+FCUC+Q6ISLyIvj9O5Van/8CJI3AbslHWqF0dtiY1g8tVcdLXnLzGbbpW/kl8AqjVpcJcreQkOfptKf6qvXPRujcU+Zz38FnqCGGRx4Lk/umTXT6IY70ZDCxW8xHutwGZ1U4gUMuMyRivBAuGt6Uk5hzPwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cNlDOk92; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41ELrHsR010715;
-	Wed, 14 Feb 2024 22:57:52 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EMgIAO019540;
+	Wed, 14 Feb 2024 23:02:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
+	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=P3WE3lMB3U1jVjyqfIrkGAFwODySyS5IO0j1eUTCPyk=; b=b0
-	TWz7o/x3N8/AZ1opgEr/avUwTe6jB8c4OuL3f6079KX9ut38Qho6sMnDxX0/NXRl
-	HF9luXKQE71ywu7/88LW1oFOxyhL4GgW3w37hUAn8grY5IK6NIxHgxtQkCcIcGvB
-	/ROTjG1H+NIDuw05+h5w8TL+iMduX8yzNMv1Dcxhtf0CGb0n7QzBMnl+V2i2GnTu
-	bGgQGVYb/vt9h8ydnmspVOxAbq5g3dcVhRW/397fx3YS2Cy23oRZvFKIaNBNlAiR
-	XeWUvyRouBn57ifET7HUpot6IpyddxUxOylXbX5DTuwTJKoJ4uDgDZdUuDUV9ccf
-	q4lMtWv3KqmsFRiSHLzQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w92fxghd3-1
+	qcppdkim1; bh=1GW05LxH0VvnJ9ProNTCf0P2xyJXWnAWLMy2YLNh4qY=; b=cN
+	lDOk92LIR99xrpamA8sz0N5ArCaopS2VM6101BwkMQV9VtFEtMk+439Pv0GJdjCn
+	5EnGX2PuyNMBj49ZAtlAXWT0bpje8q6kPF1jL4obmzPLTnGaoYsVS6lPQSXGaRUO
+	R5Hu3aiL7396cMOxq+Pj/unHa3ODbvd3KoO3JnPTylLQCrKy5yJElTkhgkghUODB
+	oEZwZER9tOwAup7MjL/Ukrv+iXiIE4oGNJ6cVIsWAxIWsh9Rt1vStwaGRa0wv49n
+	a7pASPZdkHGKvE1vgu6v1Ht2QH6Gy109tjOjjFtCy89RkmzqsfAzbW30KhZsNaLq
+	eGatDCHoqL67tKyOPhKg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8kkrjet8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 22:57:52 +0000 (GMT)
+	Wed, 14 Feb 2024 23:02:21 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EMvpng005245
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EN2KvH011166
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 22:57:51 GMT
+	Wed, 14 Feb 2024 23:02:20 GMT
 Received: from [10.71.114.103] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 14:57:50 -0800
-Message-ID: <f2952acb-4f9e-9283-a5bc-1b62164df9bc@quicinc.com>
-Date: Wed, 14 Feb 2024 14:57:46 -0800
+ 2024 15:02:19 -0800
+Message-ID: <afccaa50-74a4-d7e9-2aa5-e5c3c1d55bff@quicinc.com>
+Date: Wed, 14 Feb 2024 15:02:19 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,9 +66,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: Re: [PATCH v15 39/50] ASoC: Introduce SND kcontrols to select sound
- card and PCM device
+Subject: Re: [PATCH v15 46/50] ALSA: usb-audio: Add USB offloading capable
+ kcontrol
+Content-Language: en-US
 To: Takashi Iwai <tiwai@suse.de>
 CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
         <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
@@ -81,90 +81,72 @@ CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
         <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>
 References: <20240213005422.3121-1-quic_wcheng@quicinc.com>
- <20240213005422.3121-40-quic_wcheng@quicinc.com>
- <87y1boy6ps.wl-tiwai@suse.de>
-Content-Language: en-US
-In-Reply-To: <87y1boy6ps.wl-tiwai@suse.de>
+ <20240213005422.3121-47-quic_wcheng@quicinc.com>
+ <87o7cky2va.wl-tiwai@suse.de>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <87o7cky2va.wl-tiwai@suse.de>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iiFOt1LHNH-vK7dJGiW2u-pqhV-t6b_L
-X-Proofpoint-ORIG-GUID: iiFOt1LHNH-vK7dJGiW2u-pqhV-t6b_L
+X-Proofpoint-GUID: WGJlsDvBg2gCWujv_N8iCh27crL-0SHj
+X-Proofpoint-ORIG-GUID: WGJlsDvBg2gCWujv_N8iCh27crL-0SHj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-14_14,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401310000 definitions=main-2402140174
 
 Hi Takashi,
 
-On 2/13/2024 2:54 AM, Takashi Iwai wrote:
-> On Tue, 13 Feb 2024 01:54:11 +0100,
+On 2/13/2024 4:18 AM, Takashi Iwai wrote:
+> On Tue, 13 Feb 2024 01:54:18 +0100,
 > Wesley Cheng wrote:
 >>
->> +static int soc_usb_get_offload_dev(struct snd_kcontrol *kcontrol,
->> +				   struct snd_ctl_elem_value *ucontrol)
+>> --- a/sound/usb/Makefile
+>> +++ b/sound/usb/Makefile
+>> @@ -22,6 +22,7 @@ snd-usb-audio-objs := 	card.o \
+>>   			stream.o \
+>>   			validate.o
+>>   
+>> +snd-usb-audio-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
+>>   snd-usb-audio-$(CONFIG_SND_USB_AUDIO_MIDI_V2) += midi2.o
+>>   snd-usb-audio-$(CONFIG_SND_USB_AUDIO_USE_MEDIA_CONTROLLER) += media.o
+> 
+> This puts the code into snd-usb-audio driver, and that causes a
+> dependency mess, since...
+> 
+
+I see what you mean after moving some things into modules, etc... Will 
+fix this accordingly.
+
+>> +snd_usb_offload_available_get(struct snd_kcontrol *kcontrol,
+>> +		      struct snd_ctl_elem_value *ucontrol)
 >> +{
->> +	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
->> +	struct snd_soc_usb *ctx = snd_soc_usb_find_priv_data(component->dev);
->> +	int ret = 0;
->> +
->> +	mutex_lock(&ctx_mutex);
->> +	if (ctx && ctx->get_offload_dev)
->> +		ret = ctx->get_offload_dev(kcontrol, ucontrol);
->> +	mutex_unlock(&ctx_mutex);
-> 
-> It might be safer to initialize the values with -1 in case when the
-> callback isn't available?
-> 
-
-Make sense, will do.
-
->>   /**
->>    * snd_soc_usb_get_components_tag() - Retrieve SOC USB component tag
->>    * @playback: direction of audio stream
->> @@ -157,6 +218,12 @@ EXPORT_SYMBOL_GPL(snd_soc_usb_free_port);
->>    */
->>   int snd_soc_usb_add_port(struct snd_soc_usb *usb)
->>   {
+>> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
 >> +	int ret;
 >> +
->> +	ret = snd_soc_usb_control_init(usb->component);
->> +	if (ret < 0)
->> +		return ret;
->> +
->>   	mutex_lock(&ctx_mutex);
->>   	list_add_tail(&usb->list, &usb_ctx_list);
->>   	mutex_unlock(&ctx_mutex);
+>> +	ret = snd_soc_usb_device_offload_available(sysdev);
 > 
-> We may need to remove the control element upon the driver removal,
-> too?  In theory, you can unload the offload stuff while snd-usb-audio
-> is still active.
+> ... here you call snd_soc_usb_*() stuff that belongs to snd-soc-usb.
+> That is, with this patch, snd-usb-audio driver will depend on
+> snd-soc-usb, while snd-soc-usb also depends on snd-usb-audio for its
+> helpers again.
+> 
+> I believe the better way would be to move this whole miser_usb_offload
+> code into sound/usb/qcom/.  You need only usb_device and snd_card
+> objects at the creation, and you can get them in qcom driver side,
+> too.
 > 
 
-This is managing the control for the ASoC platform card that supports 
-offloading.  If we compile the different kernel entities as modules, we 
-see that the soc_usb layer has the following users:
-
-soc_usb 16384 3 q6usb,snd_usb_audio_qmi,snd_soc_qcom_offload_utils
-
-So we'd need to remove all these modules before we can unload soc_usb. 
-The entity which would be related to the kcontrols created for the ASoC 
-sound card would be the q6usb module.  Since the q6usb module is tightly 
-coupled with the platform soundcard itself in our design, for the q6usb 
-module to be removed, we have to remove the entire ASoC sound card. (in 
-which the kcontrols will also be removed)
-
-However, that might not always be the case...so its a good idea to just 
-manually remove the kcontrols in soc-usb as you guided.
+Yes, plan is just to compile this as part of the overall offload module 
+if the config is enabled.
 
 Thanks
 Wesley Cheng
-
 
