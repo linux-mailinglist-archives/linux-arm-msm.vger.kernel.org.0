@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EBCA8556CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:02:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BCC978556DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:05:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 887851C209E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:02:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EEE961C22827
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:05:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81E03128378;
-	Wed, 14 Feb 2024 23:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76E6913DB90;
+	Wed, 14 Feb 2024 23:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cNlDOk92"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L4y8Ewfv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC731250F6;
-	Wed, 14 Feb 2024 23:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADAD65191;
+	Wed, 14 Feb 2024 23:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707951762; cv=none; b=McMhktluIeqMVhhQKgnYO+y1HRnv9HuaIcskTqtHfDN6kPApjWdJTXkT6IvhteNTPYx/2LOT49hiEEZrRstfyYx1DXWT6fTGFZoUHXFijKdMz6JDdKjBq5dl22fpgLPX8DHx9zf3GS2tjlyeCzxnLSff2wIq6Ks94vNW5vXoW3I=
+	t=1707951906; cv=none; b=UlZaG5sj/GWeYhWPeDHJdANAiSacKt4WsvHH8W/NN3FZbnzADbaDwzWdgZZkBso65IV81ljsDABTyg/QK5hKSKQkhNpBPNCzVGC9ImZ/W6SkiaNJtyIDtNuI9iBNz309R+oRvQl2Q3wTnXVzjvsKbPhTTIdEGfsP3SpnDHraUhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707951762; c=relaxed/simple;
-	bh=02cTatai7GPs5v344TM5mzOOIQyekqpuUW+YGxDlxWc=;
+	s=arc-20240116; t=1707951906; c=relaxed/simple;
+	bh=NF5NUr80OtbglWaZRPMW8XuNliEAQsYjfE/zJTAavQA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LvrKsYYvItPA7P/T+FCUC+Q6ISLyIvj9O5Van/8CJI3AbslHWqF0dtiY1g8tVcdLXnLzGbbpW/kl8AqjVpcJcreQkOfptKf6qvXPRujcU+Zz38FnqCGGRx4Lk/umTXT6IY70ZDCxW8xHutwGZ1U4gUMuMyRivBAuGt6Uk5hzPwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cNlDOk92; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=jn6ML6+dL+wX6qny7cF8GnG0t09035jbx+F3wOAC6MJkzhEkjimjvpHoFsDV0shyGx2KhCvT2w6u3fvUfBTKYpk9H0ZI3EikfKlEm2dYJ2UOhgFovzVxfcktw8gFnXP6gWDw8C7RHwoxAS125QcwupCvLyumqSJjr1vL5+R6Io4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L4y8Ewfv; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EMgIAO019540;
-	Wed, 14 Feb 2024 23:02:22 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41EMWmtR004681;
+	Wed, 14 Feb 2024 23:04:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=1GW05LxH0VvnJ9ProNTCf0P2xyJXWnAWLMy2YLNh4qY=; b=cN
-	lDOk92LIR99xrpamA8sz0N5ArCaopS2VM6101BwkMQV9VtFEtMk+439Pv0GJdjCn
-	5EnGX2PuyNMBj49ZAtlAXWT0bpje8q6kPF1jL4obmzPLTnGaoYsVS6lPQSXGaRUO
-	R5Hu3aiL7396cMOxq+Pj/unHa3ODbvd3KoO3JnPTylLQCrKy5yJElTkhgkghUODB
-	oEZwZER9tOwAup7MjL/Ukrv+iXiIE4oGNJ6cVIsWAxIWsh9Rt1vStwaGRa0wv49n
-	a7pASPZdkHGKvE1vgu6v1Ht2QH6Gy109tjOjjFtCy89RkmzqsfAzbW30KhZsNaLq
-	eGatDCHoqL67tKyOPhKg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8kkrjet8-1
+	qcppdkim1; bh=y0Uz8mXSkjvYpXhQtlSAFEFG7yr5QWKHlI01ir09dWQ=; b=L4
+	y8EwfvWY/MSIRk9KRaT27rQwH0bU8zFAw2ylQSlnqaMws8FoKxCNU1E7FKG3PKQD
+	U69vxyTl+s7Gq8sA72GkfOvu48EXZeBEjDZfdcq9ITlMY5N+cYcYDwLzy3YUqVtH
+	IZdPC5Rbm9S11S8pq0AQDtbieP1lGuH/EQbtqL6WjI9LDIlylGTs7USbsqfp0qBK
+	ezREmJDaAP92qaGK2mxaocOpjqtToMsu6A9mmbCPFznTtDowSpYyKLNSaH0B+1XY
+	JjzCDd5o6fmx2R453ESMwOpRRySCPeTkBeUB77dcz+ZXbR+nXvmTFjwcNaL46JW+
+	rLbeB4Bi7TF8ZlhRfojg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9435raed-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 23:02:21 +0000 (GMT)
+	Wed, 14 Feb 2024 23:04:47 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EN2KvH011166
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41EN4kmI001141
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 23:02:20 GMT
+	Wed, 14 Feb 2024 23:04:46 GMT
 Received: from [10.71.114.103] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 15:02:19 -0800
-Message-ID: <afccaa50-74a4-d7e9-2aa5-e5c3c1d55bff@quicinc.com>
-Date: Wed, 14 Feb 2024 15:02:19 -0800
+ 2024 15:04:45 -0800
+Message-ID: <ecec5590-1a96-9363-1209-342b4735096c@quicinc.com>
+Date: Wed, 14 Feb 2024 15:04:45 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +66,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH v15 46/50] ALSA: usb-audio: Add USB offloading capable
- kcontrol
+Subject: Re: [PATCH v15 18/50] ASoC: Add SOC USB APIs for adding an USB
+ backend
 Content-Language: en-US
 To: Takashi Iwai <tiwai@suse.de>
 CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
@@ -81,71 +81,73 @@ CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
         <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>
 References: <20240213005422.3121-1-quic_wcheng@quicinc.com>
- <20240213005422.3121-47-quic_wcheng@quicinc.com>
- <87o7cky2va.wl-tiwai@suse.de>
+ <20240213005422.3121-19-quic_wcheng@quicinc.com>
+ <87zfw4y717.wl-tiwai@suse.de>
 From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <87o7cky2va.wl-tiwai@suse.de>
+In-Reply-To: <87zfw4y717.wl-tiwai@suse.de>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WGJlsDvBg2gCWujv_N8iCh27crL-0SHj
-X-Proofpoint-ORIG-GUID: WGJlsDvBg2gCWujv_N8iCh27crL-0SHj
+X-Proofpoint-GUID: JuSmwtbiiWjb1-tzjemz6pa5NF-cujTB
+X-Proofpoint-ORIG-GUID: JuSmwtbiiWjb1-tzjemz6pa5NF-cujTB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-14_14,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 suspectscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 mlxlogscore=999
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401310000 definitions=main-2402140174
 
 Hi Takashi,
 
-On 2/13/2024 4:18 AM, Takashi Iwai wrote:
-> On Tue, 13 Feb 2024 01:54:18 +0100,
+On 2/13/2024 2:48 AM, Takashi Iwai wrote:
+> On Tue, 13 Feb 2024 01:53:50 +0100,
 > Wesley Cheng wrote:
 >>
->> --- a/sound/usb/Makefile
->> +++ b/sound/usb/Makefile
->> @@ -22,6 +22,7 @@ snd-usb-audio-objs := 	card.o \
->>   			stream.o \
->>   			validate.o
+>> --- a/sound/soc/Kconfig
+>> +++ b/sound/soc/Kconfig
+>> @@ -76,6 +76,15 @@ config SND_SOC_UTILS_KUNIT_TEST
+>>   config SND_SOC_ACPI
+>>   	tristate
 >>   
->> +snd-usb-audio-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
->>   snd-usb-audio-$(CONFIG_SND_USB_AUDIO_MIDI_V2) += midi2.o
->>   snd-usb-audio-$(CONFIG_SND_USB_AUDIO_USE_MEDIA_CONTROLLER) += media.o
+>> +config SND_SOC_USB
+>> +	bool "SoC based USB audio offloading"
+>> +	help
+>> +	  Enable this option if an ASoC platform card has support to handle
+>> +	  USB audio offloading.  This enables the SoC USB layer, which will
+>> +	  notifies the ASoC USB DPCM backend DAI link about available USB audio
+>> +	  devices.  Based on the notifications, sequences to enable the audio
+>> +	  stream can be taken based on the design.
 > 
-> This puts the code into snd-usb-audio driver, and that causes a
-> dependency mess, since...
+> This should be tristate, and...
+> 
+>> --- a/sound/soc/Makefile
+>> +++ b/sound/soc/Makefile
+>> @@ -31,6 +31,10 @@ endif
+>>   
+>>   obj-$(CONFIG_SND_SOC_ACPI) += snd-soc-acpi.o
+>>   
+>> +ifneq ($(CONFIG_SND_SOC_USB),)
+>> +snd-soc-core-objs += soc-usb.o
+>> +endif
+> 
+> ... split it to an individual module, i.e.:
+> 
+> snd-soc-usb-objs := soc-usb.o
+> obj-$(CONFIG_SND_SOC_USB) += snd-soc-usb.o
+> 
+> Otherwise it'll lead to a hard-dependency to snd-soc-core on
+> snd-usb-audio, which is utterly unnecessary for most of other
+> devices.
 > 
 
-I see what you mean after moving some things into modules, etc... Will 
-fix this accordingly.
-
->> +snd_usb_offload_available_get(struct snd_kcontrol *kcontrol,
->> +		      struct snd_ctl_elem_value *ucontrol)
->> +{
->> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
->> +	int ret;
->> +
->> +	ret = snd_soc_usb_device_offload_available(sysdev);
-> 
-> ... here you call snd_soc_usb_*() stuff that belongs to snd-soc-usb.
-> That is, with this patch, snd-usb-audio driver will depend on
-> snd-soc-usb, while snd-soc-usb also depends on snd-usb-audio for its
-> helpers again.
-> 
-> I believe the better way would be to move this whole miser_usb_offload
-> code into sound/usb/qcom/.  You need only usb_device and snd_card
-> objects at the creation, and you can get them in qcom driver side,
-> too.
-> 
-
-Yes, plan is just to compile this as part of the overall offload module 
-if the config is enabled.
+Got it...getting this to compile as its own separate module also 
+required some changes to the other layers I had.  Anyway, I've reworked 
+some of the dependencies with other drivers and is working fine now.
 
 Thanks
 Wesley Cheng
