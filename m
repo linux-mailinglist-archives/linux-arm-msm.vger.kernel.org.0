@@ -1,70 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-11079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78CAF855313
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 20:17:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AD12855317
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 20:18:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2C291F2519C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:17:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 993EFB20FB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 19:18:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8ADF13A862;
-	Wed, 14 Feb 2024 19:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33ECF13A862;
+	Wed, 14 Feb 2024 19:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JNSAfE46"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GJkHd11E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8835134738
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 19:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6958B134738
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 19:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707938240; cv=none; b=a4qeHwQH94Yp+aokCJrKgR8JIcbpeBKXerTiAMrpwWb8P9G9kjemE6ksagk1LN0Mm+L66lNcp4k56xfbnGGpXH4FaWPJp4V03qbEULvNU5dOaWk/UbldwnSJJGDhWDqa1xYk3CJWTQ2YpFXkCwPJWx0R9euampwPMwCOrxq+gr8=
+	t=1707938307; cv=none; b=I6FdxxuFfvHtFx1Cm1Uv6awfADhV7s5sYD3nIYu+zcGUK4jE4qeMtNtqbwpeC6RinMricF+joaxfh5u4w6bD1yAZY9lfXveH673w/KbY1+2pZ5ytcatQw3IJVC7uTJLgdBFok4iZpqOKvlDPf1FSeT5GQ51Lc009sQGwGibMY7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707938240; c=relaxed/simple;
-	bh=xXYO0vSydy2GCgcesyoxpGW2P+Q0BY1lN8JBQmbUN14=;
+	s=arc-20240116; t=1707938307; c=relaxed/simple;
+	bh=HM/aqNowpDm8X9UslrhZbariNIeQguxFURa257TdBGo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bclisQxqj+lnJ/yzRbTtQKxpcglHD+XtiA8Av+bIiFsAqItqOKKuV0ZL8GzHE9kc9ET+BM+o09+DKFbaWQHoHmSNusKeebGorOltKNCeFmhe3HmXa2aRd1vzkhXzuoIgu6aTFGH1uJF6j/5fu7fdOB2Hp3MG+G9rPdaEN0byGVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JNSAfE46; arc=none smtp.client-ip=209.85.219.173
+	 To:Cc:Content-Type; b=ZSTs6gacfPQV0fNYnKoJ21Ra14lHXW1P7x4+WBNR4QBMd8FY5S9zmAcHJSb5F+wgkN8mnsBXSgTedgm7zayv+JLhKW0wejf2hfw00npkPU4rPezC8Gyyu2/+qsbWGtZ4RY5qCv7jFywz98qIarWMelg0qxBZYBHZqTIB9yqDdPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GJkHd11E; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dcbf82cdf05so1049276.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 11:17:18 -0800 (PST)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso9724276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 11:18:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707938238; x=1708543038; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gDsAswXM/Fg8rNrNvE9IyqvJefpDY8QqPMNfM2SbGso=;
-        b=JNSAfE46X4jLq97+ft+iorlpAUDpCgiNsvYqE1dAgnkwLohsy0nuLzIWR62GuxMrV5
-         gvTEe77Q3tJmHVV6ab50nSaXEF7d0iBoh8xOPcWj4V4VCL8HZPP70X4/Nu3vIxnfZoAI
-         4Tyxqv2hYaSW/n0gi8zcguUJY7mn1U1dxmg58aAjbZIqXkFzOk8xngfpqQAW2pgcHYux
-         YUYX9q8iDgy+CXiARM72xN4gH11hnCkA8YAQuTEyUqVN+ovNM/iwuR+MHRoVzGsJuFa1
-         AYOt8rmw3dYYerHIhmIRqP5ti3i7vSfMgmkqHbed2zlBpKv3VMd86cMZ1FBQIuvRtpH4
-         Wq9A==
+        d=linaro.org; s=google; t=1707938304; x=1708543104; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vX31/EzD/EWKcus6lCA8zVhfltgaK7sFq7I9qzmQtfs=;
+        b=GJkHd11E0s9Yg8f2LeJXICVpRuu57bmr8tqW6SWxMfw/S5dMEPt/tCAzBE3aMtHGKy
+         vO7pttliqAHwrO6uCY3EorassjnjswIElcKhdKhQyW9nmiy5YcD59B0a8Sy4WARZbZM0
+         izOYZbO/PHZPN+Nq9P2OqwKEavi7IN94ossi0c5CBBCGxhcvLQSN1oLUgwNGHuU2Ma+c
+         9cTaVWz2HtEJwg+8tmuQ0dKiYKZyK7AUN9RutNdYT1PtP2xSWRRHOlDo56SardEDpFTm
+         f5rFyNJDAjYhNL2XzrhT64CsEWktkzpm0kqB/9SdRTj3fGeh2lmkcSJd2KJUzwTbA6NE
+         Vpew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707938238; x=1708543038;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gDsAswXM/Fg8rNrNvE9IyqvJefpDY8QqPMNfM2SbGso=;
-        b=GoLGJvj0dZDbqHnOGPIAfmNe0KnpagFKovGfXwv1H1LgRNh2MIoBRUFHrm3zyWbiV3
-         wpBtWjqBQCmkdXGYl4e/XS+BXu08fShglyuhKZmSCQztLzI+weLkHq+hMzIn/aNbpPkD
-         r8qwS8CRnB3abswrBI2DTvb7ibyfxeowG1cnWlfKPyRROJh1pq8u0HaKX8NtIqEV7wvV
-         sLwEik3zA9oGVMW4wbCcW2cqP+kjBMoXN/jFDuBv11xMxLkJb1UHprkpOh8Rjy9D7PlU
-         qNiowjajxLb4v/dhfM0o26D7CvVJipBYNv05XnuFnEE8hi1sQCY6G6PEIv/UiUHimhTa
-         1lkw==
-X-Forwarded-Encrypted: i=1; AJvYcCV5u5UV6QlIYcbmR8hyJUaLZakrP6CFY1mDPfSZ83XQARQpZYxCQy+pJ8fJEhQ6RTHc3CMKQM2pNZriKCt3w7/Iv9xsfoOJ7WRZcH2kxw==
-X-Gm-Message-State: AOJu0YxE5KeR9AGUOhHvORzxUcUX6WBZFW1SWizTrntc7h60Wwj2onam
-	F0CIpa22j3aQBUoOk2YaNrLyu4VxEBDWlpcHo4VFrJ0kKyz83Yjqi9P7mvJtUSmho/YrcuBfFza
-	B89iytCUyHvYAYeJ+H0vhV5CoWPOvFll73PeGnw==
-X-Google-Smtp-Source: AGHT+IFpGF9vZuRtc3AROUP4xNXEOWTbmXO4DabWLZwpSvMWDXLOGtVO/xnAKG91VzrP0hw5IUJ7H045MpoTmgzeNx8=
-X-Received: by 2002:a5b:e90:0:b0:dc7:45df:a04c with SMTP id
- z16-20020a5b0e90000000b00dc745dfa04cmr3357608ybr.43.1707938237167; Wed, 14
- Feb 2024 11:17:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707938304; x=1708543104;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vX31/EzD/EWKcus6lCA8zVhfltgaK7sFq7I9qzmQtfs=;
+        b=FhxE45pANMJJw9HFgIhl791GjRxf9NiMmIoHhtzO/HwG1a89pi4/QJUvvgemW1KZia
+         oUIc938C4muTzYKdzdPl4eDoimr4l/VrXabqwFokbWnKeLnko1MGg9JGSLbeXYW62nD+
+         91vCwC0nXn76n0mc2DuoFFCzAtEH7Jlg1BC5iSH6ulNISRlG4B0cw32QPRP8RkwvR3pa
+         wzdza0RCjF1wn17C+0Fs1K4093uqDcwIsYGA3802O6xRx30VToBa3s0IQPXZLi7gpsWr
+         JFl8ZE7p7A6/lGko/In4Ww0C4hh+92HdFL36Mc5F1y+miIWajYNMSwGzCCUenBI05Oov
+         DIYA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6Nd4LRW9+UwiYrsGJO1w3IIz27I1oCa57ato7+jyebNVTg5ypHX3Jp2euMvllBvykfgfxcihh4m6lKfDI8bA/hgbKaSbT4UiX/umtbQ==
+X-Gm-Message-State: AOJu0Yw7b9tRDnSKt+btwJ8tF631RUYAZbSe2ZLfZiHyAIKSFNLqi2Pg
+	Yyh/VbQ+EKu/kSqWEfZS8Ybbw2dH7QN8JogHBBEZicK+rOELjnYf2vWOid0n+Lkz+aC9fkJRn7m
+	zKHaRIx/HEr7V+jQJho4ZwXJW0kFc44Ljj50IpQ==
+X-Google-Smtp-Source: AGHT+IF4aOVnL4Bd3VrS8xHPrKHuOlpm4uq7GLf0etCj1mf7gTKYmLfKqrL9SvEfzUISs1HpP36UHgZNvqQJmZKizwE=
+X-Received: by 2002:a25:854d:0:b0:dcd:5e0f:19c7 with SMTP id
+ f13-20020a25854d000000b00dcd5e0f19c7mr2748331ybn.54.1707938304299; Wed, 14
+ Feb 2024 11:18:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,287 +71,164 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20230914050706.1058620-1-dmitry.baryshkov@linaro.org>
- <20230914050706.1058620-2-dmitry.baryshkov@linaro.org> <Zc0ITrmhQ8CWMXMq@intel.com>
- <Zc0KsfrI57XL7Efk@intel.com>
-In-Reply-To: <Zc0KsfrI57XL7Efk@intel.com>
+ <20230914050706.1058620-3-dmitry.baryshkov@linaro.org> <311b5714-47a8-7170-5b14-cde3ac05a314@quicinc.com>
+In-Reply-To: <311b5714-47a8-7170-5b14-cde3ac05a314@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 14 Feb 2024 21:17:06 +0200
-Message-ID: <CAA8EJppv9xW1S6=eYr41Z0KG3AnsNs7+rLXWWCZ5TNetuqXuUw@mail.gmail.com>
-Subject: Re: [PATCH v3 01/12] drm/atomic-helper: split not-scaling part of drm_atomic_helper_check_plane_state
-To: =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Date: Wed, 14 Feb 2024 21:18:13 +0200
+Message-ID: <CAA8EJprQb=xDZ8e2bsLg-d3RmXQbjgda7K7BLsYb7zxMuAxGZw@mail.gmail.com>
+Subject: Re: [PATCH v3 02/12] drm/msm/dpu: add current resource allocation to
+ dumped state
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, dri-devel@lists.freedesktop.org, 
-	Stephen Boyd <swboyd@chromium.org>
+	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 14 Feb 2024 at 20:47, Ville Syrj=C3=A4l=C3=A4
-<ville.syrjala@linux.intel.com> wrote:
+On Wed, 14 Feb 2024 at 20:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> On Wed, Feb 14, 2024 at 08:37:02PM +0200, Ville Syrj=C3=A4l=C3=A4 wrote:
-> > On Thu, Sep 14, 2023 at 08:06:55AM +0300, Dmitry Baryshkov wrote:
-> > > The helper drm_atomic_helper_check_plane_state() runs several checks =
-on
-> > > plane src and dst rectangles, including the check whether required
-> > > scaling fits into the required margins. The msm driver would benefit
-> > > from having a function that does all these checks except the scaling
-> > > one. Split them into a new helper called
-> > > drm_atomic_helper_check_plane_noscale().
+>
+>
+> On 9/13/2023 10:06 PM, Dmitry Baryshkov wrote:
+> > Provide atomic_print_state callback to the DPU's private object. This
+> > way the debugfs/dri/0/state will also include RM's internal state.
 > >
-> > What's the point in eliminating a nop scaling check?
 >
-> Actually, what are you even doing in there? Are you saying that
-> the hardware has absolutely no limits on how much it can scale
-> in either direction?
-
-No, I'm just saying that the scaling ability depends on the rotation
-and other plane properties. So I had to separate the basic plane
-checks and the scaling check.
-Basic (noscale) plane check source and destination rectangles, etc.
-After that the driver identifies possible hardware pipe usage and
-after that it can perform a scaling check.
-
+> I like this idea !
 >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  4 +++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  2 ++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 48 +++++++++++++++++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  8 +++++
+> >   4 files changed, 62 insertions(+)
 > >
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/drm_atomic_helper.c | 110 ++++++++++++++++++++++----=
---
-> > >  include/drm/drm_atomic_helper.h     |   7 ++
-> > >  2 files changed, 96 insertions(+), 21 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/dr=
-m_atomic_helper.c
-> > > index 292e38eb6218..2d7dd66181c9 100644
-> > > --- a/drivers/gpu/drm/drm_atomic_helper.c
-> > > +++ b/drivers/gpu/drm/drm_atomic_helper.c
-> > > @@ -825,11 +825,9 @@ drm_atomic_helper_check_wb_encoder_state(struct =
-drm_encoder *encoder,
-> > >  EXPORT_SYMBOL(drm_atomic_helper_check_wb_encoder_state);
-> > >
-> > >  /**
-> > > - * drm_atomic_helper_check_plane_state() - Check plane state for val=
-idity
-> > > + * drm_atomic_helper_check_plane_noscale() - Check plane state for v=
-alidity
-> > >   * @plane_state: plane state to check
-> > >   * @crtc_state: CRTC state to check
-> > > - * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > > - * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > >   * @can_position: is it legal to position the plane such that it
-> > >   *                doesn't cover the entire CRTC?  This will generall=
-y
-> > >   *                only be false for primary planes.
-> > > @@ -845,19 +843,16 @@ EXPORT_SYMBOL(drm_atomic_helper_check_wb_encode=
-r_state);
-> > >   * RETURNS:
-> > >   * Zero if update appears valid, error code on failure
-> > >   */
-> > > -int drm_atomic_helper_check_plane_state(struct drm_plane_state *plan=
-e_state,
-> > > -                                   const struct drm_crtc_state *crtc=
-_state,
-> > > -                                   int min_scale,
-> > > -                                   int max_scale,
-> > > -                                   bool can_position,
-> > > -                                   bool can_update_disabled)
-> > > +int drm_atomic_helper_check_plane_noscale(struct drm_plane_state *pl=
-ane_state,
-> > > +                                     const struct drm_crtc_state *cr=
-tc_state,
-> > > +                                     bool can_position,
-> > > +                                     bool can_update_disabled)
-> > >  {
-> > >     struct drm_framebuffer *fb =3D plane_state->fb;
-> > >     struct drm_rect *src =3D &plane_state->src;
-> > >     struct drm_rect *dst =3D &plane_state->dst;
-> > >     unsigned int rotation =3D plane_state->rotation;
-> > >     struct drm_rect clip =3D {};
-> > > -   int hscale, vscale;
-> > >
-> > >     WARN_ON(plane_state->crtc && plane_state->crtc !=3D crtc_state->c=
-rtc);
-> > >
-> > > @@ -883,17 +878,6 @@ int drm_atomic_helper_check_plane_state(struct d=
-rm_plane_state *plane_state,
-> > >
-> > >     drm_rect_rotate(src, fb->width << 16, fb->height << 16, rotation)=
-;
-> > >
-> > > -   /* Check scaling */
-> > > -   hscale =3D drm_rect_calc_hscale(src, dst, min_scale, max_scale);
-> > > -   vscale =3D drm_rect_calc_vscale(src, dst, min_scale, max_scale);
-> > > -   if (hscale < 0 || vscale < 0) {
-> > > -           drm_dbg_kms(plane_state->plane->dev,
-> > > -                       "Invalid scaling of plane\n");
-> > > -           drm_rect_debug_print("src: ", &plane_state->src, true);
-> > > -           drm_rect_debug_print("dst: ", &plane_state->dst, false);
-> > > -           return -ERANGE;
-> > > -   }
-> > > -
-> > >     if (crtc_state->enable)
-> > >             drm_mode_get_hv_timing(&crtc_state->mode, &clip.x2, &clip=
-.y2);
-> > >
-> > > @@ -921,6 +905,90 @@ int drm_atomic_helper_check_plane_state(struct d=
-rm_plane_state *plane_state,
-> > >
-> > >     return 0;
-> > >  }
-> > > +EXPORT_SYMBOL(drm_atomic_helper_check_plane_noscale);
-> > > +
-> > > +/**
-> > > + * drm_atomic_helper_check_plane_scale() - Check whether plane can b=
-e scaled
-> > > + * @plane_state: plane state to check
-> > > + * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > > + * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > > + *
-> > > + * Checks that a desired plane scale fits into the min_scale..max_sc=
-ale
-> > > + * boundaries.
-> > > + * Drivers that provide their own plane handling rather than helper-=
-provided
-> > > + * implementations may still wish to call this function to avoid dup=
-lication of
-> > > + * error checking code.
-> > > + *
-> > > + * RETURNS:
-> > > + * Zero if update appears valid, error code on failure
-> > > + */
-> > > +int drm_atomic_helper_check_plane_scale(struct drm_plane_state *plan=
-e_state,
-> > > +                                   int min_scale,
-> > > +                                   int max_scale)
-> > > +{
-> > > +   struct drm_framebuffer *fb =3D plane_state->fb;
-> > > +   struct drm_rect src;
-> > > +   struct drm_rect dst;
-> > > +   int hscale, vscale;
-> > > +
-> > > +   if (!plane_state->visible)
-> > > +           return 0;
-> > > +
-> > > +   src =3D drm_plane_state_src(plane_state);
-> > > +   dst =3D drm_plane_state_dest(plane_state);
-> > > +
-> > > +   drm_rect_rotate(&src, fb->width << 16, fb->height << 16, plane_st=
-ate->rotation);
-> > > +
-> > > +   hscale =3D drm_rect_calc_hscale(&src, &dst, min_scale, max_scale)=
-;
-> > > +   vscale =3D drm_rect_calc_vscale(&src, &dst, min_scale, max_scale)=
-;
-> > > +   if (hscale < 0 || vscale < 0) {
-> > > +           drm_dbg_kms(plane_state->plane->dev,
-> > > +                       "Invalid scaling of plane\n");
-> > > +           drm_rect_debug_print("src: ", &plane_state->src, true);
-> > > +           drm_rect_debug_print("dst: ", &plane_state->dst, false);
-> > > +           return -ERANGE;
-> > > +   }
-> > > +
-> > > +   return 0;
-> > > +}
-> > > +EXPORT_SYMBOL(drm_atomic_helper_check_plane_scale);
-> > > +
-> > > +/**
-> > > + * drm_atomic_helper_check_plane_state() - Check plane state for val=
-idity
-> > > + * @plane_state: plane state to check
-> > > + * @crtc_state: CRTC state to check
-> > > + * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > > + * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed poin=
-t
-> > > + * @can_position: is it legal to position the plane such that it
-> > > + *                doesn't cover the entire CRTC?  This will generall=
-y
-> > > + *                only be false for primary planes.
-> > > + * @can_update_disabled: can the plane be updated while the CRTC
-> > > + *                       is disabled?
-> > > + *
-> > > + * Checks that a desired plane update is valid, and updates various
-> > > + * bits of derived state (clipped coordinates etc.). Drivers that pr=
-ovide
-> > > + * their own plane handling rather than helper-provided implementati=
-ons may
-> > > + * still wish to call this function to avoid duplication of error ch=
-ecking
-> > > + * code.
-> > > + *
-> > > + * RETURNS:
-> > > + * Zero if update appears valid, error code on failure
-> > > + */
-> > > +int drm_atomic_helper_check_plane_state(struct drm_plane_state *plan=
-e_state,
-> > > +                                   const struct drm_crtc_state *crtc=
-_state,
-> > > +                                   int min_scale,
-> > > +                                   int max_scale,
-> > > +                                   bool can_position,
-> > > +                                   bool can_update_disabled)
-> > > +{
-> > > +   int ret;
-> > > +
-> > > +   ret =3D drm_atomic_helper_check_plane_noscale(plane_state, crtc_s=
-tate, can_position, can_update_disabled);
-> > > +   if (ret < 0)
-> > > +           return ret;
-> > > +
-> > > +   return drm_atomic_helper_check_plane_scale(plane_state, min_scale=
-, max_scale);
-> > > +}
-> > >  EXPORT_SYMBOL(drm_atomic_helper_check_plane_state);
-> > >
-> > >  /**
-> > > diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic=
-_helper.h
-> > > index 536a0b0091c3..32ac55aea94e 100644
-> > > --- a/include/drm/drm_atomic_helper.h
-> > > +++ b/include/drm/drm_atomic_helper.h
-> > > @@ -52,6 +52,13 @@ int drm_atomic_helper_check_modeset(struct drm_dev=
-ice *dev,
-> > >  int
-> > >  drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder=
-,
-> > >                                      struct drm_connector_state *conn=
-_state);
-> > > +int drm_atomic_helper_check_plane_noscale(struct drm_plane_state *pl=
-ane_state,
-> > > +                                     const struct drm_crtc_state *cr=
-tc_state,
-> > > +                                     bool can_position,
-> > > +                                     bool can_update_disabled);
-> > > +int drm_atomic_helper_check_plane_scale(struct drm_plane_state *plan=
-e_state,
-> > > +                                   int min_scale,
-> > > +                                   int max_scale);
-> > >  int drm_atomic_helper_check_plane_state(struct drm_plane_state *plan=
-e_state,
-> > >                                     const struct drm_crtc_state *crtc=
-_state,
-> > >                                     int min_scale,
-> > > --
-> > > 2.39.2
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index ee84160592ce..172b64dc60e6 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -362,6 +362,7 @@ static void dpu_kms_global_destroy_state(struct drm_private_obj *obj,
+> >   static const struct drm_private_state_funcs dpu_kms_global_state_funcs = {
+> >       .atomic_duplicate_state = dpu_kms_global_duplicate_state,
+> >       .atomic_destroy_state = dpu_kms_global_destroy_state,
+> > +     .atomic_print_state = dpu_rm_print_state,
+> >   };
 > >
-> > --
-> > Ville Syrj=C3=A4l=C3=A4
-> > Intel
+> >   static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+> > @@ -375,6 +376,9 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+> >       drm_atomic_private_obj_init(dpu_kms->dev, &dpu_kms->global_state,
+> >                                   &state->base,
+> >                                   &dpu_kms_global_state_funcs);
+> > +
+> > +     state->rm = &dpu_kms->rm;
+> > +
+> >       return 0;
+> >   }
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > index ed549f0f7c65..dd2be279b366 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > @@ -130,6 +130,8 @@ struct vsync_info {
+> >   struct dpu_global_state {
+> >       struct drm_private_state base;
+> >
+> > +     struct dpu_rm *rm;
+> > +
+> >       uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
+> >       uint32_t mixer_to_enc_id[LM_MAX - LM_0];
+> >       uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > index f9215643c71a..5e3442fb8678 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> > @@ -652,3 +652,51 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+> >
+> >       return num_blks;
+> >   }
+> > +
+> > +void dpu_rm_print_state(struct drm_printer *p,
+> > +                     const struct drm_private_state *state)
+> > +{
+> > +     const struct dpu_global_state *global_state = to_dpu_global_state(state);
+> > +     const struct dpu_rm *rm = global_state->rm;
+> > +     int i;
+> > +
+> > +     drm_puts(p, "pingpong:");
+> > +     for (i = 0; i < ARRAY_SIZE(global_state->pingpong_to_enc_id); i++)
+> > +             if (rm->pingpong_blks[i])
+> > +                     drm_printf(p, " %d,", global_state->pingpong_to_enc_id[i]);
+> > +             else
+> > +                     drm_puts(p, " -,");
+> > +     drm_puts(p, "\n");
+> > +
+> > +     drm_puts(p, "mixer:");
+> > +     for (i = 0; i < ARRAY_SIZE(global_state->mixer_to_enc_id); i++)
+> > +             if (rm->mixer_blks[i])
+> > +                     drm_printf(p, " %d,", global_state->mixer_to_enc_id[i]);
+> > +             else
+> > +                     drm_puts(p, " -,");
+> > +     drm_puts(p, "\n");
+> > +
+> > +     drm_puts(p, "ctl:");
+> > +     for (i = 0; i < ARRAY_SIZE(global_state->ctl_to_enc_id); i++)
+> > +             if (rm->ctl_blks[i])
+> > +                     drm_printf(p, " %d,", global_state->ctl_to_enc_id[i]);
+> > +             else
+> > +                     drm_puts(p, " -,");
+> > +     drm_puts(p, "\n");
+> > +
+> > +     drm_puts(p, "dspp:");
+> > +     for (i = 0; i < ARRAY_SIZE(global_state->dspp_to_enc_id); i++)
+> > +             if (rm->dspp_blks[i])
+> > +                     drm_printf(p, " %d,", global_state->dspp_to_enc_id[i]);
+> > +             else
+> > +                     drm_puts(p, " -,");
+> > +     drm_puts(p, "\n");
+> > +
+> > +     drm_puts(p, "dsc:");
+> > +     for (i = 0; i < ARRAY_SIZE(global_state->dsc_to_enc_id); i++)
+> > +             if (rm->dsc_blks[i])
+> > +                     drm_printf(p, " %d,", global_state->dsc_to_enc_id[i]);
+> > +             else
+> > +                     drm_puts(p, " -,");
+> > +     drm_puts(p, "\n");
+> > +}
 >
-> --
-> Ville Syrj=C3=A4l=C3=A4
-> Intel
+> You also need to include cdm_to_enc_id now. But otherwise LGTM.
+>
+> If you have run this before, do you have a sample output to share?
+
+No, I don't have a dump at hand. But I can post this patch separately,
+including the CDM change.
+
+>
+>
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > index 2b551566cbf4..913baca81a42 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> > @@ -92,6 +92,14 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+> >       struct dpu_global_state *global_state, uint32_t enc_id,
+> >       enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+> >
+> > +/**
+> > + * dpu_rm_print_state - output the RM private state
+> > + * @p: DRM printer
+> > + * @state: private object state
+> > + */
+> > +void dpu_rm_print_state(struct drm_printer *p,
+> > +                     const struct drm_private_state *state);
+> > +
+> >   /**
+> >    * dpu_rm_get_intf - Return a struct dpu_hw_intf instance given it's index.
+> >    * @rm: DPU Resource Manager handle
 
 
 
---=20
+-- 
 With best wishes
 Dmitry
 
