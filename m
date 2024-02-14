@@ -1,185 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-10970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-10971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72D4585439D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 08:47:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21B01854409
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 09:29:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 965371C2031F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 07:47:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDD9B28B7E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 08:29:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2106F18635;
-	Wed, 14 Feb 2024 07:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DCCE125A8;
+	Wed, 14 Feb 2024 08:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w8WMKcLS"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WbOf/DOz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2749218628
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 07:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F33E125A2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 08:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707896813; cv=none; b=rRzLajVQgksj4APHNm7xkZit7eX2rXxSfL5mRZqdY6xypKy7ENMUQU3MGztGKxclgupw4Nf6X7UmLHMttRnHKi+RCJEFRTsnshgs0RuV5gTfDFXgoOBwVR/rJiXIbOXje1XJzq5/TtTTkVfpMXO494HdPzsJ8IEgW6iIHJqyCps=
+	t=1707899393; cv=none; b=XYOG+L1VM8hC7LEYrEv9XqOjKb6F07Sqvt4sqC4/km25VG6AJu3dHcBvzm7l+ND57GjYQKfjjWGXM185PH75esq9AQmrRc+S65sIb2z6+z9GorI8Lvs9xOPsfpYxuRSl5c3LY/UUVEaCICAYhG0uDn9oE90v+4dtOTBJfYGPLIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707896813; c=relaxed/simple;
-	bh=yqB2XdwA6UHCegZCB9/lVXiW3YWDwxrPU4imydmilIQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ifeg5I3npJkrNC5RNscyUe/Q1cQfrqpuyhvlLzr4DE+0pT+PXoLNGkKdMQfDiHr80owktB/EBHN7OzAVv0THI0GAB+0rZ3IsP1GgNxb+nBzGPkjPZ1yeaXjCLTsqCrYpqlZ+SeQSdj7eFGPh8amNkDWj9ixabkVf2No5etCHD+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w8WMKcLS; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-560037b6975so5768286a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Feb 2024 23:46:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707896809; x=1708501609; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B0R4c1Ylk8xxreF7nNGXS85UtN57qLPiI5PzupAO4is=;
-        b=w8WMKcLSzIe/ZW5SHuL5Uza48FfctvU0cXX3VLiP9p2aOdzdT7OwBm2eRjZfJWgRAC
-         7o6VIYcT+AqHErViaGoTSPDKncIeRCs+xZQD0zOI1n6/rrWQxHaOHuDdCPrqser7LGwO
-         jAig9P7ejdDcWpCUtjwikwed8SZpaXPS8r766Dn7pOQssiTAFPh9Quhayo+1Dqbt82pm
-         vDhjP7TA1wJmcNnboDFO7BLYAyKiRBhrhLUvpiWdOt17yCFoWSjWiLu5hOLel7zCHuZw
-         y48cMBRM6pGIXvhKY5A6+veX6A4x8IwjQSJOQp1gVxPSGacAk8VJjbwTdnFoNafwGVHj
-         ONPA==
+	s=arc-20240116; t=1707899393; c=relaxed/simple;
+	bh=qChK1qQ6Od/4UgKn1tzFNFtQzd4F48tHVbIEhF5Dd4k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VFzv3lQbuDqmQtVCp+2cKD2NxVp1r+ksQZN5w6Ksv0Ujs73tc6Or+ZCP1q68QCmxNWhpMfzC+4MWLphLg6czo2XTGpNLpp7i0FnWTZpcT9QFYIgySElIvG2EKt0MOqeUhaaRvv2x4Kh9pc/6VV+RQduNf/NSds1omgJCVBQM/wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WbOf/DOz; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1707899390;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Vb/g1159e0DO4hnfKwx1FD37+ejv2muFNbaldYH/o+A=;
+	b=WbOf/DOzNJhNMPt1goI1XfasuprSc8+6yRqXY2+0+0FI3xzI2wzSCo+VbOY8ioaoNgPjsi
+	llvD91D00yfXBVyQ0+6Fv4J5hE6Ea6Pf+qzhOotylb2FW4cYu4EYkl6bgfwMyMS0b97Nii
+	rjVWDPIp+sQTwF3osNqUEuxrDiAGzXs=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-261-4hdeFteBPpe5rocpo2sTuQ-1; Wed, 14 Feb 2024 03:29:48 -0500
+X-MC-Unique: 4hdeFteBPpe5rocpo2sTuQ-1
+Received: by mail-lf1-f72.google.com with SMTP id 2adb3069b0e04-511535180b4so4128051e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 00:29:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707896809; x=1708501609;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B0R4c1Ylk8xxreF7nNGXS85UtN57qLPiI5PzupAO4is=;
-        b=CJ8ENVObC1d+hT/aEjzaWO7WVPfWyIsbij+0OJwPiMey3JSdpd6qZlcORcjdllwDev
-         PqQhwhjyux2T1bImpCN4kWI1ezHjwexnD+uyuygPzmuqmGzxXAvuOfLdDFkFpeIWwIxH
-         Js3vSuf5XjQ2PTrqTBHKZf4ve4Sb9Mvz/Dt6yuDu3PzPEE2X+8GbWfeIrHOyXBApQhDU
-         p9dCQtgLSvwr+EZK4DAtC81srXcLjLuXU4czeeNNH3fsIL/6wUUMle+8vHKNxnQtxHYo
-         1qUcQYwkrKcaHSLrVwKF761TmRAYNf8OWUgu2Kx1lvaaWLhFAhVP8CU9AspxJZjwZl4v
-         sIPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWWm3y5vfbtEUY1EdwUnd2EshvAIGz0EJBi1558asiQmVB+yvGzis2q47XMDd0mf1DIDFkna876xU+wtje4bAK/b69Az5F4/8YSzYb3jA==
-X-Gm-Message-State: AOJu0YwG7aLlBaJmrljGN9pe+IzTmMx1g5sy+rkDUWhGsePHToPqnX+k
-	q7BdD2p7V5/sDmodc0lkj/hd9n5zjXeiLEz8GCD07TeF/K9IaEJ3YRc74QNJPa0=
-X-Google-Smtp-Source: AGHT+IFNERq4Pu0oUowuFY7XJnZIaUf0PIqtAYp2ZpdJ45uNhu4a+E9OoFBYAFugw5+I/njxHcUUyg==
-X-Received: by 2002:a17:906:1997:b0:a38:7541:36f6 with SMTP id g23-20020a170906199700b00a38754136f6mr1155720ejd.21.1707896809126;
-        Tue, 13 Feb 2024 23:46:49 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWXy07FRHQZQsUwtOQUQeSP5tZae8wDnNB8QFQmIDKOkkbMPwHrHy5ivMIR9fEYbPIE2VECpzcYwuL46XgVkfFXEFz0qgAO4gIO/HvP+OAtjtxapDiqXeRdJsy0+5kuUboimTZJKHUiO5qi+A==
-Received: from [192.168.86.110] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ty8-20020a170907c70800b00a3d09d09e90sm1278993ejc.59.2024.02.13.23.46.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Feb 2024 23:46:48 -0800 (PST)
-Message-ID: <0e03d788-a4d1-494e-a103-9f57ad81b016@linaro.org>
-Date: Wed, 14 Feb 2024 07:46:46 +0000
+        d=1e100.net; s=20230601; t=1707899387; x=1708504187;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vb/g1159e0DO4hnfKwx1FD37+ejv2muFNbaldYH/o+A=;
+        b=GH1gMZdKA5cQhuXgM/oNoBEpDU06Rg8puZ9XCFLpXMQShinlwvi1zteaKqgX7bIa12
+         TtqJVvx2FhW0oD+VseS+G+W1HvpM35VLRwKm7Rzzs2n8gt2ea//678Pe9gQQox9oQvY7
+         37tXkv+YReyTrTVtPofRMn5HgLr38Lg+EjpIKe1wsmt8gM8H3hfcFzRFgPvZqDGOB9Nw
+         O22kD9KIzhBKWbg3KavSUgM6Z0bZYep+7BEdoCWrtTsP7Yxdu7b1qc+3HN8itRRl5BzT
+         c74QDG8ZcJy3qBowlJwhIYrpPKbylHozbFakPhVyz2wC8BkbZ7YmQ7yIFgjj8x+r2w7y
+         W88Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV9HD3iHeCvMhuuyoGBC1m8LaVjrYgqDPAXDUwQ9/PW5kgfJWGz8OVw8S6K2u1xTWdfzJD8LaPKqlish5z2K+50PeQ3fuLDWg8zooO+Rg==
+X-Gm-Message-State: AOJu0YwJa5JGB1dIFl4c5TxkAnntC2yeqa7J7uihJ2DiBQWM5BDUey2M
+	+e4T1wMrGy9xfDO197JV1caRgibFrITLhsaZOuAvisfbCz0STHaHKHwibWBueWtj193go/kE8zP
+	X2adRZNsZU7b4JGQhfVmWLuyMIyrtYkfeZM1G8CBc9K1iFS0rODdJPcUepf0jbUQ=
+X-Received: by 2002:a05:6512:31d2:b0:511:6bbb:7ff4 with SMTP id j18-20020a05651231d200b005116bbb7ff4mr1650176lfe.28.1707899387161;
+        Wed, 14 Feb 2024 00:29:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEsLfgWG/30yrRsS8j6eyKwETXq3//aeDhjygzrlpII45P5KOddG3karYL+WkrkvZKL5sO5Sw==
+X-Received: by 2002:a05:6512:31d2:b0:511:6bbb:7ff4 with SMTP id j18-20020a05651231d200b005116bbb7ff4mr1650160lfe.28.1707899386794;
+        Wed, 14 Feb 2024 00:29:46 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVRJ5ra1Ww+fJK/5MMBRDzXr77JRTW+837gGQewt9e0TsXZDVffQkOcLqCpaO+UdjsKVB9ZOPD2U+h9i88g1DtSXMeY843Bt50MpnDUs4Lim21DIJXTf039lhSinIOjE7EqPwLfNc9D4R2/4h3RlF/pSPC5VDImI44l846EuDjqOKhRLUYXz1erKJabwn2k2f5UI+gudFD0p63bGI9JeTJ5MPSiTUA+AzcrQrPHMziCufhmxIsKt8n3IO0jNTEpdCo8jkReoJj56R5Xgn8j3gFCbTo3rQBVYNwOAoHIEJWvEl+RggDYFZ6Fb1rlO9RVWiYqkfwBNwGHoKgBivpCgj39F18nY8b4W6qztthYuIkracHTLCdiKk8lq3Zz8/XvX0MkG2+P9z6pwnaeGkSNoNWNRIELp1k=
+Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id az17-20020adfe191000000b0033b87c2725csm6133062wrb.104.2024.02.14.00.29.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Feb 2024 00:29:46 -0800 (PST)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, Helen Koike <helen.koike@collabora.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] drm: ci: use clk_ignore_unused for apq8016
+In-Reply-To: <20240213193931.2300211-1-dmitry.baryshkov@linaro.org>
+References: <20240213193931.2300211-1-dmitry.baryshkov@linaro.org>
+Date: Wed, 14 Feb 2024 09:29:45 +0100
+Message-ID: <87plwzjvnq.fsf@minerva.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/16] misc: fastrpc: Add fastrpc multimode invoke
- request support
-Content-Language: en-US
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
-References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
- <20240202064039.15505-5-quic_ekangupt@quicinc.com>
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20240202064039.15505-5-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
+Hello Dmitry,
 
-On 02/02/2024 06:40, Ekansh Gupta wrote:
-> Multimode invocation request is intended to support multiple
-> different type of requests. This will include enhanced invoke
-> request to support CRC check and performance counter enablement.
-> This will also support few driver level user controllable
-> mechanisms like usage of shared context banks, wakelock support,
-> etc. This IOCTL is also added with the aim to support few
-> new fastrpc features like DSP PD notification framework,
-> DSP Signalling mechanism etc.
-> 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> If the ADV7511 bridge driver is compiled as a module, while DRM_MSM is
+> built-in, the clk_disable_unused congests with the runtime PM handling
+> of the DSI PHY for the clk_prepare_lock(). This causes apq8016 runner to
+> fail without completing any jobs ([1]). Drop the BM_CMDLINE which
+> duplicate the command line from the .baremetal-igt-arm64 clause and
+> enforce the clk_ignore_unused kernelarg instead to make apq8016 runner
+> work.
+>
+
+Agree that this is the only practical option for the short term...
+
+> [1] https://gitlab.freedesktop.org/drm/msm/-/jobs/54990475
+>
+> Fixes: 0119c894ab0d ("drm: Add initial ci/ subdirectory")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/misc/fastrpc.c      | 176 ++++++++++++++++++++++++++----------
->   include/uapi/misc/fastrpc.h |  26 ++++++
->   2 files changed, 154 insertions(+), 48 deletions(-)
-> 
-...
 
-> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-> index f33d914d8f46..45c15be1de58 100644
-> --- a/include/uapi/misc/fastrpc.h
-> +++ b/include/uapi/misc/fastrpc.h
-> @@ -16,6 +16,7 @@
->   #define FASTRPC_IOCTL_INIT_CREATE_STATIC _IOWR('R', 9, struct fastrpc_init_create_static)
->   #define FASTRPC_IOCTL_MEM_MAP		_IOWR('R', 10, struct fastrpc_mem_map)
->   #define FASTRPC_IOCTL_MEM_UNMAP		_IOWR('R', 11, struct fastrpc_mem_unmap)
-> +#define FASTRPC_IOCTL_MULTIMODE_INVOKE	_IOWR('R', 12, struct fastrpc_ioctl_multimode_invoke)
->   #define FASTRPC_IOCTL_GET_DSP_INFO	_IOWR('R', 13, struct fastrpc_ioctl_capability)
->   
->   /**
-> @@ -80,6 +81,31 @@ struct fastrpc_invoke {
->   	__u64 args;
->   };
->   
-> +struct fastrpc_enhanced_invoke {
-> +	struct fastrpc_invoke inv;
-> +	__u64 crc;
-> +	__u64 perf_kernel;
-> +	__u64 perf_dsp;
-> +	__u32 reserved[8];	/* keeping reserved bits for new requirements */
-> +};
-> +
-> +struct fastrpc_ioctl_multimode_invoke {
-This struct needs some documentation.
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
-> +	__u32 req;
-we use req here and then in next few lines we define the same as 
-fastrpc_multimode_invoke_type. I would recommend to make this type 
-instead of req.
+>  drivers/gpu/drm/ci/test.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+> index 355b794ef2b1..b9f864e062df 100644
+> --- a/drivers/gpu/drm/ci/test.yml
+> +++ b/drivers/gpu/drm/ci/test.yml
+> @@ -119,7 +119,7 @@ msm:apq8016:
+>      DRIVER_NAME: msm
+>      BM_DTB: https://${PIPELINE_ARTIFACTS_BASE}/arm64/apq8016-sbc-usb-host.dtb
+>      GPU_VERSION: apq8016
+> -    BM_CMDLINE: "ip=dhcp console=ttyMSM0,115200n8 $BM_KERNEL_EXTRA_ARGS root=/dev/nfs rw nfsrootdebug nfsroot=,tcp,nfsvers=4.2 init=/init $BM_KERNELARGS"
 
-> +	__u32 rsvd;		/* padding field */
-reserved?
+Maybe add a comment here explaining why the clk_ignore_unused param is
+needed ? (basically what you have in your commit message), that way it
+could be dropped once the underlying issue is fixed.
 
-<---
-> +	__u64 invparam;
-> +	__u64 size;
--->
-Isn't size obvious when we know request type?
+> +    BM_KERNEL_EXTRA_ARGS: clk_ignore_unused
+>      RUNNER_TAG: google-freedreno-db410c
+>    script:
+>      - ./install/bare-metal/fastboot.sh
+> -- 
+> 2.39.2
+>
 
-This is also opening up a path for userspace to pass some random structures.
+-- 
+Best regards,
 
-It makes more sense to have a union of all the request structures.
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
-Why not add all the enhanced invoke uapi structures as part of this patch?
-
-> +	__u32 reserved[8];	/* keeping reserved bits for new requirements */
-> +};
-> +
-> +enum fastrpc_multimode_invoke_type {
-> +	FASTRPC_INVOKE			= 1,
-> +	FASTRPC_INVOKE_ENHANCED	= 2,
-> +	FASTRPC_INVOKE_CONTROL = 3,
-> +	FASTRPC_INVOKE_DSPSIGNAL = 4,
-> +	FASTRPC_INVOKE_NOTIF = 5,
-> +	FASTRPC_INVOKE_MULTISESSION = 6,
-
-All of these needs a proper documentation. Its impossible to understand 
-what they actually mean.
-
-This applies to all the enums that are added as part of other patches to 
-the uapi headers.
-
-thanks,
-Srini
-
-
-> +};
-> +
->   struct fastrpc_init_create {
->   	__u32 filelen;	/* elf file length */
->   	__s32 filefd;	/* fd for the file */
 
