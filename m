@@ -1,95 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-11112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 715608555BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:28:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 685E5855612
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 23:37:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1782B25993
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:28:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2515A28C197
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 22:37:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 242121419B1;
-	Wed, 14 Feb 2024 22:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3DE1419BF;
+	Wed, 14 Feb 2024 22:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxv8HS1F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nvVULrNW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1E13EFF6;
-	Wed, 14 Feb 2024 22:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAC313DBA7;
+	Wed, 14 Feb 2024 22:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707949702; cv=none; b=u+1utU3SMnRNu+pRmxCH+dgPQ26gKoBYJBoaoJSd71L46b/SsicUZmqVMrtZ3h/cYnhGGAUDH73E4jE2ih7qQXCMk6wvzFyTvm9WC3Kyn2RkoUHNpHehs8au73FXGByVkWtT1zRGSyKBkIyn6qoDgCBSs4ItsCAxoZTQfqflqp0=
+	t=1707950177; cv=none; b=rS1BlMhjEe8BRiGHN7vok9FNxnBoMyRI5bhkBnrAOs8JwaDPOe82s9I2Md/vp3jlaBjyK8dvI1uqTTfP8xr/qU4KhdUQoRpeRgbQDoagG/R650YP4pFl/KoH3mLd1BUR2JbK/5qczDYknuFxokeYTqpdhYm7wlVwxTVhtBP4HEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707949702; c=relaxed/simple;
-	bh=qbQIPkDF9enNBpDUcaaAm6aTN+NTrShN/xw24zMiJqU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=gP9+/VWvDFEzmOxRoaWOWrkDBYNTaqqxKvmJ4C/N6mA8MdbD4Qov2N3Rs4eLhMEz3SXFfZcJ7eWaubitmFf8eHf740cdCRD2hxfdKnwOlY61/tnl+z1umcFD/H6eGV06lgfCdyk1pENN4bQvVB3VxAizqlMg11+8bo+YEB2rd/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxv8HS1F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D5AC433C7;
-	Wed, 14 Feb 2024 22:28:21 +0000 (UTC)
+	s=arc-20240116; t=1707950177; c=relaxed/simple;
+	bh=cuk5v3UVSkias2/T3msBj4KycCIN+ZE+xQFPHrHtltA=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=laX3wBdKSpYAeYtN312etp2ZzD2t9gniryvfgKpGwIbn0nmIqtRDdeBFDdaN0BEqCsUvoOW00ycWQo534/7awd+t0IqQS/lQitm3vRB61VQNAMffQVAA5QK4FI0CCKaAqg7g7cb8tGAT5oWYGMLkjEhl0K7vMrOk6hsFEKwFlr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nvVULrNW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45377C433C7;
+	Wed, 14 Feb 2024 22:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707949701;
-	bh=qbQIPkDF9enNBpDUcaaAm6aTN+NTrShN/xw24zMiJqU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=cxv8HS1FjcAFAG6g4L5UUkAfOcC5oRq4VLve5CyWif/eJO7ftzpQYRp+ymW0bXA6c
-	 r/c/183kvkTOMOCO+vfiey1KJA/OasI+2CsXImsX6p2aXkLFLlpyT5D3g/Ih4lcwfI
-	 xQebTOgZ2QFP+Rv5vwXn4X5EhWPtAM+TX36D3ZWuA1y5MSeC86Znw3Qek8qMimRAz3
-	 k0JstiTGweUcoNexA91Gkop+DjQ18SUhZYki3jjvz4NVH9SHl0umbVQpbGMCzuIQgK
-	 fDHdVqafGYHKgedJL+ni+wpY5J5RDauoHmh+BUgHLf7UDjmVNIQRc/Fc3DnlWiz00U
-	 BFMAuYP2AHd7w==
-Date: Wed, 14 Feb 2024 16:28:19 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
-Message-ID: <20240214222819.GA1269395@bhelgaas>
+	s=k20201202; t=1707950176;
+	bh=cuk5v3UVSkias2/T3msBj4KycCIN+ZE+xQFPHrHtltA=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=nvVULrNWO6OHTXzeiA/aff8L7LAVeWUldrf30FQbige0JDpC3WwsYRZsvat9sOW91
+	 uSTBn96wSSdhMBzhx3t7P0dzky5G/CFngUBeKGeR0hkBpOUz9VTrr0eMoKOEehK7kb
+	 tRDvgTs4QNS0cAf88ILs2+OCO9dBew5MinzwhX/7Mqb+haqsQnXzo2sPuKn+pN3j+0
+	 C1C+4lRQa++p5t6B9fvyXra5R3uuOHBaMFBIOxohr1v8R3s4wD8bQdAFu1xBHkvddl
+	 61AzLJY4T4VTYbXirpTt2GbplAM3W7xkmmgL1ctN54jTy645vqc0Qrm/d3mLhmIP1C
+	 dmXKHlSwcCXgQ==
+Date: Wed, 14 Feb 2024 16:36:15 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26015e7a-5e3f-471c-aa98-46a0dfb4d155@linaro.org>
+From: Rob Herring <robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+ Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>, 
+ Maxime Ripard <mripard@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, dri-devel@lists.freedesktop.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240214-x1e80100-display-v2-1-cf05ba887453@linaro.org>
+References: <20240214-x1e80100-display-v2-0-cf05ba887453@linaro.org>
+ <20240214-x1e80100-display-v2-1-cf05ba887453@linaro.org>
+Message-Id: <170795017346.2201348.120007615715215491.robh@kernel.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: document MDSS on
+ X1E80100
 
-On Wed, Feb 14, 2024 at 10:35:16PM +0100, Konrad Dybcio wrote:
-> On 12.02.2024 22:17, Bjorn Helgaas wrote:
-> > Maybe include the reason in the subject?  "Read back" is literally
-> > what the diff says.
-> > 
-> > On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
-> >> To ensure write completion, read the PARF_LTSSM register after setting
-> >> the LTSSM enable bit before polling for "link up".
-> > 
-> > The write will obviously complete *some* time; I assume the point is
-> > that it's important for it to complete before some other event, and it
-> > would be nice to know why that's important.
+
+On Wed, 14 Feb 2024 23:24:30 +0200, Abel Vesa wrote:
+> Document the MDSS hardware found on the Qualcomm X1E80100 platform.
 > 
-> Right, that's very much meaningful on non-total-store-ordering
-> architectures, like arm64, where the CPU receives a store instruction,
-> but that does not necessarily impact the memory/MMIO state immediately.
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 252 +++++++++++++++++++++
+>  1 file changed, 252 insertions(+)
+> 
 
-I was hinting that maybe we could say what the other event is, or what
-problem this solves?  E.g., maybe it's as simple as "there's no point
-in polling for link up until after the PARF_LTSSM store completes."
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-But while the read of PARF_LTSSM might reduce the number of "is the
-link up" polls, it probably wouldn't speed anything up otherwise, so I
-suspect there's an actual functional reason for this patch, and that's
-what I'm getting at.
+yamllint warnings/errors:
 
-Bjorn
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dts:24:18: fatal error: dt-bindings/clock/qcom,x1e80100-dispcc.h: No such file or directory
+   24 |         #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1428: dt_binding_check] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240214-x1e80100-display-v2-1-cf05ba887453@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
