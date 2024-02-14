@@ -1,97 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-11000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A1DA854A77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:25:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C4D1854A87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 14:31:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0F42B211F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:25:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E26C428DCFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Feb 2024 13:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2475454F88;
-	Wed, 14 Feb 2024 13:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADE045472A;
+	Wed, 14 Feb 2024 13:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DP3MvIKC"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="fwcGPp+r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F129054F82;
-	Wed, 14 Feb 2024 13:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBA654BC7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 13:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707917144; cv=none; b=YrLoPmi88KOriWJoH53lgCC1W+yI1q7Z0+IlVraomW1OK8JzOqykmbIIgR/7yZkCnGBR9kaOChQGGa066scWSkv7FwTF/5FnSxrG49lpbZEY6V18HBlTtQkMqZWQF+ocMn8vq6+tQlCned8UXp5PxSRYE3st8wclfsK55vS3AWY=
+	t=1707917468; cv=none; b=qo2oHuViPWUL+riah+S/nMIrUQs9ZZRsKrorQKtIXBZupgU5aU103hJRGD+/0wYghIfBJDsvLiS43fS6ShJK/4neLMdP813yZbON7G2vYamZvSa+QmtnJPSuSc2S+9TVkCgSaZT95PUaREva0PEAQrSh5wZHi4q6WNFofdAK0go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707917144; c=relaxed/simple;
-	bh=ec+5pA6eqCefVv3bkSMVygeKg7lBf5lDJ6Av8fyMLTg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MEJkP7pzL2UsjEnUrGpCZHfsmbbjasSXhNaPA9tzXxwl8xFWqQrs310E+1NTVDqEHPY2irXT7Lypo4RkbepCJGnjhb71Rx7dwsb7B27qicaRcH+T3/1JS7+Cy2ID+t1Br3MZBx1fWnWX3a/elblsV1IUIUtZALUj+WSuPPCSUyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DP3MvIKC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6E2C43390;
-	Wed, 14 Feb 2024 13:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707917143;
-	bh=ec+5pA6eqCefVv3bkSMVygeKg7lBf5lDJ6Av8fyMLTg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DP3MvIKCuo1Pr1XASVT1JXs3+SvLI0Psszrd3OtQZiTFZlpRSG8a2JS4Nz8iDyfrT
-	 sXCVdn4DAKtmGawXHrpee6kIUuighT7+OVU5D5rmkJ6+pyvVQuccDFDDCdi1hSw5Ub
-	 6//K4ggZqmdq9itvGeE/r/amV4ZZPaQpGuJQszfyiPm9U0UYXc8oGBWGiR9zqQBEEM
-	 aWyT0Siatl9hHYaai08e4QylaxtLDo2kucJNeSUsuUIIucOCk7IMX4Kaowhxf9oiL9
-	 ng7gr69pKkw5iYgXxTt/Pw8Bwg1wp5KNjWeof16+KzxDGjw9XGFf55XCuCdKGGIeY0
-	 GrDrFhM7FAAmg==
-Date: Wed, 14 Feb 2024 13:25:38 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: bryan.odonoghue@nexus-software.ie, andersson@kernel.org,
-	konrad.dybcio@linaro.org, lgirdwood@gmail.com,
-	quic_fenglinw@quicinc.com, quic_collinsd@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: qcom-rpmh: Fix pm8010 pmic5_pldo502ln minimum
- voltage
-Message-ID: <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
-References: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
+	s=arc-20240116; t=1707917468; c=relaxed/simple;
+	bh=fU/LrTKEOEr5qvUuOXDDcynEiayORw54tUhot/f1gRA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d4mjNIZE7UOQAvkzmSG/Zi3GNKFWpj2etaJJHOdxjIM5X/xwHuR5YX88VEepGvFx5LpxoqgNTEzGY1jfBdNRoDv+2BtDCO2KICbWu1Dgo925bLH1MlqQf1eI9PKYC4Wf9VvFd0PjwXLAFUqyLdUU8E2SjBrFo09mZpIuUeZFIG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=fwcGPp+r; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1707917462;
+	bh=fU/LrTKEOEr5qvUuOXDDcynEiayORw54tUhot/f1gRA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fwcGPp+rtBiSfVOn3UpxTB+PoBw3/Vlj0xLtM0e3+noBcIw6s8e42LOe6v/QdZzyy
+	 JDVdgdDBK01sheQTF4e2Eian70HHDtLKgc8mpFGVvDNDvZWNxZ4Tn7H/wUz9w571Zn
+	 oo+Bv0Z3aJM1K5ocKcyiJ/p+IskkWPTyxPnM8LXOQIKs+ZsHJ6BRM2LjoYqZXOkANL
+	 c/ZGxSIYuGhQMGCGvihDvmsqFLDHcqisxGKpVcJEDj6NvNCPNj3G6sNbjRcQ60MxCH
+	 DoJUzJsBQTZQ8SrNvTsV1od1nzElIKUWyjyHrAJwbiIjaLDQuzI5fajIhLD5yRj5iA
+	 fFr9wL7n7Kulw==
+Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: koike)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 7DC0E378203F;
+	Wed, 14 Feb 2024 13:30:58 +0000 (UTC)
+Message-ID: <c1078d13-5375-4c3f-93b7-40a1ea22f0dc@collabora.com>
+Date: Wed, 14 Feb 2024 10:30:51 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r17f06/4YKIVk7Q3"
-Content-Disposition: inline
-In-Reply-To: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
-X-Cookie: Available while quantities last.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm: ci: use clk_ignore_unused for apq8016
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Javier Martinez Canillas <javierm@redhat.com>
+References: <20240214083708.2323967-1-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From: Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20240214083708.2323967-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---r17f06/4YKIVk7Q3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Wed, Feb 14, 2024 at 12:16:14PM +0000, Bryan O'Donoghue wrote:
+On 14/02/2024 05:37, Dmitry Baryshkov wrote:
+> If the ADV7511 bridge driver is compiled as a module, while DRM_MSM is
+> built-in, the clk_disable_unused congests with the runtime PM handling
+> of the DSI PHY for the clk_prepare_lock(). This causes apq8016 runner to
+> fail without completing any jobs ([1]). Drop the BM_CMDLINE which
+> duplicate the command line from the .baremetal-igt-arm64 clause and
+> enforce the clk_ignore_unused kernelarg instead to make apq8016 runner
+> work.
+> 
+> [1] https://gitlab.freedesktop.org/drm/msm/-/jobs/54990475
+> 
+> Fixes: 0119c894ab0d ("drm: Add initial ci/ subdirectory")
+> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->  	.voltage_ranges = (struct linear_range[]) {
-> -		REGULATOR_LINEAR_RANGE(1800000, 0,  2,  200000),
-> +		REGULATOR_LINEAR_RANGE(1808000, 0,  2,  200000),
+Acked-by: Helen Koike <helen.koike@collabora.com>
 
-This will also offset all other voltages that get set, is that expected
-and desired?
+Thanks
+Helen
 
---r17f06/4YKIVk7Q3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXMv1EACgkQJNaLcl1U
-h9AzXgf8CaXLf67yXq6uJFdCGGwbgcmiAVIqD2Erqmp+1IEn4fPWevmkyc3SkMkg
-0rY7VgauEFF1PePaW0out7P5ac2lMZVol33GLXfp9e8infEQzZhZBd4Tpm2foNHu
-qwv/RIpRgFRSB2k5B9EnDFMSAe1gcwwiKlA9EpSK5ir+D4w0vb3s3+vMc0US3HCz
-glXtAvMzoenWyTtfcifytMmmEi3N1DP6+s3uhpAkO2sNRnQdztxysz5+C8mHxjJ5
-c03ntS+0echMzNJ/IgPoT6mdlwqx7iwEjGVJDDhXOljOcP6DxbqMjR8DYrTrd5vn
-terqQg9GgTt1tbobzrKqxJHn52MjSg==
-=PNfk
------END PGP SIGNATURE-----
-
---r17f06/4YKIVk7Q3--
+> ---
+> 
+> Changes in v2:
+> - Added a comment, describing the issue and a way to reproduce it
+>    (Javier)
+> 
+> ---
+>   drivers/gpu/drm/ci/test.yml | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+> index 7ffb620d7398..e64205286a27 100644
+> --- a/drivers/gpu/drm/ci/test.yml
+> +++ b/drivers/gpu/drm/ci/test.yml
+> @@ -119,7 +119,10 @@ msm:apq8016:
+>       DRIVER_NAME: msm
+>       BM_DTB: https://${PIPELINE_ARTIFACTS_BASE}/arm64/apq8016-sbc-usb-host.dtb
+>       GPU_VERSION: apq8016
+> -    BM_CMDLINE: "ip=dhcp console=ttyMSM0,115200n8 $BM_KERNEL_EXTRA_ARGS root=/dev/nfs rw nfsrootdebug nfsroot=,tcp,nfsvers=4.2 init=/init $BM_KERNELARGS"
+> +    # disabling unused clocks congests with the MDSS runtime PM trying to
+> +    # disable those clocks and causes boot to fail.
+> +    # Reproducer: DRM_MSM=y, DRM_I2C_ADV7511=m
+> +    BM_KERNEL_EXTRA_ARGS: clk_ignore_unused
+>       RUNNER_TAG: google-freedreno-db410c
+>     script:
+>       - ./install/bare-metal/fastboot.sh
 
