@@ -1,131 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-11177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 302D88560BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:05:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AC968561B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:35:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E96FCB37CF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:52:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23222B29D98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:56:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B242113665B;
-	Thu, 15 Feb 2024 10:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6676F132C02;
+	Thu, 15 Feb 2024 10:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p1zwR6i9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xqZ8IFgw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5113173F;
-	Thu, 15 Feb 2024 10:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EBC1386DF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 10:41:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707993600; cv=none; b=J7kJCPaN0YBugHhPFTBRLu83S9YXlnj4l2lzxBf4PtuK4xjFAgJybF9Qw6jHLBCXHlinPL9jlM0pndShBGQpS1rKHZbPyXWPZJHPRSHZSUxB77mN6gJRyhcDUP2+LIH69z1WOm8+0HC5yeEDBPClG9Ydo9h0DDh/1Gc7XrAebfs=
+	t=1707993700; cv=none; b=H6kooxl6L/U4fSdgVR+OPCi+/W3qlLJSaiD0fYyOzAvepIwVmYj7pddtgITnquLbQ+rIGmonRgebJ8yxwa9v80BETvTq44xDfaSaVzK68gCd481bfRa6328Gv+qDRc119/LfrKxUNkOOMYDCDqcwMF+t/1PYwPOoGDbJIQ5LooM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707993600; c=relaxed/simple;
-	bh=3DRaxfRX0WV3VdMSyOsaAEEh1cKEYJFdFUbwZW6uKk8=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=RgrRTsW58U2+GFeGg+3OLOzoqChEh0grxc8SppdQGaZakCDd3wq4C/lMExLp/fK9xl76OfdELPtwiZMMjXFDb+4bzjTvBtQqsqz8GbJuA0bNKz26XV00OcltbrGTPgxh7bSNTrIu21gR6ZfWoUWptvaNPRcKqzAwCHw2+c1hgIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p1zwR6i9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41F7KNij007372;
-	Thu, 15 Feb 2024 10:39:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=hHFw//1+BQxq
-	kGcqXGiC1LeRSZmYFGoSjsSnWsluyxI=; b=p1zwR6i9D6H0tToMffAhgxkl9TQM
-	VqB7jP8mOsT3HwuYb/opfpe6PdakTOlb2EzbbOU8Ap8ka53YD/V5Z5rOjp5E4lqE
-	UgwmgP82sPqyF2CYt2vSazVzyTABtMEDX2ym4xW+mDYUunNxLVHmy9zRXSLLjFae
-	VNY7CONXg10uc4dvKcxeklrFpV+LGb1e0OsQOAVJgJRlbD6YU86CBZiS0pxhiiwe
-	OsByPZ7OnTCLFj1uH/fLSwOCX2wNfsjK25s5X6Fp78uBqAV2dFppxHLwCCEM8Lt1
-	AZQTWEF5wB90cf+6WAoUYjZagxl7bs3r676+/098XcACY3vjJb2yVLVR1w==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9e4h0c46-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 10:39:38 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXVg013844;
-	Thu, 15 Feb 2024 10:39:33 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3w627mab7d-1;
-	Thu, 15 Feb 2024 10:39:33 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXrX013828;
-	Thu, 15 Feb 2024 10:39:33 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.147.241.247])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41FAdXDW013824;
-	Thu, 15 Feb 2024 10:39:33 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2314801)
-	id DBCB860142D; Thu, 15 Feb 2024 16:09:31 +0530 (+0530)
-From: Ritesh Kumar <quic_riteshk@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
-        geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        m.szyprowski@samsung.com
-Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, quic_abhinavk@quicinc.com,
-        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
-Subject: [PATCH v3 0/2] add display and panel on qcm6490 idp
-Date: Thu, 15 Feb 2024 16:09:27 +0530
-Message-Id: <20240215103929.19357-1-quic_riteshk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vsqQs8P2CNeXpdR6YUEChV7Oz-n1HAYM
-X-Proofpoint-ORIG-GUID: vsqQs8P2CNeXpdR6YUEChV7Oz-n1HAYM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-15_10,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- impostorscore=0 adultscore=0 mlxscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 mlxlogscore=615
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402150084
+	s=arc-20240116; t=1707993700; c=relaxed/simple;
+	bh=89kL2m38VBLYpfi08xjvcphV/ms31WL7c/6vBV5WjpU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YJdu1oGVjuKv6gOcDup2puoReL3TZPXsjTnlqm1EZCCngBJOsAclXnswzxhZMH77nyCdUjvR7z6fZLMunOplfhh+58ENADiznXIOq8RzbOKTVjsvqsnJ5iP8j6rQMBtHQXwciNWnMj2krJoFl52X6MCzthpsagvtcnDCaZ7tuxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xqZ8IFgw; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5116ec49365so893085e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 02:41:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707993696; x=1708598496; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VUYBcKj53WAi3y6gltiMvu5JfERqWvi9YPUJbVOf3Mo=;
+        b=xqZ8IFgwUXKumSOUVZAIsE0FgE4GYClyDu3Vl9k/AxbjuLtH0kQeMDXvcjb+Xbt3LY
+         fsHyeJMIF/NT5CWUElsZ+p+9DabFV6VRAogrsYH7IcrJB64hzHSw/aKogwwNGB1lKfLu
+         g+rrfTps2TJa7zi8/NGRw+PxEobtTT0PMz+RA0G1VofzxPbCOASoyqj3qRruNmGRBNjb
+         UhzW6i0o0KS8msLx6/jz7XZdxgVoxfZtQ0o4D9XEUOYxdOnWaAiBBA/y8vQ90L1TJCXP
+         mJaiwhk2QYTtWuLSLEK47S3i/P9hwy/pPc1I/QPpMON8G+9aL+tDEC0PYqbkEcVg4rRt
+         xOyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707993696; x=1708598496;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VUYBcKj53WAi3y6gltiMvu5JfERqWvi9YPUJbVOf3Mo=;
+        b=K5im05tkZ1HfTi53jcYU4Qjz3OnyEurpB2JsyYbNRcwdZt0Og8BuizYt2AB2fVwPNC
+         hjoI/S5KLQN4r8fjeNd5P9QaEOYy6Gnkn1Pw5Tv/hk+lWyoS36ib8TwjxVH2cSoQCZMS
+         BqGC255kZ2n+n9R6paIwTl6tYNDmJZcVQC11hddZSzhwQtw0+6jrWUuCw/+PSbxnH4gh
+         etab5z2DXPieh3+cpkyAWpJkaJmpGhRd+m99bZOcaqlWW7Ip1d4hkk04Et3wqH6aEZAP
+         hSg1OpeRcYDwcbRbVi9eB5k1mnfXbifemWWg0XkvCRcIMpltTbiDsHOH8sFOuRu8uDqs
+         C/6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXt7eGwXljKwCXjxN+k9FYqswvgXrvG1WE0mXXcC/fHvTPL3XHgN01bKm5v9LN8P0ir+bHNHfKZhLzaPWIjayn21SelWA3z8xAMJQYyvA==
+X-Gm-Message-State: AOJu0YzwguHG0ku+foNmMiEt/9KNRoYUJohB5eDvRIJF2ST8lJMj6Iur
+	C2RGAK6AGMI+lJPbII/YJ6D+O/4X2CUfsEXuoZ2ClnN2+7WfVmcRE8asysK3ZEw=
+X-Google-Smtp-Source: AGHT+IEcAT4U/SeoV9QZ1GoMtyBdueDaX8N8avvtZi0g2w+pf1DVcF9RtUYsg2KCjzAVQ534XzYb1w==
+X-Received: by 2002:a05:6512:3ca5:b0:511:87c6:3060 with SMTP id h37-20020a0565123ca500b0051187c63060mr1648595lfv.12.1707993696399;
+        Thu, 15 Feb 2024 02:41:36 -0800 (PST)
+Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id t26-20020ac243ba000000b005119fdbac87sm189167lfl.289.2024.02.15.02.41.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Feb 2024 02:41:35 -0800 (PST)
+Message-ID: <20ab318e-e79f-419e-b68b-85ae0e5ab128@linaro.org>
+Date: Thu, 15 Feb 2024 11:41:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] drm/panel: Add driver for DJN HX83112A LCD panel
+Content-Language: en-US
+To: neil.armstrong@linaro.org, Luca Weiss <luca.weiss@fairphone.com>,
+ Linus Walleij <linus.walleij@linaro.org>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg
+ <sam@ravnborg.org>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20240110-fp4-panel-v2-0-8ad11174f65b@fairphone.com>
+ <20240110-fp4-panel-v2-2-8ad11174f65b@fairphone.com>
+ <CACRpkdaWTfPDCin_L6pefHsokjNyO8Mo6hWPdzPLLi1EUkKUuA@mail.gmail.com>
+ <CYBZEZ4IM6IL.VR04W7933VI@fairphone.com>
+ <CACRpkdZQbVXfBa70nhDOqfWPbsh-6DgX-uvZOxr19pzMmF2giQ@mail.gmail.com>
+ <CYCLSCKPPBOC.1B1MP3VOOC0Q8@fairphone.com>
+ <cdc18e2a-b7eb-4b54-a513-481148fb3b0d@linaro.org>
+ <CYCMVXHYVDCI.HVH1TR8MWEUK@fairphone.com>
+ <CACRpkdacS9ojXUuogygkz6xxCf3mMq6GG_75sze8ukUu=rxVyw@mail.gmail.com>
+ <f99d363c-d4a6-44b3-8057-3925f8dac1d5@linaro.org>
+ <CYL76M5KT424.G3BC6JX74XVN@fairphone.com>
+ <CZ4P5PWJTODV.3UJ89H6M8W07H@fairphone.com>
+ <f9164049-6529-42c1-a35a-e91132c823b9@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <f9164049-6529-42c1-a35a-e91132c823b9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Build the Novatek NT36672E DSI Panel driver as module and enable
-display subsystem on Qualcomm qcm6490 idp board.
+On 14.02.2024 10:50, neil.armstrong@linaro.org wrote:
+> On 14/02/2024 10:33, Luca Weiss wrote:
+>> On Mon Jan 22, 2024 at 12:27 PM CET, Luca Weiss wrote:
+>>> On Fri Jan 12, 2024 at 11:26 AM CET,  wrote:
+>>>> On 12/01/2024 11:23, Linus Walleij wrote:
+>>>>> On Fri, Jan 12, 2024 at 10:52 AM Luca Weiss <luca.weiss@fairphone.com> wrote:
+>>>>>
+>>>>>> Since there's zero indication Truly is involved in this panel in my
+>>>>>> documentation - much less the number 5P65 - I'm not going to add that.
+>>>>
+>>>> Ack
+>>>>
+>>>>>
+>>>>> OK then, I fold, thanks for looking into it.
+>>>>> Keep the Himax hx83112a file name and symbols.
+>>>>>
+>>>>>> So in short this panel is the model 9A-3R063-1102B from DJN, which uses
+>>>>>> a Himax HX83112A driver IC.
+>>>>>
+>>>>> So compatible = "djn,9a-3r063-1102b" since the setup sequences for
+>>>>> hx83112a are clearly for this one display?
+>>>>
+>>>> Yep let's settle on that!
+>>>
+>>
+>> Hi Neil and Linus,
+>>
+>> Any feedback about the below question?
+>>
+>> Regards
+>> Luca
+>>
+>>> It's clear to me to use "djn,9a-3r063-1102b" in the driver now but what
+>>> about dts?
+>>>
+>>> Currently here in v2 we have this:
+>>> compatible = "fairphone,fp4-hx83112a-djn", "himax,hx83112a";
+>>>
+>>> Should this just become this?
+>>> compatible = "djn,9a-3r063-1102b";
+>>>
+>>> Or e.g. this?
+>>> compatible = "djn,9a-3r063-1102b", "himax,hx83112a";
+>>>
+>>> Or something else completely? Do we have some documentation / best
+>>> practises around this maybe?
+> 
+> Sorry I totally missed the question.
+> 
+> Not sure if "himax,hx83112a" is needed here, the "djn,9a-3r063-1102b" is enough to know the IC is hx83112a.
+> 
+> I don't think you'll ever find a "djn,9a-3r063-1102b" with another controller IC ?
+> 
+> And "himax,hx83112a" alone as fallback is not enough to describe the panel hardware, so I think it should be dropped.
 
----
-This series depends on following series:
-1. https://lore.kernel.org/all/20231222073135.2512313-1-quic_uchheda@quicinc.com/
-   (arm64: dts: qcom: qcm6490-idp: Add support for PM7250B PMIC)
-2. https://lore.kernel.org/all/20240108095902.22725-1-quic_riteshk@quicinc.com/
-   (Add support for Novatek NT36672E LCD DSI panel)
-3. https://lore.kernel.org/all/20240116071803.5264-1-quic_riteshk@quicinc.com/t/#u
-   (drm/panel: novatek-nt36672e: Include <linux/of.h>)
++1
 
-v2: Fixed review comments from Dmitry and Konrad
-      - moved pinctrl-names after pinctrl-0 property.
-      - removed gpu disablement change after validating gpu.
-      - updated commit text.
-    Rebased the patch
-      - rebased the patch to resolve conflicts.
-v3: Fixed review comments from Dmitry
-      - renamed panel supply to regulator-lcd-disp-bias.
-      - moved backlight as per sort order.
----
-
-Ritesh Kumar (2):
-  arm64: defconfig: enable Novatek NT36672E DSI Panel driver
-  arm64: dts: qcom: qcm6490-idp: add display and panel
-
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 92 ++++++++++++++++++++++++
- arch/arm64/configs/defconfig             |  1 +
- 2 files changed, 93 insertions(+)
-
--- 
-2.17.1
-
+Konrad
 
