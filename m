@@ -1,123 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-11212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6B27856A9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 18:10:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C6D6856AF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 18:26:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED3FBB29A38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 17:07:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF2961C23E28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 17:26:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FB57133280;
-	Thu, 15 Feb 2024 17:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 725E3138481;
+	Thu, 15 Feb 2024 17:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FM4Frm6U"
+	dkim=pass (2048-bit key) header.d=mai.rs header.i=@mai.rs header.b="PbRbU7JB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PY7XrJJr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741C6136982
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 17:07:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23E1369A2;
+	Thu, 15 Feb 2024 17:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708016829; cv=none; b=Vt2Hzsu6JxdSgAhdettYdjwKSTtzw49PcBNyzyMkhGzH1d4ZRZRntdgSCRjyAwNh2eAtFD33pm+XUOgjOkmpNer1hmfszE5BT5QsO9QbR+jz6V9a1an/EBty9YzgYzDlmkZWMETeFConzh/x4SkvasXluVQphqazq368ryvJHBQ=
+	t=1708017984; cv=none; b=iR46PKukd6Y5GvAbIoTY3xvLirrijkNmn6LNaBMxfYelPb287VixMc1F5afwItapF/BbpDkLRWRkYWlbR/uVtVwQHc3lreoeUVWzjUxj80qPIguvEJDQ5VewBb5KmE7+7ADDhyOlajjXKbjn2b9fh7HpVzMrNNJ1G6CgrRd+4ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708016829; c=relaxed/simple;
-	bh=pFkEYjhRyiVvnWaKVrGsyu3fH7xh0jxPovSUEGQL6NE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ksntwMUagpGBdtOpD3nAuqwK44vnAv0HA11PCJIQZysGPmDaHsh727pYg1u9KiSZuGv4GQdy+BFPWauDYgE2pIKV/oKXeic5KrrP4RQgS1/K7g7O8dsPadkpQRPjWo78VBvUyfBfFD3NmJWC7CI7mcj+FEapsr2ZIY1XON7RRjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FM4Frm6U; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-562178003a1so1408070a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 09:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708016826; x=1708621626; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=NaFZCKNRyy9AI0T22Z2pSTOZSHkLFwL4nJxKMKuEj5w=;
-        b=FM4Frm6UHfVtuu8IqIZFFJUY/2FIOoHNfhiMppx0Z1dm4wtW448/T7vsB94ilCdzU2
-         +js0Rumwt0bwMtqJAHMiPKYVlSQfmGLM/78HSq+H54BSLf1pbIYAwCtsZR+gNaKr0snx
-         HtmJblHMvjV17Mutpe9QdV7yM0aOg7Usu4GPeM5fgVgrXXqFPv8n1hN1yLofudg5oIvi
-         W8rJh3w4YQzruAm6030VMqkATjc0IEAWLr5Jp0Xs9G5yPbiSdaRuZB9/dOKIYmFDXEhb
-         OA9OM7xBtEncoaKs8bm6iez07CvMx7yxcAM75Rmxcw4C6DBxoKyEhArrhTf+6xAuj/VS
-         eVsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708016826; x=1708621626;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NaFZCKNRyy9AI0T22Z2pSTOZSHkLFwL4nJxKMKuEj5w=;
-        b=gZfIwhvdBmdOUVTioSwv8bsQCysrkWGoqjYm8UZyP1HKXVn9z4HPiBI5d4j+QaGSob
-         GPuANeOlf3MBkS9xEm9oG2WeRx1F3aHiZ3dveqyyC8AuUrwhfJwRekANBp6DFGi1Sb2u
-         Zh8wnBzPP0LzOhE9erkUaarysFaueBfOyc45sdseYC9KEHsKybt4KtgjLWoOzZT29lzX
-         zx2hdGnyBAuCRkMhImY06LTpaIwTsrWgQqZMICbuB85+lRCWhmaJqKHbyE0xDGopkF30
-         PLs35RgdvsQpAnT/6iAyNMUu3Rv9iIa1iS8pXwyXuAklbiyMAUxEky8OGTURwmrnO2jZ
-         ngVg==
-X-Forwarded-Encrypted: i=1; AJvYcCWbJQOTzVze7Y3fQi3zhmsOeJloKvjYaAktTwJRFHH5pN8mxzdfqswQEqcGQUy0x0JHY34Y4ySv+y/6w+Xq8W5KucbcNl5e69l0ddrdAQ==
-X-Gm-Message-State: AOJu0Yx7shUcfCH90T4k4LSUKfnkYZnZwRWoVF4t33WxiVvG9laZ44F1
-	u9y2B/DQGmw71HvN31a16NSfIUzS+Ubr3Mt7jO9Lyv3vBDItL7iiFjACScFLHW/dUiXbbBnbLn5
-	12LiRq6zSsfgnXwmO1wEgD9fQxOk=
-X-Google-Smtp-Source: AGHT+IHQnssP+8eYTlr7x1l/6mWdxxayrT6Dpil17YQWLjvn/WEv95g6hveEQFy6V7FoCfJZi+1coBgfQdZsV9QNqNw=
-X-Received: by 2002:a05:6402:268f:b0:563:cb4d:80a6 with SMTP id
- w15-20020a056402268f00b00563cb4d80a6mr1039139edd.16.1708016825489; Thu, 15
- Feb 2024 09:07:05 -0800 (PST)
+	s=arc-20240116; t=1708017984; c=relaxed/simple;
+	bh=jLfDGBorgsnjXYJBTWI/GaiSFQdK44fYLGCUNXbjhw0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iEiSiNlttARtbXUb03+ADfS/oT4fOjBKA+wDPP6SMlLf36OCLeeR4toud7QFEiTXpomlU/FYZZWZohbX0FmE76z+y/klC5LdVYT4GLUCMLroH3RNEOeFhiorusiNUOxFA3mrnU69GGd1UV5F++xn5j4nrFbV+a2BoHCUFKAajMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mai.rs; spf=pass smtp.mailfrom=mai.rs; dkim=pass (2048-bit key) header.d=mai.rs header.i=@mai.rs header.b=PbRbU7JB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PY7XrJJr; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mai.rs
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mai.rs
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 17B15138009A;
+	Thu, 15 Feb 2024 12:26:21 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 15 Feb 2024 12:26:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mai.rs; h=cc:cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1708017981; x=1708104381; bh=fQZdaVp4DDsm5XDmrXzzI
+	iRsQ41MBd8wovYL0HPc63k=; b=PbRbU7JB9U4NCPjt2uga/82YJjkB9rvuViuCR
+	f9RGmF9OA2aQKk7SuXaL9ZHh7JxFPwukq7ICbFiPTFHxI5E/c85RLcykU8dbUOZq
+	uBaLUMjJRIAPs1biuOe7gDUGryVKx7NuOYVh8U0Dlckw8803qAeuhSw7j2iaVWrY
+	O6yIVD7j3FBb7biDTLqOFXaTxtI1T1CdQSL4BFOF8nfXqASpoRw3rhgLs3juE5vT
+	NhYdpqPheAn/ZCFsx0I2VOqFx4ZgfsW8TM2KBxKbD5eFS5e699+Cjs+Qk1XwT2w1
+	Nqwv/Sh2tFZAg/kjq5vnecswiDNcotWJIb52XweD8Th6TbHgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1708017981; x=1708104381; bh=fQZdaVp4DDsm5XDmrXzzIiRsQ41M
+	Bd8wovYL0HPc63k=; b=PY7XrJJrsXfRNtrLiP+y8AzLq8UWJDh0hWYCAPbylrKO
+	ZhD/EfDHC6DO8DlH74E5tWO+FA5dABCri20eXBPVufCyeQqeIb8ueGbOzOPP8NNo
+	0U0ObciyKH769UNd2BCS3b5DrAh0CoNGDWHbWfA6ZDNyiF3qbQMjHmh8Tdr7Vc4a
+	G62ft1ZfyRATFHfXJIsDQGhFPZCGsP5oYcmgB9aEuN4O+2DbvnEUaCJ28f/IfYlQ
+	v68gR1jPPlJOY1xm2d8Zg6XmuOM1g0fRomu0s5TXyH7uiRJ2e0Z2y3G8E++P28Kg
+	5m46aJzlNLucOe0Vl1M7xqOVehC/9IxdTPh1sg2X4A==
+X-ME-Sender: <xms:PEnOZWy4dtjYb9d4UjzhMR_4YNvtHPoLV5N2cg3pqjoWXZfdkS-z6Q>
+    <xme:PEnOZSSqw8clnXMTGbF9nf7B7Od3dW_Z3t7eAgaebaMs7bcz7hLXZ4XC6nUK05aHC
+    d_7786oOPrljpVV2Q>
+X-ME-Received: <xmr:PEnOZYUhvOF-93tzwp-TZEDXX9EVhsj5kn88aPnuKcVIM6gVzREfl9Qk2mgfCa4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgddutdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepuehrhigrnhht
+    ucforghirhhsuceosghrhigrnhhtsehmrghirdhrsheqnecuggftrfgrthhtvghrnhepge
+    eiteekgfeihfeggedtgeejgfelieffkeeivdduvddugeffteefleehheeiiedunecuffho
+    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegsrhihrghnthesmhgrihdrrhhs
+X-ME-Proxy: <xmx:PEnOZcgvt6RMXe-88_UaLxrd1GQIcVXg3JNzra9OcCAZYQ1hO6dIDQ>
+    <xmx:PEnOZYDMkG_rvOkdFwFmyhYJXNW9Uan2dUGIMusCnfZUNy9MUJtphQ>
+    <xmx:PEnOZdKuSJ-QOKAQL-G97vRUc266nyFo0FzD1nWMT9zSNZr60HYg0g>
+    <xmx:PUnOZU7JKRoa3RCYnwzZhT9rW83puDlToT2AjYxOziGqNjRcsDycrg>
+Feedback-ID: i891b436e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 Feb 2024 12:26:19 -0500 (EST)
+From: Bryant Mairs <bryant@mai.rs>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	luca@z3ntu.xyz
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH v2 0/2] Add samsung-milletwifi
+Date: Thu, 15 Feb 2024 18:19:47 +0100
+Message-ID: <20240215172617.115307-1-bryant@mai.rs>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 15 Feb 2024 09:06:53 -0800
-Message-ID: <CAF6AEGszDSiw66+a=ttBr-hat+zrcBtfc_cZ4LQqXu89DJ0UeQ@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2024-02-15 for v6.8-rc5
-To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Dave,
+This series adds support for samsung-milletwifi, the smaller cousin
+to samsung-matisselte. I've used the manufacturer's naming convention
+for consistency.
 
-Another fixes pull, this time actually including the GPU fixes left
-out of last week's fixes due to miss-applied label, plus addition of a
-tlb invalidation fix.  Description below.
+Hardware currently supported:
+- GPS
+- Display
+- Wi-Fi
+- Bluetooth
+- Cover detection
+- Physical buttons
+- Touchscreen and touchkeys
+- Accelerometer
 
-The following changes since commit 8d35217149daa33358c284aca6a56d5ab92cfc6c:
+Signed-off-by: Bryant Mairs <bryant@mai.rs>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+---
+Changes in v2:
+- Squashed DTS work into a single commit
+- Add touchkeys to the DTS
+- Link to v1: https://lore.kernel.org/all/20231105204759.37107-1-bryant@mai.rs/
+---
 
-  drm/msm/mdss: specify cfg bandwidth for SDM670 (2024-01-25 14:36:04 -0800)
+Bryant Mairs (2):
+  dt-bindings: arm: qcom: Document samsung,milletwifi device
+  ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 8.0 Wi-Fi
 
-are available in the Git repository at:
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm/boot/dts/qcom/Makefile               |   1 +
+ .../qcom/qcom-apq8026-samsung-milletwifi.dts  | 568 ++++++++++++++++++
+ 3 files changed, 570 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2024-02-15
+-- 
+2.43.0
 
-for you to fetch changes up to 8c7bfd8262319fd3f127a5380f593ea76f1b88a2:
-
-  drm/msm: Wire up tlb ops (2024-02-15 08:51:31 -0800)
-
-----------------------------------------------------------------
-Fixes for v6.8-rc5
-
-GPU:
-- dmabuf vmap fix
-- a610 UBWC corruption fix (incorrect hbb)
-- revert a commit that was making GPU recovery unreliable
-- tlb invalidation fix
-
-----------------------------------------------------------------
-Dmitry Baryshkov (1):
-      drm/msm/a6xx: set highest_bank_bit to 13 for a610
-
-Rob Clark (3):
-      drm/msm/gem: Fix double resv lock aquire
-      Revert "drm/msm/gpu: Push gpu lock down past runpm"
-      drm/msm: Wire up tlb ops
-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  2 +-
- drivers/gpu/drm/msm/msm_gem_prime.c   |  4 ++--
- drivers/gpu/drm/msm/msm_gpu.c         | 11 +++++------
- drivers/gpu/drm/msm/msm_iommu.c       | 32 +++++++++++++++++++++++++++++---
- drivers/gpu/drm/msm/msm_ringbuffer.c  |  7 +++++--
- 5 files changed, 42 insertions(+), 14 deletions(-)
 
