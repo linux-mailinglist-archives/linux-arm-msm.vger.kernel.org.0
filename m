@@ -1,171 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-11202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99C868566D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 16:04:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C77A18566DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 16:04:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B2579B28B7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 15:00:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7AF1B2A8CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 15:02:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4134C132499;
-	Thu, 15 Feb 2024 14:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C340132C21;
+	Thu, 15 Feb 2024 15:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MpjcItyx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 520DD13173F;
-	Thu, 15 Feb 2024 14:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2B131E25
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 15:00:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708009067; cv=none; b=fFWy5pJqhtCu9Tr6wbTbLDOYrgm2Ot1yZrnBBe78lGwZkFAXFx6SFGda43bk5lvac+S9ijN/61YDI9sUMT2Q5giPU/kL2klReUglXUnICKs5UtPAJ//IoQBD2lSIbEKzY+tkx/wmYuxndR3M2QivBduAAhs0K5woRNbqD4OxMdU=
+	t=1708009253; cv=none; b=c8bQ8RIb1Aj+5zHQslNdv+Fl1315of8DCipNb+EUN3u3jJ8o5P8vP1EJ4YHS9AYh5on+7+mdQcMnEjUn977Gn0Hdff2/5tcoYX0AJOdMb9Yr8uS/DkFNXLtko664+T5GSNug6HK29wh9IhgstNYmOlZpwvtN0H1kx9th0ih0a6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708009067; c=relaxed/simple;
-	bh=1Gv7+LBoNQLxJ3O3mSHbpiF5DyNS3KBkgKz/fRO/mSE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nb1pr7DjZzlrjCTJrS8ehvHrq4z+L2S7NLwcAqs8TwpDlWv9Hdld+7cXtbM+t1PQj841Ksq7Z7rI8zCWNlF3Kv4xLGLxoEJMi38DI2OPYsArsw2gvf05/z6qOamAfRPvUwxPqzyC4cccvdNaDRMwXpqZ3BkABOZT++3E32pgNik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B24851FB;
-	Thu, 15 Feb 2024 06:58:18 -0800 (PST)
-Received: from [192.168.178.6] (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B27B13F7A6;
-	Thu, 15 Feb 2024 06:57:35 -0800 (PST)
-Message-ID: <265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com>
-Date: Thu, 15 Feb 2024 15:57:34 +0100
+	s=arc-20240116; t=1708009253; c=relaxed/simple;
+	bh=TuiNAUvyq1clV8TcQUgStWd7GbVGRghSxXf3rSzZwzE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ruhd0AFGG+FCaIF/b67tBjPinfl51HaPx75pVqo2PIsD2v5e0cveq43YBqyXxa/hLd+NUOx7RNsfbu62TtWNB3eTGbfzfXiqTh1cbvonIvVHPUOhXfB5L3MQ/tf0pmB4u7Ch+1cIN3l5cD+JvhehA0+mmtpg+q2rFtkXlSxwwsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MpjcItyx; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-60777552d72so9369447b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 07:00:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708009250; x=1708614050; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CJ0BMQ4fbAPxFZIL+ExAw2UZkWvzvacKzKpaYXVa9bs=;
+        b=MpjcItyxaCUbywq2/eFa9EpNJTbqxHjYzxiGUvadyJ4OpD2g3m4X/lGDCmwdji0F89
+         ZI3iiZzXixEt5Ceq2UT/wY6vmjXC6KX5du0vxdF+ZnJH0R4cB96e0DF9PgVExW/+PJ9G
+         owZiDKQ4YK3LEngMTT6K1FVQmx2pltalCWdLGmxV766sl7oax+LSo/5H2dJ7jIBfOCG+
+         NfeLZACVrTmdxU4rSK1ptNPKzImM3PtzV3W03K/9imOLSjYcvzQJcVGA7a+cKKrbzfVE
+         KvGCKypdYp7V70/ltmKfLfVkw2SUm5ku6/RfV+DUnaCYMBLfJG5LnMRxHfhK7cfXTWBx
+         Y/0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708009250; x=1708614050;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CJ0BMQ4fbAPxFZIL+ExAw2UZkWvzvacKzKpaYXVa9bs=;
+        b=BlW/aHZH8lCd32yo7OEdWnngbZV6W/mRBGt/Bp3Nn3d1/bzaoKNeLMYYXyo53IL5U3
+         ePIeg1Ae7RVQP7dt9LbkuF13iesrMwncJcbOkNmeB5r5yK9CjvPKoarmUsb++nWw3Zi0
+         zn/j15qp8EQ7kxmprj8WHKOqOdcS9k7HKY6i5LVWWboYxtGUtBxqCwebHyxZrK2rIfAH
+         pfYwDhH5NG/9fUmE1crIoYezVWoesBYcnRsRkQxjBUrNrtAGekeNdWZbG2fHu4SP1peH
+         kAwL4/XX98BuT1T6WpgxAxY7EvzJ+gThkpsZ/MPgXS3a/wI0BWsr8Jqha/t/4pZ2zVWV
+         ofKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV1diRR2sZqAf/G28DwpKqyCqoappLdpHHyc1YMWbqDPPRzvnh/iCNTq9FxCW0oK2zfxORVftnGUt1ehTT4FNRjshKllX/0d1CVUI8lug==
+X-Gm-Message-State: AOJu0YzqBrdYfjzU6x9ealui1ZTgmByp5qAGzKdRdm1s01OhtTNMUzkC
+	9UP9d7+pZGBOF4cYfh5ikl/wOimsz8rVzhFGUd2wsoGI+MUcwf9kza4D/imz5ezX6lSz/3XIkfB
+	EtMrDlYVDsEJsgMfR9oEaRBMkYOb/9DocetNZxw==
+X-Google-Smtp-Source: AGHT+IH1iXXNMam85attnJ7ZRIB2/4oXnewhRdPWa1d/MOJ9E89Emu3qeIMg52lohwW+P6inqZ48cubKQOYzlT5hKRw=
+X-Received: by 2002:a81:7994:0:b0:607:7e73:fce1 with SMTP id
+ u142-20020a817994000000b006077e73fce1mr2063382ywc.26.1708009249786; Thu, 15
+ Feb 2024 07:00:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] cpufreq: scmi: Add boost frequency support
-Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, Sudeep Holla
- <sudeep.holla@arm.com>, Viresh Kumar <viresh.kumar@linaro.org>
-Cc: cristian.marussi@arm.com, rafael@kernel.org, morten.rasmussen@arm.com,
- lukasz.luba@arm.com, sboyd@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org, nm@ti.com
-References: <20240117110443.2060704-1-quic_sibis@quicinc.com>
- <20240123060827.a3vszziftj6pszt3@vireshk-i7> <Za-RtBrSxI-j4Jdx@bogus>
- <e968092a-dc2b-4351-9489-acf874bbc7b6@arm.com>
- <01b3d0ed-3fd3-86c6-7b0f-48d34a5d9ba8@quicinc.com>
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
-In-Reply-To: <01b3d0ed-3fd3-86c6-7b0f-48d34a5d9ba8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com> <20240215134856.1313239-6-quic_mdalam@quicinc.com>
+In-Reply-To: <20240215134856.1313239-6-quic_mdalam@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 15 Feb 2024 17:00:37 +0200
+Message-ID: <CAA8EJpqV=w38TqjfTp6OurAwHjR87PpmQTs2jUo6O7vF1-T-WQ@mail.gmail.com>
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: ipq9574: Disable eMMC node
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org, 
+	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
+	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-spi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	quic_srichara@quicinc.com, quic_varada@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 13/02/2024 08:35, Sibi Sankar wrote:
-> 
-> 
-> On 1/31/24 20:37, Dietmar Eggemann wrote:
->> On 23/01/2024 11:15, Sudeep Holla wrote:
->>> On Tue, Jan 23, 2024 at 11:38:27AM +0530, Viresh Kumar wrote:
->>>> On 17-01-24, 16:34, Sibi Sankar wrote:
+On Thu, 15 Feb 2024 at 15:49, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+>
+> Disable eMMC node for rdp433, since rdp433 default boot mode
+> is norplusnand.
 
-[...]
+Are they exclusive?
 
->> root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
->> 1
->> 0
->> 0
->>
->> root@juno:/sys/devices/system/cpu/cpufreq# cat
->> policy*/scaling_available_frequencies policy*/scaling_boost_frequencies
->> 450000 575000 700000
->> 450000 625000 800000
->> 775000 850000
->> 950000 1100000
->>
->> If I disable system-wide boost I see the correct influence on
->> 'cpufreq_pressure':
->>
->> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > boost
->>
->> [  439.466682] cpufreq_update_pressure() cpu=1 cpufreq_pressure=280
->> [  439.472797] cpufreq_update_pressure() cpu=2 cpufreq_pressure=280
->> [  439.478889] cpufreq_update_pressure() cpu=0 cpufreq_pressure=79
->> [  439.484852] cpufreq_update_pressure() cpu=3 cpufreq_pressure=79
->> [  439.490843] cpufreq_update_pressure() cpu=4 cpufreq_pressure=79
->> [  439.499621] cpufreq_update_pressure() cpu=5 cpufreq_pressure=79
->>
->> reflecting the max frequency change from '1100000 to 800000' on CPU1,2
->> and from '850000 to 700000' on CPU0,3-5.
->>
->> root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
->>
->> [ 2722.693113] cpufreq_update_pressure() cpu=1 cpufreq_pressure=0
->> [ 2722.699041] cpufreq_update_pressure() cpu=2 cpufreq_pressure=0
->> [ 2722.704962] cpufreq_update_pressure() cpu=0 cpufreq_pressure=0
->> [ 2722.710842] cpufreq_update_pressure() cpu=3 cpufreq_pressure=0
->> [ 2722.719644] cpufreq_update_pressure() cpu=4 cpufreq_pressure=0
->> [ 2722.728224] cpufreq_update_pressure() cpu=5 cpufreq_pressure=0
->>
->> What doesn't work for me is to disable boost per policy:
->>
->> root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
->> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy0/boost
->> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy1/boost
->>
->> Here I don't see 'cpufreq_pressure' changes.
->>
->> BTW, what's the use case you have in mind for this feature? Is it to cap
->> high OPPs for CPUs in a certain CPUfreq policy?
-> 
-> Yeah, that's exactly the use case for X1E. Boost frequencies defined in
-> the SoC are achievable by only one CPU in a cluster i.e. either the
-> other CPUs in the same cluster should be in low power mode or offline.
-> So it's mostly for book keeping i.e. we wouldn't to intimate incorrectly
-> that the CPUs are running at max possible frequency when it's actually
-> running at a lower frequency.
-
-I see.
-
-What about the issue with the settings of the global and the per-policy
-'boost' file?
-
-On my Juno-r0 the initial boost values are:
-
-(1) Initial setting:
-
-root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
-1
-0
-0
-
-Should they not all be 1 ?
+>
+> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> index 1bb8d96c9a82..e33e7fafd695 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> @@ -24,7 +24,7 @@ &sdhc_1 {
+>         mmc-hs400-enhanced-strobe;
+>         max-frequency = <384000000>;
+>         bus-width = <8>;
+> -       status = "okay";
+> +       status = "disabled";
+>  };
+>
+>  &tlmm {
+> --
+> 2.34.1
+>
+>
 
 
-(2) Disabling system-wide boost
-
-root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > boost
-
-Here I see 'cpufreq_pressure > 0' for all CPUs.
-
-
-(3) Enabling system-wide boost
-
-root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
-
-And here 'cpufreq_pressure == 0' for all CPUs.
-
-
-(4) Disabling boost for policy0.
-
-root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy0/boost
-
-root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
-1
-0
-1
-
-Here nothing happened. But I was expecting to see 'cpufreq_pressure > 0'
-for CPUs of policy0:
-
-root@juno:/sys/devices/system/cpu/cpufreq# cat policy0/affected_cpus
-0 3 4 5
+-- 
+With best wishes
+Dmitry
 
