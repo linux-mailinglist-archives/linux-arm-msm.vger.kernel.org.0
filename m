@@ -1,110 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-11146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDFBE855D49
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:04:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50489855E33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:32:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACF48B3138D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:57:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3683B2E929
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 09:26:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70F7C18628;
-	Thu, 15 Feb 2024 08:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MB1W8N8i"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 270E41B946;
+	Thu, 15 Feb 2024 09:25:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA44171D4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 08:55:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+Received: from lgeamrelo11.lge.com (lgeamrelo13.lge.com [156.147.23.53])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96F1817C61
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 09:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.147.23.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707987349; cv=none; b=MxBM9/rI9oGss5D4BgU5duJ3sxay1TCLj5+9OlLcdzawnpRQxfJQVmfWJVANFA9zs/dlarGJV2zh+QERGqLeGk94B1ZndD8DdpjSRQwkoj/wwcKZPBL0OW1Y61gCA/JTLpr53qy20JlSo0xYEr6/waz8at8Bz1vEFsIwj0hEj2s=
+	t=1707989151; cv=none; b=UUW7HlkaGVxnCFuIDlxRWdgBYdnq00yuMd4muR5d1zg6NPGvwvYHQSmVNmQsbY6uXaF1zloeWpC/l/VyXxg8awfgY074j8jhEAJv7mCps1DMQ32E3IJBbyn9qv34uLzTvykZW40U0nlUk3xB6NYP/EEBn58886qFWpV0kPvRI3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707987349; c=relaxed/simple;
-	bh=Uwkhg8nmF9a5jzbJDateJHiIVJm0VCqSJhr8niy4XeM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b7KuaYuNDvYKl95GiBotsUGp3mO2d0d3CcM7ASu8IRqdKUHcYdr5qANxnP5oZVgMXxGVmWOJ+6curfRWN68qow1cwdGy4dXEAlqlbydo+AmBOBSKYC1kbm8Pu3TjH51rLtZjEahLIVqJWyDCoRBFD+VHMxX9l9qK6kNEcrHPQf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MB1W8N8i; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc25e12cc63so1474716276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:55:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707987346; x=1708592146; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=A6CQ+IRO32lNLtjlKEcSjvtD+crehBuMoEtTj27QIp4=;
-        b=MB1W8N8iBsdroMbZia/9JI/Qs16puVeQEA1QcEPx2rzCL+D58Wrd1pFy31bsGmTrhZ
-         wM5mfv9rHi9WoevrFcvHIR9uLmIOthUBItlynLmPTZDLZRnXFNUoEfsMozmcI5mlT0PK
-         PJjuySoqtz63NWqpqRPuZ1yep6nxlEyfNpPKRYkfFTHzuvhn/JMhPzZVsd3c1+APMZcB
-         zqckycJc+IHma4p7TwMfexXbgUuOFjQjFNHriBpA4NB8dUb8ZJ9QWrdVpqxno97F5eQ5
-         j5YH4SnZkNXSfuCJTok6wYXepsph98G8bw2GV4e/C1aGKR1yLmOoEf6wSq1DgcJkxuhp
-         vhQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707987346; x=1708592146;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A6CQ+IRO32lNLtjlKEcSjvtD+crehBuMoEtTj27QIp4=;
-        b=eBmrtnFHluaVw1Uvnfb8asGGV/NBj27QAFEvS3X0EIgTWwo8eAAUgBuqQFt809ZgFM
-         TwFczIHjyImMwTdBHUXDjBbZYefQ3RLceMjHrKMiM+9klkJBoZMfbVhrzKVMwgCri7iY
-         3AWG8j0bRERy3ZuM6DYMIzKY7L5bBC/q04CS07zsgbDd+dEDDI2FT12irMbc4JzMZt0W
-         D+gtKAIExNypYR8+15xXFHIvUY+XYRbcrgdHPPamJVN6/IkVukvomYRK8b/pVht81nHF
-         SiYW2AkrqRRWcgCSkQr0TlfaKsxyshYf7t5abYonlOkuVCVa8TrV/Dq180VgsqvlmuH+
-         XgZA==
-X-Forwarded-Encrypted: i=1; AJvYcCXj50B+vnDdgVHIioU/w6ejoXNcUepvccWuRb9XujSmLhFDOBKkLfwYuzqeMl+7iICHVEo6mv+oOuJANfsXZ0sJUdLOgIRTnao9iacLoA==
-X-Gm-Message-State: AOJu0Yz3xatJUOOkWz2AP0WD3toN1XSjQ9t2SV67O4cPegxuMIK161gE
-	LSSYA5jCeQ1TAdS3Ic30UqbJsfdfzyXy6pWmS0kj7qgYCwOZch1a7dxw26+RyE8ETUJWnJe+zAh
-	Xm1YA6trmO0cQUArfiae9/ZGg7hP3dHIL+kzrGA==
-X-Google-Smtp-Source: AGHT+IE4lbTZKhBywpPpsira5YbX/aKUOSR2Y7bKcNEGDTo00brA9daDt/YyPAL9VY6ak8GFW08RebDPlLnamXNKJ9Q=
-X-Received: by 2002:a25:3c87:0:b0:dcb:b072:82d8 with SMTP id
- j129-20020a253c87000000b00dcbb07282d8mr3327167yba.15.1707987345897; Thu, 15
- Feb 2024 00:55:45 -0800 (PST)
+	s=arc-20240116; t=1707989151; c=relaxed/simple;
+	bh=WW+WFmDnH2V+1GQsgAFG07eSRILRm8Qu3HVR57TR4a4=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=oXhFU8yK179f365s2rHT5J1Zf2g/t+45QEA1aIvgyzTeNnssvu8DVnlizyTOsxqxWPSnNQKnx91xFxsiNv2RbWB/Bhj2SlqGIaY7pmNvaZuRAsuDmkGitISXvQAoxyVm/s9eaYOHmtyAalqST2Nxy1Vm/hpDP2APdhe75MaTEME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lge.com; spf=pass smtp.mailfrom=lge.com; arc=none smtp.client-ip=156.147.23.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lge.com
+Received: from unknown (HELO lgemrelse6q.lge.com) (156.147.1.121)
+	by 156.147.23.53 with ESMTP; 15 Feb 2024 17:55:46 +0900
+X-Original-SENDERIP: 156.147.1.121
+X-Original-MAILFROM: chanho.min@lge.com
+Received: from unknown (HELO ?10.178.36.63?) (10.178.36.63)
+	by 156.147.1.121 with ESMTP; 15 Feb 2024 17:55:46 +0900
+X-Original-SENDERIP: 10.178.36.63
+X-Original-MAILFROM: chanho.min@lge.com
+Subject: Re: [PATCH 3/6] arm64: dts: Fix dtc interrupt_provider warnings
+To: Rob Herring <robh@kernel.org>, soc@kernel.org,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Tsahee Zidenberg <tsahee@annapurnalabs.com>,
+ Antoine Tenart <atenart@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Andrew Lunn <andrew@lunn.ch>,
+ Gregory Clement <gregory.clement@bootlin.com>,
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+ =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Stefan Agner <stefan@agner.ch>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ =?UTF-8?Q?Beno=c3=aet_Cousson?= <bcousson@baylibre.com>,
+ Tony Lindgren <tony@atomide.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Linus Walleij <linusw@kernel.org>,
+ Imre Kaloz <kaloz@openwrt.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor
+ <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>
+Cc: linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, linux-omap@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kbuild@vger.kernel.org,
+ Lee Gunho <gunho.lee@lge.com>
+References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
+ <20240213-arm-dt-cleanups-v1-3-f2dee1292525@kernel.org>
+From: Chanho Min <chanho.min@lge.com>
+Message-ID: <f5aeffed-9365-b1db-4c32-4ed6da208ea0@lge.com>
+Date: Thu, 15 Feb 2024 17:55:46 +0900
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240214180347.1399-1-quic_parellan@quicinc.com> <20240214180347.1399-18-quic_parellan@quicinc.com>
-In-Reply-To: <20240214180347.1399-18-quic_parellan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 15 Feb 2024 10:55:36 +0200
-Message-ID: <CAA8EJppidULwO=PG7t9iZbSeK3v_=W_92s9sVyJ5Do0W9ja3Sg@mail.gmail.com>
-Subject: Re: [PATCH v3 17/19] drm/msm/dpu: modify timing engine programming
- for YUV420 over DP
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20240213-arm-dt-cleanups-v1-3-f2dee1292525@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Wed, 14 Feb 2024 at 20:04, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
-> Adjust the encoder timing engine setup programming in the case of video
-> mode for YUV420 over DP to accommodate CDM.
->
-> Changes in v3:
->         - Move drm_display_mode's hskew division to another patch
->         - Minor cleanup
->
-> Changes in v2:
->         - Move timing engine programming to this patch
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+On 24. 2. 14. 4:34 Rob Herring wrote:
+> The dtc interrupt_provider warning is off by default. Fix all the warnings
+> so it can be enabled.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>   arch/arm64/boot/dts/lg/lg1312.dtsi                  | 1 -
+>   arch/arm64/boot/dts/lg/lg1313.dtsi                  | 1 -
+Acked-by: Chanho Min <chanho.min@lge.com>
 
--- 
-With best wishes
-Dmitry
 
