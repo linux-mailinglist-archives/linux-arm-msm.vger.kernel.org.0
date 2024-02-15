@@ -1,147 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-11145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7372B855CFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 09:56:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB1C6855D10
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 09:58:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA6991F23403
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:56:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6BC628DD36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:58:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC4CA17585;
-	Thu, 15 Feb 2024 08:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 241391C686;
+	Thu, 15 Feb 2024 08:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XXPaU5P6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jiz7pwMR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB7D17581;
-	Thu, 15 Feb 2024 08:54:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E091C2BC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 08:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707987284; cv=none; b=sUV18S6a3VogMyGBKSVpmbafP1t8pn+lylnUKOuAaPt4R1cgYxAws1w88Q5Ksx0xqxkn7pU37IlC/tIOr4p9iU1gdLbteiOSqw/36VmKpnHcp0erEQvRJxwqILTTwxvTWs2YBaBKrWKzjM3EFnzsb+kZWm7wynDP8BRpRSqxJ8s=
+	t=1707987374; cv=none; b=CPM5TwbOSTkBJ9pfG5l3DMIgr/I2xl/AGAe4wG9UVvlBf2mz69WzWfHkT7XtwwFZbK121a0Fohqgk6ysmkv9S2e1wy9BIBz4n6R4DWubrhgJyCnDB44SBTT6myycQnjMRefsLsdgKTOOG221DzJOO+5nQModhkaTupvq4IaxWFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707987284; c=relaxed/simple;
-	bh=HacCDBBWtVwrM7+2fJ4RyNIZdk8dEqnwujn5LPirQAA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TGNB7TXgeu3KAmEavRdkasDc8PUYz5y6OuhRn/KtbP82vE29RuMZ/0QvDKAy2gDZs7UvRLDM+Ay3J6HhZ70amW1+JYlcuAym+8G75/uX7w312fg/Cz8pXpg+6MBfPYRKhoZIhiC6YWexdEGPyS6l5jaR+1InXE2s9+7XFyQFXzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XXPaU5P6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4EDC433C7;
-	Thu, 15 Feb 2024 08:54:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707987284;
-	bh=HacCDBBWtVwrM7+2fJ4RyNIZdk8dEqnwujn5LPirQAA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XXPaU5P6PkLW09thFcTYVoLsFIRMfGGevZoyNtTqyj4M8Es3yX9vidxbUYXl3Dv8o
-	 PcjA3WvC/yfs5J1cYrPrmr54XM5XIhw1KAlolK6e3whyWOY62PfkO2pgBIeQc6/i08
-	 SLufjR8ygQl7tmc4ORUrLnhV89kJoDB/JZ6yI0HjX7W/oIZYw3+mRtAhAt1M5EZPFl
-	 135r5NAGQPmZcUAKp82u9FuObg7glXyQQoE13v82t1+ZuPyOr3HBA2dEZ5KmoS9ASW
-	 7yeL1MKFWptNTJultdZv+TWwaDoLuzZEYhI8RpnzzK9veUHwvZuV9lhhZqE2hRmwu3
-	 MXJ24q2AlstKw==
-Message-ID: <ea9d31c4-e5c4-4869-8bf9-caef3dd32829@kernel.org>
-Date: Thu, 15 Feb 2024 09:54:37 +0100
+	s=arc-20240116; t=1707987374; c=relaxed/simple;
+	bh=yxQbmZTo8wuNiSZlyLJM0ccLI+PzcqkStsD2kSw5uak=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X7MrkZIRwks0zns3CL4rrhkK6bjCfqymW9QWnHVCtrgR78qu3RIz3KUSTbxIMrlzjiRZcXjnjdfrDHJbqndH7dMLoTj6A5vPkv7hmV7oAlIJaY5311cZqwuIPDTf7w6beQA6lY8nOzPQLoyAijmCOiQlYt/0Axopm9lV//X0OHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jiz7pwMR; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dcbef31a9dbso404317276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:56:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707987371; x=1708592171; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fs4SETNb1lvqVZ8gWpZC/Rt9HqyJWvbYB6LQacF0iGM=;
+        b=Jiz7pwMRkgAhHz2KhORYiB6q4N6JEXvhNfNeRBcmr5NiOMiS/M40WNK2jZ6mjtu15a
+         RqIrEXxQY88qNlF2x/n11ViTQctGsj1Hxno2d9KC+XJsVBG54meVchxQ6s1PUyJbFf/2
+         1sAwMGQa6iv29VO07ONYIVA2yvzsqdORzHO8I2SQE3IHN3CYW3q57nwS0C7MBSUEvNdC
+         OvwjPDbzfL07D8/RsKU+JJG/lJ0iViw+7z+gds4unoSLdP0tj7OrgATfwfBx9ngREVyh
+         FSJ6aSMCpXNdP/a8F9+mpFaN19kPyxVyaV7hfpfyQiB/VEkdGoKKb6FFvXMFtchcn5lQ
+         XGBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707987371; x=1708592171;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Fs4SETNb1lvqVZ8gWpZC/Rt9HqyJWvbYB6LQacF0iGM=;
+        b=tYQ/VoLIXzXLI10BABLJGdLIio6ZcaSaFF9YIDvrWghi5LLr1PAek0qlxp3yVfZqeQ
+         wT7pnw7xK+fuqebc9A2YiiYKPPOVqP/K2rJ6/sjebMXTgpjSWcw9/qOVclVOHQRHO8OO
+         a4z8wLCRLG4y+P913MB2LDvhcWlMqkK+nMUxFkfCqAzdDt1jgnbsXj5r5/vRd4VFuzT1
+         AxvZvAI4EOgslV0hcrZ/tnVOfCDkcU7ux7BcT1w0VvBL8iIwHDa2HCL1ICwynuQAFI1v
+         rEyG1gJKKrZuGHfJP5l9099fEm0NLYwqUYMgUnOptRUNtDqo0+InAi++dyjXB68SGMQd
+         w/mg==
+X-Forwarded-Encrypted: i=1; AJvYcCXhZ8eUByhADrJFz0f9ggWPYwI9Bfuw7B/gds2zLT5YsjeByhydNxLjhBpwsj1kIO6bLm/EuIHD1UurOiMw6t/OZrPhG/dNQvPqIWPmRQ==
+X-Gm-Message-State: AOJu0YwJHtSNkfDuKQ/u9QuDeDOOiQOWKn1hqp6oSb6Q3iNIHFAYQZBL
+	15O1P1sMZ+NLgRlt/rOvi7vwvpd4dAH72niO+Jsp4tLDKrNLyQL1aq6qfHLyn7LX6adsA1zIWPr
+	SYHZqQoYvQL8uBIQV6afYZ/x7VAgKpur84smthA==
+X-Google-Smtp-Source: AGHT+IHHRlxCdvGNha4XCXxq2zUtJjoqVlUr8oWoPF6SvyMgi8dq/k3AKGlE3v79seUFy5PqY7Z4u85rCS9NwbgpEd4=
+X-Received: by 2002:a25:b124:0:b0:dbc:decf:e511 with SMTP id
+ g36-20020a25b124000000b00dbcdecfe511mr927285ybj.6.1707987371322; Thu, 15 Feb
+ 2024 00:56:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 1/4] dt-bindings: spmi: Add PMIC ARB v7 schema
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>, Stephen Boyd <sboyd@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org
-References: <20240214-spmi-multi-master-support-v3-0-0bae0ef04faf@linaro.org>
- <20240214-spmi-multi-master-support-v3-1-0bae0ef04faf@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240214-spmi-multi-master-support-v3-1-0bae0ef04faf@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240214180347.1399-1-quic_parellan@quicinc.com> <20240214180347.1399-3-quic_parellan@quicinc.com>
+In-Reply-To: <20240214180347.1399-3-quic_parellan@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 15 Feb 2024 10:56:01 +0200
+Message-ID: <CAA8EJpoCYvz5Ucd9tKiz1DdAyv=k5y6LTxK=Srbfmc7615bFJQ@mail.gmail.com>
+Subject: Re: [PATCH v3 02/19] drm/msm/dpu: add division of drm_display_mode's
+ hskew parameter
+To: Paloma Arellano <quic_parellan@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
+	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
+	neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 14/02/2024 22:13, Abel Vesa wrote:
-> Add dedicated schema for PMIC ARB v7 as it allows multiple
-> buses by declaring them as child nodes. These child nodes
-> will follow the generic spmi bus bindings.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On Wed, 14 Feb 2024 at 20:04, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+>
+> Setting up the timing engine when the physical encoder has a split role
+> neglects dividing the drm_display_mode's hskew parameter. Let's fix this
+> since this must also be done in preparation for implementing YUV420 over
+> DP.
+>
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 > ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline), work on fork of kernel
-(don't, instead use mainline) or you ignore some maintainers (really
-don't). Just use b4 and everything should be fine, although remember
-about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time, thus I will skip this patch entirely till you follow
-the process allowing the patch to be tested.
-
-Please kindly resend and include all necessary To/Cc entries.
-
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
