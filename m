@@ -1,204 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-11200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B77868565DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 15:24:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46949856625
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 15:42:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 646D11F21DE0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 14:24:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 79F8F1C227D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 14:42:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42A64131E31;
-	Thu, 15 Feb 2024 14:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 154F313249B;
+	Thu, 15 Feb 2024 14:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j7PC2yP2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iNcjrIxJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3F512FB33;
-	Thu, 15 Feb 2024 14:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDEE132497
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 14:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708007049; cv=none; b=FTdwEpXZhbAKbeX7HAwuSAWKVFUbz46JpjZdGd5vYLr1+GBY7fzY2noMdjengAioJ3eCl1NMloyw4bVuSCD+bHD85Ljq/zHpIGO3rReUi1Ci1SE3qBUPpfRSb3tzsYhEhpNdNBRcM2xJy5/W9ZXr13Hjo/AhkFX8ro+GxtI7saI=
+	t=1708008135; cv=none; b=sYOYOPK4zrWaM3hW1QojB8SlPMwBljAlunSaQnPylEdij/19DHjJPJYFgJEsxkI+yMafsBAFxyOAkbBDB8TkO2jGxWpbPbS6A1j98gofUSiafZP0YvY8HCo7p6HIDLr2ShKpx7JCyjR9bsToHs7eDcI1S71ZBK2L6zOcwcli1vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708007049; c=relaxed/simple;
-	bh=n4QN1QaOnHa9dWqkKphOT17gFQtTnkhJWHRJ7aqMprY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uQPQFQ6lHHQEmemjlOoowksuXFu7PX2ubnWkcua1RrIn5nzbuN4jaRm57SMtxddu65TekNuTE6+lOFGU485sPpJQBk6m2FSceHg3f5jdbXrgPC7LxLAXxuf9bYwBH4iqFboxwn+J0Nq0nfsQZrPDkLiZT8xLuRxbd13ldfgGhe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j7PC2yP2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D23BC433C7;
-	Thu, 15 Feb 2024 14:24:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708007048;
-	bh=n4QN1QaOnHa9dWqkKphOT17gFQtTnkhJWHRJ7aqMprY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j7PC2yP239Rulrb4Oc0X42S7d0fM0Qj3QMQ7xzjZKF6YFGVw1OWI0WKrgzuZCMR1u
-	 FZ21DlxMcKnKJmfKG2ILc8JfIxKYteCJwBlYJtO8NPD76hUWOJwMScsukUMbNQPkvW
-	 3TEa3/xe0SGtmFGuZPO+FxLf3K5zo9ILVYuFwg4pnJShUsfgTqYsdfoIu6kO16v1oN
-	 O1pZejF6PC71dGBeD3ggzxHxqGdteuIjhg5T/gOPSxqZilj0Bk6JpK9exc5X/FDjfh
-	 yEhuGn/4vntrq34XCOgVmOMZsMYwfwi9a5wQDA59IME5uJWA9JV8GO4J2/tyPDjFW5
-	 Xon+tLJr8u3Ig==
-Date: Thu, 15 Feb 2024 14:24:02 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
-	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-	vigneshr@ti.com, manivannan.sadhasivam@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org, quic_srichara@quicinc.com,
-	quic_varada@quicinc.com
-Subject: Re: [PATCH 1/5] spi: dt-bindings: add binding doc for spi-qpic-snand
-Message-ID: <20240215-upon-anime-af032e49e84d@spud>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
- <20240215134856.1313239-2-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1708008135; c=relaxed/simple;
+	bh=dS27jGD0fKVGB7XlaqNnfwFAlFDq82S6W3A7kwltT3w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gyjJM7NKI0PXy1HT0pyJYjhbV0yA6jitUAL9yBYPt6s+87qbOjM4DVcueB4vKohWigPCnj5KIYhZy1BOw1lU3HRJZ+endf26+IdzbqKsNh+GTOG9v7mUwZXJO76m2K7ZdbZpDloDbRDYQhtVoKVuQmQlGO2CAhD9i0hQIPkI+yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iNcjrIxJ; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dcd9e34430cso898251276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 06:42:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708008132; x=1708612932; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dAC16XHzjVY3XukbmOyTYofThyOnRxBkJl2MJq0kU/g=;
+        b=iNcjrIxJ2xjPQk92cQBpUDREps7BpgVcGVshe0obIHnneQXtVx/00A2ag83axItwM3
+         P1y9dqqf2RkWgAOsaFM9vuqQHbxIR2/c1ATQKL7l9FIAC5ZTnCPqZexjGatoZVUunb/x
+         z6X3SoOiXd0w2ePkxQSFCJGkBqneWWiS1cTHt8999yLh6wkVhZuzsePiGMJFl6BjEm9A
+         5aP2Wr24RvqTxdDcUomEh+/taRMW5QsYZ8y7llz0gPzWL3a069SsXncCHbnfT3kg+7MB
+         nCagWrFEaanxoYg7knRsIqyL1mz4uqjDoavT/97iu6D2vhd70LGThnCenmVfbqqNxAu0
+         MOnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708008132; x=1708612932;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dAC16XHzjVY3XukbmOyTYofThyOnRxBkJl2MJq0kU/g=;
+        b=hcP53Wbr0CQo4BNbxEuNympkHBnnwP5PS9d2BcTndtvod9zSG2YNstBQhkYOqbxCXR
+         MaoCImMu/aSoTwuAtmxYuJVAdtGZmDLOe4aZe7qqMvT/Vjd6cEsXbxWc5zPdImMFRNjJ
+         dOe+5MCO0+6pUev41EzidYqf6C9sBj+kYDq82k56A5FO2NRLRFrvj03SX20isqplzDv3
+         OpZCxKFd7KqCvSuTjBqVEMU9DVLIf9on/MOg50+e7h/ReLT/MuYWsX6ZlvL/P54CNpAt
+         NbUZ9lswt28XeidP3a3KmihhnzNVWzTHpUNDL4uSS5MTGnCGewMSj0enQzgu8fI2pl5t
+         bdhA==
+X-Forwarded-Encrypted: i=1; AJvYcCVPlAaW6jftCvksrH3CHoSemjstCfvm8h+Nn7jCfL4REtYtsxfXgWBZoa4m23nJDMe1RPDpRVK0SsMadGp7F/LWBQEXHWn2otI1MvQkKw==
+X-Gm-Message-State: AOJu0YxIlca/aT0+9uPvWx45oz7VRjZX7XMTxSIH4GNDSmwG5Px6NrlU
+	AmQvLLo2NjyOzIbN/9xCeAjvnOvWhnQCuwQwv28tkhilYmdEVCuqXOVNt6zoIzT/FpVZ6rOhSpI
+	hIqxgIweHUbdo6gh38ZWxejGLbRNqhW/IBlzABw==
+X-Google-Smtp-Source: AGHT+IFRJcoqJupsoaQ1qFV0tFqhF7c08tDk4aD3Ff1yyUny9nMO7+GZqCkuvRwWEVUHQhtBkS1fIY9p/4h0S7hvHQg=
+X-Received: by 2002:a25:b282:0:b0:dc7:46ef:8b9e with SMTP id
+ k2-20020a25b282000000b00dc746ef8b9emr1827807ybj.29.1708008131861; Thu, 15 Feb
+ 2024 06:42:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="UDj3Iu6IuX6GpJeg"
-Content-Disposition: inline
-In-Reply-To: <20240215134856.1313239-2-quic_mdalam@quicinc.com>
+References: <20240214-spmi-multi-master-support-v3-0-0bae0ef04faf@linaro.org>
+ <20240214-spmi-multi-master-support-v3-3-0bae0ef04faf@linaro.org>
+ <d9d8e86b-a499-49d1-90ad-6fae5b7dcbb7@linaro.org> <Zc0yXR/fC2OcObLB@linaro.org>
+ <CAA8EJpq=kYeZfNbFtfQ_oLS0Xi4imyEGV+dDNO+h6LZfqmpxZg@mail.gmail.com> <Zc4SWIViTS0uf952@linaro.org>
+In-Reply-To: <Zc4SWIViTS0uf952@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 15 Feb 2024 16:42:00 +0200
+Message-ID: <CAA8EJpqOd1Sz_538ZwhPh+AesVRBRmzMiQ0ntsvm4i5erKM-jA@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 3/4] spmi: pmic-arb: Make core resources acquiring
+ a version operation
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Stephen Boyd <sboyd@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Johan Hovold <johan@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Thu, 15 Feb 2024 at 15:32, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> On 24-02-15 11:30:23, Dmitry Baryshkov wrote:
+> > On Wed, 14 Feb 2024 at 23:36, Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
+> > > On 24-02-14 22:18:33, Konrad Dybcio wrote:
+> > > > On 14.02.2024 22:13, Abel Vesa wrote:
+> > > > > Rather than setting up the core, obsrv and chnls in probe by using
+> > > > > version specific conditionals, add a dedicated "get_core_resources"
+> > > > > version specific op and move the acquiring in there.
+> > > > >
+> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > ---
+> > > > >  drivers/spmi/spmi-pmic-arb.c | 111 ++++++++++++++++++++++++++++++-------------
+> > > > >  1 file changed, 78 insertions(+), 33 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> > > > > index 23939c0d225f..489556467a4c 100644
+> > > > > --- a/drivers/spmi/spmi-pmic-arb.c
+> > > > > +++ b/drivers/spmi/spmi-pmic-arb.c
+> > > > > @@ -203,6 +203,7 @@ struct spmi_pmic_arb {
+> > > > >   */
+> > > > >  struct pmic_arb_ver_ops {
+> > > > >     const char *ver_str;
+> > > > > +   int (*get_core_resources)(struct platform_device *pdev, void __iomem *core);
+> > > > >     int (*init_apid)(struct spmi_pmic_arb *pmic_arb, int index);
+> > > > >     int (*ppid_to_apid)(struct spmi_pmic_arb *pmic_arb, u16 ppid);
+> > > > >     /* spmi commands (read_cmd, write_cmd, cmd) functionality */
+> > > > > @@ -956,6 +957,19 @@ static int pmic_arb_init_apid_min_max(struct spmi_pmic_arb *pmic_arb)
+> > > > >     return 0;
+> > > > >  }
+> > > > >
+> > > > > +static int pmic_arb_get_core_resources_v1(struct platform_device *pdev,
+> > > > > +                                     void __iomem *core)
+> > > > > +{
+> > > > > +   struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
+> > > > > +
+> > > > > +   pmic_arb->wr_base = core;
+> > > > > +   pmic_arb->rd_base = core;
+> > > > > +
+> > > > > +   pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
+> > > > > +
+> > > > > +   return 0;
+> > > > > +}
+> > > > > +
+> > > > >  static int pmic_arb_init_apid_v1(struct spmi_pmic_arb *pmic_arb, int index)
+> > > > >  {
+> > > > >     u32 *mapping_table;
+> > > > > @@ -1063,6 +1077,41 @@ static u16 pmic_arb_find_apid(struct spmi_pmic_arb *pmic_arb, u16 ppid)
+> > > > >     return apid;
+> > > > >  }
+> > > > >
+> > > > > +static int pmic_arb_get_obsrvr_chnls_v2(struct platform_device *pdev)
+> > > > > +{
+> > > > > +   struct spmi_pmic_arb *pmic_arb = platform_get_drvdata(pdev);
+> > > > > +   struct device *dev = &pdev->dev;
+> > > > > +   struct resource *res;
+> > > > > +
+> > > > > +   res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+> > > >
+> > > > It's no longer indented to deep, no need to keep such aggressive wrapping
+> > > >
+> > >
+> > > The pmic_arb_get_obsrvr_chnls_v2 is used by both:
+> > > pmic_arb_get_core_resources_v2
+> > > pmic_arb_get_core_resources_v7
+> > >
+> > > > > +                                      "obsrvr");
+> > > > > +   pmic_arb->rd_base = devm_ioremap(dev, res->start,
+> > > > > +                                    resource_size(res));
+> > > > > +   if (IS_ERR(pmic_arb->rd_base))
+> > > > > +           return PTR_ERR(pmic_arb->rd_base);
+> > > > > +
+> > > > > +   res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+> > > > > +                                      "chnls");
+> > > > > +   pmic_arb->wr_base = devm_ioremap(dev, res->start,
+> > > > > +                                    resource_size(res));
+> > > > > +   if (IS_ERR(pmic_arb->wr_base))
+> > > > > +           return PTR_ERR(pmic_arb->wr_base);
+> > > >
+> > > > Could probably make it "devm_platform_get_and_ioremap_resource "
+> > >
+> > > The reason this needs to stay as is is because of reason explained by
+> > > the following comment found in probe:
+> > >
+> > > /*
+> > >  * Please don't replace this with devm_platform_ioremap_resource() or
+> > >  * devm_ioremap_resource().  These both result in a call to
+> > >  * devm_request_mem_region() which prevents multiple mappings of this
+> > >  * register address range.  SoCs with PMIC arbiter v7 may define two
+> > >  * arbiter devices, for the two physical SPMI interfaces, which  share
+> > >  * some register address ranges (i.e. "core", "obsrvr", and "chnls").
+> > >  * Ensure that both devices probe successfully by calling devm_ioremap()
+> > >  * which does not result in a devm_request_mem_region() call.
+> > >  */
+> > >
+> > > Even though, AFAICT, there is no platform that adds a second node for
+> > > the second bus, currently, in mainline, we should probably allow the
+> > > "legacy" approach to still work.
+> >
+> > If there were no DT files which used two SPMI devices, I think we
+> > should drop this comment and use existing helpers. We must keep
+> > compatibility with the existing DTs, not with the _possible_ device
+> > trees.
+>
+> Sure.
+>
+> Should I drop the qcom,bus-id from the driver as well? It is optional
+> after all.
 
---UDj3Iu6IuX6GpJeg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think so. Let's drop it completely. And for the new sub-devices you
+perfectly know the bus ID.
 
-On Thu, Feb 15, 2024 at 07:18:52PM +0530, Md Sadre Alam wrote:
-> Add device-tree binding documentation for QCOM QPIC-SNAND-NAND Flash
-> Interface.
->=20
-> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
->  .../bindings/spi/qcom,spi-qpic-snand.yaml     | 82 +++++++++++++++++++
->  1 file changed, 82 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-s=
-nand.yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.ya=
-ml b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
-> new file mode 100644
-> index 000000000000..fa7484ce1319
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
-> @@ -0,0 +1,82 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/spi/qcom,spi-qpic-snand.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QPIC NAND controller
-> +
-> +maintainers:
-> +  - Md sadre Alam <quic_mdalam@quicinc.com>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq9574-snand
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 2
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    minItems: 2
-> +    maxItems: 3
-> +
-> +allOf:
-> +  - $ref: /schemas/spi/spi-controller.yaml#
-> +  - if:
-
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq9574-snand
-> +
-> +    then:
-> +      properties:
-> +        dmas:
-> +          items:
-> +            - description: tx DMA channel
-> +            - description: rx DMA channel
-> +            - description: cmd DMA channel
-> +
-> +        dma-names:
-> +          items:
-> +            - const: tx
-> +            - const: rx
-> +            - const: cmd
-
-None of this complexity here is needed, you have only one device in this
-binding and therefore can define these properties at the top level.
-
-Cheers,
-Conor.
-
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> +    qpic_nand: spi@79b0000 {
-> +        compatible =3D "qcom,ipq9574-snand";
-> +        reg =3D <0x1ac00000 0x800>;
-> +
-> +        clocks =3D <&gcc GCC_QPIC_CLK>,
-> +                 <&gcc GCC_QPIC_AHB_CLK>,
-> +                 <&gcc GCC_QPIC_IO_MACRO_CLK>;
-> +        clock-names =3D "core", "aon", "iom";
-> +
-> +        #address-cells =3D <1>;
-> +        #size-cells =3D <0>;
-> +
-> +        flash@0 {
-> +            compatible =3D "spi-nand";
-> +            reg =3D <0>;
-> +            #address-cells =3D <1>;
-> +            #size-cells =3D <1>;
-> +            nand-ecc-engine =3D <&qpic_nand>;
-> +            nand-ecc-strength =3D <4>;
-> +            nand-ecc-step-size =3D <512>;
-> +            };
-> +        };
-> --=20
-> 2.34.1
->=20
-
---UDj3Iu6IuX6GpJeg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZc4eggAKCRB4tDGHoIJi
-0vO4AQC/9EXBXWmYMmh41rKINWfmf2C0tle9Rbns/1KqqVSKAQD+Lo3EUIx5DARc
-ZjZm/tSapiiF/R0brf6h1Z0Dk28FfQQ=
-=mzbY
------END PGP SIGNATURE-----
-
---UDj3Iu6IuX6GpJeg--
+-- 
+With best wishes
+Dmitry
 
