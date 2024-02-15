@@ -1,95 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-11179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E21578560B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:05:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 157E08561ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:44:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B0B2B3AA45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 11:02:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C31BB248FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 11:24:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B97712EBDB;
-	Thu, 15 Feb 2024 10:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C37C8527C;
+	Thu, 15 Feb 2024 11:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iKKGdMo9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UOmLZR3g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04B012D755;
-	Thu, 15 Feb 2024 10:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E767E53369;
+	Thu, 15 Feb 2024 11:24:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707994228; cv=none; b=ca5S/syr/rc09lH1NUUHkAiHNCM5n8k9BBY5smEM0AA+qp/JAzpz5mlp88b3+fSxVFkrXwMHLNzGvz1LCNe42UuDyKyWPXyEBoEFKGf/mj3+M7/NfpejDfhIXGWhYdTyU6Gandu2xiz85+gg8FR7RIg+CRo13vEDb44/0udwD6g=
+	t=1707996262; cv=none; b=Q03rCQQRo+jaSN4Ff1OElow11wiGZrzsLiQ/6v9wHm6fdbp2xYZXdgZiUoyu+IZf0fMWto0Bi4ztHhJBr+WUt5QJ19qX1P7/gA2KneMvavjNR7EuQaZ+jIKNyVplU2oQI5vAbY7nzbMCb7akNJQA6pM3u9ZnarhKh3C02MAMr9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707994228; c=relaxed/simple;
-	bh=mPkAl0B5FPIBBKPul56eqRHQGADbH4mMnMRWdtErg+w=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=bfSB3aSQw7HToM9G9TjWzOrn64l7mIHfobgp7eD5EYIRTdGe5pyys4VJ49jBmFwxmEP893Kcp1B7UgQu11oW0ztNccY1cMKcyCX547sd1RdIVdZFA3AzLs3xfs/8ITS7C4nCJgm6ZF3KGT/QG4ZlVIrWqx0jsuzoe8qkhJbdVKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iKKGdMo9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B6263C43394;
-	Thu, 15 Feb 2024 10:50:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707994227;
-	bh=mPkAl0B5FPIBBKPul56eqRHQGADbH4mMnMRWdtErg+w=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=iKKGdMo97+gMGlXF3RKyljSDVdfnPV4jamidEMBm4y9otufE+I+yBIbCyjdaZGQH4
-	 JzH3IizJJl9Wcb6z9pd4OhUym6xY0YuRUsZLh5Ycnyf+cy/CDV1EqwnAOK+FhQAL5m
-	 3oQ6VcWIQ2hzsMZbodKEQxOonUNEFFMCmqvDNm4fjyVtxpFmp4CloNNq0sVwQ/9xhj
-	 NeYy66odtJbGxCb4YgYZ6MFLTLA8KyBanrkL68M8P42oke1ZEBhAXykFDTnaxg/OTs
-	 nBDnfxlwSvIyJpaPFBCd+mBoSRBew8m15cSIvEmjpAcqdbvtL+MyQ9D5UMbRi0aa5K
-	 E+sfiUDhzuKpQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9B5A8D8C97D;
-	Thu, 15 Feb 2024 10:50:27 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1707996262; c=relaxed/simple;
+	bh=T40Bb/okSk8xC07J0s4tBjEbaqfT+JQiYdFRe1exttY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QWEIZxUsl5J3QkHg4OO+m2JGyRQaMNoMsS+w2CiWJ8y4jclN1g5pxIEwHYP5k1nahDf2Kh3Hxrq+5rA/yEMFsAOHnGNfhcPvMT+SvjvY+GDbw4yy7nJry371mJej9zJKuutNGAzrbIqQn9rVaHbh/lNmL4JvygwTU6mmx/izE18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UOmLZR3g; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41F9lUf4022733;
+	Thu, 15 Feb 2024 11:24:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=fuX4jRjU3Bu1HVqZnpt7tw+geePMvX9MHSSgoEALtGg=; b=UO
+	mLZR3gkffoJ2mhbzUuQ7bnbQVrNwGIz6royeUIJrhgCSkXIhL970zQSx6ob1QcVr
+	RC14NRAD6eFuA1R8B0npG3ngYma4PMDecU/0fj8RHlG99yE0wXeENeMedmiOJOaL
+	WWI0ouTEIec78yAXTibissim6hl/QLgiHy1yJckYVvUBbhILKiBrFdDZDxUjdYkJ
+	qy3QzvGjxmrE08rM19e0f9GgUXLbWqH3VAJ15glyx9+iGlbImbO4rgk0Qa8Ur6Sv
+	SifauzqlCMvpxr6MpbifYH9iTI1T3Q1esy8M2i7L79GnWmNBlT8ZDEevVgGlNGSK
+	R4zQqYxIXDmM8EKQVgcQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9e4h0f0r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Feb 2024 11:24:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41FBOGDl027876
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Feb 2024 11:24:16 GMT
+Received: from [10.217.198.224] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 15 Feb
+ 2024 03:24:15 -0800
+Message-ID: <bc40a8b6-de9b-4715-90fa-94eabdc2102f@quicinc.com>
+Date: Thu, 15 Feb 2024 16:54:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: phy: qca807x: move interface mode check to
- .config_init_once
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <170799422763.15473.1497115981711263607.git-patchwork-notify@kernel.org>
-Date: Thu, 15 Feb 2024 10:50:27 +0000
-References: <20240212115043.1725918-1-robimarko@gmail.com>
-In-Reply-To: <20240212115043.1725918-1-robimarko@gmail.com>
-To: Robert Marko <robimarko@gmail.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch,
- hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- ansuelsmth@gmail.com, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: qcom_stats: Add DSPs and apss subsystem stats
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240215-qcom_stats-v1-1-4a2cf83d0bdd@quicinc.com>
+ <6ffa3094-ccbb-4947-9f28-e1437c9f500c@linaro.org>
+From: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
+In-Reply-To: <6ffa3094-ccbb-4947-9f28-e1437c9f500c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5M-CG8XxMQAiJFGmqk7wR5khkJaRlPUB
+X-Proofpoint-ORIG-GUID: 5M-CG8XxMQAiJFGmqk7wR5khkJaRlPUB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-15_10,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ impostorscore=0 adultscore=0 mlxscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402150090
 
-Hello:
-
-This patch was applied to netdev/net-next.git (main)
-by Paolo Abeni <pabeni@redhat.com>:
-
-On Mon, 12 Feb 2024 12:49:34 +0100 you wrote:
-> Currently, we are checking whether the PHY package mode matches the
-> individual PHY interface modes at PHY package probe time, but at that time
-> we only know the PHY package mode and not the individual PHY interface
-> modes as of_get_phy_mode() that populates it will only get called once the
-> netdev to which PHY-s are attached to is being probed and thus this check
-> will always fail and return -EINVAL.
+On 2/15/2024 3:24 PM, Konrad Dybcio wrote:
+> On 15.02.2024 10:23, Maulik Shah wrote:
+>> Add SMEM items for compute, general purpose DSPs and application processor
+>> subsystem stats.
+>>
+>> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/qcom_stats.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+>> index 0216fc24f2ca..c429d5154aae 100644
+>> --- a/drivers/soc/qcom/qcom_stats.c
+>> +++ b/drivers/soc/qcom/qcom_stats.c
+>> @@ -35,11 +35,15 @@ static const struct subsystem_data subsystems[] = {
+>>   	{ "wpss", 605, 13 },
+>>   	{ "adsp", 606, 2 },
+>>   	{ "cdsp", 607, 5 },
+>> +	{ "cdsp1", 607, 12 },
+>> +	{ "gpdsp0", 607, 17 },
+>> +	{ "gpdsp1", 607, 18 },
+>>   	{ "slpi", 608, 3 },
+>>   	{ "gpu", 609, 0 },
+>>   	{ "display", 610, 0 },
+>>   	{ "adsp_island", 613, 2 },
+>>   	{ "slpi_island", 613, 3 },
+>> +	{ "apss", 631, QCOM_SMEM_HOST_ANY },
 > 
-> [...]
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+Thanks for the review.
 
-Here is the summary with links:
-  - [net-next] net: phy: qca807x: move interface mode check to .config_init_once
-    https://git.kernel.org/netdev/net-next/c/3be0d950b628
+> Although, giving it a spin on 8280, it's not there.. It is there
+> on 8450, but the reported count seems to coincide with cpuidle..
+> roughly min{/sys/bus/cpu/devices/cpu*/cpuidle/state0/usage).
+> 
+> Konrad
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+yes apss stats should be available from sm8450 onward and count should 
+(not necessarily) coincide with 
+/sys/kernel/debug/pm_genpd/power-domain-cluster/idle_states, s1 usage 
+count on sm8450.
 
+DSP stats for gdsp0/gdsp1/cdsp1 are available in sa8775p.
 
+Thanks,
+Maulik
 
