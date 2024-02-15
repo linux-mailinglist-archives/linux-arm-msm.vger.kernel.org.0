@@ -1,208 +1,590 @@
-Return-Path: <linux-arm-msm+bounces-11142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D46C855C9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 09:39:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 264FD855CB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 09:41:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E97A528285C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:39:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3554D1C2B11D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:41:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C211A134AF;
-	Thu, 15 Feb 2024 08:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F311917579;
+	Thu, 15 Feb 2024 08:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zZL84w98"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNtlPvhq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F245F134C6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 08:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8665413FFB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 08:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707986363; cv=none; b=kzVanTbQHycgzP856SsN/xaj5YxFHUv8M0qVSvEEkyoexcrRN9ylhTiB3VBaBecr2BzSfm5Bj30eku36ZxhRm27SZy/lcCoeaZO1cfZ/MaFkQ70mG7xDEO6tGLTDVrPGRftTM3gQDf7KxM3QeN1MG/I4eZdr1Fgy15lN7VcGtic=
+	t=1707986469; cv=none; b=qzi0tYC6Okwl5T3zPthKNIOMWd2AQebTjwenOc9hUoCt8t4npxHcO/FQ5h/enMkipuCvt5qFLjegUdO2S2PiWYBZ/r2BSTWDlg8fsK8oXYr9Mggn3MikIxzWTUOf/dC49J3gVVv/+mhecpnmm/t/ktH1FICHRrV844SQL6N1GqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707986363; c=relaxed/simple;
-	bh=yC6kHSRvKkqYYdGQqM1omwhwYRYrDp3DukkCubobnU8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kmiS0NaKdJmpuV7sXTwCNGNYraLJ5c8CE9rloC4kJ+aQleIn7MNEbBajQXWRpWTIYe7cmE7mrAwBiXqORhi/ZVdM2OJ/IGQHzozErgbz3+LITSZd/znMAUxtf38q1TwF3z/ywyzYaHdw97C/lVnb5fMEs/c6T0RvgLIkvy/aCoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zZL84w98; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1707986469; c=relaxed/simple;
+	bh=bMmQiVFrkgOofqtvhNKD6H+jv6+8lRAsETW2b2vYuPQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nl3Pu6zXQz1ucrrM7xNiOBlJyaY98Z0fBJ0lt4vPIqYXFp/9wxoqsuh9rLGKN8KHlof+XEUMZOdVZXBn+Jixntv5/53s9O0flO5JYDlxQHvOIMLfcvv8ibpb6xzHbnKk+7uCdlpEMljnszQbvHN7us5RcQl36EVvCpwb0HvLPL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNtlPvhq; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a2d7e2e7fe0so120298766b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:39:21 -0800 (PST)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc6d24737d7so526534276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707986360; x=1708591160; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wNQBz1sIK/4mg2JmHpaia1KSFPNVyM9uJkIcdSOuaC4=;
-        b=zZL84w983Jz3a3l9Wu1dyU8PSOrtI7pPJrzxN3fEjfIBXUAhGOyIP7lTZR8ON51y0f
-         wi9ptuGiPqrqwWfEU0vnfkOtMx5T1bztlMNul9PqsVpIK5Me03yNHjCBcOY21is+o0tP
-         meSfR6+jNiv1cz9J9X59mbFd5FpMowLxdnQpkxcstl7pt+hKgx8rtrkYj5SRpjcawuag
-         KARSlnVvq4XUhytqV3kD6NZP+DmSjc2r1Zn7K3Phx9cPcLu841bjnfaHQ1N7KV5qmezj
-         mhGOYYG0ZkJX67tBJZ5PjD1P/66JMZzp6Hw4DoZ+afzOBube1qni0sTH4BJwqBp0waNB
-         eZfw==
+        d=linaro.org; s=google; t=1707986466; x=1708591266; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPYilzAPc4el+5+co5Q777g/mm9yLAYOR9W16Wtw26U=;
+        b=kNtlPvhq4Kbnc5FWEY3cpiRhMwEahAs+6DGmHo3N6/Y+sWEMZ7rdtBy38U89hnTMXY
+         mOiK5Fpxm8txUpObb+BjZb9DdwrVaA7zCFpTro21FwWfm7BSPzxPg8WcW3oZ1CbxNuG0
+         LalQDg8zUpJRpNOI8WviVD3NHZo21yD8WobGhzSo/CxW+6aSWjV2enHxVdtA+vs0wtlU
+         BmEogAuKjTd8xgnVshyp7b6iQCXDhaC+sZo508+hVH7o2eGtxvlH7r+YKz7PEbvXwm/H
+         SZvbYV5gt0QdiPJiMEiRJ1uWvhEjklrr7PGaTNgNSHDI/2E8zfzmtFPfJYUtEF7w5fzb
+         zlAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707986360; x=1708591160;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wNQBz1sIK/4mg2JmHpaia1KSFPNVyM9uJkIcdSOuaC4=;
-        b=mSrQuv3xld9LRvs4q2laQmI8iMWw0FBLhzY/5oPKeugc/l5S/CYLAbKa0iDGHovMYq
-         UuI5yLe26S6tFS3ivKFCIjv3BJI0JzZRbitmVqTy+7xsToZcNouw52PmEC/KHk8EE0BA
-         Q0JFYaB9aHfiGa14lt6dFUUU/w/cDm2pyMs849x21EF7fXMoWyIKQM2Br3itLMmvSlis
-         O4ZAFOAhtb1B6dAxtVL2dTbnKN45m3GigxWtAPpMCqGFpD8kFpUynvJkkbaSiH1Va3B7
-         oRekq6SqAOUhDTCmH+HhALLRvCb8FMj7cQZ3Hnm4Rdt/7n5BBzsCjn5MeXaRSvKzKFmu
-         dx1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUhN7FzISy9EWk15gwHpIrEXM7d2bmOYtWITQq84GMqTewbgUWtB5sWF4gHP/Xzzonb/csoAKQ0Y+Lpwt0bRsutP77GezVFm0osXGizzQ==
-X-Gm-Message-State: AOJu0YzM4OSCWhwtbtw0UQS7wTcqaao0rRh2sLqsUjtNRAFfzGzJnkor
-	ELIv2LJBYYHvsgw0wRJ+OrmJvKN33E9HdF7xYFcvI9sWmU46U158+uGuBnKtgk8=
-X-Google-Smtp-Source: AGHT+IFXMkjC59dZDD/bZU7bp5dc4sjhNvSGvhU/k6lBcUDwSv7Zh1XkBkihkLA/y57EYSoY6y7gYg==
-X-Received: by 2002:a17:906:c791:b0:a3d:20ec:7d1a with SMTP id cw17-20020a170906c79100b00a3d20ec7d1amr4142606ejb.11.1707986360322;
-        Thu, 15 Feb 2024 00:39:20 -0800 (PST)
-Received: from [192.168.0.22] ([78.10.207.130])
-        by smtp.gmail.com with ESMTPSA id vx1-20020a170907a78100b00a3d8be700ddsm318508ejc.98.2024.02.15.00.39.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Feb 2024 00:39:19 -0800 (PST)
-Message-ID: <7be10595-3852-4fec-a53c-b7d8ddde84c3@linaro.org>
-Date: Thu, 15 Feb 2024 09:39:18 +0100
+        d=1e100.net; s=20230601; t=1707986466; x=1708591266;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SPYilzAPc4el+5+co5Q777g/mm9yLAYOR9W16Wtw26U=;
+        b=GcfVZYCOG2vwiDzcwveeEmHaJi3SQEZyktUxyiqjII/yks+Kr3N1LxmZeRb4R635eI
+         7reKGc1Z74CyZV2XJ0pML31OePQofLAlakAb4YSucg3GlavZr+F6/2Kb9YA/W3c/4Ppv
+         FGD8gGW/AyKjZPLHMm33XGLoMgVHGwAWDUm4sa0SKdfOb3OdO3yc1gABuhPswb4uOX+W
+         ou+C4IRRFFqjhuUWK3trlbeH2zVbOgcaU+1KqizsuokqJvexbYOWT4flY5lxUiim1+GX
+         GeCCcxrrQ0EH9ulvtGiQ0kBnDKhnxmGtp9aBakoZejXQOq9u+gQvRpm9Xf0+IR1g9vQZ
+         lrKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXw2viZWbc83Rwks77YgW8pVDRJDD8Syvjbn5Y5OV/q9TOcYmf7czgzTe8kDIKPwelr+y3JcpjCIzmSRugt6OD09vEvY/2H0k9iv0WClA==
+X-Gm-Message-State: AOJu0YzHm9ZQZ/iBz6vRD3B94Syylt8+NO0/hifgcG9T0P/wBpk+tYl5
+	neLv+Yv5W6OZ20uE2D6Xao5j8gvyps/u8Kc8LWHeVj6oTDarD/Yx4GE0MHbHpnGRdjE4FoxtSk4
+	WlxVfrTGwONWhb+olB6h1UZ3XRG0yHQVyQ0wS2w==
+X-Google-Smtp-Source: AGHT+IEbgSeQHfRAKwq6lptq4/4KJTgoMaIDFInBbyOKbes9qa7csoUgbHpaFJ1q4cLN5/7truVfgfpia4ey34cWtM8=
+X-Received: by 2002:a25:ab06:0:b0:dc2:2e01:4ff0 with SMTP id
+ u6-20020a25ab06000000b00dc22e014ff0mr933930ybi.45.1707986466309; Thu, 15 Feb
+ 2024 00:41:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/22] dt-bindings: chrome: Add binding for ChromeOS Pogo
- pin connector
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, chrome-platform@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
- Pin-yen Lin <treapking@chromium.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
- Guenter Roeck <groeck@chromium.org>
-References: <20240210070934.2549994-1-swboyd@chromium.org>
- <20240210070934.2549994-19-swboyd@chromium.org>
- <18ac05fb-a78d-4e95-a73d-461f509cdc5f@linaro.org>
- <CAE-0n50Y_GRMt8km=XjGC5Zm5dvb2t4gccznJn9HEFS4p7y8fQ@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAE-0n50Y_GRMt8km=XjGC5Zm5dvb2t4gccznJn9HEFS4p7y8fQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240214180347.1399-1-quic_parellan@quicinc.com>
+ <20240214180347.1399-14-quic_parellan@quicinc.com> <CAA8EJppCxHrcUYRdtGJYmjLYu=VwX3KbPXZ4YNsCzagkMEPvLQ@mail.gmail.com>
+ <917eadef-0d84-be62-9ef2-9048dea97144@quicinc.com>
+In-Reply-To: <917eadef-0d84-be62-9ef2-9048dea97144@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 15 Feb 2024 10:40:56 +0200
+Message-ID: <CAA8EJprroq8mcAgaPMO_g-XrpbaGOfZhjCDQ-4vxHy5Ae9iY3w@mail.gmail.com>
+Subject: Re: [PATCH v3 13/19] drm/msm/dp: add VSC SDP support for YUV420 over DP
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_jesszhan@quicinc.com, quic_khsieh@quicinc.com, 
+	marijn.suijten@somainline.org, neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 15/02/2024 01:07, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2024-02-11 05:39:36)
->> On 10/02/2024 08:09, Stephen Boyd wrote:
->>> diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
->>> new file mode 100644
->>> index 000000000000..5ba68fd95fcd
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
->>> @@ -0,0 +1,61 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
-> [...]
->>
->>> +properties:
->>> +  compatible:
->>> +    const: google,pogo-pin-connector
->>> +
->>> +  "#address-cells":
->>> +    const: 1
->>> +
->>> +  "#size-cells":
->>> +    const: 0
->>> +
->>> +  port:
->>> +    $ref: /schemas/graph.yaml#/properties/port
->>> +    description: Connection to USB2 port providing USB signals
->>> +    required:
->>> +      - endpoint
->>
->> Drop required.
-> 
-> Why? I'd like to make it so you can't have the node defined without
-> connecting it up to the rest of the system. Is that bad?
+On Wed, 14 Feb 2024 at 22:15, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 2/14/2024 11:39 AM, Dmitry Baryshkov wrote:
+> > On Wed, 14 Feb 2024 at 20:04, Paloma Arellano <quic_parellan@quicinc.com> wrote:
+> >>
+> >> Add support to pack and send the VSC SDP packet for DP. This therefore
+> >> allows the transmision of format information to the sinks which is
+> >> needed for YUV420 support over DP.
+> >>
+> >> Changes in v3:
+> >>          - Create a new struct, msm_dp_sdp_with_parity, which holds the
+> >>            packing information for VSC SDP
+> >>          - Use drm_dp_vsc_sdp_pack() to pack the data into the new
+> >>            msm_dp_sdp_with_parity struct instead of specifically packing
+> >>            for YUV420 format
+> >>          - Modify dp_catalog_panel_send_vsc_sdp() to send the VSC SDP
+> >>            data using the new msm_dp_sdp_with_parity struct
+> >>
+> >> Changes in v2:
+> >>          - Rename GENERIC0_SDPSIZE macro to GENERIC0_SDPSIZE_VALID
+> >>          - Remove dp_sdp from the dp_catalog struct since this data is
+> >>            being allocated at the point used
+> >>          - Create a new function in dp_utils to pack the VSC SDP data
+> >>            into a buffer
+> >>          - Create a new function that packs the SDP header bytes into a
+> >>            buffer. This function is made generic so that it can be
+> >>            utilized by dp_audio
+> >>            header bytes into a buffer
+> >>          - Create a new function in dp_utils that takes the packed buffer
+> >>            and writes to the DP_GENERIC0_* registers
+> >>          - Split the dp_catalog_panel_config_vsc_sdp() function into two
+> >>            to disable/enable sending VSC SDP packets
+> >>          - Check the DP HW version using the original useage of
+> >>            dp_catalog_hw_revision() and correct the version checking
+> >>            logic
+> >>          - Rename dp_panel_setup_vsc_sdp() to
+> >>            dp_panel_setup_vsc_sdp_yuv_420() to explicitly state that
+> >>            currently VSC SDP is only being set up to support YUV420 modes
+> >>
+> >> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dp/dp_catalog.c | 113 ++++++++++++++++++++++++++++
+> >>   drivers/gpu/drm/msm/dp/dp_catalog.h |   7 ++
+> >>   drivers/gpu/drm/msm/dp/dp_ctrl.c    |   4 +
+> >>   drivers/gpu/drm/msm/dp/dp_panel.c   |  55 ++++++++++++++
+> >>   drivers/gpu/drm/msm/dp/dp_reg.h     |   3 +
+> >>   drivers/gpu/drm/msm/dp/dp_utils.c   |  48 ++++++++++++
+> >>   drivers/gpu/drm/msm/dp/dp_utils.h   |  18 +++++
+> >>   7 files changed, 248 insertions(+)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> >> index 5d84c089e520a..61d5317efe683 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> >> @@ -901,6 +901,119 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
+> >>          return 0;
+> >>   }
+> >>
+> >> +static void dp_catalog_panel_send_vsc_sdp(struct dp_catalog *dp_catalog,
+> >> +                                         struct msm_dp_sdp_with_parity *msm_dp_sdp)
+> >> +{
+> >> +       struct dp_catalog_private *catalog;
+> >> +       u32 val;
+> >> +
+> >> +       if (!dp_catalog) {
+> >> +               DRM_ERROR("invalid input\n");
+> >> +               return;
+> >> +       }
+> >> +
+> >> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
+> >> +
+> >> +       val = ((msm_dp_sdp->vsc_sdp.sdp_header.HB0) << HEADER_BYTE_0_BIT |
+> >> +              (msm_dp_sdp->pb.PB0 << PARITY_BYTE_0_BIT) |
+> >> +              (msm_dp_sdp->vsc_sdp.sdp_header.HB1) << HEADER_BYTE_1_BIT |
+> >> +              (msm_dp_sdp->pb.PB1 << PARITY_BYTE_1_BIT));
+> >> +       dp_write_link(catalog, MMSS_DP_GENERIC0_0, val);
+> >> +
+> >> +       val = ((msm_dp_sdp->vsc_sdp.sdp_header.HB2) << HEADER_BYTE_2_BIT |
+> >> +              (msm_dp_sdp->pb.PB2 << PARITY_BYTE_2_BIT) |
+> >> +              (msm_dp_sdp->vsc_sdp.sdp_header.HB3) << HEADER_BYTE_3_BIT |
+> >> +              (msm_dp_sdp->pb.PB3 << PARITY_BYTE_3_BIT));
+> >> +       dp_write_link(catalog, MMSS_DP_GENERIC0_1, val);
+> >
+> > I still think that this is not the way to do it. Could you please
+> > extract the function that takes struct dp_sdp_header, calculates
+> > padding and writes resulting data to the hardware? This way we can
+> > reuse it later for all the dp_audio stuff.
+> >
+>
+> hmmm ... dp_utils_pack_sdp_header() does that you are asking for right?
+>
+> OR are you asking for another function like:
+>
+> 1) rename dp_utils_pack_sdp_header() to dp_utils_calc_sdp_parity()
+> 2) dp_utils_pack_sdp() takes two u32 to pack the header and parity
+> together and we move the << HEADER_BYTE_xx | part to it
+>
+> dp_catalog_panel_send_vsc_sdp() just uses these two u32 to write the
+> headers.
 
-Hm, I double checked and you're right. I thought endpoint is required
-anyway by graph.yaml in dtschema, but it seems it is not.
+I'm really looking for the following function:
 
-> 
->>
->>
->>> +
->>> +patternProperties:
->>> +  "^keyboard@[0-9a-f]{1,2}$":
->>> +    description: The detachable keyboard
->>
->> If this is detachable why do you define it in DT? Only hard-wired USB
->> devices, which need some sort of special handling. are described in DT.
-> 
-> From the commit text:
-> 
->  We expect to find a keyboard on the other side of this connector with a
->  specific vid/pid, so describe that as a child device at the port of the
->  usb device connected upstream.
-> 
-> ChromeOS userspace is checking that the connected device downstream of
-> this port has the expected vid/pid to quickly rule out USB keyboards
-> that aren't the detachable keyboard. I wanted to express this in DT so
-> that it didn't live in ChromeOS userspace forever.
+void dp_catalog_panel_send_vsc_sdp(struct dp_catalog *dp_catalog,
+struct dp_sdp *dp_sdp)
+{
+    dp_write_vsc_header(dp_catalog, MMSS_DP_GENERIC0_0, &dp_sdp->sdp_header);
+    dp_write_vsc_packet(dp_catalog, MMSS_DP_GENERIC0_2, dp_sdp);
+}
 
-OK,
+Then dp_audio functions will be able to fill struct dp_sdp_header and
+call dp_write_vsc_header (or whatever other name for that function)
+directly.
 
-Best regards,
-Krzysztof
+>
+>
+> >> +
+> >> +       val = ((msm_dp_sdp->vsc_sdp.db[16]) | (msm_dp_sdp->vsc_sdp.db[17] << 8) |
+> >> +              (msm_dp_sdp->vsc_sdp.db[18] << 16));
+> >> +       dp_write_link(catalog, MMSS_DP_GENERIC0_6, val);
+> >
+> > Shouldn't we write full dp_sdp data, including all zeroes? Here you
+> > assume that there is no other data in dp_sdp and also that nobody
+> > wrote anything senseless to those registers.
+> >
+>
+> As per documentation, it says db[0] to db[15] are reserved so I thought
+> its better not to touch/use them and start writing for 16 onwards.
+>
+> 1592  * VSC SDP Payload for Pixel Encoding/Colorimetry Format
+> 1593  * db[0] - db[15]: Reserved
+> 1594  * db[16]: Pixel Encoding and Colorimetry Formats
+> 1595  * db[17]: Dynamic Range and Component Bit Depth
+> 1596  * db[18]: Content Type
+> 1597  * db[19] - db[31]: Reserved
+> 1598  */
 
+If I understand correctly, it also supports 3D Stereo and other bits.
+Also other revisions of VSC packets have other field requirements. So,
+I don't think it is incorrect to write just bytes 16-18.
+
+>
+> >> +}
+> >> +
+> >> +static void dp_catalog_panel_update_sdp(struct dp_catalog *dp_catalog)
+> >> +{
+> >> +       struct dp_catalog_private *catalog;
+> >> +       u32 hw_revision;
+> >> +
+> >> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
+> >> +
+> >> +       hw_revision = dp_catalog_hw_revision(dp_catalog);
+> >> +       if (hw_revision < DP_HW_VERSION_1_2 && hw_revision >= DP_HW_VERSION_1_0) {
+> >> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x01);
+> >> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x00);
+> >> +       }
+> >> +}
+> >> +
+> >> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog,
+> >> +                                    struct msm_dp_sdp_with_parity *msm_dp_sdp)
+> >> +{
+> >> +       struct dp_catalog_private *catalog;
+> >> +       u32 cfg, cfg2, misc;
+> >> +
+> >> +       if (!dp_catalog) {
+> >> +               DRM_ERROR("invalid input\n");
+> >> +               return;
+> >> +       }
+> >> +
+> >> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
+> >> +
+> >> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
+> >> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
+> >> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
+> >> +
+> >> +       cfg |= GEN0_SDP_EN;
+> >> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
+> >> +
+> >> +       cfg2 |= GENERIC0_SDPSIZE_VALID;
+> >> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
+> >> +
+> >> +       dp_catalog_panel_send_vsc_sdp(dp_catalog, msm_dp_sdp);
+> >> +
+> >> +       /* indicates presence of VSC (BIT(6) of MISC1) */
+> >> +       misc |= DP_MISC1_VSC_SDP;
+> >> +
+> >> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=1\n");
+> >> +
+> >> +       pr_debug("misc settings = 0x%x\n", misc);
+> >> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
+> >> +
+> >> +       dp_catalog_panel_update_sdp(dp_catalog);
+> >> +}
+> >> +
+> >> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog)
+> >> +{
+> >> +       struct dp_catalog_private *catalog;
+> >> +       u32 cfg, cfg2, misc;
+> >> +
+> >> +       if (!dp_catalog) {
+> >> +               DRM_ERROR("invalid input\n");
+> >> +               return;
+> >> +       }
+> >> +
+> >> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
+> >> +
+> >> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
+> >> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
+> >> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
+> >> +
+> >> +       cfg &= ~GEN0_SDP_EN;
+> >> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
+> >> +
+> >> +       cfg2 &= ~GENERIC0_SDPSIZE_VALID;
+> >> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
+> >> +
+> >> +       /* switch back to MSA */
+> >> +       misc &= ~DP_MISC1_VSC_SDP;
+> >> +
+> >> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=0\n");
+> >> +
+> >> +       pr_debug("misc settings = 0x%x\n", misc);
+> >> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
+> >> +
+> >> +       dp_catalog_panel_update_sdp(dp_catalog);
+> >> +}
+> >> +
+> >>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
+> >>                                  struct drm_display_mode *drm_mode)
+> >>   {
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> >> index 6cb5e2a243de2..4bf08c27a9bf3 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> >> @@ -9,6 +9,7 @@
+> >>   #include <drm/drm_modes.h>
+> >>
+> >>   #include "dp_parser.h"
+> >> +#include "dp_utils.h"
+> >>   #include "disp/msm_disp_snapshot.h"
+> >>
+> >>   /* interrupts */
+> >> @@ -30,6 +31,9 @@
+> >>
+> >>   #define DP_AUX_CFG_MAX_VALUE_CNT 3
+> >>
+> >> +#define DP_HW_VERSION_1_0      0x10000000
+> >> +#define DP_HW_VERSION_1_2      0x10020000
+> >> +
+> >>   /* PHY AUX config registers */
+> >>   enum dp_phy_aux_config_type {
+> >>          PHY_AUX_CFG0,
+> >> @@ -124,6 +128,9 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
+> >>
+> >>   /* DP Panel APIs */
+> >>   int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
+> >> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog,
+> >> +                                    struct msm_dp_sdp_with_parity *msm_dp_sdp);
+> >> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog);
+> >>   void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
+> >>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
+> >>                                  struct drm_display_mode *drm_mode);
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> >> index 209cf2a35642f..beef86b1aaf81 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> >> @@ -1952,6 +1952,8 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
+> >>          dp_io = &ctrl->parser->io;
+> >>          phy = dp_io->phy;
+> >>
+> >> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
+> >> +
+> >>          /* set dongle to D3 (power off) mode */
+> >>          dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
+> >>
+> >> @@ -2026,6 +2028,8 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
+> >>          dp_io = &ctrl->parser->io;
+> >>          phy = dp_io->phy;
+> >>
+> >> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
+> >> +
+> >>          dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
+> >>
+> >>          dp_catalog_ctrl_reset(ctrl->catalog);
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> >> index db1942794f1a4..18420a7ba4ab3 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> >> @@ -4,6 +4,7 @@
+> >>    */
+> >>
+> >>   #include "dp_panel.h"
+> >> +#include "dp_utils.h"
+> >>
+> >>   #include <drm/drm_connector.h>
+> >>   #include <drm/drm_edid.h>
+> >> @@ -281,6 +282,56 @@ void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable)
+> >>          dp_catalog_panel_tpg_enable(catalog, &panel->dp_panel.dp_mode.drm_mode);
+> >>   }
+> >>
+> >> +static int dp_panel_setup_vsc_sdp_yuv_420(struct dp_panel *dp_panel)
+> >> +{
+> >> +       struct dp_catalog *catalog;
+> >> +       struct dp_panel_private *panel;
+> >> +       struct dp_display_mode *dp_mode;
+> >> +       struct drm_dp_vsc_sdp vsc_sdp_data;
+> >> +       struct msm_dp_sdp_with_parity msm_dp_sdp;
+> >> +       ssize_t len;
+> >> +       int rc = 0;
+> >> +
+> >> +       if (!dp_panel) {
+> >> +               DRM_ERROR("invalid input\n");
+> >> +               rc = -EINVAL;
+> >> +               return rc;
+> >> +       }
+> >> +
+> >> +       panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> >> +       catalog = panel->catalog;
+> >> +       dp_mode = &dp_panel->dp_mode;
+> >> +
+> >> +       memset(&vsc_sdp_data, 0, sizeof(vsc_sdp_data));
+> >> +
+> >> +       /* VSC SDP header as per table 2-118 of DP 1.4 specification */
+> >> +       vsc_sdp_data.sdp_type = DP_SDP_VSC;
+> >> +       vsc_sdp_data.revision = 0x05;
+> >> +       vsc_sdp_data.length = 0x13;
+> >> +
+> >> +       /* VSC SDP Payload for DB16 */
+> >> +       vsc_sdp_data.pixelformat = DP_PIXELFORMAT_YUV420;
+> >> +       vsc_sdp_data.colorimetry = DP_COLORIMETRY_DEFAULT;
+> >> +
+> >> +       /* VSC SDP Payload for DB17 */
+> >> +       vsc_sdp_data.bpc = dp_mode->bpp / 3;
+> >> +       vsc_sdp_data.dynamic_range = DP_DYNAMIC_RANGE_CTA;
+> >> +
+> >> +       /* VSC SDP Payload for DB18 */
+> >> +       vsc_sdp_data.content_type = DP_CONTENT_TYPE_GRAPHICS;
+> >> +
+> >> +       // rc = dp_utils_pack_vsc_sdp(&vsc_sdp_data, &sdp_header, gen_buffer, buff_size);
+> >> +       len = dp_utils_pack_vsc_sdp(&vsc_sdp_data, &msm_dp_sdp);
+> >> +       if (len < 0) {
+> >> +               DRM_ERROR("unable to pack vsc sdp\n");
+> >> +               return len;
+> >> +       }
+> >> +
+> >> +       dp_catalog_panel_enable_vsc_sdp(catalog, &msm_dp_sdp);
+> >> +
+> >> +       return rc;
+> >> +}
+> >> +
+> >>   void dp_panel_dump_regs(struct dp_panel *dp_panel)
+> >>   {
+> >>          struct dp_catalog *catalog;
+> >> @@ -344,6 +395,10 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
+> >>          catalog->dp_active = data;
+> >>
+> >>          dp_catalog_panel_timing_cfg(catalog);
+> >> +
+> >> +       if (dp_panel->dp_mode.out_fmt_is_yuv_420)
+> >> +               dp_panel_setup_vsc_sdp_yuv_420(dp_panel);
+> >> +
+> >>          panel->panel_on = true;
+> >>
+> >>          return 0;
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> >> index ea85a691e72b5..2983756c125cd 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> >> @@ -142,6 +142,7 @@
+> >>   #define DP_MISC0_SYNCHRONOUS_CLK               (0x00000001)
+> >>   #define DP_MISC0_COLORIMETRY_CFG_SHIFT         (0x00000001)
+> >>   #define DP_MISC0_TEST_BITS_DEPTH_SHIFT         (0x00000005)
+> >> +#define DP_MISC1_VSC_SDP                       (0x00004000)
+> >>
+> >>   #define REG_DP_VALID_BOUNDARY                  (0x00000030)
+> >>   #define REG_DP_VALID_BOUNDARY_2                        (0x00000034)
+> >> @@ -201,9 +202,11 @@
+> >>   #define MMSS_DP_AUDIO_CTRL_RESET               (0x00000214)
+> >>
+> >>   #define MMSS_DP_SDP_CFG                                (0x00000228)
+> >> +#define GEN0_SDP_EN                            (0x00020000)
+> >>   #define MMSS_DP_SDP_CFG2                       (0x0000022C)
+> >>   #define MMSS_DP_AUDIO_TIMESTAMP_0              (0x00000230)
+> >>   #define MMSS_DP_AUDIO_TIMESTAMP_1              (0x00000234)
+> >> +#define GENERIC0_SDPSIZE_VALID                 (0x00010000)
+> >>
+> >>   #define MMSS_DP_AUDIO_STREAM_0                 (0x00000240)
+> >>   #define MMSS_DP_AUDIO_STREAM_1                 (0x00000244)
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.c b/drivers/gpu/drm/msm/dp/dp_utils.c
+> >> index 3a44fe738c004..81601f3c414fc 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_utils.c
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_utils.c
+> >> @@ -4,6 +4,7 @@
+> >>    */
+> >>
+> >>   #include <linux/types.h>
+> >> +#include <drm/drm_print.h>
+> >>
+> >>   #include "dp_utils.h"
+> >>
+> >> @@ -71,3 +72,50 @@ u8 dp_utils_calculate_parity(u32 data)
+> >>
+> >>          return parity_byte;
+> >>   }
+> >> +
+> >> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, struct msm_dp_vsc_sdp_parity *pb,
+> >> +                                size_t size)
+> >> +{
+> >> +       u8 header;
+> >> +
+> >> +       size_t length = sizeof(struct msm_dp_vsc_sdp_parity);
+> >> +
+> >> +       if (size < length)
+> >> +               return -ENOSPC;
+> >> +
+> >> +       memset(pb, 0, size);
+> >> +
+> >> +       header = sdp_header->HB0;
+> >> +       pb->PB0 = dp_utils_calculate_parity(header);
+> >> +
+> >> +       header = sdp_header->HB1;
+> >> +       pb->PB1 = dp_utils_calculate_parity(header);
+> >> +
+> >> +       header = sdp_header->HB2;
+> >> +       pb->PB2 = dp_utils_calculate_parity(header);
+> >> +
+> >> +       header = sdp_header->HB3;
+> >> +       pb->PB3 = dp_utils_calculate_parity(header);
+> >> +
+> >> +       return length;
+> >> +}
+> >> +
+> >> +ssize_t dp_utils_pack_vsc_sdp(struct drm_dp_vsc_sdp *vsc, struct msm_dp_sdp_with_parity *msm_dp_sdp)
+> >> +{
+> >> +       ssize_t len;
+> >> +
+> >> +       len = drm_dp_vsc_sdp_pack(vsc, &msm_dp_sdp->vsc_sdp, sizeof(msm_dp_sdp->vsc_sdp));
+> >> +       if (len < 0) {
+> >> +               DRM_ERROR("unable to pack vsc sdp\n");
+> >> +               return len;
+> >> +       }
+> >> +
+> >> +       len = dp_utils_pack_sdp_header(&msm_dp_sdp->vsc_sdp.sdp_header, &msm_dp_sdp->pb,
+> >> +                                      sizeof(msm_dp_sdp->pb));
+> >> +       if (len < 0) {
+> >> +               DRM_ERROR("unable to pack sdp header\n");
+> >> +               return len;
+> >> +       }
+> >> +
+> >> +       return len;
+> >> +}
+> >> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.h b/drivers/gpu/drm/msm/dp/dp_utils.h
+> >> index 5a505cbf3432b..6946bc51cae97 100644
+> >> --- a/drivers/gpu/drm/msm/dp/dp_utils.h
+> >> +++ b/drivers/gpu/drm/msm/dp/dp_utils.h
+> >> @@ -6,6 +6,8 @@
+> >>   #ifndef _DP_UTILS_H_
+> >>   #define _DP_UTILS_H_
+> >>
+> >> +#include <drm/display/drm_dp_helper.h>
+> >> +
+> >>   #define HEADER_BYTE_0_BIT       0
+> >>   #define PARITY_BYTE_0_BIT       8
+> >>   #define HEADER_BYTE_1_BIT      16
+> >> @@ -15,8 +17,24 @@
+> >>   #define HEADER_BYTE_3_BIT      16
+> >>   #define PARITY_BYTE_3_BIT      24
+> >>
+> >> +struct msm_dp_vsc_sdp_parity {
+> >> +       u8 PB0;
+> >> +       u8 PB1;
+> >> +       u8 PB2;
+> >> +       u8 PB3;
+> >> +} __packed;
+> >> +
+> >> +struct msm_dp_sdp_with_parity {
+> >> +       struct dp_sdp vsc_sdp;
+> >> +       struct msm_dp_vsc_sdp_parity pb;
+> >> +};
+> >> +
+> >>   u8 dp_utils_get_g0_value(u8 data);
+> >>   u8 dp_utils_get_g1_value(u8 data);
+> >>   u8 dp_utils_calculate_parity(u32 data);
+> >> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, struct msm_dp_vsc_sdp_parity *pb,
+> >> +                                size_t size);
+> >> +ssize_t dp_utils_pack_vsc_sdp(struct drm_dp_vsc_sdp *vsc,
+> >> +                             struct msm_dp_sdp_with_parity *msm_dp_sdp);
+> >>
+> >>   #endif /* _DP_UTILS_H_ */
+> >> --
+> >> 2.39.2
+> >>
+> >
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
