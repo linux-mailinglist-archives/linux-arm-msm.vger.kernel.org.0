@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-11176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC7E085602B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 11:51:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 302D88560BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:05:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E76561C217F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:51:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E96FCB37CF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 10:52:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA76C129A92;
-	Thu, 15 Feb 2024 10:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B242113665B;
+	Thu, 15 Feb 2024 10:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UzvQjEur"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p1zwR6i9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B78131740;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5113173F;
 	Thu, 15 Feb 2024 10:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707993599; cv=none; b=oWQpeAo+jXXUyDWv8XCENA15B1QOvhSna9v/nk9Lhsqz+go5aKRNty60zbsHHOw9ceIR5wEynLWN2sLCq0uVe3DQTUXPZeVuX/biD4XPkOW3Bc93Vgl+Hk9aUIYEfuyWDShvuYLuEgmll1NJNb4C6EElFig6WBr9yWzRf5APKZE=
+	t=1707993600; cv=none; b=J7kJCPaN0YBugHhPFTBRLu83S9YXlnj4l2lzxBf4PtuK4xjFAgJybF9Qw6jHLBCXHlinPL9jlM0pndShBGQpS1rKHZbPyXWPZJHPRSHZSUxB77mN6gJRyhcDUP2+LIH69z1WOm8+0HC5yeEDBPClG9Ydo9h0DDh/1Gc7XrAebfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707993599; c=relaxed/simple;
-	bh=PWvpQJPxH3xmC8dQKZixZdp+i+vn1PGn7VfkDpTt55g=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=vA3VBMFLvadwYFx0Z4rZEB5U/XothujyO4XDmFbK1fuhBb8KIRTZpCnTtYO/iuOJNDN+qoQQxaQo/VgNbWpPkSiSKAaY3YEec68KMEcrejzoxRhwM77FmcJa32Nh50Qb5HEDp+Hx1lC0DhOrEXR+fWm3093lbs5uZVGBQwfgssc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UzvQjEur; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1707993600; c=relaxed/simple;
+	bh=3DRaxfRX0WV3VdMSyOsaAEEh1cKEYJFdFUbwZW6uKk8=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=RgrRTsW58U2+GFeGg+3OLOzoqChEh0grxc8SppdQGaZakCDd3wq4C/lMExLp/fK9xl76OfdELPtwiZMMjXFDb+4bzjTvBtQqsqz8GbJuA0bNKz26XV00OcltbrGTPgxh7bSNTrIu21gR6ZfWoUWptvaNPRcKqzAwCHw2+c1hgIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p1zwR6i9; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41FAM7sw031367;
-	Thu, 15 Feb 2024 10:39:39 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41F7KNij007372;
+	Thu, 15 Feb 2024 10:39:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=nqQ2C714mkmBgSBS/ZClViH3gWgHWlEzu2KUBDeXZfY=; b=Uz
-	vQjEurdou77XyMh5cZhpcJfaVac/WwF9bvxlqGV5QZBFMTZGScRU4w0q2VgGEcYH
-	9lctyJoEH7yFyO+7YsUG9kfxBdTXJ+g2JKRETqhr3WGJgL73w7zJC8I6rmr3jqM+
-	saonZsKJjt5oBssfxRLajkmtSLa0xPEoqAsdsF+dT1NsIppGBVp/ZDT2fE++RGa3
-	RWL1+c0YbTjUwzQAhp/SJXbHrD4baiA4NtSSkmKjkYP9EjeEYaq/bQ9UoK11yRLl
-	TxihFe0d5IGHR3JR7oQyxFVMrzc12SqVqUnjJRHyxLW8LwVm88oteNT7auRcGepz
-	0rhG6eoKnM7XU+rN+0Og==
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=hHFw//1+BQxq
+	kGcqXGiC1LeRSZmYFGoSjsSnWsluyxI=; b=p1zwR6i9D6H0tToMffAhgxkl9TQM
+	VqB7jP8mOsT3HwuYb/opfpe6PdakTOlb2EzbbOU8Ap8ka53YD/V5Z5rOjp5E4lqE
+	UgwmgP82sPqyF2CYt2vSazVzyTABtMEDX2ym4xW+mDYUunNxLVHmy9zRXSLLjFae
+	VNY7CONXg10uc4dvKcxeklrFpV+LGb1e0OsQOAVJgJRlbD6YU86CBZiS0pxhiiwe
+	OsByPZ7OnTCLFj1uH/fLSwOCX2wNfsjK25s5X6Fp78uBqAV2dFppxHLwCCEM8Lt1
+	AZQTWEF5wB90cf+6WAoUYjZagxl7bs3r676+/098XcACY3vjJb2yVLVR1w==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9342hjmd-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9e4h0c46-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 15 Feb 2024 10:39:38 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXBx013846;
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXVg013844;
 	Thu, 15 Feb 2024 10:39:33 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3w627mab7e-1;
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3w627mab7d-1;
 	Thu, 15 Feb 2024 10:39:33 +0000
 Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXkM013834;
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41FAdXrX013828;
 	Thu, 15 Feb 2024 10:39:33 GMT
 Received: from hu-maiyas-hyd.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.147.241.247])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41FAdXTT013826;
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41FAdXDW013824;
 	Thu, 15 Feb 2024 10:39:33 +0000
 Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2314801)
-	id E0D5E601431; Thu, 15 Feb 2024 16:09:31 +0530 (+0530)
+	id DBCB860142D; Thu, 15 Feb 2024 16:09:31 +0530 (+0530)
 From: Ritesh Kumar <quic_riteshk@quicinc.com>
 To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
@@ -71,25 +70,23 @@ Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, quic_abhinavk@quicinc.com,
         quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
-Subject: [PATCH v3 2/2] arm64: dts: qcom: qcm6490-idp: add display and panel
-Date: Thu, 15 Feb 2024 16:09:29 +0530
-Message-Id: <20240215103929.19357-3-quic_riteshk@quicinc.com>
+Subject: [PATCH v3 0/2] add display and panel on qcm6490 idp
+Date: Thu, 15 Feb 2024 16:09:27 +0530
+Message-Id: <20240215103929.19357-1-quic_riteshk@quicinc.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240215103929.19357-1-quic_riteshk@quicinc.com>
-References: <20240215103929.19357-1-quic_riteshk@quicinc.com>
 X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SKuUTy1KAZjSvVts8D14l_l3ZTjT8FpH
-X-Proofpoint-GUID: SKuUTy1KAZjSvVts8D14l_l3ZTjT8FpH
+X-Proofpoint-GUID: vsqQs8P2CNeXpdR6YUEChV7Oz-n1HAYM
+X-Proofpoint-ORIG-GUID: vsqQs8P2CNeXpdR6YUEChV7Oz-n1HAYM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-15_10,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- phishscore=0 malwarescore=0 bulkscore=0 spamscore=0 mlxlogscore=999
- adultscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ impostorscore=0 adultscore=0 mlxscore=0 phishscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 mlxlogscore=615
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401310000 definitions=main-2402150084
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -97,146 +94,37 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 
-Enable Display Subsystem with Novatek NT36672E Panel
-on qcm6490 idp platform.
-
-Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+Build the Novatek NT36672E DSI Panel driver as module and enable
+display subsystem on Qualcomm qcm6490 idp board.
 
 ---
+This series depends on following series:
+1. https://lore.kernel.org/all/20231222073135.2512313-1-quic_uchheda@quicinc.com/
+   (arm64: dts: qcom: qcm6490-idp: Add support for PM7250B PMIC)
+2. https://lore.kernel.org/all/20240108095902.22725-1-quic_riteshk@quicinc.com/
+   (Add support for Novatek NT36672E LCD DSI panel)
+3. https://lore.kernel.org/all/20240116071803.5264-1-quic_riteshk@quicinc.com/t/#u
+   (drm/panel: novatek-nt36672e: Include <linux/of.h>)
+
 v2: Fixed review comments from Dmitry and Konrad
       - moved pinctrl-names after pinctrl-0 property.
       - removed gpu disablement change after validating gpu.
+      - updated commit text.
     Rebased the patch
       - rebased the patch to resolve conflicts.
 v3: Fixed review comments from Dmitry
       - renamed panel supply to regulator-lcd-disp-bias.
       - moved backlight as per sort order.
 ---
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 92 ++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 502a5a383bde..6d6506726827 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -10,6 +10,7 @@
- #define PM7250B_SID1 9
- 
- #include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
- #include "pm7250b.dtsi"
-@@ -35,10 +36,29 @@
- 		serial0 = &uart5;
- 	};
- 
-+	pm8350c_pwm_backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8350c_pwm 3 65535>;
-+		enable-gpios = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&pmic_lcd_bl_en>;
-+		pinctrl-names = "default";
-+	};
-+
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	lcd_disp_bias: regulator-lcd-disp-bias {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lcd_disp_bias";
-+		regulator-min-microvolt = <5500000>;
-+		regulator-max-microvolt = <5500000>;
-+		gpio = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-0 = <&lcd_disp_bias_en>;
-+		pinctrl-names = "default";
-+	};
-+
- 	reserved-memory {
- 		xbl_mem: xbl@80700000 {
- 			reg = <0x0 0x80700000 0x0 0x100000>;
-@@ -421,7 +441,79 @@
- 	};
- };
- 
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi {
-+	vdda-supply = <&vreg_l6b_1p2>;
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "novatek,nt36672e";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 44 GPIO_ACTIVE_HIGH>;
-+
-+		vddi-supply = <&vreg_l8c_1p62>;
-+		avdd-supply = <&lcd_disp_bias>;
-+		avee-supply = <&lcd_disp_bias>;
-+
-+		backlight = <&pm8350c_pwm_backlight>;
-+
-+		port {
-+			panel0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel0_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi_phy {
-+	vdds-supply = <&vreg_l10c_0p88>;
-+	status = "okay";
-+};
-+
-+&pm7250b_gpios {
-+	lcd_disp_bias_en: lcd-disp-bias-en-state {
-+		pins = "gpio2";
-+		function = "func1";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		input-disable;
-+		output-enable;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pm8350c_gpios {
-+	pmic_lcd_bl_en: pmic-lcd-bl-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		output-low;
-+		power-source = <0>;
-+	};
-+
-+	pmic_lcd_bl_pwm: pmic-lcd-bl-pwm-state {
-+		pins = "gpio8";
-+		function = "func1";
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		output-low;
-+		power-source = <0>;
-+	};
-+};
-+
- &pm8350c_pwm {
-+	pinctrl-0 = <&pmic_lcd_bl_pwm>;
-+	pinctrl-names = "default";
- 	status = "okay";
- 
- 	multi-led {
+Ritesh Kumar (2):
+  arm64: defconfig: enable Novatek NT36672E DSI Panel driver
+  arm64: dts: qcom: qcm6490-idp: add display and panel
+
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 92 ++++++++++++++++++++++++
+ arch/arm64/configs/defconfig             |  1 +
+ 2 files changed, 93 insertions(+)
+
 -- 
 2.17.1
 
