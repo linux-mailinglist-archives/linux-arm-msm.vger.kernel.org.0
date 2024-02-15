@@ -1,133 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-11191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98FC18564CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 14:49:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7F2785654E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 15:06:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48A7B1F279C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 13:49:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C0F3FB23790
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 14:06:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B73FE131E27;
-	Thu, 15 Feb 2024 13:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 256A6131753;
+	Thu, 15 Feb 2024 14:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IgI1gQ0V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMgmeOrM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36242131747;
-	Thu, 15 Feb 2024 13:49:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC13B12D74D;
+	Thu, 15 Feb 2024 14:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708004976; cv=none; b=e2hHfMP91O5wRRGGYKr1X9IsJv/MIlQ0HHIA8uHJQJ69UQ7jnqD5axo6Of8izbyaPNMs8Q4d63kLT8+RHu1F1eVQjQPT9q/PPAY/7TQQ0cNI8O2b2XURLYF6tF8uzXtYVVTHhg4WZlxGQEA8s6u1ZYYfoA2f0LtHvl0y/LOBH6g=
+	t=1708006003; cv=none; b=WSro7qFAGcfB18IUDAuFCeomLFDoT/OCoWy259qhKYQJk4XVhK2SglN5hl3u/mJSybIkHVoC8HYyVXRsTorKvjZhAb+NQndXvZgW4EGTM3/E7DFFkXWSnsZTxo5Iuk0BmRsuTloQA/PTdET2ABSoLwjS5li7rJI6xZhbIJ2GeHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708004976; c=relaxed/simple;
-	bh=ku7A275LGWQITi83yq7w6NjAOl7P4TGB5W7W+F3/bHc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NP2Dt54Dhm4G30HlXm1w85eX+2hDTBl7J9xzueHR/XngPicvlc3tD5j4IVZd1T/3Bq7XiOzsQqVqPd3lPVz0fM80VPKB8kz/sAl+hsF36PaoOv41Q92M1aOAfcFl4syE4sVyOBtT/7LCG/hNPsj9rysIcWDZzTCY8UhToXjabIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IgI1gQ0V; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41FDf5Vg029729;
-	Thu, 15 Feb 2024 13:49:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=UP6W8Qm
-	8762PwBscluUW90igYSOn17R2qh15DrFj1KA=; b=IgI1gQ0VnOoSN65dJzzG9dU
-	LRYvEWj21Z+2ZVRhY2bs1XImGd4GhlGr7XnVMfldGWzYY0FrG16ylyGdCfGjjlC6
-	c17dfh3V7f7d2b+y5u4u3T/6cnwP8E94n9zOMmggNRrP4y4lRpsRXRXCNvypgfMw
-	1PvvZuuoJdlgRmsESJz6sfdp/3yf7nqIN18nFhPYhu3WuYfCJh5CLOIn/zGT1Yfi
-	9WGK0g6cdG2In+0k/8nd07fd2pBTQhJQcbjVLyvqkwOnWu/4CoEhDhA0FJQal/AG
-	SMljwrriSoqvrRv+cClqjdrY9Kk/ehq50hWYKi6Hc4JG+vFPqeDopmHwbZWc+0Q=
-	=
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w974j1hyk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 13:49:13 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41FDn9w5009979;
-	Thu, 15 Feb 2024 13:49:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3w627mb92m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 13:49:09 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41FDn9WG009974;
-	Thu, 15 Feb 2024 13:49:09 GMT
-Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 41FDn90t009973
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 13:49:09 +0000
-Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
-	id 70F8C415ED; Thu, 15 Feb 2024 19:19:07 +0530 (+0530)
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
-        robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mtd@lists.infradead.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        quic_mdalam@quicinc.com
-Subject: [PATCH 5/5] arm64: dts: qcom: ipq9574: Disable eMMC node
-Date: Thu, 15 Feb 2024 19:18:56 +0530
-Message-Id: <20240215134856.1313239-6-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1708006003; c=relaxed/simple;
+	bh=Wz68I4JN+sBrvrmI2vCBMnMFZ1gd2Eau+yuFoH6X428=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BbbyuK8sMD4hzhcxb4QUSaPh8f6Ws2eWXwaLKmX6Eb1g6fql/2tPv9dOM2WEIjK1rdHALm3nqG8ZZoogD8oe9hvVWZYjJYpyyYvEWn3seaaWLPBfc79azRWQLpOcT0iuAbH656ezFwExSgdAA9yNYBb9DPcXFJqX8Gtl2Tprhfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMgmeOrM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DB1C433F1;
+	Thu, 15 Feb 2024 14:06:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708006002;
+	bh=Wz68I4JN+sBrvrmI2vCBMnMFZ1gd2Eau+yuFoH6X428=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OMgmeOrMASsuoPOGWdDmOZjU31bUgDKOPpJz0A/Dm/x4FwRKVwENjDuHV8xzH1FTa
+	 3BcN32aTmFt8lPQwoLRmMDpZnyZwgWdChXBxXTq064aTSG82rSeD2A0cbVCl/Snt9j
+	 ba/nx/RoNTlR99nlMMO930YzkrQJ7L8LpelVhMPCUNZb/nayqx8KG+6fxpLCR6ib5j
+	 lq7QCVk+4xCl8VMZ7DoZEZ1hUe5gcI8H68XMwHF+3hKheuHav4/LZonH9lkgdLlGYT
+	 cGALzI3+Ubh4ejfteUw/cY8wOmV1p63NpFdHbrcKdUnmoU3ZbLRtTreE5hk5qKk7iB
+	 /rqZRNN70+fHA==
+Date: Thu, 15 Feb 2024 08:06:38 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 01/22] dt-bindings: gpio: Add binding for ChromeOS EC
+ GPIO controller
+Message-ID: <20240215140638.GA4162082-robh@kernel.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org>
+ <20240210070934.2549994-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1QBL-_SnkUpxoedTM1dtZRlyxDp3CRQP
-X-Proofpoint-ORIG-GUID: 1QBL-_SnkUpxoedTM1dtZRlyxDp3CRQP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-15_12,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- mlxlogscore=631 lowpriorityscore=0 impostorscore=0 malwarescore=0
- bulkscore=0 clxscore=1015 spamscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402150111
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240210070934.2549994-2-swboyd@chromium.org>
 
-Disable eMMC node for rdp433, since rdp433 default boot mode
-is norplusnand.
+On Fri, Feb 09, 2024 at 11:09:12PM -0800, Stephen Boyd wrote:
+> The ChromeOS embedded controller (EC) supports setting the state of
+> GPIOs when the system is unlocked, and getting the state of GPIOs in all
+> cases. The GPIOs are on the EC itself, so the EC acts similar to a GPIO
+> expander. Add a binding to describe these GPIOs in DT so that other
+> devices described in DT can read the GPIOs on the EC.
+> 
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: Conor Dooley <conor+dt@kernel.org>
+> Cc: Lee Jones <lee@kernel.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: <linux-gpio@vger.kernel.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: <chrome-platform@lists.linux.dev>
+> Cc: Pin-yen Lin <treapking@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../bindings/gpio/google,cros-ec-gpio.yaml    | 49 +++++++++++++++++++
+>  .../bindings/mfd/google,cros-ec.yaml          |  3 ++
+>  2 files changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/gpio/google,cros-ec-gpio.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/gpio/google,cros-ec-gpio.yaml b/Documentation/devicetree/bindings/gpio/google,cros-ec-gpio.yaml
+> new file mode 100644
+> index 000000000000..a9f1d7784070
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/gpio/google,cros-ec-gpio.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/gpio/google,cros-ec-gpio.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: GPIOs controlled by ChromeOS EC
+> +
+> +maintainers:
+> +  - Stephen Boyd <swboyd@chromium.org>
+> +
+> +description:
+> +  Google's ChromeOS EC has a gpio controller inside the Embedded Controller
+> +  (EC) and controlled via a host-command interface. The node for this
+> +  device should be under a cros-ec node like google,cros-ec-spi.
 
-Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Why do we need a child node here? 
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 1bb8d96c9a82..e33e7fafd695 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -24,7 +24,7 @@ &sdhc_1 {
- 	mmc-hs400-enhanced-strobe;
- 	max-frequency = <384000000>;
- 	bus-width = <8>;
--	status = "okay";
-+	status = "disabled";
- };
- 
- &tlmm {
--- 
-2.34.1
-
+Rob
 
