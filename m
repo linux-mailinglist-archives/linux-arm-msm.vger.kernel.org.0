@@ -1,67 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-11136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5755E855BB6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:34:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 044E5855BBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 08:38:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B70CCB213EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 07:34:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FA071C23B8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 07:38:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36B96DDD1;
-	Thu, 15 Feb 2024 07:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E31DDDD8;
+	Thu, 15 Feb 2024 07:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iE9KG+M2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cKYv8CDc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4B9DDAE;
-	Thu, 15 Feb 2024 07:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF239DDAE;
+	Thu, 15 Feb 2024 07:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707982486; cv=none; b=DOMDk5jIuig1aXYda8ncJngcyvU+KslF3HCgaCgF4wTeXlFzrXkvJju5EM4vd0XziI0u78dm5nAaBmDGXW0OAmGEPUTrjCL1n+8VZkrUWGu7xn6yglP7NGdwKp35UV9EHDwL6/j0x6cGCM88xF71X99XPVxsc6sJeLjb8Pd0p10=
+	t=1707982679; cv=none; b=N/t0P0+AOmf/4g16WXpNrFXl8ioQh3oI0qsW2akgCax/UvJmMoXCnd9Gki6PMfhZjxnBFWWnXHIH7qucIxmCzir7etpdAWh1GZXz56FXti5onycHsoLuTvuSGtrhc9AVW77e4a/akx+206rxyA4cCFb1UnodKYNIUKGv1nIfkzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707982486; c=relaxed/simple;
-	bh=d+coCdfl5TyzHkk2WHZ+6VQlZcOEjRLYjvg5P+9S/hE=;
+	s=arc-20240116; t=1707982679; c=relaxed/simple;
+	bh=m56EgYE9aTH5bwqtaWRmlBM91krkH7JiWCqkxNH8zHA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MkDnspBlCm/QWNZmsRQVvBT9zAdy6U+Ny9ug178zSym19bRjThb/5zE4gYuVQAMmkMa61SFekVQfy08/CkflC00iBXsy6tLs7jxzYbIXqcNglLUTB7g/1/UGPWSwXqlQZXLaYJiRPdTYG8tB1v+lJl3zgtDahlsHCIZ3AzjByJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iE9KG+M2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861E8C433C7;
-	Thu, 15 Feb 2024 07:34:45 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=C5VebZyjjNUOvheZ6l9pMjBZoo1asU6AiBm5FrVNxbJP7YSMW5G360GGzSqpLqY47CLB32EXcJSSD9wUOFB1pwY38dLoz0azi7dyVnfEEhOQ38Zcsgq+KLkmniRiDAEzzNLafx7UyPvlCwmxtLE+9yKs3dstmh/bH4s920Xvplg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cKYv8CDc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06892C433C7;
+	Thu, 15 Feb 2024 07:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707982485;
-	bh=d+coCdfl5TyzHkk2WHZ+6VQlZcOEjRLYjvg5P+9S/hE=;
+	s=k20201202; t=1707982678;
+	bh=m56EgYE9aTH5bwqtaWRmlBM91krkH7JiWCqkxNH8zHA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iE9KG+M2oePyVUW3RrTA0ExjRqKVcdYIfbnqEtUrmCKOvA0eQ2MPYQhk99pnediQD
-	 TknsEmBjtw7UbFKznE+PoJzrSX9j7C+uH4OrHqSjTehLZt8FWI13FOvIqrUYYsMR5U
-	 qg3NZboZQhqFrvswRID5EYi1dNWSfXYoOeLbAz/mXq0fQnaRhow517pXOCwyb4eNIZ
-	 fWUu83J1E8wkdWc6ssdus8cNUnrB1GORbs/l39QoUHc4Vb5EuAcfTBGA6wVb3lnol/
-	 u20DWpibC0Wii+RMLczbYihIqWOq3dWoQYcOygFlTYSerrw9578QnJLjF5S8/+5Y4g
-	 Br7dpYR86wGDA==
+	b=cKYv8CDcKjum5/gKIM01h9SIJu8ikhRsqlFDRytMTj2vC/iuC4AzkGtftPwzhxaKF
+	 aol/2APaDtW4bCExipwsht3dNAlT2Si3z5zKZ049/rF+KZyB5TPyJbfc7NYNUOD4mq
+	 PmZb91nTd8TVt/ZRMMuOjswTbP6aKkNezgVyyDd9uZf5o0o4crWv7zuTEZIAgntMLp
+	 iuC9sZlJ/2geLm6f1DLYQig4oW9ByBaHjykoO9SC/AFJaiGgNU7qomVu+GY/d3OUDs
+	 KadhGsjoknJeVy5GVfq8XUaovG2Uz5UvPOq+TDSPwYZn0F3hA9RIxMdqen4U1zqbat
+	 0PP1zDOQuFjDQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1raWGv-000000002Gp-4Agb;
-	Thu, 15 Feb 2024 08:35:06 +0100
-Date: Thu, 15 Feb 2024 08:35:05 +0100
+	id 1raWK3-000000002IB-1FkX;
+	Thu, 15 Feb 2024 08:38:19 +0100
+Date: Thu, 15 Feb 2024 08:38:19 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Jordan Crouse <jordan@cosmicpenguin.net>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm: Wire up tlb ops
-Message-ID: <Zc2-qVd0gtErdbKe@hovoldconsulting.com>
-References: <20240213172340.228314-1-robdclark@gmail.com>
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RFT v2 0/3] Fix up SC8280XP idle states
+Message-ID: <Zc2_a9_w1Val6Lz4@hovoldconsulting.com>
+References: <20230619-topic-sc8280xp-idle-v2-0-cde50bf02f3c@linaro.org>
+ <k7v2qov3m43q7vniqu3w6q64277ea5mf7gvt6fzgj4e3a5uagt@fcsmuu24cfqr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,30 +70,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240213172340.228314-1-robdclark@gmail.com>
+In-Reply-To: <k7v2qov3m43q7vniqu3w6q64277ea5mf7gvt6fzgj4e3a5uagt@fcsmuu24cfqr>
 
-On Tue, Feb 13, 2024 at 09:23:40AM -0800, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Tue, Feb 13, 2024 at 11:35:06PM -0600, Bjorn Andersson wrote:
+> On Wed, Dec 20, 2023 at 11:12:53PM +0100, Konrad Dybcio wrote:
+> > Comparing the data available in the downstream sources with what's there
+> > upstream, it was easy to spot some differences. This series aligns what
+> > we have upstream with what is there on the vendor kernel.
+> > 
+> > The big asterisk there is that the downstream sources for SC8280XP can't
+> > always be trusted. A simple test shows that the lower idle states that
+> > were previously missing are implemented in the firmware (Linux reports no
+> > errors and enters them).
+> > 
+> > HOWEVER
+> > 
+> > The only cluster idle state that's been present until now (the deepest
+> > one) is now barely used if at all, as the scheduler seems to deem it
+> > inefficient or so.
+> > 
+> > Hence, a request for testing and comments, especially from those who
+> > use the X13s daily or have reliable setup to measure the power usage.
+> > 
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> The brute force iommu_flush_iotlb_all() was good enough for unmap, but
-> in some cases a map operation could require removing a table pte entry
-> to replace with a block entry.  This also requires tlb invalidation.
-> Missing this was resulting an obscure iova fault on what should be a
-> valid buffer address.
-> 
-> Thanks to Robin Murphy for helping me understand the cause of the fault.
-> 
-> Cc: Robin Murphy <robin.murphy@arm.com>
-> Fixes: b145c6e65eb0 ("drm/msm: Add support to create a local pagetable")
+> What did we conclude on this one? Does the extra state make sense?
+> The last patch looks useful...
 
-Sounds like you're missing a
+I asked Konrad a while back to provide some performance numbers to
+accompany this change.
 
-Cc: stable@vger.kernel.org
-
-here? Or is there some reason not to backport this fix (to 5.9 and later
-kernels)?
-
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+I think he said that this series made no difference in either direction,
+but IIUC that only after a really quick attempt at evaluating the
+impact during a meeting we had.
 
 Johan
 
