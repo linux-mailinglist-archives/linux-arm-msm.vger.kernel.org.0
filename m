@@ -1,125 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-11124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5065C85585B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 01:40:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 784F7855865
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 01:45:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8251A1C25F2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:40:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3CB96B260E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 00:45:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 835EF1378;
-	Thu, 15 Feb 2024 00:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6979818;
+	Thu, 15 Feb 2024 00:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Q3wEBXNv"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Rpg3YnKi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4A0818
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAAFECE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 00:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707957607; cv=none; b=TdPjSVk0Tdtvb90dUh/SIQSXtEI8afI3bDOmUo8tPye6dlOT1k2VaZPPGA/AK++CrP9tym2lQPStNpntNMCoxAlTgxXO7G2Ux93XFZFko82kmk8ehkPo0o9TGcsZbiLBNXbX+P/b1VaXBaMl1BvAtzQyZW8IjSFpLKAj1PnK34w=
+	t=1707957897; cv=none; b=CfNVFczdqakiK7rtipuHn7C4Pk2t/Z1zG0bOvNSn97ycxGfWTZJcdSD2izI7gLFPc6sJyWL72wJikUbxx4p6c3hI4ekYZojYYbL6Kg9ScLetkyQBMT8EcvHZMjkkPFWYgjAKgwW+Z0zAn8sdNktObJxYB2YbvAIpdtM3+I1J+Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707957607; c=relaxed/simple;
-	bh=kYh5k8MyiysiewusV+Glc1Kt41gt5l9m2Lg4dhbhPyw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QKwosoeZ4F8CeoHUTUnh0iAWTrjJzlbGPtoA0CV1Xde+f18itY1hh3SMuaw2H/VPhB4yAZhQXgkkDWSFOMR/hU037cnyaX5Z02GsOjBE8Po3CYJl7//xskWpGOLzD8smSKQXWdqbVJ7IQX9SitrFHVVX2z+X5wwgNy2KGGVXqJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Q3wEBXNv; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1707957897; c=relaxed/simple;
+	bh=wP/opWg4NPPj3Q1TJjBcRMLyLYuk3vBq7WguCOVgHEk=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ADjzzsxa8UQysgsjR8pycBiAtfhjTeH95hYA+sR8SmlspWrMtZZTqUJMabJoFhpJuKnfNfttn4sB543QsWDFuu38IWFB6wXNsPbHDrCztKm7rIa+NHH/IS2BWf40FDE5AT5sY6zzzGqGe0/+/ukLOxJUEGojq4eAqNurTn6o1x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Rpg3YnKi; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5118d65cf9cso380890e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 16:40:05 -0800 (PST)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5101cd91017so411017e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 16:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707957601; x=1708562401; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kYh5k8MyiysiewusV+Glc1Kt41gt5l9m2Lg4dhbhPyw=;
-        b=Q3wEBXNv03SpEX4Vk8kNpNaZsl8bjdr3PLINCfVs5Y2XutaVUnbVi5uDq7xypB5XdG
-         G1Ku/pe3mtpzMU1KuPWl0l3JUSmoRWiMH1Wr6L9vaHldMGCy4TTlJRUseHbNQCHDXHN6
-         W+MGSdkmADFDh8S4hgeaDE6inrZo6MOXquLl4=
+        d=chromium.org; s=google; t=1707957894; x=1708562694; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZK7IS77/W7TToczCQpY2GYKtvK4AuoqqptX1LvYKQRA=;
+        b=Rpg3YnKikda5gYTI6t8tbb4u9HLoOhCMrJam+9AqefCcRhKc5xaqBssE9mqyS/zg4/
+         GwRGAq3O4XcrcMMpxkOH5C5NO+gZ//wiak4RQxfiGSCWTev1ibSgBbhbq7hmXPUT+2eu
+         Z5c7DbL3lslmiGnvieKcjWmJZexhgLZxb1zTM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707957601; x=1708562401;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kYh5k8MyiysiewusV+Glc1Kt41gt5l9m2Lg4dhbhPyw=;
-        b=DKYeQP+kkTLS48Qw6HRjd1CJWr5+QtuIL39DGOvFuzHX/hN4apGgCIHPMvCE7X1x0L
-         DNMwP4EzG9t8B2hBffxW9KbQJzxL4N0zj9L9VDtWVE0LttJ+1jDMd/iAT4ZoKOXwsZ5j
-         FpsSzG2aaiGfDZ6KcptFxUqwuYxzfsMwk9SBLAe9E55pltvII6LhYmaLrPN+DZ719i9P
-         IWpwqGn2ohW6ZrsNnowbtM/xm357EMxRDlTCFP/IPjwYJ0PTHvt4Ce6J9IW/fxtXndzW
-         OVIsKl7BdPjiIgtz2nTypDblHTw5Nie8JnjnCal5FDf3OEAy2PH+dQFY6S62UBqfHbwv
-         oVQg==
-X-Forwarded-Encrypted: i=1; AJvYcCW/Umdx+gYXCh5EEZKpMLfoJ0nTjMQoksyeK6jGEavO4HQnpnnOLCx84VPoHCnfqBCsshKgrY0LsvnxKZMs/lFrzfveTlYJPDDtIoE92Q==
-X-Gm-Message-State: AOJu0YyOTLRrbgjtnUT/FxzpjfY4cbgPwJ0XzXujYdfD2U9b96rzAmTT
-	bVfqh77zaphUcf3Up2LAQTlTbZesaJ7tJOWGWmLkiip4oSDYnq7P1XB5rjfbYOW/0wggAWkYAXI
-	gomS9
-X-Google-Smtp-Source: AGHT+IH2hp3lYKTlWlKfdlLImU2M7Tz25DAZf+SjcXiU/+4E2hytO5cYXHDEzM15nuss816nNJVM2A==
-X-Received: by 2002:a05:6512:a90:b0:511:9e8f:b907 with SMTP id m16-20020a0565120a9000b005119e8fb907mr299073lfu.51.1707957601411;
-        Wed, 14 Feb 2024 16:40:01 -0800 (PST)
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com. [209.85.208.47])
-        by smtp.gmail.com with ESMTPSA id v14-20020a056402174e00b0055ff9299f71sm55629edx.46.2024.02.14.16.40.00
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 16:40:00 -0800 (PST)
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-56101dee221so2265a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Feb 2024 16:40:00 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWLoq/kAerCXgoLsGXlRXAxujLs8z0vy6ebshfIe+AvGhR/WOlJ1T/OOFAispicIXPaCtYI6oL5fmvvFRVu2NU0Z95hcjBny1wD/cg/nw==
-X-Received: by 2002:a50:8d13:0:b0:55f:8851:d03b with SMTP id
- s19-20020a508d13000000b0055f8851d03bmr333252eds.5.1707957599932; Wed, 14 Feb
- 2024 16:39:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707957894; x=1708562694;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZK7IS77/W7TToczCQpY2GYKtvK4AuoqqptX1LvYKQRA=;
+        b=DjNsmOZPcIPlQTb8DErtPyxxg6LveUmUd4bXqmy5qzuddVxhEY384eu7OUwDGP7O43
+         trGFkZQC4bMQJLajsQpU/lb8kWpS2JDIKSuWCBOQ9SJ+lhxKMNV/ke33BCqquTGl0TVZ
+         Y5sn2IxZD+q/tSZDu4Aqyz71kiea7ax1YtPXMuG11F/Y6D77rE5ILhwrwmrOYa5iy8Kz
+         KBgdl2jWN+qzx3+f7Wb1AwHpz+RmEIlDwADuM0b2xdWOjSVq4Loj5uRGb78Ahgq+U7R8
+         asE8Sdd2GMh3/bal7SI7BkLLXdnOtNZxQVSBAJwHd9fqSmE00Flmf6ch5mm21WKbIrNO
+         1wFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULhgITKzDa3eJJDYWh985/lqY1Q5i5gUdNpqSyIpcogcc+LroQXzDTYYN7PuF2Hfvj6hEpqkCUlEqv68dCkWE9mCgoYRCLCy1d9EUuIA==
+X-Gm-Message-State: AOJu0YxenZsttFXsaVsoxqFgvb7RY4RlHcHBFU1TFO9Qi1zVJQPEwoSW
+	kpSTRj+mpfD7zygbssuIJ4bckM0bJKp6FvSKx0Ax+uu4eyFCsAF/pVmZPyHWH3YkTD7nbeyURBU
+	vI8ot+h4naIVItEa7fosTFJHeNIYUhQbjw4Tn
+X-Google-Smtp-Source: AGHT+IGKsNObiv5/sSxZv6aITBScisJn3oLmwBXS+yX42z/wkWCduLTcJnTn4E24I+pmYo583/8HG2h1y512aeNzcHg=
+X-Received: by 2002:a05:6512:3487:b0:511:5c98:acd2 with SMTP id
+ v7-20020a056512348700b005115c98acd2mr193884lfr.37.1707957893979; Wed, 14 Feb
+ 2024 16:44:53 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 14 Feb 2024 16:44:53 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-22-swboyd@chromium.org>
- <CAD=FV=WovmtKFiG0OMzpus9=z8UJ+Ev3TrwsVia8pSegvjwUiw@mail.gmail.com> <CAE-0n52qgKrasAw1AbZ97zMk1xz6P4KkxNLi4cBpNKy5wWu+1A@mail.gmail.com>
-In-Reply-To: <CAE-0n52qgKrasAw1AbZ97zMk1xz6P4KkxNLi4cBpNKy5wWu+1A@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 14 Feb 2024 16:39:45 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XAcXs1hmJB_Rd42+Q3gQDuw=2L+igCyWnnnSYtqdifPA@mail.gmail.com>
-Message-ID: <CAD=FV=XAcXs1hmJB_Rd42+Q3gQDuw=2L+igCyWnnnSYtqdifPA@mail.gmail.com>
-Subject: Re: [PATCH 21/22] arm64: dts: qcom: sc7180-trogdor: Make
- clamshell/detachable fragments
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Pin-yen Lin <treapking@chromium.org>, cros-qcom-dts-watchers@chromium.org, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+In-Reply-To: <a6ce4811-2a3d-4df6-aad3-9942a1bcfedd@linaro.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-2-swboyd@chromium.org>
+ <a6ce4811-2a3d-4df6-aad3-9942a1bcfedd@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 14 Feb 2024 16:44:53 -0800
+Message-ID: <CAE-0n50Ms_QcscgGrFe55O-j5j+GA+GvvDmp=Qo60bcSD9VxUQ@mail.gmail.com>
+Subject: Re: [PATCH 01/22] dt-bindings: gpio: Add binding for ChromeOS EC GPIO controller
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, chrome-platform@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, 
+	Pin-yen Lin <treapking@chromium.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Wed, Feb 14, 2024 at 4:35=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> =
-wrote:
+Quoting Krzysztof Kozlowski (2024-02-11 05:26:33)
+> On 10/02/2024 08:09, Stephen Boyd wrote:
+> > The ChromeOS embedded controller (EC) supports setting the state of
+> > GPIOs when the system is unlocked, and getting the state of GPIOs in all
+> > cases. The GPIOs are on the EC itself, so the EC acts similar to a GPIO
+> > expander. Add a binding to describe these GPIOs in DT so that other
+> > devices described in DT can read the GPIOs on the EC.
 >
-> > > -/* This file must be included after sc7180-trogdor.dtsi */
-> > > -#include <arm/cros-ec-keyboard.dtsi>
-> > > +#include "sc7180-trogdor-clamshell.dtsi"
-> >
-> > nit: Not that it was terribly consistent before, but in lazor you
-> > remove the "This file must be included after sc7180-trogdor.dtsi"
-> > because (I guess) it moved to the clamshell file. However, in other
-> > dts files you don't remove it. pazquel has the exact same comment and
-> > it's not removed. Pompom has a slight variant of the comment where it
-> > explains the reason (to modify cros_ec) and it's not removed. Could
-> > make it more consistent...
+> ...
 >
-> Sure I can make it more consistent with the explanation. Which way to go
-> though? Remove it from the boards and put it into the fragment files?
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    spi {
+> > +      #address-cells = <1>;
+> > +      #size-cells = <0>;
+> > +
+> > +      cros-ec@0 {
+> > +        compatible = "google,cros-ec-spi";
+> > +        reg = <0>;
+> > +        interrupts = <101 0>;
+>
+> This is should be proper define but then are you sure interrupt is type
+> NONE? Does not look right.
+>
 
-I don't care too much. I guess I'd lean toward just putting it in the
-fragment files just to copy it fewer times.
-
--Doug
+I copied this from cros-ec-typec.yaml so I'll have to fix them all!
 
