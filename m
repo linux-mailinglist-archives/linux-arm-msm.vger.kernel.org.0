@@ -1,103 +1,373 @@
-Return-Path: <linux-arm-msm+bounces-11226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8B29856C00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 19:04:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CD34856CD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 19:38:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 284251C216D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 18:04:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B27FA1C22A07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 18:38:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED951384BE;
-	Thu, 15 Feb 2024 18:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17DCE6994E;
+	Thu, 15 Feb 2024 18:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="jTcrgGbJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g0SU3YBY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30862139562
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 18:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFFDDDD9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 18:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708020218; cv=none; b=qJhurWNmGI8ySZn/cjrVtUvIdl1tX6ClkrWmFamVD95btIBsuL0DOdALt3nKrTL7sFcOcd3MLt2JBHmRBlONk44U0dZeN701pGkAfC7dG4Vt0Eyf++dNOz8kAjR8ZkcgH3RAz1OH+qsYr+LAIbYR3MDiT9MrZM1uzthcnevW4AU=
+	t=1708022287; cv=none; b=qY7iN9wTARyiyXIzkMak1okAHay4rhDwXCZwXt9TZn9ilsKMi+pgsvk1EKFYyaG99nE0gMWG1QzjfrewY/JVC5LiS7qUqskg06Br5mW8bO8woFHcDtfTz85rn/0uFYGERs0IMwM+6ChUfEBvto5xFI9hMJ7k6ZGt2o2/QjhwuEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708020218; c=relaxed/simple;
-	bh=ex2AF5ZFFM+EprQ1680uI/4h5HgPPcyjhAxuJOQpuZE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2y6wzwZSi1RNZJmBTQ5mZpuWyCh4h/X4LtVn7WNfS8F0rhAspyE9plC/2Viz7me8+JNSOxfued5nc4Lh7Ytpxr1R+uFyGLe0QFapwuqgWw73vOttpWCUpwfpfVL9CJmB0BskZlqUwYdHX2SQU61K607fRuS3qFnrmw3GCX71KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=jTcrgGbJ; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1708020214;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1T+N7UTG+h3TiTfzEawsi9mJaD3TJv0dy8zUxFf3IF8=;
-	b=jTcrgGbJfjJG/LfaZcLgOali27558t+Dh5cZjaJ4nMfW7ZU4h4BR50p45IWNA+NRS71NgJ
-	D+EwOT33G617Rnbuwjk/Fj4XFo2MyJgewrTnJmtCmN9MZE73tp9pfxaubg6BOzfpPafgag
-	qqrMTnTSoR0gGMeQdKx/6xux+kpQmG5d05MqDleOSIGvyd1e+QhdLHaZGCm8tuFPAxOcqa
-	dCMcRbBQRfMFjalBj2zyCVLfS8pPkfx6ONlcPm4S08lHxLR7wrRkxQP6u+8VXxcMHgDYV1
-	WPgUgRbPN3ETVQZPe7Lh2554HFkxljGpHt/0AOdBd9/mMRNODcHKPQp3orsdEg==
-From: Stefan Hansson <newbyte@postmarketos.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Stefan Hansson <newbyte@postmarketos.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v6 4/4] ARM: dts: qcom: samsung-matisse-common: Add UART
-Date: Thu, 15 Feb 2024 19:02:02 +0100
-Message-ID: <20240215180322.99089-5-newbyte@postmarketos.org>
-In-Reply-To: <20240215180322.99089-1-newbyte@postmarketos.org>
-References: <20240215180322.99089-1-newbyte@postmarketos.org>
+	s=arc-20240116; t=1708022287; c=relaxed/simple;
+	bh=HZdSJWx79kwmw6Jp9pXQj6Z2HHdpvazdEkdgG8Xx6EU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WVqwiwo/qGmiK62lVX5Tf2QtyNS1abtNHPYVbqOAYMkjZJ5lT3N2VEacIYheiolZ+rOdLAOSU+Xqa5M4WEgs6YbESOzzDQlZ5sqONaPva8ez7iIBxBqFw1aS4JoLZHCJY27Tg7U94kbtGogPbZ2XQaCV76IaJ0HqmvYoBIXQh7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g0SU3YBY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41FEluha020551;
+	Thu, 15 Feb 2024 18:37:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=U5s9yLWlgbRXEA95N2+CsuG9Yn0lTipB+cr5xgz0RTk=; b=g0
+	SU3YBYc7487WwlA8OzoarUjKQ36zz3REpzunyAfjMBZoyeS3nlgyngpmkERqi41D
+	m0gBeetOIdQE08M+ZnmSw8gW+IXeAFy81TY2rJkUsE/3NF2JnMdKX0iYhC4Fgn4n
+	Xp6gaqrIFShlnciTSl3Uh6NC2It0zCdEM7O8ghXL3OqSVM+p8qoCnVSI3o7d7UUx
+	A1oFu3zjGTBKTlSCnx+FyNsStTgIlCDMH3HmgOYGUidd6pU6EjvcJ7yeb8a+vLUk
+	VFSBmmar5uxBzAbAvFg/ONDXMDCaAQv96/togZFWkIaNuOHrheMfWyaybHlE8r1l
+	FSjPJug5tquhRUwjHPkw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w974j2eqa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Feb 2024 18:37:48 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41FIbleb010315
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Feb 2024 18:37:47 GMT
+Received: from [10.110.109.215] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 15 Feb
+ 2024 10:37:46 -0800
+Message-ID: <e98a5451-6bd7-38a7-6cf8-80aafee3edee@quicinc.com>
+Date: Thu, 15 Feb 2024 10:37:45 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 16/19] drm/msm/dpu: modify encoder programming for CDM
+ over DP
+Content-Language: en-US
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
+        <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
+References: <20240214180347.1399-1-quic_parellan@quicinc.com>
+ <20240214180347.1399-17-quic_parellan@quicinc.com>
+ <CAA8EJppvxr_Cc6xYkrTPQtiDDqMrErByvz9a532ccbdDgsM7GQ@mail.gmail.com>
+ <049fecef-83b4-84c2-fce1-634d3cffea95@quicinc.com>
+From: Paloma Arellano <quic_parellan@quicinc.com>
+In-Reply-To: <049fecef-83b4-84c2-fce1-634d3cffea95@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZdQPCJHEa87gSR7RMEg3H-wPpMzhIQhX
+X-Proofpoint-ORIG-GUID: ZdQPCJHEa87gSR7RMEg3H-wPpMzhIQhX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-15_17,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ bulkscore=0 clxscore=1015 spamscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402150150
 
-This was not enabled in the matisse-wifi tree. Without this, it is not
-possible to use the USB port for serial debugging via a "Carkit debug
-cable".
 
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi    | 4 ++++
- 1 file changed, 4 insertions(+)
+On 2/15/2024 7:47 AM, Abhinav Kumar wrote:
+>
+>
+> On 2/15/2024 12:45 AM, Dmitry Baryshkov wrote:
+>> On Wed, 14 Feb 2024 at 20:04, Paloma Arellano 
+>> <quic_parellan@quicinc.com> wrote:
+>>>
+>>> Adjust the encoder format programming in the case of video mode for DP
+>>> to accommodate CDM related changes.
+>>>
+>>> Changes in v2:
+>>>          - Move timing engine programming to a separate patch from this
+>>>            one
+>>>          - Move update_pending_flush_periph() invocation completely to
+>>>            this patch
+>>>          - Change the logic of dpu_encoder_get_drm_fmt() so that it 
+>>> only
+>>>            calls drm_mode_is_420_only() instead of doing additional
+>>>            unnecessary checks
+>>>          - Create new functions msm_dp_needs_periph_flush() and it's
+>>>            supporting function dpu_encoder_needs_periph_flush() to 
+>>> check
+>>>            if the mode is YUV420 and VSC SDP is enabled before doing a
+>>>            peripheral flush
+>>>
+>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 35 
+>>> +++++++++++++++++++
+>>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 13 +++++++
+>>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 19 ++++++++++
+>>>   drivers/gpu/drm/msm/dp/dp_display.c           | 18 ++++++++++
+>>>   drivers/gpu/drm/msm/msm_drv.h                 | 17 ++++++++-
+>>>   5 files changed, 101 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 7e7796561009a..6280c6be6dca9 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -222,6 +222,41 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>>>          15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>>>   };
+>>>
+>>> +u32 dpu_encoder_get_drm_fmt(struct dpu_encoder_phys *phys_enc)
+>>> +{
+>>> +       struct drm_encoder *drm_enc;
+>>> +       struct dpu_encoder_virt *dpu_enc;
+>>> +       struct drm_display_info *info;
+>>> +       struct drm_display_mode *mode;
+>>> +
+>>> +       drm_enc = phys_enc->parent;
+>>> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>> +       info = &dpu_enc->connector->display_info;
+>>> +       mode = &phys_enc->cached_mode;
+>>> +
+>>> +       if (drm_mode_is_420_only(info, mode))
+>>> +               return DRM_FORMAT_YUV420;
+>>> +
+>>> +       return DRM_FORMAT_RGB888;
+>>> +}
+>>> +
+>>> +bool dpu_encoder_needs_periph_flush(struct dpu_encoder_phys *phys_enc)
+>>> +{
+>>> +       struct drm_encoder *drm_enc;
+>>> +       struct dpu_encoder_virt *dpu_enc;
+>>> +       struct msm_display_info *disp_info;
+>>> +       struct msm_drm_private *priv;
+>>> +       struct drm_display_mode *mode;
+>>> +
+>>> +       drm_enc = phys_enc->parent;
+>>> +       dpu_enc = to_dpu_encoder_virt(drm_enc);
+>>> +       disp_info = &dpu_enc->disp_info;
+>>> +       priv = drm_enc->dev->dev_private;
+>>> +       mode = &phys_enc->cached_mode;
+>>> +
+>>> +       return phys_enc->hw_intf->cap->type == INTF_DP && 
+>>> phys_enc->hw_cdm &&
+>>> + msm_dp_needs_periph_flush(priv->dp[disp_info->h_tile_instance[0]], 
+>>> mode);
+>>> +}
+>>>
+>>>   bool dpu_encoder_is_widebus_enabled(const struct drm_encoder 
+>>> *drm_enc)
+>>>   {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> index f43d57d9c74e1..211a3d90eb690 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> @@ -341,6 +341,19 @@ static inline enum dpu_3d_blend_mode 
+>>> dpu_encoder_helper_get_3d_blend_mode(
+>>>    */
+>>>   unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys 
+>>> *phys_enc);
+>>>
+>>> +/**
+>>> + * dpu_encoder_get_drm_fmt - return DRM fourcc format
+>>> + * @phys_enc: Pointer to physical encoder structure
+>>> + */
+>>> +u32 dpu_encoder_get_drm_fmt(struct dpu_encoder_phys *phys_enc);
+>>> +
+>>> +/**
+>>> + * dpu_encoder_needs_periph_flush - return true if physical encoder 
+>>> requires
+>>> + *     peripheral flush
+>>> + * @phys_enc: Pointer to physical encoder structure
+>>> + */
+>>> +bool dpu_encoder_needs_periph_flush(struct dpu_encoder_phys 
+>>> *phys_enc);
+>>> +
+>>>   /**
+>>>    * dpu_encoder_helper_split_config - split display configuration 
+>>> helper function
+>>>    *     This helper function may be used by physical encoders to 
+>>> configure
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> index f02411b062c4c..e29bc4bd39208 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> @@ -415,8 +415,15 @@ static int 
+>>> dpu_encoder_phys_vid_control_vblank_irq(
+>>>   static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys 
+>>> *phys_enc)
+>>>   {
+>>>          struct dpu_hw_ctl *ctl;
+>>> +       struct dpu_hw_cdm *hw_cdm;
+>>> +       const struct dpu_format *fmt = NULL;
+>>> +       u32 fmt_fourcc = DRM_FORMAT_RGB888;
+>>>
+>>>          ctl = phys_enc->hw_ctl;
+>>> +       hw_cdm = phys_enc->hw_cdm;
+>>> +       if (hw_cdm)
+>>
+>> I thought that Abhinav proposed to drop the if(hw_cdm) condition here.
+>> LGTM otherwise.
+>>
+>
+> Yes I did.
+>
+> This needs to be fixed in v4.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-index 24ed2ba85d62..a15a44fc0181 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-@@ -219,6 +219,10 @@ muic: usb-switch@25 {
- 	};
- };
- 
-+&blsp1_uart3 {
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
--- 
-2.43.0
 
+Ack, I must have forgotten to drop it, but I'll do it in the v4
+
+>
+>>> +               fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc);
+>>> +       fmt = dpu_get_dpu_format(fmt_fourcc);
+>>>
+>>>          DPU_DEBUG_VIDENC(phys_enc, "\n");
+>>>
+>>> @@ -425,6 +432,8 @@ static void dpu_encoder_phys_vid_enable(struct 
+>>> dpu_encoder_phys *phys_enc)
+>>>
+>>>          dpu_encoder_helper_split_config(phys_enc, 
+>>> phys_enc->hw_intf->idx);
+>>>
+>>> +       dpu_encoder_helper_phys_setup_cdm(phys_enc, fmt, 
+>>> CDM_CDWN_OUTPUT_HDMI);
+>>> +
+>>>          dpu_encoder_phys_vid_setup_timing_engine(phys_enc);
+>>>
+>>>          /*
+>>> @@ -440,6 +449,16 @@ static void dpu_encoder_phys_vid_enable(struct 
+>>> dpu_encoder_phys *phys_enc)
+>>>          if (ctl->ops.update_pending_flush_merge_3d && 
+>>> phys_enc->hw_pp->merge_3d)
+>>> ctl->ops.update_pending_flush_merge_3d(ctl, 
+>>> phys_enc->hw_pp->merge_3d->idx);
+>>>
+>>> +       if (ctl->ops.update_pending_flush_cdm && phys_enc->hw_cdm)
+>>> +               ctl->ops.update_pending_flush_cdm(ctl, hw_cdm->idx);
+>>> +
+>>> +       /*
+>>> +        * Peripheral flush must be updated whenever flushing SDP 
+>>> packets is needed.
+>>> +        * SDP packets are required for any YUV format (YUV420, 
+>>> YUV422, YUV444).
+>>> +        */
+>>> +       if (ctl->ops.update_pending_flush_periph && 
+>>> dpu_encoder_needs_periph_flush(phys_enc))
+>>> +               ctl->ops.update_pending_flush_periph(ctl, 
+>>> phys_enc->hw_intf->idx);
+>>> +
+>>>   skip_flush:
+>>>          DPU_DEBUG_VIDENC(phys_enc,
+>>>                  "update pending flush ctl %d intf %d\n",
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> index 4b04388719363..ebcc76ef1d590 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>> @@ -1397,6 +1397,24 @@ void __exit msm_dp_unregister(void)
+>>>          platform_driver_unregister(&dp_display_driver);
+>>>   }
+>>>
+>>> +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
+>>> +                              const struct drm_display_mode *mode)
+>>> +{
+>>> +       struct dp_display_private *dp;
+>>> +       const struct drm_display_info *info;
+>>> +
+>>> +       dp = container_of(dp_display, struct dp_display_private, 
+>>> dp_display);
+>>> +       info = &dp_display->connector->display_info;
+>>> +
+>>> +       return dp->panel->vsc_sdp_supported && 
+>>> drm_mode_is_420_only(info, mode);
+>>> +}
+>>> +
+>>> +bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
+>>> +                              const struct drm_display_mode *mode)
+>>> +{
+>>> +       return msm_dp_is_yuv_420_enabled(dp_display, mode);
+>>> +}
+>>> +
+>>>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+>>>   {
+>>>          struct dp_display_private *dp;
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+>>> b/drivers/gpu/drm/msm/msm_drv.h
+>>> index 16a7cbc0b7dd8..b876ebd48effe 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>>> @@ -387,7 +387,10 @@ void __exit msm_dp_unregister(void);
+>>>   int msm_dp_modeset_init(struct msm_dp *dp_display, struct 
+>>> drm_device *dev,
+>>>                           struct drm_encoder *encoder);
+>>>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct 
+>>> msm_dp *dp_display);
+>>> -
+>>> +bool msm_dp_is_yuv_420_enabled(const struct msm_dp *dp_display,
+>>> +                              const struct drm_display_mode *mode);
+>>> +bool msm_dp_needs_periph_flush(const struct msm_dp *dp_display,
+>>> +                              const struct drm_display_mode *mode);
+>>>   bool msm_dp_wide_bus_available(const struct msm_dp *dp_display);
+>>>
+>>>   #else
+>>> @@ -409,6 +412,18 @@ static inline void msm_dp_snapshot(struct 
+>>> msm_disp_state *disp_state, struct msm
+>>>   {
+>>>   }
+>>>
+>>> +static inline bool msm_dp_is_yuv_420_enabled(const struct msm_dp 
+>>> *dp_display,
+>>> +                                            const struct 
+>>> drm_display_mode *mode)
+>>> +{
+>>> +       return false;
+>>> +}
+>>> +
+>>> +static inline bool msm_dp_needs_periph_flush(const struct msm_dp 
+>>> *dp_display,
+>>> +                                            const struct 
+>>> drm_display_mode *mode)
+>>> +{
+>>> +       return false;
+>>> +}
+>>> +
+>>>   static inline bool msm_dp_wide_bus_available(const struct msm_dp 
+>>> *dp_display)
+>>>   {
+>>>          return false;
+>>> -- 
+>>> 2.39.2
+>>>
+>>
+>>
 
