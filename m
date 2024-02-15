@@ -1,159 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-11127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D416E8558EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 03:12:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CA4A8558F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 03:41:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61DD81F27787
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 02:12:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C103B1F2466A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 02:41:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF0FE1864;
-	Thu, 15 Feb 2024 02:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB1F15D1;
+	Thu, 15 Feb 2024 02:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O6tI4cfT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B9K6T7Ft"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4904F184E;
-	Thu, 15 Feb 2024 02:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEE3FC7;
+	Thu, 15 Feb 2024 02:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707963144; cv=none; b=l9XWeLpfoBn8NE/ee9ZGaJ2DFzplqSjpFS3zZ+9R1D4sbbQKMPqTYIYoC2XVyO7hWEWcC8+/ScRBq9XeL7V2B/LfuTl0WFVHioGvfaZQfYezHk6NuYgJ3pGqAVNzWntxI3mhiwGzAbXXA/7fUk2lBghDan6oiGvv+YHThXqZ8kA=
+	t=1707964900; cv=none; b=glftnda6vuXXBv6rHPVet7B3kSnlkdOiigmcfNjzmCgpvuqukStorwOTRYl5eZI5pwPqIhzscCKVjpUOrAzVsPX6LVjJUuOx9uWIrmY7vFj1p4tLl84uzqBE/i16JljabpNDtKVMAufaqd+Dl3yYzgnFArgAFBnhygG/HCtkDKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707963144; c=relaxed/simple;
-	bh=ewTPk57Oq+tWnySACn1qJU4IQLQWTno0sVk1wOLRR10=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ipaH2dhfwWXc9MsB6knvLC5TdN20n/sm+d9tougQNfNo7nUwG77cT3hmY8F1n+miPFo1tJtBmIp7dqchaP7NZj9/rr+ZGJnjXGVzfstJJsk1QRndS3RklhAGgKxMpnOxjbmW1zh+UgzRkKYVGxDgCDDVqVYqTxg33Gf9DF62QT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O6tI4cfT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41F2A2Op019521;
-	Thu, 15 Feb 2024 02:12:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=vNV6gUn87PAObdD1pIV9VlqS91LimTvXgPFC6zvbh2E=; b=O6
-	tI4cfTD2XGQKJGitF5yPmLjTBumwRdzBblhixIKxkuakwippgsY2gK/6WLMUyKKJ
-	uldxYHa+p9dIfs0yaJdaiOO0jMkWPQueiwmb6V2SU95gZ/L5L3Mv42C6Mtsg8Y5j
-	MjY6g4UGOtNLHIPhhsKs+Uerdve0WceIEvgqaSVQJmSw60WkPm8SNYfifY1ogAik
-	uvuloqhaZqe+XC4+CwOpl61gApVXeLM1NoUZmKlfiQVa+YImpFrCX30EtGe0iEzf
-	s4S3gl50hVvGVxmAJlzvlsi0fjKdpPNsSWHHrV8t1P7hzJr5ZaFCDPXl/hGleUwo
-	aznTCPRvMkIwXS44sO4A==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w8ennb573-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 02:12:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41F2C9Vn002548
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Feb 2024 02:12:09 GMT
-Received: from [10.253.12.20] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 14 Feb
- 2024 18:12:06 -0800
-Message-ID: <4a124dff-f92d-4f2e-a6bf-bd7ad75a08df@quicinc.com>
-Date: Thu, 15 Feb 2024 10:12:03 +0800
+	s=arc-20240116; t=1707964900; c=relaxed/simple;
+	bh=gfoCUu9D/q3M+PGkJekBGFp/SGs/cma2Lv5kzV3+/EU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BLxplk5rx70kVLNr/RyjlRElKa4ZCvqYx6UGtsu+JCUBsR+YBivmxh9Lo5wy2dSFnnPj9YiXDdqVEi5hWKnhF1y3gctdZngC6zOEVreRT7f//yVl7j0nPB4OltZMJLbkkY/xeparADp1j0EXteiUh6OPQAfkcGspYuUI3GIkz7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B9K6T7Ft; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351F1C433C7;
+	Thu, 15 Feb 2024 02:41:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707964899;
+	bh=gfoCUu9D/q3M+PGkJekBGFp/SGs/cma2Lv5kzV3+/EU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B9K6T7FtMDbM1caYDERATDW5et7A+dPRbzRygNys6yjkAEmQtUMGBr0OWsDT6jECZ
+	 MMQmUjQT13EdKjfcKIk4MbrDKaoxlNBB/u+jVfeD5MsJ47K+AeWu+U8J05BB7jPros
+	 FSgbZa/Hr9c56TkLPve6/bG5heYFbN6+l4esLw6sIKYCBz818odcip+Zn0AwPV6Ksp
+	 wd5jwVMMF1v9wO7dHMhhSaXBx39abf9jNJq1YtLzpO6LTpuCJuGna6BwYUmmSnUujJ
+	 UXUvsDMCFhLuJt7930ei9DcIsY+83GjXeC6WR3PdtdZJpt3NErUm90eGO3Gl5trpFg
+	 SIu9sYZb5HV4Q==
+Date: Wed, 14 Feb 2024 20:41:37 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com, 
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sa8295p: Enable tertiary
+ controller and its 4 USB ports
+Message-ID: <mko2tdjrc4fbpbuig7o4jbznzxr7y6fsw42synu6yur4qzjgtt@nd7eyojiruvd>
+References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
+ <20240213082724.1789096-3-quic_kriskura@quicinc.com>
+ <efbd57e8-6cbb-480e-b2d5-1d064a27b3a4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: qcom,coresight-tpdm: Rename
- qcom,dsb-element-size
-To: Suzuki K Poulose <suzuki.poulose@arm.com>, Rob Herring <robh@kernel.org>
-CC: Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>
-References: <20240213160521.15925-1-quic_jinlmao@quicinc.com>
- <20240213160521.15925-2-quic_jinlmao@quicinc.com>
- <20240213222957.GA2502642-robh@kernel.org>
- <c70df5a6-20af-4cee-b147-5847751fa36b@arm.com>
- <CAL_JsqKdAzPEGh941S05kraTjOcEpsPCnDRkppNkb8pBCpZu6g@mail.gmail.com>
- <729a4c17-9e86-467f-85cf-652c503fa14e@arm.com>
-Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <729a4c17-9e86-467f-85cf-652c503fa14e@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: e9G6bCh0f_EvdqNHgGIomNzYQTtaHin0
-X-Proofpoint-ORIG-GUID: e9G6bCh0f_EvdqNHgGIomNzYQTtaHin0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-15_02,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=999
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402150016
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <efbd57e8-6cbb-480e-b2d5-1d064a27b3a4@linaro.org>
 
+On Tue, Feb 13, 2024 at 09:39:51AM +0100, Krzysztof Kozlowski wrote:
+> On 13/02/2024 09:27, Krishna Kurapati wrote:
+> > Multiport USB controller (host-only) of SA8295 ADP has 4 Type-A ports
+> > exposed for connecting peripherals. The VBUS to these peripherals is
+> > provided by TPS2559QWDRCTQ1 regulators connected to these ports. Each
+> > regulator has an enable pin controlled by PMM8540. Since these regulators
+> > are GPIO controlled regulators, model them as fixed regulators and keep
+> > them Always-On at boot since we are wakeup capable and we don't need to
+> > turn them off on suspend. Also since we don't enter device mode, these
+> > regulators can be kept on.
+> > 
+> > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
+> >  1 file changed, 83 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > index fd253942e5e5..49418843c214 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> > @@ -9,6 +9,7 @@
+> >  #include <dt-bindings/gpio/gpio.h>
+> >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> >  #include <dt-bindings/spmi/spmi.h>
+> > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> >  
+> >  #include "sa8540p.dtsi"
+> >  #include "sa8540p-pmics.dtsi"
+> > @@ -108,6 +109,46 @@ edp3_connector_in: endpoint {
+> >  			};
+> >  		};
+> >  	};
+> > +
+> > +	regulator-usb2-vbus {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "USB2_VBUS";
+> > +		gpio = <&pmm8540c_gpios 9 GPIO_ACTIVE_HIGH>;
+> > +		pinctrl-0 = <&usb2_en>;
+> > +		pinctrl-names = "default";
+> > +		enable-active-high;
+> > +		regulator-always-on;
+> > +	};
+> > +
+> > +	regulator-usb3-vbus {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "USB3_VBUS";
+> > +		gpio = <&pmm8540e_gpios 5 GPIO_ACTIVE_HIGH>;
+> > +		pinctrl-0 = <&usb3_en>;
+> > +		pinctrl-names = "default";
+> > +		enable-active-high;
+> > +		regulator-always-on;
+> > +	};
+> > +
+> > +	regulator-usb4-vbus {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "USB4_VBUS";
+> > +		gpio = <&pmm8540g_gpios 5 GPIO_ACTIVE_HIGH>;
+> > +		pinctrl-0 = <&usb4_en>;
+> > +		pinctrl-names = "default";
+> > +		enable-active-high;
+> > +		regulator-always-on;
+> > +	};
+> > +
+> > +	regulator-usb5-vbus {
+> > +		compatible = "regulator-fixed";
+> > +		regulator-name = "USB5_VBUS";
+> > +		gpio = <&pmm8540g_gpios 9 GPIO_ACTIVE_HIGH>;
+> > +		pinctrl-0 = <&usb5_en>;
+> > +		pinctrl-names = "default";
+> > +		enable-active-high;
+> > +		regulator-always-on;
+> 
+> Why all these regulators are always on? If USB controller does not probe
+> for any reason, why keeping them enabled? These must not be always-on,
+> but instead used by connector as VBUS supply (or by whatever you have
+> there for USB).
+> 
 
-On 2/15/2024 12:18 AM, Suzuki K Poulose wrote:
-> On 14/02/2024 16:03, Rob Herring wrote:
->> On Wed, Feb 14, 2024 at 9:56 AM Suzuki K Poulose 
->> <suzuki.poulose@arm.com> wrote:
->>>
->>> On 13/02/2024 22:29, Rob Herring wrote:
->>>> On Tue, Feb 13, 2024 at 08:05:17AM -0800, Mao Jinlong wrote:
->>>>> Change qcom,dsb-element-size to qcom,dsb-element-bits as the unit is
->>>>> bit.
->>>>
->>>> That may be, but this is an ABI and you are stuck with it. Unless, you
->>>> can justify why that doesn't matter. (IIRC, this is new, so maybe no
->>>> users yet?)
->>>
->>> This was added and support queued in v6.8. This change won't make it to
->>> v6.8 (given it has to go via two levels and is technically not a fix).
->>
->> I'd argue it is a fix. But given no users yet, delaying is fine.
->
-> I agree it is a fix, but not something that maintainers would like to
-> pull it during an rc cycle. As you said, since there are no real users
-> for this yet (and given it is all under a single vendor), it may be fine
-> to queue this if the DT maintainers are OK with this.
->
->
->>
->>> As James also pointed out, it doesn't matter what the name is (now that
->>> it has been published).
->>
->> v6.8 final is what we consider published.
->
-> I can't send this to Greg as a fix. For v6.8. We can fix it for v6.9 
-> cycle.
->
-> Suzuki
->
-Thanks all for the comments. I will update the commit message and fix 
-the warning.
+I'm not too concerned about keeping the lights on in this scenario, but
+if we can describe this properly let's do so (and let's do so on other
+boards with connectors as well).
 
-Thanks
-Jinlong Mao
+We'd have a set of usb-a-connector nodes, that we can tie to the nodes
+in the USB/phy, and the supply. But so far we've associated a connector
+with a port manager, here we don't have one of those, so where would the
+node reside and who should acquire and drive the vbus-supply?
 
->>
->> Rob
->
+Regards,
+Bjorn
+
+> Best regards,
+> Krzysztof
+> 
 
