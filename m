@@ -1,60 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-11128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CA4A8558F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 03:41:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88BF4855904
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 03:55:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C103B1F2466A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 02:41:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F16ADB2245C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 02:55:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB1F15D1;
-	Thu, 15 Feb 2024 02:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 959F91864;
+	Thu, 15 Feb 2024 02:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B9K6T7Ft"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ae70Zxqo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEE3FC7;
-	Thu, 15 Feb 2024 02:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632C110F4;
+	Thu, 15 Feb 2024 02:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707964900; cv=none; b=glftnda6vuXXBv6rHPVet7B3kSnlkdOiigmcfNjzmCgpvuqukStorwOTRYl5eZI5pwPqIhzscCKVjpUOrAzVsPX6LVjJUuOx9uWIrmY7vFj1p4tLl84uzqBE/i16JljabpNDtKVMAufaqd+Dl3yYzgnFArgAFBnhygG/HCtkDKY=
+	t=1707965728; cv=none; b=IMKjfIR5/qoRi86GaKwRw0Vvb2MdQLyiG+YTgeQCzpz3T/AGuYNJaDmaDM7ggqyBB9MZksJ8prx6JbOUapKzM0b41OQEcmfhR5cjH/6Q9nkYn2yWapKz8EnDcw9YHQGCr6O9l7Yr4kEelcfvz9CCi/cC2FZadvGi1Pxuw72jd/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707964900; c=relaxed/simple;
-	bh=gfoCUu9D/q3M+PGkJekBGFp/SGs/cma2Lv5kzV3+/EU=;
+	s=arc-20240116; t=1707965728; c=relaxed/simple;
+	bh=ATGHlAvsAW+y6+mj3ZNmwt5QwE0bbGk9HcB1S/+IKBg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BLxplk5rx70kVLNr/RyjlRElKa4ZCvqYx6UGtsu+JCUBsR+YBivmxh9Lo5wy2dSFnnPj9YiXDdqVEi5hWKnhF1y3gctdZngC6zOEVreRT7f//yVl7j0nPB4OltZMJLbkkY/xeparADp1j0EXteiUh6OPQAfkcGspYuUI3GIkz7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B9K6T7Ft; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351F1C433C7;
-	Thu, 15 Feb 2024 02:41:39 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=F4dXccUxq5Vt4IMYu6+ta9Zqa1q23b9ZIpmqA+o/NC9N3zGzL9Uw0TmsuQwou2Efq+ePfmYpGmCKGgbmGBDikTDzYl3oCQtplYRegnzdamWGDmXIHWNeznT4AEzY82nQwJ5Gw/+BXFV6KVSVmU5cDUlnjPGDVwXfyp99+Gy2MBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ae70Zxqo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AC8C433F1;
+	Thu, 15 Feb 2024 02:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707964899;
-	bh=gfoCUu9D/q3M+PGkJekBGFp/SGs/cma2Lv5kzV3+/EU=;
+	s=k20201202; t=1707965727;
+	bh=ATGHlAvsAW+y6+mj3ZNmwt5QwE0bbGk9HcB1S/+IKBg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B9K6T7FtMDbM1caYDERATDW5et7A+dPRbzRygNys6yjkAEmQtUMGBr0OWsDT6jECZ
-	 MMQmUjQT13EdKjfcKIk4MbrDKaoxlNBB/u+jVfeD5MsJ47K+AeWu+U8J05BB7jPros
-	 FSgbZa/Hr9c56TkLPve6/bG5heYFbN6+l4esLw6sIKYCBz818odcip+Zn0AwPV6Ksp
-	 wd5jwVMMF1v9wO7dHMhhSaXBx39abf9jNJq1YtLzpO6LTpuCJuGna6BwYUmmSnUujJ
-	 UXUvsDMCFhLuJt7930ei9DcIsY+83GjXeC6WR3PdtdZJpt3NErUm90eGO3Gl5trpFg
-	 SIu9sYZb5HV4Q==
-Date: Wed, 14 Feb 2024 20:41:37 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com, 
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sa8295p: Enable tertiary
- controller and its 4 USB ports
-Message-ID: <mko2tdjrc4fbpbuig7o4jbznzxr7y6fsw42synu6yur4qzjgtt@nd7eyojiruvd>
-References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
- <20240213082724.1789096-3-quic_kriskura@quicinc.com>
- <efbd57e8-6cbb-480e-b2d5-1d064a27b3a4@linaro.org>
+	b=Ae70ZxqoIRwhsZypwAxCUSpOjEezfcsLJqxjTxAhW50/I7akynItB1ayLtMzCmCE6
+	 EhfUEhEaXMshxL59rwFswLI92LTiO/HWLFMG4CVHtSdawVSGrFG53NRfLeasyJICLj
+	 CjnxADwPYaxMCJrqeLztVUT/4XWuRZEo6m8OW2VW+TyvPGdbVXUwmBzBj55d6MbvWQ
+	 IRoNGzLhmpvynruYNd84Ca/XO0JL0kpYBIUnt8B8om4ljusNjgvvsE6LvqXnzoLxmD
+	 B8awoc4ivZiGwTXZBwnCK02D7EgEAdlpMTh6NkaBav3MqoXel1gjWGwlWqYyfi/xiB
+	 Tl3Qy4sbISpdQ==
+Date: Wed, 14 Feb 2024 20:55:25 -0600
+From: Rob Herring <robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: document MDSS on
+ X1E80100
+Message-ID: <20240215025525.GA2574098-robh@kernel.org>
+References: <20240214-x1e80100-display-v2-0-cf05ba887453@linaro.org>
+ <20240214-x1e80100-display-v2-1-cf05ba887453@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,99 +73,290 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <efbd57e8-6cbb-480e-b2d5-1d064a27b3a4@linaro.org>
+In-Reply-To: <20240214-x1e80100-display-v2-1-cf05ba887453@linaro.org>
 
-On Tue, Feb 13, 2024 at 09:39:51AM +0100, Krzysztof Kozlowski wrote:
-> On 13/02/2024 09:27, Krishna Kurapati wrote:
-> > Multiport USB controller (host-only) of SA8295 ADP has 4 Type-A ports
-> > exposed for connecting peripherals. The VBUS to these peripherals is
-> > provided by TPS2559QWDRCTQ1 regulators connected to these ports. Each
-> > regulator has an enable pin controlled by PMM8540. Since these regulators
-> > are GPIO controlled regulators, model them as fixed regulators and keep
-> > them Always-On at boot since we are wakeup capable and we don't need to
-> > turn them off on suspend. Also since we don't enter device mode, these
-> > regulators can be kept on.
-> > 
-> > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
-> >  1 file changed, 83 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > index fd253942e5e5..49418843c214 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> > @@ -9,6 +9,7 @@
-> >  #include <dt-bindings/gpio/gpio.h>
-> >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >  #include <dt-bindings/spmi/spmi.h>
-> > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> >  
-> >  #include "sa8540p.dtsi"
-> >  #include "sa8540p-pmics.dtsi"
-> > @@ -108,6 +109,46 @@ edp3_connector_in: endpoint {
-> >  			};
-> >  		};
-> >  	};
-> > +
-> > +	regulator-usb2-vbus {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "USB2_VBUS";
-> > +		gpio = <&pmm8540c_gpios 9 GPIO_ACTIVE_HIGH>;
-> > +		pinctrl-0 = <&usb2_en>;
-> > +		pinctrl-names = "default";
-> > +		enable-active-high;
-> > +		regulator-always-on;
-> > +	};
-> > +
-> > +	regulator-usb3-vbus {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "USB3_VBUS";
-> > +		gpio = <&pmm8540e_gpios 5 GPIO_ACTIVE_HIGH>;
-> > +		pinctrl-0 = <&usb3_en>;
-> > +		pinctrl-names = "default";
-> > +		enable-active-high;
-> > +		regulator-always-on;
-> > +	};
-> > +
-> > +	regulator-usb4-vbus {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "USB4_VBUS";
-> > +		gpio = <&pmm8540g_gpios 5 GPIO_ACTIVE_HIGH>;
-> > +		pinctrl-0 = <&usb4_en>;
-> > +		pinctrl-names = "default";
-> > +		enable-active-high;
-> > +		regulator-always-on;
-> > +	};
-> > +
-> > +	regulator-usb5-vbus {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "USB5_VBUS";
-> > +		gpio = <&pmm8540g_gpios 9 GPIO_ACTIVE_HIGH>;
-> > +		pinctrl-0 = <&usb5_en>;
-> > +		pinctrl-names = "default";
-> > +		enable-active-high;
-> > +		regulator-always-on;
+On Wed, Feb 14, 2024 at 11:24:30PM +0200, Abel Vesa wrote:
+> Document the MDSS hardware found on the Qualcomm X1E80100 platform.
 > 
-> Why all these regulators are always on? If USB controller does not probe
-> for any reason, why keeping them enabled? These must not be always-on,
-> but instead used by connector as VBUS supply (or by whatever you have
-> there for USB).
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 252 +++++++++++++++++++++
+>  1 file changed, 252 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.yaml
+> new file mode 100644
+> index 000000000000..c3e38afab76e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.yaml
+> @@ -0,0 +1,252 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,x1e80100-mdss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm X1E80100 Display MDSS
+> +
+> +maintainers:
+> +  - Abel Vesa <abel.vesa@linaro.org>
+> +
+> +description:
+> +  X1E80100 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
+> +  DPU display controller, DP interfaces, etc.
+> +
+> +$ref: /schemas/display/msm/mdss-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,x1e80100-mdss
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB
+> +      - description: Display hf AXI
+> +      - description: Display core
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 3
+> +
+> +  interconnect-names:
+> +    maxItems: 3
+> +
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
 
-I'm not too concerned about keeping the lights on in this scenario, but
-if we can describe this properly let's do so (and let's do so on other
-boards with connectors as well).
+       additionalProperties: true
 
-We'd have a set of usb-a-connector nodes, that we can tie to the nodes
-in the USB/phy, and the supply. But so far we've associated a connector
-with a port manager, here we don't have one of those, so where would the
-node reside and who should acquire and drive the vbus-supply?
+> +    properties:
+> +      compatible:
+> +        const: qcom,x1e80100-dpu
+> +
+> +  "^displayport-controller@[0-9a-f]+$":
+> +    type: object
 
-Regards,
-Bjorn
+       additionalProperties: true
 
-> Best regards,
-> Krzysztof
+> +    properties:
+> +      compatible:
+> +        const: qcom,x1e80100-dp
+> +
+> +  "^phy@[0-9a-f]+$":
+> +    type: object
+
+       additionalProperties: true
+
+> +    properties:
+> +      compatible:
+> +        const: qcom,x1e80100-dp-phy
+> +
+> +required:
+> +  - compatible
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
+> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interconnect/qcom,x1e80100-rpmh.h>
+> +    #include <dt-bindings/phy/phy-qcom-qmp.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+> +
+> +    display-subsystem@ae00000 {
+> +        compatible = "qcom,x1e80100-mdss";
+> +        reg = <0x0ae00000 0x1000>;
+> +        reg-names = "mdss";
+> +
+> +        interconnects = <&mmss_noc MASTER_MDP 0 &gem_noc SLAVE_LLCC 0>,
+> +                        <&mc_virt MASTER_LLCC 0 &mc_virt SLAVE_EBI1 0>,
+> +                        <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_DISPLAY_CFG 0>;
+> +        interconnect-names = "mdp0-mem", "mdp1-mem", "cpu-cfg";
+> +
+> +        resets = <&dispcc_core_bcr>;
+> +
+> +        power-domains = <&dispcc_gdsc>;
+> +
+> +        clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                 <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> +        clock-names = "bus", "nrt_bus", "core";
+> +
+> +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-controller;
+> +        #interrupt-cells = <1>;
+> +
+> +        iommus = <&apps_smmu 0x1c00 0x2>;
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        ranges;
+> +
+> +        display-controller@ae01000 {
+> +            compatible = "qcom,x1e80100-dpu";
+> +            reg = <0x0ae01000 0x8f000>,
+> +                  <0x0aeb0000 0x2008>;
+> +            reg-names = "mdp", "vbif";
+> +
+> +            clocks = <&gcc_axi_clk>,
+> +                     <&dispcc_ahb_clk>,
+> +                     <&dispcc_mdp_lut_clk>,
+> +                     <&dispcc_mdp_clk>,
+> +                     <&dispcc_mdp_vsync_clk>;
+> +            clock-names = "nrt_bus",
+> +                          "iface",
+> +                          "lut",
+> +                          "core",
+> +                          "vsync";
+> +
+> +            assigned-clocks = <&dispcc_mdp_vsync_clk>;
+> +            assigned-clock-rates = <19200000>;
+> +
+> +            operating-points-v2 = <&mdp_opp_table>;
+> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +
+> +            interrupt-parent = <&mdss>;
+> +            interrupts = <0>;
+> +
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +
+> +                port@0 {
+> +                    reg = <0>;
+> +                    dpu_intf1_out: endpoint {
+> +                        remote-endpoint = <&dsi0_in>;
+> +                    };
+> +                };
+> +
+> +                port@1 {
+> +                    reg = <1>;
+> +                    dpu_intf2_out: endpoint {
+> +                        remote-endpoint = <&dsi1_in>;
+> +                    };
+> +                };
+> +            };
+> +
+> +            mdp_opp_table: opp-table {
+> +                compatible = "operating-points-v2";
+> +
+> +                opp-200000000 {
+> +                    opp-hz = /bits/ 64 <200000000>;
+> +                    required-opps = <&rpmhpd_opp_low_svs>;
+> +                };
+> +
+> +                opp-325000000 {
+> +                    opp-hz = /bits/ 64 <325000000>;
+> +                    required-opps = <&rpmhpd_opp_svs>;
+> +                };
+> +
+> +                opp-375000000 {
+> +                    opp-hz = /bits/ 64 <375000000>;
+> +                    required-opps = <&rpmhpd_opp_svs_l1>;
+> +                };
+> +
+> +                opp-514000000 {
+> +                    opp-hz = /bits/ 64 <514000000>;
+> +                    required-opps = <&rpmhpd_opp_nom>;
+> +                };
+> +            };
+> +        };
+> +
+> +        displayport-controller@ae90000 {
+> +            compatible = "qcom,x1e80100-dp";
+> +            reg = <0 0xae90000 0 0x200>,
+> +                  <0 0xae90200 0 0x200>,
+> +                  <0 0xae90400 0 0x600>,
+> +                  <0 0xae91000 0 0x400>,
+> +                  <0 0xae91400 0 0x400>;
+> +
+> +            interrupt-parent = <&mdss>;
+> +            interrupts = <12>;
+> +
+> +            clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +               <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> +               <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+> +               <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+> +               <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+> +            clock-names = "core_iface", "core_aux",
+> +                    "ctrl_link",
+> +                    "ctrl_link_iface",
+> +                    "stream_pixel";
+> +
+> +            assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+> +                  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+> +            assigned-clock-parents = <&usb_1_ss0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +                  <&usb_1_ss0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +            operating-points-v2 = <&mdss_dp0_opp_table>;
+> +
+> +            power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +
+> +            phys = <&usb_1_ss0_qmpphy QMP_USB43DP_DP_PHY>;
+> +            phy-names = "dp";
+> +
+> +            #sound-dai-cells = <0>;
+> +
+> +            status = "disabled";
+
+Examples should be enabled.
+
+
+> +
+> +            ports {
+> +              #address-cells = <1>;
+> +              #size-cells = <0>;
+> +
+> +              port@0 {
+> +                  reg = <0>;
+> +
+> +                  mdss_dp0_in: endpoint {
+> +                    remote-endpoint = <&mdss_intf0_out>;
+> +                  };
+> +              };
+> +
+> +              port@1 {
+> +                  reg = <1>;
+> +
+> +                  mdss_dp0_out: endpoint {
+> +                  };
+> +              };
+> +            };
+> +
+> +            mdss_dp0_opp_table: opp-table {
+> +              compatible = "operating-points-v2";
+> +
+> +              opp-160000000 {
+> +                 opp-hz = /bits/ 64 <160000000>;
+> +                 required-opps = <&rpmhpd_opp_low_svs>;
+> +              };
+> +
+> +              opp-270000000 {
+> +                 opp-hz = /bits/ 64 <270000000>;
+> +                 required-opps = <&rpmhpd_opp_svs>;
+> +              };
+> +
+> +              opp-540000000 {
+> +                 opp-hz = /bits/ 64 <540000000>;
+> +                 required-opps = <&rpmhpd_opp_svs_l1>;
+> +              };
+> +
+> +              opp-810000000 {
+> +                 opp-hz = /bits/ 64 <810000000>;
+> +                 required-opps = <&rpmhpd_opp_nom>;
+> +              };
+> +            };
+> +        };
+> +    };
+> +...
+> 
+> -- 
+> 2.34.1
 > 
 
