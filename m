@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-11188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AC2385638C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 13:45:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B01F0856389
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 13:45:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C902E1C23B11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:45:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 611AB1F24122
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:45:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 629E312EBD4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 041E612DDB6;
 	Thu, 15 Feb 2024 12:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M3GR9acn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kbTsGR/p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BC012D756;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E70712DD85;
 	Thu, 15 Feb 2024 12:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708001108; cv=none; b=kDWEAd9bfZmTp/6k0+3rp/hRQACxz6qrPTNfGeU3nCM6QDHJwEG3LTBKckzJ9B3nCnr1l4Ehk4rj7fMbHUaP27q13ZNOXIb4RpW7YtqznabrWmcbrSg31GI1//8HumJGbt6u/j63rnNt28s0TXHtIlkn0tPh7ILeU0iMaGC1nJk=
+	t=1708001107; cv=none; b=oG7+IiOSecGS84ui61lAbDert6++l0TPyHy3MmQHtKxMhMMK92o5QK8CEn0pB+7BsQXedKHSkkeDnJ7/qkW2Pf3TuJMrrprqwUZgsiM/f7g8lFN8QwNixLGZCw+vMferb4sVeT90ojEhCMXGy1/La0EK40UJ2aw0ytiSkcR53nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708001108; c=relaxed/simple;
-	bh=aSSYAKXiNZ3B9g+7NCAreTP0gRzqX/zcTJJrTQGiG24=;
+	s=arc-20240116; t=1708001107; c=relaxed/simple;
+	bh=r1qCmEfG9TOJIeTRiTy4CJ/2RXzY6FXSnyuokA3WHn0=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBf/QAIH7GU8YHxzfdPzjHQvjDYRvgO5lzFBtos/pssvMzVYx/rZioPzBIZF+x5tkMvcHlg1lLDNDW/RYJuxMvrHKuz4qffafdngLxSsFPy+JUSJhTpaIHj+FKolzQ9TCZ9PRT8wwu4PQodWln71Sy10ABJLQOoSNtpuqWHwfD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M3GR9acn; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=DiC4qv26j6shfdoslTdOd1E0rCFvrLo8LVn7VJOprgWqhdlXQBqLF73GSGBd52btxpslEkStrKZkMyUfzSW9lP32nabRqFsKm0AlrwWKd/3bPwnQygcecjIlwBhk1llu8SO92fBT+rBANPfb9/A9xJTAt/2NqTiADj03jVnNoCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kbTsGR/p; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41F8xhTh026826;
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41FBi3VN009426;
 	Thu, 15 Feb 2024 12:44:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
 	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=I6FhMe2svHVVjnm5YbUsg2AnSWJOzTgHFtU1/uId9f0=; b=M3
-	GR9acn23f6Pzfb6KcsbJc8548FOW4mc5MUszSnacERV5xOkYcOwVhNDF7WeqZifC
-	ISIfl2RGch3h5V+HtvFAPEZIwaYHholNyBTCxcJBq0l4F+mwz9CAJbyU60D3oqDA
-	kxoB/Wr7Mnih/i4S+fS+q2rcRNTfsykv9cYlBNc4wR+ncyGh8LcKo8tSTl295cw6
-	ohJu9mPaamrqU++PMrXl4tTAc5RlfPeR7eez/qLiJDQW1tvaMx4sB2Q1MauoTPSn
-	p4w814Hmdu4TR8Sadppk9vOoon0UVAgTBGsWJtq5dN/UG+hJrYb36CeilLEFN1s4
-	M9WG86sxnw/u70sbppqg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9fkf8hqm-1
+	qcppdkim1; bh=4IHe2eNrOxuBbvyn8W0GTqyrfuds0kMln3z9TSBgCGo=; b=kb
+	TsGR/pw8p3NuTQWJ/O4DNiPNu0cJQSWyTe8hfdUtcpytAUA6CdXh8xupaqtYX4CG
+	Dk8lkiFekgHP5hU+W3X/FrBkBjGsxdV0M+mmncoukPZt67CQU0lUilaiqWH+Pye2
+	8VRpz7NK1JPvqvtHasJz6esjciiPDA443OS/JQ7nLdFCY9ginemH41njuuQ+v7Lb
+	6XFK7i26HRSISpRp5BhdaynMGC9wfq0WZhvpJPf/knw8eXpqZWWLsib+5juqgZUp
+	5VhztktkCdvasroi5gLLfSBQGrNVE1WrEp0rGPE2G61LCvhktmqhuyEyGyQ/4Tdi
+	oqzzAwy2K9HbzaJthL4Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w96c3sgf7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 15 Feb 2024 12:44:52 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41FCipeT011281
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41FCipVU028580
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 15 Feb 2024 12:44:51 GMT
 Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 15 Feb 2024 04:44:50 -0800
+ 15.2.1118.40; Thu, 15 Feb 2024 04:44:51 -0800
 From: Mao Jinlong <quic_jinlmao@quicinc.com>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
         Mike Leach
@@ -75,9 +75,9 @@ To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/2] dt-bindings: arm: qcom,coresight-tpdm: Rename qcom,dsb-element-size
-Date: Thu, 15 Feb 2024 04:44:36 -0800
-Message-ID: <20240215124439.30037-2-quic_jinlmao@quicinc.com>
+Subject: [PATCH v2 2/2] coresight-tpda: Change qcom,dsb-element-size to qcom,dsb-elem-bits
+Date: Thu, 15 Feb 2024 04:44:37 -0800
+Message-ID: <20240215124439.30037-3-quic_jinlmao@quicinc.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215124439.30037-1-quic_jinlmao@quicinc.com>
 References: <20240215124439.30037-1-quic_jinlmao@quicinc.com>
@@ -93,54 +93,38 @@ X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RbmXe_y5Crp_XC3XAWHkxOUgjqWMrbcs
-X-Proofpoint-GUID: RbmXe_y5Crp_XC3XAWHkxOUgjqWMrbcs
+X-Proofpoint-ORIG-GUID: uzAGRWWQWwkUy8tJU8yoqbV6LScbyqo5
+X-Proofpoint-GUID: uzAGRWWQWwkUy8tJU8yoqbV6LScbyqo5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-15_11,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- adultscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=864
- spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402150100
+ definitions=2024-02-15_12,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 mlxscore=0 mlxlogscore=948 malwarescore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402150102
 
-Change qcom,dsb-element-size to qcom,dsb-element-bits as the unit is
-bit. There is no tpdm node in any DT as of now. Make this change before
-any tpdm node is added to DT.
+Change qcom,dsb-element-size to qcom,dsb-elem-bits as the unit is bit.
 
-Fixes: 2a8d9b371566 ("dt-bindings: arm: Add support for DSB element size")
+Fixes: 57e7235aa1d1 ("coresight-tpda: Add DSB dataset support")
 Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 ---
- .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml         | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/hwtracing/coresight/coresight-tpda.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-index d0647ffaed71..8eec07d9d454 100644
---- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-@@ -44,12 +44,11 @@ properties:
-     minItems: 1
-     maxItems: 2
+diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+index 6863afe7ca94..5d20e10be24b 100644
+--- a/drivers/hwtracing/coresight/coresight-tpda.c
++++ b/drivers/hwtracing/coresight/coresight-tpda.c
+@@ -70,7 +70,7 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
  
--  qcom,dsb-element-size:
-+  qcom,dsb-element-bits:
-     description:
-       Specifies the DSB(Discrete Single Bit) element size supported by
-       the monitor. The associated aggregator will read this size before it
-       is enabled. DSB element size currently only supports 32-bit and 64-bit.
--    $ref: /schemas/types.yaml#/definitions/uint8
-     enum: [32, 64]
- 
-   qcom,cmb-element-bits:
-@@ -111,7 +110,7 @@ examples:
-       compatible = "qcom,coresight-tpdm", "arm,primecell";
-       reg = <0x0684c000 0x1000>;
- 
--      qcom,dsb-element-size = /bits/ 8 <32>;
-+      qcom,dsb-element-bits = <32>;
-       qcom,dsb-msrs-num = <16>;
- 
-       clocks = <&aoss_qmp>;
+ 	if (tpdm_has_dsb_dataset(tpdm_data)) {
+ 		rc = fwnode_property_read_u8(dev_fwnode(csdev->dev.parent),
+-				"qcom,dsb-element-size", &drvdata->dsb_esize);
++				"qcom,dsb-element-bits", &drvdata->dsb_esize);
+ 	}
+ 	if (tpdm_has_cmb_dataset(tpdm_data)) {
+ 		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
 -- 
 2.41.0
 
