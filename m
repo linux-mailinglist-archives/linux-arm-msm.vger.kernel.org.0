@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-11183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D32A4856324
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 13:29:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99A4D85632B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 13:29:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6CE921F2372A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:29:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE7841C21231
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Feb 2024 12:29:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2362612C809;
-	Thu, 15 Feb 2024 12:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C47B512BEAF;
+	Thu, 15 Feb 2024 12:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="rwzc1Zvu"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="C4nHm6os"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19D912C52D;
-	Thu, 15 Feb 2024 12:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B8E12C52E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Feb 2024 12:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708000136; cv=none; b=aD4Kbiy14Z5q4S992CKvDwVRkxXx9KfCUpjjIddBGeH2mz3itK3ciEecj+R1f+nLfnslc9Fs2H2Np9kEK1MdcS3n+8pfHiDjc4MIQsVLJzjyY3ZcNxb/SAf9EqenV9B8/mn92i9bBN4zxV83vrcn0t5oVQSjUqEzM4PyjC5hgbM=
+	t=1708000160; cv=none; b=giJwZcOTBoQP1Ywn6MEhfV70dz/Wp3X+NOcBY7VECTx3ivwNmNc3cQG/uK01dXTCSBXd7al5deGSW6H0bB+TrdtWvxZandFlKMcYtfRlWuDacrRSNUO/WYL55VYNBFRnhgqFQ5h0jrVNwnSqkXGCFZiuo0TkL/edRYeJRyhOdJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708000136; c=relaxed/simple;
-	bh=XWn/5rkeMC3EwrTcHX8+1KjZarDety7nInkfDIyao18=;
+	s=arc-20240116; t=1708000160; c=relaxed/simple;
+	bh=gK6wUKZ7BRK2yS46gb+SKBvXjc9KtbVUd1KCbiSSQ04=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iYNDjrZgyP1heW3LC2aF7XOKULoQ05VmJLr0zPogEj808dZyRUsiUwaP9I2M+1MD7KYBSI7cKwiG8hYWmwuVG43VANslaaIcNU0zY/Dv5ZUtPsp3KJdnWU2Vp2ofkhKmPgGcno9eMkjiwkGIj2s2XJy5PVpXsNT/EZ4o4XFaH5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=rwzc1Zvu; arc=none smtp.client-ip=185.70.43.24
+	 MIME-Version:Content-Type; b=aNtWMrIOSQpayYd8UAiDBTRsQr/p7G7KT0FJYIan3pKaMfQMoJ4oKcMBzqLpGDvO1kHsLStlq4dBUwOJWomKM2JJYrwMZnbq6leUd1YxZNkmLQiT0GMuqJdHiDwBnhzFm3D73ggrihLebi9GSG097sJ9GapBFwXIsX+9zI8oNWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=C4nHm6os; arc=none smtp.client-ip=188.165.51.139
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1708000131; x=1708259331;
-	bh=escI57YZz6EIQiDGXdanbLIoEKO4yLQ5pM7Z8MzCj/g=;
+	s=protonmail3; t=1708000142; x=1708259342;
+	bh=srmpZi2uOdq8TLrq51itEDqW3WFFrCeLXnGkywx2Dp0=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=rwzc1ZvuDEAS72SGWuTo5HgUuNXMnn35s0MHgSRUvcoQdzXwR9bieBJFip7nIUGei
-	 3YwX9Idlp04ijaGpNxxtYAPFGXldldvaj9fMEKYYltpPvCPyVvFBi2dw9nm7fp07/3
-	 RvIaooofnOXE4li+BvHCu/2gO9D5nvNYBdpETx4ksys/eAhqhmFN3J0Ja4B2Ek59lv
-	 CRKwfsz2u12ZG59K7riwpQjzUhwh7BWBD0+xw76mxdBnXFH29XmTmPpR7ZjJeeU5X8
-	 S751kK3nB9lwT7g4w1neBQHvL9CBl78omvxdCnQrduuuY8qlyJfs82cusS6ulXY9xW
-	 +J4M2QPR7lXDg==
-Date: Thu, 15 Feb 2024 12:26:27 +0000
+	b=C4nHm6oskzC/uZkH3+TWaCj16kAD/GtFhaSVyb4dbDGLoJu4OId/CpeaoM+KUFe3L
+	 +3Xs2EnUflVhYY0h2mzJlskZ1djsGJ7BjoOl3nv+bdYWLQ0oXqVoYQNyIqevFlJYwm
+	 4bjaLwgKZVaiZh4Riuet+rrk/4QxeLa8nHfeuAIDAlkERPTL3vQpeqppfSUXIlVpuy
+	 mACqaoJur9pQ5KKZJFshBQnXpKw2RhLUbq/wGWEOk4g7nH4c1ssMN3CNXon9vkLNUZ
+	 tAJuwh9PIAcOHBWpOWvHJgOrTQF9lYXMdJMPa0EB3zcrZ8veQbObHLnfGIQLphqWuF
+	 4dawUywCnREFg==
+Date: Thu, 15 Feb 2024 12:26:36 +0000
 To: linux-kernel@vger.kernel.org
 From: Raymond Hackley <raymondhackley@protonmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Jakob Hauser <jahau@rocketmail.com>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: [PATCH v2 1/2] arm64: dts: qcom: msm8916/39-samsung-a2015: Add connector for MUIC
-Message-ID: <20240215122612.3833-2-raymondhackley@protonmail.com>
+Subject: [PATCH v2 2/2] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and charger
+Message-ID: <20240215122612.3833-3-raymondhackley@protonmail.com>
 In-Reply-To: <20240215122612.3833-1-raymondhackley@protonmail.com>
 References: <20240215122612.3833-1-raymondhackley@protonmail.com>
 Feedback-ID: 49437091:user:proton
@@ -61,70 +61,297 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Add subnode usb_con: extcon for SM5502 / SM5504 MUIC, which will be used
-for RT5033 charger.
+The phones listed below have Richtek RT5033 PMIC and charger.
+Add them to the device trees.
+
+- Samsung Galaxy A3/A5/A7 2015
+- Samsung Galaxy E5/E7
+- Samsung Galaxy Grand Max
 
 Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 6 ++++++
- arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi | 6 ++++++
- arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts            | 6 ++++++
- 3 files changed, 18 insertions(+)
+ .../qcom/msm8916-samsung-a2015-common.dtsi    | 53 +++++++++++++++++-
+ .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts |  6 ++
+ .../boot/dts/qcom/msm8916-samsung-a5u-eur.dts |  6 ++
+ .../boot/dts/qcom/msm8916-samsung-e5.dts      |  6 ++
+ .../boot/dts/qcom/msm8916-samsung-e7.dts      |  7 +++
+ .../dts/qcom/msm8916-samsung-grandmax.dts     |  6 ++
+ .../boot/dts/qcom/msm8939-samsung-a7.dts      | 56 ++++++++++++++++++-
+ 7 files changed, 138 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/a=
 rch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-index 2937495940ea..4bbbee80b5e4 100644
+index 4bbbee80b5e4..e6355e5e2177 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
-@@ -128,6 +128,12 @@ muic: extcon@25 {
-=20
- =09=09=09pinctrl-names =3D "default";
- =09=09=09pinctrl-0 =3D <&muic_int_default>;
-+
-+=09=09=09usb_con: connector {
-+=09=09=09=09compatible =3D "usb-b-connector";
-+=09=09=09=09label =3D "micro-USB";
-+=09=09=09=09type =3D "micro";
-+=09=09=09};
+@@ -28,6 +28,12 @@ tz-apps@85500000 {
  =09=09};
  =09};
 =20
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-index 3c49dac92d2d..c50f81a68897 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e2015-common.dtsi
-@@ -23,6 +23,12 @@ muic: extcon@14 {
-=20
- =09=09=09pinctrl-names =3D "default";
- =09=09=09pinctrl-0 =3D <&muic_int_default>;
++=09battery: battery {
++=09=09compatible =3D "simple-battery";
++=09=09precharge-current-microamp =3D <450000>;
++=09=09precharge-upper-limit-microvolt =3D <3500000>;
++=09};
 +
-+=09=09=09usb_con: connector {
-+=09=09=09=09compatible =3D "usb-b-connector";
-+=09=09=09=09label =3D "micro-USB";
-+=09=09=09=09type =3D "micro";
-+=09=09=09};
- =09=09};
- =09};
+ =09clk_pwm: pwm {
+ =09=09compatible =3D "clk-pwm";
+ =09=09#pwm-cells =3D <2>;
+@@ -245,7 +251,7 @@ magnetometer@12 {
+ &blsp_i2c4 {
+ =09status =3D "okay";
 =20
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts b/arch/arm64/b=
-oot/dts/qcom/msm8939-samsung-a7.dts
-index aa6c39482a2f..0c599e71a464 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-@@ -286,6 +286,12 @@ muic: extcon@25 {
+-=09battery@35 {
++=09fuel-gauge@35 {
+ =09=09compatible =3D "richtek,rt5033-battery";
+ =09=09reg =3D <0x35>;
+ =09=09interrupt-parent =3D <&tlmm>;
+@@ -253,6 +259,44 @@ battery@35 {
 =20
- =09=09pinctrl-0 =3D <&muic_int_default>;
  =09=09pinctrl-names =3D "default";
+ =09=09pinctrl-0 =3D <&fg_alert_default>;
 +
-+=09=09usb_con: connector {
-+=09=09=09compatible =3D "usb-b-connector";
-+=09=09=09label =3D "micro-USB";
-+=09=09=09type =3D "micro";
++=09=09power-supplies =3D <&charger>;
++=09};
++};
++
++&blsp_i2c6 {
++=09status =3D "okay";
++
++=09pmic@34 {
++=09=09compatible =3D "richtek,rt5033";
++=09=09reg =3D <0x34>;
++
++=09=09interrupts-extended =3D <&tlmm 62 IRQ_TYPE_EDGE_FALLING>;
++
++=09=09pinctrl-0 =3D <&pmic_int_default>;
++=09=09pinctrl-names =3D "default";
++
++=09=09regulators {
++=09=09=09rt5033_reg_safe_ldo: SAFE_LDO {
++=09=09=09=09regulator-min-microvolt =3D <4900000>;
++=09=09=09=09regulator-max-microvolt =3D <4900000>;
++=09=09=09=09regulator-always-on;
++=09=09=09};
++
++=09=09=09/*
++=09=09=09 * Needed for camera, but not used yet.
++=09=09=09 * Define empty nodes to allow disabling the unused
++=09=09=09 * regulators.
++=09=09=09 */
++=09=09=09LDO {};
++=09=09=09BUCK {};
++=09=09};
++
++=09=09charger: charger {
++=09=09=09compatible =3D "richtek,rt5033-charger";
++=09=09=09monitored-battery =3D <&battery>;
++=09=09=09richtek,usb-connector =3D <&usb_con>;
 +=09=09};
  =09};
  };
 =20
+@@ -476,6 +520,13 @@ nfc_i2c_default: nfc-i2c-default-state {
+ =09=09bias-disable;
+ =09};
+=20
++=09pmic_int_default: pmic-int-default-state {
++=09=09pins =3D "gpio62";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
++
+ =09sdc2_cd_default: sdc2-cd-default-state {
+ =09=09pins =3D "gpio38";
+ =09=09function =3D "gpio";
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts b/arch/ar=
+m64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
+index 3b934f5eba47..906d31f1ea21 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dts
+@@ -55,6 +55,12 @@ &accelerometer {
+ =09=09       "0", "0", "1";
+ };
+=20
++&battery {
++=09charge-term-current-microamp =3D <150000>;
++=09constant-charge-current-max-microamp =3D <1000000>;
++=09constant-charge-voltage-max-microvolt =3D <4350000>;
++};
++
+ &blsp_i2c5 {
+ =09status =3D "okay";
+=20
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts b/arch/ar=
+m64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
+index 391befa22bb4..fe39be7a742b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dts
+@@ -29,6 +29,12 @@ &accelerometer {
+ =09=09=09"0", "0", "1";
+ };
+=20
++&battery {
++=09charge-term-current-microamp =3D <200000>;
++=09constant-charge-current-max-microamp =3D <1500000>;
++=09constant-charge-voltage-max-microvolt =3D <4350000>;
++};
++
+ &blsp_i2c5 {
+ =09status =3D "okay";
+=20
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts b/arch/arm64/b=
+oot/dts/qcom/msm8916-samsung-e5.dts
+index fad2535255f7..800cb1038da0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e5.dts
+@@ -23,6 +23,12 @@ / {
+ =09chassis-type =3D "handset";
+ };
+=20
++&battery {
++=09charge-term-current-microamp =3D <200000>;
++=09constant-charge-current-max-microamp =3D <1500000>;
++=09constant-charge-voltage-max-microvolt =3D <4350000>;
++};
++
+ &blsp_i2c5 {
+ =09status =3D "okay";
+=20
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-e7.dts b/arch/arm64/b=
+oot/dts/qcom/msm8916-samsung-e7.dts
+index b412b61ca258..ec1debd2e245 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-e7.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-e7.dts
+@@ -23,6 +23,13 @@ / {
+ =09chassis-type =3D "handset";
+ };
+=20
++&battery {
++=09charge-term-current-microamp =3D <200000>;
++=09constant-charge-current-max-microamp =3D <1500000>;
++=09constant-charge-voltage-max-microvolt =3D <4350000>;
++};
++
++
+ &pm8916_l17 {
+ =09regulator-min-microvolt =3D <3000000>;
+ =09regulator-max-microvolt =3D <3000000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts b/arch/a=
+rm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
+index 5882b3a593b8..135df1739dbd 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-grandmax.dts
+@@ -41,6 +41,12 @@ led-keyled {
+ =09};
+ };
+=20
++&battery {
++=09charge-term-current-microamp =3D <150000>;
++=09constant-charge-current-max-microamp =3D <1000000>;
++=09constant-charge-voltage-max-microvolt =3D <4400000>;
++};
++
+ &reg_motor_vdd {
+ =09gpio =3D <&tlmm 72 GPIO_ACTIVE_HIGH>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts b/arch/arm64/b=
+oot/dts/qcom/msm8939-samsung-a7.dts
+index 0c599e71a464..91acdb160227 100644
+--- a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
++++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
+@@ -33,6 +33,15 @@ tz-apps@85500000 {
+ =09=09};
+ =09};
+=20
++=09battery: battery {
++=09=09compatible =3D "simple-battery";
++=09=09charge-term-current-microamp =3D <150000>;
++=09=09constant-charge-current-max-microamp =3D <1500000>;
++=09=09constant-charge-voltage-max-microvolt =3D <4300000>;
++=09=09precharge-current-microamp =3D <450000>;
++=09=09precharge-upper-limit-microvolt =3D <3500000>;
++=09};
++
+ =09gpio-hall-sensor {
+ =09=09compatible =3D "gpio-keys";
+=20
+@@ -82,7 +91,7 @@ i2c-fg {
+ =09=09#address-cells =3D <1>;
+ =09=09#size-cells =3D <0>;
+=20
+-=09=09battery@35 {
++=09=09fuel-gauge@35 {
+ =09=09=09compatible =3D "richtek,rt5033-battery";
+ =09=09=09reg =3D <0x35>;
+=20
+@@ -91,6 +100,8 @@ battery@35 {
+=20
+ =09=09=09pinctrl-0 =3D <&fg_alert_default>;
+ =09=09=09pinctrl-names =3D "default";
++
++=09=09=09power-supplies =3D <&charger>;
+ =09=09};
+ =09};
+=20
+@@ -325,6 +336,42 @@ touchscreen@24 {
+ =09};
+ };
+=20
++&blsp_i2c6 {
++=09status =3D "okay";
++
++=09pmic@34 {
++=09=09compatible =3D "richtek,rt5033";
++=09=09reg =3D <0x34>;
++
++=09=09interrupts-extended =3D <&tlmm 62 IRQ_TYPE_EDGE_FALLING>;
++
++=09=09pinctrl-0 =3D <&pmic_int_default>;
++=09=09pinctrl-names =3D "default";
++
++=09=09regulators {
++=09=09=09rt5033_reg_safe_ldo: SAFE_LDO {
++=09=09=09=09regulator-min-microvolt =3D <4900000>;
++=09=09=09=09regulator-max-microvolt =3D <4900000>;
++=09=09=09=09regulator-always-on;
++=09=09=09};
++
++=09=09=09/*
++=09=09=09 * Needed for camera, but not used yet.
++=09=09=09 * Define empty nodes to allow disabling the unused
++=09=09=09 * regulators.
++=09=09=09 */
++=09=09=09LDO {};
++=09=09=09BUCK {};
++=09=09};
++
++=09=09charger: charger {
++=09=09=09compatible =3D "richtek,rt5033-charger";
++=09=09=09monitored-battery =3D <&battery>;
++=09=09=09richtek,usb-connector =3D <&usb_con>;
++=09=09};
++=09};
++};
++
+ &blsp_uart2 {
+ =09status =3D "okay";
+ };
+@@ -510,6 +557,13 @@ nfc_i2c_default: nfc-i2c-default-state {
+ =09=09bias-disable;
+ =09};
+=20
++=09pmic_int_default: pmic-int-default-state {
++=09=09pins =3D "gpio62";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
++
+ =09reg_tsp_en_default: reg-tsp-en-default-state {
+ =09=09pins =3D "gpio73";
+ =09=09function =3D "gpio";
 --=20
 2.39.2
 
