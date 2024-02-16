@@ -1,178 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-11334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A237C857B66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:19:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD2E0857B83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:23:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18775B2033F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:19:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C05CE1C23C93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:23:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1A159B62;
-	Fri, 16 Feb 2024 11:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DA8F768F4;
+	Fri, 16 Feb 2024 11:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="THn4oTjP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+TkqYOU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C6859B52;
-	Fri, 16 Feb 2024 11:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5140C1BF50;
+	Fri, 16 Feb 2024 11:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708082356; cv=none; b=ldIgVSQRxmESyxG2IbWUidrTj0Y08eKCW/bk9uj/CB1Jsb5wVNqRyXZxWqBiQCwLLBO2ypekA4iWQI3sYQ6V8uyMlDih2Ci+QrpJYACU1x1ndOStfB7VZcjQ9jnSeREVVOzfnkFPiB8fBCieqDfrM1oOSfIJfR11pjwNjnrJRUY=
+	t=1708082622; cv=none; b=I45czSrF9fovdNW+NuQHcALHGIkJe67bx1veY4ucRjlpRrlea+W+8Llknyn6ep+dq4xFY7zWKu8mFBD74VBs3MUTnsNr2+3GN+kBE9iAPxbOt/SMkOtozcrNFgQDeD/0pMEyaJae42/oTjgf0kgRCf7psc0PcQsGh8S8+odz3ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708082356; c=relaxed/simple;
-	bh=iB6CRq25HlENFqGrsPH7JLQFt2BIJPW9dYbbZFCQLYM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=eyksR+miaHg7VqhhnaHIdCff3UtyrNgJP76vSGpz7BTVmdc6A1Ndyu5M/DuAnQKzT3cDoiAVAJ9fvmKd/GQbOCx8IiK/Nb/W82OOsolpS0YLznpXexPHYMeGctdJnth49/IVtfmYcUf7EOIVmQQhrvLrNhrIjEGJ0AWPhc4Ppik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=THn4oTjP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41G5xJRE030155;
-	Fri, 16 Feb 2024 11:18:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RLtP2rJDNQHP8tWz4lIqKNUcxLZ6TvPXZeB9bvCF4fQ=; b=TH
-	n4oTjP3tc20wz+n0TBL6RQMqy/7dny+3Pf1mureOcsPx+H+bsNHbPT48mA20xP80
-	p3joSG8cTD0NtSQwCnlGXI/8w/i20OO8+pqk3yWtUQ6vJRLbBEnSuPpyqU/fWwW/
-	dJPEOUf5AjLkQeN8I4KL7trWcB1ZRG8+PH9EKgOdxf+J8XIWtspP1orHFRA/ncV7
-	t3xqtk2FzbfBFyhbyI6J5egkDnur5ELbgg3XhQrPeglFmvKLRiAGm8+NcB8KW7+H
-	zZeimwcpQDQkd/4n3GEEcrTEfKNOiWOb2vxUI9rwRlQxXB5xoaO4sUXdxXsyHj+O
-	WI7n9nkj5r430KUJiDlA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wa03r8qt0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 11:18:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GBIk7K022931
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 11:18:46 GMT
-Received: from [10.218.16.59] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
- 2024 03:18:34 -0800
-Message-ID: <e491ec4a-f79b-4063-bd24-bbf3644ce486@quicinc.com>
-Date: Fri, 16 Feb 2024 16:48:31 +0530
+	s=arc-20240116; t=1708082622; c=relaxed/simple;
+	bh=JJcfIBGCp3ZKPHLIPV/hxkDPf5TaHhr8o0zt0AcWnRY=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=VeNuZsLJBfZaNt4ZlchG+fK6/m3Wk+yeVHVZ1fLqOksInBCK5gkqZYpoYlpeA0Fij7yY+zXZAl28xVrALcK9Gb6l7336ispDXtEzr4NrUCG5ABvUcKdow/cNlJso1cqdbkCnwJKsDBGaVwsgEVRc5UAXSyNfQiTU5G8TFxXPR0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+TkqYOU; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-511acd26c2bso2750065e87.2;
+        Fri, 16 Feb 2024 03:23:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708082618; x=1708687418; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qCkIBF2HUHDgPA/fkE23qtD6c+3DYAPMy1MuIjYZckA=;
+        b=F+TkqYOU1LIIbCw/kiIShDUIoUVlvbGoyMy5/G8pVcq6M6Ta/1cYcz5KdWju4hGJt/
+         WM3N2BShCm2pmcvre4zpjrSWyJcBwLU8WOuqI+eU7f6URnUzbOYlIZxWnGNtjNTIVn5I
+         nEJUP3btos9Epr5iVcb5e1eqHPgXZZS0+N635f6xAc3IWLjA71h+tCR5Hfj+DzmSBW6l
+         Hskfj3CbhjY9t9VpxB+5RZZsbMIM4NXzD7SaTBbpsz63hTKE6ehmtq5D0a+WLqcC0DBQ
+         lKD5RfaWhT+oqP0QNISyFb6BPUdHAb9ik20rO7Zelfp9aUpsttP4p+YHzHNymX4U+8HY
+         0HVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708082618; x=1708687418;
+        h=in-reply-to:references:to:from:subject:message-id:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCkIBF2HUHDgPA/fkE23qtD6c+3DYAPMy1MuIjYZckA=;
+        b=JgBONV4aQhJR1VElPZq6ykdPkVhUtx/xdJ9jeAq6LQacN0FCxhB9Jt24mcXt5BzQZX
+         9yfHdF8gQW2IX1c44TLuFX389YPmt+YrwQPeBddJ8H8X16ZA7Eq5g5JGxRwqKeFL2Pzk
+         wz3ff8CTdqgn0rLpfoI0BXZX4gxjWOXqlmbOCp5v3x1Nk38n+S0QYoC6qy7g1bMY4GAA
+         6HXVr5Q3v+IRSbInP1ZBtv+LHicyuUFnAXona22oeSGt7hILK6mW4xctFrQQ/Z3LQq6g
+         eSgB/fy+1MmtfmYHLcMVMM4dkLyIgK5T84E/T/EuoPiAyyfRuwfG+zXGKcC4O238Fd3g
+         ASPg==
+X-Forwarded-Encrypted: i=1; AJvYcCU6xPvsAzMNcbW4wl21CCLyXej6jLImAWb9o6/qLuPlqBOS+g1DVxsTBilnk/5Bk3lQD2cF7nK/es+aLa5aS4ZmUjxqhORPV6q1dA6Yydp/m0DSSwD9NFpsY9+OCb6rBFuwP7/SGBIY7c+DGXfyofw8dwvClJG99SZ8d4ymjMGeWAeZva1DxTkLQ8FJMyoLEe6f41Wk9ucYUxvIfBVRlriInAnr6PShpYwrIPiKSANm7/VUqfidu+Kms7+GO2BGXjMDfYPytWXZdZH9ZcjdQJvDvDy86DlVUxRUVmQ3aGbs2Rt6F80cVzd6rMRu259tstLGRk5Sf10JfVAHHMhldj5WGOxIGH4/fRahoQUrAE1pVGQqnJddDSGX9G13WQ==
+X-Gm-Message-State: AOJu0YyKyOU+02rDKxEufmO4WKCB9TLkRKlz9WG/bXV622DUcM38thN9
+	YviF23Wh7agyKrc4/ddkBiBn4kThkpFqV3chJcEeWvOYx3TO4isx
+X-Google-Smtp-Source: AGHT+IFk4ZkCa0R/m44omA2Xi3MhoAzI8tKPY8V0cTU/2axm4inHWuZNW2UcVx0PzaNks2ZutoR+ew==
+X-Received: by 2002:a05:6512:716:b0:511:8b40:ab6b with SMTP id b22-20020a056512071600b005118b40ab6bmr2834631lfs.50.1708082618024;
+        Fri, 16 Feb 2024 03:23:38 -0800 (PST)
+Received: from localhost (p200300e41f147f00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f14:7f00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id f23-20020a170906561700b00a3d828c54f1sm1459386ejq.135.2024.02.16.03.23.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Feb 2024 03:23:37 -0800 (PST)
+Content-Type: multipart/signed;
+ boundary=87caa6e717479adfa0f5d015ffee82cc14ceb938e5f7a71c46d45b7997b5;
+ micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <jic23@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
-        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
-        <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
-        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
-        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
-        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
-        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
-        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-3-quic_jprakash@quicinc.com>
- <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
- <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
- <CAA8EJppsn2zsAXem-m=9U8izhtAZmVe62xS5qdkwJmFTqV30gA@mail.gmail.com>
-From: Jishnu Prakash <quic_jprakash@quicinc.com>
-In-Reply-To: <CAA8EJppsn2zsAXem-m=9U8izhtAZmVe62xS5qdkwJmFTqV30gA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3loeRtsLeLAhQLMDXOPPD-VezXsdvBWc
-X-Proofpoint-GUID: 3loeRtsLeLAhQLMDXOPPD-VezXsdvBWc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-16_09,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=908 lowpriorityscore=0 mlxscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0 spamscore=0
- suspectscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2401310000 definitions=main-2402160091
+Mime-Version: 1.0
+Date: Fri, 16 Feb 2024 12:23:36 +0100
+Message-Id: <CZ6GR5BWC80N.36XRBM33WF8MW@gmail.com>
+Subject: Re: [PATCH] clk: constify the of_phandle_args argument of
+ of_clk_provider
+From: "Thierry Reding" <thierry.reding@gmail.com>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Michael
+ Turquette" <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>,
+ "Sudeep Holla" <sudeep.holla@arm.com>, "Peng Fan" <peng.fan@nxp.com>,
+ "Shawn Guo" <shawnguo@kernel.org>, "Nishanth Menon" <nm@ti.com>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Geert Uytterhoeven" <geert+renesas@glider.be>,
+ "Jonathan Hunter" <jonathanh@nvidia.com>, "Linus Walleij"
+ <linus.walleij@linaro.org>, "Laurent Pinchart"
+ <laurent.pinchart@ideasonboard.com>, "Mauro Carvalho Chehab"
+ <mchehab@kernel.org>, "Vinod Koul" <vkoul@kernel.org>, "Russell King"
+ <linux@armlinux.org.uk>, "Srinivas Kandagatla"
+ <srinivas.kandagatla@linaro.org>, "Mark Brown" <broonie@kernel.org>,
+ "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
+ <linux-clk@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-kernel@vger.kernel.org>, <patches@opensource.cirrus.com>,
+ <linux-stm32@st-md-mailman.stormreply.com>, "NXP Linux Team"
+ <linux-imx@nxp.com>, <linux-amlogic@lists.infradead.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+ <linux-tegra@vger.kernel.org>, <linux-omap@vger.kernel.org>,
+ <linux-media@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+ <alsa-devel@alsa-project.org>, <linux-sound@vger.kernel.org>
+X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
+References: <20240208163710.512733-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240208163710.512733-1-krzysztof.kozlowski@linaro.org>
 
-Hi Dmitry,
+--87caa6e717479adfa0f5d015ffee82cc14ceb938e5f7a71c46d45b7997b5
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-On 2/16/2024 4:18 PM, Dmitry Baryshkov wrote:
-> Hi Jishnu,
-> 
-> 
-> On Fri, 16 Feb 2024 at 12:39, Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
-> 
-> Please disable sending HTML emails in your email client. It is
-> generally frowned upon, it complicates replying, it breaks quotations,
-> etc.
+On Thu Feb 8, 2024 at 5:37 PM CET, Krzysztof Kozlowski wrote:
+[...]
+>  drivers/clk/tegra/clk-bpmp.c                  |  2 +-
+>  drivers/clk/tegra/clk-tegra124.c              |  2 +-
+>  drivers/clk/tegra/clk-tegra20.c               |  2 +-
+>  drivers/clk/tegra/clk-tegra30.c               |  2 +-
+[...]
 
-Sorry, I'm not sure how that happened, but I have fixed it now.
+Acked-by: Thierry Reding <treding@nvidia.com>
 
-> 
->>
->> Hi Krzysztof,
->>
->> On 1/4/2024 1:48 PM, Krzysztof Kozlowski wrote:
->>
->> On 31/12/2023 18:12, Jishnu Prakash wrote:
->>
->> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
->> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
->>
+--87caa6e717479adfa0f5d015ffee82cc14ceb938e5f7a71c46d45b7997b5
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
->> +
->>
->> +      qcom,adc-tm:
->> +        description: |
->> +            Indicates if ADC_TM monitoring is done on this channel.
->> +            Defined for compatible property "qcom,spmi-adc5-gen3".
-> 
-> You are describing qcom,spmi-adc5-gen3, are you not? So this phrase
-> adds nothing.
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmXPRbkACgkQ3SOs138+
+s6FzcQ/9F5fJyakwkqSmFCFsFTUwQ0Vv6AmJP7kf0C2oOGiJISmgaFwRE7ikl73f
+tfJ/jetoF3grVZE950B1ZtY1sAK6WLfAlRnkD52YE25Y+NcehSPfcE2403gBL/JZ
+6Rtlw4U/jJhHC7k1NNSCV6W3YM9tFJZzPdOwWL1efc33DWZQkTgvIPKSfqGIHd0i
+iclZTsusANQThdL9ASOlvq81RrglhXgo2PIt/oeGjEBtf+IoDVhHSWqJ65e/lmYV
+cBw1uhHa5zHLiWoT4xTqJY8dPkSLfBSRM3uflLUkA5BRNllvVsHAPvIgR6aBpqi5
+KeLdZEDFeIuIi8nqtYxhhnGa8nKz9t03MNj9GbFf9HYocIVDIV4SvKuKongDjcYZ
+zr5jC3lMZnmuQIM5XOIFu8hQWG0zQ6H+Kuf6ifolHj13E5gplCo4BoZWNnE84OZ8
+fMjNHraK6RNUUqJXW43OBEjejW+FvvZIpMvyyt8TcE/I7hieXCjib0Spu2n5SwvK
+mQgKxPJpsOpCxIOID89cK2VwOX3uOZslT3M5sU9ZkoUcwRpQ/Ntfr7ZWW8Jy/L4Y
+DWnk7IvOvI4fFlmRQONIeWpr8euHFmCL8L8dJ29AI9oB2lvs7ZovvWw9QTE8E6iU
+EjVBwtdG6KqWJxP803h8DAvvD0Vsu0KzQFr+Pwre3NP2FHYDCR0=
+=E0uq
+-----END PGP SIGNATURE-----
 
-Yes, I'll remove this.
-
-> 
->> +            This is the same functionality as in the existing QCOM ADC_TM
->> +            device, documented at devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml.
->> +        type: boolean
->> +
->>
->> Why do you duplicate entire vadc file? Why it cannot be part of that
->> file? Oh wait, it was in v2.
->>
->> You now duplicated a lot of property definitions without clear reason.
->> If this is intention, then you need to put them in common schema.
->>
->>
->> Many of the properties used for earlier QCOM VADC devices will be used for this device too.....do you mean I can add a new schema file (named something like qcom,vadc.yaml) and move common properties into it (like qcom,hw-settle-time, qcom,decimation, etc) from this file and qcom,spmi-vadc.yaml?
->>
->> Can I do it in the same patch or should it be a separate patch coming before this one ?
-> 
-> I'd say, separate patch. Move first, extend later.
-
-OK, I'll make it this way if no one else has any objections.
-
-Thanks,
-Jishnu
-
-> 
->>
->>
->>
+--87caa6e717479adfa0f5d015ffee82cc14ceb938e5f7a71c46d45b7997b5--
 
