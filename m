@@ -1,284 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-11370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 934AA857FCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 15:54:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A441185811C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 16:32:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48E9A286708
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 14:54:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C95DA1C20D2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 15:32:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD4D412F365;
-	Fri, 16 Feb 2024 14:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E71612FB1F;
+	Fri, 16 Feb 2024 15:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ianPdFhS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HBRTcxo9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CD112EBF6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 14:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FFD12F590;
+	Fri, 16 Feb 2024 15:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708095265; cv=none; b=Hm9SG8VsMN+g1l2SZLe3yiZRDLRqumbz6ESFCytPNXoBIiMvhmOGjiGa6VWHS0QY6GN0PfmcUmUkhCFd5IdDng9H5tbrcRBryvKAOISM8eFlsE24Cyb7DrFWSCEkoy7pSGB8sHAQxpaXE7m4dGa7OMFZ6ByOalD/+5pzp+IbcHQ=
+	t=1708097006; cv=none; b=ls34K3/w3/znfcRno5yy7GGuifyGBVqeK3KP+/yIXyU+IRnnEP2sE4GTxIGjjOIizjcwQxtDI7I3AY1AxezsiaZjhORXhMk6jlbBYbb1nVOXO7BRzE1+Ayfgxdh4B+EHJbjEgF+BwDJLny6G6Z+i/w2/Fn7Ww5bxpMZmUF6Q2IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708095265; c=relaxed/simple;
-	bh=+C8SQjHKPXwZr8+yfS37nIG2SloOZQAZQRlLo8MFMyQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8njCfR/v0LrSrZEceOANyvKLaard1DXU7P0niX466eKKJ9oV2ngCoMrWvvh8JlObx1zt4hIwbZNhb/fagqtQtSN1OUpAjTUiwgL8t9R64gqJP7uXOlUrzAcMduNRNtaSwbD8IkrVPd8k/gW2uXLQembt8VwveFn43mZeVNJapY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ianPdFhS; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6da4a923b1bso1945595b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 06:54:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708095263; x=1708700063; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=H5+UrxbRXLOQkrvNam9zPtYfUH7CmHJYGluAwCM/rwk=;
-        b=ianPdFhSVhzI9Th/fqAI3ShYYxPw20hycVzaslpZgLpP6SPLRSaW1mLsohvPFQsX59
-         I6cRHV+/MamW0t592fUjLVHFMQdPIOWXgIdmrD/BIYuYHMI0NJ9VvJdFva49s126fIe2
-         QDL3viwXpcYjygLeFhNrCNyreczL+2lXlMjGqk2YOOT9+KUmuYq9W9qkktJo0l5an08f
-         TEHdJgUyjYBOtvPU9H2yM/rIXeTejxAgFQeP2RMeuSpwmfzduitIka7AQk4qyYrWO2og
-         2WfOtiFyDnR604TTVhnbMS9btiGnPt6tcciuaJmHlP6G6fmsZXRNOt/j+l3CzP7kPxKH
-         WdSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708095263; x=1708700063;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H5+UrxbRXLOQkrvNam9zPtYfUH7CmHJYGluAwCM/rwk=;
-        b=uIKGlCmIC7naQEHb0KBpalGVhnRMOFcErYux8rFSKn+wKRbG2DkY/7UkWq90dSc3iD
-         YkiNqL+nt0sz990vFqKrUzUGs+fdPKiXzaS0sPPFcxP5UP+t+96d3oWvpNPwwgeQLcFu
-         Yn2CxGv3E0tTl2GItV7V3vmTSRoLawmynhB6zPb7YZE1meHaDcQQlu+n26tx5BTZ6O71
-         dVd5EsJ9GBRDudvThpVlMvRpg+z5qlKd7UkVNJ06omYL59jBAYdjhwc1THlhLODLUkfi
-         iXhCde0DCpzoE6nnqKIYdETkr4cGoWq8gk+N2ZsKos17CF/fQcOSF9zNc9YtzO/bViCi
-         xCjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUzn9+W+VUzY9NssTiHyDoknGRHRn3GlcTMighzCogNzxYP9/WkYu2fCF/cU0SOyFrUWiRdWDEuqf832r52DrTQegY0ypuiMcr9R6ORlA==
-X-Gm-Message-State: AOJu0YzrwoLEWt7CF06OENE6qB/j6mzilhB6QUt4yhIbbLnRX4JgDBkC
-	zGL/rrvXEwc9l2t7bQADF7ST8O4HeUgjLWTa88yCCMmCBNdJqjkij2tVOn8JOQ==
-X-Google-Smtp-Source: AGHT+IFebQpMSN10eafxcqxmHBhmZ61uYkmXBGgYKWbyPo+PGCqfnv3NuYzwqbuIh9R8Q1n23F0ayg==
-X-Received: by 2002:a05:6a00:3a81:b0:6e0:392b:c236 with SMTP id fk1-20020a056a003a8100b006e0392bc236mr4809601pfb.11.1708095263219;
-        Fri, 16 Feb 2024 06:54:23 -0800 (PST)
-Received: from thinkpad ([120.138.12.48])
-        by smtp.gmail.com with ESMTPSA id e11-20020a056a0000cb00b006e046085ee8sm21871pfj.174.2024.02.16.06.54.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 06:54:22 -0800 (PST)
-Date: Fri, 16 Feb 2024 20:24:16 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/10] arm64: dts: qcom: sc8280xp: enable GICv3 ITS for
- PCIe
-Message-ID: <20240216145416.GA39963@thinkpad>
-References: <20240212165043.26961-1-johan+linaro@kernel.org>
- <20240214063554.GC4618@thinkpad>
- <ZcyfW4HSsES7GU-F@hovoldconsulting.com>
+	s=arc-20240116; t=1708097006; c=relaxed/simple;
+	bh=Xx5jSFVmR8kKsbKaSAkT+6yVkSDIJYlTfxO/EtUuVWM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KWdlNH7TkeaNbAdWfjfiIWeg8dG9I12ZOAOwcPFkaB4zS0UV7LNKc2gdOptzp8aU4jRHy5qDGxwxt1bGMcskbqLzugtOZG5YcCIeNokw5swW5wDlq6V4D5YWUmkCPIpb5feL8NcZ0zqqNTpWv/wolHWalX9Xeg1n4jXz7Wpp5DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HBRTcxo9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41GEAWsI009953;
+	Fri, 16 Feb 2024 15:22:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=uIq/Agw0yupQT4M4DimqqSBPa70+vSSr+DSeONVRZJ0=; b=HB
+	RTcxo9hbAG52xOOWunETTnrcmN70eacSwyRX0O+bLrNCKOJYrUmtmvDx2sbM+bwH
+	eh209jlA2T0jKd+70J4jJWS4skSRu3hUGVn0JI0d1w3HUWka8VFPa6bfLKcU1y7w
+	vTFFgDbbq6tZFKgFdr2tlY9WAgLSXCPK9EOXbVT0qnOi6vJlb9cYgnHQ/ATy5RWc
+	c2Cl0h2FR0Gf+n4jfTCC5V/lVghWebbKH4OlB/LF3qdQfy+KTHAVNWqsH/jpqPwm
+	LvEp4kYAFcL3aDHjVX6WYIpiV2z/OZ44zCwNFlpCOS0ec+ATjTUtEwiCYlsevkfB
+	H9Yzb0CrPSIPKh9OsgGA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9fkfbw56-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 15:22:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GFMsDd003794
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 15:22:54 GMT
+Received: from [10.216.32.60] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
+ 2024 07:22:48 -0800
+Message-ID: <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
+Date: Fri, 16 Feb 2024 20:52:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZcyfW4HSsES7GU-F@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Content-Language: en-US
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin
+ Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
+ <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9F9jTJZpwa9-J3H6FxCCvQ93vX9fb8bx
+X-Proofpoint-GUID: 9F9jTJZpwa9-J3H6FxCCvQ93vX9fb8bx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-16_15,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402160122
 
-On Wed, Feb 14, 2024 at 12:09:15PM +0100, Johan Hovold wrote:
-> On Wed, Feb 14, 2024 at 12:05:54PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Feb 12, 2024 at 05:50:33PM +0100, Johan Hovold wrote:
-> > > This series addresses a few problems with the sc8280xp PCIe
-> > > implementation.
-> > > 
-> > > The DWC PCIe controller can either use its internal MSI controller or an
-> > > external one such as the GICv3 ITS. Enabling the latter allows for
-> > > assigning affinity to individual interrupts, but results in a large
-> > > amount of Correctable Errors being logged on both the Lenovo ThinkPad
-> > > X13s and the sc8280xp-crd reference design.
-> > > 
-> > > It turns out that these errors are always generated,
-> > 
-> > How did you confirm this?
-> 
-> You can see that error flags being set in the controller and endpoint,
-> for example, using lspci -vv:
-> 
-> 	CESta:  RxErr- BadTLP+ BadDLLP- Rollover- Timeout- AdvNonFatalErr-
-> 
 
-Okay.
 
-> > > but for some yet to
-> > > be determined reason, the AER interrupts are never received when using
-> > > the internal MSI controller, which makes the link errors harder to
-> > > notice.
-> > 
-> > If you manually inject the errors using "aer-inject", are you not seeing the AER
-> > errors with internal MSI controller as well?
+On 2/14/2024 8:14 PM, Andrew Lunn wrote:
+> On Wed, Feb 14, 2024 at 02:49:41PM +0530, Kathiravan Thirumoorthy wrote:
+>>
+>>
+>> On 1/26/2024 1:35 AM, Andrew Lunn wrote:
+>>> On Mon, Jan 22, 2024 at 11:26:58AM +0530, Kathiravan Thirumoorthy wrote:
+>>>> gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk are
+>>>> enabled by default and it's RCG is properly configured by bootloader.
+>>>
+>>> Which bootloader? Mainline barebox?
+>>
+>>
+>> Thanks for taking time to review the patches. I couldn't get time to respond
+>> back, sorry for the delay.
+>>
+>> I was referring to the U-boot which is delivered as part of the QSDK. I will
+>> call it out explicitly in the next patch.
 > 
-> I haven't tried that, I'm just reporting that that piece of
-> functionality is currently broken and that that partly explains why the
-> ASPM problems went unnoticed.
+> I've never used QSDK u-boot, so i can only make comments based on my
+> experience with other vendors build of u-boot. That experience is, its
+> broken for my use cases, and i try to replace it as soon as possible
+> with upstream.
 > 
+> I generally want to TFTP boot the kernel and the DT blob. Sometimes
+> vendor u-boot has networking disabled. Or the TFTP client is
+> missing. If it is there, the IP addresses are fixed, and i don't want
+> to modify my network to make it compatible with the vendor
+> requirements. If the IP addresses can be configured, sometimes there
+> is no FLASH support so its not possible to actually write the
+> configuration to FLASH so that it does the right thing on reboot
+> etc...
+> 
+> Often the vendor u-boot is a black box, no sources. Can you give me a
+> git URL for the u-boot in QSDK? If the sources are open, i could at
+> least rebuild it with everything turned on.
 
-I just gave it a shot and I could see the AER interrupts raised for correctable
-errors with internal MSI controller.
 
-Now I'm puzzled why this is not getting triggered by default. I'll check with
-the hardware team if they have any clue.
+You can get the source at 
+https://git.codelinaro.org/clo/qsdk/oss/boot/u-boot-2016/-/tree/NHSS.QSDK.12.2?ref_type=heads
 
-> > > On the X13s, there is a large number of errors generated when bringing
-> > > up the link on boot. This is related to the fact that UEFI firmware has
-> > > already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
-> > > link at Gen3 generates a massive amount of errors until the Wi-Fi
-> > > firmware is restarted.
-> > > 
-> > > A recent commit enabling ASPM on certain Qualcomm platforms introduced
-> > > further errors when using the Wi-Fi on the X13s as well as when
-> > > accessing the NVMe on the CRD. The exact reason for this has not yet
-> > > been identified, but disabling ASPM L0s makes the errors go away. This
-> > > could suggest that either the current ASPM implementation is incomplete
-> > > or that L0s is not supported with these devices.
-> > 
-> > What are those "further errors" you are seeing with ASPM enabled? Are those
-> > errors appear with GIC ITS or with internal MSI controller as well?
-> 
-> Further errors as in further correctable errors that are not related to
-> the errors seen when resetting the X13s Wi-Fi link at boot.
-> 
-> These show up, for example, when accessing the NVMe on the CRD or when
-> using the Wi-Fi on the X13s. These errors go away when L0s is disabled.
-> 
-> And yes, you see them with both the external and internal MSI controller
-> (in the latter case, by looking at the error flags mentioned above).
->  
+You should be able to TFTP the images, write into the flash and 
+configure the IP and so on...
 
-Hmm.
 
-> > > Note that the X13s and CRD use the same Wi-Fi controller, but the errors
-> > > are only generated on the X13s. The NVMe controller on my X13s does not
-> > > support L0s so there are no issues there, unlike on the CRD which uses a
-> > > different controller. The modem on the CRD does not generate any errors,
-> > > but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
-> > > when not used, which could indicate that there are bigger problems with
-> > > the ASPM implementation. I don't have a modem on my X13s so I have not
-> > > been able to test whether L0s causes an trouble there.
-> > > 
-> > > Enabling AER error reporting on sc8280xp could similarly also reveal
-> > > existing problems with the related sa8295p and sa8540p platforms as they
-> > > share the base dtsi.
-> > > 
-> > > The last four patches, marked as RFC, adds support for disabling ASPM
-> > > L0s in the devicetree and disables it selectively for the X13s Wi-Fi
-> > > and CRD NVMe. If it turns out that the Qualcomm PCIe implementation is
-> > > incomplete, we may need to disable ASPM (L0s) completely in the driver
-> > > instead.
-> > 
-> > If the device is not supporting L0s, then it as to be disabled in the device,
-> > not in the PCIe controller, no?
 > 
-> Well, we don't know yet where the problem lies, just that enabling L0s
-> results in a large number of correctable errors.
+> But still, it is better that Linux makes no assumptions about what the
+> boot loader has done. That makes it much easier to change the
+> bootloader.
 > 
-> Until yesterday I had not seen any such errors for the Wi-Fi on the CRD,
-> which uses essentially the same ath11k controller, so there was no clear
-> indication that this was necessarily a problem with the devices either.
+>>>> Some of the NSS clocks needs these clocks to be enabled. To avoid
+>>>> these clocks being disabled by clock framework, drop these entries
+>>>> from the clock table and enable it in the driver probe itself.
+>>>
+>>> If they are critical clocks, i would expect a device to reference
+>>> them. The CCF only disabled unused clocks in late_initcall_sync(),
+>>> which means all drivers should of probed and taken a reference on any
+>>> clocks they require.
+>>
+>>
+>> Some of the NSSCC clocks are enabled by bootloaders and CCF disables the
+>> same (because currently there are no consumers for these clocks available in
+>> the tree. These clocks are consumed by the Networking drivers which are
+>> being upstreamed).
 > 
+> If there is no network drivers, you don't need clocks to the
+> networking hardware. So CCF turning them off seems correct.
 
-I'll confirm the L0s compatibility with the hardware team.
 
-> > > Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
-> > > significant impact on the power consumption 
-> > > 
-> > > The DT bindings and PCI patch are expected to go through the PCI tree,
-> > > while Bjorn A takes the devicetree updates through the Qualcomm tree.
-> > 
-> > Since I took a stab at enabling the GIC ITS previously, I noticed that the NVMe
-> > performance got a slight dip. And that was one of the reasons (apart from AER
-> > errors) that I never submitted the patch.
-> > 
-> > Could you share the NVMe benchmark (fio) with this series?
-> 
-> Did you have any particular benchmark in mind?
-> 
-> I have run multiple fio benchmarks and while the results vary with the
-> parameters, the impact of switching to ITS (so that not all PCIe
-> interrupts are processed on CPU0) is generally favourable.
-> 
-> A raw sequential read shows no change in throughput on either the X13s
-> or the CRD even if for some reason this test performs really badly on
-> the X13s (i.e. regardless of which MSI controller is used):
-> 
-> 	crd-rseq-read:	IOPS=11.1k, BW=2764MiB/s (2898MB/s)(81.0GiB/30003msec)
-> 	X13s-rseq-read:	IOPS=508, BW=127MiB/s (134MB/s)(3841MiB/30169msec)
-> 
-> Another benchmark I've used against a mounted ext4 partition shows a 2x
-> improvement in throughput with ITS for sequential and random reads and
-> writes on the X13s:
-> 
-> 	seq-read:	IOPS=88.4k, BW=345MiB/s (362MB/s)(10.0GiB/29657msec)
-> 	rand-read:	IOPS=21.2k, BW=82.8MiB/s (86.8MB/s)(4967MiB/60001msec)
-> 	seq-write:	IOPS=162k, BW=632MiB/s (662MB/s)(10.0GiB/16213msec)
-> 	rand-write:	IOPS=142k, BW=555MiB/s (582MB/s)(10.0GiB/18439msec)
-> 	
-> while the results are essentially unchanged with a larger block size and
-> queue depth (32/2m instead of 4/4k):
-> 
-> 	seq-read:	IOPS=1095, BW=2191MiB/s (2298MB/s)(10.0GiB/4673msec)
-> 	rand-read:	IOPS=1020, BW=2041MiB/s (2140MB/s)(10.0GiB/5017msec)
-> 	seq-write:	IOPS=918, BW=1837MiB/s (1926MB/s)(10.0GiB/5574msec)
-> 	rand-write:	IOPS=826, BW=1653MiB/s (1734MB/s)(10.0GiB/6194msec)
-> 
+Yeah agree with your comments.
 
-Ok, this looks promising. Long back when I tried the benchmark (seq & rand r/w),
-performance dropped slightly with GIC ITS. But looks like things have changed.
+QSDK's u-boot enables the network support, so the required NSSCC clocks 
+are turned ON and left it in ON state. CCF tries to disables the unused 
+NSSCC clocks but system goes for reboot.
 
-> > > Johan Hovold (10):
-> > >   dt-bindings: PCI: qcom: Allow 'required-opps'
-> > >   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
-> > >   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
-> > >   arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
-> > >   arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
-> > >   arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
-> > 
-> > Is this patch based on the version I shared with you long back? If so, I'd
-> > expect to have some credit. If you came up with your own version, then ignore
-> > this comment.
-> 
-> No, this patch has beeen created and evaluated from scratch based on the
-> downstream direwolf dts, which has these five 'msi-map' properties. 
-> 
-> I debated whether I should base it on your version instead, but in the
-> end it would have a new commit message and only these properties from
-> the downstream dtsi would remain (you also removed existing properties
-> IIRC). So while it's certainly inspired by your work, this has been done
-> from scratch, including the testing.
-> 
-> If you prefer I can make this clear in the commit message, but adding a
-> Co-developed-by didn't seem quite right either as I did this work
-> without your involvement. But perhaps that would be better?
-> 
 
-Nah. As I said, if you have created the patch without basing on my version,
-then no credit is required. I just wanted to know since I shared the patch
-earlier.
+Reason being, to access the NSSCC clocks, these GCC clocks 
+(gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
+should be turned ON. But CCF disables these clocks as well due to the 
+lack of consumer.
 
-- Mani
 
--- 
-மணிவண்ணன் சதாசிவம்
+> 
+> Once you have actual drivers, this should solve itself, the drivers
+> will consume the clocks.
+
+
+Given that, NSSCC is being built as module, there is no issue in booting 
+the kernel. But if you do insmod of the nsscc-ipq5332.ko, system will 
+reset.
+
+Without the networking drivers, there is no need to install this module. 
+And as you stated, once the drivers are available, there will be no issues.
+
+So can I explain the shortcomings of installing this module without the 
+networking drivers in cover letter and drop this patch all together?
+
+
+
+> 
+>> However looking back, gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
+>> gcc_nssnoc_nsscc_clk are consumed by the networking drivers only. So is it
+>> okay to drop these clocks from the GCC driver and add it back once the
+>> actual consumer needs it?
+> 
+> But why should you remove them. If nothing is using them, they should
+> be turned off.
+> 
+>     Andrew
 
