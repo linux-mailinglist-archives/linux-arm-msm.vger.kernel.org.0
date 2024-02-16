@@ -1,59 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-11396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E05AA8584B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:58:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 929F38584CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 19:05:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D3050B26689
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 17:58:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E6002817B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:05:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B6E21350D0;
-	Fri, 16 Feb 2024 17:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A2313340D;
+	Fri, 16 Feb 2024 18:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DMSBG9Bk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5RpmDuU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4701350C8;
-	Fri, 16 Feb 2024 17:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18A112FB3F;
+	Fri, 16 Feb 2024 18:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708106287; cv=none; b=eymyXYp2sLjKaMQNOU5hf2GKAYn87mw+fFEFVsD4t+mcYWsGahgDbBgwmmTmBywetdtmJWLHxFKEoaPpPpcHp3DO+SzvyBPY1EBA+f7VUWyWMywvUoIwf/98hmf2ql9wy5v6oQyaat3bHpgAYD6AOKBRm95lV1ioUG1/c8/FfWE=
+	t=1708106705; cv=none; b=VV/VwKhSPGHg/vNhV6Z0WoxYPknwyhRvQuoy5GaVizNUj6qt8jAEKIEaK0TBIxFmbQWKf1EUZ6+6tP496/gQr7yN+QubaBk3w0KXmUDkU4s1zDVHEO7lnSVNExZQ+E5CU1bWAvdrGaW4meYlEQyv1Ubp6MmZSni+aJ79Zid6cuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708106287; c=relaxed/simple;
-	bh=TzxyUhzWqR9OGR0ur5lsWOcMoqjtLpMgsu+N/yqRV/w=;
+	s=arc-20240116; t=1708106705; c=relaxed/simple;
+	bh=vG/RKSRTXzqAUxbAxGsYUW1wn0EAG4siYC+evNc+IOA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a/QZj2x3ZvsKWF2jIe5qlwhPQs9OS4yiKb5iUOzQp+GxCvNQW+QZF9sEXUNdmWHBVZpMu9CiL0nXiKKMNgJ/hjcCa3YXi54xjk8ZC8GShdvk1GwuqBHSJaa8FFUki9e6MjE70PMeA5duRbZ7+xtHWwsXFvZ7Diy31IAH+bCRA2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DMSBG9Bk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F1BC433C7;
-	Fri, 16 Feb 2024 17:58:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=LzS0pbLGGWdsYChyYrmtHF7b7sfke0kR95Gqj1mK3P3Fp+/qfsk3d14JCSmeDkVz4EpAHTzUTfnywGCaKQOtBwcGly+nvysXAa7MXujA7mAZ7AKBLrE7jmuP6WHCkXE4B+DRGr0cNFtlzpqyPbGz2GQmifMqzRrFx3uH7KviFyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5RpmDuU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE75FC433C7;
+	Fri, 16 Feb 2024 18:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708106286;
-	bh=TzxyUhzWqR9OGR0ur5lsWOcMoqjtLpMgsu+N/yqRV/w=;
+	s=k20201202; t=1708106705;
+	bh=vG/RKSRTXzqAUxbAxGsYUW1wn0EAG4siYC+evNc+IOA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DMSBG9BkYIxFDjC5KmCPBFFdDDt88bpd723PEAupSkg0/l4CI/u1KJHRUAKZMHHVF
-	 82/WHm5v6nZVd3K1e8jwXwDOTrlml7lkrzn9pTd2ldCnFa2DF6eiJuxf1h3huaMWV2
-	 NiSulu/q0ZWuqy7qUpPCHt5SbrE27oyPe1e7z8t2F/s+zjnEnpAOpgzxYWG3hcAUyM
-	 Woq6/rNfkcJQz3NXOVy1mghaxKes9myS5GPleFUqJjvM2rL1NP6ffJvtOyLZ4SFaLu
-	 lrpcKGLF0FBZa57SjU6NnHQ7krfusuxiRQa7CJhWN6G0U07A7rtBD26/Taz6MFHzgz
-	 kz4kOk6JdhLaw==
-Date: Fri, 16 Feb 2024 11:58:03 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: quic_fenglinw@quicinc.com, kernel@quicinc.com, 
-	Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	b=e5RpmDuUiTEP2FeBe2JgOBq/D8z+MLtqWSuSNSbCQMoEn1su+PuqgTIsbcKEOfJFl
+	 IbBwzFpiRVjZjkTuTWpO4QXHU5F4r1DD7Rly7RvJtLmtCVBJlJXa8PoxfMmh8iYkCs
+	 WGRoVikXPBHUT5XIbzQiPihfov+fuxTVlOB6owwytGPd+UPF3GCXKwmj1ilNTuGIfP
+	 TwHXvHLlc/fEUCYcVUm9TTjNNMKMgujpUCm1Gz89iu/mgyU82eT9/kq6BsdFKQlqLg
+	 HMPVR/Z3ZrOvaW90jqkMc4HFf+mldHcVZLhymeV+cjJSFKVi560NKyu5dbg249S6+d
+	 kkwuFi1XAg1Hw==
+Date: Fri, 16 Feb 2024 10:05:03 -0800
+From: Jaegeuk Kim <jaegeuk@kernel.org>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: chao@kernel.org, quic_stummala@quicinc.com, quic_bjorande@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-f2fs-devel@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: ipq6018: add #power-domain-cells for
- gcc node
-Message-ID: <wged56grfp7qwvkd2gq4qbewzdevv23kz52vou2z2uh4ws7c3c@b6xigs2ca5oe>
-References: <20240104-gcc-docs-update-v1-1-127e4816b798@quicinc.com>
- <CAA8EJprsGke9zZBy_x=YSxz7R1aSpx8r3ndjjXVVKhjKBxd=QQ@mail.gmail.com>
+Subject: Re: [PATCH] f2fs: doc: Fix bouncing email address for Sahitya Tummala
+Message-ID: <Zc-jz93ECAgAbeON@google.com>
+References: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
+ <ce40205b-25c6-6ba5-23a4-70a51b4e1b21@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,73 +60,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprsGke9zZBy_x=YSxz7R1aSpx8r3ndjjXVVKhjKBxd=QQ@mail.gmail.com>
+In-Reply-To: <ce40205b-25c6-6ba5-23a4-70a51b4e1b21@quicinc.com>
 
-On Thu, Jan 04, 2024 at 11:53:46AM +0200, Dmitry Baryshkov wrote:
-> On Thu, 4 Jan 2024 at 10:06, Fenglin Wu via B4 Relay
-> <devnull+quic_fenglinw.quicinc.com@kernel.org> wrote:
-> >
-> > From: Fenglin Wu <quic_fenglinw@quicinc.com>
-> >
-> > Property '#power-domain-cells' is required as per defined in qcom,gcc.yaml
-> > so add it for ipq6018 gcc device node to eliminate following warning in
-> > dtbs_check:
-> >
-> > arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: gcc@1800000:
-> >         '#power-domain-cells' is a required property
-> > from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-ipq6018.yaml#
+On 02/16, Jeffrey Hugo wrote:
+> On 2/2/2024 9:52 AM, Jeffrey Hugo wrote:
+> > The servers for the @codeaurora domain are long retired and any messages
+> > addressed there will bounce.  Sahitya Tummala has a .mailmap entry to an
+> > updated address, but the documentation files still list @codeaurora
+> > which might be a problem for anyone reading the documentation directly.
+> > Update the documentation files to match the .mailmap update.
+> > 
+> > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > 
-> But ipq6018 doesn't implement GDSC support. So for the sake of fixing
-> the warning you are adding a bogus property.
+> Jaegeuk Kim will you apply this?
+
+Thanks for reminding this. Applied.
+
 > 
-
-The platform does indeed have two USB GDSCs, which you can see being
-referred to in gcc_ipq6018_probe().
-
-But while this patch removes a warning, I think the proper solution
-would be to actually describe those GDSCs in the DeviceTree as well.
-Unfortunately this would imply the need to actually implement them in
-Linux as well.
-
-
-Alternatively, there exist a reason for not actually change the state of
-these GDSCs at runtime - i.e. the gcc driver is doing the right thing.
-But if so, this patch would be wrong...
-
-Regards,
-Bjorn
-
-> >
-> > Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> > index 39cd6b76b4c1..54914912d610 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> > @@ -386,6 +386,7 @@ gcc: gcc@1800000 {
-> >                         reg = <0x0 0x01800000 0x0 0x80000>;
-> >                         clocks = <&xo>, <&sleep_clk>;
-> >                         clock-names = "xo", "sleep_clk";
-> > +                       #power-domain-cells = <1>;
-> >                         #clock-cells = <1>;
-> >                         #reset-cells = <1>;
-> >                 };
-> >
-> > ---
-> > base-commit: 17cb8a20bde66a520a2ca7aad1063e1ce7382240
-> > change-id: 20240103-gcc-docs-update-fa604579e468
-> >
-> > Best regards,
-> > --
-> > Fenglin Wu <quic_fenglinw@quicinc.com>
-> >
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+> -Jeff
 
