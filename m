@@ -1,57 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-11397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 929F38584CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 19:05:09 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7A3B8584E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 19:10:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E6002817B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:05:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 584C9B2167D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A2313340D;
-	Fri, 16 Feb 2024 18:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D68D1350EA;
+	Fri, 16 Feb 2024 18:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e5RpmDuU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvFwwYpv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18A112FB3F;
-	Fri, 16 Feb 2024 18:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17751134751;
+	Fri, 16 Feb 2024 18:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708106705; cv=none; b=VV/VwKhSPGHg/vNhV6Z0WoxYPknwyhRvQuoy5GaVizNUj6qt8jAEKIEaK0TBIxFmbQWKf1EUZ6+6tP496/gQr7yN+QubaBk3w0KXmUDkU4s1zDVHEO7lnSVNExZQ+E5CU1bWAvdrGaW4meYlEQyv1Ubp6MmZSni+aJ79Zid6cuc=
+	t=1708106955; cv=none; b=hnn566D0FsMsLXa8iMxZlc2wsPoHi8qPFZ50iy6IXctIvas3COk7GHT9jwy2utMoXao360oskTXyifjKQJWxBZazKzioSgdGubZKVUR+p6JOtQtJiVgceARIv2MfhkX67JgWOm3tr/RjeAt2LyvfdUUYK26aiDpvPhcg2ck9Y0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708106705; c=relaxed/simple;
-	bh=vG/RKSRTXzqAUxbAxGsYUW1wn0EAG4siYC+evNc+IOA=;
+	s=arc-20240116; t=1708106955; c=relaxed/simple;
+	bh=gEiW2xpv104Z8gpM4qzqbYKLaODu05bz5fxABQE83wg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LzS0pbLGGWdsYChyYrmtHF7b7sfke0kR95Gqj1mK3P3Fp+/qfsk3d14JCSmeDkVz4EpAHTzUTfnywGCaKQOtBwcGly+nvysXAa7MXujA7mAZ7AKBLrE7jmuP6WHCkXE4B+DRGr0cNFtlzpqyPbGz2GQmifMqzRrFx3uH7KviFyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e5RpmDuU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE75FC433C7;
-	Fri, 16 Feb 2024 18:05:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UcV8NBb0ot+Fe+b17AEKJGQMLI1U7rC5b4SAd6ZrjoMRyNLZSkaGdSHaboZosv36Y2MscVzS6wkBTgrKCmpdg/QC6+/b8dHAbzisiN3jHJaclMVQ1RBjVujyCQn24VCwrfgSkqJ7VU5Z3A6pJBJig7iXz9BuXpOztA1tY3MH5Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvFwwYpv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E855C433C7;
+	Fri, 16 Feb 2024 18:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708106705;
-	bh=vG/RKSRTXzqAUxbAxGsYUW1wn0EAG4siYC+evNc+IOA=;
+	s=k20201202; t=1708106954;
+	bh=gEiW2xpv104Z8gpM4qzqbYKLaODu05bz5fxABQE83wg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e5RpmDuUiTEP2FeBe2JgOBq/D8z+MLtqWSuSNSbCQMoEn1su+PuqgTIsbcKEOfJFl
-	 IbBwzFpiRVjZjkTuTWpO4QXHU5F4r1DD7Rly7RvJtLmtCVBJlJXa8PoxfMmh8iYkCs
-	 WGRoVikXPBHUT5XIbzQiPihfov+fuxTVlOB6owwytGPd+UPF3GCXKwmj1ilNTuGIfP
-	 TwHXvHLlc/fEUCYcVUm9TTjNNMKMgujpUCm1Gz89iu/mgyU82eT9/kq6BsdFKQlqLg
-	 HMPVR/Z3ZrOvaW90jqkMc4HFf+mldHcVZLhymeV+cjJSFKVi560NKyu5dbg249S6+d
-	 kkwuFi1XAg1Hw==
-Date: Fri, 16 Feb 2024 10:05:03 -0800
-From: Jaegeuk Kim <jaegeuk@kernel.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: chao@kernel.org, quic_stummala@quicinc.com, quic_bjorande@quicinc.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-f2fs-devel@lists.sourceforge.net,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] f2fs: doc: Fix bouncing email address for Sahitya Tummala
-Message-ID: <Zc-jz93ECAgAbeON@google.com>
-References: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
- <ce40205b-25c6-6ba5-23a4-70a51b4e1b21@quicinc.com>
+	b=EvFwwYpvsieJvyJnPOWN+cDgxBhuuJu1tT27tiz1r7V9bzV4pv8IcsrOBif/+FOHa
+	 32BxZ4xkZBqPt/SPEEDsCGKZJcmHYrd4k/IP4JVHFjAozrv6MWU2oU0jz+wOQPyJLO
+	 4ZU5MSWR7TpxC8JchbbQnucCTZTVAwL9FIwsF//GHAuBuRIeYuf5O1glp9gPDsnHvE
+	 i6oVVk6S7NGCcBTtbr1+crfaKNQB4F3aIr+8lrqwws2gjns8T4QdY03J3MthQ9a194
+	 u+ETklM29xQz7vd6biVoMvgT3MsvAyJWQ1hErvbGiyHSsFecfvkufz9mf+M9WXxyM3
+	 bXckFaQUeJifg==
+Date: Fri, 16 Feb 2024 12:09:11 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Stephan Gerhold <stephan@gerhold.net>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm6350: Add Crypto Engine
+Message-ID: <pbjbhnj4opt57xswk7jfg2h2wjdv3onmg4ukxn22tsjjsnknxv@m5gy44kkbvvl>
+References: <20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com>
+ <20240105-sm6350-qce-v1-2-416e5c7319ac@fairphone.com>
+ <ZZguvdJTyVgfxm4D@gerhold.net>
+ <CZ6FYZLGWT3K.ZBHYDQ7TDN4B@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,22 +65,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ce40205b-25c6-6ba5-23a4-70a51b4e1b21@quicinc.com>
+In-Reply-To: <CZ6FYZLGWT3K.ZBHYDQ7TDN4B@fairphone.com>
 
-On 02/16, Jeffrey Hugo wrote:
-> On 2/2/2024 9:52 AM, Jeffrey Hugo wrote:
-> > The servers for the @codeaurora domain are long retired and any messages
-> > addressed there will bounce.  Sahitya Tummala has a .mailmap entry to an
-> > updated address, but the documentation files still list @codeaurora
-> > which might be a problem for anyone reading the documentation directly.
-> > Update the documentation files to match the .mailmap update.
-> > 
-> > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+On Fri, Feb 16, 2024 at 11:46:49AM +0100, Luca Weiss wrote:
+> On Fri Jan 5, 2024 at 5:30 PM CET, Stephan Gerhold wrote:
+> > On Fri, Jan 05, 2024 at 05:15:44PM +0100, Luca Weiss wrote:
+> > > Add crypto engine (CE) and CE BAM related nodes and definitions for this
+> > > SoC.
+> > > 
+> > > For reference:
+> > > 
+> > >   [    2.297419] qcrypto 1dfa000.crypto: Crypto device found, version 5.5.1
+> > > 
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sm6350.dtsi | 31 +++++++++++++++++++++++++++++++
+> > >  1 file changed, 31 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > > index 8fd6f4d03490..516aadbb16bb 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > > @@ -1212,6 +1212,37 @@ ufs_mem_phy_lanes: phy@1d87400 {
+> > >  			};
+> > >  		};
+> > >  
+> > > +		cryptobam: dma-controller@1dc4000 {
+> > > +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+> > > +			reg = <0 0x01dc4000 0 0x24000>;
+> > > +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+> > > +			#dma-cells = <1>;
+> > > +			qcom,ee = <0>;
+> > > +			qcom,controlled-remotely;
+> > > +			num-channels = <16>;
+> > > +			qcom,num-ees = <4>;
+> > > +			iommus = <&apps_smmu 0x432 0x0000>,
+> > > +				 <&apps_smmu 0x438 0x0001>,
+> > > +				 <&apps_smmu 0x43f 0x0000>,
+> > > +				 <&apps_smmu 0x426 0x0011>,
+> > > +				 <&apps_smmu 0x436 0x0011>;
+> >
+> > The last two lines look equivalent to me: 0x436 & ~0x0011 = 0x426.
 > 
-> Jaegeuk Kim will you apply this?
-
-Thanks for reminding this. Applied.
-
+> I don't understand the IOMMU SID + mask really, but I think I've seen
+> somewhere before like here that TZ can be a bit picky with the SIDs?
 > 
-> -Jeff
+> https://lore.kernel.org/linux-arm-msm/opqdrmyj3y64nqqqmakjydn5rkspizufyeavm7ec7c7ufqz4wk@ey2a7bq3shfj/
+> https://lore.kernel.org/linux-arm-msm/11b5db69-49f5-4d7b-81c9-687d66a5cb0d@linaro.org/
+> 
+> I don't quite want to risk having some obscure use case breaking because
+> we cleaned up the dts ;)
+> 
+> But if you're more sure than me that it won't break, let me know!
+> 
+> >
+> > It's also a bit weird that the mask has one more digit than the stream
+> > ID. And ordered numerically (by stream ID, first number) it would be a
+> > bit easier to read. :-)
+> 
+> Sorting them is no problem, can do that for v2.
+> 
+
+Where you able to do this? I don't see a v2 in my inbox, am I just
+searching poorly?
+
+Regards,
+Bjorn
+
+> >
+> > Thanks,
+> > Stephan
+> 
 
