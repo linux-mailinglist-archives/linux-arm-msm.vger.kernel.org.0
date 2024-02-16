@@ -1,168 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-11365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA80F857EB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 15:08:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 549F8857F7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 15:40:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59D601F21023
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 14:08:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDC3428B4E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 14:40:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1201412BE9F;
-	Fri, 16 Feb 2024 14:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0213A12EBDD;
+	Fri, 16 Feb 2024 14:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JEJxSQkD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6vRSD4J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A2812C526
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 14:08:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2912EBD7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 14:40:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708092507; cv=none; b=S9DvJrZSnB+yyqaqjvLzrc6AfXC7sRovN3N3WjI9CqlcCAra01oBi+3a8/48ils4F5OMrlu3ni5fmprvWQlokpLolt4JS/LMjHh8wno05MNyAYOqIql3w4RxuuvS0ZUtSDgDeHpDiQUFpSNFtqwcf6DSmH8htKDJhaoqF6FxlEc=
+	t=1708094436; cv=none; b=IOjfGiOH7od7Co4PK8Onu3brA9JZzvRb68D2ZIOQdDTPntc9Ylt8msAwm2IZmKo/8NPxzCSr0xjOkX45vEaVnTBkaF7gKa43BYIGAeGC4Fm/hKn9yyTgr1kjD4sCbz/MCwyrVvwJW0rNDsQnCh/pUQEuqH3ABz8EyYpzBnz1bS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708092507; c=relaxed/simple;
-	bh=VWBsKuNrGY4MHfVRFud0fpjtMJD9nw9ddeYFNhkmHOs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BR4rs2hlwAS+eNhjzEpERe5b0jYCHl5NpKSaeoCUzCMIvT8rYawpssPcYF+SGIJCOx81L9nk1DAKryB6G6jNgEgOXfDqOQ18oLyElYD06ByV/UTST6H6c27+IO08eDqm0HEypn3cnoAUY7JxCb+8TpnkYPTfoTNPygYzMWxDbKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JEJxSQkD; arc=none smtp.client-ip=209.85.214.177
+	s=arc-20240116; t=1708094436; c=relaxed/simple;
+	bh=VhhgxqgxNna3VDXzGb+u29de1zzuvgOHxd0eRr4Za/8=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=KkGTjDoSTAyX8LCfydfGdTrKDTBysDHe3PDGGBw0gP494pXxFVgmavzPmaBs+oygalJRYW5uiDPLqhaMAAQvkUc+Z/mmw5UsJdTK9EqCCZ8mV5BfwmVeqpZ3uVdZFWd0whbFyUOoqrnXln8M/p43bIwYPFuDEKXsWZ5g4O2kOS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6vRSD4J; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1dba177c596so7634145ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 06:08:25 -0800 (PST)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a3dfb2e03e7so39043966b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 06:40:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708092504; x=1708697304; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hDNGahqQJk0+PITO4aJ9GSNZ6MTNzgQKhJKA5SQZKi8=;
-        b=JEJxSQkDlBSxDwr2A8IeMR85T+g8S+1tDUy1Cfi6B1n1uwMyXmUDPZVF363lc/8gFI
-         OslOa/0P+EORrnKMizcJXnAhGbtxJXZnTKcM76Z8wEAlMW0VE7twP5CCp1n89bENMO4T
-         d1LYqv0oWvSogkJ/HTe8SKyDChlQkMLzwOgAR3WVLGurUSFuM9wwY2SnNVhhsrkT8MLp
-         +XiC7bxox//Im/muCdXrCO00Z+QLw1Nhg6IfVyEtZASLE3AL3jjAPuEBYK5QemohBx2L
-         ChwP9L6AFosAh1jCm+U769bytLrJZ16v3YF6u8MWKB0K9CxsKsMPgvEBuhYhCkJAHWZ6
-         TUeQ==
+        d=linaro.org; s=google; t=1708094432; x=1708699232; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZRC42YbuNYRdIwcaj+US8j1sKLD+6CzDw3sU7mb37/4=;
+        b=C6vRSD4JJq5VeMpEP/qRigg9X6R76yWVZMsOrj+Tc1BoLlL99PJRhdXCL7JfIyG5GX
+         jCqYQWrKDtOxbjTqzp6frBGY01m/xc0MIHJ5tsq7llV9AxClh/BJH1UexH15Fbrn6jj/
+         1ta6q/qIsSOO8XZIMNWh3LjtVanF5H6mCeRsxOzxGNcxH3e7ydzkfp880eOUEdcqf/Zi
+         0DrgV7iwPy6YcfTijX46hkS8bSz5xioYPguXBptI40L1ZCfSNdNvbfBkvMuN/Y7Vzkkp
+         nYTbWV4wGHkvdigTBChx/xitB18De9uMjTYTUWAgwfE3ZLMkJcLp7kbAfmc3JXapjIGO
+         laUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708092504; x=1708697304;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hDNGahqQJk0+PITO4aJ9GSNZ6MTNzgQKhJKA5SQZKi8=;
-        b=dPJEtPgr3NcVkSSdAsMfjg8Fiexnk7PBVKaWoRRuxWmis+nL4CqIfzz5ONlVM4Di69
-         4GJfsjfSsbSoZDznoyAb/A/t5B2dJaOlplkaxvIaquiqRZypqXJBXJgP6+HNseYSf+n2
-         JhMLu7uR+3PBUuexJejRRZG6nb5ReYPrFOP3iF5WyN7RtEXVyb/kqfYiJbZt3Fep/t4w
-         bYaJqsijBK34UUHCvkwnk43kP0VVkDDXoQx2aGC8DUHMiNqrEOadk3ikJYIzFise6VW4
-         F+NveRWDpfeM9mEGAJhrpE2P1exTs5kmYDyAdmjfJL80lTxIlCT4Qdg0WPYb9M9Ih9li
-         PChA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkTaC/lqTlWUIfl/zBlDlMnwVgslsCtBwmiwTPFkPyTP9GYLs0XmSfsIWDUfagbAHsCLczDEb6QmCtr9oSnuUeBx5KMNJRVTpPFzSsTw==
-X-Gm-Message-State: AOJu0Yx9SL/3cDO1MQobcZiWN5zPJYpGgIH5RuzBPGjQORHIjw60Xe0n
-	UTEFWxRNPsm2Fewa7JBAts483EqCUtNrJzq7NTDY6O1vdvsEvEKhtrJjsBqjdA==
-X-Google-Smtp-Source: AGHT+IEJ67yKNp9ZCPVkUP0bhXP3swDJdkIjJCRgMu0wYsy757xU1RvqSe3sdhXohwWYryr7nTgkZQ==
-X-Received: by 2002:a17:902:7c8c:b0:1db:47bb:671b with SMTP id y12-20020a1709027c8c00b001db47bb671bmr9327518pll.19.1708092504602;
-        Fri, 16 Feb 2024 06:08:24 -0800 (PST)
-Received: from thinkpad ([120.138.12.48])
-        by smtp.gmail.com with ESMTPSA id jl21-20020a170903135500b001d8e41b3f95sm3036484plb.51.2024.02.16.06.08.20
+        d=1e100.net; s=20230601; t=1708094432; x=1708699232;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZRC42YbuNYRdIwcaj+US8j1sKLD+6CzDw3sU7mb37/4=;
+        b=nWzcPCxsiMkVbsiffGzRRRjB46ltCzvqtPz0VT/+dN08sR2Z7Z/YA4lYr7quVmZ6Xm
+         1NA8IQeTW/R7FNzHeWimFLy0jilz/j00edZ7Tsjd4hSkiz9FHDYS7JzOkZNqOHNQjxzz
+         Qpw57tnJRgynn7psRdS9Djb42dB6cqhU/r5gv9v7knf21p3ucIPmuE4kwUPbdlvYp3n3
+         GRhW2qrR81ze4Y4GgvM7Mv39juptJRv4h/e8APmOYk9oE0IfHvkOCJJmFX69zfRywi8/
+         SZ4HXidVMkeKI7iNY6Rwj/yqbsFQfYWFf5WpOAsGmXxW9sGwSjOwVFVTHJC76+Wm+wPm
+         scUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXRaUXznte5jw7r6nN+hOCZc+ISeAo5+1RHyelavAvcmydfPtzO/TF8io2tYL1mKikXDvM0PLZDeFMygqKKMx3Lst79bQjcG26Q/4mO+A==
+X-Gm-Message-State: AOJu0YwwYci8zuoutdA7HapX5thWNVGYHMIUaFe3EtlevQMDU290Dvw9
+	W5aPZ281QbhoMG1Ng/UnH69UeGMbcnHUKhiINLCS99OnBGLTRWy36RC/F/kJ66o=
+X-Google-Smtp-Source: AGHT+IHf//9yt3eTnyw6VXgXdUG6tjNHVGPCN0at0VvNZn01LUmWCi7a4swsg2sOshpZkHrmmM9UNA==
+X-Received: by 2002:a17:906:185a:b0:a3d:994a:791d with SMTP id w26-20020a170906185a00b00a3d994a791dmr3667044eje.59.1708094432164;
+        Fri, 16 Feb 2024 06:40:32 -0800 (PST)
+Received: from krzk-bin.. ([78.10.207.130])
+        by smtp.gmail.com with ESMTPSA id a8-20020a170906670800b00a3ce3c5b2a4sm1592942ejp.195.2024.02.16.06.40.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 06:08:24 -0800 (PST)
-Date: Fri, 16 Feb 2024 19:38:18 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Can Guo <quic_cang@quicinc.com>,
-	Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+        Fri, 16 Feb 2024 06:40:31 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Hector Martin <marcan@marcan.st>,
+	Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: msm8996: drop source clock
- entries from the UFS node
-Message-ID: <20240216140818.GN2559@thinkpad>
-References: <20240213-msm8996-fix-ufs-v2-0-650758c26458@linaro.org>
- <20240213-msm8996-fix-ufs-v2-6-650758c26458@linaro.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Krishna Reddy <vdumpa@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	virtualization@lists.linux.dev
+Subject: [PATCH 1/4] iommu: constify pointer to bus_type
+Date: Fri, 16 Feb 2024 15:40:24 +0100
+Message-Id: <20240216144027.185959-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240213-msm8996-fix-ufs-v2-6-650758c26458@linaro.org>
 
-On Tue, Feb 13, 2024 at 01:22:22PM +0200, Dmitry Baryshkov wrote:
-> There is no need to mention and/or to touch in any way the intermediate
-> (source) clocks. Drop them from MSM8996 UFSHCD schema, making it follow
-> the example lead by all other platforms.
-> 
+Make pointer to bus_type a pointer to const for code safety.
 
-Okay, here you are dropping the "core_clk_unipro_src" anyway. So my earlier
-comment can be ignored.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/iommu/iommu-priv.h | 5 +++--
+ drivers/iommu/iommu.c      | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
-> ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 ------
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index ce94e2af6bc5..f18d80a97bbf 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -2047,24 +2047,20 @@ ufshc: ufshc@624000 {
->  			power-domains = <&gcc UFS_GDSC>;
->  
->  			clock-names =
-> -				"core_clk_src",
->  				"core_clk",
->  				"bus_clk",
->  				"bus_aggr_clk",
->  				"iface_clk",
-> -				"core_clk_unipro_src",
->  				"core_clk_unipro",
->  				"core_clk_ice",
->  				"ref_clk",
->  				"tx_lane0_sync_clk",
->  				"rx_lane0_sync_clk";
->  			clocks =
-> -				<&gcc UFS_AXI_CLK_SRC>,
->  				<&gcc GCC_UFS_AXI_CLK>,
->  				<&gcc GCC_SYS_NOC_UFS_AXI_CLK>,
->  				<&gcc GCC_AGGRE2_UFS_AXI_CLK>,
->  				<&gcc GCC_UFS_AHB_CLK>,
-> -				<&gcc UFS_ICE_CORE_CLK_SRC>,
->  				<&gcc GCC_UFS_UNIPRO_CORE_CLK>,
->  				<&gcc GCC_UFS_ICE_CORE_CLK>,
->  				<&rpmcc RPM_SMD_LN_BB_CLK>,
-> @@ -2072,8 +2068,6 @@ ufshc: ufshc@624000 {
->  				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
->  			freq-table-hz =
->  				<100000000 200000000>,
-> -				<100000000 200000000>,
-> -				<0 0>,
->  				<0 0>,
->  				<0 0>,
->  				<0 0>,
-> 
-> -- 
-> 2.39.2
-> 
-
+diff --git a/drivers/iommu/iommu-priv.h b/drivers/iommu/iommu-priv.h
+index 2024a2313348..5f731d994803 100644
+--- a/drivers/iommu/iommu-priv.h
++++ b/drivers/iommu/iommu-priv.h
+@@ -21,10 +21,11 @@ int iommu_group_replace_domain(struct iommu_group *group,
+ 			       struct iommu_domain *new_domain);
+ 
+ int iommu_device_register_bus(struct iommu_device *iommu,
+-			      const struct iommu_ops *ops, struct bus_type *bus,
++			      const struct iommu_ops *ops,
++			      const struct bus_type *bus,
+ 			      struct notifier_block *nb);
+ void iommu_device_unregister_bus(struct iommu_device *iommu,
+-				 struct bus_type *bus,
++				 const struct bus_type *bus,
+ 				 struct notifier_block *nb);
+ 
+ #endif /* __LINUX_IOMMU_PRIV_H */
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index d14413916f93..170329a085b8 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -291,7 +291,7 @@ EXPORT_SYMBOL_GPL(iommu_device_unregister);
+ 
+ #if IS_ENABLED(CONFIG_IOMMUFD_TEST)
+ void iommu_device_unregister_bus(struct iommu_device *iommu,
+-				 struct bus_type *bus,
++				 const struct bus_type *bus,
+ 				 struct notifier_block *nb)
+ {
+ 	bus_unregister_notifier(bus, nb);
+@@ -305,7 +305,8 @@ EXPORT_SYMBOL_GPL(iommu_device_unregister_bus);
+  * some memory to hold a notifier_block.
+  */
+ int iommu_device_register_bus(struct iommu_device *iommu,
+-			      const struct iommu_ops *ops, struct bus_type *bus,
++			      const struct iommu_ops *ops,
++			      const struct bus_type *bus,
+ 			      struct notifier_block *nb)
+ {
+ 	int err;
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
 
