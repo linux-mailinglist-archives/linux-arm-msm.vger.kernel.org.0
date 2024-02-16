@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3021D858237
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 17:14:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68C1B858241
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 17:17:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49F24B2137D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 16:14:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C1C51C21924
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 16:17:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7680212FF62;
-	Fri, 16 Feb 2024 16:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 097A012FB39;
+	Fri, 16 Feb 2024 16:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lFFJCQwz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YLhZ8Urr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7DE12FB2A;
-	Fri, 16 Feb 2024 16:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B19F12FB07;
+	Fri, 16 Feb 2024 16:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708100033; cv=none; b=N03AQ0Tv/8Y/D/XMjpMjgNltGbxirvZNSloMoyuM+ZBOdJcd/WgDAjqlPYUiTt05+w6snmJE7FDBWm9mTtgJMrJCgU1Zrda4w7y2Ab6FF0NUrrPyw3EXyaQO/4XvB6GLO21ALlpWKPlj1f9wzWmWt5BcL3ojPad97UPGeodR6MM=
+	t=1708100271; cv=none; b=L5eYnczTvLLr7DkShFI5NPp2mY9MC21z9N2NJIgkgA2nxyOZGzEQL8FRpBCQCIy0omQdj9l258D//Tgnoh5Z7fjrAqLJGHFWbY3Xb3SMnIktNvQACftMxHv1cVErzWdHLYZcARpsEkm93qvi1so+g5GZDwMcACH4sBpW8Wv2esQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708100033; c=relaxed/simple;
-	bh=pgWB8gIDXuJeUwDAXlFyiHSuW8VCIa9c0sSJlQvxunQ=;
+	s=arc-20240116; t=1708100271; c=relaxed/simple;
+	bh=1wNdSjbg5tRh3dMTBmjtbbkcd3rSjBMoG/xSPJIZT1o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=M6kck5E1nmqu/l49ZEy0lm+OG9r26K8yQh6WDBGdvWwop9tc/cUaxva5odVm6C5YQgcCIH56Ye7LMmvINlLLHYM42j7ZYGQ2zOW1rRBKWCftvhh+4FPsdFrHcBrEHumex6mOb6FlZwgU/WgV96PjkRjb3Z88cPiZvqi1dsr20/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lFFJCQwz; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Tj/TTFMyETeMenF3GRzgz73Wqg+gnzXGQ92iLnVjeDQ4ba5IuhdlzhWCe7T34CIwMU7wYDfT1ML+X4vp9w8QxM+OG9mfeBEL9JSzXu1AOFrBiBF5lA8Yus+b40btWj14sQqLYwVf6FgDNU2G2RfCrS7fF0VVgrsehTKKCrH1dbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YLhZ8Urr; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41GDrAhE004249;
-	Fri, 16 Feb 2024 16:13:37 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41GD3VNV002219;
+	Fri, 16 Feb 2024 16:17:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+s47s+oRh66JHw0QvJ6IVx2HVUlYYq8i2oqDQRbbDig=; b=lF
-	FJCQwzs80Of5CG+ukeY9DHL2bH7il19HDv5gI9hnHgau0nkXlj3Ld+CmTXojaddx
-	fQOiQ30S7Zzn04MpZ/j6dG5B+s56Brbakz1+kqEs74n2IM5SCbxOUeXv7DL0AjW6
-	5OO11o6eA+hAZgkBsXxevUFrifBHQt/MwqGlMYN0p3rNbRqkIvNycD8W+2BBeqJy
-	JKMXJniTgZoNf5mbyLzJ1nU5V7U5Te0LY/srqMU6VZevK1Hf/lLSbjrsTi08k9IO
-	qSrwT4+7Y1ig9oOieup8oGy9Dnok7ZcUacZ3LaSn5EGzK6Qn4wUB+6gcJdfzjx7H
-	ZP+m9OL9Sta2iQC41VQg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9fkfc0y0-1
+	qcppdkim1; bh=B4eyMajiTRUV1N5hgCQ1JZM85SAd3ezHL/YInFjHpd4=; b=YL
+	hZ8UrrFO1p25b7bZ9BpKHg/JH/0ZE2O3HQpX1kMUY1EkyBa8AegeAmiBuxlzZoaI
+	dQw0MaSPXoevghgDc8QMogmjga0yuUqHCFWFG2FpMGsIdDAr/wRop/uPecQGFNXY
+	3JMSgNIMzFdvRmcrxiYLaqWpQ8ndUkYFNHmCoomOnxOvhshImtaruQucDZ2JzNK3
+	7D3mgTEqfG37kbGJS9kQz3a3HrRzMdMY3uqh6/WsbOjnbs6r6FviMxgQo6lah6kz
+	mjRUoioIuVxaZ/1EPSh/+agyGphX9d2RiDqk2Oa/gxaSqnQzp6Sdhrl4ayWS1Ohf
+	OnBKDnDjCkFzsWuqsYfw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9fkfc17a-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 16:13:36 +0000 (GMT)
+	Fri, 16 Feb 2024 16:17:40 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GGDZiH015439
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GGHdUw010327
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 16:13:35 GMT
+	Fri, 16 Feb 2024 16:17:39 GMT
 Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
- 2024 08:13:35 -0800
-Message-ID: <ce40205b-25c6-6ba5-23a4-70a51b4e1b21@quicinc.com>
-Date: Fri, 16 Feb 2024 09:13:34 -0700
+ 2024 08:17:38 -0800
+Message-ID: <640dcd49-394b-1cc0-8cce-01aaabc751b8@quicinc.com>
+Date: Fri, 16 Feb 2024 09:17:37 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,42 +66,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH] f2fs: doc: Fix bouncing email address for Sahitya Tummala
+Subject: Re: [PATCH] dt-bindings: net: bluetooth: qualcomm: Fix bouncing
+ @codeaurora
 Content-Language: en-US
-To: <jaegeuk@kernel.org>, <chao@kernel.org>, <quic_stummala@quicinc.com>,
-        <quic_bjorande@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-f2fs-devel@lists.sourceforge.net>,
+To: <quic_bjorande@quicinc.com>, <marcel@holtmann.org>, <luiz.dentz@gmail.com>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <quic_bgodavar@quicinc.com>, <quic_rjliao@quicinc.com>
+CC: <linux-bluetooth@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-References: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
+References: <20240202181122.4118105-1-quic_jhugo@quicinc.com>
 From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
+In-Reply-To: <20240202181122.4118105-1-quic_jhugo@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Cr2KoCkvvaPxsIziVfFyMR7TPWg19cuW
-X-Proofpoint-GUID: Cr2KoCkvvaPxsIziVfFyMR7TPWg19cuW
+X-Proofpoint-ORIG-GUID: kVbLdiVGyazhhJ7RiokAvXEoMV4iz0lg
+X-Proofpoint-GUID: kVbLdiVGyazhhJ7RiokAvXEoMV4iz0lg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-16_15,2024-02-16_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- adultscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=307
+ adultscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=489
  spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0 phishscore=0
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401310000 definitions=main-2402160130
 
-On 2/2/2024 9:52 AM, Jeffrey Hugo wrote:
+On 2/2/2024 11:11 AM, Jeffrey Hugo wrote:
 > The servers for the @codeaurora domain are long retired and any messages
-> addressed there will bounce.  Sahitya Tummala has a .mailmap entry to an
-> updated address, but the documentation files still list @codeaurora
-> which might be a problem for anyone reading the documentation directly.
-> Update the documentation files to match the .mailmap update.
+> sent there will bounce.  Update the maintainer addresses for this
+> binding to match the entries in .mailmap so that anyone looking in the
+> file for a contact will see a correct address.
 > 
 > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Jaegeuk Kim will you apply this?
+Rob, will you take this?  You seemed willing to take similar changes.
 
 -Jeff
 
