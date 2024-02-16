@@ -1,189 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-11336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FD24857BB1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:31:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57E90857BF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:44:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00F851F22E49
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:31:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA8D7282963
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADBCE77F05;
-	Fri, 16 Feb 2024 11:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 474A777F24;
+	Fri, 16 Feb 2024 11:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Li7BNrv4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h5/bJFDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E6177A0F;
-	Fri, 16 Feb 2024 11:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6322F12E7E;
+	Fri, 16 Feb 2024 11:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708083069; cv=none; b=oezQtxR0uD9jH3JvskO0g/NdQmdBYAN29IXuBQnMxHlVv+qSqpA22LhYKH5MgRFOPlOF6Il6dCwXTOnmC2KEpVEVSvk8EerCW0CAiisR/OchWYLEiaQC04HyZLc6IbyO42lQrTTts7AapyGW5YpMQe/RByo3W3l2yZaSQcOC8dY=
+	t=1708083893; cv=none; b=n25/02p6bwrMTH7DMXtFygBxchiIy812HaP4Y+f6rTXMfOGVo8T5Kc0GOTRheJH3b5uJmotTzFYNMqJBc/kHUoUKsz8fWOAURgmQqYp4bK3EyVUea71QnZJc59rgisVsgJ/F5ff1zjnec66spHS+rCqcNqdpysk4z5L54+ThIfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708083069; c=relaxed/simple;
-	bh=TJamkMeETVXAU6QkC7A8Ognn1K46paOc5DcsQ8n28aw=;
-	h=Content-Type:Mime-Version:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=XzmrKjQRZOec6rh2gb7oBdGCxZ38GWR2zMLQ2SIde2jwNqNCs8uzNKGNo2Edk3zJdJPcP7KMA1Qu9oc73atmjQ0+hZ9ZS2Odz76Wb9F7oxTarZa3+jVHDEhzc363mvWWEfznw0AFQPsVx1mA4DxtBVfY1h/omUq5R20vyNZimXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Li7BNrv4; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a3d0d26182dso206566966b.1;
-        Fri, 16 Feb 2024 03:31:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708083066; x=1708687866; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CeAZhE7j4dRyX+kzFFWa3n1YxsCqKudIIvx3LQHUXoE=;
-        b=Li7BNrv4q2VI1du3vLMHylWl+JrA2qipZETw4SN4+vUVBuNPKSjd5z6/lNiR7wheSv
-         iO5qUaI2J7kr4hmtwe8j8OkuuJGtv3tLEFj5SFWioRpD87ZA1clL04MS3TdGNAqONT3d
-         pYCPOIGg4pRCAkmAb0YYu4VVzy5OnOuoFvfRXOFxvFhWs6IIu0ZRETsMvGatD2TO5WVm
-         EV0y5U+5oM2BIKR5BBy4GOa0p5pKiD+8zEozt9i6zgvYhJcZhB/fE6uw29W1+ChmVqSS
-         9RwAlIF5sXrMf3+9AjhkPhTxGIC+rOq52q5xkdcTojQTj+3pPJ4Qc5JWrwfwRHzEWfry
-         urlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708083066; x=1708687866;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CeAZhE7j4dRyX+kzFFWa3n1YxsCqKudIIvx3LQHUXoE=;
-        b=HB4uwJy2GXndECz0I5tr6hWmOGszGILrMRVQvvddr3SlEoVo88S+ONhqldcXRcWrD/
-         PpQwpu/RhiZGgdjVn6qhuHINrHcd3GajlD4Yn7PyrACG1q/SB1OaNGsBxmdLz+7dT5rw
-         CwBuWFB9x833vKQy+wclCdZjse1crIBA7tUBU0+XVmtM73WuyA7wnfIKOmurxdrew4jg
-         28oQwn92UNnxWILAdF+89dvbIKRUJhHJAMVbigCVNJgNm+6yBWoV0DgtV3U0QouS6svl
-         jUbaJ8CKiow3nOVcn2br9qTp6LJxiIEbnCRO+qe/kbxzyLqk1br23eec0YAvRPsjdzOR
-         CtWg==
-X-Forwarded-Encrypted: i=1; AJvYcCWmtOjIKyEoPepZk5Th/qwGodhpfIaHIvqUXNXUSZafs26h/Eju4Xmzxep9kWIZ8SXiFMYnHpQ7jXlCpPhBD1xwR77HU1aegOlljShBrgQ4EFvpt2TMWQytq18nE7BFoyjxmhXjMZa2FLN5RiqJq0++3M0BUNZRfLdWesCZokCorhavWVJ76AFQGpWdz4xUtfHtx3ozyNdflu0wGjIRW2BVZ2qyhbqzY2pPLupo7Q5sInLOKhHJTRapC4hiYE7RFqhKrbHU4Jh+xMm89ejTI72yr29KusSFqhdno3hJTWE6gtFy2jhOzxi+7ct/ITKnlR/2FVagnoqIWZr9oB0fEtLdMHFftUkyHsMqd3qpF8Z6yaDEfrHBegWRbGI=
-X-Gm-Message-State: AOJu0YySID0z82NQ5rnZS7KVunKsbfhiRr/4cV0TIGR/CVwvf2RfkHdP
-	/ruX/beMCmxrvfWMVVvO2if7sSHazbvFZH9mArmmWE5VmT7bueM3
-X-Google-Smtp-Source: AGHT+IGXWz97gD5gN+VSAVL7iY1zPTDMUokWZgtmUOJLcJDV64j1IaqQ0abnS0651OrxU9XfbwlwlQ==
-X-Received: by 2002:a17:906:11cc:b0:a3d:2cd0:c17a with SMTP id o12-20020a17090611cc00b00a3d2cd0c17amr3351354eja.58.1708083065855;
-        Fri, 16 Feb 2024 03:31:05 -0800 (PST)
-Received: from localhost (p200300e41f147f00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f14:7f00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id ts4-20020a170907c5c400b00a3df003b6a9sm242282ejc.119.2024.02.16.03.31.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Feb 2024 03:31:05 -0800 (PST)
-Content-Type: multipart/signed;
- boundary=b7223a00e4ef0df93c47d9276017bbb483a03ab38a891db7b003e5591ffa;
- micalg=pgp-sha256; protocol="application/pgp-signature"
+	s=arc-20240116; t=1708083893; c=relaxed/simple;
+	bh=xg3H3S3ln6QEVC/6fQKGUWqyLA6D0eWw7f5BVs1Es5g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=W4IYfx1QWWW2P43HA4s8xfUlWHNT837BLfPc+cNimA0MONGLqpRTqZAMpl7ZKzZ3jzlUdX9pd5JeUAOQWnkG3QQ8xL4Jb+cM0clEEBxWUQ5wXkx4vf8NDKJn1JmEZU0CT7Mb6FoBvckXDyJxNCJrKX9/bJZGQKvIu6oXYYtfM94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h5/bJFDb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41GBY5lt010430;
+	Fri, 16 Feb 2024 11:44:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=GrTWn4995ZuRctWZ1kMoEso1m63FAMtxfL+s1KsIQYk=; b=h5
+	/bJFDb4ke/ktcaez5sz0bn+sz3g8p0P32U4MhvOOOfIWQ0X37GbguZbuVowehyBI
+	Xks5xVhAxU6sNIzqb9dNssGRGTEJ/JuR9KTVTw3+YUFu+RSaUOPAnVFw4PYHT1Z5
+	1yZnsgG4Mh/q5I/Y5Yzz7OXTQHqPUMs8oWDt5j9IIepnbPYwv9sU4Ugh6kUOzYvU
+	t3kHI4f9OAV17q2D/19/TE0D4vDkf3F/aaZkzr6F5B/k3ac3bkasx88oPFkB6zw1
+	UDb3SZoFqPxM5vcLC6POQ7LuVJq0zxUOY6YILeqbpXtCLlRxrpcjqvtxdRMOtW/y
+	hrEGfbX1czkAamTYF75A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9fkfbfc6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 11:44:27 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GBiQYp010439
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 11:44:26 GMT
+Received: from [10.218.16.59] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
+ 2024 03:44:14 -0800
+Message-ID: <d2f2cb91-983f-48e4-b53a-8af2cd87f3d2@quicinc.com>
+Date: Fri, 16 Feb 2024 17:14:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Date: Fri, 16 Feb 2024 12:31:03 +0100
-Message-Id: <CZ6GWUQ73SSL.6HP29PU9Q7R@gmail.com>
-To: "Mark Hasemeyer" <markhas@chromium.org>, "LKML"
- <linux-kernel@vger.kernel.org>
-Cc: "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
- "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Rob Herring"
- <robh@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Sudeep
- Holla" <sudeep.holla@arm.com>, "Andy Shevchenko"
- <andriy.shevchenko@intel.com>, "Raul Rangel" <rrangel@chromium.org>,
- "Tzung-Bi Shih" <tzungbi@kernel.org>, "AKASHI Takahiro"
- <takahiro.akashi@linaro.org>, "Alexandre TORGUE" <alexandre.torgue@st.com>,
- "Alim Akhtar" <alim.akhtar@samsung.com>, "Andre Przywara"
- <andre.przywara@arm.com>, "Andrew Morton" <akpm@linux-foundation.org>,
- "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>, "Baoquan He"
- <bhe@redhat.com>, "Bartosz Golaszewski" <brgl@bgdev.pl>, "Benson Leung"
- <bleung@chromium.org>, "Bhanu Prakash Maiya" <bhanumaiya@chromium.org>,
- "Bjorn Andersson" <andersson@kernel.org>, "Chen-Yu Tsai"
- <wenst@chromium.org>, "Conor Dooley" <conor+dt@kernel.org>, "Daniel Scally"
- <djrscally@gmail.com>, "David Gow" <davidgow@google.com>, "Enric Balletbo i
- Serra" <eballetbo@gmail.com>, "Frank Rowand" <frowand.list@gmail.com>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Guenter Roeck"
- <groeck@chromium.org>, "Heikki Krogerus" <heikki.krogerus@linux.intel.com>,
- "Heiko Stuebner" <heiko@sntech.de>, "Jonathan Hunter"
- <jonathanh@nvidia.com>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Lee Jones" <lee@kernel.org>, "Len
- Brown" <lenb@kernel.org>, "Linus Walleij" <linus.walleij@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Mark Brown"
- <broonie@kernel.org>, "Matthias Brugger" <matthias.bgg@gmail.com>, "Michal
- Simek" <michal.simek@amd.com>, "Mika Westerberg"
- <mika.westerberg@linux.intel.com>, "Nick Hawkins" <nick.hawkins@hpe.com>,
- "Prashant Malani" <pmalani@chromium.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, "Rob Barnes" <robbarnes@google.com>, "Rob Herring"
- <robh+dt@kernel.org>, "Sakari Ailus" <sakari.ailus@linux.intel.com>,
- "Stephen Boyd" <swboyd@chromium.org>, "Takashi Iwai" <tiwai@suse.de>, "Tony
- Lindgren" <tony@atomide.com>, =?utf-8?q?Uwe_Kleine-K=C3=B6nig?=
- <u.kleine-koenig@pengutronix.de>, "Wolfram Sang" <wsa@kernel.org>,
- <chrome-platform@lists.linux.dev>, <cros-qcom-dts-watchers@chromium.org>,
- <devicetree@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-gpio@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
- <linux-mediatek@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
- <linux-samsung-soc@vger.kernel.org>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v3 00/24] Improve IRQ wake capability reporting and
- update the cros_ec driver to use it
-From: "Thierry Reding" <thierry.reding@gmail.com>
-X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
-References: <20231226192149.1830592-1-markhas@chromium.org>
-In-Reply-To: <20231226192149.1830592-1-markhas@chromium.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <jic23@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
+        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
+        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
+        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
+ <20231231171237.3322376-3-quic_jprakash@quicinc.com>
+ <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ofKoIyoRhH9_CAwxDddvjHrndBr679Uc
+X-Proofpoint-GUID: ofKoIyoRhH9_CAwxDddvjHrndBr679Uc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-16_09,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402160094
 
---b7223a00e4ef0df93c47d9276017bbb483a03ab38a891db7b003e5591ffa
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Krzysztof,
 
-On Tue Dec 26, 2023 at 8:21 PM CET, Mark Hasemeyer wrote:
-> Currently the cros_ec driver assumes that its associated interrupt is
-> wake capable. This is an incorrect assumption as some Chromebooks use a
-> separate wake pin, while others overload the interrupt for wake and IO.
-> This patch train updates the driver to query the underlying ACPI/DT data
-> to determine whether or not the IRQ should be enabled for wake.
->
-> Both the device tree and ACPI systems have methods for reporting IRQ
-> wake capability. In device tree based systems, a node can advertise
-> itself as a 'wakeup-source'. In ACPI based systems, GpioInt and
-> Interrupt resource descriptors can use the 'SharedAndWake' or
-> 'ExclusiveAndWake' share types.
->
-> Some logic is added to the platform, ACPI, and DT subsystems to more
-> easily pipe wakeirq information up to the driver.
->
-> Changes in v3:
-> -Rebase on linux-next
-> -See each patch for patch specific changes
->
-> Changes in v2:
-> -Rebase on linux-next
-> -Add cover letter
-> -See each patch for patch specific changes
->
-> Mark Hasemeyer (24):
-[...]
->   ARM: dts: tegra: Enable cros-ec-spi as wake source
-[...]
->   arm64: dts: tegra: Enable cros-ec-spi as wake source
-[...]
+(Resending this mail for tracking on mailing lists, as it got rejected 
+from lists the first time due to HTML)
 
-Both patches applied, thanks.
+On 1/4/2024 1:48 PM, Krzysztof Kozlowski wrote:
+> On 31/12/2023 18:12, Jishnu Prakash wrote:
+>> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+>> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+>>
+>> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
+>> going through PBS(Programmable Boot Sequence) firmware through a single
+>> register interface. This interface is implemented on an SDAM (Shared
+>> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
+>> than a dedicated ADC peripheral.
+>>
+>> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
+>> channels and virtual channels (combination of ADC channel number and
+>> PMIC SID number) per PMIC, to be used by clients of this device.
+>>
+>> Changes since v2:
+>> - Moved ADC5 Gen3 documentation into a separate new file.
+> 
+> Changelog goes under ---.
+> 
+> Why did you do this? What is the rationale? Sorry, this patchset goes
+> nowhere.
 
-Thierry
+I'll elaborate this more in the next patchset. There are two main 
+reasons for adding this documentation in a new file:
 
---b7223a00e4ef0df93c47d9276017bbb483a03ab38a891db7b003e5591ffa
-Content-Type: application/pgp-signature; name="signature.asc"
+1.This device is not exactly like the existing QCOM VADC drivers as it 
+now combines VADC functionality (reading ADC channel on client request) 
+with ADC_TM functionality (thermal threshold monitoring).
 
------BEGIN PGP SIGNATURE-----
+2.Adding this device's bindings in the existing qcom,spmi-vadc.yaml file 
+is not possible as it would require updating some of the existing 
+top-level constraints. (for the older devices in that file, "reg" and 
+"interrupts" can have at most one item, while this device can have more 
+than one item under these properties.)
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmXPR3kACgkQ3SOs138+
-s6FXyA//QEgOaLPJMLtFwzEUNlO0/8MF3SAbMW7kCkEt3S3OMXQ3wtyOeIC3nlyN
-zwxSqhOzC1I/qdbqdnc5ejbrPWB/9d6ohPyc45vT19QAS79mc9nB2ZQm3AoVlPaA
-HGQhrtMEx6KRBu+GjS9Sz9YQjBftSWl/kr8oAwXOs6wtg2m06tfm00LF3bVFLQEu
-aTZ1Jal4+fIpK0OK/yz/yhczCMQCbVnKBClkwuoKQWJpxh7z/xYCY2Gm50VD4sN7
-F60KcEQzW8DfY5dGd1eT9oY7UqqA+yoRDGNN7KNYYurFPoEL6jZqvSts1J26pp4u
-MjFQS2jY6bjbQFR0RRUwwjPRRmUXRcGpW3qHN/+ajof0pXgRa/rWnthIB2boTs4Q
-uApu3k81kwLXVgZZh9YRXCwcYf8sgMo7Qj849I8e5vRi/MuL6jwKyU7P8SwRrWRd
-xIY0v+EKupY6iDvxPApV4b5Mw8gyxbRO6Kcm5Ep7Z8DBCeCr+g3iZFHVUXpG3vll
-PjwZW9bC+U9kcn/W5qoJrdKqGFAsaqks7fzWoIBIX5rVNbNSNZpG7Dwi/EeNUmak
-T5tJqIr3VbtsNd0ni6f42Efs9z/m0vsUKL6H5mGZoX3oTGXvzO91XF2gfFMEqOO9
-8cxE1rJREy1F73S7VZWOE46nyNPlsD6qm5+fApxvV3eKGRO5wfU=
-=fOyD
------END PGP SIGNATURE-----
 
---b7223a00e4ef0df93c47d9276017bbb483a03ab38a891db7b003e5591ffa--
+> 
+>>
+>> Changes since v1:
+>> - Updated properties separately for all compatibles to clarify usage
+>>    of new properties and updates in usage of old properties for ADC5 Gen3.
+>> - Avoided updating 'adc7' name to 'adc5 gen2' and just left a comment
+>>    mentioning this convention.
+>> - Used predefined channel IDs in individual PMIC channel definitions
+>>    instead of numeric IDs.
+>> - Addressed other comments from reviewers.
+>>
+
+>> +          per PMIC in the PMIC-specific files in include/dt-bindings/iio/adc.
+>> +
+>> +      label:
+>> +        $ref: /schemas/types.yaml#/definitions/string
+> 
+> Why do you need it in the first place? Don't you miss some $ref?
+
+This is just meant to show the ADC channel name in DT for our reference. 
+I'll check if I can use adc.yaml, which includes this property already, 
+as a reference in this case.
+
+> 
+>> +        description: |
+> 
+> Do not need '|' unless you need to preserve formatting. Applies everywhere.
+> 
+> 
+> 
+>> +            ADC input of the platform as seen in the schematics.
+>> +            For thermistor inputs connected to generic AMUX or GPIO inputs
+>> +            these can vary across platform for the same pins. Hence select
+>> +            the platform schematics name for this channel.
+>> +
+
+
+>> +
+>> +      qcom,adc-tm:
+>> +        description: |
+>> +            Indicates if ADC_TM monitoring is done on this channel.
+>> +            Defined for compatible property "qcom,spmi-adc5-gen3".
+>> +            This is the same functionality as in the existing QCOM ADC_TM
+>> +            device, documented at devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml.
+>> +        type: boolean
+>> +
+> 
+> Why do you duplicate entire vadc file? Why it cannot be part of that
+> file? Oh wait, it was in v2.
+> 
+> You now duplicated a lot of property definitions without clear reason.
+> If this is intention, then you need to put them in common schema.
+
+Many of the properties used for earlier QCOM VADC devices will be used 
+for this device too.....do you mean I can add a new schema file (named 
+something like qcom,vadc.yaml) and move common properties into it (like 
+qcom,hw-settle-time, qcom,decimation, etc) from this file and 
+qcom,spmi-vadc.yaml?
+
+
+Dmitry suggests doing it in a separate patch, I'll follow his suggestion 
+if there's no issue.
+
+
+>> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h b/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+>> index c0680d1285cf..750a526af2c1 100644
+>> --- a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+>> +++ b/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+>> @@ -6,7 +6,7 @@
+>>   #ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+>>   #define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+>>   
+>> -#include <dt-bindings/iio/qcom,spmi-vadc.h>
+>> +#include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
+> 
+> ? How is it related?
+
+This should have gone into patch 1, I'll fix it in the next patch series.
+
+I'll address all your other comments in the next patchset.
+
+Thanks,
+
+Jishnu
+
+> 
+>>   
+>>   #define SMB139x_1_ADC7_SMB_TEMP			(SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
+>>   #define SMB139x_1_ADC7_ICHG_SMB			(SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
+>> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h b/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+>> index ef07ecd4d585..cfe653d945a4 100644
+>> --- a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+>> +++ b/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+>> @@ -1,6 +1,8 @@
+>>   /* SPDX-License-Identifier: GPL-2.0 */
+>>   /*
+>>    * Copyright (c) 2012-2014,2018,2020 The Linux Foundation. All rights reserved.
+>> + *
+> 
+> Drop stray blank line
+> 
+> Best regards,
+> Krzysztof
+> 
 
