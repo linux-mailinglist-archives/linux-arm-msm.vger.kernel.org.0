@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-11323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9572857AE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:04:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 512A5857AF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 12:04:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 468612808E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:04:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7F05B23DF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:04:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37DA35813F;
-	Fri, 16 Feb 2024 11:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4797658AAD;
+	Fri, 16 Feb 2024 11:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vHbYtuH9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LUvD8H/0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E1058105
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 11:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A521058135
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 11:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708081438; cv=none; b=HQzr/rpudJitPlhjCopv2V5RnJXbKl+s8Kafs4WTOsum8+Nzb8fa6xJy8+OGVvYrsRPou7ZlEzvvmwLiB/3yQv/J4UKSwIQS7QCA6NrNCS+QPdGGwz4bs2dB3xTZ6u0F5+YQLbpQOfTI4q8Ww4TQU75rR6tY/+nWHd0HkquAUM4=
+	t=1708081440; cv=none; b=h2F6G4WTXQNnXqHF31PHItLh9a3IPvBRz8DDGTljH04ec2iUB9Gg/SME/34vQDFKi0NOox247jzj06YGPHoZUH4wZhvYvtsmNd+3JkBHst1Sd3s8/iZ/Pp4PtGgdF4PE/yZFvWf2/9R+Fommp22yUV5G//XmcJ6Vn1s22jne2ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708081438; c=relaxed/simple;
-	bh=7rJgqOrASH1+9XrvkT4uAGIQBP7+drYr4P1tenEnLrU=;
+	s=arc-20240116; t=1708081440; c=relaxed/simple;
+	bh=bKSwIMquL3ldQeZEbQDg4MhNZo4DD2FIt5FqyCH+Nw0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EkG4I7GdY9HHas/e/N7LSwl/Sy+qehidqUKbBmyiAhdef88ruC0LElrsjBspmOQpp3m/slhwESaskWZJXX8F+5jStIKAJz59Ne/i1QNWTifNPiwCbsh4UqXRWNHgVazIG9yV6MvMmMLIcJwgFsRBIzQBjOFs17z+f0hYY8oGZ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vHbYtuH9; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:To:Cc; b=m6K2jvRofonByeL2ZbqgcC8kPYTIlwK0v/U4ehS7H7cbyCipDMRN8xBgkeTUPkKAvCja5fKm3JzEgcPZz2lWj9vflcjF21AcRfDCU9OBSnP3dYR16KbJ/pKdTwuK/zLHUkaH9INT2fnFYPyERP+lKQyZ8rc0qlW7CctUse40EWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LUvD8H/0; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41241f64c6bso3883295e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 03:03:56 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4122a8566e4so9758845e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 03:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708081434; x=1708686234; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708081436; x=1708686236; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=M3p79qEtfp2ZjIJ+XTjXE+1hnr3OUwv786b7yeYiOaw=;
-        b=vHbYtuH9FeDfiEFVS+hHfrp3/Mw1yXUwy33R1nb441voux464wagNysJABoEZS77bg
-         kEBkzIGjGg41AV1OfnRVwAiaoRpOBn/uYUQR6+kVX2Si1CArrldRTEKVqpItaoMJPqjt
-         uLsMfFbxe4TXnRxINcHX6UgOewWYzS+XNzLab1Jih53y9Z048mHHIZYD7tHow6cdQDLC
-         QLKkydlBsTMJe2Z8FAzJthp3J3ZLh5f5qMP1PK0LmOmFRrztaVOJkBS9CCG7f0sF7Ods
-         YQYnzIeWFUFM/p/C0bq646KtQw/u4j2In7BOTRBBn61V5VWzXqLjybjYPMRLVDsqT+4z
-         G6eA==
+        bh=AWxHJkBPvh7dfzfYkfpsJVh1kKWdDbAwY9dahQR1fTQ=;
+        b=LUvD8H/062QGeSIqWrLEQKcJ8x0YYWPAuNtYv8DRyIWdDUNCu21KIIr5Ok4l3xgQC3
+         XfxJyypeo/femfPrkFkYBwFQ1lXxNpIRnHtssNSAIUCEes7ASmN2P32dTarxXPS58yaT
+         goCPXP4Z0aTbUiivvC9TX8pTv3tt2ZoTxWBgNXNwHJwSvyVJSK5XnZt4ekjzvSMbOKPB
+         3WOeCi4st5PTuhpV2p7BoH/BMmKmy76uDlYPXfohlPl5Pr0TKsz0OafuejXpzvazoQMt
+         5y5N+R+kOdE8AcY87UZzHwGknbJGdlLJfOhYVmTGCBca8AgBEPXYLhTjtAaGUWrvoKkl
+         E2Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708081434; x=1708686234;
+        d=1e100.net; s=20230601; t=1708081436; x=1708686236;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M3p79qEtfp2ZjIJ+XTjXE+1hnr3OUwv786b7yeYiOaw=;
-        b=ISaROKq2T7544aVjzu1S3CgCccD+1XZ5doPNvvTtwPN50l30OfzqH5A5Kdqg/4o9Bz
-         tkhfFtQ2k+WwT+4uQzHax4rlziKgEnnvHt34ImhR19nKN7/ko5JC2PAjOWQZHEoR0UGb
-         ERhja85lB42OqaO0W3XIRFT2a53MgDBFTOu81TOsfsNpTonvsv65OEdku+QU9feTVR27
-         smWEb7RKVnb9Svt8H3/Ej389EUNxjD+RBiPVnnomK5PS9AXO77E/GumfCbdzJAoK9xx2
-         sAX+gnTuCvsZsa/bjuR9cTEJ1wP2LMzHDdaF/PShaKX7UuwDmZVjznwzAzFYwARuPFCk
-         pyXA==
-X-Gm-Message-State: AOJu0YypoSCFJP+hznucSfhdznHwTlOuJSQ+pFaLz+Uzqxc+jyYRRpbt
-	6v5YHfuXqLbFpom0V7U1/PAnjBCvx/lSyPG0qgPU2QA+IgcAwr3kg/zlZVColNA=
-X-Google-Smtp-Source: AGHT+IGBdNL8KeMG/RG+D3xrVj+pgMbj754F04oy4yi1RpZ6V0RRLQa/LsZkNh4S2dCingJr9VMEQQ==
-X-Received: by 2002:a05:600c:198f:b0:40f:ddc8:f804 with SMTP id t15-20020a05600c198f00b0040fddc8f804mr3001191wmq.17.1708081434548;
-        Fri, 16 Feb 2024 03:03:54 -0800 (PST)
+        bh=AWxHJkBPvh7dfzfYkfpsJVh1kKWdDbAwY9dahQR1fTQ=;
+        b=PHeM86v3MD2IGRX2KUVZNH9J9zF1DAmQLgAO/aI46N1oTXnsKd6Y54B48Mah6Srh0G
+         q+XgJFRHxSqQvI+FuBEJwy97QsgxWoner+0WeXo9QkuKDRp90KKj0rkPtpifKGJ4a9oS
+         m7VRYOFmwAr4DYPIkskhaQ6p1j3S+jNmLbSr8WrRyrD2x7RLxnZKa1hvJThYcUawGZhQ
+         kp/YYg6gHKpoOXEfnLUkdbBVgFRoQpPwLvBMvAIcAZBZ5mvtkIiKtGeXDIVYvs1vOLG+
+         7YBRyUM+rD60YTe94K1qhaVc/K4cI1/pq9BGcbqWgYmMDbRTEMKCMduwUs17f5HH0f6o
+         zmWw==
+X-Gm-Message-State: AOJu0YzCqeCWVmd4UwWSxmF1444TgRizimqXMLmdRLDslKFtdM7DMVJp
+	UnBtjG1wN1Mhh7flf5/KCK4NGnHUYwNYtrRuJzSEeCzGjFvfxYfvIUFh2UtXYdY=
+X-Google-Smtp-Source: AGHT+IEibQ/Igt+OBTemdGFhAzHNU82OtjS01cgsM+Rhg5xCut32DRol5sAh63j4m2MM+BVPWD1pCA==
+X-Received: by 2002:a05:600c:1f89:b0:410:656c:d6d with SMTP id je9-20020a05600c1f8900b00410656c0d6dmr3225887wmb.18.1708081435852;
+        Fri, 16 Feb 2024 03:03:55 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id r2-20020a05600c35c200b004123b049f86sm1993174wmq.37.2024.02.16.03.03.53
+        by smtp.gmail.com with ESMTPSA id r2-20020a05600c35c200b004123b049f86sm1993174wmq.37.2024.02.16.03.03.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 03:03:54 -0800 (PST)
+        Fri, 16 Feb 2024 03:03:55 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 16 Feb 2024 12:03:48 +0100
-Subject: [PATCH v3 1/7] dt-bindings: display/msm/gmu: Document Adreno 750
- GMU
+Date: Fri, 16 Feb 2024 12:03:49 +0100
+Subject: [PATCH v3 2/7] dt-bindings: arm-smmu: fix SM8[45]50 GPU SMMU if
+ condition
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240216-topic-sm8650-gpu-v3-1-eb1f4b86d8d3@linaro.org>
+Message-Id: <20240216-topic-sm8650-gpu-v3-2-eb1f4b86d8d3@linaro.org>
 References: <20240216-topic-sm8650-gpu-v3-0-eb1f4b86d8d3@linaro.org>
 In-Reply-To: <20240216-topic-sm8650-gpu-v3-0-eb1f4b86d8d3@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -98,47 +98,67 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  iommu@lists.linux.dev, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Conor Dooley <conor.dooley@microchip.com>
+ Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=852;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1499;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=7rJgqOrASH1+9XrvkT4uAGIQBP7+drYr4P1tenEnLrU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlz0EVKmuMnelD+jPOCbPUzTsHxLthOrLTOHgLjSTa
- xPs9FyKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZc9BFQAKCRB33NvayMhJ0UhfD/
- oDuWdTNYoa15dCO3oA5HvDkWIEClqPqQZHvjaUyI02QCzOQZbQS7T7thHZbOFed88h2oi6jIbXWzgV
- KxWH7h8S+J7gQL4u5XD9bhu5Vcgt4wqA+DABnmw2rxLW3UrwVUkiPnnG95WLAheF81uTwWkWjFfgLX
- y1XQ7DMFEmSUgEubL7Q3WAyicXwmHy26yaqP/Et0eGr7vrRSPwLJuPkXp4JNSZ5itASbwbEItH8PVu
- SncEDTCd8qFewiyGcpenZiCcy/1KNythe/3892+ASMfBHrU3bfAxkHGusUoG75tHoxkfnA+XpjIx4j
- YbIjYFCotP4yelFiFH0ll2Jy4japCWmcRYNg9bjZK7cRqXUjuIT1CPtZYllK4RC8JWY5Kg4PxPNFZP
- kTHo3d3pIPQs1EfRodWBPD3BOM0Vir6ynTmSchUKvskzoG4RUtPx2iu44CEvZ1LWVoe4tj44QQnNtA
- bs+omtQ3D3SkHCQ/04RN+kLEZtBIXrSzdNOV4eLdvPN6yzDvXq0GpNVUIVAJeTrueIS1tDhmghfzLi
- F9PuzzDWB+BSPKDkfkYCK6dWICYAjdb02YJuuC1zuN5gBd8r+dBhyuBMRgOBFd2YjERvpVuX9GU5Fd
- SD5S4DilqNQ8hWaCpNhf6b3skPzzzmSq5FTK+/cGKy8Tn2KWa4l+597zsTdQ==
+ bh=bKSwIMquL3ldQeZEbQDg4MhNZo4DD2FIt5FqyCH+Nw0=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlz0EVlZtPi8kLuM8GFD/opq53aRjm2jON3EvioLGw
+ Pp2Pq6eJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZc9BFQAKCRB33NvayMhJ0eJRD/
+ wMuGubcv5rl5NSZDd1jyjLXF66wVusziyc0Uj6bd6emX+Y5vX8RUWtEKTpyuOGzPk90izPMId0UFzd
+ z9OcL+cud177MKnZ59fRzF2Ceas8GdkdI4TKwhvW2c9NzmPb/k/wDQHKVfRlfAPfoHCYJ+Yth/tDeM
+ aAWpW2YY7srWsK2LY3uOFMHHVDRUvJgIPNZMxgu+m68UpkxK4R+r1nTOPgYD5DDhUXSts8P6PU1r5q
+ bLhP5LCD/OzJQTCo5JOI/FVtFTIY9neCngCQnQQoBuu8g0NXlq2hVCtrH2Q8EK5nIMxony8Px1fJVp
+ 1zhgF7KvBPOv8+ZE5yAs6qEeUaca/GMh6iaQ1eH5voudCNhtlCNllEiuUcH/eWexoqVO96PSjg5h/C
+ 6UBqp7apKCKtQjCbUU1L1aXsdHaJWKL/elXvZGroLEZW8hXjWR+03aD0RwKN9/efIQjhReSzKyyFMb
+ hxLlsCYOdsAmYwoY50+XOvmZZZ8+tfAM1RHCQx45llmq7HcYCg4aypDnMYpAJIOTKjJzI+LrVZIFlk
+ 5+DQbwIN7Ux0ULMwAjTGy69f0f9Ta0cyOs9C3QoAeXrGH8QVgxAEJb3uWYCCfs6vds6LHDr6c1wJx9
+ GS0yygCa534u2Tc1Y2EdlZgGus1HblB7dz89fVvGMsFZlCXZ3I8lXguGKIYw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Document the Adreno 750 GMU found on the SM8650 platform.
+The if condition for the SM8[45]50 GPU SMMU is too large,
+add the other compatible strings to the condition to only
+allow the clocks for the GPU SMMU nodes.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 4fff78dc2490 ("dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU")
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/gmu.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index 4e1c25b42908..b3837368a260 100644
---- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -224,6 +224,7 @@ allOf:
-             enum:
-               - qcom,adreno-gmu-730.1
-               - qcom,adreno-gmu-740.1
-+              - qcom,adreno-gmu-750.1
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index a4042ae24770..38c48131e6e7 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -484,7 +484,12 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          const: qcom,sm8450-smmu-500
++          items:
++            - const: qcom,sm8450-smmu-500
++            - const: qcom,adreno-smmu
++            - const: qcom,smmu-500
++            - const: arm,mmu-500
++
      then:
        properties:
-         reg:
+         clock-names:
+@@ -508,7 +513,11 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          const: qcom,sm8550-smmu-500
++          items:
++            - const: qcom,sm8550-smmu-500
++            - const: qcom,adreno-smmu
++            - const: qcom,smmu-500
++            - const: arm,mmu-500
+     then:
+       properties:
+         clock-names:
 
 -- 
 2.34.1
