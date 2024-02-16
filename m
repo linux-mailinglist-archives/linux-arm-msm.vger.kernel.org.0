@@ -1,187 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-11457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C05858A2D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 00:33:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A66A858A35
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 00:37:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1AAF2281A9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 23:33:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AE5328974A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 23:37:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABE2A146900;
-	Fri, 16 Feb 2024 23:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89421487F1;
+	Fri, 16 Feb 2024 23:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DOHzZTAK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IWjmm4Fy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D45639856;
-	Fri, 16 Feb 2024 23:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627E13541B;
+	Fri, 16 Feb 2024 23:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708126382; cv=none; b=JQ/SijuPGO3lZ+0FT3igybLATaSbmOHjqYuwhAr/smoW4HtDfQvQCiJWvWNgkJYZ4Iyj0lo/vUR3VHuJJFJ0fXtWk5CpA1VAUveuw9ZmddvxmnvrZ46lD6fcB5VxwaLfkZiiYj44Ie+v4dUoelOoUsyVwM2EqIGng+3/NWxGFkA=
+	t=1708126621; cv=none; b=in8ry8XyP2kEVcx5t6ERUMB3R+JahJRyktlcDAB2BU5mehS18PvdF7whX+BEXg2mD+U5ANj5qqNF/0pe+RdAMJSvB7DifbdDmyq/0EwwnJLGmJs66sTWvVKRcOTZK9LU4TjJwOKEAoCoMGc9y6kTlsnhST9gNNS14CArq/AjFAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708126382; c=relaxed/simple;
-	bh=eqVzyEMsGzU657cg5/N5H+3Tf21cigAxeHyuccXXgEw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMmuuD781GV7+f68zdMBL/OOLaUGaQvGqeOCGV8Llb6MT0jIYcRqCx8LP5nZPOptsXnCfDZDSHwSupOEvERZVuljeeZzxGhKkuYgAXWn/+7BsMpRdN2M7LUKr9bQm/kaShPtxPpc0FlkgFJDXoNQyeRrEEVpkVcPKFeli6UIEV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DOHzZTAK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EDEC433C7;
-	Fri, 16 Feb 2024 23:33:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708126382;
-	bh=eqVzyEMsGzU657cg5/N5H+3Tf21cigAxeHyuccXXgEw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DOHzZTAKXDMXVosB9ZTMu4Vk/VyP/ne+gcWYQw0EtOFXZqpynenXuhA/3PJUB4qNW
-	 Ia1LBgtti9/hEfOTDKQeXusVVjevKoi+g7dILsjdCphDv7F1HGJU7TkFKm2DhmCVnf
-	 eEy/uNUOknF08EHNhXM5zCRZ7hjfrnm7D1NVMaWZ7RZBEGZh+VBbyG/2I3dF5+zgkx
-	 s4J981HBjC7TLcZUYVUpABzR2yvdL44rmmORY8UhYeuOEpLt39o5TUfH60v4TLAmGU
-	 d8s92TIxRY8SJTeK36DWAEWVb5XrK1kFbsDRDmzlczZSSHLpuq4U/0X5VUZKDOx17Q
-	 mG/P4X4cFo8YQ==
-Date: Fri, 16 Feb 2024 17:32:59 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com, 
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sa8295p: Enable tertiary
- controller and its 4 USB ports
-Message-ID: <bwy4gpmhjkrumow6yjas6rww3eqzjheondafoenyvh3ugsp7oo@6jlpt5cx6zty>
-References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
- <20240213082724.1789096-3-quic_kriskura@quicinc.com>
- <efbd57e8-6cbb-480e-b2d5-1d064a27b3a4@linaro.org>
- <mko2tdjrc4fbpbuig7o4jbznzxr7y6fsw42synu6yur4qzjgtt@nd7eyojiruvd>
- <1a033944-9361-4576-8807-35a68c1e8548@linaro.org>
+	s=arc-20240116; t=1708126621; c=relaxed/simple;
+	bh=zvtJ/goEXl78uXi/CkTnmJLWqFaobtHaj24advs/UyU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SDaXe/pYFD1UrltM2mwhHzNQizi+hCLBWjuTTCh9sv8OEoSlrqzEdBuPvsy7HZGnsWcf31xyiyzOzTBhC+u3xQhk+n9CMp5Syizh3FG0kwUlZ7w4mTInOue7tJzFLpE4ynSvH+rI6wSykqoL/C1Cumv55/faIdsFUck7LZXwHbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IWjmm4Fy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41GN1RTd028772;
+	Fri, 16 Feb 2024 23:36:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=/Kp/ON2+FVNkC5NRIxIJBRrJsNuKYQMnRLjSnkzi+Oc=; b=IW
+	jmm4FyOKbHvPh61NOvHsMMrtd1HY66gUjRUP/O6xukRSTaHnlf4SKxkRC0dURs+Z
+	L2JrPGMKGmBlbZZ/1hM89XECcMRaYTYQUpI8a8mPE9RKiPo/WYx1SFs9XevK+Ery
+	bimwm4hzXlYjnX6l3jXXUGhlgODN7Q5m0kcZBadF2UayYUmYhXAEGX/+O3q49Ya2
+	jrNki28V2Rkg3UNzOdbAq5UNUSyT0FyAlvtmChAK3CWEQxrGxYbYnQPhW/C100cD
+	UMZwP2E9R2E4WiP/wSozADmY4nsIuR/ZTHxOvgLqfD+eG9FWN02KVb/K2MYg0EJ+
+	4D4BoxCeF8cW3lqejwFw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wabeerqhx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 23:36:36 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GNaYJD020839
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Feb 2024 23:36:34 GMT
+Received: from [10.110.4.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
+ 2024 15:36:33 -0800
+Message-ID: <03f71225-5450-a7c7-5f8c-9b275c1a37f1@quicinc.com>
+Date: Fri, 16 Feb 2024 15:36:33 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a033944-9361-4576-8807-35a68c1e8548@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v16 00/50] Introduce QC USB SND audio offloading support
+Content-Language: en-US
+To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240216035923.23392-1-quic_wcheng@quicinc.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20240216035923.23392-1-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _EJn_PmWx1C-2tjP_V0vsB4c74ZlKlXO
+X-Proofpoint-GUID: _EJn_PmWx1C-2tjP_V0vsB4c74ZlKlXO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-16_23,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 phishscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402160185
 
-On Thu, Feb 15, 2024 at 09:19:39AM +0100, Krzysztof Kozlowski wrote:
-> On 15/02/2024 03:41, Bjorn Andersson wrote:
-> > On Tue, Feb 13, 2024 at 09:39:51AM +0100, Krzysztof Kozlowski wrote:
-> >> On 13/02/2024 09:27, Krishna Kurapati wrote:
-> >>> Multiport USB controller (host-only) of SA8295 ADP has 4 Type-A ports
-> >>> exposed for connecting peripherals. The VBUS to these peripherals is
-> >>> provided by TPS2559QWDRCTQ1 regulators connected to these ports. Each
-> >>> regulator has an enable pin controlled by PMM8540. Since these regulators
-> >>> are GPIO controlled regulators, model them as fixed regulators and keep
-> >>> them Always-On at boot since we are wakeup capable and we don't need to
-> >>> turn them off on suspend. Also since we don't enter device mode, these
-> >>> regulators can be kept on.
-> >>>
-> >>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> >>> ---
-> >>>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
-> >>>  1 file changed, 83 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >>> index fd253942e5e5..49418843c214 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >>> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >>> @@ -9,6 +9,7 @@
-> >>>  #include <dt-bindings/gpio/gpio.h>
-> >>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >>>  #include <dt-bindings/spmi/spmi.h>
-> >>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> >>>  
-> >>>  #include "sa8540p.dtsi"
-> >>>  #include "sa8540p-pmics.dtsi"
-> >>> @@ -108,6 +109,46 @@ edp3_connector_in: endpoint {
-> >>>  			};
-> >>>  		};
-> >>>  	};
-> >>> +
-> >>> +	regulator-usb2-vbus {
-> >>> +		compatible = "regulator-fixed";
-> >>> +		regulator-name = "USB2_VBUS";
-> >>> +		gpio = <&pmm8540c_gpios 9 GPIO_ACTIVE_HIGH>;
-> >>> +		pinctrl-0 = <&usb2_en>;
-> >>> +		pinctrl-names = "default";
-> >>> +		enable-active-high;
-> >>> +		regulator-always-on;
-> >>> +	};
-> >>> +
-> >>> +	regulator-usb3-vbus {
-> >>> +		compatible = "regulator-fixed";
-> >>> +		regulator-name = "USB3_VBUS";
-> >>> +		gpio = <&pmm8540e_gpios 5 GPIO_ACTIVE_HIGH>;
-> >>> +		pinctrl-0 = <&usb3_en>;
-> >>> +		pinctrl-names = "default";
-> >>> +		enable-active-high;
-> >>> +		regulator-always-on;
-> >>> +	};
-> >>> +
-> >>> +	regulator-usb4-vbus {
-> >>> +		compatible = "regulator-fixed";
-> >>> +		regulator-name = "USB4_VBUS";
-> >>> +		gpio = <&pmm8540g_gpios 5 GPIO_ACTIVE_HIGH>;
-> >>> +		pinctrl-0 = <&usb4_en>;
-> >>> +		pinctrl-names = "default";
-> >>> +		enable-active-high;
-> >>> +		regulator-always-on;
-> >>> +	};
-> >>> +
-> >>> +	regulator-usb5-vbus {
-> >>> +		compatible = "regulator-fixed";
-> >>> +		regulator-name = "USB5_VBUS";
-> >>> +		gpio = <&pmm8540g_gpios 9 GPIO_ACTIVE_HIGH>;
-> >>> +		pinctrl-0 = <&usb5_en>;
-> >>> +		pinctrl-names = "default";
-> >>> +		enable-active-high;
-> >>> +		regulator-always-on;
-> >>
-> >> Why all these regulators are always on? If USB controller does not probe
-> >> for any reason, why keeping them enabled? These must not be always-on,
-> >> but instead used by connector as VBUS supply (or by whatever you have
-> >> there for USB).
-> >>
-> > 
-> > I'm not too concerned about keeping the lights on in this scenario, but
-> > if we can describe this properly let's do so (and let's do so on other
-> > boards with connectors as well).
-> > 
-> > We'd have a set of usb-a-connector nodes, that we can tie to the nodes
-> > in the USB/phy, and the supply. But so far we've associated a connector
-> > with a port manager, here we don't have one of those, so where would the
-> > node reside and who should acquire and drive the vbus-supply?
+
+
+On 2/15/2024 7:58 PM, Wesley Cheng wrote:
+> Several Qualcomm based chipsets can support USB audio offloading to a
+> dedicated audio DSP, which can take over issuing transfers to the USB
+> host controller.  The intention is to reduce the load on the main
+> processors in the SoC, and allow them to be placed into lower power modes.
+> There are several parts to this design:
+>    1. Adding ASoC binding layer
+>    2. Create a USB backend for Q6DSP
+>    3. Introduce XHCI interrupter support
+>    4. Create vendor ops for the USB SND driver
 > 
-> usb-connector binding has vbus-supply and its node could be top-level.
-
-Introducing usb-connector nodes toplevel, with vbus-supply sounds
-reasonable. But to my knowledge there's today no way to acquire a
-handle to that regulator, unless you have a struct device for the
-connector node.
-
-> However don't some USB phys also take that regulator?
+>        USB                          |            ASoC
+> --------------------------------------------------------------------
+>                                     |  _________________________
+>                                     | |sm8250 platform card     |
+>                                     | |_________________________|
+>                                     |         |           |
+>                                     |      ___V____   ____V____
+>                                     |     |Q6USB   | |Q6AFE    |
+>                                     |     |"codec" | |"cpu"    |
+>                                     |     |________| |_________|
+>                                     |         ^  ^        ^
+>                                     |         |  |________|
+>                                     |      ___V____    |
+>                                     |     |SOC-USB |   |
+>     ________       ________               |        |   |
+>    |USB SND |<--->|QC offld|<------------>|________|   |
+>    |(card.c)|     |        |<----------                |
+>    |________|     |________|___     | |                |
+>        ^               ^       |    | |    ____________V_________
+>        |               |       |    | |   |APR/GLINK             |
+>     __ V_______________V_____  |    | |   |______________________|
+>    |USB SND (endpoint.c)     | |    | |              ^
+>    |_________________________| |    | |              |
+>                ^               |    | |   ___________V___________
+>                |               |    | |->|audio DSP              |
+>     ___________V_____________  |    |    |_______________________|
+>    |XHCI HCD                 |<-    |
+>    |_________________________|      |
+> 
+> 
+> Adding ASoC binding layer:
+> soc-usb: Intention is to treat a USB port similar to a headphone jack.
+> The port is always present on the device, but cable/pin status can be
+> enabled/disabled.  Expose mechanisms for USB backend ASoC drivers to
+> communicate with USB SND.
+> 
+> Create a USB backend for Q6DSP:
+> q6usb: Basic backend driver that will be responsible for maintaining the
+> resources needed to initiate a playback stream using the Q6DSP.  Will
+> be the entity that checks to make sure the connected USB audio device
+> supports the requested PCM format.  If it does not, the PCM open call will
+> fail, and userpsace ALSA can take action accordingly.
+> 
+> Introduce XHCI interrupter support:
+> XHCI HCD supports multiple interrupters, which allows for events to be routed
+> to different event rings.  This is determined by "Interrupter Target" field
+> specified in Section "6.4.1.1 Normal TRB" of the XHCI specification.
+> 
+> Events in the offloading case will be routed to an event ring that is assigned
+> to the audio DSP.
+> 
+> Create vendor ops for the USB SND driver:
+> qc_audio_offload: This particular driver has several components associated
+> with it:
+> - QMI stream request handler
+> - XHCI interrupter and resource management
+> - audio DSP memory management
+> 
+> When the audio DSP wants to enable a playback stream, the request is first
+> received by the ASoC platform sound card.  Depending on the selected route,
+> ASoC will bring up the individual DAIs in the path.  The Q6USB backend DAI
+> will send an AFE port start command (with enabling the USB playback path), and
+> the audio DSP will handle the request accordingly.
+> 
+> Part of the AFE USB port start handling will have an exchange of control
+> messages using the QMI protocol.  The qc_audio_offload driver will populate the
+> buffer information:
+> - Event ring base address
+> - EP transfer ring base address
+> 
+> and pass it along to the audio DSP.  All endpoint management will now be handed
+> over to the DSP, and the main processor is not involved in transfers.
+> 
+> Overall, implementing this feature will still expose separate sound card and PCM
+> devices for both the platorm card and USB audio device:
+>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>   1 [Audio          ]: USB-Audio - USB Audio
+>                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4, high speed
+> 
+> This is to ensure that userspace ALSA entities can decide which route to take
+> when executing the audio playback.  In the above, if card#1 is selected, then
+> USB audio data will take the legacy path over the USB PCM drivers, etc...
+> 
+> This feature was validated using:
+> - tinymix: set/enable the multimedia path to route to USB backend
+> - tinyplay: issue playback on platform card
+> 
+> Changelog
+> --------------------------------------------
+> Changes in v16:
+> - Modified some code layer dependencies so that soc usb can be split as a separate
+>    module.
+>    - Split the kcontrols from ASoC QCOM common layer into a separate driver
+> - Reworked SOC USB kcontrols for controlling card + pcm offload routing and status
+>    so that there are individual controls for card and pcm devices.
+> - Added a kcontrol remove API in SOC USB to remove the controls on the fly.  This
+>    required to add some kcontrol management to SOC USB.
+> - Removed the disconnect work and workqueue for the QC USB offload as it is not
+>    required, since QMI interface driver ensures events are handled in its own WQ.
 > 
 
-I don't think it's appropriate to add the supply to any of the phys,
-some of the connectors has 2 phys others has 1 phy.
+Sorry for sending a bad series.  Please ignore this version, as its 
+missing some changes made.  Will resend as v17.
 
-Representing the vbus in the connector but driving it from the phy
-(we will need to figure out which one) sounds reasonable. We just need
-to make sure this doesn't conflict with the fact that some TCPM
-implementations also seems to drive vbus.
-
-
-I would like this to be properly modelled, but it seems reasonable to
-punt that to the todo list for now.
-
-Regards,
-Bjorn
-
-> Best regards,
-> Krzysztof
-> 
+Thanks
+Wesley Cheng
 
