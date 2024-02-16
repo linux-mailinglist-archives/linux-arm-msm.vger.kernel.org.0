@@ -1,126 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-11348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F18E6857D58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 14:11:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20686857D69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 14:14:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C26F1F270E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 13:11:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45CD81C244D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 13:14:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30A621292F3;
-	Fri, 16 Feb 2024 13:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7799F1292E5;
+	Fri, 16 Feb 2024 13:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="WVRSGz7g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T1HYX+iC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAAC12AAC9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 13:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A773177F19
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 13:14:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708089085; cv=none; b=LPwGB7aGuyPE3uiGTWpffWC8M7gaQA0A7/fEeh1igWK7B8nNMQR59GWLEzsAL3FzQY0lYeZ25U2wVmEKJE4ntFl5+o4T/Nj+Sujewez87sPHMi/X8cxOb2C5aXjkKZfUCuVWCZ1X4Uw5lt3x0lWp4LR+qLHJ8z5/jUl1rOUPV9U=
+	t=1708089244; cv=none; b=FNqZko1aLkjhqUiYUjMyNolOyyT/06Pj5FDwoPLj++Nz99+WnCq9z/x/SuUBz7vB/ImGk5pKFH+h83EBtecDupej1q1Kq2TKdDXIkKXtQkJsev5yy0FpEjHaxbOI9Ue00xXfenaEWqG3CNdXVbguxyiQRM6vVkybiqIjWl5MiEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708089085; c=relaxed/simple;
-	bh=phFHjxICeoeu2UXJo8Xg6HVAwWeWLM3vTEpsjnGZlm8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RwaPxYq7ftqaX6A3CB9Z6/9Tq3+q3HkN+EgjF18HA01ftlOSOc92x7p3TjijQhbYDl+d90cMNMWDr3XidSfJAnuCLMNCzx34OUQPdVq+Js4Dwspl7HmLm5NIEP89XqKgAIZ+o3KpPjn1vX4oIsXnWAb6x+QFleGUIunRPeLNXvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=WVRSGz7g; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-511acd26befso2584929e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 05:11:22 -0800 (PST)
+	s=arc-20240116; t=1708089244; c=relaxed/simple;
+	bh=nM9GaWKfFAoq+/qqTqmoUGUpnBAspUurESVzdl8uIJA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W3Gl2sVi/cCK6FS1Ws0M91ObtOKQ+C/NyXvn7nawgwLUIkyy7nYnXLQl8StF/6blvz/YGsKw/Dm8r1ovV9Z+WeSPqytJLf36NdQp19+Yi+9FLlKiKJb+xIEqwsadPtjkvi/307GJo4cODo63WHGhPqpGBqxOEMbXkPyCeMV9RVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T1HYX+iC; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-563cc707c7cso2395468a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 05:14:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1708089081; x=1708693881; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kk2nrxcIZOnYIUymYqv99a1uv9GIViFiL6v2nz1/iKc=;
-        b=WVRSGz7g9GA+1oMk0gJ5vijG3H6zxrjeZNnz6SMB6i4Au6RUrc8JqOCPFDsuRsQ2my
-         r+5FbrJudilPAQS6N6481ajLX+4LeFnwUudwJNdXz2zRro6QTpmajdY4UYjJwPB2EZ1w
-         1UL4EgH7mHbr6rXyBhkvWr4Hi1KMLjV+W69QPEG4hqA5dm5T9kFtnjl8SX68H34b1Iqj
-         uoW87oyEmkc0Tzrbp34LUoT6dTl4tf1TXg3nAEO0nAP3lECrJpaUVdA8IewvgUBJmNxt
-         NbIPxJZ+Wue9OQ8jiWxcEn3N01B7h7YZmc3R284PiGUmQv+z7gQHFaDRFOKFjo+vf1OF
-         4t9Q==
+        d=linaro.org; s=google; t=1708089241; x=1708694041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EbSwL6nsTbc1tx6YWr9QAKsxz4e0BHcI/QIK8egHm0k=;
+        b=T1HYX+iCtloa46Igr34lbcbUv0drNzfeqWaAkZdVia8xMlEP3enQOFay5tCPggcSg6
+         ymOTuwUDlPMKE//PIt6bhDscjEYPuFi/wFdUo6UJi8ACQtAceRA7AioN504fgOt/PRES
+         JcqTIF4tuokvzcnxsHH8Yl4vzEynFVBs9J9sf+bJK8gunT6KVUrHIyk+rLmnXkXV8Kjz
+         3ib4ixeZsszhRJiBTJ+AALPHLbFvPp60x9SmsQWSC5RBCIWa8CccJjOW0iZYFj9i6QeU
+         0tVVLao50spda7olpgEzpkzYCJ52kJhDiQzeDrLvetGMNmPbYMZs39CQXFm1MCC3UAYr
+         6GpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708089081; x=1708693881;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kk2nrxcIZOnYIUymYqv99a1uv9GIViFiL6v2nz1/iKc=;
-        b=f82LyfqnLCsyN/7K+Ir/vegDvh44yiclrYIgnL36lzmatk4VPuOlzeXN3vN7cq+1pL
-         ptc72bjknhVOm4/zt00B7lbUgV2zUG60O1Bf07ftIYIjV713VvnYTJTxNxzLQX91qLLt
-         n+nxoHSwShzdqk3iMmONtZESRBObcFjJbPMQfhtsKpCdKypViChvjxMZhpQn0DJ5gKrF
-         eaCxqCUvsF9f8+ftrwJtQx/js4CpNDWDhBodv1J5r3aAYwLoCqdl4K5fHS2Vm1hcBcXL
-         5SgWnyfPF63UwvcBVz9TiHP0QhOHB/BvUvYp6BOHnkyBtCMqhJzA4FiGcMQMT6RTt1PZ
-         r0Kw==
-X-Forwarded-Encrypted: i=1; AJvYcCWKxZD8VQuViXqgQBRKMKByB7t0o4UjlWtUSPjdRgI0EGYQwQReeV+2qkQgLMANbXwwOMDnqpDtd7Z1x6DxfXqBc6Zp7EL0u4kfT7AfXg==
-X-Gm-Message-State: AOJu0Yw6CAgr90g7WR5sGTBQj6elgcD75WeL9bqXDF2qslrKLQ3GO30V
-	oYDmVFcnQnKi4/0TnFkkyiG0V2JFS1ZZCLmIgObuFhtCyjiuiQbyECxnyKitkFk=
-X-Google-Smtp-Source: AGHT+IGuDfabpFAea5gQEjZpS0uYGtn7s9Z0/VOzjWdm8DInuK41Bc583vkce37p7mlnxAx096deog==
-X-Received: by 2002:a19:2d16:0:b0:511:aae2:e5e8 with SMTP id k22-20020a192d16000000b00511aae2e5e8mr3275183lfj.52.1708089081157;
-        Fri, 16 Feb 2024 05:11:21 -0800 (PST)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id zh14-20020a170906880e00b00a3d35bccdf0sm1535323ejb.139.2024.02.16.05.11.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 05:11:20 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 16 Feb 2024 14:11:20 +0100
-Subject: [PATCH] arm64: dts: qcom: sm6350: Add interconnect for MDSS
+        d=1e100.net; s=20230601; t=1708089241; x=1708694041;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EbSwL6nsTbc1tx6YWr9QAKsxz4e0BHcI/QIK8egHm0k=;
+        b=BMyCQ99GG4t59ZuBNO93bCWgGeyziqPDnCVT7J+QxuPUwO/NzrSIlvIKMCItnmAjEN
+         mopf6diZcbNeVlAh+6f+dYmipV2HFRGftLUYy4YTcTXgrGk2ruWAJ5YPcDMmmXWNI90Z
+         erxjRjrV9KRad/kwhbZ10P061d1Ml8zNczxpnbNuFIGc/UkJspOVb8kfwqP8DQX2Mf0d
+         WKnE/b4rajvkS7Sf4npRGAGdCorDxCffZrycrH2jx2RLZlT1e6Y8KaZyou7zSQhNBlU6
+         sLiFcAItJHNlxmbz2vSzF6bNOiQIvB6OHZH7mwMs49kHzQgnqttmZso75BT3aPZHOhh7
+         xQfw==
+X-Gm-Message-State: AOJu0YwXUZ7frEYMfRcSBSAEXpQMc7xKTVNMJxJHCawqqdb+fD2HU5vj
+	DzX2+nRT+8HUaqkHca0h/qYonUgY4UmuY1sPhYmQy0OksCY7ALQ4Mt13b8JTlQQ=
+X-Google-Smtp-Source: AGHT+IEtxyXtiQBQSFUysXLDsk7ys/qDhXp0LyOf8hsqFZZ1LHheaM1oRROnTJZ7orzww/V6ue2T1g==
+X-Received: by 2002:a17:906:c10f:b0:a38:107a:94e9 with SMTP id do15-20020a170906c10f00b00a38107a94e9mr8542900ejc.2.1708089240874;
+        Fri, 16 Feb 2024 05:14:00 -0800 (PST)
+Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id i26-20020a170906251a00b00a3ce36ce4f9sm1534655ejb.83.2024.02.16.05.13.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Feb 2024 05:14:00 -0800 (PST)
+Message-ID: <153daeb9-5a53-443c-a3eb-c2282c8c6a41@linaro.org>
+Date: Fri, 16 Feb 2024 14:13:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240216-sm6350-interconnect-v1-1-9d55667c06ca@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAPdez2UC/x3MTQqAIBBA4avErBPUtL+rRAuxqWbRGCoRRHdPW
- n6L9x5IGAkTjNUDES9KFLhA1RX43fGGgpZi0FIbqbQR6WgbKwVxxugDM/os3OB1bztn7WCglGf
- Ele7/Os3v+wH8sCYvZQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] clk: qcom: drop the SC7180 Modem subsystem clock
+ driver
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.4
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, Sibi Sankar <quic_sibis@quicinc.com>,
+ Nikita Travkin <nikita@trvn.ru>
+References: <20240216-drop-sc7180-mss-v1-0-0a8dc8d71c0c@linaro.org>
+ <20240216-drop-sc7180-mss-v1-1-0a8dc8d71c0c@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240216-drop-sc7180-mss-v1-1-0a8dc8d71c0c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add the definition for the interconnect used in the display subsystem.
+On 16.02.2024 12:14, Dmitry Baryshkov wrote:
+> This driver has never been used in the DT files merged to the kernel.
+> According to Sibi, it only worked on the pre-production devices. For the
+> production devices this functionality has been moved to the firmware.
+> 
+> Drop the driver to remove possible confusion.
+> 
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+Thanks for spotting this..
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 5e8c8896ba66..ef4d847c4acf 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1973,6 +1973,13 @@ mdss: display-subsystem@ae00000 {
- 			interrupt-controller;
- 			#interrupt-cells = <1>;
- 
-+			interconnects = <&mmss_noc MASTER_MDP_PORT0 QCOM_ICC_TAG_ALWAYS
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
-+					<&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			interconnect-names = "mdp0-mem",
-+					     "cpu-cfg";
-+
- 			clocks = <&gcc GCC_DISP_AHB_CLK>,
- 				 <&gcc GCC_DISP_AXI_CLK>,
- 				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+It'd be worth to keep in mind this existed (+CC Nikita), as it may be
+useful for people tinkering with replacing TZ..
 
----
-base-commit: 84c11540697ba996a7f55b16565945b52db3019e
-change-id: 20240124-sm6350-interconnect-a9c2857a5594
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+Konrad
 
 
