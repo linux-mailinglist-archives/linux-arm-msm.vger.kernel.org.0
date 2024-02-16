@@ -1,192 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-11316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAA04857A7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:40:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50528857A96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:47:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 613DF285850
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:40:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0BA3B216F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:47:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C171524BC;
-	Fri, 16 Feb 2024 10:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17B4537FC;
+	Fri, 16 Feb 2024 10:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bsjpucCf"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="paic9VLj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FBB51C5A;
-	Fri, 16 Feb 2024 10:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426EA53800
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 10:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708080016; cv=none; b=XOKG/UT3wHLH41Tvn+G0JPOzvuu6F1qARH/I+XstaF+45oEFO8xzHEulPTnv3yNeXPopMwAcEfnZ2YttMwFb3IaBerx2742v+v/yQG90WtyqZdUjFs+tiAsUkV0EJ5GfQYa535U7HfD7UAgavyXkiub/X+Kwz/o6/cTU+WlrJCo=
+	t=1708080414; cv=none; b=SZ10eoJCJoX4RhxSXTSO0C87DEMvspfpi9whHuR2jVQEmYj+UvTpkgzB+REwA2mD/QIiSUaW6SF/qyeMe6QFcJkYXN+FbLiwZk9CNIl/zAhOCQJ4Tt6++jP+ZI94uvpZ+s/ZYpZgFLoxMYfdCEgZ5fFhQv6wsnjq3Xw+0gX84F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708080016; c=relaxed/simple;
-	bh=lKkTWjc5S0Zeir08AUyREHVP6BXIPt/Pb30uog3d1Xw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MFg5N9t+jMtLicKIkk7zJMBJ4U9s2ouAL/ZpCmJ4UesjDMRgUOCtWQGZVsjUYE1K2PDEByoGmyXQoKL1kPu05S0YQcdZvkGQqMu+UjaKRDXXl/LxBHjOqB2L0cgGPijTDUOFBlgp6JxtqWbVeTnjmzBWZL67UnPABcVkIOMyXe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bsjpucCf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41G6Kf2o023221;
-	Fri, 16 Feb 2024 10:39:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bHEy5IZPeB1t6hgx0UtqO2tRKR4Ki3BJPIXU08pxj80=; b=bs
-	jpucCfLbGGmhMT4MFQMTs8uGvEkQWBrw4g4pM8lo9Cvx6EVgUxma2tSPDSpBQoaB
-	vZNHa/Ux7zoSJKJ4rC5PvYzAp8dQd3x5FW0kZtD9vUuX9yZgPO3aOWAqjnhnI2zw
-	x2o+ts2E2thgX92qiC5A7iPJ4EjGgoSw4a0YxipmkCjB5Zw+ZR9Wv1epnkBrVYob
-	VQX+uKofpEG3vQRwhbVn2TZR+9LI4yOpGwKbINegZ1r8zXdLRY6xVzAtHCS/t73t
-	lZtR7CEvf2JYe+hXRj6yDNlNC1CyWXWv9zgdYbAkjnI7lBJ69ckV3enoAkt7NLbq
-	VH7cfI27pvC1VwGJ6riw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w9xdx8tg2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 10:39:50 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41GAdn7o014888
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Feb 2024 10:39:49 GMT
-Received: from [10.218.16.59] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 16 Feb
- 2024 02:39:38 -0800
-Message-ID: <12723477-aee2-40bc-80f0-a86c16c98988@quicinc.com>
-Date: Fri, 16 Feb 2024 16:09:38 +0530
+	s=arc-20240116; t=1708080414; c=relaxed/simple;
+	bh=/Fv7pZduc9Bvxjs3c+I5eHvPrfvb1kDFVxbm5FfqWTc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TXzhE/sCsc7uRiZiJnEpkh2Frodvbahdf9Ki2MDZHZgvZbop1MDHEJrxGMHAcDbhDTLA0luDjAGqzHSDwVG+3H8fkyaBJDCGKqzDvh/3ndShuAO1xOnDlNvGnv960dhkszggFEScCOHJVnQ4JgEMAoYGJmfsHNK+KwVEZrhvNa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=paic9VLj; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so240748266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 02:46:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1708080410; x=1708685210; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZN902PZ33RtjgjeWH2GYWtC877xiVrHyazftcFvMCYA=;
+        b=paic9VLj5iB9jqOQ7uUKubylKN1a13uNYqBxMszXFySy6AwDGoraMfpiKIdSn/tJbx
+         AtFXy2km0WaFV+IGqjfMCFzgiGCH9fLImFZ53UPYkitkoayNT+DYjRp5QUP2CZZqK4vM
+         HfkobiS62CI/VmoeUimZCJW7yfKnwmhntyyWcHrFZ9Nz2c3ASXEXiiCAC2kdRNA/0EZJ
+         cj60P7QOFkr2TjNct+EnZaox2mw9Q5zUiqRSPZsnB3uUFYdbxEPnIwlzI4gaR/msZ1nE
+         NLqgixfq4ACI2xAFLTHsRgeqZJYM8xcZvInGgDOk6gRwgX3SaGgrcO6zSw5YC6RUGwG3
+         dHpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708080410; x=1708685210;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZN902PZ33RtjgjeWH2GYWtC877xiVrHyazftcFvMCYA=;
+        b=wDxO7J7iMms3T7irM7bek8m8iLGjSrHNxhcpvgDqkD4V0r/FBJlEDLMgPyVpcqsDD3
+         yc0y8hFh8NwkkBMYgWU3U/c+pWcFZcNE2B/BJLxrGmhqDfdPZ3FLbh/ENgfFW8nUSMts
+         mHP/nw3yiovtZM4MNsKXC2Qw+a8kqoGWXYTmTNmIfTbyoS2wvICoUYczhAnZs5iGvzEW
+         EZAp1Wrv5gTD4qmB/j7YL7OphUz4AvVhPVaWkcFUdI2amz7sZsgywSH54/dQHfV37CsR
+         p0hyhbZkatBxPMuE4UmWQkG7wAXlKDxY4hTX+tK8JWORkzDZ0VvrtuzXJItue2MY/yq4
+         S2nQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ+6KH0Zp8Kmu2AiJZ7EuiEWC4idL3Wra17fiRcGOHxv17NRfb8iCBeh8F95SxecxV93QHheHxyYPLgY9ibDbzvtXLNKcczoaN4YgULA==
+X-Gm-Message-State: AOJu0YymmlAWMxNrXwY2IMdwjNqkq9wIjoxm+GC9q3hfyRQ8uINXIy+N
+	pYiFYna0sAlagsxhvYMT6fiE5zN+48cpSS47Qvk2b229lwsrBmgq60x1falEhjY=
+X-Google-Smtp-Source: AGHT+IG5rkARmaWUictA1Ft2Xt9RaqG2EvVFtFJRmC7NNAJ+R9vH+8s1KCC+Eq70YL/6ULgKJ1LJ7w==
+X-Received: by 2002:a17:906:3757:b0:a3d:9e6b:2776 with SMTP id e23-20020a170906375700b00a3d9e6b2776mr2966222ejc.17.1708080410468;
+        Fri, 16 Feb 2024 02:46:50 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id p17-20020a1709060e9100b00a3d11feb32esm1429131ejf.186.2024.02.16.02.46.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Feb 2024 02:46:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-Content-Language: en-US
-To: Jonathan Cameron <jic23@kernel.org>
-CC: <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
-        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <lars@metafoo.de>, <luca@z3ntu.xyz>,
-        <marijn.suijten@somainline.org>, <agross@kernel.org>,
-        <sboyd@kernel.org>, <rafael@kernel.org>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <linus.walleij@linaro.org>,
-        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
-        <quic_amelende@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <kernel@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-arm-msm-owner@vger.kernel.org>,
-        <linux-iio@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <cros-qcom-dts-watchers@chromium.org>
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-3-quic_jprakash@quicinc.com>
- <20240101180209.56e04267@jic23-huawei>
-From: Jishnu Prakash <quic_jprakash@quicinc.com>
-In-Reply-To: <20240101180209.56e04267@jic23-huawei>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AF-uuHRRXZAu6C46-PBrfZ69SzHtTBto
-X-Proofpoint-GUID: AF-uuHRRXZAu6C46-PBrfZ69SzHtTBto
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-16_08,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- suspectscore=0 mlxlogscore=999 adultscore=0 phishscore=0 mlxscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402160086
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 16 Feb 2024 11:46:49 +0100
+Message-Id: <CZ6FYZLGWT3K.ZBHYDQ7TDN4B@fairphone.com>
+Cc: "Andy Gross" <agross@kernel.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Thara
+ Gopinath" <thara.gopinath@gmail.com>, "Herbert Xu"
+ <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Rob Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Bhupesh Sharma" <bhupesh.sharma@linaro.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm6350: Add Crypto Engine
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Stephan Gerhold" <stephan@gerhold.net>
+X-Mailer: aerc 0.15.2
+References: <20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com>
+ <20240105-sm6350-qce-v1-2-416e5c7319ac@fairphone.com>
+ <ZZguvdJTyVgfxm4D@gerhold.net>
+In-Reply-To: <ZZguvdJTyVgfxm4D@gerhold.net>
 
-Hi Jonathan,
-
-On 1/1/2024 11:32 PM, Jonathan Cameron wrote:
-> On Sun, 31 Dec 2023 22:42:36 +0530
-> Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
+On Fri Jan 5, 2024 at 5:30 PM CET, Stephan Gerhold wrote:
+> On Fri, Jan 05, 2024 at 05:15:44PM +0100, Luca Weiss wrote:
+> > Add crypto engine (CE) and CE BAM related nodes and definitions for thi=
+s
+> > SoC.
+> >=20
+> > For reference:
+> >=20
+> >   [    2.297419] qcrypto 1dfa000.crypto: Crypto device found, version 5=
+.5.1
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm6350.dtsi | 31 ++++++++++++++++++++++++++++=
++++
+> >  1 file changed, 31 insertions(+)
+> >=20
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts=
+/qcom/sm6350.dtsi
+> > index 8fd6f4d03490..516aadbb16bb 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > @@ -1212,6 +1212,37 @@ ufs_mem_phy_lanes: phy@1d87400 {
+> >  			};
+> >  		};
+> > =20
+> > +		cryptobam: dma-controller@1dc4000 {
+> > +			compatible =3D "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+> > +			reg =3D <0 0x01dc4000 0 0x24000>;
+> > +			interrupts =3D <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
+> > +			#dma-cells =3D <1>;
+> > +			qcom,ee =3D <0>;
+> > +			qcom,controlled-remotely;
+> > +			num-channels =3D <16>;
+> > +			qcom,num-ees =3D <4>;
+> > +			iommus =3D <&apps_smmu 0x432 0x0000>,
+> > +				 <&apps_smmu 0x438 0x0001>,
+> > +				 <&apps_smmu 0x43f 0x0000>,
+> > +				 <&apps_smmu 0x426 0x0011>,
+> > +				 <&apps_smmu 0x436 0x0011>;
 >
->> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+> The last two lines look equivalent to me: 0x436 & ~0x0011 =3D 0x426.
 
->> +
->> +      label:
->> +        $ref: /schemas/types.yaml#/definitions/string
->> +        description: |
->> +            ADC input of the platform as seen in the schematics.
->> +            For thermistor inputs connected to generic AMUX or GPIO inputs
->> +            these can vary across platform for the same pins. Hence select
->> +            the platform schematics name for this channel.
-> defined in adc.yaml, so should just have a reference to that here.
+I don't understand the IOMMU SID + mask really, but I think I've seen
+somewhere before like here that TZ can be a bit picky with the SIDs?
+
+https://lore.kernel.org/linux-arm-msm/opqdrmyj3y64nqqqmakjydn5rkspizufyeavm=
+7ec7c7ufqz4wk@ey2a7bq3shfj/
+https://lore.kernel.org/linux-arm-msm/11b5db69-49f5-4d7b-81c9-687d66a5cb0d@=
+linaro.org/
+
+I don't quite want to risk having some obscure use case breaking because
+we cleaned up the dts ;)
+
+But if you're more sure than me that it won't break, let me know!
+
 >
->> +
->> +      qcom,decimation:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: |
->> +            This parameter is used to decrease ADC sampling rate.
->> +            Quicker measurements can be made by reducing decimation ratio.
-> Why is this in DT rather than as a userspace control?
+> It's also a bit weird that the mask has one more digit than the stream
+> ID. And ordered numerically (by stream ID, first number) it would be a
+> bit easier to read. :-)
 
+Sorting them is no problem, can do that for v2.
 
-We don't intend this property to be something that can be controlled 
-from userspace - if a client wants to read an ADC channel from 
-userspace, we only intend to provide them the processed value, 
-calculated with a fixed set of ADC properties mentioned in the 
-corresponding channel node in DT.
-
-
->> +        enum: [ 85, 340, 1360 ]
->> +        default: 1360
->> +
-
->> +
->> +      qcom,hw-settle-time:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: |
->> +            Time between AMUX getting configured and the ADC starting
->> +            conversion. The 'hw_settle_time' is an index used from valid values
->> +            and programmed in hardware to achieve the hardware settling delay.
->> +        enum: [ 15, 100, 200, 300, 400, 500, 600, 700, 1000, 2000, 4000,
->> +                8000, 16000, 32000, 64000, 128000 ]
->> +        default: 15
-> only currently defined for muxes but we have settle-time-us which has benefit of
-> providing the units (which are missing here from the description as well)
 >
->> +
->> +      qcom,avg-samples:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: |
->> +            Number of samples to be used for measurement.
->> +            Averaging provides the option to obtain a single measurement
->> +            from the ADC that is an average of multiple samples. The value
->> +            selected is 2^(value).
-> Why is this in dt?  Why not just userspace control (in_voltageX_oversampling_ratio
->
-> If it needs to be, we do have standard DT bindings for it in adc.yaml
-
-
-avg-samples is also something we don't want the client to modify from 
-userspace. As for using adc.yaml, I think I could use settling-time-us 
-and oversampling-ratio from it for the above two properties.
-
-However, Krzysztof has mentioned in another comment that I should put 
-properties common to ADC5 Gen3 and older QCOM VADC devices in a common 
-schema. If I now try replacing the existing qcom,hw-settle-time and 
-qcom,avg-samples properties with settling-time-us and oversampling-ratio 
-for older devices too, I would have to make several DT changes for 
-existing devices...are you fine with this? Or should I just replace 
-these two properties for ADC5 Gen3?
-
-
-I'll address your other comments in the next patchset.
-
-
-Thanks,
-
-Jishnu
+> Thanks,
+> Stephan
 
 
