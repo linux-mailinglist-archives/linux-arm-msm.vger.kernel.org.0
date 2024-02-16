@@ -1,166 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-11317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50528857A96
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:47:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19DCB857A9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0BA3B216F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:47:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D26F1F24AE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:48:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17B4537FC;
-	Fri, 16 Feb 2024 10:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6771537FB;
+	Fri, 16 Feb 2024 10:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="paic9VLj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rPoakCyi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426EA53800
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 10:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ADE535C5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 10:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708080414; cv=none; b=SZ10eoJCJoX4RhxSXTSO0C87DEMvspfpi9whHuR2jVQEmYj+UvTpkgzB+REwA2mD/QIiSUaW6SF/qyeMe6QFcJkYXN+FbLiwZk9CNIl/zAhOCQJ4Tt6++jP+ZI94uvpZ+s/ZYpZgFLoxMYfdCEgZ5fFhQv6wsnjq3Xw+0gX84F0=
+	t=1708080523; cv=none; b=DoBViAJ0FY1WsaJifcZWUmSmw5Hk9Y7gxXubtjrYSu/eNVPshuvFpkVfqBMWlouP3TMzzDw2uf2U9W/q0zp1SYyhMXzC77BGBVX6lxeQ3OM+jQq6Tmxl2kv5bDwyRDniKqSkYriglt2lQi00fss/iVnB7zSDP5qEojbMBN7YxBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708080414; c=relaxed/simple;
-	bh=/Fv7pZduc9Bvxjs3c+I5eHvPrfvb1kDFVxbm5FfqWTc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TXzhE/sCsc7uRiZiJnEpkh2Frodvbahdf9Ki2MDZHZgvZbop1MDHEJrxGMHAcDbhDTLA0luDjAGqzHSDwVG+3H8fkyaBJDCGKqzDvh/3ndShuAO1xOnDlNvGnv960dhkszggFEScCOHJVnQ4JgEMAoYGJmfsHNK+KwVEZrhvNa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=paic9VLj; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so240748266b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 02:46:51 -0800 (PST)
+	s=arc-20240116; t=1708080523; c=relaxed/simple;
+	bh=MjLtBHGl3EKFZpRSU/O6NS5UxcW+90Ac2k1SucdI/n8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dkTiLJL3xDp7C3DWjmOmyp3wAOkbTajdMxSCyuFqcuZl8jvAAr0b8x02r8p/Kyuwwdb/14W+GD/JU9zDQelydGEt6bYL0Ie6TrZJWx2zZgqgi7JXmj71igByzwO3A6Al6DdjlxzteUwhPCgNdXRFx1azv8PGRrNKZuIkSG8t/Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rPoakCyi; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso1890026276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 02:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1708080410; x=1708685210; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1708080520; x=1708685320; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZN902PZ33RtjgjeWH2GYWtC877xiVrHyazftcFvMCYA=;
-        b=paic9VLj5iB9jqOQ7uUKubylKN1a13uNYqBxMszXFySy6AwDGoraMfpiKIdSn/tJbx
-         AtFXy2km0WaFV+IGqjfMCFzgiGCH9fLImFZ53UPYkitkoayNT+DYjRp5QUP2CZZqK4vM
-         HfkobiS62CI/VmoeUimZCJW7yfKnwmhntyyWcHrFZ9Nz2c3ASXEXiiCAC2kdRNA/0EZJ
-         cj60P7QOFkr2TjNct+EnZaox2mw9Q5zUiqRSPZsnB3uUFYdbxEPnIwlzI4gaR/msZ1nE
-         NLqgixfq4ACI2xAFLTHsRgeqZJYM8xcZvInGgDOk6gRwgX3SaGgrcO6zSw5YC6RUGwG3
-         dHpw==
+        bh=NKfZzgXFQ7L4hFdgNuI/0C1mifl1ZkgKyzPDgn09DEE=;
+        b=rPoakCyiYJCQvBxIioimrAoV0sl8is25zVnV80e6dBYErmUbypXiu2/MjWIvXWygUt
+         LHaMmrfV44YH1y2OHsooO5+YIRW92Ef7OvYWcTsm4RA9kfVyOoYtu9FRowgVSbvxLn1P
+         M4p2gJgiRydoCXXgRM+EKRQ/K7MB0J26vx9OJu8cIMoJR7ofJtO67W+f4EPXHZTTH3GI
+         bzQF2aDLTtfHYHoG4EBYsrt8W/tZlusf6qOv1kJjhqtc4CpoCfDqDS83OwHGDFPmnAZr
+         jkUhLeAw3a26y6NEAqWdChjDqjDkavt8W7UBwjSDjo95vrfqoGNefdNwVmGLxwq0aKZI
+         gKzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708080410; x=1708685210;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZN902PZ33RtjgjeWH2GYWtC877xiVrHyazftcFvMCYA=;
-        b=wDxO7J7iMms3T7irM7bek8m8iLGjSrHNxhcpvgDqkD4V0r/FBJlEDLMgPyVpcqsDD3
-         yc0y8hFh8NwkkBMYgWU3U/c+pWcFZcNE2B/BJLxrGmhqDfdPZ3FLbh/ENgfFW8nUSMts
-         mHP/nw3yiovtZM4MNsKXC2Qw+a8kqoGWXYTmTNmIfTbyoS2wvICoUYczhAnZs5iGvzEW
-         EZAp1Wrv5gTD4qmB/j7YL7OphUz4AvVhPVaWkcFUdI2amz7sZsgywSH54/dQHfV37CsR
-         p0hyhbZkatBxPMuE4UmWQkG7wAXlKDxY4hTX+tK8JWORkzDZ0VvrtuzXJItue2MY/yq4
-         S2nQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ+6KH0Zp8Kmu2AiJZ7EuiEWC4idL3Wra17fiRcGOHxv17NRfb8iCBeh8F95SxecxV93QHheHxyYPLgY9ibDbzvtXLNKcczoaN4YgULA==
-X-Gm-Message-State: AOJu0YymmlAWMxNrXwY2IMdwjNqkq9wIjoxm+GC9q3hfyRQ8uINXIy+N
-	pYiFYna0sAlagsxhvYMT6fiE5zN+48cpSS47Qvk2b229lwsrBmgq60x1falEhjY=
-X-Google-Smtp-Source: AGHT+IG5rkARmaWUictA1Ft2Xt9RaqG2EvVFtFJRmC7NNAJ+R9vH+8s1KCC+Eq70YL/6ULgKJ1LJ7w==
-X-Received: by 2002:a17:906:3757:b0:a3d:9e6b:2776 with SMTP id e23-20020a170906375700b00a3d9e6b2776mr2966222ejc.17.1708080410468;
-        Fri, 16 Feb 2024 02:46:50 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id p17-20020a1709060e9100b00a3d11feb32esm1429131ejf.186.2024.02.16.02.46.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Feb 2024 02:46:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708080520; x=1708685320;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NKfZzgXFQ7L4hFdgNuI/0C1mifl1ZkgKyzPDgn09DEE=;
+        b=r6a7PKH8CQs+ibsdKIgTy7BIO9kKhtlSsQ4EpItAHdwM3d2y3ptxIWw6a4c3J5RSxQ
+         UWnZw+/Smj6JXiUSIGxNjoKkzvun5jewX1RjkvH40INNJyC5wnX6JcNj2sFQnC72sjSF
+         MqNLvtHVDuUwi+M9JLYbRK1RW/2cq0siTORGAQGBw4uUgyplA2DQLGfIEnti1vJF/6FM
+         d79CFEH6gfQkmOajtwCjqNUY0vHX/DL1rsciYlewoo3xjmKb8+Y5S2AqnaOhbBjuYXIy
+         bifJG1R8yw7VdxdWtxz1fWolnrIOcAR+CfISk5YXnjbGnEzGBIpYwBUbopd26VCXrJFU
+         qXEA==
+X-Forwarded-Encrypted: i=1; AJvYcCXqjO1MadxaRS8AR8ixFP9fxH2agBzzZUyG/afc10dEnP6yuXfTzxKyuLWd/bl5zoyp0NLCuEYATzcN6N6x9r+QnIYgdM9huM0SoEZJ8w==
+X-Gm-Message-State: AOJu0YzYCSvohfEoevSNTygQkcV3AXQoCEWsCAnRZ7myTMpxxDSxoPNz
+	c3NW1PmQLHi3dXJQz28tasPqnAfTR1zYpNpYecEppyYnEdEDaHFEWo7sjJlBmq5Q0roa2Plh/50
+	7C9ypUQfaYlGMwj9dq8McVQ249xuClsCWtwmW0w==
+X-Google-Smtp-Source: AGHT+IFbejH6b7sinvG8KhiDdJHrIEdrQqXVLTFHjvll3gtnHa+pgS4X4AFWoxSUSZD0KqtQdIyD2hcJKMWbRbauHEE=
+X-Received: by 2002:a5b:991:0:b0:dc7:32ea:c89f with SMTP id
+ c17-20020a5b0991000000b00dc732eac89fmr4951588ybq.15.1708080519834; Fri, 16
+ Feb 2024 02:48:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
+ <20231231171237.3322376-3-quic_jprakash@quicinc.com> <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
+ <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
+In-Reply-To: <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 16 Feb 2024 12:48:28 +0200
+Message-ID: <CAA8EJppsn2zsAXem-m=9U8izhtAZmVe62xS5qdkwJmFTqV30gA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Jishnu Prakash <quic_jprakash@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, jic23@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, lee@kernel.org, andriy.shevchenko@linux.intel.com, 
+	daniel.lezcano@linaro.org, lars@metafoo.de, luca@z3ntu.xyz, 
+	marijn.suijten@somainline.org, agross@kernel.org, sboyd@kernel.org, 
+	rafael@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
+	linus.walleij@linaro.org, quic_subbaram@quicinc.com, 
+	quic_collinsd@quicinc.com, quic_amelende@quicinc.com, quic_kamalw@quicinc.com, 
+	kernel@quicinc.com, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org, 
+	linux-iio@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 16 Feb 2024 11:46:49 +0100
-Message-Id: <CZ6FYZLGWT3K.ZBHYDQ7TDN4B@fairphone.com>
-Cc: "Andy Gross" <agross@kernel.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Thara
- Gopinath" <thara.gopinath@gmail.com>, "Herbert Xu"
- <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
- "Rob Herring" <robh+dt@kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Bhupesh Sharma" <bhupesh.sharma@linaro.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm6350: Add Crypto Engine
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Stephan Gerhold" <stephan@gerhold.net>
-X-Mailer: aerc 0.15.2
-References: <20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com>
- <20240105-sm6350-qce-v1-2-416e5c7319ac@fairphone.com>
- <ZZguvdJTyVgfxm4D@gerhold.net>
-In-Reply-To: <ZZguvdJTyVgfxm4D@gerhold.net>
 
-On Fri Jan 5, 2024 at 5:30 PM CET, Stephan Gerhold wrote:
-> On Fri, Jan 05, 2024 at 05:15:44PM +0100, Luca Weiss wrote:
-> > Add crypto engine (CE) and CE BAM related nodes and definitions for thi=
-s
-> > SoC.
-> >=20
-> > For reference:
-> >=20
-> >   [    2.297419] qcrypto 1dfa000.crypto: Crypto device found, version 5=
-.5.1
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm6350.dtsi | 31 ++++++++++++++++++++++++++++=
-+++
-> >  1 file changed, 31 insertions(+)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts=
-/qcom/sm6350.dtsi
-> > index 8fd6f4d03490..516aadbb16bb 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> > @@ -1212,6 +1212,37 @@ ufs_mem_phy_lanes: phy@1d87400 {
-> >  			};
-> >  		};
-> > =20
-> > +		cryptobam: dma-controller@1dc4000 {
-> > +			compatible =3D "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> > +			reg =3D <0 0x01dc4000 0 0x24000>;
-> > +			interrupts =3D <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> > +			#dma-cells =3D <1>;
-> > +			qcom,ee =3D <0>;
-> > +			qcom,controlled-remotely;
-> > +			num-channels =3D <16>;
-> > +			qcom,num-ees =3D <4>;
-> > +			iommus =3D <&apps_smmu 0x432 0x0000>,
-> > +				 <&apps_smmu 0x438 0x0001>,
-> > +				 <&apps_smmu 0x43f 0x0000>,
-> > +				 <&apps_smmu 0x426 0x0011>,
-> > +				 <&apps_smmu 0x436 0x0011>;
->
-> The last two lines look equivalent to me: 0x436 & ~0x0011 =3D 0x426.
+Hi Jishnu,
 
-I don't understand the IOMMU SID + mask really, but I think I've seen
-somewhere before like here that TZ can be a bit picky with the SIDs?
 
-https://lore.kernel.org/linux-arm-msm/opqdrmyj3y64nqqqmakjydn5rkspizufyeavm=
-7ec7c7ufqz4wk@ey2a7bq3shfj/
-https://lore.kernel.org/linux-arm-msm/11b5db69-49f5-4d7b-81c9-687d66a5cb0d@=
-linaro.org/
+On Fri, 16 Feb 2024 at 12:39, Jishnu Prakash <quic_jprakash@quicinc.com> wr=
+ote:
 
-I don't quite want to risk having some obscure use case breaking because
-we cleaned up the dts ;)
-
-But if you're more sure than me that it won't break, let me know!
+Please disable sending HTML emails in your email client. It is
+generally frowned upon, it complicates replying, it breaks quotations,
+etc.
 
 >
-> It's also a bit weird that the mask has one more digit than the stream
-> ID. And ordered numerically (by stream ID, first number) it would be a
-> bit easier to read. :-)
+> Hi Krzysztof,
+>
+> On 1/4/2024 1:48 PM, Krzysztof Kozlowski wrote:
+>
+> On 31/12/2023 18:12, Jishnu Prakash wrote:
+>
+> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+>
+> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
+> going through PBS(Programmable Boot Sequence) firmware through a single
+> register interface. This interface is implemented on an SDAM (Shared
+> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
+> than a dedicated ADC peripheral.
+>
+> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
+> channels and virtual channels (combination of ADC channel number and
+> PMIC SID number) per PMIC, to be used by clients of this device.
+>
+> Changes since v2:
+> - Moved ADC5 Gen3 documentation into a separate new file.
+>
+> Changelog goes under ---.
+>
+> Why did you do this? What is the rationale? Sorry, this patchset goes
+> nowhere.
+>
+>
+> I'll elaborate this more in the next patchset. There are two main reasons=
+ for adding this documentation in a new file:
+>
+> 1.This device is not exactly like the existing QCOM VADC drivers as it no=
+w combines VADC functionality (reading ADC channel on client request) with =
+ADC_TM functionality (thermal threshold monitoring).
+>
+> 2.Adding this device's bindings in the existing qcom,spmi-vadc.yaml file =
+is not possible as it would require updating some of the existing top-level=
+ constraints. (for the older devices in that file, "reg" and "interrupts" c=
+an have at most one item, while this device can have more than one item und=
+er these properties.)
+>
+>
+> Changes since v1:
+> - Updated properties separately for all compatibles to clarify usage
+>   of new properties and updates in usage of old properties for ADC5 Gen3.
+> - Avoided updating 'adc7' name to 'adc5 gen2' and just left a comment
+>   mentioning this convention.
+> - Used predefined channel IDs in individual PMIC channel definitions
+>   instead of numeric IDs.
+> - Addressed other comments from reviewers.
+>
+>
+> +          per PMIC in the PMIC-specific files in include/dt-bindings/iio=
+/adc.
+> +
+> +      label:
+> +        $ref: /schemas/types.yaml#/definitions/string
+>
+> Why do you need it in the first place? Don't you miss some $ref?
+>
+>
+> This is just meant to show the ADC channel name in DT for our reference. =
+I'll check if I can use adc.yaml, which includes this property already, as =
+a reference in this case.
+>
+>
+> +        description: |
+>
+> Do not need '|' unless you need to preserve formatting. Applies everywher=
+e.
+>
+>
+>
+> +            ADC input of the platform as seen in the schematics.
+> +            For thermistor inputs connected to generic AMUX or GPIO inpu=
+ts
+> +            these can vary across platform for the same pins. Hence sele=
+ct
+> +            the platform schematics name for this channel.
+> +
+>
+> +      qcom,adc-tm:
+> +        description: |
+> +            Indicates if ADC_TM monitoring is done on this channel.
+> +            Defined for compatible property "qcom,spmi-adc5-gen3".
 
-Sorting them is no problem, can do that for v2.
+You are describing qcom,spmi-adc5-gen3, are you not? So this phrase
+adds nothing.
 
+> +            This is the same functionality as in the existing QCOM ADC_T=
+M
+> +            device, documented at devicetree/bindings/thermal/qcom-spmi-=
+adc-tm5.yaml.
+> +        type: boolean
+> +
+>
+> Why do you duplicate entire vadc file? Why it cannot be part of that
+> file? Oh wait, it was in v2.
+>
+> You now duplicated a lot of property definitions without clear reason.
+> If this is intention, then you need to put them in common schema.
+>
+>
+> Many of the properties used for earlier QCOM VADC devices will be used fo=
+r this device too.....do you mean I can add a new schema file (named someth=
+ing like qcom,vadc.yaml) and move common properties into it (like qcom,hw-s=
+ettle-time, qcom,decimation, etc) from this file and qcom,spmi-vadc.yaml?
+>
+> Can I do it in the same patch or should it be a separate patch coming bef=
+ore this one ?
+
+I'd say, separate patch. Move first, extend later.
+
+>
+>
+>
+> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h b/inclu=
+de/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+>
+> index c0680d1285cf..750a526af2c1 100644
+> --- a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+> +++ b/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
+> @@ -6,7 +6,7 @@
+>  #ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+>  #define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+>
+> -#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
+>
+> ? How is it related?
+>
+>
+> This should have gone into patch 1, I'll fix it in the next patch series.
+>
+> I'll address all your other comments in the next patchset.
 >
 > Thanks,
-> Stephan
+>
+> Jishnu
+>
+>
+>
+>  #define SMB139x_1_ADC7_SMB_TEMP (SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
+>  #define SMB139x_1_ADC7_ICHG_SMB (SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
+> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h b/include/dt-bi=
+ndings/iio/adc/qcom,spmi-vadc.h
+> index ef07ecd4d585..cfe653d945a4 100644
+> --- a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+> +++ b/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
+> @@ -1,6 +1,8 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+>  /*
+>   * Copyright (c) 2012-2014,2018,2020 The Linux Foundation. All rights re=
+served.
+> + *
+>
+> Drop stray blank line
+>
+> Best regards,
+> Krzysztof
+>
 
+
+--=20
+With best wishes
+Dmitry
 
