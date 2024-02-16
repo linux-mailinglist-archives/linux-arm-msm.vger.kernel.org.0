@@ -1,119 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-11400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6B9185854E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 19:34:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFE4B85855B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 19:39:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 258761C20ECD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:34:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E06FD1C20F50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:39:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68D69145FE3;
-	Fri, 16 Feb 2024 18:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E2E9133439;
+	Fri, 16 Feb 2024 18:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JIjUVToZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P3igEePE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC1A145B21;
-	Fri, 16 Feb 2024 18:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EC812FB18;
+	Fri, 16 Feb 2024 18:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708108324; cv=none; b=LfkYluSmg7UnSnP5m4fJbvgufEoPDTKol2ZajxXDg40LbukYl3DYZaRXBGzlqb7ymUZmHEG6Jdkaqb51f/EuaMIVs07/wVa5ZLEsFv1zQS2J58un4UubnXt6Qmc4V0/kHBW8P3Yx5cu9soumAx8yW8RJq4UQrrLyv2At/eM68OQ=
+	t=1708108757; cv=none; b=N3CQah54tOtbBkgEEpmcVX6os8A7/6OVGNkN5vzbWDJq/vDYYNycTy2hk10wPs53Hh5PO04QmhXlcGgU4OWGrulqfB/E27SzTSF84fz4/oAK4ypSy/NmKvD9LAnGoWsnBEZhGBiZaxzr868btLKKq82ObsqUVnUi+x/w+4gC/TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708108324; c=relaxed/simple;
-	bh=EuQ0oWNycJc6EUI4ZgzFYPB2MfQHGg5k+ggiEumBsng=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=XyU6Fa2JLRhIiGE6vuhTBw2LlSlE6nYE/0d3MZEN4hIFeCuAX42xyWJnPmp4Vu/t0lnbMWxXvYLV/F0VQOmdvVyUtcD2FeeAfOTCNLt2caPaSRMhq5aa8C1BjoBVgm+QNjGKQuQRIqihS9u3In+kDDEB80iDXoDJ8OGyIcXW1A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JIjUVToZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E82C433C7;
-	Fri, 16 Feb 2024 18:32:03 +0000 (UTC)
+	s=arc-20240116; t=1708108757; c=relaxed/simple;
+	bh=c52Bjk2RQnn7DIN2AN3Dt13KP2BKtoclcR7LSa6bwgE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mvSFSnL8ghRMaPF9S80X/yTBB6ZBIaLREwirBHXwbaOQ42gP9GNnw/qOhPvJl8LFtmXnY9lZidqkGOAyt7HolhYw3lty+GpWGECiMlrFWANvcEQKCNOvHCU+bt5d70P7hTqdF3aGUkpdtan4LDNmsSWkq8AemM7hkMusOJZb+Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3igEePE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE102C433F1;
+	Fri, 16 Feb 2024 18:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708108323;
-	bh=EuQ0oWNycJc6EUI4ZgzFYPB2MfQHGg5k+ggiEumBsng=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=JIjUVToZ9OnNPRW7wZ74ZAXQQlIcXyhcK2EAgw6bEzGMA96/l9Xd7ImlVnHC/HSAA
-	 AHp2+W08dKHJh4ynlYb8oC1vIqJUnjz/XHaw/Git88hTRb6S7T27UZAlW7HzwbtGaE
-	 dm0L+KbwQX9tKFdiwbF3rjc3v9vtOQNzWrSig5Ss89NDi1ArxCLMZynVlP0YG3BOzY
-	 VQ5i8oLalUDpiLoMop1oM9vz4DCHALT1OkCJDXKELTO84yhaKTPDsSofHOulle52zg
-	 yeFghWg60WN9u/87wAo2PLiNihR7A5n+nIvour5wfyw4UHCFHWpJJy8mttA348xfOl
-	 ZxsitMFTnBynw==
-Date: Fri, 16 Feb 2024 12:32:02 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1708108756;
+	bh=c52Bjk2RQnn7DIN2AN3Dt13KP2BKtoclcR7LSa6bwgE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P3igEePEy1/PnswfNRWUu+JU7dPo6agq07TwhdbIMZqb7HTGvrfAHN0bZ0mx7pIm6
+	 g+6ojphnhIrXU6rG3tJTPQ3smk4UPoAuhjSV2ZblYRfh6L+EZlQ7wvyzvtM6NE2Rh+
+	 KaWcMyUoA13HOqD/KOLXACONwvaaU6dbUdE6+nb6J2zn5M19HnhDRKwuwej7ZIr2E4
+	 mJuktNaCneKE2AuDh9V+YQQwBu2jNRb8epndhA0vghGllgf7QVvbwODZLNJ0nfixcb
+	 MG5NYM7ptJXaM8mzKlWznplyHTwIe2I1Low0Y71J4A+dvT+3byreoujfIHzXluUpqP
+	 nEqD9/fQwQ4DQ==
+Date: Fri, 16 Feb 2024 12:39:14 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: konrad.dybcio@linaro.org, linus.walleij@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v11 1/4] firmware: qcom: scm: provide a read-modify-write
+ function
+Message-ID: <jyfpwd3jiwwqgbap3vk7uzhumqaj2rt2udiakink7rgxk4k5le@hqclapr7wizu>
+References: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
+ <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Sean Paul <sean@poorly.run>, Maxime Ripard <mripard@kernel.org>, 
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, freedreno@lists.freedesktop.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- David Airlie <airlied@gmail.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Rob Clark <robdclark@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Daniel Vetter <daniel@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20240216-x1e80100-display-v3-2-28b1c33ac8c0@linaro.org>
-References: <20240216-x1e80100-display-v3-0-28b1c33ac8c0@linaro.org>
- <20240216-x1e80100-display-v3-2-28b1c33ac8c0@linaro.org>
-Message-Id: <170810832158.3497594.1997532394027797497.robh@kernel.org>
-Subject: Re: [PATCH v3 2/4] dt-bindings: display/msm: Document MDSS on
- X1E80100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
 
+On Mon, Jan 08, 2024 at 08:57:31PM +0530, Mukesh Ojha wrote:
+> It was realized by Srinivas K. that there is a need of
 
-On Fri, 16 Feb 2024 19:01:06 +0200, Abel Vesa wrote:
-> Document the MDSS hardware found on the Qualcomm X1E80100 platform.
+"need" is a strong word for this functionality, unless there's some use
+case that I'm missing.
+
+> read-modify-write scm exported function so that it can
+> be used by multiple clients.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Let's introduce qcom_scm_io_rmw() which masks out the bits
+> and write the passed value to that bit-offset.
+> 
+> Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
 > ---
->  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 253 +++++++++++++++++++++
->  1 file changed, 253 insertions(+)
+>  drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
+>  include/linux/firmware/qcom/qcom_scm.h |  1 +
+>  2 files changed, 27 insertions(+)
 > 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 520de9b5633a..25549178a30f 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/of_irq.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/spinlock.h>
+>  #include <linux/reset-controller.h>
+>  #include <linux/types.h>
+>  
+> @@ -41,6 +42,8 @@ struct qcom_scm {
+>  	int scm_vote_count;
+>  
+>  	u64 dload_mode_addr;
+> +	/* Atomic context only */
+> +	spinlock_t lock;
+>  };
+>  
+>  struct qcom_scm_current_perm_info {
+> @@ -481,6 +484,28 @@ static int qcom_scm_disable_sdi(void)
+>  	return ret ? : res.result[0];
+>  }
+>  
+> +int qcom_scm_io_rmw(phys_addr_t addr, unsigned int mask, unsigned int val)
+> +{
+> +	unsigned int old, new;
+> +	int ret;
+> +
+> +	if (!__scm)
+> +		return -EINVAL;
+> +
+> +	spin_lock(&__scm->lock);
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Please express that this lock is just for create mutual exclusion
+between rmw operations, nothing else.
 
-yamllint warnings/errors:
+Also please make a statement why this is desirable and/or needed.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dts:24:18: fatal error: dt-bindings/clock/qcom,x1e80100-dispcc.h: No such file or directory
-   24 |         #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1428: dt_binding_check] Error 2
-make: *** [Makefile:240: __sub-make] Error 2
+Regards,
+Bjorn
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240216-x1e80100-display-v3-2-28b1c33ac8c0@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> +	ret = qcom_scm_io_readl(addr, &old);
+> +	if (ret)
+> +		goto unlock;
+> +
+> +	new = (old & ~mask) | (val & mask);
+> +
+> +	ret = qcom_scm_io_writel(addr, new);
+> +unlock:
+> +	spin_unlock(&__scm->lock);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_io_rmw);
+> +
+>  static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>  {
+>  	struct qcom_scm_desc desc = {
+> @@ -1824,6 +1849,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  		return ret;
+>  
+>  	mutex_init(&scm->scm_bw_lock);
+> +	spin_lock_init(&scm->lock);
+>  
+>  	scm->path = devm_of_icc_get(&pdev->dev, NULL);
+>  	if (IS_ERR(scm->path))
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index ccaf28846054..3a8bb2e603b3 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -82,6 +82,7 @@ bool qcom_scm_pas_supported(u32 peripheral);
+>  
+>  int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+>  int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
+> +int qcom_scm_io_rmw(phys_addr_t addr, unsigned int mask, unsigned int val);
+>  
+>  bool qcom_scm_restore_sec_cfg_available(void);
+>  int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
+> -- 
+> 2.7.4
+> 
 
