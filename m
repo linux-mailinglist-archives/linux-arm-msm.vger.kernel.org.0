@@ -1,138 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-11380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 265EA858311
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 17:54:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43C2885833C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 18:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3BE9281282
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 16:54:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67E3F1C21120
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 17:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63EB7130E25;
-	Fri, 16 Feb 2024 16:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31429130E47;
+	Fri, 16 Feb 2024 17:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SMRdlQnU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y7RLDLsM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D81130AF6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 16:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4910B130E39
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 17:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708102456; cv=none; b=grvPRWPctdxMkojo5HWSY1VlnD35knyvonxLsK6UKca+TkMO0vi5IR1xF1p6X5afWzhGnhicpxWu13fP18K2cl1C/Q7cUkNAx2uAQMLVDW7lxmUZwfGsnMfsW+HeU/80sz4qXkDvjauu8O7A03Yvm1u6YyIeCkE8IUSviBf60pQ=
+	t=1708102882; cv=none; b=K+VPS8dxHA7SqgW5OUmB/ZClQ5e5/kd4lhIOFcgs75oeWMd0SIh3QKiZJ8dFPTWsMNGMAsrU2j2vAyhwA/jlJ+LClxeJUfHp5PZ3Q/tOcnId2O1tLfTFv06zRxp0d1C1TrVPf/TBGyiz90Dcb3WSxkhhi0Lqv/e1TrCYt6O29ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708102456; c=relaxed/simple;
-	bh=Y91UWNzXuH8p9y2IvbH82XnOrZASUCU2q9704Gj6jR8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mgvSNbc7fSBhTLgDUKosdxBBHluCdiLemvTIPNUIZBzxYjY3o84s4JhQ4g8yRQqI7/WmvpPr9Te10UZzeGjs1VDwCCkPR5sz+J/W/Crx0Yp/KiJNL04cdst72ayTP0VnGknddd6eEBT8VeksyXwiRuJIQUgwsjk0gVmwkwWZqoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SMRdlQnU; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1708102882; c=relaxed/simple;
+	bh=0iFXpBAkOI5XFf8B+lBsw7By4yXHr24NnEal53Y4B9U=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IZC7FxcOT3d8tMp8xsGo+H/d5GpvxIxyvgajOEyod3c4HwN8KpRfgIKpDZpHWSl35qD50xUkU2Dj4ALEGWXgObxILH9lv8S0eJIMXGdExaUpea4xsm2ex8MWZdf8F9+ws1uUU4/qJMWeueIUlKtl/HLXjZb/0orj8X8k6jZIJi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y7RLDLsM; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6d9f94b9186so1875074b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 08:54:14 -0800 (PST)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-563c403719cso1925747a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 09:01:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708102454; x=1708707254; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=br2N/R8PHJEVGm+jIHqD2c6+5tUx5kxjgFiSBw/i4S8=;
-        b=SMRdlQnUiv+6LrQ2ehvig9k9l5PaWzqQsSAhpqnhg3jFBuukeqJ5KBl3oiNaUC6/nA
-         30CJEXE6F7rc4/CTEfQ1I2L7c0BvVKXKj2d7cHIW+lvbJoXWstUhW3vsgS/sw1C+V9wZ
-         0IrIuTx8B3KBVaM1A5+y1yTn4WMhHpqKOuG+XxFQx6CShjM0JdC2FQOsiEXvDUr3Jw5d
-         X/SOeJBnQlvBN76yMw2miOxyssUgDnFG7TaT474zko52/yM9D1D/7PRZB0rOS2CXtZg1
-         3KEDx1XWENcW93LB7jz1J+3Ssr7BpqYnx7CH4bnioOowhSN0xJbT3ENUzYyn1IqcQJqf
-         qJdA==
+        d=linaro.org; s=google; t=1708102878; x=1708707678; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p1UcFz1FGckNLw1XlmxhxjVgBjfCwoT7hcC1xOssOlI=;
+        b=Y7RLDLsMswlx1nHhJCT5o9/4rYKWBhVENA00Jip/VM8c3XCs896W8xJLA85UgfLovS
+         7kc28zDoli1oJsJVjjbAWhVKH/SuZ7xR39IUgl4+fSq6gUQcwv2M1chYTuAHaXz2J7Dd
+         nf5HHuV2dY5x2TPGuswgk1ED5qQzuaiL04hhIwqFG92LKkGfVZNnWh5x4Vd8NRbRfhXJ
+         5vcSAodkf/Zg8JgHzzntX+TegkF2OPCaKfjksX9GW/HeOLdloj37aBSfVyVnOLoRg4UO
+         GSMbrs6OoEXqJhjOt9/Nw4+G5oHthturtXcxB/1r8Z4Q+2Dsn0hpBBCLEIpH36wZ++SU
+         TB1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708102454; x=1708707254;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=br2N/R8PHJEVGm+jIHqD2c6+5tUx5kxjgFiSBw/i4S8=;
-        b=s2iIr+U3+mwalWuinyHJfR5poNEZCFOp0PDQC4ntl/gJ2yA4vWQDwF9vtTLD5o6UmB
-         xRY/rZ4kmYv4MYAKLKu5h3P5YXZgw3MBKYR96BLnxuBhiC8JSqDo+8tq5p+mMMeqhdec
-         kL8FbPTjUr0dTCsbqS3MKNa4eXBVr+WLbhM0dRfKXijjMHXa3jbQgO8hVU8YSrIfJKqO
-         zaCq/Ji9likoGlQlx74WUDH8zgjLnvj0Q+g+XfiNpif5tqQu1daBZEZzEBrLnhYjGkao
-         ODjaaLL6OCZ49JSdQdBZLg+n0vLm3NCIOEjhG56ViCzNvVibbJr1JlGKSAWoJRrArOiH
-         T9Cg==
-X-Forwarded-Encrypted: i=1; AJvYcCUuGnybVI6yx8AMFRfYDw+RtBuH3QiJR4G0NqlC2Dhu090V64GVzixXQoUxfidZU6iz84Ad2X0BqQbGWAMW03TGjQB/7t5muTrbrGFcxA==
-X-Gm-Message-State: AOJu0Yzei0ayhXlF3gDoGikUfenNhTPfKJUEdCzlq6KvwVv4lKwv5FGY
-	QVDj7+JxTgzajtFuC7+zAHMtsYhGwpHaoJZLotoTLR8dzO3xl7WsvyZ1TGvJ2g==
-X-Google-Smtp-Source: AGHT+IEg7nBZgAV6mmmXqEFA0ksN6sm799MQHapgL/DdyvYAzH6BOQl3qC6EYPbvT0oVYUmjTjUyCg==
-X-Received: by 2002:aa7:8a56:0:b0:6e0:f2a6:abde with SMTP id n22-20020aa78a56000000b006e0f2a6abdemr5363330pfa.5.1708102452975;
-        Fri, 16 Feb 2024 08:54:12 -0800 (PST)
-Received: from thinkpad ([120.138.12.48])
-        by smtp.gmail.com with ESMTPSA id gu8-20020a056a004e4800b006dde35245d8sm173857pfb.58.2024.02.16.08.54.08
+        d=1e100.net; s=20230601; t=1708102878; x=1708707678;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p1UcFz1FGckNLw1XlmxhxjVgBjfCwoT7hcC1xOssOlI=;
+        b=OAUpGac9xaBDqO9twgrRNLzyp8N/f8gOzjN6SLYvnRUDrfvSlPx2G28wC+WP1DAKN3
+         Qj+s6qYRj9hQ44MEJ3jJbAqJZGWrzdZuv/O8pxtUxn11gdSNutD/yMs/3cx7tTfW3rLJ
+         KHdhaTrhcuzPsv3mTHPjm6x0PFHLt9NIDdiTjNvIPQ8Zub0N6ZjbsTCehxnIo5u2lI8r
+         kZEyDNrqW5L0sG/KLgJlTLh6B4r6RiAvayQWeWo98S1dk0NXX0s9yQC79Fd8QqjQJI+A
+         nAwXUEZi3wdDoZUIh11OSPaMVtyiQrSk9MtTlYVwjaG3XTMeaG4oSSvLrWuiMRQjHds7
+         22/w==
+X-Gm-Message-State: AOJu0Yzrg4puOcNpDqBbeHS10oH0YRAEeBKpNgsP3QFHqRcycqYfmoh/
+	1FtXJZXBZiBkynnP46AyWkrwXtxJ2GvJKqmZG1lKtCkABDOTDTr88f0ThZxOcfk=
+X-Google-Smtp-Source: AGHT+IHKQOQB0YGj0ov9AvBSyG6g37XAlR8RWH9o87R5qxWdfqq2CXR/ocGh+Qm9/bbxo+8iSy3IAg==
+X-Received: by 2002:a05:6402:28f:b0:560:c951:57ba with SMTP id l15-20020a056402028f00b00560c95157bamr4631607edv.26.1708102878588;
+        Fri, 16 Feb 2024 09:01:18 -0800 (PST)
+Received: from [127.0.1.1] ([188.24.162.93])
+        by smtp.gmail.com with ESMTPSA id u20-20020aa7d894000000b00563a6c9fd71sm159706edq.16.2024.02.16.09.01.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 08:54:12 -0800 (PST)
-Date: Fri, 16 Feb 2024 22:24:06 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Do not require
- 'msi-map-mask'
-Message-ID: <20240216165406.GD39963@thinkpad>
-References: <20240212165043.26961-1-johan+linaro@kernel.org>
- <20240212165043.26961-3-johan+linaro@kernel.org>
- <e396cf20-8598-4437-b635-09a4a737a772@linaro.org>
- <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
- <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
+        Fri, 16 Feb 2024 09:01:18 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v3 0/4] drm/msm: Add display support for X1E80100
+Date: Fri, 16 Feb 2024 19:01:04 +0200
+Message-Id: <20240216-x1e80100-display-v3-0-28b1c33ac8c0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANCUz2UC/22NQQ7CIBQFr9KwFvP5pYquvIdxAS20JAQaUNKm6
+ d2l3Rijy3nJm1lI0tHqRK7VQqLONtngC9SHirSD9L2mtitMELBmCIxOTAtgALSzaXRyppKfauQ
+ cQElDyk3JpKmK0rdDOfqXc2UcozZ22jv3R+HBpmeI857NbFu3AgeGl99CZhQodBetBDa8M3Bz1
+ ssYjiH2ZLNl/BiQ8T8GLIbWQKOkEGfe1F+GdV3fLEbD+QgBAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2021; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=0iFXpBAkOI5XFf8B+lBsw7By4yXHr24NnEal53Y4B9U=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlz5TSztKm9Y1ReskOBVpTZu0w//CBKZim1KNW8
+ Fk0rx9kfouJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZc+U0gAKCRAbX0TJAJUV
+ VlCMD/wJQ0F811zULMoG88tizqg5woFm+ExkHS4/mFScQnxjO+250VkA5TNSBM6eDMDqTEYM47x
+ Fe1ZqYKqiUvTfjFtiFv2tmdT/vUewNdtQBNNlhaW/3f5NG2E9/xONI03hY6Tf9lQHpEK8B5Q92i
+ peLKidNcBoXsOAfufe0rMntPTxGyGYtb3eAs5/N+S+bb17O+HabqxNqSmf2PBKQLLqbRxvc9Kzq
+ PMiLF0PkOc22GI7MObDQG7poVcrLMF0zcVaWrBrBO6feSCKlx7S770Szrki1hNi5xyakOuEj5ik
+ 7cTnPjvjqJyOqgoYot5JYIKc0BdiBhcOqDtXmTLa3pemCeg4eufj4ZflFg6ds5kzssC1M4lUOT7
+ WOC7klglnEEEL6zJxkOuvgLjUj64dQJXMoTm7a69k4xLU/MDRa3sZCJQKRbziF4PNFTjr8/DOCO
+ eerJ2dt/af/vs7Jwnz/buOATn+c4m7Uy+2P3fG6iWvLBZsB6+hUiiVv6ACpzLJTUTKlNG5n8Ma5
+ sNjNnsfp6ZpfdaQjabrJfus/PZ3jAcwhCagh+nLo/Hj+Su4QelJxhp68ajzoKF0OOBckjZIrRE9
+ aEQ36y1kFLJu7ATRCzJYHYuXxurcbZgAs8Zr4LOKDN2hmJwFRkmtNxgSuCXS5dePxFZbZUngk69
+ AMzRJnKXWtf0tWA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Wed, Feb 14, 2024 at 02:38:57PM +0100, Krzysztof Kozlowski wrote:
-> On 14/02/2024 13:54, Johan Hovold wrote:
-> > On Wed, Feb 14, 2024 at 01:01:20PM +0100, Krzysztof Kozlowski wrote:
-> >> On 12/02/2024 17:50, Johan Hovold wrote:
-> >>> Whether the 'msi-map-mask' property is needed or not depends on how the
-> >>> MSI interrupts are mapped and it should therefore not be described as
-> >>> required.
-> >>
-> >> I could imagine that on all devices the interrupts are mapped in a way
-> >> you need to provide msi-map-mask. IOW, can there be a Qualcomm platform
-> >> without msi-map-mask?
-> > 
-> > I don't have access to the documentation so I'll leave that for you guys
-> > to determine. I do note that the downstream DT does not use it and that
-> > we have a new devicetree in linux-next which also does not have it:
-> > 
-> > 	https://lore.kernel.org/r/20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org
-> > 
-> > But at least the latter looks like an omission that should be fixed.
-> 
-> Hm, either that or the mask for sm8450 was not needed as well. Anyway,
-> thanks for explanation, appreciated!
-> 
+This patchset adds support for display for X1E80100.
+The support for embedded DisplayPort on this platform will not
+be enabled using the connetor type from driver match data,
+but through some 'is-edp' property via DT. This subsequent work
+will be part of a separate patchset.
 
-msi-map-mask is definitely needed as it would allow all the devices under the
-same bus to reuse the MSI identifier. Currently, excluding this property will
-not cause any issue since there is a single device under each bus. But we cannot
-assume that is going to be the case on all boards.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v3:
+- Added Dmitry's R-b tag to the mdss patch
+- Swapped order of first two patches, as suggested by Rob
+- Added "additionalProperties: true" to all pattern properties in MDSS
+  schema
+- Link to v2: https://lore.kernel.org/r/20240214-x1e80100-display-v2-0-cf05ba887453@linaro.org
 
-I will submit a patch to fix SM8650.
+Changes in v2:
+- Dropped the 4th patch:
+  "drm/msm/dp: Try looking for link-frequencies into the port@0's endpoint first"
+- Fixed the qcom,x1e80100-mdss schema by including some missing headers
+  in the example
+- Added TODO comment for reg_bus_bw
+- Switched to SDMA features mask
+- Added Krzysztof's R-b tag to mdss schema patch
+- Added Dmitry's R-b tag to the dpu patch
+- Link to v1: https://lore.kernel.org/r/20240129-x1e80100-display-v1-0-0d9eb8254df0@linaro.org
 
-- Mani
+---
+Abel Vesa (4):
+      dt-bindings: display/msm: Document the DPU for X1E80100
+      dt-bindings: display/msm: Document MDSS on X1E80100
+      drm/msm: mdss: Add X1E80100 support
+      drm/msm/dpu: Add X1E80100 support
 
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      |   4 +-
+ .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 253 ++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   | 449 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                     |  13 +
+ 7 files changed, 722 insertions(+), 1 deletion(-)
+---
+base-commit: 85a96a047f413da4b663919a4ced39a4715c6835
+change-id: 20231201-x1e80100-display-a46324400baf
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Abel Vesa <abel.vesa@linaro.org>
+
 
