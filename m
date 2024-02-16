@@ -1,276 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-11318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19DCB857A9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:48:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37EF5857AB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 11:52:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D26F1F24AE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:48:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E84A728615F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Feb 2024 10:52:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6771537FB;
-	Fri, 16 Feb 2024 10:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C060F53E0C;
+	Fri, 16 Feb 2024 10:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rPoakCyi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dZxKMAMl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ADE535C5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 10:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855DF535A2;
+	Fri, 16 Feb 2024 10:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708080523; cv=none; b=DoBViAJ0FY1WsaJifcZWUmSmw5Hk9Y7gxXubtjrYSu/eNVPshuvFpkVfqBMWlouP3TMzzDw2uf2U9W/q0zp1SYyhMXzC77BGBVX6lxeQ3OM+jQq6Tmxl2kv5bDwyRDniKqSkYriglt2lQi00fss/iVnB7zSDP5qEojbMBN7YxBo=
+	t=1708080772; cv=none; b=ofZBhUu3AKa13W9TTf42Rc2/9HuOp6FbtoHVbP1uDxvXUkuUAUvEZV90ZzxtgpxFirt0j/NkknVpxx6oc0NbFgBOVy1m+ZVARv8KRpmKzm3OHo+/2ap7xIuqwS7P7uAVtMm+kFOe5IcqTd85uO8rONGAhyaTF9rgKrYI42jfugQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708080523; c=relaxed/simple;
-	bh=MjLtBHGl3EKFZpRSU/O6NS5UxcW+90Ac2k1SucdI/n8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dkTiLJL3xDp7C3DWjmOmyp3wAOkbTajdMxSCyuFqcuZl8jvAAr0b8x02r8p/Kyuwwdb/14W+GD/JU9zDQelydGEt6bYL0Ie6TrZJWx2zZgqgi7JXmj71igByzwO3A6Al6DdjlxzteUwhPCgNdXRFx1azv8PGRrNKZuIkSG8t/Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rPoakCyi; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc23bf7e5aaso1890026276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Feb 2024 02:48:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708080520; x=1708685320; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NKfZzgXFQ7L4hFdgNuI/0C1mifl1ZkgKyzPDgn09DEE=;
-        b=rPoakCyiYJCQvBxIioimrAoV0sl8is25zVnV80e6dBYErmUbypXiu2/MjWIvXWygUt
-         LHaMmrfV44YH1y2OHsooO5+YIRW92Ef7OvYWcTsm4RA9kfVyOoYtu9FRowgVSbvxLn1P
-         M4p2gJgiRydoCXXgRM+EKRQ/K7MB0J26vx9OJu8cIMoJR7ofJtO67W+f4EPXHZTTH3GI
-         bzQF2aDLTtfHYHoG4EBYsrt8W/tZlusf6qOv1kJjhqtc4CpoCfDqDS83OwHGDFPmnAZr
-         jkUhLeAw3a26y6NEAqWdChjDqjDkavt8W7UBwjSDjo95vrfqoGNefdNwVmGLxwq0aKZI
-         gKzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708080520; x=1708685320;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NKfZzgXFQ7L4hFdgNuI/0C1mifl1ZkgKyzPDgn09DEE=;
-        b=r6a7PKH8CQs+ibsdKIgTy7BIO9kKhtlSsQ4EpItAHdwM3d2y3ptxIWw6a4c3J5RSxQ
-         UWnZw+/Smj6JXiUSIGxNjoKkzvun5jewX1RjkvH40INNJyC5wnX6JcNj2sFQnC72sjSF
-         MqNLvtHVDuUwi+M9JLYbRK1RW/2cq0siTORGAQGBw4uUgyplA2DQLGfIEnti1vJF/6FM
-         d79CFEH6gfQkmOajtwCjqNUY0vHX/DL1rsciYlewoo3xjmKb8+Y5S2AqnaOhbBjuYXIy
-         bifJG1R8yw7VdxdWtxz1fWolnrIOcAR+CfISk5YXnjbGnEzGBIpYwBUbopd26VCXrJFU
-         qXEA==
-X-Forwarded-Encrypted: i=1; AJvYcCXqjO1MadxaRS8AR8ixFP9fxH2agBzzZUyG/afc10dEnP6yuXfTzxKyuLWd/bl5zoyp0NLCuEYATzcN6N6x9r+QnIYgdM9huM0SoEZJ8w==
-X-Gm-Message-State: AOJu0YzYCSvohfEoevSNTygQkcV3AXQoCEWsCAnRZ7myTMpxxDSxoPNz
-	c3NW1PmQLHi3dXJQz28tasPqnAfTR1zYpNpYecEppyYnEdEDaHFEWo7sjJlBmq5Q0roa2Plh/50
-	7C9ypUQfaYlGMwj9dq8McVQ249xuClsCWtwmW0w==
-X-Google-Smtp-Source: AGHT+IFbejH6b7sinvG8KhiDdJHrIEdrQqXVLTFHjvll3gtnHa+pgS4X4AFWoxSUSZD0KqtQdIyD2hcJKMWbRbauHEE=
-X-Received: by 2002:a5b:991:0:b0:dc7:32ea:c89f with SMTP id
- c17-20020a5b0991000000b00dc732eac89fmr4951588ybq.15.1708080519834; Fri, 16
- Feb 2024 02:48:39 -0800 (PST)
+	s=arc-20240116; t=1708080772; c=relaxed/simple;
+	bh=8VkaDPezDLyOsFDWG7YISAHY6yzoxdeio9M6WtqjSaw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fph5odDwzzAIxy5jkyl0UqSPnSu+73Fmg5t9SQUgEe936FhY38YpmDrBIpgxKBs59+QbCuUnvjR8AP1yYJjooi3KuHE6dOA3HPT5pBRu8qeHD6+2RHfyavfB0vXuif6+b/NDjU3A5tR04+jM7J0SbHPnlqzevmw05ZtfxhTN8vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dZxKMAMl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B92C433C7;
+	Fri, 16 Feb 2024 10:52:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708080772;
+	bh=8VkaDPezDLyOsFDWG7YISAHY6yzoxdeio9M6WtqjSaw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dZxKMAMlNEItXdf+sah3f0Cyw5u24xo2zCc00T3+8mqhBrqpOxyetDPgOL9e8avxx
+	 mv22lD1sEPmBEmFDSHApj6JOize1TuBT4VPWM4jBcJrKvhYj92EzTyN60eKdNNzhIt
+	 7yYcEj66TVVTE8xrrDPoK4urjCLlNNUpfQPba/TWUvl/7TT12Yr5dVPI/+323QCq7F
+	 TmaGxLvOhmIVwApJw/9MbnTbjlaCsq1ZAzy8dZAgR6x9rfcpnVf2SuuJSE3GDx4sNQ
+	 FBP2KsLyjT8nx4N4tU/0WxdWlWFnesGH9gIGZWVbjblrTWsB7Pb2DROPyjsNu9MQZD
+	 b6BSnB9vI28LQ==
+Date: Fri, 16 Feb 2024 16:22:41 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	konrad.dybcio@linaro.org, mani@kernel.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, robh@kernel.org,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_parass@quicinc.com, quic_schintav@quicinc.com,
+	quic_shijjose@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev
+Subject: Re: [PATCH v9 0/5] arm64: qcom: sa8775p: add support for EP PCIe
+Message-ID: <20240216105241.GB2559@thinkpad>
+References: <1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-3-quic_jprakash@quicinc.com> <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
- <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
-In-Reply-To: <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 16 Feb 2024 12:48:28 +0200
-Message-ID: <CAA8EJppsn2zsAXem-m=9U8izhtAZmVe62xS5qdkwJmFTqV30gA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-To: Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, jic23@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, lee@kernel.org, andriy.shevchenko@linux.intel.com, 
-	daniel.lezcano@linaro.org, lars@metafoo.de, luca@z3ntu.xyz, 
-	marijn.suijten@somainline.org, agross@kernel.org, sboyd@kernel.org, 
-	rafael@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
-	linus.walleij@linaro.org, quic_subbaram@quicinc.com, 
-	quic_collinsd@quicinc.com, quic_amelende@quicinc.com, quic_kamalw@quicinc.com, 
-	kernel@quicinc.com, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org, 
-	linux-iio@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com>
 
-Hi Jishnu,
+On Fri, Dec 01, 2023 at 05:36:11PM +0530, Mrinmay Sarkar wrote:
+> This series adds the relavent DT bindings, new compatible string,
+> add support to EPF driver and add EP PCIe node in dtsi file for
+> ep pcie0 controller.
+> 
 
+Applied patches 3 and 4 to pci/endpoint!
 
-On Fri, 16 Feb 2024 at 12:39, Jishnu Prakash <quic_jprakash@quicinc.com> wr=
-ote:
+- Mani
 
-Please disable sending HTML emails in your email client. It is
-generally frowned upon, it complicates replying, it breaks quotations,
-etc.
+> v8 -> v9:
+> - update author in "Add pci_epf_mhi_ prefix to the function" patch.
+> - add ack by and reviewed by tag in commit message.
+> 
+> v7 -> v8:
+> - Add new patch PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function
+>   names
+> - Update PCI: epf-mhi: Add support for SA8775P patch on top of the new
+>   patch and update commit message.
+> 
+> v6 -> v7:
+> - add reviewed by tag in commit message in all patches.
+> - update commit message in patch 2 as per comment.
+> - update reason for reusing PID in commit message.
+> 
+> v5 -> v6:
+> - update cover letter.
+> 
+> v4 -> v5:
+> - add maxItems to the respective field to constrain io space and
+>   interrupt in all variants.
+> 
+> v3 -> v4:
+> - add maxItems field in dt bindings
+> - update comment in patch2
+> - dropped PHY driver patch as it is already applied [1]
+> - update comment in EPF driver patch
+> - update commect in dtsi and add iommus instead of iommu-map
+> 
+> [1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
+> 
+> v2 -> v3:
+> - removed if/then schemas, added minItems for reg,
+>   reg-bnames, interrupt and interrupt-names instead.
+> - adding qcom,sa8775p-pcie-ep compitable for sa8775p
+>   as we have some specific change to add.
+> - reusing sm8450's pcs_misc num table as it is same as sa8775p.
+>   used appropriate namespace for pcs.
+> - remove const from sa8775p_header as kernel test robot
+>   throwing some warnings due to this.
+> - remove fallback compatiable as we are adding compatiable for sa8775p.
+> 
+> v1 -> v2:
+> - update description for dma
+> - Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+>   for sa8775p
+> - sort the defines in phy header file and remove extra defines
+> - add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+>   flag as hdma patch is not ready
+> - add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
+> 
+> 
+> Manivannan Sadhasivam (1):
+>   PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function names
+> 
+> Mrinmay Sarkar (4):
+>   dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+>   PCI: qcom-ep: Add support for SA8775P SOC
+>   PCI: epf-mhi: Add support for SA8775P
+>   arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 64 +++++++++++++++++++++-
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 ++++++++++++++++
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c       | 21 ++++++-
+>  4 files changed, 128 insertions(+), 4 deletions(-)
+> 
+> -- 
+> 2.7.4
+> 
+> 
 
->
-> Hi Krzysztof,
->
-> On 1/4/2024 1:48 PM, Krzysztof Kozlowski wrote:
->
-> On 31/12/2023 18:12, Jishnu Prakash wrote:
->
-> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
-> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
->
-> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
-> going through PBS(Programmable Boot Sequence) firmware through a single
-> register interface. This interface is implemented on an SDAM (Shared
-> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
-> than a dedicated ADC peripheral.
->
-> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
-> channels and virtual channels (combination of ADC channel number and
-> PMIC SID number) per PMIC, to be used by clients of this device.
->
-> Changes since v2:
-> - Moved ADC5 Gen3 documentation into a separate new file.
->
-> Changelog goes under ---.
->
-> Why did you do this? What is the rationale? Sorry, this patchset goes
-> nowhere.
->
->
-> I'll elaborate this more in the next patchset. There are two main reasons=
- for adding this documentation in a new file:
->
-> 1.This device is not exactly like the existing QCOM VADC drivers as it no=
-w combines VADC functionality (reading ADC channel on client request) with =
-ADC_TM functionality (thermal threshold monitoring).
->
-> 2.Adding this device's bindings in the existing qcom,spmi-vadc.yaml file =
-is not possible as it would require updating some of the existing top-level=
- constraints. (for the older devices in that file, "reg" and "interrupts" c=
-an have at most one item, while this device can have more than one item und=
-er these properties.)
->
->
-> Changes since v1:
-> - Updated properties separately for all compatibles to clarify usage
->   of new properties and updates in usage of old properties for ADC5 Gen3.
-> - Avoided updating 'adc7' name to 'adc5 gen2' and just left a comment
->   mentioning this convention.
-> - Used predefined channel IDs in individual PMIC channel definitions
->   instead of numeric IDs.
-> - Addressed other comments from reviewers.
->
->
-> +          per PMIC in the PMIC-specific files in include/dt-bindings/iio=
-/adc.
-> +
-> +      label:
-> +        $ref: /schemas/types.yaml#/definitions/string
->
-> Why do you need it in the first place? Don't you miss some $ref?
->
->
-> This is just meant to show the ADC channel name in DT for our reference. =
-I'll check if I can use adc.yaml, which includes this property already, as =
-a reference in this case.
->
->
-> +        description: |
->
-> Do not need '|' unless you need to preserve formatting. Applies everywher=
-e.
->
->
->
-> +            ADC input of the platform as seen in the schematics.
-> +            For thermistor inputs connected to generic AMUX or GPIO inpu=
-ts
-> +            these can vary across platform for the same pins. Hence sele=
-ct
-> +            the platform schematics name for this channel.
-> +
->
-> +      qcom,adc-tm:
-> +        description: |
-> +            Indicates if ADC_TM monitoring is done on this channel.
-> +            Defined for compatible property "qcom,spmi-adc5-gen3".
-
-You are describing qcom,spmi-adc5-gen3, are you not? So this phrase
-adds nothing.
-
-> +            This is the same functionality as in the existing QCOM ADC_T=
-M
-> +            device, documented at devicetree/bindings/thermal/qcom-spmi-=
-adc-tm5.yaml.
-> +        type: boolean
-> +
->
-> Why do you duplicate entire vadc file? Why it cannot be part of that
-> file? Oh wait, it was in v2.
->
-> You now duplicated a lot of property definitions without clear reason.
-> If this is intention, then you need to put them in common schema.
->
->
-> Many of the properties used for earlier QCOM VADC devices will be used fo=
-r this device too.....do you mean I can add a new schema file (named someth=
-ing like qcom,vadc.yaml) and move common properties into it (like qcom,hw-s=
-ettle-time, qcom,decimation, etc) from this file and qcom,spmi-vadc.yaml?
->
-> Can I do it in the same patch or should it be a separate patch coming bef=
-ore this one ?
-
-I'd say, separate patch. Move first, extend later.
-
->
->
->
-> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h b/inclu=
-de/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
->
-> index c0680d1285cf..750a526af2c1 100644
-> --- a/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
-> +++ b/include/dt-bindings/iio/adc/qcom,spmi-adc7-smb139x.h
-> @@ -6,7 +6,7 @@
->  #ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
->  #define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
->
-> -#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
->
-> ? How is it related?
->
->
-> This should have gone into patch 1, I'll fix it in the next patch series.
->
-> I'll address all your other comments in the next patchset.
->
-> Thanks,
->
-> Jishnu
->
->
->
->  #define SMB139x_1_ADC7_SMB_TEMP (SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
->  #define SMB139x_1_ADC7_ICHG_SMB (SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
-> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h b/include/dt-bi=
-ndings/iio/adc/qcom,spmi-vadc.h
-> index ef07ecd4d585..cfe653d945a4 100644
-> --- a/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
-> +++ b/include/dt-bindings/iio/adc/qcom,spmi-vadc.h
-> @@ -1,6 +1,8 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Copyright (c) 2012-2014,2018,2020 The Linux Foundation. All rights re=
-served.
-> + *
->
-> Drop stray blank line
->
-> Best regards,
-> Krzysztof
->
-
-
---=20
-With best wishes
-Dmitry
+-- 
+மணிவண்ணன் சதாசிவம்
 
