@@ -1,159 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-11522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04292858FCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 14:49:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 182CA858FD9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 14:58:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DB291C20FCE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 13:49:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C94CD28292E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 13:58:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6523B7AE61;
-	Sat, 17 Feb 2024 13:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C9897C094;
+	Sat, 17 Feb 2024 13:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YxKK0Afe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fb0Y7NJg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D2E6A025;
-	Sat, 17 Feb 2024 13:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59CA7BAE7;
+	Sat, 17 Feb 2024 13:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708177748; cv=none; b=ZrEkKp9hGrFrMEtvJoNp7B7XhCqNs5M4V1gBdGrMn/slJok7UDzyKA3joQtM2qjy/ifpMS9egVEN6OMVVNDhBFmDYOBpZfzsR5tBnMnMUJ3SBUL2TlWz9hhYw/joRDikAC/1WDBR7AhzjnmCUdM3qSQ7Iq8YlmEoz1NsP6jmxIs=
+	t=1708178255; cv=none; b=Fkb4YJsKaMPNiF4uPNuEC6+o2v7/pyR6iPeVa5whM/EoCyGzGh5hjtFKHAeGSzRS5NrkFj2Dowy/VW1VSQNePzPu73UlAFVjYmWbFLdxs5wsHC6LCljh0iefpetJsZPfwU9gaMMVnuhLFL7ik/IPNCrLpjj6tjsWl6L3LXk3HzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708177748; c=relaxed/simple;
-	bh=Sy3rNKIx5Ui639NRais+KmPpwAJj9NL8Ysw1j/NJYXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iJjqrVYUa/AhLoYLpwgzcRzI4Iny0z/ADNw9jjFkLMswBYSPME0d7n0hQfM2s6B953YfHj9LCbINYR8RFPytfnT2WdTPKDSdO22j60oTh9pooR9wMSo6naP3xlSlV1RqlZLyDcABUWaiFSLp2g5dGwkvFW+B5WxL4aQljniUX5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YxKK0Afe; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708177746; x=1739713746;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Sy3rNKIx5Ui639NRais+KmPpwAJj9NL8Ysw1j/NJYXI=;
-  b=YxKK0AfeMyLYhD4UH480fz8NuuRX0BJcbDgAX0xeyNgShBrLvhWl32u2
-   Cw2AEMOXG8WnUzvnbkyGEk//KGw6iB9cp1GpkQGqS6z/EYalM/6qK60FY
-   26xvXfT4QWf6GpvNRGFpzG5VDd6878zJatMgA2zgF+J6AUZfKtlIuhG/+
-   WD6Q+0obMCiDCa04tjhRfM/EElpATHBrX/A8xb+b9xr4K65Rz2emvr+JA
-   gC+ovszMAq2fBJBBjY2ZyWRFnQuqV1nT5efXy8i+gvUAAG7aRZ3iC2ui+
-   tk330rM6XfHIwDTZuYpL51hTNBN9HGGS6cjrR/JkJ7Lk4UF8alwshWdnt
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10986"; a="2428384"
-X-IronPort-AV: E=Sophos;i="6.06,166,1705392000"; 
-   d="scan'208";a="2428384"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2024 05:49:05 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,166,1705392000"; 
-   d="scan'208";a="8700226"
-Received: from lkp-server02.sh.intel.com (HELO 3c78fa4d504c) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 17 Feb 2024 05:49:01 -0800
-Received: from kbuild by 3c78fa4d504c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rbL3i-00029c-0q;
-	Sat, 17 Feb 2024 13:48:55 +0000
-Date: Sat, 17 Feb 2024 21:48:09 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, broonie@kernel.org, robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_srichara@quicinc.com,
-	quic_varada@quicinc.com, quic_mdalam@quicinc.com
-Subject: Re: [PATCH 3/5] spi: spi-qpic: Add qpic spi nand driver support
-Message-ID: <202402172116.yfeRMLEF-lkp@intel.com>
-References: <20240215134856.1313239-4-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1708178255; c=relaxed/simple;
+	bh=aWT50lJuEyLuBC6bdjZcLVcVbSSAd/hYVo+Ldw2RS48=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=OK/Id1cK4gee6SWhLDXaKUe+QhWaPfBKD3EJu+PwUKkkqxjzuTcGGM7h9OrsPBlgekeU/zQMY0OMLtHq8+CIyZux9mMTWKAALWHbYrksP3E667eirYdzQe0BZtGwAFUxA5lDOZloH3EsNQ+86a4f5Iy0RK/3QIeHZsCPktVh1o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fb0Y7NJg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41HDfZ9D031770;
+	Sat, 17 Feb 2024 13:57:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=h9VFo0bcfKDSpl
+	pfPaeC5cxtTrFf/cuxr3uw/279Q5E=; b=Fb0Y7NJgeUgd5t3bQl2lHK+UPsyH/Q
+	2XXA0IdU4SHsZXnK4MrYeIT79LCpflgYOvdc2T4zAYEy2kI7FBpuQgGx7Xwdw7Eo
+	XKWO165mpIS2108oz2mqlbioft4xndBKEf/teOBh2GbCAwGdACS5K+OidxVrVzsQ
+	h+AFqSmKqjgaEBXhpxXJUQSEzHHNe9j39D1T4647B5WXq54jyFADuuG0DydsNK/y
+	US2B+3Ij62tHcQsPTIdtvqR6Z8lzp3eXJtuaoOIwLNn4e0hJbT77uC6aXaN2wvrs
+	UsOgjyAxCPRPEt+Q/op/igLdZq2uZgwar1oyp/z5BttI/2KH5rtLQfkg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3waqmdrd27-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 17 Feb 2024 13:57:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41HDvDgr017266
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 17 Feb 2024 13:57:13 GMT
+Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Sat, 17 Feb 2024 05:57:09 -0800
+From: Maulik Shah <quic_mkshah@quicinc.com>
+Subject: [PATCH 0/2] Update init level for cmd-db, rpmh-rsc and psci
+ cpuidle domains
+Date: Sat, 17 Feb 2024 19:27:06 +0530
+Message-ID: <20240217-init_level-v1-0-bde9e11f8317@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240215134856.1313239-4-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADK70GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDI0Nz3cy8zJL4nNSy1BzdpNQksxRzE4MUixQjJaCGgqLUtMwKsGHRsbW
+ 1AHwjxKtcAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        "Rafael J.
+ Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_lsrao@quicinc.com>, Maulik Shah <quic_mkshah@quicinc.com>
+X-Mailer: b4 0.12.5-dev-2aabd
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708178229; l=1020;
+ i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
+ bh=aWT50lJuEyLuBC6bdjZcLVcVbSSAd/hYVo+Ldw2RS48=;
+ b=NwilpH+Ii+ckIRaRbv4O6V62Z9Yh3Hn/dAEEEcEy7BivZ0UhYrdKagy4w5v/v8LrKn0qf7SEh
+ ZmVNgJyOVGvCd1qPl2DXZ79M2JZOGy9BQVC7wl9IuABEtTBaNT4mVzJ
+X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
+ pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: p3_jVyjRySa_Gq2nBMHJZ2gvULuXLcDD
+X-Proofpoint-ORIG-GUID: p3_jVyjRySa_Gq2nBMHJZ2gvULuXLcDD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-17_10,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0 adultscore=0
+ spamscore=0 impostorscore=0 bulkscore=0 clxscore=1011 mlxlogscore=755
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402170113
 
-Hi Md,
+cmd-db and rpmh-rsc are used by clients like regulators, interconnects and
+clocks for resource voting. These clients are in core_initcall() while
+cmd-db and rpmh-rsc are in arch_initcall(). Update init level for these
+drivers also to core_initcall() to avoid unnecessary probe defer during
+boot up.
 
-kernel test robot noticed the following build warnings:
+Similarly psci cpuidle psci power domains are used by rpmh-rsc driver and
+they are in subsys_initcall(). Update it to core_initcall().
 
-[auto build test WARNING on next-20240215]
-[also build test WARNING on linus/master v6.8-rc4]
-[cannot apply to mtd/nand/next broonie-spi/for-next robh/for-next v6.8-rc4 v6.8-rc3 v6.8-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+---
+Maulik Shah (2):
+      soc: qcom: Update init level to core_initcall() for cmd-db and rpmh-rsc
+      cpuidle: psci: Update init level to core_initcall()
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-add-binding-doc-for-spi-qpic-snand/20240215-215348
-base:   next-20240215
-patch link:    https://lore.kernel.org/r/20240215134856.1313239-4-quic_mdalam%40quicinc.com
-patch subject: [PATCH 3/5] spi: spi-qpic: Add qpic spi nand driver support
-config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240217/202402172116.yfeRMLEF-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240217/202402172116.yfeRMLEF-lkp@intel.com/reproduce)
+ drivers/cpuidle/cpuidle-psci-domain.c | 2 +-
+ drivers/soc/qcom/cmd-db.c             | 2 +-
+ drivers/soc/qcom/rpmh-rsc.c           | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+---
+base-commit: d37e1e4c52bc60578969f391fb81f947c3e83118
+change-id: 20240217-init_level-beb6d740d8d2
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202402172116.yfeRMLEF-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/spi/spi-qpic-snand.c: In function 'qpic_snand_ecc_init_ctx_pipelined':
-   drivers/spi/spi-qpic-snand.c:161:14: warning: variable 'ecc_user' set but not used [-Wunused-but-set-variable]
-     161 |         bool ecc_user = false;
-         |              ^~~~~~~~
-   drivers/spi/spi-qpic-snand.c:160:42: warning: variable 'desired_correction' set but not used [-Wunused-but-set-variable]
-     160 |         int step_size = 0, strength = 0, desired_correction = 0, steps;
-         |                                          ^~~~~~~~~~~~~~~~~~
-   drivers/spi/spi-qpic-snand.c: In function 'qpic_snand_read_oob':
-   drivers/spi/spi-qpic-snand.c:399:13: warning: variable 'oob_buf' set but not used [-Wunused-but-set-variable]
-     399 |         u8 *oob_buf;
-         |             ^~~~~~~
-   drivers/spi/spi-qpic-snand.c: In function 'snandc_check_error':
-   drivers/spi/spi-qpic-snand.c:452:37: warning: variable 'erased' set but not used [-Wunused-but-set-variable]
-     452 |         bool serial_op_err = false, erased;
-         |                                     ^~~~~~
-   drivers/spi/spi-qpic-snand.c: In function 'qpic_snand_write_page_cache':
->> drivers/spi/spi-qpic-snand.c:682:30: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     682 |                 snandc->wbuf = op->data.buf.out;
-         |                              ^
->> drivers/spi/spi-qpic-snand.c:675:30: warning: variable 's_op' set but not used [-Wunused-but-set-variable]
-     675 |         struct qpic_snand_op s_op = {};
-         |                              ^~~~
-
-
-vim +/const +682 drivers/spi/spi-qpic-snand.c
-
-   671	
-   672	static int qpic_snand_write_page_cache(struct qcom_nand_controller *snandc,
-   673					       const struct spi_mem_op *op)
-   674	{
- > 675		struct qpic_snand_op s_op = {};
-   676		u32 cmd;
-   677	
-   678		cmd = qpic_snand_cmd_mapping(snandc, op->cmd.opcode);
-   679		s_op.cmd_reg = cmd;
-   680	
-   681		if (op->cmd.opcode == SPINAND_PROGRAM_LOAD) {
- > 682			snandc->wbuf = op->data.buf.out;
-   683			snandc->wlen = op->data.nbytes;
-   684		}
-   685	
-   686		return 0;
-   687	}
-   688	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Maulik Shah <quic_mkshah@quicinc.com>
+
 
