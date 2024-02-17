@@ -1,152 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-11539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 813A1859099
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:45:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F5C8590A4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:48:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3BA91281C57
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:45:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D997B1C214F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:48:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F72C7C6DD;
-	Sat, 17 Feb 2024 15:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E30A7C6C8;
+	Sat, 17 Feb 2024 15:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="okau/IxH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oai0G6qL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F4026AE0;
-	Sat, 17 Feb 2024 15:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF777A735;
+	Sat, 17 Feb 2024 15:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708184726; cv=none; b=pp1EsPLWjyMxNNST4ZJQJaz8cMG2mFLQTKFJbxdpBoE5MCQXGTKT5Xxg0ZpE4uGmC3yLwSwk6rSJGGyzyYbNVCYz2F+EfHuviL0cdSAll3rriDWv/UNNSGsQOG8Bn5tWlRCtW6gXw4Yk254QvlH9dobH0sSK6IzQIW2zJhkTGhU=
+	t=1708184889; cv=none; b=WxGTzcF5oDs5kh3oEuN3IgqSCMeEhMQMN1nKGlo45W4gbwIFhdcwTRTXPRpQnWzX6BcGIG5HI4ulzWqzcsd9UFfEJzueZhS8dTXuJmF6T/Pm6jDgIxLO1wrkCvhsRNvNLarrNd/Ml9frqbAwEpMx28PeEnTb7qj3wLl6sUviGB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708184726; c=relaxed/simple;
-	bh=Pn42SOug1SeuUwFUNDXOg1b5cYz8sTuWFoTywf+qOKY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bgnIIn9LndHF1Cgt6cJOgsIKp8rEY2drwLIkbLjY5fgLLZ2Vtl5IJaJDk5hCnHTM5/MOoCUl3vWc7FYBz8eStgds5zyLPtYgm3i36ZYh3ybWwG9EQMFvgXLLRIfuC1O+T1Cjd78pqRa5Cpbs2VS0yMKbdS5P6dz7qprCFuNEIis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=okau/IxH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41HErtwF021695;
-	Sat, 17 Feb 2024 15:45:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=DXamrJ4SOCBYjAmqzjslC7fuieKptJ71ZD0J10qEzJY=; b=ok
-	au/IxHG6vmukrkgzYuPL3h8FpnVdAmse3RBs0N4kUoriRkPEDdDk20DACTtX2OFP
-	ZVreTFt1JcspCYWUm65q73nsp9l832XpEtfarCRzBzvvpI11JxqPdugZ2nBA1QHW
-	Q990VthQcENY5dL1DE+Hcigf8CSBz4FM+S12RYcgLSH7/wWtLXcEK7PrcF9TH/iA
-	mN6ltLbQ0N5mkT0sY6yPW9X9r32vpDKpHaULgcriVvowOAd5GZAtmetbyM3cV6FT
-	SsQKf8Po2jq5iJmItFWX7M9VT0m8vf/h1/LAVzAHthq2qhO8dIYWA3xKN3N0YZ1w
-	NcJRNNi0D12729w9Ku9w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wamvy8pfj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 17 Feb 2024 15:45:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41HFj6w6032663
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 17 Feb 2024 15:45:06 GMT
-Received: from [10.216.61.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 17 Feb
- 2024 07:44:59 -0800
-Message-ID: <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com>
-Date: Sat, 17 Feb 2024 21:14:55 +0530
+	s=arc-20240116; t=1708184889; c=relaxed/simple;
+	bh=n957lHva6zeenMJ+yyB11NqmI51yboi14R4UBuEZ4d4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=untcMPs61c7k1lphGrXn8VbBVg9kAPZIfDIYolFyKww7uwOzwx3RKw05QOVaAlAKZdsUUGZKTlph3jnDS9qvGZ5DQGMQE4eeDwIfuxAW/n7jXSkHscrB1GdeVN5oq3F1pYKL/JYiEEQ6MKlgGjoftEe5YrZDOM6Jxj1qml3VIXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oai0G6qL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF36CC433F1;
+	Sat, 17 Feb 2024 15:48:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708184888;
+	bh=n957lHva6zeenMJ+yyB11NqmI51yboi14R4UBuEZ4d4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oai0G6qLzbylNPvS6aAPc55ThgalhgPu1SYKajhqffmpQesjJ2OqsAP/JoGNo3voU
+	 TkrvaUuRD2SqntuJ/K01y5d1cfIh36BRU+bkXQuUhLqzj96BRf0TatZ/fIrmiHQBfy
+	 wbMriDgDmlonGvNa5Az+exOwOL+XPPfFp0HKXkzfMTjkjZ8WwpTEqHcf10aTAm5TR1
+	 Axyh29QvnrtErk40PPetNMIw+oj/HTCOjcH+PZHOTdLngCU2zbuqnsd5ZAYgaps59q
+	 PvIb4F6sN53mvYvb7dnp8pd86GrjiYbn0psSCl9KANB/lgGL9B553RwT3SLIshZL/e
+	 JlF0JcX0camYA==
+Date: Sat, 17 Feb 2024 15:48:05 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 03/18] dt-bindings: regulator: describe the PMU module
+ of the QCA6390 package
+Message-ID: <ZdDVNbjv60G9YUNy@finisterre.sirena.org.uk>
+References: <20240216203215.40870-1-brgl@bgdev.pl>
+ <20240216203215.40870-4-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
- driver probe
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
- <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
- <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
- <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
- <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
- <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
- <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uxrDFjrn2vWVtpU3K4Bwl7Q9vQyozlnx
-X-Proofpoint-GUID: uxrDFjrn2vWVtpU3K4Bwl7Q9vQyozlnx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-17_13,2024-02-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 spamscore=0 mlxscore=0
- suspectscore=0 mlxlogscore=804 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402170128
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="XBBFEBnxsUybHGMW"
+Content-Disposition: inline
+In-Reply-To: <20240216203215.40870-4-brgl@bgdev.pl>
+X-Cookie: You might have mail.
 
 
-<snip>
+--XBBFEBnxsUybHGMW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> Reason being, to access the NSSCC clocks, these GCC clocks
->> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
->> should be turned ON. But CCF disables these clocks as well due to the
->> lack of consumer.
-> 
-> This means that NSSCC is also a consumer of those clocks. Please fix
-> both DT and nsscc driver to handle NSSNOC clocks.
+On Fri, Feb 16, 2024 at 09:32:00PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>=20
+> The QCA6390 package contains discreet modules for WLAN and Bluetooth. They
+> are powered by the Power Management Unit (PMU) that takes inputs from the
+> host and provides LDO outputs. This document describes this module.
 
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
 
-Thanks Dmitry. I shall include these clocks in the NSSCC DT node and 
-enable the same in the NSSCC driver probe.
+--XBBFEBnxsUybHGMW
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 
->>> Once you have actual drivers, this should solve itself, the drivers
->>> will consume the clocks.
->>
->>
->> Given that, NSSCC is being built as module, there is no issue in booting
->> the kernel. But if you do insmod of the nsscc-ipq5332.ko, system will
->> reset.
->>
->> Without the networking drivers, there is no need to install this module.
->> And as you stated, once the drivers are available, there will be no issues.
->>
->> So can I explain the shortcomings of installing this module without the
->> networking drivers in cover letter and drop this patch all together?
-> 
-> No. Using allyesconfig or allmodconfig and installing the full modules
-> set should work.
-> 
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXQ1TQACgkQJNaLcl1U
+h9BBnwf+JhH7AG76SVpXm/3RKzqDWuvpMu1DUot/+e5n8hK2kqMFn55zOAN2HEwL
+bZLO+MD8fXjFjLXZQ+4K8xdooNenzvCyvfYuxE8RoyThkbheKCY+m8aQLTlik/R3
+euRIOevSUYqQhYY1q5z5bgAEC6RwQi0sAHYATTbhqBjNi/MogEbXje1VBfStNYEb
+tKWS7Yi/GPw22IXDH8PYurLmAXp9k65N8ajJX7pMcALn/uUvPQZT77TVLjZ4M9yp
+a+0SiBJypHB9nTzWsA89yCH97/kWFYzAoE54vUxuQB4N6l0XgDyTyQIzIJfuNg0F
+h5HG2zP3ZTX/v/CVQjc3Vp4maV3F5Q==
+=r2fB
+-----END PGP SIGNATURE-----
 
-Okay, Got it. Thanks for the information.
-
-<snip>
+--XBBFEBnxsUybHGMW--
 
