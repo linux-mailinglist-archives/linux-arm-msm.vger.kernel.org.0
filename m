@@ -1,152 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-11520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A50858F1E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 12:39:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB6FA858F7A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 14:00:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9049A1F221EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 11:39:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DA232828CF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 13:00:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15FBE69DF0;
-	Sat, 17 Feb 2024 11:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF48422094;
+	Sat, 17 Feb 2024 13:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vKD+yCmb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kZxgyw5z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C9369DE8
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 11:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DB27A728
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 13:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708169993; cv=none; b=ZfFgeOgOLjZ/5nr3RYfFK+ae7OcnXIqFVvw+MIEO9bRJfeMaBep+VK0eyiv0mmBu8OWakYBww2lwScCosTvZok18QpXqpcmGODJi2u901kKySAU9eCYsVz6VjwXwJFoC3OMjO96mrcY3CCyfxaU8YejqrJdBv2rAWp+wSeJikVU=
+	t=1708174819; cv=none; b=LzP/8Sf1GmJIZAR2ABtrvcPyYnht4lIyLCEexkC0rmC4E1uqCn8IWNh1RwaKiEgzgtdGEA4vJVOJ+EpfImkVj4Gq6h6ozYS07P5rDUirVomcz4aHvQWojCKsCe/PCLAOYKQSYib2ZFJdr6smo4DCQmIvCehMYHYekoHy3Sh88sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708169993; c=relaxed/simple;
-	bh=vPvQg6T8DzaSAL66/xyHZth0xHwP9DWPS25PuK6+Z4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=chymOOwJAxsMi+0bVvb+argNM/AaKUMJgeOe/VpYcu/Tw4+/CYKq2NZ+PoE+ccPEB7O2k/XxqYkZ6F/HiX2TrCRWLL51aFQ8xkVfYufsIVVTqjVKluV5zhZP82IcZUhZjjbbIXoiooXuaMdfUo3qe2rfdk4j0GHZr4BgNNKuhIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vKD+yCmb; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1708174819; c=relaxed/simple;
+	bh=I4t+NyC+xXswLrJ6H9tnVexduaTvPcO5BsOp3W3R+6E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=REgtXjmCCJLiMYJujSw9IugBup2ZXjLirrMd3FLS08f8oSHl3eF4EkCa3xd7jo8Wn4d/QfVw3dUVHo8qd8PGiBSq7PgWlNzGZksNgLg9lf4EVH8nAIWM5jUPwuz2sA75wmMr/j+W3QD1ksCWWkL5HKYnuJqCOkH6oz5y+pH1SL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kZxgyw5z; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-55a8fd60af0so4265951a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 03:39:50 -0800 (PST)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512a65cd2c7so353227e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 05:00:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708169989; x=1708774789; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1C+Hkp9mF5Xdg3l0hgYcA9Z6irk/GvuEVb1RZfBg7lc=;
-        b=vKD+yCmbfxdngJtvVUYRvZxTNKXUoDYUBhmggjcFOcg88P6/fsifJIShS1Mh6qfRBn
-         742BIR1Yo2vEojK8rN13RhOnMBdRT8v1bUc76HRizQKFphMrOjn2m5C50BeWFc/qOWRg
-         31Eg5sF/uuHNFOG0ORuW7l1tpkkPr7WmIbwPC4ruHZO/5xsS4bu7qR+bRlZK+yxYAJQf
-         0nddt/nYoMPwCzOlZM/Xtq77fHnYPNMyl6vMx6Gz0qh1Oc1mYERNjvzN5SRB1MRL6AbX
-         t0FXXNBCcf2XYrY5CDJYtBPiLWTYwnYPMD0F2IdNmoffvVUxCXYxInRJ3PtxDTK1PsxD
-         fsNQ==
+        d=linaro.org; s=google; t=1708174816; x=1708779616; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZsF5Cn+TEuUEZcXkl6xjZPNAK30CgZ7B3oXv0UIX7Q=;
+        b=kZxgyw5zZ07X93HZhZ/pMvvQ8erC3nuNSRXNO42+40PyU7f4i02Ylt4BZwZpT91lUQ
+         1Sm7Ej17iNpATVfvFE88Ium3Pjw8oZqzsfblL+4WzDcwzcds81VkUKzLx8AEwD3goo01
+         hUypNd9ISvMBBF7Wr0c5qAU9yVaHle620jPUBVTyGuR1sm7XmbvfT3t5ymFqpKhmc6IS
+         ak3kAMBIIZeteIoo5mWVPODBWciyutqUn5yy8byA58DRxxt7qHsTaghV6+Fl+oHwXbmn
+         E2En1ObwsWhOdEhvRhEHD1O8sqIejRneCX4DXlDrhk3gErNFK6YOTA1bEhYB/PR8bOxu
+         pPoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708169989; x=1708774789;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1C+Hkp9mF5Xdg3l0hgYcA9Z6irk/GvuEVb1RZfBg7lc=;
-        b=f+Qm2b/YCf+JmX2nMJ13R2ftVFFAGb4kltVR3/YgSLxEfl4w0ZBFrM0chhs/31mibI
-         4iHBedH5ELw9VEPUkKIKccIZyI8eafFq7QXZ9vGfqt6xOtGU0lQ6XKFsRuZY0rRyp6X7
-         CjbzALhvnURagbX2x/L1gRYxvSabDj1rFdAlVZbgvUFT6tGYUDWsdRuKob1MWX/XIadO
-         y0ZcLgyASnOkVFOSc4pmfh4h0SiC6BYxGJZuNJ8x6p1B7FeLelKe0O1MaMLYHLcDAiNE
-         RBl6KjrNONHiBfPT5hSrc58jtBCZDa8kk5RSBoyhB03nYOQNR7HXbVXEYVBgnWFu44Ln
-         CefQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXKcyww8p8wvmANBtrR+6nbcPrzCSQAukQV9Zi4qxfDOxmqWol4ud8jGSPKBAJOxs/9i8oxDYW4ksFLYwttxsq9CnUrI5mUwrjstj6Lag==
-X-Gm-Message-State: AOJu0YwOUsf+2fSWFu4j3Mijo2kTiPnh9JuWKwJzNJ2kCjs3BG1MHvLJ
-	bNV51Q15hdL9mnOehYZ/RXUtgyipB8VLBsPSxxTGt3zLYWTlQ+BpqATCTbZiD3I=
-X-Google-Smtp-Source: AGHT+IHC8q9jk1V+NICBbpC1WNnMyrhtKdpmvofzMtMFylRK1DYfLGy8RvSLVqogHDYFEu79JIpj6g==
-X-Received: by 2002:aa7:d313:0:b0:564:2fbb:a869 with SMTP id p19-20020aa7d313000000b005642fbba869mr524179edq.38.1708169989449;
-        Sat, 17 Feb 2024 03:39:49 -0800 (PST)
-Received: from linaro.org ([188.24.162.93])
-        by smtp.gmail.com with ESMTPSA id ek23-20020a056402371700b0055edfb81384sm803108edb.60.2024.02.17.03.39.47
+        d=1e100.net; s=20230601; t=1708174816; x=1708779616;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3ZsF5Cn+TEuUEZcXkl6xjZPNAK30CgZ7B3oXv0UIX7Q=;
+        b=jEZzFxc/qzK8w6qe55t14114ks99lIkwiAtSu/oWBzPXFkn3I+T9dPKoSuKhtzCIbR
+         e5/NiPWMMRasDjhB3ZKb+o7tmf8Hx4c1QZnVrdL97AjnXnQh6jza7BSWLxyvyM5Sly42
+         jKfd5dBTB0Nl3kEwP5+ju6XBAfkE5XsgJH5u4LmDvatikQVH5ZweopmT22JAAls+EU12
+         RkZj4Lj25q5WD3c2EMMxWUJzaGRsfWI3vkOlLlo7gF09MmrPP766gV3fzx2xP+W7I6DR
+         467wjo73YyEq7fHuFZPdZbf3N8edVIWQztvAZk9fKVO3E6OuCgLquvtoNOsnnL50oVkf
+         lYRw==
+X-Forwarded-Encrypted: i=1; AJvYcCWm8/IFy8dlwJO1eKPgoBkB/0KgP2jCW7i6XwD8AkPOttq2Cp7KUTiynKY0qIIkql8AvLR/BA7JJQFRLA5vcgimltjo7vXZ32uoTBNHkg==
+X-Gm-Message-State: AOJu0YyPiH4zvB+X0+gXn0trk4/VztnwNCRDHB3Z6BW4G+LomEr/IDRp
+	wFFi3iLIsaRLTkKHfzqAhca3Mpu7eE9aOJ873+c9eU2krOt65gmFocjwtUQnOlA=
+X-Google-Smtp-Source: AGHT+IG37EhLEIyJMkUfK9Ia6jLZhpBV3S2Mby/k+T0USdu+atu0qv+dEOg0H1CwLyNgGBnxHGtscw==
+X-Received: by 2002:ac2:53b5:0:b0:511:a02b:8223 with SMTP id j21-20020ac253b5000000b00511a02b8223mr4881369lfh.58.1708174815887;
+        Sat, 17 Feb 2024 05:00:15 -0800 (PST)
+Received: from [10.167.154.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id lj8-20020a170907188800b00a3dd52e758bsm959608ejc.100.2024.02.17.05.00.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Feb 2024 03:39:48 -0800 (PST)
-Date: Sat, 17 Feb 2024 13:39:46 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Sean Paul <sean@poorly.run>, Maxime Ripard <mripard@kernel.org>,
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	Rob Herring <robh+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	freedreno@lists.freedesktop.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	David Airlie <airlied@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 2/4] dt-bindings: display/msm: Document MDSS on
- X1E80100
-Message-ID: <ZdCbAjnga8HCMdYf@linaro.org>
-References: <20240216-x1e80100-display-v3-0-28b1c33ac8c0@linaro.org>
- <20240216-x1e80100-display-v3-2-28b1c33ac8c0@linaro.org>
- <170810832158.3497594.1997532394027797497.robh@kernel.org>
+        Sat, 17 Feb 2024 05:00:15 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Sat, 17 Feb 2024 14:00:07 +0100
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Add missing LMH interrupts
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <170810832158.3497594.1997532394027797497.robh@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240217-topic-8280_lmh-v1-1-d72dd4fedfb8@linaro.org>
+X-B4-Tracking: v=1; b=H4sIANat0GUC/x2NQQqDMBAAvyJ7diEJUlO/IlJiumkW0iiJFUH8u
+ 0uPMzDMCZUKU4WhOaHQzpWXLKDbBnx0+UPIb2EwynTK6B63ZWWP1lj1St+Imh5PRcGH3lmQaHa
+ VcC4u+yhZ/qUkci0U+Phfxum6bu9rPW91AAAA
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708174813; l=1550;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=I4t+NyC+xXswLrJ6H9tnVexduaTvPcO5BsOp3W3R+6E=;
+ b=9YCoAlhGNMlVbiCVW+pj/ZJgvAw86IYa6Cw1GZ33sZxrhjKOIDzeVKKaX7OZm0QCYrcJ9DlSy
+ 3Au95oZyu2mDm5hmExnnPV2RfzET5f8Bf5HeZHl6DJBOkE5CQxkUsg5
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 24-02-16 12:32:02, Rob Herring wrote:
-> 
-> On Fri, 16 Feb 2024 19:01:06 +0200, Abel Vesa wrote:
-> > Document the MDSS hardware found on the Qualcomm X1E80100 platform.
-> > 
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 253 +++++++++++++++++++++
-> >  1 file changed, 253 insertions(+)
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dts:24:18: fatal error: dt-bindings/clock/qcom,x1e80100-dispcc.h: No such file or directory
->    24 |         #include <dt-bindings/clock/qcom,x1e80100-dispcc.h>
->       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> compilation terminated.
-> make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/display/msm/qcom,x1e80100-mdss.example.dtb] Error 1
-> make[2]: *** Waiting for unfinished jobs....
-> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1428: dt_binding_check] Error 2
-> make: *** [Makefile:240: __sub-make] Error 2
-> 
+Hook up the interrupts that signal the Limits Management Hardware has
+started some sort of throttling action.
 
-These bindings headers are already in -next.
+In testing, you may notice the A78C cluster throttle IRQ fire count stays
+at zero. After an hour of painful experiments on an X13s, I was able to
+get that cluster to heat up near 90 degC, after which the IRQ has indeed
+fired. So it stands to reason that the heat output difference between the
+A78C and X1C clusters is so massive that LMH rarely decides to throttle
+the "little" one based on its power metrics.
 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240216-x1e80100-display-v3-2-28b1c33ac8c0@linaro.org
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index a5b194813079..daaf054efca3 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4966,6 +4966,11 @@ cpufreq_hw: cpufreq@18591000 {
+ 			      <0 0x18592000 0 0x1000>;
+ 			reg-names = "freq-domain0", "freq-domain1";
+ 
++			interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "dcvsh-irq-0",
++					  "dcvsh-irq-1";
++
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+ 			clock-names = "xo", "alternate";
+ 
+
+---
+base-commit: d37e1e4c52bc60578969f391fb81f947c3e83118
+change-id: 20240217-topic-8280_lmh-1e690efcf7a8
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
