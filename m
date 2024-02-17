@@ -1,140 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-11529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86B7D859041
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:03:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3F36859070
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:15:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2203C1F21938
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:03:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 997871F21E0C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 947587C0B1;
-	Sat, 17 Feb 2024 15:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30D037C0A7;
+	Sat, 17 Feb 2024 15:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dk3HLJ7y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nE7HsySo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C57C69DE6;
-	Sat, 17 Feb 2024 15:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0208069D3A;
+	Sat, 17 Feb 2024 15:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708182183; cv=none; b=gM8RWOfn6NNZ68WQz7UT9hMzZiVHcW74gbNNYuDeKHdjkd/PYw9Rywoh+gtcGnMV1ZmWWD7/Yz8l4kEbWNhf/+g/ophwB7727sKrS97XgUSaTZAMHQsK5lKrI/vDyZKbw8t7tPQV5/ws1WOpWhjzoGTg3qPGcPHtDirAVjC/l3c=
+	t=1708182899; cv=none; b=uEf5iz4n5y7iCAp351uv3j937AaV/2w9VVe2Ejv/6w77FKM18422msLmPgcnbXxrr+/OdXu2kZG1wdBO1DDDyzwVguaUXk7ywL4zx6vMXqN2oqmt2WMNrInhRPIxpKbf7YhmCw3CU8Zp0s9bUDm64+heYnOzcEvc0OD2ZfFOkzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708182183; c=relaxed/simple;
-	bh=E7peNP5XvxWfotZQJXcvlEV4QrXxAGb8fVXnSMSgPFc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZJzgc/FrqRSoY0oAUvFEBcCrK/VV+eip2dXuU9tCmAr5v+yJVWZ3fQkACnriFgWrvatSTDRvai2ghIRGlbUzNPu36QDWg8tfEM7QLUJMPwohxMF6XOKzKCFuq6lFctGy9KtvFuasoTxfnOKm1HeeRgd+7ZTtVQR9C+2d4YMJRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dk3HLJ7y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E98C433F1;
-	Sat, 17 Feb 2024 15:03:02 +0000 (UTC)
+	s=arc-20240116; t=1708182899; c=relaxed/simple;
+	bh=TLjN2HulsLngOJVgAuYf4Pn7GqZqS3+GGjKKcBZ0KkM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mx0MJapr8LikmlWF1q4/Ii20oUVGyVWNMzOhekuj5THVrNfVyEsUHqjZhE7d0ezOgbHe/6HnDglsnj3pIMwsCu4abtRbUg/qu/2sjnVdxXP9MC6H05bcj/8PmuTJQlpYyi6qSODPS/O3kIoUNzmQO6pebex9+Wmhl+eh+8HxEPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nE7HsySo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E663C433F1;
+	Sat, 17 Feb 2024 15:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708182183;
-	bh=E7peNP5XvxWfotZQJXcvlEV4QrXxAGb8fVXnSMSgPFc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dk3HLJ7yF2q4ypNSoZdXkmm0aPgQCR7FYvJT9iw+lGINaaGvc2xX2ebCULvFlg36z
-	 kg3r/qLyz+ERxutx4KEI5MbR/7iNf/Lpm/fYTcaE+tSB7UCJwcQKuJhvet4uGTQvbj
-	 rof9weCUaGRieOlItOAbq7is6pzcG8M8db3wJjwnOFJ/7zE/wgx/Qr+R0/0bmWe4xC
-	 tgkDLMNz3/jO7oNW6ZrSxB6yKgxga37TRMVA5DSDXRnjIws81+QskGbPRszwbtPE/b
-	 NUhdJgV3ly89vY/6IBys0iGEqVscmwG5scY0CA2Nod9ifVSTAzeYdt0OSDnzlv+eyP
-	 5eDMgBOxAdAvA==
+	s=k20201202; t=1708182898;
+	bh=TLjN2HulsLngOJVgAuYf4Pn7GqZqS3+GGjKKcBZ0KkM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nE7HsySov90y/vHtMCfJXd23d7y6KBAtm1F4lITB4vg8MBRjnFV0snYu57pS04AHo
+	 /4GtJZiH7KWwW1kKACjE3hCQSRcfwb9zXVHDpI9D753TxbzIaK4lhFJEtHxBG9n5Cs
+	 zc5SamBHZXw6g1u5F2JyYpiKNIpsG/XcMtmnzbbiaXsAvHrHx1xsXxqGhXmv+soR+O
+	 DNBUfMQUqod4rzw4eInf23Mt96swC3oHpbUFe0NtdiEwXmXh0vKjPofCQQYpgqhI33
+	 lmJj0Mc8dg1t7sOVpEAJzbgnyeeIJ1dL8sGY9i04DZT1pGS/3sw8gjbjI7tLYyIGVx
+	 6b//0l8cHdAsQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1rbMDW-000000001Vy-47Zd;
-	Sat, 17 Feb 2024 16:03:03 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Jonas Karlman <jonas@kwiboo.se>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
+	(envelope-from <johan@kernel.org>)
+	id 1rbMP4-000000001bL-1zG3;
+	Sat, 17 Feb 2024 16:14:58 +0100
+Date: Sat, 17 Feb 2024 16:14:58 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org,
-	Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: [PATCH 6/6] phy: qcom-qmp-combo: fix type-c switch registration
-Date: Sat, 17 Feb 2024 16:02:28 +0100
-Message-ID: <20240217150228.5788-7-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240217150228.5788-1-johan+linaro@kernel.org>
-References: <20240217150228.5788-1-johan+linaro@kernel.org>
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: drm/msm: DisplayPort regressions in 6.8-rc1
+Message-ID: <ZdDNcrf4KpflGeYQ@hovoldconsulting.com>
+References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
+ <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
+ <ZczFhVjHIm55JTfO@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZczFhVjHIm55JTfO@hovoldconsulting.com>
 
-Due to a long-standing issue in driver core, drivers may not probe defer
-after having registered child devices to avoid triggering a probe
-deferral loop (see fbc35b45f9f6 ("Add documentation on meaning of
--EPROBE_DEFER")).
+On Wed, Feb 14, 2024 at 02:52:06PM +0100, Johan Hovold wrote:
+> On Tue, Feb 13, 2024 at 10:00:13AM -0800, Abhinav Kumar wrote:
+> 
+> > I do agree that pm runtime eDP driver got merged that time but I think 
+> > the issue is either a combination of that along with DRM aux bridge 
+> > https://patchwork.freedesktop.org/series/122584/ OR just the latter as 
+> > even that went in around the same time.
+> 
+> Yes, indeed there was a lot of changes that went into the MSM drm driver
+> in 6.8-rc1 and since I have not tried to debug this myself I can't say
+> for sure which change or changes that triggered this regression (or
+> possibly regressions).
+> 
+> The fact that the USB-C/DP PHY appears to be involved
+> (/soc@0/phy@88eb000) could indeed point to the series you mentioned.
+> 
+> > Thats why perhaps this issue was not seen with the chromebooks we tested 
+> > on as they do not use pmic_glink (aux bridge).
+> > 
+> > So we will need to debug this on sc8280xp specifically or an equivalent 
+> > device which uses aux bridge.
+> 
+> I've hit the NULL-pointer deference three times now in the last few days
+> on the sc8280xp CRD. But since it doesn't trigger on every boot it seems
+> you need to go back to the series that could potentially have caused
+> this regression and review them again. There's clearly something quite
+> broken here.
 
-Move registration of the typec switch to after looking up clocks and
-other resources.
+Since Dmitry had trouble reproducing this issue I took a closer look at
+the DRM aux bridge series that Abhinav pointed and was able to track
+down the bridge regressions and come up with a reproducer. I just posted
+a series fixing this here:
 
-Note that PHY creation can in theory also trigger a probe deferral when
-a 'phy' supply is used. This does not seem to affect the QMP PHY driver
-but the PHY subsystem should be reworked to address this (i.e. by
-separating initialisation and registration of the PHY).
+	https://lore.kernel.org/lkml/20240217150228.5788-1-johan+linaro@kernel.org/
 
-Fixes: 2851117f8f42 ("phy: qcom-qmp-combo: Introduce orientation switching")
-Cc: stable@vger.kernel.org      # 6.5
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+As I mentioned in the cover letter, I am still seeing intermittent hard
+resets around the time that the DRM subsystem is initialising, which
+suggests that we may be dealing with two separate DRM regressions here
+however.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index e19d6a084f10..17c4ad7553a5 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3562,10 +3562,6 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = qmp_combo_typec_switch_register(qmp);
--	if (ret)
--		return ret;
--
- 	/* Check for legacy binding with child nodes. */
- 	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
- 	if (usb_np) {
-@@ -3585,6 +3581,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_node_put;
- 
-+	ret = qmp_combo_typec_switch_register(qmp);
-+	if (ret)
-+		goto err_node_put;
-+
- 	ret = drm_aux_bridge_register(dev);
- 	if (ret)
- 		goto err_node_put;
--- 
-2.43.0
+If the hard resets are triggered by something like unclocked hardware,
+perhaps that bit could this be related to the runtime PM rework?
 
+Johan
 
