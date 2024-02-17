@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-11533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECAE0859055
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:03:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6891485904C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 16:03:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6F3E283157
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:03:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C94F2831B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 15:03:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F27D27CF01;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA61E7C6D6;
 	Sat, 17 Feb 2024 15:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eEqGR0C+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NaZiHiRT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DF37C0B2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F697C0AA;
 	Sat, 17 Feb 2024 15:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708182183; cv=none; b=CCoKO7Hg7fdIT2keUiUAWP01m1eXRKD8AKYcnEj0U6+FlihDjxcAh8Q+T2dnJypmoeIE9+irhjIxXl2Nendw+dUWsDyrSWp2VbXDptZeH6mG3Q2SoYSNzfpg4r1KkiDmkWexegV62kCSRwGBcPIegFIW3I2oE8k1M0oEqxJxoCU=
+	t=1708182183; cv=none; b=F9AhJbiM7zcdJdu5v/5Wr4RzKe1sPuJWrudiNTpKqurALBXlOi+y/XKbzUR/gpB1n8aC9QNACP6f5o6jm3WdDYMn/BCGaOFP7gPhHVWrV9EGTCHqh/9TtP6NHmGIEGV1RfLgih+30kmvGOukBfhEes1S36UmRo6dhU3UlHeeHX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708182183; c=relaxed/simple;
-	bh=POmhG3XikVsaXc0RusI64Jf3HUeMzGtS54gIumrv1I0=;
+	bh=UrO8iSOZ0DaThfpdYnA1yNkyhVkUZHq2oInX+0bHaNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gy0UdPF/6SgLV2fqa2DD/a/eOGnC2H273mobdv9NNxfkgg9hs+wui+w78Tq3wRQSKx/X45K2+vLJLWxhDPXbEsfHOvMMrBgG6z6V5vhWDT45eYGUrDpbotiMQNTzsnNJIRvxX23zP6lrVC/RPfc+qr0i72CB4rHWjoP3EQTZScM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eEqGR0C+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17518C433B1;
+	 MIME-Version; b=fOwOiv1rNmujBvnTSzwAy0pxWGcHmSgREbaOg5J8AmZREdcKeWwEHCD9MHcgqI/dI026IpFz1CLB/jxeB2PiRt3UhwsQw9igyBMc0m5fUUen6y72+p+zYbMvwIUnHRihwrJZZem5yFOYEZ7ECpRxXxXhr4iYze16QVNT2ToptMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NaZiHiRT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F4AC43390;
 	Sat, 17 Feb 2024 15:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1708182183;
-	bh=POmhG3XikVsaXc0RusI64Jf3HUeMzGtS54gIumrv1I0=;
+	bh=UrO8iSOZ0DaThfpdYnA1yNkyhVkUZHq2oInX+0bHaNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEqGR0C+9C6T6cV2g4R/ygaPvBNcGscgTTbDfWpt6RqNCVCSNemlDmMiBjLINFF9K
-	 vNOWBEXAul5FUj2axKYGDdckCtDO4TfXoy/tk+8sx+M+Nax3pT9M4+S/bHKHCxiynt
-	 JVidLDi1X3iyquM1kp0a0kub0LV/yLpN3RHEru2kNVYZ1+NxnuinFZsD6q3h74J/bF
-	 QqKCFNwEidPJOkwPHGJM73U2yVQ+4BuksOAvfFpAIVLuaZV050HXeu1xqCZl2QDBHY
-	 upv4mvxbKoOiSRj0B/wbcx4RIR8QiHUJlV8SjhAA3Z57ya1yYljjfWRvPgLGCifDKc
-	 1sh5+H+c0Jn0g==
+	b=NaZiHiRTPIbfPSO9V0T+nG2YbfYd4RoH8ksqJQQ1dehfcWd2IBpfDfHByIOYR552k
+	 nFE6hEIT8qeuW8E1DS42blBrIgHYehI0FYTJGCYTibnUeVmyZJiOsvTtME4KgkAEe1
+	 2DZMp8TbZu2Mg7JL+VzvP8/SC4bf+EeS4GljpXWaWwPxOIFZ7DYN71gVu5IEEVjh+w
+	 DzXELAT5AkdX51DLJnuyzx5+kHBA06WxIT15EspnGNlrpCt7XfgVUA4CP7eTv9tjWo
+	 yjnjggK8Df0jykaNcY2Dpx0NYTW6TsHn3D25leWURtAkgUtuWIOc5QR84HO7i0InVS
+	 Lg+4YkPkvcdxQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1rbMDW-000000001Vo-2L8p;
+	id 1rbMDW-000000001Vq-2fLy;
 	Sat, 17 Feb 2024 16:03:02 +0100
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -71,9 +71,9 @@ Cc: Jonas Karlman <jonas@kwiboo.se>,
 	linux-arm-msm@vger.kernel.org,
 	linux-phy@lists.infradead.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
-Date: Sat, 17 Feb 2024 16:02:23 +0100
-Message-ID: <20240217150228.5788-2-johan+linaro@kernel.org>
+Subject: [PATCH 2/6] drm/bridge: aux-hpd: separate allocation and registration
+Date: Sat, 17 Feb 2024 16:02:24 +0100
+Message-ID: <20240217150228.5788-3-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240217150228.5788-1-johan+linaro@kernel.org>
 References: <20240217150228.5788-1-johan+linaro@kernel.org>
@@ -85,38 +85,163 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The two device node references taken during allocation need to be
-dropped when the auxiliary device is freed.
+Combining allocation and registration is an anti-pattern that should be
+avoided. Add two new functions for allocating and registering an dp-hpd
+bridge with a proper 'devm' prefix so that it is clear that these are
+device managed interfaces.
 
-Fixes: 6914968a0b52 ("drm/bridge: properly refcount DT nodes in aux bridge drivers")
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
+	devm_drm_dp_hpd_bridge_alloc()
+	devm_drm_dp_hpd_bridge_add()
+
+The new interface will be used to fix a use-after-free bug in the
+Qualcomm PMIC GLINK driver and may prevent similar issues from being
+introduced elsewhere.
+
+The existing drm_dp_hpd_bridge_register() is reimplemented using the
+above and left in place for now.
+
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/gpu/drm/bridge/aux-hpd-bridge.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c | 67 +++++++++++++++++++------
+ include/drm/bridge/aux-bridge.h         | 15 ++++++
+ 2 files changed, 67 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/aux-hpd-bridge.c b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-index bb55f697a181..9e71daf95bde 100644
+index 9e71daf95bde..6886db2d9e00 100644
 --- a/drivers/gpu/drm/bridge/aux-hpd-bridge.c
 +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-@@ -25,6 +25,7 @@ static void drm_aux_hpd_bridge_release(struct device *dev)
- 	ida_free(&drm_aux_hpd_bridge_ida, adev->id);
- 
- 	of_node_put(adev->dev.platform_data);
-+	of_node_put(adev->dev.of_node);
- 
+@@ -30,16 +30,13 @@ static void drm_aux_hpd_bridge_release(struct device *dev)
  	kfree(adev);
  }
-@@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct device *parent,
  
- 	ret = auxiliary_device_init(adev);
- 	if (ret) {
-+		of_node_put(adev->dev.platform_data);
-+		of_node_put(adev->dev.of_node);
- 		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
- 		kfree(adev);
+-static void drm_aux_hpd_bridge_unregister_adev(void *_adev)
++static void drm_aux_hpd_bridge_free_adev(void *_adev)
+ {
+-	struct auxiliary_device *adev = _adev;
+-
+-	auxiliary_device_delete(adev);
+-	auxiliary_device_uninit(adev);
++	auxiliary_device_uninit(_adev);
+ }
+ 
+ /**
+- * drm_dp_hpd_bridge_register - Create a simple HPD DisplayPort bridge
++ * devm_drm_dp_hpd_bridge_alloc - allocate a HPD DisplayPort bridge
+  * @parent: device instance providing this bridge
+  * @np: device node pointer corresponding to this bridge instance
+  *
+@@ -47,11 +44,9 @@ static void drm_aux_hpd_bridge_unregister_adev(void *_adev)
+  * DRM_MODE_CONNECTOR_DisplayPort, which terminates the bridge chain and is
+  * able to send the HPD events.
+  *
+- * Return: device instance that will handle created bridge or an error code
+- * encoded into the pointer.
++ * Return: bridge auxiliary device pointer or an error pointer
+  */
+-struct device *drm_dp_hpd_bridge_register(struct device *parent,
+-					  struct device_node *np)
++struct auxiliary_device *devm_drm_dp_hpd_bridge_alloc(struct device *parent, struct device_node *np)
+ {
+ 	struct auxiliary_device *adev;
+ 	int ret;
+@@ -82,13 +77,55 @@ struct device *drm_dp_hpd_bridge_register(struct device *parent,
  		return ERR_PTR(ret);
+ 	}
+ 
+-	ret = auxiliary_device_add(adev);
+-	if (ret) {
+-		auxiliary_device_uninit(adev);
++	ret = devm_add_action_or_reset(parent, drm_aux_hpd_bridge_free_adev, adev);
++	if (ret)
+ 		return ERR_PTR(ret);
+-	}
+ 
+-	ret = devm_add_action_or_reset(parent, drm_aux_hpd_bridge_unregister_adev, adev);
++	return adev;
++}
++EXPORT_SYMBOL_GPL(devm_drm_dp_hpd_bridge_alloc);
++
++static void drm_aux_hpd_bridge_del_adev(void *_adev)
++{
++	auxiliary_device_delete(_adev);
++}
++
++/**
++ * devm_drm_dp_hpd_bridge_add - register a HDP DisplayPort bridge
++ * @dev: struct device to tie registration lifetime to
++ * @adev: bridge auxiliary device to be registered
++ *
++ * Returns: zero on success or a negative errno
++ */
++int devm_drm_dp_hpd_bridge_add(struct device *dev, struct auxiliary_device *adev)
++{
++	int ret;
++
++	ret = auxiliary_device_add(adev);
++	if (ret)
++		return ret;
++
++	return devm_add_action_or_reset(dev, drm_aux_hpd_bridge_del_adev, adev);
++}
++EXPORT_SYMBOL_GPL(devm_drm_dp_hpd_bridge_add);
++
++/**
++ * drm_dp_hpd_bridge_register - allocate and register a HDP DisplayPort bridge
++ * @parent: device instance providing this bridge
++ * @np: device node pointer corresponding to this bridge instance
++ *
++ * Return: device instance that will handle created bridge or an error pointer
++ */
++struct device *drm_dp_hpd_bridge_register(struct device *parent, struct device_node *np)
++{
++	struct auxiliary_device *adev;
++	int ret;
++
++	adev = devm_drm_dp_hpd_bridge_alloc(parent, np);
++	if (IS_ERR(adev))
++		return ERR_CAST(adev);
++
++	ret = devm_drm_dp_hpd_bridge_add(parent, adev);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
+index c4c423e97f06..4453906105ca 100644
+--- a/include/drm/bridge/aux-bridge.h
++++ b/include/drm/bridge/aux-bridge.h
+@@ -9,6 +9,8 @@
+ 
+ #include <drm/drm_connector.h>
+ 
++struct auxiliary_device;
++
+ #if IS_ENABLED(CONFIG_DRM_AUX_BRIDGE)
+ int drm_aux_bridge_register(struct device *parent);
+ #else
+@@ -19,10 +21,23 @@ static inline int drm_aux_bridge_register(struct device *parent)
+ #endif
+ 
+ #if IS_ENABLED(CONFIG_DRM_AUX_HPD_BRIDGE)
++struct auxiliary_device *devm_drm_dp_hpd_bridge_alloc(struct device *parent, struct device_node *np);
++int devm_drm_dp_hpd_bridge_add(struct device *dev, struct auxiliary_device *adev);
+ struct device *drm_dp_hpd_bridge_register(struct device *parent,
+ 					  struct device_node *np);
+ void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status status);
+ #else
++static inline struct auxiliary_device *devm_drm_dp_hpd_bridge_alloc(struct device *parent,
++								    struct device_node *np)
++{
++	return NULL;
++}
++
++static inline int devm_drm_dp_hpd_bridge_add(struct auxiliary_device *adev)
++{
++	return 0;
++}
++
+ static inline struct device *drm_dp_hpd_bridge_register(struct device *parent,
+ 							struct device_node *np)
+ {
 -- 
 2.43.0
 
