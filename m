@@ -1,830 +1,299 @@
-Return-Path: <linux-arm-msm+bounces-11518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FE6D858E62
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 10:40:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84750858E91
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 11:08:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9FA1F21F74
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 09:40:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13BFE1F22137
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 10:08:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552E21D552;
-	Sat, 17 Feb 2024 09:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 979B61DA23;
+	Sat, 17 Feb 2024 10:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xRYQdL/O"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TurgWrWS";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="nBmFB/jt";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="TurgWrWS";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="nBmFB/jt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A741D548
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 09:39:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6566F1C15;
+	Sat, 17 Feb 2024 10:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708162795; cv=none; b=JnNOyLC44Gnjha5/anFb+MuB/h4eAMg+E/A+FyQDYHd1A07db9U/hWA3IBJ9oSEjo/h/o/NkMhUYZQkSxMog+sj/5i45DBsSmAdjndedPCKq0mINaIxU0awYYoVmHlc3cNBfiidvUD17nBE+2Il707OjsWhSayhr9IYfxvOZ7No=
+	t=1708164504; cv=none; b=Mb5uroxbVDJ7KGC04EaDZfy7iWGMt1j3AHUOvPYgwZrPGrdPdUJ6BgGVi41KlG1LmlRMJmi597MNIeZpwVD4LqvfGsmHbDwyWrnPgOY8psmh1UlHmTlgbbZOzzJa2+QohNZ6dHuSQ+xGt2SyYwTqfHrjDZq6NnkaoxqGoAVuxiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708162795; c=relaxed/simple;
-	bh=btt416lNx8UE4nyrEYO/2Cbobxq9AiMs/pLN7K+3eYc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dAJ914+e4FfWWnMGoHCns4+NxCAaxkUKLdYjZid9tGJgDnrWggHmRShkz7iMgaXPpRR6xSqTuQKwRT0cxO8My3+nR2h0CO0SAIzGLKiJJJXD0OGYrY+mzblxuh3b9yL47/a6SRR/KFWwDNI3IHvGwAAdAzu0juX73O0mLSGkiOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xRYQdL/O; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a36126ee41eso378285666b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 01:39:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708162781; x=1708767581; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=X75RlHDlmi5XCIOWvGc6BMu59jRgO14yvUgaoxgEH+c=;
-        b=xRYQdL/O5gnWZrAa33b1EcRhLVTpusuRO/OyPFeGonSMATtLQTu8U47GB3VgG/Uq2o
-         fGP6lnkZ028ErlXhweqlQSQYuSOMwjGbhBgyQ2bo48Wm/Rka9LX6A05heakBn56l7VXF
-         nkkxqtiYr7fFSsNJ/3WVIGg8qoHzuGXusv2gChvsdLzAwVmgy9lkJpcRMFW3XOqWCqxq
-         uzbs2HYINmist6G50Y4uHXjccumkDKSQ5cVFkp8zpS1vCPcWYDuRYSkgRMFSKwEESBNU
-         L+jao38kElvA9eauWHUUBDrc2RlJjK/Tv4o32+QfL4K0M7jOb+Ci0aWgbCaSVDoIwJv9
-         jOXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708162781; x=1708767581;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X75RlHDlmi5XCIOWvGc6BMu59jRgO14yvUgaoxgEH+c=;
-        b=t1+x43pjiCkFnMKT+rdtnO5vfiSFONu5MALA/nGpgOf//fVVglGesxc9eY6ktBvfD9
-         oGLyxTW/EwWvkPRcZvgO+ZevFsZ1NnUFzxkZYDpISTLGg/k03GqJytNQpJM7g60Q+9LJ
-         HQoTawAIFicUDBIZD+jAXrpR4OKIJtBrBRlRxPNmZyV+7w+U4zkQsxTsUtp0hxWrqEoX
-         VbD4IYx4fvH+6+nARrTE67A/z/aLGBsA8uGMOQ+TN8r7hi0bzlGm0b0wFFu8Aw1z2Dt8
-         zt4SU8CRvZFp8ucltwTYJLqVJu58FOzxZrFwO/+ZefkThKbRwvf8QEV8vwG9NK96XsBu
-         5nMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXPE1/gw0ghvWv6w5Au8bA/CSCZvYO/BauCUM62LZ1LfTWWmO0kpFQ8on1tMzA1ZddwAStEXqyaHqN0rvzKHoVUQA4hYXcsjmGlFykGQ==
-X-Gm-Message-State: AOJu0YyHXlgXt8IjpRteklDskdN9PnCr2fArjP5a7JWl27aQmu/yOI9/
-	J1de7aeCVL6hOljikESdytX9jun1c5/OvkH5nYkzqikJYFueVDPbLZ2vpsuBfv8=
-X-Google-Smtp-Source: AGHT+IEzkjPFuVfn8DWdUX4zamD0M9/nG+w/NggF3hD3S/inITRTlG1ZGNvYnl9Tc1SdVCj8EdTREg==
-X-Received: by 2002:a17:906:da09:b0:a3d:eaf9:6404 with SMTP id fi9-20020a170906da0900b00a3deaf96404mr2751348ejb.57.1708162781090;
-        Sat, 17 Feb 2024 01:39:41 -0800 (PST)
-Received: from krzk-bin.. ([78.10.207.130])
-        by smtp.gmail.com with ESMTPSA id vg8-20020a170907d30800b00a3d70dc4337sm821145ejc.102.2024.02.17.01.39.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Feb 2024 01:39:40 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-phy@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-amlogic@lists.infradead.org,
-	netdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-tegra@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] phy: constify of_phandle_args in xlate
-Date: Sat, 17 Feb 2024 10:39:37 +0100
-Message-Id: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1708164504; c=relaxed/simple;
+	bh=5yOrl7ejMhiYLXAozx5kVTkg0b8+HpBur90WSH3AXco=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J1S0VvDmU3efaQF1DysTJ/UXLYsIQIAhiLuTiqtR5Ral7p9rRhk8DFu4N0wfRkZeFsgrHEyqxw0Xacq0JEQ7JEWv8W7R4+EOf7/qVRdWGt0CsXaqkiK6SJY5OICKNaUMxq5Vrq/YKKyQ4KRt7UEQwhALwpS1Dm/kh7wu1Zictrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TurgWrWS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=nBmFB/jt; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=TurgWrWS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=nBmFB/jt; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 4E5B91F7B9;
+	Sat, 17 Feb 2024 10:08:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1708164500; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rRWhyrNas2ODukH8hQrcMU98AhP1T7F4SpR72WFtrc4=;
+	b=TurgWrWSWcb/osb//n0APh3TG7biuluETL6+NAmXRJdiEywHbYvYtQkP5moBy39K9ZTb+a
+	lwNW1R8tUrJsHHp7mUGG9RTvhMsN1jJ7C3RnF0Sl5zdJP+l9l4UyM6YBwPfGLoXx4yUjbu
+	+3Nh266T0ViYlUg9REBTXCvMR+RjK6U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1708164500;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rRWhyrNas2ODukH8hQrcMU98AhP1T7F4SpR72WFtrc4=;
+	b=nBmFB/jt4FpRyUSvQfBP4fDZWAnf/yFyC00wcyQogqtxiKJktLn7+U5D+xjFkyVUJT0QF/
+	u3MXX+2LHXy7V9BA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1708164500; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rRWhyrNas2ODukH8hQrcMU98AhP1T7F4SpR72WFtrc4=;
+	b=TurgWrWSWcb/osb//n0APh3TG7biuluETL6+NAmXRJdiEywHbYvYtQkP5moBy39K9ZTb+a
+	lwNW1R8tUrJsHHp7mUGG9RTvhMsN1jJ7C3RnF0Sl5zdJP+l9l4UyM6YBwPfGLoXx4yUjbu
+	+3Nh266T0ViYlUg9REBTXCvMR+RjK6U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1708164500;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rRWhyrNas2ODukH8hQrcMU98AhP1T7F4SpR72WFtrc4=;
+	b=nBmFB/jt4FpRyUSvQfBP4fDZWAnf/yFyC00wcyQogqtxiKJktLn7+U5D+xjFkyVUJT0QF/
+	u3MXX+2LHXy7V9BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A05C21370C;
+	Sat, 17 Feb 2024 10:08:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id U3N8JZOF0GV+JgAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Sat, 17 Feb 2024 10:08:19 +0000
+Date: Sat, 17 Feb 2024 11:08:19 +0100
+Message-ID: <87y1bjpfn0.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: <srinivas.kandagatla@linaro.org>,
+	<mathias.nyman@intel.com>,
+	<perex@perex.cz>,
+	<conor+dt@kernel.org>,
+	<corbet@lwn.net>,
+	<lgirdwood@gmail.com>,
+	<andersson@kernel.org>,
+	<krzysztof.kozlowski+dt@linaro.org>,
+	<gregkh@linuxfoundation.org>,
+	<Thinh.Nguyen@synopsys.com>,
+	<broonie@kernel.org>,
+	<bgoswami@quicinc.com>,
+	<tiwai@suse.com>,
+	<robh+dt@kernel.org>,
+	<konrad.dybcio@linaro.org>,
+	<linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>,
+	<linux-sound@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>,
+	<alsa-devel@alsa-project.org>
+Subject: Re: [PATCH v14 32/53] ALSA: usb-audio: Check for support for requested audio format
+In-Reply-To: <7f0c4f85-5a63-4643-8553-e3f5d6af67ec@quicinc.com>
+References: <20240208231406.27397-1-quic_wcheng@quicinc.com>
+	<20240208231406.27397-33-quic_wcheng@quicinc.com>
+	<87v86x2a27.wl-tiwai@suse.de>
+	<cb3b7857-dc6c-80db-4fa7-6772a856f328@quicinc.com>
+	<7f0c4f85-5a63-4643-8553-e3f5d6af67ec@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=TurgWrWS;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="nBmFB/jt"
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.01 / 50.00];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_TRACE(0.00)[suse.de:+];
+	 MX_GOOD(-0.01)[];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 BAYES_HAM(-3.00)[100.00%];
+	 ARC_NA(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 FROM_HAS_DN(0.00)[];
+	 DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[dt];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 RCPT_COUNT_TWELVE(0.00)[23];
+	 MID_CONTAINS_FROM(1.00)[];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,quicinc.com:email];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,quicinc.com,suse.com,vger.kernel.org,alsa-project.org];
+	 RCVD_TLS_ALL(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[]
+X-Spam-Score: -4.01
+X-Rspamd-Queue-Id: 4E5B91F7B9
+X-Spam-Flag: NO
 
-The xlate callbacks are supposed to translate of_phandle_args to proper
-provider without modifying the of_phandle_args.  Make the argument
-pointer to const for code safety and readability.
+On Sat, 17 Feb 2024 00:42:18 +0100,
+Wesley Cheng wrote:
+> 
+> Hi Takashi,
+> 
+> On 2/9/2024 1:34 PM, Wesley Cheng wrote:
+> > Hi Takashi,
+> > 
+> > On 2/9/2024 2:42 AM, Takashi Iwai wrote:
+> >> On Fri, 09 Feb 2024 00:13:45 +0100,
+> >> Wesley Cheng wrote:
+> >>> 
+> >>> Allow for checks on a specific USB audio device to see if a
+> >>> requested PCM
+> >>> format is supported.  This is needed for support when playback is
+> >>> initiated by the ASoC USB backend path.
+> >>> 
+> >>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> >>> ---
+> >>>   sound/usb/card.c | 31 +++++++++++++++++++++++++++++++
+> >>>   sound/usb/card.h | 11 +++++++++++
+> >>>   2 files changed, 42 insertions(+)
+> >>> 
+> >>> diff --git a/sound/usb/card.c b/sound/usb/card.c
+> >>> index 7dc8007ba839..1ad99a462038 100644
+> >>> --- a/sound/usb/card.c
+> >>> +++ b/sound/usb/card.c
+> >>> @@ -155,6 +155,37 @@ int snd_usb_unregister_platform_ops(void)
+> >>>   }
+> >>>   EXPORT_SYMBOL_GPL(snd_usb_unregister_platform_ops);
+> >>> +/*
+> >>> + * Checks to see if requested audio profile, i.e sample rate, # of
+> >>> + * channels, etc... is supported by the substream associated to the
+> >>> + * USB audio device.
+> >>> + */
+> >>> +struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
+> >>> +            struct snd_pcm_hw_params *params, int direction)
+> >>> +{
+> >>> +    struct snd_usb_audio *chip;
+> >>> +    struct snd_usb_substream *subs;
+> >>> +    struct snd_usb_stream *as;
+> >>> +
+> >>> +    /*
+> >>> +     * Register mutex is held when populating and clearing usb_chip
+> >>> +     * array.
+> >>> +     */
+> >>> +    guard(mutex)(&register_mutex);
+> >>> +    chip = usb_chip[card_idx];
+> >>> +
+> >>> +    if (chip && enable[card_idx]) {
+> >>> +        list_for_each_entry(as, &chip->pcm_list, list) {
+> >>> +            subs = &as->substream[direction];
+> >>> +            if (snd_usb_find_substream_format(subs, params))
+> >>> +                return as;
+> >>> +        }
+> >>> +    }
+> >>> +
+> >>> +    return NULL;
+> >>> +}
+> >>> +EXPORT_SYMBOL_GPL(snd_usb_find_suppported_substream);
+> >>> +
+> >>>   /*
+> >>>    * disconnect streams
+> >>>    * called from usb_audio_disconnect()
+> >>> diff --git a/sound/usb/card.h b/sound/usb/card.h
+> >>> index 02e4ea898db5..ed4a664e24e5 100644
+> >>> --- a/sound/usb/card.h
+> >>> +++ b/sound/usb/card.h
+> >>> @@ -217,4 +217,15 @@ struct snd_usb_platform_ops {
+> >>>   int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops);
+> >>>   int snd_usb_unregister_platform_ops(void);
+> >>> +
+> >>> +#if IS_ENABLED(CONFIG_SND_USB_AUDIO)
+> >>> +struct snd_usb_stream *snd_usb_find_suppported_substream(int card_idx,
+> >>> +            struct snd_pcm_hw_params *params, int direction);
+> >>> +#else
+> >>> +static struct snd_usb_stream
+> >>> *snd_usb_find_suppported_substream(int card_idx,
+> >>> +            struct snd_pcm_hw_params *params, int direction)
+> >>> +{
+> >>> +    return NULL;
+> >>> +}
+> >>> +#endif /* IS_ENABLED(CONFIG_SND_USB_AUDIO) */
+> >> 
+> >> The usefulness of ifdef guard here is doubtful, IMO.  This header is
+> >> only for USB-audio driver enablement, and not seen as generic
+> >> helpers.  So, just add the new function declarations without dummy
+> >> definitions.
+> >> 
+> > 
+> > Got it, will remove it.  We also have a dependency in place for the
+> > qc_audio_offload driver and SND USB AUDIO in the Kconfig.
+> > 
+> 
+> Looking at this again after trying some mixed Kconfig settings.  These
+> declarations aren't specific for USB-audio.  They are helpers that are
+> exposed to soc usb, so that it can do some basic verification with soc
+> usb before allowing the enable stream to continue.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/phy/allwinner/phy-sun4i-usb.c              |  2 +-
- drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c     |  2 +-
- drivers/phy/broadcom/phy-bcm-sr-pcie.c             |  2 +-
- drivers/phy/broadcom/phy-bcm-sr-usb.c              |  2 +-
- drivers/phy/broadcom/phy-bcm63xx-usbh.c            |  2 +-
- drivers/phy/broadcom/phy-brcm-usb.c                |  2 +-
- drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c    |  2 +-
- drivers/phy/freescale/phy-fsl-lynx-28g.c           |  2 +-
- drivers/phy/hisilicon/phy-histb-combphy.c          |  2 +-
- drivers/phy/intel/phy-intel-lgm-combo.c            |  2 +-
- drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c        |  2 +-
- drivers/phy/marvell/phy-armada375-usb2.c           |  2 +-
- drivers/phy/marvell/phy-armada38x-comphy.c         |  2 +-
- drivers/phy/marvell/phy-berlin-sata.c              |  2 +-
- drivers/phy/marvell/phy-mvebu-a3700-comphy.c       |  2 +-
- drivers/phy/marvell/phy-mvebu-cp110-comphy.c       |  2 +-
- drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c        |  2 +-
- drivers/phy/mediatek/phy-mtk-tphy.c                |  2 +-
- drivers/phy/mediatek/phy-mtk-xsphy.c               |  2 +-
- drivers/phy/microchip/lan966x_serdes.c             |  2 +-
- drivers/phy/microchip/sparx5_serdes.c              |  2 +-
- drivers/phy/mscc/phy-ocelot-serdes.c               |  2 +-
- drivers/phy/phy-core.c                             |  8 ++++----
- drivers/phy/phy-xgene.c                            |  2 +-
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c          |  2 +-
- drivers/phy/ralink/phy-mt7621-pci.c                |  2 +-
- drivers/phy/renesas/phy-rcar-gen2.c                |  2 +-
- drivers/phy/renesas/phy-rcar-gen3-usb2.c           |  2 +-
- drivers/phy/renesas/r8a779f0-ether-serdes.c        |  2 +-
- drivers/phy/rockchip/phy-rockchip-naneng-combphy.c |  2 +-
- drivers/phy/rockchip/phy-rockchip-pcie.c           |  2 +-
- drivers/phy/samsung/phy-exynos-mipi-video.c        |  2 +-
- drivers/phy/samsung/phy-exynos5-usbdrd.c           |  2 +-
- drivers/phy/samsung/phy-samsung-usb2.c             |  2 +-
- drivers/phy/socionext/phy-uniphier-usb2.c          |  2 +-
- drivers/phy/st/phy-miphy28lp.c                     |  2 +-
- drivers/phy/st/phy-spear1310-miphy.c               |  2 +-
- drivers/phy/st/phy-spear1340-miphy.c               |  2 +-
- drivers/phy/st/phy-stm32-usbphyc.c                 |  2 +-
- drivers/phy/tegra/xusb.c                           |  2 +-
- drivers/phy/ti/phy-am654-serdes.c                  |  2 +-
- drivers/phy/ti/phy-da8xx-usb.c                     |  2 +-
- drivers/phy/ti/phy-gmii-sel.c                      |  2 +-
- drivers/phy/xilinx/phy-zynqmp.c                    |  2 +-
- drivers/pinctrl/tegra/pinctrl-tegra-xusb.c         |  2 +-
- include/linux/phy/phy.h                            | 14 +++++++-------
- 46 files changed, 55 insertions(+), 55 deletions(-)
+Then rather the question is why snd-soc-usb calls those functions
+*unconditionally*.  No matter whether we have dependencies in Kconfig,
+calling the function means that the callee shall be drug when the
+corresponding code is running.
 
-diff --git a/drivers/phy/allwinner/phy-sun4i-usb.c b/drivers/phy/allwinner/phy-sun4i-usb.c
-index e53a9a9317bc..b0f19e950601 100644
---- a/drivers/phy/allwinner/phy-sun4i-usb.c
-+++ b/drivers/phy/allwinner/phy-sun4i-usb.c
-@@ -683,7 +683,7 @@ static int sun4i_usb_phy0_vbus_notify(struct notifier_block *nb,
- }
- 
- static struct phy *sun4i_usb_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct sun4i_usb_phy_data *data = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c b/drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c
-index 2712c4bd549d..5468831d6ab9 100644
---- a/drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c
-+++ b/drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c
-@@ -350,7 +350,7 @@ static int phy_g12a_usb3_pcie_exit(struct phy *phy)
- }
- 
- static struct phy *phy_g12a_usb3_pcie_xlate(struct device *dev,
--					    struct of_phandle_args *args)
-+					    const struct of_phandle_args *args)
- {
- 	struct phy_g12a_usb3_pcie_priv *priv = dev_get_drvdata(dev);
- 	unsigned int mode;
-diff --git a/drivers/phy/broadcom/phy-bcm-sr-pcie.c b/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-index 8a4aadf166cf..ff9b3862bf7a 100644
---- a/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-+++ b/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-@@ -195,7 +195,7 @@ static const struct phy_ops sr_paxc_phy_ops = {
- };
- 
- static struct phy *sr_pcie_phy_xlate(struct device *dev,
--				     struct of_phandle_args *args)
-+				     const struct of_phandle_args *args)
- {
- 	struct sr_pcie_phy_core *core;
- 	int phy_idx;
-diff --git a/drivers/phy/broadcom/phy-bcm-sr-usb.c b/drivers/phy/broadcom/phy-bcm-sr-usb.c
-index b0bd18a5df87..6bcfe83609c8 100644
---- a/drivers/phy/broadcom/phy-bcm-sr-usb.c
-+++ b/drivers/phy/broadcom/phy-bcm-sr-usb.c
-@@ -209,7 +209,7 @@ static const struct phy_ops sr_phy_ops = {
- };
- 
- static struct phy *bcm_usb_phy_xlate(struct device *dev,
--				     struct of_phandle_args *args)
-+				     const struct of_phandle_args *args)
- {
- 	struct bcm_usb_phy_cfg *phy_cfg;
- 	int phy_idx;
-diff --git a/drivers/phy/broadcom/phy-bcm63xx-usbh.c b/drivers/phy/broadcom/phy-bcm63xx-usbh.c
-index f8183dea774b..647644de041b 100644
---- a/drivers/phy/broadcom/phy-bcm63xx-usbh.c
-+++ b/drivers/phy/broadcom/phy-bcm63xx-usbh.c
-@@ -366,7 +366,7 @@ static const struct phy_ops bcm63xx_usbh_phy_ops = {
- };
- 
- static struct phy *bcm63xx_usbh_phy_xlate(struct device *dev,
--					  struct of_phandle_args *args)
-+					  const struct of_phandle_args *args)
- {
- 	struct bcm63xx_usbh_phy *usbh = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
-index a16f0b58eb74..ad2eec095601 100644
---- a/drivers/phy/broadcom/phy-brcm-usb.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb.c
-@@ -175,7 +175,7 @@ static const struct phy_ops brcm_usb_phy_ops = {
- };
- 
- static struct phy *brcm_usb_phy_xlate(struct device *dev,
--				      struct of_phandle_args *args)
-+				      const struct of_phandle_args *args)
- {
- 	struct brcm_usb_phy_data *data = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-index 0ae052df3765..38388dd04bdc 100644
---- a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-@@ -294,7 +294,7 @@ static int mixel_lvds_phy_reset(struct device *dev)
- }
- 
- static struct phy *mixel_lvds_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct mixel_lvds_phy_priv *priv = dev_get_drvdata(dev);
- 	unsigned int phy_id;
-diff --git a/drivers/phy/freescale/phy-fsl-lynx-28g.c b/drivers/phy/freescale/phy-fsl-lynx-28g.c
-index e2187767ce00..b86da8e9daa4 100644
---- a/drivers/phy/freescale/phy-fsl-lynx-28g.c
-+++ b/drivers/phy/freescale/phy-fsl-lynx-28g.c
-@@ -556,7 +556,7 @@ static void lynx_28g_lane_read_configuration(struct lynx_28g_lane *lane)
- }
- 
- static struct phy *lynx_28g_xlate(struct device *dev,
--				  struct of_phandle_args *args)
-+				  const struct of_phandle_args *args)
- {
- 	struct lynx_28g_priv *priv = dev_get_drvdata(dev);
- 	int idx = args->args[0];
-diff --git a/drivers/phy/hisilicon/phy-histb-combphy.c b/drivers/phy/hisilicon/phy-histb-combphy.c
-index c44588fd5a53..7436dcae3981 100644
---- a/drivers/phy/hisilicon/phy-histb-combphy.c
-+++ b/drivers/phy/hisilicon/phy-histb-combphy.c
-@@ -163,7 +163,7 @@ static const struct phy_ops histb_combphy_ops = {
- };
- 
- static struct phy *histb_combphy_xlate(struct device *dev,
--				       struct of_phandle_args *args)
-+				       const struct of_phandle_args *args)
- {
- 	struct histb_combphy_priv *priv = dev_get_drvdata(dev);
- 	struct histb_combphy_mode *mode = &priv->mode;
-diff --git a/drivers/phy/intel/phy-intel-lgm-combo.c b/drivers/phy/intel/phy-intel-lgm-combo.c
-index d32e267c0001..f8e3054a9e59 100644
---- a/drivers/phy/intel/phy-intel-lgm-combo.c
-+++ b/drivers/phy/intel/phy-intel-lgm-combo.c
-@@ -508,7 +508,7 @@ static const struct phy_ops intel_cbphy_ops = {
- };
- 
- static struct phy *intel_cbphy_xlate(struct device *dev,
--				     struct of_phandle_args *args)
-+				     const struct of_phandle_args *args)
- {
- 	struct intel_combo_phy *cbphy = dev_get_drvdata(dev);
- 	u32 iphy_id;
-diff --git a/drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c b/drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c
-index ef93bf2cba10..406a87c8b759 100644
---- a/drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c
-+++ b/drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c
-@@ -358,7 +358,7 @@ static const struct phy_ops ltq_vrx200_pcie_phy_ops = {
- };
- 
- static struct phy *ltq_vrx200_pcie_phy_xlate(struct device *dev,
--					     struct of_phandle_args *args)
-+					     const struct of_phandle_args *args)
- {
- 	struct ltq_vrx200_pcie_phy_priv *priv = dev_get_drvdata(dev);
- 	unsigned int mode;
-diff --git a/drivers/phy/marvell/phy-armada375-usb2.c b/drivers/phy/marvell/phy-armada375-usb2.c
-index b141e3cd8a94..3731f9b25655 100644
---- a/drivers/phy/marvell/phy-armada375-usb2.c
-+++ b/drivers/phy/marvell/phy-armada375-usb2.c
-@@ -61,7 +61,7 @@ static const struct phy_ops armada375_usb_phy_ops = {
-  * USB3 case it still optional and we use ENODEV.
-  */
- static struct phy *armada375_usb_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct armada375_cluster_phy *cluster_phy = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/marvell/phy-armada38x-comphy.c b/drivers/phy/marvell/phy-armada38x-comphy.c
-index d3259984ee8e..5063361b0120 100644
---- a/drivers/phy/marvell/phy-armada38x-comphy.c
-+++ b/drivers/phy/marvell/phy-armada38x-comphy.c
-@@ -160,7 +160,7 @@ static const struct phy_ops a38x_comphy_ops = {
- };
- 
- static struct phy *a38x_comphy_xlate(struct device *dev,
--				     struct of_phandle_args *args)
-+				     const struct of_phandle_args *args)
- {
- 	struct a38x_comphy_lane *lane;
- 	struct phy *phy;
-diff --git a/drivers/phy/marvell/phy-berlin-sata.c b/drivers/phy/marvell/phy-berlin-sata.c
-index f972d78372ea..c90e2867900c 100644
---- a/drivers/phy/marvell/phy-berlin-sata.c
-+++ b/drivers/phy/marvell/phy-berlin-sata.c
-@@ -155,7 +155,7 @@ static int phy_berlin_sata_power_off(struct phy *phy)
- }
- 
- static struct phy *phy_berlin_sata_phy_xlate(struct device *dev,
--					     struct of_phandle_args *args)
-+					     const struct of_phandle_args *args)
- {
- 	struct phy_berlin_priv *priv = dev_get_drvdata(dev);
- 	int i;
-diff --git a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-index 24c3371e2bb2..41162d7228c9 100644
---- a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-+++ b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
-@@ -1213,7 +1213,7 @@ static const struct phy_ops mvebu_a3700_comphy_ops = {
- };
- 
- static struct phy *mvebu_a3700_comphy_xlate(struct device *dev,
--					    struct of_phandle_args *args)
-+					    const struct of_phandle_args *args)
- {
- 	struct mvebu_a3700_comphy_lane *lane;
- 	unsigned int port;
-diff --git a/drivers/phy/marvell/phy-mvebu-cp110-comphy.c b/drivers/phy/marvell/phy-mvebu-cp110-comphy.c
-index b0dd13366598..da5e8f405749 100644
---- a/drivers/phy/marvell/phy-mvebu-cp110-comphy.c
-+++ b/drivers/phy/marvell/phy-mvebu-cp110-comphy.c
-@@ -917,7 +917,7 @@ static const struct phy_ops mvebu_comphy_ops = {
- };
- 
- static struct phy *mvebu_comphy_xlate(struct device *dev,
--				      struct of_phandle_args *args)
-+				      const struct of_phandle_args *args)
- {
- 	struct mvebu_comphy_lane *lane;
- 	struct phy *phy;
-diff --git a/drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c b/drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c
-index 972c129185f7..058e1d926630 100644
---- a/drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c
-+++ b/drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c
-@@ -165,7 +165,7 @@ static int mtk_mipi_phy_power_off(struct phy *phy)
- }
- 
- static struct phy *mtk_mipi_cdphy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct mtk_mipi_cdphy_port *priv = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/mediatek/phy-mtk-tphy.c b/drivers/phy/mediatek/phy-mtk-tphy.c
-index a4746f6cb8a1..25b86bbb9cec 100644
---- a/drivers/phy/mediatek/phy-mtk-tphy.c
-+++ b/drivers/phy/mediatek/phy-mtk-tphy.c
-@@ -1467,7 +1467,7 @@ static int mtk_phy_set_mode(struct phy *phy, enum phy_mode mode, int submode)
- }
- 
- static struct phy *mtk_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct mtk_tphy *tphy = dev_get_drvdata(dev);
- 	struct mtk_phy_instance *instance = NULL;
-diff --git a/drivers/phy/mediatek/phy-mtk-xsphy.c b/drivers/phy/mediatek/phy-mtk-xsphy.c
-index b222fbbd71d1..064fd0941727 100644
---- a/drivers/phy/mediatek/phy-mtk-xsphy.c
-+++ b/drivers/phy/mediatek/phy-mtk-xsphy.c
-@@ -378,7 +378,7 @@ static int mtk_phy_set_mode(struct phy *phy, enum phy_mode mode, int submode)
- }
- 
- static struct phy *mtk_phy_xlate(struct device *dev,
--				 struct of_phandle_args *args)
-+				 const struct of_phandle_args *args)
- {
- 	struct mtk_xsphy *xsphy = dev_get_drvdata(dev);
- 	struct xsphy_instance *inst = NULL;
-diff --git a/drivers/phy/microchip/lan966x_serdes.c b/drivers/phy/microchip/lan966x_serdes.c
-index b5ac2b7995e7..835e369cdfc5 100644
---- a/drivers/phy/microchip/lan966x_serdes.c
-+++ b/drivers/phy/microchip/lan966x_serdes.c
-@@ -518,7 +518,7 @@ static const struct phy_ops serdes_ops = {
- };
- 
- static struct phy *serdes_simple_xlate(struct device *dev,
--				       struct of_phandle_args *args)
-+				       const struct of_phandle_args *args)
- {
- 	struct serdes_ctrl *ctrl = dev_get_drvdata(dev);
- 	unsigned int port, idx, i;
-diff --git a/drivers/phy/microchip/sparx5_serdes.c b/drivers/phy/microchip/sparx5_serdes.c
-index 01bd5ea620c5..7cb85029fab3 100644
---- a/drivers/phy/microchip/sparx5_serdes.c
-+++ b/drivers/phy/microchip/sparx5_serdes.c
-@@ -2509,7 +2509,7 @@ static struct sparx5_serdes_io_resource sparx5_serdes_iomap[] =  {
- 
- /* Client lookup function, uses serdes index */
- static struct phy *sparx5_serdes_xlate(struct device *dev,
--				     struct of_phandle_args *args)
-+				     const struct of_phandle_args *args)
- {
- 	struct sparx5_serdes_private *priv = dev_get_drvdata(dev);
- 	int idx;
-diff --git a/drivers/phy/mscc/phy-ocelot-serdes.c b/drivers/phy/mscc/phy-ocelot-serdes.c
-index d9443e865a78..1cd1b5db2ad7 100644
---- a/drivers/phy/mscc/phy-ocelot-serdes.c
-+++ b/drivers/phy/mscc/phy-ocelot-serdes.c
-@@ -441,7 +441,7 @@ static const struct phy_ops serdes_ops = {
- };
- 
- static struct phy *serdes_simple_xlate(struct device *dev,
--				       struct of_phandle_args *args)
-+				       const struct of_phandle_args *args)
- {
- 	struct serdes_ctrl *ctrl = dev_get_drvdata(dev);
- 	unsigned int port, idx, i;
-diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-index 2e8b07eb637a..c5c8d70bc853 100644
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -747,8 +747,8 @@ EXPORT_SYMBOL_GPL(devm_phy_put);
-  * should provide a custom of_xlate function that reads the *args* and returns
-  * the appropriate phy.
-  */
--struct phy *of_phy_simple_xlate(struct device *dev, struct of_phandle_args
--	*args)
-+struct phy *of_phy_simple_xlate(struct device *dev,
-+				const struct of_phandle_args *args)
- {
- 	struct phy *phy;
- 	struct class_dev_iter iter;
-@@ -1142,7 +1142,7 @@ EXPORT_SYMBOL_GPL(devm_phy_destroy);
- struct phy_provider *__of_phy_provider_register(struct device *dev,
- 	struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args))
-+				 const struct of_phandle_args *args))
- {
- 	struct phy_provider *phy_provider;
- 
-@@ -1205,7 +1205,7 @@ EXPORT_SYMBOL_GPL(__of_phy_provider_register);
- struct phy_provider *__devm_of_phy_provider_register(struct device *dev,
- 	struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args))
-+				 const struct of_phandle_args *args))
- {
- 	struct phy_provider **ptr, *phy_provider;
- 
-diff --git a/drivers/phy/phy-xgene.c b/drivers/phy/phy-xgene.c
-index 1f0f908323f0..5007dc7a357c 100644
---- a/drivers/phy/phy-xgene.c
-+++ b/drivers/phy/phy-xgene.c
-@@ -1611,7 +1611,7 @@ static const struct phy_ops xgene_phy_ops = {
- };
- 
- static struct phy *xgene_phy_xlate(struct device *dev,
--				   struct of_phandle_args *args)
-+				   const struct of_phandle_args *args)
- {
- 	struct xgene_phy_ctx *ctx = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index b6908a03da58..546d3c6bee32 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3454,7 +3454,7 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
- 	return 0;
- }
- 
--static struct phy *qmp_combo_phy_xlate(struct device *dev, struct of_phandle_args *args)
-+static struct phy *qmp_combo_phy_xlate(struct device *dev, const struct of_phandle_args *args)
- {
- 	struct qmp_combo *qmp = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/ralink/phy-mt7621-pci.c b/drivers/phy/ralink/phy-mt7621-pci.c
-index 2f876f158e1d..a591ad95347c 100644
---- a/drivers/phy/ralink/phy-mt7621-pci.c
-+++ b/drivers/phy/ralink/phy-mt7621-pci.c
-@@ -263,7 +263,7 @@ static const struct phy_ops mt7621_pci_phy_ops = {
- };
- 
- static struct phy *mt7621_pcie_phy_of_xlate(struct device *dev,
--					    struct of_phandle_args *args)
-+					    const struct of_phandle_args *args)
- {
- 	struct mt7621_pci_phy *mt7621_phy = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/renesas/phy-rcar-gen2.c b/drivers/phy/renesas/phy-rcar-gen2.c
-index 507435af2656..c0221e7258c0 100644
---- a/drivers/phy/renesas/phy-rcar-gen2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen2.c
-@@ -306,7 +306,7 @@ static const struct of_device_id rcar_gen2_phy_match_table[] = {
- MODULE_DEVICE_TABLE(of, rcar_gen2_phy_match_table);
- 
- static struct phy *rcar_gen2_phy_xlate(struct device *dev,
--				       struct of_phandle_args *args)
-+				       const struct of_phandle_args *args)
- {
- 	struct rcar_gen2_phy_driver *drv;
- 	struct device_node *np = args->np;
-diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index 6387c0d34c55..fbab6ac0f0d1 100644
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -608,7 +608,7 @@ static const unsigned int rcar_gen3_phy_cable[] = {
- };
- 
- static struct phy *rcar_gen3_phy_usb2_xlate(struct device *dev,
--					    struct of_phandle_args *args)
-+					    const struct of_phandle_args *args)
- {
- 	struct rcar_gen3_chan *ch = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/renesas/r8a779f0-ether-serdes.c b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-index fc6e398fa3bf..f1f1da4a0b1f 100644
---- a/drivers/phy/renesas/r8a779f0-ether-serdes.c
-+++ b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-@@ -334,7 +334,7 @@ static const struct phy_ops r8a779f0_eth_serdes_ops = {
- };
- 
- static struct phy *r8a779f0_eth_serdes_xlate(struct device *dev,
--					     struct of_phandle_args *args)
-+					     const struct of_phandle_args *args)
- {
- 	struct r8a779f0_eth_serdes_drv_data *dd = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-index 5de5e2e97ffa..76b9cf417591 100644
---- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-@@ -251,7 +251,7 @@ static const struct phy_ops rochchip_combphy_ops = {
- 	.owner = THIS_MODULE,
- };
- 
--static struct phy *rockchip_combphy_xlate(struct device *dev, struct of_phandle_args *args)
-+static struct phy *rockchip_combphy_xlate(struct device *dev, const struct of_phandle_args *args)
- {
- 	struct rockchip_combphy_priv *priv = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
-index 1bbd6be2a584..51cc5ece0e63 100644
---- a/drivers/phy/rockchip/phy-rockchip-pcie.c
-+++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
-@@ -82,7 +82,7 @@ static struct rockchip_pcie_phy *to_pcie_phy(struct phy_pcie_instance *inst)
- }
- 
- static struct phy *rockchip_pcie_phy_of_xlate(struct device *dev,
--					      struct of_phandle_args *args)
-+					      const struct of_phandle_args *args)
- {
- 	struct rockchip_pcie_phy *rk_phy = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/samsung/phy-exynos-mipi-video.c b/drivers/phy/samsung/phy-exynos-mipi-video.c
-index 592d8067e848..f6756a609a9a 100644
---- a/drivers/phy/samsung/phy-exynos-mipi-video.c
-+++ b/drivers/phy/samsung/phy-exynos-mipi-video.c
-@@ -274,7 +274,7 @@ static int exynos_mipi_video_phy_power_off(struct phy *phy)
- }
- 
- static struct phy *exynos_mipi_video_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct exynos_mipi_video_phy *state = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index 3f310b28bfff..04171eed5b16 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -715,7 +715,7 @@ static int exynos5420_usbdrd_phy_calibrate(struct exynos5_usbdrd_phy *phy_drd)
- }
- 
- static struct phy *exynos5_usbdrd_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct exynos5_usbdrd_phy *phy_drd = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/samsung/phy-samsung-usb2.c b/drivers/phy/samsung/phy-samsung-usb2.c
-index 68a174eca0ba..9de744cd6f39 100644
---- a/drivers/phy/samsung/phy-samsung-usb2.c
-+++ b/drivers/phy/samsung/phy-samsung-usb2.c
-@@ -87,7 +87,7 @@ static const struct phy_ops samsung_usb2_phy_ops = {
- };
- 
- static struct phy *samsung_usb2_phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct samsung_usb2_phy_driver *drv;
- 
-diff --git a/drivers/phy/socionext/phy-uniphier-usb2.c b/drivers/phy/socionext/phy-uniphier-usb2.c
-index 3f2086ed4fe4..21c201717d95 100644
---- a/drivers/phy/socionext/phy-uniphier-usb2.c
-+++ b/drivers/phy/socionext/phy-uniphier-usb2.c
-@@ -81,7 +81,7 @@ static int uniphier_u2phy_init(struct phy *phy)
- }
- 
- static struct phy *uniphier_u2phy_xlate(struct device *dev,
--					struct of_phandle_args *args)
-+					const struct of_phandle_args *args)
- {
- 	struct uniphier_u2phy_priv *priv = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/st/phy-miphy28lp.c b/drivers/phy/st/phy-miphy28lp.c
-index e30305b77f0d..063fc38788ed 100644
---- a/drivers/phy/st/phy-miphy28lp.c
-+++ b/drivers/phy/st/phy-miphy28lp.c
-@@ -1074,7 +1074,7 @@ static int miphy28lp_get_addr(struct miphy28lp_phy *miphy_phy)
- }
- 
- static struct phy *miphy28lp_xlate(struct device *dev,
--				   struct of_phandle_args *args)
-+				   const struct of_phandle_args *args)
- {
- 	struct miphy28lp_dev *miphy_dev = dev_get_drvdata(dev);
- 	struct miphy28lp_phy *miphy_phy = NULL;
-diff --git a/drivers/phy/st/phy-spear1310-miphy.c b/drivers/phy/st/phy-spear1310-miphy.c
-index 35a9831b5161..c661ab63505f 100644
---- a/drivers/phy/st/phy-spear1310-miphy.c
-+++ b/drivers/phy/st/phy-spear1310-miphy.c
-@@ -183,7 +183,7 @@ static const struct phy_ops spear1310_miphy_ops = {
- };
- 
- static struct phy *spear1310_miphy_xlate(struct device *dev,
--					 struct of_phandle_args *args)
-+					 const struct of_phandle_args *args)
- {
- 	struct spear1310_miphy_priv *priv = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/st/phy-spear1340-miphy.c b/drivers/phy/st/phy-spear1340-miphy.c
-index 34a1cf21015f..85a60d64ebb7 100644
---- a/drivers/phy/st/phy-spear1340-miphy.c
-+++ b/drivers/phy/st/phy-spear1340-miphy.c
-@@ -220,7 +220,7 @@ static SIMPLE_DEV_PM_OPS(spear1340_miphy_pm_ops, spear1340_miphy_suspend,
- 			 spear1340_miphy_resume);
- 
- static struct phy *spear1340_miphy_xlate(struct device *dev,
--					 struct of_phandle_args *args)
-+					 const struct of_phandle_args *args)
- {
- 	struct spear1340_miphy_priv *priv = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
-index d5e7e44000b5..9dbe60dcf319 100644
---- a/drivers/phy/st/phy-stm32-usbphyc.c
-+++ b/drivers/phy/st/phy-stm32-usbphyc.c
-@@ -574,7 +574,7 @@ static void stm32_usbphyc_switch_setup(struct stm32_usbphyc *usbphyc,
- }
- 
- static struct phy *stm32_usbphyc_of_xlate(struct device *dev,
--					  struct of_phandle_args *args)
-+					  const struct of_phandle_args *args)
- {
- 	struct stm32_usbphyc *usbphyc = dev_get_drvdata(dev);
- 	struct stm32_usbphyc_phy *usbphyc_phy = NULL;
-diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index 142ebe0247cc..0dc86a7740e3 100644
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -22,7 +22,7 @@
- #include "xusb.h"
- 
- static struct phy *tegra_xusb_pad_of_xlate(struct device *dev,
--					   struct of_phandle_args *args)
-+					   const struct of_phandle_args *args)
- {
- 	struct tegra_xusb_pad *pad = dev_get_drvdata(dev);
- 	struct phy *phy = NULL;
-diff --git a/drivers/phy/ti/phy-am654-serdes.c b/drivers/phy/ti/phy-am654-serdes.c
-index 3f1d43e8b7ad..8b3b937de624 100644
---- a/drivers/phy/ti/phy-am654-serdes.c
-+++ b/drivers/phy/ti/phy-am654-serdes.c
-@@ -495,7 +495,7 @@ static void serdes_am654_release(struct phy *x)
- }
- 
- static struct phy *serdes_am654_xlate(struct device *dev,
--				      struct of_phandle_args *args)
-+				      const struct of_phandle_args *args)
- {
- 	struct serdes_am654 *am654_phy;
- 	struct phy *phy;
-diff --git a/drivers/phy/ti/phy-da8xx-usb.c b/drivers/phy/ti/phy-da8xx-usb.c
-index b7a9ef3f4654..0fe577f0d6c1 100644
---- a/drivers/phy/ti/phy-da8xx-usb.c
-+++ b/drivers/phy/ti/phy-da8xx-usb.c
-@@ -119,7 +119,7 @@ static const struct phy_ops da8xx_usb20_phy_ops = {
- };
- 
- static struct phy *da8xx_usb_phy_of_xlate(struct device *dev,
--					 struct of_phandle_args *args)
-+					 const struct of_phandle_args *args)
- {
- 	struct da8xx_usb_phy *d_phy = dev_get_drvdata(dev);
- 
-diff --git a/drivers/phy/ti/phy-gmii-sel.c b/drivers/phy/ti/phy-gmii-sel.c
-index 81dd1c3449d9..b30bf740e2e0 100644
---- a/drivers/phy/ti/phy-gmii-sel.c
-+++ b/drivers/phy/ti/phy-gmii-sel.c
-@@ -297,7 +297,7 @@ static const struct phy_ops phy_gmii_sel_ops = {
- };
- 
- static struct phy *phy_gmii_sel_of_xlate(struct device *dev,
--					 struct of_phandle_args *args)
-+					 const struct of_phandle_args *args)
- {
- 	struct phy_gmii_sel_priv *priv = dev_get_drvdata(dev);
- 	int phy_id = args->args[0];
-diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index 2559c6594cea..f72c5257d712 100644
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -768,7 +768,7 @@ static const unsigned int icm_matrix[NUM_LANES][CONTROLLERS_PER_LANE] = {
- 
- /* Translate OF phandle and args to PHY instance. */
- static struct phy *xpsgtr_xlate(struct device *dev,
--				struct of_phandle_args *args)
-+				const struct of_phandle_args *args)
- {
- 	struct xpsgtr_dev *gtr_dev = dev_get_drvdata(dev);
- 	struct xpsgtr_phy *gtr_phy;
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c b/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
-index 7641848be4de..96ef57a7d385 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
-@@ -685,7 +685,7 @@ static const struct phy_ops sata_phy_ops = {
- };
- 
- static struct phy *tegra_xusb_padctl_xlate(struct device *dev,
--					   struct of_phandle_args *args)
-+					   const struct of_phandle_args *args)
- {
- 	struct tegra_xusb_padctl *padctl = dev_get_drvdata(dev);
- 	unsigned int index = args->args[0];
-diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-index aa76609ba258..03cd5bae92d3 100644
---- a/include/linux/phy/phy.h
-+++ b/include/linux/phy/phy.h
-@@ -181,7 +181,7 @@ struct phy_provider {
- 	struct module		*owner;
- 	struct list_head	list;
- 	struct phy * (*of_xlate)(struct device *dev,
--		struct of_phandle_args *args);
-+				 const struct of_phandle_args *args);
- };
- 
- /**
-@@ -272,7 +272,7 @@ void phy_put(struct device *dev, struct phy *phy);
- void devm_phy_put(struct device *dev, struct phy *phy);
- struct phy *of_phy_get(struct device_node *np, const char *con_id);
- struct phy *of_phy_simple_xlate(struct device *dev,
--	struct of_phandle_args *args);
-+				const struct of_phandle_args *args);
- struct phy *phy_create(struct device *dev, struct device_node *node,
- 		       const struct phy_ops *ops);
- struct phy *devm_phy_create(struct device *dev, struct device_node *node,
-@@ -282,11 +282,11 @@ void devm_phy_destroy(struct device *dev, struct phy *phy);
- struct phy_provider *__of_phy_provider_register(struct device *dev,
- 	struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args));
-+				 const struct of_phandle_args *args));
- struct phy_provider *__devm_of_phy_provider_register(struct device *dev,
- 	struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args));
-+				 const struct of_phandle_args *args));
- void of_phy_provider_unregister(struct phy_provider *phy_provider);
- void devm_of_phy_provider_unregister(struct device *dev,
- 	struct phy_provider *phy_provider);
-@@ -500,7 +500,7 @@ static inline struct phy *of_phy_get(struct device_node *np, const char *con_id)
- }
- 
- static inline struct phy *of_phy_simple_xlate(struct device *dev,
--	struct of_phandle_args *args)
-+					      const struct of_phandle_args *args)
- {
- 	return ERR_PTR(-ENOSYS);
- }
-@@ -530,7 +530,7 @@ static inline void devm_phy_destroy(struct device *dev, struct phy *phy)
- static inline struct phy_provider *__of_phy_provider_register(
- 	struct device *dev, struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args))
-+				 const struct of_phandle_args *args))
- {
- 	return ERR_PTR(-ENOSYS);
- }
-@@ -538,7 +538,7 @@ static inline struct phy_provider *__of_phy_provider_register(
- static inline struct phy_provider *__devm_of_phy_provider_register(struct device
- 	*dev, struct device_node *children, struct module *owner,
- 	struct phy * (*of_xlate)(struct device *dev,
--				 struct of_phandle_args *args))
-+				 const struct of_phandle_args *args))
- {
- 	return ERR_PTR(-ENOSYS);
- }
--- 
-2.34.1
+If it were generic core API stuff such as power-management or ACPI,
+it'd make sense to define dummy functions without the enablement, as
+many code may have optional calls.  If the API is enabled, it's anyway
+in the core.  If not, it's optional.  That'll be fine.
 
+OTOH, the stuff you're calling certainly belongs to snd-usb-audio.
+Even if the call is really optional, it means that you'll have a hard
+dependency when snd-usb-audio is built, no matter whether you need or
+not.
+
+> Since the ASoC
+> layer doesn't have insight on what audio profiles are supported by the
+> usb device, this API will ensure that the request profile is
+> supported.
+>
+> Issues are seen when we disable SND USB audio config and enable the
+> ASoC parts.
+
+If snd-usb-audio is disabled, what snd-soc-usb would serve at all?
+Does it still make sense to keep it enabled? 
+That said, the statement above (building snd-soc-usb without
+snd-usb-audio) looks already dubious; isn't it better to have a proper
+dependency in Kconfig, instead?
+
+
+thanks,
+
+Takashi
 
