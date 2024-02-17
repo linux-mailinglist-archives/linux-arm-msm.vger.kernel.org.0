@@ -1,92 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-11546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 697EF859155
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 18:40:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 227A08591AC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 19:18:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B88A3B20C72
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 17:39:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B6F4CB20F5A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Feb 2024 18:18:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26F57D413;
-	Sat, 17 Feb 2024 17:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE24C7E107;
+	Sat, 17 Feb 2024 18:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbYNEtL7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uJowWFHS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8391CD1F;
-	Sat, 17 Feb 2024 17:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541B07C6F0
+	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 18:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708191592; cv=none; b=eLkZR5Da6P9qY8njusDqSMXyfx0/kT+eRI9MhLEhX/lvMObDOSnXfi3ADbToV0xzrz3OFIiGMfsCyOXGuowWrLvpyovMTAzT4TuMpnzWfb6FFf1XeHRQANt9e5D38T2f+3Ia/+Lyi2WqH+nH6DSCheVyhDarShwOWVGBxa4ZIJ0=
+	t=1708193889; cv=none; b=AE1vjQwKei6QN8A1DalnBs1wQuAb55WFNsREELpc6YNdM3NlMxw6ub26NwUlKwB2URt9fACwXPb6LH/d62+1aiTIrHnHFVkv/HAevRNi0gE83ZbnFq1mIKCRUMSfvQSfSjx32S25JMuldD4xeMPU8BTCPAH029R+Fks/4UK5Jwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708191592; c=relaxed/simple;
-	bh=ebo0Nz5NB6p8XZFP+hLXjd6Z68qG6zhlDNfq+Svz3Oc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nqAeMVQfmUz70toF3ZRt9e88gN3wKNEdG7WUEqJlYyE2gIL+0AHYBZnAV4Q/4aJ+7uUA9zlRjqaQuf1FC7K7Zqdf7gp479werQ29nsWEi+C5CcgRgwFlLO7Tbvdrp6N/oqx+6c0qDP0o1cxucuTPdwW/HcNmtiSRMRTdpHnNSqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbYNEtL7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD05C433C7;
-	Sat, 17 Feb 2024 17:39:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708191592;
-	bh=ebo0Nz5NB6p8XZFP+hLXjd6Z68qG6zhlDNfq+Svz3Oc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gbYNEtL7ZT1TNkc5nfo4LMlRj6ZwcBCtHKauFUBn8V4P6G/VwAV/j964gwHPJ5ejj
-	 Uv0uZTfGjFOiugbE5vI7+fDavhAKHpmpqTT7udXIvG0sek/WY9Fj4T8Ban5HwAgjLq
-	 dk0hVb4xYB++E+RBXOw2+UYEnF0jz/d1/MsZpwnA=
-Date: Sat, 17 Feb 2024 18:39:49 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, Johan Hovold <johan@kernel.org>,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH v15 0/9] Add multiport support for DWC3 controllers
-Message-ID: <2024021703-sponge-reactor-4984@gregkh>
-References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1708193889; c=relaxed/simple;
+	bh=Qzb3J1w292mYeic6Z5BobktYBhZzdTBYI73MRYlqTkY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AJRjCKcF5QdZ5sTmrR/q3ddUjZLImTFCqjpTRg31XYf+wtAfdiJur5N8Ype6wy+SF/SlPtLda563tSkbYkPhqze5cpfXP5u/3vxPbqqEL0FcWgr4+SQhvhcIa6ADts8wYg+1OvXpHzybZtq+btQjyldqZVTmBQo3/tG6JDK9s4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uJowWFHS; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-db4364ecd6aso1788694276.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 10:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708193886; x=1708798686; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jbyO0DKsw6wXpJbxjwS7LuEbfeSrnfaky7pY4pa8Iro=;
+        b=uJowWFHSJ1P2USUNXbh/zxGJ/QO55sPlMfi/4QkaKQLURCJgqMlbZJnwy2RryLTxWQ
+         YrEe9z8OP+yYWARHRuCN+LS2m3hZn85H9SGmP3SLx89Cr+Pp4Hy514hsAoa4UX2Toh/O
+         +ojjUSS1DX120V81zQC3xDlKz0CjRiNlEa8urvFtB15hoV0CUZDZMUhkSxkpIpWkiSPf
+         EtU5D3Lzj0LKKc6PbmahFHMSxob0NocBjuYZwsi9sohSi4sHXJ2bV1KR6I1JCYrpdfNf
+         kYAX/K6/5DL2KeWzlHsg21aAql8CD0uKFlnpplicBGJ/z7c3uv7osJ2cRDQprg5cfQbi
+         ViZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708193886; x=1708798686;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jbyO0DKsw6wXpJbxjwS7LuEbfeSrnfaky7pY4pa8Iro=;
+        b=H7GJ1Wuy+b+KbIKsTgqrpwtn3AUHzLqTuMTju8dx6PW970J6AVvK4RorFaRiFSp+o7
+         Eu05Vgx2cDKkhh5noqY3EUWLpfKASr+JCcfbTnOzhXfu+4uXpAILkYghb2VY8kyfZrcw
+         LIeUJIFxAbQ9vitNeKU58tOtfTjceCf6Q7z5POFB2b7IdM0snx/jJWB3e5LwW2olbTqj
+         +cQQrR8Gw5MaXCl4S+Y6q9yLwYKjQrvUnWpAISeAkZNjpkrp0HysTSds+KjGe7jKF3P3
+         R6Gb1rFevZ7O/OIA5UbCO4DyqTsWazLqvZWUE5vtDfz/VS55yuasJrcpQO2Lv3H442Es
+         XvxA==
+X-Forwarded-Encrypted: i=1; AJvYcCV06w/xqdesotzzfWynQszE6WatGjSTxtuIKvXm/o4IIUuiiWNGtY7MAsgXQH++YxKldPCVAQKWX6bznkgb7RyJbCEBptHWfSS6zwLj5w==
+X-Gm-Message-State: AOJu0YzKEgKuYZSJCBAZVMDjEttK53OVvheD0azNP5/tUKCorbaK27v1
+	ep1tZApmNqAD2WltnaaQbE5/7baJW2WUP7zMCZGX8eacJs2dVZ9v0SN1INF7JYQiRtyZqVNz23C
+	h6ZruUqxWQ5zUBk5S2Tu2/sWelupOf3xPKypGmw==
+X-Google-Smtp-Source: AGHT+IHR2aw5Fq9+f+b6J2C+oHZ3lJAwIW+/0JnzTfJsNAWuf5xhYkTrzi03iYoBr9x5+9kp7hFsJqSP9BmXYDW/Jdg=
+X-Received: by 2002:a25:ac93:0:b0:dcc:2da:e44e with SMTP id
+ x19-20020a25ac93000000b00dcc02dae44emr6454894ybi.61.1708193886191; Sat, 17
+ Feb 2024 10:18:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240216005756.762712-1-quic_kriskura@quicinc.com>
+References: <20240217163201.32989-1-danila@jiaxyga.com> <20240217163201.32989-4-danila@jiaxyga.com>
+In-Reply-To: <20240217163201.32989-4-danila@jiaxyga.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 17 Feb 2024 20:17:55 +0200
+Message-ID: <CAA8EJpqRZiUU8fmGswwvegq3uTR_8RGu4L=LHiT5TRsShQHgWQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm6150: define USB-C related blocks
+To: Danila Tikhonov <danila@jiaxyga.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com, 
+	broonie@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	conor+dt@kernel.org, bryan.odonoghue@linaro.org, gregkh@linuxfoundation.org, 
+	quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 16, 2024 at 06:27:47AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller which
-> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
-> DWC3 controller with multiple ports that can operate in host mode.
-> Some of the port supports both SS+HS and other port supports only HS
-> mode.
-> 
-> This change primarily refactors the Phy logic in core driver to allow
-> multiport support with Generic Phy's.
-> 
-> Changes have been tested on  QCOM SoC SA8295P which has 4 ports (2
-> are HS+SS capable and 2 are HS only capable).
+On Sat, 17 Feb 2024 at 18:32, Danila Tikhonov <danila@jiaxyga.com> wrote:
+>
+> Define VBUS regulator and the Type-C handling block as present on the
+> Quacomm PM6150 PMIC.
+>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 
-I've dropped these all from my queue (see the other private email thread
-on the commit response).  Please resend when you address the issues
-Johan raised.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-And note, please do NOT attempt to poke maintainers in private bug
-reports to do reviews as that is not how any of this happens, you know
-this quite well.
+> ---
+>  arch/arm64/boot/dts/qcom/pm6150.dtsi | 46 ++++++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
 
-thanks,
 
-greg k-h
+
+-- 
+With best wishes
+Dmitry
 
