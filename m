@@ -1,63 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-11577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E82ED859498
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 05:29:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0834885957E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 09:06:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25AC1283874
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 04:29:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C78E1C20C86
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 08:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2778F1C32;
-	Sun, 18 Feb 2024 04:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88B96EAFC;
+	Sun, 18 Feb 2024 08:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SnDxKL27"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="zP9sEU4b";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="GUExKSB3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from fallback20.i.mail.ru (fallback20.i.mail.ru [79.137.243.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4940E184F;
-	Sun, 18 Feb 2024 04:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0597312E61;
+	Sun, 18 Feb 2024 08:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708230571; cv=none; b=RonNOwIsivME/iFsd9SWYlmFxJNYggzqWxCa5xfct9rP+0yN1RVXqVc6Zbfqnjl/pP3v8tXrvtCBGV9ajHUXccvZ2fEYFFdwZ8O/unUTjzHBWjsCYMs2ksT4ehKyybSUbVawp7dRiJTfePFB76RPteyUZ5ssSM7XA+Sq90tisB4=
+	t=1708243577; cv=none; b=IwNcvMkcFkQmAwqW3um+bFnVKbCYUYDxX8NGSDWW/Rpcw1P9P2KKWOl7TdOeI5/YoPSP+MLkzXuUa4FhG2K2IGrhPM+awywPSuRnMUqXqA1zKMkVyUrDtoDh/1Ka2HVaksQ4s9kO37d8XQ7Lv3HsHY5uZA9bSutv3hvSgsfpnhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708230571; c=relaxed/simple;
-	bh=lLzvN+0UA7nYVUd9h0btrwR1+ARJGyAx88D7zo5odmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=juWURbg6v7kcZHZpoFwTTbu60ng6cYrTJiqYln/9LrR+HBnC7/RR078wDQp36QYazPUUKP3eN+9NKqid0D4xPAavn9K26j/1qiGHxZ3Epqfr1PvvIiixCHsJnI1x5xHzV5bVz035DG2NDWJtSTyFMwn++RjeLByK8k8DuYSmE1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SnDxKL27; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41I4R2Zf019929;
-	Sun, 18 Feb 2024 04:29:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=cwAA9VhFh41lHklFAVgJT+Qaw4CK5FsdcTXPz98BgOk=; b=Sn
-	DxKL27h+Z+Gs9DI0fMst5fvp20MESRBpdIW//17kQIoHpA4+xoQhk6+TsvwXi0+A
-	60JxHlyfZ/S02kDzzgf9/RbvnmjaPj55UssYHAT2vOATy28te6i1h1gjIwInuu7j
-	Vpn3x3QaZlAhCz1std74Vo6kC334T7PkZloVeNMqzond/rCuOb65TEdIwCYC+2lH
-	1exrSe3LDlc4jg5OpP4XRuaiLdNFNkrbi+t8wdFLJO8n3drw1qwhtw1GAc1Mrtgz
-	MSxU+foEZyoSPlsmELAgdVAnxTQEQ5vqCCbh+yJHb/9R/2oxmb20z3947dypGI+v
-	AoQHHaiLkr2Y/sqvJRbQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wam4q1cg5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 18 Feb 2024 04:29:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41I4TEFr018329
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 18 Feb 2024 04:29:14 GMT
-Received: from [10.216.61.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 17 Feb
- 2024 20:29:08 -0800
-Message-ID: <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
-Date: Sun, 18 Feb 2024 09:59:03 +0530
+	s=arc-20240116; t=1708243577; c=relaxed/simple;
+	bh=zbKNbENFN/OnjMU8rFgLiYkxYbjk2LCM2f7LHLfAxj8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C8sXXu9/am1kaou5HW2LHbDoKcNWbMIItlkjloV4NNucB4/GQ5xk00F+9L/vIKtuuaKrqfgWcfyZq3I0n6NQzQlWVRvS/5KXoLamwNp1nkil/ZkmXRo1YQD32nefFGDkGi4MUnP3uzLQwKIou95p6Jn/MWniO+4Bb8sJcKmy89I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=zP9sEU4b; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=GUExKSB3; arc=none smtp.client-ip=79.137.243.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=fAe17WryL73RB+0sTl7z/tWEaSPh34cycckfhNlErMg=;
+	t=1708243573;x=1708333573; 
+	b=zP9sEU4bABQi24Ex0q70FS9F247yq3CC+GTtWrG5/olLcuJW55wJIE4gCnGFFtL5FQaluY4WA4+qbiargoGQvtwD3yvuDOti8aKEdRSLPD6QS0m+mMoI37BMhvaop0VnHKAzHplWFIQaP3qDeNfGgbXYjyVbixqPMwyiDJqAUlA=;
+Received: from [10.12.4.8] (port=35750 helo=smtp35.i.mail.ru)
+	by fallback20.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1rbcBZ-00D7N6-7I; Sun, 18 Feb 2024 11:06:05 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
+	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=fAe17WryL73RB+0sTl7z/tWEaSPh34cycckfhNlErMg=; t=1708243565; x=1708333565; 
+	b=GUExKSB3uWG4gifDWJMCcZzxNsDQyD3pAdGrCsmLiuDnMMMzboWLcIdu746IY4wOjysz/p6IKCN
+	ZITSsPe8G37VmYBFo9evmugaLQb5aUfp4tsYtud0PjxjNaJM9d2Y7VunS2XnGBvMXQY1BQcK1rpZR
+	bbW7kSn7u283vczHWjA=;
+Received: by smtp35.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rbcBH-0000000FcS4-1nT7; Sun, 18 Feb 2024 11:05:48 +0300
+Message-ID: <b0b732b8-456a-4021-8277-cd51f01ead17@jiaxyga.com>
+Date: Sun, 18 Feb 2024 11:05:21 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,109 +61,141 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
- driver probe
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm6150: define USB-C related blocks
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
- <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
- <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
- <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
- <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
- <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
- <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
- <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com>
- <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wpntqkDePuxxvfTymCOCn_FH2diCd_32
-X-Proofpoint-GUID: wpntqkDePuxxvfTymCOCn_FH2diCd_32
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-18_02,2024-02-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0
- spamscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=670 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402180031
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ gregkh@linuxfoundation.org, quic_wcheng@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org, danila@jiaxyga.com
+References: <20240217163201.32989-1-danila@jiaxyga.com>
+ <20240217163201.32989-4-danila@jiaxyga.com>
+ <6bf11ccd-ff08-369b-913f-277c189afb76@linaro.org>
+From: Danila Tikhonov <danila@jiaxyga.com>
+In-Reply-To: <6bf11ccd-ff08-369b-913f-277c189afb76@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 4F1203BC0FB41BD9001F8F2F6BAD2021F4B2298ADA324AF81BB1825BF5AE0A1600894C459B0CD1B9C5D8C186BDEC901D8E0B8F4C4390A0A6D797543978E9DD59B427ADE3CF5787D5CE06B70447BA4CE8
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7F9D3BE5B596754B8C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE77633BACAB33B95088F08D7030A58E5AD1A62830130A00468AEEEE3FBA3A834EE7353EFBB553375664F31EC67F06AD94B38E25929FDAC290C7432EB4E4AC1A54B2A3D379F6A05D0CB389733CBF5DBD5E913377AFFFEAFD269176DF2183F8FC7C0DCF4F0DC832992758941B15DA834481FCF19DD082D7633A0EF3E4896CB9E6436389733CBF5DBD5E9D5E8D9A59859A8B6BAA8CD687FCDB2EBCC7F00164DA146DA6F5DAA56C3B73B237318B6A418E8EAB8D32BA5DBAC0009BE9E8FC8737B5C22498BFD6B1B042489AC3AA81AA40904B5D9CF19DD082D7633A0C84D3B47A649675F3AA81AA40904B5D98AA50765F79006372D13D82DB4E1BCE9EC76A7562686271ED91E3A1F190DE8FD2E808ACE2090B5E14AD6D5ED66289B5278DA827A17800CE754F43A495B1ACFC12EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE7325B7099C10CC3D7731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A5C7C3FE977A4F061B5002B1117B3ED6967ED4914A5D9C2BAFC66B2B37046EC955823CB91A9FED034534781492E4B8EEAD3CCD70CEBBF18A22BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFA4DAB5E10157C3A32689DEF3F2745BF1CFE96C77343EE50FE8DC3B222CB7337F8DB4AB58792EC0EC34E84B500378195F43C5EF13D2DD4106429CF131A738E00D2EA3BB66D8629B7F457F7985AD47CF5C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxutXuoGjqiO27Q==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981E693FEBE5FC77AFAF7A6B01B8567BB20533548DF75F671C6F06B934CBD06DDCB2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 6242723A09DB00B4A77971E4CF73965D9E271BDE2CCB4C0C7AB8ED82C1DDBC5A049FFFDB7839CE9E8F5A60B08382AFE35CBC31FB6670A0722AAA73FD5854DA906FB50257FD98370E
+X-7FA49CB5: 0D63561A33F958A5A08FF61CF9D8C74F55D7C90D4B06AD703D055AAF7A6EEE438941B15DA834481FA18204E546F3947C4CB6874B0BCFF0B8F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006370D8CD50B7E84063A389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3C16BB147ABCEB83B35872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxusC26qdUNZ9Tg==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
+I know that some interrupts have both for PM8150B, but for PM6150 all 
+interrupts are rising.
+Please look at the downstream kernel:
+https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/187022f2721d584ac4ec92c0ac1af77da487521d/arch/arm64/boot/dts/qcom/pm6150.dtsi#L319
+https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/187022f2721d584ac4ec92c0ac1af77da487521d/arch/arm64/boot/dts/qcom/pm8150b.dtsi#L292
 
+---
+Best wishes
+Danila
 
-On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
-> On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
-> <quic_kathirav@quicinc.com> wrote:
+On 2/18/24 02:19, Bryan O'Donoghue wrote:
+> On 17/02/2024 16:32, Danila Tikhonov wrote:
+>> Define VBUS regulator and the Type-C handling block as present on the
+>> Quacomm PM6150 PMIC.
 >>
->>
->> <snip>
->>
->>>> Reason being, to access the NSSCC clocks, these GCC clocks
->>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
->>>> should be turned ON. But CCF disables these clocks as well due to the
->>>> lack of consumer.
->>>
->>> This means that NSSCC is also a consumer of those clocks. Please fix
->>> both DT and nsscc driver to handle NSSNOC clocks.
->>
->>
->> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
->> enable the same in the NSSCC driver probe.
-> 
-> Or use them through pm_clk. This might be better, as the system
-> doesn't need these clocks if NSSCC is suspended.
+>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+>
+>> +        pm6150_typec: typec@1500 {
+>> +            compatible = "qcom,pm6150-typec,
+>> +                      qcom,pm8150b-typec";
+>> +            reg = <0x1500>, <0x1700>;
+>> +            interrupts = <0x0 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x01 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x03 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x06 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x15 0x07 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x00 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x01 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x02 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x03 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x04 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x05 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x06 IRQ_TYPE_EDGE_RISING>,
+>> +                     <0x0 0x17 0x07 IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "or-rid-detect-change",
+>> +                      "vpd-detect",
+>> +                      "cc-state-change",
+>> +                      "vconn-oc",
+>> +                      "vbus-change",
+>> +                      "attach-detach",
+>> +                      "legacy-cable-detect",
+>> +                      "try-snk-src-detect",
+>> +                      "sig-tx",
+>> +                      "sig-rx",
+>> +                      "msg-tx",
+>> +                      "msg-rx",
+>> +                      "msg-tx-failed",
+>> +                      "msg-tx-discarded",
+>> +                      "msg-rx-discarded",
+>> +                      "fr-swap";
+>> +            status = "disabled";
+>> +        };
+>
+> Should all of these be rising ? Looks incorrect to me.
+>
+> Please review: arch/arm64/boot/dts/qcom/pm8150b.dtsi
+>
+> pm8150b_typec: typec@1500 {
+>         compatible = "qcom,pm8150b-typec";
+>         status = "disabled";
+>         reg = <0x1500>,
+>               <0x1700>;
+>
+>     interrupts = <0x2 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x15 0x01 IRQ_TYPE_EDGE_BOTH>,
+>              <0x2 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x15 0x03 IRQ_TYPE_EDGE_BOTH>,
+>              <0x2 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x15 0x06 IRQ_TYPE_EDGE_BOTH>,
+>              <0x2 0x15 0x07 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x00 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x01 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x02 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x03 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x04 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x05 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x06 IRQ_TYPE_EDGE_RISING>,
+>              <0x2 0x17 0x07 IRQ_TYPE_EDGE_RISING>;
+>
+>         interrupt-names = "or-rid-detect-change",
+>                   "vpd-detect",
+>                   "cc-state-change",
+>                   "vconn-oc",
+>                   "vbus-change",
+>                   "attach-detach",
+>                   "legacy-cable-detect",
+>                   "try-snk-src-detect",
+>                   "sig-tx",
+>                   "sig-rx",
+>                   "msg-tx",
+>                   "msg-rx",
+>                   "msg-tx-failed",
+>                   "msg-tx-discarded",
+>                   "msg-rx-discarded",
+>                   "fr-swap";
+> }
+>
+> ---
+> bod
 
-
-IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so 
-that, can I enable these clocks in NSSCC driver probe itself?
-
-
-> 
->>
->>>
->>>>> Once you have actual drivers, this should solve itself, the drivers
->>>>> will consume the clocks.
->>>>
->>>>
->>>> Given that, NSSCC is being built as module, there is no issue in booting
->>>> the kernel. But if you do insmod of the nsscc-ipq5332.ko, system will
->>>> reset.
->>>>
->>>> Without the networking drivers, there is no need to install this module.
->>>> And as you stated, once the drivers are available, there will be no issues.
->>>>
->>>> So can I explain the shortcomings of installing this module without the
->>>> networking drivers in cover letter and drop this patch all together?
->>>
->>> No. Using allyesconfig or allmodconfig and installing the full modules
->>> set should work.
->>>
->>
->>
->> Okay, Got it. Thanks for the information.
->>
->> <snip>
-> 
-> 
-> 
 
