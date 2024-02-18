@@ -1,154 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-11579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D549185958B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 09:15:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5636B8595BF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 09:45:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC66A1C209EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 08:15:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB52C1F22508
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 08:45:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A74CF4EB;
-	Sun, 18 Feb 2024 08:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B31D6EAEB;
+	Sun, 18 Feb 2024 08:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e0q2WsUM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b+SldZ+f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FA4EAEB;
-	Sun, 18 Feb 2024 08:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC4463A7;
+	Sun, 18 Feb 2024 08:45:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708244125; cv=none; b=GGWBsMmkq8fwn6iagOu6fWG3PvAs0ujYjqlsm0YNg/K4NRkOp76O37Y0KRgQ86qpXgofn/bxUktMU1rGIV2xrpIMo3NHzEMJBGW7oHzJ7PV6jR9chqDWs/k+mlTsPZ1+kKe5lTICQD3TbWF4fydsVzK/sRq91Ym3XeM2GBzbpRY=
+	t=1708245924; cv=none; b=X7EvG0AdlxC4+ht3x4DocXPazsrgCR+hBRsZAq25O9iy/eE/9PS4DR21GZezL7IF0NBDSHuWccmWUB5PJSr75LPN4mgZEv0aDPQVQPRYiUKc4wQeAhqkihsD5anrGVClxeDku2zswXGYQ+OooYsmsF21usfh8YVLDj64Ru7pFuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708244125; c=relaxed/simple;
-	bh=nIUi3+5qE2Fu+BpbvRSLMr1JZHmcSqsOnohOrMctUSA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MWM+eb99wJcC7GQ21d4UdUoDzRbI9Y4Ygv++qeKBg5vxkd4fqYXRfNEoJH7EBzlqTPLoPWsIhsbtiZinQ6VpM3wxXQHCUjOunNNnvFyViP5JUP0NGaltO+8G6yCqcPc+Azw/0ytNBq4sTvjVYIXraoRPYBGEcZSnpS6Iv2kCkhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e0q2WsUM; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708244124; x=1739780124;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=nIUi3+5qE2Fu+BpbvRSLMr1JZHmcSqsOnohOrMctUSA=;
-  b=e0q2WsUMnMpsT8ZRkKNNfpe/cP8B2Ynvtxsj25mCfoDv9qXrLFNJkFxQ
-   qW47CJXfL6HlHrL5zJEjg5ypI+NVXu4UsfvdoJ/rGbBTfVODEXN0Oxk9q
-   i56H9Jodie6W5wv4iv3K5cTOlUj5FniNmGtHNYe2pg8usELz+7LcwmDFc
-   8DWHTvjgLqMoVgolQbn4WY5vnMgbLmYbEH9OYD02rOGhFkFJCBo4/kzKY
-   8z6Wl0D8ee+axhBTq7LUxUy6TkNzEKfPgnvntCKM6tVH/GJ5Bq+kEebwT
-   dJ0r+uegW8kwh1NIRpgDBn00o4iYlQI/YQoLBLN32voEkqZGLV/Y1SxN1
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10987"; a="2199076"
-X-IronPort-AV: E=Sophos;i="6.06,168,1705392000"; 
-   d="scan'208";a="2199076"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2024 00:15:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,168,1705392000"; 
-   d="scan'208";a="35259770"
-Received: from lkp-server02.sh.intel.com (HELO 3c78fa4d504c) ([10.239.97.151])
-  by fmviesa001.fm.intel.com with ESMTP; 18 Feb 2024 00:15:18 -0800
-Received: from kbuild by 3c78fa4d504c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rbcKR-0002tA-2n;
-	Sun, 18 Feb 2024 08:15:15 +0000
-Date: Sun, 18 Feb 2024 16:14:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, broonie@kernel.org, robh@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	quic_srichara@quicinc.com, quic_varada@quicinc.com,
-	quic_mdalam@quicinc.com
-Subject: Re: [PATCH 3/5] spi: spi-qpic: Add qpic spi nand driver support
-Message-ID: <202402181614.N6WuWtRU-lkp@intel.com>
-References: <20240215134856.1313239-4-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1708245924; c=relaxed/simple;
+	bh=s0e8d/D7C6nbPI5ya3os5qMDpMCA/WnNjDAq9XnA/K8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=fmZVtwPYKOLu8ejLC8w22Itx1Zhx9/W3TmFGwsy5u7j+rtN2tCSaUqSlCJVS/ULIU7tCRv0u/bPR/6mko9TASw+0zdyY45LFJOlOt7Cqy+qD2RW/zAWIfAYwVRlIhWdPQWwYS7WkNl4iMWdaioQC73TChBRnKChrajb5LNKsF3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b+SldZ+f; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41I8jEvA024377;
+	Sun, 18 Feb 2024 08:45:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=kY1
+	NBOAgu/U1j9Fa6JABYuoNXSOLLP0J8W+rur07U+Q=; b=b+SldZ+fMZRrJk4/Gff
+	bDZ44zibb11s3RtrMZEbRUREnY/UzvUnkZNNzpIDDhHnRy7VYqQXJMu9814j8GiE
+	NNVrdq4rhSG15IgRl6BmFyrV61bQtepBDO9KWz/Ibow0xRfm7HOXBpUGptykXfvv
+	RhzTUyB/pPjzYQZjPjQiMEqz3fKH7pSFU+VJp2yTGflhenFqXes+xeD+QsOwKzpK
+	jj0F2mdStySvQdMbTPB0mJ5uBJ5dneEpH7veyRKN8ntUbEnHspVnny6sP9YxpCGd
+	BTVto7XYbFtwKMB386dwXeIaUvovbjuwGFw2dVM7ol//4V/icXosCknQ66r/ckR2
+	LXg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wan17hhnn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 08:45:13 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41I8jDBH016301
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 08:45:13 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Sun, 18 Feb 2024 00:45:09 -0800
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Date: Sun, 18 Feb 2024 14:13:39 +0530
+Subject: [PATCH] bus: mhi: host: Change the trace string for the userspace
+ tools mapping
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240215134856.1313239-4-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240218-ftrace_string-v1-1-27da85c1f844@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIADzD0WUC/x3MQQqAIBBA0avIrBPUQqOrRITYZLOxGCWC8O5Jy
+ 7f4/4WMTJhhEi8w3pTpTA26ExAOnyJK2prBKDMoo0e5F/YB11yYUpTOOues8d72AVpzMe70/L9
+ 5qfUDP0PxY18AAAA=
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Steven Rostedt
+	<rostedt@goodmis.org>
+CC: <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-trace-kernel@vger.kernel.org>,
+        <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
+        Krishna chaitanya chundru
+	<quic_krichai@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708245908; l=2059;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=s0e8d/D7C6nbPI5ya3os5qMDpMCA/WnNjDAq9XnA/K8=;
+ b=OWRiAqsu0nVhFU0aJFmTLUTPLcCmTsVx/NztAgu7GRyT3yw8kXW1O1ARRFwMfTgOwSANcluOt
+ DI3bWfEJ7XQDZ4lxAFHFM4Dk+cEFJjy4vj4FsBwB9ZS4LSD3UhhZ7Rh
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: c64ZYWOqttvm1mQxeQ6eQL5AHsR9l3xc
+X-Proofpoint-GUID: c64ZYWOqttvm1mQxeQ6eQL5AHsR9l3xc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-18_06,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ spamscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 impostorscore=0
+ mlxlogscore=956 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402180065
 
-Hi Md,
+User space tools can't map strings if we use directly, as the string
+address is internal to kernel.
 
-kernel test robot noticed the following build errors:
+So add trace point strings for the user space tools to map strings
+properly.
 
-[auto build test ERROR on next-20240215]
-[also build test ERROR on linus/master v6.8-rc4]
-[cannot apply to mtd/nand/next broonie-spi/for-next robh/for-next v6.8-rc4 v6.8-rc3 v6.8-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+ drivers/bus/mhi/host/main.c  | 4 ++--
+ drivers/bus/mhi/host/trace.h | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-add-binding-doc-for-spi-qpic-snand/20240215-215348
-base:   next-20240215
-patch link:    https://lore.kernel.org/r/20240215134856.1313239-4-quic_mdalam%40quicinc.com
-patch subject: [PATCH 3/5] spi: spi-qpic: Add qpic spi nand driver support
-config: arm-defconfig (https://download.01.org/0day-ci/archive/20240218/202402181614.N6WuWtRU-lkp@intel.com/config)
-compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240218/202402181614.N6WuWtRU-lkp@intel.com/reproduce)
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index 2d38f6005da6..15d657af9b5b 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -1340,7 +1340,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+ 	enum mhi_cmd_type cmd = MHI_CMD_NOP;
+ 	int ret;
+ 
+-	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, "Updating");
++	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, TPS("Updating"));
+ 	switch (to_state) {
+ 	case MHI_CH_STATE_TYPE_RESET:
+ 		write_lock_irq(&mhi_chan->lock);
+@@ -1407,7 +1407,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+ 		write_unlock_irq(&mhi_chan->lock);
+ 	}
+ 
+-	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, "Updated");
++	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, TPS("Updated"));
+ exit_channel_update:
+ 	mhi_cntrl->runtime_put(mhi_cntrl);
+ 	mhi_device_put(mhi_cntrl->mhi_dev);
+diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
+index d12a98d44272..368515dcb22d 100644
+--- a/drivers/bus/mhi/host/trace.h
++++ b/drivers/bus/mhi/host/trace.h
+@@ -84,6 +84,8 @@ DEV_ST_TRANSITION_LIST
+ #define dev_st_trans(a, b)		{ DEV_ST_TRANSITION_##a, b },
+ #define dev_st_trans_end(a, b)		{ DEV_ST_TRANSITION_##a, b }
+ 
++#define TPS(x)	tracepoint_string(x)
++
+ TRACE_EVENT(mhi_gen_tre,
+ 
+ 	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202402181614.N6WuWtRU-lkp@intel.com/
+---
+base-commit: ceeb64f41fe6a1eb9fc56d583983a81f8f3dd058
+change-id: 20240218-ftrace_string-7677762aa63c
 
-All errors (new ones prefixed by >>):
-
-   drivers/spi/spi-qpic-snand.c:161:7: warning: variable 'ecc_user' set but not used [-Wunused-but-set-variable]
-           bool ecc_user = false;
-                ^
-   drivers/spi/spi-qpic-snand.c:160:35: warning: variable 'desired_correction' set but not used [-Wunused-but-set-variable]
-           int step_size = 0, strength = 0, desired_correction = 0, steps;
-                                            ^
-   drivers/spi/spi-qpic-snand.c:399:6: warning: variable 'oob_buf' set but not used [-Wunused-but-set-variable]
-           u8 *oob_buf;
-               ^
-   drivers/spi/spi-qpic-snand.c:452:30: warning: variable 'erased' set but not used [-Wunused-but-set-variable]
-           bool serial_op_err = false, erased;
-                                       ^
->> drivers/spi/spi-qpic-snand.c:682:16: error: assigning to 'u8 *' (aka 'unsigned char *') from 'const void *const' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
-                   snandc->wbuf = op->data.buf.out;
-                                ^ ~~~~~~~~~~~~~~~~
-   4 warnings and 1 error generated.
-
-
-vim +682 drivers/spi/spi-qpic-snand.c
-
-   671	
-   672	static int qpic_snand_write_page_cache(struct qcom_nand_controller *snandc,
-   673					       const struct spi_mem_op *op)
-   674	{
-   675		struct qpic_snand_op s_op = {};
-   676		u32 cmd;
-   677	
-   678		cmd = qpic_snand_cmd_mapping(snandc, op->cmd.opcode);
-   679		s_op.cmd_reg = cmd;
-   680	
-   681		if (op->cmd.opcode == SPINAND_PROGRAM_LOAD) {
- > 682			snandc->wbuf = op->data.buf.out;
-   683			snandc->wlen = op->data.nbytes;
-   684		}
-   685	
-   686		return 0;
-   687	}
-   688	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
 
