@@ -1,127 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-11576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01D0C859491
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 05:18:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E82ED859498
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 05:29:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B256728384D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 04:18:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25AC1283874
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 04:29:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43EDC1CD0F;
-	Sun, 18 Feb 2024 04:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2778F1C32;
+	Sun, 18 Feb 2024 04:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vbuiCmd5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SnDxKL27"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851F71CD03
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 04:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4940E184F;
+	Sun, 18 Feb 2024 04:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708229885; cv=none; b=UjLHr1qGJfkfdnLJALq1X8+11N9QO2GvJy2hAlbIRkejZb0/zXS6HmZiSXk9ac39LiyXbvOUniuZ3t4nU0aFMkS0scbjEYQ9Q1kjzvVdb3mCKFtAiBdYpUGXqU6Vv5wICGNfXTcn5vt5EAu6VKrKxopMu6gI0TV7/IMxGLW21gQ=
+	t=1708230571; cv=none; b=RonNOwIsivME/iFsd9SWYlmFxJNYggzqWxCa5xfct9rP+0yN1RVXqVc6Zbfqnjl/pP3v8tXrvtCBGV9ajHUXccvZ2fEYFFdwZ8O/unUTjzHBWjsCYMs2ksT4ehKyybSUbVawp7dRiJTfePFB76RPteyUZ5ssSM7XA+Sq90tisB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708229885; c=relaxed/simple;
-	bh=Lkcxnc7kQjKz5FJDXaeFm4oviG9PoQJZEi4n8rRF2Bo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KbziB5SNdMjVRaqzrqzBcpLFC8K9kEuw4SUOSfcczVejuXd2GEtF3/P0H9Vn0/usSUebyz0DaAVc1urOWJO6yF5f1ve3NU2pxaobxUnLtrYkZZZYV8qs0lYF8m3zDvrBK7mMVPgZADQhjgi2TW5+wCKAOub24VMPh36wUqFHG0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vbuiCmd5; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-603fd31f5c2so36317247b3.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Feb 2024 20:18:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708229882; x=1708834682; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EzD4Pv6p9Be8l8eNEWsH1WgYTIMlRyAnHGABnOcxnhU=;
-        b=vbuiCmd5Si6VdQhhYxY2YmEU49HlBkMWg5/5GuYuZWd223UePptNE7lxSGOlbwgZYQ
-         1Bc6Hiegb0qWXPaFChzUp1DLP7pLXqAjKKkw38sfIU5LiQXIkz4WRQcNvnc9MtUH+28h
-         4vw1hYHf/Hj3dc28MBHk2/ht/QXwBw1q423u7GyDJeS0mSdaZkNVFGpphU1r+TOHWfHQ
-         Q+wV9gWDHsRr8WUa3RYtQkQh6/JuJFlpO+9KWfONp81JQeg65Q+4W2De18XG+61zVd4F
-         1mEs1pZJWV6Pecu8WTOTJRMTm3cPGeHMrI58MAkpCcQCwk65Hu2hR8qV/fCDBWa6lnCI
-         vChw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708229882; x=1708834682;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EzD4Pv6p9Be8l8eNEWsH1WgYTIMlRyAnHGABnOcxnhU=;
-        b=sIN7LqOKANI/O9cwl40cQE86M9GtZzuvJOYswPtdkDsridlf25YFPgegeGKLI0RguC
-         XoZszkEIpnk+djXAOFsbdPTt4lIx5NMlArou4Fy805mgnZ01E/CyVWcKetCOuNyjjM9M
-         gu88BjL5sSJjqfsYrjbFk1REX3WWocldCDcuip096tGGIk5LLhZCS7vGkS7oVcPmj8yk
-         t9hlwvfrMpFbsroGa7oIjTQYBhnJ6m/Z6eO8rv4KOKizotT3yelRCkD9ZV4Q7+j90GRR
-         CC3r3w6uWyLRl+nUojfhhWcqQKElxieKB2KgBcFx0sa1WAcHTi1eNS4bGIbGx6g2X/Sw
-         MHcw==
-X-Forwarded-Encrypted: i=1; AJvYcCVtAkx2dXg5V/ONppoYXT5ITNCFtgk7yYrWqKY/yRIwq1/7TNfhvj93/PC/QO+3CuSrtjGZ1oibtbWOyCfRkSaQ2k1HlzJSYZgpvTlrqw==
-X-Gm-Message-State: AOJu0YwRGYL4YaC6xZGjtWZuBWS+zWNW+10g5Ad/TT6msbNzQn4aeXQP
-	uEkEkK27eWbFN+TzEyVvHRAXcHLiJgqrDPkvzVTBvsq4jyEyztLGO8XtuGZoDkItFTd7rjNdGr+
-	1AsVv1f711HIm3+m46qPrjtq+Cpir1WDLiauVhg==
-X-Google-Smtp-Source: AGHT+IEpgMf3VvMWakVwv7fghI9Fa7G7wYfMJAdAyHJSmdQW1S3Ff0ESfxQKn12qZsKW7JtlMbzrJ7Lgo1P4FfdpkMU=
-X-Received: by 2002:a05:690c:16:b0:608:b86:7c9f with SMTP id
- bc22-20020a05690c001600b006080b867c9fmr2610027ywb.7.1708229882487; Sat, 17
- Feb 2024 20:18:02 -0800 (PST)
+	s=arc-20240116; t=1708230571; c=relaxed/simple;
+	bh=lLzvN+0UA7nYVUd9h0btrwR1+ARJGyAx88D7zo5odmM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=juWURbg6v7kcZHZpoFwTTbu60ng6cYrTJiqYln/9LrR+HBnC7/RR078wDQp36QYazPUUKP3eN+9NKqid0D4xPAavn9K26j/1qiGHxZ3Epqfr1PvvIiixCHsJnI1x5xHzV5bVz035DG2NDWJtSTyFMwn++RjeLByK8k8DuYSmE1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SnDxKL27; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41I4R2Zf019929;
+	Sun, 18 Feb 2024 04:29:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=cwAA9VhFh41lHklFAVgJT+Qaw4CK5FsdcTXPz98BgOk=; b=Sn
+	DxKL27h+Z+Gs9DI0fMst5fvp20MESRBpdIW//17kQIoHpA4+xoQhk6+TsvwXi0+A
+	60JxHlyfZ/S02kDzzgf9/RbvnmjaPj55UssYHAT2vOATy28te6i1h1gjIwInuu7j
+	Vpn3x3QaZlAhCz1std74Vo6kC334T7PkZloVeNMqzond/rCuOb65TEdIwCYC+2lH
+	1exrSe3LDlc4jg5OpP4XRuaiLdNFNkrbi+t8wdFLJO8n3drw1qwhtw1GAc1Mrtgz
+	MSxU+foEZyoSPlsmELAgdVAnxTQEQ5vqCCbh+yJHb/9R/2oxmb20z3947dypGI+v
+	AoQHHaiLkr2Y/sqvJRbQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wam4q1cg5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 04:29:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41I4TEFr018329
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 04:29:14 GMT
+Received: from [10.216.61.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 17 Feb
+ 2024 20:29:08 -0800
+Message-ID: <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
+Date: Sun, 18 Feb 2024 09:59:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240216230228.26713-1-quic_parellan@quicinc.com> <20240216230228.26713-17-quic_parellan@quicinc.com>
-In-Reply-To: <20240216230228.26713-17-quic_parellan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 18 Feb 2024 06:17:51 +0200
-Message-ID: <CAA8EJpoVFEXRCnePop20cv7vy0+=gsZ_cgdgkLSoQ0QsHjNYdg@mail.gmail.com>
-Subject: Re: [PATCH v4 16/19] drm/msm/dpu: modify encoder programming for CDM
- over DP
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	quic_khsieh@quicinc.com, marijn.suijten@somainline.org, 
-	neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
+ <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+ <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
+ <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
+ <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com>
+ <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wpntqkDePuxxvfTymCOCn_FH2diCd_32
+X-Proofpoint-GUID: wpntqkDePuxxvfTymCOCn_FH2diCd_32
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-18_02,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0
+ spamscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0
+ mlxlogscore=670 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402180031
 
-On Sat, 17 Feb 2024 at 01:03, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
-> Adjust the encoder format programming in the case of video mode for DP
-> to accommodate CDM related changes.
->
-> Changes in v4:
->         - Remove hw_cdm check in dpu_encoder_needs_periph_flush()
->         - Remove hw_cdm check when getting the fmt_fourcc in
->           dpu_encoder_phys_vid_enable()
->
-> Changes in v2:
->         - Move timing engine programming to a separate patch from this
->           one
->         - Move update_pending_flush_periph() invocation completely to
->           this patch
->         - Change the logic of dpu_encoder_get_drm_fmt() so that it only
->           calls drm_mode_is_420_only() instead of doing additional
->           unnecessary checks
->         - Create new functions msm_dp_needs_periph_flush() and it's
->           supporting function dpu_encoder_needs_periph_flush() to check
->           if the mode is YUV420 and VSC SDP is enabled before doing a
->           peripheral flush
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 35 +++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 13 +++++++
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 16 +++++++++
->  drivers/gpu/drm/msm/dp/dp_display.c           | 18 ++++++++++
->  drivers/gpu/drm/msm/msm_drv.h                 | 17 ++++++++-
->  5 files changed, 98 insertions(+), 1 deletion(-)
->
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
--- 
-With best wishes
-Dmitry
+On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
+> On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
+> <quic_kathirav@quicinc.com> wrote:
+>>
+>>
+>> <snip>
+>>
+>>>> Reason being, to access the NSSCC clocks, these GCC clocks
+>>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
+>>>> should be turned ON. But CCF disables these clocks as well due to the
+>>>> lack of consumer.
+>>>
+>>> This means that NSSCC is also a consumer of those clocks. Please fix
+>>> both DT and nsscc driver to handle NSSNOC clocks.
+>>
+>>
+>> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
+>> enable the same in the NSSCC driver probe.
+> 
+> Or use them through pm_clk. This might be better, as the system
+> doesn't need these clocks if NSSCC is suspended.
+
+
+IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so 
+that, can I enable these clocks in NSSCC driver probe itself?
+
+
+> 
+>>
+>>>
+>>>>> Once you have actual drivers, this should solve itself, the drivers
+>>>>> will consume the clocks.
+>>>>
+>>>>
+>>>> Given that, NSSCC is being built as module, there is no issue in booting
+>>>> the kernel. But if you do insmod of the nsscc-ipq5332.ko, system will
+>>>> reset.
+>>>>
+>>>> Without the networking drivers, there is no need to install this module.
+>>>> And as you stated, once the drivers are available, there will be no issues.
+>>>>
+>>>> So can I explain the shortcomings of installing this module without the
+>>>> networking drivers in cover letter and drop this patch all together?
+>>>
+>>> No. Using allyesconfig or allmodconfig and installing the full modules
+>>> set should work.
+>>>
+>>
+>>
+>> Okay, Got it. Thanks for the information.
+>>
+>> <snip>
+> 
+> 
+> 
 
