@@ -1,112 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-11581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 870F08595FB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 10:31:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01DD4859613
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 10:43:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA1A11C20F6A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 09:31:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8412EB22009
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 09:43:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01E412E7A;
-	Sun, 18 Feb 2024 09:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99BDD1B28D;
+	Sun, 18 Feb 2024 09:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JqLT55/j"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dJpFaYii"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA724CA6B;
-	Sun, 18 Feb 2024 09:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE08149E15;
+	Sun, 18 Feb 2024 09:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708248682; cv=none; b=CEmw/Us7EvkkYrGHlu0PadFiAxliUP0bNVYL84TKpZv+esndDI9bpxv4wZww91VNijMXwVlbXShWNKD6XxzNv+ylPvxpcYWSqJy9NAUp6wuAYc+yh7fxeDrmntGiQ60gkzH1hTn3nK4EvT+tu5HSIqQ1DIshJ8Kh/NxStvT4njI=
+	t=1708249429; cv=none; b=kV0FPHqtux1dynEI+cqIdqnjzdcs7vrZSNaSJfuFKKaKUtQGGAFYe3iWuBc1IlG/HdS9sVF38jdo1c5TRCFrqMeNWdCZpYtch062r+9Wp+UUWAw3sDoYSsBIUsl51Cyvi+rgwB32vK2vAm6vWgLqNVsnbsQSp0Lc9fEOnNipIys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708248682; c=relaxed/simple;
-	bh=H/OSay05+csAHwBP0A3xim8Jfufbq4gn0ZbQ5TgLGOo=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rGSV4ZuDzUys3nfkt6j1WTifmbq+0Hg9908NM82Mt0XRbuJl6jwFudJYPE1Ir2+GuSUGrMHAMzmyV2Egb6R5SeptxawyXkS9F+yb/tosmFrBt7ozpLu7khJZP/Rh0FsaNged27DFsC7DzLE0GKeIeSgoBncwvgxDTaPdiPnSUPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JqLT55/j; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708248679; x=1739784679;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=H/OSay05+csAHwBP0A3xim8Jfufbq4gn0ZbQ5TgLGOo=;
-  b=JqLT55/jGf/mUSf/KMB9jcH+qdN2G2FOxnvgQwGg+kLgaDuxDe8yXCRL
-   LAp/HjSkJw96zBbYKjq5gX02GSDGRGR+kxWc+2CjKlqm3zXnzGleF6mdH
-   JYOvAVBBAA0vDZ8XepE8C7UsoMnPhP/LelOO+rB3da/g1ttVI+Q3IRGat
-   jTzTU/wLexgSQM7R90612dhYoHZWDbovy3SizmHpLRz52mjxEYwEq6P2P
-   RhEdz15kphhFj8ukkG9i/JYNWQVY57Zhgpc83uQOr7QFWc5k5jl+Xd0Un
-   GnCfjzJ4boz62YSnNKMYefz0ZEtJComBoBPzKWhXXcJWkteizNEJdUhLr
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10987"; a="2200303"
-X-IronPort-AV: E=Sophos;i="6.06,168,1705392000"; 
-   d="scan'208";a="2200303"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2024 01:31:18 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10987"; a="912682691"
-X-IronPort-AV: E=Sophos;i="6.06,168,1705392000"; 
-   d="scan'208";a="912682691"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.209.212]) ([10.254.209.212])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2024 01:31:09 -0800
-Message-ID: <7b18a339-d0e3-4347-a20b-8fca9bbc7eb4@linux.intel.com>
-Date: Sun, 18 Feb 2024 17:31:06 +0800
+	s=arc-20240116; t=1708249429; c=relaxed/simple;
+	bh=NWlow1lDx5LyEzRo3c0aTeQMycufCm4lICqSCvV7zes=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sF001ijCWc2Q9YTahPuIlg6R3AdOWd9pstjtIfymmLVk+DlfQnfaWKSuvODpdvLf0EH4neLkg1zT2WkdCYx1++8cMNLoKT3ufWeWQ05n0HYf3cIpSpA4STbSAgMr9v4x5GIjF1XJqYiqbnAlmsbLLRu4Aw2RyelIkYXfa4z7XDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dJpFaYii; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41I9DC8q008219;
+	Sun, 18 Feb 2024 09:43:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=NYMxL+/
+	0EkAb3ridYEVejY2Pqg5ME5B7neyQY/A1CJo=; b=dJpFaYii3xESn6YPWeuz8wf
+	iLoxuCFfh6N1wop2csY9736YN4SkGg9P8Bj/BUY8AIPp4vQ+RC3BwwvgikpApT5s
+	iE568Nb6l15L204cnoxV1St37+iI9fLJxAx8kTHD9HxEmNnrF0BUrWToz6kLiNRH
+	tQZ1RNnFWAQ4xx34x98YvxPAfjGuYC1muB7M6BZ1LNMm49kVj9ZYs3QtIeOU95Oi
+	pf4ZmOyDEVvLs0wLky0kgFpykiW5fMt4lip8C37bQVcw80nsml8686lMrP2dOxNR
+	Q9e8QEu1OTaE5pVYX/zS2tFVRFJBLNNHJNusRSeugvgQ/QIsB2wwGMcslwwLNPg=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wakrwhp49-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 09:43:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41I9hYid022414
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 18 Feb 2024 09:43:34 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Sun, 18 Feb 2024 01:43:34 -0800
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Mao
+ Jinlong" <quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/2] coresight: tpdm: Change qcom,dsb-element-size to qcom,dsb-elem-bits
+Date: Sun, 18 Feb 2024 01:43:18 -0800
+Message-ID: <20240218094322.22470-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com
-Subject: Re: [PATCH 1/4] iommu: constify pointer to bus_type
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
- Alyssa Rosenzweig <alyssa@rosenzweig.io>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Rob Clark <robdclark@gmail.com>, Marek Szyprowski
- <m.szyprowski@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Yong Wu <yong.wu@mediatek.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Heiko Stuebner <heiko@sntech.de>, Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy
- <vdumpa@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>, asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, virtualization@lists.linux.dev
-References: <20240216144027.185959-1-krzysztof.kozlowski@linaro.org>
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20240216144027.185959-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tNhDdvA4f3C7jAvGlDtCnVsez__rX5Pr
+X-Proofpoint-ORIG-GUID: tNhDdvA4f3C7jAvGlDtCnVsez__rX5Pr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-18_07,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ mlxlogscore=820 mlxscore=0 spamscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402180073
 
-On 2024/2/16 22:40, Krzysztof Kozlowski wrote:
-> Make pointer to bus_type a pointer to const for code safety.
-> 
-> Signed-off-by: Krzysztof Kozlowski<krzysztof.kozlowski@linaro.org>
-> ---
->   drivers/iommu/iommu-priv.h | 5 +++--
->   drivers/iommu/iommu.c      | 5 +++--
->   2 files changed, 6 insertions(+), 4 deletions(-)
+As unit of dsb element size is bit, change qcom,dsb-element-size to
+qcom,dsb-elem-bits. And CMB uses -bits suffix as well. There is no
+TPDM node in any DT now. Make such change before any TPDM node is added
+to DT.
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Change since V2:
+1. Use fwnode_property_read_u32 to read the proprety value.
 
-Best regards,
-baolu
+Change since V1:
+1. Update the commit message for dt-binding.
+2. Fix the dt_binding_check error for dt-binding change.
+
+Mao Jinlong (2):
+  dt-bindings: arm: qcom,coresight-tpdm: Rename qcom,dsb-element-size
+  coresight-tpda: Change qcom,dsb-element-size to qcom,dsb-elem-bits
+
+ .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml         | 5 ++---
+ drivers/hwtracing/coresight/coresight-tpda.c                 | 4 ++--
+ drivers/hwtracing/coresight/coresight-tpda.h                 | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+-- 
+2.41.0
+
 
