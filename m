@@ -1,158 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-11605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 328DA859922
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 20:50:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D70E8859960
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 21:58:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD6FE281AAA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 19:50:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77A331F2158A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 20:58:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CDED6F53E;
-	Sun, 18 Feb 2024 19:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718EF74274;
+	Sun, 18 Feb 2024 20:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="xjj7zlpc";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="nIXIwEu7"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="oJDybTuh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fallback22.i.mail.ru (fallback22.i.mail.ru [79.137.243.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9BD9442;
-	Sun, 18 Feb 2024 19:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E1F8C1A;
+	Sun, 18 Feb 2024 20:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708285833; cv=none; b=FwYX7fG4Qd9PszxBeJQPpld6gE5zdYFC23QZ98m9IslBhHlpxmQTYZPjyj1baBFcfNk1TUu2oTNAG354S/Jsbs+Mb6MouJEYNXA306AFGTnKo4guyGKJg/3FLt3gpzjVEGPxWAOyPnuDv/2oY3GLDLcz4S+4Qh/N2xCjkiWw72s=
+	t=1708289870; cv=none; b=kp8LQSxUWt1Ywz/TnwNwi2wCGhAfZQESqQmgm5fcsrrEDusfjRJLfbQ/NGd4z5G+Z8SR4sdmG0Ubf+8SovNix6L+KO04Jaak9xgQx5btMiZMfrtoeRtWqT5vMltVFTrzhRPn5ashkDgYZYmbEGtsFJZwznkov8hOPPUX8xpQLl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708285833; c=relaxed/simple;
-	bh=LwinS9JB95uEZLSjeTt+G4axyvv7nJVl1bqUuJsT8R8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUcVQ8DuQXesfOXDumgSWAtJow9X+9HYOdOH3FXvvfhOv6JaKbNltoizUCUAarS60eGsMDag0R18yChkAJwc6coJPPYGmMyzW+9UVNE6b1qvvZxFbq0riO7U+x6lNWVmt3eXPijL0Vcjtyj0VFpMrPFqYgXOQ+tNOtRpC59+3v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=xjj7zlpc; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=nIXIwEu7; arc=none smtp.client-ip=79.137.243.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
-	h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=4/wl3nPE9NLJe3dlrlIflnjznmzyaom44ksPbb06geE=;
-	t=1708285830;x=1708375830; 
-	b=xjj7zlpcZmQ8kEDX1qmhICN/dSFSBbIcQfl7IMoAfFQ+ZdQoQVGsLcXq3Xvjf99FeW+0xr78CAoPMJZ+SCWetILPCOZhsuEi846SnK+PXjTeztd7W/xM+iHwj2TJyTdpnOT7Vt+IwGPSNC3YQtim+OPdCjejXFt6Un7SGUcgMnY=;
-Received: from [10.12.4.2] (port=35680 helo=smtp29.i.mail.ru)
-	by fallback22.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
-	id 1rbnBD-00C5Vm-Oe; Sun, 18 Feb 2024 22:50:28 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=4/wl3nPE9NLJe3dlrlIflnjznmzyaom44ksPbb06geE=; t=1708285827; x=1708375827; 
-	b=nIXIwEu7YLN0kB3XiylGvh3O7cyvFmbElr+l3kDE4Dvbgd63M1kfOGBULduxcgxAqhEKn0f9NhF
-	C1KFEit9SY5yeNfQO6jth22KNaFiH3DrOLhdd8l6A75KjDVx6ztb5TH4CmQPIaMbyFntfkKSC+lMu
-	MK+9vtX5SZCX+OE4MqY=;
-Received: by smtp29.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1rbnAz-00000006hY1-275H; Sun, 18 Feb 2024 22:50:14 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	konrad.dybcio@linaro.org,
-	johan+linaro@kernel.org,
-	quic_bjorande@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [RESEND PATCH v2 1/1] drm/msm/adreno: Add support for SM7150 SoC machine
-Date: Sun, 18 Feb 2024 22:50:07 +0300
-Message-ID: <20240218195007.89960-2-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240218195007.89960-1-danila@jiaxyga.com>
-References: <20240218195007.89960-1-danila@jiaxyga.com>
+	s=arc-20240116; t=1708289870; c=relaxed/simple;
+	bh=gg9lJWHASR44HHvXtQri1Pkt7A1AFAQRzHCWHX4bYgM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hNy5pVgciaZark2ZBLsvdvwRw1rLt9tBKP0E7GOo7CIHOzW1Ie/neXsYRQlLdXchHbhjMKDTR8zLxRCPFWe3rbPd+s9ybKSXk5piw4jH4KSEcoJJ8krn4a/sHmImksUzhubpT/jVKfm3W2ux/Q4NKHkNUU7EBdQSHZzdT15dbhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=oJDybTuh; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1708289860; bh=gg9lJWHASR44HHvXtQri1Pkt7A1AFAQRzHCWHX4bYgM=;
+	h=From:Subject:Date:To:Cc;
+	b=oJDybTuhhVGhyT5XClQluwcmUDL/FF/xXG3lQOSlSai9GiaS+IEC1EfF23sufacO2
+	 78ZBmbuolQxwKsgLj1OYTYwvfW1+Hr1X3bsetTcPEziHyBpZRNOLT0YbmlFU8ZrVdb
+	 IDIr19zkxmEfHwJl/TdknQyfVql2QF7c/ae2SHEw=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH v2 0/3] Convert qcom,hfpll documentation to yaml + related
+ changes
+Date: Sun, 18 Feb 2024 21:57:24 +0100
+Message-Id: <20240218-hfpll-yaml-v2-0-31543e0d6261@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9001F8F2F6BAD2021BBD8C705D41124DC6159324E79CF6DC700894C459B0CD1B9C5E22C23F1BE03C07FBBE522E338CBBDA25AC2CB0B85F4D9C08A02FB1A177B0896BFE15B8ADB4371
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE793089AEA09EF102BEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637D8F5094E9BAC3E9F8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D89E8E22097183F6372652140B8C21926305C4F13DE3BC10D8CC7F00164DA146DAFE8445B8C89999728AA50765F79006377C70927E34808485389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC821E93C0F2A571C7BF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CA5ED62E35AC703CCC0837EA9F3D197644AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3C9F4304F34B30F1CBA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C3D13DC059A893E58D35872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C1DE0DAB: 0D63561A33F958A5D4E08B9C32BD0D525002B1117B3ED6969918ED69EDCDA2E7C638DF663A625AFA823CB91A9FED034534781492E4B8EEADF12279BA039A6965C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFB5E2A74AD09625C955E57C695C7097EF810F039CA7F3B7C081E5A95D9CF27496E5D0AE1B9048421534E84B500378195F3327C800B57CF284DA80BD25FDB1A95A9D5BF67B070882F2457F7985AD47CF5C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxuuUQixMPPYjew==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981B81DDCAC1631E74704DE63E6493D46055460E003A26B2832A877D903728FDABB2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 6242723A09DB00B4A77971E4CF73965D9E271BDE2CCB4C0C7AB8ED82C1DDBC5A049FFFDB7839CE9E8F5A60B08382AFE3848351DD467580E9312762F486F8102C39D320635B8870A2
-X-7FA49CB5: 0D63561A33F958A5DBD39F8E793081EACE88A8A54B442D44FAF53675CA7907D98941B15DA834481FA18204E546F3947CB645AEB2D65EEA52117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE7EF2A066DDA19BA868941B15DA834481F9449624AB7ADAF3735872C767BF85DA227C277FBC8AE2E8B9323F30CF592B49A75ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
-X-87b9d050: 1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxuu6I5dWVp/Zhw==
-X-Mailru-MI: 8000000000000800
-X-Mras: Ok
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADRv0mUC/22MTQrDIBgFrxK+dS3+RbCr3iNkIYlWwZqgqcQE7
+ 16bdeFtZuDNCUlHpxM8uhOizi65JTSgtw4mq8JLIzc3BoopI23ImtV7VNTbI0mFMLhZ0U/QDmv
+ Uxu1XbBgbW5e2JZarncnP/s1kgjBivZw5V1wTyZ8HC9vnvpcDxlrrF4Ink7WkAAAA
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1221; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=gg9lJWHASR44HHvXtQri1Pkt7A1AFAQRzHCWHX4bYgM=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl0m82P7odzZSC4lkYhivSeToHEzGiYMYFMiwXf
+ H6x0ie5UNiJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZdJvNgAKCRBy2EO4nU3X
+ Vn1DD/91y0Ipz7kusToi71Np3xBNR2T9HpsJdQpRkPTYRNO5ROlnaepifh4m2UH0IQQXDgcoFXA
+ A7M5zCMSiofbRjE1nITZjMl6WQPyiPVEXoa8IOphLZhMjUYrxaNlz3JVWb7bKZAeOTRD/ZUPjhc
+ Btn+pqHthOyl3QIUn17Uro7fNovfQbkM2rn59qaYaD8gGbLOf2cqip74ojB/Kp38rIdstvYul/9
+ dDNzTevs47Nvzf3ye2aWiytXicjMiCO51M44ccqxGUxGG9LZSfAZh65I0eOCf12ds+8RTmAcpBs
+ SoQPgZkWEQqFT/IOG3H/IpYmNzTpnbPJcZVdvy7+SvNsHb1zCngu/XIy0HOI+QYSQAoAvww5PUo
+ ly8SVUYxdlAx2DiIAjLEKALJrZhoG+JG+olKX8BnrsaB0SMb3KOqOEh767QlTY/vX7hvCmPk7KH
+ YR3MLQFUcOV5KN2JZ4RlS4Rhy04S3XlzR1+qez05fRTtneKTnTx4RZnZlTPWn/MPj8yAYq/TrJT
+ H/43jhMQF4kbx/Pf04rdSzrCqjXlw09dyST8nXKomyn0wpKRb4qIy2f9wyuzn+FYnzosBQKuay0
+ lx4iqmT/yHpIajq7CzyoMS1gGDTrXQCfsxdsq+ajGea+CdRlt8s0BDZj+HkS0zVPqslhpp3FgSX
+ HoOC/jWDlJdoIPA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-SM7150 has 5 power levels which correspond to 5 speed-bin values: 0,
-128, 146, 167, 172. Speed-bin value is calulated as FMAX/4.8MHz round up
-to zero decimal places.
+Finally touch the hfpll doc and convert it to yaml, and do some related
+changes along the way.
 
-Also a618 on SM7150 uses a615 zapfw. Add a squashed version (.mbn).
-
-Add this as machine = "qcom,sm7150", because speed-bin values are
-different from atoll (sc7180/sm7125).
-
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Changes in v2:
+- Drop APQ8064/IPQ8064/MSM8960 compatibles (Dmitry)
+- Update example to MSM8974 since IPQ8064 is dropped
+- Clean up dt binding description (Krzysztof)
+- Remove second example in docs (Krzysztof)
+- Try to clear up the text and content around deprecating qcom,hfpll
+- Link to v1: https://lore.kernel.org/r/20231231-hfpll-yaml-v1-0-359d44a4e194@z3ntu.xyz
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 2ce7d7b1690d..b81f90fb4257 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -293,6 +293,27 @@ static const struct adreno_info gpulist[] = {
- 			{ 157, 3 },
- 			{ 127, 4 },
- 		),
-+	}, {
-+		.machine = "qcom,sm7150",
-+		.chip_ids = ADRENO_CHIP_IDS(0x06010800),
-+		.family = ADRENO_6XX_GEN1,
-+		.fw = {
-+			[ADRENO_FW_SQE] = "a630_sqe.fw",
-+			[ADRENO_FW_GMU] = "a630_gmu.bin",
-+		},
-+		.gmem = SZ_512K,
-+		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT,
-+		.init = a6xx_gpu_init,
-+		.zapfw = "a615_zap.mbn",
-+		.hwcg = a615_hwcg,
-+		.speedbins = ADRENO_SPEEDBINS(
-+			{ 0,   0 },
-+			{ 128, 1 },
-+			{ 146, 2 },
-+			{ 167, 3 },
-+			{ 172, 4 },
-+		),
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x06010800),
- 		.family = ADRENO_6XX_GEN1,
-@@ -539,6 +560,7 @@ MODULE_FIRMWARE("qcom/a530_zap.b00");
- MODULE_FIRMWARE("qcom/a530_zap.b01");
- MODULE_FIRMWARE("qcom/a530_zap.b02");
- MODULE_FIRMWARE("qcom/a540_gpmu.fw2");
-+MODULE_FIRMWARE("qcom/a615_zap.mbn");
- MODULE_FIRMWARE("qcom/a619_gmu.bin");
- MODULE_FIRMWARE("qcom/a630_sqe.fw");
- MODULE_FIRMWARE("qcom/a630_gmu.bin");
+---
+Luca Weiss (3):
+      dt-bindings: clock: qcom,hfpll: Convert to YAML
+      clk: qcom: hfpll: Add QCS404-specific compatible
+      arm64: dts: qcom: qcs404: Use qcs404-hfpll compatible for hfpll
+
+ .../devicetree/bindings/clock/qcom,hfpll.txt       | 63 --------------------
+ .../devicetree/bindings/clock/qcom,hfpll.yaml      | 69 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               |  2 +-
+ drivers/clk/qcom/hfpll.c                           |  6 +-
+ 4 files changed, 74 insertions(+), 66 deletions(-)
+---
+base-commit: 841c35169323cd833294798e58b9bf63fa4fa1de
+change-id: 20231231-hfpll-yaml-9266f012365c
+
+Best regards,
 -- 
-2.43.2
+Luca Weiss <luca@z3ntu.xyz>
 
 
