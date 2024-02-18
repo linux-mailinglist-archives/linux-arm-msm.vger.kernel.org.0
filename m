@@ -1,73 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-11599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 148948598AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 19:52:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 416E985991B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 20:36:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E66D0B21170
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 18:52:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7051F1C20F09
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 19:36:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58E086F084;
-	Sun, 18 Feb 2024 18:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCDE71B33;
+	Sun, 18 Feb 2024 19:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mh+xjTXW"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="nuN2t6YX";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="NSAsfQ3W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback22.i.mail.ru (fallback22.i.mail.ru [79.137.243.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1486F06D
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 18:52:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8888D6F507;
+	Sun, 18 Feb 2024 19:36:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708282329; cv=none; b=khBLWzn499egElKOZbVXMejIElO9cPMMIkIIWM2PcrhKm6v+d/mcUOq0pCZcOfvCv5/5GwUC/yA/iGtsuwqB98nGDTgo6+b3TKz3gROuEmZ6tC/AIuny2/Nroy7zpl5npjl/e7mWl65gyVRm2/zsFCOQRVwk9KcSZLlqMmge+yQ=
+	t=1708285002; cv=none; b=ozbTwLpDLRdnRdbk5Fzwv1XSJWTOMECSKyDs4CHQW8RJvUIg1jbFMjVPnFUcaunmoAWwPgsVrIx4jMV6NR86M8jjA5wZPPE1hkTiepwM87l3Bog05Jwp4KJsJgGZnD/R8wxH/LmDsNiZB7UuaEoZcpL+3M4PT3DVhP9AhsQgBJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708282329; c=relaxed/simple;
-	bh=WIqJZbaPkUeaZ6fzw7naKrgrDKBnwdRF/57LdtYivCM=;
+	s=arc-20240116; t=1708285002; c=relaxed/simple;
+	bh=cBTLLd4fPeaUvWkODfGyD3++ZlviOPyT7dSZACmAIOQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ODLTY1W7tqUHUIRZsDC0Rr4+EjPdkkfjl2gJgsVz0+CYKUK5xIzoQOdD+pQpT7g5xOXnv2H2RDeua2sxZDEz9UlTVGUlL4D9fulY48Yee4//VtsBopxa567TVgul18hjn19azg99tiZ77c+TwWvOTeMjyXVgGdb2v96ixrcHKl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mh+xjTXW; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3394bec856fso2641240f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 10:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708282326; x=1708887126; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wNBEOVVb/rP1qaF97WrZeJwt+wEqX59IP8EY5F5M0uM=;
-        b=Mh+xjTXWVAWLomdgkOXG/7uHRYmHcrO6OItQW3iHb3terVhC9zlX+fnHZXqr7qC59k
-         XSC+46qZM5ipAPbabYEoM03fpb1y0jrQZxSIPMr+QtgkAZNxhnz4Lh7bNFsmcPBysVbn
-         hYj9M2aTv4f5UI/AYbVpg4OgVAUuQ10dAJeGY0XBxvtO6xUHkCj28wFYIze/G9vaTSQm
-         hpMzMGgGttCbrWh+lAgNMnSuoyFY+HyqmidmFzk9zNPGBxGq8PRXZaBzDbrwCsSXSSE5
-         NkfVG3YRdCDdK664XaYTbwQ+QgYQzy/Rqu73/X/zziq1+wekyhe7rUraoN/jVxUiTwNi
-         y9ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708282326; x=1708887126;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wNBEOVVb/rP1qaF97WrZeJwt+wEqX59IP8EY5F5M0uM=;
-        b=rDtVs17zVlSP7X+1UpsyJ89dRrxzs3pDQsiW0Ob9gIwc23Ik/GQOd35lOvameQV0oz
-         NWEwhdAtGnsBoLA7GgnFSdZKgv3D2Y47BtLSs80QYCSYElVAVAqIesPyNRrqRTZH81KD
-         Sv+Ook3N88N3tIWQfqKs54CP3sug58sYHZAewfEUzYNAZBrdMQa/oTBOBM0c1g9EcjXa
-         C6dZP9JZnbloaoqqK5R45j2vRIU31D2/mCgWCTIUCNs+PUvGN54dYYwU17z4jH6CcOy5
-         usFBGXX1PLZETsrxIwF3Z053nDQd5cEulQ50j89B3ODmACZDhQp/+31pxGFm06wZLKgq
-         BAcw==
-X-Gm-Message-State: AOJu0Yx8PDBML2jN9Y4KgL2Cd5/F4OYYGt9IdXypj0qOAPvNZvMDrpZS
-	K6SwsnxrXv0Hlg9fiH0KKyblJpaA/1EF0JCW2pHXWgiAXHeA0bOKhHQr8I/idwo=
-X-Google-Smtp-Source: AGHT+IEG1WdiR3eQwnrb//cEfiT0Sx0t9LAhVUuGI6WXwfKCIpNTnZnU9e9ScPsT8AfU5RS2bUrM7A==
-X-Received: by 2002:a5d:570b:0:b0:33d:47c6:24fe with SMTP id a11-20020a5d570b000000b0033d47c624femr1113697wrv.12.1708282325670;
-        Sun, 18 Feb 2024 10:52:05 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id r8-20020adfe688000000b0033cf5094fcesm8026214wrm.36.2024.02.18.10.52.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Feb 2024 10:52:05 -0800 (PST)
-Message-ID: <d3a4c6f9-e24a-446c-acbf-75519f6782fb@linaro.org>
-Date: Sun, 18 Feb 2024 19:52:03 +0100
+	 In-Reply-To:Content-Type; b=ibUby+qDoCC1AKOjI0S8doAX0ADUbZydtkuTBX4vNpSQlNHHj8E6kVBIXN4Kd5p1yIYn4V8AMOu5nBSCPwnUgjjtoDcNL4WZkqgPqhV/93q989YgGYm7oXlZk3mA6Jh6xNVpO3qsrVCkodqTAslVFHkpgATFpLAxD8jbELi/vEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=nuN2t6YX; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=NSAsfQ3W; arc=none smtp.client-ip=79.137.243.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=o/hxFDSgXayAN8I0Y2EKcBJU46DJQsaZjaDQYg69Zrk=;
+	t=1708284998;x=1708374998; 
+	b=nuN2t6YXOZJPDSq6nNIGqcR9BxMq3YdPBhWXpMka5GXytPo4nVSB6zenx83nU69ad5TmFmmztMPX5oLyh9552MC+rsXkKU7oTOSN1EbnHvkUtf2hMHRhPqtUW4jWmbW69vFaHXaUAQjYYJxtUuysexKai6ponh+NsQQjDuBAyOo=;
+Received: from [10.12.4.29] (port=48678 helo=smtp51.i.mail.ru)
+	by fallback22.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1rbmHu-00BQ6z-F3; Sun, 18 Feb 2024 21:53:18 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
+	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=o/hxFDSgXayAN8I0Y2EKcBJU46DJQsaZjaDQYg69Zrk=; t=1708282398; x=1708372398; 
+	b=NSAsfQ3WT+evT9o2P3VRybQHhAFAxDoN+cYtqNS2LeBkdLiRkL8ADbhfwjTB9r4YHGYRDqbhg1J
+	MG6K1yp8o62Mz3Iq3oizUS/vGcdSg3I6wEtv133tj38xf+8ETxGDaDDNswsJlBn7f2Gjeg/qIYM1A
+	NhtqUO7743tgYY9P7JE=;
+Received: by smtp51.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rbmHe-00000005vMT-21OP; Sun, 18 Feb 2024 21:53:03 +0300
+Message-ID: <60728953-bdf0-4a06-a90a-d1191d41962b@jiaxyga.com>
+Date: Sun, 18 Feb 2024 21:52:03 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,119 +61,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm SM7150 DT
- bindings
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm6150: define USB-C related blocks
 Content-Language: en-US
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, djakov@kernel.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240218183239.85319-1-danila@jiaxyga.com>
- <20240218183239.85319-2-danila@jiaxyga.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240218183239.85319-2-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, lgirdwood@gmail.com, broonie@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ gregkh@linuxfoundation.org, quic_wcheng@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240217163201.32989-1-danila@jiaxyga.com>
+ <20240217163201.32989-4-danila@jiaxyga.com>
+ <6bf11ccd-ff08-369b-913f-277c189afb76@linaro.org>
+ <b0b732b8-456a-4021-8277-cd51f01ead17@jiaxyga.com>
+ <44c669a0-3722-4a58-be78-0c91f0573ca1@linaro.org>
+From: Danila Tikhonov <danila@jiaxyga.com>
+In-Reply-To: <44c669a0-3722-4a58-be78-0c91f0573ca1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9001F8F2F6BAD2021721DFC1638C0DE020CB518295F388C0600894C459B0CD1B9A01AAA9C53E1FC432F2A137662B0CE962297CA7220B8368C71C683C9A4AAF24583DAA694144A5695
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE746D93DAA4671895CEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063767500BC4578134A08638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8FBF1F58988AA117F27B5378C4569AF915A99C2240F7500D3CC7F00164DA146DAFE8445B8C89999728AA50765F79006374F09588CB15B21E6389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8ED96AA85C75E140D117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFACA9F7D16C0C9468BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6AFA7A56FB51D02A176E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249D082881546D93491E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B603913CCF128142C9089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: 0D63561A33F958A5B96BF9A7E50CFEC45002B1117B3ED696BFF207C5EA5A8D5922DFD5397F446790823CB91A9FED034534781492E4B8EEAD9DB614F8F96CFA30BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742424CF958EAFF5D571004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34411AA3F52B5778B68AFB7C41CED23D24D319A1D15F84B4677068687820F8DA58194B66EDDAE282011D7E09C32AA3244C8304EF706C60CF3B2887F5EA2DDCF344BE1C58D71CDCC731EA455F16B58544A26EF364EE5276B8775DA084F8E80FEBD322CFFF16B4474ECB4573B60270F1EB7C214C2BC1176D5C25
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxuuwKMqqiM4moA==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C739498149590CA6AC7771EACDECE012BE5914E03C454A2D891CD7F55FD86E11417434552C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4A77971E4CF73965D9E271BDE2CCB4C0C9224595B18E9D805049FFFDB7839CE9E8F5A60B08382AFE3C7D0837E42D462A30016A7864CFEE5E5F33A3D857371F1ED
+X-7FA49CB5: 0D63561A33F958A5C4A1241F65A9DF449011F685861E5E6B1A890AC55145D5408941B15DA834481FA18204E546F3947C4B6F6234D9065C97F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637CBDA538BD653CEDD389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C36623C589A9CCD53435872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj3ZJ49a6yxuuW3WXFcmWZoQ==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-On 18/02/2024 19:32, Danila Tikhonov wrote:
-> The Qualcomm SM7150 platform has several bus fabrics that could be
-> controlled and tuned dynamically according to the bandwidth demand.
-> 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+You are referring to Dmitry Baryshkov, as I see. But Dmitry has already 
+reviewed my patch (message above).
+So it would be rude to change anything without his knowledge. Let's wait 
+for his answer.
+
+---
+Best wishes
+Danila
+
+On 2/18/24 20:14, Bryan O'Donoghue wrote:
+> On 18/02/2024 8:05 a.m., Danila Tikhonov wrote:
+>> I know that some interrupts have both for PM8150B, but for PM6150 all 
+>> interrupts are rising.
+>> Please look at the downstream kernel:
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/187022f2721d584ac4ec92c0ac1af77da487521d/arch/arm64/boot/dts/qcom/pm6150.dtsi#L319 
+>>
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/187022f2721d584ac4ec92c0ac1af77da487521d/arch/arm64/boot/dts/qcom/pm8150b.dtsi#L292 
+>>
+>>
+>
+>
+> Please take a look here, I think the same logic should apply to your 
+> patchset.
+>
+> https://www.spinics.net/lists/devicetree/msg665558.html
+>
 > ---
->  .../interconnect/qcom,sm7150-rpmh.yaml        |  88 ++++++++++
->  .../interconnect/qcom,sm7150-rpmh.h           | 150 ++++++++++++++++++
->  2 files changed, 238 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,sm7150-rpmh.h
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml
-> new file mode 100644
-> index 000000000000..604822ed4adc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml
-> @@ -0,0 +1,88 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,sm7150-rpmh.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm RPMh Network-On-Chip Interconnect on SM7150
-> +
-> +maintainers:
-> +  - Danila Tikhonov <danila@jiaxyga.com>
-> +
-> +description: |
-> +  RPMh interconnect providers support system bandwidth requirements through
-> +  RPMh hardware accelerators known as Bus Clock Manager (BCM).
-> +
-> +  See also:: include/dt-bindings/interconnect/qcom,sm7150-rpmh.h
-> +
-> +allOf:
-> +  - $ref: qcom,rpmh-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm7150-aggre1-noc
-> +      - qcom,sm7150-aggre2-noc
-> +      - qcom,sm7150-compute-noc
-> +      - qcom,sm7150-config-noc
-> +      - qcom,sm7150-dc-noc
-> +      - qcom,sm7150-gem-noc
-> +      - qcom,sm7150-mc-virt
-> +      - qcom,sm7150-mmss-noc
-> +      - qcom,sm7150-system-noc
-
-I don't see how you resolved the warning we talked about on IRC.
-
-Best regards,
-Krzysztof
+> bod
 
 
