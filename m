@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-11591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CB16859740
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 14:56:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD192859743
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 14:57:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC60D2810A9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 13:56:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 31E51B21396
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Feb 2024 13:57:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44FDA6BFD5;
-	Sun, 18 Feb 2024 13:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1023A6D1A4;
+	Sun, 18 Feb 2024 13:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V24Z44xY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VAejksZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A84A6BB44
-	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 13:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415836BFC2
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 13:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708264601; cv=none; b=WQNbzs/b3BYLR3E6HdqgwfnLU31ZScrm5gdLpgy1rIRe2pgtktUAKzkUmQ6kJK/1W8BiIXDvC16psTMNV70n+NwOTVqZGfvUdO/NC2xiKDPplZGym1vsNgE8Q49eqk7K7sYVtKUMD/DemqJVs4YO2IAhga5ZepzueqejU9o32VM=
+	t=1708264602; cv=none; b=A7RhUO9xrb8pm5M/6y0072ZK/zGsBC0LSr3P9T/8yKG1yLHytQxR5Yie3d45FyGrmbQ80wacZ1Aas22rTMNNg3Sb2ymrzIWVxMhBNdzsZHRm4/SJwYLzoCUVcWtOZsYhNL9DDUjX94lRxhb3S0fdklbR5ycH+uFbNrZiwVMVJHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708264601; c=relaxed/simple;
-	bh=8Jw52K/qybWNDYMmkfmKEVECM6bSjDnqNRJimByERIo=;
+	s=arc-20240116; t=1708264602; c=relaxed/simple;
+	bh=qjeaOhaCrY4VcmImvKR8DYCqB4V+aBVBAJGTPiEhh3o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lMW7AbFDCFTazc/T63uz/S2GDnqblh8IkEsV5Zoa5g/fCihr7APeEfc6oEa/yYGZo0AB4eQd8VGh4ym+WVX7Lq5CR8jv9jxdIPHeb63M/FIkWIkYIqX+tBr6b7g6T6fVuoR/sCZ0moCd5jQNQn9oeaH3oK761xOoUFU+R4ml4F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V24Z44xY; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:To:Cc; b=qCAqemgK/ulrjqbgWIuuv0cNoaxDSxs83Qsn9qMJV1NQnENSiYAh6mQhozNnJAXm5jJxi3khi0uH0ks2Ezc2wzPamPaKGrJkwdG9xyjLbpZcccvaWw3hx6/n/a1zhp7L2gBjoqvqoGATM5WYE1FGF6X47h/+KSkXualHQs7322w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VAejksZq; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-512acc1a881so494103e87.3
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51178bbb5d9so2458711e87.2
         for <linux-arm-msm@vger.kernel.org>; Sun, 18 Feb 2024 05:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708264597; x=1708869397; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708264598; x=1708869398; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j/wysQ9aXGGhXLcp2eBZzGgvMjVSvkeyoH1wNdoYdsI=;
-        b=V24Z44xY8YZqIrtvw+e88MvHzo+IFvkAv4kzi2w2hWegT8jSZj+xPcQoq9jwaGyyMy
-         gP+4kaPrK7zs/YfCkpt11ZmEf8+rGK34vzkwHheRHKQxjL/9T1DlVRaFyROHDGqp+Oer
-         26Mp9E6HAEyqfxqQ0x6Lh21AGeyzngE7JUXqLVqKp6xohEkQ/nDR55hQAIGrZF8ZaVSp
-         mbTxAmz/dchQXlTTCnAtmLgM3GMl1fZBC0q8qRBruzOJQCXedGT4D/tDRTmE4ks31TVx
-         s0eoos+AC3pwGlNc3Sv4cp0pIl6ry2aoEOEE2jdDFirDQ+WJ7lie7WPjlgXoxDyCucCC
-         buBQ==
+        bh=p9uxpSXtWjR5vbZkonahao8rqtm4NaLba001ReJHo9w=;
+        b=VAejksZqpPsqFVEASFewlrdJdlSIPsGS5NTRKHkRaMRzWsssoqCZuM419JjrvWclLC
+         550blbTsotsh7ZPTzYLyl8mna83/KNkFiUWG1xGB89Y/ftwY/Lfxd0xy9yR7vQFPLm+J
+         17eHu9cGyG1HRPb4x4TECO4GSieM58XdwDP3zUB25Z14DCJnc8Pq8Hdr77dD4yPCgbUT
+         wPy4kjJBYA7g+eT+5Gi7pDt/Bo7h/jxYHrPiOr+7gXPTjpYfiR1H5DqZEbJPqK2J0UaB
+         WBdWa2XzbdDr5vi7N9MqXPiJLBctddKbl5aPmKm6jyxT5ClXGPXuK8nH3K77gfBdku3e
+         ybLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708264597; x=1708869397;
+        d=1e100.net; s=20230601; t=1708264598; x=1708869398;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j/wysQ9aXGGhXLcp2eBZzGgvMjVSvkeyoH1wNdoYdsI=;
-        b=uKeXcP1LrAtYkAsy1Au+yTjYV3GCEvCmzL0x3t3sJVNBDOiW34R8fbXCQA6Oc2LAlU
-         cDi7DQByEC2zx8hV6aiyAw31KKTV+1/WGB0YH6HtIQcOxd3GAk0GNgwXoUD4bL1yjms8
-         JiLd4Pe9UUiM0pjL15V9WMjOg6lfCOcxPB/vrIpcsjF6qPPrOvnX1F3TjqjJbvlfTkM8
-         mUr+2rgCD/HcaRZ4jpbxelsKPG4mdMOGlRoP5bkRfTECt78mrHjIGt9J++hCU+CJsWmp
-         BGYSgyRSTFal8OV9U+ZCp4KCV/0v8xa/XJ0WiTa3zkA56deITIWmSpjgFXZC6BxtvZQV
-         LA2g==
-X-Gm-Message-State: AOJu0Yzezq6O4Ov3vjxfyerkoi9R47Cvl3zv+I6+cDDqMjfjr0OewxvP
-	Wv76JzXAR6J0edvWj56wIv2Adk2n63BUrVUhjlw7CQJqB/zbBvp6ThELu+2SMls=
-X-Google-Smtp-Source: AGHT+IFL5RmXbxgZsZdS/aW5kG9euoaEuFb5V08Lnqfuv5FdgBlWBEWZtRRP9J5to5emztf4vaYPDA==
-X-Received: by 2002:a05:6512:220d:b0:512:ac4c:abf7 with SMTP id h13-20020a056512220d00b00512ac4cabf7mr1276217lfu.65.1708264597654;
-        Sun, 18 Feb 2024 05:56:37 -0800 (PST)
+        bh=p9uxpSXtWjR5vbZkonahao8rqtm4NaLba001ReJHo9w=;
+        b=bZmzppMVXmbdQ/y9VB5JLqzmTWeuv1/I/wgaWRnibj+dz1Bf6LhHWtjjX0K0qi4pS7
+         EEYhd8g3We1xUvjyLNiTgvwsIxQKyCW4Zok4w4tF5JeLsCkrzuTOU/O6bBIQ+NXN5hI/
+         WFeRtjsRbFdS1sdJ/E+8nvq+h1tGsqnnPlDowW0sQN+8mVnhRBOl+fg5d7uyp3bTDii/
+         PkG/rthXV8QDN8KRIaLh+spAxgAGNlncxgqnMqpFD2guCGPZEOAnRZmiGEbvrndfLPHt
+         pwHrs8IOxW9L0uLDLiSgzHfyUIcXreX5CRBxH7i8rYTcVDDagrcrYeV97c7uMazmxXZQ
+         Piiw==
+X-Gm-Message-State: AOJu0YzGGVXAR1DaK4MV3OSyxQaoPZrg4aKVy4jkQp4WmP6o8sgnRY73
+	k1HTyq6C5Og1XO8s4yiRQD63APKrFGPxXK00SyDRXuBmyHVYm/aBNiRAbKhpAW0=
+X-Google-Smtp-Source: AGHT+IG3o8o/a4+lttK6f9vGAipl3Rr4H/zqGBtpaamLytI2dyMtTrm//xygZ83Nh1MHwPq+Dvj1eg==
+X-Received: by 2002:a05:6512:358b:b0:512:ab03:1b with SMTP id m11-20020a056512358b00b00512ab03001bmr1277442lfr.53.1708264598338;
+        Sun, 18 Feb 2024 05:56:38 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id w9-20020a05651204c900b005119fdbac87sm548698lfq.289.2024.02.18.05.56.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 18 Feb 2024 05:56:37 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 18 Feb 2024 15:56:35 +0200
-Subject: [PATCH v3 2/5] arm64: dts: qcom: msm8996: specify UFS core_clk
- frequencies
+Date: Sun, 18 Feb 2024 15:56:36 +0200
+Subject: [PATCH v3 3/5] arm64: dts: qcom: msm8996: set GCC_UFS_ICE_CORE_CLK
+ freq directly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240218-msm8996-fix-ufs-v3-2-40aab49899a3@linaro.org>
+Message-Id: <20240218-msm8996-fix-ufs-v3-3-40aab49899a3@linaro.org>
 References: <20240218-msm8996-fix-ufs-v3-0-40aab49899a3@linaro.org>
 In-Reply-To: <20240218-msm8996-fix-ufs-v3-0-40aab49899a3@linaro.org>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -96,46 +96,45 @@ To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
  devicetree@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1101;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=930;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=8Jw52K/qybWNDYMmkfmKEVECM6bSjDnqNRJimByERIo=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl0gySFeeR8Nqww3tj/VSGTJTNnyikgeG2I7SyZ
- nNXRvBa+i6JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdIMkgAKCRCLPIo+Aiko
- 1agICACMPq45pXJ2FruwpBy6twqsBFRy9Y0zr0Gwe0U2kTtQ+uzvScPfqTrP1YHBZh5MvwylSWd
- qHM8jpr/LVUAqqwFc9WtFPG+kC4eFdHHj3dxjw5eh80S5PS8dZoHE898Dk3c0h+BVm4CY/QD894
- Y8184PCxoytoLP4mmFX7jvk2cAnoV6RK6CpqRHhbkYhk+Ztb1Sqia0YfSjDB5nPJuqKFsOTCIk4
- 0PRzx39Vx9n7aTOPwp5fKv7/Qlp8qCEyat4aSdkBbCGw0qApwitzCRUAdxVioVV/zeli3fugrE6
- HLKByBugfx3unbAO52L9mCTYcV12wipnd4jazSgrAr9jaxf6
+ bh=qjeaOhaCrY4VcmImvKR8DYCqB4V+aBVBAJGTPiEhh3o=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl0gyTvsrx5bGHb1ytmU2tJaqUSojI5Rdb4BQFM
+ VzRV8pyBdSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdIMkwAKCRCLPIo+Aiko
+ 1bhFCACSfsRIe8ROLD7IVDgsrBnAdV5w1za3tCYtlJuN3c/l8kg5s0wBD0dvtYpzbf7/nGe9YwW
+ 9RbcQ23zHcSZt7y7BOt4C9LsWC9AlHuKh8R0hmdEE+OeoVVZC9O7ckvaq9jP+ODA/PmFVHzih3r
+ h/adx6BnUk0T+2u1bykv/2jvtx/j8s8gENDKNY86o6UvX3J6XZTIqH/8o2mI7m4Gpwh8Vw2V58r
+ ysWqR6Bu1VHHXzZnuqSAML3sbJZ8OInzzGzwW8778dyDmfI/YsXE9nwwoxu4AwFfSCRAACohsGI
+ c0JR9q7tRydt/ThSpwX1YaTVCN38kZmoH/yS82DaPi/SDlou
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Follow the example of other platforms and specify core_clk frequencies
-in the frequency table in addition to the core_clk_src frequencies. The
-driver should be setting the leaf frequency instead of some interim
-clock freq.
+Instead of setting the frequency of the interim UFS_ICE_CORE_CLK_SRC
+clock, set the frequency of the leaf GCC_UFS_ICE_CORE_CLK clock directly.
 
-Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Fixes: 57fc67ef0d35 ("arm64: dts: qcom: msm8996: Add ufs related nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 80d83e01bb4d..401c6cce9fec 100644
+index 401c6cce9fec..ce94e2af6bc5 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -2072,7 +2072,7 @@ ufshc: ufshc@624000 {
- 				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
- 			freq-table-hz =
- 				<100000000 200000000>,
--				<0 0>,
-+				<100000000 200000000>,
+@@ -2076,9 +2076,9 @@ ufshc: ufshc@624000 {
  				<0 0>,
  				<0 0>,
  				<0 0>,
+-				<150000000 300000000>,
+-				<75000000 150000000>,
+ 				<0 0>,
++				<75000000 150000000>,
++				<150000000 300000000>,
+ 				<0 0>,
+ 				<0 0>,
+ 				<0 0>;
 
 -- 
 2.39.2
