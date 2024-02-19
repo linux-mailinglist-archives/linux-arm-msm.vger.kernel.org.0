@@ -1,111 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-11727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 233D085AA28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:44:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90BB585AA54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:49:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC39B1F22456
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:44:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C363D1C21242
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:49:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B4245BE2;
-	Mon, 19 Feb 2024 17:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C3E4779F;
+	Mon, 19 Feb 2024 17:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C+zGe7Xu"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="h4sRlf5z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB93044C92
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8771544C8D;
+	Mon, 19 Feb 2024 17:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708364657; cv=none; b=ibSrWIU37oIYJbeFLi4PzXLCHoukAMrSaREETWEu+8tco/ghSh9GTVX8lR1AnJyPOl6yhxiknOwrJlxS08xGHsi5qMAuTHFb/j+z6TncnXZHMSBoRBPFoT5HEoROGkZ+ohOy49+Z12BK+FtUYhyUWqGyWIqbIGo8OR6KpIDjUlM=
+	t=1708364971; cv=none; b=c1OBW3QoofEwpzeZKmFnJ0WiOmSGaXh7rn1D4yFmOY4lQNdz+pCgTQ9EPOk11oAR/O5p4CcikEHFC0+5Y+FDI2YWnnMgYm2Wr7VecEfPDu2Az687pd5Oh2eaJMMWeO/ADN27sNCjmH7fggaxJEH7fj9W3KGxuyJla/PKehSObkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708364657; c=relaxed/simple;
-	bh=9vwu3zNtnqAqbKhJ+6AGN3WXgzDAgZ/Y8sE+lPjvzHw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lc3p5rgxvUBeJ7ctKuv7QnbglikwN99/KzO4idnJ/RnWjurgGsj0YPH9kl4n/yIPQLpyewkmzXiHe/CJfoB/7bNmqFNkt/Gm3CXrwntEmswaHMezFQl0GQKtwFaqvM2kjtuZKC09AtYUUbLIxXfbwkFINZRPMlJZU1lRpjCXg3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C+zGe7Xu; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dcc73148611so5318595276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708364655; x=1708969455; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j0zXATHAze8NZy9kFIN3YGfccOzS376coG1qccDgLkg=;
-        b=C+zGe7Xua7pzKtrc8+4tfQtXldBnEvEHqH5ODcpQwLB4Cb/tFU4wP6S7qLc2A7BBe5
-         0NYk3y9RkdGfwNjyZizsHEzR1Hwua4NcFgco2FX+3fIz9bMPs/YnmhgJUB2jm3c45foI
-         r9DoMbR3M9eGDLiGBctpZhWQY96ymHTRNAjBiebDgf44gKn3dwJnAuV68fGVeXnZmiX5
-         xuAf+gkyvUeIYfjTBL/NlH/C+Mg8VqBQ2+oBR4TvEgnx9DJp09QpZJmKyCDh5TZPcJto
-         ZzQWPfHpt1QJddMicM6wnzP0j1E95cxVUJD9FrObM7kxinj81MWxKxjzA74/lfv7RBB6
-         xW+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708364655; x=1708969455;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j0zXATHAze8NZy9kFIN3YGfccOzS376coG1qccDgLkg=;
-        b=G0yt9MTcshJZayvpZKrpH2Hvmb1YqvxPRgH3mk0HwUJt3A7RCHZLEy04YSRJ45uy13
-         gcTFoZ5f1ZQfyRdcYbyPDwPpjqK+1xaYflw8ynqhj4oV0vYLL2mCHhrGaE1b1+4RqBOF
-         5SuTLizgEU1/eFCVNcmA6ev1gt0PFdbgGSBCfj+LgYLbo/oIjT+Rk18lU8dpBnW5GzAB
-         BqxqeNjUJ1Ke3LILy2MRSBRW/Ts494ZmG9fyCwaqgerbOHHB+jM9s5fFgz7e74u0alca
-         fuAD4qQVG/85JmDQSUMYaTmOXakynBBRSwW+GFwrpGdRjj01zYSWd/Gl2e7syYbBp9Um
-         iatw==
-X-Forwarded-Encrypted: i=1; AJvYcCWzEoEieb9RyGTaFHSFRfaHdpvmRAIDZFNF9jsb2s9M7Rp/fUstUK3TsDFwYA0+YQrj7uyF2yZO52S3uoUA6xbxjLXQMIk3Vjhg0etqYw==
-X-Gm-Message-State: AOJu0Yyg21tp3SFBjKOgnrB+I6z7ZiO+bKGhyDSPe1GBHDxuJRrOrKwe
-	0eoFDcRmKqxynK/gySOIruoLF+4pxfCXuQxNHwDke1FMx1ii+ko46e2qwsLMPIeBK5xpHN+1uH1
-	v2+A3OKkw769zB4mtqytkiAT11aCSGV+3rXkesQ==
-X-Google-Smtp-Source: AGHT+IFKzL6ptSitfZtFW/T6MBsRHT8U4ZmYel6dTcQd6ViVfKfe13gcYjSRgWwo+fjNa26PIFvPmQrxOdu9t+jwOJw=
-X-Received: by 2002:a25:8006:0:b0:dc7:32e5:a707 with SMTP id
- m6-20020a258006000000b00dc732e5a707mr11059292ybk.61.1708364654765; Mon, 19
- Feb 2024 09:44:14 -0800 (PST)
+	s=arc-20240116; t=1708364971; c=relaxed/simple;
+	bh=hPupRt57+r+Pl0dfVnsjq1GsNhHpCJ6eXReICe+eDDo=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=elpbcyqsRDbiOr7y+H9F8/zr0K9L/Lw2MV71f9DXzp5Iab4noMbNf/+EsuBzCXnnx/wBBZAl8XCPuQkC4zDBC26O8gEaBOyge3+r11CUbighCudMlQM07tGSVRWvOfccWZu1xXMquPTqmch5k3CBR5Sg70B64QBuJA6q0pYnH9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=h4sRlf5z; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708364915; x=1708969715; i=markus.elfring@web.de;
+	bh=hPupRt57+r+Pl0dfVnsjq1GsNhHpCJ6eXReICe+eDDo=;
+	h=X-UI-Sender-Class:Date:To:Cc:References:Subject:From:
+	 In-Reply-To;
+	b=h4sRlf5zIV+QWDila5ohfglWmS12NfxX6Wx6NvhudyKq05oHZRWmmvB+yQAl/USd
+	 s/hF88fZLogXlVoPr9rYZcV6U1BvLPtgrwOs3I0XIdBFv8XpCNCNY3EEijkJj1DzY
+	 5VvHfB+6tRpIy0Tq9+g7oAj5CiRYslmyzxurJVIsHN3Kc9uYA8tBa3N1Mp5L6Y/wr
+	 oucP7TurufLy2QMHeMn/SgfhJjg31IVk1/FHtcdSB/Axxv9EWjjleNaSPrJeU4eX5
+	 oZ7w/z6ZtPYAINIoef5Lp0bfUVTHb8xQlzM7tiiHXC7yK1h1ujvgMvoDn/CvIgI7W
+	 Yu6xFw2F9eBfP/W1YQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.80.95]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M2xrs-1rfQbv2m5c-003JhM; Mon, 19
+ Feb 2024 18:48:35 +0100
+Message-ID: <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de>
+Date: Mon, 19 Feb 2024 18:48:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr> <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
-In-Reply-To: <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 19 Feb 2024 19:44:04 +0200
-Message-ID: <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Marc Gonzalez <mgonzalez@freebox.fr>, DT <devicetree@vger.kernel.org>, 
-	linux-media <linux-media@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Bryan O Donoghue <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Pierre-Hugues Husson <phh@phh.me>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+To: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Bjorn Andersson <andersson@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+ David Airlie <airlied@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Vinod Koul <vkoul@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Rob Clark <robdclark@gmail.com>
+References: <20240217150228.5788-2-johan+linaro@kernel.org>
+Subject: Re: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240217150228.5788-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:1qY8TG6XGBPBySkXD9Iw+B/jMk+ITC9FUkKiHaIFz/AtRCFm3X8
+ A2bG3gibnYIc7UfT5py0ZV3IHcRAAwqod7yJen0dD22Od/rMMXKMtv4O3ehHFd6NK1O47oF
+ 2FKhSK+MFr0qgPhK4sp6Gvv75D7So3Dsd6VTfJ4FGrbLdu71hXEBz4h4bEnOqoDzSyVLUQM
+ FFo2segx5J963ehK0Nyqg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Vt1j2p9N3tU=;Y5Fkv24B75ZRsEO6v+JeViz6QDS
+ Z0Qr1vSndEAhOcBQzzzF9Hc+zTH8Lh5ACQIDs7Em43y0RsMfANmO66fe8KzHagSpTU3nCS9yw
+ seqRMXtdrL7zS+FYfxRWVQMh2n+AW0LD8yuU/LvcAOqSzpZuAxCp9sB894cWb6Vs/KQwhcvix
+ 0c0MCspFvzytZ8Z/VmjJpOa6U7u79EUFZbSTMcXdtOidhEyGaXoD1ed1lSk72ZHY4WrxBcoIG
+ AQDpd7AAX8XoGPbGzDh8DSIIf76R1xfHsRz/IWtBKre8C5hyOZibsT6rlCWZf1Hn4OY8nyGe8
+ 0R7jtfGDhFTNaLob/euJ4Xouo1S6JDEo6roUqqRQhLm+eihsK/1yoocr3e4TN5EfooNR/mqlb
+ JU0s2ZXbFHxS1HxFt10qTR2Q3UBDpjnHxaf0nc6H7jpfWpYApArkm5d6/CArQHWMYRyHggilo
+ NOJYAzpbA7OAaB9NNxId1wvcwZvrTgkzAeabC2c5HsL0UzNsbWqKbMMceESmfn72wOIfsQIsP
+ L1S6NcAESVAnTYRBVYmDfWpuRiWfiWzh6aw9JFeF6HLm6Y4ajY/9ve+rE1vwM2zw9Na/oA3vn
+ fbfuZnuDVcd6HgPLX6VmhUXnUzA/O+87vE3/mjhRZ30qPnFNmB7/gDo+4lkRApUIZ+Y5SsU8T
+ C/RmhXE33yy5bOoTU1jR3W+iZ1ylFub+AO8utosVVJ5xfLspRIaoR6ptLogpbtO8A+duLEl5g
+ BTecZA4H8EdbrwYdstFYfumSnHWDkijS5WNqggvyMOhheue05/XZGimtzonJucoBOFIY89JRK
+ mjveQA3OLbiH8J7EvTIIAlcAE3cn0wtcE7uXKqhPCSnq8=
 
-On Mon, 19 Feb 2024 at 19:29, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> The two device node references taken during allocation need to be
+> dropped when the auxiliary device is freed.
+=E2=80=A6
+> +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
+=E2=80=A6
+> @@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct devic=
+e *parent,
 >
-> On 19.02.2024 18:18, Marc Gonzalez wrote:
-> > From: Pierre-Hugues Husson <phhusson@freebox.fr>
-> >
-> > On our msm8998-based device, calling venus_sys_set_power_control()
-> > breaks playback. Since the vendor kernel never calls it, we assume
-> > it should not be called for this device/FW combo.
-> >
-> > Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
-> > Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> > ---
->
-> FWIW, this is also broken on other SoCs.. 8280/8350 and 6115
-> to name a couple.
+>  	ret =3D auxiliary_device_init(adev);
+>  	if (ret) {
+> +		of_node_put(adev->dev.platform_data);
+> +		of_node_put(adev->dev.of_node);
+>  		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
+>  		kfree(adev);
+>  		return ERR_PTR(ret);
 
-Then let's just disable it until it gets unbroken?
+The last two statements are also used in a previous if branch.
+https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/gpu/drm/bridge/au=
+x-hpd-bridge.c#L63
 
+How do you think about to avoid such a bit of duplicate source code
+by adding a label here?
 
--- 
-With best wishes
-Dmitry
+Regards,
+Markus
 
