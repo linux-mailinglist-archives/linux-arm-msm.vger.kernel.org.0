@@ -1,170 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-11644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 768C385A0BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:16:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAA8785A0C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:16:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8B461C20DCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:16:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57D431F237E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:16:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDA562562C;
-	Mon, 19 Feb 2024 10:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45ACC25616;
+	Mon, 19 Feb 2024 10:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Bjbd1Mps"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="anFXOSDX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE2525618
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 10:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F84228E22
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 10:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708337772; cv=none; b=u529iC+5PP43ez56w1yNNmcnPMcVH878/01sa7L1cmNds38UJLxR9KAKA2iWuio+zCulZoD45hzkxpcv8B1eIz3vpSfCsc6EV7cmIzyPxOLPsVeBxZ5JjJj9a+iHt63yTGC+cktO9uh2LL0VAhT9jcT83FL1x4Xgi7xFEcGQC38=
+	t=1708337796; cv=none; b=S86RDvZR7nfrFL0Sf9Kdi7O10IxMI6i9xvvZSmqPGsU20rGBEbYWbpR3M6XnT9ELNlTizL7isrRDi8VzT9GJQ/KPbht2MnlIn5qldnMWg4OAWWdRhY1GH2HSlm0ZL/Iyy2ZijndUatGCLvpN+hrTxOu366W30CMnt2Z1x3/jH8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708337772; c=relaxed/simple;
-	bh=3eH2DQjulTQWzaETHUPgMzr5ISAoOnSFssehNnOf5ag=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BQo766NM8/N7yCRf+JylcUNcrAxfWQ5kybqGSWGXDpMGylbhhnZm392RVSZJC2l6vvLYmlaRskHhJK/4QR1Py471t+i0xvI6Bbt2auh8VvImQPn/99bJVmSsRJXi8uS/lMYIaaH5PZtrxfXZnH+PSD0+nyjWgXAmGiRlMC9rXb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Bjbd1Mps; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33adec41b55so1983644f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 02:16:10 -0800 (PST)
+	s=arc-20240116; t=1708337796; c=relaxed/simple;
+	bh=ddrK06DYYlWFp/8o1bKXY+MqFFxKPduBG+KoHpQXtnQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MQZGYLKtz5z9d37kSjoW+o5zxp5SyeVqrV4VnnM54SsPsJGDSqE1b33brLK7nKbfc8RJ5E4hTKlJWbJCH/XzdhKg4V1dXqoSuGT2wB3cYcyRiy2cIRuHoIHQCmiZ42M32Lmwm7pXRoMGlY8rnJ3/z/CITvrxcYKGD+7mYJzJOdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=anFXOSDX; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso3876571a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 02:16:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1708337769; x=1708942569; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5zoml2vRpQl5LD/rIkuDqi2U8sTmVO8rjzsWkW2+twQ=;
-        b=Bjbd1MpsUASSbeQIwnOJR0KaBxHRzuVZyopyguBXSj/7s5EBOdG8lA7CkOB7fnBqPG
-         d4cy8MpnD7dhl0Q/kvOMW3x9apcmtE7qgAacFUoFTDyd+PQBmtODxXO7j96l+TiAJinp
-         cd+rinaWFgep+JDqwVl4OzS6tcsJwYszXtPs1mFDSTDxJ6U/j0vrR1TZKOrEenQSBOo5
-         qmLFIxi+fJqa8dRGdqjQwoZwCQ1esp9X/QqVGao9LdE0Yyt7B0Hwm5qja5Zp7WGUlThN
-         /uO5V6VsqDXUS2LY8UYE5DPxiFYckEKhmy5Vjlg+FuWi0dQknESy8FlRq49MFexTcA9W
-         5Q7Q==
+        d=linaro.org; s=google; t=1708337793; x=1708942593; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g7Lad/UmGJgb5525hSE9P/XpX6hMriuonfy0h/btJ74=;
+        b=anFXOSDXGaWKLXnFw70c8JtAHphhOXV8mwldCzg6B5Dl9KCR0d8RKlZ011KBkzSyaR
+         P47lRKxSF5Q4SiA9GRq1VXWYUfNF8Wg7xOAjqfE/IJRHgodsVUADT21bFDbVRKfKyf2P
+         F7FpkvTuADJGExcOr6QWYFFuCAcP08Eib1g9Xn8O/rn00KehGmqu571SHwPS4o4uztus
+         o8aHWPEdELhEgUHaePyHvQbWHozYstDWq120i+v+1SAHZGCi344S1mb22sx8mtBTGEg/
+         3/iTvskGn4OuNjzRbiEsHgvq9fhi9JQC1WT7ifXXY+DvEGLoH7tNDNuP+yIlXiZ/eNLI
+         ni1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708337769; x=1708942569;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5zoml2vRpQl5LD/rIkuDqi2U8sTmVO8rjzsWkW2+twQ=;
-        b=c7GXw+OVCL965BxQryzlrATt/jpmKc1oggrgqi9HbJR1zv1SD1kZtVIoBvXRT+hwHa
-         ulWWWm6Yv8FHTEFPbI8iw9AUUqC7Ww4i6D++zHuCngKW2F0rW6Wd1eBbh++xOE6LoXPX
-         R2lXd4yzFOK9eEMIcYOmqoASBDaQWlzcGI7Pc06jx24jlwU8GsvbvkmBlr8Coiz/VDFQ
-         PJNZ6PRI6M3+hi+DA+O/G5jHK09wYfS+MfjNxTIQlMrSMX4MlVu/aT55VOg7B5R9Ju0z
-         Fig5NmY264f01RPHEGw062NYdbj4fOtqjdwmQo7JddaSshzR9rr7D8NS2q8hkiYOqstO
-         D6gw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKbb62UsZ0lDxiHhA/VW6H2BpNepZSybW1mtZNyLFRT+T89lUZH2txVd6g7eMQvRXYaxxBKCrZT30i5KLNLtFOyIEZDPg+Qxry+DsYtQ==
-X-Gm-Message-State: AOJu0YyIxjVmRR0k0w/aK3UT49Klthuk9zixtPM8T8kiYKYAhv+RN8F4
-	gyv9L9sLJWltaPLwyinjGVs8ZqNntczaWxNVl2J76ZFi6NLOlJ9UzT9RIM1G+5E=
-X-Google-Smtp-Source: AGHT+IGrWfQTq5uDJ77OQYqzYBHmVzvtrmE3pqBM057vfJOgs36Eytz0Y/9xdEhJdg29BER0tNIYyA==
-X-Received: by 2002:a05:6000:1244:b0:33d:5f6a:60e9 with SMTP id j4-20020a056000124400b0033d5f6a60e9mr511704wrx.45.1708337769281;
-        Mon, 19 Feb 2024 02:16:09 -0800 (PST)
-Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id dw5-20020a0560000dc500b0033b278cf5fesm9856250wrb.102.2024.02.19.02.16.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Feb 2024 02:16:09 -0800 (PST)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Mon, 19 Feb 2024 11:16:02 +0100
-Subject: [PATCH v2] arm64: dts: qcom: sm6350: Add Crypto Engine
+        d=1e100.net; s=20230601; t=1708337793; x=1708942593;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g7Lad/UmGJgb5525hSE9P/XpX6hMriuonfy0h/btJ74=;
+        b=F6X6kMK8j6jP32Q9616v98kO+dLfyqrIb/qPHPfRhL4Y59qVm8tygbg6F3NdPveA48
+         ik8KANAeHlpiLn0Ufx3KkobQiDsAGCaAsora3uub1HwV5IXidiMI26lAYvvi9PFZHSgx
+         bhTTsnqzwn425ZuNS6q1r29m4RaujkP+GdicejjgV3Bbo23g72DB3FNojBH9LueGSlRk
+         dvFPahGtjM/h6rHE4jlJ0KBJkn4wlID1gV3pqgrNHEX/p+NmgDeNZvrADFgPzlcDdxDa
+         sBCHfCrzioaKlYx44IVRGoYtJJYr3fRql2GGsXsw5o7MfSVOIOuLRDT8OwCDnrl1gKxW
+         3bdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKaHGnOtqv6n9tDYVK7vVIoj1P5/+hcbsOheyffw3ggZPZ4lnVQYvZ0n9xl0sHCE6ysR8HqOG+9uiSpkVjhQtQdq35K/KZvG2zZaJllg==
+X-Gm-Message-State: AOJu0YwLX2sYsiK+SVmCqcYif2NGfx3/PWiKOaOZW3acyYht9+5angs8
+	6RT1co9+WYMZeX7EkMM/Eg1aK5DcW6SsooNVApajk8R8Hqk6aQv8Cn46/EEbFkA=
+X-Google-Smtp-Source: AGHT+IENa4i0UQzIyD/tV/wQnoCaQZIG2aVhQsRIDX2/LE6pQ6khHX1I6mzlZXGgqlAR3Yp8LR32Yg==
+X-Received: by 2002:a05:6402:214a:b0:563:bd95:4e8b with SMTP id bq10-20020a056402214a00b00563bd954e8bmr5758346edb.11.1708337792697;
+        Mon, 19 Feb 2024 02:16:32 -0800 (PST)
+Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id e18-20020a056402149200b00563c63e0a13sm2562753edv.49.2024.02.19.02.16.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Feb 2024 02:16:32 -0800 (PST)
+Message-ID: <85538095-9550-4b24-b147-bf765c296a01@linaro.org>
+Date: Mon, 19 Feb 2024 11:16:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Content-Language: en-US
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Richard Cochran <richardcochran@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
+ <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+ <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
+ <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
+ <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com>
+ <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
+ <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
+ BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
+ HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
+ TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
+ zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
+ MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
+ t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
+ UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
+ aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
+ kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
+ Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
+ R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
+ BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
+ yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
+ xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
+ 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
+ GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
+ mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
+ x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
+ BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
+ mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
+ Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
+ xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
+ AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
+ 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
+ jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
+ cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
+ jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
+ cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
+ bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
+ YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
+ bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
+ nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
+ izWDgYvmBE8=
+In-Reply-To: <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240219-sm6350-qce-v2-1-7acb8838f248@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAGEq02UC/23MSw7CIBSF4a00dyyGt9GR+zAdULzIHbRUMETTs
- HexY4f/Sc63QcFMWOAybJCxUqG09JCHAXx0ywMZ3XuD5FJzwQ0rs1WGs6dH5q1Uyk1TMDpAP6w
- ZA7137Db2jlReKX92u4rf+pepgnGmhUXjT0qcnb8GR3mNacGjTzOMrbUv0EmnOKgAAAA=
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, 
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Bhupesh Sharma <bhupesh.linux@gmail.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.4
 
-Add crypto engine (CE) and CE BAM related nodes and definitions for this
-SoC.
+On 18.02.2024 05:29, Kathiravan Thirumoorthy wrote:
+> 
+> 
+> On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
+>> On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
+>> <quic_kathirav@quicinc.com> wrote:
+>>>
+>>>
+>>> <snip>
+>>>
+>>>>> Reason being, to access the NSSCC clocks, these GCC clocks
+>>>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
+>>>>> should be turned ON. But CCF disables these clocks as well due to the
+>>>>> lack of consumer.
+>>>>
+>>>> This means that NSSCC is also a consumer of those clocks. Please fix
+>>>> both DT and nsscc driver to handle NSSNOC clocks.
+>>>
+>>>
+>>> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
+>>> enable the same in the NSSCC driver probe.
+>>
+>> Or use them through pm_clk. This might be better, as the system
+>> doesn't need these clocks if NSSCC is suspended.
+> 
+> 
+> IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so that, can I enable these clocks in NSSCC driver probe itself?
 
-For reference:
+Surely the platform can s2idle..
 
-  [    2.297419] qcrypto 1dfa000.crypto: Crypto device found, version 5.5.1
-
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-Add the compatible and nodes for the QCE found on SM6350 SoC.
-
-Not completely sure how to fully test it but "kcapi-speed --all" shows
-no issues. Let me know if I can/should test this more.
----
-Changes in v2:
-- Drop applied patch
-- Sort iommu entries & drop extra leading zeroes from mask
-- Link to v1: https://lore.kernel.org/r/20240105-sm6350-qce-v1-0-416e5c7319ac@fairphone.com
----
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 43cffe8e1247..7a14b040d140 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1202,6 +1202,37 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
- 		};
- 
-+		cryptobam: dma-controller@1dc4000 {
-+			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-+			reg = <0 0x01dc4000 0 0x24000>;
-+			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			qcom,controlled-remotely;
-+			num-channels = <16>;
-+			qcom,num-ees = <4>;
-+			iommus = <&apps_smmu 0x426 0x11>,
-+				 <&apps_smmu 0x432 0x0>,
-+				 <&apps_smmu 0x436 0x11>,
-+				 <&apps_smmu 0x438 0x1>,
-+				 <&apps_smmu 0x43f 0x0>;
-+		};
-+
-+		crypto: crypto@1dfa000 {
-+			compatible = "qcom,sm6350-qce", "qcom,sm8150-qce", "qcom,qce";
-+			reg = <0 0x01dfa000 0 0x6000>;
-+			dmas = <&cryptobam 4>, <&cryptobam 5>;
-+			dma-names = "rx", "tx";
-+			iommus = <&apps_smmu 0x426 0x11>,
-+				 <&apps_smmu 0x432 0x0>,
-+				 <&apps_smmu 0x436 0x11>,
-+				 <&apps_smmu 0x438 0x1>,
-+				 <&apps_smmu 0x43f 0x0>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 QCOM_ICC_TAG_ALWAYS
-+					 &clk_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>;
-+			interconnect-names = "memory";
-+		};
-+
- 		ipa: ipa@1e40000 {
- 			compatible = "qcom,sm6350-ipa";
- 
-
----
-base-commit: 6af5a37dbe961391c3c357c0799d76dcd7c280e4
-change-id: 20240105-sm6350-qce-c6233abbf54f
-
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
-
+Konrad
 
