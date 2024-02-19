@@ -1,144 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-11724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0452685AA0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:29:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0DBB85AA22
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:41:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3694F1C211FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:29:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01E61C216C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:41:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95FF244C89;
-	Mon, 19 Feb 2024 17:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B89B45BE0;
+	Mon, 19 Feb 2024 17:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GE770cYs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C3wDk2C5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DA425566;
-	Mon, 19 Feb 2024 17:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3552E416
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708363756; cv=none; b=cYh3KQkt6BD31rHmATOQSnIfbIju7FT21qR4ryRjN+1NO6qKvtYXkqZEnH+chAZMYoOx1smr+Mryg3oVamwR9iaNmws4nCne4uPKlbPTgW0UOMlqi+bHHc8y3lQDL4tT/6Y5N/ngmOeY1mChGMm3A9JYAk8h/dORuHL/lqwGFHc=
+	t=1708364512; cv=none; b=SmF3zMKyjZUDbZkrUCp1AU/T89cihbH+SoDhnW6UohCvxKNIhFzYG9hdHHX5qvEzkjY2Yc2SA7chNi4GEDRDE7A715e3cBbsRUzbcKvzZp1G0PnwDggYEIudsc1nRCAgMcZ7Vc8vI3HCxISyWP5HjZkLvIm6yEzM8dC16yeX4Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708363756; c=relaxed/simple;
-	bh=HDOUgL6Y0nc7IvKBPLbbUpZK2qQlAnpDmaaG/SLeRF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L1iPQzRqBxKR8sx11JYoJR7cScv7h4eJC+a3VZDey26upiybbYNXewKyll/ZgEADvpixsQZvCc49BwAUrLs/kS3HM5bngsDb/MFIRS3bD34zVTKfMAYPl8VdDy6WCOmrZhOSMA40GlXlyzAH/0jTWVr+HiZgFrDNAULfnslSvZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GE770cYs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D434C433F1;
-	Mon, 19 Feb 2024 17:29:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708363756;
-	bh=HDOUgL6Y0nc7IvKBPLbbUpZK2qQlAnpDmaaG/SLeRF0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GE770cYsLQOhGWHmeW4Wg45pDEMxw26SbCB7J9GSGeTl7xQsE9XqhdyPsSDWl1Zx3
-	 GkLul7ypkIJvVGKOnIDIlmwNi8Q+VnTopWh448gGGS5T4pP9gJuH89xqr118L7d1l+
-	 obyKh8WkVuV6gjlzFMVRklxXAY53JPCpTT8xRRQlccCm2IQW+xOklWfRPJqQsSsPKl
-	 jX+pEMjurC+jfEYSlBBVtis0nu2adzeOz5r3PlYClT5iggsaVZ/Iw8rNmvz8fOtJv2
-	 /KGOTaFj8QTc8l5D2mo7mpGYFBC2DwW7mT6IMbPFGcR+H8eiJ7B64HfaZCJtDbhn8w
-	 dXFebOuUKJu9A==
-Date: Mon, 19 Feb 2024 18:29:10 +0100
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Maulik Shah <quic_mkshah@quicinc.com>
-Cc: Mark Rutland <mark.rutland@arm.com>, andersson@kernel.org,
-	ulf.hansson@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-pm@vger.kernel.org, quic_lsrao@quicinc.com,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] firmware/psci: Move psci_init_system_suspend() to
- late_initcall()
-Message-ID: <ZdOP5oAwZvEhNAsn@lpieralisi>
-References: <20240219-suspend_ops_late_init-v1-1-6330ca9597fa@quicinc.com>
+	s=arc-20240116; t=1708364512; c=relaxed/simple;
+	bh=679zUDpN6QOBZs8mfOsDKqbdb4UNHtj7fdB7M/jDYbE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gmuoPxaRK+NF5/kolQzQArvQP48JBUe7GCgF9IDnLtots8gvut7aMbbreIzvYPIstgbzXZjUHT4mTnRffRpoKEpjqt2QoLZJtIgGbC0CszrjWWn7rANj6JRn4Rmx0w9XQoQDdD3JAgCfiLr4ZU8gGjUh89n2ltZH/+FSXsbRL0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C3wDk2C5; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-db3a09e96daso3769721276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:41:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708364509; x=1708969309; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IpbxXvCSubVl6XgXjNWjfYRG3//u4L72+hbwdG6Aw+g=;
+        b=C3wDk2C5g25Q3u89OgrmqU+nsHkT903jviWJkjvJhord6SxHMBLaqLyCHsg8yxDmk3
+         3zTMzc2A4p6JPyFXAN83STdKgfBlzcgx6KvmT6E5ZUVRdhIS6GXNO870kxVvobzjG9Jc
+         XC2FxSRIo+8qo9PnBN/dvKIa5zoe9e6Ymqo4hvIJ602XbhyqYN5PxyvRFFLOsWZ63Q7R
+         hwgtWtyfSVjlVO0+l8AmhDZpQbX7i6jgPkJdkeDBVvpuoH373G9joLfFxJyYAgUe7xbg
+         /cnM+/81avBRcHGN6CIm/X460h7MuCYZiWtelbpdXigM1D6FUdAGLYUDVvK6cxYVywxW
+         ov9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708364509; x=1708969309;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IpbxXvCSubVl6XgXjNWjfYRG3//u4L72+hbwdG6Aw+g=;
+        b=RaLzjnZrIGkEebjmY7heoapzrcTwZtfX95sEah2brjB6/P7bZ5+E/fgYby/vnFGgXS
+         984u5b9fwfcrfml97bqb5kFHWQB0AfytNekGAOvgoM7li4rJMKAiChYv86056rUDjPRN
+         t9jyKy5slQRndIBANIL9by7n1teSb292llGnjvYTTpo6cYcSxOw9mezsht5JXxd7ejhP
+         lW8j5ZllF85Q8rvpYvIn+xmhrGAGMtDfMaMW3IIPd2TD1UejODcRpu+qLtuanQ+kM2cI
+         a8ZXr9WP/CqiI0210m/TxYQwmCys32kOptlGOC2sejR64XVP2MttNtBFtQ6DNbXQyr7i
+         I+rg==
+X-Forwarded-Encrypted: i=1; AJvYcCUrt0m0iLvmMYKwPDiCmEJkUBizZ4pa4Aqt961LmALlcMX8euJjq1LkamNGCdXM3fGw5po2+Jg64f+w2Btfnc1V/tBuN3AmeAYu/2h/Mw==
+X-Gm-Message-State: AOJu0YzqU/YckSX30TRfAsqDoY+TwKQxhmptWrYzuIIk5DQD51+XRBkk
+	KPY8uH8SOmHCJsQlC+wtvWv4BykpLzdyx01yZq4C3YwWWXmhK9zqTNbDvNet8no9mdPWsNPii9r
+	rTwZ0UezyQuy92LLNhjn9NXyD5kOClt3urIW52g==
+X-Google-Smtp-Source: AGHT+IGZBxSF+ykZUi3ZT/ydnvwdYMo+yLycBE4tf1TfD3XQ/uVP/RoPtvKOq3lMWHZQhSHC2eXcKDI/1o8ZI1vAnpA=
+X-Received: by 2002:a25:8046:0:b0:dc2:2f4b:c9d8 with SMTP id
+ a6-20020a258046000000b00dc22f4bc9d8mr11563408ybn.16.1708364508953; Mon, 19
+ Feb 2024 09:41:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240219-suspend_ops_late_init-v1-1-6330ca9597fa@quicinc.com>
+References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
+ <868r3g4fhv.wl-maz@kernel.org> <CAA8EJpqiN6oRMWhAMMP6EsAeki5KSMbO+XzEtT9YRdJKc9_Gbg@mail.gmail.com>
+ <865xyk4dgf.wl-maz@kernel.org>
+In-Reply-To: <865xyk4dgf.wl-maz@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 19 Feb 2024 19:41:37 +0200
+Message-ID: <CAA8EJprKUOMwrwawiQ51WKiLCipm72ZcpY6q520kSOg--9oKZg@mail.gmail.com>
+Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
+To: Marc Zyngier <maz@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Anup Patel <apatel@ventanamicro.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 19, 2024 at 03:02:04PM +0530, Maulik Shah wrote:
-> psci_init_system_suspend() invokes suspend_set_ops() very early during
-> bootup even before kernel command line for mem_sleep_default is setup.
-> This leads to kernel command line mem_sleep_default=s2idle not working
-> as mem_sleep_current gets changed to deep via suspend_set_ops() and never
-> changes back to s2idle.
-> 
-> Move psci_init_system_suspend() to late_initcall() to make sure kernel
-> command line mem_sleep_default=s2idle sets up s2idle as default suspend
-> mode.
+On Mon, 19 Feb 2024 at 18:37, Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Mon, 19 Feb 2024 16:21:06 +0000,
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Mon, 19 Feb 2024 at 17:53, Marc Zyngier <maz@kernel.org> wrote:
+> > >
+> > > On Mon, 19 Feb 2024 14:47:37 +0000,
+> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
+> > > > count restriction from select()") the irq_find_matching_fwspec() was
+> > > > handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
+> > > > the select() callback. However the callback of GICv3 (even though it got
+> > > > modified to handle zero param_count) wasn't prepared to return true for
+> > > > DOMAIN_BUS_ANY bus_token.
+> > > >
+> > > > This breaks probing of any of the child IRQ domains, since
+> > > > platform_irqchip_probe() uses irq_find_matching_host(par_np,
+> > > > DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
+> > > >
+> > > > Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
+> > > > Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  drivers/irqchip/irq-gic-v3.c | 3 ++-
+> > > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+> > > > index 6fb276504bcc..e9e9643c653f 100644
+> > > > --- a/drivers/irqchip/irq-gic-v3.c
+> > > > +++ b/drivers/irqchip/irq-gic-v3.c
+> > > > @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
+> > > >
+> > > >       /* Handle pure domain searches */
+> > > >       if (!fwspec->param_count)
+> > > > -             return d->bus_token == bus_token;
+> > > > +             return d->bus_token == bus_token ||
+> > > > +                     bus_token == DOMAIN_BUS_ANY;
+> > > >
+> > > >       /* If this is not DT, then we have a single domain */
+> > > >       if (!is_of_node(fwspec->fwnode))
+> > > >
+> > >
+> > > I really dislike the look of this. If that's the case, any irqchip
+> > > that has a 'select' method (such as imx-intmux) should be similarly
+> > > hacked. And at this point, this should be handled by the core code.
+> > >
+> > > Can you try this instead? I don't have any HW that relies on
+> > > behaviour, but I'd expect this to work.
+> > >
+> > > Thanks,
+> > >
+> > >         M.
+> > >
+> > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+> > > index aeb41655d6de..3dd1c871e091 100644
+> > > --- a/kernel/irq/irqdomain.c
+> > > +++ b/kernel/irq/irqdomain.c
+> > > @@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
+> > >          */
+> > >         mutex_lock(&irq_domain_mutex);
+> > >         list_for_each_entry(h, &irq_domain_list, link) {
+> > > -               if (h->ops->select)
+> > > +               if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
+> > >                         rc = h->ops->select(h, fwspec, bus_token);
+> > >                 else if (h->ops->match)
+> > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+> >
+> > This works. But I wonder if the following change is even better. WDYT?
+> >
+> > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+> > index aeb41655d6de..2f0d2700709e 100644
+> > --- a/kernel/irq/irqdomain.c
+> > +++ b/kernel/irq/irqdomain.c
+> > @@ -449,14 +449,17 @@ struct irq_domain
+> > *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
+> >          */
+> >         mutex_lock(&irq_domain_mutex);
+> >         list_for_each_entry(h, &irq_domain_list, link) {
+> > -               if (h->ops->select)
+> > +               if (fwnode != NULL &&
+> > +                   h->fwnode == fwnode &&
+> > +                   bus_token == DOMAIN_BUS_ANY)
+> > +                       rc = true;
+> > +               else if (h->ops->select)
+> >                         rc = h->ops->select(h, fwspec, bus_token);
+> >                 else if (h->ops->match)
+> >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+> >                 else
+> >                         rc = ((fwnode != NULL) && (h->fwnode == fwnode) &&
+> > -                             ((bus_token == DOMAIN_BUS_ANY) ||
+> > -                              (h->bus_token == bus_token)));
+> > +                             (h->bus_token == bus_token));
+> >
+> >                 if (rc) {
+> >                         found = h;
+> >
+>
+> Can't say I like it either. It duplicates the existing check without
+> any obvious benefit. Honestly, this code is shit enough that we should
+> try to make it simpler, not more complex...
 
-Why can't we fix it the other way around, namely enforce
-mem_sleep_current according to the mem_sleep_default command line
-even if suspend_set_ops() was already called ?
+Only the fwnode conditions are duplicated. And it makes sense: we
+should check for the DOMAIN_BUS_ANY first, before going to select. I'm
+not sure whether at some point we'd have to add (&& bus_token !=
+DOMAIN_BUS_ANY) to the ops->match check.
 
-Just asking, I am not super keen on using initcalls ordering, it
-looks fragile to me.
+>
+> I'd rather we keep the impact as minimal as possible, and use the
+> upcoming weeks to weed out the effects of these changes (there is
+> another report of some Renesas machine falling over itself here[1]).
+>
+> Thanks,
+>
+>         M.
+>
+> [1] https://lore.kernel.org/all/170802702416.398.14922976721740218856.tip-bot2@tip-bot2
+>
+> --
+> Without deviation from the norm, progress is not possible.
 
-Thanks,
-Lorenzo
 
-> Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support")
-> CC: stable@vger.kernel.org # 5.15+
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
-> ---
->  drivers/firmware/psci/psci.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> index d9629ff87861..655a2db70a67 100644
-> --- a/drivers/firmware/psci/psci.c
-> +++ b/drivers/firmware/psci/psci.c
-> @@ -523,18 +523,26 @@ static void __init psci_init_system_reset2(void)
->  		psci_system_reset2_supported = true;
->  }
->  
-> -static void __init psci_init_system_suspend(void)
-> +static int __init psci_init_system_suspend(void)
->  {
->  	int ret;
-> +	u32 ver;
->  
->  	if (!IS_ENABLED(CONFIG_SUSPEND))
-> -		return;
-> +		return 0;
-> +
-> +	ver = psci_0_2_get_version();
-> +	if (PSCI_VERSION_MAJOR(ver) < 1)
-> +		return 0;
->  
->  	ret = psci_features(PSCI_FN_NATIVE(1_0, SYSTEM_SUSPEND));
->  
->  	if (ret != PSCI_RET_NOT_SUPPORTED)
->  		suspend_set_ops(&psci_suspend_ops);
-> +
-> +	return ret;
->  }
-> +late_initcall(psci_init_system_suspend)
->  
->  static void __init psci_init_cpu_suspend(void)
->  {
-> @@ -651,7 +659,6 @@ static int __init psci_probe(void)
->  	if (PSCI_VERSION_MAJOR(ver) >= 1) {
->  		psci_init_smccc();
->  		psci_init_cpu_suspend();
-> -		psci_init_system_suspend();
->  		psci_init_system_reset2();
->  		kvm_init_hyp_services();
->  	}
-> 
-> ---
-> base-commit: d37e1e4c52bc60578969f391fb81f947c3e83118
-> change-id: 20240219-suspend_ops_late_init-27fb0b15baee
-> 
-> Best regards,
-> -- 
-> Maulik Shah <quic_mkshah@quicinc.com>
-> 
+
+-- 
+With best wishes
+Dmitry
 
