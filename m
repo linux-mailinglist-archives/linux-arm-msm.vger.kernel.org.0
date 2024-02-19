@@ -1,131 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-11731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36EBB85AA80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:03:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D22985AA95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:08:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A21C31F251B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:03:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF8BB1F21413
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:08:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DEA547A7B;
-	Mon, 19 Feb 2024 18:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CCC481A6;
+	Mon, 19 Feb 2024 18:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qfqY9KQ2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AEPrsa0U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4543BB38;
-	Mon, 19 Feb 2024 18:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C0247F6F;
+	Mon, 19 Feb 2024 18:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708365797; cv=none; b=OkkR24XqeowG8mZTYEsDwV5YrIo4CvruhQ1f7RJ3XHQ9bTknx6q67cg2xKV4B6YX0wjK1FlvLJ5jQIItDa0EaFA5MfjaJJMAUhCRd6B2c/+rl6s+fC/qdwXV67x84H3/IAtFPl5MNqJLTMfdMQftwIHuB9t4aL7glst0VpOPEfk=
+	t=1708366092; cv=none; b=cER0hejLu7t1CYux/Pzza5juHsu9I4BlDkk/cpBLq2g8j3D2wLpRUwX3Ers8HP2NlT0YwIdPxscDqPj2y6Y9CFTexbDNUK3zXORS/n7haAxtGyfC6jzOg3KFlHIckVz/dOMIT11+ml3erpd2kqnPi/b6e73EPMkHfETDJWKRPuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708365797; c=relaxed/simple;
-	bh=fN+7T2/ux9us6GFbiDO1by9SUDxjo7ndhirheQxhNXg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bepM8ERrso06Ez8EGnkVmhsOiCF3QnebYpn6K4GKvFiTFmIgV7ZIjNqkrJDhbWBu3YdWbM6kDz9Gs8pFBZzZdvmDMboTUbj9JbQCx+m4gsfj6Aal8f2pfcRwxjk+LqjbnZZaEqBJB2CAw5hkgpEYaVNgldl9kWD2yL8nU8r6jng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qfqY9KQ2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C34AC433C7;
-	Mon, 19 Feb 2024 18:03:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708365796;
-	bh=fN+7T2/ux9us6GFbiDO1by9SUDxjo7ndhirheQxhNXg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qfqY9KQ2bRFKYwmsH0uzlhQyYe3wi0lQtfF7J8Or2LPWCBwIxdtqUsol0P/TlsPNu
-	 f1BUTTd8v03NxJR9Z0g7YY2jn/DzGiBkgj+7joJ6q0wQtM6sPhewKU/xHuu6GCZQ5p
-	 rWMW75ggpoPmQYwiqKmNBEC/RAyW+ATsoH4mYNfSDWRVO257rLekRm9FP+wh+Lr01m
-	 +9uQfeHQK7NEMIUsbHpl36G6qlB/KqsksKYBm7o8VDBvj9+I6LpLyMFPbXdCoV06v0
-	 MSXnA/g8Yq91VWXrESrD1xa+CDhVggBP5/3ZKsVL1zs/FWwOqOL/YAHcB0w11B4cCO
-	 p6B0OBYRWtBFA==
-Date: Mon, 19 Feb 2024 18:03:03 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v5 09/18] arm64: dts: qcom: qrb5165-rb5: model the PMU of
- the QCA6391
-Message-ID: <48164f18-34d0-4053-a416-2bb63aaae74b@sirena.org.uk>
-References: <20240216203215.40870-1-brgl@bgdev.pl>
- <20240216203215.40870-10-brgl@bgdev.pl>
+	s=arc-20240116; t=1708366092; c=relaxed/simple;
+	bh=4eiR7frSCTGgzT1qgBT77iEwpFx1D8aIPX5PZQXLens=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RAwec+vBX3/Gt+jPbAgp7wjqQN85gQ+IvXiqJqAg0+eOL33l/egmkef2AnE6jDWf+CrJwErx6bcAYU368H3CFRz8ROeFltSSPwCd7LJfVn9tsNdqbdkfDB/aSSOtm4udrYI8o57MQo8WzLxj0q2wQUgPO5Az6S7gdqH0hSX+I3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AEPrsa0U; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41JETmFc030847;
+	Mon, 19 Feb 2024 18:08:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=cAVBL+O
+	daeFKi9D704TrJJ3AmyfV5HyuZTFTsrwuAz0=; b=AEPrsa0UavSgWBgdwysjGMP
+	SDncXP9s6sOWvD0ikXSMQACmdsheMCcx56eCuUFrShfY4HKEjN1qveFvdREsi4gB
+	66Yas55F/vhj+MflhKfjhgCoj4Oh5YmlKK0Z/FXWrTyAE5C8R3WituynzK6lIBEe
+	P9ZEdWzIfLqH4VLgqTYGBHCxMknXcnDyM0lytU7Onw0HroujIX9Rvc/fTjiMDWbk
+	C+3ZGixG3hIdSRRVBJBztYuQP0muPuFujXO4LB+IEBoHKuxYwF/yTxLrJC7AsrRW
+	mPuajggCP3T6pQRyaN/PUY4WP80XdUszFuIuscP4pL++D3buAehgXG4KUWyS8YQ=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wc6te8rvw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Feb 2024 18:08:08 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41JI87MW029106
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Feb 2024 18:08:07 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 19 Feb 2024 10:08:07 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH] Revert "bus: mhi: core: Add support for reading MHI info from device"
+Date: Mon, 19 Feb 2024 11:07:48 -0700
+Message-ID: <20240219180748.1591527-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6Ec75K1sOfBNW6oj"
-Content-Disposition: inline
-In-Reply-To: <20240216203215.40870-10-brgl@bgdev.pl>
-X-Cookie: Kleeneness is next to Godelness.
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ypKP3VoO7puJcXBGahpURqVWREplP5Uc
+X-Proofpoint-ORIG-GUID: ypKP3VoO7puJcXBGahpURqVWREplP5Uc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-19_15,2024-02-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402190136
 
+This reverts commit 3316ab2b45f6bf4797d8d65b22fda3cc13318890.
 
---6Ec75K1sOfBNW6oj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The MHI spec owner pointed out that the SOC_HW_VERSION register is part
+of the BHIe segment, and only valid on devices which implement BHIe.
+Only a small subset of MHI devices implement BHIe so blindly accessing
+the register for all devices is not correct. Also, since the BHIe
+segment offset is not used when accessing the register, any
+implementation which moves the BHIe segment will result in accessing
+some other register.  We've seen that accessing this register on AIC100
+which does not support BHIe can result in initialization failures.
 
-On Fri, Feb 16, 2024 at 09:32:06PM +0100, Bartosz Golaszewski wrote:
+We could try to put checks into the code to address these issues, but in
+the roughly 4 years this functionality has existed, no one has used it.
+Easier to drop this dead code and address the issues if anyone comes up
+with a real world use for it.
 
-> +			vreg_pmu_aon_0p59: ldo1 {
-> +				regulator-name = "vreg_pmu_aon_0p59";
-> +				regulator-min-microvolt = <540000>;
-> +				regulator-max-microvolt = <840000>;
-> +			};
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ drivers/bus/mhi/host/init.c     | 12 ------------
+ drivers/bus/mhi/host/internal.h |  6 ------
+ include/linux/mhi.h             | 17 -----------------
+ 3 files changed, 35 deletions(-)
 
-That's a *very* wide voltage range for a supply that's got a name ending
-in _0_p59 which sounds a lot like it should be fixed at 0.59V.
-Similarly for a bunch of the other supplies, and I'm not seeing any
-evidence that the consumers do any voltage changes here?  There doesn't
-appear to be any logic here, I'm not convinced these are validated or
-safe constraints.
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 944da46e6f11..44f934981de8 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -914,7 +914,6 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 	struct mhi_chan *mhi_chan;
+ 	struct mhi_cmd *mhi_cmd;
+ 	struct mhi_device *mhi_dev;
+-	u32 soc_info;
+ 	int ret, i;
+ 
+ 	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->regs ||
+@@ -989,17 +988,6 @@ int mhi_register_controller(struct mhi_controller *mhi_cntrl,
+ 		mhi_cntrl->unmap_single = mhi_unmap_single_no_bb;
+ 	}
+ 
+-	/* Read the MHI device info */
+-	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs,
+-			   SOC_HW_VERSION_OFFS, &soc_info);
+-	if (ret)
+-		goto err_destroy_wq;
+-
+-	mhi_cntrl->family_number = FIELD_GET(SOC_HW_VERSION_FAM_NUM_BMSK, soc_info);
+-	mhi_cntrl->device_number = FIELD_GET(SOC_HW_VERSION_DEV_NUM_BMSK, soc_info);
+-	mhi_cntrl->major_version = FIELD_GET(SOC_HW_VERSION_MAJOR_VER_BMSK, soc_info);
+-	mhi_cntrl->minor_version = FIELD_GET(SOC_HW_VERSION_MINOR_VER_BMSK, soc_info);
+-
+ 	mhi_cntrl->index = ida_alloc(&mhi_controller_ida, GFP_KERNEL);
+ 	if (mhi_cntrl->index < 0) {
+ 		ret = mhi_cntrl->index;
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 091244cf17c6..5fe49311b8eb 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -15,12 +15,6 @@ extern struct bus_type mhi_bus_type;
+ #define MHI_SOC_RESET_REQ_OFFSET			0xb0
+ #define MHI_SOC_RESET_REQ				BIT(0)
+ 
+-#define SOC_HW_VERSION_OFFS				0x224
+-#define SOC_HW_VERSION_FAM_NUM_BMSK			GENMASK(31, 28)
+-#define SOC_HW_VERSION_DEV_NUM_BMSK			GENMASK(27, 16)
+-#define SOC_HW_VERSION_MAJOR_VER_BMSK			GENMASK(15, 8)
+-#define SOC_HW_VERSION_MINOR_VER_BMSK			GENMASK(7, 0)
+-
+ struct mhi_ctxt {
+ 	struct mhi_event_ctxt *er_ctxt;
+ 	struct mhi_chan_ctxt *chan_ctxt;
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index 474d32cb0520..77b8c0a26674 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -320,10 +320,6 @@ struct mhi_controller_config {
+  * @hw_ev_rings: Number of hardware event rings
+  * @sw_ev_rings: Number of software event rings
+  * @nr_irqs: Number of IRQ allocated by bus master (required)
+- * @family_number: MHI controller family number
+- * @device_number: MHI controller device number
+- * @major_version: MHI controller major revision number
+- * @minor_version: MHI controller minor revision number
+  * @serial_number: MHI controller serial number obtained from BHI
+  * @mhi_event: MHI event ring configurations table
+  * @mhi_cmd: MHI command ring configurations table
+@@ -368,15 +364,6 @@ struct mhi_controller_config {
+  * Fields marked as (required) need to be populated by the controller driver
+  * before calling mhi_register_controller(). For the fields marked as (optional)
+  * they can be populated depending on the usecase.
+- *
+- * The following fields are present for the purpose of implementing any device
+- * specific quirks or customizations for specific MHI revisions used in device
+- * by the controller drivers. The MHI stack will just populate these fields
+- * during mhi_register_controller():
+- *  family_number
+- *  device_number
+- *  major_version
+- *  minor_version
+  */
+ struct mhi_controller {
+ 	struct device *cntrl_dev;
+@@ -407,10 +394,6 @@ struct mhi_controller {
+ 	u32 hw_ev_rings;
+ 	u32 sw_ev_rings;
+ 	u32 nr_irqs;
+-	u32 family_number;
+-	u32 device_number;
+-	u32 major_version;
+-	u32 minor_version;
+ 	u32 serial_number;
+ 
+ 	struct mhi_event *mhi_event;
+-- 
+2.34.1
 
---6Ec75K1sOfBNW6oj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXTl9YACgkQJNaLcl1U
-h9AVgQf/Zstl1AGU01IOsCVbEoRgtQnUVnvdCJmcKksR0WQRA9Ez7ZgGXt2kYGCV
-fJfjGIuSto9RcICB8ifx7MrgId9TmPvp9N9Duh87hY01bzM7kmk/pXX7HMBJlU4T
-c6IC7feW5hVtwO7i+xWu4xEjmtGtBPcyhkNuN5x/niH5MHtFqqsBsd7GKz36dJL0
-Ow7999ejPBXXTJSWrIUHN2SQyPmr/06rondsVSlNct8OVA/sjIjPtv7z/642ETwR
-QgVxlgM46BBusYa9IzPbpnE60VsWiecTGBALHtpwtM83iSdQhNnoNJf1l1khPwsp
-za6sxl3vD4FWj+gFYkh1oMTuE/Jp1g==
-=WZdq
------END PGP SIGNATURE-----
-
---6Ec75K1sOfBNW6oj--
 
