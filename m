@@ -1,167 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-11662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4C2B85A223
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:39:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0541285A285
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:53:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F5ECB20B4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:39:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 892601F215B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:53:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F6072C861;
-	Mon, 19 Feb 2024 11:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C9F22E64F;
+	Mon, 19 Feb 2024 11:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="cQHVru/F"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WHlmVRVs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch [185.70.40.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D248F2C6B9;
-	Mon, 19 Feb 2024 11:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB542E647
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 11:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708342741; cv=none; b=qVb6PiwRYDjF8sokedvdLDjkIf0PxX1JlU4R//DlwbV1+SN9Lxvt/4MjAUPbtQxoC49uwYxs3qoZnoEyRGJsDMiVEBrkENkS1YtiJ2IF7JtnE6oj98ekTQoYVJ2HwD0bRYW6+QZREklGPj63+5urboy+saw58vGb4ticWBEq2lQ=
+	t=1708343582; cv=none; b=ndXjUxlsi9DLpgxnmXI/SldfuzFxNn4yLkfmybP6QqOLC4Po+AWvgNoBRNj9oT7t1oXgBOLVVqk9w0975a/OVbsQf+9gDhSRNK+5AWlPCcx11JPbrK3GvO/QdiIOB4OhDgOiv9ojYEVv118u+gDMn0DFnihJJkT/UZvR5XB43Oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708342741; c=relaxed/simple;
-	bh=h1IIIWSe4qRLlBhLMEFmMIBQFe/eyV1n6swvwGxnTbo=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Z4W2XEJ0epWJBSsZqIKyGa/pJ/487JJ+OQem3wzsSVQIOwxY85KyWvN0/D/yrOrVOXDZJhCQfsodaaweFnLYc5iMiIBFcFKaV5zjkzggxehQt/eoONCn8DOu6Xfk/NmKsUaTm9OdVMR45nLYLqsKK+XmiWXyDkp8VqgOuDbdsUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=cQHVru/F; arc=none smtp.client-ip=185.70.40.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1708342731; x=1708601931;
-	bh=RghR81ILLrY+u/jsCEPpXuUrAFRZYkdrd5pCcF3xLH0=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=cQHVru/FnkVeZV6g1iU74VPlLwzYoItNu6+AYcp+QpUmOSMVw1bjptzzcjP39KR21
-	 69ryUwJ1iWHxnMl969SnhMsGzV+0ccrlEQtg98vTyUSkzFvQT3FY1VIjFQ9h5Zsm1n
-	 zrk0IZNuAXVQL5tLot/ML50iESDO5t3bkK3wucQiD+Wth0z6GmME3sI8chnvOij4PR
-	 HRAeydwZtrMpVILa6NgrZmhKN7urO1INzbhZeyU+nSL4UidhWkDa9biJOe6G9YXNRi
-	 cin97ASuCSsT9AAnV5j15uAdalS9BnWU97JVIqizJ4vxbajR3cvDVsYQ1SLpF7NUhr
-	 k0FeEqpbWeE1A==
-Date: Mon, 19 Feb 2024 11:38:33 +0000
-To: linux-kernel@vger.kernel.org
-From: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Joe Mason <buddyjojo06@outlook.com>
-Subject: [PATCH] arm64: dts: qcom: msm8916-samsung-fortuna: Add touchscreen
-Message-ID: <20240219113823.4189-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
+	s=arc-20240116; t=1708343582; c=relaxed/simple;
+	bh=psLxC6s9LHoyLa6JFtDB3Lh1RZsR5Kss2pXXzs/r4iU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ejiHvnNyrNgaBLVPAMRIFIwnNzirOl3qBY8bVRgOeKAGAl+rOWK9TxHhh6oZ6PZ1Ft4X6zNyxSt+dLak8C1IYGPSd74q2tIjOwZu11da6Ke/l1P71y1hy9e3QRdY97ltv6aJJMmWuQ0Nz+4pGs6apEwswotK221BzuHbK8u6j90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WHlmVRVs; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dcbd1d4904dso4599747276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 03:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708343579; x=1708948379; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eDlnERxsGwtLXki6krZHreIryztOLvxcnQnuu/21/BE=;
+        b=WHlmVRVs0RxyaTX9lCDGXBbBcS3spZQ28Rt+fU70oFTsdWz85VoXZfakojk+g44EUm
+         6rgvYh6orQjTvMIObP/joX5DO+o8WRXLjdE8tBmwx1dN+xwzPoC9Lg1ZxKFIxIjw8bI6
+         ERpoufPL8GcdsqJOWXLVpzoIUWS3334N9pDd9LhYiqdDDAMHz5z1qXpI8E8NswOiPQ85
+         GYuT2/4pA4Of/rQDZUpwvujkskiq1grB2feKfxKqbWlEZCJfw0a6bgz+GEJ2WB5lEn+4
+         xNAhKPX4QmJ88UYxMOmjOjBYSOwjMHj9SaLr1UPolMdEzu/gfa0ydNsbPaG66yfbUPKK
+         zzig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708343579; x=1708948379;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eDlnERxsGwtLXki6krZHreIryztOLvxcnQnuu/21/BE=;
+        b=NAX5g6D6WRqgT16EzkCcu5mNckpo+Fue6qd3NoTB7aSs+bILxvyFz4W89+WOpSk7pv
+         9pKFpjE0KO2xSdaDinNeoLIgXP1TksT7zz6vZLzns0QG9ffsCVoNJRcNxMh4am5TFBuD
+         WIrG37b7kUg1IQM8YiiqM39dPVt2XqqiLzgkP2jscoEe/juxBhZaRpwD1hMzlyR3bmLf
+         WzKziH2Z1QiLS+rrlbab+Gfyd75EEC2pG8fR0XaEZx1F/Vaf+hiw+GBWcfPnprmbqpO0
+         ITW01oo0a25dl0BNogaqyhOBrDJFIP1VDFDLYJbLeHtMkzkITesRZJrW7W/p/I1y5BE7
+         zi7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUi5XXZp2Iu6MgCzGUxo250x0UjU7z8oLlIUS1hk3xvZLFvVc5i6+fmbq1hrqqLyl812jXAInQ/mpBZXCH2MJ9kSh02urJiWYiUGF8QVw==
+X-Gm-Message-State: AOJu0Yxcrl+QD8GiwNRrwgDZGeFtEFx/lO8V71CFKeF9L8puc1X/gpB9
+	xxQ9ztk/lamjheuiOs+qvVanomy57qtz1zyVqSXGGB7l6zfJNkhLLc0RM+nUed+Lwowsfi4ipjr
+	rNqghuMuFl3Gc2toRviM/atyFvk5Pxv4c2+Ij/w==
+X-Google-Smtp-Source: AGHT+IEPnDswYQFtDH941jPPgVJlGCvd1CpCQH5qqUk8Fa/hDLMhAwQb5bV+etm3XhmW+ddV9H3F2J9t1vD4jdi3+lU=
+X-Received: by 2002:a25:b322:0:b0:dcd:2aa3:d73b with SMTP id
+ l34-20020a25b322000000b00dcd2aa3d73bmr9660313ybj.50.1708343579395; Mon, 19
+ Feb 2024 03:52:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20240208-fd-dpu-debug-timeout-v2-1-9f907f1bdd87@linaro.org>
+ <1cb90bff-ce5b-c6d1-a3df-24f6306f833a@quicinc.com> <CAA8EJpotiHKT_NYphDs0-vhpvsybgTW281XDYbteUx8qOX=v4g@mail.gmail.com>
+ <63bba15b-6d8d-5ba8-d99d-8cd2dd763262@quicinc.com>
+In-Reply-To: <63bba15b-6d8d-5ba8-d99d-8cd2dd763262@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 19 Feb 2024 13:52:48 +0200
+Message-ID: <CAA8EJpqHmVBry9FyJ6HRB+qdVcVNN3Q7rHZz1daZL1Sz6yeZ=A@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dpu: make "vblank timeout" more useful
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Joe Mason <buddyjojo06@outlook.com>
+On Wed, 14 Feb 2024 at 22:36, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 2/14/2024 11:20 AM, Dmitry Baryshkov wrote:
+> > On Wed, 14 Feb 2024 at 20:02, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 2/8/2024 6:50 AM, Dmitry Baryshkov wrote:
+> >>> We have several reports of vblank timeout messages. However after some
+> >>> debugging it was found that there might be different causes to that.
+> >>> To allow us to identify the DPU block that gets stuck, include the
+> >>> actual CTL_FLUSH value into the timeout message and trigger the devcore
+> >>> snapshot capture.
+> >>>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>> ---
+> >>> Changes in v2:
+> >>> - Added a call to msm_disp_snapshot_state() to trigger devcore dump
+> >>>     (Abhinav)
+> >>> - Link to v1: https://lore.kernel.org/r/20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org
+> >>> ---
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
+> >>>    1 file changed, 2 insertions(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> >>> index d0f56c5c4cce..a8d6165b3c0a 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> >>> @@ -489,7 +489,8 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
+> >>>                (hw_ctl->ops.get_flush_register(hw_ctl) == 0),
+> >>>                msecs_to_jiffies(50));
+> >>>        if (ret <= 0) {
+> >>> -             DPU_ERROR("vblank timeout\n");
+> >>> +             DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
+> >>> +             msm_disp_snapshot_state(phys_enc->parent->dev);
+> >>
+> >>
+> >> There is no rate limiting in this piece of code unfortunately. So this
+> >> will flood the number of snapshots.
+> >
+> > Well... Yes and no. The devcoredump will destroy other snapshots if
+> > there is a pending one. So only the console will be flooded and only
+> > in case when MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE is enabled.
+> >
+>
+> Yes, true but at the same time this makes it hard to capture a good dump
+> as potentially every vblank you could timeout so this destroy/create
+> cycle wont end.
 
-Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
-touchscreen. Add it together with the necessary fixed-regulator to the
-device tree.
+Excuse me, maybe I miss something. On the first timeout the snapshot
+is created. It is held by the kernel until it is fully read out from
+the userspace. Other snapshots will not interfere with this snapshot.
 
-Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
-[Raymond: Move to fortuna-common. Use interrupts-extended]
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
----
- .../qcom/msm8916-samsung-fortuna-common.dtsi  | 49 +++++++++++++++++++
- .../qcom/msm8916-samsung-rossa-common.dtsi    |  7 +++
- 2 files changed, 56 insertions(+)
+Or are you worried that snapshotting takes time, so taking a snapshot
+will also interfere with the vblank timings for the next vblank?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b=
-/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-index c2800ad2dd5b..6fe0a08db08e 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-@@ -66,6 +66,19 @@ reg_motor_vdd: regulator-motor-vdd {
- =09=09pinctrl-0 =3D <&motor_en_default>;
- =09=09pinctrl-names =3D "default";
- =09};
-+
-+=09reg_vdd_tsp_a: regulator-vdd-tsp-a {
-+=09=09compatible =3D "regulator-fixed";
-+=09=09regulator-name =3D "vdd_tsp_a";
-+=09=09regulator-min-microvolt =3D <3000000>;
-+=09=09regulator-max-microvolt =3D <3000000>;
-+
-+=09=09gpio =3D <&tlmm 73 GPIO_ACTIVE_HIGH>;
-+=09=09enable-active-high;
-+
-+=09=09pinctrl-0 =3D <&tsp_en_default>;
-+=09=09pinctrl-names =3D "default";
-+=09};
- };
-=20
- &blsp_i2c1 {
-@@ -94,6 +107,28 @@ fuel-gauge@35 {
- =09};
- };
-=20
-+&blsp_i2c5 {
-+=09status =3D "okay";
-+
-+=09touchscreen@20 {
-+=09=09compatible =3D "zinitix,bt541";
-+=09=09reg =3D <0x20>;
-+
-+=09=09interrupts-extended =3D <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+
-+=09=09touchscreen-size-x =3D <540>;
-+=09=09touchscreen-size-y =3D <960>;
-+
-+=09=09vcca-supply =3D <&reg_vdd_tsp_a>;
-+=09=09vdd-supply =3D <&pm8916_l6>;
-+
-+=09=09pinctrl-0 =3D <&tsp_int_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09linux,keycodes =3D <KEY_APPSELECT KEY_BACK>;
-+=09};
-+};
-+
- &blsp_uart2 {
- =09status =3D "okay";
- };
-@@ -200,4 +235,18 @@ sdc2_cd_default: sdc2-cd-default-state {
- =09=09drive-strength =3D <2>;
- =09=09bias-disable;
- =09};
-+
-+=09tsp_en_default: tsp-en-default-state {
-+=09=09pins =3D "gpio73";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
-+=09tsp_int_default: tsp-int-default-state {
-+=09=09pins =3D "gpio13";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-index 42843771ae2a..ee55c4669e5f 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-@@ -14,3 +14,10 @@ muic: extcon@14 {
- =09=09pinctrl-names =3D "default";
- =09};
- };
-+
-+&blsp_i2c5 {
-+=09status =3D "disabled";
-+
-+=09/* Touchscreen varies depending on model variant */
-+=09/delete-node/ touchscreen@20;
-+};
---=20
-2.39.2
-
-
+-- 
+With best wishes
+Dmitry
 
