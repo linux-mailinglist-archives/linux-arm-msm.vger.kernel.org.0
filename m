@@ -1,131 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-11646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A1A485A0DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:23:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9017485A0F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:27:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF8C7281BD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:23:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48EE2283610
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:27:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 255D025578;
-	Mon, 19 Feb 2024 10:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E57FF28DA7;
+	Mon, 19 Feb 2024 10:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kZ6kbIYt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J2SZ8TRl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7BD25626
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 10:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94F2288D9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 10:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708338197; cv=none; b=k75QEJS4YTgVXyvc7tyzzpgNxKRiI9omZu5YmJue9XQ+9c9kHs4KpBgqgB5gjTZZWMr2KiL+jvvihOeSm32hEQg4cf3d5/4bznu74tI/U3G91ueoCnTWmL2lIQXexlqSakb2EPr/2z47KtQO8wAIu2n1sNVc4RvnylV/cavZFHw=
+	t=1708338412; cv=none; b=LwAzbiTm995+j5SPD+Ib7/e603Pjb9+Hi1e+T38XxMuvpNCN68lUO+VYA1EmgeXNUH/gorY4oxxyqFJfKm+vfFR5ZKye+WRJU2PpjEfYkV3BqqbS4jqjs7SdysqmL+qh32Vczlg/6ctHqPxq8G3daJklMTRQeEvi4Cp1h3yBTZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708338197; c=relaxed/simple;
-	bh=RWXNHUGEvBUqJCoB+kDBknBCopB3TrSyunf4vw0H9b4=;
+	s=arc-20240116; t=1708338412; c=relaxed/simple;
+	bh=lCcUA04zUjPlqcbDjjJroqxQOZ61QPH+jdJBen0HMLo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OCGc7ivfP198xsG9eHY9c8A5ti7K5l4C0qd+8U9bJPB179hQg+WQa57DIjSBeqnOC0PmhFCR0K1PS+shCiC94dyKUrYgeNl2Xk0TNIAbKEC2Qvdg0GjoJci55hmYqV1UYNguSRtQY77GtU4GYUarXcqGKBkaBck3WK+fz0EuDPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kZ6kbIYt; arc=none smtp.client-ip=209.85.219.182
+	 To:Cc:Content-Type; b=mvHGwAYQ5xSByBwqp8VKTs3oX1TyFkOA0dxM46iSVc52rzmM2qoMqV69DAwLBs/BdUz24zHzonQbCBfCEL0u2A1j1HBAJv2rvt4sjC3ErpuHKUldSxdpyBhdpldoDj860mwPrk6lNj0Xk3Lba+Kg8MpUsvbadUKQzrqUtFyqh6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J2SZ8TRl; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so3650508276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 02:23:15 -0800 (PST)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-603fd31f5c2so42811877b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 02:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708338194; x=1708942994; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708338410; x=1708943210; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=P1ZbvUj4g/1dmV9lTG+hpiBDBBa56SEI8So/qgiUsAU=;
-        b=kZ6kbIYttBRbtKi6cPWzdZ7AOKnsKuiU+45xK5OibNJaM8rvdWGITOMrZ5JLM2Cf+E
-         79AmBdWjmPNqB1wIYLYRJIuyW0O7mrPHqZXYTq/x/MJ3jzzrCK+drSD4OIAD7HIL/1NL
-         nwr4iQwIi8NTHnMb+L065r2LJTqK9zpy0/v35hqV6g1xOVCoM8Emhx7fBL0cRJ/L7xo5
-         dzUJCzJ5oT72zQaNm2f7go6xPfXiN7WiUedol08PSU7gGPkaer9dF09/u5Px+OFukkkV
-         3XtBf8k+zzfzvV3Xa813+x2AQHqjgMlDRWORJ1NpoEK4RaVVgA8YKwu3w7IgzCRB28uS
-         t8Sw==
+        bh=TmyLIGmDRBMuA9/uAiTaewm8j0zrsoCAkXewuup87r0=;
+        b=J2SZ8TRlXUXjErTvCm7meKfgsK876x8PjR9Lrc9V6qfoVUkCUC4BNRI4xrXnLC/Uee
+         Y8R5YdV5KqE1BIL5V2PIFp3QGWnLdp3LDS1OlZRdKJkASqCNEZdzN8ScB6au+leYAtjI
+         EKsuIHFKb11X4C/iwunFLucXzVsXtIlutqbEBw1+9Ctbt4BDYkuh2U2rhC7ZEv9KYTXj
+         IePMttvXdtYHsE3+ClHNpcrsrVYfeIH4rCK5OVT119AMhEms/2ud9Uyyg4yR9+I1igY2
+         E24p80Jdrk4UrIHyeMr6xvls2gYwklgZXZt1nh2v8XJDQNPjlO2Mc1rRtz3f6qcjK9vS
+         IcKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708338194; x=1708942994;
+        d=1e100.net; s=20230601; t=1708338410; x=1708943210;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=P1ZbvUj4g/1dmV9lTG+hpiBDBBa56SEI8So/qgiUsAU=;
-        b=iusYsbF3uOxnSnZmlpWfiV/i6Ia46cEQBcAXvD4I0+Lfkh+4hqW3sJu5eeUcLfeewb
-         C9Bh6EixdqQirkYVquBppe7XuwFTiv6QJdnxwNcLrxar6WKI788e+Nv/uZ979WQiVi4+
-         4+KzAHWPXelW58FwelFSigQpMRRPhdsSLyRH5mDdIEY9ZzYsLyyKz4nlAJqgEV6AObDc
-         TdP+qKX6H9Ki3ArQInUpPZpomd5hMMMzeEfyUacrLi4OmLBzRdLAzSCWWpkmABJTAS1L
-         8+0Nq88mEtYwtMg4CE4+bG6OY7GJ8u9mR7aq4BWNVAUQlV6XNhwqE/spF8O2raaV2Piz
-         BhlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXlWLyzKWUkQ021VRIn5TrK0J7MQDBnbm+GJ5RMb3BHnJd2X5V/wXiURcG7VO6czr5xCm/QD9bG8hiA8mRV8M5ojwwDjIwJ1fAD5o89ew==
-X-Gm-Message-State: AOJu0YwBHOxRWPMkMyzkZ7/s/a3ruqwokbZaXB5t8DIKHVMxgEuFXcBE
-	rhhfB00mdyk5QSVJfgOnzoQZpVaX4BhmpDqTDfa4Oev4ZkCwREOk80AbVXzTmeNa7pMu4RyaDpu
-	GiV2gf30Cz+K6+7WlrFKi7r9Q4VXuGC7TFwj5dQ==
-X-Google-Smtp-Source: AGHT+IH5oIcfK+pzIlzufb2Y2g0Srso+To9j4nOMGd/Wz87mtK+W4F/PAtewgD0Ixr6xM+851B8U0nnEnWifG9DTxEk=
-X-Received: by 2002:a25:a348:0:b0:dcd:3663:b5e5 with SMTP id
- d66-20020a25a348000000b00dcd3663b5e5mr9035958ybi.25.1708338194451; Mon, 19
- Feb 2024 02:23:14 -0800 (PST)
+        bh=TmyLIGmDRBMuA9/uAiTaewm8j0zrsoCAkXewuup87r0=;
+        b=tH/ZHdOYyyHnJ5Co5kn1JY6dWQhmLAOeJUybomZz9jgW1z9ZkzRvRCXl+XJXxNjMLx
+         Oupn0LykdQQMRUgeG8GdwSSi8jAoqdLFd+JL0jzOj7PeDWSF+Q57pLW1zM4HLTBaNTko
+         86m8YepUW6OR6mVsf0HrWKpMrWhhntusZvEqk/kEZMdgASJTowvuFztSjWKO3lMzMmtA
+         lpJYZxolfZfbNlDhCHKnznkzyvqd7H1M3HhmffD7N4h/l9KrT9BO+zRsKkeOA/gFUhIg
+         UqhU/mbjV6caWmeVNBD2qgZNAjELNFvxZaYMTXCPuT8Yooo0904XWxA0dIa0hxKqAnvy
+         eP+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUWXaCUfpAK5FaLAL5U/+0uNnRfjkrtKHaBPdY6txqCT409ZL2IfKgFA4F+OirZ6kebJPmu5IZ5EjPXKv6rXl+SaiiEvmpTRRYJiX3Jtg==
+X-Gm-Message-State: AOJu0YxqA1dIc7xkxmygamaQVQ+wgc6ZnzJ/4q6MxxG3b5HK6T4SQ1N3
+	DcE1GcMmO2cNkmbBVqPEeOczmOPZD7N9YdXrlyEpSOKu0/b20Yaq3kcbj1DkwF4ukiWhmIshNPF
+	eU0md7wz4x2yE56mw1rdjUVBkvPFKxmDBKDXpHg==
+X-Google-Smtp-Source: AGHT+IH8Xj1z0uS8Qm7X6TratBsLyV3NzUK9GlyrRDCdO1y8h0WcX4ALGme/oMWCWglNot9Mbw3Z17eahBSzxpWPP2s=
+X-Received: by 2002:a81:84cc:0:b0:608:427:bf61 with SMTP id
+ u195-20020a8184cc000000b006080427bf61mr4616175ywf.19.1708338409779; Mon, 19
+ Feb 2024 02:26:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
- <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com> <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
- <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com> <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
- <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com> <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
- <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com> <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
- <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
-In-Reply-To: <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
+References: <20240216203215.40870-1-brgl@bgdev.pl> <CAA8EJppt4-L1RyDeG=1SbbzkTDhLkGcmAbZQeY0S6wGnBbFbvw@mail.gmail.com>
+ <e4cddd9f-9d76-43b7-9091-413f923d27f2@linaro.org> <CAA8EJpp6+2w65o2Bfcr44tE_ircMoON6hvGgyWfvFuh3HamoSQ@mail.gmail.com>
+ <4d2a6f16-bb48-4d4e-b8fd-7e4b14563ffa@linaro.org>
+In-Reply-To: <4d2a6f16-bb48-4d4e-b8fd-7e4b14563ffa@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 19 Feb 2024 12:23:03 +0200
-Message-ID: <CAA8EJppP_bAPRH7Upnq8dO7__xQPOJ6F_Lc-fpRAcutKKzk0eA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
- driver probe
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Date: Mon, 19 Feb 2024 12:26:39 +0200
+Message-ID: <CAA8EJpq=iyOfYzNATRbpqfBaYSdJV1Ao5t2ewLK+wY+vEaFYAQ@mail.gmail.com>
+Subject: Re: [PATCH v5 00/18] power: sequencing: implement the subsystem and
+ add first users
+To: neil.armstrong@linaro.org
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 18 Feb 2024 at 06:29, Kathiravan Thirumoorthy
-<quic_kathirav@quicinc.com> wrote:
+On Mon, 19 Feb 2024 at 11:42, <neil.armstrong@linaro.org> wrote:
 >
->
->
-> On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
-> > On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
-> > <quic_kathirav@quicinc.com> wrote:
+> On 19/02/2024 10:22, Dmitry Baryshkov wrote:
+> > On Mon, 19 Feb 2024 at 10:14, Neil Armstrong <neil.armstrong@linaro.org> wrote:
 > >>
-> >>
-> >> <snip>
-> >>
-> >>>> Reason being, to access the NSSCC clocks, these GCC clocks
-> >>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
-> >>>> should be turned ON. But CCF disables these clocks as well due to the
-> >>>> lack of consumer.
+> >> On 18/02/2024 13:53, Dmitry Baryshkov wrote:
+> >>> On Fri, 16 Feb 2024 at 22:33, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >>>>
+> >>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>>>
+> >>>> First, I'd like to apologize for the somewhat chaotic previous iterations
+> >>>> of this series and improper versioning which was rightfully pointed out
+> >>>> to me. I figured that the scope changed so much that it didn't make sense
+> >>>> to consider previous submissions part of the same series as the original
+> >>>> RFC but others thought otherwise so this one becomes v5 and I'll keep the
+> >>>> versioning going forward.
+> >>>>
+> >>>> This is the summary of the work so far:
+> >>>>
+> >>>> v1: Original RFC:
+> >>>>
+> >>>> https://lore.kernel.org/lkml/20240104130123.37115-1-brgl@bgdev.pl/T/
+> >>>>
+> >>>> v2: First real patch series (should have been PATCH v2) adding what I
+> >>>>       referred to back then as PCI power sequencing:
+> >>>>
+> >>>> https://lore.kernel.org/linux-arm-kernel/2024021413-grumbling-unlivable-c145@gregkh/T/
+> >>>>
+> >>>> v3: RFC for the DT representation of the PMU supplying the WLAN and BT
+> >>>>       modules inside the QCA6391 package (was largely separate from the
+> >>>>       series but probably should have been called PATCH or RFC v3):
+> >>>>
+> >>>> https://lore.kernel.org/all/CAMRc=Mc+GNoi57eTQg71DXkQKjdaoAmCpB=h2ndEpGnmdhVV-Q@mail.gmail.com/T/
+> >>>>
+> >>>> v4: Second attempt at the full series with changed scope (introduction of
+> >>>>       the pwrseq subsystem, should have been RFC v4)
+> >>>>
+> >>>> https://lore.kernel.org/lkml/20240201155532.49707-1-brgl@bgdev.pl/T/
+> >>>>
+> >>>> ===
+> >>>>
+> >>>> With that out of the way, I'd like to get down to explaining the two
+> >>>> problems I'm trying to solve.
+> >>>>
+> >>>> Problem statement #1: Dynamic bus chicken-and-egg problem.
+> >>>>
+> >>>> Certain on-board PCI devices need to be powered up before they are can be
+> >>>> detected but their PCI drivers won't get bound until the device is
+> >>>> powered-up so enabling the relevant resources in the PCI device driver
+> >>>> itself is impossible.
+> >>>>
+> >>>> Problem statement #2: Sharing inter-dependent resources between devices.
+> >>>>
+> >>>> Certain devices that use separate drivers (often on different busses)
+> >>>> share resources (regulators, clocks, etc.). Typically these resources
+> >>>> are reference-counted but in some cases there are additional interactions
+> >>>> between them to consider, for example specific power-up sequence timings.
+> >>>>
+> >>>> ===
+> >>>>
+> >>>> The reason for tackling both of these problems in a single series is the
+> >>>> fact the the platform I'm working on - Qualcomm RB5 - deals with both and
+> >>>> both need to be addressed in order to enable WLAN and Bluetooth support
+> >>>> upstream.
+> >>>>
+> >>>> The on-board WLAN/BT package - QCA6391 - has a Power Management Unit that
+> >>>> takes inputs from the host and exposes LDO outputs consumed by the BT and
+> >>>> WLAN modules which can be powered-up and down independently. However
+> >>>> a delay of 100ms must be respected between enabling the BT- and
+> >>>> WLAN-enable GPIOs[*].
+> >>>>
+> >>>> ===
+> >>>>
+> >>>> This series is logically split into several sections. I'll go
+> >>>> patch-by-patch and explain each step.
+> >>>>
+> >>>> Patch 1/18:
+> >>>>
+> >>>> This is a commit taken from the list by Jonathan Cameron that adds
+> >>>> a __free() helper for OF nodes. Not strictly related to the series but
+> >>>> until said commit ends in next, I need to carry it with this series.
+> >>>>
+> >>>> Patch 2/18:
+> >>>>
+> >>>> This enables the ath12k PCI module in arm64 defconfig as Qualcomm sm8650
+> >>>> and sm8550 reference platforms use it in the WCN7850 module.
+> >>>>
+> >>>> Patches 3/18-6/18:
+> >>>>
+> >>>> These contain all relevant DT bindings changes. We add new documents for
+> >>>> the QCA6390 PMU and ATH12K devices as well as extend the bindings for the
+> >>>> Qualcomm Bluetooth and ATH11K modules with regulators used by them in
+> >>>> QCA6390.
+> >>>>
+> >>>> Patches 7/18-9/18:
+> >>>>
+> >>>> These contain changes to device-tree sources for the three platforms we
+> >>>> work with in this series. As the WCN7850 module doesn't require any
+> >>>> specific timings introducing dependencies between the Bluetooth and WLAN
+> >>>> modules, while the QCA6390 does, we take two different approaches to how
+> >>>> me model them in DT.
+> >>>>
+> >>>> For WCN7850 we hide the existence of the PMU as modeling it is simply not
+> >>>> necessary. The BT and WLAN devices on the device-tree are represented as
+> >>>> consuming the inputs (relevant to the functionality of each) of the PMU
+> >>>> directly.
 > >>>
-> >>> This means that NSSCC is also a consumer of those clocks. Please fix
-> >>> both DT and nsscc driver to handle NSSNOC clocks.
+> >>> We are describing the hardware. From the hardware point of view, there
+> >>> is a PMU. I think at some point we would really like to describe all
+> >>> Qualcomm/Atheros WiFI+BT units using this PMU approach, including the
+> >>> older ath10k units present on RB3 (WCN3990) and db820c (QCA6174).
 > >>
-> >>
-> >> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
-> >> enable the same in the NSSCC driver probe.
+> >> While I agree with older WiFi+BT units, I don't think it's needed for
+> >> WCN7850 since BT+WiFi are now designed to be fully independent and PMU is
+> >> transparent.
 > >
-> > Or use them through pm_clk. This might be better, as the system
-> > doesn't need these clocks if NSSCC is suspended.
+> > I don't see any significant difference between WCN6750/WCN6855 and
+> > WCN7850 from the PMU / power up point of view. Could you please point
+> > me to the difference?
+> >
 >
+> The WCN7850 datasheet clearly states there's not contraint on the WLAN_EN
+> and BT_EN ordering and the only requirement is to have all input regulators
+> up before pulling up WLAN_EN and/or BT_EN.
 >
-> IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so
-> that, can I enable these clocks in NSSCC driver probe itself?
+> This makes the PMU transparent and BT and WLAN can be described as independent.
 
-There is a difference between PM (suspend/resume) and runtime PM.
-
+From the hardware perspective, there is a PMU. It has several LDOs. So
+the device tree should have the same style as the previous
+generations.
 
 -- 
 With best wishes
