@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-11721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69C2785A9BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:18:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FBE485A9C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:19:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7FF61F22294
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:18:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D46421F21981
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:19:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A9D446C9;
-	Mon, 19 Feb 2024 17:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB41F44C81;
+	Mon, 19 Feb 2024 17:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hqQqDI3U"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="Q9MvrLQz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F56A446CF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8682E446D3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708363116; cv=none; b=sFaXDEOk5ArM+dHyumeCrNRYV9DaEvUhsNhNOhwVrFSdD/wf+VYaJuPOz2JtLNuX4V7rnbDS4YTHAwHFKoo34Viulb6HLVTpw4NSKUyXK5iHYywr0qN938bDwlfC8bWOlvwrDX5cQXVBTKlQCY8SeAULozOyRi73DIANqycrHtY=
+	t=1708363140; cv=none; b=HZUv7NhT8mOmzxcXmJjdXMkGe+KnWdKyssfhLm8/q/jEEFxi0KXLpdxhVORwIq+QLGht/wEmiCEpenOvpni7h/gqH6IAVFcgEe3I3wYQ/3BK0YxXXzpVXbTERtTj7SaCCCMo7hW5Duw4bz6jeDQEZjL5CAYBB1bcvszWGARnVqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708363116; c=relaxed/simple;
-	bh=YtBsaUyY/Wb1P24PhdovpdBvyLf28UKpe0gDT+2Ldzs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=V3jB4R7sfp/6CTpYFbYCtgAdgLgaCGwFpxgytIVz2o+EyIprSYEWU6Pp2EaZTxwIfkUobq0tRQ455nNEjwcYRJ8oVjwTk3/SmX3kA42Lnxe6rKjM2gYdZYfDtvvig+4TDQuKYZHVEASgDydFS7vpc0ZYhyWaFgohIuTCw65GUIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hqQqDI3U; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4126cff604bso334565e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:18:32 -0800 (PST)
+	s=arc-20240116; t=1708363140; c=relaxed/simple;
+	bh=iTLM3uRb+Do/AiNS0Xb0HJmwMZOJkgfTuotbr0kn9go=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=hYdTDffXiHzXpm6g68k6X7osG1uMREpT8mVeygaVTsgASXSlx0OLrRaBHERLAdcLqHIVJPnG8f2EMLO5C43SjFCYXeAj8E1mBSmgrb/xwVVsqOsV/bxqLU6+gD3cy0CAC/EDL2nl2NBDpsW85gitIP3spsRJ96f1QdvUOGY3T5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=Q9MvrLQz; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41262eaa95aso11054315e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:18:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708363111; x=1708967911; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u7kZlLXHS08bcdnhY94K2kbmvHbCpRcAmjuD4rUAeN0=;
-        b=hqQqDI3UTvqcM1op56C6Rxsqy2oUu2x4TlZ1k0D/AcnXfFRlvHXlixoiL09wHuY+1K
-         KifV4Hj16GRpLJvi0BOxcXIq4CnWM+xP6YQUHKmBCnO7RE2i5IeI32xKsYbaQNd2b1d1
-         6SdFADJUGBsRib9RmIJVut+ivdi7b1r/F5pQI5XzvCjmj11XUnmfPv8x6/qDKQE/DAI5
-         RH8pNs4O2znG2C3/Nk7P5yKvbyRYz4mAqc4FvTQwDnYzsesCth2md4HFGFE4woDwJUXZ
-         DSCzXRT0gCrNvnEBxcUl3c+yV54GhP1tmfaI7CGTfgLR2/xAkzJRpoxj1z706POhjtCK
-         JnFg==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1708363137; x=1708967937; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5U9UMku/CkX7+3OIheqbJbG1G4XMMn+BnJs98wrGs/M=;
+        b=Q9MvrLQzzNHNQf3ohItSiMw4xmxRIlZI9SMgudEUBgOEIxOlCh4ZLKlLCmZVkracjL
+         adiK6AyrnA6K/sd09whYTE741hqQLUEvNUOTO1yiHLz87NBf6cMkBqyEeG5nxv7rp1hi
+         Z3/gJ0Q/stqixMozQt4WDsBh/kOepk2+Yne4/lH1ahT+EGCzIwTw3Un23CiEwbZwCuuY
+         s2ul96gPltO5t2LH9Z5UzmYdiAxsTol+aS9QvGOWJ8lgR7LVq7RIMUG5FevVJWmkLwyG
+         5FWXM9FV5ZZ69l4a3vNKYNNzJeL7iD9jVy50WfB6W+rzG7aiONU+9EuY0up3DHkEr1Gk
+         0R4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708363111; x=1708967911;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=u7kZlLXHS08bcdnhY94K2kbmvHbCpRcAmjuD4rUAeN0=;
-        b=YmnxSzHY1PLqhqDkNJ7/5hhsr83IqtoKY2ZQvjLO0JWH4cwe50SQvErcfi2662MoKG
-         MC5WECO2quUUakK+ZiSF5fl54uT8cqvkzaC6c+H/T0MCbup5YqZmBFWMS33Cu3LQaZrU
-         O9rOs7RlDjgn6Di0oqPtFIEYfMV3BkJ3VZxQ0SsC8Ww5tN7URTq8B3yu1foxbboHGJ89
-         pGu5lJHk/aWvnHsGPzvuDX52O0s5tk4IB+fiRSW8mD5pLhhZgGUrickkPfd5EMN0qMjP
-         iPMEvGQbcmR9s65tLckgvEI6taCdO8zHhqtdMOcaXw/1R9Be6p3qJvg1TZ/PD8QLgLkA
-         NDgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVdjDS25l2ErwiHdC9a2dNOPd/KURP3h1LZFQZ9FRjkLcYf6roiQjp/9Anp1EcpuaCwtAw7Xd9+RtS78MXcjjlW8wvP7lAJaY2L+Z6Gkw==
-X-Gm-Message-State: AOJu0Ywsg+6jk9YDXz5Wa/UWpDfQDLK/jhXekYl37rF5bQjJTZt64fgv
-	YzEehET5Tu9T4GMBUHH7VGW9ifOcnoNbGATUdKSna7XbIDtgiS8zUUWgA/9bQYE=
-X-Google-Smtp-Source: AGHT+IG6HApNAr08gNp8EANCLSEDYJY0OEJeO4RN59vBmzRJNnpiIxby3zbW1YTKTzihCko1G1T4UQ==
-X-Received: by 2002:a05:600c:5186:b0:412:6953:fc8c with SMTP id fa6-20020a05600c518600b004126953fc8cmr1379148wmb.23.1708363111460;
-        Mon, 19 Feb 2024 09:18:31 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:fe7f:ff5e:4cf1:97b9? ([2a01:e0a:982:cbb0:fe7f:ff5e:4cf1:97b9])
-        by smtp.gmail.com with ESMTPSA id p17-20020a05600c469100b004120b4c57c9sm12103046wmo.4.2024.02.19.09.18.29
+        d=1e100.net; s=20230601; t=1708363137; x=1708967937;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5U9UMku/CkX7+3OIheqbJbG1G4XMMn+BnJs98wrGs/M=;
+        b=kQzvZu5tJjtx7iQa1Mot9rRnEzZMCh6NaI64hxhOvFiiT720syenD2hY7xEwk7RYGd
+         iLEsI1ii6rsJ4Juo84bbwb3dGVIsAwGlrgRRMKkGG/PXc0Kd18QGpJboW7JDQVqCQeDA
+         36TNdJ/BUaN8MEPTgHYsEa3hKwoFABzHIRo3kufBx99cqlM+hQ6AskwTzHu6FeLJ/iny
+         4+eAvXYtSnwn4VAIc4IZVf8aRRIrz9fLkiTlxzFDllagmvI4qxy9Wjrw+EBJTE+Y2pnt
+         SloN+JT3i6c5Vy4s8roB2ScTfrMhPZXEJzRp0YSq/UIq/B1BikIRCLRJWguhrbl0tBya
+         oJAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWvGy/UHAgB1qYJrUm7xVLrh01TQQWXUwZItbt4ztFJxZBXNbZE/ppnYHbi7BaVQnDemt8x7Rt1//2GKBp5hFfiBFuZitERbnspWHac8A==
+X-Gm-Message-State: AOJu0Yz4HDqPKVcWlGWabPIeUAf8ungr3pcYvlxJ8Bw0bEaTYVuf1kfT
+	vJetdpEzyotCKarf9/U+YSoc22O2B63/NBu5Zmd7XKZ7fq7MXW5sEO2tBXdf4vXmNrvum3n3fy0
+	1170=
+X-Google-Smtp-Source: AGHT+IHUfkwhEny4pldBlneSMSVOBEZmWmmqdtsOXfySiNrUjDQ+DcKurzgbN5N5Pgk90iwYbshmbQ==
+X-Received: by 2002:adf:ed81:0:b0:33d:3553:d395 with SMTP id c1-20020adfed81000000b0033d3553d395mr3619328wro.15.1708363136742;
+        Mon, 19 Feb 2024 09:18:56 -0800 (PST)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id g1-20020a056000118100b00337d5cd0d8asm10847459wrx.90.2024.02.19.09.18.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Feb 2024 09:18:30 -0800 (PST)
-Message-ID: <b9a31374-8ea9-407e-9ec3-008a95e2b18b@linaro.org>
-Date: Mon, 19 Feb 2024 18:18:28 +0100
+        Mon, 19 Feb 2024 09:18:56 -0800 (PST)
+Message-ID: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
+Date: Mon, 19 Feb 2024 18:18:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,140 +76,74 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v5 00/18] power: sequencing: implement the subsystem and
- add first users
-Content-Language: en-US, fr
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+Content-Language: en-US
+To: DT <devicetree@vger.kernel.org>, linux-media
+ <linux-media@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240216203215.40870-1-brgl@bgdev.pl>
- <CAA8EJppt4-L1RyDeG=1SbbzkTDhLkGcmAbZQeY0S6wGnBbFbvw@mail.gmail.com>
- <e4cddd9f-9d76-43b7-9091-413f923d27f2@linaro.org>
- <CAA8EJpp6+2w65o2Bfcr44tE_ircMoON6hvGgyWfvFuh3HamoSQ@mail.gmail.com>
- <4d2a6f16-bb48-4d4e-b8fd-7e4b14563ffa@linaro.org>
- <CAA8EJpq=iyOfYzNATRbpqfBaYSdJV1Ao5t2ewLK+wY+vEaFYAQ@mail.gmail.com>
- <CAMRc=Mfnpusf+mb-CB5S8_p7QwVW6owekC5KcQF0qrR=iOQ=oA@mail.gmail.com>
- <CAA8EJppY7VTrDz3-FMZh2qHoU+JSGUjCVEi5x=OZgNVxQLm3eQ@mail.gmail.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CAA8EJppY7VTrDz3-FMZh2qHoU+JSGUjCVEi5x=OZgNVxQLm3eQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Pierre-Hugues Husson <phh@phh.me>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [RFC WIP PATCH] venus: add qcom,no-low-power property
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 19/02/2024 13:33, Dmitry Baryshkov wrote:
-> On Mon, 19 Feb 2024 at 14:23, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>
->> On Mon, Feb 19, 2024 at 11:26 AM Dmitry Baryshkov
->> <dmitry.baryshkov@linaro.org> wrote:
->>>
->>
->> [snip]
->>
->>>>>>>>
->>>>>>>> For WCN7850 we hide the existence of the PMU as modeling it is simply not
->>>>>>>> necessary. The BT and WLAN devices on the device-tree are represented as
->>>>>>>> consuming the inputs (relevant to the functionality of each) of the PMU
->>>>>>>> directly.
->>>>>>>
->>>>>>> We are describing the hardware. From the hardware point of view, there
->>>>>>> is a PMU. I think at some point we would really like to describe all
->>>>>>> Qualcomm/Atheros WiFI+BT units using this PMU approach, including the
->>>>>>> older ath10k units present on RB3 (WCN3990) and db820c (QCA6174).
->>>>>>
->>>>>> While I agree with older WiFi+BT units, I don't think it's needed for
->>>>>> WCN7850 since BT+WiFi are now designed to be fully independent and PMU is
->>>>>> transparent.
->>>>>
->>>>> I don't see any significant difference between WCN6750/WCN6855 and
->>>>> WCN7850 from the PMU / power up point of view. Could you please point
->>>>> me to the difference?
->>>>>
->>>>
->>>> The WCN7850 datasheet clearly states there's not contraint on the WLAN_EN
->>>> and BT_EN ordering and the only requirement is to have all input regulators
->>>> up before pulling up WLAN_EN and/or BT_EN.
->>>>
->>>> This makes the PMU transparent and BT and WLAN can be described as independent.
->>>
->>>  From the hardware perspective, there is a PMU. It has several LDOs. So
->>> the device tree should have the same style as the previous
->>> generations.
->>>
->>
->> My thinking was this: yes, there is a PMU but describing it has no
->> benefit (unlike QCA6x90). If we do describe, then we'll end up having
->> to use pwrseq here despite it not being needed because now we won't be
->> able to just get regulators from WLAN/BT drivers directly.
->>
->> So I also vote for keeping it this way. Let's go into the package
->> detail only if it's required.
-> 
-> The WiFi / BT parts are not powered up by the board regulators. They
-> are powered up by the PSU. So we are not describing it in the accurate
-> way.
+From: Pierre-Hugues Husson <phhusson@freebox.fr>
 
-I disagree, the WCN7850 can also be used as a discrete PCIe M.2 card, and in
-this situation the PCIe part is powered with the M.2 slot and the BT side
-is powered separately as we currently do it now.
+On our msm8998-based device, calling venus_sys_set_power_control()
+breaks playback. Since the vendor kernel never calls it, we assume
+it should not be called for this device/FW combo.
 
-So yes there's a PMU, but it's not an always visible hardware part, from the
-SoC PoV, only the separate PCIe and BT subsystems are visible/controllable/powerable.
+Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+---
+TODO in v2: split the patch in 2
+Is "qcom,no-low-power" a proper name for the property?
+Is a boolean property the right approach?
+---
+ .../devicetree/bindings/media/qcom,venus-common.yaml     | 3 +++
+ drivers/media/platform/qcom/venus/hfi_venus.c            | 9 +++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-Neil
-
-> 
-> Moreover, I think we definitely want to move BT driver to use only the
-> pwrseq power up method. Doing it in the other way results in the code
-> duplication and possible issues because of the regulator / pwrseq
-> taking different code paths.
-> 
-> 
-
+diff --git a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
+index 3153d91f9d18a..69cb16dc4852c 100644
+--- a/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,venus-common.yaml
+@@ -62,6 +62,9 @@ properties:
+     required:
+       - iommus
+ 
++  qcom,no-low-power:
++    type: boolean
++
+ required:
+   - reg
+   - clocks
+diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+index f9437b6412b91..2cd85a8cd837e 100644
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -945,10 +945,11 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+ 			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+ 	}
+ 
+-	ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
+-	if (ret)
+-		dev_warn(dev, "setting hw power collapse ON failed (%d)\n",
+-			 ret);
++	if (!of_property_read_bool(dev->of_node, "qcom,no-low-power")) {
++		ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
++		if (ret)
++			dev_warn(dev, "setting hw power collapse ON failed (%d)\n", ret);
++	}
+ 
+ 	/* For specific venus core, it is mandatory to set the UBWC configuration */
+ 	if (res->ubwc_conf) {
+-- 
+2.34.1
 
