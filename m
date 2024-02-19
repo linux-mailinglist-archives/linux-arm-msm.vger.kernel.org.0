@@ -1,225 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-11737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CB4185ABFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:28:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D25D085AC2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:44:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B796E28482E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:28:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1119D1C2177C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:44:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9F8C5027F;
-	Mon, 19 Feb 2024 19:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C5895026D;
+	Mon, 19 Feb 2024 19:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YRX8uO3u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WmqvKUaU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26211BF3D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 19:28:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3F23BB38;
+	Mon, 19 Feb 2024 19:44:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708370925; cv=none; b=etQtD/D/HxrCQ3jwreOTqUXaGy4SOgDZb6gj5wtufFwCX7jCCTk5RV8ETh3/Lq9ztL5zZ7MOO8qwAovpr1X7vKTxakaD5c0z7YQXqsmk52donaz7TfAhhbR6YfQIjPDxlXFsW+LesD97nFYFaVIFh1X0xVzjFLChvmYzJmaIYYo=
+	t=1708371879; cv=none; b=YFy/JAp9QYuY/D61lam9HjLafcYXomXnO0h9tDpoWlPgsviOaAkn2tR6+hWQpgbBPZ8QyVizjoqYj39D9aAs42LCFVJDmCl2p91UrSYm4ju2zlPdpsmGfSP8DL8i7z8ZzWYDr/EUq/yobGIrgWjLIkHal6Lg96Md4/qBJ975AtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708370925; c=relaxed/simple;
-	bh=IAjwCyxBMPci0g0gw4ihhUopvixuhN4VOL+h9fiPS0o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MMReNpwLC7JrskLTytrOuIitOH3vyayhUvEHXRo1NzqSVbSKoZM+RtbZf+zRA1D0SYR43OL4ym9VI09suyh558eSPvTUAI6lXqLEqRVdLZc/52ckVYADbhT9qMoGx5lHVJsEQRGvVQ8lAJrCzrrUBHAJlgN+ZaMPeMC0+WLKsZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YRX8uO3u; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-607d9c4fa90so46599647b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 11:28:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708370923; x=1708975723; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=O7THUmDYQgW5sUdB+plRPPCtHli507znRGIREXrMsPk=;
-        b=YRX8uO3uVo0EQEimLgOPbG83q0HzlEqY+ox17yl2sH6CLVRkjy7wU3vhrKWWmRhUqz
-         VklTr+ZmqKnaSHP74SzrWZraWVIHYGMzKUixx9SQtNmKUdeV7LRMdIBBxCUWcakYWJUY
-         q+nPpVD1N0DuZYAdEBy/bmAkdnX0dP58NwiQYqRAkLSF/+OYTYd0+mHT7bkiAWSUhEWc
-         exomWF84/tWSmITTs5aMxUOSh8V25QEpS/OsQ4N3knlQp6t+2GF2JQHHyDi2e2hf1BRa
-         K/j9g6O/E4VJInnFREtFvuQDKRTJ/P9J/gNM+sNLeTemNVL6Wu1M7RhVQdgpEOQsnUiW
-         lh9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708370923; x=1708975723;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=O7THUmDYQgW5sUdB+plRPPCtHli507znRGIREXrMsPk=;
-        b=a0xFNx5Nqn/XJ6HaGDrTwrQjJ4td0hV4YHflYDLGmILJFryD5cgmhOwsQ2ozS5+hEM
-         gxFLnOvCJcmUZ7PG+jXXWOEndn2ybKz+mYn2qR97Byclbxnuz+USSsKLwbs9naZwzfQV
-         wWiepA/33FU78FgMiTglwQdSCKIDGaNnu0MYf1D1XUJRIkyXzszIm3RkSFW4r7dZq5KE
-         qZy3iOjbmd41cBTQkex3KPMmuiopLaloxT6izgSHebReLJPf2Wc7anmFsemExbPzOya3
-         f6KqKS6VKLqizw2kmKohHJop5r2R748quCNDfcnQ1dWkj/MlEbLK3XL9t+zhQt8GXIMw
-         7srg==
-X-Forwarded-Encrypted: i=1; AJvYcCXbN0e2riPkBZiVxU65K0quIZnxQy+9bg9sCgSm+G2T+idGqQ2q9n6nDncuymgfeGtH1VSw4P6oHTxC27ZCyz70R9gvMqrSLtLcwxWtdQ==
-X-Gm-Message-State: AOJu0YyxfpWYNsbDl/Uf49/rO1mZqwltw1xawt9rIpTFHQOwDDnN5Jsn
-	I4FbvU2hHRFoTH1k5fHblf2A8b+DfxRJsGGdDxP8PLkBp4cE2kbM1kh9PoVIU7gC/0dARx/cL99
-	vQL9MV9131bH15nL0PchpoapY4Ih0vHVKVRYR1g==
-X-Google-Smtp-Source: AGHT+IHfLbLICp5d9jnJFTqYd/KOWxiKrNflnQySStAix6bImUWy6E0guv21H9PIGvCN+JnXSuWWIxjTpW+i5htjDgY=
-X-Received: by 2002:a81:ac1c:0:b0:607:f09d:b2af with SMTP id
- k28-20020a81ac1c000000b00607f09db2afmr9775145ywh.1.1708370922949; Mon, 19 Feb
- 2024 11:28:42 -0800 (PST)
+	s=arc-20240116; t=1708371879; c=relaxed/simple;
+	bh=HhzPmP09U/1d8rZXRd2SC5bEMVxNbRPE2hAW1nJC6AA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gVw9zI8Qf28N1G/SkonKOIadXEWP2VsMnK5v4n29cqfUlRJW1LU971KTu5RJYyDy0EkakYXsk2W2lkKTQc3TJmVTTCWl1/alIOXHzylIM34O/KAmAjbzO0bVdoro6G8iUm6dIxzLKepsGWHWk/UaO0TCG50KOdk/2YUpZZK116s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WmqvKUaU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647E7C433C7;
+	Mon, 19 Feb 2024 19:44:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708371878;
+	bh=HhzPmP09U/1d8rZXRd2SC5bEMVxNbRPE2hAW1nJC6AA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WmqvKUaUWVa6kpqJIjPCL3kBAiP/eY8mLFE1B+abI7dfbxAFZx4eXipmp9gS5l1Fx
+	 xWmCbyPNZDTKRcZ5ig6CO6DpZLEJlrgB2Ej0S57xW7POSuQHmuq955Hi9cR3xxXX7I
+	 57+c0R6VodtNz+tyMMWmGkjwh+z7gCvhAgWNTcjXtC3od5miHG+b4ZU3aqd8eTjyu+
+	 6opxW4cIaAZq4S5Ih2gysLidfGkznztG7X6auEqVmZXYcvSpR6c1lusRqDfH2scMuR
+	 iLAEnreVi4pdhoX5RBrkXzVd813rdmBtQ/pwIqkv+C4SVZ+rEYvx7qmrxNLXlZEQfe
+	 G2QMvhnD0n1Eg==
+Date: Mon, 19 Feb 2024 19:44:33 +0000
+From: Simon Horman <horms@kernel.org>
+To: Alex Elder <elder@linaro.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
+	quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+	elder@kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] net: ipa: don't overrun IPA suspend interrupt registers
+Message-ID: <20240219194433.GN40273@kernel.org>
+References: <20240218190450.331390-1-elder@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
- <868r3g4fhv.wl-maz@kernel.org> <CAA8EJpqiN6oRMWhAMMP6EsAeki5KSMbO+XzEtT9YRdJKc9_Gbg@mail.gmail.com>
- <865xyk4dgf.wl-maz@kernel.org> <CAA8EJprKUOMwrwawiQ51WKiLCipm72ZcpY6q520kSOg--9oKZg@mail.gmail.com>
- <864je44a1a.wl-maz@kernel.org>
-In-Reply-To: <864je44a1a.wl-maz@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 19 Feb 2024 21:28:32 +0200
-Message-ID: <CAA8EJppBemsbVsjPvzBK6wp8qDdB-mK_j6HG=sq=USs-zRUNHg@mail.gmail.com>
-Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
-To: Marc Zyngier <maz@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Anup Patel <apatel@ventanamicro.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240218190450.331390-1-elder@linaro.org>
 
-On Mon, 19 Feb 2024 at 19:51, Marc Zyngier <maz@kernel.org> wrote:
->
-> On Mon, 19 Feb 2024 17:41:37 +0000,
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Mon, 19 Feb 2024 at 18:37, Marc Zyngier <maz@kernel.org> wrote:
-> > >
-> > > On Mon, 19 Feb 2024 16:21:06 +0000,
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > On Mon, 19 Feb 2024 at 17:53, Marc Zyngier <maz@kernel.org> wrote:
-> > > > >
-> > > > > On Mon, 19 Feb 2024 14:47:37 +0000,
-> > > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > > > > >
-> > > > > > Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
-> > > > > > count restriction from select()") the irq_find_matching_fwspec() was
-> > > > > > handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
-> > > > > > the select() callback. However the callback of GICv3 (even though it got
-> > > > > > modified to handle zero param_count) wasn't prepared to return true for
-> > > > > > DOMAIN_BUS_ANY bus_token.
-> > > > > >
-> > > > > > This breaks probing of any of the child IRQ domains, since
-> > > > > > platform_irqchip_probe() uses irq_find_matching_host(par_np,
-> > > > > > DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
-> > > > > >
-> > > > > > Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
-> > > > > > Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
-> > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > ---
-> > > > > >  drivers/irqchip/irq-gic-v3.c | 3 ++-
-> > > > > >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > > > > >
-> > > > > > diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-> > > > > > index 6fb276504bcc..e9e9643c653f 100644
-> > > > > > --- a/drivers/irqchip/irq-gic-v3.c
-> > > > > > +++ b/drivers/irqchip/irq-gic-v3.c
-> > > > > > @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
-> > > > > >
-> > > > > >       /* Handle pure domain searches */
-> > > > > >       if (!fwspec->param_count)
-> > > > > > -             return d->bus_token == bus_token;
-> > > > > > +             return d->bus_token == bus_token ||
-> > > > > > +                     bus_token == DOMAIN_BUS_ANY;
-> > > > > >
-> > > > > >       /* If this is not DT, then we have a single domain */
-> > > > > >       if (!is_of_node(fwspec->fwnode))
-> > > > > >
-> > > > >
-> > > > > I really dislike the look of this. If that's the case, any irqchip
-> > > > > that has a 'select' method (such as imx-intmux) should be similarly
-> > > > > hacked. And at this point, this should be handled by the core code.
-> > > > >
-> > > > > Can you try this instead? I don't have any HW that relies on
-> > > > > behaviour, but I'd expect this to work.
-> > > > >
-> > > > > Thanks,
-> > > > >
-> > > > >         M.
-> > > > >
-> > > > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> > > > > index aeb41655d6de..3dd1c871e091 100644
-> > > > > --- a/kernel/irq/irqdomain.c
-> > > > > +++ b/kernel/irq/irqdomain.c
-> > > > > @@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
-> > > > >          */
-> > > > >         mutex_lock(&irq_domain_mutex);
-> > > > >         list_for_each_entry(h, &irq_domain_list, link) {
-> > > > > -               if (h->ops->select)
-> > > > > +               if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
-> > > > >                         rc = h->ops->select(h, fwspec, bus_token);
-> > > > >                 else if (h->ops->match)
-> > > > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
-> > > >
-> > > > This works. But I wonder if the following change is even better. WDYT?
-> > > >
-> > > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> > > > index aeb41655d6de..2f0d2700709e 100644
-> > > > --- a/kernel/irq/irqdomain.c
-> > > > +++ b/kernel/irq/irqdomain.c
-> > > > @@ -449,14 +449,17 @@ struct irq_domain
-> > > > *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
-> > > >          */
-> > > >         mutex_lock(&irq_domain_mutex);
-> > > >         list_for_each_entry(h, &irq_domain_list, link) {
-> > > > -               if (h->ops->select)
-> > > > +               if (fwnode != NULL &&
-> > > > +                   h->fwnode == fwnode &&
-> > > > +                   bus_token == DOMAIN_BUS_ANY)
-> > > > +                       rc = true;
-> > > > +               else if (h->ops->select)
-> > > >                         rc = h->ops->select(h, fwspec, bus_token);
-> > > >                 else if (h->ops->match)
-> > > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
-> > > >                 else
-> > > >                         rc = ((fwnode != NULL) && (h->fwnode == fwnode) &&
-> > > > -                             ((bus_token == DOMAIN_BUS_ANY) ||
-> > > > -                              (h->bus_token == bus_token)));
-> > > > +                             (h->bus_token == bus_token));
-> > > >
-> > > >                 if (rc) {
-> > > >                         found = h;
-> > > >
-> > >
-> > > Can't say I like it either. It duplicates the existing check without
-> > > any obvious benefit. Honestly, this code is shit enough that we should
-> > > try to make it simpler, not more complex...
-> >
-> > Only the fwnode conditions are duplicated. And it makes sense: we
-> > should check for the DOMAIN_BUS_ANY first, before going to select. I'm
-> > not sure whether at some point we'd have to add (&& bus_token !=
-> > DOMAIN_BUS_ANY) to the ops->match check.
->
-> ops->match should just *die*, and it is not going to see any sort of
-> semantic upgrade. Ever. No new code should be added using match.
->
-> And look at what my change does. It checks for DOMAIN_BUS_ANY before
-> doing anything else, ensuring that the default clause does the job. So
-> no, your suggestion doesn't make much sense to me.
+On Sun, Feb 18, 2024 at 01:04:50PM -0600, Alex Elder wrote:
+> In newer hardware, IPA supports more than 32 endpoints.  Some
+> registers--such as IPA interrupt registers--represent endpoints
+> as bits in a 4-byte register, and such registers are repeated as
+> needed to represent endpoints beyond the first 32.
+> 
+> In ipa_interrupt_suspend_clear_all(), we clear all pending IPA
+> suspend interrupts by reading all status register(s) and writing
+> corresponding registers to clear interrupt conditions.
+> 
+> Unfortunately the number of registers to read/write is calculated
+> incorrectly, and as a result we access *many* more registers than
+> intended.  This bug occurs only when the IPA hardware signals a
+> SUSPEND interrupt, which happens when a packet is received for an
+> endpoint (or its underlying GSI channel) that is suspended.  This
+> situation is difficult to reproduce, but possible.
 
-Yeah, I was worried about the DOMAIN_BUS_ANY vs match call. If that's
-not an issue, your patch looks fine to me.
+I see what you mean about *many* more :)
 
-Please use 'Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>'
-with your patch.
+> Fix this by correctly computing the number of interrupt registers to
+> read and write.  This is the only place in the code where registers
+> that map endpoints or channels this way perform this calculation.
+> 
+> Fixes: f298ba785e2d ("net: ipa: add a parameter to suspend registers")
+> Signed-off-by: Alex Elder <elder@linaro.org>
 
->
->         M.
->
-> --
-> Without deviation from the norm, progress is not possible.
+As noted by Alex elsewhere elsewhere in this thread, this is for net.
 
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Simon Horman <horms@kernel.org>
 
