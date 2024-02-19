@@ -1,142 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-11711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 159BD85A7DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 16:54:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 64BE985A7FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 16:58:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C5B3B222C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 15:53:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A83FB25446
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 15:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FBB939840;
-	Mon, 19 Feb 2024 15:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60A963A1BF;
+	Mon, 19 Feb 2024 15:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9vTbW1Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bRZiDo9P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369E3381CE;
-	Mon, 19 Feb 2024 15:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970D53C09F;
+	Mon, 19 Feb 2024 15:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708358031; cv=none; b=E8wS6geAbvbnrkKn/a9QilP236L/olVkOH6XPWXm/emD3noEgSqC5BfDycV8i+n9S9aX/kRFpTkQez+f1UQEpiR7IxR0JaM+kd+eZjJq0maQAd1KM6NmkiRhuvNIbF3HbmHUcWfwFpVBbvrvSaMZucBGwGC8aKwwtzY5s0sDW50=
+	t=1708358310; cv=none; b=s/zWtNYzFXhLJm8+4jTsIfJzfJKgAU+jiARm7aQn+07+ZdHJabP/E99+gARGgjwk27dAhKUxcwKjiT91G3vgJr8gBFdkfHyNTHk/0Qc29K5vg324bYwnUvHJR5crYIbwOihZ9NP01weYuJcmEaK6gFNUBROG26NFHSkC2qXg0rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708358031; c=relaxed/simple;
-	bh=517fO3sYzhBoS+A0/0syTbcWUfDqWRHc0TLYK++SB58=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YZu5wKtbuXkxg3bDVW2ZTEnt0IpWSQ39N2qvPFkG+jL44BBVUkPBzZUJK5xIoRuECwsPEAGYxL6CDziUJFjZuT2fp5QkBZCyJUbBYOw/KlpQRfiKtEGmwa6E3LrsLhmN3kN+exQ+7YMek1ko5Tqa9/rX6UOHoJhDHaeM2CiGAWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s9vTbW1Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D53C43390;
-	Mon, 19 Feb 2024 15:53:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708358030;
-	bh=517fO3sYzhBoS+A0/0syTbcWUfDqWRHc0TLYK++SB58=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=s9vTbW1Zb4232ZNMuGkskRATSlx/9DIk6EfIbOERpQ8wfVwMybokX2cKqwlst5k3s
-	 /wZn4awaQpLjSjlE3xEeenjMDR0dcHanOaS6euffCUGFVUJTCbXieWC2CbkLUY7Jbt
-	 gtfATQZS2FDZj+VvvE+Rbyu8DLqMo8RKeHo4/pSmbqAeuKqSUuQJci+wXv6CDkUwlX
-	 CyaQIaLsPqW3PnGTTvOZe+OLq0N0K3RroZG1LBviYsaclgy4qRxOaIVO8hmJ/vX8o8
-	 h6Dsg3AdOR3jPNmSMQtHQeIunm3GFunpTkuDe0rpSpT8AvEml40Im6NYF1qgWqHVfj
-	 f7slrWgzTUg5w==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1rc5xk-004crN-Hc;
-	Mon, 19 Feb 2024 15:53:48 +0000
-Date: Mon, 19 Feb 2024 15:53:48 +0000
-Message-ID: <868r3g4fhv.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Anup Patel <apatel@ventanamicro.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
-In-Reply-To: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
-References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1708358310; c=relaxed/simple;
+	bh=icU/jxR0DFDHz5XD9AAV7lcBtUbJa4K2a1BPr/lVQOg=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=rVuECbyUJPwIztrlHLTCB0q5GC56rVmqe2zx8r6Hjv2Q/LA5k/610EitvQYb2fyXo2t0QNiW0hUCyvTQHPDws5DQn4p1apiAgsoNerFd8NEcIUsBxBJanwRPPs0jH5XMM0oQTVcojqzOjDKb+bq32pRHJJDVrIHIZQP88OnzHgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bRZiDo9P; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a3eafbcb1c5so103413366b.0;
+        Mon, 19 Feb 2024 07:58:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708358307; x=1708963107; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tiqLc5KdCmtjYQt/eIFsjHHh0iB3V/zgzPhPHivKtAs=;
+        b=bRZiDo9PXa9+VKDjKADljVQkf4cPFN6ym9XX5wiIKCHgX6kg/EpiHWUYiwTYKijb54
+         LItev2WCuyWWY18OKeyqcjybUqNjU+yp4W4ABb/hfC37Y84i8q4OeLb5lZLi5sU9MSH4
+         7cg+ZWqH2dN9ThbqN2+/VD05cUjnzHrHPu3o82Dg/HhVsjG0gsdFrlJJvFr2ctq6/RuL
+         lPlDBrypYSRIURvSXHpTjt1er6X0q1HUM+HuC0hljfphEkYOHkn3QU4aPd9SGJgEHKBd
+         +XXE3tWBMpTHN9zC2NQKpCzwn8kQRBeUD5SwEJhs0kCPjd7Jj+G3H76L56dK580YF30c
+         9bKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708358307; x=1708963107;
+        h=in-reply-to:references:to:from:subject:message-id:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tiqLc5KdCmtjYQt/eIFsjHHh0iB3V/zgzPhPHivKtAs=;
+        b=Z4EIHk1j/DhSfCAsOqRm95EX1S0ZkZSfWKSsdSHj+fPMFdqvNyjy+W2tkv7tr18iGK
+         1mr2DIFPasJAQJ4SUxR8vGUW33R+5oYhHLV0zoHULZqlypGr1NZ3/n26yTRJtaRnm+ce
+         u5d5uJKTiRBDS6rPUbZ84YYGxv0a85dt7d2K8BNGGX4evNVgArNRUoVsCJjb0LFglKx/
+         T11WgcTEgD1dva9YTXoT5HttctKcG3hL0+MvpnLtiEoOj9l0V5DXUE6vTB3VtpFzC/oA
+         hPM7lW+7XtEJDacgVG7JPN11tpqMNcYJY2Qlb2xmR4jqbI+6bFOLv0vXE1HU484DzjJK
+         X77g==
+X-Forwarded-Encrypted: i=1; AJvYcCX38WLLdJbhz3FOzPkjqIAFVVLKXvIY0TMpNDu1f8Ias4ldEMla6J5WOYXAko8WoaLeBiFD523ZEpEaJMNTNThrJGNC3QWA6xr+OzTRbOF42UFt2WlIQRFez3DpJENx3AzLJQgAU8T2zdinTIYGqgk9pp/JQX8VmCjVTL20Zhv24IjhEC8bc+PnXQ+g8dIGCY/2Xz+GImJpbMcqUwJWlNW5ERQFITaQV5V+ChjcF+hp+nA8suA+q58rLhifmhysVn5ifiIYCuieZ69CexbGWMMGUdtsaY41XXIPDhdCODXZJjBnenrN3MkXyWY6b1RAC4F/L7GlOlexPJEUUGyiNAoMNlc=
+X-Gm-Message-State: AOJu0Yz3zkXOK1pYz0UfPEWI69hknu4v9ioIbxNtTaqSR/rxlW6U5E0c
+	EYRYtTZPkCnvYap9jB7BB4ZZIYL5IKNGxZ+rH2mSY2aQyHeJO6N3
+X-Google-Smtp-Source: AGHT+IFtwqfaW9gJsxLy3j5F49CYy1xFjRlT0RRadI4Z0IOCUNhh1itGGGOPl5tKEJMCv67TBumOMw==
+X-Received: by 2002:a17:906:851:b0:a3d:80d7:d1e3 with SMTP id f17-20020a170906085100b00a3d80d7d1e3mr7428154ejd.77.1708358306585;
+        Mon, 19 Feb 2024 07:58:26 -0800 (PST)
+Received: from localhost (p200300e41f2d4600f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f2d:4600:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id rf23-20020a1709076a1700b00a3da5bf6aa5sm3076542ejc.211.2024.02.19.07.58.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Feb 2024 07:58:26 -0800 (PST)
+Content-Type: multipart/signed;
+ boundary=f0caf17c841197981a0b66a2ac604de0b745306e0ba899959bfe0165d31f;
+ micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: dmitry.baryshkov@linaro.org, tglx@linutronix.de, apatel@ventanamicro.com, konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+Mime-Version: 1.0
+Date: Mon, 19 Feb 2024 16:58:25 +0100
+Message-Id: <CZ96H72GI4Z0.SZJBZXA1VXJZ@gmail.com>
+Subject: Re: [PATCH] phy: constify of_phandle_args in xlate
+From: "Thierry Reding" <thierry.reding@gmail.com>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Vinod Koul"
+ <vkoul@kernel.org>, "Kishon Vijay Abraham I" <kishon@kernel.org>,
+ "Chun-Kuang Hu" <chunkuang.hu@kernel.org>, "Philipp Zabel"
+ <p.zabel@pengutronix.de>, "Jonathan Hunter" <jonathanh@nvidia.com>,
+ "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>, "Linus Walleij"
+ <linus.walleij@linaro.org>, <linux-phy@lists.infradead.org>,
+ <linux-arm-kernel@lists.infradead.org>, <linux-sunxi@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
+ <netdev@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+ <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-renesas-soc@vger.kernel.org>, <linux-rockchip@lists.infradead.org>,
+ <linux-samsung-soc@vger.kernel.org>,
+ <linux-stm32@st-md-mailman.stormreply.com>, <linux-tegra@vger.kernel.org>,
+ <linux-gpio@vger.kernel.org>
+X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
+References: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
 
-On Mon, 19 Feb 2024 14:47:37 +0000,
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> 
-> Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
-> count restriction from select()") the irq_find_matching_fwspec() was
-> handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
-> the select() callback. However the callback of GICv3 (even though it got
-> modified to handle zero param_count) wasn't prepared to return true for
-> DOMAIN_BUS_ANY bus_token.
-> 
-> This breaks probing of any of the child IRQ domains, since
-> platform_irqchip_probe() uses irq_find_matching_host(par_np,
-> DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
-> 
-> Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
-> Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--f0caf17c841197981a0b66a2ac604de0b745306e0ba899959bfe0165d31f
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+
+On Sat Feb 17, 2024 at 10:39 AM CET, Krzysztof Kozlowski wrote:
+> The xlate callbacks are supposed to translate of_phandle_args to proper
+> provider without modifying the of_phandle_args.  Make the argument
+> pointer to const for code safety and readability.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  drivers/irqchip/irq-gic-v3.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-> index 6fb276504bcc..e9e9643c653f 100644
-> --- a/drivers/irqchip/irq-gic-v3.c
-> +++ b/drivers/irqchip/irq-gic-v3.c
-> @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
->  
->  	/* Handle pure domain searches */
->  	if (!fwspec->param_count)
-> -		return d->bus_token == bus_token;
-> +		return d->bus_token == bus_token ||
-> +			bus_token == DOMAIN_BUS_ANY;
->  
->  	/* If this is not DT, then we have a single domain */
->  	if (!is_of_node(fwspec->fwnode))
-> 
+>  drivers/phy/allwinner/phy-sun4i-usb.c              |  2 +-
+>  drivers/phy/amlogic/phy-meson-g12a-usb3-pcie.c     |  2 +-
+>  drivers/phy/broadcom/phy-bcm-sr-pcie.c             |  2 +-
+>  drivers/phy/broadcom/phy-bcm-sr-usb.c              |  2 +-
+>  drivers/phy/broadcom/phy-bcm63xx-usbh.c            |  2 +-
+>  drivers/phy/broadcom/phy-brcm-usb.c                |  2 +-
+>  drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c    |  2 +-
+>  drivers/phy/freescale/phy-fsl-lynx-28g.c           |  2 +-
+>  drivers/phy/hisilicon/phy-histb-combphy.c          |  2 +-
+>  drivers/phy/intel/phy-intel-lgm-combo.c            |  2 +-
+>  drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c        |  2 +-
+>  drivers/phy/marvell/phy-armada375-usb2.c           |  2 +-
+>  drivers/phy/marvell/phy-armada38x-comphy.c         |  2 +-
+>  drivers/phy/marvell/phy-berlin-sata.c              |  2 +-
+>  drivers/phy/marvell/phy-mvebu-a3700-comphy.c       |  2 +-
+>  drivers/phy/marvell/phy-mvebu-cp110-comphy.c       |  2 +-
+>  drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c        |  2 +-
+>  drivers/phy/mediatek/phy-mtk-tphy.c                |  2 +-
+>  drivers/phy/mediatek/phy-mtk-xsphy.c               |  2 +-
+>  drivers/phy/microchip/lan966x_serdes.c             |  2 +-
+>  drivers/phy/microchip/sparx5_serdes.c              |  2 +-
+>  drivers/phy/mscc/phy-ocelot-serdes.c               |  2 +-
+>  drivers/phy/phy-core.c                             |  8 ++++----
+>  drivers/phy/phy-xgene.c                            |  2 +-
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c          |  2 +-
+>  drivers/phy/ralink/phy-mt7621-pci.c                |  2 +-
+>  drivers/phy/renesas/phy-rcar-gen2.c                |  2 +-
+>  drivers/phy/renesas/phy-rcar-gen3-usb2.c           |  2 +-
+>  drivers/phy/renesas/r8a779f0-ether-serdes.c        |  2 +-
+>  drivers/phy/rockchip/phy-rockchip-naneng-combphy.c |  2 +-
+>  drivers/phy/rockchip/phy-rockchip-pcie.c           |  2 +-
+>  drivers/phy/samsung/phy-exynos-mipi-video.c        |  2 +-
+>  drivers/phy/samsung/phy-exynos5-usbdrd.c           |  2 +-
+>  drivers/phy/samsung/phy-samsung-usb2.c             |  2 +-
+>  drivers/phy/socionext/phy-uniphier-usb2.c          |  2 +-
+>  drivers/phy/st/phy-miphy28lp.c                     |  2 +-
+>  drivers/phy/st/phy-spear1310-miphy.c               |  2 +-
+>  drivers/phy/st/phy-spear1340-miphy.c               |  2 +-
+>  drivers/phy/st/phy-stm32-usbphyc.c                 |  2 +-
+>  drivers/phy/tegra/xusb.c                           |  2 +-
+>  drivers/phy/ti/phy-am654-serdes.c                  |  2 +-
+>  drivers/phy/ti/phy-da8xx-usb.c                     |  2 +-
+>  drivers/phy/ti/phy-gmii-sel.c                      |  2 +-
+>  drivers/phy/xilinx/phy-zynqmp.c                    |  2 +-
+>  drivers/pinctrl/tegra/pinctrl-tegra-xusb.c         |  2 +-
+>  include/linux/phy/phy.h                            | 14 +++++++-------
+>  46 files changed, 55 insertions(+), 55 deletions(-)
 
-I really dislike the look of this. If that's the case, any irqchip
-that has a 'select' method (such as imx-intmux) should be similarly
-hacked. And at this point, this should be handled by the core code.
+Makes sense:
 
-Can you try this instead? I don't have any HW that relies on
-behaviour, but I'd expect this to work.
+Acked-by: Thierry Reding <treding@nvidia.com>
 
-Thanks,
+--f0caf17c841197981a0b66a2ac604de0b745306e0ba899959bfe0165d31f
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	M.
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index aeb41655d6de..3dd1c871e091 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
- 	 */
- 	mutex_lock(&irq_domain_mutex);
- 	list_for_each_entry(h, &irq_domain_list, link) {
--		if (h->ops->select)
-+		if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
- 			rc = h->ops->select(h, fwspec, bus_token);
- 		else if (h->ops->match)
- 			rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmXTeqIACgkQ3SOs138+
+s6GdEBAAsZtqIRL7k6ZV5nu5N0juG6RO7Sm34o9+isHlbNUAhmDQeIXxdlWIF3qc
+ap2W/H4jLtQnrDaCtdFWa5oPx8Ud41AKoeOQRlZq6goHZemt2JbUyB5IzsMIL0KN
+FUGwvVEZdDnJbhe2+8YX0fN8WG4qpAYo7vrb1XsgP4RzGwgkwH64LbCOtoAoYtYl
+rOc7hn6eNJrIYlW1LaU37BApWV0KgdMiI1YSILAT5YJK24fYst7j//8UxyEQP4aO
+S+3uPr8/1K1JifAihpgqu7w5kyDcMW1ncoAamilKe2xDzz7wJ8wxtYcdypnwBSpd
+/+rhMybnEj2kgbDrSbY+LVlczSU6Wf/SEtZzB+DOCE4+CZrtFyMVsSgAeVXFT1n0
+L5vTh0182skHEAm97GXHwoQOmLND8wJJVZR+Sw1OApxEYI1Y8hTx33NrbA+5hiVq
+15m0Jq8NXvpd237p5obNfFNuDmK/BlMhlq3x+3/aWGqT+pRlavF1i0HP/wEV9YoC
+6zleWWkx9BAonksD76uhrk/LBnYnc3wb9O5B4KS6dp+tYE3ekIWauHxzhg4tpOcg
+FqcY6ObCs+Jjtplo4vtrTBR6A4jdvunJQcp4WqSO/5RkZd/ySVdSbpvCdK1yy/JM
+j7SSnUWV03IbkbGoBduin/a8YT84GAn3seVzxO0ik5dpZHGbAPM=
+=Z186
+-----END PGP SIGNATURE-----
 
--- 
-Without deviation from the norm, progress is not possible.
+--f0caf17c841197981a0b66a2ac604de0b745306e0ba899959bfe0165d31f--
 
