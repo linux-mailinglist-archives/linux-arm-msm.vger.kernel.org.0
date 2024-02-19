@@ -1,118 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-11698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1F9085A5FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 15:32:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D82B85A604
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 15:33:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 736D0B21D42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 14:32:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 421261C215C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 14:33:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E1081E526;
-	Mon, 19 Feb 2024 14:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CD912E414;
+	Mon, 19 Feb 2024 14:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NII8P/Jv"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="kMFxOgcD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97EE1DDFC;
-	Mon, 19 Feb 2024 14:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D26E1E890
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 14:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708353138; cv=none; b=ZbmAYzrO42oe8xCx6lVk61FZcmUsCAJ2iOT+Zjh3W6aEyT7iQ8TIl6ZHKQZ1YPJBOsZ1iQu7UYre8ojTdwL3wXEAE3ausb/IZikkhne1fjP9kowXewzL5Fl00Th41zHd9dhHGvEZfnWlFpbsAtnf+CfyYTqjWmjm7eKBf4CZ6BA=
+	t=1708353217; cv=none; b=pGJLosg24j9RA+5Irtg8EXWVkobp4VUsRJRFtSybC+o3OCKRFWa1xdKoiDiRrTq//s8p0yaEvIy0FFhh0pnvBaFprJDz4b4PP18ZCjA/3Q8K1VoweoOpTBSv45eVZHAPtnMbSD+W9TCHeVppiClwkUjSGXYUK/n+yP8k7aZA+PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708353138; c=relaxed/simple;
-	bh=p7CKu3q3ddLdu/9KSihXnzeOfwJAXWsmYHQH7vap+SM=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=KldDQIJLD/7TVKiciSWCOvRNQiral1jxl4DY9bWAFeIaGXb63b4HQLLhW+nXzSKAuDfEPLYN9PtYdxDwtOaQcuy18CSKSEeNAkDWzVeKJy9J4hpORQcg9iUD0S6kGUgq9pPdu7q1vK1uFTSgyITIwOYtenDRXJp3uIhp+kwzIJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NII8P/Jv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3FEC433F1;
-	Mon, 19 Feb 2024 14:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708353138;
-	bh=p7CKu3q3ddLdu/9KSihXnzeOfwJAXWsmYHQH7vap+SM=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=NII8P/JvDIQSdS6jY3XVqY9OwEYbCNImuVFaDu7HQh8UC/uvUsJ/tkH4r3cwOJ+pL
-	 zJC9tno6EAU0Rwg3c2/M9j9dKoVcp+yyaxWmbqEk5xDYdsbNzfdFWzGDPZCWUqf1UT
-	 1XOTqVxZ30LixtHGzYdSUyM9WfyPAE52bNCuTsaC37iFtygZ/aVqmpAT/F3888Qoi7
-	 28SlXXlJIKfquDWCKFgsdWWDg2t7yhd8iE4bHlpCx0GWBGRxq9TCSBZPeC/qmjKIsy
-	 cVHutL99zjZP+dIprMmy7elANko4CEteHsdjrXyt4h5KHYPUhO2VE6+H361hGc5AyS
-	 HKW39QrDx9ExA==
-Date: Mon, 19 Feb 2024 08:32:16 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1708353217; c=relaxed/simple;
+	bh=E55A6tvppmcqo5uMegI+1QXtot00n/DsjKupvH1s+to=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=iCYfXIQcrZVCwJ8oWOBPJJvBI/Is9NwggE5Mkni1WrBq23KPcFCBwBPzt34uUrZSAT9eYAqPh/VwIVrlmZluuProRKtLJROZxkgZObhxhwAqLAvz2gxJSq2AojoVi2pS5pYKNEnI4w891HmJ4URSAKGHXOjAgS/WVPryxPMmbN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=kMFxOgcD; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-337d05b8942so3177135f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 06:33:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1708353213; x=1708958013; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fx0Nfh/GZY23MSwb8h36wBmZT1dZMCgZLMin+nAG92o=;
+        b=kMFxOgcDn7VVwmSU/CKfaKoKmDttq4TS8V+Z96IvzPsWoQIkseDhzGWuecwlYHznop
+         fW4DyLInToooK3rloOmGk6zeFPvOlsbxXKSQcPnFLqBaqZTmyWBBjmNsU7NbRQktVMQk
+         aBLbQmE7545yogwlIJwNQD8ns4rhYlsiAgVKIdgtzdTfhMAyc4vWacqXWzW0nXbX6c8U
+         CIMULBLqe8vlmam2JW1jVjFksP4m3oiCe6AUKHC3rxMQDUlLhHN1/7UW6SLitCAZS7Tg
+         aQy3y/XMUOx+ECOtksdlnWBPX/MGCLkGi5/8LZDOcYzXF94dBAIT0KZtxPnGel5o6OHR
+         Q7lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708353213; x=1708958013;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fx0Nfh/GZY23MSwb8h36wBmZT1dZMCgZLMin+nAG92o=;
+        b=VId7R8GfqMHr1NnSphxNSx0/xeOMRej+ye5WvmX5oqIVPuB9LsTZHBCaldzZp8MMUC
+         JFayQQjxyuMVWZvF0J7W32I3W5g/sFPkIxJY0idKcliDwYX4IW17RKl5I6v2kl8pILTD
+         d/z2CbVmCFvOpGr711/SnnPabiV5XehdCZguAELGfpr0+QuLFFgnoZCT3Q9pz8/65kL+
+         FtMlrsLSkrHThD4AnXlQ8TSl5zXdVpMRU1LZyK3xam1xQb5gRC+JuAjOifqNiYiQeH2T
+         dbQQ8gFDVdWTGrePF/oNcgmaMEzk4mPJ9IgDEgxQ0iYp1AMKINdkH532SZbn5FFiAapd
+         1M7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVjoEerDUsENetVCzcmmm+3mZcxIH3b/gYNSl90NVfIzLD6J7ZsxOGPzS0NNvS5gwDKH1GffH3cBqfXjExO8rwTmwpKzS0PeNytlth/nA==
+X-Gm-Message-State: AOJu0YyMCeOhjkf01SR/MCENx2KnMx5IfR5SdothYjlBqb0mF2ezJO4v
+	visGtOlaOUMyAdzA7uFaaiN5hnltcTrurViiGeq3o3qa3Z2UrTVYOe06xaACVbI=
+X-Google-Smtp-Source: AGHT+IEpkivuVWTmGFjTymrSTRZ3SougY9X/d5AjLZRwEHWDiLLI/aGwizs1Hx3F+XGn6ThNw9s7mA==
+X-Received: by 2002:a5d:4e82:0:b0:33d:1352:3dc4 with SMTP id e2-20020a5d4e82000000b0033d13523dc4mr5873325wru.38.1708353212938;
+        Mon, 19 Feb 2024 06:33:32 -0800 (PST)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id o18-20020adfcf12000000b0033b87c2725csm10541866wrj.104.2024.02.19.06.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Feb 2024 06:33:32 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Mon, 19 Feb 2024 15:33:27 +0100
+Subject: [PATCH] arm64: dts: qcom: Fix type of "wdog" IRQs for remoteprocs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240219-remoteproc-irqs-v1-1-c5aeb02334bd@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIALZm02UC/x3MQQqAIBBA0avErBN0jKCuEi3ExppFamNEEN09a
+ fkW/z9QSJgKjM0DQhcXTrHCtA34zcWVFC/VgBo7jWZQQns6KUvyiuUoqrfB4mBdwF5DrbJQ4Ps
+ /TvP7flEAnhphAAAA
+To: cros-qcom-dts-watchers@chromium.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- linux-arm-kernel@lists.infradead.org, Rob Clark <robdclark@gmail.com>, 
- Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Joerg Roedel <joro@8bytes.org>, linux-clk@vger.kernel.org, 
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- Robin Murphy <robin.murphy@arm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, devicetree@vger.kernel.org, 
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240219-topic-rb1_gpu-v1-2-d260fa854707@linaro.org>
-References: <20240219-topic-rb1_gpu-v1-0-d260fa854707@linaro.org>
- <20240219-topic-rb1_gpu-v1-2-d260fa854707@linaro.org>
-Message-Id: <170835313573.3576894.7520977778258170562.robh@kernel.org>
-Subject: Re: [PATCH 2/8] dt-bindings: clock: Add Qcom QCM2290 GPUCC
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.13.0
 
+The code in qcom_q6v5_init() requests the "wdog" IRQ as
+IRQF_TRIGGER_RISING. If dt defines the interrupt type as LEVEL_HIGH then
+the driver will have issues getting the IRQ again after probe deferral
+with an error like:
 
-On Mon, 19 Feb 2024 14:35:47 +0100, Konrad Dybcio wrote:
-> Add device tree bindings for graphics clock controller for Qualcomm
-> Technology Inc's QCM2290 SoCs.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/clock/qcom,qcm2290-gpucc.yaml         | 76 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,qcm2290-gpucc.h     | 32 +++++++++
->  2 files changed, 108 insertions(+)
-> 
+  irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Fix that by updating the devicetrees to use IRQ_TYPE_EDGE_RISING for
+these interrupts, as is already used in most dt's. Also the driver was
+already using the interrupts with that type.
 
-yamllint warnings/errors:
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+See also this thread:
+https://lore.kernel.org/linux-arm-msm/efecb4cf-e42b-40fb-aa68-37433529604b@linaro.org/
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi   | 4 ++--
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi   | 4 ++--
+ arch/arm64/boot/dts/qcom/sm6375.dtsi   | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi   | 6 +++---
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml: properties:compatible: [{'const': 'qcom,qcm2290-gpucc'}] is not of type 'object', 'boolean'
-	from schema $id: http://json-schema.org/draft-07/schema#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml: properties:compatible: [{'const': 'qcom,qcm2290-gpucc'}] is not of type 'object', 'boolean'
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml: ignoring, error in schema: properties: compatible
-Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.example.dtb: /example-0/soc/clock-controller@5990000: failed to match any schema with compatible: ['qcom,qcm2290-gpucc']
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index c31a09bac4ed..8379ca283d52 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3707,7 +3707,7 @@ remoteproc_adsp: remoteproc@3700000 {
+ 			compatible = "qcom,sc7280-adsp-pas";
+ 			reg = <0 0x03700000 0 0x100>;
+ 
+-			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -3944,7 +3944,7 @@ remoteproc_cdsp: remoteproc@a300000 {
+ 			compatible = "qcom,sc7280-cdsp-pas";
+ 			reg = <0 0x0a300000 0 0x10000>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index a5b194813079..c9058c7fc1a3 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -2641,7 +2641,7 @@ remoteproc_adsp: remoteproc@3000000 {
+ 			compatible = "qcom,sc8280xp-adsp-pas";
+ 			reg = <0 0x03000000 0 0x100>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -4977,7 +4977,7 @@ remoteproc_nsp0: remoteproc@1b300000 {
+ 			compatible = "qcom,sc8280xp-nsp0-pas";
+ 			reg = <0 0x1b300000 0 0x100>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp0_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp0_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp0_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -5108,7 +5108,7 @@ remoteproc_nsp1: remoteproc@21300000 {
+ 			compatible = "qcom,sc8280xp-nsp1-pas";
+ 			reg = <0 0x21300000 0 0x100>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp1_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp1_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp1_in 2 IRQ_TYPE_EDGE_RISING>,
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 24bcec3366ef..0be053555602 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1252,7 +1252,7 @@ adsp: remoteproc@3000000 {
+ 			compatible = "qcom,sm6350-adsp-pas";
+ 			reg = <0 0x03000000 0 0x100>;
+ 
+-			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -1511,7 +1511,7 @@ cdsp: remoteproc@8300000 {
+ 			compatible = "qcom,sm6350-cdsp-pas";
+ 			reg = <0 0x08300000 0 0x10000>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index 4386f8a9c636..f40509d91bbd 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -1561,7 +1561,7 @@ remoteproc_adsp: remoteproc@a400000 {
+ 			compatible = "qcom,sm6375-adsp-pas";
+ 			reg = <0 0x0a400000 0 0x100>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index f3c70b87efad..03c7dda1d542 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -3062,7 +3062,7 @@ slpi: remoteproc@5c00000 {
+ 			compatible = "qcom,sm8250-slpi-pas";
+ 			reg = <0 0x05c00000 0 0x4000>;
+ 
+-			interrupts-extended = <&pdc 9 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_slpi_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -3766,7 +3766,7 @@ cdsp: remoteproc@8300000 {
+ 			compatible = "qcom,sm8250-cdsp-pas";
+ 			reg = <0 0x08300000 0 0x10000>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_cdsp_in 2 IRQ_TYPE_EDGE_RISING>,
+@@ -5928,7 +5928,7 @@ adsp: remoteproc@17300000 {
+ 			compatible = "qcom,sm8250-adsp-pas";
+ 			reg = <0 0x17300000 0 0x100>;
+ 
+-			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
 
-doc reference errors (make refcheckdocs):
+---
+base-commit: 35a4fdde2466b9d90af297f249436a270ef9d30e
+change-id: 20240219-remoteproc-irqs-63f3293af260
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240219-topic-rb1_gpu-v1-2-d260fa854707@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
