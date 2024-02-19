@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-11642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A71785A068
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:59:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A159885A0B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:14:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C47B31F22A2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 09:59:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 421BD1F21D72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:14:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C31CE25569;
-	Mon, 19 Feb 2024 09:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 515CC25629;
+	Mon, 19 Feb 2024 10:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vHNqu4gm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzsdwsSQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DFA25561
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FA925603
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 10:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708336765; cv=none; b=qIXUZ5Jo+O+W/HwYcm63aeom1Gtj9iohhhyfTu0wz/svICxzXmdpQ7y878Ew63JOPOLGm6QTbSIYWd3qkeZRl5ZgWqOYbR7Ub0v/7qtKSaDB1TZ5fFIpW+fQjGxMMSqjpvQdRh8HEQ4sSPnqhPBg1j4dODq9UPW3bgETTuHfBuw=
+	t=1708337688; cv=none; b=G25+YB+AN7rxYLCg6vnSSVm/IQ6OsnrLIes6HUPgu7JM1kTfQN3WgyvurmMjLZ9ArcdPnWjMcNU69mA4DcE6C/vQ5jXdKXdP83Zsbw+MpbVpzly+t2xiW24y1IFFkp+tZOKd2GY3vpeoY7S8f8GB/j3ELbqi+gKUlzkE+Ynl3x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708336765; c=relaxed/simple;
-	bh=+51psQD7bb/Oa4T+MFP8wncBfjGz+puKKys+c8LD/zE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bQIA9GHaIw7eerqm04HDduzNrZjFeIpKIK6UVPO81+AS0VlOLNmR/Popc8tby5uwU/rySyNG2TNb0kjXMnRAPjGH3KNFOzmKZo9Zf2r0ERNWyry1rRYcSjBJUus7wtVYMZxwHNtJII88dBiQeJNSKfiDZW8UJYWwTPdph0WCHlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vHNqu4gm; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1708337688; c=relaxed/simple;
+	bh=/r+Sw8hg1vButQTUTMbULSa/k6wzvq6pq3Hs/SxGJjk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qCIDTcFNe+z+BSwTv1+OKWTA/LFyFUGlTCTlRH8ZIFBLxuQX+RiwhfFgfLWrjTIxZOjbBNPNjH9HZtMgpU2VRGhdz4lmWIqrW2SvTnb0dibqqCGBKvcNMl48lVM2v483BdS1q2SQ+7ykVwW1MxsQKdYYykMPIivHXwrcmClUo/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tzsdwsSQ; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4125edd1433so12247305e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 01:59:23 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a36126ee41eso540221666b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 02:14:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708336762; x=1708941562; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uQnaoRg0OcXD43oUOLOIkmEkqA5MmodUK9yZS2QQYNs=;
-        b=vHNqu4gmuoISJjJaskMtTNP7ruUoc+ND4o2kbpfyXFJPsWYHgMIEmXiYFpVYa1/rRh
-         Ih33t7z+c1/qJ57h0JGpFySRppXPIAsM2fw99ZhTeQBUVcDAY6H4rNrknKeux/TzKtf/
-         Pt9yRAuNUFklbUyuhj3bBBNIKdIPbJBcEgyAzpEVhyhXtae0GW51UWIvasLGvdSeFllF
-         MAJJy8xzhemXt5VvI8lYJeedN5qWqKRfdQSGUaT2NcSigjgdGV42txFLadAoAGGl6sgd
-         d7dsZrBLG2ZULbY4xFzGcxB53k0JJoqgw7wH8c/NhcFXG7eio9wAuq/GJY9G0JaRmOAb
-         Yp4w==
+        d=linaro.org; s=google; t=1708337684; x=1708942484; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+VfvyMz4J9zOLt2R+IkpEvDhJZO2XVen/W32wenUqb0=;
+        b=tzsdwsSQQbOtfSEmK3gWnzUto6z/CAvnGyV4pYLpEyFfsB71j/H7acfZuuCYo/bvoz
+         F4s/sIZCjyq+PMT70/7E2uGMjnle6KaZVVay3F3OPNbYKeJHfgd+yRmCiC+T0xg8F53D
+         K3Q8cCMxA1pHMFmKa/Cr7Gw8WukO0lywWjSkiECwaQB3iF/iTx6vxzMgH9gpNX54uerW
+         deaXoJNJjskwVJitYS0SBQiKcbK6inrF6dDH3Txyf5ZO1MqmUv8W8dFhS3pisPP8fHsH
+         /mNdPvukth2vYU0krmBEJ1qogOz7OHaSVjJE8DC/T3x4Yd5QcU3OOG1WegVszh+CjZKL
+         n4VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708336762; x=1708941562;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uQnaoRg0OcXD43oUOLOIkmEkqA5MmodUK9yZS2QQYNs=;
-        b=v4Ywsv6M9FwAetz5W2nvHvMXGjPJ10hIi9ua52cwp5VzCjGcl9ZksMh0mYwnWZtuAF
-         kSChSGqqkfH7spJhf8WIq8EOmaMlpgDWGS0670NXbO7qFn4KYOEZXvjJXzOaebZf/mc7
-         AvgD747zMdqoIkiPpO104LfQ3aE77I1cFNic8/ompHXjM5pNiGbz4aqjaeA1JQHdDP3+
-         tA+8NfVYK3aT+D2BYJFG5kA0dssF+PxlgRAKbMRLeYC+UiJksj+rD2z7ZiSD9t+IC1OU
-         refz4UU/M0nbdou72/s1C+1xcqPfMd2ES2PsbOF7mX1rv+Dg65yse8CaemRJRWrU5+Xz
-         8fQw==
-X-Gm-Message-State: AOJu0Yzw1DQWIWQEsTYaSu7/zpAjK6tsWm+kZlmrLAaZNZhwhPVm91AF
-	7Oi29Vi+nG1kG6yeogbw95G96KC9xd/f+IetZ2pPkT1CKtfG5+HgPJHWL/Y/dQE=
-X-Google-Smtp-Source: AGHT+IEPWCw2eRmI7UZZlYyf7GjQ9NtYbNMbDUZNx1KRB17Odf+V6wSPyk7WKj1c+RpQM3Cbjxu2pQ==
-X-Received: by 2002:a05:600c:3b02:b0:412:5f54:f402 with SMTP id m2-20020a05600c3b0200b004125f54f402mr3142487wms.22.1708336762410;
-        Mon, 19 Feb 2024 01:59:22 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:9470:c6e0:c87a:fa9f? ([2a01:e0a:982:cbb0:9470:c6e0:c87a:fa9f])
-        by smtp.gmail.com with ESMTPSA id b1-20020a05600c11c100b00410cc2f5550sm10636819wmi.19.2024.02.19.01.59.21
+        d=1e100.net; s=20230601; t=1708337684; x=1708942484;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+VfvyMz4J9zOLt2R+IkpEvDhJZO2XVen/W32wenUqb0=;
+        b=wPZVDfoBaSqBlPYVNNgJ65b0OwYAW9PipRvuXdavr2R0AOCk9pxgfx35DEE24nPdDx
+         i4GOSaZXohIlRNSVbliflzw4w0ZD81TZRkJ1biPyvkeE9PBYSUU4hKzj5zdUhV51admB
+         SHbQNdbpN0VfSDUm+T1zosFP66ZhjeEMYchDddDvJ1siFfEhsMhOMSNOnSqyjEdVgpKz
+         jaq0QmyldYz9F0GtviyhbFW+xIjeeslApG0H6OKlwp8x3o+bSxvOrUF9CeFynlcsCEta
+         Pm4PhdT/pB1KnpySyp0TGTy12ZEojEj7qcr+1t0BNmMuWkou1w2rQRnRD19dpjuAJXMc
+         SRkA==
+X-Gm-Message-State: AOJu0Yw/KUxdVa7H4VUFKvqDz3G07OZMJgfS0S437v4JmEXvnntVWMkh
+	H712y3K0ot9n7KAO3R0qgXkBJZCNX/rGxDb/dxWbhN7UYgaCSihhG0yDXQ4SFy0=
+X-Google-Smtp-Source: AGHT+IHWZTCfeNUz+MEa50xtnI28rbL81sZDIymURuniBGN+xM/ptumUPnZs90a7TfVQcwwF9TB/Lw==
+X-Received: by 2002:a17:907:11c2:b0:a3e:88fb:3e23 with SMTP id va2-20020a17090711c200b00a3e88fb3e23mr1886026ejb.7.1708337683999;
+        Mon, 19 Feb 2024 02:14:43 -0800 (PST)
+Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id x19-20020a1709065ad300b00a3e786d8729sm1284360ejs.168.2024.02.19.02.14.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Feb 2024 01:59:22 -0800 (PST)
-Message-ID: <ade835c0-6a01-4045-b2e6-1c4b90fe044f@linaro.org>
-Date: Mon, 19 Feb 2024 10:59:20 +0100
+        Mon, 19 Feb 2024 02:14:43 -0800 (PST)
+Message-ID: <ca2c5b9c-6d8c-42a4-9f27-b60f024c95c2@linaro.org>
+Date: Mon, 19 Feb 2024 11:14:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,89 +75,125 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: sm8650: Add msi-map-mask for PCIe nodes
-Content-Language: en-US, fr
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240216-sm8550-msi-map-fix-v1-1-b66d83ce48b7@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240216-sm8550-msi-map-fix-v1-1-b66d83ce48b7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/2] interconnect: qcom: Add SM7150 driver support
+Content-Language: en-US
+To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
+ djakov@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240218183239.85319-1-danila@jiaxyga.com>
+ <20240218183239.85319-3-danila@jiaxyga.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240218183239.85319-3-danila@jiaxyga.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/02/2024 18:05, Manivannan Sadhasivam wrote:
-> "msi-map-mask" is a required property for all Qcom PCIe controllers as it
-> would allow all PCIe devices under a bus to share the same MSI identifier.
+On 18.02.2024 19:32, Danila Tikhonov wrote:
+> Add a driver that handles the different NoCs found on SM7150, based on the
+> downstream dtb.
 > 
-> Without this property, each device has to use a separate MSI identifier
-> which is not possible due to platform limitations.
-> 
-> Currently, this is not an issue since only one device is connected to the
-> bus on boards making use of this SoC.
-> 
-> Fixes: a33a532b3b1e ("arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index d488b3b3265e..12ba839f215e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2277,6 +2277,7 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->   			/* Entries are reversed due to the unusual ITS DeviceID encoding */
->   			msi-map = <0x0 &gic_its 0x1401 0x1>,
->   				  <0x100 &gic_its 0x1400 0x1>;
-> +			msi-map-mask = <0xff00>;
->   
->   			linux,pci-domain = <0>;
->   			num-lanes = <2>;
-> @@ -2404,6 +2405,7 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->   			/* Entries are reversed due to the unusual ITS DeviceID encoding */
->   			msi-map = <0x0 &gic_its 0x1481 0x1>,
->   				  <0x100 &gic_its 0x1480 0x1>;
-> +			msi-map-mask = <0xff00>;
->   
->   			linux,pci-domain = <1>;
->   			num-lanes = <2>;
-> 
-> ---
-> base-commit: d37e1e4c52bc60578969f391fb81f947c3e83118
-> change-id: 20240216-sm8550-msi-map-fix-ab8fe5e24df1
-> 
-> Best regards,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Looks rather good, just 3 minor things:
+
+
+> +
+> +static const struct of_device_id qnoc_of_match[] = {
+> +	{ .compatible = "qcom,sm7150-aggre1-noc",
+> +	  .data = &sm7150_aggre1_noc},
+
+Please unwrap these and add a space before the closing curly bracket
+
+> +	{ .compatible = "qcom,sm7150-aggre2-noc",
+> +	  .data = &sm7150_aggre2_noc},
+> +	{ .compatible = "qcom,sm7150-camnoc-virt",
+> +	  .data = &sm7150_camnoc_virt},
+> +	{ .compatible = "qcom,sm7150-compute-noc",
+> +	  .data = &sm7150_compute_noc},
+> +	{ .compatible = "qcom,sm7150-config-noc",
+> +	  .data = &sm7150_config_noc},
+> +	{ .compatible = "qcom,sm7150-dc-noc",
+> +	  .data = &sm7150_dc_noc},
+> +	{ .compatible = "qcom,sm7150-gem-noc",
+> +	  .data = &sm7150_gem_noc},
+> +	{ .compatible = "qcom,sm7150-mc-virt",
+> +	  .data = &sm7150_mc_virt},
+> +	{ .compatible = "qcom,sm7150-mmss-noc",
+> +	  .data = &sm7150_mmss_noc},
+> +	{ .compatible = "qcom,sm7150-system-noc",
+> +	  .data = &sm7150_system_noc},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, qnoc_of_match);
+> +
+> +static struct platform_driver qnoc_driver = {
+> +	.probe = qcom_icc_rpmh_probe,
+> +	.remove_new = qcom_icc_rpmh_remove,
+> +	.driver = {
+> +		.name = "qnoc-sm7150",
+> +		.of_match_table = qnoc_of_match,
+> +		.sync_state = icc_sync_state,
+> +	},
+> +};
+> +module_platform_driver(qnoc_driver);
+
+This is most certainly a bad choice, but at the same time it doesn't
+matter for now.. It's going to be badly delayed anyway, I have some
+fixes in the pipeline. Please change it to core_initcall (which may make
+your boot slower as of torvalds/master, counter-intuitively.. but I will
+surely forget to update this otherwise)
+
+[...]
+
+> +
+> +MODULE_DESCRIPTION("Qualcomm SM7150 NoC driver");
+> +MODULE_LICENSE("GPL");
+> diff --git a/drivers/interconnect/qcom/sm7150.h b/drivers/interconnect/qcom/sm7150.h
+> new file mode 100644
+> index 000000000000..e00a9b0c1279
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/sm7150.h
+> @@ -0,0 +1,140 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+
+GPL2+BSD3?
+
+Konrad
 
