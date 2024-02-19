@@ -1,90 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-11674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC86B85A363
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 13:31:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D9F485A365
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 13:32:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E9F21F24873
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:31:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77D43B21892
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:32:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 287522E646;
-	Mon, 19 Feb 2024 12:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 236F436118;
+	Mon, 19 Feb 2024 12:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xMnKzNO1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DD/0soRE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727BA33CF9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 12:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CF73589C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 12:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708345854; cv=none; b=JQBhfVdKheUAiPZuBeP+mDwl+MqR1daCODZE4ZN/wyDeB+2cqxFWfnKTvbPCyL6U7tcL+jVHDlieWk5xeip6SO+kU2VQI8lQMhMWAhwg4/U6c3IdtGIOFnhbCLoOl0z/WeEaJXl3YbY/+xztKHz/UF011rovO/LxmpP8ilIbdt4=
+	t=1708345855; cv=none; b=kp4hOlxLDKCvCBU+WRPWXkXl6rEn5+Z45rScHjvWda9AQbKHSZXNX2IoV3uh1jsTm1z2wu23LCCcnv4tnONSbg9l1DtMY9MPNbURTm1Q8K0Iqi4U2WO0EL40Tx466V799NdROZ/JoE5db6ukmDydzraStZKC6y/han7aj8/1bgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708345854; c=relaxed/simple;
-	bh=CIqMEmdgqI3t82Rv2T7Lko+CSlpgqA71kulwLGRRhy8=;
+	s=arc-20240116; t=1708345855; c=relaxed/simple;
+	bh=jeszU7cS6hiWuSbHa6Gl/NZ+4dTstY0j8dyZDzSMMHc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GJt/YrD1VbKeSQu+vRB1SkUmGFDBfY3+zJf1NTDcxjBlR9RiKqUhUoPwVORBoWKvWmh760u8UHibNeIFlcE1YRBMAx1LFSRPGbdfSUUWAv6uLvKnO7tDmmlFVSteLOfZb9fY7nlaiQzo9aMsukJrp4Y6KSRkYMX4owLykU45nI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xMnKzNO1; arc=none smtp.client-ip=209.85.167.48
+	 MIME-Version:Content-Type; b=AMaRI7/ITi9bjW18nRehRSN9wQIqOAHycuoWWidt1MErnCNaEU41KSH5O6CV9WS3PmTkSMltaw9H0qBQdnYcrCH7DVJw9PUnZG437Z7wg3HtUz+dCftJzFyLVdSFHQ5G9LjkL/vGRsfsyILpzF1WadKNCoBRo/xgG3ZCCjNtuJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DD/0soRE; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512bb2ed1f7so600167e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 04:30:52 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-512b85d03daso438062e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 04:30:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1708345851; x=1708950651; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TpAohRwTwYbAuMyXNWeiGCD6UdiTEgdchbEGaanHYJ8=;
-        b=xMnKzNO1Haz7g7XhiQW7ec3cPruY48C+JJCqaspPX0Hh1R+VfmHddfxqmFkywdou+E
-         Uvsmae7EY9LU9X7R8MrY3RICNbmqa1KEo9MV3Sh+VVAOYLvEFMtFdU4OWX/DTMNoJS2x
-         zuNOYxMnYqdhcr+RK2X32HgKoZNEUAIJxyIJlXOjzmCOwloSlzoJQ90ewJylbyrWo4Tl
-         xxAum3W3fdcSwfC/L9gtmGACLUdMVpt/W+MUMrM5GnaogBGNk0WI6XXC1X/atkYMPst5
-         UTDl9k6La+hDSbkHY1hibbtKd+mua34OQQt2RNdyCv3e5LO2QDVS+67oFDmc4Cql/k/P
-         IJPw==
+        bh=kjMb4d1hbiL9rkEx3BrswRg3MQUneLIxmtF5Ztvz0jI=;
+        b=DD/0soREgkRoEVHbH3uBDuiSZYSKJgYJwTrNnESgIEibNkh05r1Zjxo1rs0cGdBif3
+         /DchscPfxdI8KzJ/ld5j7Jei2PS0wdIgUSgwLv5Y46akKVJW9/KxkajJW77h3GHxAdz5
+         aJhXQaoVFzTazdQuOqp42bHh81C2oskR4ya5kwW8o9JmHdHbumxtuNmlrFKjtWSltGbO
+         fNIXsdO7uOQC81nvV/s8STrBxmftNDgHuXN0eBb7vZboNSULkzXWO4TqY/YE3dGUk65I
+         aGq6V6j2COHf6DW2fJzaOtV3N40tIDNDW4qTxSm2l/J9xLIIopGJHaKCAFfxlG7oIy8y
+         EB9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1708345851; x=1708950651;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TpAohRwTwYbAuMyXNWeiGCD6UdiTEgdchbEGaanHYJ8=;
-        b=PPfSSVps2gpT84pgqpyQDbE+5KtBJIXp9MMXZoA50w5mxprK/Q2Xe7Ia0e78mh1xiU
-         Xl738nCJJqCGuCgyuE5isT9wkWZu5byw9jWNfz0IcZO8YiuTtC0yxFP3nnL/A0eeFpT2
-         2atWeVl5n696Ca/miWQ2+zLAsijJb2E1UId6H8svFUc4WYLtP2o0Uy0tP2j0wv71CITs
-         IabwXssUyzkdxmu2td31UsdqAJcQgBnIQF7DoFNNiZ0SHnsQWDC3sAZpRCuvh50QWBGr
-         Z/ZOlijVtugH8Q1dCSylMLSS7eOCF0st44Uv1nxKWXvP3e1V7ZVBP/6hpg9sBFeUt5Pd
-         Afnw==
-X-Gm-Message-State: AOJu0YyzqOwSzvenau2YtvwHeFc+zOIPtslZ86uSPZ8Tknc2FZW7j4GO
-	tmjmGoX5fZN7TWf0Uy7+8gX/+X+5ATBiCBMxWJUeo20CNeaNaPCibeM04nBqaIk=
-X-Google-Smtp-Source: AGHT+IFlu6VTSkvuiYZTha+WVDfU9F1rby9AFqQIs6ooFgMJwGVOj+HHMKyt94DNvUTyn3MOK1rWAg==
-X-Received: by 2002:ac2:489a:0:b0:511:5f38:76e with SMTP id x26-20020ac2489a000000b005115f38076emr7448667lfc.1.1708345850792;
-        Mon, 19 Feb 2024 04:30:50 -0800 (PST)
+        bh=kjMb4d1hbiL9rkEx3BrswRg3MQUneLIxmtF5Ztvz0jI=;
+        b=uJiZKL9i+yyIXd1kavLjF0wAiV3Dfd3VLWgNvGZFAlzDqd009oIz93tcHDHH+xuYSi
+         0qwFX9FAVsbYlZ8c7Nc9/IvyLTaOXGR+Mb4iJGVzQ0bCa3ZMjYzE+ylPO/VtDCpddQWG
+         JKKdU40zGAPs78UBrd/px67WX2yPjt7Rahd8EFoKEsBzIcM+G8rwOlH3AzD+DepCIW7R
+         rnBYqCmnqmaRd7MhH2O0P0nNwU08Yof+4DMnvYo91e433L6ZiZPsXCk9otjXxwEZ3r3I
+         XWUbLvSPlqjIJRYRKpfUTC1b15JgibGBsAuTW9ayT1PAogD8WNAvTfoQjLgX99eDlnYr
+         ZCPQ==
+X-Gm-Message-State: AOJu0YycWlNr+OMsvv1K/QevzpNeTWPiZf2NrOdnw4un7Ax8uPzByhRm
+	2Zi7YdLAEDSbS9ntCarZ24MvGFMEz9GyKjYr5pMdx7SeWM560++WrgOHZaYvStc=
+X-Google-Smtp-Source: AGHT+IFsnM5T1SLVsoU88JG+DcwZETnLSFkjv32tNAhdISToncKjt/6wK4uHEKC7yxoH4WxJY1IvhQ==
+X-Received: by 2002:a05:6512:b86:b0:512:b39b:9768 with SMTP id b6-20020a0565120b8600b00512b39b9768mr955071lfv.31.1708345851583;
+        Mon, 19 Feb 2024 04:30:51 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id i6-20020ac25226000000b00512bde4cddfsm90466lfl.148.2024.02.19.04.30.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Feb 2024 04:30:50 -0800 (PST)
+        Mon, 19 Feb 2024 04:30:51 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sean Paul <sean@poorly.run>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Vinod Koul <vkoul@kernel.org>,
 	Marijn Suijten <marijn.suijten@somainline.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: Re: [PATCH] drm/msm/dpu: Only enable DSC_MODE_MULTIPLEX if dsc_merge is enabled
-Date: Mon, 19 Feb 2024 14:30:38 +0200
-Message-Id: <170834569503.2610898.6715741555434645771.b4-ty@linaro.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dsi: Replace dsi_get_bpp() with mipi_dsi header function
+Date: Mon, 19 Feb 2024 14:30:39 +0200
+Message-Id: <170834569503.2610898.3555817415070936483.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240204-dpu-dsc-multiplex-v1-1-080963233c52@somainline.org>
-References: <20240204-dpu-dsc-multiplex-v1-1-080963233c52@somainline.org>
+In-Reply-To: <20240204-drm-msm-dsi-remove-open-coded-get-bpp-v1-1-c16212de7e86@somainline.org>
+References: <20240204-drm-msm-dsi-remove-open-coded-get-bpp-v1-1-c16212de7e86@somainline.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,21 +93,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 04 Feb 2024 18:45:27 +0100, Marijn Suijten wrote:
-> When the topology calls for two interfaces on the current fixed topology
-> of 2 DSC blocks, or uses 1 DSC block for a single interface (e.g. SC7280
-> with only one DSC block), there should be no merging of DSC output.
+On Sun, 04 Feb 2024 18:04:39 +0100, Marijn Suijten wrote:
+> drm_mipi_dsi.h already provides a conversion function from MIPI_DSI_FMT_
+> to bpp, named mipi_dsi_pixel_format_to_bpp().
 > 
-> This is already represented by the return value of
-> dpu_encoder_use_dsc_merge(), but not yet used to correctly configure
-> this flag.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/dpu: Only enable DSC_MODE_MULTIPLEX if dsc_merge is enabled
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/06267d22f9ee
+[1/1] drm/msm/dsi: Replace dsi_get_bpp() with mipi_dsi header function
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/99d519fed75b
 
 Best regards,
 -- 
