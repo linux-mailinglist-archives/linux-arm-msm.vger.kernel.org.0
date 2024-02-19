@@ -1,58 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D25D085AC2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:44:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C95D285AC8F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:56:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1119D1C2177C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:44:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49BB6B25F90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:56:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C5895026D;
-	Mon, 19 Feb 2024 19:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EF051033;
+	Mon, 19 Feb 2024 19:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WmqvKUaU"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/Tf0rg/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3F23BB38;
-	Mon, 19 Feb 2024 19:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2824F203;
+	Mon, 19 Feb 2024 19:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708371879; cv=none; b=YFy/JAp9QYuY/D61lam9HjLafcYXomXnO0h9tDpoWlPgsviOaAkn2tR6+hWQpgbBPZ8QyVizjoqYj39D9aAs42LCFVJDmCl2p91UrSYm4ju2zlPdpsmGfSP8DL8i7z8ZzWYDr/EUq/yobGIrgWjLIkHal6Lg96Md4/qBJ975AtI=
+	t=1708372602; cv=none; b=DHLIqOk/1zuzODK1TxZr8HGfHB52qeawYpUb5R33su4WXZ7wdq7O2KolJPgkr2eqLkkWeEvHV8GVRLtQQdsExja5sSo+f0n/e8XW2CN82kSlPyndDGcq0ClHn8UHxy/5/ZU8qRSb0n/Zd7VcoM2HgXXm4qtvBfDPwLB3sqsujww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708371879; c=relaxed/simple;
-	bh=HhzPmP09U/1d8rZXRd2SC5bEMVxNbRPE2hAW1nJC6AA=;
+	s=arc-20240116; t=1708372602; c=relaxed/simple;
+	bh=OaAEMFvFDN1qhJ4t5nXfrOCymw4TroM52J1E3WnfAP0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gVw9zI8Qf28N1G/SkonKOIadXEWP2VsMnK5v4n29cqfUlRJW1LU971KTu5RJYyDy0EkakYXsk2W2lkKTQc3TJmVTTCWl1/alIOXHzylIM34O/KAmAjbzO0bVdoro6G8iUm6dIxzLKepsGWHWk/UaO0TCG50KOdk/2YUpZZK116s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WmqvKUaU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647E7C433C7;
-	Mon, 19 Feb 2024 19:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708371878;
-	bh=HhzPmP09U/1d8rZXRd2SC5bEMVxNbRPE2hAW1nJC6AA=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=CH4YqlWQDjRZLjxA9JEkwaaOqLi/mrjBUUS/3yaX83WK06PFr8FxyNJBd91I6uSMOnjWDsIJ91rhDKrrmpit9Vhy8jb01pRudRtDZ9VQ3Rq0HhgzI/meluSTxcDYa/e5ovNASbEkGksYmoyofeDx5Fm7G3IfRDji4+O9hTZ2GkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/Tf0rg/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB28C433F1;
+	Mon, 19 Feb 2024 19:56:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1708372601;
+	bh=OaAEMFvFDN1qhJ4t5nXfrOCymw4TroM52J1E3WnfAP0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WmqvKUaUWVa6kpqJIjPCL3kBAiP/eY8mLFE1B+abI7dfbxAFZx4eXipmp9gS5l1Fx
-	 xWmCbyPNZDTKRcZ5ig6CO6DpZLEJlrgB2Ej0S57xW7POSuQHmuq955Hi9cR3xxXX7I
-	 57+c0R6VodtNz+tyMMWmGkjwh+z7gCvhAgWNTcjXtC3od5miHG+b4ZU3aqd8eTjyu+
-	 6opxW4cIaAZq4S5Ih2gysLidfGkznztG7X6auEqVmZXYcvSpR6c1lusRqDfH2scMuR
-	 iLAEnreVi4pdhoX5RBrkXzVd813rdmBtQ/pwIqkv+C4SVZ+rEYvx7qmrxNLXlZEQfe
-	 G2QMvhnD0n1Eg==
-Date: Mon, 19 Feb 2024 19:44:33 +0000
-From: Simon Horman <horms@kernel.org>
-To: Alex Elder <elder@linaro.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
-	quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-	quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-	elder@kernel.org, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] net: ipa: don't overrun IPA suspend interrupt registers
-Message-ID: <20240219194433.GN40273@kernel.org>
-References: <20240218190450.331390-1-elder@linaro.org>
+	b=j/Tf0rg/52VRU0RdqcIIbgIp34hsAGhLLM6UEzs4f8XeRAe8Pe0ZnvuYgjEaedKPh
+	 XzolqPbpGuyslO57mb26R3nPLHjlPXFweVZOqmQ+StxE+IHfCDJsSFchYOb0ECw4Ej
+	 9bic7JeKdiqsqqJlLXwCDhAwxYe5B/OGUhUOFkGU=
+Date: Mon, 19 Feb 2024 20:56:39 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+	corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
+	broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
+	robh+dt@kernel.org, konrad.dybcio@linaro.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	alsa-devel@alsa-project.org
+Subject: Re: [PATCH v17 00/51] Introduce QC USB SND audio offloading support
+Message-ID: <2024021929-catching-subheader-d51b@gregkh>
+References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
+ <2024021754-unengaged-saggy-6ab1@gregkh>
+ <96ab6033-2cb9-daa7-ddad-090138896739@linux.intel.com>
+ <2024021922-privatize-runt-495e@gregkh>
+ <d82c8955-6793-7544-0013-1033abd9f1e9@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,35 +66,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240218190450.331390-1-elder@linaro.org>
+In-Reply-To: <d82c8955-6793-7544-0013-1033abd9f1e9@linux.intel.com>
 
-On Sun, Feb 18, 2024 at 01:04:50PM -0600, Alex Elder wrote:
-> In newer hardware, IPA supports more than 32 endpoints.  Some
-> registers--such as IPA interrupt registers--represent endpoints
-> as bits in a 4-byte register, and such registers are repeated as
-> needed to represent endpoints beyond the first 32.
+On Mon, Feb 19, 2024 at 01:03:31PM +0200, Mathias Nyman wrote:
+> > > 
+> > > Patch 10/10 is based on an old POC patch by me, but it's heavily modified.
+> > > 
+> > > It looks like it does a few minor things that are not optimal, like extra
+> > > spinlock/unlock, and wait_for_completion_timeout() with magical timeout value.
+> > > I haven't tested this version, but I guess any fixes or cleanups can be done
+> > > later on top of it.
+> > 
+> > I can revert it now if you want, just let me know.
+> > 
 > 
-> In ipa_interrupt_suspend_clear_all(), we clear all pending IPA
-> suspend interrupts by reading all status register(s) and writing
-> corresponding registers to clear interrupt conditions.
-> 
-> Unfortunately the number of registers to read/write is calculated
-> incorrectly, and as a result we access *many* more registers than
-> intended.  This bug occurs only when the IPA hardware signals a
-> SUSPEND interrupt, which happens when a packet is received for an
-> endpoint (or its underlying GSI channel) that is suspended.  This
-> situation is difficult to reproduce, but possible.
+> Maybe reverting it would be better yes.
 
-I see what you mean about *many* more :)
+Ok, will do, thanks for letting me know.
 
-> Fix this by correctly computing the number of interrupt registers to
-> read and write.  This is the only place in the code where registers
-> that map endpoints or channels this way perform this calculation.
-> 
-> Fixes: f298ba785e2d ("net: ipa: add a parameter to suspend registers")
-> Signed-off-by: Alex Elder <elder@linaro.org>
-
-As noted by Alex elsewhere elsewhere in this thread, this is for net.
-
-Reviewed-by: Simon Horman <horms@kernel.org>
+greg k-h
 
