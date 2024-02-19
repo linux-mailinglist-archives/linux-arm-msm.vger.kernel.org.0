@@ -1,139 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-11695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3212085A4F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 14:38:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF0CF85A4FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 14:39:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 656C81C232B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 13:38:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB8332879A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 13:39:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82D933CF5F;
-	Mon, 19 Feb 2024 13:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB2136AFB;
+	Mon, 19 Feb 2024 13:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hVLDPwnQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RKU4rhLm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DF73C09F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 13:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E57136AE5;
+	Mon, 19 Feb 2024 13:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708349786; cv=none; b=lWRuJi50ITopf3guasBiRV7pu0FFTEHYHhuAumYHtbW33qOCNxNEEESENjccEuBYR5VV9B9j3DFrmaAnuwLKBw83/cw4Bh/yDEKfF4d5Is0f9hBkIDEj6ayc4AxdKB7W54Mm7wiTmcT9VCWrZUxl8GklAg41WoRMhk563VG4lrI=
+	t=1708349924; cv=none; b=ABcn01yEdFgNqRcWU04gF8p2u+aPEiCORAdKJwQ8JD3Es9cZrfA++qL4XmmyRZhtRBli4G3GGiu2ZShDo5eqTRO9tRWppqsfVm6K/j9+rQPSSU5AWK9KIz9PEiS7rG0ZYoT7MPwp2BjkAPGYHYcpLG3cytjzdtszeAduW7iw4qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708349786; c=relaxed/simple;
-	bh=Qqtg4ojpOawwNYOqVpOvtJgi/pUtWJ369I3bzfKA0X4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E0Qix3Wx3eDreKo/ev8abxsQZNjoFXSlANSBI4bEnIWkvHpD63h6QHno2FhlDce33BU9RYPNmFTaunG2ajOEugWVDp0n2WKGOuBqnKKEpO3F8S4vJMWHvKSRXMT/9hyeGOKZgtLTPfH8zA/kWak9IV/+GPeuVrr2ppvKULBovHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hVLDPwnQ; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-512b29f82d1so1391387e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 05:36:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708349783; x=1708954583; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lYeaGN05CrS5pFcr/tEpV5+bAgqlMkDoOULt3QF1Ggk=;
-        b=hVLDPwnQZk2yW6UDBf540LepB2o7SAzdv3IAAhs+f315m2ruNaY5oo2kY+NL6pdvTY
-         1zrNhzMutFQSFIczXSYX+hRE0G80b1cmO8Sm9V5gfsAnINMSYn8iTvpVKvynYrJksQHS
-         Hob/YZoweIAobxcombbBod4Eh+kp1ol+VJKPUUvFELxOvXMtsb599gV3SCn6aKalOhtP
-         95t/n6yIPDJ1kQ1jyOvaWBoU4q7mAlM7F7augd1FemG49Q16t5w1zzMOTh/NSP2o6BIJ
-         Puv86dEFqdKAI0Z/c/yM/+ttvyKiB5Am/q6aBEe4cKvYEOYo42pYUzeDqUflVn7Gjp2K
-         Zfgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708349783; x=1708954583;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lYeaGN05CrS5pFcr/tEpV5+bAgqlMkDoOULt3QF1Ggk=;
-        b=T7TO78kQGGPmxkK6n+lGWYEUYaNY25OhGJzIFBcUnkZfxVmHyEKL5FTuRqAONIX0iZ
-         0fHrAJLhYqZg4Vyk/xWV/yVeDlQsvroYH7MEnBmEa+BgZ5sk007rn2gfJrVJ9MRCwHcW
-         0OcWEoKx75xRuv8YdHd0hovatPBBxoUnB7rCW7BioTPXtobgIUFtu1wVSGh7Y/X/b02m
-         lZaHMZKETzCCPqCYGokCSNStdMjxLwv1tW/vvz+NHPhh29Ojz3iWapKRwN5Rv41jnCQ1
-         EEo6CUAdxCSDbyp5JeacErDT/Q+hqaDxhJQx1wX2Gy84cBHxMbVI5txZKRnE/IYpmI4d
-         +1DA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpCoctLCgQYYg9mLmP7hPAlih5ZtY4T60Wwtj5y8ju1MwceNqctu4sfKrP5tHakMVFRcf+L/ylF+ri23CPUmBVOoI2gPXevk5UE6FL0Q==
-X-Gm-Message-State: AOJu0YzHkSq/Ntwkh+3EYvcQwOOF5DgH92C0K9bOcdU1k6UhkvDTLiFw
-	CgOrrLmUWKsjH4P9YhjZgspZBINbp859nJeRotJ0QcIpqJbwy9JQ+MzR8jHyr/k=
-X-Google-Smtp-Source: AGHT+IFrCmmRI9koWR8+2EcQASd/IAuIdf+8BxbSGOHLyOpoeNa+Y8fldaDiDE1mcZ7oQlR5RnyK8A==
-X-Received: by 2002:a05:6512:e8f:b0:512:be57:6dce with SMTP id bi15-20020a0565120e8f00b00512be576dcemr701562lfb.12.1708349782988;
-        Mon, 19 Feb 2024 05:36:22 -0800 (PST)
-Received: from [10.167.154.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id q29-20020a50cc9d000000b00563a3ff30basm2900168edi.59.2024.02.19.05.36.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Feb 2024 05:36:22 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Mon, 19 Feb 2024 14:35:53 +0100
-Subject: [PATCH 8/8] arm64: dts: qcom: qrb2210-rb1: Enable the GPU
+	s=arc-20240116; t=1708349924; c=relaxed/simple;
+	bh=2y/R2rNrQF5YNdRb1X6YdN4UDCwnv5pqvMcfcKpihWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s6fCGpt4gOEwaC+tw1LLCvT9sdymmjt03/jiMQIoHjWaEAhKYp4ylEuR12PL0wGqbTsuUiGiC/Tz2ae3q3Sx9gREy6YB8Zl62xTSKIF7W42ShmHGCaIXrg0QO16gg2SPB7v2865S8MM4781vP68YQdYb6JKECYS/AGjlROe2ZKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RKU4rhLm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E31C433F1;
+	Mon, 19 Feb 2024 13:38:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708349924;
+	bh=2y/R2rNrQF5YNdRb1X6YdN4UDCwnv5pqvMcfcKpihWM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RKU4rhLmXh2QGNfVOd1TLLlAWldlYF1g01lkeL+TNUl/NObJeGAgG8LAVZSK8Zt7l
+	 ySPSnhqT2Gi2bZ5Kz09RVV3tGh8l9vffvkg9q29/Ypd5SQF4fw63Hx7eh3sZhT4Zfa
+	 D6jeHwAt3rfOmYxtibweL82tniOlA9SX5g7Wtuxja01mcAzBbNATfB0mpLVp7IRw2u
+	 s8nNCVyHiDp8qiomruTzVpmtl8nQJjLOy6HBxahTsCeydfzpL2F6c4sTkbsj5+qmGg
+	 FtGX6AoSQRa4y+/hS/mnZvGo+91/BDSS5IEBoYAg0uAXgSWiLXszqzFpZyMt6eF5OF
+	 /sHe0ELFLhLqw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rc3qz-000000002NA-15HX;
+	Mon, 19 Feb 2024 14:38:41 +0100
+Date: Mon, 19 Feb 2024 14:38:41 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: drm/msm: Second DisplayPort regression in 6.8-rc1
+Message-ID: <ZdNZ4TiJn9-yKT5_@hovoldconsulting.com>
+References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
+ <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
+ <ZczFhVjHIm55JTfO@hovoldconsulting.com>
+ <ZdDNcrf4KpflGeYQ@hovoldconsulting.com>
+ <ZdMwZa98L23mu3u6@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240219-topic-rb1_gpu-v1-8-d260fa854707@linaro.org>
-References: <20240219-topic-rb1_gpu-v1-0-d260fa854707@linaro.org>
-In-Reply-To: <20240219-topic-rb1_gpu-v1-0-d260fa854707@linaro.org>
-To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1708349759; l=852;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Qqtg4ojpOawwNYOqVpOvtJgi/pUtWJ369I3bzfKA0X4=;
- b=7s6b1o0Wbq+2Q9UxmDpWZcz1X+WrOuTL3z3Ndhfv4cWpB+GS8fT0yuSsDnxb4CeS4G3tVFSpH
- aC1g/6W2UwABvq/j2FmZN37rrNOb1IlvgJD1D3eP0KEN8TNjCvQO0bL
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZdMwZa98L23mu3u6@hovoldconsulting.com>
 
-Enable the A702 GPU (also marketed as "3D accelerator by qcom [1], lol).
+On Mon, Feb 19, 2024 at 11:41:41AM +0100, Johan Hovold wrote:
 
-[1] https://docs.qualcomm.com/bundle/publicresource/87-61720-1_REV_A_QUALCOMM_ROBOTICS_RB1_PLATFORM__QUALCOMM_QRB2210__PRODUCT_BRIEF.pdf
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index 6e9dd0312adc..c9abca5a7e39 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -199,6 +199,14 @@ &gpi_dma0 {
- 	status = "okay";
- };
+> It seems my initial suspicion that at least some of these regressions
+> were related to the runtime PM work was correct. The hard resets happens
+> when the DP controller is runtime suspended after being probed:
  
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/qcm2290/a702_zap.mbn";
-+	};
-+};
-+
- &i2c2 {
- 	clock-frequency = <400000>;
- 	status = "okay";
+> [   17.074925] bus: 'platform': __driver_probe_device: matched device aea0000.displayport-controller with driver msm-dp-display
+> [   17.112000] msm-dp-display aea0000.displayport-controller: dp_display_probe - populate aux bus
+> [   17.125208] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_resume
+> [   17.197909] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_suspend
+> [   17.198079] probe of aea0Format: Log Type - Time(microsec) - Message - Optional Info
+> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.1-00470-MAKENA-1
+> S - IMAGE_VARIANT_STRING=SocMakenaWP
+> S - OEM_IMAGE_VERSION_STRING=crm-ubuntu92
+> 
+>   < machine is reset by hypervisor >
+> 
+> Presumably the reset happens when controller is being shut down while
+> still being used by the EFI framebuffer.
+> 
+> In the cases where the machines survives boot, the controller is never
+> suspended.
+> 
+> When investigating this I've also seen intermittent:
+> 
+> 	[drm:dp_display_probe [msm]] *ERROR* device tree parsing failed
 
--- 
-2.43.2
+Note that there are further indications there may be more than one bug
+here too.
 
+I definitely see hard resets when dp_pm_runtime_suspend() is shutting
+down the eDP PHY, but there are occasional resets also if I instrument
+DP controller probe() to resume and then prevent the controller from
+suspending until after a timeout (e.g. to be used as a temporary
+workaround):
+
+[   15.676495] bus: 'platform': __driver_probe_device: matched device aea0000.displayport-controller with driver msm-dp-display
+[   15.769392] msm-dp-display aea0000.displayport-controller: dp_display_probe - populate aux bus
+[   15.778808] msm-dp-display aea0000.displayport-controller: dp_display_probe - scheduling handover
+[   15.789931] probe of aea0000.displayport-controller returned 0 after 91121 usecs
+[   15.790460] bus: 'dp-aux': __driver_probe_device: matched device aux-aea0000.displayport-controller with driver panel-simple-dp-aux
+Format: Log Type - Time(microsec) - Message - Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.1-00470-MAKENA-1
+
+I'll wait for the maintainers and authors of this code to comment, but
+it seems the runtime PM work is broken in multiple ways.
+
+Johan
 
