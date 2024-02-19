@@ -1,210 +1,2135 @@
-Return-Path: <linux-arm-msm+bounces-11725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0DBB85AA22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:41:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6311D85AA27
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:43:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01E61C216C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:41:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57CD51C2101E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:43:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B89B45BE0;
-	Mon, 19 Feb 2024 17:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2C2B40BE3;
+	Mon, 19 Feb 2024 17:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C3wDk2C5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fRi3DA15"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3552E416
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:41:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756FD26288
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 17:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708364512; cv=none; b=SmF3zMKyjZUDbZkrUCp1AU/T89cihbH+SoDhnW6UohCvxKNIhFzYG9hdHHX5qvEzkjY2Yc2SA7chNi4GEDRDE7A715e3cBbsRUzbcKvzZp1G0PnwDggYEIudsc1nRCAgMcZ7Vc8vI3HCxISyWP5HjZkLvIm6yEzM8dC16yeX4Og=
+	t=1708364587; cv=none; b=l1dQKuzPukLGmpfNbQn+GyJ2ZqqSzCGgG/gFA90pfeJ/vb44xC4VMW3g6Eu1K8LIa7k5g0e6uTITnELbhfxL8iWadBB3bOjAhbM6o+jby51sb/i5x85lgZLlmvQk74FSsW9eb06OPkk6li6Ad6vR/UNUN+ZhARg6tyUop2XjK7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708364512; c=relaxed/simple;
-	bh=679zUDpN6QOBZs8mfOsDKqbdb4UNHtj7fdB7M/jDYbE=;
+	s=arc-20240116; t=1708364587; c=relaxed/simple;
+	bh=Cix/LNg3Ab2KOp727emXF750FLJdoTxR+wOa5cVAt3Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gmuoPxaRK+NF5/kolQzQArvQP48JBUe7GCgF9IDnLtots8gvut7aMbbreIzvYPIstgbzXZjUHT4mTnRffRpoKEpjqt2QoLZJtIgGbC0CszrjWWn7rANj6JRn4Rmx0w9XQoQDdD3JAgCfiLr4ZU8gGjUh89n2ltZH/+FSXsbRL0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C3wDk2C5; arc=none smtp.client-ip=209.85.219.176
+	 To:Cc:Content-Type; b=P7PZs0x2wYmk9OKwDo1pSX6oGNUMHZSSuvfqEjXXC+Q4ljIkiAnxBFSU+1VbcsxxNoiSbuV53X+2uhmweWr3W/KgHYUciMnSIxH22s7FBi8lAzn8y9wRmEgyK4D2PXfBCxT3zmtRWDDghbdChtBKhr/cLh6X1qTFN+rOKbq7rbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fRi3DA15; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-db3a09e96daso3769721276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:41:49 -0800 (PST)
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dc74e33fe1bso4262389276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:43:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708364509; x=1708969309; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708364581; x=1708969381; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IpbxXvCSubVl6XgXjNWjfYRG3//u4L72+hbwdG6Aw+g=;
-        b=C3wDk2C5g25Q3u89OgrmqU+nsHkT903jviWJkjvJhord6SxHMBLaqLyCHsg8yxDmk3
-         3zTMzc2A4p6JPyFXAN83STdKgfBlzcgx6KvmT6E5ZUVRdhIS6GXNO870kxVvobzjG9Jc
-         XC2FxSRIo+8qo9PnBN/dvKIa5zoe9e6Ymqo4hvIJ602XbhyqYN5PxyvRFFLOsWZ63Q7R
-         hwgtWtyfSVjlVO0+l8AmhDZpQbX7i6jgPkJdkeDBVvpuoH373G9joLfFxJyYAgUe7xbg
-         /cnM+/81avBRcHGN6CIm/X460h7MuCYZiWtelbpdXigM1D6FUdAGLYUDVvK6cxYVywxW
-         ov9g==
+        bh=z6c+T/qNZsKtVcCWVkApVogzySlU/GXoX2iK5B890uI=;
+        b=fRi3DA151CfkGUuRct1wT9F8/yRJdHPJHtk1rUQpvQUErtdWnUy62SN09/+bK5h+Sr
+         uCa5q8uZ7j5BQ8IovUlqyv2q6GYxtJ2AEgxj9hBYxWeKGWAjqt/E7YRA8k1WX9VBxkoT
+         /Vu5oA9QUTd/hFAk0HYAL2XQuaHBmwYhT65mhd26iLxg8Gst8Ndvz42vVw0d7E2fDdx1
+         GuhY7Ffc6Ky5SbUSAL+niKJoNALPSre3FgVTpowhx67PiHlOlfDo1Y/kSSPpxjecTgjd
+         ETkMbmQdEf3xHi+p9KuonRsaV77EY23KMoLT8dqxCr5/07uYwv9TkAZatAqIkjfatrlx
+         8BfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708364509; x=1708969309;
+        d=1e100.net; s=20230601; t=1708364581; x=1708969381;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IpbxXvCSubVl6XgXjNWjfYRG3//u4L72+hbwdG6Aw+g=;
-        b=RaLzjnZrIGkEebjmY7heoapzrcTwZtfX95sEah2brjB6/P7bZ5+E/fgYby/vnFGgXS
-         984u5b9fwfcrfml97bqb5kFHWQB0AfytNekGAOvgoM7li4rJMKAiChYv86056rUDjPRN
-         t9jyKy5slQRndIBANIL9by7n1teSb292llGnjvYTTpo6cYcSxOw9mezsht5JXxd7ejhP
-         lW8j5ZllF85Q8rvpYvIn+xmhrGAGMtDfMaMW3IIPd2TD1UejODcRpu+qLtuanQ+kM2cI
-         a8ZXr9WP/CqiI0210m/TxYQwmCys32kOptlGOC2sejR64XVP2MttNtBFtQ6DNbXQyr7i
-         I+rg==
-X-Forwarded-Encrypted: i=1; AJvYcCUrt0m0iLvmMYKwPDiCmEJkUBizZ4pa4Aqt961LmALlcMX8euJjq1LkamNGCdXM3fGw5po2+Jg64f+w2Btfnc1V/tBuN3AmeAYu/2h/Mw==
-X-Gm-Message-State: AOJu0YzqU/YckSX30TRfAsqDoY+TwKQxhmptWrYzuIIk5DQD51+XRBkk
-	KPY8uH8SOmHCJsQlC+wtvWv4BykpLzdyx01yZq4C3YwWWXmhK9zqTNbDvNet8no9mdPWsNPii9r
-	rTwZ0UezyQuy92LLNhjn9NXyD5kOClt3urIW52g==
-X-Google-Smtp-Source: AGHT+IGZBxSF+ykZUi3ZT/ydnvwdYMo+yLycBE4tf1TfD3XQ/uVP/RoPtvKOq3lMWHZQhSHC2eXcKDI/1o8ZI1vAnpA=
-X-Received: by 2002:a25:8046:0:b0:dc2:2f4b:c9d8 with SMTP id
- a6-20020a258046000000b00dc22f4bc9d8mr11563408ybn.16.1708364508953; Mon, 19
- Feb 2024 09:41:48 -0800 (PST)
+        bh=z6c+T/qNZsKtVcCWVkApVogzySlU/GXoX2iK5B890uI=;
+        b=H+bUlv48ocUB5foOMqGACzDrfjwt4TsOr5Pzt804kHuShOpiKiW0wV+L91/52hluJE
+         7mOnQu2oDvawmSZAJCxJNXVMwTPd9ZXf/5iAeOrqEdEoF7p+4iKONNzcxWizQkUmtdPN
+         VMtSS+lqPpGYEv96uwmyboAEKLwk9FBsfQSgdUHchbRbuYxvOzDZztlnekTOlEseHUAs
+         zbiutYsT83z7NTzKpbowHGgSkoS4+8jk7vtCX+9VOzjLsir1JJwFqEyx+CGx+DTsYfsh
+         d/4+vLC+3FnVgYTMTKBj2LfMExg1t7XPL5zQeCqT8hI1qxUfpNfQbs0LQHYJag+UMzug
+         LKFA==
+X-Forwarded-Encrypted: i=1; AJvYcCVp1Ji6K7bgExrygn9GQUklB6Qmj41lrgYDUdpvjXbfyECz4fh8bLJZNKEYBn74S63K9498/K/kUYMq35qSLcl6aBIGRqRSfpeFtwaYCQ==
+X-Gm-Message-State: AOJu0YzsNXaCti/cJKXbBYGvtQFMrkv4C2UwUGnnS2pokKrWIkYVuKd8
+	9ukvgIAylmTRF1k3sh1f0Wd8f3/9hhpVlm4rwqGkGpBP89c619AC2QdjG8909V01vwBaFxMy8yf
+	pyiu4/HuVrfstH3Sh9AlGUwMJ4a14M5zDHg4FSg==
+X-Google-Smtp-Source: AGHT+IGYrZBoLLvY6XZKrEGuagWXgAxRUq1chlkriB2Ea9zhQYnUp1hKCxI1XgiPTK9iazN2Xg5FG51XGP3gRMSiIyo=
+X-Received: by 2002:a25:ae5b:0:b0:dc7:48f8:1d07 with SMTP id
+ g27-20020a25ae5b000000b00dc748f81d07mr11353763ybe.21.1708364580943; Mon, 19
+ Feb 2024 09:43:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
- <868r3g4fhv.wl-maz@kernel.org> <CAA8EJpqiN6oRMWhAMMP6EsAeki5KSMbO+XzEtT9YRdJKc9_Gbg@mail.gmail.com>
- <865xyk4dgf.wl-maz@kernel.org>
-In-Reply-To: <865xyk4dgf.wl-maz@kernel.org>
+References: <20240218041204.2522828-1-dmitry.baryshkov@linaro.org>
+ <4c2fccd7-1ef4-456c-beef-e8f173b62998@collabora.com> <CAA8EJpqx_0eG2X+dZv6Uvz59_x=6cGMamR8EkcW00KZLg3gzeA@mail.gmail.com>
+ <9f430eca-3fd8-4443-a713-5702eb6d4199@collabora.com>
+In-Reply-To: <9f430eca-3fd8-4443-a713-5702eb6d4199@collabora.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 19 Feb 2024 19:41:37 +0200
-Message-ID: <CAA8EJprKUOMwrwawiQ51WKiLCipm72ZcpY6q520kSOg--9oKZg@mail.gmail.com>
-Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
-To: Marc Zyngier <maz@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Anup Patel <apatel@ventanamicro.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Date: Mon, 19 Feb 2024 19:42:49 +0200
+Message-ID: <CAA8EJprUUfjw1mL_Ay-HWO_SUrE_m7Us+7zS9WxudxSKtS92QA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/ci: update IGT test names
+To: Helen Koike <helen.koike@collabora.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 19 Feb 2024 at 18:37, Marc Zyngier <maz@kernel.org> wrote:
+On Mon, 19 Feb 2024 at 18:48, Helen Koike <helen.koike@collabora.com> wrote:
 >
-> On Mon, 19 Feb 2024 16:21:06 +0000,
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Mon, 19 Feb 2024 at 17:53, Marc Zyngier <maz@kernel.org> wrote:
-> > >
-> > > On Mon, 19 Feb 2024 14:47:37 +0000,
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
-> > > > count restriction from select()") the irq_find_matching_fwspec() was
-> > > > handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
-> > > > the select() callback. However the callback of GICv3 (even though it got
-> > > > modified to handle zero param_count) wasn't prepared to return true for
-> > > > DOMAIN_BUS_ANY bus_token.
-> > > >
-> > > > This breaks probing of any of the child IRQ domains, since
-> > > > platform_irqchip_probe() uses irq_find_matching_host(par_np,
-> > > > DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
-> > > >
-> > > > Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
-> > > > Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >  drivers/irqchip/irq-gic-v3.c | 3 ++-
-> > > >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-> > > > index 6fb276504bcc..e9e9643c653f 100644
-> > > > --- a/drivers/irqchip/irq-gic-v3.c
-> > > > +++ b/drivers/irqchip/irq-gic-v3.c
-> > > > @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
-> > > >
-> > > >       /* Handle pure domain searches */
-> > > >       if (!fwspec->param_count)
-> > > > -             return d->bus_token == bus_token;
-> > > > +             return d->bus_token == bus_token ||
-> > > > +                     bus_token == DOMAIN_BUS_ANY;
-> > > >
-> > > >       /* If this is not DT, then we have a single domain */
-> > > >       if (!is_of_node(fwspec->fwnode))
-> > > >
-> > >
-> > > I really dislike the look of this. If that's the case, any irqchip
-> > > that has a 'select' method (such as imx-intmux) should be similarly
-> > > hacked. And at this point, this should be handled by the core code.
-> > >
-> > > Can you try this instead? I don't have any HW that relies on
-> > > behaviour, but I'd expect this to work.
-> > >
-> > > Thanks,
-> > >
-> > >         M.
-> > >
-> > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> > > index aeb41655d6de..3dd1c871e091 100644
-> > > --- a/kernel/irq/irqdomain.c
-> > > +++ b/kernel/irq/irqdomain.c
-> > > @@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
-> > >          */
-> > >         mutex_lock(&irq_domain_mutex);
-> > >         list_for_each_entry(h, &irq_domain_list, link) {
-> > > -               if (h->ops->select)
-> > > +               if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
-> > >                         rc = h->ops->select(h, fwspec, bus_token);
-> > >                 else if (h->ops->match)
-> > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
-> >
-> > This works. But I wonder if the following change is even better. WDYT?
-> >
-> > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> > index aeb41655d6de..2f0d2700709e 100644
-> > --- a/kernel/irq/irqdomain.c
-> > +++ b/kernel/irq/irqdomain.c
-> > @@ -449,14 +449,17 @@ struct irq_domain
-> > *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
-> >          */
-> >         mutex_lock(&irq_domain_mutex);
-> >         list_for_each_entry(h, &irq_domain_list, link) {
-> > -               if (h->ops->select)
-> > +               if (fwnode != NULL &&
-> > +                   h->fwnode == fwnode &&
-> > +                   bus_token == DOMAIN_BUS_ANY)
-> > +                       rc = true;
-> > +               else if (h->ops->select)
-> >                         rc = h->ops->select(h, fwspec, bus_token);
-> >                 else if (h->ops->match)
-> >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
-> >                 else
-> >                         rc = ((fwnode != NULL) && (h->fwnode == fwnode) &&
-> > -                             ((bus_token == DOMAIN_BUS_ANY) ||
-> > -                              (h->bus_token == bus_token)));
-> > +                             (h->bus_token == bus_token));
-> >
-> >                 if (rc) {
-> >                         found = h;
-> >
 >
-> Can't say I like it either. It duplicates the existing check without
-> any obvious benefit. Honestly, this code is shit enough that we should
-> try to make it simpler, not more complex...
+>
+> On 19/02/2024 11:33, Dmitry Baryshkov wrote:
+> > On Mon, 19 Feb 2024 at 15:21, Helen Koike <helen.koike@collabora.com> wrote:
+> >>
+> >> Hi Dmitry,
+> >>
+> >>
+> >> On 18/02/2024 01:12, Dmitry Baryshkov wrote:
+> >>> Since the addition of testlist.txt the IGT has changed some of test
+> >>> names. Some test names were changed to use '-' instead of '_'. In other
+> >>> cases tests were just renamed. Follow those changes.
+> >>>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>
+> >> Thanks for the patchset
+> >>
+> >> Do you have a pipeline link with those patches I can check?
+> >
+> > https://gitlab.freedesktop.org/drm/msm/-/pipelines/1106149/
+>
+> I see two jobs failing, both had a timeout on the serial.
+>
+> msm:apq8016 had:
+>
+> Pass: 26, Fail: 1, ExpectedFail: 2, Skip: 1044, Duration: 17:40,
+> Remaining: 27:48
+>
+> but it didn't generate the fails.csv due to the timeout.
+>
+> In any case, should it also be updated on xfails?
 
-Only the fwnode conditions are duplicated. And it makes sense: we
-should check for the DOMAIN_BUS_ANY first, before going to select. I'm
-not sure whether at some point we'd have to add (&& bus_token !=
-DOMAIN_BUS_ANY) to the ops->match check.
+I could not get apq8016 to finish. Once it works in a stable way, I'll
+update corresponding xfails.
 
 >
-> I'd rather we keep the impact as minimal as possible, and use the
-> upcoming weeks to weed out the effects of these changes (there is
-> another report of some Renesas machine falling over itself here[1]).
+> Regards,
+> Helen
 >
-> Thanks,
->
->         M.
->
-> [1] https://lore.kernel.org/all/170802702416.398.14922976721740218856.tip-bot2@tip-bot2
->
-> --
-> Without deviation from the norm, progress is not possible.
+> >
+> >>
+> >> Thanks
+> >> Helen
+> >>
+> >>> ---
+> >>>    drivers/gpu/drm/ci/testlist.txt | 1888 ++++++++++++++-----------------
+> >>>    1 file changed, 844 insertions(+), 1044 deletions(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/ci/testlist.txt b/drivers/gpu/drm/ci/testlist.txt
+> >>> index eaeb751bb0ad..3377f002f8c5 100644
+> >>> --- a/drivers/gpu/drm/ci/testlist.txt
+> >>> +++ b/drivers/gpu/drm/ci/testlist.txt
+> >>> @@ -100,7 +100,7 @@ kms_atomic@plane-invalid-params-fence
+> >>>    kms_atomic@crtc-invalid-params
+> >>>    kms_atomic@crtc-invalid-params-fence
+> >>>    kms_atomic@atomic-invalid-params
+> >>> -kms_atomic@atomic_plane_damage
+> >>> +kms_atomic@atomic-plane-damage
+> >>>    kms_atomic_interruptible@legacy-setmode
+> >>>    kms_atomic_interruptible@atomic-setmode
+> >>>    kms_atomic_interruptible@legacy-dpms
+> >>> @@ -321,726 +321,726 @@ kms_bw@linear-tiling-7-displays-3840x2160p
+> >>>    kms_bw@linear-tiling-8-displays-1920x1080p
+> >>>    kms_bw@linear-tiling-8-displays-2560x1440p
+> >>>    kms_bw@linear-tiling-8-displays-3840x2160p
+> >>> -kms_ccs@pipe-A-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-A-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-B-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-C-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-D-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-E-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-F-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-G-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-pixel-format-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-pixel-format-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-pixel-format-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-rotation-90-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-rotation-90-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-rotation-90-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-basic-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-primary-rotation-180-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-random-ccs-data-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-random-ccs-data-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-random-ccs-data-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-missing-ccs-buffer-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-ccs-on-another-bo-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-aux-stride-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-bad-aux-stride-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-bad-aux-stride-4_tiled_mtl_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-y_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-yf_tiled_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-y_tiled_gen12_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-y_tiled_gen12_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_dg2_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_dg2_rc_ccs_cc
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_mtl_mc_ccs
+> >>> -kms_ccs@pipe-H-crc-sprite-planes-basic-4_tiled_mtl_rc_ccs_cc
+> >>> +kms_ccs@pipe-A-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-A-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-B-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-C-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-D-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-E-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-F-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-G-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-pixel-format-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-pixel-format-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-pixel-format-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-rotation-90-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-rotation-90-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-rotation-90-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-basic-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-primary-rotation-180-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-random-ccs-data-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-random-ccs-data-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-random-ccs-data-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-missing-ccs-buffer-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-ccs-on-another-bo-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-aux-stride-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-bad-aux-stride-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-bad-aux-stride-4-tiled-mtl-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-y-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-yf-tiled-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-y-tiled-gen12-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-y-tiled-gen12-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-dg2-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-dg2-rc-ccs-cc
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-mtl-mc-ccs
+> >>> +kms_ccs@pipe-H-crc-sprite-planes-basic-4-tiled-mtl-rc-ccs-cc
+> >>>    kms_cdclk@plane-scaling
+> >>>    kms_cdclk@mode-transition
+> >>>    kms_cdclk@mode-transition-all-outputs
+> >>> @@ -1061,21 +1061,14 @@ kms_color@deep-color
+> >>>    kms_color@invalid-gamma-lut-sizes
+> >>>    kms_color@invalid-degamma-lut-sizes
+> >>>    kms_color@invalid-ctm-matrix-sizes
+> >>> -kms_concurrent@pipe-A
+> >>> -kms_concurrent@pipe-B
+> >>> -kms_concurrent@pipe-C
+> >>> -kms_concurrent@pipe-D
+> >>> -kms_concurrent@pipe-E
+> >>> -kms_concurrent@pipe-F
+> >>> -kms_concurrent@pipe-G
+> >>> -kms_concurrent@pipe-H
+> >>> +kms_concurrent@multi-plane-atomic-lowres
+> >>>    kms_content_protection@legacy
+> >>>    kms_content_protection@atomic
+> >>>    kms_content_protection@atomic-dpms
+> >>> -kms_content_protection@LIC
+> >>> +kms_content_protection@lic
+> >>>    kms_content_protection@type1
+> >>> -kms_content_protection@mei_interface
+> >>> -kms_content_protection@content_type_change
+> >>> +kms_content_protection@mei-interface
+> >>> +kms_content_protection@content-type-change
+> >>>    kms_content_protection@uevent
+> >>>    kms_content_protection@srm
+> >>>    kms_content_protection@dp-mst-type-0
+> >>> @@ -1218,8 +1211,8 @@ kms_cursor_legacy@cursorA-vs-flipA-atomic-transitions-varying-size
+> >>>    kms_cursor_legacy@cursorA-vs-flipB-atomic-transitions-varying-size
+> >>>    kms_cursor_legacy@cursorB-vs-flipA-atomic-transitions-varying-size
+> >>>    kms_cursor_legacy@cursorB-vs-flipB-atomic-transitions-varying-size
+> >>> -kms_dither@FB-8BPC-Vs-Panel-6BPC
+> >>> -kms_dither@FB-8BPC-Vs-Panel-8BPC
+> >>> +kms_dither@fb-8bpc-vs-panel-6bpc
+> >>> +kms_dither@fb-8bpc-vs-panel-8bpc
+> >>>    kms_dp_aux_dev
+> >>>    kms_tiled_display@basic-test-pattern
+> >>>    kms_tiled_display@basic-test-pattern-with-chamelium
+> >>> @@ -2351,7 +2344,6 @@ kms_frontbuffer_tracking@psrdrrs-shrfb-scaledprimary
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-indfb-scaledprimary
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-shrfb-scaledprimary
+> >>>    kms_frontbuffer_tracking@fbc-modesetfrombusy
+> >>> -kms_frontbuffer_tracking@fbc-badstride
+> >>>    kms_frontbuffer_tracking@fbc-stridechange
+> >>>    kms_frontbuffer_tracking@fbc-tiling-linear
+> >>>    kms_frontbuffer_tracking@fbc-tiling-y
+> >>> @@ -2361,7 +2353,6 @@ kms_frontbuffer_tracking@psr-modesetfrombusy
+> >>>    kms_frontbuffer_tracking@psr-slowdraw
+> >>>    kms_frontbuffer_tracking@psr-suspend
+> >>>    kms_frontbuffer_tracking@fbcpsr-modesetfrombusy
+> >>> -kms_frontbuffer_tracking@fbcpsr-badstride
+> >>>    kms_frontbuffer_tracking@fbcpsr-stridechange
+> >>>    kms_frontbuffer_tracking@fbcpsr-tiling-linear
+> >>>    kms_frontbuffer_tracking@fbcpsr-tiling-y
+> >>> @@ -2372,7 +2363,6 @@ kms_frontbuffer_tracking@drrs-modesetfrombusy
+> >>>    kms_frontbuffer_tracking@drrs-slowdraw
+> >>>    kms_frontbuffer_tracking@drrs-suspend
+> >>>    kms_frontbuffer_tracking@fbcdrrs-modesetfrombusy
+> >>> -kms_frontbuffer_tracking@fbcdrrs-badstride
+> >>>    kms_frontbuffer_tracking@fbcdrrs-stridechange
+> >>>    kms_frontbuffer_tracking@fbcdrrs-tiling-linear
+> >>>    kms_frontbuffer_tracking@fbcdrrs-tiling-y
+> >>> @@ -2383,7 +2373,6 @@ kms_frontbuffer_tracking@psrdrrs-modesetfrombusy
+> >>>    kms_frontbuffer_tracking@psrdrrs-slowdraw
+> >>>    kms_frontbuffer_tracking@psrdrrs-suspend
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-modesetfrombusy
+> >>> -kms_frontbuffer_tracking@fbcpsrdrrs-badstride
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-stridechange
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-tiling-linear
+> >>>    kms_frontbuffer_tracking@fbcpsrdrrs-tiling-y
+> >>> @@ -2456,7 +2445,7 @@ kms_plane@plane-position-hole-dpms
+> >>>    kms_plane@plane-panning-top-left
+> >>>    kms_plane@plane-panning-bottom-right
+> >>>    kms_plane@plane-panning-bottom-right-suspend
+> >>> -kms_plane@invalid-pixel-format-settings
+> >>> +kms_plane@planar-pixel-format-settings
+> >>>    kms_plane_alpha_blend@alpha-basic
+> >>>    kms_plane_alpha_blend@alpha-7efc
+> >>>    kms_plane_alpha_blend@coverage-7efc
+> >>> @@ -2479,24 +2468,24 @@ kms_plane_multiple@tiling-x
+> >>>    kms_plane_multiple@tiling-y
+> >>>    kms_plane_multiple@tiling-yf
+> >>>    kms_plane_multiple@tiling-4
+> >>> -kms_plane_scaling@plane-upscale-with-pixel-format-20x20
+> >>> -kms_plane_scaling@plane-upscale-with-pixel-format-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-5
+> >>> -kms_plane_scaling@plane-downscale-with-pixel-format-factor-0-75
+> >>> -kms_plane_scaling@plane-scaler-with-pixel-format-unity-scaling
+> >>> -kms_plane_scaling@plane-upscale-with-rotation-20x20
+> >>> -kms_plane_scaling@plane-upscale-with-rotation-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-rotation-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-rotation-factor-0-5
+> >>> -kms_plane_scaling@plane-downscale-with-rotation-factor-0-75
+> >>> -kms_plane_scaling@plane-scaler-with-rotation-unity-scaling
+> >>> -kms_plane_scaling@plane-upscale-with-modifiers-20x20
+> >>> -kms_plane_scaling@plane-upscale-with-modifiers-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-modifiers-factor-0-25
+> >>> -kms_plane_scaling@plane-downscale-with-modifiers-factor-0-5
+> >>> -kms_plane_scaling@plane-downscale-with-modifiers-factor-0-75
+> >>> -kms_plane_scaling@plane-scaler-with-modifiers-unity-scaling
+> >>> +kms_plane_scaling@plane-upscale-20x20-with-pixel-format
+> >>> +kms_plane_scaling@plane-upscale-factor-0-25-with-pixel-format
+> >>> +kms_plane_scaling@plane-downscale-factor-0-25-with-pixel-format
+> >>> +kms_plane_scaling@plane-downscale-factor-0-5-with-pixel-format
+> >>> +kms_plane_scaling@plane-downscale-factor-0-75-with-pixel-format
+> >>> +kms_plane_scaling@plane-scaler-unity-scaling-with-pixel-format
+> >>> +kms_plane_scaling@plane-upscale-20x20-with-rotation
+> >>> +kms_plane_scaling@plane-upscale-factor-0-25-with-rotation
+> >>> +kms_plane_scaling@plane-downscale-factor-0-25-with-rotation
+> >>> +kms_plane_scaling@plane-downscale-factor-0-5-with-rotation
+> >>> +kms_plane_scaling@plane-downscale-factor-0-75-with-rotation
+> >>> +kms_plane_scaling@plane-scaler-unity-scaling-with-rotation
+> >>> +kms_plane_scaling@plane-upscale-20x20-with-modifiers
+> >>> +kms_plane_scaling@plane-upscale-factor-0-25-with-modifiers
+> >>> +kms_plane_scaling@plane-downscale-factor-0-25-with-modifiers
+> >>> +kms_plane_scaling@plane-downscale-factor-0-5-with-modifiers
+> >>> +kms_plane_scaling@plane-downscale-factor-0-75-with-modifiers
+> >>> +kms_plane_scaling@plane-scaler-unity-scaling-with-modifiers
+> >>>    kms_plane_scaling@plane-scaler-with-clipping-clamping-pixel-formats
+> >>>    kms_plane_scaling@plane-scaler-with-clipping-clamping-rotation
+> >>>    kms_plane_scaling@plane-scaler-with-clipping-clamping-modifiers
+> >>> @@ -2551,48 +2540,69 @@ kms_properties@invalid-properties-legacy
+> >>>    kms_properties@invalid-properties-atomic
+> >>>    kms_properties@get_properties-sanity-atomic
+> >>>    kms_properties@get_properties-sanity-non-atomic
+> >>> -kms_psr@basic
+> >>> -kms_psr@no_drrs
+> >>> -kms_psr@primary_page_flip
+> >>> -kms_psr@primary_mmap_gtt
+> >>> -kms_psr@primary_mmap_cpu
+> >>> -kms_psr@primary_blt
+> >>> -kms_psr@primary_render
+> >>> -kms_psr@sprite_mmap_gtt
+> >>> -kms_psr@cursor_mmap_gtt
+> >>> -kms_psr@sprite_mmap_cpu
+> >>> -kms_psr@cursor_mmap_cpu
+> >>> -kms_psr@sprite_blt
+> >>> -kms_psr@cursor_blt
+> >>> -kms_psr@sprite_render
+> >>> -kms_psr@cursor_render
+> >>> -kms_psr@sprite_plane_move
+> >>> -kms_psr@cursor_plane_move
+> >>> -kms_psr@sprite_plane_onoff
+> >>> -kms_psr@cursor_plane_onoff
+> >>> -kms_psr@dpms
+> >>> -kms_psr@suspend
+> >>> -kms_psr@psr2_basic
+> >>> -kms_psr@psr2_no_drrs
+> >>> -kms_psr@psr2_primary_page_flip
+> >>> -kms_psr@psr2_primary_mmap_gtt
+> >>> -kms_psr@psr2_primary_mmap_cpu
+> >>> -kms_psr@psr2_primary_blt
+> >>> -kms_psr@psr2_primary_render
+> >>> -kms_psr@psr2_sprite_mmap_gtt
+> >>> -kms_psr@psr2_cursor_mmap_gtt
+> >>> -kms_psr@psr2_sprite_mmap_cpu
+> >>> -kms_psr@psr2_cursor_mmap_cpu
+> >>> -kms_psr@psr2_sprite_blt
+> >>> -kms_psr@psr2_cursor_blt
+> >>> -kms_psr@psr2_sprite_render
+> >>> -kms_psr@psr2_cursor_render
+> >>> -kms_psr@psr2_sprite_plane_move
+> >>> -kms_psr@psr2_cursor_plane_move
+> >>> -kms_psr@psr2_sprite_plane_onoff
+> >>> -kms_psr@psr2_cursor_plane_onoff
+> >>> -kms_psr@psr2_dpms
+> >>> -kms_psr@psr2_suspend
+> >>> +kms_psr@pr-basic
+> >>> +kms_psr@pr-no-drrs
+> >>> +kms_psr@pr-primary-page-flip
+> >>> +kms_psr@pr-primary-mmap-gtt
+> >>> +kms_psr@pr-primary-mmap-cpu
+> >>> +kms_psr@pr-primary-blt
+> >>> +kms_psr@pr-primary-render
+> >>> +kms_psr@pr-sprite-mmap-gtt
+> >>> +kms_psr@pr-cursor-mmap-gtt
+> >>> +kms_psr@pr-sprite-mmap-cpu
+> >>> +kms_psr@pr-cursor-mmap-cpu
+> >>> +kms_psr@pr-sprite-blt
+> >>> +kms_psr@pr-cursor-blt
+> >>> +kms_psr@pr-sprite-render
+> >>> +kms_psr@pr-cursor-render
+> >>> +kms_psr@pr-sprite-plane-move
+> >>> +kms_psr@pr-cursor-plane-move
+> >>> +kms_psr@pr-sprite-plane-onoff
+> >>> +kms_psr@pr-cursor-plane-onoff
+> >>> +kms_psr@pr-dpms
+> >>> +kms_psr@pr-suspend
+> >>> +kms_psr@psr-basic
+> >>> +kms_psr@psr-no-drrs
+> >>> +kms_psr@psr-primary-page-flip
+> >>> +kms_psr@psr-primary-mmap-gtt
+> >>> +kms_psr@psr-primary-mmap-cpu
+> >>> +kms_psr@psr-primary-blt
+> >>> +kms_psr@psr-primary-render
+> >>> +kms_psr@psr-sprite-mmap-gtt
+> >>> +kms_psr@psr-cursor-mmap-gtt
+> >>> +kms_psr@psr-sprite-mmap-cpu
+> >>> +kms_psr@psr-cursor-mmap-cpu
+> >>> +kms_psr@psr-sprite-blt
+> >>> +kms_psr@psr-cursor-blt
+> >>> +kms_psr@psr-sprite-render
+> >>> +kms_psr@psr-cursor-render
+> >>> +kms_psr@psr-sprite-plane-move
+> >>> +kms_psr@psr-cursor-plane-move
+> >>> +kms_psr@psr-sprite-plane-onoff
+> >>> +kms_psr@psr-cursor-plane-onoff
+> >>> +kms_psr@psr-dpms
+> >>> +kms_psr@psr-suspend
+> >>> +kms_psr@psr2-basic
+> >>> +kms_psr@psr2-no-drrs
+> >>> +kms_psr@psr2-primary-page-flip
+> >>> +kms_psr@psr2-primary-mmap-gtt
+> >>> +kms_psr@psr2-primary-mmap-cpu
+> >>> +kms_psr@psr2-primary-blt
+> >>> +kms_psr@psr2-primary-render
+> >>> +kms_psr@psr2-sprite-mmap-gtt
+> >>> +kms_psr@psr2-cursor-mmap-gtt
+> >>> +kms_psr@psr2-sprite-mmap-cpu
+> >>> +kms_psr@psr2-cursor-mmap-cpu
+> >>> +kms_psr@psr2-sprite-blt
+> >>> +kms_psr@psr2-cursor-blt
+> >>> +kms_psr@psr2-sprite-render
+> >>> +kms_psr@psr2-cursor-render
+> >>> +kms_psr@psr2-sprite-plane-move
+> >>> +kms_psr@psr2-cursor-plane-move
+> >>> +kms_psr@psr2-sprite-plane-onoff
+> >>> +kms_psr@psr2-cursor-plane-onoff
+> >>> +kms_psr@psr2-dpms
+> >>> +kms_psr@psr2-suspend
+> >>>    kms_psr2_sf@primary-plane-update-sf-dmg-area
+> >>>    kms_psr2_sf@primary-plane-update-sf-dmg-area-big-fb
+> >>>    kms_psr2_sf@overlay-plane-update-sf-dmg-area
+> >>> @@ -2643,13 +2653,13 @@ kms_scaling_modes@scaling-mode-full
+> >>>    kms_scaling_modes@scaling-mode-center
+> >>>    kms_scaling_modes@scaling-mode-full-aspect
+> >>>    kms_scaling_modes@scaling-mode-none
+> >>> -kms_selftest@drm_cmdline
+> >>> -kms_selftest@drm_damage
+> >>> -kms_selftest@drm_dp_mst
+> >>> +kms_selftest@drm_cmdline_parser
+> >>> +kms_selftest@drm_damage_helper
+> >>> +kms_selftest@drm_dp_mst_helper
+> >>>    kms_selftest@drm_format_helper
+> >>>    kms_selftest@drm_format
+> >>> -kms_selftest@framebuffer
+> >>> -kms_selftest@drm_plane
+> >>> +kms_selftest@drm_framebuffer
+> >>> +kms_selftest@drm_plane_helper
+> >>>    kms_setmode@basic
+> >>>    kms_setmode@basic-clone-single-crtc
+> >>>    kms_setmode@invalid-clone-single-crtc
+> >>> @@ -2658,248 +2668,38 @@ kms_setmode@clone-exclusive-crtc
+> >>>    kms_setmode@invalid-clone-single-crtc-stealing
+> >>>    kms_sysfs_edid_timing
+> >>>    kms_tv_load_detect@load-detect
+> >>> -kms_universal_plane@universal-plane-pipe-A-functional
+> >>> -kms_universal_plane@universal-plane-pipe-A-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-A
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-A
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-A
+> >>> -kms_universal_plane@universal-plane-pipe-B-functional
+> >>> -kms_universal_plane@universal-plane-pipe-B-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-B
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-B
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-B
+> >>> -kms_universal_plane@universal-plane-pipe-C-functional
+> >>> -kms_universal_plane@universal-plane-pipe-C-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-C
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-C
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-C
+> >>> -kms_universal_plane@universal-plane-pipe-D-functional
+> >>> -kms_universal_plane@universal-plane-pipe-D-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-D
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-D
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-D
+> >>> -kms_universal_plane@universal-plane-pipe-E-functional
+> >>> -kms_universal_plane@universal-plane-pipe-E-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-E
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-E
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-E
+> >>> -kms_universal_plane@universal-plane-pipe-F-functional
+> >>> -kms_universal_plane@universal-plane-pipe-F-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-F
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-F
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-F
+> >>> -kms_universal_plane@universal-plane-pipe-G-functional
+> >>> -kms_universal_plane@universal-plane-pipe-G-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-G
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-G
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-G
+> >>> -kms_universal_plane@universal-plane-pipe-H-functional
+> >>> -kms_universal_plane@universal-plane-pipe-H-sanity
+> >>> -kms_universal_plane@disable-primary-vs-flip-pipe-H
+> >>> -kms_universal_plane@cursor-fb-leak-pipe-H
+> >>> -kms_universal_plane@universal-plane-pageflip-windowed-pipe-H
+> >>> +kms_universal_plane@universal-plane-functional
+> >>> +kms_universal_plane@universal-plane-sanity
+> >>> +kms_universal_plane@disable-primary-vs-flip
+> >>> +kms_universal_plane@cursor-fb-leak
+> >>> +kms_universal_plane@universal-plane-pageflip-windowed
+> >>>    kms_vblank@invalid
+> >>>    kms_vblank@crtc-id
+> >>> -kms_vblank@pipe-A-accuracy-idle
+> >>> -kms_vblank@pipe-A-query-idle
+> >>> -kms_vblank@pipe-A-query-idle-hang
+> >>> -kms_vblank@pipe-A-query-forked
+> >>> -kms_vblank@pipe-A-query-forked-hang
+> >>> -kms_vblank@pipe-A-query-busy
+> >>> -kms_vblank@pipe-A-query-busy-hang
+> >>> -kms_vblank@pipe-A-query-forked-busy
+> >>> -kms_vblank@pipe-A-query-forked-busy-hang
+> >>> -kms_vblank@pipe-A-wait-idle
+> >>> -kms_vblank@pipe-A-wait-idle-hang
+> >>> -kms_vblank@pipe-A-wait-forked
+> >>> -kms_vblank@pipe-A-wait-forked-hang
+> >>> -kms_vblank@pipe-A-wait-busy
+> >>> -kms_vblank@pipe-A-wait-busy-hang
+> >>> -kms_vblank@pipe-A-wait-forked-busy
+> >>> -kms_vblank@pipe-A-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-A-ts-continuation-idle
+> >>> -kms_vblank@pipe-A-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-A-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-A-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-A-ts-continuation-suspend
+> >>> -kms_vblank@pipe-A-ts-continuation-modeset
+> >>> -kms_vblank@pipe-A-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-A-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-B-accuracy-idle
+> >>> -kms_vblank@pipe-B-query-idle
+> >>> -kms_vblank@pipe-B-query-idle-hang
+> >>> -kms_vblank@pipe-B-query-forked
+> >>> -kms_vblank@pipe-B-query-forked-hang
+> >>> -kms_vblank@pipe-B-query-busy
+> >>> -kms_vblank@pipe-B-query-busy-hang
+> >>> -kms_vblank@pipe-B-query-forked-busy
+> >>> -kms_vblank@pipe-B-query-forked-busy-hang
+> >>> -kms_vblank@pipe-B-wait-idle
+> >>> -kms_vblank@pipe-B-wait-idle-hang
+> >>> -kms_vblank@pipe-B-wait-forked
+> >>> -kms_vblank@pipe-B-wait-forked-hang
+> >>> -kms_vblank@pipe-B-wait-busy
+> >>> -kms_vblank@pipe-B-wait-busy-hang
+> >>> -kms_vblank@pipe-B-wait-forked-busy
+> >>> -kms_vblank@pipe-B-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-B-ts-continuation-idle
+> >>> -kms_vblank@pipe-B-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-B-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-B-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-B-ts-continuation-suspend
+> >>> -kms_vblank@pipe-B-ts-continuation-modeset
+> >>> -kms_vblank@pipe-B-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-B-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-C-accuracy-idle
+> >>> -kms_vblank@pipe-C-query-idle
+> >>> -kms_vblank@pipe-C-query-idle-hang
+> >>> -kms_vblank@pipe-C-query-forked
+> >>> -kms_vblank@pipe-C-query-forked-hang
+> >>> -kms_vblank@pipe-C-query-busy
+> >>> -kms_vblank@pipe-C-query-busy-hang
+> >>> -kms_vblank@pipe-C-query-forked-busy
+> >>> -kms_vblank@pipe-C-query-forked-busy-hang
+> >>> -kms_vblank@pipe-C-wait-idle
+> >>> -kms_vblank@pipe-C-wait-idle-hang
+> >>> -kms_vblank@pipe-C-wait-forked
+> >>> -kms_vblank@pipe-C-wait-forked-hang
+> >>> -kms_vblank@pipe-C-wait-busy
+> >>> -kms_vblank@pipe-C-wait-busy-hang
+> >>> -kms_vblank@pipe-C-wait-forked-busy
+> >>> -kms_vblank@pipe-C-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-C-ts-continuation-idle
+> >>> -kms_vblank@pipe-C-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-C-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-C-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-C-ts-continuation-suspend
+> >>> -kms_vblank@pipe-C-ts-continuation-modeset
+> >>> -kms_vblank@pipe-C-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-C-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-D-accuracy-idle
+> >>> -kms_vblank@pipe-D-query-idle
+> >>> -kms_vblank@pipe-D-query-idle-hang
+> >>> -kms_vblank@pipe-D-query-forked
+> >>> -kms_vblank@pipe-D-query-forked-hang
+> >>> -kms_vblank@pipe-D-query-busy
+> >>> -kms_vblank@pipe-D-query-busy-hang
+> >>> -kms_vblank@pipe-D-query-forked-busy
+> >>> -kms_vblank@pipe-D-query-forked-busy-hang
+> >>> -kms_vblank@pipe-D-wait-idle
+> >>> -kms_vblank@pipe-D-wait-idle-hang
+> >>> -kms_vblank@pipe-D-wait-forked
+> >>> -kms_vblank@pipe-D-wait-forked-hang
+> >>> -kms_vblank@pipe-D-wait-busy
+> >>> -kms_vblank@pipe-D-wait-busy-hang
+> >>> -kms_vblank@pipe-D-wait-forked-busy
+> >>> -kms_vblank@pipe-D-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-D-ts-continuation-idle
+> >>> -kms_vblank@pipe-D-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-D-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-D-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-D-ts-continuation-suspend
+> >>> -kms_vblank@pipe-D-ts-continuation-modeset
+> >>> -kms_vblank@pipe-D-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-D-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-E-accuracy-idle
+> >>> -kms_vblank@pipe-E-query-idle
+> >>> -kms_vblank@pipe-E-query-idle-hang
+> >>> -kms_vblank@pipe-E-query-forked
+> >>> -kms_vblank@pipe-E-query-forked-hang
+> >>> -kms_vblank@pipe-E-query-busy
+> >>> -kms_vblank@pipe-E-query-busy-hang
+> >>> -kms_vblank@pipe-E-query-forked-busy
+> >>> -kms_vblank@pipe-E-query-forked-busy-hang
+> >>> -kms_vblank@pipe-E-wait-idle
+> >>> -kms_vblank@pipe-E-wait-idle-hang
+> >>> -kms_vblank@pipe-E-wait-forked
+> >>> -kms_vblank@pipe-E-wait-forked-hang
+> >>> -kms_vblank@pipe-E-wait-busy
+> >>> -kms_vblank@pipe-E-wait-busy-hang
+> >>> -kms_vblank@pipe-E-wait-forked-busy
+> >>> -kms_vblank@pipe-E-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-E-ts-continuation-idle
+> >>> -kms_vblank@pipe-E-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-E-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-E-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-E-ts-continuation-suspend
+> >>> -kms_vblank@pipe-E-ts-continuation-modeset
+> >>> -kms_vblank@pipe-E-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-E-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-F-accuracy-idle
+> >>> -kms_vblank@pipe-F-query-idle
+> >>> -kms_vblank@pipe-F-query-idle-hang
+> >>> -kms_vblank@pipe-F-query-forked
+> >>> -kms_vblank@pipe-F-query-forked-hang
+> >>> -kms_vblank@pipe-F-query-busy
+> >>> -kms_vblank@pipe-F-query-busy-hang
+> >>> -kms_vblank@pipe-F-query-forked-busy
+> >>> -kms_vblank@pipe-F-query-forked-busy-hang
+> >>> -kms_vblank@pipe-F-wait-idle
+> >>> -kms_vblank@pipe-F-wait-idle-hang
+> >>> -kms_vblank@pipe-F-wait-forked
+> >>> -kms_vblank@pipe-F-wait-forked-hang
+> >>> -kms_vblank@pipe-F-wait-busy
+> >>> -kms_vblank@pipe-F-wait-busy-hang
+> >>> -kms_vblank@pipe-F-wait-forked-busy
+> >>> -kms_vblank@pipe-F-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-F-ts-continuation-idle
+> >>> -kms_vblank@pipe-F-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-F-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-F-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-F-ts-continuation-suspend
+> >>> -kms_vblank@pipe-F-ts-continuation-modeset
+> >>> -kms_vblank@pipe-F-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-F-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-G-accuracy-idle
+> >>> -kms_vblank@pipe-G-query-idle
+> >>> -kms_vblank@pipe-G-query-idle-hang
+> >>> -kms_vblank@pipe-G-query-forked
+> >>> -kms_vblank@pipe-G-query-forked-hang
+> >>> -kms_vblank@pipe-G-query-busy
+> >>> -kms_vblank@pipe-G-query-busy-hang
+> >>> -kms_vblank@pipe-G-query-forked-busy
+> >>> -kms_vblank@pipe-G-query-forked-busy-hang
+> >>> -kms_vblank@pipe-G-wait-idle
+> >>> -kms_vblank@pipe-G-wait-idle-hang
+> >>> -kms_vblank@pipe-G-wait-forked
+> >>> -kms_vblank@pipe-G-wait-forked-hang
+> >>> -kms_vblank@pipe-G-wait-busy
+> >>> -kms_vblank@pipe-G-wait-busy-hang
+> >>> -kms_vblank@pipe-G-wait-forked-busy
+> >>> -kms_vblank@pipe-G-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-G-ts-continuation-idle
+> >>> -kms_vblank@pipe-G-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-G-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-G-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-G-ts-continuation-suspend
+> >>> -kms_vblank@pipe-G-ts-continuation-modeset
+> >>> -kms_vblank@pipe-G-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-G-ts-continuation-modeset-rpm
+> >>> -kms_vblank@pipe-H-accuracy-idle
+> >>> -kms_vblank@pipe-H-query-idle
+> >>> -kms_vblank@pipe-H-query-idle-hang
+> >>> -kms_vblank@pipe-H-query-forked
+> >>> -kms_vblank@pipe-H-query-forked-hang
+> >>> -kms_vblank@pipe-H-query-busy
+> >>> -kms_vblank@pipe-H-query-busy-hang
+> >>> -kms_vblank@pipe-H-query-forked-busy
+> >>> -kms_vblank@pipe-H-query-forked-busy-hang
+> >>> -kms_vblank@pipe-H-wait-idle
+> >>> -kms_vblank@pipe-H-wait-idle-hang
+> >>> -kms_vblank@pipe-H-wait-forked
+> >>> -kms_vblank@pipe-H-wait-forked-hang
+> >>> -kms_vblank@pipe-H-wait-busy
+> >>> -kms_vblank@pipe-H-wait-busy-hang
+> >>> -kms_vblank@pipe-H-wait-forked-busy
+> >>> -kms_vblank@pipe-H-wait-forked-busy-hang
+> >>> -kms_vblank@pipe-H-ts-continuation-idle
+> >>> -kms_vblank@pipe-H-ts-continuation-idle-hang
+> >>> -kms_vblank@pipe-H-ts-continuation-dpms-rpm
+> >>> -kms_vblank@pipe-H-ts-continuation-dpms-suspend
+> >>> -kms_vblank@pipe-H-ts-continuation-suspend
+> >>> -kms_vblank@pipe-H-ts-continuation-modeset
+> >>> -kms_vblank@pipe-H-ts-continuation-modeset-hang
+> >>> -kms_vblank@pipe-H-ts-continuation-modeset-rpm
+> >>> +kms_vblank@accuracy-idle
+> >>> +kms_vblank@query-idle
+> >>> +kms_vblank@query-idle-hang
+> >>> +kms_vblank@query-forked
+> >>> +kms_vblank@query-forked-hang
+> >>> +kms_vblank@query-busy
+> >>> +kms_vblank@query-busy-hang
+> >>> +kms_vblank@query-forked-busy
+> >>> +kms_vblank@query-forked-busy-hang
+> >>> +kms_vblank@wait-idle
+> >>> +kms_vblank@wait-idle-hang
+> >>> +kms_vblank@wait-forked
+> >>> +kms_vblank@wait-forked-hang
+> >>> +kms_vblank@wait-busy
+> >>> +kms_vblank@wait-busy-hang
+> >>> +kms_vblank@wait-forked-busy
+> >>> +kms_vblank@wait-forked-busy-hang
+> >>> +kms_vblank@ts-continuation-idle
+> >>> +kms_vblank@ts-continuation-idle-hang
+> >>> +kms_vblank@ts-continuation-dpms-rpm
+> >>> +kms_vblank@ts-continuation-dpms-suspend
+> >>> +kms_vblank@ts-continuation-suspend
+> >>> +kms_vblank@ts-continuation-modeset
+> >>> +kms_vblank@ts-continuation-modeset-hang
+> >>> +kms_vblank@ts-continuation-modeset-rpm
+> >>>    kms_vrr@flip-basic
+> >>>    kms_vrr@flip-dpms
+> >>>    kms_vrr@flip-suspend
+> >
+> >
+> >
 
 
 
