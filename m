@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F2ED85A18F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:02:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F100085A1A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 12:11:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFB361F207C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:02:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACFB2283ABA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:11:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F0B628E1B;
-	Mon, 19 Feb 2024 11:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EAE12AD39;
+	Mon, 19 Feb 2024 11:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iI3AdxuQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IaUvF/vP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B7C1C10;
-	Mon, 19 Feb 2024 11:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E43A286AE;
+	Mon, 19 Feb 2024 11:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708340521; cv=none; b=HGRPBixG31K7+BlnDrVE8Lg3N3wjMQQ7vH+OwNowV3X0+7FAL1zv0ZdUWMPPzdCYZwpQ51ffQSEEtbgn9D++4f6mJ9omrxedSwiM0EM6Yn1gmHzXFXZlSTTepEI2k+EsMiR8agMRIytkpOGZIn++OJ+sQl8X61p2mvV/GRnz6cU=
+	t=1708341066; cv=none; b=q52bmocM19xljMh7uIPGNuPaL7RTtbIJCYz53qRkmOcHm7ocHiP3IKsnPWZDfQaVn92Q46+9yz1L2QWsdaqA9KkQ0MOahBxJwQ1Z31YG335g91K+j4v2rAgMvsAUT8fTMhhO3m400iXFU8GWsMpVCdl03hCDPrkWO9K21WFlKMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708340521; c=relaxed/simple;
-	bh=FYHwUjv0CBOVE/UvV6qkWI5k+uNh+6/RQIoNRoiJaqg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S+cGZ/rTpG2hCZcaYuT0/KpyxyQSCLGNvnhNccGYYxPBPZC/tBgib1Oni+SAYA/2VRpp8yQi89IiDSzpL8DXeAvS6AVTRPx32MDoVb7Zi5ewnjBJ1ZbRF1t/iPece53la1218c6UrgDMn8A87DG+TgxfzP4uIXhVj6aSeHFmqNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iI3AdxuQ; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708340519; x=1739876519;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=FYHwUjv0CBOVE/UvV6qkWI5k+uNh+6/RQIoNRoiJaqg=;
-  b=iI3AdxuQLJ85BdNTv3LccBvTl5WpMvi7xNNIB/S4qC0txlEEhksTTF4t
-   PObXqnZpH7B9civwnocqwQqi7C93tDCK7ntMrdlosEgtv4GHRtZmFZkrR
-   hbPSMYpk0z9IrOc7SQR6DN22A6iklWlgKP08i1akbwVjBrxa435dC7s4x
-   /ZOs19P1TCMAx+2atJl7CfGGimudpfoBiW6s89tAoHFzMM5CkQF7HtsN7
-   bJBRifBbJ+X798YVCRjVfVX+CYt5s7HVfH/oRB8cg1l9HYEvMsSKgdEVY
-   zeHxFy6koLkwkj4IChSaQMcnrJ5v0xh7a4bypUyV8zwLUpOJFFSb9fVMK
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10988"; a="2276106"
-X-IronPort-AV: E=Sophos;i="6.06,170,1705392000"; 
-   d="scan'208";a="2276106"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2024 03:01:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10988"; a="936276332"
-X-IronPort-AV: E=Sophos;i="6.06,170,1705392000"; 
-   d="scan'208";a="936276332"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by fmsmga001.fm.intel.com with ESMTP; 19 Feb 2024 03:01:53 -0800
-Message-ID: <d82c8955-6793-7544-0013-1033abd9f1e9@linux.intel.com>
-Date: Mon, 19 Feb 2024 13:03:31 +0200
+	s=arc-20240116; t=1708341066; c=relaxed/simple;
+	bh=FzHCTH1/lwAXWNzDn9YmTVvU124kRkSDWB3i57YEXIw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=u+U6qrJ/HPLSDBiAf+k6koMwpu87Ej9JyK4sbYOS/ERw4casEJ+w0dfyDEXRm1B0WccHKIenhw9pUi6RcKrcPjpuZREto25yT5yTuSnFM956/QmeAuUg3/7L0VVjJXI6ABqEENzaJhhtQhZ9SfW7bdRiyWGbsayQpWzBLUOKAno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IaUvF/vP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41J4xXNw025538;
+	Mon, 19 Feb 2024 11:10:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=wJk9cnR0mHBU+skKBY4VWZ76aSl9OgmeXFpYlLWfDqY=; b=Ia
+	UvF/vPXsNcQlu9uyWBzhLPqxJSqvOq+YNwAEi28iGNQ+mbVMzhrbNyq2LScl0DSG
+	bmVYbWncbvJYW1Fz1k7oEhprPWedABtdLrHOhkVYt7m4U4GYjjdRlmktd4QWHxXJ
+	lUcW3PLa0QHdGHXAKCpZupXCv9D8gkF6vXwdQDEj2r1aBi6GjUrxT8jnzLs4aH8e
+	uZ/Cg2w5x4tNj64bsg7lRuuUdn+52EKVamHy+Uwh8yEIttwc0eRMhfWUbucdLjyL
+	qpV9cQzRcbxc8OcRp7JisWKUjxtFjb7KGPMvUAD5Upd/qihDLNn6PWoT9RiGD/NK
+	9WSsDLzVS9hCIj/IVO4g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3waqmdue8j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Feb 2024 11:10:52 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41JBApbl020242
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Feb 2024 11:10:51 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 19 Feb
+ 2024 03:10:48 -0800
+Message-ID: <a57a0770-b344-57bc-540d-ced7f169687c@quicinc.com>
+Date: Mon, 19 Feb 2024 16:40:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,41 +65,75 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-Subject: Re: [PATCH v17 00/51] Introduce QC USB SND audio offloading support
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] clk: qcom: drop the SC7180 Modem subsystem clock
+ driver
 Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
- broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
- robh+dt@kernel.org, konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
- <2024021754-unengaged-saggy-6ab1@gregkh>
- <96ab6033-2cb9-daa7-ddad-090138896739@linux.intel.com>
- <2024021922-privatize-runt-495e@gregkh>
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
-In-Reply-To: <2024021922-privatize-runt-495e@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael
+ Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob
+ Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20240216-drop-sc7180-mss-v1-0-0a8dc8d71c0c@linaro.org>
+ <20240216-drop-sc7180-mss-v1-1-0a8dc8d71c0c@linaro.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20240216-drop-sc7180-mss-v1-1-0a8dc8d71c0c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: AfncOdyr74QhzzH2xJn354J_uH5l-uft
+X-Proofpoint-ORIG-GUID: AfncOdyr74QhzzH2xJn354J_uH5l-uft
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-19_08,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0 adultscore=0
+ spamscore=0 impostorscore=0 bulkscore=0 clxscore=1011 mlxlogscore=999
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402190084
 
->>
->> Patch 10/10 is based on an old POC patch by me, but it's heavily modified.
->>
->> It looks like it does a few minor things that are not optimal, like extra
->> spinlock/unlock, and wait_for_completion_timeout() with magical timeout value.
->> I haven't tested this version, but I guess any fixes or cleanups can be done
->> later on top of it.
+
+
+On 2/16/24 16:44, Dmitry Baryshkov wrote:
+> This driver has never been used in the DT files merged to the kernel.
+> According to Sibi, it only worked on the pre-production devices. For the
+> production devices this functionality has been moved to the firmware.
 > 
-> I can revert it now if you want, just let me know.
+> Drop the driver to remove possible confusion.
 > 
+> Cc: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Maybe reverting it would be better yes.
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
 
-Thanks
-Mathias
+> ---
+>   drivers/clk/qcom/Kconfig      |  10 ---
+>   drivers/clk/qcom/Makefile     |   1 -
+>   drivers/clk/qcom/mss-sc7180.c | 140 ------------------------------------------
+>   3 files changed, 151 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 4580edbd13ea..8ab08e7b5b6c 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -635,16 +635,6 @@ config SC_LPASS_CORECC_7280
+>   	  Say Y if you want to use LPASS clocks and power domains of the LPASS
+>   	  core clock controller.
+>   
+
+[...]
+
+> -MODULE_LICENSE("GPL v2");
+> 
 
