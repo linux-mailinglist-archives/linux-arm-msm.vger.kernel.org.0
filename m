@@ -1,182 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-11714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B6CD85A8BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:21:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C15BF85A8D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:23:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D70D286A2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 16:21:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CDE928112E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 16:23:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EABD3B7A1;
-	Mon, 19 Feb 2024 16:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E06D037704;
+	Mon, 19 Feb 2024 16:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hUed3Kdu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QBdlZSZ3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B803CF4E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 16:21:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9FB3C082;
+	Mon, 19 Feb 2024 16:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708359679; cv=none; b=dJBdRoo7IvKF1Jhdn/F8OgvgWjL8hzfvjX+Bp3nf73XRvXloXn/qC6JbKDdaYwn51tIEGi0wUjQbRVrKLSgy5dWpnQw4t2L+RGoieaywgqC4Z7WP5KnSvR3+j+BjC3u94phlvHPNeFIjCCT6LaSMN5Eeem4/ujYOpGjoDBHDs+Q=
+	t=1708359829; cv=none; b=eOA1Kc6THdeYaR6KPj+CyCMTc+MIyRr3lnEQrkG1LMdHkpGL0qT8Yf0CPewgOygohnmSKTHyl/PtVVyD6x/jOdR10akeFmgAXumcV1TzfjYmJr1c9h+DD5Q+fX0uaD7Q8IEqhu7AC1z71l2PHpP4RLiSIq1fggy3LIiBvycVbE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708359679; c=relaxed/simple;
-	bh=gEqc7+mZIizrBsHgqf3iXtCjJRR1NKFgsluQ7BMfYkI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QyK0DGWFI/+Wx7KfP+QnnRfKlEcR+qIitXfq1BYbR30oe20qRyT3qU3tJAHRPCojUXi+AusVzo6SxAgoSKp1488aQ98sQB8HBBG722obW9aGD/PecEK1vlLbp9lfcOhYUOWQ6PnrlgSZpoyT8sz1Vhu2pzV2qZCRWFPjzB4iOtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hUed3Kdu; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6083dc087b3so9334767b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 08:21:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708359677; x=1708964477; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=R2wt3HoshVyMSpGbBwuw8bsOeM4QsAyrGiOVNmA65O8=;
-        b=hUed3KduHb81mmXzxHPrN1ZMNnt42OSPyvlxqh/elgvkNyaXgjvMJEq3UKmG2dK+F4
-         ym9e7hh2OakiIB/MTJWc+815GQpENfeWEiYacOqls8HqA5qVlRpSbVuiFTD7Brn+qirY
-         XKb47LivrcvmXdMlL4A80R2VLQyi1y9YkDMr0sEA3YgNLyHw13sCfOw6MnWniAk6Aj5s
-         Bh1UnqY5TsSE03hyMVCTAMRcGd4Uoniv2/L7g2R3MWwS0Oyuhfk/twh/XG7HgrhCrnwH
-         qFTWYhlxu3RNl8uXNBKPaORgEzDpr6I1s1nxERE00dhO03Myh7Pbded5P6VoMcX5DaH5
-         ivEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708359677; x=1708964477;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R2wt3HoshVyMSpGbBwuw8bsOeM4QsAyrGiOVNmA65O8=;
-        b=WQKOXmky1dbioPaKiWXkr/tdyEERA8MnGfdjz2VxwvUXExd1lVWp8GcL0X2niZsH8b
-         znD/jAhDzrDz269YHd5Sq5/Qs2gAyZ51lwTzOGHvM1lCRVgkyR6NxMiVxWN57Ba/w7Vw
-         h6WBLmiJBDFFOMUD/VDZY+hAQleW2SQJ+7mbj6vjgCaq8I/c8PRmMjryQdpIvNYHqFsX
-         TaYtgTexbEy+44KB4kjUsWWoidpVRCfQR+5hL1gwd7fyxIIIhdwKyaCsaS+Jti+nOLV6
-         G8v1b7PqGWoRyku3p0Vk9+2WEYWfgktdWx8TUjLPWsLHwqChUS/tAg1011e4aPZWsbI1
-         RO8A==
-X-Forwarded-Encrypted: i=1; AJvYcCXZvJZnLa38w3gDMhwq6jTA2mxBEdEEhAVpYfLqQ3ek/Ce5UE2U49TRmfckL71TBWoS/kNKHM++bz+QwgsXooDw5/FaDzwhVg8l9N/iJw==
-X-Gm-Message-State: AOJu0Yy9WXJFZabF2SVE/BCz20LL69dBoQ0yaF/N/MAVTCxjOoW1QcbV
-	Nil3InKziSH2wLnr/tajuK/Sbc/3mN7voddwUJ6oO4Odu9CdUtBNqFUmsln0XkzqC5AGf71g6rz
-	gglEXh/8T0ker4zethj/QVkjk02Tug1G1clvjzA==
-X-Google-Smtp-Source: AGHT+IEQn0c4ED0ZVL1Lxu49TiXak7RXw5M8hdgJfXaLEATpd6+9NC0IG4FzU8TZixBPFIIGr32Qva5v2j6a+srqihE=
-X-Received: by 2002:a81:431e:0:b0:607:f785:c5b5 with SMTP id
- q30-20020a81431e000000b00607f785c5b5mr8604211ywa.22.1708359677335; Mon, 19
- Feb 2024 08:21:17 -0800 (PST)
+	s=arc-20240116; t=1708359829; c=relaxed/simple;
+	bh=3TaEMNwc1sACneFvya4ZgRhN24IEHV8XP900tswpqOU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=eBy01xf0a/TfRRtjM9AcomSXViPrIHoyPLkIxor6/bwVbyZN0n9+45c6/QZepdUmMZQiQ75hMg66p4GUFwKTBw0862rhf9Q+SDdt8/fC7aL7HNhG4Fcg3IT8elYiwF8q98cF7/vOuZUCWA84+ieeO60vwDgkHTmBkvPzmgelaAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QBdlZSZ3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05658C433F1;
+	Mon, 19 Feb 2024 16:23:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708359829;
+	bh=3TaEMNwc1sACneFvya4ZgRhN24IEHV8XP900tswpqOU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=QBdlZSZ3/jh0t5RrjsMfWFAd8OECarSKuRBgKWCIQv31MZqKChPKwlLazCFZ6T5YF
+	 11dFD41YY33Ki3ZhTy1Fm9jBmArtxi6RFa1CNWMIXi6UAwQ2SdXMa+z1ywpv09ft7k
+	 KLe3SSwhuNW9+be6rm08IdoICuoFiL80aajLLOhFXRl9VTXIBISnWcMFsvsMVSLLl1
+	 GqQ4HKDme3x5BnRP1cFQ5hKxssAG3Mtad+D4jxQfbqIBIw3WwHP5WuU8NP8ZDCknFm
+	 4Jd8yPc9k4v8bp9oAmqLwIzqFQKs/0ygQUKo1d5aHTcgcLdKT/nLNj3UgoU/j5i4eT
+	 d2D+cmXBcT90g==
+From: Mark Brown <broonie@kernel.org>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com, 
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+ bryan.odonoghue@linaro.org, gregkh@linuxfoundation.org, 
+ quic_wcheng@quicinc.com, Danila Tikhonov <danila@jiaxyga.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-usb@vger.kernel.org
+In-Reply-To: <20240217163201.32989-1-danila@jiaxyga.com>
+References: <20240217163201.32989-1-danila@jiaxyga.com>
+Subject: Re: (subset) [PATCH 0/3] arm64: dts: qcom: pm6150: Add typec
+ support for PM6150
+Message-Id: <170835982675.1195521.16416838868807847765.b4-ty@kernel.org>
+Date: Mon, 19 Feb 2024 16:23:46 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org> <868r3g4fhv.wl-maz@kernel.org>
-In-Reply-To: <868r3g4fhv.wl-maz@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 19 Feb 2024 18:21:06 +0200
-Message-ID: <CAA8EJpqiN6oRMWhAMMP6EsAeki5KSMbO+XzEtT9YRdJKc9_Gbg@mail.gmail.com>
-Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
-To: Marc Zyngier <maz@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Anup Patel <apatel@ventanamicro.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-a684c
 
-On Mon, 19 Feb 2024 at 17:53, Marc Zyngier <maz@kernel.org> wrote:
->
-> On Mon, 19 Feb 2024 14:47:37 +0000,
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
-> > count restriction from select()") the irq_find_matching_fwspec() was
-> > handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
-> > the select() callback. However the callback of GICv3 (even though it got
-> > modified to handle zero param_count) wasn't prepared to return true for
-> > DOMAIN_BUS_ANY bus_token.
-> >
-> > This breaks probing of any of the child IRQ domains, since
-> > platform_irqchip_probe() uses irq_find_matching_host(par_np,
-> > DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
-> >
-> > Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
-> > Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/irqchip/irq-gic-v3.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-> > index 6fb276504bcc..e9e9643c653f 100644
-> > --- a/drivers/irqchip/irq-gic-v3.c
-> > +++ b/drivers/irqchip/irq-gic-v3.c
-> > @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
-> >
-> >       /* Handle pure domain searches */
-> >       if (!fwspec->param_count)
-> > -             return d->bus_token == bus_token;
-> > +             return d->bus_token == bus_token ||
-> > +                     bus_token == DOMAIN_BUS_ANY;
-> >
-> >       /* If this is not DT, then we have a single domain */
-> >       if (!is_of_node(fwspec->fwnode))
-> >
->
-> I really dislike the look of this. If that's the case, any irqchip
-> that has a 'select' method (such as imx-intmux) should be similarly
-> hacked. And at this point, this should be handled by the core code.
->
-> Can you try this instead? I don't have any HW that relies on
-> behaviour, but I'd expect this to work.
->
-> Thanks,
->
->         M.
->
-> diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> index aeb41655d6de..3dd1c871e091 100644
-> --- a/kernel/irq/irqdomain.c
-> +++ b/kernel/irq/irqdomain.c
-> @@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
->          */
->         mutex_lock(&irq_domain_mutex);
->         list_for_each_entry(h, &irq_domain_list, link) {
-> -               if (h->ops->select)
-> +               if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
->                         rc = h->ops->select(h, fwspec, bus_token);
->                 else if (h->ops->match)
->                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+On Sat, 17 Feb 2024 19:31:58 +0300, Danila Tikhonov wrote:
+> This series adds typec support for PM6150. Was tested on SM7150
+> (xiaomi-surya).
+> 
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@linaro.org>
+> To: Liam Girdwood <lgirdwood@gmail.com>
+> To: Mark Brown <broonie@kernel.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+> To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> To: Wesley Cheng <quic_wcheng@quicinc.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-usb@vger.kernel.org
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> 
+> [...]
 
-This works. But I wonder if the following change is even better. WDYT?
+Applied to
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index aeb41655d6de..2f0d2700709e 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -449,14 +449,17 @@ struct irq_domain
-*irq_find_matching_fwspec(struct irq_fwspec *fwspec,
-         */
-        mutex_lock(&irq_domain_mutex);
-        list_for_each_entry(h, &irq_domain_list, link) {
--               if (h->ops->select)
-+               if (fwnode != NULL &&
-+                   h->fwnode == fwnode &&
-+                   bus_token == DOMAIN_BUS_ANY)
-+                       rc = true;
-+               else if (h->ops->select)
-                        rc = h->ops->select(h, fwspec, bus_token);
-                else if (h->ops->match)
-                        rc = h->ops->match(h, to_of_node(fwnode), bus_token);
-                else
-                        rc = ((fwnode != NULL) && (h->fwnode == fwnode) &&
--                             ((bus_token == DOMAIN_BUS_ANY) ||
--                              (h->bus_token == bus_token)));
-+                             (h->bus_token == bus_token));
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-                if (rc) {
-                        found = h;
+Thanks!
 
+[1/3] dt-bindings: regulator: qcom,usb-vbus-regulator: Add PM6150 compatible
+      commit: ec29a4d9b7c7329afc61e7932cb91e9b292b2b74
 
--- 
-With best wishes
-Dmitry
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
