@@ -1,186 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-11651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3033F85A11C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:38:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0238685A134
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 11:41:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5522F1C217E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:38:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7CB8281AA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A04228DA5;
-	Mon, 19 Feb 2024 10:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B1D028DBC;
+	Mon, 19 Feb 2024 10:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCwVT97q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LY6yXZr3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AD02577C;
-	Mon, 19 Feb 2024 10:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAA328DA5;
+	Mon, 19 Feb 2024 10:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708339120; cv=none; b=eRj1kp9oF+0rz6DNq34vXAnLYcuZBsVg6rOWCEb8GyssgYbQn06wiChll2dFv+qKdFzLWQ8+P4g2oWkxUpX10E75e1NCQ2uGW2F5J64QfF+bRf8oMewm/Z2R2AtXFqX3hyOUJ4gIOv+WUoXpNFGSJ/cLws9glTuBVsIVPq5DHnE=
+	t=1708339304; cv=none; b=DbFoN7zh+5feSMXvM9U83k3SZ8/xxUF9GFZAb7pTdLAHAJ4Mn0CRLDsqDlt4FmINJB5UPn3qt/2SnT6rKMKhWevob8gueQYqfVKxV56X7IMmAQK86IY+sDIXhoi3IpSJV9NKBa6zEuNBpI4jj13RKqOtI9ZouFIFmsG1p46AONg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708339120; c=relaxed/simple;
-	bh=hOjoEZOsJrgzSDEm791GyPfritGFcTYrGPWq8i5PRXw=;
+	s=arc-20240116; t=1708339304; c=relaxed/simple;
+	bh=j0hZ7OP3iKPpfHm4XNFd9GklyucQI6Echl+Kr1PbKTs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MwQIsfVI67yxFc7BSPA19R4r8UuSu2eVuVaAyLivuG/iv9FIMiRfZuttMBClxg8TJ8KO/P2nMfPOid8FiIvzRgVFN2ouqKCiWXMeuwlOlAxwrKC61AC03Q2S4rBAQKT3E1oW+L6vNlrKkEKdC1Df3X5lyZWPuC5ieg+NDWQzI/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCwVT97q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F107FC433F1;
-	Mon, 19 Feb 2024 10:38:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708339119;
-	bh=hOjoEZOsJrgzSDEm791GyPfritGFcTYrGPWq8i5PRXw=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=d0sFF5oPSj7Gmar+T+mGesT8RbSjcA8HYBfCFBW8YI3bz+JNtPV6V0S4GzX2Uu5Y+XWgtWPBpusX2BXwmQ/YIRaSm0Eud51V+BxVlCrR671jqtjBQ3s4BhVrSthbrdNcLoFbwkbaDF6A6uz/oWw5TFNWEkBPzaWN/g1TlDzcH+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LY6yXZr3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ADCC433F1;
+	Mon, 19 Feb 2024 10:41:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708339303;
+	bh=j0hZ7OP3iKPpfHm4XNFd9GklyucQI6Echl+Kr1PbKTs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vCwVT97qTUowrz0FvfZbzkPiEn2LAIMZhQupvKtp+Z6uYQ1rsOamJJnYvX19wDqPC
-	 KenKKuPEiebDngxAmkUWwheH4o+Y7YXhVs+suLyUCebhxpKsuQmzgs5NFZvOh+eOCe
-	 tkzh75vrfA+1ElehEF3C4A4QXqrhxYEBZZDG3u6Y=
-Date: Mon, 19 Feb 2024 11:38:36 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
-	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
-	corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
-	broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
-	robh+dt@kernel.org, konrad.dybcio@linaro.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
-	alsa-devel@alsa-project.org
-Subject: Re: [PATCH v17 00/51] Introduce QC USB SND audio offloading support
-Message-ID: <2024021922-privatize-runt-495e@gregkh>
-References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
- <2024021754-unengaged-saggy-6ab1@gregkh>
- <96ab6033-2cb9-daa7-ddad-090138896739@linux.intel.com>
+	b=LY6yXZr3E2vzWkg1Hg9gmo5TqYcNayGq//e1aM6TDjTSjOYtKCjyL1lOKXFSFAeuF
+	 V2WJ8OD/2ZPSq3wiOlRSM76qr71jZijdaRDQ/BijFj7wZnZ7sViiwSZ4bLlGNoD+ZV
+	 WH4//y4qt8YHFZuPle48PQ0JIjlUyHbs3sqIxnQQwtNo6naYwYzLqwh0n+Ou9KxA9q
+	 TLmwEhUoEEAKU+0VbbUZMfAjrQcLPHK05XkPWQ3IFQ3TazJb5UBMHb4crKm4a5q9n6
+	 NqUbtMGE/2ohmNR3QBpUDSq7onI6kyNLMXQClsTIMiVx+CgsqLyenhRcpbnB8SmjCa
+	 jPT7FURBb12Ew==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rc15h-000000006eY-16Ya;
+	Mon, 19 Feb 2024 11:41:41 +0100
+Date: Mon, 19 Feb 2024 11:41:41 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: drm/msm: Second DisplayPort regression in 6.8-rc1
+Message-ID: <ZdMwZa98L23mu3u6@hovoldconsulting.com>
+References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
+ <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
+ <ZczFhVjHIm55JTfO@hovoldconsulting.com>
+ <ZdDNcrf4KpflGeYQ@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <96ab6033-2cb9-daa7-ddad-090138896739@linux.intel.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZdDNcrf4KpflGeYQ@hovoldconsulting.com>
 
-On Mon, Feb 19, 2024 at 12:27:18PM +0200, Mathias Nyman wrote:
-> On 17.2.2024 17.25, Greg KH wrote:
-> > On Fri, Feb 16, 2024 at 04:09:26PM -0800, Wesley Cheng wrote:
-> > > Several Qualcomm based chipsets can support USB audio offloading to a
-> > > dedicated audio DSP, which can take over issuing transfers to the USB
-> > > host controller.  The intention is to reduce the load on the main
-> > > processors in the SoC, and allow them to be placed into lower power modes.
-> > > There are several parts to this design:
-> > >    1. Adding ASoC binding layer
-> > >    2. Create a USB backend for Q6DSP
-> > >    3. Introduce XHCI interrupter support
-> > >    4. Create vendor ops for the USB SND driver
-> > > 
-> > >        USB                          |            ASoC
-> > > --------------------------------------------------------------------
-> > >                                     |  _________________________
-> > >                                     | |sm8250 platform card     |
-> > >                                     | |_________________________|
-> > >                                     |         |           |
-> > >                                     |      ___V____   ____V____
-> > >                                     |     |Q6USB   | |Q6AFE    |
-> > >                                     |     |"codec" | |"cpu"    |
-> > >                                     |     |________| |_________|
-> > >                                     |         ^  ^        ^
-> > >                                     |         |  |________|
-> > >                                     |      ___V____    |
-> > >                                     |     |SOC-USB |   |
-> > >     ________       ________               |        |   |
-> > >    |USB SND |<--->|QC offld|<------------>|________|   |
-> > >    |(card.c)|     |        |<----------                |
-> > >    |________|     |________|___     | |                |
-> > >        ^               ^       |    | |    ____________V_________
-> > >        |               |       |    | |   |APR/GLINK             |
-> > >     __ V_______________V_____  |    | |   |______________________|
-> > >    |USB SND (endpoint.c)     | |    | |              ^
-> > >    |_________________________| |    | |              |
-> > >                ^               |    | |   ___________V___________
-> > >                |               |    | |->|audio DSP              |
-> > >     ___________V_____________  |    |    |_______________________|
-> > >    |XHCI HCD                 |<-    |
-> > >    |_________________________|      |
-> > > 
-> > > 
-> > > Adding ASoC binding layer:
-> > > soc-usb: Intention is to treat a USB port similar to a headphone jack.
-> > > The port is always present on the device, but cable/pin status can be
-> > > enabled/disabled.  Expose mechanisms for USB backend ASoC drivers to
-> > > communicate with USB SND.
-> > > 
-> > > Create a USB backend for Q6DSP:
-> > > q6usb: Basic backend driver that will be responsible for maintaining the
-> > > resources needed to initiate a playback stream using the Q6DSP.  Will
-> > > be the entity that checks to make sure the connected USB audio device
-> > > supports the requested PCM format.  If it does not, the PCM open call will
-> > > fail, and userpsace ALSA can take action accordingly.
-> > > 
-> > > Introduce XHCI interrupter support:
-> > > XHCI HCD supports multiple interrupters, which allows for events to be routed
-> > > to different event rings.  This is determined by "Interrupter Target" field
-> > > specified in Section "6.4.1.1 Normal TRB" of the XHCI specification.
-> > > 
-> > > Events in the offloading case will be routed to an event ring that is assigned
-> > > to the audio DSP.
-> > > 
-> > > Create vendor ops for the USB SND driver:
-> > > qc_audio_offload: This particular driver has several components associated
-> > > with it:
-> > > - QMI stream request handler
-> > > - XHCI interrupter and resource management
-> > > - audio DSP memory management
-> > > 
-> > > When the audio DSP wants to enable a playback stream, the request is first
-> > > received by the ASoC platform sound card.  Depending on the selected route,
-> > > ASoC will bring up the individual DAIs in the path.  The Q6USB backend DAI
-> > > will send an AFE port start command (with enabling the USB playback path), and
-> > > the audio DSP will handle the request accordingly.
-> > > 
-> > > Part of the AFE USB port start handling will have an exchange of control
-> > > messages using the QMI protocol.  The qc_audio_offload driver will populate the
-> > > buffer information:
-> > > - Event ring base address
-> > > - EP transfer ring base address
-> > > 
-> > > and pass it along to the audio DSP.  All endpoint management will now be handed
-> > > over to the DSP, and the main processor is not involved in transfers.
-> > > 
-> > > Overall, implementing this feature will still expose separate sound card and PCM
-> > > devices for both the platorm card and USB audio device:
-> > >   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
-> > >                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
-> > >   1 [Audio          ]: USB-Audio - USB Audio
-> > >                        Generic USB Audio at usb-xhci-hcd.1.auto-1.4, high speed
-> > > 
-> > > This is to ensure that userspace ALSA entities can decide which route to take
-> > > when executing the audio playback.  In the above, if card#1 is selected, then
-> > > USB audio data will take the legacy path over the USB PCM drivers, etc...
-> > > 
-> > > This feature was validated using:
-> > > - tinymix: set/enable the multimedia path to route to USB backend
-> > > - tinyplay: issue playback on platform card
-> > 
-> > I've applied patches 1-10 and the 2 dts changes here, as those all had
-> > acks from the relevant maintainers already.
-> > 
+On Sat, Feb 17, 2024 at 04:14:58PM +0100, Johan Hovold wrote:
+> On Wed, Feb 14, 2024 at 02:52:06PM +0100, Johan Hovold wrote:
+> > On Tue, Feb 13, 2024 at 10:00:13AM -0800, Abhinav Kumar wrote:
+
+> Since Dmitry had trouble reproducing this issue I took a closer look at
+> the DRM aux bridge series that Abhinav pointed and was able to track
+> down the bridge regressions and come up with a reproducer. I just posted
+> a series fixing this here:
 > 
-> Patch 10/10 is based on an old POC patch by me, but it's heavily modified.
+> 	https://lore.kernel.org/lkml/20240217150228.5788-1-johan+linaro@kernel.org/
 > 
-> It looks like it does a few minor things that are not optimal, like extra
-> spinlock/unlock, and wait_for_completion_timeout() with magical timeout value.
-> I haven't tested this version, but I guess any fixes or cleanups can be done
-> later on top of it.
+> As I mentioned in the cover letter, I am still seeing intermittent hard
+> resets around the time that the DRM subsystem is initialising, which
+> suggests that we may be dealing with two separate DRM regressions here
+> however.
+> 
+> If the hard resets are triggered by something like unclocked hardware,
+> perhaps that bit could this be related to the runtime PM rework?
 
-I can revert it now if you want, just let me know.
+It seems my initial suspicion that at least some of these regressions
+were related to the runtime PM work was correct. The hard resets happens
+when the DP controller is runtime suspended after being probed:
 
-thanks,
+[   16.748475] bus: 'platform': __driver_probe_device: matched device ae00000.display-subsystem with driver msm-mdss
+[   16.759444] msm-mdss ae00000.display-subsystem: Adding to iommu group 21
+[   16.795226] bus: 'platform': __driver_probe_device: matched device ae01000.display-controller with driver msm_dpu
+[   16.807542] probe of ae01000.display-controller returned -517 after 3 usecs
+[   16.821552] bus: 'platform': __driver_probe_device: matched device ae90000.displayport-controller with driver msm-dp-display
+[   16.837749] probe of ae90000.displayport-controller returned -517 after 1 usecs
+[  OK  ] Listening on Load/Save RF Kill Swit[   16.854659] bus: 'platform': __dch Status /dev/rfkill Watch.
+[   16.868458] probe of ae98000.displayport-controller returned -517 after 2 usecs
+[   16.880012] bus: 'platform': __driver_probe_device: matched device aea0000.displayport-controller with driver msm-dp-display
+[   16.891856] probe of aea0000.displayport-controller returned -517 after 2 usecs
+[   16.903825] probe of ae00000.display-subsystem returned 0 after 144497 usecs
+[   16.911636] bus: 'platform': __driver_probe_device: matched device ae01000.display-controller with driver msm_dpu
+[   16.942092] probe of ae01000.display-controller returned 0 after 19593 usecs
+         Starting Load/Save Screen Backligh…rightness[   16.959146] bus: 'platform': _ of backlight:backlight...
+[   16.995355] msm-dp-display ae90000.displayport-controller: dp_display_probe - probe tail
+[   17.004032] probe of ae90000.displayport-controller returned 0 after 30225 usecs
+[   17.012308] bus: 'platform': __driver_probe_device: matched device ae98000.displayport-controller with driver msm-dp-display
+[   17.050193] msm-dp-display ae98000.displayport-controller: dp_display_probe - probe tail
+         Starting Network Name Resolution...
+[   17.058925] probe of ae98000.displayport-controller returned 0 after 34774 usecs
+[   17.074925] bus: 'platform': __driver_probe_device: matched device aea0000.displayport-controller with driver msm-dp-display
+[        Starting Network Time Synchronization...
+[   17.112000] msm-dp-display aea0000.displayport-controller: dp_display_probe - populate aux bus
+[   17.125208] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_resume
+         Starting Record System Boot/Shutdown in UTMP...
+         Starting Virtual Console Setup...
+[  OK  ] Finished Load/Save Screen Backlight Brightness of backlight:backlight.
+[   17.197909] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_suspend
+[   17.198079] probe of aea0Format: Log Type - Time(microsec) - Message - Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.1-00470-MAKENA-1
+S - IMAGE_VARIANT_STRING=SocMakenaWP
+S - OEM_IMAGE_VERSION_STRING=crm-ubuntu92
 
-greg k-h
+  < machine is reset by hypervisor >
+
+Presumably the reset happens when controller is being shut down while
+still being used by the EFI framebuffer.
+
+In the cases where the machines survives boot, the controller is never
+suspended.
+
+When investigating this I've also seen intermittent:
+
+	[drm:dp_display_probe [msm]] *ERROR* device tree parsing failed
+
+which also appears to be related to the runtime PM rework:
+
+	https://lore.kernel.org/lkml/1701472789-25951-1-git-send-email-quic_khsieh@quicinc.com/
+
+I believe this is enough evidence to conclude that this second
+regression is introduced by commit 5814b8bf086a ("drm/msm/dp:
+incorporate pm_runtime framework into DP driver"):
+
+#regzbot introduced: 5814b8bf086a
+
+Has anyone given some thought to how the framebuffer handover is
+supposed to work? It seems we're currently just relying on luck with
+timing.
+
+Johan
 
