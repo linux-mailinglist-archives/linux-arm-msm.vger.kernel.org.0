@@ -1,143 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-11729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D2C985AA57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:50:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81AFC85AA61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:52:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FB541C20E7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:50:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23760285684
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:52:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D4A045BF8;
-	Mon, 19 Feb 2024 17:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81C55481A4;
+	Mon, 19 Feb 2024 17:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Byeh1ywY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YNyXHuN2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6B93B19D;
-	Mon, 19 Feb 2024 17:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5EB47A72;
+	Mon, 19 Feb 2024 17:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708365004; cv=none; b=UY9v+yJgbQsnWavknczJLWcznEGgtRq466TYc3v6oEwEZsamV1FvzfqGPqcm4m9M0qoYA36ASvHSAhiuGa3Z7idiEP0CoQyUbye/gOiBDtlHaF2SV6Li1lwLv4TCH2dZHI1gAmqDPZoSOT+kNp77GQ0m9b+/u8mP8Z8WVRIOpJ8=
+	t=1708365108; cv=none; b=bQPR6iDTPgHZNsxB9P8veAaMmewzK019hkVXaKlUu6XANgFgxsXmzPxEW9ZWAy4uBLT2i0artHX1OdzfBbuIm3pf191GuQMQqJhb2MJ3v2UAuD0hqypvvdDQe4mMjlhZ7/WUuTg+H8hqYZm2/aQdpnQNRqFq2lEPuRmbT+A1Hbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708365004; c=relaxed/simple;
-	bh=UvHxv7xepbJxpy9+6O5z19tRjX3zU46AaArjEk6oaqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dGbTluVABLEiApUe4MqhCDiRDDovHh5xX/VNgsZ+FSMBUFZak6+/dwikHDg3DFUhgChCIhxREiINKN9Z1lWP6ncTqj00qIwujHmu18qt99/eRkMZMO/pBDvmagN5nWim/0mi6YqLgLmrO2JFGHpCgsf9JudlfPeHxUSIBSfNSXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Byeh1ywY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B81C433F1;
-	Mon, 19 Feb 2024 17:49:56 +0000 (UTC)
+	s=arc-20240116; t=1708365108; c=relaxed/simple;
+	bh=dAq7lvi2qjqlCm0cDmbERqAISQJ+CRwDqZZNt19rsSc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ukRlZfYu/78Uq3Vtjah36Tb5aYGVs7Xrw6z398VY2CkrwKSl/q5N1RuDdBQHYdbs4xaWN74XAnBd7d7vUWVOT1PS1kQ5nJTgB5ulYRgvEgiCp2HLxuV+17xKo70BZgdV25rAfH2693M4qBGmqb8CKnPyPa0OulBiMliiCmp9s7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YNyXHuN2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC09AC433F1;
+	Mon, 19 Feb 2024 17:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708365003;
-	bh=UvHxv7xepbJxpy9+6O5z19tRjX3zU46AaArjEk6oaqE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Byeh1ywYb7LFUazgOuI5zH2TrdYxfCCsIPl7883Pp0qneK0V0Dq876TSb8vfaWBKf
-	 Z7v8XNYcJBDe0fgC7/GWxKowMHWwuFXKus6EYvnQZSt6rwFgJqUlV8yECROn4uRrYE
-	 ap7565fNBc4aIg7mGSG8vM64fUH8OXpfLE/qDxO07PLLbo17ctl+PoR/RRZ6J8QxJt
-	 KwHMaimwy35Nyc5s6Qj5l1J51qR/jEKojuKbYgKHKj0P8XfJL8ZkFS7KI1ZKMlafV3
-	 DGk5xTgJAdS3/ssEih8TDlfWENpTEnxKoNDV9AcnOakdQlC4bXnZ7wU1ojeu3m9dgn
-	 kSaNB8meAZvvw==
-Date: Mon, 19 Feb 2024 17:49:53 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	s=k20201202; t=1708365107;
+	bh=dAq7lvi2qjqlCm0cDmbERqAISQJ+CRwDqZZNt19rsSc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=YNyXHuN2YT/XzRrIR4eMIg9ie9fuxn/+spdYzFMrfDhsGBALWy3cdvwzpr6x4t799
+	 aU8RqQiOSGdanaYbKed6fU4TUAxYlPanEwMqz8fdi20yjg4+RlJ+nVtg5MYH4LZlcB
+	 HDQDoHz+UvZKVzmEVf2UttHa2VlELfwM4OnJ8+Af6z10FxQwc86tZjk3+tXTCke9bf
+	 0BhThNuZo9XUPh6UzR9MDq8dMFKIou6VjeqJ2R0DaIZrOGgwN+AUsoxdKj+gaPA+zG
+	 zFLe2bELwLewvPrM96xK933fMtIeC3SxKcfLByK2H+zTgxVsbzFKtyezA0ezXf1Vm0
+	 aBLbHPPcOwT+w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1rc7nt-004evM-Fn;
+	Mon, 19 Feb 2024 17:51:45 +0000
+Date: Mon, 19 Feb 2024 17:51:45 +0000
+Message-ID: <864je44a1a.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>,
+	Anup Patel <apatel@ventanamicro.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v5 14/18] PCI/pwrctl: add a power control driver for
- WCN7850
-Message-ID: <d5d603dc-ec66-4e21-aa41-3b25557f1fb7@sirena.org.uk>
-References: <20240216203215.40870-1-brgl@bgdev.pl>
- <20240216203215.40870-15-brgl@bgdev.pl>
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] irqchip/gic-v3: handle DOMAIN_BUS_ANY in gic_irq_domain_select
+In-Reply-To: <CAA8EJprKUOMwrwawiQ51WKiLCipm72ZcpY6q520kSOg--9oKZg@mail.gmail.com>
+References: <20240219-gic-fix-child-domain-v1-1-09f8fd2d9a8f@linaro.org>
+	<868r3g4fhv.wl-maz@kernel.org>
+	<CAA8EJpqiN6oRMWhAMMP6EsAeki5KSMbO+XzEtT9YRdJKc9_Gbg@mail.gmail.com>
+	<865xyk4dgf.wl-maz@kernel.org>
+	<CAA8EJprKUOMwrwawiQ51WKiLCipm72ZcpY6q520kSOg--9oKZg@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zhaxDJmWzXDQsJtR"
-Content-Disposition: inline
-In-Reply-To: <20240216203215.40870-15-brgl@bgdev.pl>
-X-Cookie: Kleeneness is next to Godelness.
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: dmitry.baryshkov@linaro.org, tglx@linutronix.de, apatel@ventanamicro.com, konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
+On Mon, 19 Feb 2024 17:41:37 +0000,
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> 
+> On Mon, 19 Feb 2024 at 18:37, Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On Mon, 19 Feb 2024 16:21:06 +0000,
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Mon, 19 Feb 2024 at 17:53, Marc Zyngier <maz@kernel.org> wrote:
+> > > >
+> > > > On Mon, 19 Feb 2024 14:47:37 +0000,
+> > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > > > >
+> > > > > Before the commit de1ff306dcf4 ("genirq/irqdomain: Remove the param
+> > > > > count restriction from select()") the irq_find_matching_fwspec() was
+> > > > > handling the DOMAIN_BUS_ANY on its own. After this commit it is a job of
+> > > > > the select() callback. However the callback of GICv3 (even though it got
+> > > > > modified to handle zero param_count) wasn't prepared to return true for
+> > > > > DOMAIN_BUS_ANY bus_token.
+> > > > >
+> > > > > This breaks probing of any of the child IRQ domains, since
+> > > > > platform_irqchip_probe() uses irq_find_matching_host(par_np,
+> > > > > DOMAIN_BUS_ANY) to check for the presence of the parent IRQ domain.
+> > > > >
+> > > > > Fixes: 151378251004 ("irqchip/gic-v3: Make gic_irq_domain_select() robust for zero parameter count")
+> > > > > Fixes: de1ff306dcf4 ("genirq/irqdomain: Remove the param count restriction from select()")
+> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > ---
+> > > > >  drivers/irqchip/irq-gic-v3.c | 3 ++-
+> > > > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+> > > > > index 6fb276504bcc..e9e9643c653f 100644
+> > > > > --- a/drivers/irqchip/irq-gic-v3.c
+> > > > > +++ b/drivers/irqchip/irq-gic-v3.c
+> > > > > @@ -1696,7 +1696,8 @@ static int gic_irq_domain_select(struct irq_domain *d,
+> > > > >
+> > > > >       /* Handle pure domain searches */
+> > > > >       if (!fwspec->param_count)
+> > > > > -             return d->bus_token == bus_token;
+> > > > > +             return d->bus_token == bus_token ||
+> > > > > +                     bus_token == DOMAIN_BUS_ANY;
+> > > > >
+> > > > >       /* If this is not DT, then we have a single domain */
+> > > > >       if (!is_of_node(fwspec->fwnode))
+> > > > >
+> > > >
+> > > > I really dislike the look of this. If that's the case, any irqchip
+> > > > that has a 'select' method (such as imx-intmux) should be similarly
+> > > > hacked. And at this point, this should be handled by the core code.
+> > > >
+> > > > Can you try this instead? I don't have any HW that relies on
+> > > > behaviour, but I'd expect this to work.
+> > > >
+> > > > Thanks,
+> > > >
+> > > >         M.
+> > > >
+> > > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+> > > > index aeb41655d6de..3dd1c871e091 100644
+> > > > --- a/kernel/irq/irqdomain.c
+> > > > +++ b/kernel/irq/irqdomain.c
+> > > > @@ -449,7 +449,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
+> > > >          */
+> > > >         mutex_lock(&irq_domain_mutex);
+> > > >         list_for_each_entry(h, &irq_domain_list, link) {
+> > > > -               if (h->ops->select)
+> > > > +               if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
+> > > >                         rc = h->ops->select(h, fwspec, bus_token);
+> > > >                 else if (h->ops->match)
+> > > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+> > >
+> > > This works. But I wonder if the following change is even better. WDYT?
+> > >
+> > > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+> > > index aeb41655d6de..2f0d2700709e 100644
+> > > --- a/kernel/irq/irqdomain.c
+> > > +++ b/kernel/irq/irqdomain.c
+> > > @@ -449,14 +449,17 @@ struct irq_domain
+> > > *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
+> > >          */
+> > >         mutex_lock(&irq_domain_mutex);
+> > >         list_for_each_entry(h, &irq_domain_list, link) {
+> > > -               if (h->ops->select)
+> > > +               if (fwnode != NULL &&
+> > > +                   h->fwnode == fwnode &&
+> > > +                   bus_token == DOMAIN_BUS_ANY)
+> > > +                       rc = true;
+> > > +               else if (h->ops->select)
+> > >                         rc = h->ops->select(h, fwspec, bus_token);
+> > >                 else if (h->ops->match)
+> > >                         rc = h->ops->match(h, to_of_node(fwnode), bus_token);
+> > >                 else
+> > >                         rc = ((fwnode != NULL) && (h->fwnode == fwnode) &&
+> > > -                             ((bus_token == DOMAIN_BUS_ANY) ||
+> > > -                              (h->bus_token == bus_token)));
+> > > +                             (h->bus_token == bus_token));
+> > >
+> > >                 if (rc) {
+> > >                         found = h;
+> > >
+> >
+> > Can't say I like it either. It duplicates the existing check without
+> > any obvious benefit. Honestly, this code is shit enough that we should
+> > try to make it simpler, not more complex...
+> 
+> Only the fwnode conditions are duplicated. And it makes sense: we
+> should check for the DOMAIN_BUS_ANY first, before going to select. I'm
+> not sure whether at some point we'd have to add (&& bus_token !=
+> DOMAIN_BUS_ANY) to the ops->match check.
 
---zhaxDJmWzXDQsJtR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ops->match should just *die*, and it is not going to see any sort of
+semantic upgrade. Ever. No new code should be added using match.
 
-On Fri, Feb 16, 2024 at 09:32:11PM +0100, Bartosz Golaszewski wrote:
+And look at what my change does. It checks for DOMAIN_BUS_ANY before
+doing anything else, ensuring that the default clause does the job. So
+no, your suggestion doesn't make much sense to me.
 
-> +static struct pci_pwrctl_wcn7850_vreg pci_pwrctl_wcn7850_vregs[] = {
-> +	{
-> +		.name = "vdd",
-> +		.load_uA = 16000,
-> +	},
+	M.
 
-I know a bunch of the QC stuff includes these load numbers but are they
-actually doing anything constructive?  It keeps coming up that they're
-causing a bunch of work and it's not clear that they have any great
-effect on modern systems.
-
-> +static int pci_pwrctl_wcn7850_power_on(struct pci_pwrctl_wcn7850_ctx *ctx)
-> +{
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(ctx->pdata->num_vregs, ctx->regs);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = clk_prepare_enable(ctx->clk);
-> +	if (ret)
-> +		return ret;
-
-This won't disable the regulators on error.
-
---zhaxDJmWzXDQsJtR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXTlMAACgkQJNaLcl1U
-h9CbcAf/TbzIjHqTiQO+FHev6hCBpVYxHMM5DOvWBX9ZL+ZhfvUuEcLsSRXWlokW
-HhtoUNnGZDtqJVvKNBZcDL0ltgO81LrS+YQNT/z252knsVjqxFknViXPRqK7rN8Z
-16HIEb5HegfAIZRRoBnR/G8nSdn78grXMJU42wUOAI7yaMfDFq4073C3oK8BvIAE
-VVWmJKdPIK8vwfyS9ugKW3ncdjLg7zjxlmmK8BfpIUZDrsv/mCeDOWQFgOqmoL2u
-xoyg8EmT9wL6lEWBxAkWxtljU4T2rZvFSxBT9uZW3M0xy83QF/G59Thp+ggKTkls
-f+7PMN+ly3LgO93wRdhXNTSBN6vI6w==
-=wO5a
------END PGP SIGNATURE-----
-
---zhaxDJmWzXDQsJtR--
+-- 
+Without deviation from the norm, progress is not possible.
 
