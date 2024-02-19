@@ -1,155 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-11635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D815F859E47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 09:32:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3FC6859F14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 10:04:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75B131F21609
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 08:32:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BE941F22F88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 09:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F109C1D69D;
-	Mon, 19 Feb 2024 08:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2086224EF;
+	Mon, 19 Feb 2024 09:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tol60US4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dJvJw+MD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0214C9D;
-	Mon, 19 Feb 2024 08:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7607E21114
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 09:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708331555; cv=none; b=UyjL4hOrZUsR3pJFXdCZZyAS4DyUC+yqFOlN+LB+VDItS0OM50D/jVReKHIfowM8tcRfXjb2ptMH+qPTnUc88HJG0hv6FU+1u5X33OPqd8ZcNtCcLCb7AJcpLR6sCCrEeXDyL3SzVJ3tZIunGH5UfjNNZ2WI+6wBEOJdF3kLjG4=
+	t=1708333422; cv=none; b=sVS9Mb/CzSRetNUA6/oSQpMKQ5S5IW2q2cFPSNWRodcUqM63Z07ywbfNFgTJ2BJfvPN7IqglZX2ZJr1TZUZcQVwRxebptf92QVkOfckxVpMRluOsbIgSh4eC8OX2BHYeLhSL+Z2zlp1OM4fr8694qhOuvvAvOwEMiXTv7VEFLjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708331555; c=relaxed/simple;
-	bh=mzagyX0s00DuFga1OEspDrD7QlaYPTc6QQLSYid+wmc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SDHM4K3/V4uHdowGtb6nIsJOLxEZSzmT4wTllUGB1U21GDV5NoVFZStxOIMDP3zLwqBFRMUvJMxhw3foQKlzp3DibyoXdH03RYsV7PKAAuX4YZPtZ1Ijvq9MaXZ60+BgtufP29omhCWD1vv7p+yar10ZaqdkOGgFGJ1gFUOxl6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tol60US4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3BBC433C7;
-	Mon, 19 Feb 2024 08:32:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708331555;
-	bh=mzagyX0s00DuFga1OEspDrD7QlaYPTc6QQLSYid+wmc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Tol60US4baCbJG5fCN3uEhGriEOUOYWBYHl269+fX+R+Er5iSS88SX83aWXsgKtar
-	 TT8pQEt+YM3WkRQ+1+knktgRTOXFpfeliyG2/trJclp1x8K6oVQTgUYk+V0jMFKTtF
-	 zNtG/nT7YxKkBmHxfY6nXhT7m6Ckd/3NO+tL383q5fBxmdNGpje5iBCeO/uFKtzr6D
-	 K1fc5Rp2FtKB/GHFf1U5VS4+4aUAqp+IRv+7HmngiQXqkqC2R37kGYxhKnMD0F6OOF
-	 ceExrtnn3r2jaqvzWa2xDh9WCwshPs2w3sSySQ/lXO2rtchedL7KtjbtvFIdSIzaPj
-	 dOV4NmnqMrrMQ==
-Date: Mon, 19 Feb 2024 14:02:20 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
-	andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, robh+dt@kernel.org, quic_shazhuss@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
-	robh@kernel.org, quic_krichai@quicinc.com,
-	quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-	quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] PCI: qcom: Enable cache coherency for SA8775P RC\
-Message-ID: <20240219083220.GA3281@thinkpad>
-References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
- <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
- <20231130052116.GA3043@thinkpad>
- <a9c2532a-eaa6-4019-8ce9-5a58b1b720b2@linaro.org>
- <20231130110909.GQ3043@thinkpad>
+	s=arc-20240116; t=1708333422; c=relaxed/simple;
+	bh=zpTa+qfeGV2k5NtVzTVITl85Yym3NlMeyy53MZ3h8nI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=h7r3FU/RFAoeFWUVuH0gWqV3zvdD7IuKpYJAdR7qbyx2x9UPtq2mzYIay6cGSA+lF8WQJxQc+U/vQPtVVmuoJVBmXX85XKG1de9Po2L6Y4Un4ahqJmPsRdMkGjONUIK1RM6nrXbBHtY6g/mCLVm1LOXz8NCITg3gCCKBWyeRTBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dJvJw+MD; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33d0a7f2424so2204533f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 01:03:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708333419; x=1708938219; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gF7sGDk1x24G6RZbBVHNrWjV9qvXDZGdRDsrtRvQq9E=;
+        b=dJvJw+MDFW//kuh8SimerpT4lecUfksPHfHT6jJhmDGnFYP7GG75Znf6PY0WtePuPO
+         Ni/9Bh81gdIUFBZBM7qeWQsej+Sywka6qqbHC3Ttt1EB9cp+ePRtS8puZwKbb6vzdR/0
+         v/qFDPqjggI8aFCHjIrfpQPyPWR1kk2WH3g3YiOycklOxlV/jmIN+Sl/kJ9F1Y086NcH
+         z62hwKFLtGz6p/AUyMW3mEwphoPW/rQhaRBjcHyP+7Y54HoqqXOTxhKiVDbATV9DJa4d
+         tjWN+gS8ZSxHxw6l+a+7Q5El5YLvl41STdcKVL0Qk7XQiomDQ5eVfCAk/5JcCszBNhh0
+         nz0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708333419; x=1708938219;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gF7sGDk1x24G6RZbBVHNrWjV9qvXDZGdRDsrtRvQq9E=;
+        b=OZDc1KlxiIfzgTNyoXAJIO8NH45WL/8mhLDrC3GnYGY/hyEdS9EGNuMk0NQ+7s60cQ
+         R67IlWb3cW6q9y65NlwEatXxpZeOm/RZWxXbi8pr8gL3PW50xettq42bW4imO4Bk9Tb7
+         APNNXEzXeOQNOQrHwj1nnk4Ueb20FEONMDSLC7xf1EDgDcR5RQJO94tNhCK0iW1zAN4V
+         Uf3Ho+cI2BwnqVHJo25klBVXqWx9YO7kYF1AYDldJyYhwEsIohrx0L/3W7h+wfyv3ED/
+         4p79+8l7VGt0hUpGMkc5fLICO67H7sFDNHW8+h699maKQP0pzy7rtw9XeZm1zhdbeOsw
+         ZYgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQksfxnGq5Um/Sl+JiaH9emgVJ/qdyaVukC2RC7no5LPajcOZVh3aGq6pf3sVHfiX+94tXOHgYJKyiSSFYlTFm5vIGThQi0UfgfGPOng==
+X-Gm-Message-State: AOJu0YyhUXFuBu9V/AZpqspFVnqNSUdqmaASdobH6hn5UhRGeLDnPkpk
+	KIQ5RBZw8BfDNY5Hy83E+VpInT3gzkLvQt1gMdQ2Fqu1TfBcBTVM+evj8/R940Q=
+X-Google-Smtp-Source: AGHT+IHeW4FAyqvBoHaZHyX8ohtq5iNNLDp8u7VcW4ZWJqvxtsgUI3BYpUKh1ifXeE1GS2yUvTjqBg==
+X-Received: by 2002:a5d:588f:0:b0:33d:2b3d:b598 with SMTP id n15-20020a5d588f000000b0033d2b3db598mr4141771wrf.70.1708333418779;
+        Mon, 19 Feb 2024 01:03:38 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:9470:c6e0:c87a:fa9f? ([2a01:e0a:982:cbb0:9470:c6e0:c87a:fa9f])
+        by smtp.gmail.com with ESMTPSA id s1-20020adff801000000b0033d01fe1f04sm9722957wrp.55.2024.02.19.01.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Feb 2024 01:03:38 -0800 (PST)
+Message-ID: <c86594cd-f32d-4b66-8459-9045640aa928@linaro.org>
+Date: Mon, 19 Feb 2024 10:03:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231130110909.GQ3043@thinkpad>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 5/6] phy: qcom-qmp-combo: fix drm bridge registration
+Content-Language: en-US, fr
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Vinod Koul <vkoul@kernel.org>
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ stable@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20240217150228.5788-1-johan+linaro@kernel.org>
+ <20240217150228.5788-6-johan+linaro@kernel.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20240217150228.5788-6-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 30, 2023 at 04:39:09PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Nov 30, 2023 at 11:09:59AM +0100, Konrad Dybcio wrote:
-> > On 30.11.2023 06:21, Manivannan Sadhasivam wrote:
-> > > On Tue, Nov 21, 2023 at 08:08:11PM +0530, Mrinmay Sarkar wrote:
-> > >> In a multiprocessor system cache snooping maintains the consistency
-> > >> of caches. Snooping logic is disabled from HW on this platform.
-> > >> Cache coherency doesn’t work without enabling this logic.
-> > >>
-> > >> 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for this
-> > >> platform. Assign no_snoop_override flag into struct qcom_pcie_cfg and
-> > >> set it true in cfg_1_34_0 and enable cache snooping if this particular
-> > >> flag is true.
-> > >>
-> > > 
-> > > I just happen to check the internal register details of other platforms and I
-> > > see this PCIE_PARF_NO_SNOOP_OVERIDE register with the reset value of 0x0. So
-> > > going by the logic of this patch, this register needs to be configured for other
-> > > platforms as well to enable cache coherency, but it seems like not the case as
-> > > we never did and all are working fine (so far no issues reported).
-> > 
-> > Guess we know that already [1]
-> > 
+On 17/02/2024 16:02, Johan Hovold wrote:
+> Due to a long-standing issue in driver core, drivers may not probe defer
+> after having registered child devices to avoid triggering a probe
+> deferral loop (see fbc35b45f9f6 ("Add documentation on meaning of
+> -EPROBE_DEFER")).
 > 
-> Bummer! I didn't look close into that reply :/
+> This could potentially also trigger a bug in the DRM bridge
+> implementation which does not expect bridges to go away even if device
+> links may avoid triggering this (when enabled).
 > 
-> > The question is whether this override is necessary, or the default
-> > internal state is OK on other platforms
-> > 
+> Move registration of the DRM aux bridge to after looking up clocks and
+> other resources.
 > 
-> I digged into it further...
+> Note that PHY creation can in theory also trigger a probe deferral when
+> a 'phy' supply is used. This does not seem to affect the QMP PHY driver
+> but the PHY subsystem should be reworked to address this (i.e. by
+> separating initialisation and registration of the PHY).
 > 
-> The register description says "Enable this bit x to override no_snoop". So
-> NO_SNOOP is the default behavior unless bit x is set in this register.
+> Fixes: 35921910bbd0 ("phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE")
+> Fixes: 1904c3f578dc ("phy: qcom-qmp-combo: Introduce drm_bridge")
+> Cc: stable@vger.kernel.org      # 6.5
+> Cc: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> This means if bit x is set, MRd and MWd TLPs originating from the desired PCIe
-> controller (Requester) will have the NO_SNOOP bit set in the header. So the
-> completer will not do any cache management for the transaction. But this also
-> requires that the address referenced by the TLP is not cacheable.
-> 
-> My guess here is that, hw designers have enabled the NO_SNOOP logic by default
-> and running into coherency issues on the completer side. Maybe due to the
-> addresses are cacheable always (?).
-> 
-> And the default value of this register has no impact on the NO_SNOOP attribute
-> unless specific bits are set.
-> 
-> But I need to confirm my above observations with HW team. Until then, I will
-> hold on to my Nack.
-> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 1ad10110dd25..e19d6a084f10 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -3566,10 +3566,6 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		return ret;
+>   
+> -	ret = drm_aux_bridge_register(dev);
+> -	if (ret)
+> -		return ret;
+> -
+>   	/* Check for legacy binding with child nodes. */
+>   	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
+>   	if (usb_np) {
+> @@ -3589,6 +3585,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>   	if (ret)
+>   		goto err_node_put;
+>   
+> +	ret = drm_aux_bridge_register(dev);
+> +	if (ret)
+> +		goto err_node_put;
+> +
+>   	pm_runtime_set_active(dev);
+>   	ret = devm_pm_runtime_enable(dev);
+>   	if (ret)
 
-I had some discussions with the hardware folks and clarified my concerns with
-them. Here is the summary:
-
-Due to some hardware changes, SA8775P has set the NO_SNOOP attribute in its TLP
-for all the PCIe controllers. NO_SNOOP attribute when set, the requester is
-indicating that there no cache coherency issues exit for the addressed memory
-on the host i.e., memory is not cached. But in reality, requester cannot assume
-this unless there is a complete control/visibility over the addressed memory on
-the host.
-
-And worst case, if the memory is cached on the host, it may lead to memory
-corruption issues. It should be noted that the caching of memory on the host is
-not solely dependent on the NO_SNOOP attribute in TLP.
-
-So to avoid the corruption, this patch overrides the NO_SNOOP attribute by
-setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not needed for
-other upstream supported platforms since they do not set NO_SNOOP attribute by
-default.
-
-Mrinmay, please add above information in the commit message while sending v2.
-I'm taking by NACK back.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
