@@ -1,88 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-11739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C95D285AC8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:56:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6AEA85ACB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 21:00:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49BB6B25F90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 19:56:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 539A91F248AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 20:00:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EF051033;
-	Mon, 19 Feb 2024 19:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4611251C5F;
+	Mon, 19 Feb 2024 19:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/Tf0rg/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T45+FMhR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2824F203;
-	Mon, 19 Feb 2024 19:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D96E535AA;
+	Mon, 19 Feb 2024 19:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708372602; cv=none; b=DHLIqOk/1zuzODK1TxZr8HGfHB52qeawYpUb5R33su4WXZ7wdq7O2KolJPgkr2eqLkkWeEvHV8GVRLtQQdsExja5sSo+f0n/e8XW2CN82kSlPyndDGcq0ClHn8UHxy/5/ZU8qRSb0n/Zd7VcoM2HgXXm4qtvBfDPwLB3sqsujww=
+	t=1708372797; cv=none; b=khX1RLajPfHcVZLvL6AXr3N3VW41tIVsn69fGnPiW4kuU7Fb7MltNey6Tth9glYtisI2egrGx2gnChmITfgQiidhKhweAQNfeTq5hklHDo9APbKUngECRQ3gPlO+Br+Hcx737xItXedBssIbfFuX3lmUslkP1iq19mYkJP1dfc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708372602; c=relaxed/simple;
-	bh=OaAEMFvFDN1qhJ4t5nXfrOCymw4TroM52J1E3WnfAP0=;
+	s=arc-20240116; t=1708372797; c=relaxed/simple;
+	bh=V7d3FUHDHjaNVIGYicTJg7/TYe1drwX4p1eQCSxDewU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CH4YqlWQDjRZLjxA9JEkwaaOqLi/mrjBUUS/3yaX83WK06PFr8FxyNJBd91I6uSMOnjWDsIJ91rhDKrrmpit9Vhy8jb01pRudRtDZ9VQ3Rq0HhgzI/meluSTxcDYa/e5ovNASbEkGksYmoyofeDx5Fm7G3IfRDji4+O9hTZ2GkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/Tf0rg/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB28C433F1;
-	Mon, 19 Feb 2024 19:56:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708372601;
-	bh=OaAEMFvFDN1qhJ4t5nXfrOCymw4TroM52J1E3WnfAP0=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=UEkUdzFfjg/A48XyX4qZ9hiot+D8QSaaebNav2umvx3rtsFIohZKU/SIAjecWaLa04OxYmGoX5pkoSYnSKBc9hcG/B/WJBWk0y95apqMssFSWxNuLL7URzHgXiVS1gdaBMTS7gvMxTJqmxHu45xn9oc25tHI8bmUnvR8I2I+RB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T45+FMhR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CC0C433C7;
+	Mon, 19 Feb 2024 19:59:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708372796;
+	bh=V7d3FUHDHjaNVIGYicTJg7/TYe1drwX4p1eQCSxDewU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j/Tf0rg/52VRU0RdqcIIbgIp34hsAGhLLM6UEzs4f8XeRAe8Pe0ZnvuYgjEaedKPh
-	 XzolqPbpGuyslO57mb26R3nPLHjlPXFweVZOqmQ+StxE+IHfCDJsSFchYOb0ECw4Ej
-	 9bic7JeKdiqsqqJlLXwCDhAwxYe5B/OGUhUOFkGU=
-Date: Mon, 19 Feb 2024 20:56:39 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Mathias Nyman <mathias.nyman@linux.intel.com>
-Cc: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
-	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
-	corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
-	broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
-	robh+dt@kernel.org, konrad.dybcio@linaro.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
-	alsa-devel@alsa-project.org
-Subject: Re: [PATCH v17 00/51] Introduce QC USB SND audio offloading support
-Message-ID: <2024021929-catching-subheader-d51b@gregkh>
-References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
- <2024021754-unengaged-saggy-6ab1@gregkh>
- <96ab6033-2cb9-daa7-ddad-090138896739@linux.intel.com>
- <2024021922-privatize-runt-495e@gregkh>
- <d82c8955-6793-7544-0013-1033abd9f1e9@linux.intel.com>
+	b=T45+FMhRUYku0IayKkrM4fevhsmPoINGwzAQ9OuvUumK7yoDAV0cFQPSR/JcJDNn6
+	 IH86pdnnzsLO36yg9DvE/hK7dOZdenbuAKHEeg7OE2f+zxYFLmduoDZWzOGylGlVnZ
+	 hoZoC5s4uP59yejL+WA87fY9xoX0np9crzdCKJA5yIqCoqjmyOKHS5oPLcM09Bb3BI
+	 tHtxC/ShPCBum7nM440EwXfy4XGKPa6Nf0ATZqLhlndytiG9amoUQaXq+Oc2LvR9/l
+	 KFDaKUBuG237eYDJ8O8YsLz3vgf0BC2UAqhKruifhPeeCoSZcvsGjOs3/8Y+Y8knzI
+	 waWE8KNaC6a5A==
+Date: Mon, 19 Feb 2024 19:59:46 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 09/18] arm64: dts: qcom: qrb5165-rb5: model the PMU of
+ the QCA6391
+Message-ID: <8e392aed-b5f7-486b-b5c0-5568e13796ec@sirena.org.uk>
+References: <20240216203215.40870-1-brgl@bgdev.pl>
+ <20240216203215.40870-10-brgl@bgdev.pl>
+ <48164f18-34d0-4053-a416-2bb63aaae74b@sirena.org.uk>
+ <CAMRc=Md7ymMTmF1OkydewF5C32jDNy0V+su7pcJPHKto6VLjLg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="emYsqvRPUjKAiXsY"
 Content-Disposition: inline
-In-Reply-To: <d82c8955-6793-7544-0013-1033abd9f1e9@linux.intel.com>
+In-Reply-To: <CAMRc=Md7ymMTmF1OkydewF5C32jDNy0V+su7pcJPHKto6VLjLg@mail.gmail.com>
+X-Cookie: Kleeneness is next to Godelness.
 
-On Mon, Feb 19, 2024 at 01:03:31PM +0200, Mathias Nyman wrote:
-> > > 
-> > > Patch 10/10 is based on an old POC patch by me, but it's heavily modified.
-> > > 
-> > > It looks like it does a few minor things that are not optimal, like extra
-> > > spinlock/unlock, and wait_for_completion_timeout() with magical timeout value.
-> > > I haven't tested this version, but I guess any fixes or cleanups can be done
-> > > later on top of it.
-> > 
-> > I can revert it now if you want, just let me know.
-> > 
-> 
-> Maybe reverting it would be better yes.
 
-Ok, will do, thanks for letting me know.
+--emYsqvRPUjKAiXsY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-greg k-h
+On Mon, Feb 19, 2024 at 07:48:20PM +0100, Bartosz Golaszewski wrote:
+> On Mon, Feb 19, 2024 at 7:03=E2=80=AFPM Mark Brown <broonie@kernel.org> w=
+rote:
+> > On Fri, Feb 16, 2024 at 09:32:06PM +0100, Bartosz Golaszewski wrote:
+
+> > > +                     vreg_pmu_aon_0p59: ldo1 {
+> > > +                             regulator-name =3D "vreg_pmu_aon_0p59";
+> > > +                             regulator-min-microvolt =3D <540000>;
+> > > +                             regulator-max-microvolt =3D <840000>;
+> > > +                     };
+
+> > That's a *very* wide voltage range for a supply that's got a name ending
+> > in _0_p59 which sounds a lot like it should be fixed at 0.59V.
+> > Similarly for a bunch of the other supplies, and I'm not seeing any
+> > evidence that the consumers do any voltage changes here?  There doesn't
+> > appear to be any logic here, I'm not convinced these are validated or
+> > safe constraints.
+
+> No, the users don't request any regulators (or rather: software
+> representations thereof) because - as per the cover letter - no
+> regulators are created by the PMU driver. This is what is physically
+> on the board - as the schematics and the datasheet define it. I took
+
+The above makes no sense.  How can constraints be "what is physically on
+the board", particularly variable constrants when there isn't even a
+consumer?  What values are you taking from which documentation? =20
+
+The cover letter and binding both claimed (buried after large amounts of
+changelog) that these PMUs were exposing regulators to consumers and the
+DTS puports to do exactly that...
+
+> the values from the docs verbatim. In C, we create a power sequencing
+> provider which doesn't use the regulator framework at all.
+
+For something that doesn't use the regulator framework at all what
+appears to be a provider in patch 16 ("power: pwrseq: add a driver for
+the QCA6390 PMU module") seems to have a lot of regualtor API calls?
+
+--emYsqvRPUjKAiXsY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXTszEACgkQJNaLcl1U
+h9Cnngf+IYF9pPUvDAr0+9oD3KtUt4+wAyqpvCYd3QuvT98XgcKtkxuBF8yVrn3o
+LceeY91qW8Y/CLz4ZXDqVdWCd1bOtiU48jYXX29ZuQciuXy20B+0LuJ8hkYSkAUk
+JZplf/496WYrFs/92k/NhBU5djkuEGpxjp+LD+0mGJT3RJphr59zb8ToDh3Fi3Xo
+9Vw/tkd7v+/tZY7g+OJsbnSi1/WHnHYepYRh9O5eO7CYRsHw1sHELt2X5s+wQKv7
+rB+MB9piVE3Vjuys5hjODJMTFg5eZJix6jHU+9xKA5FxezF9mo1Yan6MceBP4ZBK
+IU9LsWWcwWsnu9mgk5kBM58ddzUI/A==
+=aUMd
+-----END PGP SIGNATURE-----
+
+--emYsqvRPUjKAiXsY--
 
