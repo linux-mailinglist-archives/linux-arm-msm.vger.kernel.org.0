@@ -1,128 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-11728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90BB585AA54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:49:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D2C985AA57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 18:50:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C363D1C21242
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:49:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FB541C20E7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 17:50:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C3E4779F;
-	Mon, 19 Feb 2024 17:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D4A045BF8;
+	Mon, 19 Feb 2024 17:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="h4sRlf5z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Byeh1ywY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8771544C8D;
-	Mon, 19 Feb 2024 17:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6B93B19D;
+	Mon, 19 Feb 2024 17:50:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708364971; cv=none; b=c1OBW3QoofEwpzeZKmFnJ0WiOmSGaXh7rn1D4yFmOY4lQNdz+pCgTQ9EPOk11oAR/O5p4CcikEHFC0+5Y+FDI2YWnnMgYm2Wr7VecEfPDu2Az687pd5Oh2eaJMMWeO/ADN27sNCjmH7fggaxJEH7fj9W3KGxuyJla/PKehSObkw=
+	t=1708365004; cv=none; b=UY9v+yJgbQsnWavknczJLWcznEGgtRq466TYc3v6oEwEZsamV1FvzfqGPqcm4m9M0qoYA36ASvHSAhiuGa3Z7idiEP0CoQyUbye/gOiBDtlHaF2SV6Li1lwLv4TCH2dZHI1gAmqDPZoSOT+kNp77GQ0m9b+/u8mP8Z8WVRIOpJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708364971; c=relaxed/simple;
-	bh=hPupRt57+r+Pl0dfVnsjq1GsNhHpCJ6eXReICe+eDDo=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=elpbcyqsRDbiOr7y+H9F8/zr0K9L/Lw2MV71f9DXzp5Iab4noMbNf/+EsuBzCXnnx/wBBZAl8XCPuQkC4zDBC26O8gEaBOyge3+r11CUbighCudMlQM07tGSVRWvOfccWZu1xXMquPTqmch5k3CBR5Sg70B64QBuJA6q0pYnH9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=h4sRlf5z; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1708364915; x=1708969715; i=markus.elfring@web.de;
-	bh=hPupRt57+r+Pl0dfVnsjq1GsNhHpCJ6eXReICe+eDDo=;
-	h=X-UI-Sender-Class:Date:To:Cc:References:Subject:From:
-	 In-Reply-To;
-	b=h4sRlf5zIV+QWDila5ohfglWmS12NfxX6Wx6NvhudyKq05oHZRWmmvB+yQAl/USd
-	 s/hF88fZLogXlVoPr9rYZcV6U1BvLPtgrwOs3I0XIdBFv8XpCNCNY3EEijkJj1DzY
-	 5VvHfB+6tRpIy0Tq9+g7oAj5CiRYslmyzxurJVIsHN3Kc9uYA8tBa3N1Mp5L6Y/wr
-	 oucP7TurufLy2QMHeMn/SgfhJjg31IVk1/FHtcdSB/Axxv9EWjjleNaSPrJeU4eX5
-	 oZ7w/z6ZtPYAINIoef5Lp0bfUVTHb8xQlzM7tiiHXC7yK1h1ujvgMvoDn/CvIgI7W
-	 Yu6xFw2F9eBfP/W1YQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.80.95]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M2xrs-1rfQbv2m5c-003JhM; Mon, 19
- Feb 2024 18:48:35 +0100
-Message-ID: <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de>
-Date: Mon, 19 Feb 2024 18:48:30 +0100
+	s=arc-20240116; t=1708365004; c=relaxed/simple;
+	bh=UvHxv7xepbJxpy9+6O5z19tRjX3zU46AaArjEk6oaqE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dGbTluVABLEiApUe4MqhCDiRDDovHh5xX/VNgsZ+FSMBUFZak6+/dwikHDg3DFUhgChCIhxREiINKN9Z1lWP6ncTqj00qIwujHmu18qt99/eRkMZMO/pBDvmagN5nWim/0mi6YqLgLmrO2JFGHpCgsf9JudlfPeHxUSIBSfNSXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Byeh1ywY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B81C433F1;
+	Mon, 19 Feb 2024 17:49:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708365003;
+	bh=UvHxv7xepbJxpy9+6O5z19tRjX3zU46AaArjEk6oaqE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Byeh1ywYb7LFUazgOuI5zH2TrdYxfCCsIPl7883Pp0qneK0V0Dq876TSb8vfaWBKf
+	 Z7v8XNYcJBDe0fgC7/GWxKowMHWwuFXKus6EYvnQZSt6rwFgJqUlV8yECROn4uRrYE
+	 ap7565fNBc4aIg7mGSG8vM64fUH8OXpfLE/qDxO07PLLbo17ctl+PoR/RRZ6J8QxJt
+	 KwHMaimwy35Nyc5s6Qj5l1J51qR/jEKojuKbYgKHKj0P8XfJL8ZkFS7KI1ZKMlafV3
+	 DGk5xTgJAdS3/ssEih8TDlfWENpTEnxKoNDV9AcnOakdQlC4bXnZ7wU1ojeu3m9dgn
+	 kSaNB8meAZvvw==
+Date: Mon, 19 Feb 2024 17:49:53 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 14/18] PCI/pwrctl: add a power control driver for
+ WCN7850
+Message-ID: <d5d603dc-ec66-4e21-aa41-3b25557f1fb7@sirena.org.uk>
+References: <20240216203215.40870-1-brgl@bgdev.pl>
+ <20240216203215.40870-15-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Bjorn Andersson <andersson@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
- David Airlie <airlied@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Vinod Koul <vkoul@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Rob Clark <robdclark@gmail.com>
-References: <20240217150228.5788-2-johan+linaro@kernel.org>
-Subject: Re: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240217150228.5788-2-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1qY8TG6XGBPBySkXD9Iw+B/jMk+ITC9FUkKiHaIFz/AtRCFm3X8
- A2bG3gibnYIc7UfT5py0ZV3IHcRAAwqod7yJen0dD22Od/rMMXKMtv4O3ehHFd6NK1O47oF
- 2FKhSK+MFr0qgPhK4sp6Gvv75D7So3Dsd6VTfJ4FGrbLdu71hXEBz4h4bEnOqoDzSyVLUQM
- FFo2segx5J963ehK0Nyqg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Vt1j2p9N3tU=;Y5Fkv24B75ZRsEO6v+JeViz6QDS
- Z0Qr1vSndEAhOcBQzzzF9Hc+zTH8Lh5ACQIDs7Em43y0RsMfANmO66fe8KzHagSpTU3nCS9yw
- seqRMXtdrL7zS+FYfxRWVQMh2n+AW0LD8yuU/LvcAOqSzpZuAxCp9sB894cWb6Vs/KQwhcvix
- 0c0MCspFvzytZ8Z/VmjJpOa6U7u79EUFZbSTMcXdtOidhEyGaXoD1ed1lSk72ZHY4WrxBcoIG
- AQDpd7AAX8XoGPbGzDh8DSIIf76R1xfHsRz/IWtBKre8C5hyOZibsT6rlCWZf1Hn4OY8nyGe8
- 0R7jtfGDhFTNaLob/euJ4Xouo1S6JDEo6roUqqRQhLm+eihsK/1yoocr3e4TN5EfooNR/mqlb
- JU0s2ZXbFHxS1HxFt10qTR2Q3UBDpjnHxaf0nc6H7jpfWpYApArkm5d6/CArQHWMYRyHggilo
- NOJYAzpbA7OAaB9NNxId1wvcwZvrTgkzAeabC2c5HsL0UzNsbWqKbMMceESmfn72wOIfsQIsP
- L1S6NcAESVAnTYRBVYmDfWpuRiWfiWzh6aw9JFeF6HLm6Y4ajY/9ve+rE1vwM2zw9Na/oA3vn
- fbfuZnuDVcd6HgPLX6VmhUXnUzA/O+87vE3/mjhRZ30qPnFNmB7/gDo+4lkRApUIZ+Y5SsU8T
- C/RmhXE33yy5bOoTU1jR3W+iZ1ylFub+AO8utosVVJ5xfLspRIaoR6ptLogpbtO8A+duLEl5g
- BTecZA4H8EdbrwYdstFYfumSnHWDkijS5WNqggvyMOhheue05/XZGimtzonJucoBOFIY89JRK
- mjveQA3OLbiH8J7EvTIIAlcAE3cn0wtcE7uXKqhPCSnq8=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zhaxDJmWzXDQsJtR"
+Content-Disposition: inline
+In-Reply-To: <20240216203215.40870-15-brgl@bgdev.pl>
+X-Cookie: Kleeneness is next to Godelness.
 
-> The two device node references taken during allocation need to be
-> dropped when the auxiliary device is freed.
-=E2=80=A6
-> +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-=E2=80=A6
-> @@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct devic=
-e *parent,
->
->  	ret =3D auxiliary_device_init(adev);
->  	if (ret) {
-> +		of_node_put(adev->dev.platform_data);
-> +		of_node_put(adev->dev.of_node);
->  		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
->  		kfree(adev);
->  		return ERR_PTR(ret);
 
-The last two statements are also used in a previous if branch.
-https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/gpu/drm/bridge/au=
-x-hpd-bridge.c#L63
+--zhaxDJmWzXDQsJtR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-How do you think about to avoid such a bit of duplicate source code
-by adding a label here?
+On Fri, Feb 16, 2024 at 09:32:11PM +0100, Bartosz Golaszewski wrote:
 
-Regards,
-Markus
+> +static struct pci_pwrctl_wcn7850_vreg pci_pwrctl_wcn7850_vregs[] = {
+> +	{
+> +		.name = "vdd",
+> +		.load_uA = 16000,
+> +	},
+
+I know a bunch of the QC stuff includes these load numbers but are they
+actually doing anything constructive?  It keeps coming up that they're
+causing a bunch of work and it's not clear that they have any great
+effect on modern systems.
+
+> +static int pci_pwrctl_wcn7850_power_on(struct pci_pwrctl_wcn7850_ctx *ctx)
+> +{
+> +	int ret;
+> +
+> +	ret = regulator_bulk_enable(ctx->pdata->num_vregs, ctx->regs);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = clk_prepare_enable(ctx->clk);
+> +	if (ret)
+> +		return ret;
+
+This won't disable the regulators on error.
+
+--zhaxDJmWzXDQsJtR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXTlMAACgkQJNaLcl1U
+h9CbcAf/TbzIjHqTiQO+FHev6hCBpVYxHMM5DOvWBX9ZL+ZhfvUuEcLsSRXWlokW
+HhtoUNnGZDtqJVvKNBZcDL0ltgO81LrS+YQNT/z252knsVjqxFknViXPRqK7rN8Z
+16HIEb5HegfAIZRRoBnR/G8nSdn78grXMJU42wUOAI7yaMfDFq4073C3oK8BvIAE
+VVWmJKdPIK8vwfyS9ugKW3ncdjLg7zjxlmmK8BfpIUZDrsv/mCeDOWQFgOqmoL2u
+xoyg8EmT9wL6lEWBxAkWxtljU4T2rZvFSxBT9uZW3M0xy83QF/G59Thp+ggKTkls
+f+7PMN+ly3LgO93wRdhXNTSBN6vI6w==
+=wO5a
+-----END PGP SIGNATURE-----
+
+--zhaxDJmWzXDQsJtR--
 
