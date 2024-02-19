@@ -1,200 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-11614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70DC7859AE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 04:07:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E416859B9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 06:16:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A866C281723
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 03:07:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E2561F22299
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Feb 2024 05:16:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3D52107;
-	Mon, 19 Feb 2024 03:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA91C2030D;
+	Mon, 19 Feb 2024 05:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EcvGLg8g"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LaZ1jS7u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A53220F1;
-	Mon, 19 Feb 2024 03:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D7F200BA;
+	Mon, 19 Feb 2024 05:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708312039; cv=none; b=l1Z1SDGBvUp8G7OZZc8Q69yFfhEd5YIlK36Ez/a94ugxCe97c40Ie0Bfnz8qcvUDQYkLJqNGL6L8uV7GT5gGtuPF64yfabVTWAbwtvpqlXTQbHRFcq2izW5/69mrUHn0V8tNiZMCL5Qv+ozDnlkTfyMBSGQYEeUvOerMzt1eSfQ=
+	t=1708319709; cv=none; b=AYPePpfAN74ZUtZFrOANFxAWBqu6GlHXre+i7AqVxTMuahD67/LzPXBanKMlkrHYWnao7tpiPWMXQRwRLrvpaG3USklavbxa9JJSDGxc2noyRLajyKiTDhz1G9wRJcZdREBxorEV4WtS3MC1/XTpwSCvFAOLUdAOfoc56YaIhAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708312039; c=relaxed/simple;
-	bh=XQeH4obCzIwDVNOBuxCqI+SricNPqRL82HPK4fc4/jM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Rnhrv8l82mRBk7VE8raXDeyYOLpC7r9z7uh0Za/P0JUq15XW6CmVfyaef0q6ZDtnk+/OCb8VMOXCdqlOtYuqGbeWTMN+AqeHFKauzMkQ3GKeAzeP0Yg1+huF7QnyP0N1BIJLwaVc3UPcUkhyDSgSGmvMQ29H7xUGrsDlCuCIx40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EcvGLg8g; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1708319709; c=relaxed/simple;
+	bh=vgTnlbikClzVzfy0RRZAEyEVyAKBisA5MaYhnDsUA3E=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=Tm5Fyh615jc42+tS9YO11B1eqAOVreAMUHx5oI2Sy5VoBtLknhHjyDht1QzB1JMkGgIZYFtoJ9H1dEu/Mi1S5ao3g8QnsZg8KMVrteJrE4UqtClXoMbvmY+t98eo+PzMpRO/i/Xl0JTZYoCdlnxNOKMdOD4MayZbXSdy2i3MAYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LaZ1jS7u; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41J36RFj023496;
-	Mon, 19 Feb 2024 03:07:13 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41J4DkCe007159;
+	Mon, 19 Feb 2024 05:15:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=n5FtCz25BpyroYipWCCkQfOwY+crHF/X3CqywesI5qs=; b=Ec
-	vGLg8ggIXW+MJIiT2R2IXhKEkgD/b1VrkHDl2PQnisyr1xKFerAa3n9tfouJZcf5
-	6hm7sDkLgDmiInOi32qfafC5FDCq8XpQ7t+xx7D2UqWMjhfe8GAuLN9y+/ifKaOW
-	N1Wi0z0H1i38Yb+ocrWlwNRA5wlbkLSaG77iQHMARFzYtwELlor2Kg/5tJtEAKin
-	nfnbTvv5PeOLuhAE6GJWLEd235RobDhZTwE8OYOe6aSZ0GAyNdMhaCNXZRsArlkk
-	M1iT2eGYBWqW6x5AlNAe03VshgxA3y5/B8KbrHFJXReQ8A5nnH9iUMF+PEqwylRT
-	FUbR8ytwdopio5mI+Tdw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wan17jkqn-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=bszPaqpe15iy
+	YLqgD3PQ79AynqzwEbCvxtyaIuKDJrY=; b=LaZ1jS7uyylB9JcDYmmklw1DSlUB
+	gLvC8yBv6uuLDLAEARIpoba4gFyEP6l7mZrKxOMSIawWXw5D5mfJaS73p6IA2GZ9
+	1xB0sXJ22mSQJrE7cBmYCX1PHsXP3NOrVPpkVwAyiJsJojFQeoOYeySEppE8o8oJ
+	GkrJb72MOCmbDPDVewBflrjDQtbKfD93ueYwXlcTNIvhjXnB4mjmniuHZrfnOWjx
+	pJTNrssJAKUhgZm1Uf0NQiTilR8nylehsbsxqIemlJuiUmWIUQ37MsSY3gK8xAaQ
+	Vs7fGzQ5EKijbWiJ/jkpB78fb8XovMbEPIr6j5xvfrX2Ocfn0/jQzDBOJw==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3waj5sb0du-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Feb 2024 03:07:13 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41J37A1v000567
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Feb 2024 03:07:10 GMT
-Received: from [10.253.36.30] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 18 Feb
- 2024 19:07:08 -0800
-Message-ID: <6f6dfaa2-f529-c9fe-7dde-402c92f0daf6@quicinc.com>
-Date: Mon, 19 Feb 2024 11:06:39 +0800
+	Mon, 19 Feb 2024 05:15:03 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41J5ExQq011098;
+	Mon, 19 Feb 2024 05:14:59 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wanvkdwbq-1;
+	Mon, 19 Feb 2024 05:14:59 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41J5Ex8D011093;
+	Mon, 19 Feb 2024 05:14:59 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41J5EwAh011092;
+	Mon, 19 Feb 2024 05:14:59 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id E50225001D7; Mon, 19 Feb 2024 10:44:57 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_cchiluve@quicinc.com, Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v4] arm64: dts: qcom: sc7280: add slimbus DT node
+Date: Mon, 19 Feb 2024 10:44:55 +0530
+Message-Id: <20240219051455.25927-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8vnnBlxNPgGTB4YX8vo7AdBz6akIbYw0
+X-Proofpoint-ORIG-GUID: 8vnnBlxNPgGTB4YX8vo7AdBz6akIbYw0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-19_02,2024-02-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxlogscore=595 bulkscore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402190037
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH] regulator: qcom-rpmh: Fix pm8010 pmic5_pldo502ln minimum
- voltage
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown
-	<broonie@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <quic_collinsd@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
- <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
- <f38468b4-8b16-4180-9738-0a2b557651a1@linaro.org>
- <dcce3fa9-ecf3-42be-adf6-ca653a79ba2e@sirena.org.uk>
- <3851e21f-f8cb-487b-9ed4-9975949ff922@linaro.org>
- <a09d6450-95e7-4ed6-a0ad-5e7bb661533a@sirena.org.uk>
- <df6a49f3-88e9-46b4-b7c3-e5419fd01eca@linaro.org>
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <df6a49f3-88e9-46b4-b7c3-e5419fd01eca@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: N25RXN6fofJ8BOE08JqpWMFUfdZivI6e
-X-Proofpoint-GUID: N25RXN6fofJ8BOE08JqpWMFUfdZivI6e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-18_21,2024-02-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 malwarescore=0 impostorscore=0
- mlxlogscore=687 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402190024
 
+Populate the DTSI node for slimbus instance to be
+used by bluetooth FM audio case.
 
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+v3 -> v4:
+- Correct email address for linux-arm-msm.
 
-On 2024/2/15 6:47, Bryan O'Donoghue wrote:
-> On 14/02/2024 14:52, Mark Brown wrote:
->> On Wed, Feb 14, 2024 at 02:44:56PM +0000, Bryan O'Donoghue wrote:
->>> On 14/02/2024 14:13, Mark Brown wrote:
->>
->>>> Not just that but also note that every voltage step in the range will
->>>> have the 8mV offset added.
->>
->>> The documents I have just show sensors attached to ldo3, ldo4 and 
->>> ldo6 fixed
->>> at 1.808.
->>
->>> I don't think there's any better or different information than a 
->>> +200000uV
->>> increment TBH.
->>
->> This seems like a very surprising and unusual hardware design, the
->> 1.808V voltage is already unusual.  Note that this may break systems
->> that are trying to set a range of say 1.8-2.0V if they actually need to
->> set 2V.
-> 
-> Hmm. I'm sure the rail value should be 1.808 its all over the 
-> documentation for example when we get to index 3 we hit 2608000
-> 
-> REGULATOR_LINEAR_RANGE(1808000, 0,  2,  200000),
-> 1808000 0
-> 2008000 1
-> 2208000 2
-> 2408000 x
-> REGULATOR_LINEAR_RANGE(2608000, 3,  28, 16000),
-> 
-> And there are other rails @ 1v8 if 1v8
-> 
-> The one thing I can't easily verify is index 0 = 1808000 and not say 
-> 1800000 or indeed that the increment is 200000 and not say 8000.
-> 
-> I'll see if I can ask around with the hw people and get a more complete 
-> answer.
-> 
-> Similarly now that you've gotten me digging into this problem, it's not 
-> clear to me why this regulator isn't just a linear regulator with an 8mv 
-> increment over a range of indexes.
-> 
-> At least the documentation I'm looking at doesn't elucidate.
-> 
-> I'll dig some more.
-Please see the voltage steps for LDO3/4/6 described in the PM8010 TDOS 
-document which is the most authoritative that we used internally for 
-PMIC driver development:
+v2 -> v3:
+- Fix patch title by adding "PATCH" string.
+- Update commit log.
 
-Index	Vset (mV)
-0	1800
-1	2000
-2	2200
-3	2608
-4	2624
-5	2640
-6	2656
-7	2672
-8	2688
-9	2704
-10	2720
-11	2736
-12	2752
-13	2768
-14	2784
-15	2800
-16	2816
-17	2832
-18	2848
-19	2864
-20	2880
-21	2896
-22	2912
-23	2928
-24	2944
-25	2960
-26	2976
-27	2992
-28	3008
-29	3104
-30	3200
-31	3312
+v1 -> v2:
+- change 0x0 -> 0 to reg property.
+- reorder the DT property.
+- change node tag slim_msm to slim.
+---
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-And I do see from the document change history that step 0 was changed 
-from 1808mV and step 2 was changed from 2512mV, I don't know the reason 
-of the change though.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 581818676a4c..1d6afde915aa 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2672,6 +2672,31 @@
+ 			status = "disabled";
+ 		};
+ 
++		slimbam: dma-controller@3a84000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0 0x03a84000 0 0x20000>;
++			interrupts = <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
++			#dma-cells = <1>;
++			qcom,controlled-remotely;
++			num-channels  = <31>;
++			qcom,ee = <1>;
++			qcom,num-ees = <2>;
++			iommus = <&apps_smmu 0x1826 0x0>;
++			status = "disabled";
++		};
++
++		slim: slim-ngd@3ac0000 {
++			compatible = "qcom,slim-ngd-v1.5.0";
++			reg = <0 0x03ac0000 0 0x2c000>;
++			interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
++			dmas = <&slimbam 3>, <&slimbam 4>;
++			dma-names = "rx", "tx";
++			iommus = <&apps_smmu 0x1826 0x0>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			status = "disabled";
++		};
++
+ 		lpass_hm: clock-controller@3c00000 {
+ 			compatible = "qcom,sc7280-lpasshm";
+ 			reg = <0 0x03c00000 0 0x28>;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Fenglin
-
-> 
-> ---
-> bod
-> 
 
