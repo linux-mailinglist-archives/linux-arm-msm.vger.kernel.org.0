@@ -1,145 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-11805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E29185BB19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:56:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7AAA85BB23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:57:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D76031F21362
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:56:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58509B27034
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:57:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A0D867E73;
-	Tue, 20 Feb 2024 11:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A287967C5D;
+	Tue, 20 Feb 2024 11:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iQUs7WiY"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="4xbaCJOa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A7D67E65
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 11:55:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6587F67C4E;
+	Tue, 20 Feb 2024 11:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708430155; cv=none; b=I/18mTB3MKHP7wnR1+6gdpossrEZjSNJzKLcZYCUEdanYqHA7gh2KJX4fECvigH/JmPlU3o0gzVuYHh4Ir8CqjtrvIzPN2Ickot43olMNVE65dk38/OqKehUKYpX+/kBPHtavcT5ynUXd7KIG+J9hj5qbrdRbNB1j/eqVASaaaQ=
+	t=1708430249; cv=none; b=jml5pmye5EHh7Wg6PTWaQNTyEpWCnVwi07Vc4xJCKrmnAd4ZmO2eCXYqD2ilseE46ITayym16uusv9BXomsA3tkkjQqRGE9yhcGEvesIW1iNij9wbsMCPYVUn0WAeRUIOKEo4qGDEou/5VrhT/u7l2OscGQ4VwMOv5np336Iikg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708430155; c=relaxed/simple;
-	bh=eRbFyA1HvnTiPA/WeNSsg+LGCPcb7wlEk3IxlkbWnAI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OLZXzxTbNlFlODyvVG5novXuoHeAovcWfM9Zrq312f481A5smEWlQB0nL7lu7urfQd0h4A4wWmPxiTah7wLu9WAjtD3yV2KOW0CKvm6aIj5SmVM41nickUx1WSWF75xW5fVxMeDEjWvcOGrhIjPOd8NW+1Li6aS0/90CDjLyWhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iQUs7WiY; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcd94fb9e4dso5396170276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 03:55:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708430152; x=1709034952; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uumLRt54NCf1C2r2Jw813VJ80gZwOfopdqyWnHS9j/Y=;
-        b=iQUs7WiYRjzGkvUHMWXgnimq2PfuGVqXsXx1Wq+uIY5+jjT1HCeHKFV45dDyEn7XIB
-         n4+z4z+b00r9QuOZEi+vm+eQy/KyEt5eF1ePUbWMfn8gwY/jHy+HlPX6mM1TYoOE+tj9
-         5Ggoge+2oxr3yFaQE0hyPX+beq2WcgdOy0QEGxfQsnJ3N5DsDFHCUpSBT6RVjak5GsS9
-         wYx46u9WxPVlXbmWxMMPtpN03FwMVdzEnYzRr7wNnkDjkIsUZQPtGKGLWbM8xDHO1I7W
-         AwhAZNQaEgO09cJxGLmTeYx81DY2fLc/EaPgloi/igK70jCCp4EAB0n09SCFLFE023pY
-         vIyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708430152; x=1709034952;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uumLRt54NCf1C2r2Jw813VJ80gZwOfopdqyWnHS9j/Y=;
-        b=cwO1dWtpCdHMfql6bCx8w49TBTiarFjskShQ0XQ5kksitBwOsVLtQMjDUDJNNRChC2
-         5S3N30ypjV+kwrUls/zd/lgCCQbqIV16tGufWPHLXpNYMyY1X0rRVT6S7jTg+SLK+430
-         EImRw5qQNTH/1a33XkxYBEVLCMJiOWDOJt9NuvZ/loizoBujsLqtLTu4GwIHhyNhc+VT
-         8P8du3u/vI6eBe+m8FWenCfTAsnDhZMPMaVKftnST30HqF/ynbPfhPWF66jMDdMcZHRH
-         w5XsIvQnhQpgyj9kdb5Iz8D06TcGZGPw6gIIvzrY0KJFMulArtRQuCEgnUAX0ZICudnC
-         MWkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUvQDsf5Lrp9oTM0v2WK7UyzCWj0qCHHNW5LRXS0Vp0NHUnvDIjv3lpGVfI1zcULkhfhMMNjekKUbfFMlpXnZS0khfgE22vK6KRaHnX5g==
-X-Gm-Message-State: AOJu0Yz/4SZWVcEsA4iqgg7uTt3UU7eITWbvMW1HuZVsa5kCriUoDiCJ
-	EW1yIZo5fU0fWs0ICM4KEzPAe6ut0yqDBYQNakSYwt8f/0lVVuXNIv3m/KpEZlbSgdK/qYVeQx7
-	DOPRyijiFNIAF0rwNqnO381ta1+fk4V/UEwG3Aw==
-X-Google-Smtp-Source: AGHT+IExpvpD8AgXA3aIHbCHCE4RqNcFOBxn35EoCinO8Hpk+aekmgbnXIo/496q/fTFdU86koAVpAivWwXL7BwqeFo=
-X-Received: by 2002:a25:8d0d:0:b0:dcb:ef22:3869 with SMTP id
- n13-20020a258d0d000000b00dcbef223869mr12986540ybl.16.1708430151780; Tue, 20
- Feb 2024 03:55:51 -0800 (PST)
+	s=arc-20240116; t=1708430249; c=relaxed/simple;
+	bh=RMDhUfhGZeArDSgF3ihV+uEwJ9e6YTGsJuPN6ZlFYfo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=g7r1fguv8zfqBlBo31YpZBpj4NMOf1RR8HGDfsHT7qj8i3X4SyHOIO/VyywfM8zr/NJ3NPWyiM/qeYCa1bbwCSRZkpKCFvqsGb6QEzngFAzAxaEmj5TMTcqWbHhz8SD3qky01wv95HWstaKY241/6YVqQjWJnzHCddZa3Bz/vks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=4xbaCJOa; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id AA1EF40387;
+	Tue, 20 Feb 2024 16:57:17 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1708430238; bh=RMDhUfhGZeArDSgF3ihV+uEwJ9e6YTGsJuPN6ZlFYfo=;
+	h=From:Subject:Date:To:Cc:From;
+	b=4xbaCJOaovGOd/+tOZYgcpLOjpmu7qofuJpWg/BQ/2OUzYVgDpoGPrTKUeZ3tDhAU
+	 0mgybVFk54nlnXw1ivfHPW5jYi3CoFyeQdE46Zn+k+7gDuwqSKvwp6cOhCrKw9vFMI
+	 3mVdhWOfrW6LV/gQNQKWrdPEcXap0QH9pjZJzlw/6g/LFfwP6uHh/umJCZvdRKMcGq
+	 A+oGcmLQqtCGroRrf2yOjZB7rtmJ2dQDQG4qAjk5tr4IR43AcuZgDZdhF1UE9GkFcb
+	 SqaMxJiXnCZqFYBlWaD7JpSgKW8hexV+CIkdp68IC2VVkytTitqgrZYCAjzq9+gn7/
+	 oH4gwpEeMcHtA==
+From: Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v3 0/3] power: supply: Acer Aspire 1 embedded controller
+Date: Tue, 20 Feb 2024 16:57:11 +0500
+Message-Id: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240217150228.5788-2-johan+linaro@kernel.org>
- <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de> <ZdRTx2lmHBVlcLub@hovoldconsulting.com>
- <1afc87c-2c1f-df10-a0c8-2a267d44122@inria.fr>
-In-Reply-To: <1afc87c-2c1f-df10-a0c8-2a267d44122@inria.fr>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 20 Feb 2024 13:55:40 +0200
-Message-ID: <CAA8EJppH9ey97yKFUccNLHhMKs3eUS55+rY0tXm_a6KGp9jtug@mail.gmail.com>
-Subject: Re: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
-To: Julia Lawall <julia.lawall@inria.fr>
-Cc: Johan Hovold <johan@kernel.org>, Markus Elfring <Markus.Elfring@web.de>, 
-	Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Vinod Koul <vkoul@kernel.org>, 
-	LKML <linux-kernel@vger.kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Rob Clark <robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJeT1GUC/1XMQQ6CMBCF4auYWVvTGZQGV97DuBiGUboB0mKjI
+ dzdQmLE5XvJ/00QNXiNcN5NEDT56Psuj2K/A2m5e6jxTd5AlgokWxqOgw+KRsWUddGQsCA7ghw
+ MQe/+tWLXW96tj2Mf3qudcHm/jNsyCY01NVeKQuSsdZcxpO4QnrAgiTYh0l9IORQ+Vidly47lF
+ 87z/AFsS4Mh2wAAAA==
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2172; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=RMDhUfhGZeArDSgF3ihV+uEwJ9e6YTGsJuPN6ZlFYfo=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBl1JOaHlnQv5HkaeWvoA8Eb7/agVmUR11TCkWGZ
+ z0AJuWPbAiJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZdSTmgAKCRBDHOzuKBm/
+ dSaHD/4vK0CrKhObBMgsUN4WbMEmOT31itMTdjzS9oWl5rROkXvarhv/AKED12zI+CcmOl2pDsS
+ iSJREUYk3q0KccBWNna1quTVNBSqiLWwBUENZJprbu3mb9b5qWiPGNkENJsXFpkW2LExTvSO+pW
+ T5+C9oQY81iwZ63t34zQS/0ZE9XMUkCP+n/DD3UrwL+6ma0mfRs22GNZG1gsufuWR6UTV79tgfO
+ 7aWIrzgwtNU2PKRDIn9rWaoWDa7xGnayobdnc8KXck/1fKo42Y0ug3DpODpqsNyfOwO+R289xgv
+ pbg2zOXN01FWpEJ5ebhlp+eTMY9cEHvATUOtrr3jVRCkFxApAA92xlQ3OgAr0q7sasGA/g8Megy
+ lkQQiCqW3ohfUEcaI1APVT45R+t3agJPOeMLBEP1EI8QVp+LR5xRecRbg7axNxp6qqTnOz+hMMc
+ ME0I1UtDGGu4Wr1K4fibi6CVtEyt7t2Z7X3otZxjitJUAjRU6ejEdyYcgmWMPa3Zp9HkkaiCLJg
+ ciAVyxxfuvbnht1NBoD+DNaFFnr2cT32ZXv8f3i9ccnMMmaZloIJy65i6NFfvtcZebcZtTebjks
+ ltHRpCED+rE9qRGd0GdTiI+rtKyHUEm+gbiK9RvPmv4W0ME1GvhJTwlFuzpMFJJKGTT8YksDYEd
+ tvnjjMbJtPzpiFg==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-On Tue, 20 Feb 2024 at 13:52, Julia Lawall <julia.lawall@inria.fr> wrote:
->
->
->
-> On Tue, 20 Feb 2024, Johan Hovold wrote:
->
-> > On Mon, Feb 19, 2024 at 06:48:30PM +0100, Markus Elfring wrote:
-> > > > The two device node references taken during allocation need to be
-> > > > dropped when the auxiliary device is freed.
-> > > =E2=80=A6
-> > > > +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-> > > =E2=80=A6
-> > > > @@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct =
-device *parent,
-> > > >
-> > > >   ret =3D auxiliary_device_init(adev);
-> > > >   if (ret) {
-> > > > +         of_node_put(adev->dev.platform_data);
-> > > > +         of_node_put(adev->dev.of_node);
-> > > >           ida_free(&drm_aux_hpd_bridge_ida, adev->id);
-> > > >           kfree(adev);
-> > > >           return ERR_PTR(ret);
-> > >
-> > > The last two statements are also used in a previous if branch.
-> > > https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/gpu/drm/brid=
-ge/aux-hpd-bridge.c#L63
-> > >
-> > > How do you think about to avoid such a bit of duplicate source code
-> > > by adding a label here?
-> >
-> > No, the current code is fine and what you are suggesting is in any case
-> > unrelated to this fix.
-> >
-> > If this function ever grows a third error path like that, I too would
-> > consider it however.
->
-> I guess these of_node_puts can all go away shortly with cleanup anyway?
+The laptop contains an embedded controller that provides a set of
+features:
 
-I'm not sure about it. Those are long-living variables, so they are
-not a subject of cleanup.h, are they?
+- Battery and charger monitoring
+- USB Type-C DP alt mode HPD monitoring
+- Lid status detection
+- Small amount of keyboard configuration*
 
+[*] The keyboard is handled by the same EC but it has a dedicated i2c
+bus and is already enabled. This port only provides fn key behavior
+configuration.
 
---=20
-With best wishes
-Dmitry
+Unfortunately, while all this functionality is implemented in ACPI, it's
+currently not possible to use ACPI to boot Linux on such Qualcomm
+devices. Thus this series implements and enables a new driver that
+provides support for the EC features.
+
+The EC would be one of the last pieces to get almost full support for the
+Acer Aspire 1 laptop in the upstream Linux kernel.
+
+This series is similar to the EC driver for Lenovo Yoga C630, proposed
+in [1] but seemingly never followed up...
+
+[1] https://lore.kernel.org/all/20230205152809.2233436-1-dmitry.baryshkov@linaro.org/
+
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Changes in v3:
+- Supress warning on few no-op events.
+- Invert the fn key behavior (Rob, Conor)
+- Link to v2: https://lore.kernel.org/r/20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru
+
+Changes in v2:
+- Drop incorrectly allowed reg in the ec connector binding (Krzysztof)
+- Minor style changes (Konrad)
+- Link to v1: https://lore.kernel.org/r/20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru
+
+---
+Nikita Travkin (3):
+      dt-bindings: power: supply: Add Acer Aspire 1 EC
+      power: supply: Add Acer Aspire 1 embedded controller driver
+      arm64: dts: qcom: acer-aspire1: Add embedded controller
+
+ .../bindings/power/supply/acer,aspire1-ec.yaml     |  69 ++++
+ arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts   |  40 +-
+ drivers/power/supply/Kconfig                       |  14 +
+ drivers/power/supply/Makefile                      |   1 +
+ drivers/power/supply/acer-aspire1-ec.c             | 453 +++++++++++++++++++++
+ 5 files changed, 576 insertions(+), 1 deletion(-)
+---
+base-commit: 2d5c7b7eb345249cb34d42cbc2b97b4c57ea944e
+change-id: 20231206-aspire1-ec-6b3d2cac1a72
+
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
+
 
