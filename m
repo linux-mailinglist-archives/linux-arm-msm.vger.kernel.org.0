@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-11914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4A5E85C490
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 20:23:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3582085C4F7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 20:42:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 86702B24D79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 19:23:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE3EF2871F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 19:42:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF2D1468F6;
-	Tue, 20 Feb 2024 19:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2CDB14A0A6;
+	Tue, 20 Feb 2024 19:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P2j8/i97"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ruWZyNuN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4CF1353EA;
-	Tue, 20 Feb 2024 19:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CF212AAE8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 19:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708456955; cv=none; b=EGnMZ+CRecTprxRnDr1PWlR7rxaFJ0IvMUL9O5Xkl17QnBSsqiDRMSkentNSXwx71u8f0O1pD1zeee3YGZU6wNBhqLsbeY2vT0kJ8w7zjoyqlBAj14m8XxtIQMDmwu9rnCQ8G4+Zw+rwQXPRnyOxw58hmlJH4L2CJxiZTFXlsBQ=
+	t=1708458132; cv=none; b=srXFtf/rxhOdJ/JI/ftCldrJFMe2VTScV/6JidYzGUKydGA8XNvCX4gJMq9lMhBly/snAwULlgsPw8l8djao+OMpbdsh0LBwT3/QGaqra9GSbNXp9bU8WbogFVOqmdsJm3knt8w5kCwQkGXKizpAw1zG4Zg6nkKmsL2zlCIvZfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708456955; c=relaxed/simple;
-	bh=iETYLic/GnoHZMrLLtBPhdaUdXYC0To+q4lhTtjXdgE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LphuXy1VZ2Czdtqwl1lQIWflcJBMMyujPg3qGccJaK9lga6Rb4ICL8+N3DLV9merr6Y/5n196jv+W74PQJHelkPH84ZKzkHIm6V0qWOSHqQyPQtF/NZh/Euv32Widp+SLCCLzz0Y6AUgmFOmeyP3vR2jtwTA2uzVHMZtBD9gQC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P2j8/i97; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41241f64c6bso34389645e9.0;
-        Tue, 20 Feb 2024 11:22:33 -0800 (PST)
+	s=arc-20240116; t=1708458132; c=relaxed/simple;
+	bh=BcD6RsSSskw1Y1FZWqSNW79K1il0ALG4B1Z5loGjs3c=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b2+rWe1uqadih2kbNJEAsNP1JS+mwWM+JMhgcjk8723OWR9AOwP5M7lNx0jE7Ro8i8rvEo2qdpzbYpc83qTixoiqLfqFjwL+CCybhb9InFOkieu/yHn5UVHoB4jHJdxVsv/HI8h1SACwmNZwBn8SJKSYEFOlel7GuSbqd72V/pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ruWZyNuN; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-563fe793e1cso5865554a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 11:42:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708456952; x=1709061752; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vr4WFlS9/GiUzUgyJ2V+G5bwrUNZLQw/Jx2ML4aaFjk=;
-        b=P2j8/i97yq9HxvAc3oD4gMpkwdeyRlOZq/Mrw3n+nmQELd6lNuXFfi/l2gestaaxBN
-         B85lBJbUz+K9JdMhLwu1jXvv8N9XP6OhWSlyqohK29f0r1IAqDk0pe6i7qgdtD6UP+PR
-         cgdWxwMOuxID1mXT0GTgzagQtkur4lT86jHO1+RtSYyS7uW+EW9kXoru3TYM0YBeNwV1
-         3tbTk6ZTfD+l/sPkDD9171dHki9mKfN6fT4qFEKlkYWQL8Aw/X3qa9pqcrugGMkSiT+a
-         qkWZgEhelZWDkhDPKtfKfu3eUpwlMGRggxFLl7OEHyxs7IqPoN/Rt2Pq3fF82fuO202r
-         Cw8Q==
+        d=linaro.org; s=google; t=1708458129; x=1709062929; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JhuET/T0FANjeqzL8xf3U1OOYne712izFcHMVgNkJis=;
+        b=ruWZyNuNBHRDZRX1j5dm4IRWOo9ZWqWl3/QEerq0pZlbYXABv7dPZCzkcl7p6dVLGC
+         SVsRMjQQRdXjWVII+/JKGAWBjpOH+c0tWVPdSNYNTkusBv2WfnmDWeNm0T3mjllW5LzY
+         RTM35h6rNz1P0BaWVbTV6rfOmRjeeCS0HwUTGzT0qAzmkgjURj0noWPj4WmiWWS9PASI
+         2p7ANG+82qr4ksBBLqa9OI/7+tbN5Rgxj2YrLeK4C0EhF1g5gQgOn63Ew9YyoE9EjpMD
+         UW/REwk8n9QuxUk0Mpgho0VsL0BznxXZ6RrosiRmzk9WReK53pUcacCfxijlMr4ck4ld
+         6jKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708456952; x=1709061752;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1708458129; x=1709062929;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vr4WFlS9/GiUzUgyJ2V+G5bwrUNZLQw/Jx2ML4aaFjk=;
-        b=UG+WyOqr2tFkqsysHxe1MnhQ5wXmuYUJAmXSe+I/aW8WHULibL4SMSvtEuVHpi5VYB
-         nrEsOIUYvZ+bZndBozfVm07FPbBm8waRSX538K9mfBKMWB684ioovkApu/wdjA0WBk94
-         FSROg4SxkPXlpJD4aPEu9qy18tTuhd/g7smdu5khxyk7lAJqx7mtTkSPxby6WCtvy/Wj
-         qpJLM8YXWL7R2r+vsmBHiSA4/ieo+McKdLSh+zvBKps17VPSwKm1bLM+ZPawTeEOkBsD
-         ruunRgnBkbRb+oecXZ0Bf7Nd2ABxBf5wYFiN8ViDjed/nOniJK4uONPRXzrPTdLKlmO3
-         8sXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWwIh/s9nXmHOhINQWllF/huf168bdS7yp1YbUWxqtPcpx13TwBVrid6ElDRaVqmVuGrfXb9H7LcnSGuovdnvT79J06o6Z7vNKKoZ5BXikhmlEIJYz1Ovk+q1Rbx6uJpXXPcukTbBvCuWTkU2+xjR6K9SAgj4r+Z794In/XMgTRhTgykw==
-X-Gm-Message-State: AOJu0YzVivLlrOKQqdcguE0xiG3UrtoOSrLJn1bFhWqgDGyYN3C20/69
-	k6yU+W2EjRvQTbXTNo3SJhph25hyNi1Bg12aNSZxXa4SeLs9cq4GeIhAEzQ9K6U=
-X-Google-Smtp-Source: AGHT+IFZQREKFQJmcdKI/Yhn1UaRjKV+UzDWjPGCC+Re35EsAMnplszDN1boVkaacvaHa6v3pZOvoQ==
-X-Received: by 2002:a5d:6811:0:b0:33d:374f:83f1 with SMTP id w17-20020a5d6811000000b0033d374f83f1mr6373789wru.43.1708456952254;
-        Tue, 20 Feb 2024 11:22:32 -0800 (PST)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id ba20-20020a0560001c1400b0033d640c8942sm3942265wrb.10.2024.02.20.11.22.31
+        bh=JhuET/T0FANjeqzL8xf3U1OOYne712izFcHMVgNkJis=;
+        b=cn/J6un1+L7ivUsSaH7+U1MdybAbjHiRVLYTnbtk8MGKIqW7v8dSv7CyRqOY1FhyDt
+         1/YD8wa7PQRGdAtK+b5u4UTwf4DcU1db275US0Cb0Rsp3Av8vn7w6ZW1NDR/T0u/aMtz
+         atSDROZ/0BKA3iB+IRXJ7nqNr+/PY7ZKlc5PAUvrhqwF65QKYj2KvSiShsHDjHsu2QQw
+         9Bk1ert4HLj2BPmEPtajtFBtP7gf/16RwN5ERj4h4Va0Xv8J6T+iiRojkyT+Dj1PCKRr
+         7KMWrto8RtS4gEm9LntlkyHWtlcdzjTXOurmYThSs69j+d+cOIIJfaz13+iMw0ReyuaA
+         M65g==
+X-Gm-Message-State: AOJu0Yxm1wXTE/XaAjBnB6eJ5f/7WQH8SXYuEnU3T9Jvi5bZTAwiHeKT
+	TGqSfRsLV78Z5ZS7RQaOYYmyf1bxCoKY0+F0Xba/+gyijgertVAY7usmy4N5a5M=
+X-Google-Smtp-Source: AGHT+IFRrj5v8hh0hSjlC77d2Mey3KqKNXqp373Xia098XsxTnsRZEZzSLlrq/fVkmA7kp1skyw5jg==
+X-Received: by 2002:a05:6402:33c9:b0:563:e5e0:85e3 with SMTP id a9-20020a05640233c900b00563e5e085e3mr7766330edc.33.1708458129076;
+        Tue, 20 Feb 2024 11:42:09 -0800 (PST)
+Received: from [127.0.1.1] ([188.24.162.93])
+        by smtp.gmail.com with ESMTPSA id c1-20020a056402100100b0056486eaa669sm1906822edu.50.2024.02.20.11.42.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 11:22:31 -0800 (PST)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Tue, 20 Feb 2024 20:22:18 +0100
-Subject: [PATCH] dt-bindings: usb: qcom,dwc3: fix a typo in interrupts'
- description
+        Tue, 20 Feb 2024 11:42:08 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v2 0/2] phy: qcom: eusb2-repeater: Add support for SMB2360
+Date: Tue, 20 Feb 2024 21:41:58 +0200
+Message-Id: <20240220-phy-qualcomm-eusb2-repeater-smb2360-v2-0-213338ca1d5f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,48 +76,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240220-dt-bindins-qcom-dwc3-fix-typo-v1-1-742bf6e49641@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAOn71GUC/x3MQQqDMBBA0avIrDuQTC3SXkW6SDMTnYWJJqIW8
- e4NXT4+/BOKZJUCr+aELJsWTbHC3hrwo4uDoHI1kKHWEBnkFT8aWWPBxacJefd3DHrg+p0T2kf
- obPskxy5AfcxZavv/+/d1/QBCwZXqbwAAAA==
+X-B4-Tracking: v=1; b=H4sIAIYA1WUC/42OQQ6CMBBFr0K6dkwZEMWV9zAshjLYJtDiFIjEc
+ HerJ3D53uK//1aRxXFU1+ythFcXXfAJ8JApY8k/GFyXWKHGIs8RYbIbPBcaTBhH4CW2CMIT08w
+ CcWyxqDSQ7rtKd8UFTanSUkuRoRXyxqYtvwxDkpNw716/9L1JbF2cg2y/J2v+td9oqVHXf0XXH
+ FK5R0NlV5+oOt8G50nCMchDNfu+fwCqJIf57AAAAA==
 To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh+dt@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+ Abel Vesa <abel.vesa@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1078; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=BcD6RsSSskw1Y1FZWqSNW79K1il0ALG4B1Z5loGjs3c=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBl1QCInUMm+zVQe4rePGCRdJoZPR1980x4ZsJ6M
+ blrGB5KFI2JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZdUAiAAKCRAbX0TJAJUV
+ VjxvEACSN7RkodjVNVk0+UuvzJNhrhOyKBVFhQvbXkauXDtYeg3+LJR+10MbcvR14n/tMT4vxix
+ v3Oz6mUK1HOhCiBqsJt873FNX8JWWAU67Ic711H0AbP4jmL9rYualvMC5v4f+3vVmHCqalp5h1t
+ sb2/rQktL9Tca5jKbzXt5R0xsjPJ0pshvMkef7Z4ADQJFdX2Y7xTFnB7UVk17ydXt/oUt0dcdwP
+ uCgJKJ5rRq6LZGFQ92PxB05N49Fr3fbbbRf2VDEhDBwSkdOxkL9z/1L5r2jI/yVYInMozBsGu1F
+ sGmRgX5strm+bMigviWZqJnTiJqgeg5cYBRukOkIdSKb8gr6OJzZVh6UM+pR+yHHnpUnkznEs38
+ xd8qJQ2ccCcEBYmQam24FpSb/GKcr8iShAOpWguqQZN3DT8ToF3Ps6vR1Wa39u9m1AhUZWhgN2T
+ 2D+nLkC9P31eejfNQDid7/X/4gU2MqIzNnO97o7/qaMDnND3ger5VYsxpoh1joT+irmPpan+tBJ
+ gQQ45Z3b+BV+Nz48koEuNRnRmSI3hqUIXaqsphi80w2Tg7GXhcJrgb8Faho84SA3G8Hc+ewMCnT
+ +SQJeqFax6GMs9UJw+Ld9XkYEwskfenlBixNtMBQ/6T9RqUT7c1Vkw6TvHzsYx7BYGvg9fW0unR
+ oDKOhTNrzMpadfg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The correct interrupt name is 'hs_phy_irq' not 'hs_phY_irq'.
+This patchset adds support for the eUSB2 repeater provided
+by the SMB2360 PMICs.
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 63d150b216c5..38a3404ec71b 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -102,7 +102,7 @@ properties:
-     description: |
-       Different types of interrupts are used based on HS PHY used on target:
-         - pwr_event: Used for wakeup based on other power events.
--        - hs_phY_irq: Apart from DP/DM/QUSB2 PHY interrupts, there is
-+        - hs_phy_irq: Apart from DP/DM/QUSB2 PHY interrupts, there is
-                        hs_phy_irq which is not triggered by default and its
-                        functionality is mutually exclusive to that of
-                        {dp/dm}_hs_phy_irq and qusb2_phy_irq.
+Changes in v2:
+- Re-worded the commit message for the driver patch to fit Dmitry's request
+- Added Dmitry's R-b tag to the driver patch
+- Changed the compatible entry in schema to enum, like Krzysztof suggested
+- Added Krzysztof's A-b tag to the schema patch
+- Link to v1: https://lore.kernel.org/r/20240209-phy-qualcomm-eusb2-repeater-smb2360-v1-0-af2ca4d95a67@linaro.org
 
 ---
-base-commit: b401b621758e46812da61fa58a67c3fd8d91de0d
-change-id: 20240220-dt-bindins-qcom-dwc3-fix-typo-15f71492adaf
+Abel Vesa (2):
+      dt-bindings: phy: qcom,snps-eusb2-repeater: Add compatible for SMB2360
+      phy: qualcomm: phy-qcom-eusb2-repeater: Add support for SMB2360
+
+ .../bindings/phy/qcom,snps-eusb2-repeater.yaml          |  4 +++-
+ drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c          | 17 +++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+---
+base-commit: 2d5c7b7eb345249cb34d42cbc2b97b4c57ea944e
+change-id: 20231122-phy-qualcomm-eusb2-repeater-smb2360-a0fd60d382c4
 
 Best regards,
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+Abel Vesa <abel.vesa@linaro.org>
 
 
