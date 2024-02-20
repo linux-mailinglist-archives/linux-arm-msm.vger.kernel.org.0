@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-11955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C14085CC64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:59:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD3B685CC66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:59:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 39F841F224EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:59:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB705B21EF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9B315531F;
-	Tue, 20 Feb 2024 23:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3434A155A25;
+	Tue, 20 Feb 2024 23:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U/vdDzVr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sVhGVHk8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC09155302
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 23:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4526B155308
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 23:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708473537; cv=none; b=MeUGCarFWMtVmmglp2vZiollzrteAekMVW/s5YQkL4jf/UVv9W6yDb9Poa4lmTqeizRuZV/SKMF9wP1LkudUkuin6VolQU3oHHxQKC8pFP3qtYln8CbvYYkdDQN7uMbxPCDs7CzVymVKpWfKYfdS0TMg0AAc+FF64P3P4v2JPYk=
+	t=1708473537; cv=none; b=X8MsdEKPUgcK20/axHloQU15/5X+ZAgxgzrK1121E6B1t30m6Ws8JDZJgclC6VdzVw6LVd/ZcbaSQvkSG15QrNBNPRo3p7qrTuA4AYx5wg4CF4cpEIsNGcsobMg1senFxrbFhHiK+cgiL1lXO4RTsXW9DTULHY7NmBDoAzN2ruQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708473537; c=relaxed/simple;
-	bh=2G9nSogr8c74B7MEi/HjwQ+O27W/ZFykawWXB6X8Jj0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FIuf5s8K8W1PWXEYZ7RLmRW/32Mv9gC1fVTPXRs06oiDq7AxF6/RhUg8+v02f9HhgRN7KmpFsBHvU/m2VcdSzBQXu4bQHY354Naxv1AioKCXTELCubo7RUW0Coxba+5254+dFMfLeRH6sRkMMfzzuWJ58B1e6TzPznYy1qJbVOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U/vdDzVr; arc=none smtp.client-ip=209.85.167.44
+	bh=I72GnJCLd9/WSa0N+ty2v+dNI2zZTTJ7yTodRVOBsLU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=VZhwpgqVDAViLYHpQo8rKbzZHWr7xv9XT4jtcxfKWZPbYzMicVzwcESsZ+GPNC+ehVNPgHmVBOOjnJl5B3N33bwV/4TW/Ae5i8Qd9PaO2Op0vsJkghANuL2ZYoktLGFPUrN/RuAM3aLJ1EiHv3rzbtOfAv7al0aJC3Kxi7nrsck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sVhGVHk8; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5129e5b8cecso5098876e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 15:58:54 -0800 (PST)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-512c4442095so1852385e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 15:58:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708473533; x=1709078333; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BtcLO9BOs2cWJAWCnVizVenwlOZis2DVv36N2x8QJ7I=;
-        b=U/vdDzVri4fgyQIOBEPpWPnkQoyBgN/n/pAiFfo70sqIMystSjvbpaE5TXR3c0M0f2
-         UcFsqYgAXj3fAISU3f0yjPCh4SyM1lUcDWLQBePDRoCteFG+qk4N7S6aYzdeDJZlBPNS
-         J3ekJkAObCr8AgDsUE+TPI92od1eB3YW9dlOID4pEk7psf/YBetlS2CEF4ExfgeF1oi9
-         KlGjwNrwXKNZJNw4H1Z36wtBH9yaTS9yDxfSdlmjTEUBIFvtNNgHAhx1P3vuz5YS6Hea
-         VHotperyR7PRsqlJZ69Eu3YBk5SlWAmYycU9Odw7cgNQdBkC/iQFuH0nH8RL8wYhcK9N
-         MKcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708473533; x=1709078333;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1708473534; x=1709078334; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BtcLO9BOs2cWJAWCnVizVenwlOZis2DVv36N2x8QJ7I=;
-        b=wFfMgIIb14VHU3p3WgLl0d0wUdbAR21aZc7CZF+RBbmFhrVD9blGS/KC2EjPloLd1S
-         q7EHxhZWopE2Y9sMsMQj8TwKmTyOjzmy+M9fCWs4ddStwS8w/lFN+JiX4DaZ6/SIzV04
-         FGo6MpabYahEBlcFc7gNTS6tu5a6ry7Zd1FoaWrkGrOswTTvGUYsNl9hA8gdJ4XAHQRc
-         35oYD1k1AvL9ACxssL8WQjLebU6o2wlCbcs4uysa5GfLitt2ZeDhMP1OD2MXWo9G6z/T
-         8r/yLLJN8nx7ziWUbM3/nT8Awupkpf29ouKaDbNyXtpQ2aozQi9+ptHuEGpXy0Czoeju
-         mqGQ==
-X-Gm-Message-State: AOJu0YwfgcGziCFa6xMqAVwSEVMiRfgXxTi708CCcv7GURYyoyWXh93I
-	kCqb88PXCMvbykhad6AUiZq9V747PDsi3b2aQdhy5NZCYAo+cNkfk1tpzpsqMD0=
-X-Google-Smtp-Source: AGHT+IGK9SWwTqY2ZtVV8T3/+G0lzTnYhUYGgvskyOWliKYS9JAwb/A3ZCpMFRSeHp9/oEKd569qOA==
-X-Received: by 2002:a05:6512:3772:b0:512:b90f:fc4e with SMTP id z18-20020a056512377200b00512b90ffc4emr4031749lft.46.1708473533079;
+        bh=o4dH1ivAwHXEfRcTfOF8u7VTWdZsEwOMNlr3FVqkNPU=;
+        b=sVhGVHk8+qu5zMFpDYMIPwZRNQUp8dTSGoC8Lyv+FDHDH67lCraZ/SNGxtNWDSEeno
+         /PEh79gtDYRMeBD4mMjem5wSVg8HVNkM9w7mQ/TG1RON7D84YC61xfbsrCJXvq/s2OY9
+         HROT1ouoH2IfPz965cVifP0/eEN+jcA9HKYHgBnqF1LQkWoW8yb4BFQYjJy0V815zBty
+         br6auFElcBvMvpkEkhOI0Bnlvy0FJDvQn2KfI1kFesvfq0ZmKmrB+14JDdjniEY/d0XR
+         hFxZggi8dItnihaIEeV+CyZUSNsIEA5naOd62Z6c0Wz4L51fyVoo6TWbY1lPCI9YH6DX
+         U37Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708473534; x=1709078334;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o4dH1ivAwHXEfRcTfOF8u7VTWdZsEwOMNlr3FVqkNPU=;
+        b=sqbzdhD4xPrOvFNU56FhR+oYwENuvGjeIgaZUf7sX0F2NAcEuCHWJmloRe5aISpJuL
+         Be4T0bO8QO3M+l42m51HOAmzVvryQbKWDe5aUMIpcldjjAqMLX0C2jW1F9mo10Fro2SK
+         l7kETrB2/1z2+SDuZapxA2rOPXLt1rG0JzGSIBdb3e4BkIfcjvfJ2k298w8aj0ZGGhCV
+         /swjqAEeXnwEYv0YzPXnf5evhtakmRhZV1hvivW4GTuz90aoSY3oF4oPFTINgSXTwU7p
+         UJvcKFZR9HiQp3YnZeZtBnDGf5kOBMLLpns7hlO8eoeCh84UUfX4Oii6DKZYUdwmqcQ9
+         SMTw==
+X-Gm-Message-State: AOJu0Yzh9mH6aI3dqlwU5Wlnrr1Lp53+rOr8JmjFwYiCWhjF3ygjAzTF
+	SLi+SR7IOQv1+domfh/FUgKA25Jr79NQz6d0n2xnqsRGhc8GkpPCKIQku1M14AM=
+X-Google-Smtp-Source: AGHT+IEOWHRu0nBY2wHAv0SKzD6r95/9wH2ZYJzxXoOE2qLCzqw3mSA1gzeFO97Ol7nFNqgpQ5fBag==
+X-Received: by 2002:a05:6512:3f06:b0:512:8d30:6dce with SMTP id y6-20020a0565123f0600b005128d306dcemr11672739lfa.52.1708473533791;
         Tue, 20 Feb 2024 15:58:53 -0800 (PST)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id h27-20020a056512055b00b0051167de8560sm1438831lfl.38.2024.02.20.15.58.52
+        by smtp.gmail.com with ESMTPSA id h27-20020a056512055b00b0051167de8560sm1438831lfl.38.2024.02.20.15.58.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 15:58:52 -0800 (PST)
+        Tue, 20 Feb 2024 15:58:53 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v3 0/3] arm64: dts: qcom: qrb2210-rb1: enable Type-C
- support
-Date: Wed, 21 Feb 2024 01:58:49 +0200
-Message-Id: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
+Date: Wed, 21 Feb 2024 01:58:50 +0200
+Subject: [PATCH v3 1/3] regulator: dt-bindings: qcom,usb-vbus-regulator:
+ add support for PM4125
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALk81WUC/12OQQqDMBBFryJZN2UmKkm66j1KF5JMNdAaSSRUJ
- HdvlEKxm4H34T1mZZGCo8gu1coCJRedHwvUp4qZoRt74s4WZgJEA4iST68GRcvnZSLDlQKw2oD
- uyLCiTIEe7r3nbvfCg4uzD8teT7it31ANx1BCDpyUBdCShNZ4fbqxC/7sQ8+2UhI/u5w/WxQbh
- ZRoVSvLSwc75/wBmEetzecAAAA=
+Message-Id: <20240221-pm4125-typec-v3-1-fdd0ee0465b8@linaro.org>
+References: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
+In-Reply-To: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -93,52 +93,43 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-usb@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1436;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1066;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=2G9nSogr8c74B7MEi/HjwQ+O27W/ZFykawWXB6X8Jj0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl1Ty7BYeJxRWk8ojmdlhD9jIZ/z7At/oGQQlV4
- AUIfiR95KuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdU8uwAKCRCLPIo+Aiko
- 1eXsCACX5cZavaDvU5sIr1jrA/RK3odBt+/hnoegNbTdNYKePVJ8vJm3GA4ospHpcCnXfaJMKh9
- 1c7k0QThaha2NmgNwEGj2VYOMejDDrBohBWw3m0MRuHmWDCBsBWrbYzIwSeeHCBFZ5yXEY2Ocft
- rQ9Dd7z/MU7Mon4kWEBnc1+KGAaYuqoRzjDXxFMh1XxcBkyFNnDGqyhUyIsBw7E3vFA/qYepy+d
- 0oErM7gjeQy+coHukU38lZgPxvj7VobYDJP0cpTYahNhBtzA+UcraJkoI7Hj4dykPiS3XVEps35
- imrQFYIjc3fVTm6nX5INtIPKGytNRfN0ni/9357RD7bj5eIa
+ bh=I72GnJCLd9/WSa0N+ty2v+dNI2zZTTJ7yTodRVOBsLU=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl1Ty7+EA1phDtHjGy+z/YkjXb+FB1VvZvKJ3Tz
+ kq2i4NHmg2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdU8uwAKCRCLPIo+Aiko
+ 1YUKCACNKbnhPO+7xDqVxHPQnHkNVFl5x3SNvshghflafN/vNrZ8ObGn/Ip0zE2ql1T04xserQM
+ JAyqmTjPU50+c2PVmJRv/jCZs/4l+mkT2McD40NujQxRH+h1fgjJunD6hzX9YwM1F27JXGNjspu
+ x07YaP51xAtmDKrZd8OnEGxZjx9NTOWAFQnNrlExaVQCVED/+Dgn/ibz7mGkAcpC5EM71Dd1IPi
+ w/gUJu3cCVu2yHWNl4pFDNxlyzb98LaDrf6XqLCHdNyVMB6cvwB+dBkTD5YIjjn6Lgqm9SRIirI
+ aU7Oy+I90nlGzyx/rV3ySgSNVg0LVKC7ENY81VP27ZYcAXfA
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Reuse Type-C support implemented for the PMI632 PMIC (found on Qualcomm
-Robotics RB2 platform) and implement Type-C handling for the Qualcomm
-Robotics RB1 platform.
+The VBUS register block on the PM4125 PMIC shares the design with the
+PM8150B one. Define corresponding compatible string, having the
+qcom,pm8150b-vbus-reg as a fallback.
 
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v3:
-- Fixed the commit subject for the regulators patch (Mark Brown)
-- Rebased on top of linux-next, dropping applied patches
-- Link to v2: https://lore.kernel.org/r/20240202-pm4125-typec-v2-0-12771d85700d@linaro.org
+ Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v2:
-- Removed unnecessary conditional expansion, covered by existing compat
-  string (Krzysztof)
-- Link to v1: https://lore.kernel.org/r/20240130-pm4125-typec-v1-0-e8d0097e2991@linaro.org
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+index b828a69ccb84..33ae1f786802 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
+@@ -24,6 +24,7 @@ properties:
+           - qcom,pm8150b-vbus-reg
+       - items:
+           - enum:
++              - qcom,pm4125-vbus-reg
+               - qcom,pm6150-vbus-reg
+               - qcom,pmi632-vbus-reg
+           - const: qcom,pm8150b-vbus-reg
 
----
-Dmitry Baryshkov (3):
-      regulator: dt-bindings: qcom,usb-vbus-regulator: add support for PM4125
-      dt-bindings: usb: qcom,pmic-typec: add support for the PM4125 block
-      arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
-
- .../regulator/qcom,usb-vbus-regulator.yaml         |  1 +
- .../devicetree/bindings/usb/qcom,pmic-typec.yaml   | 12 +++--
- arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 42 +++++++++++++++
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           | 60 +++++++++++++++++++---
- 4 files changed, 104 insertions(+), 11 deletions(-)
----
-base-commit: d17c63c5000f53307cd2a509b216dd197948ae80
-change-id: 20240117-pm4125-typec-8800d9c09aec
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
