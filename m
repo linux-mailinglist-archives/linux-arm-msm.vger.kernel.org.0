@@ -1,185 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-11824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8FF185BBC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:18:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6119285BBE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:22:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3891EB222D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:18:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC59A1F21208
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:22:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BFF67E76;
-	Tue, 20 Feb 2024 12:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 241A35B674;
+	Tue, 20 Feb 2024 12:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="RpNK2xzW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dYHiVoau"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0CC67E78
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7225B1F8;
+	Tue, 20 Feb 2024 12:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708431493; cv=none; b=NbXeGD9wpM49F/TSb8CBfk0OnulGP12RitVGsZpnxsEad5DTkRkcUJ/k1K101rAKuvB28L+eOsK2sw1wF8Hhz70JA+mav6GXOOABeJ+Hqz/fkq92fSu9GaVj6CJeUb9LDh+UAiKXGMqT3kjxyBbi4B9XrGAyPunzRLoMopRe2cg=
+	t=1708431746; cv=none; b=RvZSDgJI9DgBTqjwiUWuQx8c8SyXVGDQ2ezJks27u4lV9bwgsVKEL+aSSzv5XpldNlPUJLs/C7BR/EYCqIlePVzomQ+/+PcfeXXBShP14cXV2qh3al+lqUtZ342m+v9RRF7+xB67ZQ17fDAZPcgZK2XspQM7ASKy3lSr3PZ89eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708431493; c=relaxed/simple;
-	bh=FyNYzT8EV/tDwSUKQpoe9xy1MnakgX8mWChybUQAYz4=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=XX2EsIzw6FGk3hvr2ORmkUrMz2yasit5KbXRZq4FOcRIl2PXpgtpUvHna1ehy4ZNb1bMqfFvv2Hn0edEHyif64y/bOkbQfudIvVXMSVi+JyCnFBeObCig+e6ohTD+UdbC9Kt9uV58Ol3eDAPlDuUYQ6CTNq2aphf9yKDivDt624=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=RpNK2xzW; arc=none smtp.client-ip=203.254.224.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20240220121808epoutp019618e50a02e44a2b4da10f7a56af1f9b~1kWMnRx6j1006410064epoutp01x
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:18:08 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20240220121808epoutp019618e50a02e44a2b4da10f7a56af1f9b~1kWMnRx6j1006410064epoutp01x
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1708431488;
-	bh=FyNYzT8EV/tDwSUKQpoe9xy1MnakgX8mWChybUQAYz4=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=RpNK2xzWiCsMyVnPhMpq52sMpwZwQ3oJNX9hE7jY9iAJY3C8DdZ6qIXPNiStaKwLt
-	 1tgAUceJqBTuMCOBYk+X4cz5WA5BQtfmJsZoqQ+YgfKDnRWpnvhZW+ZnGU/uZbpfkY
-	 puJBoJZyBzPt1BtsvBXLx40LWheaNeIhW8XHgD0E=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-	20240220121808epcas5p45507e0d247b7228e8b5b784223425b7e~1kWMMqAXs2515225152epcas5p4a;
-	Tue, 20 Feb 2024 12:18:08 +0000 (GMT)
-Received: from epsmges5p3new.samsung.com (unknown [182.195.38.182]) by
-	epsnrtp3.localdomain (Postfix) with ESMTP id 4TfJMd6vLKz4x9Pr; Tue, 20 Feb
-	2024 12:18:05 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	23.D9.09672.D7894D56; Tue, 20 Feb 2024 21:18:05 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20240220121804epcas5p3f01e75b1089af1edf6db4ee3ea3a5efa~1kWJGqsyX3231832318epcas5p3F;
-	Tue, 20 Feb 2024 12:18:04 +0000 (GMT)
-Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
-	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20240220121804epsmtrp2a62d16806647f420afad909b08430dc1~1kWJE7VzD0477204772epsmtrp2c;
-	Tue, 20 Feb 2024 12:18:04 +0000 (GMT)
-X-AuditID: b6c32a4b-39fff700000025c8-e9-65d4987dce4d
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-	58.85.08817.C7894D56; Tue, 20 Feb 2024 21:18:04 +0900 (KST)
-Received: from INBRO000447 (unknown [107.122.12.5]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20240220121802epsmtip2c274177845b43966e4d2735153498c4d~1kWG__oCO2982329823epsmtip2_;
-	Tue, 20 Feb 2024 12:18:02 +0000 (GMT)
-From: "Alim Akhtar" <alim.akhtar@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>, "'Georgi
- Djakov'" <djakov@kernel.org>, "'Bjorn Andersson'" <andersson@kernel.org>,
-	"'Konrad Dybcio'" <konrad.dybcio@linaro.org>, "'Sylwester	Nawrocki'"
-	<s.nawrocki@samsung.com>, =?utf-8?Q?'Artur_=C5=9Awigo=C5=84'?=
-	<a.swigon@samsung.com>, "'Thierry Reding'" <thierry.reding@gmail.com>,
-	"'Jonathan Hunter'" <jonathanh@nvidia.com>, <linux-pm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-samsung-soc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-tegra@vger.kernel.org>
-Cc: "'Thierry Reding'" <treding@nvidia.com>
-In-Reply-To: <20240220072213.35779-1-krzysztof.kozlowski@linaro.org>
-Subject: RE: [PATCH v2] interconnect: constify of_phandle_args in xlate
-Date: Tue, 20 Feb 2024 17:48:01 +0530
-Message-ID: <1d9b01da63f6$daeb0170$90c10450$@samsung.com>
+	s=arc-20240116; t=1708431746; c=relaxed/simple;
+	bh=InDHKtmK2AtUmds74XuVyGWa4Kq1lt972r024xFyyPY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HCoSik0xeeDqnAGTmgaYjELAEUKEGLkwgwJsyypgvahmQ3UJMe4amgH8+ba+WEhlcXOnHoEs8suCygaH+KECX8Cic3/dDb+sqvjkFiSTyb4FDRmM0T9gMDM4quq2QpvIsgy89CTFP7j1bnVATbYQOYUCGdjmnwW4e9r6H5fxK80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dYHiVoau; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KBe1qL030653;
+	Tue, 20 Feb 2024 12:21:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=379Srn1tGEaDvceo1XrilJx6GCtEIxn4M0Q0q4VP4Mw=; b=dY
+	HiVoauIcBhnBW8SellHUd6j95dWA+0KfkP2GeUTalqAGLbljfeFRBZQPfbdJAytO
+	NFVBDM4Tsd7V2AzsMwpYsVptWiSJQCOt2ZM36hbiils+6/agZ2mwLh293R37M4bp
+	DmDJUdXDZNpTSaYGpsk8vLgkZ4nbmb0cqKJKjCcmCqUnVuUh4QfuYAurDH9TFo8Y
+	wXt/2fcSJ3ecnlpSxcRlzkX973QMMFQLN0ziCvdWrHMDiAxSXA3T2Lr2BFA4Glma
+	cDwkz8XN5Zw+qNIJU9n0rM+wurK4M2epzmX5OOF2efb81VLdsA/Vc90dPJe1Rb1u
+	qqYs0lc7Q2MDLWPOA5Aw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct3eg7yk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:21:22 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCLLmR029113
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:21:21 GMT
+Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 04:21:15 -0800
+Message-ID: <439c89ec-3702-4b4a-5e02-b18cc99b8ba3@quicinc.com>
+Date: Tue, 20 Feb 2024 17:51:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLQP0hpybpPMp0Wp7r3CvZ4KlHU5QIjg6hJrxZRFBA=
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOJsWRmVeSWpSXmKPExsWy7bCmum7tjCupBt+PG1vcn9fKaLGtw8bi
-	2a1GNouWWYtYLDomb2ex2Pt6K7vFpsfXWC0m7j/LbnF51xw2i8+9RxgtZpzfx2TR+WUWm8Xh
-	N+2sFj93zWOxuP2bz4HfY+esu+wem1Z1snncubaHzWPzknqP3uZ3bB59W1YxenzeJBfAHpVt
-	k5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6kkJeYm2qr5OIToOuWmQN0tZJCWWJO
-	KVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwKRArzgxt7g0L10vL7XEytDAwMgUqDAhO+P0
-	6Y8sBd8lKlp2r2BtYGyV6GLk5JAQMJG4vOE6G4gtJLCbUaJvV2oXIxeQ/YlRYvnlZUwQzjdG
-	id2zvrLCdPx7MpMdIrGXUeLhw1/MEM4LRolHx3oYQarYBHQldixuYwNJiAjcZ5H4saIXrJ1Z
-	QFviyNMbQO0cHJwCLhIXH8WAmMIC7hJdC6RBKlgEVCXmf58AVs0rYCkx/8xqJghbUOLkzCcs
-	MFOWLXzNDHGQgsTPp8vA6kUErCR2Hb7KCFEjLvHy6BGwQyUErnBIPD/2mQWiwUViy9xmqG+E
-	JV4d38IOYUtJfH63lw3kHgkBD4lFf6QgwhkSb5evZ4Sw7SUOXJnDAlLCLKApsX6XPsQqPone
-	30+YIDp5JTrahCCqVSWa312FWiotMbG7G2qph0TbvkcsExgVZyF5bBaSx2YheWAWwrIFjCyr
-	GCVTC4pz01OLTQuM81LL4bGdnJ+7iRGcorW8dzA+evBB7xAjEwfjIUYJDmYlEV6W8iupQrwp
-	iZVVqUX58UWlOanFhxhNgaE9kVlKNDkfmCXySuINTSwNTMzMzEwsjc0MlcR5X7fOTRESSE8s
-	Sc1OTS1ILYLpY+LglGpg2uBuxeh2f3pHpmmrzbSP9S3745aeLfZbktEcpeiR5/kz5GDBfEFe
-	nY/fs4tyZA/fNvk8icdgyZqbtSGiWRGHHu6W3p375DPnZ/9qUYkbZ8ruL1swr5WPv71Vb+Wj
-	o90v3zY+bD/k4N23UuDRH//78+/WON3dvagxc/KuJMWDDw+KrIq480w1qlzyxxHhjX2lbiz1
-	PE/yYixjIsLZJ9T733/s5CgdPZ9/ioO4XcHWX9NNnPrV7eL466XfN3R9txU44Cn50Xzvn6n/
-	z2/NL9q+wWz6Ya+UuxXrTarkGhXTG1+zz38sEqTpMnXRm9mLvFuv/Nj5vU2ttUmmsr7xwt5F
-	dsJx+j53GYt+m5rw/G5QYinOSDTUYi4qTgQAQaaPGloEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsWy7bCSvG7NjCupBn/eG1rcn9fKaLGtw8bi
-	2a1GNouWWYtYLDomb2ex2Pt6K7vFpsfXWC0m7j/LbnF51xw2i8+9RxgtZpzfx2TR+WUWm8Xh
-	N+2sFj93zWOxuP2bz4HfY+esu+wem1Z1snncubaHzWPzknqP3uZ3bB59W1YxenzeJBfAHsVl
-	k5Kak1mWWqRvl8CV8WsVZ8EjwYqVV3qZGhhP83UxcnJICJhI/Hsyk72LkYtDSGA3o8S5z69Z
-	IBLSEtc3TmCHsIUlVv57DmYLCTxjlOjaIQRiswnoSuxY3MYG0iwi8JJFYv/mJawgCWYBbYkj
-	T29ATZ3KKLH47HqgKg4OTgEXiYuPYkBMYQF3ia4F0iDlLAKqEvO/TwBr5RWwlJh/ZjUThC0o
-	cXLmExaYkU9vPoWzly18zQxxm4LEz6fLwHpFBKwkdh2+yghRIy7x8ugR9gmMwrOQjJqFZNQs
-	JKNmIWlZwMiyilEytaA4Nz232LDAKC+1XK84Mbe4NC9dLzk/dxMjOFK1tHYw7ln1Qe8QIxMH
-	4yFGCQ5mJRFelvIrqUK8KYmVValF+fFFpTmpxYcYpTlYlMR5v73uTRESSE8sSc1OTS1ILYLJ
-	MnFwSjUwLb0cbfizqpLjzl3DF8+OZX/xKpJSeyW7483UXR9qb5x/0CzvenVdyYbQjDWbv4S+
-	5o/liC6cpbNYNvA895UkgxO7wrZY6HIt64iP6v8Y2rT8X979CapsVw6d/yE7zUihXdlJN+CN
-	l+Hdp5fYb7lm+eq+ZlsicfBOW9zhfTcKWIS4alYvzcjc/u/XqlP33Rv+u4VPPibvvbvNLjL3
-	U3JM6yWXOiaRNxdeZjtUWru+Fw3xWMj491OKSv2i/W0X37Ux8/j3WM+KUQqcP9f5fE6fxZ+d
-	K0xWPmtL8//p2cCt52E1qzm/gct/ueuVtau8OZYV5y650vXGs7pRZZpTluLjXr1qiyPsD+Ru
-	xyyJ0FRVYinOSDTUYi4qTgQA33CUyEMDAAA=
-X-CMS-MailID: 20240220121804epcas5p3f01e75b1089af1edf6db4ee3ea3a5efa
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240220072224epcas5p4ff60556b0b5632abfc44d2b8ad932b8f
-References: <CGME20240220072224epcas5p4ff60556b0b5632abfc44d2b8ad932b8f@epcas5p4.samsung.com>
-	<20240220072213.35779-1-krzysztof.kozlowski@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 2/5] drivers: mtd: nand: Add qpic_common API file
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <broonie@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240215134856.1313239-3-quic_mdalam@quicinc.com>
+ <4cb0144c-303b-4b91-bf88-0a7d7412afe1@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <4cb0144c-303b-4b91-bf88-0a7d7412afe1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5UIVdpcamgOu-7yVNLkwt275vMMlNqui
+X-Proofpoint-GUID: 5UIVdpcamgOu-7yVNLkwt275vMMlNqui
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ spamscore=0 phishscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402200088
 
 
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
-> Sent: Tuesday, February 20, 2024 12:52 PM
-> To: Georgi Djakov <djakov=40kernel.org>; Bjorn Andersson
-> <andersson=40kernel.org>; Konrad Dybcio <konrad.dybcio=40linaro.org>;
-> Sylwester Nawrocki <s.nawrocki=40samsung.com>; Artur =C5=9Awigo=C5=84=0D=
-=0A>=20<a.swigon=40samsung.com>;=20Krzysztof=20Kozlowski=0D=0A>=20<krzyszto=
-f.kozlowski=40linaro.org>;=20Alim=20Akhtar=0D=0A>=20<alim.akhtar=40samsung.=
-com>;=20Thierry=20Reding=20<thierry.reding=40gmail.com>;=0D=0A>=20Jonathan=
-=20Hunter=20<jonathanh=40nvidia.com>;=20linux-pm=40vger.kernel.org;=0D=0A>=
-=20linux-kernel=40vger.kernel.org;=20linux-arm-msm=40vger.kernel.org;=20lin=
-ux-=0D=0A>=20samsung-soc=40vger.kernel.org;=20linux-arm-kernel=40lists.infr=
-adead.org;=20linux-=0D=0A>=20tegra=40vger.kernel.org=0D=0A>=20Cc:=20Thierry=
-=20Reding=20<treding=40nvidia.com>=0D=0A>=20Subject:=20=5BPATCH=20v2=5D=20i=
-nterconnect:=20constify=20of_phandle_args=20in=20xlate=0D=0A>=20=0D=0A>=20T=
-he=20xlate=20callbacks=20are=20supposed=20to=20translate=20of_phandle_args=
-=20to=20proper=0D=0A>=20provider=20without=20modifying=20the=20of_phandle_a=
-rgs.=20=20Make=20the=20argument=0D=0A>=20pointer=20to=20const=20for=20code=
-=20safety=20and=20readability.=0D=0A>=20=0D=0A>=20Acked-by:=20Konrad=20Dybc=
-io=20<konrad.dybcio=40linaro.org>=0D=0A>=20Acked-by:=20Thierry=20Reding=20<=
-treding=40nvidia.com>=20=23=20Tegra=0D=0A>=20Signed-off-by:=20Krzysztof=20K=
-ozlowski=20<krzysztof.kozlowski=40linaro.org>=0D=0A>=20=0D=0A>=20---=0D=0A>=
-=20=0D=0A>=20Changes=20in=20v2:=0D=0A>=201.=20Drop=20unrelated=20gpiolib=20=
-changes=20(Konrad,=20Thierry).=0D=0A>=202.=20Add=20tags.=0D=0A>=20---=0D=0A=
->=20=20drivers/interconnect/core.c=20=20=20=20=20=20=20=20=20=20=20=20=7C=
-=20=204=20++--=0D=0A>=20=20drivers/interconnect/qcom/icc-common.c=20=7C=20=
-=203=20++-=0D=0A>=20drivers/interconnect/qcom/icc-common.h=20=7C=20=203=20+=
-+-=0D=0A>=20drivers/interconnect/samsung/exynos.c=20=20=7C=20=202=20+-=0D=
-=0A>=20=20drivers/memory/tegra/mc.c=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra124-emc.c=20=20=20=
-=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra124.c=20=20=20=20=
-=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra186-emc.c=
-=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra20-emc.c=
-=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra20.c=
-=20=20=20=20=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra=
-/tegra30-emc.c=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/teg=
-ra/tegra30.c=20=20=20=20=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20include/=
-linux/interconnect-provider.h=20=20=7C=2011=20++++++-----=0D=0A>=20=20inclu=
-de/soc/tegra/mc.h=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=20=
-=207=20++++---=0D=0A>=20=2014=20files=20changed,=2025=20insertions(+),=2021=
-=20deletions(-)=0D=0A>=20=0D=0A=0D=0AFor=20Samsung/Exynos=0D=0AReviewed-by:=
-=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>=0D=0A.=0D=0A.=0D=0A=5Bsnip=
-=5D=0D=0A>=20--=0D=0A>=202.34.1=0D=0A=0D=0A=0D=0A
+On 2/15/2024 11:25 PM, Konrad Dybcio wrote:
+> On 15.02.2024 14:48, Md Sadre Alam wrote:
+>> Add qpic_common.c file which hold all the common
+>> qpic APIs which will be used by both qpic raw nand
+>> driver and qpic spi nand driver.
+>>
+>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+> 
+> IIUC this is mostly moving code around?
+> 
+> I do however have some suggestions..
+Ok
+> 
+>>   drivers/mtd/nand/Makefile            |    1 +
+>>   drivers/mtd/nand/qpic_common.c       |  786 +++++++++++++++++
+>>   drivers/mtd/nand/raw/qcom_nandc.c    | 1226 +-------------------------
+>>   include/linux/mtd/nand-qpic-common.h |  488 ++++++++++
+>>   4 files changed, 1291 insertions(+), 1210 deletions(-)
+>>   create mode 100644 drivers/mtd/nand/qpic_common.c
+>>   create mode 100644 include/linux/mtd/nand-qpic-common.h
+>>
+>> diff --git a/drivers/mtd/nand/Makefile b/drivers/mtd/nand/Makefile
+>> index 19e1291ac4d5..131707a41293 100644
+>> --- a/drivers/mtd/nand/Makefile
+>> +++ b/drivers/mtd/nand/Makefile
+>> @@ -12,3 +12,4 @@ nandcore-$(CONFIG_MTD_NAND_ECC) += ecc.o
+>>   nandcore-$(CONFIG_MTD_NAND_ECC_SW_HAMMING) += ecc-sw-hamming.o
+>>   nandcore-$(CONFIG_MTD_NAND_ECC_SW_BCH) += ecc-sw-bch.o
+>>   nandcore-$(CONFIG_MTD_NAND_ECC_MXIC) += ecc-mxic.o
+>> +obj-y += qpic_common.o
+>> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+>> new file mode 100644
+>> index 000000000000..4d74ba888028
+>> --- /dev/null
+>> +++ b/drivers/mtd/nand/qpic_common.c
+>> @@ -0,0 +1,786 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * QPIC Controller common API file.
+>> + * Copyright (C) 2023  Qualcomm Inc.
+>> + * Authors:	Md sadre Alam           <quic_mdalam@quicinc.com>
+>> + *		Sricharan R             <quic_srichara@quicinc.com>
+>> + *		Varadarajan Narayanan	<quic_varada@quicinc.com>
+>> + *
+>> + */
+>> +
+>> +#include <linux/mtd/nand-qpic-common.h>
+>> +
+>> +struct qcom_nand_controller *
+>> +get_qcom_nand_controller(struct nand_chip *chip)
+>> +{
+>> +	return container_of(chip->controller, struct qcom_nand_controller,
+>> +			    controller);
+>> +}
+>> +EXPORT_SYMBOL(get_qcom_nand_controller);
+> 
+> #define to_qcom_nand_controller()?
+Ok
+> 
+>> +
+>> +/*
+>> + * Helper to prepare DMA descriptors for configuring registers
+>> + * before reading a NAND page.
+>> + */
+> 
+> Can you convert these to kerneldoc instead?
+Ok
+> 
+>> +void config_nand_page_read(struct nand_chip *chip)
+>> +{
+>> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>> +
+>> +	write_reg_dma(nandc, NAND_ADDR0, 2, 0);
+>> +	write_reg_dma(nandc, NAND_DEV0_CFG0, 3, 0);
+>> +	if (!nandc->props->qpic_v2)
+> 
+> This is not going to scale going forward.. please include a version
+> enum instead.
+Ok
+> 
+> [...]
+> 
+>> +
+>> +int prep_adm_dma_desc(struct qcom_nand_controller *nandc, bool read,
+>> +		      int reg_off, const void *vaddr, int size,
+>> +			     bool flow_control)
+>> +{
+>> +	struct desc_info *desc;
+>> +	struct dma_async_tx_descriptor *dma_desc;
+>> +	struct scatterlist *sgl;
+>> +	struct dma_slave_config slave_conf;
+>> +	struct qcom_adm_peripheral_config periph_conf = {};
+>> +	enum dma_transfer_direction dir_eng;
+>> +	int ret;
+> 
+> Revertse-christmas-tree, please
+Ok
+> 
+>> +
+>> +	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
+>> +	if (!desc)
+>> +		return -ENOMEM;
+>> +
+>> +	sgl = &desc->adm_sgl;
+>> +
+>> +	sg_init_one(sgl, vaddr, size);
+>> +
+>> +	if (read) {
+>> +		dir_eng = DMA_DEV_TO_MEM;
+>> +		desc->dir = DMA_FROM_DEVICE;
+>> +	} else {
+>> +		dir_eng = DMA_MEM_TO_DEV;
+>> +		desc->dir = DMA_TO_DEVICE;
+>> +	}
+>> +
+>> +	ret = dma_map_sg(nandc->dev, sgl, 1, desc->dir);
+>> +	if (ret == 0) {
+> 
+> if (!ret)
+Ok
+> 
+>> +		ret = -ENOMEM;
+>> +		goto err;
+>> +	}
+>> +
+>> +	memset(&slave_conf, 0x00, sizeof(slave_conf));
+> 
+> Just zero-initialize it (= { 0 }) at declaration time
+Ok
+> 
+> Konrad
+> 
+
+Thanks for reviewing , I will fix all the comments in next patch.
+
+Regards,
+Alam.
 
