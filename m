@@ -1,74 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-11794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 267EE85B9B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:56:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CCAD85B9FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:11:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 59C551C23B2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:56:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9FF341C24965
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:11:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E068657D5;
-	Tue, 20 Feb 2024 10:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5569E664A2;
+	Tue, 20 Feb 2024 11:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="iGzX1dRr"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="BLdU6PEu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AF0657CA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 10:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6E165BD9;
+	Tue, 20 Feb 2024 11:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708426599; cv=none; b=jIgHqdnwMvFMzE4Q+vE9UPUxJSyACMQ7ZTJDjEI1q9PCyIQ7YvZYGwhExxOS1xuwAd8BoCkZIG/LvFNdyCnOW9ime24GE9/YNVg2QfoKZlnniCYJ8c8bVRF1cmAdqqkm4MZ37FNbp88ZGNWKzNArZfTHYGEAux0LRp9ZpIzXsJg=
+	t=1708427448; cv=none; b=NC20K2+LOAkvQA4956UXuvDUepetV0srKbQYauKXLNyJC9B39+S7dchpwBjoIbXAci/712k0BDg8JXXZMq1DgV+aX8Y8lBKM10Ikg10ARq/32VnZXRuiXFBECzk5K9q1LN3Yef9/57NOEv2Tdx7pdj6BLEte6tnzQpw2KaWxkoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708426599; c=relaxed/simple;
-	bh=ItcZXiwx0pn9pwbWyTyXC3iPYxq91O+Pq8jBE7oWMmw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PgrPijeJ8ibKQ4Ong2b+3AgFH4bIsYQzP572SVzQwc8BZimGGRkDAdY2U4mlZPderigFSBZxZbpuEEqJBW4nQ7Ihm/HDGmo3bSo6/C1dPI1yIFealo36z/3906vbHJE6YgCHEJ3W9g8s1KCjmEGXAe6CIGIGQCgWl2vARY0bn9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=iGzX1dRr; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-33adec41b55so2591932f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 02:56:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1708426595; x=1709031395; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fI4R5r0KNJPe3HSPx51xZM8JsxxzPIp8jg35tmYYxDU=;
-        b=iGzX1dRrOK7IDSuLaQ+iomD7+f8cEWldHokAyCrEGXVDogSgK/iuYPH6lf8G+Jq4yn
-         qiHtX30RUuYaVC3tsJdoeh2ah0YXPYmN2Xqw2ajxnj3i5qQgPfD6MQr4j3OW40u0AHs2
-         hhVFzizTwlG6O/fKhhPinjcPEILFYP+Q+m1+xi7gqMOACPqAA64uzojMu68gTHtcFqgk
-         2zIVw/sdR90SJqotZtPeWxyT0xaYD3GwT7K8vZcKn/i/r/vsJiQ9AoBSK9p85nPsmwpf
-         Qv5gI1Q1sITf4ZyWQ8M6sEI/EG0svj8fscNYTjWRuXwz5QsduQtm6kgfUQ8yHTK5fSj2
-         oApw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708426595; x=1709031395;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fI4R5r0KNJPe3HSPx51xZM8JsxxzPIp8jg35tmYYxDU=;
-        b=vvqk5NXiuzu2y93sE94gsX4BaOH72u61N6uJ8EVFx2Qo+WDKpzLy+R1o/pGnL8paq9
-         IeebG4kxXPvv3naAmcLwBc0s84E/UEF/ICQ7kLU+WLzjPZBBHD0Je1VLilX086vE+5AE
-         grYBpxNHyWx1fEA4+x3R+CQgT51iMs+09cQPuLRHxFxLNkIvOYheZ4x2B5dSPK9MHKL3
-         vjCT+IcB7RDjbWsN95ADibqoaZZa08ZxJw5t6fH1hqzhZNBq+z+zY9k3f21UNyF29jkF
-         nID7m1RflRuZQbLrMsxl++GymSrtFEgZsQbaEb1/j35s9xt8BxRxVBR3U0vuyj+r/VBY
-         4XMA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3FMQiSUPT1EuOkGsJA6OuYGOtuGPxLU+cf5ZDX2V6eIH3uWCim4S63ASQQsg2OZnhdbIQVFbOrabaoUrg7BQycXn5VMDAUwf1QofKEQ==
-X-Gm-Message-State: AOJu0YyIK3flG0HtFlZ+oFM64/RRGdrRiqOCq3Ywc2gjgLGYrOa3zvwQ
-	rKIWvCcB/nloEd5mt3ghuo5cpCO8u4YP4NnayZ33h78mrQRxClp7myTqNlbb+Lk=
-X-Google-Smtp-Source: AGHT+IGApatcDJbsg9w739dtr2C68EHiOexix3zbasgEM50vzI9etj5RWluvQJQh4ukw4yzcsKiaVw==
-X-Received: by 2002:a5d:5309:0:b0:33d:20f4:def with SMTP id e9-20020a5d5309000000b0033d20f40defmr6830654wrv.59.1708426595328;
-        Tue, 20 Feb 2024 02:56:35 -0800 (PST)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id df2-20020a5d5b82000000b0033d6c928a95sm1430407wrb.63.2024.02.20.02.56.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 02:56:35 -0800 (PST)
-Message-ID: <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
-Date: Tue, 20 Feb 2024 11:56:34 +0100
+	s=arc-20240116; t=1708427448; c=relaxed/simple;
+	bh=MpJcVGRKO8AWBDMnssLpCilOGC18nfaO9n9RoVZq7VQ=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=cgEql6SejxSuarVPtVUuOgkRufbQN6a507YkaeJ8lXezjFlr7svcFkBdBz3qWTzuqaGVWbWS7+/v+feZy8pk/2hnT6DIs/yvNk3HUroEPA0MBPOYXe8NKG8J/7b30wcrbVLqjpvlyeZXhW0eOemNnDS+gZ7gv2b5s4DMRaV3QQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=BLdU6PEu; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708427438; x=1709032238; i=markus.elfring@web.de;
+	bh=MpJcVGRKO8AWBDMnssLpCilOGC18nfaO9n9RoVZq7VQ=;
+	h=X-UI-Sender-Class:Date:To:Cc:References:Subject:From:
+	 In-Reply-To;
+	b=BLdU6PEuy96My08QHX+sfAMRWW4IK1X4d0T4z7p4DxV7MRkglWrcZf/j/tZKdw52
+	 YPMAa2l6FxXjQdxzj85XS/JNEH9oDG/yKaghQ2vCY2NfS1Kb49HmyUj+GrUD85WqQ
+	 8RNDEIiRbmSjIwPbGf/sSU2rQRZhM51J48MM7HybPKuk1Wofxj67i5sJb8fCQZu0v
+	 W/79FPqhyfb5sz0FQ05r+Usub8KlNKiZYpi0CoK3MsPsiy0LZ+Q9NgLIEq6arb5/3
+	 gu86okYONMl5QBxcn6SytaLQHWAyDAtkOmAFfD5zc4XMnhGSw7Qy4gsQb/CGAeWec
+	 m/95GOLhnMPpFIYZBQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.80.95]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7Nig-1rZ6Xk3SFY-007pjU; Tue, 20
+ Feb 2024 11:56:00 +0100
+Message-ID: <9ff4221a-7083-4cb1-abde-1690f655da8d@web.de>
+Date: Tue, 20 Feb 2024 11:55:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,62 +55,86 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Bjorn Andersson <andersson@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+ David Airlie <airlied@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Vinod Koul <vkoul@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: DT <devicetree@vger.kernel.org>, linux-media
- <linux-media@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Pierre-Hugues Husson <phh@phh.me>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Rob Clark <robdclark@gmail.com>, stable@vger.kernel.org
+References: <20240217150228.5788-4-johan+linaro@kernel.org>
+Subject: Re: [PATCH 3/6] soc: qcom: pmic_glink_altmode: fix drm bridge
+ use-after-free
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240217150228.5788-4-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+nHgQKTeGuYog2KEpVvwroQxHKbVWgy4x84LyT/hTMOvc2YQpn3
+ JDDJBBZ8e8iXt3Iuyj6UFT2vAkr8MqMibV6zXbFxjjJ4NonyB3VINxG4cgtMo5Xs7xuC6zv
+ xHHA+wCH+zFVfPWvJKoIfdB4zOgAfy83sRz8V39oAy7aiZgIKyhsi1FhkeElCu/itLaX0BA
+ SMxSEIL5gaOlUNFNP274g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:aOKHz1US+0c=;Y7LOb2uGXWAxALKRNeJNoMXdSED
+ 6mThPuSgax6MusWH8Ux/RV+9w1zP98fwHF/F/EFha/52Eso2NCDEZICzFoaqBbjVZwC8X9iXj
+ imqXDHI+XMO0+ZsKtOfqx24v88gE5o5vzibabRrgXDJNXGYIMVRv0FhA3zBLzLImf+0yKA0w3
+ JipXGp3SXIfH7L7HV9OeJp/lRlCX0T2dcB4emjiyAhry5gg7pglw5q81w+eBAmMASEC7p3QFl
+ fNJMxuiOt8h2Rezr4SEiSyEQA6eYjV9YL2u7jd2D7a/Z782fqk3AH3QRs5XYKldiKIQ/ET21w
+ kQy5vQRVco7VAXTQBMM4nu+jjOcrp7VwntKu1Lv8lSUeYMgoPk+03t1Jfd7Wq+v0DumL+b69s
+ EFpggdlfcwjmUZiY1H5L0aypyi1fqDno1dcoD3BThjr7HInZntawd5DklobDax+czHsflIRKo
+ EEald0kztZeVc20C//rszyjaE0lRLHAnbS1xEbuUhgIY6wQNfjOWsKpTlwmKkxJhg+G8V87Hw
+ CsGHwCQpWo8JUQ2u8u13to8icfvbIURNZ/+0TOfimg6fk1e3Xp6tk5ZST+n0FupyGgbuzh8Xk
+ /ckHy9ppsFBiMNkezud3jl9lRX5YB1WBEQYzDYOCWdxsFvo3mw715qMWQEMJjar3JQR4i/NFh
+ wpz15f441+KtAxdh9D+nYKtO57bx/KSH6YPyS0OgfVYWQnCwWw9/FSkWuNj+8E9Xouf+xnsSV
+ 7i9vSiZZCGaVCFmj7xKEWlGyBccfvDxkylTO9r0FdjfgxCZQFBHfYnKaMD47c7kVBC5lznyEq
+ 1ZP+jYKEtNDnFoMJvSTvMXP1v6aJ26Z0pgxbocw6whsgI=
 
-On 19/02/2024 20:24, Bryan O'Donoghue wrote:
-
-> On 19/02/2024 5:44 p.m., Dmitry Baryshkov wrote:
+=E2=80=A6
+> Specifically, the dp-hpd bridge is currently registered before all
+> resources have been acquired which means that it can also be
+> deregistered on probe deferrals.
 >
->> On Mon, 19 Feb 2024 at 19:29, Konrad Dybcio wrote:
->>>
->>> On 19.02.2024 18:18, Marc Gonzalez wrote:
->>>
->>>> On our msm8998-based device, calling venus_sys_set_power_control()
->>>> breaks playback. Since the vendor kernel never calls it, we assume
->>>> it should not be called for this device/FW combo.
->>>
->>> FWIW, this is also broken on other SoCs.. 8280/8350 and 6115
->>> to name a couple.
->>
->> Then let's just disable it until it gets unbroken?
-> 
-> Its functional on most of our upstream stuff though, why switch if off 
-> unless necessary ?
-> 
-> Maybe it should be an opt-in instead of an opt-out, TBH my own feeling 
-> is its better to minimize the amount of work and opt as per the proposed 
-> patch.
-> 
-> Perhaps the qcom vidc team can give insights on 8280xp and 8350 when we 
-> come to tackling new HFI6XX and later SoCs ...
+> In the meantime there is a race window where the new aux bridge driver
+> (or PHY driver previously) may have looked up the dp-hpd bridge and
+> stored a (non-reference-counted) pointer to the bridge which is about to
+> be deallocated.
+=E2=80=A6
+> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+=E2=80=A6
+> @@ -454,7 +454,7 @@ static int pmic_glink_altmode_probe(struct auxiliary=
+_device *adev,
+>  		alt_port->index =3D port;
+>  		INIT_WORK(&alt_port->work, pmic_glink_altmode_worker);
+>
+> -		alt_port->bridge =3D drm_dp_hpd_bridge_register(dev, to_of_node(fwnod=
+e));
+> +		alt_port->bridge =3D devm_drm_dp_hpd_bridge_alloc(dev, to_of_node(fwn=
+ode));
+>  		if (IS_ERR(alt_port->bridge)) {
+>  			fwnode_handle_put(fwnode);
+>  			return PTR_ERR(alt_port->bridge);
+=E2=80=A6
 
-I was wondering if the chosen property name might cause issues later...
+The function call =E2=80=9Cfwnode_handle_put(fwnode)=E2=80=9D is used in m=
+ultiple if branches.
+https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/soc/qcom/pmic_gli=
+nk_altmode.c#L435
 
-Thinking "qcom,no-low-power" might be a bit too general?
-Perhaps would need to mention venus somewhere in the name,
-to limit this to the video decoder?
+I suggest to add a jump target so that a bit of exception handling
+can be better reused at the end of this function implementation.
 
-Regards
-
+Regards,
+Markus
 
