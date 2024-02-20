@@ -1,83 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-11827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB4F185BC1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:28:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE36385BC20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:29:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A05D1C213DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:28:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E8DFB21920
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:29:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24D2067E7E;
-	Tue, 20 Feb 2024 12:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A9469964;
+	Tue, 20 Feb 2024 12:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RgTXfMzu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V7i8i2ko"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A840C65BDF;
-	Tue, 20 Feb 2024 12:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544E769968;
+	Tue, 20 Feb 2024 12:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708432106; cv=none; b=Uq0em/fgSnBtZutqXt/yZt+HUfDCiZGyaJ7c1PtS0Oko84y2z49safef28FeJWQYk4lqf9tH7SCdCBfc0LBZJ83TYoe7p/ifn+eF4hxHNwoiPHmX0EDtvugbVp+GVmoTEB7p533cG+3HQ/V1gbXXeGlcL2SK7fP4Qnkdie2Ahpc=
+	t=1708432134; cv=none; b=p0dF14MmawUThV/F1prAguOvxu0G3jB2Y/txOg2y3gta5hIKEdkUOPijg+4E511fJBdy3jgrftoXGIzofEU4Kngdi51WK2G2sQGdWdyGl5uOgiIUbU4/0CICVY72o5NVQwyktBHNtMDZ4MCMRBX20notYiGmv0j1y0VGb9dqHXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708432106; c=relaxed/simple;
-	bh=kogTKqIaNyTjBUM7x5FnLesGtt8VNECuM8HWVn67DyE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=P4PC6YHN6WWzJ1Hbe9ylFx2ogVJuOgoexFSf67JSaa8Ju605dgM90EvBExDT6AU1TGSVDHWoRcistIAOGApwiKrVzdiy+GuZzLlNvHgdnnq/2zYrW/gHZ+VGHLCqr7hx6nwYd1UPDGm78pok6DPF7rDHhN3k+0trW0eKQ74eI48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RgTXfMzu; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1708432134; c=relaxed/simple;
+	bh=9hC48CFGOI+zH+J/OnR3D9Cvj+eSSX+d271pEsg8oYE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JTQRFwAnRmSVKXDtRg+21dNhDmTY6N8hicVvAOT3CCXI/gMbT3uYPEyXOSADhCJZFciB1TVY+NwA42T7Q3wYNsU4HkC08DHILidFajcvNfFtGfrZ+cVwrtFIH+XFqyJozYxp4KmUzUJsHnA4b6o3JGpsmOXHWfDEfkgpbkEmdtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V7i8i2ko; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K46GpV030024;
-	Tue, 20 Feb 2024 12:28:21 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K5laxu005396;
+	Tue, 20 Feb 2024 12:28:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=SWPeOrQ
-	+8S6jdrU+QkJVQNUKhh5nmk5KlDjNIu9xuEU=; b=RgTXfMzuiQWGAONw16cdUuS
-	Zt4EHCsWWczmBj6it9Zl2YglDi/4wUbQRnsdjCbKXBtqQqisamKihhyAuWj/SMrq
-	yWWdSMkfO9eqtZW7yGKEoXknD6mIbgIXp6Qxezf3u5V75lJIQfST+lnrW//PSC9f
-	PrGUD0tdHTjUZOhf7g0Pmqly8nyVyUqJlXTid7bpWzcA/Be2El3xWE0ngXm9h2RJ
-	aTOt0UeNroTOVIk+pSTKdXMtYsDRQnnrpyBtSq9xGEy+r5N3hmhNsTPf47aRGjzn
-	Et9mzNwyujG2GZaSYQR9fmkTxIKccd/zftTmLPpoWpKyjvVXx554/5TQ/oEaCRg=
-	=
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcmqp8wke-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=g28R+uJawHAgWOgBmwhyNrp8WnEMlRZ+lOB3MV0yd50=; b=V7
+	i8i2ko3gpKbqmbgIStQ7+rg1mEXmv0vXkgwdKevULxE80JN6lQQp9ejBf+OR7UX1
+	mnxNAM5B2xZSt7Fsu2ku6aKWNB21rPkchyYfKHrhPACJJzGH9jRbQQ/kENIYSKS5
+	/yc8MQequPiJxA9OBdnGPsCspMqr7aa5Xr6TVAnuTe+uORZB8Uxfna8o5Bxvh43q
+	hBwXPbi1vjZpdamOFBgW9ZXeRzMBWgvjGntg4fqwC660NcEmDeKmslxS3zm8FmLj
+	DKDQ1sfa4512fQnZuRIPSwvo5bxmXS8wT+f//1ntgJtwQOZGlW5nGhZLyMACQCCG
+	TJEvonc9iT4xReU7e05A==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcmqp8wm3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:28:21 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCSK95002183
+	Tue, 20 Feb 2024 12:28:43 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCSgcB013993
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:28:20 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 20 Feb 2024 04:28:18 -0800
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Mukesh
- Ojha" <quic_mojha@quicinc.com>
-Subject: [PATCH] soc: qcom: llcc: Add llcc device availability check
-Date: Tue, 20 Feb 2024 17:58:04 +0530
-Message-ID: <20240220122805.9084-1-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.43.0.254.ga26002b62827
+	Tue, 20 Feb 2024 12:28:42 GMT
+Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 04:28:36 -0800
+Message-ID: <196fe404-ad88-27da-9fd2-e717355be520@quicinc.com>
+Date: Tue, 20 Feb 2024 17:58:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/5] spi: dt-bindings: add binding doc for spi-qpic-snand
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <broonie@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240215134856.1313239-2-quic_mdalam@quicinc.com>
+ <8c3d8fc3-2c1e-4ece-abb1-b427a909ad39@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <8c3d8fc3-2c1e-4ece-abb1-b427a909ad39@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: f7qnyPcZYDYCTKt9waKZdcd9mg2FSQQR
-X-Proofpoint-ORIG-GUID: f7qnyPcZYDYCTKt9waKZdcd9mg2FSQQR
+X-Proofpoint-GUID: 5-uOaEB-mW3eyFykmLRc0U2UUciV0rZr
+X-Proofpoint-ORIG-GUID: 5-uOaEB-mW3eyFykmLRc0U2UUciV0rZr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
@@ -87,61 +99,158 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspect
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2401310000 definitions=main-2402200090
 
-When llcc driver is enabled  and llcc device is not
-physically there on the SoC, client can get
--EPROBE_DEFER on calling llcc_slice_getd() and it
-is possible they defer forever.
 
-Let's add a check device availabilty and set the
-appropriate applicable error in drv_data.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/soc/qcom/llcc-qcom.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+On 2/16/2024 12:32 AM, Krzysztof Kozlowski wrote:
+> On 15/02/2024 14:48, Md Sadre Alam wrote:
+>> Add device-tree binding documentation for QCOM QPIC-SNAND-NAND Flash
+>> Interface.
+>>
+> 
+> A nit, subject: drop second/last, redundant "bindings". The
+> "dt-bindings" prefix is already stating that these are bindings.
+> See also:
+> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+Ok
+> 
+>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>   .../bindings/spi/qcom,spi-qpic-snand.yaml     | 82 +++++++++++++++++++
+>>   1 file changed, 82 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>> new file mode 100644
+>> index 000000000000..fa7484ce1319
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+> 
+> Filename like compatible.
+Ok
+> 
+>> @@ -0,0 +1,82 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spi/qcom,spi-qpic-snand.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm QPIC NAND controller
+>> +
+>> +maintainers:
+>> +  - Md sadre Alam <quic_mdalam@quicinc.com>
+>> +
+> 
+> Provide description which will describe hardware.
+Ok
+> 
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,ipq9574-snand
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    minItems: 2
+>> +    maxItems: 3
+> 
+> You must document the items (could be sufficient in clock-names if the
+> names are obvious).
+Ok
+> 
+> 
+> Why the clocks are flexible? This given IPQ9574 has variable clock
+> inputs? Please explain.
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 4ca88eaebf06..cb336b183bba 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -769,6 +769,27 @@ static const struct qcom_sct_config x1e80100_cfgs = {
- };
- 
- static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-+static DEFINE_MUTEX(dev_avail);
-+
-+static bool is_llcc_device_available(void)
-+{
-+	static struct llcc_drv_data *ptr;
-+
-+	mutex_lock(&dev_avail);
-+	if (!ptr) {
-+		struct device_node *node;
-+
-+		node = of_find_node_by_name(NULL, "system-cache-controller");
-+		if (!of_device_is_available(node)) {
-+			pr_warn("llcc-qcom: system-cache-controller node not found\n");
-+			drv_data = ERR_PTR(-ENODEV);
-+		}
-+		of_node_put(node);
-+		ptr = drv_data;
-+	}
-+	mutex_unlock(&dev_avail);
-+	return (PTR_ERR(ptr) != -ENODEV) ? true : false;
-+}
- 
- /**
-  * llcc_slice_getd - get llcc slice descriptor
-@@ -783,7 +804,7 @@ struct llcc_slice_desc *llcc_slice_getd(u32 uid)
- 	struct llcc_slice_desc *desc;
- 	u32 sz, count;
- 
--	if (IS_ERR(drv_data))
-+	if (!is_llcc_device_available() || IS_ERR(drv_data))
- 		return ERR_CAST(drv_data);
- 
- 	cfg = drv_data->cfg;
--- 
-2.43.0.254.ga26002b62827
-
+  I have checked Hardware Spec. and clocks are fixed in IPQ9574. Will fix in next
+  patch.
+> 
+>> +
+>> +  clock-names:
+>> +    minItems: 2
+>> +    maxItems: 3
+>> +
+> 
+> required goes here.
+Ok
+> 
+>> +allOf:
+>> +  - $ref: /schemas/spi/spi-controller.yaml#
+> 
+> 
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,ipq9574-snand
+>> +
+>> +    then:
+>> +      properties:
+>> +        dmas:
+>> +          items:
+>> +            - description: tx DMA channel
+>> +            - description: rx DMA channel
+>> +            - description: cmd DMA channel
+>> +
+>> +        dma-names:
+>> +          items:
+>> +            - const: tx
+>> +            - const: rx
+>> +            - const: cmd
+> 
+> No clue why it is here, move it to top level.
+Ok
+> 
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +
+>> +unevaluatedProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
+>> +    qpic_nand: spi@79b0000 {
+> 
+> Drop unused label
+Ok
+> 
+>> +        compatible = "qcom,ipq9574-snand";
+>> +        reg = <0x1ac00000 0x800>;
+>> +
+>> +        clocks = <&gcc GCC_QPIC_CLK>,
+>> +                 <&gcc GCC_QPIC_AHB_CLK>,
+>> +                 <&gcc GCC_QPIC_IO_MACRO_CLK>;
+>> +        clock-names = "core", "aon", "iom";
+>> +
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +
+>> +        flash@0 {
+>> +            compatible = "spi-nand";
+>> +            reg = <0>;
+>> +            #address-cells = <1>;
+>> +            #size-cells = <1>;
+>> +            nand-ecc-engine = <&qpic_nand>;
+>> +            nand-ecc-strength = <4>;
+>> +            nand-ecc-step-size = <512>;
+>> +            };
+> 
+> Fix indentation.
+Ok
+> 
+>> +        };
+> 
+> Best regards,
+> Krzysztof
+> 
 
