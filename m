@@ -1,155 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-11776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3215885B660
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:00:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 813BF85B6AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:07:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC3672837D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:00:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3FAC1C23E28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:06:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81CD6612DC;
-	Tue, 20 Feb 2024 08:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D6D5F471;
+	Tue, 20 Feb 2024 09:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HFndHDmn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LIB+prbN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAF45FF0F;
-	Tue, 20 Feb 2024 08:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DCF5D8E2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 09:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708419372; cv=none; b=Li/eTxrvfiYeTkkCx4M9md7G1pPkZ/mlDE8GTelHZvsLGXZTx/1ZpB/ExRT3R9X6hOjRSViHPN8/tAVjKOvsjA+AwFQS6R7RZixK2+NGPBGpPBeZe3wSnS/EYocw1Y5rTw/1GrGiTpJqCbfKzaGZC/GOOjnrTHxJ0LBfDRJfuAM=
+	t=1708419975; cv=none; b=Gw/Dv1DZo8Pk/JO6TRSoqMzJf7tnWlgvZRVb6CDKlgBQ0wdKrIU0O8kGcutuwloAdlS7B4yQfwpk2UdohT2Rzmktscu0aqP6YhpucS8t4rv5oxmULbH/HdNIDwBUM+mBw7JRrH6cB47KnIg3Akp7Fqi7W5systjKTOgWvV7WWX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708419372; c=relaxed/simple;
-	bh=zDfSBLJbbIrbJcXCzH/p1UQgT0n+EWE9SZXW7U5XCyI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=T0evPhhfS1E31MtKyfO3gbq9/rHpY7nJNW/lfGfnJnzcGGtU6xLWTuIjh1cnKLzz58TiQd84gTgM4Xepl2g3e3xi4qTJNsy64+TC4jnwT+vLEDQPqdj9u8ryeCn60sUpkBEN2ZykKqiKF1uXuao4cAkNLtW4erOR0aOgnW2JFEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HFndHDmn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K644pi002528;
-	Tue, 20 Feb 2024 08:56:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=LEgPixatv3d0ywWoeBLBebOftW6W4Qx9nCBkHmjSrkI=; b=HF
-	ndHDmnd+7B9QTxfY5pLksAJ0U8T9ZNL9V0Tf9Q7wTE7G92u0tgoTfikBcjxvcisi
-	OSQtcfbfaUuMus+j6F2pVRXOFDCalnzrmtUWSNr2rSRQq1IdAe/QNupsyDP2bM8A
-	4/w9DWaafxdGgGXWaUQUr+AGhLyEvJ/NpdHI2oHA2y+PM1vxX0CISakj/O5GRicH
-	Y0NwT5YlIRl6DA2h6wgWSlJIJApqWQEp+o1KX2TkDwIPLBoC9N5ai0ayPHVwjaUv
-	xmYEu1HCcY0ZHnHJTZxJUR+kpsZO10g/TnB5Il0Ymy7MJzBOggxdcDh0DBe0b3wm
-	G2RBSoryw7MwqkcsnmFw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcnbd8e4q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 08:56:05 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K8u4sC027490
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 08:56:04 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 00:55:59 -0800
-Message-ID: <441ffff2-81a8-4b53-b15b-5ac6375d65c3@quicinc.com>
-Date: Tue, 20 Feb 2024 16:55:57 +0800
+	s=arc-20240116; t=1708419975; c=relaxed/simple;
+	bh=N84xpgCHrORAjoI2Nkdi/wi3wZrgord7nWepiT3bvPA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qgfPnZhaIMOx0KPsqcHZ9BaTJvXKrE8IiEnsbAmKJHAFJU5DR4I49BB3SF8t0LSYClMjuLtEmRecIto6xUtCZEG7aSJt6u3bARTMp13UX2RmOUHRj5HlxQXm6OHBEXjgpvcV68Ud1GlWj0dxi4eVBC1Zr1Z3CxaKGPNj+4KP9Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LIB+prbN; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dc74435c428so4777293276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 01:06:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708419973; x=1709024773; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R0CyeS56TSWYq1NAjfXsEvKV0TSPVdyTmQCCIvDs6Vk=;
+        b=LIB+prbNJQ4xwvId5haLIrz9MKnw2dAFfET7Y3YQF7PBn3wPmQLpZa+6E9ei/DXPmE
+         UmvBS0vnLKV087zDaFocXnSsig/WW2LJL6Q4biN4TcXcGiU0q74tQuWlpH4mOVCbfUnp
+         Q7RrHBQC7CN+wTw9VGIdmLRfny9zukw4STKn7/2y7wUZgXSe5VQVlQtShFvS6MsQJw5S
+         Rq25wYI2NTEIq0zFKUx/Qjg3kFmkEFMtg3w9qDR8gnycsze6A4/KuZkTwO+4VS+iPzoa
+         QMtMB8irZuCBIpVkHTkREMxQUnTS+UuBxVRtCfhbSq/B7mgXxa3alRtaUC0GsXawKxgS
+         iO9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708419973; x=1709024773;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R0CyeS56TSWYq1NAjfXsEvKV0TSPVdyTmQCCIvDs6Vk=;
+        b=AIqIe3+VE+LklCtz6mVeDxZ5XuDsoQSU4JNBzCAN0v2tzMS+GrRXNlr9vI6Qzx7EQT
+         ATsl2xByG0vd4C/CAN57DDLOj0RQmVYBNZE7TkA58/ESEPNz9+Du4wRv0DVMwKilInqk
+         8V+HW7kwct6S6UQiuYM9B11RZ02lwYprKNjx7Z1bGGWCCtdVjGHG1Txemsv9GA/I/8Yt
+         tgGeacmpVx/QRWsB0o8jmbhLONxNRdhp0EIS01jfIif6hp/K/opoJvqvdNlFwsaQ8JkX
+         Nqi/ugYARrRzrx63fsv5FlMAz3xHZYf02dRQN4m318JXjPMsDTLXbJqZWJJU3Dm/GzL0
+         6quw==
+X-Forwarded-Encrypted: i=1; AJvYcCW1vJtGkRJpdandcs+6Ds/L5iNtYgrffx8OX3eRdaVM/optFXgo14odpETQP/nLqh8RBeAmnQWrRPi71eqal3adEJhIn1PcZzFbNjeaAw==
+X-Gm-Message-State: AOJu0YzWmCXXDPXI1j6opgzgk3wPF2h75r7nihqTACypQw2qNxoPptqW
+	4aAVv5cSDHG1wo+yjVqY3DyyndOa7gvOZrEcw7tmfbA6E81AK01bIhsmjmk8BtNss8OdYVHQSVZ
+	Z2WgdJHLHA6Zha/rPL9Au7fKu2wqg4K4fT+p67Q==
+X-Google-Smtp-Source: AGHT+IF50+ClBlIDnyyXGYJ4+9cr8Az9j0fxyWVTYfiRxOMlR8QjxPnTxJgiBCmodSw3Jj3u9rVrMXJR5+zExry6ZEc=
+X-Received: by 2002:a25:680e:0:b0:dbd:553d:9d6a with SMTP id
+ d14-20020a25680e000000b00dbd553d9d6amr14218173ybc.40.1708419972956; Tue, 20
+ Feb 2024 01:06:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20240205115721.1195336-1-quic_jingyw@quicinc.com>
+ <20240205115721.1195336-2-quic_jingyw@quicinc.com> <2fa4d857-7262-40df-a842-56945ecffb81@linaro.org>
+ <441ffff2-81a8-4b53-b15b-5ac6375d65c3@quicinc.com>
+In-Reply-To: <441ffff2-81a8-4b53-b15b-5ac6375d65c3@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 20 Feb 2024 11:06:01 +0200
+Message-ID: <CAA8EJpra8UjWzWArQQg3Cq3m7WLo4Shnsj=EOhb50Yh46bOh7w@mail.gmail.com>
 Subject: Re: [RFC PATCH 1/6] dt-bindings: arm: qcom: Document sm8650p soc and
  AIM500 AIoT board
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <kernel@quicinc.com>
-References: <20240205115721.1195336-1-quic_jingyw@quicinc.com>
- <20240205115721.1195336-2-quic_jingyw@quicinc.com>
- <2fa4d857-7262-40df-a842-56945ecffb81@linaro.org>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <2fa4d857-7262-40df-a842-56945ecffb81@linaro.org>
+To: Jingyi Wang <quic_jingyw@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, kernel@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: q43VoSriLbrKjtzjHQhM1QKpaZNyE-Rn
-X-Proofpoint-ORIG-GUID: q43VoSriLbrKjtzjHQhM1QKpaZNyE-Rn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=965 clxscore=1011
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402200063
+
+On Tue, 20 Feb 2024 at 11:00, Jingyi Wang <quic_jingyw@quicinc.com> wrote:
+>
+>
+> Hi Krzysztof,
+>
+> On 2/5/2024 8:33 PM, Krzysztof Kozlowski wrote:
+> > On 05/02/2024 12:57, Jingyi Wang wrote:
+> >> Document Qualcomm SM8650P SoC and AIM500 AIoT board.
+> >
+> > Please describe shortly what is SM8650P and what are the differences
+> > with SM8650.
+> >
+> >>
+> >> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> >> ---
+> >>  Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++++
+> >>  1 file changed, 9 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> index 1999a5f2f254..e87ceb42853b 100644
+> >> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >> @@ -88,11 +88,13 @@ description: |
+> >>          sm8450
+> >>          sm8550
+> >>          sm8650
+> >> +        sm8650p
+> >>          x1e80100
+> >>
+> >>    The 'board' element must be one of the following strings:
+> >>
+> >>          adp
+> >> +        aim500-aiot
+> >
+> > Drop this line.
+> >
+> drop this line will cause fail dt binding check failure, any suggestion on that?
+
+It will not, it is just a free-form text
+
+> >>          cdp
+> >>          dragonboard
+> >>          idp
+> >> @@ -1051,6 +1053,13 @@ properties:
+> >>                - qcom,sm8650-qrd
+> >>            - const: qcom,sm8650
+> >>
+> >> +      - items:
+> >> +          - enum:
+> >> +              - qcom,sm8650p-aim500-aiot
+> >> +          - const: qcom,sm8650p-aim500
+> >> +          - const: qcom,sm8650p
+> >> +          - const: qcom,sm8650
+> >
+> >
+> >
+> > Best regards,
+> > Krzysztof
+> >
+> Thanks,
+> Jingyi
+>
 
 
-Hi Krzysztof,
-
-On 2/5/2024 8:33 PM, Krzysztof Kozlowski wrote:
-> On 05/02/2024 12:57, Jingyi Wang wrote:
->> Document Qualcomm SM8650P SoC and AIM500 AIoT board.
-> 
-> Please describe shortly what is SM8650P and what are the differences
-> with SM8650.
-> 
->>
->> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
->> ---
->>  Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 1999a5f2f254..e87ceb42853b 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -88,11 +88,13 @@ description: |
->>          sm8450
->>          sm8550
->>          sm8650
->> +        sm8650p
->>          x1e80100
->>  
->>    The 'board' element must be one of the following strings:
->>  
->>          adp
->> +        aim500-aiot
-> 
-> Drop this line.
-> 
-drop this line will cause fail dt binding check failure, any suggestion on that?
->>          cdp
->>          dragonboard
->>          idp
->> @@ -1051,6 +1053,13 @@ properties:
->>                - qcom,sm8650-qrd
->>            - const: qcom,sm8650
->>  
->> +      - items:
->> +          - enum:
->> +              - qcom,sm8650p-aim500-aiot
->> +          - const: qcom,sm8650p-aim500
->> +          - const: qcom,sm8650p
->> +          - const: qcom,sm8650
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-Thanks,
-Jingyi
+-- 
+With best wishes
+Dmitry
 
