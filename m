@@ -1,182 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-11826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3D6685BC0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:27:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB4F185BC1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:28:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2EA57B21EAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:27:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A05D1C213DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE0467E7E;
-	Tue, 20 Feb 2024 12:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24D2067E7E;
+	Tue, 20 Feb 2024 12:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="AFSbsmDV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RgTXfMzu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771CB664A6;
-	Tue, 20 Feb 2024 12:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A840C65BDF;
+	Tue, 20 Feb 2024 12:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708432029; cv=none; b=i2WLgu5VJV5xIm3GeI3j4dYoi16IYd0JFqUsDyT048mKEr121GFjOctLw6q5o4kC2DsoohnDQabzqPg5fnzDrOw8/YbBCRkgPy5hD5bJQzK5RZRafjFAs3OwVIWUzCWAyhnEeQzsJugrDfG6vUkC7dIoQusH/rRWm1nQO63WgSw=
+	t=1708432106; cv=none; b=Uq0em/fgSnBtZutqXt/yZt+HUfDCiZGyaJ7c1PtS0Oko84y2z49safef28FeJWQYk4lqf9tH7SCdCBfc0LBZJ83TYoe7p/ifn+eF4hxHNwoiPHmX0EDtvugbVp+GVmoTEB7p533cG+3HQ/V1gbXXeGlcL2SK7fP4Qnkdie2Ahpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708432029; c=relaxed/simple;
-	bh=RuY9w5Dr/1wdetSAqH5kT8zGrdXUySxdTGovYYxNZG4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zy4wUzuf4XwqO/hKMlhvJOJT+rn21rasxmeQYQtmSl1BuexP3OZfP5gh0SnI1XATCPsmb6Z/3d+JhE4OwBbniA5G3xmYEuEWuBQ+mcp3wiWykt/L4h7dyBh63Q5MJcubkgDky09PCfEnAcSc8YuE9lwYm4iESs3Sw5c6lyDMpXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=AFSbsmDV; arc=none smtp.client-ip=198.47.23.248
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41KCQo64093480;
-	Tue, 20 Feb 2024 06:26:50 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1708432010;
-	bh=x8mUODGtFNg84s5n14xg7n/kJUQBebR7lCHh9t+k4lA=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=AFSbsmDVoNp1NzAKbPe/H3eoYR74xIERVx73jf70QUFR9HxJCBNtiXfkJEIRXJ5QY
-	 tMRMw8x063Ssd2tqjdk6jbm9/F1QUdiZmHdghpyO6YuUvzGkOXo7TyQway1E+NZESb
-	 Qa+u5mT+tJ83RBkx01bWKiSIxuuqnMTpqNHpME0Y=
-Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
-	by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41KCQorb116256
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 20 Feb 2024 06:26:50 -0600
-Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE100.ent.ti.com
- (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 20
- Feb 2024 06:26:49 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE108.ent.ti.com
- (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Tue, 20 Feb 2024 06:26:49 -0600
-Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41KCQmMl092870;
-	Tue, 20 Feb 2024 06:26:48 -0600
-Date: Tue, 20 Feb 2024 17:56:48 +0530
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel
-	<gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Marek Vasut
-	<marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda
-	<yoshihiro.shimoda.uh@renesas.com>,
-        Kishon Vijay Abraham I
-	<kishon@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <s-vadapalli@ti.com>
-Subject: Re: [PATCH v2 3/5] PCI: dwc: Pass the eDMA mapping format flag
- directly from glue drivers
-Message-ID: <17ef7cf1-62d8-41f8-9e52-3ce972708a72@ti.com>
-References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
- <20240216-dw-hdma-v2-3-b42329003f43@linaro.org>
+	s=arc-20240116; t=1708432106; c=relaxed/simple;
+	bh=kogTKqIaNyTjBUM7x5FnLesGtt8VNECuM8HWVn67DyE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=P4PC6YHN6WWzJ1Hbe9ylFx2ogVJuOgoexFSf67JSaa8Ju605dgM90EvBExDT6AU1TGSVDHWoRcistIAOGApwiKrVzdiy+GuZzLlNvHgdnnq/2zYrW/gHZ+VGHLCqr7hx6nwYd1UPDGm78pok6DPF7rDHhN3k+0trW0eKQ74eI48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RgTXfMzu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K46GpV030024;
+	Tue, 20 Feb 2024 12:28:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=SWPeOrQ
+	+8S6jdrU+QkJVQNUKhh5nmk5KlDjNIu9xuEU=; b=RgTXfMzuiQWGAONw16cdUuS
+	Zt4EHCsWWczmBj6it9Zl2YglDi/4wUbQRnsdjCbKXBtqQqisamKihhyAuWj/SMrq
+	yWWdSMkfO9eqtZW7yGKEoXknD6mIbgIXp6Qxezf3u5V75lJIQfST+lnrW//PSC9f
+	PrGUD0tdHTjUZOhf7g0Pmqly8nyVyUqJlXTid7bpWzcA/Be2El3xWE0ngXm9h2RJ
+	aTOt0UeNroTOVIk+pSTKdXMtYsDRQnnrpyBtSq9xGEy+r5N3hmhNsTPf47aRGjzn
+	Et9mzNwyujG2GZaSYQR9fmkTxIKccd/zftTmLPpoWpKyjvVXx554/5TQ/oEaCRg=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcmqp8wke-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:28:21 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCSK95002183
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:28:20 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 20 Feb 2024 04:28:18 -0800
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Mukesh
+ Ojha" <quic_mojha@quicinc.com>
+Subject: [PATCH] soc: qcom: llcc: Add llcc device availability check
+Date: Tue, 20 Feb 2024 17:58:04 +0530
+Message-ID: <20240220122805.9084-1-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.43.0.254.ga26002b62827
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240216-dw-hdma-v2-3-b42329003f43@linaro.org>
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: f7qnyPcZYDYCTKt9waKZdcd9mg2FSQQR
+X-Proofpoint-ORIG-GUID: f7qnyPcZYDYCTKt9waKZdcd9mg2FSQQR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ spamscore=0 mlxlogscore=999 adultscore=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402200090
 
-On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
-> Instead of maintaining a separate capability for glue drivers that cannot
-> support auto detection of the eDMA mapping format, let's pass the mapping
-> format directly from them.
-> 
-> This will simplify the code and also allow adding HDMA support that also
-> doesn't support auto detection of mapping format.
-> 
-> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+When llcc driver is enabled  and llcc device is not
+physically there on the SoC, client can get
+-EPROBE_DEFER on calling llcc_slice_getd() and it
+is possible they defer forever.
 
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Let's add a check device availabilty and set the
+appropriate applicable error in drv_data.
 
-Regards,
-Siddharth.
-> ---
->  drivers/pci/controller/dwc/pcie-designware.c | 16 +++++++++-------
->  drivers/pci/controller/dwc/pcie-designware.h |  5 ++---
->  drivers/pci/controller/dwc/pcie-rcar-gen4.c  |  2 +-
->  3 files changed, 12 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index d07747b75947..54ecd536756d 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -894,18 +894,20 @@ static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
->  {
->  	u32 val;
->  
-> +	/*
-> +	 * Bail out finding the mapping format if it is already set by the glue
-> +	 * driver. Also ensure that the edma.reg_base is pointing to a valid
-> +	 * memory region.
-> +	 */
-> +	if (pci->edma.mf != EDMA_MF_EDMA_LEGACY)
-> +		return pci->edma.reg_base ? 0 : -ENODEV;
-> +
->  	/*
->  	 * Indirect eDMA CSRs access has been completely removed since v5.40a
->  	 * thus no space is now reserved for the eDMA channels viewport and
->  	 * former DMA CTRL register is no longer fixed to FFs.
-> -	 *
-> -	 * Note that Renesas R-Car S4-8's PCIe controllers for unknown reason
-> -	 * have zeros in the eDMA CTRL register even though the HW-manual
-> -	 * explicitly states there must FFs if the unrolled mapping is enabled.
-> -	 * For such cases the low-level drivers are supposed to manually
-> -	 * activate the unrolled mapping to bypass the auto-detection procedure.
->  	 */
-> -	if (dw_pcie_ver_is_ge(pci, 540A) || dw_pcie_cap_is(pci, EDMA_UNROLL))
-> +	if (dw_pcie_ver_is_ge(pci, 540A))
->  		val = 0xFFFFFFFF;
->  	else
->  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 26dae4837462..995805279021 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -51,9 +51,8 @@
->  
->  /* DWC PCIe controller capabilities */
->  #define DW_PCIE_CAP_REQ_RES		0
-> -#define DW_PCIE_CAP_EDMA_UNROLL		1
-> -#define DW_PCIE_CAP_IATU_UNROLL		2
-> -#define DW_PCIE_CAP_CDM_CHECK		3
-> +#define DW_PCIE_CAP_IATU_UNROLL		1
-> +#define DW_PCIE_CAP_CDM_CHECK		2
->  
->  #define dw_pcie_cap_is(_pci, _cap) \
->  	test_bit(DW_PCIE_CAP_ ## _cap, &(_pci)->caps)
-> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> index e9166619b1f9..3c535ef5ea91 100644
-> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> @@ -255,7 +255,7 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
->  	rcar->dw.ops = &dw_pcie_ops;
->  	rcar->dw.dev = dev;
->  	rcar->pdev = pdev;
-> -	dw_pcie_cap_set(&rcar->dw, EDMA_UNROLL);
-> +	rcar->dw.edma.mf = EDMA_MF_EDMA_UNROLL;
->  	dw_pcie_cap_set(&rcar->dw, REQ_RES);
->  	platform_set_drvdata(pdev, rcar);
->  
-> 
-> -- 
-> 2.25.1
-> 
-> 
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+ drivers/soc/qcom/llcc-qcom.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 4ca88eaebf06..cb336b183bba 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -769,6 +769,27 @@ static const struct qcom_sct_config x1e80100_cfgs = {
+ };
+ 
+ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
++static DEFINE_MUTEX(dev_avail);
++
++static bool is_llcc_device_available(void)
++{
++	static struct llcc_drv_data *ptr;
++
++	mutex_lock(&dev_avail);
++	if (!ptr) {
++		struct device_node *node;
++
++		node = of_find_node_by_name(NULL, "system-cache-controller");
++		if (!of_device_is_available(node)) {
++			pr_warn("llcc-qcom: system-cache-controller node not found\n");
++			drv_data = ERR_PTR(-ENODEV);
++		}
++		of_node_put(node);
++		ptr = drv_data;
++	}
++	mutex_unlock(&dev_avail);
++	return (PTR_ERR(ptr) != -ENODEV) ? true : false;
++}
+ 
+ /**
+  * llcc_slice_getd - get llcc slice descriptor
+@@ -783,7 +804,7 @@ struct llcc_slice_desc *llcc_slice_getd(u32 uid)
+ 	struct llcc_slice_desc *desc;
+ 	u32 sz, count;
+ 
+-	if (IS_ERR(drv_data))
++	if (!is_llcc_device_available() || IS_ERR(drv_data))
+ 		return ERR_CAST(drv_data);
+ 
+ 	cfg = drv_data->cfg;
+-- 
+2.43.0.254.ga26002b62827
+
 
