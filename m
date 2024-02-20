@@ -1,116 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-11768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59CDF85B3EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 08:25:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5927A85B41A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 08:41:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE0A8B249E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:25:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8685D1C226A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:41:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 543715A7A8;
-	Tue, 20 Feb 2024 07:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C21AF5A4EF;
+	Tue, 20 Feb 2024 07:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6WSjOKx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JY6Toh2B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249315A799;
-	Tue, 20 Feb 2024 07:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907DE3D69;
+	Tue, 20 Feb 2024 07:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708413899; cv=none; b=YDA7ChZsGcNkQ+zJacCDxkUWMmyNdSdXmVuN0x2HATuaxhiq1B1ucu6vUWpyg50T0o2RHXOnqVnEjx7C8PkVHy/nXG3q6LN8UQcf3/Pqt4ueWsnE6UieN+BQ8bcRbELsgj9/KlnFaiNTKr73AsqQxJtBIrlKTm8lygqUUCP4G68=
+	t=1708414887; cv=none; b=GWWopRcUQ2NL5qXo0PmaSGAcKmSw3JYFE5OKmGQMkbA07JYdfXCwepNF0hcXawkiW2qJ/a6SX+R1ciqXgBvdmfAB4zKScK7Ws3YgfB/f5Hg+TlyOfyedJqXowyQXBg7kvwRY+hQGN7eAT+Au9DMWqD8+yMYBmsKpfVQPGLDFjWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708413899; c=relaxed/simple;
-	bh=Km8gZMkJB7vNwcEvKJf3Z5MjG8s2kLrFv7d6SMKvVC4=;
+	s=arc-20240116; t=1708414887; c=relaxed/simple;
+	bh=J+HORaFB9BevhmkmzQueEU/imUrqvh0T/whWu92LpyQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XjfVbqr6wXtMvOkl6TZdPCZBmcRRO4r5yaR138+pEB5uDBmu5iB77MdhQ06lIwO9CMqhS2c4HyBiIIbo4I0hR+EZeItdTcNmExZn0bY2EEX8o+OD122UsDvHnEu1EYr0fSTmz2MiOpiNtQvXvt6O7vPq5RAl7tLsY2s+po7H24E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6WSjOKx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CECC433C7;
-	Tue, 20 Feb 2024 07:24:58 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=pY1Mm5o8Hj8sRU0MFp7KVrz1FGtSY25wSATmpN9kPALc1WLJ708GIzpi7u+/4tl2BjYrZH/pqS0+xMFBgjJ3yL7XnHqtlYRTnakmhm2TKrP23GeRdTM9N4MK6lxlsudG7W+ejnc2Am67FlbtOnjVPyhDcFwhsTEfr0X5oOeIFr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JY6Toh2B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AFCC433F1;
+	Tue, 20 Feb 2024 07:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708413898;
-	bh=Km8gZMkJB7vNwcEvKJf3Z5MjG8s2kLrFv7d6SMKvVC4=;
+	s=k20201202; t=1708414887;
+	bh=J+HORaFB9BevhmkmzQueEU/imUrqvh0T/whWu92LpyQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y6WSjOKxHt9TBefi2fivgCw5sGg4pib4PrIDZmtoesOTgo80CtchhROVw3pw0FeqR
-	 Pc9MGfrCfAKPZbAgDQVs+NvTqOslO+bcwY0+bPdxSK2Sx7n0x9RIur2VOHGKxXS5q1
-	 ZojucTaTTOXH7nqkaDAr7oKNW9keBDciLLBBztXj3jG96Dqy7egDtQFdz8u2Q2iBJt
-	 aWy2UUb55Fmr0MdRm5gJysrUBrLO6+m7+7BBeis1O8wXCAb8JBXQ17KOHFtUMJxzgm
-	 /zoywKFK7JfGrRP4yu7ts9/D14Ft57GqR0srDYm1N84JAeD8Tp4Vli9+dIMNop2M/1
-	 B2HwmHPKoXLyg==
+	b=JY6Toh2BDGiFy9xwulIfY5B+iEbVfcXmqWyqe7oWtbzY3v+xzOZXGq0iK1CxtaOBv
+	 spxKlF7t3ceCJTFb1AREMYL7HmtcjbTmoRS4AmCMTtAV7OcQOahZuYr9WlngZAc/CO
+	 3Q47hDZdH+upXWEmzmw/NvDczUwSdMjHE7TDFxDcTrmZOraP8O+AxcvxA/FBvQQzeZ
+	 xcVmpoCEP83w2bGGijXyXcsoOs/hGCs/M8APdaf8b0T2bbWMMCRPtvVPFQq+koQeQE
+	 VXkD5kfl/d8OjC+o2IFGEQFIeFIxUu0ruJYG5aNbtzjf/EERMaiHHFIPCP5f0xzA76
+	 K7A+KE27Ib9ug==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rcKUp-0000000024l-2ZkS;
-	Tue, 20 Feb 2024 08:24:56 +0100
-Date: Tue, 20 Feb 2024 08:24:55 +0100
+	id 1rcKkn-000000002Ca-2uih;
+	Tue, 20 Feb 2024 08:41:25 +0100
+Date: Tue, 20 Feb 2024 08:41:25 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Markus Elfring <Markus.Elfring@web.de>
-Cc: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Vinod Koul <vkoul@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Rob Clark <robdclark@gmail.com>
-Subject: Re: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
-Message-ID: <ZdRTx2lmHBVlcLub@hovoldconsulting.com>
-References: <20240217150228.5788-2-johan+linaro@kernel.org>
- <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Do not require
+ 'msi-map-mask'
+Message-ID: <ZdRXpQnbDbojlMkV@hovoldconsulting.com>
+References: <20240212165043.26961-1-johan+linaro@kernel.org>
+ <20240212165043.26961-3-johan+linaro@kernel.org>
+ <e396cf20-8598-4437-b635-09a4a737a772@linaro.org>
+ <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
+ <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
+ <20240216165406.GD39963@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de>
+In-Reply-To: <20240216165406.GD39963@thinkpad>
 
-On Mon, Feb 19, 2024 at 06:48:30PM +0100, Markus Elfring wrote:
-> > The two device node references taken during allocation need to be
-> > dropped when the auxiliary device is freed.
-> …
-> > +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-> …
-> > @@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct device *parent,
-> >
-> >  	ret = auxiliary_device_init(adev);
-> >  	if (ret) {
-> > +		of_node_put(adev->dev.platform_data);
-> > +		of_node_put(adev->dev.of_node);
-> >  		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
-> >  		kfree(adev);
-> >  		return ERR_PTR(ret);
+On Fri, Feb 16, 2024 at 10:24:06PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Feb 14, 2024 at 02:38:57PM +0100, Krzysztof Kozlowski wrote:
+> > On 14/02/2024 13:54, Johan Hovold wrote:
+> > > On Wed, Feb 14, 2024 at 01:01:20PM +0100, Krzysztof Kozlowski wrote:
+> > >> On 12/02/2024 17:50, Johan Hovold wrote:
+> > >>> Whether the 'msi-map-mask' property is needed or not depends on how the
+> > >>> MSI interrupts are mapped and it should therefore not be described as
+> > >>> required.
+> > >>
+> > >> I could imagine that on all devices the interrupts are mapped in a way
+> > >> you need to provide msi-map-mask. IOW, can there be a Qualcomm platform
+> > >> without msi-map-mask?
+> > > 
+> > > I don't have access to the documentation so I'll leave that for you guys
+> > > to determine. I do note that the downstream DT does not use it and that
+> > > we have a new devicetree in linux-next which also does not have it:
+> > > 
+> > > 	https://lore.kernel.org/r/20240125-topic-sm8650-upstream-pcie-its-v1-1-cb506deeb43e@linaro.org
+> > > 
+> > > But at least the latter looks like an omission that should be fixed.
+> > 
+> > Hm, either that or the mask for sm8450 was not needed as well. Anyway,
+> > thanks for explanation, appreciated!
 > 
-> The last two statements are also used in a previous if branch.
-> https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/gpu/drm/bridge/aux-hpd-bridge.c#L63
-> 
-> How do you think about to avoid such a bit of duplicate source code
-> by adding a label here?
+> msi-map-mask is definitely needed as it would allow all the devices under the
+> same bus to reuse the MSI identifier. Currently, excluding this property will
+> not cause any issue since there is a single device under each bus. But we cannot
+> assume that is going to be the case on all boards.
 
-No, the current code is fine and what you are suggesting is in any case
-unrelated to this fix.
+Are you saying that there is never a use case for an identity mapping?
+Just on Qualcomm hardware or in general?
 
-If this function ever grows a third error path like that, I too would
-consider it however.
+It looks like we have a fairly large number of mainline devicetrees that
+do use an identity mapping here (i.e. do not specify 'msi-map-mask') and
+the binding document also has an explicit example of this.
+
+	Documentation/devicetree/bindings/pci/pci-msi.txt
+
+> I will submit a patch to fix SM8650.
 
 Johan
 
