@@ -1,184 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-11792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8DFD85B8B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:13:58 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8ACC385B90C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:29:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EB5D1F2473D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:13:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B703BB20F1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:28:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9008F60EF8;
-	Tue, 20 Feb 2024 10:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C0C2612C8;
+	Tue, 20 Feb 2024 10:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nv9a/AUQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Aq+LnfDV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD8B41A80;
-	Tue, 20 Feb 2024 10:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8373760EE3;
+	Tue, 20 Feb 2024 10:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708423905; cv=none; b=mMDMYfgj0gRvtxloqcAe2fgHqbncKH+YDBeF3PeZzultoCKoABRlVqsaL60rBBIo8A4JiuhgAS2qRvg3XMlA5wYrHf2vLiEie0/RsctfiUuqNdj1wJe2agFH5FewF2bnQrs/odjOj/cWiykDMcllINAK3QLS4p67f1UTd4Df+x4=
+	t=1708424906; cv=none; b=p7uOzub7JFRZQIJi9e5QBP9KlmfJ4Vva7Syur6wz1An1RLyCJFAEsKvOeHgxVWytxo8tdfn8mZ8qfsKZLeFrbi8iNji+raCFS1zdKz/2TRzm8lGbk4xJ53MEHCIfjOXn1jwsmij3Q6MVp/UuHAmk/iHl0FLge9pHfCiI9biTPmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708423905; c=relaxed/simple;
-	bh=4fR3RvvX25uhwy7hcoCiq63kjKy7ETnyYtzhSQgIwQQ=;
+	s=arc-20240116; t=1708424906; c=relaxed/simple;
+	bh=l7otL2gscSgJ64bCvC033YalS/+yUmZ93WpIuL3Dwu4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZEdsG9OoxgVcMmumy3df6cnLoScDkyZRyAC7URhSHpMtBN7Tp+Aa3AGZpR3hr7Pi8TS0UXnG7I3xW8Jxl/lNgxpKRR/RPJxvWY4HZ0E1eyneoiFcLvzbwFXUgRWK4b2xbf5d/3XsebBHEotB2bye3rWdDonwCS8+ySGa/kiUxd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nv9a/AUQ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=IkXodb0sjJdyThHd/xi4p87c9x2kP6ni5YkpYqFdwapnAZhER6u9kvXuTZZtJJEJHhssxZI+r0/dZyMS8OUKqSkthQqX31UtXYQknv0VkXDn+iEGB0DpfBkzQIoM7ImtJl/sQKWFbMWhmQXb43uez8nSUT5bS7Je3n3YX26J0XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Aq+LnfDV; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K4Nw9V004019;
-	Tue, 20 Feb 2024 10:11:33 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KABgW2026869;
+	Tue, 20 Feb 2024 10:28:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/kGHPCXOUhT1b+kLQoJcMoS7pcHpOsfun4Cr9Uh9Xmc=; b=nv
-	9a/AUQMvRnn255bi9Vv8Kft8pJ0XEWtaut5o5HED/dgsOoy6s1pmTwLTA1OMK0HM
-	mnboG9RjEdyi31S8i61SCiZhVzIhIUYyW2G0jmjKbP0Io/2oUBM702zPdMYk/z0x
-	Vyr2xxv5UFsSsTZXUWIPNnOaYDDlRdADChIswDhJrl7A8xRjELjBeL7U0XvdTVma
-	iH4WLq67VktgXYXnP9UbLpbuPyERnJm7jxqK2akbjjZRrMOJ1IZ0jvL4rUdYRLFf
-	CzUWcDJ1a5lhM25B7v38uE3r4wfJzvED3JUXy6WyJnUuZAuKA2a8Hrr6Fzi84Bis
-	s8v67IWIoepGE8zgmJ9A==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcn15rmu8-1
+	qcppdkim1; bh=DD8EzjWrMUK+IIZqpHAfw0rT3BUw8IO2gwpFPRrgBD8=; b=Aq
+	+LnfDVuhHMQHv2uBCF6Kjaqsz4Z5xjSyuQCxYW67mbszq0MPv2KIjqT1SJtdhv4y
+	uwML35qc/tVHEhW24L0OEPZGmMiEinZ82ePiBoXTmy9FYcLehe2qizVjL/Ery60y
+	MPkBRyvrO0s6co2mZqHzuyQFWXQjDB21mi1u+WlAcpxX3QDgznhgLSHBXnIf9YEQ
+	YndZSZWWg5rgSEWbwZulztcHWrXg114kWSfRsTct/4YJz/ZpY7u5iat78hcJZNFd
+	VhAZQThFqhQOVgYqOjTKbyWsC+U6HvCglp44CR8oyYRQNlw3FpGXFNXzEpDW7KaX
+	u7fShwMwCQ9p97/nLr9A==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct3d015j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 10:11:32 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KABWho015374
+	Tue, 20 Feb 2024 10:28:20 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KASJjM022610
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 10:11:32 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 20 Feb 2024 10:28:19 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 02:11:29 -0800
-Message-ID: <b56c871e-619b-f8bb-f149-fb9b22f8a79d@quicinc.com>
-Date: Tue, 20 Feb 2024 15:41:26 +0530
+ 2024 02:28:13 -0800
+Message-ID: <374902c2-b1c4-42bd-aa34-fbb188b8428a@quicinc.com>
+Date: Tue, 20 Feb 2024 18:28:10 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v11 1/4] firmware: qcom: scm: provide a read-modify-write
- function
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 5/6] arm64: dts: qcom: add base AIM500 dtsi
 Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>
-CC: Mark Brown <broonie@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>
-References: <1704727654-13999-1-git-send-email-quic_mojha@quicinc.com>
- <1704727654-13999-2-git-send-email-quic_mojha@quicinc.com>
- <CACRpkdY7fbFyNNd6GAikxC3+wk0ca8Yn_8__zkp+Q-deJeJ_LQ@mail.gmail.com>
- <3a17f36a-04bf-04f2-7a22-82b76977b325@quicinc.com>
- <CACRpkdbnj3W3k=snTx3iadHWU+RNv9GY4B3O4K0hu8TY+DrK=Q@mail.gmail.com>
- <6lmxlfopjzxbvn5oe6uha2ppdjderuymgq3h3gz2suyb5i2vs6@mpadw4b37s5t>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <6lmxlfopjzxbvn5oe6uha2ppdjderuymgq3h3gz2suyb5i2vs6@mpadw4b37s5t>
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <kernel@quicinc.com>, Tingwei Zhang <quic_tingweiz@quicinc.com>
+References: <20240205115721.1195336-1-quic_jingyw@quicinc.com>
+ <20240205115721.1195336-6-quic_jingyw@quicinc.com>
+ <CAA8EJpr7tHXZHcH1Sbcy0-MCZfMxKBjaPXGdpg3cqyyFjTZOeA@mail.gmail.com>
+ <9685991e-6577-4f96-a17f-b0a65d8d1260@quicinc.com>
+ <CAA8EJpqVQEktHuD5sYsRMiytPS+XfoHzVTBUuKqeavL4yW72Sg@mail.gmail.com>
+ <37f1cede-6d70-4443-be8e-ef12266531a0@quicinc.com>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+In-Reply-To: <37f1cede-6d70-4443-be8e-ef12266531a0@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: D3SoTYIZC-4s_saOcdRgFyLJ_gHyZYy9
-X-Proofpoint-GUID: D3SoTYIZC-4s_saOcdRgFyLJ_gHyZYy9
+X-Proofpoint-ORIG-GUID: qeGl04L0-GnX52yBAdRy_jMqx_1w1xgd
+X-Proofpoint-GUID: qeGl04L0-GnX52yBAdRy_jMqx_1w1xgd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- phishscore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 mlxlogscore=999 impostorscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
+ adultscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200071
+ engine=8.19.0-2401310000 definitions=main-2402200075
 
 
 
-On 2/17/2024 12:01 AM, Bjorn Andersson wrote:
-> On Tue, Jan 09, 2024 at 02:34:10PM +0100, Linus Walleij wrote:
->> On Tue, Jan 9, 2024 at 2:24 PM Mukesh Ojha <quic_mojha@quicinc.com> wrote:
->>> On 1/9/2024 6:44 PM, Linus Walleij wrote:
->>>> On Mon, Jan 8, 2024 at 4:28 PM Mukesh Ojha <quic_mojha@quicinc.com> wrote:
->>>>
->>>>> It was realized by Srinivas K. that there is a need of
->>>>> read-modify-write scm exported function so that it can
->>>>> be used by multiple clients.
+On 2/20/2024 6:06 PM, Jingyi Wang wrote:
+> Hi Dmitry,
+> 
+> On 2/20/2024 5:19 PM, Dmitry Baryshkov wrote:
+>> On Tue, 20 Feb 2024 at 11:17, Jingyi Wang <quic_jingyw@quicinc.com> wrote:
+>>>
+>>> Hi Dmitry,
+>>>
+>>> On 2/5/2024 10:23 PM, Dmitry Baryshkov wrote:
+>>>> On Mon, 5 Feb 2024 at 14:00, Jingyi Wang <quic_jingyw@quicinc.com> wrote:
 >>>>>
->>>>> Let's introduce qcom_scm_io_rmw() which masks out the bits
->>>>> and write the passed value to that bit-offset.
->>>> (...)
->>>>> +int qcom_scm_io_rmw(phys_addr_t addr, unsigned int mask, unsigned int val)
->>>>> +{
->>>>> +       unsigned int old, new;
->>>>> +       int ret;
->>>>> +
->>>>> +       if (!__scm)
->>>>> +               return -EINVAL;
->>>>> +
->>>>> +       spin_lock(&__scm->lock);
->>>>> +       ret = qcom_scm_io_readl(addr, &old);
->>>>> +       if (ret)
->>>>> +               goto unlock;
->>>>> +
->>>>> +       new = (old & ~mask) | (val & mask);
->>>>> +
->>>>> +       ret = qcom_scm_io_writel(addr, new);
->>>>> +unlock:
->>>>> +       spin_unlock(&__scm->lock);
->>>>> +       return ret;
->>>>> +}
->>>>> +EXPORT_SYMBOL_GPL(qcom_scm_io_rmw);
+>>>>> Introduce aim500 board dtsi.
 >>>>
->>>> This looks a lot like you are starting to re-invent regmaps
->>>> regmap_update_bits().
+>>>> So, is it a board or a module?
 >>>>
->>>> If you are starting to realize you need more and more of
->>>> regmap, why not use regmap and its functions?
+>>> aim500 is a module, will fix the descrption.
 >>>
->>> I think, this discussion has happened already ..
+>>>>>
+>>>>> AIM500 Series is a highly optimized family of modules designed to
+>>>>> support AIoT and Generative AI applications based on sm8650p with
+>>>>> PMIC and bluetooth functions etc.
+>>>>>
+>>>>> Co-developed-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
+>>>>> Signed-off-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
+>>>>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>>>>> ---
+>>>>>   arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi | 409 +++++++++++++++++++
+>>>>>   1 file changed, 409 insertions(+)
+>>>>>   create mode 100644 arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>>>>> new file mode 100644
+>>>>> index 000000000000..cb857da8653b
+>>>>> --- /dev/null
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>>>>> @@ -0,0 +1,409 @@
+>>>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>>>> +/*
+>>>>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>> + */
+>>>>> +
+>>>>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>>>> +#include "sm8650p.dtsi"
+>>>>> +#include "pm8550.dtsi"
+>>>>> +#include "pm8550b.dtsi"
+>>>>> +#define PMK8550VE_SID 8
+>>>>> +#include "pm8550ve.dtsi"
+>>>>> +#include "pm8550vs.dtsi"
+>>>>> +#include "pmk8550.dtsi"
+>>>>> +
+>>>>> +/ {
+>>>>> +       aliases {
+>>>>> +               serial1 = &uart14;
+>>>>> +       };
+>>>>> +
+>>>>> +       vph_pwr: vph-pwr-regulator { };
+>>>>
+>>>> Is this regulator a part of the module or a part of the carrier board?
+>>>> If the latter is true, this must go to the carrier board DT file.
+>>>>
 >>>
->>> https://lore.kernel.org/lkml/CACRpkdb95V5GC81w8fiuLfx_V1DtWYpO33FOfMnArpJeC9SDQA@mail.gmail.com/
+>>> the vph_pwr regulator is defined in the aim500-aiot carrier board and used
+>>> in aim500 module.
 >>
->> That discussion ended with:
+>> If it is defined in the carrier board, then please move it and
+>> corresponding supply entries to the carrier board dts. Other devices
+>> using the SoM can have different power tree.
 >>
->> [Bjorn]
->>> We'd still need qcom_scm_io_readl() and qcom_scm_io_writel() exported to
->>> implement the new custom regmap implementation - and the struct
->>> regmap_config needed in just pinctrl-msm alone would be larger than the
->>> one function it replaces.
+>> While we are at it, could you please rename the node to regulator-vph-pwr?
 >>
->> When you add more and more accessors the premise starts to
->> change, and it becomes more and more of a reimplementation.
 >>
->> It may be time to actually fix this.
->>
-> 
-> Thought I had replied to this already, did we discuss this previously as
-> well?
-> 
-> My concern with expressing this as a regmap is that from the provider's
-> point of view, the regmap would span the entire 32-bit address space.
-> I'm guessing that there's something on the other side limiting what
-> subregions are actually accessible for each platform/firmware
-> configuration, but I'm not convinced that regmap a good abstraction...
+> will rename the node and move it to sm8650p-aim500-aiot.dts
 
-To add more to it, in current series, we are just accessing single 
-register for read/write and using regmap for this looks overkill to
-me.
+Shall we have the VPH_PWR implementation inside the board dts file, and 
+have the supply entries which used the VPH_PWR inside the SOM.dtsi file?
 
--Mukesh
+The VPH_PWR is an input IO of SOM. And the corresponding supply entries 
+is inside the SOM hardware design as well.
+
+The VPH_PWR as a fixed regulator implementation is the board design, it 
+can be changed to other design from different boards.
+
+Here is a simple diagram to show the hardware description of the VPH_PWR 
+related design:
+
++------------------------------------------------------+ 
+ 
+
+|                 Board                                | 
+ 
+
+|                                                      | 
+ 
+
+|           +-----------------+                        | 
+ 
+
+|power----->| Fixed regulator-----------+              | 
+ 
+
+|           +-----------------+         |              | 
+ 
+
+|                                       |              | 
+ 
+
+|                                       v VPH_PWR      | 
+ 
+
+|                  +------|----------------------+     | 
+ 
+
+|                  |      |    SOM       |       |     | 
+ 
+
+|                  |      |              |       |     | 
+ 
+
+|                  |      vVPH_PWR       vVPM_PWR|     | 
+ 
+
+|                  |  +------+       +------+    |     | 
+ 
+
+|                  |  | pmic1|       |pmic2 |    |     | 
+ 
+
+|                  |  +------+       +------+    |     | 
+ 
+
+|                  |                             |     | 
+ 
+
+|                  +-----------------------------+     | 
+ 
+
++------------------------------------------------------+ 
+ 
+
+
+
 > 
-> Regards,
-> Bjorn
-> 
->> Yours,
->> Linus Walleij
+> Thanks,
+> Jingyi
+
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
