@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-11764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29F9B85B281
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 06:57:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A723F85B2BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:13:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE024282E63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 05:57:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC0241C20EB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 06:13:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09CB057302;
-	Tue, 20 Feb 2024 05:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0690E58101;
+	Tue, 20 Feb 2024 06:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KzEL21Xu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TMAm/7KN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDC82030B;
-	Tue, 20 Feb 2024 05:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BCA57877;
+	Tue, 20 Feb 2024 06:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708408638; cv=none; b=jOpBJ8aSYuQAwk8B/FTm6kRrIVTQqNPKOAyNr6DaX8fEIEihCrX9X1D0bEAWlAhJzWGBLIzsujaoiDUf8Mfd0G3fITzl3z8IUSp+GlGm8dXqjOWErja1PxiaJCOSpGZtVO4j/ws145pnO5WPCMDYLwIPt5MT1zrpqmN+XWzK7rI=
+	t=1708409604; cv=none; b=STTU9j48lUXSJHtI9mv2TwWLU6hYMkcvjBmd2i/E3rMMCFbY3AemgqVLqOfWniBcnrwq5Y7exTRmcz76Clvk9xzsQxexNngDPDjZHfnqeHLqYLrN/yijkBKFRn5CPoxjdLZkrlE5rZD6GsC+cp70CEA4hFEBhMMHbJFpiD1bdpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708408638; c=relaxed/simple;
-	bh=cqjaARe1FbdSF96HBwZNb30nAMlFo1CKlR4ykFhjXpE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=C8IpSrmTTsWtHYK/Ef2pb7FjMzZQ/M1X12E2zLQLFOxcFIEfZga4ajU36mrIrEVJZaTlJSPKeOoRAUipPTzOr1Cb2c3mTRkE8pr/yVI5i2NoEskLQpS/Qq1A4v+e6+fRqt1q0cQi7SXQEWAcxfwyoRVrIYed36BuOo0ehq7bXK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KzEL21Xu; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1708409604; c=relaxed/simple;
+	bh=bVvP4nUoFxGKAU87ioUGH9WYX+2u+K4yKOSpAZp4stI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QYS2APxz9u7aCErY+IzCouaj6cwgk2B/JHoMlJVwTBlqVsz+ozJuAWfzHp8sYWjrby59wSPjeTXAIAaG+qiigHOb5npALukDL8W7FyxciokVDEJ3VON1Qmx7xua4ZH6SqIDCPAnUuNIuVH5siuqZKuPFtBrt8RIjAgM/PFrouuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TMAm/7KN; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K43xfH025633;
-	Tue, 20 Feb 2024 05:57:13 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K3bEkH007697;
+	Tue, 20 Feb 2024 06:13:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:references:from
+	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=1+w3uW+yuw2yO2IDZLFY2AOl401ceGZI48uk93ArssE=; b=Kz
-	EL21XumqkiNHVJI4Z2atx6EDp68cbGCZelp/a6erBWPvmFMQM6AHhCCmYydd3O25
-	Wc77/PR0PzRDJeuVz0fSYDW6QW0CadKicjDDNqiGGn1mjtxk20Gn/ghetfeqLiKU
-	DfNdo/TzhVuZviqrDxAelZ83AFlsHcelidEFL1ay6T3aZGR1Vtl6fe6R7oo7sCo4
-	3Ndqc/e5cuT7SXK/LU/RuTtZHoqftYFmpFDunzS3kmA+gLoMZhGoO8e2jo1UFYHS
-	PDY4VE93+O+CTV+UDaza8ycYKHDp1j9jxRVNIpc78Bt0LxbnHI3DfVZpgir111Y3
-	kA3Qh0VWAHkWPWpRRGBQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcmqp8583-1
+	qcppdkim1; bh=+K8wihPyJh/1HH1qwBrcS0bEcm0ngNnzBWoX2h74ycQ=; b=TM
+	Am/7KNO6WtphHBH+kf8HfS4f3eQhxcB3s+160806Ofba4EGhC1CwVXtI3PDCNLYR
+	CJS785HIpjs00n5qOvyL5E7E5RpNwEZbWUEsEKXdI9iYqzmE9D7jaenRzeN3TyGZ
+	utfUOaKkN/or7ltIMog0+hM8Iz3Yfqn3t5AzpAho56pPLWj9HRqVW9ChxQWn58MG
+	LjAVwfTS9mmL9J0BziBEQyQSr9lWlk6bU5hDn5IT40ooPS/2NVCfcACgzJXKd/ic
+	9mL9gbyMmWs1aqF14rwxLy9vUj5TC8T93QMMPxGg+BenUpvVoG3S2dczeks1Rb9l
+	2TOBj7hVeOUGorXPcdgA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wc54b2053-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 05:57:12 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K5uuJ2013923
+	Tue, 20 Feb 2024 06:13:16 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K6DEh7002541
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 05:56:56 GMT
-Received: from [10.214.197.177] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 20 Feb 2024 06:13:14 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 19 Feb
- 2024 21:56:53 -0800
-Message-ID: <0e2c4aff-e5cd-4d83-a46e-120d2ab3d8f1@quicinc.com>
-Date: Tue, 20 Feb 2024 11:26:50 +0530
+ 2024 22:13:09 -0800
+Message-ID: <400fa03c-bc08-4c32-a1ef-57f227493061@quicinc.com>
+Date: Tue, 20 Feb 2024 14:13:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,212 +65,331 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom_scm: Introduce batching of hyp assign
- calls
-Content-Language: en-GB
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, <luzmaximilian@gmail.com>,
-        <bartosz.golaszewski@linaro.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_guptap@quicinc.com>, <quic_pkondeti@quicinc.com>,
-        <quic_pheragu@quicinc.com>
-References: <20240209112536.2262967-1-quic_dibasing@quicinc.com>
- <7fhl7uvhl26whumcl3f5hxflczws67lg3yq4gb5fyrig2ziux6@chft6orl6xne>
- <b65d6328-e7bd-4752-a82f-36323b41ef13@linaro.org>
-From: Dibakar Singh <quic_dibasing@quicinc.com>
-In-Reply-To: <b65d6328-e7bd-4752-a82f-36323b41ef13@linaro.org>
+Subject: Re: [PATCH v4] pinctrl: Add lock to ensure the state atomization
+Content-Language: en-US
+To: Alexander Stein <alexander.stein@ew.tq-group.com>, <andersson@kernel.org>,
+        <linus.walleij@linaro.org>
+CC: <kernel@quicinc.com>, <linux-gpio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20240202105854.26446-1-quic_aiquny@quicinc.com>
+ <8376074.NyiUUSuA9g@steina-w>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+In-Reply-To: <8376074.NyiUUSuA9g@steina-w>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 18f7_PdPEotdbEg9qe-nI81g-u8THTay
-X-Proofpoint-ORIG-GUID: 18f7_PdPEotdbEg9qe-nI81g-u8THTay
+X-Proofpoint-GUID: pPL-wpZ0FI_3irS_3sF_oQkGeUAuyUWO
+X-Proofpoint-ORIG-GUID: pPL-wpZ0FI_3irS_3sF_oQkGeUAuyUWO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-20_05,2024-02-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxlogscore=999 adultscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200041
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 clxscore=1011 malwarescore=0 spamscore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=999 impostorscore=0 lowpriorityscore=0
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402200043
 
 
 
-On 12-Feb-24 4:39 PM, Konrad Dybcio wrote:
-> On 9.02.2024 19:06, Elliot Berman wrote:
->> On Fri, Feb 09, 2024 at 04:55:36PM +0530, Dibakar Singh wrote:
->>> Expose an API qcom_scm_assign_table to allow client drivers to batch
->>> multiple memory regions in a single hyp assign call.
->>>
->>> In the existing situation, if our goal is to process an sg_table and
->>> transfer its ownership from the current VM to a different VM, we have a
->>> couple of strategies. The first strategy involves processing the entire
->>> sg_table at once and then transferring the ownership. However, this
->>> method may have an adverse impact on the system because during an SMC
->>> call, the NS interrupts are disabled, and this delay could be
->>> significant when dealing with large sg_tables. To address this issue, we
->>> can adopt a second strategy, which involves processing each sg_list in
->>> the sg_table individually and reassigning memory ownership. Although
->>> this method is slower and potentially impacts performance, it will not
->>> keep the NS interrupts disabled for an extended period.
->>>
->>> A more efficient strategy is to process the sg_table in batches. This
->>> approach addresses both scenarios by involving memory processing in
->>> batches, thus avoiding prolonged NS interrupt disablement for longer
->>> duration when dealing with large sg_tables. Moreover, since we process
->>> in batches, this method is faster compared to processing each item
->>> individually. The observations on testing both the approaches for
->>> performance is as follows:
->>>
->>> Allocation Size/            256MB            512MB            1024MB
->>> Algorithm Used           ===========      ===========      ============
->>>
->>> Processing each sg_list   73708(us)        149289(us)       266964(us)
->>> in sg_table one by one
->>>
->>> Processing sg_table in    46925(us)         92691(us)       176893(us)
->>> batches
->>>
->>> This implementation serves as a wrapper around the helper function
->>> __qcom_scm_assign_mem, which takes an sg_list and processes it in
->>> batches. We’ve set the limit to a minimum of 32 sg_list in a batch or a
->>> total batch size of 512 pages. The selection of these numbers is
->>> heuristic, based on the test runs conducted. Opting for a smaller number
->>> would compromise performance, while a larger number would result in
->>> non-secure interrupts being disabled for an extended duration.
->>>
->>> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
->>> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
->>> Signed-off-by: Dibakar Singh <quic_dibasing@quicinc.com>
->>> ---
->>>   drivers/firmware/qcom/qcom_scm.c       | 211 +++++++++++++++++++++++++
->>>   include/linux/firmware/qcom/qcom_scm.h |   7 +
->>>   2 files changed, 218 insertions(+)
->>>
->>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->>> index 520de9b5633a..038b96503d65 100644
->>> --- a/drivers/firmware/qcom/qcom_scm.c
->>> +++ b/drivers/firmware/qcom/qcom_scm.c
->>> @@ -21,6 +21,8 @@
->>>   #include <linux/platform_device.h>
->>>   #include <linux/reset-controller.h>
->>>   #include <linux/types.h>
->>> +#include <linux/scatterlist.h>
->>> +#include <linux/slab.h>
->>>   
->>>   #include "qcom_scm.h"
->>>   
->>> @@ -1048,6 +1050,215 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->>>   }
->>>   EXPORT_SYMBOL_GPL(qcom_scm_assign_mem);
->>>   
->>> +/**
->>> + * qcom_scm_assign_mem_batch() - Make a secure call to reassign memory
->>> + *				   ownership of several memory regions
->>> + * @mem_regions:    A buffer describing the set of memory regions that need to
->>> + *		    be reassigned
->>> + * @nr_mem_regions: The number of memory regions that need to be reassigned
->>> + * @srcvms:	    A buffer populated with he vmid(s) for the current set of
->>> + *		    owners
->>> + * @src_sz:	    The size of the srcvms buffer (in bytes)
->>> + * @destvms:	    A buffer populated with the new owners and corresponding
->>> + *		    permission flags.
->>> + * @dest_sz:	    The size of the destvms buffer (in bytes)
->>> + *
->>> + * Return negative errno on failure, 0 on success.
->>> + */
->>> +static int qcom_scm_assign_mem_batch(struct qcom_scm_mem_map_info *mem_regions,
->>> +				     size_t nr_mem_regions, u32 *srcvms,
->>> +				     size_t src_sz,
->>> +				     struct qcom_scm_current_perm_info *destvms,
->>> +				     size_t dest_sz)
->>> +{
->>> +	dma_addr_t mem_dma_addr;
->>> +	size_t mem_regions_sz;
->>> +	int ret = 0, i;
->>> +
->>> +	for (i = 0; i < nr_mem_regions; i++) {
->>> +		mem_regions[i].mem_addr = cpu_to_le64(mem_regions[i].mem_addr);
->>> +		mem_regions[i].mem_size = cpu_to_le64(mem_regions[i].mem_size);
->>> +	}
->>> +
->>> +	mem_regions_sz = nr_mem_regions * sizeof(*mem_regions);
->>> +	mem_dma_addr = dma_map_single(__scm->dev, mem_regions, mem_regions_sz,
->>> +				      DMA_TO_DEVICE);
->>> +	if (dma_mapping_error(__scm->dev, mem_dma_addr)) {
->>> +		dev_err(__scm->dev, "mem_dma_addr mapping failed\n");
->>> +		return -ENOMEM;
->>> +	}
->>> +
->>> +	ret = __qcom_scm_assign_mem(__scm->dev, virt_to_phys(mem_regions),
->>> +				    mem_regions_sz, virt_to_phys(srcvms), src_sz,
->>> +				    virt_to_phys(destvms), dest_sz);
->>> +
->>> +	dma_unmap_single(__scm->dev, mem_dma_addr, mem_regions_sz, DMA_TO_DEVICE);
->>> +	return ret;
->>> +}
->>> +
->>> +/**
->>> + * qcom_scm_prepare_mem_batch() - Prepare batches of memory regions
->>> + * @sg_table:       A scatter list whose memory needs to be reassigned
->>> + * @srcvms:	    A buffer populated with he vmid(s) for the current set of
->>> + *		    owners
->>> + * @nr_src:	    The number of the src_vms buffer
->>> + * @destvms:	    A buffer populated with he vmid(s) for the new owners
->>> + * @destvms_perms:  A buffer populated with the permission flags of new owners
->>> + * @nr_dest:	    The number of the destvms
->>> + * @last_sgl:	    Denotes to the last scatter list element. Used in case of rollback
->>> + * @roll_back:	    Identifies whether we are executing rollback in case of failure
->>> + *
->>> + * Return negative errno on failure, 0 on success.
->>> + */
->>> +static int qcom_scm_prepare_mem_batch(struct sg_table *table,
->>> +				      u32 *srcvms, int nr_src,
->>> +				      int *destvms, int *destvms_perms,
->>> +				      int nr_dest,
->>> +				      struct scatterlist *last_sgl, bool roll_back)
->>> +{
->>> +	struct qcom_scm_current_perm_info *destvms_cp;
->>> +	struct qcom_scm_mem_map_info *mem_regions_buf;
->>> +	struct scatterlist *curr_sgl = table->sgl;
->>> +	dma_addr_t source_dma_addr, dest_dma_addr;
->>> +	size_t batch_iterator;
->>> +	size_t batch_start = 0;
->>> +	size_t destvms_cp_sz;
->>> +	size_t srcvms_cp_sz;
->>> +	size_t batch_size;
->>> +	u32 *srcvms_cp;
->>> +	int ret = 0;
->>> +	int i;
->>> +
->>> +	if (!table || !table->sgl || !srcvms || !nr_src ||
->>> +	    !destvms || !destvms_perms || !nr_dest || !table->nents)
->>> +		return -EINVAL;
->>> +
->>> +	srcvms_cp_sz = sizeof(*srcvms_cp) * nr_src;
->>> +	srcvms_cp = kmemdup(srcvms, srcvms_cp_sz, GFP_KERNEL);
->>> +	if (!srcvms_cp)
->>> +		return -ENOMEM;
->>> +
->>> +	for (i = 0; i < nr_src; i++)
->>> +		srcvms_cp[i] = cpu_to_le32(srcvms_cp[i]);
->>> +
->>> +	source_dma_addr = dma_map_single(__scm->dev, srcvms_cp,
->>> +					 srcvms_cp_sz, DMA_TO_DEVICE);
+On 2/9/2024 4:37 PM, Alexander Stein wrote:
+> Am Freitag, 2. Februar 2024, 11:58:54 CET schrieb Maria Yu:
+>> Currently pinctrl_select_state is an export symbol and don't have
+>> effective re-entrance protect design. During async probing of devices
+>> it's possible to end up in pinctrl_select_state() from multiple
+>> contexts simultaneously, so make it thread safe.
+>> More over, when the real racy happened, the system frequently have
+>> printk message like:
+>>    "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+>> already used for some other setting".
+>> Finally the system crashed after the flood log.
+>> Add per pinctrl lock to ensure the old state and new state transition
+>> atomization.
+>> Also move dev error print message outside the region with interrupts
+>> disabled.
+>> Use scoped guard to simplify the lock protection needed code.
 >>
->> Please use the new tzmem allocator:
+>> Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration")
+>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+>> ---
+>>   drivers/pinctrl/core.c | 143 +++++++++++++++++++++--------------------
+>>   drivers/pinctrl/core.h |   2 +
+>>   2 files changed, 75 insertions(+), 70 deletions(-)
 >>
->> https://lore.kernel.org/all/20240205182810.58382-1-brgl@bgdev.pl/
+>> diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+>> index ee56856cb80c..1f7d001d4c1e 100644
+>> --- a/drivers/pinctrl/core.c
+>> +++ b/drivers/pinctrl/core.c
+>> @@ -1061,6 +1061,7 @@ static struct pinctrl *create_pinctrl(struct device
+>> *dev, p->dev = dev;
+>>   	INIT_LIST_HEAD(&p->states);
+>>   	INIT_LIST_HEAD(&p->dt_maps);
+>> +	spin_lock_init(&p->lock);
+>>
+>>   	ret = pinctrl_dt_to_map(p, pctldev);
+>>   	if (ret < 0) {
+>> @@ -1257,93 +1258,95 @@ static void pinctrl_link_add(struct pinctrl_dev
+>> *pctldev, static int pinctrl_commit_state(struct pinctrl *p, struct
+>> pinctrl_state *state) {
+>>   	struct pinctrl_setting *setting, *setting2;
+>> -	struct pinctrl_state *old_state = READ_ONCE(p->state);
+>> +	struct pinctrl_state *old_state;
+>>   	int ret;
+>>
+>> -	if (old_state) {
+>> -		/*
+>> -		 * For each pinmux setting in the old state, forget SW's
+> record
+>> -		 * of mux owner for that pingroup. Any pingroups which are
+>> -		 * still owned by the new state will be re-acquired by the
+> call
+>> -		 * to pinmux_enable_setting() in the loop below.
+>> -		 */
+>> -		list_for_each_entry(setting, &old_state->settings, node) {
+>> -			if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
+>> -				continue;
+>> -			pinmux_disable_setting(setting);
+>> +	scoped_guard(spinlock_irqsave, &p->lock) {
+>> +		old_state = p->state;
+>> +		if (old_state) {
+>> +			/*
+>> +			 * For each pinmux setting in the old state,
+> forget SW's record
+>> +			 * of mux owner for that pingroup. Any pingroups
+> which are
+>> +			 * still owned by the new state will be re-
+> acquired by the call
+>> +			 * to pinmux_enable_setting() in the loop below.
+>> +			 */
+>> +			list_for_each_entry(setting, &old_state-
+>> settings, node) {
+>> +				if (setting->type !=
+> PIN_MAP_TYPE_MUX_GROUP)
+
+>> +					continue;
+>> +				pinmux_disable_setting(setting);
+>> +			}
+>>   		}
+>> -	}
+>> -
+>> -	p->state = NULL;
+>>
+>> -	/* Apply all the settings for the new state - pinmux first */
+>> -	list_for_each_entry(setting, &state->settings, node) {
+>> -		switch (setting->type) {
+>> -		case PIN_MAP_TYPE_MUX_GROUP:
+>> -			ret = pinmux_enable_setting(setting);
+>> -			break;
+>> -		case PIN_MAP_TYPE_CONFIGS_PIN:
+>> -		case PIN_MAP_TYPE_CONFIGS_GROUP:
+>> -			ret = 0;
+>> -			break;
+>> -		default:
+>> -			ret = -EINVAL;
+>> -			break;
+>> -		}
+>> +		p->state = NULL;
+>>
+>> -		if (ret < 0)
+>> -			goto unapply_new_state;
+>> +		/* Apply all the settings for the new state - pinmux first
+> */
+>> +		list_for_each_entry(setting, &state->settings, node) {
+>> +			switch (setting->type) {
+>> +			case PIN_MAP_TYPE_MUX_GROUP:
+>> +				ret = pinmux_enable_setting(setting);
+>> +				break;
+>> +			case PIN_MAP_TYPE_CONFIGS_PIN:
+>> +			case PIN_MAP_TYPE_CONFIGS_GROUP:
+>> +				ret = 0;
+>> +				break;
+>> +			default:
+>> +				ret = -EINVAL;
+>> +				break;
+>> +			}
+>>
+>> -		/* Do not link hogs (circular dependency) */
+>> -		if (p != setting->pctldev->p)
+>> -			pinctrl_link_add(setting->pctldev, p->dev);
+>> -	}
+>> +			if (ret < 0)
+>> +				goto unapply_new_state;
+>>
+>> -	/* Apply all the settings for the new state - pinconf after */
+>> -	list_for_each_entry(setting, &state->settings, node) {
+>> -		switch (setting->type) {
+>> -		case PIN_MAP_TYPE_MUX_GROUP:
+>> -			ret = 0;
+>> -			break;
+>> -		case PIN_MAP_TYPE_CONFIGS_PIN:
+>> -		case PIN_MAP_TYPE_CONFIGS_GROUP:
+>> -			ret = pinconf_apply_setting(setting);
+>> -			break;
+>> -		default:
+>> -			ret = -EINVAL;
+>> -			break;
+>> +			/* Do not link hogs (circular dependency) */
+>> +			if (p != setting->pctldev->p)
+>> +				pinctrl_link_add(setting->pctldev, p-
+>> dev);
+>>   		}
+>>
+>> -		if (ret < 0) {
+>> -			goto unapply_new_state;
+>> -		}
+>> +		/* Apply all the settings for the new state - pinconf
+> after */
+>> +		list_for_each_entry(setting, &state->settings, node) {
+>> +			switch (setting->type) {
+>> +			case PIN_MAP_TYPE_MUX_GROUP:
+>> +				ret = 0;
+>> +				break;
+>> +			case PIN_MAP_TYPE_CONFIGS_PIN:
+>> +			case PIN_MAP_TYPE_CONFIGS_GROUP:
+>> +				ret = pinconf_apply_setting(setting);
+>> +				break;
+>> +			default:
+>> +				ret = -EINVAL;
+>> +				break;
+>> +			}
+>>
+>> -		/* Do not link hogs (circular dependency) */
+>> -		if (p != setting->pctldev->p)
+>> -			pinctrl_link_add(setting->pctldev, p->dev);
+>> -	}
+>> +			if (ret < 0)
+>> +				goto unapply_new_state;
+>>
+>> -	p->state = state;
+>> +			/* Do not link hogs (circular dependency) */
+>> +			if (p != setting->pctldev->p)
+>> +				pinctrl_link_add(setting->pctldev, p-
+>> dev);
+>> +		}
+>>
+>> -	return 0;
+>> +		p->state = state;
+>> +
+>> +		return 0;
+>>
+>>   unapply_new_state:
+>> -	dev_err(p->dev, "Error applying setting, reverse things back\n");
+>>
+>> -	list_for_each_entry(setting2, &state->settings, node) {
+>> -		if (&setting2->node == &setting->node)
+>> -			break;
+>> -		/*
+>> -		 * All we can do here is pinmux_disable_setting.
+>> -		 * That means that some pins are muxed differently now
+>> -		 * than they were before applying the setting (We can't
+>> -		 * "unmux a pin"!), but it's not a big deal since the pins
+>> -		 * are free to be muxed by another apply_setting.
+>> -		 */
+>> -		if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
+>> -			pinmux_disable_setting(setting2);
+>> +		list_for_each_entry(setting2, &state->settings, node) {
+>> +			if (&setting2->node == &setting->node)
+>> +				break;
+>> +			/*
+>> +			 * All we can do here is pinmux_disable_setting.
+>> +			 * That means that some pins are muxed
+> differently now
+>> +			 * than they were before applying the setting
+> (We can't
+>> +			 * "unmux a pin"!), but it's not a big deal
+> since the pins
+>> +			 * are free to be muxed by another
+> apply_setting.
+>> +			 */
+>> +			if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
+>> +				pinmux_disable_setting(setting2);
+>> +		}
+>>   	}
+>>
+>> +	dev_err(p->dev, "Error applying setting, reverse things back\n");
+>>   	/* There's no infinite recursive loop here because p->state is NULL
+> */
+>>   	if (old_state)
+>>   		pinctrl_select_state(p, old_state);
+>> diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
+>> index 837fd5bd903d..6844edd38b4a 100644
+>> --- a/drivers/pinctrl/core.h
+>> +++ b/drivers/pinctrl/core.h
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/list.h>
+>>   #include <linux/mutex.h>
+>>   #include <linux/radix-tree.h>
+>> +#include <linux/spinlock.h>
+>>   #include <linux/types.h>
+>>
+>>   #include <linux/pinctrl/machine.h>
+>> @@ -91,6 +92,7 @@ struct pinctrl {
+>>   	struct pinctrl_state *state;
+>>   	struct list_head dt_maps;
+>>   	struct kref users;
+>> +	spinlock_t lock;
+>>   };
+>>
+>>   /**
+>>
+>> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
 > 
-> And the new __free annotations, please
+> This breaks pinctrl-imx on imx8qxp:
+> 
+> [    1.170727] imx8qxp-pinctrl system-controller:pinctrl: initialized IMX
+> pinctrl driver
+> [    1.283968] BUG: sleeping function called from invalid context at kernel/
+> locking/mutex.c:283
+> [    1.292089] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 70,
+> name: kworker/u16:4
+> [    1.300341] preempt_count: 1, expected: 0
+> [    1.304337] RCU nest depth: 0, expected: 0
+> [    1.308423] CPU: 2 PID: 70 Comm: kworker/u16:4 Not tainted 6.8.0-rc3-
+> next-20240209+ #2267 0b2aeebc4d64f1aef3abdd5fede2a9b5162eb867
+> [    1.320148] Hardware name: TQ-Systems i.MX8QXP TQMa8XQP on MBa8Xx (DT)
+> [    1.326667] Workqueue: events_unbound deferred_probe_work_func
+> [    1.332486] Call trace:
+> [    1.334918]  dump_backtrace+0x90/0x10c
+> [    1.338653]  show_stack+0x14/0x1c
+> [    1.341954]  dump_stack_lvl+0x6c/0x80
+> [    1.345603]  dump_stack+0x14/0x1c
+> [    1.348904]  __might_resched+0x108/0x160
+> [    1.352813]  __might_sleep+0x58/0xb0
+> [    1.356375]  mutex_lock+0x20/0x74
+> [    1.359676]  imx_scu_call_rpc+0x44/0x2e8
+> [    1.363586]  imx_pinconf_set_scu+0x84/0x150
+> [    1.367756]  imx_pinconf_set+0x48/0x7c
+> [    1.371491]  pinconf_apply_setting+0x90/0x110
+> [    1.375835]  pinctrl_commit_state+0xcc/0x28c
+> [    1.380092]  pinctrl_select_state+0x18/0x28
+> [    1.384262]  pinctrl_bind_pins+0x1e4/0x26c
+> [    1.388345]  really_probe+0x60/0x3e0
+> [    1.391907]  __driver_probe_device+0x84/0x198
+> [    1.396251]  driver_probe_device+0x38/0x150
+> [    1.400421]  __device_attach_driver+0xcc/0x194
+> [    1.404851]  bus_for_each_drv+0x80/0xdc
+> [    1.408674]  __device_attach+0x9c/0x1d0
+> [    1.412496]  device_initial_probe+0x10/0x18
+> [    1.416666]  bus_probe_device+0xa4/0xa8
+> [    1.420489]  deferred_probe_work_func+0x9c/0xe8
+> [    1.425006]  process_one_work+0x14c/0x40c
+> [    1.429002]  worker_thread+0x304/0x414
+> [    1.432738]  kthread+0xf4/0x100
+> [    1.435866]  ret_from_fork+0x10/0x20
+> 
+> With this commit pin_config_set callbacks need to be atomic suddenly which is
+> a no-go for any device attached to i2c or spi and in this case IPC RPC.
+> Once reverted systems start normally again.
+Thanks for the info. It is a valid scenario of your report. I will also 
+re-visit this.
+> 
+> Best regards,
+> Alexander
 > 
 
-Noted, I will incorporate these changes in the V2 patch.
-
-> Konrad
-
-Thanks,
-Dibakar
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
