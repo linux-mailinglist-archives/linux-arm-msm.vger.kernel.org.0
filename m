@@ -1,200 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-11802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45C5385BABD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:38:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60D9585BAFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:52:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C50FB1F21E23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:38:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16D62283693
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:52:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04503664DB;
-	Tue, 20 Feb 2024 11:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D56867A1B;
+	Tue, 20 Feb 2024 11:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DBahXR/D"
+	dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b="Pql6VQnC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6996994A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 11:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A738679ED;
+	Tue, 20 Feb 2024 11:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.134.164.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708429071; cv=none; b=Z59QGwVh/N7F90+/DbyYazjM2vqQ4sX60a90SVclwGcg57rmefPmbiBkaVs6idc4isBnXCTx7bRn6PI0SuF4FOdkdeWf1CcTFcQwl7CdNvAtH68Y+sTkdDicSfo/Os2ZfU+3H85UGC/TyGRiudJ6ViHDpDliYdt45zhQrCnmu24=
+	t=1708429958; cv=none; b=mrPVNBW0p3Cb137p6tVXTBRCxsoDeU2vYcTnA+rfN1u10/UsRP/BVI87fSQ8XVAPZlNzWGGjAzdaUZIz1BivK2jYwL5e/kkDOFGxzqnsleqRBzCZ8O7ZITo7w5sXm9bHVbHiAKw11w9ZEvPts4o4urZPu/8l+jeBSKoGZmOQI/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708429071; c=relaxed/simple;
-	bh=aCqm7zmGGwbfZRL15nYhI/q/NZRSI/X4Jngq4sAu76c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oCliW9yo/80XRrL0n8PuF/+bdff9GZ1fwE48cxtt4BBO33NwmehJXlFOGcR3I99sTp7m5hbDyt+Q0vbbFF4xI5BvfSB/Z4ycpaQ3hSJ9FCyr1/ElEpxoh1pFd1VJdCcIoxGwcezSy8NpswpNZhsl79KwZ6YBAYKjKvxNAf8HeJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DBahXR/D; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-55f279dca99so7194057a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 03:37:49 -0800 (PST)
+	s=arc-20240116; t=1708429958; c=relaxed/simple;
+	bh=Yp7or4NmnKQ2k4cpEJmMyo89KUtKqSrOMkPLtnvypLA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=MF+9oRcz5DI9f7+dTJoXU1rYNw0LcFwVZ37fZZ3YKR+y4Gq3Q21xu+K/P49s/WT703Doc4l5a/cOEBFsORo0rPtAByw1uhKU+ftuBw+xHb7AaXcHwnApEPOQ6Yy0LS1UVbWi5eBXQLUKUOauEnG5ObX89aIzCMt88KCKadcerVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr; spf=pass smtp.mailfrom=inria.fr; dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b=Pql6VQnC; arc=none smtp.client-ip=192.134.164.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inria.fr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708429068; x=1709033868; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mMy/+tyqqxFBTAjRn0JPSAGjq/uZ/OhPdcX+w/Bl/V0=;
-        b=DBahXR/DDCU/bUtXD4dXCNveRJHS0uUu6r/KNjgzxstNktrpLzlg42FPg5Hp1SWFzv
-         lvGXkP53sCVoyFAy2rxeB/bjx3xxV8Clhm3TyBHgWIQjklUTGp/EIeMzUQq7YfnT6RAa
-         2fVTcO4LsTwxpj81wqWm2qwzGM7zluTO50DOm/VA8oNcqh6lUDZK1RUOGOWO+uRu5VV/
-         mKRGUWAsvS+q2oChzVDYqXpTiz09IAwkJN3Ooh86bzx/KKwPMMdM+ekfEi7KIvDsCS+k
-         9XP42uNZeQNIPtOmYYkMfLBUzqvZSOtTGD2U/6+uSwdcDsxoz2/ApainZ0xa060LSgaz
-         EZuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708429068; x=1709033868;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mMy/+tyqqxFBTAjRn0JPSAGjq/uZ/OhPdcX+w/Bl/V0=;
-        b=ivk1BjGJBNsXUZU05lvMMvYPB9oDPL63I6U+f8zkthdT7FcEeGhPNSAWkQSHRA9jtb
-         QTIrdZDcAKdlS3yzzozxxOmC1v1KajxKVuml/j3izs5jGLlSYuacFxpuzrT8Ept1EXEu
-         jK4fyZyBnbaEc4jsuRttZ3IdaesMAQmDf98HL/+0NJKDM30jDmb/FRzzPk5/LODhzfSu
-         /J2uyTeWG9+AozKmZl/ZaSm59a4s3+wosyYJN5dko6LjJrB5D5QoYdwM9zJi6C3mFBmP
-         a+/jo01pIlYpHnT9yy0hFKzTVWNsl9Ub6/gSP9hrBpgLURk3gwDaXcJdLxXcVNE6nXuO
-         oETg==
-X-Forwarded-Encrypted: i=1; AJvYcCXagCzWruiWYzpj55KKab9LQLcyxtllRA2cX+bc2cZJWPP0Q3oVk6nUeVOObOT5+vh0TR/0guehA+CpDYNhMWTXQckMVgEUdHDsJEKdrQ==
-X-Gm-Message-State: AOJu0YzVT07jsRD51L/rRNphvmQBOZIDZPVH0u9HPPzx4EdolDUBCxYB
-	0bGR3fUUtFwuxo+C+//a04eU+OGfhqG/Y4R11rGZ+fJSg6y/pP+GmWg9L4hT0hY=
-X-Google-Smtp-Source: AGHT+IHxHZ7aaKdCIyzehZkgTGXYKIrhGtf9UcNgP1hoLqjXEnOBrasVQo0/L+RbgqjbdS+Ba5oaiA==
-X-Received: by 2002:aa7:c90b:0:b0:564:a9ca:1c41 with SMTP id b11-20020aa7c90b000000b00564a9ca1c41mr1901125edt.6.1708429068400;
-        Tue, 20 Feb 2024 03:37:48 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id e10-20020a50ec8a000000b00564d6840976sm234387edr.80.2024.02.20.03.37.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 03:37:48 -0800 (PST)
-Message-ID: <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
-Date: Tue, 20 Feb 2024 12:37:46 +0100
+  d=inria.fr; s=dc;
+  h=date:from:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=1M4BVBMt80+EpGUdBvcdqZq7UMSH5rmWkvh/86/IyP0=;
+  b=Pql6VQnC508MlZQr0ue7CCu89plVt/X6lTdZnJ+Of3+4gTP5Ip6joogh
+   27bbqBwHYV2sV2qL7VhZJLKnUzpN89pRC+l90k8ldZjsXwMvkYZhacpsn
+   c/QtgZ0mSU1Gfgg+8IRt5GbdySMyiWwcPKq7o5D3v1szRxKr1MizjemHy
+   0=;
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.06,172,1705359600"; 
+   d="scan'208";a="80129118"
+Received: from dt-lawall.paris.inria.fr ([128.93.67.65])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2024 12:52:25 +0100
+Date: Tue, 20 Feb 2024 12:52:25 +0100 (CET)
+From: Julia Lawall <julia.lawall@inria.fr>
+To: Johan Hovold <johan@kernel.org>
+cc: Markus Elfring <Markus.Elfring@web.de>, 
+    Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org, 
+    dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org, 
+    linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org, 
+    Andrzej Hajda <andrzej.hajda@intel.com>, 
+    Bjorn Andersson <andersson@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, 
+    David Airlie <airlied@gmail.com>, 
+    Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+    Maxime Ripard <mripard@kernel.org>, 
+    Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+    Thomas Zimmermann <tzimmermann@suse.de>, Vinod Koul <vkoul@kernel.org>, 
+    LKML <linux-kernel@vger.kernel.org>, 
+    Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+    Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+    Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
+    Kishon Vijay Abraham I <kishon@kernel.org>, 
+    Konrad Dybcio <konrad.dybcio@linaro.org>, 
+    Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+    Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+    Rob Clark <robdclark@gmail.com>
+Subject: Re: [PATCH 1/6] drm/bridge: aux-hpd: fix OF node leaks
+In-Reply-To: <ZdRTx2lmHBVlcLub@hovoldconsulting.com>
+Message-ID: <1afc87c-2c1f-df10-a0c8-2a267d44122@inria.fr>
+References: <20240217150228.5788-2-johan+linaro@kernel.org> <c95f5ff3-8dad-4302-9384-92a9b83f7bdc@web.de> <ZdRTx2lmHBVlcLub@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Marc Gonzalez <mgonzalez@freebox.fr>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: DT <devicetree@vger.kernel.org>, linux-media
- <linux-media@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Pierre-Hugues Husson <phh@phh.me>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323329-1071210912-1708429945=:3417"
 
-On 20/02/2024 12:21, Bryan O'Donoghue wrote:
-> On 20/02/2024 10:56 a.m., Marc Gonzalez wrote:
->> On 19/02/2024 20:24, Bryan O'Donoghue wrote:
->>
->>> On 19/02/2024 5:44 p.m., Dmitry Baryshkov wrote:
->>>
->>>> On Mon, 19 Feb 2024 at 19:29, Konrad Dybcio wrote:
->>>>>
->>>>> On 19.02.2024 18:18, Marc Gonzalez wrote:
->>>>>
->>>>>> On our msm8998-based device, calling venus_sys_set_power_control()
->>>>>> breaks playback. Since the vendor kernel never calls it, we assume
->>>>>> it should not be called for this device/FW combo.
->>>>>
->>>>> FWIW, this is also broken on other SoCs.. 8280/8350 and 6115
->>>>> to name a couple.
->>>>
->>>> Then let's just disable it until it gets unbroken?
->>>
->>> Its functional on most of our upstream stuff though, why switch if off
->>> unless necessary ?
->>>
->>> Maybe it should be an opt-in instead of an opt-out, TBH my own feeling
->>> is its better to minimize the amount of work and opt as per the proposed
->>> patch.
->>>
->>> Perhaps the qcom vidc team can give insights on 8280xp and 8350 when we
->>> come to tackling new HFI6XX and later SoCs ...
->>
->> I was wondering if the chosen property name might cause issues later...
->>
->> Thinking "qcom,no-low-power" might be a bit too general?
->> Perhaps would need to mention venus somewhere in the name,
->> to limit this to the video decoder?
->>
->> Regards
->>
-> 
-> Yep, the word venus should probably appear in the property name.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This is RFC, so I am ignoring it, but just in case before you send v2
-with the same:
+--8323329-1071210912-1708429945=:3417
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-You described the desired Linux feature or behavior, not the actual
-hardware. The bindings are about the latter, so instead you need to
-rephrase the property and its description to match actual hardware
-capabilities/features/configuration etc.
 
-Best regards,
-Krzysztof
 
+On Tue, 20 Feb 2024, Johan Hovold wrote:
+
+> On Mon, Feb 19, 2024 at 06:48:30PM +0100, Markus Elfring wrote:
+> > > The two device node references taken during allocation need to be
+> > > dropped when the auxiliary device is freed.
+> > …
+> > > +++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
+> > …
+> > > @@ -74,6 +75,8 @@ struct device *drm_dp_hpd_bridge_register(struct device *parent,
+> > >
+> > >  	ret = auxiliary_device_init(adev);
+> > >  	if (ret) {
+> > > +		of_node_put(adev->dev.platform_data);
+> > > +		of_node_put(adev->dev.of_node);
+> > >  		ida_free(&drm_aux_hpd_bridge_ida, adev->id);
+> > >  		kfree(adev);
+> > >  		return ERR_PTR(ret);
+> >
+> > The last two statements are also used in a previous if branch.
+> > https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/gpu/drm/bridge/aux-hpd-bridge.c#L63
+> >
+> > How do you think about to avoid such a bit of duplicate source code
+> > by adding a label here?
+>
+> No, the current code is fine and what you are suggesting is in any case
+> unrelated to this fix.
+>
+> If this function ever grows a third error path like that, I too would
+> consider it however.
+
+I guess these of_node_puts can all go away shortly with cleanup anyway?
+
+julia
+--8323329-1071210912-1708429945=:3417--
 
