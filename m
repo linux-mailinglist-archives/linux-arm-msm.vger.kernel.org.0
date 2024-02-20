@@ -1,104 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-11816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E3D285BB79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:11:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 803E385BB87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:12:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEBA8281734
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:11:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 208BE1F25FCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:12:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88221657D7;
-	Tue, 20 Feb 2024 12:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5099567C64;
+	Tue, 20 Feb 2024 12:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gFrD+wMj"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="Tgk4Nf+y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED48C67C72
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678EB67C6A;
+	Tue, 20 Feb 2024 12:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708431073; cv=none; b=l7gDAQrCTkxHn3QCqAqJ1X/pKdwkaQQi3oe/ud3nSw28iiyvngT9OC/UtKb66HMM945YKfAMKW417PeMuQm0KSH2q+Cvo9MG4e9l/C3LVGKmctXOYPNtLPUlSY5s1vj8uMp2e+YL0i1d0Rj2A3Q/wAyvaPmPHDLzD1cIijsVpJ0=
+	t=1708431122; cv=none; b=kJfv2WiZcZ0pm1ENuluuMD8krDZlNOT5lmLjvubcVqVf0IbE/wjFUP27slH3cVO8zxLkIu5+tDrW69yUEwrAG29NI2iTzZrUxlNEed+aAnI8WKCcrPKx9VId0M9d+j9AuLTNRDriSeUlP8B0HSQs/6XPDJuTcWMhEhXjSew7R1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708431073; c=relaxed/simple;
-	bh=BqaQAXupnrIUquuSop0hnKVxmWNQgaRJfNNMkdEr9pU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dOxsopgCLeXm9TiJkB60aGuyATf8VNw8DfJLdh1RIgq4TCrfiwrIbqTMultQvsHm/56oDhW8hfBXFT1n1maaMOMjfFeph48sR3qSOY0cBhsMWVx25MdG5L8GGw1gsm2HQ8wOADDBXR9L9m41iu273z0iIAQCQ1TcAb7qzuVk/JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gFrD+wMj; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-607fc3e69adso42872357b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 04:11:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708431071; x=1709035871; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dy/caDfZjOGZ/ICXi5t2Xv/6rJdHheSidVH0lV0pHS0=;
-        b=gFrD+wMjVKIF/fXKHYVJcJVWuNLohOYEJHkqwV8/0gqu+7KWfnUaLG7Gga/l5+VbsJ
-         4y+DBviY79C1KePTwfaSQCw+2Jv5SZBVVek5BhMCIVOa2cYihFXZq/gxq5kgA+Wdr+18
-         5iWndKfwbm8bLtY5Yb4+hY+E82DcQs3cS1Ws5x6HSCQBatua4EtB4cotI2lbt9Mv6jdH
-         B7MjCW++8xQbU0EtIdPnIBd/GCu9Nj1/Xr2u1Og0zWWdkvb5JV6zzUhwbUwNICOOzkoi
-         VXevboR0CiZOoEBpDWaTfuKmdgutYn882fe4sArz2NeH9rVyCnuMxdsg+VFIZPUrlJD7
-         F6CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708431071; x=1709035871;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dy/caDfZjOGZ/ICXi5t2Xv/6rJdHheSidVH0lV0pHS0=;
-        b=hcnEQ3r2p1lcOu8yYa26fVAl7gpndLmN1hpxaPdIVdbjYOStzBpHUsI9S6vV70X+aw
-         gJkd49MExO707MQkbuVQH2NtMHnjyRmfOKlZH16+z1JDplcQOynL2R++1uc5YgqZpGFS
-         d+dMDc+/e0kK5gP9FByEaOMtZ9uNTOADlSY4Qql8gF0rI5C4suneUIMRGFotB1Egtv6V
-         2RUWD7Guan/V6rqMDeCGRLkV8ZC6YE4AINlv1dxK4ethbPCy5l76CJcU4oJ86KwjpUEr
-         ivkJxHOThhg0GbkNTco5qXBneKsxUhGjeiiWiclni8N0cccZ+PVRpmzuCr1dsdP1sVkr
-         Co1w==
-X-Forwarded-Encrypted: i=1; AJvYcCU2gqfBXoKSh/Xca1N5tgE2f+Zgt0gPk69FcBhQ7xjuzmXGxcknXNylunC+0VrxPRVbAdHephNAxU+fLcER5HAYcu5ahyysOE2qs2C+1A==
-X-Gm-Message-State: AOJu0Yyq0ugX7WVr0IonrMrqc4DE6GpIJK5Jf717J+OsOHlFcfoPxWZH
-	gvy+7F9a3HnpyG151h7O22fW/pEu5RiL1gtJqq3+mNE0wMDI68xNdr+XsBDb/XpmkHq9tvgZiGy
-	jh1Fpuu+13SqtENY1UBH1+/DrYDkz6QeqBULjDg==
-X-Google-Smtp-Source: AGHT+IF2zDf3XgcK9QP2IYaoigNbZzdQSINGOcFBC2jSQR7qeBk1CasXZT2gneoj3MATMAClXBgLcHMA0tFxwFBaxmU=
-X-Received: by 2002:a05:6902:2709:b0:dcc:f8e5:c8c8 with SMTP id
- dz9-20020a056902270900b00dccf8e5c8c8mr16849736ybb.45.1708431071014; Tue, 20
- Feb 2024 04:11:11 -0800 (PST)
+	s=arc-20240116; t=1708431122; c=relaxed/simple;
+	bh=VQwdwkiqF7atE4ZGt/XQ1+JYNrmZCk8qg42wHIdGyEA=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IYws9AJl6aVz+hTeDfH268mtaPG1iyin241lnYsTGoZkjniqOpvtC9YdynF0X1wfoBCErE0rznHGIoqNg1Z8bEpvebBz1yki6aNM83Y0S3/MBQmIWU9IS57OgLAs7zXbosyB+TyY6hULXlVSKX2C0FbrIV0r/pwcWDQSR+vWTt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=Tgk4Nf+y; arc=none smtp.client-ip=198.47.19.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+	by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41KCBgP8088721;
+	Tue, 20 Feb 2024 06:11:42 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1708431102;
+	bh=A1Wnhtv/mj8FTbw6kpoNXtyq830Vf6qti0CsRifKZCM=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=Tgk4Nf+ywcowy+vjLIs8yyUUYlDeNgBzmIYjyHODprN4yxMW60DRZUpYZTAVszA4x
+	 ySv6zp5dWUNYFpAYafdIHIYKOm+55czngq/QDKqmW0DQq1JPbKG0vHUhoPEMG19eLo
+	 AZJXSBuBDNleq526lvOXsStT7ThwdQn1oDZqcpRw=
+Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
+	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41KCBgDI005500
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 20 Feb 2024 06:11:42 -0600
+Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 20
+ Feb 2024 06:11:42 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE106.ent.ti.com
+ (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Tue, 20 Feb 2024 06:11:42 -0600
+Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41KCBfOj072811;
+	Tue, 20 Feb 2024 06:11:42 -0600
+Date: Tue, 20 Feb 2024 17:41:41 +0530
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel
+	<gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Marek Vasut
+	<marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda
+	<yoshihiro.shimoda.uh@renesas.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Serge Semin <fancer.lancer@gmail.com>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <s-vadapalli@ti.com>
+Subject: Re: [PATCH v2 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
+Message-ID: <70a2f29f-301d-40c6-bc37-abab35286caa@ti.com>
+References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
+ <20240216-dw-hdma-v2-1-b42329003f43@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240220-x1e80100-phy-edp-compatible-refactor-v5-0-e8658adf5461@linaro.org>
- <20240220-x1e80100-phy-edp-compatible-refactor-v5-1-e8658adf5461@linaro.org>
-In-Reply-To: <20240220-x1e80100-phy-edp-compatible-refactor-v5-1-e8658adf5461@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 20 Feb 2024 14:11:00 +0200
-Message-ID: <CAA8EJpp20nq4X_n0Bp1ZmZ7yffWm1zYpH12QL-Gj_nP7wuq1Hg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] phy: Add Embedded DisplayPort and DisplayPort submodes
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan@kernel.org>, linux-phy@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240216-dw-hdma-v2-1-b42329003f43@linaro.org>
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-On Tue, 20 Feb 2024 at 13:58, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> In some cases, a DP PHY needs to be configured to work in eDP mode.
-> So add submodes for both DP and eDP so they can be used by the
-> controllers for specifying the mode the PHY should be configured in.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
+> In order to add support for Hyper DMA (HDMA), let's refactor the existing
+> dw_pcie_edma_find_chip() API by moving the common code to separate
+> functions.
+> 
+> No functional change.
+> 
+> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.c | 40 +++++++++++++++++++++++-----
+>  1 file changed, 33 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 250cf7f40b85..3a26dfc5368f 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
+>  	.irq_vector = dw_pcie_edma_irq_vector,
+>  };
+>  
+> -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
+> +{
+> +	pci->edma.dev = pci->dev;
+> +
+> +	if (!pci->edma.ops)
+> +		pci->edma.ops = &dw_pcie_edma_ops;
+> +
+> +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +}
+> +
+> +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+>  
+> @@ -902,8 +912,6 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  
+>  	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+>  		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> -
+> -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+>  	} else if (val != 0xFFFFFFFF) {
+>  		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Minor suggestion:
+
+The above section prior to this patch was:
+	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+
+		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+	} else if (val != 0xFFFFFFFF) {
+		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+
+		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
+	} else {
+		return -ENODEV;
+	}
+
+And this patch is removing the call to dw_pcie_readl_dma() in the "if"
+condition above. So the curly braces after this patch will only be
+present because of the "else if" statement. So is the following change a
+good idea?
+
+	/* Assume it is EDMA_LEGACY by default but update it later if needed */
+	pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+
+	if (val == 0xFFFFFFFF && pci->edma.reg_base)
+		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+	else if (val != 0xFFFFFFFF)
+		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
+	else
+		return -ENODEV;
 
 
--- 
-With best wishes
-Dmitry
+Regards,
+Siddharth.
 
