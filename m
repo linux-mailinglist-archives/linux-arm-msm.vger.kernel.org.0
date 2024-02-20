@@ -1,117 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-11780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A97A85B6EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:14:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61D0D85B6F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:15:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A37DB223EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:14:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E69BB1F252E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:15:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940DF5F542;
-	Tue, 20 Feb 2024 09:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9363060BBB;
+	Tue, 20 Feb 2024 09:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P/8qkDYp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HOhhFJKx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B8F5D499
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 09:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBCA60DD6;
+	Tue, 20 Feb 2024 09:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708420289; cv=none; b=aW3/zkpUX89/zWuv/ih8UQ8XSdhxkkPjKLw8wCTjdk4rtj6O4xg7INTMgTjvljz1zQxGbcxb3wBaXGTxx5AwyS/A5RoNrthcOiHszQ1a/KwTF5Mm3CNoTWPo4Pv/Pk5LmC5ntfe3vMkOOZOwbCAZAtOP+LzawWwwXHOcqCoTGcc=
+	t=1708420316; cv=none; b=Ojbo8u6hNwmWjxBL3kIKrRFMyIoIu1eRiuxSpAMRIVpQGT0lMeSMgH0XYqYK9kr/mYxqQsRnEOnCHmFQXifOhn7PGSfIpJ5UWDy72ZikHVoGokzdMMMeVcqIar52o8Bo/wMurYUFDsfLhG3Wjmehdw92q8nmsXlntsg5vYpaYOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708420289; c=relaxed/simple;
-	bh=+RufAobQ4qTpp+zEw1siszXvlyI7TWaehz3HNHA9mNA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YzOCBzEYnsSE/F7KiwPwd5ePOSXJzD/6O45yCm4L2vvdrpYlOOJFWhnJUqY3Qfk47LXytbnbElyBhJ+NMOfDYl03g09oGfWyfclikmAPt2UkDLxKb6nJsr08AN1kICIxMlpOITLtV9tyIvvmM6pNMbBoRBtB7iO9+53nxJ9YU0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P/8qkDYp; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso5063477276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 01:11:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708420287; x=1709025087; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i8KpvZ9x6Ln7Vkr/szsabBYktK+hPk8mYltNeiqKLU0=;
-        b=P/8qkDYpUAiBQW3v6QUdPLXJuIfz9ShyEl49r4+OP9Cs7Vn+YbiaOeYuLqjZCyjZg3
-         2cdsGjNSEdgd9htuacMYncJ1Pus6OF5SiaPPmrBNqtSB0vvArroFYxjH0wZrMZOiJcgu
-         LJ4iHX/sIcMJkD/eiFkleaP258giLHUHhDsRwPvmqGPOZQosdd0hJhHR01A5brrNmL4y
-         WbJA0uU+EIDOLEhvSFzydyXENNQiKVyhSAKAkBq7AYwxoSBSdbd9S94gn9cAz9bwQ8O0
-         5a4zm/4S8VTuS5kQuNdngneHvd7zu2CmTnikg8NjRbdh1rsorTDA0lJ54g88FcVrUGMi
-         AJZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708420287; x=1709025087;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i8KpvZ9x6Ln7Vkr/szsabBYktK+hPk8mYltNeiqKLU0=;
-        b=bX79jZkZ/p2g0XtfWypbSCcSZK+Uyg7iBH2nTVuW9fw3N0DWtKjDKoub0AP2bNQg5H
-         486TEIhkI2xXpGarvD1eRZyMQT+9EO1855j8LJ1gpmVTr0BIcZy5TRfGOLBxNBgWJO2J
-         ozELNVQtvKO2hMSSx0r7E8jDb3Y1EcteIzwVlQqovfeP9Pjfz1yh9KycwytKb0NX1QaY
-         trZorH4011ZP1THyc1qivFMHUijO55eK0Z+E8A7V2VIht7vnTGH9mhugrDce+eVHDpM7
-         k9FNEEaQ0Z6q3+tlgvUCykfJP2Y3R1Qf1TPFawziSl7EBbY+pz2UyCNjsM0cnXA4Wurk
-         jA2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWu44/oezL1F/UYn+Y8lAEQod0BZZXtt8GSf75oNRBBX3cCEnDGn+mOBkCmEcgfDntj+nL0qOdT7mAp9Xn5stt4ZL3vy2fCt6ySn1Hvfg==
-X-Gm-Message-State: AOJu0YxhjuLF4WXFwwDKj8ebcuXSijuU8/KHxplZWbFBX0HVROA+Yl5s
-	7kX9ACJHzSoVE7cZPPYEQ6h7IRy/tDpHtzY0F12M1eW2zdyCY6osZd08DpNq5jzM4iO8AIKJPbv
-	cKMEvZ7vyNli6da2e/FZBXIIBttYyWRCvd4MLmw==
-X-Google-Smtp-Source: AGHT+IFr51wnhVj35YnYqgfrkAMXo2Zn3IIpyyDexqrUDauTmbFB+nWtVWpiT6uii2V1W1tf977xLpCHWTCepL2tI8Y=
-X-Received: by 2002:a25:d0d6:0:b0:dce:1871:3d30 with SMTP id
- h205-20020a25d0d6000000b00dce18713d30mr8739458ybg.21.1708420286855; Tue, 20
- Feb 2024 01:11:26 -0800 (PST)
+	s=arc-20240116; t=1708420316; c=relaxed/simple;
+	bh=6pNQxLl0GnHySyYMqnH4Xm6BRC1/LRaZTiGQX7HtdMU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=c3lmHz1tdyiWU+2agJa47QpiPrYVPUrDUyouHs/edIpJBCawEAmBNUU567hHR3bSryA6KTphN5YTiyqyV2vk/AoZ9KBr60EF5UUXxJTSAWcAGc+MqDPvLo3B0+ZDSgzFBE2e6n+Y2BnayHjbDJEsH4vAIoj9gNmXdpdEKKgnkqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HOhhFJKx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K4lv1X027238;
+	Tue, 20 Feb 2024 09:11:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=N/CD0FCYkuZ9HzV6F9mo4RHIskjQxoogo9wDD04+oDc=; b=HO
+	hhFJKxWEhxKpaWy5RYlRTyb9trEAPG+zHlhs203+JWHDL9M2WL8ec1sV5yYm0ZDN
+	mDQQBJdsGfpGk/99uUPqlzdsaU5qhEXwDp+HclvLJDkSQSXVgdX3rymD43jYv9Pi
+	j/VV4/8KSJl3hrf0xMoSyDjOpRAzsXmDMfGZWjmcuFS5Nbc3xfQ3P6XyisJfQ1DX
+	HDoQln/TZNDvYunegYO9PEp8XZntaeuEwS0i050WeQ3zQCv+YeE2Ywfr35eo4Dvu
+	SpuTfxeio+g1VW2EPXSU+4mr2WMtUPNVxaOOwNQ0C2iSgU+aT0TFfDtEFzpE2DO+
+	jrWtKZSMc56BhaTTlnzw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcnbd8f8c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 09:11:50 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K9Bojc018583
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 09:11:50 GMT
+Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 01:11:45 -0800
+Message-ID: <37ba0703-6a15-48d5-bb07-71d0fa1c5b2c@quicinc.com>
+Date: Tue, 20 Feb 2024 17:11:42 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240204-qcom-drop-compat-v1-1-69d6cd92aa0e@linaro.org> <ZcijFk9GcgtVoXoV@gerhold.net>
-In-Reply-To: <ZcijFk9GcgtVoXoV@gerhold.net>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 20 Feb 2024 11:11:15 +0200
-Message-ID: <CAA8EJprKfMGTAtaMm1YoioRLDOtjXQ4XGm8geURB5WVXdYUK0A@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: arm: qcom: drop the superfluous device
- compatibility schema
-To: Stephan Gerhold <stephan@gerhold.net>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 5/6] arm64: dts: qcom: add base AIM500 dtsi
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, Tingwei Zhang <quic_tingweiz@quicinc.com>
+References: <20240205115721.1195336-1-quic_jingyw@quicinc.com>
+ <20240205115721.1195336-6-quic_jingyw@quicinc.com>
+ <a429f2ab-8c6d-477c-8abc-51243523064c@linaro.org>
+Content-Language: en-US
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+In-Reply-To: <a429f2ab-8c6d-477c-8abc-51243523064c@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WdMf6v_n29ENk3ZU_rbw6t4DimlbdeVl
+X-Proofpoint-ORIG-GUID: WdMf6v_n29ENk3ZU_rbw6t4DimlbdeVl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=867 clxscore=1015
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
+ definitions=main-2402200065
 
-On Sun, 11 Feb 2024 at 12:36, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Sun, Feb 04, 2024 at 06:56:35PM +0200, Dmitry Baryshkov wrote:
-> > The idea impressed in the commit b32e592d3c28 ("devicetree: bindings:
-> > Document qcom board compatible format") never got actually adopted. As
-> > can be seen from the existing board DT files, no device actually used
-> > the PMIC / foundry / version parts of the compatible string. Drop this
-> > compatibility string description to avoid possible confusion and keep
-> > just the generic terms and the SoC list.
-> >
-> > Fixes: b32e592d3c28 ("devicetree: bindings: Document qcom board compatible format")
->
-> FWIW: It's not correct that no device uses the version parts of the
-> compatible string. There are actually two boards documented in qcom.yaml
-> that follow this scheme:
->
->   compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
->   compatible = "longcheer,l8150", "qcom,msm8916-v1-qrd/9-v1", "qcom,msm8916";
->
-> I don't think anyone is actively relying on those, though. I guess we
-> can just ignore them or even remove them.
+Hi Krzysztof,
 
-Excuse me for the long delay. As it was you who added the
-longcheer-l8150 support, does it require any of the msm-id options or
-dtbTool (original or modified) processing?
-If it can work with no additional tags, we can drop these compatibility strings.
+On 2/5/2024 8:35 PM, Krzysztof Kozlowski wrote:
+> On 05/02/2024 12:57, Jingyi Wang wrote:
+>> Introduce aim500 board dtsi.
+>>
+>> AIM500 Series is a highly optimized family of modules designed to
+>> support AIoT and Generative AI applications based on sm8650p with
+>> PMIC and bluetooth functions etc.
+>>
+>> Co-developed-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
+>> Signed-off-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
+>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi | 409 +++++++++++++++++++
+>>  1 file changed, 409 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>> new file mode 100644
+>> index 000000000000..cb857da8653b
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sm8650p-aim500.dtsi
+>> @@ -0,0 +1,409 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +#include "sm8650p.dtsi"
+>> +#include "pm8550.dtsi"
+>> +#include "pm8550b.dtsi"
+>> +#define PMK8550VE_SID 8
+>> +#include "pm8550ve.dtsi"
+>> +#include "pm8550vs.dtsi"
+>> +#include "pmk8550.dtsi"
+>> +
+>> +/ {
+>> +	aliases {
+>> +		serial1 = &uart14;
+>> +	};
+>> +
+>> +	vph_pwr: vph-pwr-regulator { };
+> 
+> What is this? Why is it needed?
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
+vph_pwr is the power supply which differs from board design, it is defined in sm8650p-aim500-aiot.dts,
+and it is used in the sm8650p-aim500.dts for regulator supply, so we leave the node here.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Jingyi
 
