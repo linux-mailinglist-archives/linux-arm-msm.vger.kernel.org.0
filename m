@@ -1,202 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-11853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8D8385BDC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 14:54:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1740585BDFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 15:01:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 572E21F24E91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:54:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45492286B9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 14:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D75816FB9D;
-	Tue, 20 Feb 2024 13:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4461F6A8B3;
+	Tue, 20 Feb 2024 14:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FZOA8OeG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mRZoJifw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422D673165;
-	Tue, 20 Feb 2024 13:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF476A33E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 14:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708437213; cv=none; b=BOo+Qj6vkwM99CrIAwkzeYxV2Fh/URw7KHJwqruswDdoDFtxyf5CrmwC1NasJmZoRhK38wWkg0UmGhtAI3PMxXyWfm2BEKlDr7wqEDtg66gASUzA4Uc4Bs1wnl4unE+AYUQAFaWvM1PqcYv3IrRS7s8SQO0AvfYxw7pFDpmbpdo=
+	t=1708437655; cv=none; b=Qw/2ZLUBpYiPXbz95v5yyGelbeLcMFZN6j7zVDAHkaeiMp44oRi7aRKNUsRvqPQZHkqTgp77wY1oj1H92eOsVDF7ez+5MX9/7fqb4R/Dp8WleNWymA4YbgUPE8Q+H2ySL0VwoydaCpYLPSRBCl+OvN9nmcBnWKYdVn8fqjoY1lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708437213; c=relaxed/simple;
-	bh=MKVStnTEU2LSXevhm2uyuLuxpac7BUpgFO9DAXqk3rY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=G90n9UeK3KgQO44Ah9+sy0oJuyKYKht2YX0l/DWyUPD+bihwmInmAodx/hi9gwWEeMOLKMvFaMqsKUVoP3+XnQx+mYTAGcO+uWC0xlY320NUU8mMlmvfVV3UKKOJ3nJheoicpBb89NXsU+NjUzkYet7RmVBxxNJCUqKXR8g/RzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FZOA8OeG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K884ll024023;
-	Tue, 20 Feb 2024 13:53:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=UaYhP3+GC6vM/TvkgF3lPBBN6jmDGfiKR//qNasxKnk=; b=FZ
-	OA8OeGY7M9nlRnHzbHP5hVdjxsDTFHU1K6SlrAQtb/Oq7TUrsu8GXnNcoSTzQ1Xf
-	yAI7s5xu/MXRHVuEX2sG0CJmhZWmErCXvaheUd2gikPxX11EpvqBoGxeeYDmiS3X
-	/T3nSvBiXbOY1WP39ttrIqLRdCVB4UhN/IcXDkV42xPeDCIWyac28bX8YgdiXGkO
-	M9L+lqoGM7eGAJl+pccZc5pCMhJRKIlyEwNkZv4FIq80vwqGkr5q+/jFNe3vbtdf
-	mF9zODpMkCCkCscQowiYIvpRfG7xg6qSSPp6x2frBQG8SAY4xr9X83j1t8eACIyn
-	LZR8u2MsDcc/jnK3ryyA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcmqp92d6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 13:53:23 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KDrMA3023412
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 13:53:22 GMT
-Received: from [10.216.7.17] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 05:53:18 -0800
-Message-ID: <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
-Date: Tue, 20 Feb 2024 19:23:14 +0530
+	s=arc-20240116; t=1708437655; c=relaxed/simple;
+	bh=yIavGtyBVHQhwYxocbKlHQfDHDHgZOv5J9ExqtIQ0og=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d2g1NxhkUCftjac5wutcBGw6PbREbXdXvT4s9aZUa7ushPuQKLmX0Z9BraMSLI8aZtwJOlPQeU0IFA8sDYcyfcsB68fmjj15M43sQNC8MCI4YfAYOmkmyKUu9guPRP7CCMRMZAZ4hc2Jbz7cq78gdlmmipsVLJdYtsIjlhjJXcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mRZoJifw; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d243797703so19201401fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 06:00:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708437651; x=1709042451; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yIavGtyBVHQhwYxocbKlHQfDHDHgZOv5J9ExqtIQ0og=;
+        b=mRZoJifwVwTGd+0ntdKE33Zb9jzmcWjeV/lxBsfPyFWZYqtytI7rZ16bFKVibTJQe2
+         hNE5QqSj8R30rVki/7gV6YWl1fh+RDRrsMIv8D77cTRzDGtXw+DF6EahyiqHVPLcYpwX
+         Wg0H4Am93nmtABmrW2Kkp+PuQ12BbjleE9oKAdua39x9RLD931SWs+Umr7N4Jws06332
+         e7Sd1tgCJbkxr/32up3Y4/BviJk5FkWxre1b7AUEDeB8lngX4RCNB33w/ChXZmVcxbG3
+         irNS2JFykSbkwC33y+hF3TyXeOzCxabIFhyuJ96KFYU2ogInpvpQALB9CN6Wrk1WffPU
+         9UFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708437651; x=1709042451;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yIavGtyBVHQhwYxocbKlHQfDHDHgZOv5J9ExqtIQ0og=;
+        b=d8JGV/SkzWMgCtTKxEx1p6ClcOMaImD9s+TrAbFd2HvueBR53trBLG3OXqyf/G3Whp
+         L5FUaImufHdMoXRe3/ZiFkqgCPzES7MU3RWbQqtI6nTZliFElm2mbdM1R0u0ZzL9ssxv
+         vclrL9aEIu3yHQq7yhu+12CN9WPr2S7Kh7I6zn+5EQCC0Mk0tdmdQSbzn38b6rlm7VVm
+         Eme6iUEZtlrFOyw4ryR8MiSoWQNysE/2hcj0thDTuIQcWLQ0EL+0xTxHMp+Mbqy02Knt
+         h0b+SjwWlcuH+wbtJTjmegYRPDH/8nGcAm0dABs7Wln/vLDw4xxGQ9EssYMXrD14OPgb
+         Avlg==
+X-Forwarded-Encrypted: i=1; AJvYcCXuDpRZx8Qpzg/RLMECJpy/UVFcU/Gh9VdnepunLU4qTgSCQO9KkbzzAC1gHfHRrOyaPSdsU2kJDDVbolh4M60s3LDiIKplPXWUh3IUKQ==
+X-Gm-Message-State: AOJu0YyVvhu/dDRUXdecquXJpLcIN5bQXlfyWB5CDm8/CF6AeEDW/V3J
+	l6f6Cv5InYwZZpkiOcmeejiJ3STRUTNpJDVltNueWDTiCMwX0jE/8oV5fJkT0+s=
+X-Google-Smtp-Source: AGHT+IFnMr7pgPZVpX97ZGZLJplTKGBJmAizHUWbgJVoD43o8CV/7GPFehR+pR53bgpnnhwAyZG3rQ==
+X-Received: by 2002:a2e:b0fa:0:b0:2d2:3028:2bcc with SMTP id h26-20020a2eb0fa000000b002d230282bccmr5159754ljl.47.1708437650764;
+        Tue, 20 Feb 2024 06:00:50 -0800 (PST)
+Received: from aspen.lan (aztw-34-b2-v4wan-166919-cust780.vm26.cable.virginm.net. [82.37.195.13])
+        by smtp.gmail.com with ESMTPSA id o8-20020a05600c510800b004105528c61fsm15006473wms.35.2024.02.20.06.00.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Feb 2024 06:00:50 -0800 (PST)
+Date: Tue, 20 Feb 2024 14:00:47 +0000
+From: Daniel Thompson <daniel.thompson@linaro.org>
+To: Luca Weiss <luca@z3ntu.xyz>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"G.Shark Jeong" <gshark.jeong@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maximilian Weigand <mweigand@mweigand.net>,
+	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] backlight: lm3630a: Initialize backlight_properties
+ on init
+Message-ID: <20240220140047.GD6716@aspen.lan>
+References: <20240220-lm3630a-fixups-v1-0-9ca62f7e4a33@z3ntu.xyz>
+ <20240220-lm3630a-fixups-v1-1-9ca62f7e4a33@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Marc Gonzalez
-	<mgonzalez@freebox.fr>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: DT <devicetree@vger.kernel.org>,
-        linux-media
-	<linux-media@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Stanimir
- Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob
- Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Pierre-Hugues Husson <phh@phh.me>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
- <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
- <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
- <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: smi-yHFIgc65JDyxww9lXVxwZiyWaC_b
-X-Proofpoint-ORIG-GUID: smi-yHFIgc65JDyxww9lXVxwZiyWaC_b
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxlogscore=999 adultscore=0 mlxscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 clxscore=1011 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220-lm3630a-fixups-v1-1-9ca62f7e4a33@z3ntu.xyz>
 
-Hi,
+On Tue, Feb 20, 2024 at 12:11:19AM +0100, Luca Weiss wrote:
+> The backlight_properties struct should be initialized to zero before
+> using, otherwise there will be some random values in the struct.
+>
+> Fixes: 0c2a665a648e ("backlight: add Backlight driver for lm3630 chip")
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-On 2/20/2024 6:57 PM, Krzysztof Kozlowski wrote:
-> On 20/02/2024 13:34, Marc Gonzalez wrote:
->> On 20/02/2024 12:37, Krzysztof Kozlowski wrote:
->>
->>> On 20/02/2024 12:21, Bryan O'Donoghue wrote:
->>>
->>>> On 20/02/2024 10:56 a.m., Marc Gonzalez wrote:
->>>>
->>>>> On 19/02/2024 20:24, Bryan O'Donoghue wrote:
->>>>>
->>>>>> On 19/02/2024 5:44 p.m., Dmitry Baryshkov wrote:
->>>>>>
->>>>>>> On Mon, 19 Feb 2024 at 19:29, Konrad Dybcio wrote:
->>>>>>>>
->>>>>>>> On 19.02.2024 18:18, Marc Gonzalez wrote:
->>>>>>>>
->>>>>>>>> On our msm8998-based device, calling venus_sys_set_power_control()
->>>>>>>>> breaks playback. Since the vendor kernel never calls it, we assume
->>>>>>>>> it should not be called for this device/FW combo.
->>>>>>>>
->>>>>>>> FWIW, this is also broken on other SoCs.. 8280/8350 and 6115
->>>>>>>> to name a couple.
->>>>>>>
->>>>>>> Then let's just disable it until it gets unbroken?
->>>>>>
->>>>>> Its functional on most of our upstream stuff though, why switch if off
->>>>>> unless necessary ?
->>>>>>
->>>>>> Maybe it should be an opt-in instead of an opt-out, TBH my own feeling
->>>>>> is its better to minimize the amount of work and opt as per the proposed
->>>>>> patch.
->>>>>>
->>>>>> Perhaps the qcom vidc team can give insights on 8280xp and 8350 when we
->>>>>> come to tackling new HFI6XX and later SoCs ...
->>>>>
->>>>> I was wondering if the chosen property name might cause issues later...
->>>>>
->>>>> Thinking "qcom,no-low-power" might be a bit too general?
->>>>> Perhaps would need to mention venus somewhere in the name,
->>>>> to limit this to the video decoder?
->>>>
->>>> Yep, the word venus should probably appear in the property name.
->>>
->>> This is RFC, so I am ignoring it, but just in case before you send v2
->>> with the same:
->>>
->>> You described the desired Linux feature or behavior, not the actual
->>> hardware. The bindings are about the latter, so instead you need to
->>> rephrase the property and its description to match actual hardware
->>> capabilities/features/configuration etc.
->>
->> I added the RFC tag explicitly because I was hoping for the DT folks
->> and msm maintainers to comment on the property name ;)
-> 
-> And for the PATCH we would not comment? RFC means not ready and you
-> gather opinion before doing more work. Some maintainers ignore entirely
-> RFC patches.
-> 
->>
->> Thanks for your comment!
->>
->> Here's the proposal for v2:
->>
->> qcom,venus-broken-low-power-mode
->>
->> Description:
->> This property is defined for devices where playback does not work
->> when the video decoder is in low power mode.
-> 
-> Would be nice to know what's broken but if that's tricky to get, then
-> sounds fine.
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
-msm8998 supports configuring the VCodec (venus core0) GDSC in HW power control
-mode. Could you please check and confirm if the driver is configuring only the
-VCodec GDSC and not the venus GDSC. Look for the attribute
-"qcom,support-hw-trigger" in vendor dt file.
 
-Regards,
-Vikash
+Daniel.
 
