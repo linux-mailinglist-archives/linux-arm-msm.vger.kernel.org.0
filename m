@@ -1,172 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-11817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 803E385BB87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:12:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CED685BB92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:13:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 208BE1F25FCA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:12:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 375B9282CC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:13:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5099567C64;
-	Tue, 20 Feb 2024 12:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B81A967E70;
+	Tue, 20 Feb 2024 12:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="Tgk4Nf+y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ee73j2qk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678EB67C6A;
-	Tue, 20 Feb 2024 12:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC0E67C71;
+	Tue, 20 Feb 2024 12:12:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708431122; cv=none; b=kJfv2WiZcZ0pm1ENuluuMD8krDZlNOT5lmLjvubcVqVf0IbE/wjFUP27slH3cVO8zxLkIu5+tDrW69yUEwrAG29NI2iTzZrUxlNEed+aAnI8WKCcrPKx9VId0M9d+j9AuLTNRDriSeUlP8B0HSQs/6XPDJuTcWMhEhXjSew7R1I=
+	t=1708431176; cv=none; b=day58RawakWyQyZ6DlYSCZgBF942Zw111HexQjdbfvaE1VXI3I+EfgwlSvfqpFbDzf49o1HMXxQLpUK1w1qvU/IN3D3C+U0h77OckoyxbMBlD+dNAgs9cK0pzpE1wTgdswI2YFL4TwlkdJABLxNyCLW9Tni332XkDCL1vPSrCtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708431122; c=relaxed/simple;
-	bh=VQwdwkiqF7atE4ZGt/XQ1+JYNrmZCk8qg42wHIdGyEA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IYws9AJl6aVz+hTeDfH268mtaPG1iyin241lnYsTGoZkjniqOpvtC9YdynF0X1wfoBCErE0rznHGIoqNg1Z8bEpvebBz1yki6aNM83Y0S3/MBQmIWU9IS57OgLAs7zXbosyB+TyY6hULXlVSKX2C0FbrIV0r/pwcWDQSR+vWTt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=Tgk4Nf+y; arc=none smtp.client-ip=198.47.19.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllv0034.itg.ti.com ([10.64.40.246])
-	by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41KCBgP8088721;
-	Tue, 20 Feb 2024 06:11:42 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1708431102;
-	bh=A1Wnhtv/mj8FTbw6kpoNXtyq830Vf6qti0CsRifKZCM=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=Tgk4Nf+ywcowy+vjLIs8yyUUYlDeNgBzmIYjyHODprN4yxMW60DRZUpYZTAVszA4x
-	 ySv6zp5dWUNYFpAYafdIHIYKOm+55czngq/QDKqmW0DQq1JPbKG0vHUhoPEMG19eLo
-	 AZJXSBuBDNleq526lvOXsStT7ThwdQn1oDZqcpRw=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41KCBgDI005500
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 20 Feb 2024 06:11:42 -0600
-Received: from DLEE106.ent.ti.com (157.170.170.36) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 20
- Feb 2024 06:11:42 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE106.ent.ti.com
- (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Tue, 20 Feb 2024 06:11:42 -0600
-Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41KCBfOj072811;
-	Tue, 20 Feb 2024 06:11:42 -0600
-Date: Tue, 20 Feb 2024 17:41:41 +0530
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel
-	<gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Marek Vasut
-	<marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda
-	<yoshihiro.shimoda.uh@renesas.com>,
-        Kishon Vijay Abraham I
-	<kishon@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <s-vadapalli@ti.com>
-Subject: Re: [PATCH v2 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
-Message-ID: <70a2f29f-301d-40c6-bc37-abab35286caa@ti.com>
-References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
- <20240216-dw-hdma-v2-1-b42329003f43@linaro.org>
+	s=arc-20240116; t=1708431176; c=relaxed/simple;
+	bh=vdq/fhL20CqvrgT/zXduzBt0JpmflD0QRaHYGsHg1Cc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EEC2Ccc9HZskUFK0K3OAbIRbNd8xvSf4/EOkoN1flc6DbgYP1dfj622QXfNJbK5ocHMmyCGX9o6lFn/L4HhZeLLBABFpMNXE/FObLIM/FI0IPKEqd9v6uNENO9xN+R9DG/QPA1ryu8YNg8ZbiT8m2KH1tkrzvj8wlodyXK0eKDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ee73j2qk; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KAG1ec027660;
+	Tue, 20 Feb 2024 12:12:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=drr88rP1gE8DZYd3IlmPEoaAL4ojdft/vQ7O5Df4b+g=; b=ee
+	73j2qkNHIziBbzP0Ll8PR4rau6H2j8Hfh2pFDH1QgHDNr5ABxH0wGBzHLhyiYB0J
+	oedtraPQOH9rGJjJdjHUyZ/yHiKjuQC63neUgGDXBRpMqHfAJHlFDhm6ZU6uyJ0p
+	IQDXfMFqOq7RpqAAZjh/S6Su0n0eYFh9hKBlB7t+RIoxkyuVYiKSQ/J1ky0NZ0Tn
+	MldD3RR9EqjDR3WVHliyz9F5AwooiqCKVwBoiDID31h6JSoNxiThKUo1IL0XoxyK
+	f1X2AUcR3dhqiM/NVIVtutMJPw4o4uqSOaav2tIDuSnR9tySRJbLjf9qrPWit/ta
+	HPEo6DlMNzJCAz9M/XYQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct5786ta-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:12:37 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCCbla024375
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:12:37 GMT
+Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 04:12:30 -0800
+Message-ID: <28a6a8f9-8be8-346b-64be-50844ac31ac7@quicinc.com>
+Date: Tue, 20 Feb 2024 17:42:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240216-dw-hdma-v2-1-b42329003f43@linaro.org>
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: ipq9574: Disable eMMC node
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
+        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <manivannan.sadhasivam@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240215134856.1313239-6-quic_mdalam@quicinc.com>
+ <CAA8EJpqV=w38TqjfTp6OurAwHjR87PpmQTs2jUo6O7vF1-T-WQ@mail.gmail.com>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <CAA8EJpqV=w38TqjfTp6OurAwHjR87PpmQTs2jUo6O7vF1-T-WQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: au_RqYUsQNdgJd_KKX3r209aqYUAVbcQ
+X-Proofpoint-GUID: au_RqYUsQNdgJd_KKX3r209aqYUAVbcQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=861 mlxscore=0
+ spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
+ definitions=main-2402200088
 
-On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
-> In order to add support for Hyper DMA (HDMA), let's refactor the existing
-> dw_pcie_edma_find_chip() API by moving the common code to separate
-> functions.
+
+
+On 2/15/2024 8:30 PM, Dmitry Baryshkov wrote:
+> On Thu, 15 Feb 2024 at 15:49, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+>>
+>> Disable eMMC node for rdp433, since rdp433 default boot mode
+>> is norplusnand.
 > 
-> No functional change.
+> Are they exclusive?
+
+   Yes its exclusive, gpios are shared b/w NAND and eMMC so that
+   only one could get enable.
 > 
-> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-designware.c | 40 +++++++++++++++++++++++-----
->  1 file changed, 33 insertions(+), 7 deletions(-)
+>>
+>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> index 1bb8d96c9a82..e33e7fafd695 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> @@ -24,7 +24,7 @@ &sdhc_1 {
+>>          mmc-hs400-enhanced-strobe;
+>>          max-frequency = <384000000>;
+>>          bus-width = <8>;
+>> -       status = "okay";
+>> +       status = "disabled";
+>>   };
+>>
+>>   &tlmm {
+>> --
+>> 2.34.1
+>>
+>>
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 250cf7f40b85..3a26dfc5368f 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
->  	.irq_vector = dw_pcie_edma_irq_vector,
->  };
->  
-> -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
-> +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
-> +{
-> +	pci->edma.dev = pci->dev;
-> +
-> +	if (!pci->edma.ops)
-> +		pci->edma.ops = &dw_pcie_edma_ops;
-> +
-> +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
-> +}
-> +
-> +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
->  {
->  	u32 val;
->  
-> @@ -902,8 +912,6 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
->  
->  	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
->  		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
-> -
-> -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
->  	} else if (val != 0xFFFFFFFF) {
->  		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
-
-Minor suggestion:
-
-The above section prior to this patch was:
-	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
-		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
-
-		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
-	} else if (val != 0xFFFFFFFF) {
-		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
-
-		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
-	} else {
-		return -ENODEV;
-	}
-
-And this patch is removing the call to dw_pcie_readl_dma() in the "if"
-condition above. So the curly braces after this patch will only be
-present because of the "else if" statement. So is the following change a
-good idea?
-
-	/* Assume it is EDMA_LEGACY by default but update it later if needed */
-	pci->edma.mf = EDMA_MF_EDMA_LEGACY;
-
-	if (val == 0xFFFFFFFF && pci->edma.reg_base)
-		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
-	else if (val != 0xFFFFFFFF)
-		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
-	else
-		return -ENODEV;
-
-
-Regards,
-Siddharth.
+> 
 
