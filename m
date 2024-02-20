@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-11765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A723F85B2BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:13:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1982185B351
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:59:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC0241C20EB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 06:13:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C46EB281C5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 06:59:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0690E58101;
-	Tue, 20 Feb 2024 06:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D2A45A0F9;
+	Tue, 20 Feb 2024 06:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TMAm/7KN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZSJq5wDz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BCA57877;
-	Tue, 20 Feb 2024 06:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617785A0EB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 06:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708409604; cv=none; b=STTU9j48lUXSJHtI9mv2TwWLU6hYMkcvjBmd2i/E3rMMCFbY3AemgqVLqOfWniBcnrwq5Y7exTRmcz76Clvk9xzsQxexNngDPDjZHfnqeHLqYLrN/yijkBKFRn5CPoxjdLZkrlE5rZD6GsC+cp70CEA4hFEBhMMHbJFpiD1bdpc=
+	t=1708412384; cv=none; b=ZZV4D5O68ynEBJZiMqeyGKxzkJ3dW5tQYPC+b+3zTfCe9XsWPQDiL2QC2k1mBuxX7GigXljh6LQhSZcMCzwAhHHuv9/Z+cqVH/t5wVAVEDuWr0sIEZxyktG1Zqp36EBNKQDa0ze/hyIfqti7wAegnhvC7uxaevsb0iASd4G7eXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708409604; c=relaxed/simple;
-	bh=bVvP4nUoFxGKAU87ioUGH9WYX+2u+K4yKOSpAZp4stI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QYS2APxz9u7aCErY+IzCouaj6cwgk2B/JHoMlJVwTBlqVsz+ozJuAWfzHp8sYWjrby59wSPjeTXAIAaG+qiigHOb5npALukDL8W7FyxciokVDEJ3VON1Qmx7xua4ZH6SqIDCPAnUuNIuVH5siuqZKuPFtBrt8RIjAgM/PFrouuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TMAm/7KN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K3bEkH007697;
-	Tue, 20 Feb 2024 06:13:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+K8wihPyJh/1HH1qwBrcS0bEcm0ngNnzBWoX2h74ycQ=; b=TM
-	Am/7KNO6WtphHBH+kf8HfS4f3eQhxcB3s+160806Ofba4EGhC1CwVXtI3PDCNLYR
-	CJS785HIpjs00n5qOvyL5E7E5RpNwEZbWUEsEKXdI9iYqzmE9D7jaenRzeN3TyGZ
-	utfUOaKkN/or7ltIMog0+hM8Iz3Yfqn3t5AzpAho56pPLWj9HRqVW9ChxQWn58MG
-	LjAVwfTS9mmL9J0BziBEQyQSr9lWlk6bU5hDn5IT40ooPS/2NVCfcACgzJXKd/ic
-	9mL9gbyMmWs1aqF14rwxLy9vUj5TC8T93QMMPxGg+BenUpvVoG3S2dczeks1Rb9l
-	2TOBj7hVeOUGorXPcdgA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wc54b2053-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 06:13:16 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K6DEh7002541
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 06:13:14 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 19 Feb
- 2024 22:13:09 -0800
-Message-ID: <400fa03c-bc08-4c32-a1ef-57f227493061@quicinc.com>
-Date: Tue, 20 Feb 2024 14:13:06 +0800
+	s=arc-20240116; t=1708412384; c=relaxed/simple;
+	bh=rujM/o5AjDNJ9lcZkArg6d87J1BhTiGW6Fn0Na9SRI4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=bbV2zgYz0OSoEKUT8iG1X7z8vmmd7UZ5BB+UPd2+PVZ10oN3IvllPH7JSmE0ZggsoHuwGVPFJnjPx5Dz205YS+iL89FjUdKw6NYecH7DlLVtCYxirOyT6JTnuQp7juV59+5LUlzkKq/hxzbq+fhii53YFpX9PzBSBah8IdL3N8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZSJq5wDz; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-608342633b8so19130287b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Feb 2024 22:59:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708412380; x=1709017180; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TMFT0tsiHgdz9iZN1EKIldjl3b45OLLNs9mRQlVJ+mo=;
+        b=ZSJq5wDztcC0598GPl5gsiiGz6EXEk9rex0SPJx2eekXB7lb++ZTP6xSOjFks2QAwo
+         nJ6i0V4taQiI4p1JSyl0gj1rh7x7edg1C7q20/2vUa3fscaSi73RNzq/Bkr4AOrX3GYi
+         MyUnxCzfAXdj4CD0khJNIWuP4w/o4IRoOi8Iql5tTzLDinlZXuKp6rVg2tui0P2JPyXa
+         RzWemsPBKOKFDnlSV+LhgIo8AU2Rhu+Hco7ECyG6hHDnP5UCZM08mu6nniaXmEIPrb/Q
+         YVkpN9lCafrA1um5KFohruOAD7NS/s+NwvYl6XGi18gXPYzliZarV2qDT6wsWfzUa5oH
+         prjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708412380; x=1709017180;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TMFT0tsiHgdz9iZN1EKIldjl3b45OLLNs9mRQlVJ+mo=;
+        b=XDgJGKL4xh48yMmQylDdOhyHikSANhVedr66dgcWhkwQMUTddWmlxq1+2snPnU9y7p
+         EYbpW9FRwowhtj2uwBpBSAIJiwh0Bk6LoinKT0d8d1to22suxefofPZrRfQm028pMYc4
+         Zh1zzmTkLKCPWsqavzVkCoyGb4OyACwcYAnEWxKNFdz/ST/9buh4meC3px4HpQMEwI+o
+         xS9lE9M1n0PyRLM3ZxUOq3J8p6cZZJ/UNSAOhQ6TCZJOoCZjKcps75GXWuT8JwITR4L8
+         17z4w1fYcQqXYpesLhloMbtaX3CRR9wRMkG2Gdmi8fKLGe5tFv+XetdFly0Rek4oeyem
+         3llQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWIx8dUN6BSrZnn5ZvjsSVGJmR5R5l7h8WISmBBcmpJFSxVMgkpomP7Q2urZYleWlTAwol9ZJT3Kc+PUkceuEpkUJVK3ziFFwTYWoQg2A==
+X-Gm-Message-State: AOJu0Ywj7iuWIRBi75Ft7msTU/wFyEk7/6Dk0nm/f06qrEH7hkzDUKhG
+	SlH+5FUtJNby1dNzUVLPL/QsWL1nBfu+6pAAxLw3OdMkl97kLmeni4w11wYFCGA=
+X-Google-Smtp-Source: AGHT+IHoF+nqnIqy8Vp0maOl4q34YF7mKopu/6NelFWU12CMt2LtJkC2P4rmj2X+cDpi8B2aCRvgKw==
+X-Received: by 2002:a81:ad47:0:b0:607:f679:e370 with SMTP id l7-20020a81ad47000000b00607f679e370mr10840185ywk.33.1708412380376;
+        Mon, 19 Feb 2024 22:59:40 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id u128-20020a818486000000b0060853d574aasm423826ywf.84.2024.02.19.22.59.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Feb 2024 22:59:40 -0800 (PST)
+Message-ID: <ac4f1b66-2407-44e9-ab97-f6583a13a428@linaro.org>
+Date: Tue, 20 Feb 2024 07:59:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,331 +76,113 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] pinctrl: Add lock to ensure the state atomization
+Subject: Re: [PATCH] interconnect: constify of_phandle_args in xlate
 Content-Language: en-US
-To: Alexander Stein <alexander.stein@ew.tq-group.com>, <andersson@kernel.org>,
-        <linus.walleij@linaro.org>
-CC: <kernel@quicinc.com>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20240202105854.26446-1-quic_aiquny@quicinc.com>
- <8376074.NyiUUSuA9g@steina-w>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <8376074.NyiUUSuA9g@steina-w>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Thierry Reding <thierry.reding@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski
+ <brgl@bgdev.pl>, Georgi Djakov <djakov@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Jonathan Hunter
+ <jonathanh@nvidia.com>, linux-gpio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+References: <20240216135236.129878-1-krzysztof.kozlowski@linaro.org>
+ <488cc7dc-f45a-4c9e-b572-e4a6b3202e3e@linaro.org>
+ <41e371f1-96f4-45c0-9f65-81ed6924b325@linaro.org>
+ <CZ973FMYMJAO.PQ0Z5YLXZPPM@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CZ973FMYMJAO.PQ0Z5YLXZPPM@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pPL-wpZ0FI_3irS_3sF_oQkGeUAuyUWO
-X-Proofpoint-ORIG-GUID: pPL-wpZ0FI_3irS_3sF_oQkGeUAuyUWO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_05,2024-02-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 clxscore=1011 malwarescore=0 spamscore=0 mlxscore=0
- suspectscore=0 mlxlogscore=999 impostorscore=0 lowpriorityscore=0
- bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200043
 
+On 19/02/2024 17:27, Thierry Reding wrote:
+> On Fri Feb 16, 2024 at 2:59 PM CET, Krzysztof Kozlowski wrote:
+>> On 16/02/2024 14:55, Konrad Dybcio wrote:
+>>> On 16.02.2024 14:52, Krzysztof Kozlowski wrote:
+>>>> The xlate callbacks are supposed to translate of_phandle_args to proper
+>>>> provider without modifying the of_phandle_args.  Make the argument
+>>>> pointer to const for code safety and readability.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>>  drivers/gpio/gpiolib-of.c              |  2 +-
+>>>>  drivers/interconnect/core.c            |  4 ++--
+>>>>  drivers/interconnect/qcom/icc-common.c |  3 ++-
+>>>>  drivers/interconnect/qcom/icc-common.h |  3 ++-
+>>>>  drivers/interconnect/samsung/exynos.c  |  2 +-
+>>>>  drivers/memory/tegra/mc.c              |  2 +-
+>>>>  drivers/memory/tegra/tegra124-emc.c    |  2 +-
+>>>>  drivers/memory/tegra/tegra124.c        |  2 +-
+>>>>  drivers/memory/tegra/tegra186-emc.c    |  2 +-
+>>>>  drivers/memory/tegra/tegra20-emc.c     |  2 +-
+>>>>  drivers/memory/tegra/tegra20.c         |  2 +-
+>>>>  drivers/memory/tegra/tegra30-emc.c     |  2 +-
+>>>>  drivers/memory/tegra/tegra30.c         |  2 +-
+>>>>  include/linux/interconnect-provider.h  | 11 ++++++-----
+>>>>  include/soc/tegra/mc.h                 |  7 ++++---
+>>>
+>>> Ended up being a bit wider than just icc..
+>>>
+>>> Looks sane apart from that
+>>
+>> Tegra memory controllers are also interconnect providers, so two subsystems.
+>>
+>> This patch should go via interconnect tree.
+> 
+> I think Konrad might have been referring to the GPIO hunk, which seems
+> out of place. For the Tegra parts, though:
 
+Oh, that's right. I mixed up patches.
 
-On 2/9/2024 4:37 PM, Alexander Stein wrote:
-> Am Freitag, 2. Februar 2024, 11:58:54 CET schrieb Maria Yu:
->> Currently pinctrl_select_state is an export symbol and don't have
->> effective re-entrance protect design. During async probing of devices
->> it's possible to end up in pinctrl_select_state() from multiple
->> contexts simultaneously, so make it thread safe.
->> More over, when the real racy happened, the system frequently have
->> printk message like:
->>    "not freeing pin xx (xxx) as part of deactivating group xxx - it is
->> already used for some other setting".
->> Finally the system crashed after the flood log.
->> Add per pinctrl lock to ensure the old state and new state transition
->> atomization.
->> Also move dev error print message outside the region with interrupts
->> disabled.
->> Use scoped guard to simplify the lock protection needed code.
->>
->> Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration")
->> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
->> ---
->>   drivers/pinctrl/core.c | 143 +++++++++++++++++++++--------------------
->>   drivers/pinctrl/core.h |   2 +
->>   2 files changed, 75 insertions(+), 70 deletions(-)
->>
->> diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
->> index ee56856cb80c..1f7d001d4c1e 100644
->> --- a/drivers/pinctrl/core.c
->> +++ b/drivers/pinctrl/core.c
->> @@ -1061,6 +1061,7 @@ static struct pinctrl *create_pinctrl(struct device
->> *dev, p->dev = dev;
->>   	INIT_LIST_HEAD(&p->states);
->>   	INIT_LIST_HEAD(&p->dt_maps);
->> +	spin_lock_init(&p->lock);
->>
->>   	ret = pinctrl_dt_to_map(p, pctldev);
->>   	if (ret < 0) {
->> @@ -1257,93 +1258,95 @@ static void pinctrl_link_add(struct pinctrl_dev
->> *pctldev, static int pinctrl_commit_state(struct pinctrl *p, struct
->> pinctrl_state *state) {
->>   	struct pinctrl_setting *setting, *setting2;
->> -	struct pinctrl_state *old_state = READ_ONCE(p->state);
->> +	struct pinctrl_state *old_state;
->>   	int ret;
->>
->> -	if (old_state) {
->> -		/*
->> -		 * For each pinmux setting in the old state, forget SW's
-> record
->> -		 * of mux owner for that pingroup. Any pingroups which are
->> -		 * still owned by the new state will be re-acquired by the
-> call
->> -		 * to pinmux_enable_setting() in the loop below.
->> -		 */
->> -		list_for_each_entry(setting, &old_state->settings, node) {
->> -			if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
->> -				continue;
->> -			pinmux_disable_setting(setting);
->> +	scoped_guard(spinlock_irqsave, &p->lock) {
->> +		old_state = p->state;
->> +		if (old_state) {
->> +			/*
->> +			 * For each pinmux setting in the old state,
-> forget SW's record
->> +			 * of mux owner for that pingroup. Any pingroups
-> which are
->> +			 * still owned by the new state will be re-
-> acquired by the call
->> +			 * to pinmux_enable_setting() in the loop below.
->> +			 */
->> +			list_for_each_entry(setting, &old_state-
->> settings, node) {
->> +				if (setting->type !=
-> PIN_MAP_TYPE_MUX_GROUP)
+Best regards,
+Krzysztof
 
->> +					continue;
->> +				pinmux_disable_setting(setting);
->> +			}
->>   		}
->> -	}
->> -
->> -	p->state = NULL;
->>
->> -	/* Apply all the settings for the new state - pinmux first */
->> -	list_for_each_entry(setting, &state->settings, node) {
->> -		switch (setting->type) {
->> -		case PIN_MAP_TYPE_MUX_GROUP:
->> -			ret = pinmux_enable_setting(setting);
->> -			break;
->> -		case PIN_MAP_TYPE_CONFIGS_PIN:
->> -		case PIN_MAP_TYPE_CONFIGS_GROUP:
->> -			ret = 0;
->> -			break;
->> -		default:
->> -			ret = -EINVAL;
->> -			break;
->> -		}
->> +		p->state = NULL;
->>
->> -		if (ret < 0)
->> -			goto unapply_new_state;
->> +		/* Apply all the settings for the new state - pinmux first
-> */
->> +		list_for_each_entry(setting, &state->settings, node) {
->> +			switch (setting->type) {
->> +			case PIN_MAP_TYPE_MUX_GROUP:
->> +				ret = pinmux_enable_setting(setting);
->> +				break;
->> +			case PIN_MAP_TYPE_CONFIGS_PIN:
->> +			case PIN_MAP_TYPE_CONFIGS_GROUP:
->> +				ret = 0;
->> +				break;
->> +			default:
->> +				ret = -EINVAL;
->> +				break;
->> +			}
->>
->> -		/* Do not link hogs (circular dependency) */
->> -		if (p != setting->pctldev->p)
->> -			pinctrl_link_add(setting->pctldev, p->dev);
->> -	}
->> +			if (ret < 0)
->> +				goto unapply_new_state;
->>
->> -	/* Apply all the settings for the new state - pinconf after */
->> -	list_for_each_entry(setting, &state->settings, node) {
->> -		switch (setting->type) {
->> -		case PIN_MAP_TYPE_MUX_GROUP:
->> -			ret = 0;
->> -			break;
->> -		case PIN_MAP_TYPE_CONFIGS_PIN:
->> -		case PIN_MAP_TYPE_CONFIGS_GROUP:
->> -			ret = pinconf_apply_setting(setting);
->> -			break;
->> -		default:
->> -			ret = -EINVAL;
->> -			break;
->> +			/* Do not link hogs (circular dependency) */
->> +			if (p != setting->pctldev->p)
->> +				pinctrl_link_add(setting->pctldev, p-
->> dev);
->>   		}
->>
->> -		if (ret < 0) {
->> -			goto unapply_new_state;
->> -		}
->> +		/* Apply all the settings for the new state - pinconf
-> after */
->> +		list_for_each_entry(setting, &state->settings, node) {
->> +			switch (setting->type) {
->> +			case PIN_MAP_TYPE_MUX_GROUP:
->> +				ret = 0;
->> +				break;
->> +			case PIN_MAP_TYPE_CONFIGS_PIN:
->> +			case PIN_MAP_TYPE_CONFIGS_GROUP:
->> +				ret = pinconf_apply_setting(setting);
->> +				break;
->> +			default:
->> +				ret = -EINVAL;
->> +				break;
->> +			}
->>
->> -		/* Do not link hogs (circular dependency) */
->> -		if (p != setting->pctldev->p)
->> -			pinctrl_link_add(setting->pctldev, p->dev);
->> -	}
->> +			if (ret < 0)
->> +				goto unapply_new_state;
->>
->> -	p->state = state;
->> +			/* Do not link hogs (circular dependency) */
->> +			if (p != setting->pctldev->p)
->> +				pinctrl_link_add(setting->pctldev, p-
->> dev);
->> +		}
->>
->> -	return 0;
->> +		p->state = state;
->> +
->> +		return 0;
->>
->>   unapply_new_state:
->> -	dev_err(p->dev, "Error applying setting, reverse things back\n");
->>
->> -	list_for_each_entry(setting2, &state->settings, node) {
->> -		if (&setting2->node == &setting->node)
->> -			break;
->> -		/*
->> -		 * All we can do here is pinmux_disable_setting.
->> -		 * That means that some pins are muxed differently now
->> -		 * than they were before applying the setting (We can't
->> -		 * "unmux a pin"!), but it's not a big deal since the pins
->> -		 * are free to be muxed by another apply_setting.
->> -		 */
->> -		if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
->> -			pinmux_disable_setting(setting2);
->> +		list_for_each_entry(setting2, &state->settings, node) {
->> +			if (&setting2->node == &setting->node)
->> +				break;
->> +			/*
->> +			 * All we can do here is pinmux_disable_setting.
->> +			 * That means that some pins are muxed
-> differently now
->> +			 * than they were before applying the setting
-> (We can't
->> +			 * "unmux a pin"!), but it's not a big deal
-> since the pins
->> +			 * are free to be muxed by another
-> apply_setting.
->> +			 */
->> +			if (setting2->type == PIN_MAP_TYPE_MUX_GROUP)
->> +				pinmux_disable_setting(setting2);
->> +		}
->>   	}
->>
->> +	dev_err(p->dev, "Error applying setting, reverse things back\n");
->>   	/* There's no infinite recursive loop here because p->state is NULL
-> */
->>   	if (old_state)
->>   		pinctrl_select_state(p, old_state);
->> diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
->> index 837fd5bd903d..6844edd38b4a 100644
->> --- a/drivers/pinctrl/core.h
->> +++ b/drivers/pinctrl/core.h
->> @@ -12,6 +12,7 @@
->>   #include <linux/list.h>
->>   #include <linux/mutex.h>
->>   #include <linux/radix-tree.h>
->> +#include <linux/spinlock.h>
->>   #include <linux/types.h>
->>
->>   #include <linux/pinctrl/machine.h>
->> @@ -91,6 +92,7 @@ struct pinctrl {
->>   	struct pinctrl_state *state;
->>   	struct list_head dt_maps;
->>   	struct kref users;
->> +	spinlock_t lock;
->>   };
->>
->>   /**
->>
->> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-> 
-> This breaks pinctrl-imx on imx8qxp:
-> 
-> [    1.170727] imx8qxp-pinctrl system-controller:pinctrl: initialized IMX
-> pinctrl driver
-> [    1.283968] BUG: sleeping function called from invalid context at kernel/
-> locking/mutex.c:283
-> [    1.292089] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 70,
-> name: kworker/u16:4
-> [    1.300341] preempt_count: 1, expected: 0
-> [    1.304337] RCU nest depth: 0, expected: 0
-> [    1.308423] CPU: 2 PID: 70 Comm: kworker/u16:4 Not tainted 6.8.0-rc3-
-> next-20240209+ #2267 0b2aeebc4d64f1aef3abdd5fede2a9b5162eb867
-> [    1.320148] Hardware name: TQ-Systems i.MX8QXP TQMa8XQP on MBa8Xx (DT)
-> [    1.326667] Workqueue: events_unbound deferred_probe_work_func
-> [    1.332486] Call trace:
-> [    1.334918]  dump_backtrace+0x90/0x10c
-> [    1.338653]  show_stack+0x14/0x1c
-> [    1.341954]  dump_stack_lvl+0x6c/0x80
-> [    1.345603]  dump_stack+0x14/0x1c
-> [    1.348904]  __might_resched+0x108/0x160
-> [    1.352813]  __might_sleep+0x58/0xb0
-> [    1.356375]  mutex_lock+0x20/0x74
-> [    1.359676]  imx_scu_call_rpc+0x44/0x2e8
-> [    1.363586]  imx_pinconf_set_scu+0x84/0x150
-> [    1.367756]  imx_pinconf_set+0x48/0x7c
-> [    1.371491]  pinconf_apply_setting+0x90/0x110
-> [    1.375835]  pinctrl_commit_state+0xcc/0x28c
-> [    1.380092]  pinctrl_select_state+0x18/0x28
-> [    1.384262]  pinctrl_bind_pins+0x1e4/0x26c
-> [    1.388345]  really_probe+0x60/0x3e0
-> [    1.391907]  __driver_probe_device+0x84/0x198
-> [    1.396251]  driver_probe_device+0x38/0x150
-> [    1.400421]  __device_attach_driver+0xcc/0x194
-> [    1.404851]  bus_for_each_drv+0x80/0xdc
-> [    1.408674]  __device_attach+0x9c/0x1d0
-> [    1.412496]  device_initial_probe+0x10/0x18
-> [    1.416666]  bus_probe_device+0xa4/0xa8
-> [    1.420489]  deferred_probe_work_func+0x9c/0xe8
-> [    1.425006]  process_one_work+0x14c/0x40c
-> [    1.429002]  worker_thread+0x304/0x414
-> [    1.432738]  kthread+0xf4/0x100
-> [    1.435866]  ret_from_fork+0x10/0x20
-> 
-> With this commit pin_config_set callbacks need to be atomic suddenly which is
-> a no-go for any device attached to i2c or spi and in this case IPC RPC.
-> Once reverted systems start normally again.
-Thanks for the info. It is a valid scenario of your report. I will also 
-re-visit this.
-> 
-> Best regards,
-> Alexander
-> 
-
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
 
