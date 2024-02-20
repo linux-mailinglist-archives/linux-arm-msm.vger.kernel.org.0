@@ -1,193 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-11884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AC1785C167
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:30:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7678B85C1D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:54:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F7492855C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 16:30:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9CBA1C2333C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 16:54:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B35A1768E6;
-	Tue, 20 Feb 2024 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8119B76C75;
+	Tue, 20 Feb 2024 16:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Frt2OeGC"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="FUQQWI2G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E5A7640D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 16:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C513876419;
+	Tue, 20 Feb 2024 16:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708446633; cv=none; b=VHH9MTM9xOfe9ZxGOJRikDCDzy48ZwEYPe8Tt+ipgcpVgnSYpywWMkj2aSBP2OV1ggQRdPKzEg+5RWjLL7KqfYQ45YoD65PhkKF0G/0VntdNDhdNU5EivySfqKS2/sxx7Zs2gHaC9F4dXlKwhKR1hT8+Ovn+DSVeRYg0QRnhOsw=
+	t=1708448028; cv=none; b=fLQ/HUcB/j3XqthXNnX71KD+Hg5EAvA1VIW8iNqH5P68dJuh+/7obwiUhZJLpTT3fw01F2Xjt3M3KS5wcpP/vxC9Uvtdectvp8PgGtO0z/In9KzgUBpD2Wq9TgZWlvQ1HrlJxtbpXfGBw0NWKlSBQ4GzFAC/adCJodK2Ben8hzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708446633; c=relaxed/simple;
-	bh=1fXyq6cAuoEnamSFWTgvyvNEMlThUpp3Kff1Mcr9tDc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nXHJ0YDQg8kOoBkdE3SpEbzR3BKkh5WGfMnNX9S4CmdCJpzKw6t+hjEd/gEPSWQPxiw18DrNCvbJ0ani1lrjV4d60P/kYhyaVzow/jdewuZdggt70M2okeJdjRugXbreeMQOkbtLY6o0xMMdrGnUk14ITvISfgx70g7sN/JMqOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Frt2OeGC; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-60822b444c9so17727487b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 08:30:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708446631; x=1709051431; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6+xYMPVEaZiTF2DZys9U3HRcGSv7XVsfb8mgJa/NGLI=;
-        b=Frt2OeGCPYMZZuQPQyFE68yD+YIxzvZdQ3pZBp5iJav5PPOREnbCJnQulZlmFllt0h
-         ACi9chRg+BWeOXJI7DV+N39NWDsBjk76obVbGx0iaP66LVx/+9l4fPfRSJxbU/l4sPWM
-         8ZwqDmO81618wM6IHemuEuV6QaEyxlypN7FtS2Y0kdDYcboXIq6AXRFeEjUVOk+XSbML
-         7izskhU1GJrAVbQJgqgEIIP5wAO0Zh4qIhydzdK0kLBx83/K8OLcCJ0SPcxbfWy/SuUI
-         aHYIvwMPKuRKjlO5c8FRezwk9ckNDr/2AD1Vk7BLdIU/fPQcs+6lfYH54M2nEMSvox2G
-         LkbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708446631; x=1709051431;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6+xYMPVEaZiTF2DZys9U3HRcGSv7XVsfb8mgJa/NGLI=;
-        b=DDYHZu0BxOioMYdnfZCj9bKyHIfMQ8ET1eQulzVSAocJfNT9imYzqeo7ky3X+7Vfr/
-         KT/bMwwVL6QBI2Y5Sz/Gw9dVb9IFkxLej2yJpcCMDLSltjKDVufa8wErWeJmmVhz2rkz
-         zCju0yvmqTX5nJ+lj1qQ6MDB5F2yJVWgl5ld4xX49HybSCczbonbcqCbjn8kjbzGt2fc
-         nB8IRukI0GtiWiw9mlbnJ/Np514YZWQ91bVFo3JYqsVSNx+CzVTMCctSk6obEqPbCRaa
-         REVv1jP0wBBXUxtdnzcQ/lcEDDsinvIGZGT12Y741tuLxs2FFY2uwtlKF9MLlwQ8k4mX
-         5Unw==
-X-Forwarded-Encrypted: i=1; AJvYcCXLSrMOqHMKkJEilspL30/J//Gr+4Ac+2sUFseCkLIwuwgAeiktG9Te3NyLFWJqvgMQHnftbOK2u8snB3YIi2e1zd6pgLiNXzfCI9k3vQ==
-X-Gm-Message-State: AOJu0YwdHO33XmG5Wdn0stPr6naPwIKCIaJhmRDT6IqyrGGgR8ie8jGL
-	++4U6pC4micYjyNTrf3IzZk2tpXbakJ00G+QGzY9BbOrQnBSyIaKbVTtXNiK+SPLQiOLtAYSnHm
-	R4AIcigUaw8DaAK8wj/ZobdA+m7kQsspev9r6Qw==
-X-Google-Smtp-Source: AGHT+IFDa01ZVzEZiS8s0O26WczezIZBh59zgBpRUtt9QCMKZfbnmrqIUOMg6EBt7uBSs9R0KGrlYwTH8vjmTDt3sAU=
-X-Received: by 2002:a81:490e:0:b0:608:ba5:729d with SMTP id
- w14-20020a81490e000000b006080ba5729dmr9159540ywa.19.1708446630739; Tue, 20
- Feb 2024 08:30:30 -0800 (PST)
+	s=arc-20240116; t=1708448028; c=relaxed/simple;
+	bh=z4JWuWnGXxtj1e13X8/078DUzc51WgJgv/eBSFm2h68=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nLT26YcJ2MWBOODrFZAd6gTcJJVo93sNJMloIy4lBASzUDaO0t1v29SRo1/haWktIw5h57OkA6vTe+aVQn8c35vmy5Pxb2XGH4o6mIV5qYHJVNng1TlSzH11jVTBxFU+Fw0Ir8VBDeDiU6gEnDHWHaiP/qNwxoxGoG/0RiUkx7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=FUQQWI2G; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1708447414; bh=z4JWuWnGXxtj1e13X8/078DUzc51WgJgv/eBSFm2h68=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=FUQQWI2GUEfDPYh40q++n2IQFf5euFWbZYd/sMkhbd4YMtnzo+/j3Tv2v8HPdgYeB
+	 pOvSFLFvC6DOlZhTl26ZZi+xGX1fMErCGsPfrzxU1U50TvZi96MmlDWOlUyoVL+JfC
+	 uRCRDnSxr6Mzj9O/IFyIi2arF2v2wX92NXY3+6jU=
+From: Luca Weiss <luca@z3ntu.xyz>
+To: Daniel Thompson <daniel.thompson@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Lee Jones <lee@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+ Helge Deller <deller@gmx.de>, Andrew Morton <akpm@linux-foundation.org>,
+ "G.Shark Jeong" <gshark.jeong@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Maximilian Weigand <mweigand@mweigand.net>, dri-devel@lists.freedesktop.org,
+ linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject:
+ Re: [PATCH 3/4] backlight: lm3630a: Use backlight_get_brightness helper in
+ update_status
+Date: Tue, 20 Feb 2024 17:43:32 +0100
+Message-ID: <5027630.31r3eYUQgx@g550jk>
+In-Reply-To: <20240220141107.GF6716@aspen.lan>
+References:
+ <20240220-lm3630a-fixups-v1-0-9ca62f7e4a33@z3ntu.xyz>
+ <20240220-lm3630a-fixups-v1-3-9ca62f7e4a33@z3ntu.xyz>
+ <20240220141107.GF6716@aspen.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240216203215.40870-1-brgl@bgdev.pl> <20240216203215.40870-10-brgl@bgdev.pl>
- <48164f18-34d0-4053-a416-2bb63aaae74b@sirena.org.uk> <CAMRc=Md7ymMTmF1OkydewF5C32jDNy0V+su7pcJPHKto6VLjLg@mail.gmail.com>
- <8e392aed-b5f7-486b-b5c0-5568e13796ec@sirena.org.uk> <CAMRc=MeAXEyV47nDO_WPQqEQxSYFWTrwVPAtLghkfONj56FGVA@mail.gmail.com>
-In-Reply-To: <CAMRc=MeAXEyV47nDO_WPQqEQxSYFWTrwVPAtLghkfONj56FGVA@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 20 Feb 2024 18:30:19 +0200
-Message-ID: <CAA8EJppzkuH=YTAHuJ3Og2RLHB93PSas004UDvpqepYbGepVPg@mail.gmail.com>
-Subject: Re: [PATCH v5 09/18] arm64: dts: qcom: qrb5165-rb5: model the PMU of
- the QCA6391
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Mark Brown <broonie@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Saravana Kannan <saravanak@google.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue, 20 Feb 2024 at 13:16, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> On Mon, Feb 19, 2024 at 8:59=E2=80=AFPM Mark Brown <broonie@kernel.org> w=
-rote:
+On Dienstag, 20. Februar 2024 15:11:07 CET Daniel Thompson wrote:
+> On Tue, Feb 20, 2024 at 12:11:21AM +0100, Luca Weiss wrote:
+> > As per documentation "drivers are expected to use this function in their
+> > update_status() operation to get the brightness value.".
 > >
-> > On Mon, Feb 19, 2024 at 07:48:20PM +0100, Bartosz Golaszewski wrote:
-> > > On Mon, Feb 19, 2024 at 7:03=E2=80=AFPM Mark Brown <broonie@kernel.or=
-g> wrote:
-> > > > On Fri, Feb 16, 2024 at 09:32:06PM +0100, Bartosz Golaszewski wrote=
-:
+> > With this we can also drop the manual backlight_is_blank() handling
+> > since backlight_get_brightness() is already handling this correctly.
 > >
-> > > > > +                     vreg_pmu_aon_0p59: ldo1 {
-> > > > > +                             regulator-name =3D "vreg_pmu_aon_0p=
-59";
-> > > > > +                             regulator-min-microvolt =3D <540000=
->;
-> > > > > +                             regulator-max-microvolt =3D <840000=
->;
-> > > > > +                     };
-> >
-> > > > That's a *very* wide voltage range for a supply that's got a name e=
-nding
->
-> Because it's an error, it should have been 640000. Thanks for spotting it=
-.
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> 
+> Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+> 
+> However...
+> 
+> > ---
+> >  	/* disable sleep */
+> > @@ -201,9 +202,9 @@ static int lm3630a_bank_a_update_status(struct backlight_device *bl)
+> >  		goto out_i2c_err;
+> >  	usleep_range(1000, 2000);
+> >  	/* minimum brightness is 0x04 */
+> > -	ret = lm3630a_write(pchip, REG_BRT_A, bl->props.brightness);
+> > +	ret = lm3630a_write(pchip, REG_BRT_A, brightness);
+> 
+> ... then handling of the minimum brightness looks weird in this driver.
+> 
+> The range of the backlight is 0..max_brightness. Sadly the drivers
+> are inconsistant regarding whether zero means off or just minimum,
+> however three certainly isn't supposed to mean off! In other words the
+> offsetting should be handled by driver rather than hoping userspace has
+> some magic LM3630A mode.
 
-According to the datasheet, VDD08_PMU_AON_O goes up to 0.85V then down
-to 0.59V, which is the working voltage.
+I could also try and fix that..
 
-VDD08_PMU_RFA_CMN is normally at 0.8V, but goes to 0.4V during sleep.
+1. Treat 1..4 as 4, so have backlight on at that minimum level? Probably
+wouldn't be noticable that brightness 1=2=3=4. And the backlight will be
+on compared to off as it is now.
 
->
-> > > > in _0_p59 which sounds a lot like it should be fixed at 0.59V.
-> > > > Similarly for a bunch of the other supplies, and I'm not seeing any
-> > > > evidence that the consumers do any voltage changes here?  There doe=
-sn't
-> > > > appear to be any logic here, I'm not convinced these are validated =
-or
-> > > > safe constraints.
-> >
-> > > No, the users don't request any regulators (or rather: software
-> > > representations thereof) because - as per the cover letter - no
-> > > regulators are created by the PMU driver. This is what is physically
-> > > on the board - as the schematics and the datasheet define it. I took
-> >
-> > The above makes no sense.  How can constraints be "what is physically o=
-n
-> > the board", particularly variable constrants when there isn't even a
-> > consumer?  What values are you taking from which documentation?
-> >
->
-> The operating conditions for PMU outputs. I took them from a
-> confidential datasheet. There's a table for input constraints and
-> possible output values.
->
-> And what do you mean by there not being any consumers? The WLAN and BT
-> *are* the consumers.
->
-> > The cover letter and binding both claimed (buried after large amounts o=
-f
-> > changelog) that these PMUs were exposing regulators to consumers and th=
-e
-> > DTS puports to do exactly that...
-> >
->
-> Yes, but I'm not sure what the question is.
->
-> > > the values from the docs verbatim. In C, we create a power sequencing
-> > > provider which doesn't use the regulator framework at all.
-> >
-> > For something that doesn't use the regulator framework at all what
-> > appears to be a provider in patch 16 ("power: pwrseq: add a driver for
-> > the QCA6390 PMU module") seems to have a lot of regualtor API calls?
->
-> This driver is a power sequencing *provider* but also a regulator
-> *consumer*. It gets regulators from the host and exposes a power
-> sequencer to *its* consumers (WLAN and BT). On DT it exposes
-> regulators (LDO outputs of the PMU) but we don't instantiate them in
-> C.
->
-> Bart
+2. Decrease max_brightness by 4 values, so probably 0..251 and shift the
+values up in the driver so we get 4..255?
+
+Or would you have some other idea here?
+
+Regards
+Luca
+
+> 
+> You didn't introduce this so this patch still has my R-b ...
+> 
+> 
+> Daniel.
+> 
 
 
 
---=20
-With best wishes
-Dmitry
+
 
