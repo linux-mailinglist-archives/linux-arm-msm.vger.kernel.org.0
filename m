@@ -1,89 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-11770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 003DD85B429
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 08:44:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 87F2685B4A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:14:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93C4B1F216A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 07:44:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2992A1F21EFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 08:14:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591FF5BAC7;
-	Tue, 20 Feb 2024 07:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CABF25C5FB;
+	Tue, 20 Feb 2024 08:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fASrNh/F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hWAqPqIF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEEE1C2E;
-	Tue, 20 Feb 2024 07:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936BD5C5EF;
+	Tue, 20 Feb 2024 08:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708415089; cv=none; b=IeZeMBsfQzU0SoyL+Sj6fYjAzqJn0dRm2Sv4rP60fmWUyxziuyzjz/WNJC/Ji09q32LOr7wKWi4obILH1cDrvGTReiIdGO4AwnMcZvM3TLS/KLxZpYmS3q6M665oKhKLOM4i/WgqF83TWJOXhTgs+wDO0TxjoIyGKu40py0d+cE=
+	t=1708416841; cv=none; b=EPAY9VqBMMDxgmCB4UDWe+XeIGtDsdtBSV3LRNelDvgn3qsZE4FZmskpCCL816KXtgaCkrQ0tLhz4FFVmvp6o6X3AWya3CEyHU0NcRbjAmSSI0LWYRGh2nE0Zgs8pegLNLIxneyK/M1oD2XWynv4e1BEdJbn6NxDIHypXYYKL5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708415089; c=relaxed/simple;
-	bh=MzeNzCxDOWh7u70QrPcsPXMVJOMr1p+L/WUmSr8d/wQ=;
+	s=arc-20240116; t=1708416841; c=relaxed/simple;
+	bh=KMaiaCUm3bZGBK7I5/F1KQ3UkBMCQjLFXyGs6MrrrZU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gMKP7ocm4pW4Z+nitmYeKD4Jrzl1EQBXqw7j9isomEfoGH0sbDJ5XsINFKTqji9wYLTqadGbbBDlFiZXpnHRL7nsmOwArAgesvL7P7VNmDzNCwKzF4evDrgC0HPzJfg/68L+5cg4VZZT7e1dfDfozLvWbLwlleAbB29Ma5PYqIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fASrNh/F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F13C433F1;
-	Tue, 20 Feb 2024 07:44:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJlQB1BKx7r/koL3EYIcHCVLDmIPD8LUal7REtOnsG2zKEKfbmtm7JQIl7sNODMelrVcz3P0p1Vs07GIkfYkcIQpq8uh77D669mcVfeRGZCjharORM6qhFjubTxNv6HHKKQ+Bzq+POJMmfiygCu0Fp60/8IbC8mFVwN0iWTLFe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWAqPqIF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A99C433F1;
+	Tue, 20 Feb 2024 08:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708415088;
-	bh=MzeNzCxDOWh7u70QrPcsPXMVJOMr1p+L/WUmSr8d/wQ=;
+	s=k20201202; t=1708416841;
+	bh=KMaiaCUm3bZGBK7I5/F1KQ3UkBMCQjLFXyGs6MrrrZU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fASrNh/FGvSKlJLhp6CTvQm/rAKcuiuMYnqCQgHRpOX3Orvystdj06x85XKGKadIe
-	 rklEDxVyAk3xK/d1UUK8540dDCqHnSq0OVhOJxI9C05NVVRJPCvAgb6cn5IVN6c8Nz
-	 Xv4gFm/U+f32SuRANUQyJm52B98PThMdp0+TtG1LMdYyQHoCWTDgQ4Lybj15McbBvu
-	 TAkK2cyGYaStatf1e0FPjEBBItIMAXIBsmbsoqz5LGt4wrjeBAyryK6jecDIrjuSLy
-	 XbJyO7jfRlhfcwE9JHpq0qDsLr3t/3ZFMdAWL6NsmF9MECK1/n5B+5+n9J0V/R5pnd
-	 LIYgnxEGNhNCw==
+	b=hWAqPqIFYAZcp/X5cbUN4fXO8zQJX/f6D4UJtzxFT6y6m5gyG3oKuoyLyKCf6r6Np
+	 bHxHY+ewlI5Loa2rf5avoXxV7CrD6+ALSzIiHSWDVhHYjfzr8O7AlZOYCQ+5MF7fqv
+	 5avMiRaq3S3N4IBGWssZdSlZbpiZED8r8rwXL3dA/xuPMaO3XXoym7jDw5qlYD75+r
+	 qTCuA0UYbEVEQ/dDDyvoTExr1WLTNadhOWBz6MI+2wm5we1NzvkYcklutzMXfXStn5
+	 qRtBEHp4ZmitTxwcP/I3jc0w5avu3ifpbqNlHzrJDtbU055PBcjgSF0W1JJZxS9Vnc
+	 7ap2cwluTBrzw==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rcKo3-000000002Ey-2PWm;
-	Tue, 20 Feb 2024 08:44:47 +0100
-Date: Tue, 20 Feb 2024 08:44:47 +0100
+	id 1rcLGJ-000000002QZ-0PDo;
+	Tue, 20 Feb 2024 09:13:59 +0100
+Date: Tue, 20 Feb 2024 09:13:59 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: sm8650: Add msi-map-mask for PCIe nodes
-Message-ID: <ZdRYbyKxtkIqkpRd@hovoldconsulting.com>
-References: <20240216-sm8550-msi-map-fix-v1-1-b66d83ce48b7@linaro.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm: Wire up tlb ops
+Message-ID: <ZdRfR3xqYIYNISbL@hovoldconsulting.com>
+References: <20240213172340.228314-1-robdclark@gmail.com>
+ <Zc2-qVd0gtErdbKe@hovoldconsulting.com>
+ <CAF6AEGsPojmqDgMZWrEAm_CoWGZ05euc0jzD5+9aX0cXQha_ew@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240216-sm8550-msi-map-fix-v1-1-b66d83ce48b7@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGsPojmqDgMZWrEAm_CoWGZ05euc0jzD5+9aX0cXQha_ew@mail.gmail.com>
 
-On Fri, Feb 16, 2024 at 10:35:21PM +0530, Manivannan Sadhasivam wrote:
-> "msi-map-mask" is a required property for all Qcom PCIe controllers as it
-> would allow all PCIe devices under a bus to share the same MSI identifier.
+On Thu, Feb 15, 2024 at 07:28:53AM -0800, Rob Clark wrote:
+> On Wed, Feb 14, 2024 at 11:34 PM Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Tue, Feb 13, 2024 at 09:23:40AM -0800, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > The brute force iommu_flush_iotlb_all() was good enough for unmap, but
+> > > in some cases a map operation could require removing a table pte entry
+> > > to replace with a block entry.  This also requires tlb invalidation.
+> > > Missing this was resulting an obscure iova fault on what should be a
+> > > valid buffer address.
+> > >
+> > > Thanks to Robin Murphy for helping me understand the cause of the fault.
+> > >
+> > > Cc: Robin Murphy <robin.murphy@arm.com>
+> > > Fixes: b145c6e65eb0 ("drm/msm: Add support to create a local pagetable")
+> >
+> > Sounds like you're missing a
+> >
+> > Cc: stable@vger.kernel.org
+> >
+> > here? Or is there some reason not to backport this fix (to 5.9 and later
+> > kernels)?
 > 
-> Without this property, each device has to use a separate MSI identifier
-> which is not possible due to platform limitations.
-> 
-> Currently, this is not an issue since only one device is connected to the
-> bus on boards making use of this SoC.
-> 
-> Fixes: a33a532b3b1e ("arm64: dts: qcom: sm8650: Use GIC-ITS for PCIe0 and PCIe1")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> No reason, I just expected the Fixes tag was sufficient
 
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+No, you should still mark patches intended for stable with an explicit
+CC-stable tag (as per the documentation).
+
+The fact that Sasha and his AI tries to catch fixes which the author and
+maintainer failed to tag as a fallback should not be relied upon. It
+also makes it harder for the stable team and others to determine what
+the intention with a fix was.
 
 Johan
 
