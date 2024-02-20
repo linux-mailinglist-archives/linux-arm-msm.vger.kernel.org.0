@@ -1,130 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-11878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B828185BF78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 16:08:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EC7F85C034
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 16:41:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 727EE28347F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 15:08:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D250B1F24EE1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 15:41:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39D6E745DD;
-	Tue, 20 Feb 2024 15:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9AC77605C;
+	Tue, 20 Feb 2024 15:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sLMBHFWu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u8AruOfv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AFE73187
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 15:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067E4627EA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 15:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708441685; cv=none; b=C9ld6X9klG+wRhyge1EdXykGC1sIXXKfLEbdsh/ezyb0weJn1BZL0Wr/kVoccZyeWQcSEWZLxUZuGKMBWWjcjM4Mewc1o54DhtwIiwEvMeJn59uTmRt68Ur6EFflsnxjlUV0+zMdm2lnwylWrT6yobUTXDju18BkfauawixaUIg=
+	t=1708443711; cv=none; b=cU3rUtt9XwCuxeMFHQPgXwbHDqy5ofBJWqsk8uUBxn+65Nw7TO5KHaI3FN68+pHLJtdzueaaqTdGC6L3TT+D44M2U9d8xHOkAQ9PbblQPnEI3vgg5Fotlre7GIPjuH1Y5WXXSMQkdTIholwEw+2xhMMe3NN9PaZwOFkR309jj1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708441685; c=relaxed/simple;
-	bh=kwuCB+NIq1puSS5TsMWk2sSrB3UI23DqZRK20sJGEBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZBzQ2uba1rGvbo+O3gsVdvMQzramsDX79ESQDMjrmQVJrIWUV1tdc3DJ0OVD7QmHzxiD/eBJckaRdfBgRBcUs8NeDx7p7iCXg0VQYgNukddX0WUHBbOYzyDfNcTsBD0tih+2dko1gkENmI9fJpvWapzK+V6OOfyK6JFdk/bJiMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sLMBHFWu; arc=none smtp.client-ip=209.85.128.182
+	s=arc-20240116; t=1708443711; c=relaxed/simple;
+	bh=T78uSbL/6vBHmFMUx533JSz7i0LSC2jc2pTuwaqbKDg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ncL39iQJHIp8Y+/w3LJZwPs5vHuKYe6A7NajQAThhJztV403kDN9kRvj3h1Hd9m/8IFXrufKiLS+9a8xHxdde/6vuc6hnwGq869gMnaPahoyWS64dpx1mYL5nZB2dB/PdynEDkwHWXK7qR5Cdrvsr/pW0Bo30DaAOpy7x4sK1R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u8AruOfv; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-60869c68926so6229377b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 07:08:03 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-412718a8ea7so2851815e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 07:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708441682; x=1709046482; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aqJwFAkkc43vrSyN9lwc8naI853QjkeHrfLLwt5JeQE=;
-        b=sLMBHFWuyDY8UOpNij9+uzSenixvg2gmWBmwX01qv8zgpP5HAYZ+swcwbCJ5AsuEZp
-         0eCH1mBo1ajaFWsbY7tB/9S+IEeZgcuOb+vddHKFCRx0irO06orfrr2QkNbPYvPLLqqF
-         h78cyq1+XoJfkhmUlgFbJBRIcM/WcawYgxeN32plCbS1SPeGHyyuTiTgce2M7k75olzr
-         PS4ytW5n3l2hqf2aqpd3dtSPSezZZlV0TiE1aMdv+78YoRczT7iuiLBS6Tx//PFbquBF
-         Qan1O1t9te7Og1bg+hZ5rksyP2wrJ7zLALvrCYESZWOk3bRMH7WthfX9KEdiUOZOeIk+
-         l/2g==
+        d=linaro.org; s=google; t=1708443708; x=1709048508; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+cFEpv5w2TPD8QTkYd4ABg1XTB4+ZdG1BlQCAicZJSg=;
+        b=u8AruOfvTwBPWA7XghfXJbpi2X46ibm7crtvQrHa4h8DFP4DXhsFAxfWzjxEdukdhd
+         56u8LAD24ALHAIdlo0lDhxLnLc2P6dF8uZbs5ZJfC6uoVBeTmjf226sAjJsCwrv2A+14
+         5w8DG0SUA455m6WWlTElUuJMVprKkb5CbuV5Fo4byZZSorI/De+kNWXvuNSjKxhmjgeB
+         7Sjr5HB1rVlavn/GxgFklk4qSnns8NJ0w2irmN4W6IqShxtAmgAnPDMaKkTHfYIAwCu/
+         vGa70WLJFVo9beWRtBXvmdJ0knZlOtH84JB9LnnmhOxMgZexT+UhLI6VHFvcva0F/YC/
+         rlzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708441682; x=1709046482;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aqJwFAkkc43vrSyN9lwc8naI853QjkeHrfLLwt5JeQE=;
-        b=NKQukdZiTvq91uShWpJZSqeTFf5UeUwaSuH4kUDptH/W+QaCiAEXNzV+4GVA8FOzC1
-         hwsKcZUc/irx4M/6rRLjQR7TQ7FU+vXuRUKdhO/oG4Zugd64LgFci7naPGGfjmLqHDej
-         qaz3brmrhWsOA/H4Vd7WvyBRzuIuZ5X8Qs234vIIHiFfphenNNV2jIhw7T74TRlDwscf
-         bVUQHJhZ8zH2HdlQclPoEVFZbkP4yC39kW14YoWbnMBqwvLZzQE7xMgfSkwTv+wEZyBu
-         T2rCLeaFsBkR5HlNtVWNzN9yl1q4JNRRdYXYYZxpYHfsAIBhYEK9xqGsFIWfZ+6NoPD4
-         JR2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVP8DfObg/tBzeCRgAZzbHeHliKWpOVkMaF0599oGk2xzMA/VgtSmk6jsX3J0kpjU3TFxkvMECEjFjk+lSd66J3zIporJdbhMoDq5kwwg==
-X-Gm-Message-State: AOJu0Yz9kI9/fogJfLdJP0rPucE16izFX+1U3r8IImcIrXGOyldnV9Y9
-	3irZSnp4N1sgqh+HdqxOUaNDv7lOdOtpvgLc/Ns2tiYeumNJ5h1bk+JjKwUb+ya6Z0odrk/LQnk
-	FFJIoZezD39yWzv36mZjHl7cfZnb/8liZXpXoLg==
-X-Google-Smtp-Source: AGHT+IHdekKqXY/wwhv1RRDJOaN+kUY/5Ujob9vjM/5eL8M11cX2uP3kIvac0Jr5M2dmGLVcBO8zTmi1JscWBwxIIoI=
-X-Received: by 2002:a05:690c:f90:b0:604:9551:f595 with SMTP id
- df16-20020a05690c0f9000b006049551f595mr16731907ywb.50.1708441680946; Tue, 20
- Feb 2024 07:08:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708443708; x=1709048508;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+cFEpv5w2TPD8QTkYd4ABg1XTB4+ZdG1BlQCAicZJSg=;
+        b=K1FwXcDLQILGrLAZquA/y51IzzgBJ2Gnskq+KkgdcZ3Nw4AryQE9lst38aWr1RF62I
+         qOl+JFyaM6Lu6OwCDhlmfG3Z++BVU1g0T5cCKQsvs0b3AD1bTtTRwEU+nzAK9x7k0zlc
+         V6WUIL+RKPGk+SW5oftk1mM0ajXl5e1el3HLr43W8lPBYelKs8OjHyjp7PvvXGQoYwSR
+         Iob6xITyvpTNXPIAtKMbq109leek2tWvfgJGEdi0nwyeZL/B0LQhJ8FuLy8Uk5bN8kmd
+         CLO8WGdw6ROlNEYOrRt5y/B26LOyPXQ3F83qCX/X1nziQKL2+Ey0rZ6I9FTpnitd0cui
+         o5kQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdRWtuPjlceWvUtjzGtqww4n3symX78AtEYlVBvJeJj9c4ceOlhaRpGJFHKtXoOt5UpA2jNsc4iqBFy+wISWIhTaSoKP0A5mhIPy3kSw==
+X-Gm-Message-State: AOJu0Yx4GPBErV4CVAWTc0UX5NbDoEXK9DeSP1c3JN+saW5wLso1MG4W
+	l8SR3yK7Fbn6I+yKVVdFA40vLXVB40wEd2vblm3LDxBTuEc28td3wt7js+QaXE8=
+X-Google-Smtp-Source: AGHT+IFI6EilanMRwVS5/UaPI4MAn95lhdZbLUWfuY0Pbto/1QNDPs2PRzsV8tlz9b+wn0au2Xix+A==
+X-Received: by 2002:adf:f2c3:0:b0:33c:deed:6745 with SMTP id d3-20020adff2c3000000b0033cdeed6745mr11302397wrp.13.1708443708405;
+        Tue, 20 Feb 2024 07:41:48 -0800 (PST)
+Received: from aspen.lan (aztw-34-b2-v4wan-166919-cust780.vm26.cable.virginm.net. [82.37.195.13])
+        by smtp.gmail.com with ESMTPSA id jl22-20020a05600c6a9600b0041069adbd87sm14775650wmb.21.2024.02.20.07.41.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Feb 2024 07:41:48 -0800 (PST)
+Date: Tue, 20 Feb 2024 15:41:46 +0000
+From: Daniel Thompson <daniel.thompson@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"G.Shark Jeong" <gshark.jeong@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maximilian Weigand <mweigand@mweigand.net>,
+	dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/4] backlight: lm3630a: Initialize backlight_properties
+ on init
+Message-ID: <20240220154146.GH6716@aspen.lan>
+References: <20240220-lm3630a-fixups-v1-0-9ca62f7e4a33@z3ntu.xyz>
+ <20240220-lm3630a-fixups-v1-1-9ca62f7e4a33@z3ntu.xyz>
+ <738dcf0e-57fe-4123-af83-be91d8166420@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240220121741.2994222-1-dmitry.baryshkov@linaro.org> <54a3f3d9-ad3e-4828-96c0-61dd81c61d76@collabora.com>
-In-Reply-To: <54a3f3d9-ad3e-4828-96c0-61dd81c61d76@collabora.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 20 Feb 2024 17:07:49 +0200
-Message-ID: <CAA8EJpqaWHVqf8+EbkBktftPzPU0qq00PGhsoxYztRFuXDHv7w@mail.gmail.com>
-Subject: Re: [PATCH] drm: ci: uprev IGT
-To: Helen Koike <helen.koike@collabora.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <738dcf0e-57fe-4123-af83-be91d8166420@linaro.org>
 
-On Tue, 20 Feb 2024 at 16:31, Helen Koike <helen.koike@collabora.com> wrote:
->
->
->
-> On 20/02/2024 09:17, Dmitry Baryshkov wrote:
-> > Bump IGT revision to pick up Rob Clark's fixes for the msm driver:
+On Tue, Feb 20, 2024 at 03:07:54PM +0100, Konrad Dybcio wrote:
+> On 20.02.2024 00:11, Luca Weiss wrote:
+> > The backlight_properties struct should be initialized to zero before
+> > using, otherwise there will be some random values in the struct.
 > >
-> > - msm_submit@invalid-duplicate-bo-submit,Fail
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Do you have a gitlab pipeline link I can check?
-
-For the drm/msm, same as before (it had this fix in). But at this
-point I should probably run it again for the full set of devices.
-
->
-> Thanks
-> Helen
->
+> > Fixes: 0c2a665a648e ("backlight: add Backlight driver for lm3630 chip")
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > > ---
-> >   drivers/gpu/drm/ci/gitlab-ci.yml | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >  drivers/video/backlight/lm3630a_bl.c | 1 +
+> >  1 file changed, 1 insertion(+)
 > >
-> > diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
-> > index 8b82e6656924..47e567b4f7a7 100644
-> > --- a/drivers/gpu/drm/ci/gitlab-ci.yml
-> > +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
-> > @@ -5,7 +5,7 @@ variables:
-> >     UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
-> >     TARGET_BRANCH: drm-next
+> > diff --git a/drivers/video/backlight/lm3630a_bl.c b/drivers/video/backlight/lm3630a_bl.c
+> > index a3412c936ca2..8e275275b808 100644
+> > --- a/drivers/video/backlight/lm3630a_bl.c
+> > +++ b/drivers/video/backlight/lm3630a_bl.c
+> > @@ -343,6 +343,7 @@ static int lm3630a_backlight_register(struct lm3630a_chip *pchip)
+> >  	struct backlight_properties props;
+> >  	const char *label;
 > >
-> > -  IGT_VERSION: d2af13d9f5be5ce23d996e4afd3e45990f5ab977
-> > +  IGT_VERSION: 3f2879fef93c0c546a2f1c0aa48a9cc2a594b9d2
-> >
-> >     DEQP_RUNNER_GIT_URL: https://gitlab.freedesktop.org/anholt/deqp-runner.git
-> >     DEQP_RUNNER_GIT_TAG: v0.15.0
+> > +	memset(&props, 0, sizeof(struct backlight_properties));
+>
+> You can zero-initialize it instead
+
+I don't object to either approach but memset() dominates backlight
+implementations currently.
 
 
-
--- 
-With best wishes
-Dmitry
+Daniel.
 
