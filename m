@@ -1,146 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-11932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F31685CAAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:25:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E49C85CAC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:32:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9AD7C1F21AFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:25:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF14F1C21491
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77318152E0F;
-	Tue, 20 Feb 2024 22:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88C08152E19;
+	Tue, 20 Feb 2024 22:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nqHapgfW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TOZOn5yP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ED2152E01
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 22:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D21C151CCC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 22:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708467950; cv=none; b=fVyzaPts7uBrRqg52R5uQAN74eB1plB5OBtirRimn4UL/06askChnav2OcBNwXNl4nR+XJgi1xxsRBVqFA0CYMB4iWcRy6s77V/gstDOQk7DUI7WxxyoViMsk2AuFXi+5vCD+1HiZB1H+0LekR8g5rnmkRw1wxZA/4iTwDhkux8=
+	t=1708468359; cv=none; b=EuaTvFFqWL6l9YHcjn/Ox1iKgjH+M3stEv6WiOmz90PV4SFBTKb0TiqnnT7dEvvuWfWEwSJhHcJNVR6p1keaPtG5xd4WnY12vk5SkbWmUnUrAOYpKlKX5UetxmoVSDPeZPgw2ufAs6K56wgxTn8Hq1ajRynEfkWzyLs2ixyDZH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708467950; c=relaxed/simple;
-	bh=J06Se6Xo5ebKlxuQdbuP2UYEJVjOy3McyouaIS8jBfA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jvdvGuFIuF4P4+FV2lqFzAeyn6giWSxBPQwLhYudoh2KQRqLcHCfd4QrOUqE+IGZeKfmwK7b3r6drSWNaLEFVX74wvEC7U0tgw9kesvV/Cm5jMUOmMDAiQOGvBnTIRxIVIoUSl1sRopkfpgzpGuv1DBMak9CP0s4Ny+UDFgAigI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nqHapgfW; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1708468359; c=relaxed/simple;
+	bh=QyOIt1OC5aenbMAqQ9ERC+S6ru7SsMKlT+Crdyg/cfA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GTW75pQgQLVO1HRKdDR/xSt2IxFR0ZbklX9lIHx3PmuCZSK3LM43S/Yf9bdpAfIxTewxNSmp+X2vDglGeoxkxA3WmVgUS4UT8SqsK2A7Ic7xfmdWJPf4s52GLn6BVFyXJJLyRdGsEXsssjyOJHWSMEazQgbI2KWpf52ey5g3NkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TOZOn5yP; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-608245e549fso30375277b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 14:25:48 -0800 (PST)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-512ab55fde6so4455149e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 14:32:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708467948; x=1709072748; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lIPUEVY20o8ldO3u4b/ZQSXyrJLSb5UxnC7BJ0m/fR8=;
-        b=nqHapgfWnyoUUJI+GKd63vcNcfmMhdv09cyFAHKj8C82armEzvDc8lfWS932vfSDm5
-         ygNeB9ghDvLQbEFE/0Flh+JUEoBd5fpYnr8KIoW+V9uux0I9jIoxmPaiD+AY8WdbG51Y
-         Gz+dK+i1+hpFtgdfaK1XEQOEvC8LZ4MCX6naiixwv3Iajkiy89zG/W9apg9orGwTF2nE
-         ahl10ChWTgJGHV57uxrmpxWOgUyucnm8RKgF872rggu01leMmH/wbnokAofIfFqwsTdj
-         LpcuqRpXHf4DuUJKHmH13eirmzgfHnRWcS1VPtNFCFgj9MfPnINu+1JZF59/2gYOQGEl
-         aebA==
+        d=linaro.org; s=google; t=1708468356; x=1709073156; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LgtT6PN9/vb4CvMjcc7BrErQ70vOwDGBazNSNfsIIvg=;
+        b=TOZOn5yPOz9Yk3SQg9Lt05o7SCsqffvXdMXSY4+OylN7hQdUPeKb90LxoXqdSX0wu/
+         VBziEPptSkfOfbTW3ukR47Vm5gO5WSvAYFsLfx/f7zweDq8DC9HdN/0fYYYoU9Jwb4GG
+         f0q6AAqAte9RcF94wjQ+PYZA20QqP9aMTeR/KJg3++DCRuokBwoefKraVILZ77vbtaO3
+         3CfCzZ0Y9vq923LMdjxjBjgdhyjd+hSq3WTYnHxts838fav/4yT6+bVItcRburbt2c3e
+         f5saz8ScqEAJga3vV7PphxYxRQY8brgEmx/TGKZM3Km6Bd1h3FW1ZzIVLYIm1trVCTbE
+         3TZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708467948; x=1709072748;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1708468356; x=1709073156;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lIPUEVY20o8ldO3u4b/ZQSXyrJLSb5UxnC7BJ0m/fR8=;
-        b=XxD1/5qV/Yelk+hyPxTuoaKy2tZqLMBhZaW0H/Ec7wF26z62ibjriCe/H+aPHseknP
-         slMR21ufptOmZbGdC+kgOh3r2bDHBideY00ZkWtCc2cVfCjSekmN+xjkq951w8E1i5Zj
-         QGmaqpzSerPGftz0gt3y8/zWTCHN2J/BkSUIrzIo+78vBFsNKpbzmcaAtf5yFOkiRmKz
-         idUTEXtIZP6QBy7m6iAk+7YQAB+P8PAkbafliEbrBVvPMKJ2u+LO7SgBB1xO0YeeXeiX
-         opQ3wqVAZV8i9tZj4KiJ6uXcQDjXj9WfC0dJfi6YJ47mJIQTMoLH/TLx4CukbBZayCyL
-         9h2A==
-X-Forwarded-Encrypted: i=1; AJvYcCVKsi12e4vqZ8LdJ5s2bcmn7xGOio6c+WJyN6OHbyK4VzGD4+pnBUnC/kIrrIse6Rvh6YWkK7LvqUNvSavq2VqITGr5Zrj9CCSxGAD4+A==
-X-Gm-Message-State: AOJu0YxOh+uBjTGi77CVlf9l/vE5d2xAHcEqsEEAQMYNTthzN0y2J3eV
-	215svnlP7LB4ahy8xA3T96y3BwfvNxBH4lZAr7d/NBjAn7fR/HiF41AsgSy3eN0zT9vcYWZfR0q
-	u8s+ByMBGqus0F4DppRX8u63P+HfLQrBhwy9KvKq4wMxV/l+I
-X-Google-Smtp-Source: AGHT+IFRTbzCjaFBDMvB4KVjs3BlRUJqfdyP47yveGvVd+LVPXlYHo6fEzJ+W3hSU/nfh+k2Ix1UuUvjjOtDNfNWH9Q=
-X-Received: by 2002:a81:99d5:0:b0:607:775c:7d30 with SMTP id
- q204-20020a8199d5000000b00607775c7d30mr15165574ywg.5.1708467947738; Tue, 20
- Feb 2024 14:25:47 -0800 (PST)
+        bh=LgtT6PN9/vb4CvMjcc7BrErQ70vOwDGBazNSNfsIIvg=;
+        b=LlbhAZ9xwf3V5KMnRlPTFL6vcifs439U59UviZSBh0O5MNxgP3GrLby4jUtfRz6+UX
+         DLgA4orSgroZOzh6WBVlr3h+wUlXMqZPJCCRiHQlr7bgBaYmUzzjLwT21iOi3HRr7jgG
+         m8eL3Lynrxe3LAF25nfuNMwCboWn45YGCer4fZqUFtvUfo1J6YdF+onBu6urDENCvsXT
+         JABbVFxOeu39X16Bi81f+jnUUgW2ZLZPB83cSW9/FO3F99UUKikMJiW25uZoo0pMvbYV
+         j11uzD2/3BapSK8LekqtdQxaQU8pPxGoE0Fy9tg68RnFKBlj+G9i0zjhMGY484Jie+rD
+         WkDw==
+X-Gm-Message-State: AOJu0YyOxrDQ5NKgikRhnZtzz3/70+KLizdLWGuXGSNo6Jj3gppH8Mb7
+	yBaBQSqEW+lPYc3bSc+wIiCwLrb0P2ykl9efQqhpf7tiayCfxmNP+gKpbxSQMx0=
+X-Google-Smtp-Source: AGHT+IFtD5Mt7FFgm9jcoyrumPfMVtw/5l1TfI3A5+sL3d8mAIT0Qj17L/JAC9OGI8lX3OYu+IFXjQ==
+X-Received: by 2002:ac2:5e89:0:b0:512:bc0f:b9d6 with SMTP id b9-20020ac25e89000000b00512bc0fb9d6mr3528507lfq.47.1708468355566;
+        Tue, 20 Feb 2024 14:32:35 -0800 (PST)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id g10-20020a0565123b8a00b00512b36ee2c2sm915968lfv.65.2024.02.20.14.32.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Feb 2024 14:32:35 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 21 Feb 2024 00:32:34 +0200
+Subject: [PATCH] arm64: dts: qcom: msm8916: drop dtbTool-specific
+ compatibles
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240204-qcom-drop-compat-v1-1-69d6cd92aa0e@linaro.org>
- <ZcijFk9GcgtVoXoV@gerhold.net> <CAA8EJprKfMGTAtaMm1YoioRLDOtjXQ4XGm8geURB5WVXdYUK0A@mail.gmail.com>
- <ZdUVfHa5SvoWbc-Z@gerhold.net>
-In-Reply-To: <ZdUVfHa5SvoWbc-Z@gerhold.net>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 21 Feb 2024 00:25:36 +0200
-Message-ID: <CAA8EJprwK9OXLmxwh6wR1ij592_J2TpKKnuNGg98pt8iLF5PGA@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: arm: qcom: drop the superfluous device
- compatibility schema
-To: Stephan Gerhold <stephan@gerhold.net>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240221-msm8916-drop-compats-v1-1-71acdab14738@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAIEo1WUC/x3MQQqAIBBA0avErBtQkbKuEi2kppqFKU5EIN09a
+ fkW/xcQykwCY1Mg083C8azQbQPL4c+dkNdqMMpYZYzGIMENusM1x4RLDMlfgv3WKee9dYN1UNO
+ UaePn307z+37my6RZZgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Stephan Gerhold <stephan@gerhold.net>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1725;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=QyOIt1OC5aenbMAqQ9ERC+S6ru7SsMKlT+Crdyg/cfA=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl1SiCXqTH2iE3BwcffLxaUmrWah6isegO5dvo3
+ BPV2jsh4iCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdUoggAKCRCLPIo+Aiko
+ 1T2lB/sEpMuP7te6sozIKHa8PSxnnGBERKeRJW3QtiKInmGCocoh1Ji9xfCmIGTnEt+Ky9Hxa5O
+ JurJpI6nnNSsCvtZmBSXPyJvDBE+J7DU8zlFx2qa5mPz0tkoJ+k9O3GMou+xoyKcT5c6S9W8YxK
+ qO6y1WIVt3gBkISLkZ54SASTOdlRwKgtOzkbsFnyK6EsUtLWR/N7nRwIMBiM2UVeW1HWUACDxjf
+ 4BOsIiHziUJHu4cSzda1rmL12ChW0H7Dbr++YOB/ojt/cZp1e4hypp+XEfo9WPmOiGzaETve/iz
+ oj994kk2/ZX1PQBwYbpjMKjfkFL59CKXbjOMlWBwNv3Uiwx5
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Tue, 20 Feb 2024 at 23:11, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Tue, Feb 20, 2024 at 11:11:15AM +0200, Dmitry Baryshkov wrote:
-> > On Sun, 11 Feb 2024 at 12:36, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > On Sun, Feb 04, 2024 at 06:56:35PM +0200, Dmitry Baryshkov wrote:
-> > > > The idea impressed in the commit b32e592d3c28 ("devicetree: bindings:
-> > > > Document qcom board compatible format") never got actually adopted. As
-> > > > can be seen from the existing board DT files, no device actually used
-> > > > the PMIC / foundry / version parts of the compatible string. Drop this
-> > > > compatibility string description to avoid possible confusion and keep
-> > > > just the generic terms and the SoC list.
-> > > >
-> > > > Fixes: b32e592d3c28 ("devicetree: bindings: Document qcom board compatible format")
-> > >
-> > > FWIW: It's not correct that no device uses the version parts of the
-> > > compatible string. There are actually two boards documented in qcom.yaml
-> > > that follow this scheme:
-> > >
-> > >   compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
-> > >   compatible = "longcheer,l8150", "qcom,msm8916-v1-qrd/9-v1", "qcom,msm8916";
-> > >
-> > > I don't think anyone is actively relying on those, though. I guess we
-> > > can just ignore them or even remove them.
-> >
-> > Excuse me for the long delay. As it was you who added the
-> > longcheer-l8150 support, does it require any of the msm-id options or
-> > dtbTool (original or modified) processing?
-> > If it can work with no additional tags, we can drop these compatibility strings.
-> >
->
-> I think we added it back then to allow booting mainline with the
-> original bootloader. Together with the "skales" dtbTool (used to be at
-> https://source.codeaurora.org/quic/kernel/skales) the compatible does
-> result in a correct QCDT that is accepted by the bootloader.
->
-> I doubt anyone still uses this way of booting nowadays. In postmarketOS
-> we strongly recommend everyone to boot MSM8916 devices using lk2nd [1]
-> which supports plain appended DTB without special properties and other
-> more reliable forms of DTB selection. I have not tested booting mainline
-> with the original bootloader for many years.
+Drop two board compatibles that were used by the skales dtbTool to index
+device tree blobs. It was required to boot those devices with the
+original bootloader, however all users should have switched to the
+lk2nd bootloader by now.
 
-If I remember correctly, if somebody wants to boot msm8916 with the
-'original' bootloader, they will also face issues with SMP support,
-etc. So let's drop that.
+Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts | 2 +-
+ arch/arm64/boot/dts/qcom/msm8916-mtp.dts             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-> Dropping the extra compatible would be fine for me. Personally I don't
-> consider booting via weird/broken bootloaders worth supporting (at least
-> if better workarounds exist). Having to boot with "custom" bootloaders
-> tends to be a somewhat subjective topic though so others might disagree.
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+index 3a3e794c022f..7f0c2c1b8a94 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+@@ -12,7 +12,7 @@
+ 
+ / {
+ 	model = "Longcheer L8150";
+-	compatible = "longcheer,l8150", "qcom,msm8916-v1-qrd/9-v1", "qcom,msm8916";
++	compatible = "longcheer,l8150", "qcom,msm8916";
+ 	chassis-type = "handset";
+ 
+ 	aliases {
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-mtp.dts b/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+index ac527a3a0826..c11a845e91bb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+@@ -9,7 +9,7 @@
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. MSM 8916 MTP";
+-	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
++	compatible = "qcom,msm8916-mtp", "qcom,msm8916";
+ 	chassis-type = "handset";
+ 
+ 	aliases {
 
-I usually prefer to stick to the original as much as possible,
-especially for the end-user devices. But in this case I think it's
-beyond possible.
+---
+base-commit: 2d5c7b7eb345249cb34d42cbc2b97b4c57ea944e
+change-id: 20240221-msm8916-drop-compats-7f608aa48948
 
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
