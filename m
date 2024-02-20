@@ -1,175 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-11899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063B985C2AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 18:31:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4ED9085C30B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 18:54:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B470B281E97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:31:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D0681C239FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:54:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCABA76C89;
-	Tue, 20 Feb 2024 17:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E6A878663;
+	Tue, 20 Feb 2024 17:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JedIzxc6"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="dqDmFqmf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CEA76C76
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 17:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA227763C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 17:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708450269; cv=none; b=nfh12dZKJLir+z4C/fsoEK16sAmVzNVosWXG9nR5lcmR7OyJJPOpjJix6Gn+iUhg1n+ApKH6FBSJyDm5zaRGXuOhe7kTXg5rfZJuApnlnX/firDjbZGtUiPqTCQNf4AD34xvC9CAAoZQKnIWxP1zIn9UQL8mWYtoBAJSb6YdTbI=
+	t=1708451641; cv=none; b=TJ4c7qsTgGMeYxRheVR50iTReh0RVTRzUKOOPVclbQHor/yOVxFAXYe8glnDN75XBQp0nHwJFoZRLaGGpyTr7GMzXK/+SqRFfdJVVFhgfsm1Ur4y3JJlqCR1HkjLYMRnyYfZa1nGpMJKkDK8wgjuETzpOIu/aDF/4YydxDNWzrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708450269; c=relaxed/simple;
-	bh=hx02bMWjni/BIqa32HymRwKbgZ45Y6W5eQY/go1X1so=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dVZqeXFo5mOpZjvuidRBNKiETn4s0fC97QRVtrxIed80JUfJHKr4GmVgHuKsaoevoL7/zlyB90HHkd/7uw6HcAGl7Yhly5k+3nYH/ul2DSrYvItDBS+oQYaV6WAMxuZ1QI422bHOewhPwzxZsNej50p2jGvfR/B+qCI7GPoFLAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JedIzxc6; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d204e102a9so73772941fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 09:31:06 -0800 (PST)
+	s=arc-20240116; t=1708451641; c=relaxed/simple;
+	bh=d38oaY+K+spNFRP/qOIWiTuNObZ5xOckG4uBJUP/Mnw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pL10BaAffLdRyZDrBqV0uZYVxWx+91Puw3rAhRPFE+pM+BkKHDzhiS3sAWkHyn+AQTV9L5SrsABjSgaGOknGF9cx6AMaqkXSer7c6XhC+lkSNbCh7HybuMdH2sUYWCpyp6xkghV1CDj0lNWc3wExQD+mfR7lO9mlLl+WNvPnkwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=dqDmFqmf; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7d625a3ace6so3739455241.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 09:53:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708450265; x=1709055065; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XTun3sjeHoZPuUA68W/Q0xsVB+hQlqb+IVl/9LKFQL8=;
-        b=JedIzxc6avduODqdN4l3+h2poUwvi23qo7blM/3G8CfmVlxmTyajuAEUyoeBytg6Jv
-         7/C8nZ9ZEL7z9tZjIUl9QtTAFBI9t2oXEGW7NbfHp2Hyn3XJWNYUShevgVH7LR1H4FuT
-         Y4n1Gd4KYN9I5oneyi5CMqtLDRgT4rxe/pcOi+1e4L0A4FhXyg4y7EYMAEFVkld8xTbl
-         hSWC7UDU7hc0uqDoYHhh5jxBaBBaAEi9UdZ29Nv5c0S1f2xbuDEVS+QoqbWBvRK06w+C
-         fd7iozZ1DeffrBnAaYdr0XOQHw2Z2Mtmn8oDGLkMnR2+DKgMkMlO6UGltdI0PN0gFfrt
-         86RQ==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1708451638; x=1709056438; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4DriMqP4qiEsOx9DUXcwZZJ3R+6NkNBQrlsXuZW2fRw=;
+        b=dqDmFqmf/boXSO3XLftzEpiYyOHCamaX0F53wcY4GQpiuQW/2vzcNdtROqhIDlmaNi
+         41o8Nq1nyOrvoLTIL/A3cIMQYXmTq2Cjxsvyk3NK7hnVBlMFTjhSAGVAurwdgztdwqeW
+         jVt2HdNK35jY7M80Pawdx8zCXwTpkxi3BoUuVDYfpb+UCAn6zAOXbk1Rfe/IksHmfhmQ
+         oXt/2Ch2k7erVEf5RIDIoaIW8yY1cCjQYXfObTdvxtwV8chIeWUY5YmCQak9EDtS7KxH
+         haS60yiEvpExLTaT/E7j/g0EV7s1tdqQxtTdRgSV6FL8RIUCHzQTPmYA/1Xdy57iHOop
+         P2gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708450265; x=1709055065;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XTun3sjeHoZPuUA68W/Q0xsVB+hQlqb+IVl/9LKFQL8=;
-        b=wc5xXJVDqGfDHoqRu/LPGPIiUBdPtExvu9jI3+sxTcyZPYnq7BG7qCwxgSRT/vnpmj
-         RlCyFk091VnMgqiVf6Z8vYxAvzw6zBUhekYUd4aNLlbDuiEfF2NNuETkWnnLHfR4mcHt
-         EHjpqS5TdexrOnjsS0WDcRm6HiPa/GYRyEBJlgNY7G/qwkwr5BpZ+S2XJX3xMghg+yFd
-         AT41ZYYShPZrGbZqlbeJ8RUuv06VXRleS07JEDpgwvs8y6WOLdXwTsicETQSdxfil760
-         K6PmwMqCQRR/zEeXy5UV0OvpiFrjETDvUSfzG2doM8PnALKoGx60xscsHh72gJypo664
-         35rw==
-X-Forwarded-Encrypted: i=1; AJvYcCU7MG7JgsUQ5NlunI4SMxbSTMzd+p0nrKdRYNhpooBxzR/G77YLZpdeQ7ROPoVahC+0l1XllhzhGL7l2invQ38TuSxHby5g79qOz0BpEQ==
-X-Gm-Message-State: AOJu0Yyd2ua/krch1J9tDj1eY1iNwtq+ccSwo0Yy7Xx+gt6+DSgses8F
-	43Tf7rtizPIWEPvUkuIgJZ69Sy3pdNhN9ZVguKThxRCW/ynsW4jX4cAjVHTYL94=
-X-Google-Smtp-Source: AGHT+IF6Im9KKVZF6BrPLUUt83T7OwbOQ3FD2cFzceJ+n1jrzoKNH62XjIkgG0CkuvB6WON7bbYxkQ==
-X-Received: by 2002:a2e:9e10:0:b0:2d0:e331:8d2d with SMTP id e16-20020a2e9e10000000b002d0e3318d2dmr10769775ljk.37.1708450265047;
-        Tue, 20 Feb 2024 09:31:05 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id w4-20020a2e9584000000b002cdf4797fb7sm1585042ljh.125.2024.02.20.09.31.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 09:31:04 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH] arm64: dts: qcom: sm6115: fix USB PHY configuration
-Date: Tue, 20 Feb 2024 19:31:04 +0200
-Message-Id: <20240220173104.3052778-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        d=1e100.net; s=20230601; t=1708451638; x=1709056438;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4DriMqP4qiEsOx9DUXcwZZJ3R+6NkNBQrlsXuZW2fRw=;
+        b=Gb6mqMZnrQGsuK5AcLrkaemZoQA9fZgkGuQ/xwBzK13IMau8uyz4fZkoT/Vv3s+IDU
+         YChgz7s9DtBnz0vFNqQDy22QTBzxt0HqWAFniw10ZUidM4+/SooP/3jO2GVCyTjyUg2p
+         nWJafE3pL1u2waD4eK8DxY3r9DZMfORFFhXykrGviwBtCkd8t94HJmyLSDYhqD2/kdYp
+         gd5iWJoakBLYIN9gSu+b09+Jme3LAj5ezg3YD2Xtu3QA3D0K93JFb0c4vEVlDKUQd+2l
+         HcE73sNNlNggQC9T08TE8Grq2rPMIYlLDvDUOCWKK93AZHpNBUbph14eXtV51Q7cax4M
+         /VKw==
+X-Forwarded-Encrypted: i=1; AJvYcCWDj7K4YVg2S+/Q2qwSsN9BAbG/86AxnPrQ7+n+wyZHMsvSfER8Y1wniF7fvpwf26nfRy93zaP0TOt3ndOd4efG8aQSlNW51EtwYgAOFQ==
+X-Gm-Message-State: AOJu0YyqWSmDBHpiQMvOA9460jldSc68P+8Pzl1JPE3R6rO1Oi6RIbWb
+	WX8tvnt6R+L+aAUgorOikJUNoEG8c4YLwM86KaVB0KsPBgQYk5XHk4Ju2yFMqGd0mA5Eov9ytz+
+	Za/mE5927nJq68g5adt3I+cNg7ZFVaSf2iPgW2Q==
+X-Google-Smtp-Source: AGHT+IEAXD4s0vfCLOf3dGv178kSWMvcITercQToZ5Xpgu/ylirbyvBE31sO5fq4v2ZZE2g252F6KNSh/laLzVqmd+s=
+X-Received: by 2002:a05:6102:2436:b0:470:51da:3adc with SMTP id
+ l22-20020a056102243600b0047051da3adcmr4445513vsi.10.1708451638124; Tue, 20
+ Feb 2024 09:53:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240216203215.40870-1-brgl@bgdev.pl> <20240216203215.40870-10-brgl@bgdev.pl>
+ <48164f18-34d0-4053-a416-2bb63aaae74b@sirena.org.uk> <CAMRc=Md7ymMTmF1OkydewF5C32jDNy0V+su7pcJPHKto6VLjLg@mail.gmail.com>
+ <8e392aed-b5f7-486b-b5c0-5568e13796ec@sirena.org.uk> <CAMRc=MeAXEyV47nDO_WPQqEQxSYFWTrwVPAtLghkfONj56FGVA@mail.gmail.com>
+ <CAA8EJppzkuH=YTAHuJ3Og2RLHB93PSas004UDvpqepYbGepVPg@mail.gmail.com>
+In-Reply-To: <CAA8EJppzkuH=YTAHuJ3Og2RLHB93PSas004UDvpqepYbGepVPg@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 20 Feb 2024 18:53:46 +0100
+Message-ID: <CAMRc=MfXkG1bqGrtFWpoZo3fTY49TvU3sHOnX-zc2kjUiRfp3w@mail.gmail.com>
+Subject: Re: [PATCH v5 09/18] arm64: dts: qcom: qrb5165-rb5: model the PMU of
+ the QCA6391
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Mark Brown <broonie@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Saravana Kannan <saravanak@google.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The patch adding Type-C support for sm6115 was misapplied. All the
-orientation switch configuration ended up at the UFS PHY node instead of
-the USB PHY node. Move the data bits to the correct place.
+On Tue, Feb 20, 2024 at 5:30=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 20 Feb 2024 at 13:16, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
+> > On Mon, Feb 19, 2024 at 8:59=E2=80=AFPM Mark Brown <broonie@kernel.org>=
+ wrote:
+> > >
+> > > On Mon, Feb 19, 2024 at 07:48:20PM +0100, Bartosz Golaszewski wrote:
+> > > > On Mon, Feb 19, 2024 at 7:03=E2=80=AFPM Mark Brown <broonie@kernel.=
+org> wrote:
+> > > > > On Fri, Feb 16, 2024 at 09:32:06PM +0100, Bartosz Golaszewski wro=
+te:
+> > >
+> > > > > > +                     vreg_pmu_aon_0p59: ldo1 {
+> > > > > > +                             regulator-name =3D "vreg_pmu_aon_=
+0p59";
+> > > > > > +                             regulator-min-microvolt =3D <5400=
+00>;
+> > > > > > +                             regulator-max-microvolt =3D <8400=
+00>;
+> > > > > > +                     };
+> > >
+> > > > > That's a *very* wide voltage range for a supply that's got a name=
+ ending
+> >
+> > Because it's an error, it should have been 640000. Thanks for spotting =
+it.
+>
+> According to the datasheet, VDD08_PMU_AON_O goes up to 0.85V then down
+> to 0.59V, which is the working voltage.
+>
 
-Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 42 ++++++++++++++--------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+Hmm indeed this is what figure 3.4 says but table 3-2 says the maximum is 0=
+.64V.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index ee65ab073ba6..b344f6f6d556 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -884,10 +884,31 @@ usb_qmpphy: phy@1615000 {
- 			clock-output-names = "usb3_phy_pipe_clk_src";
- 
- 			#phy-cells = <0>;
-+			orientation-switch;
- 
- 			qcom,tcsr-reg = <&tcsr_regs 0xb244>;
- 
- 			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					usb_qmpphy_out: endpoint {
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					usb_qmpphy_usb_ss_in: endpoint {
-+						remote-endpoint = <&usb_dwc3_ss>;
-+					};
-+				};
-+			};
- 		};
- 
- 		system_noc: interconnect@1880000 {
-@@ -1213,29 +1234,8 @@ ufs_mem_phy: phy@4807000 {
- 			reset-names = "ufsphy";
- 
- 			#phy-cells = <0>;
--			orientation-switch;
- 
- 			status = "disabled";
--
--			ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
--
--					usb_qmpphy_out: endpoint {
--					};
--				};
--
--				port@1 {
--					reg = <1>;
--
--					usb_qmpphy_usb_ss_in: endpoint {
--						remote-endpoint = <&usb_dwc3_ss>;
--					};
--				};
--			};
- 		};
- 
- 		gpi_dma0: dma-controller@4a00000 {
--- 
-2.39.2
+> VDD08_PMU_RFA_CMN is normally at 0.8V, but goes to 0.4V during sleep.
+>
 
+Again figure 3.4 and table 3-2 disagree unless I'm missing something.
+
+Bart
+
+[snip]
 
