@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-11924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF56885C884
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:22:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CFF785C89E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:23:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64687284C75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 21:22:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C65D11F213E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 21:23:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C3C4151CD8;
-	Tue, 20 Feb 2024 21:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1124151CE8;
+	Tue, 20 Feb 2024 21:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F4iJGJTv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n22EjbEK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C35F2DF9F;
-	Tue, 20 Feb 2024 21:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187AB151CD6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 21:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464166; cv=none; b=iCUYEhcmRpVz+unGLoZUni41JPdQU0dZ7YH7kzroH+ZIX3viOFNJg9EtTihjFH2or0WVbsnPhHqf/Ei5Vo014kqvqkiWHgDgHhmrfA5hvCGkwMjtm63c9Ajp95kQx48+2GxvHISkkkkablBwEERMaiUyG2l+xXWS8TgooAilgvw=
+	t=1708464230; cv=none; b=qZtg/a4Cd6ErAoeemCc3AicSnmPTweGpoi9AqzXQxNVa2I5uW52t/kvQlB/1UJq6W2EBADbgZSIhKlBrFg4ImmSg7RfNK/ri5NF8mA+ZqcxCTuQyo5Nr1aFbXn+PZ9JRDUZnw2cVWyB8Q8Q/GbHmH4j3BnlALYuqcuWS+Z8fwVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464166; c=relaxed/simple;
-	bh=s931faE8/4ZR1+VSUsvD//8L/Mzovh6mhsJBinlfuEk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PE5WIqQNuIEuQSbICdQGqMiunpQ4n51cvS22MAy+NS0MMv4cNWXOMaTgIGs0YKCvsmOs5mltJ+0zh05OBlsgFgBeuK3Z94FAuwr5oF/ySLqfpxfLVBPox56L+sQC/RTdzJimNoORlvLcx1od099u1Myrby2MHrJeSzDvIW0+CXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F4iJGJTv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KJD5hY002449;
-	Tue, 20 Feb 2024 21:22:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=OdMEj7azN4uCGGFB9DoExghf1hCn72OYfVqg/ygKTi4=; b=F4
-	iJGJTvnw88Ez4o1ZtCTy273OpTQnJWq0SO4RMCfiSWfT9NS2iStDfZoYng4YS9Zq
-	Lrdg7/hfBdWWZ7MJtDZWBAkKBjwqDrH22Rt/Q1OLXngrcmh76hhqZWDgSWOZKptC
-	4NUeQZ76ydWzLo9612rcyFaYa7w7Gp5ZPRuR/5yckjX4/LDCagjHGdDRkLTgNNg/
-	kpFJSgd9xULSx5bznnAuz61tiGrmT+2gkXXuso10clRG4FKChfr7QRIhDE2Dtb9i
-	CGLQo2O92rA3BRyeugCUu4EFs/ZclhM3GYu1O4T+m8EsoW63WSo9nop3rFuXdZOi
-	GmLUafi6cndh5px8FbBg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21s089c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 21:22:24 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KLMNDp025986
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 21:22:23 GMT
-Received: from [10.46.19.239] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 13:22:20 -0800
-Message-ID: <e3688f73-2040-4cd2-965a-0ed5482aff2d@quicinc.com>
-Date: Tue, 20 Feb 2024 13:22:19 -0800
+	s=arc-20240116; t=1708464230; c=relaxed/simple;
+	bh=rI8vpSht0L7BzqoOkCoHJkGo2xBc6I6x6gxOL3k6wgw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FYwoW1TVDspYQBlQJ1j1EPkbQpfZ5Ni1sd1gtfQWfjFpX7yc+Kil4Xlss5OBhwFyU3Ko078LHpb1wNnvvkyI27c1BoSb2C05jQJJVKwm9SmL3qOMGH21cVoLtM25Vfc8hgXBm1Cxs5VJYupaHhiVQN4qpJVirXpiKQqtxHDr0Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n22EjbEK; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51197ca63f5so6435585e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 13:23:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708464227; x=1709069027; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BQN1gJBuYdnaMz2lZP1Vhemjh7XxE9ird9ZL5Hi+qmE=;
+        b=n22EjbEKamPeEGz1Pcflg43NBAolA9jtaRWB3mt2vTH8yKyCWZ55WPT6bX91NAQMxI
+         VEVlj8lwGKbuyQ3CRYNopd1mvlFTtwe9bgKKwfLcUb4bCl00cudvhOaglggODIHsCmU+
+         zg5n6tLdwBwZZ/53gE6iSBRtITJkkeqyC/3roof4fKGQIDr4N5T3wD8Bbu+lkbo0mWVn
+         +pnYeiaNr/EMb2qoG8xXcEZdMDJ0Pcih/Ip+ckqt9i8LcxiJlwBu03JPYxHINE4OJwf9
+         h/sMT40Lla1zd+SY6KijEY1stvQhfaOz2z9CW6jVVdEitB3on/nV/J7m8yrnEfZCuLEu
+         VdGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708464227; x=1709069027;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BQN1gJBuYdnaMz2lZP1Vhemjh7XxE9ird9ZL5Hi+qmE=;
+        b=U8pi0u+QtXKKFKetBidqmtcqn9IwdNUnYEkVB5FMLucKteDc6RyIWWgRYO3p4usGck
+         +fL3i5TqJ8zHVABTbi0NbRzh7GYKfq92zvCAT3+YJAtwzIw6dGh7sNlD2ZSehj3fwIzu
+         VIn+Lz1V6gwHCK0QthRklmqeNeUukCLTjlFPCm6TvOx3iFREXR/ElS7yfNweJEuprhCF
+         UmtuJJpsVhNBw7/heyAhD7WXI8ob16GnAe+FV7VcCxEu2+MP/N2Dp5ZJAA/MgXoJywzs
+         Y5L8wXYQ4ACpl0ePUrQhejgAUKMWe2XOzL0RPeLb0XpGVixYKDvFwvUVge4R114kH6K9
+         39kw==
+X-Forwarded-Encrypted: i=1; AJvYcCWNxl3HoURcd1JtnyXyt6t6Zu4WPKQK4uzx6aDWad/e0PR9VSx0ztIIo2FV6C8D8Ha1f5++RlWkDcWlrvWhXopjXR99KHjPFvukoxuGQg==
+X-Gm-Message-State: AOJu0YwSN6xQeG4bKDjOjtd9FcYhSSph1blt+c6URF1j7N/SZhnVNyNd
+	na7UtRiU86UiVCYqdlrj9tbHkfv4WYJwkZpiDMwp04tlrX/CKNvcrBeXn3WXmzI=
+X-Google-Smtp-Source: AGHT+IGUGRVWsh1lOrSwTwSBnK+MNgr79zGnGLrlETgeDUz79QjMadUApjmPNi/qsoaLXat8TR3+ew==
+X-Received: by 2002:a19:e003:0:b0:512:bf99:7d80 with SMTP id x3-20020a19e003000000b00512bf997d80mr2723866lfg.1.1708464227159;
+        Tue, 20 Feb 2024 13:23:47 -0800 (PST)
+Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id i29-20020ac25b5d000000b005118a6de76esm1407778lfp.162.2024.02.20.13.23.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Feb 2024 13:23:46 -0800 (PST)
+Message-ID: <c87d715a-d6fe-4ccd-adc5-d98d4837a120@linaro.org>
+Date: Tue, 20 Feb 2024 22:23:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,158 +76,71 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5] net: stmmac: dwmac-qcom-ethqos: Add support
- for 2.5G SGMII
-To: Sneh Shah <quic_snehshah@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-CC: <kernel@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>
-References: <20240220050735.29507-1-quic_snehshah@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115: fix USB PHY configuration
 Content-Language: en-US
-From: "Abhishek Chauhan (ABC)" <quic_abchauha@quicinc.com>
-In-Reply-To: <20240220050735.29507-1-quic_snehshah@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20240220173104.3052778-1-dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240220173104.3052778-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oj5a9uhE6Yc3ERR5VRnTqQ-Be2wgTtNV
-X-Proofpoint-GUID: oj5a9uhE6Yc3ERR5VRnTqQ-Be2wgTtNV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 impostorscore=0 mlxscore=0 suspectscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 mlxlogscore=999 malwarescore=0
- bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402200153
 
-
-
-On 2/19/2024 9:07 PM, Sneh Shah wrote:
-> Serdes phy needs to operate at 2500 mode for 2.5G speed and 1000
-> mode for 1G/100M/10M speed.
-> Added changes to configure serdes phy and mac based on link speed.
-> Changing serdes phy speed involves multiple register writes for
-> serdes block. To avoid redundant write operations only update serdes
-> phy when new speed is different.
-> For 2500 speed MAC PCS autoneg needs to disabled. Added changes to
-> disable MAC PCS autoneg if ANE parameter is not set.
+On 20.02.2024 18:31, Dmitry Baryshkov wrote:
+> The patch adding Type-C support for sm6115 was misapplied. All the
+> orientation switch configuration ended up at the UFS PHY node instead of
+> the USB PHY node. Move the data bits to the correct place.
 > 
-> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
-Tested-by: Abhishek Chauhan <quic_abchauha@quicinc.com> # sa8775p-ride
-Reviewed-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
+> Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> v5 changelog:
-> - Updated commit message with more details on MAC PCS autoneg disable
-> v4 changelog:
-> - Made cosmetic changes
-> v3 changelog:
-> - updated commit message
-> ---
-> v2 changelog:
-> - updated stmmac_pcs_ane to support autoneg disable
-> - Update serdes speed to 1000 for 100M and 10M also---
-> ---
->  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 26 +++++++++++++++++++
->  .../net/ethernet/stmicro/stmmac/stmmac_pcs.h  |  2 ++
->  2 files changed, 28 insertions(+)
-> 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index 31631e3f89d0..6bbdbb7bef44 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> @@ -106,6 +106,7 @@ struct qcom_ethqos {
->  	struct clk *link_clk;
->  	struct phy *serdes_phy;
->  	unsigned int speed;
-> +	int serdes_speed;
->  	phy_interface_t phy_mode;
->  
->  	const struct ethqos_emac_por *por;
-> @@ -606,19 +607,39 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos)
->   */
->  static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  {
-> +	struct net_device *dev = platform_get_drvdata(ethqos->pdev);
-> +	struct stmmac_priv *priv = netdev_priv(dev);
->  	int val;
->  
->  	val = readl(ethqos->mac_base + MAC_CTRL_REG);
->  
->  	switch (ethqos->speed) {
-> +	case SPEED_2500:
-> +		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
-> +		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> +			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
-> +			      RGMII_IO_MACRO_CONFIG2);
-> +		if (ethqos->serdes_speed != SPEED_2500)
-> +			phy_set_speed(ethqos->serdes_phy, SPEED_2500);
-> +		ethqos->serdes_speed = SPEED_2500;
-> +		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 0, 0, 0);
-> +		break;
->  	case SPEED_1000:
->  		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
->  		rgmii_updatel(ethqos, RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
->  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
->  			      RGMII_IO_MACRO_CONFIG2);
-> +		if (ethqos->serdes_speed != SPEED_1000)
-> +			phy_set_speed(ethqos->serdes_phy, SPEED_1000);
-> +		ethqos->serdes_speed = SPEED_1000;
-> +		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
->  		break;
->  	case SPEED_100:
->  		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
-> +		if (ethqos->serdes_speed != SPEED_1000)
-> +			phy_set_speed(ethqos->serdes_phy, SPEED_1000);
-> +		ethqos->serdes_speed = SPEED_1000;
-> +		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
->  		break;
->  	case SPEED_10:
->  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
-> @@ -627,6 +648,10 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR,
->  					 SGMII_10M_RX_CLK_DVDR),
->  			      RGMII_IO_MACRO_CONFIG);
-> +		if (ethqos->serdes_speed != SPEED_1000)
-> +			phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-> +		ethqos->serdes_speed = SPEED_1000;
-> +		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
->  		break;
->  	}
->  
-> @@ -799,6 +824,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->  				     "Failed to get serdes phy\n");
->  
->  	ethqos->speed = SPEED_1000;
-> +	ethqos->serdes_speed = SPEED_1000;
->  	ethqos_update_link_clk(ethqos, SPEED_1000);
->  	ethqos_set_func_clk_en(ethqos);
->  
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> index aefc121464b5..13a30e6df4c1 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-> @@ -110,6 +110,8 @@ static inline void dwmac_ctrl_ane(void __iomem *ioaddr, u32 reg, bool ane,
->  	/* Enable and restart the Auto-Negotiation */
->  	if (ane)
->  		value |= GMAC_AN_CTRL_ANE | GMAC_AN_CTRL_RAN;
-> +	else
-> +		value &= ~GMAC_AN_CTRL_ANE;
->  
->  	/* In case of MAC-2-MAC connection, block is configured to operate
->  	 * according to MAC conf register.
+
+So that's why UFS stopped working and I couldn't for the life of
+me guess why..
+
+
+Konrad
 
