@@ -1,181 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-11830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A59E885BC30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:31:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37FA485BC3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:32:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D80071C208F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:31:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4A421F236C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15AB769974;
-	Tue, 20 Feb 2024 12:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE0B6A014;
+	Tue, 20 Feb 2024 12:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="FQcnko7R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UTizOyuf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EEF44373;
-	Tue, 20 Feb 2024 12:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F956997D;
+	Tue, 20 Feb 2024 12:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708432268; cv=none; b=qBgrhUhXV9W2Ao4VyX8wZGm8hMwv23zdy4l20eZnIREPQ3xa6qHX16Q4CVsIy8izJtJxQwGM64aZUiKFyKJAUBf11GT2vt2yl6JctU3MXcb+wMax9jjkJ31X0MTcZ7BVM7GVckhKzWk5FprlToFqMy4/IpSiRpF88oomB/7ZlmA=
+	t=1708432329; cv=none; b=n7iJZB1sHtBLw86OotYGRSJHXBG7scCprEpfyU/Wi5eBR6CjP7yz8qBeAGvfxvXv99B3OdnjeHrYaH+XIRWDywd7dZrh7M28FfGFFjZjAceKw0/9Qs+uDDEsNc73H+wf9slzYBg2zNR8vbD12aHiAB/wRKVzIRuVTYOKGwJyo9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708432268; c=relaxed/simple;
-	bh=PQqamGZppq5o6Qqr8I3GU1b0V/YNU2o8dzbd0n79mQs=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eXEVmyOuv4dVrGvlwrcQLcZYlvDrf7RmomQ3XnDT1ZNIwmW9U6Zd6ASZ9E5FjPfRXReyDuafD1pdpxdHAluDc9P/qfgyV1yx0xNDCP4smbBvfcUmunPRIh4oV9LdieteNOPnAscdu+rxPggmX1v0rgWF06lk40GmxGofr+bEcrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=FQcnko7R; arc=none smtp.client-ip=198.47.19.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41KCUnX0092634;
-	Tue, 20 Feb 2024 06:30:49 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1708432249;
-	bh=X2TNTFiXe9xfD+D7kqdm/A0TrDMIgtFiMCyCVu1JtIY=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=FQcnko7R/a5J6gZDSYHAZ7XLx0BkHKkurR5koB+hQYCPo1ySDn3ZCWpdsfzqs7HxY
-	 yXdH7RPdGisnHbhrinHMXj6M6JiyYLaWw9zBvExfenEXJL3uqCNKGCj73nbgek598q
-	 chbc2oGroeEDM/2DdGwzZn0+YuolTZM+cc9jFYDI=
-Received: from DLEE100.ent.ti.com (dlee100.ent.ti.com [157.170.170.30])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41KCUn9W017384
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 20 Feb 2024 06:30:49 -0600
-Received: from DLEE114.ent.ti.com (157.170.170.25) by DLEE100.ent.ti.com
- (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 20
- Feb 2024 06:30:49 -0600
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE114.ent.ti.com
- (157.170.170.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Tue, 20 Feb 2024 06:30:49 -0600
-Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41KCUmfT099249;
-	Tue, 20 Feb 2024 06:30:49 -0600
-Date: Tue, 20 Feb 2024 18:00:48 +0530
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel
-	<gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Marek Vasut
-	<marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda
-	<yoshihiro.shimoda.uh@renesas.com>,
-        Kishon Vijay Abraham I
-	<kishon@kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>, <s-vadapalli@ti.com>
-Subject: Re: [PATCH v2 4/5] PCI: qcom-ep: Add HDMA support for SA8775P SoC
-Message-ID: <85374225-287f-4f2a-998b-a1ef997da268@ti.com>
-References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
- <20240216-dw-hdma-v2-4-b42329003f43@linaro.org>
+	s=arc-20240116; t=1708432329; c=relaxed/simple;
+	bh=sllmESvhwefKtD+mcwJUgwkGcuVOxcsWD1b0mvfzBoA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FMPoHJy+3GvEc24jKldlSyLhdQyNPeh/pHUrxq9rZ7XDzJPlBsx4RF1z0IWi4aHeVu6jyrDstPIFu2a5x5Usekv/EYevXw6sdi/3CaipEDFSiLXv/GOouMM4o6Fp7hlp5ZOWdaZUK9hCvKYSxqUKX3o7iOCevEJxMAQNxs7T/wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UTizOyuf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KAEioE025078;
+	Tue, 20 Feb 2024 12:31:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=+LpGty1WpTBAu3u7mkOybl2Gl1+n/qkpH75rRLI6A+8=; b=UT
+	izOyufZn3dlb5lmhN0gMUnMZUzW3VhGArJoLZZ3pVDpdRNq9pJOp8px/4VG4wqt8
+	GWi0oktlhZLirGRpZGdf+HSOr/KT3gl+LzHndOrkK+NFiyhBd0Ql4fQQ8ma8y8yO
+	hBSLciudHciG4YxG/hl4LMkDl8lyXoXw1oMlpENSKM/9esowMnsyfYzhH1Pyfdzs
+	t3X5AQdus8elLzYDZ+JZNrZMCaY9CPJv3KivhIkkLx1fLEFzi82afhUe+2gKlgih
+	R6SzJzxUA3cbfj8CYY81fYbIpKjJQGQn/06IMovG0w/4b3QJoWUUcRd8zryFxOcM
+	gxygtLWW+rdzt2+iR/kA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct5787v3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:31:48 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCVlQS017701
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 12:31:47 GMT
+Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 04:31:41 -0800
+Message-ID: <3e1e56dc-adb6-e4ec-b99b-688c707ddf0a@quicinc.com>
+Date: Tue, 20 Feb 2024 18:01:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240216-dw-hdma-v2-4-b42329003f43@linaro.org>
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: ipq9574: Add SPI nand support
+Content-Language: en-US
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <broonie@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240215134856.1313239-5-quic_mdalam@quicinc.com>
+ <17c6b3df-2acd-45e2-8167-02c629b1e972@quicinc.com>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <17c6b3df-2acd-45e2-8167-02c629b1e972@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: St93OQcwmYXz7tjkL789OcImyOxEtwXK
+X-Proofpoint-GUID: St93OQcwmYXz7tjkL789OcImyOxEtwXK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
+ spamscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
+ definitions=main-2402200090
 
-On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
-> From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> 
-> SA8775P SoC supports the new Hyper DMA (HDMA) DMA Engine inside the DWC IP.
-> Let's add support for it by passing the mapping format and the number of
-> read/write channels count.
-> 
-> The PCIe EP controller used on this SoC is of version 1.34.0, so a separate
-> config struct is introduced for the sake of enabling HDMA conditionally.
-> 
-> It should be noted that for the eDMA support (predecessor of HDMA), there
-> are no mapping format and channels count specified. That is because eDMA
-> supports auto detection of both parameters, whereas HDMA doesn't.
-> 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> [mani: Reworded commit message, added kdoc, and minor cleanups]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-Regards,
-Siddharth.
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 23 ++++++++++++++++++++++-
->  1 file changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 45008e054e31..89d06a3e6e06 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -149,6 +149,14 @@ enum qcom_pcie_ep_link_status {
->  	QCOM_PCIE_EP_LINK_DOWN,
->  };
->  
-> +/**
-> + * struct qcom_pcie_ep_cfg - Per SoC config struct
-> + * @hdma_support: HDMA support on this SoC
-> + */
-> +struct qcom_pcie_ep_cfg {
-> +	bool hdma_support;
-> +};
-> +
->  /**
->   * struct qcom_pcie_ep - Qualcomm PCIe Endpoint Controller
->   * @pci: Designware PCIe controller struct
-> @@ -803,6 +811,7 @@ static const struct dw_pcie_ep_ops pci_ep_ops = {
->  
->  static int qcom_pcie_ep_probe(struct platform_device *pdev)
->  {
-> +	const struct qcom_pcie_ep_cfg *cfg;
->  	struct device *dev = &pdev->dev;
->  	struct qcom_pcie_ep *pcie_ep;
->  	char *name;
-> @@ -816,6 +825,14 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
->  	pcie_ep->pci.ops = &pci_ops;
->  	pcie_ep->pci.ep.ops = &pci_ep_ops;
->  	pcie_ep->pci.edma.nr_irqs = 1;
-> +
-> +	cfg = of_device_get_match_data(dev);
-> +	if (cfg && cfg->hdma_support) {
-> +		pcie_ep->pci.edma.ll_wr_cnt = 8;
-> +		pcie_ep->pci.edma.ll_rd_cnt = 8;
-> +		pcie_ep->pci.edma.mf = EDMA_MF_HDMA_NATIVE;
-> +	}
-> +
->  	platform_set_drvdata(pdev, pcie_ep);
->  
->  	ret = qcom_pcie_ep_get_resources(pdev, pcie_ep);
-> @@ -874,8 +891,12 @@ static void qcom_pcie_ep_remove(struct platform_device *pdev)
->  	qcom_pcie_disable_resources(pcie_ep);
->  }
->  
-> +static const struct qcom_pcie_ep_cfg cfg_1_34_0 = {
-> +	.hdma_support = true,
-> +};
-> +
->  static const struct of_device_id qcom_pcie_ep_match[] = {
-> -	{ .compatible = "qcom,sa8775p-pcie-ep", },
-> +	{ .compatible = "qcom,sa8775p-pcie-ep", .data = &cfg_1_34_0},
->  	{ .compatible = "qcom,sdx55-pcie-ep", },
->  	{ .compatible = "qcom,sm8450-pcie-ep", },
->  	{ }
-> 
-> -- 
-> 2.25.1
+On 2/16/2024 9:10 PM, Kathiravan Thirumoorthy wrote:
 > 
 > 
+> On 2/15/2024 7:18 PM, Md Sadre Alam wrote:
+>> Add SPI NAND support for ipq9574 SoC.
+>>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>   .../boot/dts/qcom/ipq9574-rdp-common.dtsi     | 43 +++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 27 ++++++++++++
+>>   2 files changed, 70 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+>> index 91e104b0f865..5b54a027fa5d 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+>> @@ -139,6 +139,49 @@ gpio_leds_default: gpio-leds-default-state {
+>>           drive-strength = <8>;
+>>           bias-pull-up;
+>>       };
+>> +
+>> +    qpic_snand_default_state: qpic-snand-default-state {
+>> +        clock-pins {
+>> +            pins = "gpio5";
+>> +            function = "qspi_clk";
+>> +            drive-strength = <8>;
+>> +            bias-disable;
+>> +        };
+>> +
+>> +        cs-pins {
+>> +            pins = "gpio4";
+>> +            function = "qspi_cs";
+>> +            drive-strength = <8>;
+>> +            bias-disable;
+>> +        };
+>> +
+>> +        data-pins {
+>> +            pins = "gpio0", "gpio1", "gpio2";
+> 
+> 
+> As per the pinctrl driver[1], there are 4 data pins.
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pinctrl/qcom/pinctrl-ipq9574.c#n296
+
+   Will fix in next patch.
+> 
+> 
+>> +            function = "qspi_data";
+>> +            drive-strength = <8>;
+>> +            bias-disable;
+>> +        };
+>> +    };
+>> +};
+>> +
+>> +&qpic_bam {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&qpic_nand {
+>> +    pinctrl-0 = <&qpic_snand_default_state>;
+>> +    pinctrl-names = "default";
+>> +    status = "okay";
+>> +
+>> +    flash@0 {
+>> +        compatible = "spi-nand";
+>> +        reg = <0>;
+>> +        #address-cells = <1>;
+>> +        #size-cells = <1>;
+>> +        nand-ecc-engine = <&qpic_nand>;
+>> +        nand-ecc-strength = <4>;
+>> +        nand-ecc-step-size = <512>;
+>> +    };
+>>   };
+>>   &usb_0_dwc3 {
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 7f2e5cbf3bbb..d963dd2035dd 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> @@ -319,6 +319,33 @@ tcsr: syscon@1937000 {
+>>               reg = <0x01937000 0x21000>;
+>>           };
+>> +        qpic_bam: dma-controller@7984000 {
+> 
+> 
+> Nodes should be ordered by unit address in ascending order. So please move these nodes to the right place.
+  Ok
+> 
+> 
+>> +            compatible = "qcom,bam-v1.7.0";
+>> +            reg = <0x7984000 0x1c000>;
+> 
+> 
+> address should be padded to 8 bytes.
+Ok
+> 
+>> +            interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
+>> +            clocks = <&gcc GCC_QPIC_AHB_CLK>;
+>> +            clock-names = "bam_clk";
+>> +            #dma-cells = <1>;
+>> +            qcom,ee = <0>;
+>> +            status = "disabled";
+>> +        };
+>> +
+>> +        qpic_nand: spi@79b0000 {
+>> +            compatible = "qcom,ipq9574-snand";
+>> +            reg = <0x79b0000 0x10000>;
+> 
+> 
+> Ditto..
+Ok
+> 
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +            clocks = <&gcc GCC_QPIC_CLK>,
+>> +            <&gcc GCC_QPIC_AHB_CLK>,
+>> +            <&gcc GCC_QPIC_IO_MACRO_CLK>;
+> 
+> 
+> Fix the alignment.
+Ok
+> 
+>> +            clock-names = "core", "aon", "iom";
+>> +            dmas = <&qpic_bam 0>,
+>> +                <&qpic_bam 1>,
+>> +                <&qpic_bam 2>;
+> 
+> 
+> Here as well.
+Ok
+> 
+> 
+>> +            dma-names = "tx", "rx", "cmd";
+>> +            status = "disabled";
+>> +        };
+>> +
+>>           sdhc_1: mmc@7804000 {
+>>               compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
+>>               reg = <0x07804000 0x1000>,
 
