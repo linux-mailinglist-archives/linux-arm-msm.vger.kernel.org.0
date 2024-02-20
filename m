@@ -1,245 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-11825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6119285BBE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:22:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3D6685BC0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:27:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC59A1F21208
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:22:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2EA57B21EAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:27:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 241A35B674;
-	Tue, 20 Feb 2024 12:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE0467E7E;
+	Tue, 20 Feb 2024 12:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dYHiVoau"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="AFSbsmDV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7225B1F8;
-	Tue, 20 Feb 2024 12:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771CB664A6;
+	Tue, 20 Feb 2024 12:27:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.248
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708431746; cv=none; b=RvZSDgJI9DgBTqjwiUWuQx8c8SyXVGDQ2ezJks27u4lV9bwgsVKEL+aSSzv5XpldNlPUJLs/C7BR/EYCqIlePVzomQ+/+PcfeXXBShP14cXV2qh3al+lqUtZ342m+v9RRF7+xB67ZQ17fDAZPcgZK2XspQM7ASKy3lSr3PZ89eI=
+	t=1708432029; cv=none; b=i2WLgu5VJV5xIm3GeI3j4dYoi16IYd0JFqUsDyT048mKEr121GFjOctLw6q5o4kC2DsoohnDQabzqPg5fnzDrOw8/YbBCRkgPy5hD5bJQzK5RZRafjFAs3OwVIWUzCWAyhnEeQzsJugrDfG6vUkC7dIoQusH/rRWm1nQO63WgSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708431746; c=relaxed/simple;
-	bh=InDHKtmK2AtUmds74XuVyGWa4Kq1lt972r024xFyyPY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HCoSik0xeeDqnAGTmgaYjELAEUKEGLkwgwJsyypgvahmQ3UJMe4amgH8+ba+WEhlcXOnHoEs8suCygaH+KECX8Cic3/dDb+sqvjkFiSTyb4FDRmM0T9gMDM4quq2QpvIsgy89CTFP7j1bnVATbYQOYUCGdjmnwW4e9r6H5fxK80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dYHiVoau; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KBe1qL030653;
-	Tue, 20 Feb 2024 12:21:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=379Srn1tGEaDvceo1XrilJx6GCtEIxn4M0Q0q4VP4Mw=; b=dY
-	HiVoauIcBhnBW8SellHUd6j95dWA+0KfkP2GeUTalqAGLbljfeFRBZQPfbdJAytO
-	NFVBDM4Tsd7V2AzsMwpYsVptWiSJQCOt2ZM36hbiils+6/agZ2mwLh293R37M4bp
-	DmDJUdXDZNpTSaYGpsk8vLgkZ4nbmb0cqKJKjCcmCqUnVuUh4QfuYAurDH9TFo8Y
-	wXt/2fcSJ3ecnlpSxcRlzkX973QMMFQLN0ziCvdWrHMDiAxSXA3T2Lr2BFA4Glma
-	cDwkz8XN5Zw+qNIJU9n0rM+wurK4M2epzmX5OOF2efb81VLdsA/Vc90dPJe1Rb1u
-	qqYs0lc7Q2MDLWPOA5Aw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct3eg7yk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:21:22 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KCLLmR029113
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:21:21 GMT
-Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 04:21:15 -0800
-Message-ID: <439c89ec-3702-4b4a-5e02-b18cc99b8ba3@quicinc.com>
-Date: Tue, 20 Feb 2024 17:51:11 +0530
+	s=arc-20240116; t=1708432029; c=relaxed/simple;
+	bh=RuY9w5Dr/1wdetSAqH5kT8zGrdXUySxdTGovYYxNZG4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zy4wUzuf4XwqO/hKMlhvJOJT+rn21rasxmeQYQtmSl1BuexP3OZfP5gh0SnI1XATCPsmb6Z/3d+JhE4OwBbniA5G3xmYEuEWuBQ+mcp3wiWykt/L4h7dyBh63Q5MJcubkgDky09PCfEnAcSc8YuE9lwYm4iESs3Sw5c6lyDMpXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=AFSbsmDV; arc=none smtp.client-ip=198.47.23.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41KCQo64093480;
+	Tue, 20 Feb 2024 06:26:50 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1708432010;
+	bh=x8mUODGtFNg84s5n14xg7n/kJUQBebR7lCHh9t+k4lA=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=AFSbsmDVoNp1NzAKbPe/H3eoYR74xIERVx73jf70QUFR9HxJCBNtiXfkJEIRXJ5QY
+	 tMRMw8x063Ssd2tqjdk6jbm9/F1QUdiZmHdghpyO6YuUvzGkOXo7TyQway1E+NZESb
+	 Qa+u5mT+tJ83RBkx01bWKiSIxuuqnMTpqNHpME0Y=
+Received: from DFLE100.ent.ti.com (dfle100.ent.ti.com [10.64.6.21])
+	by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41KCQorb116256
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Tue, 20 Feb 2024 06:26:50 -0600
+Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE100.ent.ti.com
+ (10.64.6.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 20
+ Feb 2024 06:26:49 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE108.ent.ti.com
+ (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Tue, 20 Feb 2024 06:26:49 -0600
+Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41KCQmMl092870;
+	Tue, 20 Feb 2024 06:26:48 -0600
+Date: Tue, 20 Feb 2024 17:56:48 +0530
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel
+	<gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Marek Vasut
+	<marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda
+	<yoshihiro.shimoda.uh@renesas.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Serge Semin <fancer.lancer@gmail.com>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <s-vadapalli@ti.com>
+Subject: Re: [PATCH v2 3/5] PCI: dwc: Pass the eDMA mapping format flag
+ directly from glue drivers
+Message-ID: <17ef7cf1-62d8-41f8-9e52-3ce972708a72@ti.com>
+References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
+ <20240216-dw-hdma-v2-3-b42329003f43@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 2/5] drivers: mtd: nand: Add qpic_common API file
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <broonie@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
- <20240215134856.1313239-3-quic_mdalam@quicinc.com>
- <4cb0144c-303b-4b91-bf88-0a7d7412afe1@linaro.org>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <4cb0144c-303b-4b91-bf88-0a7d7412afe1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5UIVdpcamgOu-7yVNLkwt275vMMlNqui
-X-Proofpoint-GUID: 5UIVdpcamgOu-7yVNLkwt275vMMlNqui
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- spamscore=0 phishscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200088
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240216-dw-hdma-v2-3-b42329003f43@linaro.org>
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
+On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
+> Instead of maintaining a separate capability for glue drivers that cannot
+> support auto detection of the eDMA mapping format, let's pass the mapping
+> format directly from them.
+> 
+> This will simplify the code and also allow adding HDMA support that also
+> doesn't support auto detection of mapping format.
+> 
+> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-
-On 2/15/2024 11:25 PM, Konrad Dybcio wrote:
-> On 15.02.2024 14:48, Md Sadre Alam wrote:
->> Add qpic_common.c file which hold all the common
->> qpic APIs which will be used by both qpic raw nand
->> driver and qpic spi nand driver.
->>
->> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> ---
-> 
-> IIUC this is mostly moving code around?
-> 
-> I do however have some suggestions..
-Ok
-> 
->>   drivers/mtd/nand/Makefile            |    1 +
->>   drivers/mtd/nand/qpic_common.c       |  786 +++++++++++++++++
->>   drivers/mtd/nand/raw/qcom_nandc.c    | 1226 +-------------------------
->>   include/linux/mtd/nand-qpic-common.h |  488 ++++++++++
->>   4 files changed, 1291 insertions(+), 1210 deletions(-)
->>   create mode 100644 drivers/mtd/nand/qpic_common.c
->>   create mode 100644 include/linux/mtd/nand-qpic-common.h
->>
->> diff --git a/drivers/mtd/nand/Makefile b/drivers/mtd/nand/Makefile
->> index 19e1291ac4d5..131707a41293 100644
->> --- a/drivers/mtd/nand/Makefile
->> +++ b/drivers/mtd/nand/Makefile
->> @@ -12,3 +12,4 @@ nandcore-$(CONFIG_MTD_NAND_ECC) += ecc.o
->>   nandcore-$(CONFIG_MTD_NAND_ECC_SW_HAMMING) += ecc-sw-hamming.o
->>   nandcore-$(CONFIG_MTD_NAND_ECC_SW_BCH) += ecc-sw-bch.o
->>   nandcore-$(CONFIG_MTD_NAND_ECC_MXIC) += ecc-mxic.o
->> +obj-y += qpic_common.o
->> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
->> new file mode 100644
->> index 000000000000..4d74ba888028
->> --- /dev/null
->> +++ b/drivers/mtd/nand/qpic_common.c
->> @@ -0,0 +1,786 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * QPIC Controller common API file.
->> + * Copyright (C) 2023  Qualcomm Inc.
->> + * Authors:	Md sadre Alam           <quic_mdalam@quicinc.com>
->> + *		Sricharan R             <quic_srichara@quicinc.com>
->> + *		Varadarajan Narayanan	<quic_varada@quicinc.com>
->> + *
->> + */
->> +
->> +#include <linux/mtd/nand-qpic-common.h>
->> +
->> +struct qcom_nand_controller *
->> +get_qcom_nand_controller(struct nand_chip *chip)
->> +{
->> +	return container_of(chip->controller, struct qcom_nand_controller,
->> +			    controller);
->> +}
->> +EXPORT_SYMBOL(get_qcom_nand_controller);
-> 
-> #define to_qcom_nand_controller()?
-Ok
-> 
->> +
->> +/*
->> + * Helper to prepare DMA descriptors for configuring registers
->> + * before reading a NAND page.
->> + */
-> 
-> Can you convert these to kerneldoc instead?
-Ok
-> 
->> +void config_nand_page_read(struct nand_chip *chip)
->> +{
->> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
->> +
->> +	write_reg_dma(nandc, NAND_ADDR0, 2, 0);
->> +	write_reg_dma(nandc, NAND_DEV0_CFG0, 3, 0);
->> +	if (!nandc->props->qpic_v2)
-> 
-> This is not going to scale going forward.. please include a version
-> enum instead.
-Ok
-> 
-> [...]
-> 
->> +
->> +int prep_adm_dma_desc(struct qcom_nand_controller *nandc, bool read,
->> +		      int reg_off, const void *vaddr, int size,
->> +			     bool flow_control)
->> +{
->> +	struct desc_info *desc;
->> +	struct dma_async_tx_descriptor *dma_desc;
->> +	struct scatterlist *sgl;
->> +	struct dma_slave_config slave_conf;
->> +	struct qcom_adm_peripheral_config periph_conf = {};
->> +	enum dma_transfer_direction dir_eng;
->> +	int ret;
-> 
-> Revertse-christmas-tree, please
-Ok
-> 
->> +
->> +	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
->> +	if (!desc)
->> +		return -ENOMEM;
->> +
->> +	sgl = &desc->adm_sgl;
->> +
->> +	sg_init_one(sgl, vaddr, size);
->> +
->> +	if (read) {
->> +		dir_eng = DMA_DEV_TO_MEM;
->> +		desc->dir = DMA_FROM_DEVICE;
->> +	} else {
->> +		dir_eng = DMA_MEM_TO_DEV;
->> +		desc->dir = DMA_TO_DEVICE;
->> +	}
->> +
->> +	ret = dma_map_sg(nandc->dev, sgl, 1, desc->dir);
->> +	if (ret == 0) {
-> 
-> if (!ret)
-Ok
-> 
->> +		ret = -ENOMEM;
->> +		goto err;
->> +	}
->> +
->> +	memset(&slave_conf, 0x00, sizeof(slave_conf));
-> 
-> Just zero-initialize it (= { 0 }) at declaration time
-Ok
-> 
-> Konrad
-> 
-
-Thanks for reviewing , I will fix all the comments in next patch.
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 
 Regards,
-Alam.
+Siddharth.
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.c | 16 +++++++++-------
+>  drivers/pci/controller/dwc/pcie-designware.h |  5 ++---
+>  drivers/pci/controller/dwc/pcie-rcar-gen4.c  |  2 +-
+>  3 files changed, 12 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index d07747b75947..54ecd536756d 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -894,18 +894,20 @@ static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+>  
+> +	/*
+> +	 * Bail out finding the mapping format if it is already set by the glue
+> +	 * driver. Also ensure that the edma.reg_base is pointing to a valid
+> +	 * memory region.
+> +	 */
+> +	if (pci->edma.mf != EDMA_MF_EDMA_LEGACY)
+> +		return pci->edma.reg_base ? 0 : -ENODEV;
+> +
+>  	/*
+>  	 * Indirect eDMA CSRs access has been completely removed since v5.40a
+>  	 * thus no space is now reserved for the eDMA channels viewport and
+>  	 * former DMA CTRL register is no longer fixed to FFs.
+> -	 *
+> -	 * Note that Renesas R-Car S4-8's PCIe controllers for unknown reason
+> -	 * have zeros in the eDMA CTRL register even though the HW-manual
+> -	 * explicitly states there must FFs if the unrolled mapping is enabled.
+> -	 * For such cases the low-level drivers are supposed to manually
+> -	 * activate the unrolled mapping to bypass the auto-detection procedure.
+>  	 */
+> -	if (dw_pcie_ver_is_ge(pci, 540A) || dw_pcie_cap_is(pci, EDMA_UNROLL))
+> +	if (dw_pcie_ver_is_ge(pci, 540A))
+>  		val = 0xFFFFFFFF;
+>  	else
+>  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index 26dae4837462..995805279021 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -51,9 +51,8 @@
+>  
+>  /* DWC PCIe controller capabilities */
+>  #define DW_PCIE_CAP_REQ_RES		0
+> -#define DW_PCIE_CAP_EDMA_UNROLL		1
+> -#define DW_PCIE_CAP_IATU_UNROLL		2
+> -#define DW_PCIE_CAP_CDM_CHECK		3
+> +#define DW_PCIE_CAP_IATU_UNROLL		1
+> +#define DW_PCIE_CAP_CDM_CHECK		2
+>  
+>  #define dw_pcie_cap_is(_pci, _cap) \
+>  	test_bit(DW_PCIE_CAP_ ## _cap, &(_pci)->caps)
+> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> index e9166619b1f9..3c535ef5ea91 100644
+> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> @@ -255,7 +255,7 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
+>  	rcar->dw.ops = &dw_pcie_ops;
+>  	rcar->dw.dev = dev;
+>  	rcar->pdev = pdev;
+> -	dw_pcie_cap_set(&rcar->dw, EDMA_UNROLL);
+> +	rcar->dw.edma.mf = EDMA_MF_EDMA_UNROLL;
+>  	dw_pcie_cap_set(&rcar->dw, REQ_RES);
+>  	platform_set_drvdata(pdev, rcar);
+>  
+> 
+> -- 
+> 2.25.1
+> 
+> 
 
