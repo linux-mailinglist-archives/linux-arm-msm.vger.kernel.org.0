@@ -1,152 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-11788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E932485B827
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:50:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A75385B852
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 10:55:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A5921F21D89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:50:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5D701C22A87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 09:55:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B009604AA;
-	Tue, 20 Feb 2024 09:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B42960264;
+	Tue, 20 Feb 2024 09:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Pt9P0viO"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lDdHorO+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B6467E62;
-	Tue, 20 Feb 2024 09:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84D265BA3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 09:54:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708422441; cv=none; b=Dg8mZAIPL7wZuSg0nfKxlO5faVMygypur3e4H+yW0GmJaIP8yGUijU5P0SX1rC37jZQ0JtPlR+qiAE7GdVqZ10lmKbfOR4fb1i1YZ2xfMziAS1RkNYjtRWBQp+NoKuUWSCs3HGzUf6syl/6fzl59iTB3cfUfHYkbIvHeLYbBBqI=
+	t=1708422857; cv=none; b=AScODRsXcoE+dvKoRSORfc1DHM9q5F3FZAG2IeKBIkyxxkC0iKag2e5Y0tQJ3BBXPttlXvKUPEQC+7Bc8TomWEF6dXnxEHnbfKuc55LH/8ANxHm18cLjPzopobYFF/3O0/GQmhUIg0q3SJSkABSYAj+IrbBRQQqvO2hxQWaUP84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708422441; c=relaxed/simple;
-	bh=KesIi6Q8HPaFY4Ookna0XyPXTx7dEbSq0mOPhInm6GQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=F8LkbKF+xknkixI62XKODrVO+i6YAiaCOPvMH7bej4b6mwpIQTbzn2LnBaIpk+/q2k+cTNwIRQMzP8nY8eLdJqu88TroL6mrwGBde9eYGEY7nenpTLQdEWtrT3/qQhlycNikMiNFHVf+c8JyAkVlVv+yke3BrT/B6YoQ5Er2AcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Pt9P0viO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41K67Ymj007432;
-	Tue, 20 Feb 2024 09:47:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=PB46TtqBgvtRnJYtKHiJGTbbNaJF2LMInwNIkcF5WvY=; b=Pt
-	9P0viOQInx3OmgE/nGbSm8TiqgulsDDfLKM+9GKBbNZ6gmmLFBj18KE4ANOD1ysY
-	Q5JXacrTNXP2kdLbB+mkiTxCS9Y803O++X1oSHvVUyod0gMvRQvk/shy+HOXeoOr
-	jHuJ1uwpBvRevHl1EFyFUxvDZNrs0l4OYe6xR8gPafSQ5HsOACdVBFyKgobG8vER
-	CV0X6OH+knB0kcKs/YHWaGbv42KYVldJATlyZ6cS5z8j21O7ECmYwHRBHdJCn4Mj
-	iWVLmjkIrzgHn7vb82/j9+BmEulQipJsDviRtUG5b+e8OB7dNdgmYBYt+FlN03EC
-	gAm39zt403hJgP4p5iGg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wcnbd8hgv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 09:47:14 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41K9kvWx024927
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 09:46:57 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 01:46:52 -0800
-Message-ID: <56f7cafb-38fe-44e3-9a2d-1d3edcde9fcc@quicinc.com>
-Date: Tue, 20 Feb 2024 17:46:49 +0800
+	s=arc-20240116; t=1708422857; c=relaxed/simple;
+	bh=4xzN47cfbSqo2a8NkyQa4EL2L6QY3ra7B9pOZIDIlz8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qDos0pMxF1qOlWRk09HxK+7DKzTjKyBaJB8ucI3qHrLtrlvgyzIk6xRTTt4Hkm8BJ4FiCOC7UD/Dx4WE6OcxMFlALpQoJXOVY5dFTvTdETI+Mm76SKkk/Ecr2Vn7mqM6ByhOgQQKJRAHHn9jmDgvsYFRaBo2OlYc9JFQdVIgb+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lDdHorO+; arc=none smtp.client-ip=209.85.222.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-7ce3c7566e0so2383225241.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 01:54:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1708422853; x=1709027653; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4xzN47cfbSqo2a8NkyQa4EL2L6QY3ra7B9pOZIDIlz8=;
+        b=lDdHorO+lkfPQMdArhhqvsmZumn00lMM9ChBwlJTyrdXR9C1SW+jGrC1BOqtVsRcz4
+         a9sEehk7uszhNFjO5ej8c0DGoE0opL7XrHI3Xa+mZQ6Gg87x0MHM232QA0Ce6rycKRUL
+         3k0h+R/wF6BnPS4Moc4tk+q4mdo2QuMWaPnNcvAUh9WmcxBcR5aAZwOmVzvrmypu6lLK
+         dLP6ao+K/EGrSAX8nrf48cTADgeWYG1Hj59ZP8VL+QS31aW27QAe+EY4Xs7HfZAcCLZa
+         uZfw1lN3B9owYyOBbOBXuZFzrSePGTmXIGsnU5ETPY9SEUyjLdV1TDKM7mEETMix3YYL
+         PnGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708422853; x=1709027653;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4xzN47cfbSqo2a8NkyQa4EL2L6QY3ra7B9pOZIDIlz8=;
+        b=e7WkBlH6E+n/Uv237TaNFb3RDOgJmA78rtKrRlFZFmLEm/rp1fDoU+PcFAVhKIGUZQ
+         mTgTmDmMNbCDtv6S1g84ZeKWgbE8f2meHA8Uczjw0K2JHpHEg7S74BXtbOAPc0MRz0i6
+         5nZqiOtf4ByK0JwPBeEPW7fciUTGdXIa4NgbKIeo5RrRE0Q9593Gz8OTd3PsZsxQ6aqX
+         Z2OGaHR2YxBG2FFDmZHSA3etVQzRUKpvWvXDHDtqnGSQKNfjLxBxQoBPL12jqwwkzxW/
+         IdDQrjs8zzmKhDgM1M4x0rfiRdBV+Qtman4W8dWDN2mjILK5SUh9PpyVh/Ez+HFiXsQh
+         edqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVzduAqCmgM0fd97IENq8ehpZD40GcnQ9JvJcyckcsDf6FgYcWf+RC9zeLwrgAgvIfTyLIhbPOBh6X4h7Jwc3rdAyuAIQeVQ4hyTD2+vA==
+X-Gm-Message-State: AOJu0YyxCIHrja4Vr/e0NfdBg/1ok6HNl8kxcyrzvZ7XOSb77Cg5QxLK
+	yus1hZ5HtcLWCnX3X+IBN4x3n1EzKEGgM4/xsfoftb0TuxKDwsGKPswx4xAVfrsLBDQECckE9PJ
+	rtkqVC2cAwvyEytjdqWCKIohAe7Q/msCcwMRYWA==
+X-Google-Smtp-Source: AGHT+IGg0Yy/XoNbR6IfOmnx5l8zqnMeE76L60nsYWm8H5+Bhua/gwybe1nMinRutBrrSD8nrquPZ/DI8Do5B76kNsk=
+X-Received: by 2002:a67:fb56:0:b0:470:397f:157b with SMTP id
+ e22-20020a67fb56000000b00470397f157bmr4981944vsr.12.1708422853472; Tue, 20
+ Feb 2024 01:54:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/6] dt-bindings: arm: qcom: Document sm8650p soc and
- AIM500 AIoT board
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <kernel@quicinc.com>
-References: <20240205115721.1195336-1-quic_jingyw@quicinc.com>
- <20240205115721.1195336-2-quic_jingyw@quicinc.com>
- <2fa4d857-7262-40df-a842-56945ecffb81@linaro.org>
- <441ffff2-81a8-4b53-b15b-5ac6375d65c3@quicinc.com>
- <56da3332-deb5-4fff-ad58-664bbea0dc73@linaro.org>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <56da3332-deb5-4fff-ad58-664bbea0dc73@linaro.org>
+References: <20240205182810.58382-1-brgl@bgdev.pl> <20240205182810.58382-9-brgl@bgdev.pl>
+ <yu5uhamdlygti3jo73ipy3gxhcmgxrm5g6imgqg6ksleim4ton@npvzlex2j4xi>
+In-Reply-To: <yu5uhamdlygti3jo73ipy3gxhcmgxrm5g6imgqg6ksleim4ton@npvzlex2j4xi>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 20 Feb 2024 10:54:02 +0100
+Message-ID: <CAMRc=Mctm-cyYPpu-Vb+fr1cWJPUW49shaa9HEXYp+rkF_CHUw@mail.gmail.com>
+Subject: Re: [PATCH v7 08/12] firmware: qcom: qseecom: convert to using the TZ allocator
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Deepti Jaggi <quic_djaggi@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YdeqbxKmCFN_KINRzN1ctmAw7TtsFSMq
-X-Proofpoint-ORIG-GUID: YdeqbxKmCFN_KINRzN1ctmAw7TtsFSMq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=888 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2401310000
- definitions=main-2402200070
+Content-Transfer-Encoding: quoted-printable
 
-Hi Krzysztof,
+On Sun, Feb 18, 2024 at 4:08=E2=80=AFAM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
+>
+> On Mon, Feb 05, 2024 at 07:28:06PM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Drop the DMA mapping operations from qcom_scm_qseecom_app_send() and
+> > convert all users of it in the qseecom module to using the TZ allocator
+> > for creating SCM call buffers.
+>
+> This reads as if this is removal of duplication, now that we have the TZ
+> allocation. But wasn't there something about you not being able to mix
+> and match shmbridge and non-shmbridge allocations in the interface, so
+> this transition is actually required? Or did I get that wrong and this
+> just reduction in duplication?
+>
 
-On 2/20/2024 5:43 PM, Krzysztof Kozlowski wrote:
-> On 20/02/2024 09:55, Jingyi Wang wrote:
->>
->> Hi Krzysztof,
->>
->> On 2/5/2024 8:33 PM, Krzysztof Kozlowski wrote:
->>> On 05/02/2024 12:57, Jingyi Wang wrote:
->>>> Document Qualcomm SM8650P SoC and AIM500 AIoT board.
->>>
->>> Please describe shortly what is SM8650P and what are the differences
->>> with SM8650.
->>>
->>>>
->>>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
->>>> ---
->>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 9 +++++++++
->>>>  1 file changed, 9 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> index 1999a5f2f254..e87ceb42853b 100644
->>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> @@ -88,11 +88,13 @@ description: |
->>>>          sm8450
->>>>          sm8550
->>>>          sm8650
->>>> +        sm8650p
->>>>          x1e80100
->>>>  
->>>>    The 'board' element must be one of the following strings:
->>>>  
->>>>          adp
->>>> +        aim500-aiot
->>>
->>> Drop this line.
->>>
->> drop this line will cause fail dt binding check failure, any suggestion on that?
-> 
-> Really? How?
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
-Sorry I made some mistakes, have just checked that remove this should be fine.
+What is the question exactly? Yes it is required because once we
+enable SHM bridge, "normal" memory will no longer be accepted for SCM
+calls.
 
-Thanks,
-Jingyi 
+> > Together with using the cleanup macros,
+> > it has the added benefit of a significant code shrink.
+>
+> That is true, but the move to using cleanup macros at the same time as
+> changing the implementation makes it unnecessarily hard to reason about
+> this patch.
+>
+> This patch would be much better if split in two.
+>
+
+I disagree. If we have a better interface in place, then let's use it
+right away, otherwise it's just useless churn.
+
+> > As this is
+> > largely a module separate from the SCM driver, let's use a separate
+> > memory pool.
+> >
+>
+> This module is effectively used to read and write EFI variables today.
+> Is that worth statically removing 256kb of DDR for? Is this done solely
+> because it logically makes sense, or did you choose this for a reason?
+>
+
+Well, it will stop working (with SHM bridge enabled) if we don't. We
+can possibly release the pool once we know we'll no longer need to
+access EFI variables but I'm not sure if that makes sense? Or maybe
+remove the pool after some time of driver inactivity and create a new
+one when it's needed again?
+
+Bart
+
+[snip]
 
