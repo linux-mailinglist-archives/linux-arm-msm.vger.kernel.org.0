@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-11925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CFF785C89E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:23:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B63685C8EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:27:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C65D11F213E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 21:23:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B959B21EB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 21:27:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1124151CE8;
-	Tue, 20 Feb 2024 21:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4280314A4E6;
+	Tue, 20 Feb 2024 21:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n22EjbEK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GUlQs/IX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187AB151CD6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 21:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805A01509AC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 21:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464230; cv=none; b=qZtg/a4Cd6ErAoeemCc3AicSnmPTweGpoi9AqzXQxNVa2I5uW52t/kvQlB/1UJq6W2EBADbgZSIhKlBrFg4ImmSg7RfNK/ri5NF8mA+ZqcxCTuQyo5Nr1aFbXn+PZ9JRDUZnw2cVWyB8Q8Q/GbHmH4j3BnlALYuqcuWS+Z8fwVc=
+	t=1708464446; cv=none; b=ksDEh0RLGLgvgGtVK1DuL11eHZElg+c5El36ST4qeFMSj54wbcK1zf2rwEKdEFJ86cC6C+bMZQdV/sLCXso8vBha3FwfaF/u7dPxUjMUb0qCuUq7j/WoHkn8kNbi3ydBdTsoDdRlncqBWeyysZigEL72ADAsWGk3R5oipPOrKoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464230; c=relaxed/simple;
-	bh=rI8vpSht0L7BzqoOkCoHJkGo2xBc6I6x6gxOL3k6wgw=;
+	s=arc-20240116; t=1708464446; c=relaxed/simple;
+	bh=mihNVPdkAjT4yMtBvR/DOp64MRkHVFRDihgFw37lvKA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FYwoW1TVDspYQBlQJ1j1EPkbQpfZ5Ni1sd1gtfQWfjFpX7yc+Kil4Xlss5OBhwFyU3Ko078LHpb1wNnvvkyI27c1BoSb2C05jQJJVKwm9SmL3qOMGH21cVoLtM25Vfc8hgXBm1Cxs5VJYupaHhiVQN4qpJVirXpiKQqtxHDr0Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n22EjbEK; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:Content-Type; b=D4dML/4MnX3AW6aqksid6vqLBIoim9OLs30D9jxlik5ufnY5o1LsVXWidNvVUo2YvNd3Yrvav8dbV5R8yTxwlYwYlnNzmbLdWTmyz+vgwMcieGDxNsJTtC/i0qzaJkZouqQ8lBIzRfFxJ81t7FAt2jiFCUWP2E6r2WQws021IHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GUlQs/IX; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51197ca63f5so6435585e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 13:23:48 -0800 (PST)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d1094b5568so78949241fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 13:27:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708464227; x=1709069027; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708464443; x=1709069243; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BQN1gJBuYdnaMz2lZP1Vhemjh7XxE9ird9ZL5Hi+qmE=;
-        b=n22EjbEKamPeEGz1Pcflg43NBAolA9jtaRWB3mt2vTH8yKyCWZ55WPT6bX91NAQMxI
-         VEVlj8lwGKbuyQ3CRYNopd1mvlFTtwe9bgKKwfLcUb4bCl00cudvhOaglggODIHsCmU+
-         zg5n6tLdwBwZZ/53gE6iSBRtITJkkeqyC/3roof4fKGQIDr4N5T3wD8Bbu+lkbo0mWVn
-         +pnYeiaNr/EMb2qoG8xXcEZdMDJ0Pcih/Ip+ckqt9i8LcxiJlwBu03JPYxHINE4OJwf9
-         h/sMT40Lla1zd+SY6KijEY1stvQhfaOz2z9CW6jVVdEitB3on/nV/J7m8yrnEfZCuLEu
-         VdGg==
+        bh=hk72E6PCYMAJefDGHAelMphfYnvgFhyOXizcDeLOSm0=;
+        b=GUlQs/IXhN0obOK9PAEl+s4R3MoSr9WYSsk//AuT49ZtE0TH44grIwQyuogA+tsw74
+         QOdh3pmw+p4FbunvctcsnE5y1e2OYGYxfSJ8SVEiNs+zjNjJ5k5TeBtCK5k7M0DM+nkY
+         dM0da1b398tx0x14OnD4kWO5hbaLFZ9LlGi+X725XUfNm7JYa6sjJi6wEMBPlfiMj60t
+         PthELhKkqQf8XmJBm691EGudgv+F0sA48nuC8Mt8S5TwX1SjT0KiL94ZviFJT+Xg8hKf
+         xTTFdp0qnmCOqTiEfgugyutVqGiDk5f7MiulgAgZ7G0usby909rc/RXkzfOmHgy5VytP
+         m5pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708464227; x=1709069027;
+        d=1e100.net; s=20230601; t=1708464443; x=1709069243;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BQN1gJBuYdnaMz2lZP1Vhemjh7XxE9ird9ZL5Hi+qmE=;
-        b=U8pi0u+QtXKKFKetBidqmtcqn9IwdNUnYEkVB5FMLucKteDc6RyIWWgRYO3p4usGck
-         +fL3i5TqJ8zHVABTbi0NbRzh7GYKfq92zvCAT3+YJAtwzIw6dGh7sNlD2ZSehj3fwIzu
-         VIn+Lz1V6gwHCK0QthRklmqeNeUukCLTjlFPCm6TvOx3iFREXR/ElS7yfNweJEuprhCF
-         UmtuJJpsVhNBw7/heyAhD7WXI8ob16GnAe+FV7VcCxEu2+MP/N2Dp5ZJAA/MgXoJywzs
-         Y5L8wXYQ4ACpl0ePUrQhejgAUKMWe2XOzL0RPeLb0XpGVixYKDvFwvUVge4R114kH6K9
-         39kw==
-X-Forwarded-Encrypted: i=1; AJvYcCWNxl3HoURcd1JtnyXyt6t6Zu4WPKQK4uzx6aDWad/e0PR9VSx0ztIIo2FV6C8D8Ha1f5++RlWkDcWlrvWhXopjXR99KHjPFvukoxuGQg==
-X-Gm-Message-State: AOJu0YwSN6xQeG4bKDjOjtd9FcYhSSph1blt+c6URF1j7N/SZhnVNyNd
-	na7UtRiU86UiVCYqdlrj9tbHkfv4WYJwkZpiDMwp04tlrX/CKNvcrBeXn3WXmzI=
-X-Google-Smtp-Source: AGHT+IGUGRVWsh1lOrSwTwSBnK+MNgr79zGnGLrlETgeDUz79QjMadUApjmPNi/qsoaLXat8TR3+ew==
-X-Received: by 2002:a19:e003:0:b0:512:bf99:7d80 with SMTP id x3-20020a19e003000000b00512bf997d80mr2723866lfg.1.1708464227159;
-        Tue, 20 Feb 2024 13:23:47 -0800 (PST)
+        bh=hk72E6PCYMAJefDGHAelMphfYnvgFhyOXizcDeLOSm0=;
+        b=PymDi2ScJBF8WFpVZyRUMcU9PvyAMTYqMsSCHhVm6wfrjNmh3sWSqEghEiJ/xqRZPk
+         oJnXxRF5NOqdRJwVMv+qs6YkjUJHiJ1bPUJKs3pvIcyxxahslLpK24/HC+alhldUH/yV
+         XjNs9f9uPkj+Cs+QUHvU0kVwzcDmgpUQHX3tXeiRc3uNBEBvGtffHNrKUEIK9e8WZhQp
+         l94MYlNvk599AAgD/GQHhiHi7jr2flQ8WeYit6YE+MXPaiKlRZC677fKPfsH5ooMS0ew
+         mMZDYYcO9/9ys6zZa/a4N5Yn211Ysg1U6xdMnqapyrH92imCs8xf1/2jKF6xPASsbwKQ
+         kkDg==
+X-Forwarded-Encrypted: i=1; AJvYcCVu2UxsyEnGAwxGGkya7zCoEKVwm/+Wd7SZqcrM1TehuQGeZ/w/5FcEfStpsL/2o+TIjefmbpYi7CmSsICYh+1gJLyQ5B7mObGEvyyYZw==
+X-Gm-Message-State: AOJu0YywcV3hRl4jjPk8WlBTYRgzC/4DDZ8e+W9/zUzsfs6qKKrkibcZ
+	qfyAofTuQwVJ05ciSBPZ8zhwYHG55HwSzKvGhAn1//VuDqSDLy2u6VXDQxiLO/CCm0vxYBdg1cV
+	t
+X-Google-Smtp-Source: AGHT+IENDNFngqWBM1CHA3TPkwpJRypYzZ5TnrACPHbsfAJQJ+XLDbhOvzx2B6RpuMTFGpSm8xTBbA==
+X-Received: by 2002:a05:6512:31c5:b0:512:b773:2800 with SMTP id j5-20020a05651231c500b00512b7732800mr5224409lfe.34.1708464441698;
+        Tue, 20 Feb 2024 13:27:21 -0800 (PST)
 Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id i29-20020ac25b5d000000b005118a6de76esm1407778lfp.162.2024.02.20.13.23.44
+        by smtp.gmail.com with ESMTPSA id f18-20020a193812000000b00512cf7f4454sm55907lfa.129.2024.02.20.13.27.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 13:23:46 -0800 (PST)
-Message-ID: <c87d715a-d6fe-4ccd-adc5-d98d4837a120@linaro.org>
-Date: Tue, 20 Feb 2024 22:23:43 +0100
+        Tue, 20 Feb 2024 13:27:21 -0800 (PST)
+Message-ID: <f3ae0fac-c117-4261-890e-d8953f7e9d1e@linaro.org>
+Date: Tue, 20 Feb 2024 22:27:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,19 +77,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: fix USB PHY configuration
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: acer-aspire1: Add embedded
+ controller
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
+To: Nikita Travkin <nikita@trvn.ru>, Sebastian Reichel <sre@kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20240220173104.3052778-1-dmitry.baryshkov@linaro.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
+ <20240220-aspire1-ec-v3-3-02cb139a4931@trvn.ru>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -125,22 +126,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240220173104.3052778-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20240220-aspire1-ec-v3-3-02cb139a4931@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20.02.2024 18:31, Dmitry Baryshkov wrote:
-> The patch adding Type-C support for sm6115 was misapplied. All the
-> orientation switch configuration ended up at the UFS PHY node instead of
-> the USB PHY node. Move the data bits to the correct place.
+On 20.02.2024 12:57, Nikita Travkin wrote:
+> The laptop contains an embedded controller that provides a set of
+> features:
 > 
-> Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> - Battery and charger monitoring
+> - USB Type-C DP alt mode HPD monitoring
+> - Lid status detection
+> - Small amount of keyboard configuration*
+> 
+> [*] The keyboard is handled by the same EC but it has a dedicated i2c
+> bus and is already enabled. This port only provides fn key behavior
+> configuration.
+> 
+> Add the EC to the device tree and describe the relationship between the
+> EC-managed type-c port and the SoC DisplayPort.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 > ---
 
-So that's why UFS stopped working and I couldn't for the life of
-me guess why..
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
