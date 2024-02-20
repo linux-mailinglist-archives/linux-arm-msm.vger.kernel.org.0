@@ -1,142 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-11798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DC6185BA6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:24:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F53885BA87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:27:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D85DF2866AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:24:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D26C61C211F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:27:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B23F65BDE;
-	Tue, 20 Feb 2024 11:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68436664D7;
+	Tue, 20 Feb 2024 11:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="vSO0mx5a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r5juAYSU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9317667E64
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 11:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D14664AD;
+	Tue, 20 Feb 2024 11:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708428176; cv=none; b=WlkYskU0f1TOK66p1HtB5OYkXv4HfH8NFvFa9KjHD6swcxar1l4V2ShB6xJ9VyuKZdceclSakNyrUq0xHxT+QeWEqpcSvk1jWwzXeMN2071pifKfYujfsaOQ254sbkeMww96epRnmiHXFE1xOtN5MGdZ6sYTVcOAwMECFPxSugw=
+	t=1708428421; cv=none; b=lhgsQ+zt7ACnA2sg0UUcGx6Gw3mS+kTf/XfH1YKmn12+Wy4CH8wi2pqhWaoDKAOdQ79fkg7JBEq2svZQ8/8yEcwYmCaANJ56Xi9VUGnm/PmrnOEBXvKSF3u/H0iTF6sq0/CIOY9kZ4cP8cK46BCGFLK8Z33vz5V38b3Sd/5xYoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708428176; c=relaxed/simple;
-	bh=dQqffqh6T4LO8Z67UPdabicBep7/vKvQtPnTrA6jWl0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DTigkGli4zddVe6mghme4kPFBd9T7lY4fOYspwbeRuJW2Ci0l25GZwn0gUSMvWP+Ts+vQWoPaMZiZsXGTGSGzw4yQmdSII0BJyudVWybw3zYhYstPhoLSGH5sDVsHKSh5tyQnHqoyD+3YIJCQ74jugdeUQ910Sj3zNrxFgb2++k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=vSO0mx5a; arc=none smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4704cf2f4f8so367274137.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 03:22:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1708428173; x=1709032973; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tnGpsA2N+oEjNvZD5MvHoPc7WS23uAKNUryh+bWrqLI=;
-        b=vSO0mx5a+FNZasQYE4RcLEccUm4jxE8F3vYw1Sc5Z6kw5LmrJjsBHkEAhmB/OwiObt
-         tP8uQWrOti3T4Rsuxd2Dqutiv+AGL72KptpRTUkZnO4DrhN39ZYEcR8wGuugsTxpFzN7
-         lQyH9QDVQWiZp67zAJGmlFmxUG44rWwjGYkA4JBpouU3dzGX53eAy0Vv5CiKJSR7jW2u
-         Bgca6eN8Oj+QhK3B5CBSfGP3EnYlRfI1NNrpHpbcj623KRgeabfPIRWT4zzt3u/8VT9A
-         3G7DDvfLBZ5+7czw32tDwcCPbEA+IOYiiR/QTDyburwckbN3vOFgvgyvYIRhLTX3n1qu
-         m82w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708428173; x=1709032973;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tnGpsA2N+oEjNvZD5MvHoPc7WS23uAKNUryh+bWrqLI=;
-        b=mvFidzPvLcjK8+nkyXygnucKsbFvGM+R0Y586X3psl6O0Vfo25IRgga3UNpH5AVoon
-         4zCI/leT6xoHmwi00ZMDp0e/TllzZJ42LsS7ZUGVR3YWgfROIyI52GfHcfA9QBKp226X
-         W26PgpIWF44P/tDhbfkVoyGGeIGBF/AsQlOwaROzGRA+pbyjwY2AaZNni2pUGJ4wsPuH
-         9UsgTLbgRVMoOmyntYum5+29ZcN2GyT9nsBB7ZL+77NfNlZgDp4rZIS9ilbA1N/4Aqq1
-         Vm8Fdx2RXvB4KMNxuzukjld2PIQpC9mAQxXWBJ4RXJf0Wb/vYFzIWH+EcRofAKZP3Q5e
-         lTlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVu7j28bhVvabyhEZgUhS9gRok/h6xTCTLAJtwG+Uv1j9ewrPGj0I/rrVkMV7yds2cp95NFzahWiaNE7XPYeMSip9hBYas1TNJz8gn3xg==
-X-Gm-Message-State: AOJu0Yyf6asGMdqIs4K4l2PD+WrVXGpsqQyLOcwhVWfAhhFvxUTB+1F5
-	sIw5Vgd15vDB6Fejp1RBSzTaHVdpmhjL1bupnp4D95mHsJ2CPHinRy4NlupNxh9Ckvjn8XbClud
-	6cCYmbPYAM+iW7Pauh3c145PIc3PW3nMh8VTEvQ==
-X-Google-Smtp-Source: AGHT+IGmypbXGvIgsXnS85V0NkbV+58vcVfrux92hdJBvsnBD1MJ/T8V6U4tgekizLSc354z11MbuHbewdtd9TTnF58=
-X-Received: by 2002:a67:ec0a:0:b0:470:4dd8:b18 with SMTP id
- d10-20020a67ec0a000000b004704dd80b18mr5421598vso.19.1708428173554; Tue, 20
- Feb 2024 03:22:53 -0800 (PST)
+	s=arc-20240116; t=1708428421; c=relaxed/simple;
+	bh=VddnBpFylmssPBNR8LxVy9HNAItc6vmZJuhEvw0a1cc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hkK3ol7fiS83/xXDRbRdozrmkfsDhwVEbvKyypV7dYLxm8fUL6ysXr2yHbEuwFS+iK/9bPmNyp6tYeS7pawsK830H2zUM1jYZUz5IsgyUHOEpGyV4v6RegGaZELjAbDITXx+iQ68p703OQdX8Tuc4tjYuyPxoZXk0bPB1KoDSJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r5juAYSU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BF5C433C7;
+	Tue, 20 Feb 2024 11:27:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708428420;
+	bh=VddnBpFylmssPBNR8LxVy9HNAItc6vmZJuhEvw0a1cc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=r5juAYSUvCxKuNFb30xnBGP17AeDgQUJFn90heG7na3+4GVGkGHv+uzoBqj9ng/t+
+	 EFpWosEYzWejLzvTu1Bjvd4u5MAlivbrRnLRMjMfuVHGn0lk6E5xGLqRZs6afOtc8c
+	 SYeeknMVdh8Ikld407i7xVPx2i0/h6I2pLkXnOgloW9j9ZrZa/OkqaAfpbGDOZjNpJ
+	 726ZtnhyNIwlhqnaH68sGapgpXtajy8uqaA7IHDbJGyFupXqg/fdqFU9YA2D8CGGvs
+	 JXtfLbRWHbGtx5EOJuo+kL+Wh1rV5LD7kN3bAl4LuNNiiS6AWwXNixXdTwbJAnTXyp
+	 H2SE4ozHo1jxw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rcOH5-000000005Em-1y3j;
+	Tue, 20 Feb 2024 12:26:59 +0100
+Date: Tue, 20 Feb 2024 12:26:59 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Vinod Koul <vkoul@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Rob Clark <robdclark@gmail.com>, stable@vger.kernel.org
+Subject: Re: [PATCH 3/6] soc: qcom: pmic_glink_altmode: fix drm bridge
+ use-after-free
+Message-ID: <ZdSMg63b4ZGYhUXO@hovoldconsulting.com>
+References: <20240217150228.5788-4-johan+linaro@kernel.org>
+ <9ff4221a-7083-4cb1-abde-1690f655da8d@web.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240216203215.40870-1-brgl@bgdev.pl> <20240216203215.40870-15-brgl@bgdev.pl>
- <d5d603dc-ec66-4e21-aa41-3b25557f1fb7@sirena.org.uk>
-In-Reply-To: <d5d603dc-ec66-4e21-aa41-3b25557f1fb7@sirena.org.uk>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 20 Feb 2024 12:22:42 +0100
-Message-ID: <CAMRc=MeUjKPS3ANE6=7WZ3kbbGAdyE8HeXFN=75Jp-pVyBaWrQ@mail.gmail.com>
-Subject: Re: [PATCH v5 14/18] PCI/pwrctl: add a power control driver for WCN7850
-To: Mark Brown <broonie@kernel.org>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9ff4221a-7083-4cb1-abde-1690f655da8d@web.de>
 
-On Mon, Feb 19, 2024 at 6:50=E2=80=AFPM Mark Brown <broonie@kernel.org> wro=
-te:
->
-> On Fri, Feb 16, 2024 at 09:32:11PM +0100, Bartosz Golaszewski wrote:
->
-> > +static struct pci_pwrctl_wcn7850_vreg pci_pwrctl_wcn7850_vregs[] =3D {
-> > +     {
-> > +             .name =3D "vdd",
-> > +             .load_uA =3D 16000,
-> > +     },
->
-> I know a bunch of the QC stuff includes these load numbers but are they
-> actually doing anything constructive?  It keeps coming up that they're
-> causing a bunch of work and it's not clear that they have any great
-> effect on modern systems.
->
+On Tue, Feb 20, 2024 at 11:55:57AM +0100, Markus Elfring wrote:
+> …
+> > Specifically, the dp-hpd bridge is currently registered before all
+> > resources have been acquired which means that it can also be
+> > deregistered on probe deferrals.
+> >
+> > In the meantime there is a race window where the new aux bridge driver
+> > (or PHY driver previously) may have looked up the dp-hpd bridge and
+> > stored a (non-reference-counted) pointer to the bridge which is about to
+> > be deallocated.
+> …
+> > +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+> …
+> > @@ -454,7 +454,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+> >  		alt_port->index = port;
+> >  		INIT_WORK(&alt_port->work, pmic_glink_altmode_worker);
+> >
+> > -		alt_port->bridge = drm_dp_hpd_bridge_register(dev, to_of_node(fwnode));
+> > +		alt_port->bridge = devm_drm_dp_hpd_bridge_alloc(dev, to_of_node(fwnode));
+> >  		if (IS_ERR(alt_port->bridge)) {
+> >  			fwnode_handle_put(fwnode);
+> >  			return PTR_ERR(alt_port->bridge);
+> …
+> 
+> The function call “fwnode_handle_put(fwnode)” is used in multiple if branches.
+> https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/soc/qcom/pmic_glink_altmode.c#L435
+> 
+> I suggest to add a jump target so that a bit of exception handling
+> can be better reused at the end of this function implementation.
 
-Yes, we have what is called a high-power mode and a low-power mode in
-regulators and these values are used to determine which one to use.
+Markus, as people have told you repeatedly, just stop with these
+comments. You're not helping, in fact, you are actively harmful to the
+kernel community as you are wasting people's time.
 
-> > +static int pci_pwrctl_wcn7850_power_on(struct pci_pwrctl_wcn7850_ctx *=
-ctx)
-> > +{
-> > +     int ret;
-> > +
-> > +     ret =3D regulator_bulk_enable(ctx->pdata->num_vregs, ctx->regs);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     ret =3D clk_prepare_enable(ctx->clk);
-> > +     if (ret)
-> > +             return ret;
->
-> This won't disable the regulators on error.
-
-Indeed. Thanks for catching this.
-
-Bart
+Johan
 
