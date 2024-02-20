@@ -1,220 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-11815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDFDD85BB6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:07:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E3D285BB79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:11:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5FE6284784
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:07:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEBA8281734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:11:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC78767C62;
-	Tue, 20 Feb 2024 12:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88221657D7;
+	Tue, 20 Feb 2024 12:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kw14HRUB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gFrD+wMj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F17E67C61;
-	Tue, 20 Feb 2024 12:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED48C67C72
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708430821; cv=none; b=aYAepljz79Oxi16vwrxfNc7ZKQvXo+/Pfp4ghDx3gfovIsN9SBqIi+8NxJsMms85SzyKe0xaU9A+jG4OMLUEr7XyQ6uU48o4rXMDACpfnM4FUSG03FJnH7Xcjnyel5XMjnTSLKZqYuvbmJ1Qv2wSBVFC4BdVSr9dL7l9D/48a7I=
+	t=1708431073; cv=none; b=l7gDAQrCTkxHn3QCqAqJ1X/pKdwkaQQi3oe/ud3nSw28iiyvngT9OC/UtKb66HMM945YKfAMKW417PeMuQm0KSH2q+Cvo9MG4e9l/C3LVGKmctXOYPNtLPUlSY5s1vj8uMp2e+YL0i1d0Rj2A3Q/wAyvaPmPHDLzD1cIijsVpJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708430821; c=relaxed/simple;
-	bh=38bn2fHxN8Ck7genRflG7wkA4fCw3Vpd41PgBFZgUC0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SDlP6oTvfM0Mi2vEsdTC2iiKtL5N3OjrrzQfKp7EIlNziVMfBsGcmzQ4eV8AiNWT4SnuP7d2p5Ex6KgTzayBQsMki/SQkBbaXjFlq6VH9XaSzVtfiGuKuGJ+2VmiHcHNTvOXQhqhjr6+m513IU1VVAy7AT3CsLiXHIkXNN35XEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kw14HRUB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KAteL1004369;
-	Tue, 20 Feb 2024 12:06:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=3Un3DywxvOe0E6Au+Vjnmv8pOY2C5ymlgd6WWC4EYZo=; b=Kw
-	14HRUBbgb9LFrT62fSnlquI3rQRjJ11RaNMx24MuvUGkDMfqifKQYJ+jWquj9mGm
-	/9GDXhuIYTFaxH8sl00mn0+aBzOEiKYWMNp7R2TWN9kUWrpHgdvFaM273JhT7CQP
-	pZdVBfgO9VzgUgAzp+TTYuo3OfPrEPk7nFr3gJCevHfn5HSI1To2+gddB9TkwoW9
-	24KTHpwWG/DO6n6IH8OVg1CYwdTDZxvliB53sxT0Gg0YPdhckN31JYkfOCW435rr
-	U/tseWfZA7VwHX0lzaJdfXfM6ZR66f3vgv02Kuj5RzYAXklPrJQJjra7OEnV2yjB
-	LHH9VhcmVKSFfxmMDbOQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct3eg75b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:06:50 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KC6mqI004735
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Feb 2024 12:06:49 GMT
-Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
- 2024 04:06:43 -0800
-Message-ID: <0dae7231-6bd1-b7fc-4a5e-b0787b0adaba@quicinc.com>
-Date: Tue, 20 Feb 2024 17:36:39 +0530
+	s=arc-20240116; t=1708431073; c=relaxed/simple;
+	bh=BqaQAXupnrIUquuSop0hnKVxmWNQgaRJfNNMkdEr9pU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dOxsopgCLeXm9TiJkB60aGuyATf8VNw8DfJLdh1RIgq4TCrfiwrIbqTMultQvsHm/56oDhW8hfBXFT1n1maaMOMjfFeph48sR3qSOY0cBhsMWVx25MdG5L8GGw1gsm2HQ8wOADDBXR9L9m41iu273z0iIAQCQ1TcAb7qzuVk/JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gFrD+wMj; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-607fc3e69adso42872357b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 04:11:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708431071; x=1709035871; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dy/caDfZjOGZ/ICXi5t2Xv/6rJdHheSidVH0lV0pHS0=;
+        b=gFrD+wMjVKIF/fXKHYVJcJVWuNLohOYEJHkqwV8/0gqu+7KWfnUaLG7Gga/l5+VbsJ
+         4y+DBviY79C1KePTwfaSQCw+2Jv5SZBVVek5BhMCIVOa2cYihFXZq/gxq5kgA+Wdr+18
+         5iWndKfwbm8bLtY5Yb4+hY+E82DcQs3cS1Ws5x6HSCQBatua4EtB4cotI2lbt9Mv6jdH
+         B7MjCW++8xQbU0EtIdPnIBd/GCu9Nj1/Xr2u1Og0zWWdkvb5JV6zzUhwbUwNICOOzkoi
+         VXevboR0CiZOoEBpDWaTfuKmdgutYn882fe4sArz2NeH9rVyCnuMxdsg+VFIZPUrlJD7
+         F6CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708431071; x=1709035871;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dy/caDfZjOGZ/ICXi5t2Xv/6rJdHheSidVH0lV0pHS0=;
+        b=hcnEQ3r2p1lcOu8yYa26fVAl7gpndLmN1hpxaPdIVdbjYOStzBpHUsI9S6vV70X+aw
+         gJkd49MExO707MQkbuVQH2NtMHnjyRmfOKlZH16+z1JDplcQOynL2R++1uc5YgqZpGFS
+         d+dMDc+/e0kK5gP9FByEaOMtZ9uNTOADlSY4Qql8gF0rI5C4suneUIMRGFotB1Egtv6V
+         2RUWD7Guan/V6rqMDeCGRLkV8ZC6YE4AINlv1dxK4ethbPCy5l76CJcU4oJ86KwjpUEr
+         ivkJxHOThhg0GbkNTco5qXBneKsxUhGjeiiWiclni8N0cccZ+PVRpmzuCr1dsdP1sVkr
+         Co1w==
+X-Forwarded-Encrypted: i=1; AJvYcCU2gqfBXoKSh/Xca1N5tgE2f+Zgt0gPk69FcBhQ7xjuzmXGxcknXNylunC+0VrxPRVbAdHephNAxU+fLcER5HAYcu5ahyysOE2qs2C+1A==
+X-Gm-Message-State: AOJu0Yyq0ugX7WVr0IonrMrqc4DE6GpIJK5Jf717J+OsOHlFcfoPxWZH
+	gvy+7F9a3HnpyG151h7O22fW/pEu5RiL1gtJqq3+mNE0wMDI68xNdr+XsBDb/XpmkHq9tvgZiGy
+	jh1Fpuu+13SqtENY1UBH1+/DrYDkz6QeqBULjDg==
+X-Google-Smtp-Source: AGHT+IF2zDf3XgcK9QP2IYaoigNbZzdQSINGOcFBC2jSQR7qeBk1CasXZT2gneoj3MATMAClXBgLcHMA0tFxwFBaxmU=
+X-Received: by 2002:a05:6902:2709:b0:dcc:f8e5:c8c8 with SMTP id
+ dz9-20020a056902270900b00dccf8e5c8c8mr16849736ybb.45.1708431071014; Tue, 20
+ Feb 2024 04:11:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 1/5] spi: dt-bindings: add binding doc for spi-qpic-snand
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
-        <vigneshr@ti.com>, <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
- <20240215134856.1313239-2-quic_mdalam@quicinc.com>
- <20240215-upon-anime-af032e49e84d@spud>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20240215-upon-anime-af032e49e84d@spud>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bz2KTbBLMa6vU1xmmZGH03T_QBaLtLKk
-X-Proofpoint-GUID: bz2KTbBLMa6vU1xmmZGH03T_QBaLtLKk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- spamscore=0 phishscore=0 clxscore=1011 mlxscore=0 mlxlogscore=999
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402200087
+References: <20240220-x1e80100-phy-edp-compatible-refactor-v5-0-e8658adf5461@linaro.org>
+ <20240220-x1e80100-phy-edp-compatible-refactor-v5-1-e8658adf5461@linaro.org>
+In-Reply-To: <20240220-x1e80100-phy-edp-compatible-refactor-v5-1-e8658adf5461@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 20 Feb 2024 14:11:00 +0200
+Message-ID: <CAA8EJpp20nq4X_n0Bp1ZmZ7yffWm1zYpH12QL-Gj_nP7wuq1Hg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] phy: Add Embedded DisplayPort and DisplayPort submodes
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan@kernel.org>, linux-phy@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 20 Feb 2024 at 13:58, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> In some cases, a DP PHY needs to be configured to work in eDP mode.
+> So add submodes for both DP and eDP so they can be used by the
+> controllers for specifying the mode the PHY should be configured in.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
-
-On 2/15/2024 7:54 PM, Conor Dooley wrote:
-> On Thu, Feb 15, 2024 at 07:18:52PM +0530, Md Sadre Alam wrote:
->> Add device-tree binding documentation for QCOM QPIC-SNAND-NAND Flash
->> Interface.
->>
->> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> ---
->>   .../bindings/spi/qcom,spi-qpic-snand.yaml     | 82 +++++++++++++++++++
->>   1 file changed, 82 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
->> new file mode 100644
->> index 000000000000..fa7484ce1319
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
->> @@ -0,0 +1,82 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/spi/qcom,spi-qpic-snand.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm QPIC NAND controller
->> +
->> +maintainers:
->> +  - Md sadre Alam <quic_mdalam@quicinc.com>
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,ipq9574-snand
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    minItems: 2
->> +    maxItems: 3
->> +
->> +  clock-names:
->> +    minItems: 2
->> +    maxItems: 3
->> +
->> +allOf:
->> +  - $ref: /schemas/spi/spi-controller.yaml#
->> +  - if:
-> 
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,ipq9574-snand
->> +
->> +    then:
->> +      properties:
->> +        dmas:
->> +          items:
->> +            - description: tx DMA channel
->> +            - description: rx DMA channel
->> +            - description: cmd DMA channel
->> +
->> +        dma-names:
->> +          items:
->> +            - const: tx
->> +            - const: rx
->> +            - const: cmd
-> 
-> None of this complexity here is needed, you have only one device in this
-> binding and therefore can define these properties at the top level.
-
-  Thanks for reviewing, Will fix this in next patch.
-> 
-> Cheers,
-> Conor.
-> 
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->> +    qpic_nand: spi@79b0000 {
->> +        compatible = "qcom,ipq9574-snand";
->> +        reg = <0x1ac00000 0x800>;
->> +
->> +        clocks = <&gcc GCC_QPIC_CLK>,
->> +                 <&gcc GCC_QPIC_AHB_CLK>,
->> +                 <&gcc GCC_QPIC_IO_MACRO_CLK>;
->> +        clock-names = "core", "aon", "iom";
->> +
->> +        #address-cells = <1>;
->> +        #size-cells = <0>;
->> +
->> +        flash@0 {
->> +            compatible = "spi-nand";
->> +            reg = <0>;
->> +            #address-cells = <1>;
->> +            #size-cells = <1>;
->> +            nand-ecc-engine = <&qpic_nand>;
->> +            nand-ecc-strength = <4>;
->> +            nand-ecc-step-size = <512>;
->> +            };
->> +        };
->> -- 
->> 2.34.1
->>
+-- 
+With best wishes
+Dmitry
 
