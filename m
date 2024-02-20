@@ -1,117 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-11823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFE2385BBB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:17:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8FF185BBC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 13:18:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95A0C1F22108
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:17:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3891EB222D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FE3767C71;
-	Tue, 20 Feb 2024 12:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BFF67E76;
+	Tue, 20 Feb 2024 12:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tKdE+lIQ"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="RpNK2xzW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D8867C6A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0CC67E78
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708431466; cv=none; b=iQ7qRR9/UEzvSEQPg7e1XeYWqCrmQ1TVLCGxu3aSfze2IXS4Tf38cJbE8FhHKfsB/m2K+1rtcakmAWzaKfAhpilUiEaeIqB35PJPDJR/ac+C+JAdWOE2DqlS5WDL6OZN4JQpoJWFbdGA8+71HijtTnH8V8fyqakMHDpD+CfkRZQ=
+	t=1708431493; cv=none; b=NbXeGD9wpM49F/TSb8CBfk0OnulGP12RitVGsZpnxsEad5DTkRkcUJ/k1K101rAKuvB28L+eOsK2sw1wF8Hhz70JA+mav6GXOOABeJ+Hqz/fkq92fSu9GaVj6CJeUb9LDh+UAiKXGMqT3kjxyBbi4B9XrGAyPunzRLoMopRe2cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708431466; c=relaxed/simple;
-	bh=Err4yde9hbviVCxzR9tVlUIjIb1JIceDcQWFfd5NCk4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kRL0woHITI4qXmKRjOfX2a+9MX8Dl3N7drXeR38HxazQlpMp4SQEgAU4OSSXnx9UJFThcK6vdfBoJvl7vniADvkuR/hjvt/AFi2EeBitT4MXuow5up2g7cio5C1esR/wfibT4Sv6Yn36qVcpw8RBgxsTBRUOfLk9c6kUFFjL28k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tKdE+lIQ; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-512a9ae6c02so3293672e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 04:17:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708431462; x=1709036262; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8r2SYFf+wyFLMEw10XmrxaTrTxAIalvWxcbpOUr7Ibs=;
-        b=tKdE+lIQZYyVU1T7jmq4jjJAaZ03bfunlEKJMaAmc9bfoH9ZbkdRN7+DhKsXGnpuVE
-         r4m3kAfeZnSef3DlfM4JhLWQxRhtqWT5gVaWzR9iOHTJlLoK3efSOIlwSvAIpcwEdZlA
-         YW1sHKVvTYiI+UIs7gtL4ty40lk8GDRqfcXaOI1iRuBUiulvKFTCEEmGevztJknuanPc
-         WJwKIL/G3EI0Gwu+ucEG1YEU5O2nZ39Yuj36W4ssRIEGZ9Ap6G9ISaGA+W0lyt9zU5IU
-         u3tQxowi6Wt8jPmwIOGpMKkrsyEb4/p39rV4e2qa0hRJVDWxDOFOv9qGcNwQ8j/BELb2
-         Wazg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708431462; x=1709036262;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8r2SYFf+wyFLMEw10XmrxaTrTxAIalvWxcbpOUr7Ibs=;
-        b=Vdf3JNsO/fkF1c9tbTOk4N0vpla/Wnhqr3yzM+HBj8O8SGciiD0kp+QQ8cISmH7N7W
-         XF5L8fk3YB7sXEounRYlBLuztgOTv+/NReCKFjC2mRW7AQ0uMSqdTLNzUsGFobVTv6Ud
-         e8gXQ6V6K8c6N9C4d4do/GZFO0TbO8PZUqwJwY3NUTCq/p81ch9LGGHa90LUCclFsnAG
-         6NXsEs+VzAo12D8QLH10NfE8Cd0PvxdBxK//FUUnZZAxkd8PwgaeEKZSAYbsy3ExRApX
-         kkXN50NewyPSgvihDq/OFo5Y47B+RvcaOuz3/eKze73ZN+KTcVBN+IysmR4DtpwRunAG
-         fCWA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9+4bXKP1j4DXdSY29V6q1+121tem6qKpkefLcS4BL6CKDiyp3Hp/TCoYHWkYsf4EJaD/xHYoOTIev7Ncwk1NNl38RbBbGj823TUsxgw==
-X-Gm-Message-State: AOJu0YxHFuZMxfyuR4QNVMyMxlgzL7xTJ/BhzUlut35exz5DCev6NFPz
-	TIs1ZBOvEY6D73LIyoWXpyQ5SyEhV6d29u0m+1h63xBLFEQO1+4HORy5BBLu4XA=
-X-Google-Smtp-Source: AGHT+IGf8r51dCXj1+wK5mg75SPQ7glqZWJcKUnocWb0PTPPU8gyalRlsJFibifJcfeUhgcCDExbkQ==
-X-Received: by 2002:ac2:4835:0:b0:512:b24d:d472 with SMTP id 21-20020ac24835000000b00512b24dd472mr3390417lft.64.1708431462166;
-        Tue, 20 Feb 2024 04:17:42 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id q4-20020a19a404000000b005117c7159a0sm1251744lfc.169.2024.02.20.04.17.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 04:17:41 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Helen Koike <helen.koike@collabora.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm: ci: uprev IGT
-Date: Tue, 20 Feb 2024 14:17:41 +0200
-Message-Id: <20240220121741.2994222-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1708431493; c=relaxed/simple;
+	bh=FyNYzT8EV/tDwSUKQpoe9xy1MnakgX8mWChybUQAYz4=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=XX2EsIzw6FGk3hvr2ORmkUrMz2yasit5KbXRZq4FOcRIl2PXpgtpUvHna1ehy4ZNb1bMqfFvv2Hn0edEHyif64y/bOkbQfudIvVXMSVi+JyCnFBeObCig+e6ohTD+UdbC9Kt9uV58Ol3eDAPlDuUYQ6CTNq2aphf9yKDivDt624=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=RpNK2xzW; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20240220121808epoutp019618e50a02e44a2b4da10f7a56af1f9b~1kWMnRx6j1006410064epoutp01x
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 12:18:08 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20240220121808epoutp019618e50a02e44a2b4da10f7a56af1f9b~1kWMnRx6j1006410064epoutp01x
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1708431488;
+	bh=FyNYzT8EV/tDwSUKQpoe9xy1MnakgX8mWChybUQAYz4=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=RpNK2xzWiCsMyVnPhMpq52sMpwZwQ3oJNX9hE7jY9iAJY3C8DdZ6qIXPNiStaKwLt
+	 1tgAUceJqBTuMCOBYk+X4cz5WA5BQtfmJsZoqQ+YgfKDnRWpnvhZW+ZnGU/uZbpfkY
+	 puJBoJZyBzPt1BtsvBXLx40LWheaNeIhW8XHgD0E=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+	20240220121808epcas5p45507e0d247b7228e8b5b784223425b7e~1kWMMqAXs2515225152epcas5p4a;
+	Tue, 20 Feb 2024 12:18:08 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.38.182]) by
+	epsnrtp3.localdomain (Postfix) with ESMTP id 4TfJMd6vLKz4x9Pr; Tue, 20 Feb
+	2024 12:18:05 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	23.D9.09672.D7894D56; Tue, 20 Feb 2024 21:18:05 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20240220121804epcas5p3f01e75b1089af1edf6db4ee3ea3a5efa~1kWJGqsyX3231832318epcas5p3F;
+	Tue, 20 Feb 2024 12:18:04 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20240220121804epsmtrp2a62d16806647f420afad909b08430dc1~1kWJE7VzD0477204772epsmtrp2c;
+	Tue, 20 Feb 2024 12:18:04 +0000 (GMT)
+X-AuditID: b6c32a4b-39fff700000025c8-e9-65d4987dce4d
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	58.85.08817.C7894D56; Tue, 20 Feb 2024 21:18:04 +0900 (KST)
+Received: from INBRO000447 (unknown [107.122.12.5]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20240220121802epsmtip2c274177845b43966e4d2735153498c4d~1kWG__oCO2982329823epsmtip2_;
+	Tue, 20 Feb 2024 12:18:02 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>, "'Georgi
+ Djakov'" <djakov@kernel.org>, "'Bjorn Andersson'" <andersson@kernel.org>,
+	"'Konrad Dybcio'" <konrad.dybcio@linaro.org>, "'Sylwester	Nawrocki'"
+	<s.nawrocki@samsung.com>, =?utf-8?Q?'Artur_=C5=9Awigo=C5=84'?=
+	<a.swigon@samsung.com>, "'Thierry Reding'" <thierry.reding@gmail.com>,
+	"'Jonathan Hunter'" <jonathanh@nvidia.com>, <linux-pm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-samsung-soc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-tegra@vger.kernel.org>
+Cc: "'Thierry Reding'" <treding@nvidia.com>
+In-Reply-To: <20240220072213.35779-1-krzysztof.kozlowski@linaro.org>
+Subject: RE: [PATCH v2] interconnect: constify of_phandle_args in xlate
+Date: Tue, 20 Feb 2024 17:48:01 +0530
+Message-ID: <1d9b01da63f6$daeb0170$90c10450$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLQP0hpybpPMp0Wp7r3CvZ4KlHU5QIjg6hJrxZRFBA=
+Content-Language: en-us
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOJsWRmVeSWpSXmKPExsWy7bCmum7tjCupBt+PG1vcn9fKaLGtw8bi
+	2a1GNouWWYtYLDomb2ex2Pt6K7vFpsfXWC0m7j/LbnF51xw2i8+9RxgtZpzfx2TR+WUWm8Xh
+	N+2sFj93zWOxuP2bz4HfY+esu+wem1Z1snncubaHzWPzknqP3uZ3bB59W1YxenzeJBfAHpVt
+	k5GamJJapJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6kkJeYm2qr5OIToOuWmQN0tZJCWWJO
+	KVAoILG4WEnfzqYov7QkVSEjv7jEVim1ICWnwKRArzgxt7g0L10vL7XEytDAwMgUqDAhO+P0
+	6Y8sBd8lKlp2r2BtYGyV6GLk5JAQMJG4vOE6G4gtJLCbUaJvV2oXIxeQ/YlRYvnlZUwQzjdG
+	id2zvrLCdPx7MpMdIrGXUeLhw1/MEM4LRolHx3oYQarYBHQldixuYwNJiAjcZ5H4saIXrJ1Z
+	QFviyNMbQO0cHJwCLhIXH8WAmMIC7hJdC6RBKlgEVCXmf58AVs0rYCkx/8xqJghbUOLkzCcs
+	MFOWLXzNDHGQgsTPp8vA6kUErCR2Hb7KCFEjLvHy6BGwQyUErnBIPD/2mQWiwUViy9xmqG+E
+	JV4d38IOYUtJfH63lw3kHgkBD4lFf6QgwhkSb5evZ4Sw7SUOXJnDAlLCLKApsX6XPsQqPone
+	30+YIDp5JTrahCCqVSWa312FWiotMbG7G2qph0TbvkcsExgVZyF5bBaSx2YheWAWwrIFjCyr
+	GCVTC4pz01OLTQuM81LL4bGdnJ+7iRGcorW8dzA+evBB7xAjEwfjIUYJDmYlEV6W8iupQrwp
+	iZVVqUX58UWlOanFhxhNgaE9kVlKNDkfmCXySuINTSwNTMzMzEwsjc0MlcR5X7fOTRESSE8s
+	Sc1OTS1ILYLpY+LglGpg2uBuxeh2f3pHpmmrzbSP9S3745aeLfZbktEcpeiR5/kz5GDBfEFe
+	nY/fs4tyZA/fNvk8icdgyZqbtSGiWRGHHu6W3p375DPnZ/9qUYkbZ8ruL1swr5WPv71Vb+Wj
+	o90v3zY+bD/k4N23UuDRH//78+/WON3dvagxc/KuJMWDDw+KrIq480w1qlzyxxHhjX2lbiz1
+	PE/yYixjIsLZJ9T733/s5CgdPZ9/ioO4XcHWX9NNnPrV7eL466XfN3R9txU44Cn50Xzvn6n/
+	z2/NL9q+wWz6Ya+UuxXrTarkGhXTG1+zz38sEqTpMnXRm9mLvFuv/Nj5vU2ttUmmsr7xwt5F
+	dsJx+j53GYt+m5rw/G5QYinOSDTUYi4qTgQAQaaPGloEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsWy7bCSvG7NjCupBn/eG1rcn9fKaLGtw8bi
+	2a1GNouWWYtYLDomb2ex2Pt6K7vFpsfXWC0m7j/LbnF51xw2i8+9RxgtZpzfx2TR+WUWm8Xh
+	N+2sFj93zWOxuP2bz4HfY+esu+wem1Z1snncubaHzWPzknqP3uZ3bB59W1YxenzeJBfAHsVl
+	k5Kak1mWWqRvl8CV8WsVZ8EjwYqVV3qZGhhP83UxcnJICJhI/Hsyk72LkYtDSGA3o8S5z69Z
+	IBLSEtc3TmCHsIUlVv57DmYLCTxjlOjaIQRiswnoSuxY3MYG0iwi8JJFYv/mJawgCWYBbYkj
+	T29ATZ3KKLH47HqgKg4OTgEXiYuPYkBMYQF3ia4F0iDlLAKqEvO/TwBr5RWwlJh/ZjUThC0o
+	cXLmExaYkU9vPoWzly18zQxxm4LEz6fLwHpFBKwkdh2+yghRIy7x8ugR9gmMwrOQjJqFZNQs
+	JKNmIWlZwMiyilEytaA4Nz232LDAKC+1XK84Mbe4NC9dLzk/dxMjOFK1tHYw7ln1Qe8QIxMH
+	4yFGCQ5mJRFelvIrqUK8KYmVValF+fFFpTmpxYcYpTlYlMR5v73uTRESSE8sSc1OTS1ILYLJ
+	MnFwSjUwLb0cbfizqpLjzl3DF8+OZX/xKpJSeyW7483UXR9qb5x/0CzvenVdyYbQjDWbv4S+
+	5o/liC6cpbNYNvA895UkgxO7wrZY6HIt64iP6v8Y2rT8X979CapsVw6d/yE7zUihXdlJN+CN
+	l+Hdp5fYb7lm+eq+ZlsicfBOW9zhfTcKWIS4alYvzcjc/u/XqlP33Rv+u4VPPibvvbvNLjL3
+	U3JM6yWXOiaRNxdeZjtUWru+Fw3xWMj491OKSv2i/W0X37Ux8/j3WM+KUQqcP9f5fE6fxZ+d
+	K0xWPmtL8//p2cCt52E1qzm/gct/ueuVtau8OZYV5y650vXGs7pRZZpTluLjXr1qiyPsD+Ru
+	xyyJ0FRVYinOSDTUYi4qTgQA33CUyEMDAAA=
+X-CMS-MailID: 20240220121804epcas5p3f01e75b1089af1edf6db4ee3ea3a5efa
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240220072224epcas5p4ff60556b0b5632abfc44d2b8ad932b8f
+References: <CGME20240220072224epcas5p4ff60556b0b5632abfc44d2b8ad932b8f@epcas5p4.samsung.com>
+	<20240220072213.35779-1-krzysztof.kozlowski@linaro.org>
 
-Bump IGT revision to pick up Rob Clark's fixes for the msm driver:
 
-- msm_submit@invalid-duplicate-bo-submit,Fail
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/ci/gitlab-ci.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
-index 8b82e6656924..47e567b4f7a7 100644
---- a/drivers/gpu/drm/ci/gitlab-ci.yml
-+++ b/drivers/gpu/drm/ci/gitlab-ci.yml
-@@ -5,7 +5,7 @@ variables:
-   UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
-   TARGET_BRANCH: drm-next
- 
--  IGT_VERSION: d2af13d9f5be5ce23d996e4afd3e45990f5ab977
-+  IGT_VERSION: 3f2879fef93c0c546a2f1c0aa48a9cc2a594b9d2
- 
-   DEQP_RUNNER_GIT_URL: https://gitlab.freedesktop.org/anholt/deqp-runner.git
-   DEQP_RUNNER_GIT_TAG: v0.15.0
--- 
-2.39.2
-
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski=40linaro.org>
+> Sent: Tuesday, February 20, 2024 12:52 PM
+> To: Georgi Djakov <djakov=40kernel.org>; Bjorn Andersson
+> <andersson=40kernel.org>; Konrad Dybcio <konrad.dybcio=40linaro.org>;
+> Sylwester Nawrocki <s.nawrocki=40samsung.com>; Artur =C5=9Awigo=C5=84=0D=
+=0A>=20<a.swigon=40samsung.com>;=20Krzysztof=20Kozlowski=0D=0A>=20<krzyszto=
+f.kozlowski=40linaro.org>;=20Alim=20Akhtar=0D=0A>=20<alim.akhtar=40samsung.=
+com>;=20Thierry=20Reding=20<thierry.reding=40gmail.com>;=0D=0A>=20Jonathan=
+=20Hunter=20<jonathanh=40nvidia.com>;=20linux-pm=40vger.kernel.org;=0D=0A>=
+=20linux-kernel=40vger.kernel.org;=20linux-arm-msm=40vger.kernel.org;=20lin=
+ux-=0D=0A>=20samsung-soc=40vger.kernel.org;=20linux-arm-kernel=40lists.infr=
+adead.org;=20linux-=0D=0A>=20tegra=40vger.kernel.org=0D=0A>=20Cc:=20Thierry=
+=20Reding=20<treding=40nvidia.com>=0D=0A>=20Subject:=20=5BPATCH=20v2=5D=20i=
+nterconnect:=20constify=20of_phandle_args=20in=20xlate=0D=0A>=20=0D=0A>=20T=
+he=20xlate=20callbacks=20are=20supposed=20to=20translate=20of_phandle_args=
+=20to=20proper=0D=0A>=20provider=20without=20modifying=20the=20of_phandle_a=
+rgs.=20=20Make=20the=20argument=0D=0A>=20pointer=20to=20const=20for=20code=
+=20safety=20and=20readability.=0D=0A>=20=0D=0A>=20Acked-by:=20Konrad=20Dybc=
+io=20<konrad.dybcio=40linaro.org>=0D=0A>=20Acked-by:=20Thierry=20Reding=20<=
+treding=40nvidia.com>=20=23=20Tegra=0D=0A>=20Signed-off-by:=20Krzysztof=20K=
+ozlowski=20<krzysztof.kozlowski=40linaro.org>=0D=0A>=20=0D=0A>=20---=0D=0A>=
+=20=0D=0A>=20Changes=20in=20v2:=0D=0A>=201.=20Drop=20unrelated=20gpiolib=20=
+changes=20(Konrad,=20Thierry).=0D=0A>=202.=20Add=20tags.=0D=0A>=20---=0D=0A=
+>=20=20drivers/interconnect/core.c=20=20=20=20=20=20=20=20=20=20=20=20=7C=
+=20=204=20++--=0D=0A>=20=20drivers/interconnect/qcom/icc-common.c=20=7C=20=
+=203=20++-=0D=0A>=20drivers/interconnect/qcom/icc-common.h=20=7C=20=203=20+=
++-=0D=0A>=20drivers/interconnect/samsung/exynos.c=20=20=7C=20=202=20+-=0D=
+=0A>=20=20drivers/memory/tegra/mc.c=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra124-emc.c=20=20=20=
+=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra124.c=20=20=20=20=
+=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra186-emc.c=
+=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra20-emc.c=
+=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra/tegra20.c=
+=20=20=20=20=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/tegra=
+/tegra30-emc.c=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20drivers/memory/teg=
+ra/tegra30.c=20=20=20=20=20=20=20=20=20=7C=20=202=20+-=0D=0A>=20=20include/=
+linux/interconnect-provider.h=20=20=7C=2011=20++++++-----=0D=0A>=20=20inclu=
+de/soc/tegra/mc.h=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=7C=20=
+=207=20++++---=0D=0A>=20=2014=20files=20changed,=2025=20insertions(+),=2021=
+=20deletions(-)=0D=0A>=20=0D=0A=0D=0AFor=20Samsung/Exynos=0D=0AReviewed-by:=
+=20Alim=20Akhtar=20<alim.akhtar=40samsung.com>=0D=0A.=0D=0A.=0D=0A=5Bsnip=
+=5D=0D=0A>=20--=0D=0A>=202.34.1=0D=0A=0D=0A=0D=0A
 
