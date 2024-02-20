@@ -1,67 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-11903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5164885C326
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 18:58:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A239C85C32A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 18:58:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0785B1F25193
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:58:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 429571F24DD1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 17:58:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B787D7866A;
-	Tue, 20 Feb 2024 17:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5159A78691;
+	Tue, 20 Feb 2024 17:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9tOlNph"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IzMPy4z+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8853476C6C;
-	Tue, 20 Feb 2024 17:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264A3768E4;
+	Tue, 20 Feb 2024 17:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708451869; cv=none; b=MQjsU70ilr3dLnhmgHvI28bpNB/iCJ4+WiBhbYRPvilAmn8lF2NKh8b5kd8x1Z8TLxk1d3YDsofcmtS0YmrnfB5a63G6BK/r3dh4ESO/bCDiAJ4BR5+/TjKWfbJj2KHQdgfQrkhPwKh68dJaGfT4gAqVMEm/RQYaKSBCZ4SAyqM=
+	t=1708451871; cv=none; b=IiZWxn2xFbtV+b6GVWQ3aAtYqQoItTVKVQPF5KGcQvipXUexuU+9C6iCvKf2UqsalyPzgl2qvhbgzny/tcSPzl5Llj/3eiDqVF8AL3x5eriCtgP31JYqnm/3gM3Ke2XEwSoCRMzL9ihQlzU7mCOXXOZAp5ZrlKAqXcw8oCUKmB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708451869; c=relaxed/simple;
-	bh=niU0e3YYXa8nKs0bptXFagevwIy6zWw8W8j5BfvgpWU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CFgVSJ0ENg6CLaw427fgWVUBHOPyXoeOv0yDsEhkyNAP9Chuz2PobD8oCGpY6fddoxecQpYxeRhdIwrcK2SgAGjqCrAYSzpWT0M8SvAMdCtgVtW3ISZgts74e9ufE0ihmkt1NB1OemMkWv9+EhNeyVkknKv6eIkmfaBzv6JAg5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s9tOlNph; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FA2C433C7;
-	Tue, 20 Feb 2024 17:57:47 +0000 (UTC)
+	s=arc-20240116; t=1708451871; c=relaxed/simple;
+	bh=qtwbn4UPn2z9JflxF9F9+oogdoTrqWdb0O9YF4n1ZFs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YD5t0p9JLNfyJ8kecT/0YwKEa3c0xTMbyw3lcgywf992RHIYgFovs4bMv6Mr/1aJuHtNxwAYcYEpOj92gsXmgyf5lbw5bGWN6VXnnjkdTLT+0UvND1Zy+onuaUMVJvl1dC3J2A/vdQiIg6YbIzaFtW6uGCdm5uIhOvHDHPpShYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IzMPy4z+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9EBC43601;
+	Tue, 20 Feb 2024 17:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708451869;
-	bh=niU0e3YYXa8nKs0bptXFagevwIy6zWw8W8j5BfvgpWU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9tOlNphyB1KcCqAiLhfn9eQVOuKTO8p3H1b6SGtA+rlMHnesuq43aSDVkJh8rtZ8
-	 AE1+ojcA7o4Re9rRlk/RLxrxXXvrHx5QbE+1ieTFuLH94DGZHoUoVIBLPSBC60kEGm
-	 RVe3V+C9vMavyk+WkaO+81u4XIVycySNquJWDiXN6i8fuc8DlaTRrmwZD3Ej0hw4uG
-	 Ln2VvBuFxQEkRABSENvL5rW/M8ZZzsS2cjrgryCDk1/czcyQQ359JWoqNcnL/bEvkS
-	 UpU+4zwmbeyPtWaiBIJnYO14Sc4o3/n+cHCzggJJ7oMCxxLn50QYnAjyZtE9Uq4MW6
-	 J6MngogkXnV+Q==
+	s=k20201202; t=1708451870;
+	bh=qtwbn4UPn2z9JflxF9F9+oogdoTrqWdb0O9YF4n1ZFs=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=IzMPy4z+vtvxETZ1uV3xZei5PSMnNB9fh6OWOyNpJSL0QRi8jhcf2BRkjhnfuumFZ
+	 dlnVqkaJGjf8Y0j+HXgqz16k1kFbdGsoZ207b9w0+lMt18gj+HCZCENnxsbHkmrCJ+
+	 ooHjlh+W0JxEGKpLQJ1mTOcj/mG7mMhQqUpM3tZldFass3ECVlArcnI9rnJvBqIf/Q
+	 A6VGvKk3w1Een9ODstz1FpoOPjzpyg/uOaDgwhxSjzxdcXAgJCQPSVxicZjIOxBcGZ
+	 Z3HCRtAkY6zT/VMdaTHdThc/mXgpStxZ+ZG5D2NP+6NejnSD5zl7FVhr6qGsOIKnHH
+	 3Qu9QLYRf8Oqw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
+	cros-qcom-dts-watchers@chromium.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v2 0/4] arm64: dts: qcom: qrb2210-rb1: enable Type-C support
-Date: Tue, 20 Feb 2024 11:57:39 -0600
-Message-ID: <170845186085.159943.14965896524132330811.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: replace underscores in node names
+Date: Tue, 20 Feb 2024 11:57:40 -0600
+Message-ID: <170845186086.159943.10821539995515301290.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
-References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
+In-Reply-To: <20240213145124.342514-1-krzysztof.kozlowski@linaro.org>
+References: <20240213145124.342514-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,23 +67,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 02 Feb 2024 01:55:07 +0200, Dmitry Baryshkov wrote:
-> Reuse Type-C support implemented for the PMI632 PMIC (found on Qualcomm
-> Robotics RB2 platform) and implement Type-C handling for the Qualcomm
-> Robotics RB1 platform.
+On Tue, 13 Feb 2024 15:51:24 +0100, Krzysztof Kozlowski wrote:
+> Underscores should not be used in node names (dtc with W=2 warns about
+> them), so replace them with hyphens.
 > 
-> Dependencies: [1]
 > 
-> [1] https://lore.kernel.org/linux-arm-msm/20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org/
-> 
-> [...]
 
 Applied, thanks!
 
-[3/4] arm64: dts: qcom: pm4125: define USB-C related blocks
-      commit: 46ea59235c4f00bbca6955cf05d7cc0fccde7a64
-[4/4] arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
-      (no commit info)
+[1/1] arm64: dts: qcom: replace underscores in node names
+      commit: 408e177651614977032e66091ebd26f9b948e64b
 
 Best regards,
 -- 
