@@ -1,89 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-11952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3598E85CC33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:44:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F66985CC39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:46:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CAF08B2223F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:44:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDDFC282361
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:46:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33E11154C05;
-	Tue, 20 Feb 2024 23:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BC22154C05;
+	Tue, 20 Feb 2024 23:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVw8eBpT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+3DPmsh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33BD15444C;
-	Tue, 20 Feb 2024 23:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DD51EF19;
+	Tue, 20 Feb 2024 23:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708472666; cv=none; b=NOlWbgbqZ2zl1iHh8CkO8jCkR5fS87PjWZSCzlGgEVLGrc+V9BqDTuYnIqEYXDZCyknJVqBPld+xBcQFbfvtOCEfQpNlSe4/i1avKs37tHOUuze64Hpy64pUbl5nKlaGlnZKajFihzRHFFb2ghrJbD/4shPfOzgGoRuRzXFZBAM=
+	t=1708472756; cv=none; b=skVcNUZV5DypAfZDGVtsO3n+4D0JViTJorKOmmzaWlRIO5QCAaC6zq6kczQtV7fLwg7UvyODW23yvDBd9wZ5snqL/DO3HOavI1vCTTHK/+D4U2qLala7NjFbu/vKPezTfB/12A9MBswIXkwXwDb2cI0K4Ov9aRJD+4oO3RTaTd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708472666; c=relaxed/simple;
-	bh=Zxy/pymnMx5rTDOnldO5AbT5UwWB1Dt3XC+eanXoo2Y=;
+	s=arc-20240116; t=1708472756; c=relaxed/simple;
+	bh=L2QVjkZNMqhds2Vn+7nDa/OeZVsjV6Ipu7u1w+s06lg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IJWSICJMZ44PGLmO5i8WNKcBHnIF6c01TpUO+mJQZnKoeb/cy7Q/GsAbeDyB06siKzPLQgOIDDIGBnTm1L+yFy5qte8azTRiz5LE3s4iQo145BFRoA7mcV7RrPARMPtFV2RjaGCrrCLgFeQkz7w5LIMX5ntvALi4A/9rtHrN+j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVw8eBpT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2019DC433F1;
-	Tue, 20 Feb 2024 23:44:17 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UgU/hDCzLEYm8UGJwYZsMuZGiZ2MggpFz7IEMiDkqutwCXVH///zvZR+XPU6LIonVF/nwbLikDONZdLZBzNOHUqFfBNPZgk8bQuYevrthDA82Vc5N+qoLkUGSPQ1x3KzohO1xa4vDk3IzMp5FC/lLGutatZ8BB4+/W6NyDIEeMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+3DPmsh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CC2C433C7;
+	Tue, 20 Feb 2024 23:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708472665;
-	bh=Zxy/pymnMx5rTDOnldO5AbT5UwWB1Dt3XC+eanXoo2Y=;
+	s=k20201202; t=1708472756;
+	bh=L2QVjkZNMqhds2Vn+7nDa/OeZVsjV6Ipu7u1w+s06lg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MVw8eBpTCjdftSTyEbvxYQwqBQu3kUyua3/5maqJotrEpeQPF8MT/1EbtFAFQFqfY
-	 K0t7zPYZFcaMD3RHTzSC0Uzv22Ugf1jGS0lzKX4sZDiF2uJlHtf54PreCVaOTr3Tfw
-	 EsNQcr25WGsNXahnwTYIKVKmHvjdlK1vnLLqa/lqMd9ZP0CJAoHHVpjm1IDApXd34L
-	 K8FF/7Nu8P3ZfXeqfPWePnahSDfkXSU50X19KYac3SI+AfDNsTcHOD0rG9WKxl6ASe
-	 5A+s/TjQHvdaFIsr3eOLqD/cnd9vXh+RwYFkBVZ9DdjLYfhoL8QluOXvPfeX7MKiVt
-	 orv+kbQUnDC4w==
-Date: Tue, 20 Feb 2024 23:44:14 +0000
+	b=V+3DPmsh3Se2Bp1Id6QgKV7kTHL7SMyvG5I0oguFULzp3SNouTaPc513M+K4gDoAW
+	 9EiCrIvQQT8dicB02MN7qpg4E0FPtq0HX2gp20gcZ+aWA+OpEc+YkvjLWBWTJK1BRa
+	 4K+g9dj2Pqh1f4DkHtutjXRG6QyhWoWOKgOkFP0z4e1+24RupCFfJhgreIYZMD5eLI
+	 juCe9wiAbYVeEQOhk/FSS43gjC94N+TxXWUyG5ilh8L3DYEIeNWrJzCO7WMGu04q4E
+	 +dF5eoCJPZjdQRlsFrChmOHkHjNlmSaBWXClA0Cba6u4KZH3oB69y2DY8vfw1sfM+3
+	 F2oj8z8xChiog==
+Date: Tue, 20 Feb 2024 23:45:50 +0000
 From: Mark Brown <broonie@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v5 14/18] PCI/pwrctl: add a power control driver for
- WCN7850
-Message-ID: <53f0956f-ee64-4bd6-b44f-cbebafd42e46@sirena.org.uk>
-References: <20240216203215.40870-1-brgl@bgdev.pl>
- <20240216203215.40870-15-brgl@bgdev.pl>
- <d5d603dc-ec66-4e21-aa41-3b25557f1fb7@sirena.org.uk>
- <CAMRc=MeUjKPS3ANE6=7WZ3kbbGAdyE8HeXFN=75Jp-pVyBaWrQ@mail.gmail.com>
- <ea08a286-ff53-4d58-ae41-38cca151508c@sirena.org.uk>
- <17bbd9ae-0282-430e-947b-e6fb08c53af7@linaro.org>
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: qrb2210-rb1: enable Type-C
+ support
+Message-ID: <b72042b7-a500-460f-803a-c6f178bd9cb1@sirena.org.uk>
+References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
+ <CAA8EJpoUHi8FDAKa+LO+2t7fXxXaFYhXAJzkUUPs_uJH9pvZWw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,56 +68,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="w1C+bNORgZucbhbU"
+	protocol="application/pgp-signature"; boundary="se6umII3fO6mWC3n"
 Content-Disposition: inline
-In-Reply-To: <17bbd9ae-0282-430e-947b-e6fb08c53af7@linaro.org>
+In-Reply-To: <CAA8EJpoUHi8FDAKa+LO+2t7fXxXaFYhXAJzkUUPs_uJH9pvZWw@mail.gmail.com>
 X-Cookie: E = MC ** 2 +- 3db
 
 
---w1C+bNORgZucbhbU
+--se6umII3fO6mWC3n
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Tue, Feb 20, 2024 at 10:21:04PM +0100, Konrad Dybcio wrote:
-> On 20.02.2024 13:47, Mark Brown wrote:
+On Wed, Feb 21, 2024 at 12:40:32AM +0200, Dmitry Baryshkov wrote:
+> > Dmitry Baryshkov (4):
+> >       dt-bindings: regulator: qcom,usb-vbus-regulator: add support for PM4125
+> >       dt-bindings: usb: qcom,pmic-typec: add support for the PM4125 block
+> >       arm64: dts: qcom: pm4125: define USB-C related blocks
+> >       arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
 
-> > Are you *sure* this actually happens (and that the regulators don't
-> > figure it out by themselves), especially given that the consumers are
-> > just specifying the load once rather than varying it dynamically at
-> > runtime which is supposed to be the use case for this API?  This API is
-> > intended to be used dynamically, if the regulator always needs to be in
-> > a particular mode just configure that statically.
+> Mark, Greg, granted that the dependency has landed, could you please
+> pick up patches 1 and 2 correspondingly.
 
-> *AFAIU*
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
 
-> The regulators aggregate the requested current (there may be
-> multiple consumers) and then it's decided if it's high enough
-> to jump into HPM.
-
-Yes, that's the theory - I just question if it actually does something
-useful in practice.  Between regulators getting more and more able to
-figure out mode switching autonomously based on load monitoring and them
-getting more efficient it's become very unclear if this actually
-accomplishes anything, the only usage is the Qualcomm stuff and that's
-all really unsophisticated and has an air of something that's being
-cut'n'pasted forwards rather than delivering practical results.  There
-is some value at ultra low loads, but that's more for suspend modes than
-for actual use.
-
---w1C+bNORgZucbhbU
+--se6umII3fO6mWC3n
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXVOUsACgkQJNaLcl1U
-h9B4Sgf/U1Mvu4f6A7qzABpKd9BB7OcLPxH6iSmo8bzo4Tx8MZhge4nd6FITJ9Qr
-BMMbYW8osslMnOrHCH0Pat8hVGnQqDL6a0xURC3B0/E1PLgC9f0+licqpxxQTRqL
-V2Mm42QnAwLrug2ACCRxhByQxjl8c4eknu+KFgpJtIJNfM5UlnJ4kF4voEBkQBIC
-/69z0ZVKAyuebe3Q+EtAh/Vm0HA2d6cb9JsjqOSQnoyFXEqExFuqEZoIhdzrn9bM
-Y6j+npu1uSv+PyaTRXnB6Kf7SZdk1cmghtBmYh/hSh3tjsZvJw5i9GBc3UklYcl+
-oSruwA9tsK/zK0w2x1N+Iah+Bv2l9g==
-=u1/w
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXVOa0ACgkQJNaLcl1U
+h9DRJAf/R0Il0YfhwvTX7aFOwzsq9d3ydqAl/+6oHDJnB4EkxLrpio3DXwlwVP7U
+Xxd8FqHFi1aedGu6VtigivmPThso2YeaXwm8wi8HJu0JgTw+IqczW/SZYfHInQUj
+1Nthjx8YeBwkKXegFyK9+opa3bjqN58hAJQRicLq4Kodc6xNslikuQOaHcxeccvU
+ANN1/5fIrGW++zcOGBjBrt3f/jOKOulzNCU9ASrECAdtzwu6wnC/4RJ51M95N+s6
+gZLAg63KYmbA4jTelWGmsHepWVR8pAI0EelmXd28Z7CbwyfgOr/hWCqKjCqAjLTr
+yPa8Xc00XzR2Cr3s+JGMlb18ccYucw==
+=5S1A
 -----END PGP SIGNATURE-----
 
---w1C+bNORgZucbhbU--
+--se6umII3fO6mWC3n--
 
