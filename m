@@ -1,123 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-11799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F53885BA87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:27:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DFB585BAA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 12:33:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D26C61C211F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:27:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A152F1F2206E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 11:33:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68436664D7;
-	Tue, 20 Feb 2024 11:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7267E664DA;
+	Tue, 20 Feb 2024 11:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r5juAYSU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M6mlcGeG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D14664AD;
-	Tue, 20 Feb 2024 11:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A6D5B66C;
+	Tue, 20 Feb 2024 11:33:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708428421; cv=none; b=lhgsQ+zt7ACnA2sg0UUcGx6Gw3mS+kTf/XfH1YKmn12+Wy4CH8wi2pqhWaoDKAOdQ79fkg7JBEq2svZQ8/8yEcwYmCaANJ56Xi9VUGnm/PmrnOEBXvKSF3u/H0iTF6sq0/CIOY9kZ4cP8cK46BCGFLK8Z33vz5V38b3Sd/5xYoA=
+	t=1708428789; cv=none; b=lc57Frr4RkAMRHLRcmsHhyRK+cnKj8SMOGnu4nLLQStKHbx9DpB0QWVaZpNhV5pj8FHJq0XeKunsf8EJbvkYXlcOPvjMbYVKrSuzppfFqgkl+e1jDZ881WfJLCdyhUGFrv9h7n/tgQGLAaRimMF8xrFY8U5KvVfAtQwc0a06QSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708428421; c=relaxed/simple;
-	bh=VddnBpFylmssPBNR8LxVy9HNAItc6vmZJuhEvw0a1cc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hkK3ol7fiS83/xXDRbRdozrmkfsDhwVEbvKyypV7dYLxm8fUL6ysXr2yHbEuwFS+iK/9bPmNyp6tYeS7pawsK830H2zUM1jYZUz5IsgyUHOEpGyV4v6RegGaZELjAbDITXx+iQ68p703OQdX8Tuc4tjYuyPxoZXk0bPB1KoDSJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r5juAYSU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BF5C433C7;
-	Tue, 20 Feb 2024 11:27:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708428420;
-	bh=VddnBpFylmssPBNR8LxVy9HNAItc6vmZJuhEvw0a1cc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r5juAYSUvCxKuNFb30xnBGP17AeDgQUJFn90heG7na3+4GVGkGHv+uzoBqj9ng/t+
-	 EFpWosEYzWejLzvTu1Bjvd4u5MAlivbrRnLRMjMfuVHGn0lk6E5xGLqRZs6afOtc8c
-	 SYeeknMVdh8Ikld407i7xVPx2i0/h6I2pLkXnOgloW9j9ZrZa/OkqaAfpbGDOZjNpJ
-	 726ZtnhyNIwlhqnaH68sGapgpXtajy8uqaA7IHDbJGyFupXqg/fdqFU9YA2D8CGGvs
-	 JXtfLbRWHbGtx5EOJuo+kL+Wh1rV5LD7kN3bAl4LuNNiiS6AWwXNixXdTwbJAnTXyp
-	 H2SE4ozHo1jxw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rcOH5-000000005Em-1y3j;
-	Tue, 20 Feb 2024 12:26:59 +0100
-Date: Tue, 20 Feb 2024 12:26:59 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Markus Elfring <Markus.Elfring@web.de>
-Cc: Johan Hovold <johan+linaro@kernel.org>, freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-phy@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Vinod Koul <vkoul@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Rob Clark <robdclark@gmail.com>, stable@vger.kernel.org
-Subject: Re: [PATCH 3/6] soc: qcom: pmic_glink_altmode: fix drm bridge
- use-after-free
-Message-ID: <ZdSMg63b4ZGYhUXO@hovoldconsulting.com>
-References: <20240217150228.5788-4-johan+linaro@kernel.org>
- <9ff4221a-7083-4cb1-abde-1690f655da8d@web.de>
+	s=arc-20240116; t=1708428789; c=relaxed/simple;
+	bh=nu5ywiYaSjFjgFyE5Qqnc33gPSlkptZflEOVTZMX7GY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=crLG5u5xSiMaeK9hCQKQNt6dT4MVO2UEPQikQLaayyfhkET4AE5Nx1RrgY7ouc3QNlWuBE/SPffNPPNBEVQj1vAOEVpwLd2WlrbnwtwTrSVbb2OOpX596esW5MzhcXEZ3zDaZVS1eVyu0XJuIp/Pz/LvAgTFwbmcAAeRIhekWU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M6mlcGeG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KAApqN025688;
+	Tue, 20 Feb 2024 11:32:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=CuAAaIpyHcdXRL6GRG/AMq7g/D+YIAJuhwyqTbufseo=; b=M6
+	mlcGeGRuSih/K/mEhOa9t5ijxezOCTaiVwHctk2bDCx4opbRz0SsOnyymZO9MGmE
+	81QuAEYqf6K3GLhNMcwLDYvJ1YD99BmQDeuKrOQheT/d6vcxXxJg+VZVoqUWfQdO
+	psuYLwGZyYfvBoWLHKHbwjAwe+bLcrKGVoTE3bL8HtLKTV+U4ti4yTU+4cRmiCVi
+	j+3GpLYWQBeE804lk7qLC2d4EwSS2iur78wgNnmrxG3Cyna8Cb8KakM5LhdHNMzp
+	CHC2WSS21U5UF9LU237b7zer5wox+lcoe8VzNF4QshdIVuXIMXIgajUs/iQEp4Ok
+	/8rr6NtoRGOIN6uy6JLg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wct3d0504-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 11:32:49 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KBWm4W026534
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 11:32:48 GMT
+Received: from [10.216.16.129] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 03:32:43 -0800
+Message-ID: <3ad2909d-4ac3-fff3-739d-b12a3408fa0f@quicinc.com>
+Date: Tue, 20 Feb 2024 17:02:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9ff4221a-7083-4cb1-abde-1690f655da8d@web.de>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 0/5] Add QPIC SPI NAND driver
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
+        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240219130412.GC3281@thinkpad>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20240219130412.GC3281@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: D3u3QcuM8VBH9Rtw3Kb75Ur5-gaB298t
+X-Proofpoint-GUID: D3u3QcuM8VBH9Rtw3Kb75Ur5-gaB298t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ mlxscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 clxscore=1015
+ adultscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402200083
 
-On Tue, Feb 20, 2024 at 11:55:57AM +0100, Markus Elfring wrote:
-> …
-> > Specifically, the dp-hpd bridge is currently registered before all
-> > resources have been acquired which means that it can also be
-> > deregistered on probe deferrals.
-> >
-> > In the meantime there is a race window where the new aux bridge driver
-> > (or PHY driver previously) may have looked up the dp-hpd bridge and
-> > stored a (non-reference-counted) pointer to the bridge which is about to
-> > be deallocated.
-> …
-> > +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-> …
-> > @@ -454,7 +454,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
-> >  		alt_port->index = port;
-> >  		INIT_WORK(&alt_port->work, pmic_glink_altmode_worker);
-> >
-> > -		alt_port->bridge = drm_dp_hpd_bridge_register(dev, to_of_node(fwnode));
-> > +		alt_port->bridge = devm_drm_dp_hpd_bridge_alloc(dev, to_of_node(fwnode));
-> >  		if (IS_ERR(alt_port->bridge)) {
-> >  			fwnode_handle_put(fwnode);
-> >  			return PTR_ERR(alt_port->bridge);
-> …
+
+
+On 2/19/2024 6:34 PM, Manivannan Sadhasivam wrote:
+> On Thu, Feb 15, 2024 at 07:18:51PM +0530, Md Sadre Alam wrote:
+>> This series of patches will add initial supports
+>> for QPIC SPI NAND driver.
+>>
+>> Currently this driver support following commands
+>>
+>> -- RESET
+>> -- READ ID
+>> -- BLOCK ERASE
+>> -- PAGE READ
+>> -- PAGE WRITE
+>> -- GET FEATURE
+>> -- SET FEATURE
+>> -- BAD BLOCK CHECK
+>>
+>> This driver has been tested with dd command with read/write page
+>> with multiple file size 1MiB, 10MiB,40MiB etc.
+>> Also tested with "mtd" command like mtd erase, mtd write, mtd verify etc.
+>>
 > 
-> The function call “fwnode_handle_put(fwnode)” is used in multiple if branches.
-> https://elixir.bootlin.com/linux/v6.8-rc5/source/drivers/soc/qcom/pmic_glink_altmode.c#L435
+> This is not the first version isn't it? Where is the changelog describing what
+> has changed since then?
+
+   The earlier patch was the RFC for design review only.
 > 
-> I suggest to add a jump target so that a bit of exception handling
-> can be better reused at the end of this function implementation.
-
-Markus, as people have told you repeatedly, just stop with these
-comments. You're not helping, in fact, you are actively harmful to the
-kernel community as you are wasting people's time.
-
-Johan
+> - Mani
+> 
+>> Need help to test these all patches on SDX65 and SDX75 platform.
+>>
+>> Md Sadre Alam (5):
+>>    spi: dt-bindings: add binding doc for spi-qpic-snand
+>>    drivers: mtd: nand: Add qpic_common API file
+>>    spi: spi-qpic: Add qpic spi nand driver support
+>>    arm64: dts: qcom: ipq9574: Add SPI nand support
+>>    arm64: dts: qcom: ipq9574: Disable eMMC node
+>>
+>>   .../bindings/spi/qcom,spi-qpic-snand.yaml     |   82 ++
+>>   .../boot/dts/qcom/ipq9574-rdp-common.dtsi     |   43 +
+>>   arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |    2 +-
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   27 +
+>>   drivers/mtd/nand/Makefile                     |    1 +
+>>   drivers/mtd/nand/qpic_common.c                |  794 +++++++++++
+>>   drivers/mtd/nand/raw/qcom_nandc.c             | 1226 +----------------
+>>   drivers/spi/Kconfig                           |    9 +
+>>   drivers/spi/Makefile                          |    1 +
+>>   drivers/spi/spi-qpic-snand.c                  | 1025 ++++++++++++++
+>>   include/linux/mtd/nand-qpic-common.h          |  548 ++++++++
+>>   11 files changed, 2547 insertions(+), 1211 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>>   create mode 100644 drivers/mtd/nand/qpic_common.c
+>>   create mode 100644 drivers/spi/spi-qpic-snand.c
+>>   create mode 100644 include/linux/mtd/nand-qpic-common.h
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
