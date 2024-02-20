@@ -1,117 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-11934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96E4085CAD5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:38:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77C3985CADA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:40:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 27577B21F53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:38:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B76A285A46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 22:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179E4153BF6;
-	Tue, 20 Feb 2024 22:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91CDE153BF2;
+	Tue, 20 Feb 2024 22:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fba1YMU6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B4bN5/3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C62153BE4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 22:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E0628DBD;
+	Tue, 20 Feb 2024 22:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708468714; cv=none; b=W9YS5X6WdQSx+PdFAfkvvO9aXw8gSGUO3h8zDO3t2GRfoiKrcDntQLSPdFoNo97h1d+AR+Zl5R6j0hgbnW/oDB2/Zonn8hTayG2569/UJUmCDltNjWm8ieyeaKdtKk7RmGK9pBX56EsW6SDq+rwzVfqUnkCPm0RHYo5Z/v7WZZw=
+	t=1708468842; cv=none; b=LI+GCSBE4dnXmoYG7czDMlDoFtcBeesWmtQ8Br4AzBKnnsOe61xSZWbMFQYWKZBZBnkVGE+yxxrCGd1q+UPFWuY1cBcZjhbZqEdzlv2+23nUyQh0MpJLEerazh+SbyMDaxGe9SSEa6BolJ/tFRTdS7v8xLiNioFllHUHtgwRMSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708468714; c=relaxed/simple;
-	bh=yclMuqfVpq6Uo1jCiaeacEaGMBhHwnHW1pMSpxjkkR8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WTlZhXVRpBIP/EKgG8gxC1+h/u2tOpYLB2Lq/wVr6PWJrzzvPk4i2J1JKHiXbQulVo+r1GovBOY4n0b7vQ4ljtxAh7Q8oeJJUzxGgYZjsbp5Hv1ZD3bKCLAOD95GjWD9cg0TJl0BcdTdqzhvKz0gyNAWiRAs2P7aVkSOe70kE8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fba1YMU6; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dbed0710c74so4001984276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 14:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708468711; x=1709073511; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tpl1owOrWyjqDOWkdN2xFa6uL/xl0XTw5pHOD078G5M=;
-        b=Fba1YMU6OgtSFvF4nGwMzJ0Ahj9a9b0I3qZ6NBPODdqPDHGucWSH9TGTUJEQpJFtf1
-         BkbJHMnSaAGTnoVaabe2MZYWROYVchs1UC0dhfCM3BXy8P4wrRflOWtxuOufcMc8daWC
-         CDctDCgYcU5jaI3vMu8iGAe9C7wZtYOyQhIm7OJNfGvUG5VJLZT7DLmswCjCTsQorT7r
-         SERj1VfysbzRc8L938pjDD0g51oLFV2vtiYJq3g9fAO9mgOEA+42cZMHTBBWcjNXNjSy
-         eMlQc3acWMHvwRFDRHWn07LqWANaS60t1csW2jQIwAcQn0ZbDb+ICiv9rwqBJ6e0izwv
-         l9Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708468711; x=1709073511;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tpl1owOrWyjqDOWkdN2xFa6uL/xl0XTw5pHOD078G5M=;
-        b=QG93ufk34TxnAsuE/zeXdxn306ttjxEDSL3OdiLfrPWUT6/mP5/5/7x9ZROjhJ6XOI
-         7quvafQy0WULYnnDYp0/69LVVcRU5ifrIohkDBc3m/jsj2qtVToG2WKNPiXYbdHiwuIk
-         s0/QCWKe3csKfIqcft7WmGRFMOPknFhBSr6JHDNPXev0Uy2u4aUJYmymqgzusY03kXzT
-         pPwP12HZpmapMD8myPD0hvTjkx6xb2iiB9s41fLACgVePDUYJpfGm9RK+Kd6mxAuzoDS
-         yUCL3o5wIdKG9x9SCfzr2pIEvwTbnIpYGgHiDafePvfWxYh51d4Ff8P9zqsoGXsRmuel
-         mIvg==
-X-Forwarded-Encrypted: i=1; AJvYcCVUlhw3cXmPXvl/FLJ/8SVACcGVYxxlkSbkDD2AAlTWruxw6uzCFWVu0vvNEBclFMWMlc1xQOjQI2XsNJuaZiAq49bfPqMzXg+GKug1wg==
-X-Gm-Message-State: AOJu0Yy1e+ztCl7nFi2aoEgRAFRuHafe9SclbyM6S7V46USsGwf/qZyP
-	VzhzAYynYGJlk/Uay6wXbtfI6mm4Y62PaayGgabEErVmCPv+IvNYiaCWzvPE94cpy2QopjnU+WX
-	na4nNBicWtBYvEwhgLus2TpvIlFMRH0ATq6zo8g==
-X-Google-Smtp-Source: AGHT+IHu/ijwBwa+JiQvgJls8FPLtF2HDFrmYed6T0djTupJAnR5NQQy8l2L9TNIP0k9znPyUUVhzs2mv/BO8O80DIc=
-X-Received: by 2002:a25:4105:0:b0:dcc:b719:4e4f with SMTP id
- o5-20020a254105000000b00dccb7194e4fmr13917052yba.53.1708468711565; Tue, 20
- Feb 2024 14:38:31 -0800 (PST)
+	s=arc-20240116; t=1708468842; c=relaxed/simple;
+	bh=X1ODGiav0Vne3qV9C0n6t3FDPsqqP9idzZxGgMBXT2M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Qw2PbQQqgbaCSF/2tS1GzI9BpnMitlSuCvheasvXk+TFCWD/vI6udEL785pis4uwheugH3axU2FMUCCWhAMd4304WdhhD47hlJOcpqc6xji+HGHLvA28X3NkHREZjWCqUwwxyU6Li5OciQEGwjCVkzqOLSKefP3o31YeHI0I1Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B4bN5/3K; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41KMaWOp006858;
+	Tue, 20 Feb 2024 22:40:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=DzgSSjiF7MER59HcHRdD0KQPa4VTP7amKqzcZKrkGcE=; b=B4
+	bN5/3Ko+uKUY4iWdMcs0gjISPVK33vQAAyVl7udYyUZzp/oaDv3EQ+r9T48eAaGZ
+	a7t5tlBuFBu5KQSRVX1wRZtEi3ETcOvRysP61X4LpxfiFu26exKMcWg+QX8CqMey
+	kcQ4XbRQjTAuSa8+VYUaZXZuquHEi8/2oDG1Y8u75alp99YbD/VDBwYhMdXebB7m
+	zhXZvcERFTaCgy+RrvuQDTOno4QekBMgThIaB/Ow8k+NkaYZQ5PFKhpWUy8YVQAw
+	/fT24ofbN3cdTnzmwdJlta+NYClIKa0j+NonYSBLqfhuBx1aRq6HPq7KN2NlKsX4
+	RM2VsRnfG0+/U/A824PA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21s8cd0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 22:40:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41KMeVAd007363
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Feb 2024 22:40:31 GMT
+Received: from [10.110.62.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 14:40:31 -0800
+Message-ID: <69d152d2-6a25-9ff4-ce6b-c4790247a661@quicinc.com>
+Date: Tue, 20 Feb 2024 14:40:30 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org> <170845186085.159943.14965896524132330811.b4-ty@kernel.org>
-In-Reply-To: <170845186085.159943.14965896524132330811.b4-ty@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 21 Feb 2024 00:38:20 +0200
-Message-ID: <CAA8EJppkVkY9_yJ8ZpwmP+b9uCM2_-5NRUT=_VHsYpj5K0s+5A@mail.gmail.com>
-Subject: Re: (subset) [PATCH v2 0/4] arm64: dts: qcom: qrb2210-rb1: enable
- Type-C support
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, 20 Feb 2024 at 19:57, Bjorn Andersson <andersson@kernel.org> wrote:
->
->
-> On Fri, 02 Feb 2024 01:55:07 +0200, Dmitry Baryshkov wrote:
-> > Reuse Type-C support implemented for the PMI632 PMIC (found on Qualcomm
-> > Robotics RB2 platform) and implement Type-C handling for the Qualcomm
-> > Robotics RB1 platform.
-> >
-> > Dependencies: [1]
-> >
-> > [1] https://lore.kernel.org/linux-arm-msm/20240130-pmi632-typec-v3-0-b05fe44f0a51@linaro.org/
-> >
-> > [...]
->
-> Applied, thanks!
->
-> [3/4] arm64: dts: qcom: pm4125: define USB-C related blocks
->       commit: 46ea59235c4f00bbca6955cf05d7cc0fccde7a64
-> [4/4] arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
->       (no commit info)
-
-This looks worryingly.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] drm/msm/dpu: make "vblank timeout" more useful
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240208-fd-dpu-debug-timeout-v2-1-9f907f1bdd87@linaro.org>
+ <1cb90bff-ce5b-c6d1-a3df-24f6306f833a@quicinc.com>
+ <CAA8EJpotiHKT_NYphDs0-vhpvsybgTW281XDYbteUx8qOX=v4g@mail.gmail.com>
+ <63bba15b-6d8d-5ba8-d99d-8cd2dd763262@quicinc.com>
+ <CAA8EJpqHmVBry9FyJ6HRB+qdVcVNN3Q7rHZz1daZL1Sz6yeZ=A@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqHmVBry9FyJ6HRB+qdVcVNN3Q7rHZz1daZL1Sz6yeZ=A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: t9crU5pOJDLNHXaEgNhV7Rf5up6tcKsS
+X-Proofpoint-GUID: t9crU5pOJDLNHXaEgNhV7Rf5up6tcKsS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=910 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402200163
 
 
--- 
-With best wishes
-Dmitry
+
+On 2/19/2024 3:52 AM, Dmitry Baryshkov wrote:
+> On Wed, 14 Feb 2024 at 22:36, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/14/2024 11:20 AM, Dmitry Baryshkov wrote:
+>>> On Wed, 14 Feb 2024 at 20:02, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 2/8/2024 6:50 AM, Dmitry Baryshkov wrote:
+>>>>> We have several reports of vblank timeout messages. However after some
+>>>>> debugging it was found that there might be different causes to that.
+>>>>> To allow us to identify the DPU block that gets stuck, include the
+>>>>> actual CTL_FLUSH value into the timeout message and trigger the devcore
+>>>>> snapshot capture.
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>> Changes in v2:
+>>>>> - Added a call to msm_disp_snapshot_state() to trigger devcore dump
+>>>>>      (Abhinav)
+>>>>> - Link to v1: https://lore.kernel.org/r/20240106-fd-dpu-debug-timeout-v1-1-6d9762884641@linaro.org
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 ++-
+>>>>>     1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>>>> index d0f56c5c4cce..a8d6165b3c0a 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>>>> @@ -489,7 +489,8 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
+>>>>>                 (hw_ctl->ops.get_flush_register(hw_ctl) == 0),
+>>>>>                 msecs_to_jiffies(50));
+>>>>>         if (ret <= 0) {
+>>>>> -             DPU_ERROR("vblank timeout\n");
+>>>>> +             DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
+>>>>> +             msm_disp_snapshot_state(phys_enc->parent->dev);
+>>>>
+>>>>
+>>>> There is no rate limiting in this piece of code unfortunately. So this
+>>>> will flood the number of snapshots.
+>>>
+>>> Well... Yes and no. The devcoredump will destroy other snapshots if
+>>> there is a pending one. So only the console will be flooded and only
+>>> in case when MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE is enabled.
+>>>
+>>
+>> Yes, true but at the same time this makes it hard to capture a good dump
+>> as potentially every vblank you could timeout so this destroy/create
+>> cycle wont end.
+> 
+> Excuse me, maybe I miss something. On the first timeout the snapshot
+> is created. It is held by the kernel until it is fully read out from
+> the userspace. Other snapshots will not interfere with this snapshot.
+> 
+
+For every new snapshot a new devcoredump device will be created which 
+should remain till it has been read. But now this will be created every 
+blank. IMO, this is really too much data for no reason.
+
+Subsequent vblank timeouts are not going to give any new information 
+compared to the existing snapshot of the first vblank timeout thats why 
+we should just create the snapshot when the first error happens and stop.
+
+For other frame done timeouts, infact subsequent timeouts without any 
+sort of recovery in between are quite misleading because hardware was 
+already not able to fetch the previous frame so it will most likely not 
+fetch the next one either till it has recovered. Typically thats why 
+these vblank timeouts happen in a flurry as the hardware never really 
+recovered from the first timeout.
+
+> Or are you worried that snapshotting takes time, so taking a snapshot
+> will also interfere with the vblank timings for the next vblank?
+> 
+
+Yes this is another point.
 
