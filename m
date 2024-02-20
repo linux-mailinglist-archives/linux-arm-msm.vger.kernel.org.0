@@ -1,112 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-11953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F66985CC39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:46:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB39285CC60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:59:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDDFC282361
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:46:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65E48B2234C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Feb 2024 23:59:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BC22154C05;
-	Tue, 20 Feb 2024 23:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 143E51552EF;
+	Tue, 20 Feb 2024 23:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+3DPmsh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I3YN/4fr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DD51EF19;
-	Tue, 20 Feb 2024 23:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584CB1552E3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 23:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708472756; cv=none; b=skVcNUZV5DypAfZDGVtsO3n+4D0JViTJorKOmmzaWlRIO5QCAaC6zq6kczQtV7fLwg7UvyODW23yvDBd9wZ5snqL/DO3HOavI1vCTTHK/+D4U2qLala7NjFbu/vKPezTfB/12A9MBswIXkwXwDb2cI0K4Ov9aRJD+4oO3RTaTd8=
+	t=1708473534; cv=none; b=K2gqqIsD32cJ3SN9okM6rKRtw3zNLfPQCBJUBNkCtLQ9KRetrj5aT4xY+5g8IwAI4c2kmDDcnmTWtidOj655cvuZxAcMBAzYemQT1FSUE6I7Ob9Lm0zp7u7ZdNHeKJ35O60ajzI748H8Hp1g9gpmcc34M34D+ual4XQnh9DMTMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708472756; c=relaxed/simple;
-	bh=L2QVjkZNMqhds2Vn+7nDa/OeZVsjV6Ipu7u1w+s06lg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UgU/hDCzLEYm8UGJwYZsMuZGiZ2MggpFz7IEMiDkqutwCXVH///zvZR+XPU6LIonVF/nwbLikDONZdLZBzNOHUqFfBNPZgk8bQuYevrthDA82Vc5N+qoLkUGSPQ1x3KzohO1xa4vDk3IzMp5FC/lLGutatZ8BB4+/W6NyDIEeMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+3DPmsh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CC2C433C7;
-	Tue, 20 Feb 2024 23:45:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708472756;
-	bh=L2QVjkZNMqhds2Vn+7nDa/OeZVsjV6Ipu7u1w+s06lg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V+3DPmsh3Se2Bp1Id6QgKV7kTHL7SMyvG5I0oguFULzp3SNouTaPc513M+K4gDoAW
-	 9EiCrIvQQT8dicB02MN7qpg4E0FPtq0HX2gp20gcZ+aWA+OpEc+YkvjLWBWTJK1BRa
-	 4K+g9dj2Pqh1f4DkHtutjXRG6QyhWoWOKgOkFP0z4e1+24RupCFfJhgreIYZMD5eLI
-	 juCe9wiAbYVeEQOhk/FSS43gjC94N+TxXWUyG5ilh8L3DYEIeNWrJzCO7WMGu04q4E
-	 +dF5eoCJPZjdQRlsFrChmOHkHjNlmSaBWXClA0Cba6u4KZH3oB69y2DY8vfw1sfM+3
-	 F2oj8z8xChiog==
-Date: Tue, 20 Feb 2024 23:45:50 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: qrb2210-rb1: enable Type-C
- support
-Message-ID: <b72042b7-a500-460f-803a-c6f178bd9cb1@sirena.org.uk>
-References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
- <CAA8EJpoUHi8FDAKa+LO+2t7fXxXaFYhXAJzkUUPs_uJH9pvZWw@mail.gmail.com>
+	s=arc-20240116; t=1708473534; c=relaxed/simple;
+	bh=/2E1dI20mlC8/4NkWi0ja8n1GkgznfvZg8EI+WshC0I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S29iNRzT2dBvDznyr/XCnuiQc6GSiOyyw18Dqob12HuENtSwXtfFGrozwtyro3ZDY+DKKS6OI6CKR4ltnJ9RDYWQlx7uNBrm4ZgtzI8hireyd37EnKUvuWEv4pqxQ9F19jfDlSD12E4/j7pD8itWOiboEUXN4kWzVDx0AOwmSZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I3YN/4fr; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dcc71031680so4808097276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 15:58:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708473531; x=1709078331; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qWLcN9a9ompSRERy0rerQL4YJLev9LmdSeoyCodY8x8=;
+        b=I3YN/4frvIvjgfHL8GW1C/X4El4VCnK1c4x5FYyCgF46hUcG0LxHYbTyiC6nuUjwzg
+         vtWQct7flqQwDctPwWTit0s0jEg00T4zTFEJUUiSngt6j6kqNfMITC9Dfu4u+QYBQ/k5
+         0yC3SgY5Bd8+WV2KrPM/5nRycuwFkuj7KlYJ/xhDNplJsrqHM7IzuOCABZx8eT1X08Pz
+         u7eUrQ2gxlyPCtiipelQLJkuibEPS6aOCdkmIIXz2iATMjATNJ4KXHd0+AtDw82mM7nR
+         3OX3WD10f9gDrzdBoVXIHYRGuSP0ANeotMuA8J3F5fRXVa5MZV55HDNmOO1GbEIn6KT9
+         XcHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708473531; x=1709078331;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qWLcN9a9ompSRERy0rerQL4YJLev9LmdSeoyCodY8x8=;
+        b=qmXVIdaQ7gxRdPK3PkXGBHYkD/PrgCf4s8co0uW9kqF8DWSiNU1FaZ9H/QKjERhCkP
+         vxpnPsgsF7wDC5Safsf4Ily2hGb86VQa4/TcADCZnOdbJGva60n1/zHDLxltYH956YMk
+         2moo0gWvclxh/9jOO7d6PSeHhb0CuhNkaDMeU8bu/PUYKcctJzH3tEhQPDPQ0TG1qc0o
+         HKtxqxPwj8RDaiyPvCSRfq9FZZqTRA0NIwanZF1Y0Od1R9Tet7e4eTqwkRuIqz9/ub8Y
+         tRNss33iBwY7FCOywqCbIBdWPib5bITGnf5qq02w3TMDm4yiutUwHSPWcH4Csczw+2L2
+         NqoA==
+X-Forwarded-Encrypted: i=1; AJvYcCXU0d+qrO016ceqU5yftnIewFuv22tcl3fpKtQINfNj8Ttlc+kShLKAUle4ebpRB21wW/z3+aIrSvXt/zSBRTMK1WiBaTl5sXcMbmdWUQ==
+X-Gm-Message-State: AOJu0YyGgODL/zhm/DcpOQaypUhZsEDiSfmjYnmtFgIqlCRYXFmKbgTV
+	4dTPuZ+iLkjOkbVTAwYUo9LVrVQ2B4nUjKF9F+2yWIQ0/KEaHyywC/xKeCvRoXMQvEcwTXrw5gj
+	UCm1s+6NuPe6QuBz1PTxSmyCO+G4M9ZxJ/TRh4g==
+X-Google-Smtp-Source: AGHT+IEYX5XxZmmo9sef97202jg0pEahQhP3i37ehPC6dExoWuBQvnOlPK2ahAYAetTNc+dq+us40BDsa5OA7E9lxso=
+X-Received: by 2002:a25:aa84:0:b0:dc7:4b0a:589 with SMTP id
+ t4-20020a25aa84000000b00dc74b0a0589mr15828426ybi.55.1708473531428; Tue, 20
+ Feb 2024 15:58:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="se6umII3fO6mWC3n"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoUHi8FDAKa+LO+2t7fXxXaFYhXAJzkUUPs_uJH9pvZWw@mail.gmail.com>
-X-Cookie: E = MC ** 2 +- 3db
+References: <20240202-pm4125-typec-v2-0-12771d85700d@linaro.org>
+ <CAA8EJpoUHi8FDAKa+LO+2t7fXxXaFYhXAJzkUUPs_uJH9pvZWw@mail.gmail.com> <b72042b7-a500-460f-803a-c6f178bd9cb1@sirena.org.uk>
+In-Reply-To: <b72042b7-a500-460f-803a-c6f178bd9cb1@sirena.org.uk>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 21 Feb 2024 01:58:40 +0200
+Message-ID: <CAA8EJprU-oC7ki1k98dpLn6xcsOa63EtOa678AcG0WiH=qy5xg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: qrb2210-rb1: enable Type-C support
+To: Mark Brown <broonie@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 21 Feb 2024 at 01:45, Mark Brown <broonie@kernel.org> wrote:
+>
+> On Wed, Feb 21, 2024 at 12:40:32AM +0200, Dmitry Baryshkov wrote:
+> > > Dmitry Baryshkov (4):
+> > >       dt-bindings: regulator: qcom,usb-vbus-regulator: add support for PM4125
+> > >       dt-bindings: usb: qcom,pmic-typec: add support for the PM4125 block
+> > >       arm64: dts: qcom: pm4125: define USB-C related blocks
+> > >       arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
+>
+> > Mark, Greg, granted that the dependency has landed, could you please
+> > pick up patches 1 and 2 correspondingly.
+>
+> Please submit patches using subject lines reflecting the style for the
+> subsystem, this makes it easier for people to identify relevant patches.
+> Look at what existing commits in the area you're changing are doing and
+> make sure your subject lines visually resemble what they're doing.
 
---se6umII3fO6mWC3n
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Ack, excuse me.
 
-On Wed, Feb 21, 2024 at 12:40:32AM +0200, Dmitry Baryshkov wrote:
-> > Dmitry Baryshkov (4):
-> >       dt-bindings: regulator: qcom,usb-vbus-regulator: add support for PM4125
-> >       dt-bindings: usb: qcom,pmic-typec: add support for the PM4125 block
-> >       arm64: dts: qcom: pm4125: define USB-C related blocks
-> >       arm64: dts: qcom: qrb2210-rb1: enable USB-C port handling
-
-> Mark, Greg, granted that the dependency has landed, could you please
-> pick up patches 1 and 2 correspondingly.
-
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-
---se6umII3fO6mWC3n
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXVOa0ACgkQJNaLcl1U
-h9DRJAf/R0Il0YfhwvTX7aFOwzsq9d3ydqAl/+6oHDJnB4EkxLrpio3DXwlwVP7U
-Xxd8FqHFi1aedGu6VtigivmPThso2YeaXwm8wi8HJu0JgTw+IqczW/SZYfHInQUj
-1Nthjx8YeBwkKXegFyK9+opa3bjqN58hAJQRicLq4Kodc6xNslikuQOaHcxeccvU
-ANN1/5fIrGW++zcOGBjBrt3f/jOKOulzNCU9ASrECAdtzwu6wnC/4RJ51M95N+s6
-gZLAg63KYmbA4jTelWGmsHepWVR8pAI0EelmXd28Z7CbwyfgOr/hWCqKjCqAjLTr
-yPa8Xc00XzR2Cr3s+JGMlb18ccYucw==
-=5S1A
------END PGP SIGNATURE-----
-
---se6umII3fO6mWC3n--
+-- 
+With best wishes
+Dmitry
 
