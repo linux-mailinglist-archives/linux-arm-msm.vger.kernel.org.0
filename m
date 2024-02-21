@@ -1,199 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-11961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1249285CD2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 01:59:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C7F85CE7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 04:00:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0C61282E5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 00:59:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96DD41F22D93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 03:00:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 525031C33;
-	Wed, 21 Feb 2024 00:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 263D32B9D7;
+	Wed, 21 Feb 2024 03:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+6SoEQG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lztLj9E+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0ECA17D5;
-	Wed, 21 Feb 2024 00:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D08746BF;
+	Wed, 21 Feb 2024 03:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708477185; cv=none; b=HhDbOf/fk53Nmlvg6ZLG0C+ExBobu4R6UGnZnS636UwhTwuY7fbMR73RDHKdTG0ysHMHfqI5fTI2a3bUc53yAwV9YY2GcmjZh4w5/rGlfI008mDp4+lhuBoFfp5rn2aliZXagKSIcPw16Fz2NHKyQkL3ylqJtrhp+RrPBxLqP04=
+	t=1708484451; cv=none; b=b0NFgTZEt+UbY8nBxycvh/4w6LZHya4CSoxeHoyOO6ofKqrgwc/FpGigPdhiBEEia9QKEj5lLZOetXnAo0LLTOK0xTB/h2u9kkYAFEAbQUIFP9d5HqFuPBpM5Hxb3HBGVz3iGIcuIM4D8n+6BDuVCnKpDYfCXi6syk25A8QbFJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708477185; c=relaxed/simple;
-	bh=AujcxXsI2GmZwiCgxr67BALfTDI6r30TVbTGpOXMtis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZR1//vC9pjdIQhCDfjRRs6/1ZEIXSdb1d6ez8ouEUOf0TqGHgKA2vCreW3M1t1aBfzaQLhxD5jzO0TSUxIvScyTWMf68EJYWhjLqBeIQPAAihAa/4EvxlG2g4sRd2clCIrocIJ1jrTqC5cY9GVcGTTs86QfLkWqIzr+ZSGyzx44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+6SoEQG; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7875c347a29so215682185a.1;
-        Tue, 20 Feb 2024 16:59:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708477182; x=1709081982; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V0xiNw2TY1Xto20MDjzn1OJnpZlYS5WxTan3TWFTSco=;
-        b=Y+6SoEQGy7n7IreyxH1B1ugQHgkZIc8XBmz2O7jGMbmhWmrY4Na/BI5zTTNEAKk8YR
-         rTRdD3XHUppeVZb12Mjz9Qg+PPUW+mY+ZwQJkAXHzKn6jcnqEbAOD8GKAX8ptq+LfNO1
-         G3zvoC8tamaE0ANVUyZHWLshpIcM+Wo2kB+Lhj+LCyhXjLi+jsK5h8f2PXb04Et5/KUb
-         4Db0W6AbB1oLcIJjSs24wEbzoIM9FgLI2PYYtId3Xst/MZjL59qYcbQYEQxLtX7r5ZCj
-         +dGT/r5Mpc6FvPj1KgrfJePSmFehWAvQ+Da2OzHLXkG/Nt8alu3XiZHoaRUA6r3/i6EV
-         kxHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708477182; x=1709081982;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V0xiNw2TY1Xto20MDjzn1OJnpZlYS5WxTan3TWFTSco=;
-        b=ISNyT/dzeFC1q28R4VrfReLFg9lxgqgPyA8ch4hKL8QfxD6aLgEkXXJAAOIf6F8zeP
-         qYI5XiptJCBMVCO3kSEAUTqVuNcVI7PFYab5ghLK5NEvRIy2A9AIycTgqk+O69aEDqFR
-         BpZncuED4RyfUhFY38DAu+Dz+I/xB0SHY95BCwdhBuR8GpDZBcyuTF7gTwPpUM+EY90n
-         kguIHKlD4iBV3ZRichbt0pJkN9c9/ut7vjE1bUEwjQ9XVjyz2UJS1HPzAA9XVW/2RfMM
-         nRmiWGeHuSgVRiMnYt9o9NS/gylJrr+iC1Oj1QV41qsYZym/0EmJqPj8WOD1fQz1WsPL
-         tfKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUTrP5wKz4pGECGA/3fCj/FpP1LcQcnp9PZV23xWUU/NL4tq2Zs/z87XJ2LRPCuBIJaFeJ8FV7liqmhKYvo1diKGHvjWpUotXSJxzGr6veKgSxsJh1sGqy7H70+SK7vs/S2cijSs08qjpDwawox57R+LZBsZWTCS7W7yngTxa0U04zT6JEi1AFn
-X-Gm-Message-State: AOJu0YwhC8fK92cDDTcrlnNvNqJWE1ur7e9BrKgSkODjRxxSxC0EBBIE
-	e0ooibt1dntr6l3v1I5OU2nsBfFa3u9t4cVONeJKKStukZV38ozGGwVwURfAh+4=
-X-Google-Smtp-Source: AGHT+IGddt2DXBR3Bx8H5Xrc9ATwr5t4aKJPTC2IMHfI0m3zZFa3ZiV3Uv3nHbhXOT/5p7TXIZL23A==
-X-Received: by 2002:a05:620a:3956:b0:785:8aed:42a7 with SMTP id qs22-20020a05620a395600b007858aed42a7mr23131409qkn.14.1708477182474;
-        Tue, 20 Feb 2024 16:59:42 -0800 (PST)
-Received: from localhost ([2607:fea8:52a3:d200::42b6])
-        by smtp.gmail.com with ESMTPSA id oo11-20020a05620a530b00b00787188dd406sm3874828qkn.30.2024.02.20.16.59.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 16:59:41 -0800 (PST)
-Date: Tue, 20 Feb 2024 19:59:39 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 07/20] media: venus: core: Constify all members of the
- resource struct
-Message-ID: <ZdVK-4S7XX_m9vBJ@radian>
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-7-3dac84b88c4b@linaro.org>
+	s=arc-20240116; t=1708484451; c=relaxed/simple;
+	bh=0/OGpzfd35ioFroZyJvdOOMT2FWP6cE4wEBGHPCX0j8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hn36idI4Ft8llAwRgoT5F9VoYR9d/l+/yABudXen3e+g+JbG/w2Mgyrp5r5ytXdXFK+zULoi90w/VUF+JIbC2CQNnDMVGPS6V2fmFA2/Z6CbuYLGxXQJ2YgqFzXdXjFUmkKwmzmMoLrtuiboMaWCRjvBBpDzl6HPKjTW4uydiAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lztLj9E+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L2uFC7006944;
+	Wed, 21 Feb 2024 03:00:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=xqAx+6q
+	4cmST+6i8xL4b9Nl9jzjBC8YxcMrVxIe0LCk=; b=lztLj9E++KjoMzhqx0QJq6K
+	01r4Sm3DORPnlu2d06Gq2AJj9tph/uqDqxnS1NSM+l0STGhnRGvpZfczrkQnb6T3
+	XB/gYdpL+rTtcVRroNkyPjo9WG7AibRfjNfKBMal1t25sDCSjsg11hNOC6P3jnM2
+	IEm0A2IxU3jM3RtM3fiu8SDh+m03tvEFuZD00tZ9b47NTXN5T7UQgxSSCnf7ROHi
+	WtIsjcRGAjZK4PMfHZchreYnKa0V5cwCe1nMQfJVDbfS+dsUJ2YTJxSJVDGTErTo
+	e2U3A8rXXT7duMAigZCSq+JDiyCgFV476kMeRGg+MlgXWo5Hu9WXSGjrdaM8jNw=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd22u0sy9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 03:00:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41L30hOI022919
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 03:00:43 GMT
+Received: from bqiang-SFF.qca.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 20 Feb 2024 19:00:41 -0800
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+To: <ath11k@lists.infradead.org>, <mhi@lists.linux.dev>
+CC: <linux-wireless@vger.kernel.org>, <quic_bqiang@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH 0/3] wifi: ath11k: hibernation support
+Date: Wed, 21 Feb 2024 11:00:23 +0800
+Message-ID: <20240221030026.10553-1-quic_bqiang@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230911-topic-mars-v2-7-3dac84b88c4b@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: odlhEWLq-eHOKnhP-TNm4Eys2KyOYTAX
+X-Proofpoint-ORIG-GUID: odlhEWLq-eHOKnhP-TNm4Eys2KyOYTAX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=927 priorityscore=1501 clxscore=1011
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2402210020
 
-On Fri, Feb 09, 2024 at 10:09:51PM +0100, Konrad Dybcio wrote:
-> Nothing inside the resource struct needs to be mutable. Sprinkle
-> 'const' all over it. A lot of 'const'.
+Currently in ath11k we keep the firmware running on the WLAN device when the
+network interface (wlan0) is down. The problem is that this will break
+hibernation, obviously the firmware can't be running after the whole system is
+powered off. To power down the ath11k firmware for suspend/hibernation some
+changes both in MHI subsystem and ath11k are needed.
 
-We already have 'const struct venus_resources'. Is that not sufficient?
+This patchset fixes a longstanding bug report about broken hibernation support:
 
-Maybe it's just style, since the string arrays are const?
+https://bugzilla.kernel.org/show_bug.cgi?id=214649
 
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h | 58 ++++++++++++++++----------------
->  1 file changed, 29 insertions(+), 29 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 6a77de374454..6b1887f7d9cb 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -56,39 +56,39 @@ enum vpu_version {
->  };
->  
->  struct venus_resources {
-> -	u64 dma_mask;
-> -	const struct freq_tbl *freq_tbl;
-> -	unsigned int freq_tbl_size;
-> -	const struct bw_tbl *bw_tbl_enc;
-> -	unsigned int bw_tbl_enc_size;
-> -	const struct bw_tbl *bw_tbl_dec;
-> -	unsigned int bw_tbl_dec_size;
-> -	const struct reg_val *reg_tbl;
-> -	unsigned int reg_tbl_size;
-> -	const struct hfi_ubwc_config *ubwc_conf;
-> +	const u64 dma_mask;
-> +	const struct freq_tbl * const freq_tbl;
-> +	const unsigned int freq_tbl_size;
-> +	const struct bw_tbl * const bw_tbl_enc;
-> +	const unsigned int bw_tbl_enc_size;
-> +	const struct bw_tbl * const bw_tbl_dec;
-> +	const unsigned int bw_tbl_dec_size;
-> +	const struct reg_val * const reg_tbl;
-> +	const unsigned int reg_tbl_size;
-> +	const struct hfi_ubwc_config * const ubwc_conf;
->  	const char * const clks[VIDC_CLKS_NUM_MAX];
-> -	unsigned int clks_num;
-> +	const unsigned int clks_num;
->  	const char * const vcodec0_clks[VIDC_VCODEC_CLKS_NUM_MAX];
->  	const char * const vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
-> -	unsigned int vcodec_clks_num;
-> -	const char **vcodec_pmdomains;
-> -	unsigned int vcodec_pmdomains_num;
-> -	const char **opp_pmdomain;
-> -	unsigned int vcodec_num;
-> +	const unsigned int vcodec_clks_num;
-> +	const char * const *vcodec_pmdomains;
+There already is an RFC version which has been tested by multiple users with
+positive results:
 
-This doesn't error on:
+https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
 
-	const char *pmdomains[] = { "venus", "vcodec0", "vcodec1" };
-	struct venus_resources res;
-	res.vcodec_pmdomains = pmdomains;
-	res.vcodec_pmdomains = NULL;
+Basically the RFC version adds two APIs to MHI stack: with the first one ath11k
+is able to keep MHI devices when going to suspend/hibernation, getting us rid of
+the probe deferral issue when resume back. while with the second one ath11k could
+manually prepare/unprepare MHI channels by itself, which is needed because QRTR
+doesn't probe those channels automatically in this case.
 
-> +	const unsigned int vcodec_pmdomains_num;
-> +	const char * const * const opp_pmdomain;
-> +	const unsigned int vcodec_num;
->  	const char * const resets[VIDC_RESETS_NUM_MAX];
-> -	unsigned int resets_num;
-> -	enum hfi_version hfi_version;
-> -	enum vpu_version vpu_version;
-> -	u8 num_vpp_pipes;
-> -	u32 max_load;
-> -	unsigned int vmem_id;
-> -	u32 vmem_size;
-> -	u32 vmem_addr;
-> -	u32 cp_start;
-> -	u32 cp_size;
-> -	u32 cp_nonpixel_start;
-> -	u32 cp_nonpixel_size;
-> -	const char *fwname;
-> +	const unsigned int resets_num;
-> +	const enum hfi_version hfi_version;
-> +	const enum vpu_version vpu_version;
-> +	const u8 num_vpp_pipes;
-> +	const u32 max_load;
-> +	const unsigned int vmem_id;
-> +	const u32 vmem_size;
-> +	const u32 vmem_addr;
-> +	const u32 cp_start;
-> +	const u32 cp_size;
-> +	const u32 cp_nonpixel_start;
-> +	const u32 cp_nonpixel_size;
-> +	const char * const fwname;
->  };
->  
->  enum venus_fmt {
->
-> -- 
-> 2.43.0
->
+Mani, the MHI maintainer, firstly doesn't like that version and insists that an
+MHI device should be destroyed when suspend/hibernation, according to his
+understanding on device driver model. See
+
+https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+
+After a long discussion Mani thought we might need a new PM callback with which
+ath11k is able to wait until kernel unblocks device probe and thus MHI channels
+get probed. So we came to the kernel PM list and there Mani realized that his
+understanding is not correct so he finally agrees to keep MHI device during
+suspend/hibernation. See
+
+https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+
+Mani also pointed out that an MHI controller driver (ath11k here) should not touch
+MHI channels directly because those channels are managed by the corresponding MHI
+client driver (QRTR here). To address this, we come up with this version.
+
+Compared with that RFC version, this version adds PM callbacks in QRTR module:
+suspend callback unprepares MHI channels during suspend and resume callback
+prepares those channels during resume. In this way ath11k doesn't need to do
+unprepare/prepare work by itself so those two APIs added in RFC version are
+removed now.
+
+The power down/up procedure requires a specific sequence in which PM callbacks
+of wiphy, ath11k and QRTR are called, this is achieved by exploiting the
+child-father relationship between their device struct, and also the PM framework
+which separates whole suspend/resume process into several stages. Details in
+patch [3/3].
+
+Depends on:
+wifi: ath11k: rearrange IRQ enable/disable in reset path
+wifi: ath11k: remove MHI LOOPBACK channels
+wifi: ath11k: do not dump SRNG statistics during resume
+wifi: ath11k: fix warning on DMA ring capabilities event
+wifi: ath11k: thermal: don't try to register multiple times
+
+Baochen Qiang (3):
+  bus: mhi: host: add mhi_power_down_no_destroy()
+  net: qrtr: support suspend/hibernation
+  wifi: ath11k: support hibernation
+
+ drivers/bus/mhi/host/internal.h        |   4 +-
+ drivers/bus/mhi/host/pm.c              |  36 +++++++--
+ drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
+ drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
+ drivers/net/wireless/ath/ath11k/core.h |   6 +-
+ drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
+ drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
+ drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
+ drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
+ drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
+ include/linux/mhi.h                    |  15 +++-
+ net/qrtr/mhi.c                         |  29 +++++++
+ 12 files changed, 218 insertions(+), 60 deletions(-)
+
+
+base-commit: 707e306f3573fa321ae197d77366578e4566cff5
+prerequisite-patch-id: d3f76112f9a55195c71459e0edf3a4ecf8af9181
+prerequisite-patch-id: 340d15aad1d3c1c3c93d9d996e1c96226c8bad8f
+prerequisite-patch-id: 98cdd37a68df4f651a065145e946d92c43be799e
+prerequisite-patch-id: a19ed13af0c894b7f9b22cedc99029991f48e47c
+prerequisite-patch-id: b5ad50fae6167c7c2b60cc063a8d460f7ddd4997
+-- 
+2.25.1
+
 
