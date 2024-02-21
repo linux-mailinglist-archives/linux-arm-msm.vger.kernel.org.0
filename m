@@ -1,143 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-12052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0F585DA7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:32:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E01DC85DAEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:35:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A2C81F221CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:32:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90794282872
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:35:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3A187E595;
-	Wed, 21 Feb 2024 13:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E05797C08C;
+	Wed, 21 Feb 2024 13:35:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E73C6762C1;
-	Wed, 21 Feb 2024 13:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0D7BAFE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 13:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522121; cv=none; b=ChVxc5FeQ9+JBq+vkiFwuKvrUoOP0s1cmiJcqyKNCpKQXOnebi/VWh9GkP4vgbdS9/IlPSbGMYz3zH+O4oQ3ge92Ja5OchtcxqvEaevaOhf7KfHPQPOBSsLpqT4ZKlT6sTgqXq3tbCJUH9JskbWxUPJGbIzb0ehrYaQFobILGWA=
+	t=1708522500; cv=none; b=B1HgWGilRJF4G6P1LHHpo4abQcs3FRCdOfbabQpYEnfaAeIp67nHfcSvm1q6LxvW5Maz3/pxFxWIqYp6aKW5q9NB024nkF9E8eibmv92vzuSiOSwS66EjKQB0HcpWoSFSz840RRt4Z+I9MKbtccdWD90MJNAT4wXwoXjR0n5/hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522121; c=relaxed/simple;
-	bh=jcM7Y8plT+9yKZcGSc7nmPeNy9idDPzXx63Ses56ZJk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=Lw9eWAaP8elQO9gCGBmpqE4E6QhHoCF9Q7LsllObyimR0lXMtInELo3jsRN4oi4J1rMBEbgE4FZi9d8MectE0CTfCaA4/Jtcs7ujglBB7Obf1BGmDQdqsMe942/ilosSrIl14Z0bv6EM+V60NcXxrVDEeuWqvx76joDF1/OZ2hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2AA85FEC;
-	Wed, 21 Feb 2024 05:29:16 -0800 (PST)
-Received: from [10.57.11.178] (unknown [10.57.11.178])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 95FE63F762;
-	Wed, 21 Feb 2024 05:28:32 -0800 (PST)
-Message-ID: <4e9603e9-4127-43f1-92be-6c2b59ff2fe0@arm.com>
-Date: Wed, 21 Feb 2024 13:28:48 +0000
+	s=arc-20240116; t=1708522500; c=relaxed/simple;
+	bh=zqql2sXx3i2yN008ue+WEu6k8Gl5CMT7NyPCC0UJ8ns=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RMjHlfi7DdAY1An7DwcC4XTUkRfibGCCTmyPUfFdZClUCxAcUXfGBjT8bl/Onv21nW+Vf2CEfyR9ZFfL0WWQbV30/38f3LJU224NZuKu7WRebNMTSQshSJNdxWTdwUW7BKIoFgeKAhVDXsr0Kgs3LSRwx3Qn6vmo4lKC7uonzlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmkJ-0004t7-E2; Wed, 21 Feb 2024 14:34:47 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmkH-0023Bm-UM; Wed, 21 Feb 2024 14:34:45 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmkH-0009YG-2o;
+	Wed, 21 Feb 2024 14:34:45 +0100
+Message-ID: <1cf19cf23ffd88d9ffb673e8f382f3b1d24545bb.camel@pengutronix.de>
+Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Stanimir Varbanov
+ <stanimir.k.varbanov@gmail.com>, Vikash Garodia
+ <quic_vgarodia@quicinc.com>,  Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>,  Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, Stanimir Varbanov
+	 <stanimir.varbanov@linaro.org>, Mauro Carvalho Chehab
+	 <mchehab+huawei@kernel.org>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Wed, 21 Feb 2024 14:34:45 +0100
+In-Reply-To: <ad20b872-0b50-4a16-b342-582d2f33eeca@linaro.org>
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+	 <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
+	 <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
+	 <ad20b872-0b50-4a16-b342-582d2f33eeca@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/5] Rework system pressure interface to the scheduler
-Content-Language: en-US
-To: Vincent Guittot <vincent.guittot@linaro.org>
-References: <20240220145947.1107937-1-vincent.guittot@linaro.org>
-Cc: konrad.dybcio@linaro.org, mhiramat@kernel.org, agross@kernel.org,
- rafael@kernel.org, sudeep.holla@arm.com, will@kernel.org,
- linux@armlinux.org.uk, bristot@redhat.com, mgorman@suse.de,
- bsegall@google.com, rostedt@goodmis.org, andersson@kernel.org,
- dietmar.eggemann@arm.com, juri.lelli@redhat.com, mingo@redhat.com,
- linux-pm@vger.kernel.org, catalin.marinas@arm.com,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- corbet@lwn.net, amit.kachhap@gmail.com, daniel.lezcano@linaro.org,
- peterz@infradead.org, linux-arm-msm@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- gregkh@linuxfoundation.org, vschneid@redhat.com, rui.zhang@intel.com,
- viresh.kumar@linaro.org
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20240220145947.1107937-1-vincent.guittot@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Hi Vincent,
+On Mi, 2024-02-14 at 22:20 +0100, Konrad Dybcio wrote:
+> On 14.02.2024 14:31, Philipp Zabel wrote:
+> > Hi Konrad,
+> >=20
+> > On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
+> > > All of the resets are toggled together. Use the bulk api to save on s=
+ome
+> > > code complexity.
+> > >=20
+> > > The delay between resets is now correctly determined by the reset
+> > > framework.
+> >=20
+> > If this is a recent change, could you reference the commit?
+>=20
+> It's a series that recently landed in -next [1]
 
-On 2/20/24 14:59, Vincent Guittot wrote:
-> Following the consolidation and cleanup of CPU capacity in [1], this serie
-> reworks how the scheduler gets the pressures on CPUs. We need to take into
-> account all pressures applied by cpufreq on the compute capacity of a CPU
-> for dozens of ms or more and not only cpufreq cooling device or HW
-> mitigiations. We split the pressure applied on CPU's capacity in 2 parts:
-> - one from cpufreq and freq_qos
-> - one from HW high freq mitigiation.
-> 
-> The next step will be to add a dedicated interface for long standing
-> capping of the CPU capacity (i.e. for seconds or more) like the
-> scaling_max_freq of cpufreq sysfs. The latter is already taken into
-> account by this serie but as a temporary pressure which is not always the
-> best choice when we know that it will happen for seconds or more.
-> 
-> [1] https://lore.kernel.org/lkml/20231211104855.558096-1-vincent.guittot@linaro.org/
-> 
-> Change since v4:
-> - Add READ_ONCE() in cpufreq_get_pressure()
-> - Add ack and reviewed tags
-> 
-> Change since v3:
-> - Fix uninitialized variables in cpufreq_update_pressure()
-> 
-> Change since v2:
-> - Rework cpufreq_update_pressure()
-> 
-> Change since v1:
-> - Use struct cpufreq_policy as parameter of cpufreq_update_pressure()
-> - Fix typos and comments
-> - Make sched_thermal_decay_shift boot param as deprecated
-> 
-> Vincent Guittot (5):
->    cpufreq: Add a cpufreq pressure feedback for the scheduler
->    sched: Take cpufreq feedback into account
->    thermal/cpufreq: Remove arch_update_thermal_pressure()
->    sched: Rename arch_update_thermal_pressure into
->      arch_update_hw_pressure
->    sched/pelt: Remove shift of thermal clock
-> 
->   .../admin-guide/kernel-parameters.txt         |  1 +
->   arch/arm/include/asm/topology.h               |  6 +-
->   arch/arm64/include/asm/topology.h             |  6 +-
->   drivers/base/arch_topology.c                  | 26 ++++----
->   drivers/cpufreq/cpufreq.c                     | 36 +++++++++++
->   drivers/cpufreq/qcom-cpufreq-hw.c             |  4 +-
->   drivers/thermal/cpufreq_cooling.c             |  3 -
->   include/linux/arch_topology.h                 |  8 +--
->   include/linux/cpufreq.h                       | 10 +++
->   include/linux/sched/topology.h                |  8 +--
->   .../{thermal_pressure.h => hw_pressure.h}     | 14 ++---
->   include/trace/events/sched.h                  |  2 +-
->   init/Kconfig                                  | 12 ++--
->   kernel/sched/core.c                           |  8 +--
->   kernel/sched/fair.c                           | 63 +++++++++----------
->   kernel/sched/pelt.c                           | 18 +++---
->   kernel/sched/pelt.h                           | 16 ++---
->   kernel/sched/sched.h                          | 22 +------
->   18 files changed, 144 insertions(+), 119 deletions(-)
->   rename include/trace/events/{thermal_pressure.h => hw_pressure.h} (55%)
-> 
+Missing link?
 
+> [...]
+>=20
+> >=20
+> > Since VIDC_RESETS_NUM_MAX is only 2, I don't think a separate
+> > allocation is worth it.
+>=20
+> It's 2 today, anyway. I wanted to keep it flexible
 
-The code looks good and works as expected. The time delays in those
-old mechanisms that were important to me are good now. The boost is
-handled, cpufreq capping from sysfs - all good. Also the last patch
-which removes the shift and makes it obsolete. Thanks!
+If this is expected to grow, fine.
 
-Feel free to add to all patches:
+> [...]
+>=20
+> > > +	ret =3D reset_control_bulk_reset(res->resets_num, core->resets);
+> > > +	if (ret)
+> > > +		dev_err(core->dev, "Failed to toggle resets: %d\n", ret);
+> > > =20
+> > > -err:
+> > >  	return ret;
+> >=20
+> > Could be simplified to:
+> >=20
+> > 	return reset_control_bulk_reset(res->resets_num, core-
+> > > resets);
+>=20
+> I intentionally kept the if (ret) to print a specific error message
+> in case the call fails, this driver doesn't go a good job of telling
+> the user/developer what went wrong.
 
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Tested-by: Lukasz Luba <lukasz.luba@arm.com>
+Oh, ok.
 
-Regards,
-Lukasz
+regards
+Philipp
 
