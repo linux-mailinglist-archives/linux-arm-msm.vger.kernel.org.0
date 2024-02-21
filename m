@@ -1,158 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-12024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76DF085D67A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 12:09:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEB8F85D683
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 12:10:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8DDE3B216AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:09:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A8BC28304A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:10:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 934E23EA94;
-	Wed, 21 Feb 2024 11:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5940E3F8C0;
+	Wed, 21 Feb 2024 11:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HwzAQSho"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D+2fWVu+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91163DB92;
-	Wed, 21 Feb 2024 11:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750EC3F8D3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 11:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708513738; cv=none; b=YLCuUteexl2A39M01X3UMEZbER78IYeeVubu05wDjxsbRzM/BdY6/SIDNRTfnvB8nocVp5ZJq3fhXYs6oaQG/2drImMAMlqKtu9ItQkTHpQJzNk+Eoq/QOJkJASZ5pLsnAnt0fwymWCTfTCiADWxaXJHQy4ENEVhL/3WvpShXyE=
+	t=1708513835; cv=none; b=jlU4pduVt+MSBobIwJsaR70fqCy8KhCKxD7uYtrxH756rjvF7Am2itpv3QT1C5XICidm66fcCio9KqX5KPpc8gE5N28Gn3lQOBkyN87bx4F8m9PGM2/1n71OSuc6oKm/nJ2Hf9ZRYxoa7TZBV4cHof5Y33gxJ9Tv45urqrhxv8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708513738; c=relaxed/simple;
-	bh=Ilpl6qDn+BLmGfDkj3wZmJu260s+TcYOBxBljvMnFdQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GOyU9VPI7R6BUQiM/KoyyXGvlmG/XRjv3MIZjcvGBBKazCVen4et4jbIjZ1fekjkcOASc3etorhcOGS7v7yg2F/Y8ztmRRKy0LEst1jUu4RfmvAYAs+MleC/01nAQorJPsINplz4de/lHGDph967GXIumK8gI4aalMm5+b4Y1Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HwzAQSho; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41LB0hP2010690;
-	Wed, 21 Feb 2024 11:08:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=EojJ00F9rrvDlSEynFkxvpGQqZFHkGbZulob50tdVok=; b=Hw
-	zAQShoa0IxjzkJnpE4X/s9Ts4WS4t4r6fLx2zo4Sf8xUls51DvKLxuKjBb3orqdc
-	ZNEOLnrEM4XFpUV1ymWJEzfIqCy5CG2rhw0qV6aVCpaKcWQLMbRw/bTCFkgyIqTW
-	F8PLklMZNMC3z0DeinYB0MdKzmsMOyZyMbPNtyHZZ+t+x1No6nQbpih1Alj9FZ9c
-	ZsuHlThBOHTO3lQrbhPr/zfUmhrXNWG3fL+scFAgKeKSynP32TmI19MshaXYLpBR
-	q70Ngpu8hgbMc4+S0GK+F+mohtpW+s0UYFeWUJ20kEAcNbXNlvY6OB7Jf0UoI1ki
-	BelFtF5YQ1ZBOdmIIVVQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdfx4g0jh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 11:08:43 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LB8hC7016562
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 11:08:43 GMT
-Received: from [10.216.62.93] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
- 2024 03:08:37 -0800
-Message-ID: <3a044447-375f-8f5d-1d4e-b421ed0a2c1f@quicinc.com>
-Date: Wed, 21 Feb 2024 16:38:34 +0530
+	s=arc-20240116; t=1708513835; c=relaxed/simple;
+	bh=yYwOfjmiT5pxQ2sOc334eJUjQ4d60tVUqL5jOyR3Ajk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ODKZQTV68eYND3Uz68s0kBnlLfog8zqOhUytL+jeB64znSV+WBLQMZA3wKd9o4NUZxs/UPjJajKH2v213/NT85ErcGis8ICTEA7vSZqrJzXE48n6rkUFPxpM4XE+iIhAiEr48E3S2iexSur5GumSTAWX/pv477ZZg+vSqyghqDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D+2fWVu+; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a3f299f828aso106679066b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 03:10:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708513832; x=1709118632; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=G5L9NoyuwvA4Gf7LYh90rqEBr7lWC8KBnH4p5IN+MFQ=;
+        b=D+2fWVu+7PjUx59LJn4ht5s+r3cnBMz3esyFQVkAP5nx5nphKUWZb3qglKZtMobDrS
+         HbUGPaV+MAcjXPPCN05K+uqpy0kuZylOVA/Smtz3zE1uvm+uZSN6kiJnNUi/ul7IEa1I
+         a6ndT+UJYSCsEiOseOIx5NQNqyn0yrLqp8QOqe2mGY0s69k0C8EpZBTHBNpLctR5IxLt
+         pbjP2ZaIEEW3KTkCS0JR98Z5injR772i8O7I295k+U4A1XTZxVweCMtN3Y1vPJIqbiwA
+         RG3WC3ODR0Y8/GxCaYMO3QX3OZzpARoy2VfBnPcXnKRSFBFGfoh7y0KN2WY1t8pgxUYu
+         En8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708513832; x=1709118632;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G5L9NoyuwvA4Gf7LYh90rqEBr7lWC8KBnH4p5IN+MFQ=;
+        b=RdPmfIdYQhhGPctzdiToGsiXch9uDkE3T9kyhe3v9iV0gAVWptkTy1UM4I8Mk0J8l6
+         6OwSVRjzkw5NiicLO1Xe6X/R/g2gDajndBv0TI20UTBeN0wAphCnsIuaez8Zw0+QDMFf
+         OVwx5Wvx0QtEEeVOrzcMFqKJLXWGhS8GRJzlWAQiyyMv0aJ3avTMcoYmnlIiDlnM4Jil
+         VydLBrxNd8FhPdVzwzaBkKezUhZmck/yyXJX86QqT1x+Qa/wGy8CFoU79jiTZGXuYf1v
+         GWe+P1KtylFf8CS6OLJ0buegCi6EULUMdVPZaAcvNsZY2BYpR3EIJC9nKYUv8FT2WN51
+         9Tew==
+X-Forwarded-Encrypted: i=1; AJvYcCXt13048e8V2c96nHBY7U62UnQY8Y1S9quJzN8yeKyDtHK3Ouxvp6noYz8noNL2oOgpxCxdjev5SgKqwjw9NaMMO+2tiWaTBxILZNMBzA==
+X-Gm-Message-State: AOJu0Yx3hvILXrkgW9pVz3KGLV0YPThAqR7vmSk4YW8l05C6Psct0DVu
+	9G80kIgrKMRgk9piRlQIHKi5LQhiq7e4jcnpFVA4uXSuul6JSEP6NefLb5LuaBA=
+X-Google-Smtp-Source: AGHT+IEHmqJXiGEszWIcBJwOe1/dTMQWWMygFC3Y1juPap31hfiRJ/+P0zYCmXOXO8UIXslmCNRgjw==
+X-Received: by 2002:a17:906:3bd0:b0:a3f:45b7:3af0 with SMTP id v16-20020a1709063bd000b00a3f45b73af0mr605988ejf.71.1708513831729;
+        Wed, 21 Feb 2024 03:10:31 -0800 (PST)
+Received: from linaro.org ([188.24.162.93])
+        by smtp.gmail.com with ESMTPSA id ts4-20020a170907c5c400b00a3e0119b4a3sm4958240ejc.140.2024.02.21.03.10.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Feb 2024 03:10:31 -0800 (PST)
+Date: Wed, 21 Feb 2024 13:10:29 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Will Deacon <will@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Add X1E80100 MDSS compatible
+Message-ID: <ZdXaJQ5AfOiki1l5@linaro.org>
+References: <20240131-x1e80100-iommu-arm-smmu-qcom-v1-1-c1240419c718@linaro.org>
+ <20240213131952.GB28926@willie-the-truck>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 0/5] Add QPIC SPI NAND driver
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "Manivannan
- Sadhasivam" <manivannan.sadhasivam@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
-        <vigneshr@ti.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
- <20240219130412.GC3281@thinkpad>
- <3ad2909d-4ac3-fff3-739d-b12a3408fa0f@quicinc.com>
- <454a7e8d-70f5-4bf5-a3f1-bf9e42672c4c@linaro.org>
- <bfa0edb7-02fd-42dd-2235-0ea34f362515@quicinc.com>
- <d9a49d77-32b1-45d1-b110-5e66155abad3@linaro.org>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <d9a49d77-32b1-45d1-b110-5e66155abad3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: heR9Ezb94gQFaWmjyfV8D6KObvJhplbf
-X-Proofpoint-GUID: heR9Ezb94gQFaWmjyfV8D6KObvJhplbf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- mlxlogscore=815 clxscore=1015 mlxscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402210086
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240213131952.GB28926@willie-the-truck>
 
+On 24-02-13 13:19:52, Will Deacon wrote:
+> On Wed, Jan 31, 2024 at 02:35:16PM +0200, Abel Vesa wrote:
+> > Add the X1E80100 MDSS compatible to clients compatible list, as it also
+> > needs the workarounds.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > index 8b04ece00420..5c7cfc51b57c 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > @@ -260,6 +260,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+> >  	{ .compatible = "qcom,sm6375-mdss" },
+> >  	{ .compatible = "qcom,sm8150-mdss" },
+> >  	{ .compatible = "qcom,sm8250-mdss" },
+> > +	{ .compatible = "qcom,x1e80100-mdss" },
+> 
+> I think this needs adding to the bindings Documentation first.
 
+It is documented here (once it gets merged):
+https://lore.kernel.org/all/20240220-x1e80100-display-v4-2-971afd9de861@linaro.org/
 
-On 2/21/2024 4:31 PM, Krzysztof Kozlowski wrote:
-> On 21/02/2024 11:34, Md Sadre Alam wrote:
->>
->>
->> On 2/20/2024 5:06 PM, Krzysztof Kozlowski wrote:
->>> On 20/02/2024 12:32, Md Sadre Alam wrote:
->>>>
->>>>
->>>> On 2/19/2024 6:34 PM, Manivannan Sadhasivam wrote:
->>>>> On Thu, Feb 15, 2024 at 07:18:51PM +0530, Md Sadre Alam wrote:
->>>>>> This series of patches will add initial supports
->>>>>> for QPIC SPI NAND driver.
->>>>>>
->>>>>> Currently this driver support following commands
->>>>>>
->>>>>> -- RESET
->>>>>> -- READ ID
->>>>>> -- BLOCK ERASE
->>>>>> -- PAGE READ
->>>>>> -- PAGE WRITE
->>>>>> -- GET FEATURE
->>>>>> -- SET FEATURE
->>>>>> -- BAD BLOCK CHECK
->>>>>>
->>>>>> This driver has been tested with dd command with read/write page
->>>>>> with multiple file size 1MiB, 10MiB,40MiB etc.
->>>>>> Also tested with "mtd" command like mtd erase, mtd write, mtd verify etc.
->>>>>>
->>>>>
->>>>> This is not the first version isn't it? Where is the changelog describing what
->>>>> has changed since then?
->>>>
->>>>      The earlier patch was the RFC for design review only.
->>>
->>> RFC is state of patch, not version. This is v2 then.
->>>
->>> These RFC postings are really becoming mess. Some people make multiple
->>> RFCs and then post v1 hiding entire previous history... And why even
->>> bother with calling it RFC?
->>
->>    Sorry, I was not aware of this. Shall I post the next one as V3
->>    and add references to the RFC patch and this patch in the cover
->>    letter of V3?
 > 
-> Yes, like with every posting.
-Thank you.
-> 
-> Best regards,
-> Krzysztof
-> 
+> Will
 
