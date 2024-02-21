@@ -1,184 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-12008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9496F85D218
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 09:05:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C40285D2E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 09:56:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0CB16B2603D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 08:05:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B00F71C20DD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 08:56:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16CD03BB25;
-	Wed, 21 Feb 2024 08:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 866233CF7C;
+	Wed, 21 Feb 2024 08:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eK6ijRXR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eGgPG4d4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE40E3A269;
-	Wed, 21 Feb 2024 08:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5693CF79;
+	Wed, 21 Feb 2024 08:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708502730; cv=none; b=TezZUO6M84Ep+HIMbQiskYsOHIQAFvVPYioL8I+CyGdD38mBSHwkQ8WqGIPW2w5kISTo4Z90ZUY+T98Z+/JsHNomn/461uUphCTmGvRfc/y4zJm8N3hkTTsICyt1f7QQGuBHAOwAsNpVmyYTT/i0Qt93tNfkLuh9iXWYkgdmKKY=
+	t=1708505769; cv=none; b=KADnIUzhko/v6VZeVQMUWD0Ax0Ainj+I2RAydS6ISOhXKzOEWr2PVKgi6f/WqUQY6Wg04heH0XWlvKbR2qD/7qeXaKHEKCs2x//kDd5Z7uqsy1BZAHBPd7A9lHZAyNtZeQeXBGcYMOoit9ZZVD7JGtO0cIMFtCtdo2wruwL2pJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708502730; c=relaxed/simple;
-	bh=Tpr/yec3AGC4Lc2eJDg1OjnAD9sBLP7h0jxhyqIYTUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RvMCgaHuWbVU3OlQmOqJ3vYPDGHFhbaL5Whsickfh9y2a1dr3AVYl0t/HirioYTq3fv4nvcmKRRbJfwgcjfq45LHqCqMO/eYLLVL6koBBPb8ce/Wr4/pDIDeVQLSEIVfuA5jNrlRsNvzE0xNDFVco8oqP228BLNKcYNw1CYoGJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eK6ijRXR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B0DC433C7;
-	Wed, 21 Feb 2024 08:05:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708502729;
-	bh=Tpr/yec3AGC4Lc2eJDg1OjnAD9sBLP7h0jxhyqIYTUQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eK6ijRXRympTy7Dlryxc1+ccz+sSc9s0V1MK9EzciMsOwCX31RlKWS1sIRNlLJZOl
-	 nNXm/VKIPBSVHaaNT4XyAGeUwcPHOffWPNyCwwX0+nJCVmevA9E8CLAmGbhFpzDN5i
-	 gNF1JoS+qJE4Du1iQMrDeb0MtjwdodkrHmvMa+4mVt5chON5GQBTtJVUNvDNQwEUCa
-	 0HIEAJejS3pOB2BbCfmA/xZODMcpB6TjHBgD1ZtL4YmsLwENycTADaiN9TTZnwfMf+
-	 zT2IK655ADuV66esW14ijM7EDLGHrRR4PSXMazD2xJGOMUn2JbiYJplEH9ruicueIK
-	 +V/92rXlMN8Bw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rchbe-000000004Sj-2sC5;
-	Wed, 21 Feb 2024 09:05:30 +0100
-Date: Wed, 21 Feb 2024 09:05:30 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: drm/msm: Second DisplayPort regression in 6.8-rc1
-Message-ID: <ZdWuygp4HuRVXvyl@hovoldconsulting.com>
-References: <ZctVmLK4zTwcpW3A@hovoldconsulting.com>
- <343710b1-f0f4-5c05-70e6-3c221cdc9580@quicinc.com>
- <ZczFhVjHIm55JTfO@hovoldconsulting.com>
- <ZdDNcrf4KpflGeYQ@hovoldconsulting.com>
- <ZdMwZa98L23mu3u6@hovoldconsulting.com>
- <2df31f2d-8271-d966-158a-27c6e0581d72@quicinc.com>
+	s=arc-20240116; t=1708505769; c=relaxed/simple;
+	bh=t0i7AUpWThgRz90yQislwVsOXiY5R5YW4Bm983CUoE8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ov5DTkp32hBynI+vJjMUrNPT46ZgGRh4ask1pHar+wu55IkNGTKJH2I3Spa/+n0Sr/CNQAE1y1/foZixc8qASa5j6WdP4vd+I7LG/OmJH5sYDAFjNYAmDP3V9oY/yXkesx8oECywep+16m3BhIK8Lg0S5MoN3PDoVox30FT7Gkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eGgPG4d4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L1Ddqk022068;
+	Wed, 21 Feb 2024 08:55:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Dh400oD5PMxWwz0r1DmS8UjX2c9zvWlF7BXlLVaLS2I=; b=eG
+	gPG4d4E4a3pt3DEYfWeKUw+o1V7KsSg/zjPcEov42OrMFqDYBiRpdcben/Lfg77c
+	kK7yhOv+W0ljd3mBvkHlT2tu3TKCDjt3IdYWsMXafeJZczFEmqegNaVY3wkRLHD+
+	dZVJuB7dVh7erMOlaasyzXGXKrebgydlaBz60VPYJUVG/Ze92eJNhaug7nDdSTO2
+	gsCnYq07ORVaChYtCMSKYpunzFUvslgnivBtgtEQbK/GXn9a9djbXSkkSYHkHefN
+	quLjExsnh7vhYjQrIPnEdIrzzI+PgUU0o7EH9rtCGxy1P9iMN8FPCGClZ3TsM/gB
+	4vN3Nh7lJ63c1qWkFzXg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd22u1eu4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 08:55:43 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41L8tfJ1009386
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 08:55:41 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
+ 2024 00:55:36 -0800
+Message-ID: <201fef09-50ab-436b-af63-4535c7510d15@quicinc.com>
+Date: Wed, 21 Feb 2024 14:25:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2df31f2d-8271-d966-158a-27c6e0581d72@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 4/5] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
+To: Will Deacon <will@kernel.org>
+CC: <robin.murphy@arm.com>, <joro@8bytes.org>, <dmitry.baryshkov@linaro.org>,
+        <konrad.dybcio@linaro.org>, <jsnitsel@redhat.com>,
+        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <saravanak@google.com>
+References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
+ <20240123144543.9405-5-quic_bibekkum@quicinc.com>
+ <20240213134714.GC28926@willie-the-truck>
+Content-Language: en-US
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <20240213134714.GC28926@willie-the-truck>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GH0YrLu6YqU4VmqqS0F4C2itO15lAgA4
+X-Proofpoint-ORIG-GUID: GH0YrLu6YqU4VmqqS0F4C2itO15lAgA4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2402210069
 
-On Tue, Feb 20, 2024 at 01:19:54PM -0800, Abhinav Kumar wrote:
-> On 2/19/2024 2:41 AM, Johan Hovold wrote:
 
-> > It seems my initial suspicion that at least some of these regressions
-> > were related to the runtime PM work was correct. The hard resets happens
-> > when the DP controller is runtime suspended after being probed:
 
-> > [   17.074925] bus: 'platform': __driver_probe_device: matched device aea0000.displayport-controller with driver msm-dp-display
-> > [        Starting Network Time Synchronization...
-> > [   17.112000] msm-dp-display aea0000.displayport-controller: dp_display_probe - populate aux bus
-> > [   17.125208] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_resume
-> >           Starting Record System Boot/Shutdown in UTMP...
-> >           Starting Virtual Console Setup...
-> > [  OK  ] Finished Load/Save Screen Backlight Brightness of backlight:backlight.
-> > [   17.197909] msm-dp-display aea0000.displayport-controller: dp_pm_runtime_suspend
-> > [   17.198079] probe of aea0Format: Log Type - Time(microsec) - Message - Optional Info
-> > Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
-> > S - QC_IMAGE_VERSION_STRING=BOOT.MXF.1.1-00470-MAKENA-1
-> > S - IMAGE_VARIANT_STRING=SocMakenaWP
-> > S - OEM_IMAGE_VERSION_STRING=crm-ubuntu92
-> > 
-> >    < machine is reset by hypervisor >
-> > 
-> > Presumably the reset happens when controller is being shut down while
-> > still being used by the EFI framebuffer.
+On 2/13/2024 7:17 PM, Will Deacon wrote:
+> On Tue, Jan 23, 2024 at 08:15:42PM +0530, Bibek Kumar Patro wrote:
+>> Add ACTLR data table for SM8550 along with support for
+>> same including SM8550 specific implementation operations.
+>>
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 90 ++++++++++++++++++++++
+>>   1 file changed, 90 insertions(+)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> index 6004c6d9a7b2..db15b1eade97 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> @@ -23,6 +23,86 @@
+>>
+>>   #define CPRE			(1 << 1)
+>>   #define CMTLB			(1 << 0)
+>> +#define PREFETCH_SHIFT		8
+>> +#define PREFETCH_DEFAULT	0
+>> +#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
+>> +#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
+>> +#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
+>> +#define PREFETCH_SWITCH_GFX	(5 << 3)
+>> +
+>> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
+>> +	{ 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>> +	{ 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>> +	{ 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+>> +	{ 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+>> +	{ 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>> +	{ 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>> +	{ 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>> +	{ 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>> +	{ 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>> +	{ 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>> +	{ 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>> +	{ 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
 > 
-> I am not sure if we can conclude like that. Even if we shut off the 
-> controller when the framebuffer was still being fetched that should only 
-> cause a blank screen and not a reset because we really don't trigger a 
-> new register write / read while its fetching so as such there is no new 
-> hardware access.
-
-It specifically looks like the reset happens when shutting down the PHY,
-that is, the call to dp_display_host_phy_exit(dp) in
-dp_pm_runtime_suspend() never returns.
-
-That seems like more than a coincidence to me.
- 
-> One thing I must accept is that there are two differences between 
-> sc8280xp where we are hitting these resets and sc7180/sc7280 chromebooks 
-> where we tested it more thoroughly without any such issues:
+> [...]
 > 
-> 1) with the chromebooks we have depthcharge and not the QC UEFI.
-> 
-> If we are suspecting a hand-off issue here, will it help if we try to 
-> disable the display in EFI by using "fastboot oem select-display-panel 
-> none" (assuming this is a fastboot enabled device) and see if you still 
-> hit the reset issue?
+> Isn't this effectively hard-coding the topology of the SoC in the driver?
+> Wouldn't it better describing higher-level prefetch properties in the DT
+> nodes corresponding to the upstream devices?
 
-No, we don't have fastboot.
+Since prefetch data stored in this table represent settings for the
+ACTLR register, and doesn't exactly define the hardware (So in this
+manner prefetch data won't exactly be a part of soc topology ?).
+So it seemed apt not to use the device tree for storing the prefetch
+property. Hence we reverted from the DT approach (initial proposal in
+RFC to piggyback on iommus property to store prefetch settings) back to 
+use driver for storing this data.
 
-But as I mentioned I still do see resets when I instrument the code to
-not shut down the display, which could indicate more than one issue
-here.
+Some drivers use the same approach for storing their platform specific
+data. Examples being
+drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+drivers/soc/qcom/llcc-qcom.c
+These drivers were taken as reference for storing platform specific 
+ACTLR data.
 
-> 2) chromebooks used "internal_hpd" whereas the pmic_glink method used in 
-> the sc8280xp.
-> 
-> I am still checking if there are any code paths in the eDP/DP driver 
-> left exposed due to this difference with pm_runtime which can cause 
-> this. I am wondering if some sort of drm tracing will help to narrow 
-> down the reset point.
-> 
-> > In the cases where the machines survives boot, the controller is never
-> > suspended.
-> > 
-> > When investigating this I've also seen intermittent:
-> > 
-> > 	[drm:dp_display_probe [msm]] *ERROR* device tree parsing failed
-> 
-> So this error I think is because in dp_parser_parse() ---> 
-> dp_parser_ctrl_res(), we also have a devm_phy_get().
-> 
-> This can return -EDEFER if the phy driver has not yet probed.
-> 
-> I checked the other things inside dp_parser_parse(), others calls seem 
-> to be purely DT parsing except this one. I think to avoid the confusion, 
-> we should move devm_phy_get() outside of DT parsing into a separate call 
-> or atleast add an error log inside devm_phy_get() failure below to 
-> indicate that it deferred
-> 
->          io->phy = devm_phy_get(&pdev->dev, "dp");
->          if (IS_ERR(io->phy))
->                  return PTR_ERR(io->phy);
-> 
-> If my hypothesis is correct on this, then this error log (even though 
-> misleading) should be harmless for this issue because if we hit 
-> DRM_ERROR("device tree parsing failed\n"); we will skip the 
-> devm_pm_runtime_enable().
+Thanks & regards,
+Bibek
 
-Yeah, this seems to be the case as boot appears to recover from this, so
-this may indeed be a probe deferral.
-
-Probe deferrals should not be logged as errors however, so the fix is
-not to add another error message but rather to suppress the current one
-(e.g. using dev_err_probe()).
-
-> > Has anyone given some thought to how the framebuffer handover is
-> > supposed to work? It seems we're currently just relying on luck with
-> > timing.
-
-Any comments to this? It seems we should not be shutting down (runtime
-suspend) the display during boot as can currently happen.
-
-Johan
+> 
+> Looking back at the prior revisions of this series, it seems like others
+> were in favour of this approach, so if that's the general consensus, then
+> so be it. But is this _really_ what we want in the SMMU driver? It would
+> be good to have an Ack from Robin and a DT maintainer on this mechanism.
+>
+> It just all feels a bit like a step back into the bad old world of
+> platform data to me, where we end up trying to maintain a bunch of random
+> constants that supposedly make things faster for somebody :/
+> > Will
 
