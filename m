@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-12004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B6BD85D1C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 08:51:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 680CE85D1CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 08:53:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1E7BB24C5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 07:51:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B3741C248DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 07:53:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 723843AC24;
-	Wed, 21 Feb 2024 07:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BA8E3B287;
+	Wed, 21 Feb 2024 07:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pcGTKOCU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vfbnMzC5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D773B1AB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 07:51:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C462E3AC24
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 07:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708501886; cv=none; b=DJFEInHkc+bigAwA1MqNGE3Rnbsdxy/fDSaGjxadCfd4uFW7dNIHDKvQOcuxXhuwOlZEO97daTo6BbvUPBv5yBquttiVNzJVHbpNDKuzEQeSRfhrEYM/L7DziBsN8F7NmyRvDpP4wVZH0TYWS43GiSC3jbhemClZjX9Xq8YGAJc=
+	t=1708501992; cv=none; b=IbEAoOKS8p59JTD1+nRQunfQz/sl4DvlI63B95n6GfJWhQpLowzRVsC6sVDYs1HlESj2MdpmT1uFPyyzufEjv5qBJcknxtvhcl2yzaZ/VeUh6TRpQbfylCVNFQEjhd6FWLwBOEbbtl8LjwaCYqWQd1mH7bjr3Mw43o/3GnjjUVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708501886; c=relaxed/simple;
-	bh=uGgEIVeyKJiSQnurn91AK+7d+n5FSymCxSnXitlJhFg=;
+	s=arc-20240116; t=1708501992; c=relaxed/simple;
+	bh=GmowectVv98ES1B8xlngWScoQFq7seVXH13pbxBtq6I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mcmn8nHB/4QbEPi8l96v1B/wdD0oMVHwP4dGysuA60r5ZuXT+/4tHloxcE+HPwmfWSRhWJgBbj8d2JreYdywSKC3pc2K68i3gdIRhgaNVk2CZfPuYARTpMzFrKMI4vepTHYOywBgzcW0X+MxzJpLWYa5DBWfODta0FKFycGNgkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pcGTKOCU; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:Content-Type; b=TfSP/StniHvqfx08spBu5v0ei4w9hbw8kBE19y7Lmp4AcrpMgwn4SK4+pO2HjhfPpzvalezdGOFx+1kAm6M5LAHb6VadgESp1PVOoz2mln3x3ay0+Vdx99rYolAFRU0l9Ob9S1AgFI3IZJBNvQ1ebnpvj6uv3iZ6gYvSh8nC2hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vfbnMzC5; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a3f3d0d2787so37095666b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 23:51:23 -0800 (PST)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a3e87b2de41so301529066b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 23:53:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708501882; x=1709106682; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708501989; x=1709106789; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5X67GxZG4hBOKCIJt5i0wiVcNfhU+OcILeo8clyw3BE=;
-        b=pcGTKOCUkZE1zrOyJefLEENHAaVI9z0KgH74e3gWqJQZolnc6DYseMS9NQ+F0DUT/c
-         OAPm1j7iBbaekGYiKyR5odgMpiU9I+lybmG4kORbOFVXDxNH4MEkXhHCKSmxRb93WiJ9
-         pVeJVNFsaPV1q3ujFqZnW+NdcLY8924/qzI3lxl6zI8idiBasMniSMb8RTfM2RsMkbAF
-         hWp4OrspjQ4TGor32m0dBJNe5cFJ7A6Rac0NdVZ8AVyCvp1LbTf/+K69fvF2mXkmo6oj
-         GRMEjUDALPdYxvBYk4KMwBn+dKgQTwVkva7XWnrNY6LfBXoMhxHQBnfGM4uXlm3WKmW4
-         ENew==
+        bh=5UKet7pE0ziH9qkCdIaVIclPbSKhB7l99On+63S6lQc=;
+        b=vfbnMzC54mVQ2ooL2CpXp91Z6dUV6Es360Fc66UM+QVlkHaft26pPm0+R2rScXvYpS
+         3tGXX8mKiXz1kQdwe49ZvTjSAISaiyZYABWJo90WRfc0xvE2kN4Ne5Mu2776ZaHxJYsD
+         h+dDtJnXGGa4w5FiIzT45DgP5vG5umEzmmd/NahXHnYOM4y8Jo3iDk/gmeAW6SZer/7f
+         S9Uq65JcShYmJlZW/2Y+SHyjEE/quLvP9iDsrY+lkotStuBMDXMRJ/XGtgN+R42ZKRW8
+         nVVCOJ359ldO3t13cJRaYI1X++v0Rbl0CwlX/19bNspToEHdBmATsk9t91d6ze4Zox93
+         YeBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708501882; x=1709106682;
+        d=1e100.net; s=20230601; t=1708501989; x=1709106789;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5X67GxZG4hBOKCIJt5i0wiVcNfhU+OcILeo8clyw3BE=;
-        b=k8q3YElZae078IQpHGXc1ls2Gs7hyfmQV0dDets4TpDwe8ETLyyTSMq5X3IASJwSeq
-         56KqYbt5KIoxJpydM2WEP4p+Y2KvOlz3xVoppCPrbBbP4DQc0z3CErpDbMDDc/QJuEQY
-         JLcAEUluFq3K6136VPI6N8LveOabhYbAhBBJXn1W2JOEVrlMChrPjFuRsg2uEI46UScn
-         v2HXcYVQaVe/O4rYyOSR1T9y+o4jFauEf8kCuFddncJwYp/OKOqOXL3wDqjq8NGQNPFF
-         rhZtZgwFU5GDp+RBP4a6KFGxExlMTl71PYp1878ypqYD7jR61LVXnVGH0Tl8TDbSLuhy
-         JPPw==
-X-Gm-Message-State: AOJu0Yw2YnYp2Ut+JGhv9w9ZPql7tFR+uVOBB7aZWIkhTw0aGthN1HAf
-	/MVzODv4wgRjsdFcITgNA1PMKqgca8WdTlWE6J2QXCmlLtR6CBbhwkm3hQOQDygTM2h7TKrVxkS
-	T
-X-Google-Smtp-Source: AGHT+IEmO7eZPgeEpGCqrcgm9wJc+8NGHNmqacXmYDiYnwsvG01TsVjhcjWY3XfJWj9108mYbu0Rmw==
-X-Received: by 2002:a17:906:fb05:b0:a3e:c758:5a7e with SMTP id lz5-20020a170906fb0500b00a3ec7585a7emr4476805ejb.41.1708501882535;
-        Tue, 20 Feb 2024 23:51:22 -0800 (PST)
+        bh=5UKet7pE0ziH9qkCdIaVIclPbSKhB7l99On+63S6lQc=;
+        b=reWH0eDieM/uxHXkCZhgIpn1RmMc0Q0/Q6uhpeSwCapzNszPKrEUgyBttl3SPCi6wO
+         Q7K//Dg1sQLy4oKk2YKfZY0rNadTiMqqdJQEGwKE140Fnmej7vn3AkPN5qSh3iGQeJ9H
+         Tg9yOTHTsM1L9pPUv47nLClqnogYU6SKSOcSQEooUDWMscs4FETpI36oiZ3JmCTNEo1M
+         sPOMO1fU6UCluZwsEVv6lafYBkEb9BF6zu5I6WnJmQrgWYxOFaPo1vJHH2pO5GqSBbht
+         6BrVELRPv2Q39aWtMjRf7PbTXGyWjSzwiT3Zy1adD8GadtCIHRBWWo6CR9iHj1pLxsDG
+         GslQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUhGwSpFgpVyWA8NNuXzMmwMPhglFnlY99g7MFtIH4W6EovH8K8D8hug1ytSRIJeEN9qMdfRjopx5KbgjMD2orHL1NvwC1J3wi4/eGwCg==
+X-Gm-Message-State: AOJu0YyThYnPJvmNBESo5wN6pSIj/am+8T8MEtHVq44+0NRmkVZFb2pH
+	mw2OW/gN8ug1hoLYtH+T41oDlPTsrwSpgjHZcaHlN/b0+rvVpUhhq82+H6JPcdg=
+X-Google-Smtp-Source: AGHT+IGuooSzj23lksHDfeROERq2EYO/jLP0u9Ge6vRRKf6LBXVXFGMkWpEgcHxo2x1rBDG8rnEqyA==
+X-Received: by 2002:a17:906:528d:b0:a3e:cab2:f776 with SMTP id c13-20020a170906528d00b00a3ecab2f776mr5202939ejm.15.1708501989105;
+        Tue, 20 Feb 2024 23:53:09 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id y2-20020a170906470200b00a3d0dd84276sm4687798ejq.184.2024.02.20.23.51.20
+        by smtp.gmail.com with ESMTPSA id r18-20020a1709060d5200b00a3d12d84cffsm4684971ejh.167.2024.02.20.23.53.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 23:51:22 -0800 (PST)
-Message-ID: <5d89829d-e3ca-4c91-ba5b-1c115e588171@linaro.org>
-Date: Wed, 21 Feb 2024 08:51:20 +0100
+        Tue, 20 Feb 2024 23:53:08 -0800 (PST)
+Message-ID: <f523cca0-2641-4ddb-a77d-4d0130922f23@linaro.org>
+Date: Wed, 21 Feb 2024 08:53:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +76,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: drop dtbTool-specific
- compatibles
+Subject: Re: [PATCH v3 1/3] dt-bindings: power: supply: Add Acer Aspire 1 EC
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+To: Nikita Travkin <nikita@trvn.ru>, Sebastian Reichel <sre@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Stephan Gerhold <stephan@gerhold.net>
-References: <20240221-msm8916-drop-compats-v1-1-71acdab14738@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
+ <20240220-aspire1-ec-v3-1-02cb139a4931@trvn.ru>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,38 +133,32 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240221-msm8916-drop-compats-v1-1-71acdab14738@linaro.org>
+In-Reply-To: <20240220-aspire1-ec-v3-1-02cb139a4931@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/02/2024 23:32, Dmitry Baryshkov wrote:
-> Drop two board compatibles that were used by the skales dtbTool to index
-> device tree blobs. It was required to boot those devices with the
-> original bootloader, however all users should have switched to the
-> lk2nd bootloader by now.
+On 20/02/2024 12:57, Nikita Travkin wrote:
+> Add binding for the EC found in the Acer Aspire 1 laptop.
 > 
-> Suggested-by: Stephan Gerhold <stephan@gerhold.net>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts | 2 +-
->  arch/arm64/boot/dts/qcom/msm8916-mtp.dts             | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> index 3a3e794c022f..7f0c2c1b8a94 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-> @@ -12,7 +12,7 @@
->  
->  / {
->  	model = "Longcheer L8150";
-> -	compatible = "longcheer,l8150", "qcom,msm8916-v1-qrd/9-v1", "qcom,msm8916";
-> +	compatible = "longcheer,l8150", "qcom,msm8916";
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 
+...
 
-Old compatible does not hurt, does it? What if some user did not switch?
+> +
+> +  connector:
+> +    $ref: /schemas/connector/usb-connector.yaml#
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |+
 
-Also - you would need to update bindings.
+If there is going to be new posting: drop "+"
 
 Best regards,
 Krzysztof
