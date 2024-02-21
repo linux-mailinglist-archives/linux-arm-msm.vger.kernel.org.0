@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-12036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68B6485D82F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:47:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF98685D832
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:48:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E6E32835EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 12:47:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57D3E1F22D49
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 12:48:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C55AD69962;
-	Wed, 21 Feb 2024 12:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D96469D15;
+	Wed, 21 Feb 2024 12:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r70fg2La"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FxHrCYuv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41E2657AD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 12:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735C269D30
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 12:46:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708519598; cv=none; b=oP7xpVVygBAzbQdXqgBeidsX2NtUpvEpgCiygsKQEHunBc8Yr10VYl02OnLQh1KVSzZwAZjEUQh524uOIdhS6bmqFXi1/k+p9ZVmAn/yKhz8XddcDRYGDEbK9DMlFFT4Nz+KNQJqXQOCxtyZMvqBasXFQMdyauIquInN8K8OD9k=
+	t=1708519610; cv=none; b=bVUw0gR02T9+I5PpQjy7jU084YNp/lxwpAzASFBsMu4OeZs7jtgEbc8aauyJYAUCIAamWOLEAwhbJbQeWxIrOqbwHIPUm+6hJIi7QPcfWxBsGoIv1cKd2SuBmd4jwmNvU7yLZhJ58VlTHwuLL+1bZIT7dm76ywYYwamXa9R/NFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708519598; c=relaxed/simple;
-	bh=rmC+JPyaJaNGoCGsxwGFb8rYUkL+teE35ckCjgoiN8g=;
+	s=arc-20240116; t=1708519610; c=relaxed/simple;
+	bh=z3HEJ6S2AMndq0bseExYFbEybm/HilEkhjj9IMrNfjI=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=upIoqI3QoQ5DQidHAC/FJoszOwtbvwam3KtqOBD+ojfVDaEvehZvXTHfNNJrI9yFD6ECZGQJnwSD/hP7JL1HOBAyjOL5RNFXTMauW2wXIVUDndjvDP4dSJ85Fa/bdHi6gD6UKuNnMntRZp813DKDEzaD8Y1xjkNfyo6mFvzDP2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r70fg2La; arc=none smtp.client-ip=209.85.167.47
+	 In-Reply-To:Content-Type; b=fHJBB7RdZwcmoADxYx761jWBsPv6eECn8aX3DjEp4LUut5Hh/I8i4MqNASDVVdiyU98yDADLxyIhUVzyJ8r3BxOeLtL0BE53PiRQr1kZ85+A6q7jRAOe3NP1b6gT3sDfM047xty6yDY4Q16J8kw75jXmjR0gq7yG0czGxSN9u6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FxHrCYuv; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512aafb3ca8so3731866e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 04:46:36 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-41275d2edbcso4438885e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 04:46:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708519595; x=1709124395; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708519606; x=1709124406; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XHZrn5E2iSqgJ7TERch35NpDb/N0meA5fLJwZ5XQ+Mk=;
-        b=r70fg2Lab/HolLt+SuY8FOtUbxdjERqyL2951L8zPTmvKdf1IfrYjIOEskEyvh4qWe
-         JWAkKtdrya7VqLh6FPXeqtvtTPkNGy4HvixieEcKg8qriJTWe6QbcWajWLUKro8cQ2TA
-         C+IL6MIYtuFUvsO8VulnDi2UyPqVolEZxmIpG/JGRnjFwYfUc7U5eEiZwEZOad47323E
-         4jgjelcl12EBLburlZtYDObwhhoqsq+uCVDEr9a19l3Z76gnhvwchCLEpfZd34WGs2jn
-         yMVX2UPE8zjE8RjNzRqTfizlYCaRNtclPaXb9rLMpQA1W3LfOrjancIswkj2NWb+pNUG
-         Cz/A==
+        bh=2crl62am3tR1iEEzxCYJzpOeewoyy8ABE6QxXXM9PqE=;
+        b=FxHrCYuvOpbYQC1HIUFivlnrxiusgBGnh3KYehP/bA5ahlBh42uhs/SXC8Di0mss2h
+         tpQC9lwUr685eQg2Ir2pfEJ7erDit5vztHMYyQtDd3aXpLdOCSVHMsvlg9FxqRqkjq0s
+         /Ci7OLrM/Lzxb8vgzfiMvknm3iUhS0oVgjwCRtKJyzkL7qFuZIOqPkXLyTA5ypUqea0+
+         OC/3lWC857mMNzt/DICXIecOLJgBYVJ0/rDOn4NwwvGehMrMWv4ocw1ZysrkUuwy6ZFj
+         8/3yJwSoHEy/CliffAcRa3m1WKLscRn8NHuy1yQ81GpI3zCFHdlHuSuRv/WOgVy2IFkn
+         urQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708519595; x=1709124395;
+        d=1e100.net; s=20230601; t=1708519606; x=1709124406;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=XHZrn5E2iSqgJ7TERch35NpDb/N0meA5fLJwZ5XQ+Mk=;
-        b=NopkMsABYz5aQqqkVnbVP5KRRGd54muKNgBBNTKan9sL5EeXcASvyxRH6kDaV6pgmV
-         B6+BA7i8jATkt3WcTkM5CffbPl1zdJvyR2q4YTnxYEnWJ8ZX5Mq41PWJ4cvZClOm+OGG
-         NFy3cWfvP/UNGS1s2QS3FeUdIHkCZx3o8dj4rpNrZe8JkmUuo/X2sguDaVFHN5PEDoN4
-         whDake2UECqum7A/qe1rgtrs0zUYp87HqvOMOxBFtDBDQGlhSphlKwa9CXT7S+VNmlyo
-         OukcUuBB/Ld+WD5GdZd67xjQE2XXhOcE+TPj0D74d0KeYtSkAQWQrhRfVJvhal2kOHw6
-         ecKw==
-X-Gm-Message-State: AOJu0Yz/ViGIIeU5Xmbk5NsBzBGJ7PzYI0uRleywgrwiNwbG+RAQh7l6
-	DqdvSlAX+I2PvCQFOwLjAXFL22F3V5SmLUt3iPkxd3WSI0n5Tfoive2hTDjoknzXeVPekdZPhnV
-	EeINdHQ==
-X-Google-Smtp-Source: AGHT+IH5J0lVnzfJ+XA5nSZo5JRaaK++ucYrsbcEBu7Tx4Bf9KxtfBIq3tLRyBoxoT//xBXeXKptbQ==
-X-Received: by 2002:a05:6512:402:b0:512:b24c:dba with SMTP id u2-20020a056512040200b00512b24c0dbamr5169139lfk.60.1708519594935;
-        Wed, 21 Feb 2024 04:46:34 -0800 (PST)
+        bh=2crl62am3tR1iEEzxCYJzpOeewoyy8ABE6QxXXM9PqE=;
+        b=BgCwJNfVEVsMqrpsov4gDM99uNkLNUICBCtiprRph72fQ10l5qZgGPDXBvP0NBBdLD
+         hfHC4YEQfyB0S1YSQe2+vhCiifXOihv6l7b5PBw2R0pW9HddAg6EQpYR9XQPvOBEZV4b
+         rld7p2DBT0SpNNtwf9ENx/rKpTBMY36+YMofh0lGLdlUjweetLUq7QVGb9iLbBG/TzVP
+         gFhI19E77YJ3zrRQ013MmTA4zxzFlC5TbHj3zFadhuqLIfydZPJnN5LwC+sYn5SSN5Qa
+         +QsdZ08eDE+irEBuYoGnEPjyMrHQQgWEZO5WR3Nlu6ErqOQ/6iH4Lyj/sIVrt/smbejU
+         VUsA==
+X-Gm-Message-State: AOJu0YyHATsGYhX7ig/9J5rv026OI9iPcqPZJgGHDUl9U3a9d/rspPiE
+	Ve/w+4aqYQHAv4Ntb993FLvY6gC4QxftCCJuBr1doVDwfuteQb+J7W91EdZf+TE=
+X-Google-Smtp-Source: AGHT+IFFN3TaC/aG5VVgZwwQfXnpWlMm0V32BHUK/RgBw9hM2zIhuoUDFM8gRmRsDnGehYtBWJahrg==
+X-Received: by 2002:a05:600c:3545:b0:412:65e7:3639 with SMTP id i5-20020a05600c354500b0041265e73639mr6381970wmq.27.1708519605732;
+        Wed, 21 Feb 2024 04:46:45 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:83fc:439c:6f36:ce5c? ([2a01:e0a:982:cbb0:83fc:439c:6f36:ce5c])
-        by smtp.gmail.com with ESMTPSA id r17-20020a05600c459100b004124907f43fsm17468735wmo.12.2024.02.21.04.46.34
+        by smtp.gmail.com with ESMTPSA id r17-20020a05600c459100b004124907f43fsm17468735wmo.12.2024.02.21.04.46.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 04:46:34 -0800 (PST)
-Message-ID: <863b6e46-aef5-4340-8dfe-6741b57a2856@linaro.org>
-Date: Wed, 21 Feb 2024 13:46:33 +0100
+        Wed, 21 Feb 2024 04:46:45 -0800 (PST)
+Message-ID: <42bd1a2c-9ab4-40ce-9b5a-1e5b28ec550e@linaro.org>
+Date: Wed, 21 Feb 2024 13:46:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +79,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 06/21] arm64: dts: qcom: sm8550: Add PCIe bridge node
+Subject: Re: [PATCH 07/21] arm64: dts: qcom: sm8650: Add PCIe bridge node
+Content-Language: en-US, fr
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
@@ -89,8 +89,7 @@ To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240221-pcie-qcom-bridge-dts-v1-0-6c6df0f9450d@linaro.org>
- <20240221-pcie-qcom-bridge-dts-v1-6-6c6df0f9450d@linaro.org>
-Content-Language: en-US, fr
+ <20240221-pcie-qcom-bridge-dts-v1-7-6c6df0f9450d@linaro.org>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -116,7 +115,7 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <20240221-pcie-qcom-bridge-dts-v1-6-6c6df0f9450d@linaro.org>
+In-Reply-To: <20240221-pcie-qcom-bridge-dts-v1-7-6c6df0f9450d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -126,15 +125,15 @@ On 21/02/2024 04:41, Manivannan Sadhasivam wrote:
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 20 ++++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 20 ++++++++++++++++++++
 >   1 file changed, 20 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index ee1ba5a8c8fc..3ee11311885f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1754,6 +1754,16 @@ pcie0: pcie@1c00000 {
->   			phy-names = "pciephy";
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 2df77123a8c7..57a1ea84aa59 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -2270,6 +2270,16 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>   			dma-coherent;
 >   
 >   			status = "disabled";
 > +
@@ -150,8 +149,8 @@ On 21/02/2024 04:41, Manivannan Sadhasivam wrote:
 >   		};
 >   
 >   		pcie0_phy: phy@1c06000 {
-> @@ -1851,6 +1861,16 @@ pcie1: pcie@1c08000 {
->   			phy-names = "pciephy";
+> @@ -2379,6 +2389,16 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>   				 <0x02000000 0 0x40300000 0 0x40300000 0 0x1fd00000>;
 >   
 >   			status = "disabled";
 > +
