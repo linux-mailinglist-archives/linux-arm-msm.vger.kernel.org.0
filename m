@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-12011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D671685D326
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:13:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13D4985D430
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:45:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D77D2810D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 09:13:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97B2D1F278CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 09:45:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 032193C497;
-	Wed, 21 Feb 2024 09:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD223D54C;
+	Wed, 21 Feb 2024 09:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ehfED+vb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EB8uQNK6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4823E3C6AB;
-	Wed, 21 Feb 2024 09:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1343C493
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 09:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708506785; cv=none; b=ATIuPnL777uhePdTnhhHbVBy+gs0upHB3rvhp3b8tObiCwpPoPar4aA9CpWXj57fv3XVwlU8JHyMgWNMoi6Utq94JYFmNdJXz7eVR2RfzFCRZCYaDOijFFWiRMpzTIQVxALtDWIVeIpOBB3V81bRYQXlMPbpuNlA8pD/ML46b5I=
+	t=1708508699; cv=none; b=IOaCGbJK9k1zPOP2E/5IrKY1EOFUdtPEdv50tNmju9ea4WzHiHBEZZuuptKPSQn/mIMg7MG5kD0JzImgzM1P4PGaSTmnq+tZ3XJ6aL9F7/pHo6xuJiqrC2WkMUZgncYVw7bu97Gw24FmrA3wBoIU1dtayC2zRCt1mE2OUSdSC+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708506785; c=relaxed/simple;
-	bh=1SkocYH3fo2j2uDv5WnCnFcUqIuX9Fi1/HdKKH2UY0Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ubp5lLFFl6un/EVMn62xdIvyZhbf79ce9VVEGkx1HTTiAm6SQrZlIzspbHC50FVH3sbwsYHmBu1Y8ia/GDmXsf7qL0MMFIHVQZwUr5JwqGPN8Hpa2LCEWZ7RF8Rn2p3hGjluWBy4bTqNzM/YBQLFIFvXpquQxZ39a5JupXzCcPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ehfED+vb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L2bCow027853;
-	Wed, 21 Feb 2024 09:13:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=B3vXZICwlVLnOSYVFqiY/q6uGIvLfgq4175ICymiVU4=; b=eh
-	fED+vbmKkfkY6wOO/LaCh+CNzunLAntCLcGfh7y9sJF3Q86xIxelmsgaj253c251
-	EApmtfhUUU9W2jL1Go5fUKrTBvVC8Ct75wHkquzF5v696wX+cqE3IktasfKQaUbc
-	W9tujCfJDl2EPfiyYn8EpZL7ftd4KiltjB2Qu3x9CqN3RnXOfbvNJRLlv+Tjhhcl
-	j96OoSgUG/Oz7CEQxLNBItku/zMfEC7aOGlbtfbCq6wF0XoQSX6Rp4dG8Jcmq19W
-	/XOGucPU/c/CbLY9kzi9QVjBaEHGNxI54DNr4j3bcYo8Wuna+1+9LCV1WAz4qin/
-	6ZxSa+52YehvNR+kxhHg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21qsgem-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 09:12:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41L9CwW7001678
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 09:12:58 GMT
-Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
- 2024 01:12:56 -0800
-Message-ID: <6b36bdc2-0ffb-491f-a1ae-93a20822e6f0@quicinc.com>
-Date: Wed, 21 Feb 2024 17:11:24 +0800
+	s=arc-20240116; t=1708508699; c=relaxed/simple;
+	bh=/opIB55MMYKYaC78niYQAuyhzp2B1CswjFKDPDdn5Xk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=URXQrxrfSwmzornpD3BbaeGCvpm+vIxvSTX2AbrhWs8tvTuEVfd//DnUyEcNcmz3ShBMHTb7xYPVTR7vSQTLCprx/TJ+nuT3LTFgLZ7FF64G+mMAtq4KERgDEoPwpyqTp6bZgABUYr4vq15NFjOYxSb2LmyxloMF+EC0VtFVzUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EB8uQNK6; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a3e8c1e4aa7so45596166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 01:44:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708508696; x=1709113496; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NyBaoVH2N/0Qpdr6Z5VWnZpm4sf6QgnERUX3ACGj03I=;
+        b=EB8uQNK6VFZNe3WYq8CHMy4J44WMAAaiHCqGROumV+EWVQhMQNGZsULAifrsSRUwgE
+         faG/Ze5n6vqAY/giFyBf3/1l9DFRjDtf1B4n87QO40x62e434qQShJKL9QZm9q98gRWd
+         5qfx3QlONdPD6P3pwX9QNCdZlPRsWtzQMJCdNlX0tsv4vRdDioLBc+JnqYjb70fZdos4
+         31IPELlOJMY1b36lVmx1HlFmYjxb3ywkH9xKjJjbZUCW8Db1cIVFTHEBfXfcomOYrUPy
+         Tci+yPSbVQikHaaygoLR9mtYJxxdK/SZb6ADkhYdDfttj5rLcHM503OdN9jsHDysBgQT
+         DeEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708508696; x=1709113496;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NyBaoVH2N/0Qpdr6Z5VWnZpm4sf6QgnERUX3ACGj03I=;
+        b=q4A0EXI+0LG8lpM1XjmxgV5eaKgigqIJ8fPngrYbQ+iTJf3+1BFzkySYfoEhjEcW51
+         v0ysla/QJq0Bbb5w90n/LU/IulUm0wglTZHT/B86NuneHT7GEEIaZgi9P4wqhne+Vcu0
+         gQcKkGo9tA4TgjSOM0qbr6jh16B1OtZfe1vairm1gUbsxYUKJ2RSeor5vmqNWo37monJ
+         jBoqCGBlMiQNZlbk3FGx0/de0It6oyYBc7JOdXvrgwb8Kl7kNFb511YA2YSFc2zfy1Jw
+         l4h+0hzdxRlc5HL/qLuIVJDEu98qg4u9y2dFk1RIARr68ayi+g/HuVL4fh50TswyGyEh
+         z96w==
+X-Forwarded-Encrypted: i=1; AJvYcCUaBCC2RuEwzMpVc5LBSprtq0lfeMuO6TKmSRKtBqpI5ShTKkolCIz2j/SC3zvS4GTDaXtMuavegKfVJQCO05BhkqWnh/Za90rs9ajeJw==
+X-Gm-Message-State: AOJu0YyN2JwE5POtLNHGsPMSd+gxsbwDsbHgYIEL2V8qIkle06NPD4iP
+	NZhKqUHicz2XtY8MzEMRWsCJga9lqjN4g55tofEhoDWWwNYlm3Tju8WPhJ+kLt0=
+X-Google-Smtp-Source: AGHT+IHKAvnXAoTx45vIQ/qJlrbVDVZ7kPxLCVw3sTsnFfwKS3/tPeqcsbS4/Vw6sYV6b+JfjsNYeA==
+X-Received: by 2002:a17:906:2b97:b0:a3f:50ae:52d with SMTP id m23-20020a1709062b9700b00a3f50ae052dmr418708ejg.10.1708508696477;
+        Wed, 21 Feb 2024 01:44:56 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id sn24-20020a170906629800b00a3e1939b23bsm4464478ejc.127.2024.02.21.01.44.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Feb 2024 01:44:55 -0800 (PST)
+Message-ID: <7ae0567d-e5d3-4e00-98f7-5139d5879f75@linaro.org>
+Date: Wed, 21 Feb 2024 10:44:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,148 +76,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] regulator: qcom-rpmh: Fix pm8010 pmic5_pldo502ln minimum
- voltage
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown
-	<broonie@kernel.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <quic_collinsd@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240214121614.2723085-1-bryan.odonoghue@linaro.org>
- <13baed68-1014-4a48-874a-94027a6dd061@sirena.org.uk>
- <f38468b4-8b16-4180-9738-0a2b557651a1@linaro.org>
- <dcce3fa9-ecf3-42be-adf6-ca653a79ba2e@sirena.org.uk>
- <3851e21f-f8cb-487b-9ed4-9975949ff922@linaro.org>
- <a09d6450-95e7-4ed6-a0ad-5e7bb661533a@sirena.org.uk>
- <df6a49f3-88e9-46b4-b7c3-e5419fd01eca@linaro.org>
- <6f6dfaa2-f529-c9fe-7dde-402c92f0daf6@quicinc.com>
- <bc05fe84-0700-4587-bb18-eb39d30f10a8@linaro.org>
+Subject: Re: [PATCH v6 0/6] reset: gpio: ASoC: shared GPIO resets
 Content-Language: en-US
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <bc05fe84-0700-4587-bb18-eb39d30f10a8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NZbMFwcvnBhDiZdoiWZQEpX3zpdwKpHD
-X-Proofpoint-ORIG-GUID: NZbMFwcvnBhDiZdoiWZQEpX3zpdwKpHD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 spamscore=0 suspectscore=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402210071
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand
+ <frowand.list@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>,
+ Bartosz Golaszewski <brgl@bgdev.pl>, Sean Anderson <sean.anderson@seco.com>
+References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 29/01/2024 12:52, Krzysztof Kozlowski wrote:
+> Hi,
+> 
+> Dependencies / Merging
+> ======================
+> 1. Depends on !GPIOLIB stub:
+>    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowski@linaro.org/
+> 
+> 2. Patch #2 (cpufreq: do not open-code of_phandle_args_equal()) and patch #4
+>    (reset: Instantiate reset GPIO controller for shared reset-gpios) depend on OF
+>    change (patch #1).
 
 
+Hi Philipp,
 
-On 2/20/2024 4:20 PM, Bryan O'Donoghue wrote:
-> On 19/02/2024 3:06 a.m., Fenglin Wu wrote:
->>
->>
->> On 2024/2/15 6:47, Bryan O'Donoghue wrote:
->>> On 14/02/2024 14:52, Mark Brown wrote:
->>>> On Wed, Feb 14, 2024 at 02:44:56PM +0000, Bryan O'Donoghue wrote:
->>>>> On 14/02/2024 14:13, Mark Brown wrote:
->>>>
->>>>>> Not just that but also note that every voltage step in the range will
->>>>>> have the 8mV offset added.
->>>>
->>>>> The documents I have just show sensors attached to ldo3, ldo4 and 
->>>>> ldo6 fixed
->>>>> at 1.808.
->>>>
->>>>> I don't think there's any better or different information than a 
->>>>> +200000uV
->>>>> increment TBH.
->>>>
->>>> This seems like a very surprising and unusual hardware design, the
->>>> 1.808V voltage is already unusual.  Note that this may break systems
->>>> that are trying to set a range of say 1.8-2.0V if they actually need to
->>>> set 2V.
->>>
->>> Hmm. I'm sure the rail value should be 1.808 its all over the 
->>> documentation for example when we get to index 3 we hit 2608000
->>>
->>> REGULATOR_LINEAR_RANGE(1808000, 0,  2,  200000),
->>> 1808000 0
->>> 2008000 1
->>> 2208000 2
->>> 2408000 x
->>> REGULATOR_LINEAR_RANGE(2608000, 3,  28, 16000),
->>>
->>> And there are other rails @ 1v8 if 1v8
->>>
->>> The one thing I can't easily verify is index 0 = 1808000 and not say 
->>> 1800000 or indeed that the increment is 200000 and not say 8000.
->>>
->>> I'll see if I can ask around with the hw people and get a more 
->>> complete answer.
->>>
->>> Similarly now that you've gotten me digging into this problem, it's 
->>> not clear to me why this regulator isn't just a linear regulator with 
->>> an 8mv increment over a range of indexes.
->>>
->>> At least the documentation I'm looking at doesn't elucidate.
->>>
->>> I'll dig some more.
->> Please see the voltage steps for LDO3/4/6 described in the PM8010 TDOS 
->> document which is the most authoritative that we used internally for 
->> PMIC driver development:
-> 
-> I will look - however
-> 
-> 1. The powertree internal docs for xe801000 show 1.808 rails derived
->     from 1.856 rails for camera sensors
-> 
-> 2. Publicly available with registration : 80-185821-1
-> 
-> https://docs.qualcomm.com/bundle/80-18582-1/resource/80-18582-1_REV_AV_PM8010_Data_Sheet.pdf
-> 
->     Table 3-7 Linear/low-voltage regulator summary
-> 
->     Specified programmable range (V)
->     ldo3, ldo4, ldo6 = 1.808 to 3.312
-> 
-> 3. The pmic ranges I'm looking at on the internal
->     show increases of 8000 mv linearly
-> 
->> And I do see from the document change history that step 0 was changed 
->> from 1808mV and step 2 was changed from 2512mV, I don't know the 
->> reason of the change though.
-> 
-> Hrmm...
-> 
-> OK, that's enough to investigate further.
-> 
+I got acks from GPIO folks. The also provided stable tag with dependency:
+https://lore.kernel.org/all/20240213101000.16700-1-brgl@bgdev.pl/
+(which BTW already is in mainline, so you could just merge Linus' tree
+into your next branch)
 
-Got feedback from the chip designer: "1.808V is the typical digital Vset 
-logic output – always round up to the integer multiples of 8mV.
-However, 1.8V is a more commonly used output. So we made analog only 
-change, move the tap point of the reference generator to 1.8V when it is 
-programmed to 1.808V.
-If user program it to 1.8V, digital logic will round it up to 1.808V, 
-send it to analog, then analog will map it to 1.8V. So the end result is 
-the same regardless customer program it to 1.8V or 1.808V from PMIC 
-register point of view. "
+Can you take entire patchset?
 
-So, programming it to either 1.8V or 1.808V, the HW will output 1.8V. I 
-understand there is a problem for x1e801000 because its AOP side limits 
-the voltage range to [1.808V, 1.808V] for LDO3/4/6 power rails, it won't 
-work if linux side updates to use 1.8V. Actually the same issue applies 
-to SM8550 and SM8650 if you simply update the voltage level to 1.808V, 
-because their AOP side limits the voltage ranges for some of these LDOs 
-to [1.8V, 1.8V].
+Best regards,
+Krzysztof
 
-One possible fix is just adding 1.808v as another level for these LDOs.
-
-Fenglin
-
-> ---
-> bod
-> 
 
