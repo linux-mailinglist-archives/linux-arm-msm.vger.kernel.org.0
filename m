@@ -1,142 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-12022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 659D885D61D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:56:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B902285D655
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 12:02:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D98D1C206A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:56:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0214D1F24382
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440A73D566;
-	Wed, 21 Feb 2024 10:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D143C3EA72;
+	Wed, 21 Feb 2024 11:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wRxolPFq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l9r7C64o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3DE4C62
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 10:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264213E483
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 11:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708513016; cv=none; b=lL9Buox1Hn5YCioLDsDbTx0YAhvr0z4I8pMTf49PGB96fabEWbPl2VbLVzuJVFMAy4/+gUzY1d6r7dzK6DMrdHyMWG5DmRxAIZtoCFBw9i5haumESP/boZ889HnYNwn/3QKHalpMBYLm3vspi6S8FvjlDe6VwU5OoArAHuihMvs=
+	t=1708513288; cv=none; b=S1XZjSAXj7L66EWhpCd7XHzQgWM4Xblg5rFPVlhbhOSKd6JY5ei1V3HHIEA+r1+z+5LKmdAytUH14w7u5ix8Xlpp3omNy4RsJKn5qLOTUpx5jPzv5TmWK/924gT/O4GisdAWHI2NXiSVwdBwCf4y/BIv6XGj8Wjn0OTiv1cn/RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708513016; c=relaxed/simple;
-	bh=vbWMRmS1rFnN3OCYfqHmxe0l6A9GOkYIALwfyrOlRrY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dN24bn2iFCjOaedU/KSZMvMJzBzEh6XAOpjHh3pbZSwaX+lbdHvdFctdl/j/1I+rLpU41RLSWOSLegl/p4du258N2iWH1l8T64MPEiwz469DfzePeV3CiAL8WOxC2becuOBxlgGEgLgwpj0PXATWSbtCOO3q9URGLHNmUJVnnsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wRxolPFq; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1708513288; c=relaxed/simple;
+	bh=8Pqi2OvYHkdbbzOZoaZOwv6BUpCoATH4Y3bMmVwaWIY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rBKPLdDcH3r5/+JUeQw+VbKqwPv6PsgSGUo4BmAUyw6tqytGFEd3EkD56ugd44PVDk1DZ81nzy5FjO8Li0DQwBN3xqmDrGDGRvKOZ7OE/ZAzmAnQIOrx9BE0lgVW130xoaJSmd8GEvb8iQQ3Y2N7a49wW8LPfmEr/6f4o3y+lMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l9r7C64o; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6d24737d7so5810120276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 02:56:52 -0800 (PST)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-56454c695e6so5430490a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 03:01:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708513011; x=1709117811; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+ncsQZDtkxlo5wIjHq/CdTQpHc5QZi5GaNWKD+dMSg=;
-        b=wRxolPFqKJ5spFJS732SEnqTalMhyxzyquFjBtWb+qkY7Cypys45JzvxUGEXZLdrw5
-         2/5q4Xpmb4zC5WvN46F83scAmDdhzuzl1X5M/oyNg10SvMhFN/fdFe4WanS0JAm41IkJ
-         9lidcGyPe5Jodb8iBuYNzl8Pf3d2TIVISkmu+RhoDhVIVNBEanN+xqGxv4C8O5UPsv5f
-         MLbtCALp7IZoP14OaMR33PNR2m3oeNv/6PFsKpVTgUItQPnwxWbYKyH4lkOWXulpTaMs
-         ItK2qV4GosRMHbujN/RnNCRX/G+osmDJDy+jnL3aMUO3kYnobzYVP+QX61FkgOq6bPpu
-         HA+w==
+        d=linaro.org; s=google; t=1708513285; x=1709118085; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m2pkJbBBVU7OxhHun8X03GydiaahosMvy5Ph96bySx0=;
+        b=l9r7C64ol2749jhgkmYYmYtTU3G0tOsl3Qfxkb1vaerB+bCdb9kZFUwkjWxkAM7L4i
+         jSwJ7bcw8pvkhR0e7fqV8AzGgCrxi61OnWCnPI9ObEeMIYLe2vKdlyZy8g5TZcZy+ExT
+         45o6xzbYNWFCfG6CFD/tBsn+L1tBQ1Ba2bTb0M3VwE5fjqo8LgAX0AqwgqlbWSlCF5Xm
+         4dy8EcceStsIOG4sa4dNqqx7UoeCMWkhHThNKbyb3qyrBYP500Qr7WH3cQ8Fx+8/q643
+         7rwvoF3R3jTMeFOrA7NQ4tbdjesBxjEdlyJeHEWOd1MGrk4QDyIFvhhpjrV1XmcnGbJh
+         kqDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708513011; x=1709117811;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i+ncsQZDtkxlo5wIjHq/CdTQpHc5QZi5GaNWKD+dMSg=;
-        b=koNqmBYWbJPtrdEU+uHdjEZsgK/+8SPWZyY7kVIWyCBsycv8hM9YiisbtVmL7UBaVi
-         3DAEX1eV/SSL/acbSgmUIaSkJvjZJcbrG5m+vmiXwmqwaicT5GQqdHoNro/GtaanezP1
-         DT2WzXPG71ASJka6PUoWE+Atu1ut2B+2NhV/uhQorXgAwv3jEp8gHLLCt7f7mwHwYSdg
-         en9E7L3slv2+reI7t0BdfCfYVz+b4TCHsb/qScC23pwUeT3Zd19yfjuuz/bhETdw4ICc
-         WJF+iWKW9gGZLHM1nJe4Ygf1oDTYoFFbN3D4IGrl7guyKArG8fDMi4Z88pRz0vA5GjtN
-         hpAA==
-X-Forwarded-Encrypted: i=1; AJvYcCWo/rfxKL84quoEzc+ducLtKCLvipfuvesg7mfaDzxFcwbDITjFQsGhhzK4ZOrwkTuDm8wZShGCpapseMceqWdeFLtDASE0tBtDSjBN1Q==
-X-Gm-Message-State: AOJu0YxpQk3kPgvIWA2dgLqQshVeOe4npBTl/HQBgfGdNda5sJFLTCkk
-	+IymrRoo5pv+r5zLq/M56FJftYDBvxS1Ze68eV54MX2KXoeR3mdwtBjUp494rjlhUnYRo60K7Pz
-	73z5BkNzlzs8HSBV9rcJqpJjMgQPsXhHzT8IsIg==
-X-Google-Smtp-Source: AGHT+IEAHnosrh2HKr+vWyBNOZNSN17fCMu1+F8oggttg0/XQH/nIN/mS6ozHi+E8ndqPb5619KYo2+L25hzHEBSDrU=
-X-Received: by 2002:a25:b347:0:b0:dcc:5a25:ae88 with SMTP id
- k7-20020a25b347000000b00dcc5a25ae88mr15176976ybg.19.1708513011384; Wed, 21
- Feb 2024 02:56:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708513285; x=1709118085;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m2pkJbBBVU7OxhHun8X03GydiaahosMvy5Ph96bySx0=;
+        b=QPpV4Hn96t3bKh23uuWNe/blYCEfEo3xSBmq6r9YKVxipgrRjUf987Tt6TiL5ZiX+u
+         Ljrj760ycil3X40kHcQudhjLbNSPqg920wLW3k355Yhujl6hOJzyEryxKNmY+g/TVoSC
+         AmRUK1ZH3Wq9VrhPi84gOZH9HQ3mVLzyMJdhI2BThlA3Ahyd6wgK0qvLVV0qV6ifEjSQ
+         5wg2CXUxWeKY3MXincDIZB6ZOODh+9yBE5/Npk44mqTu8cNzDAVZsxY+Sx0GC2J+7CA/
+         SIrn3F3tVJ4Ua7sjbo7vqpMMYH4chMSDv/Bnppbsss47z7m87azY9wGeGPWppRxy4rzO
+         7R5A==
+X-Forwarded-Encrypted: i=1; AJvYcCUmr4/qp5GPZAVi+D/r+huboH70bzOQLmp9WXohkzO+GFjsvKkiK6gAfUfuD0UauDbuaYs1ZFPV4nJtqOnEbKqYqiNKd0uO1fs1qWa+ng==
+X-Gm-Message-State: AOJu0YxpEJx7A0qP5e1y4RgtcFVSsihAR5qZVgJJwrE2AV9qVPUls2hy
+	BQYpTEtGNMmxIC+wo5zgDov7WSbtYkQb5Ok84yaiqghUBCpIo4l5rIfefXbr0WY=
+X-Google-Smtp-Source: AGHT+IGKFQfxxh8f92W176IqOsPZLnlvo1236gn/NcK4osUoufn8tePgwwNQB8Vjdhu3+BPGeKco8w==
+X-Received: by 2002:a05:6402:e8d:b0:561:ea0:e234 with SMTP id h13-20020a0564020e8d00b005610ea0e234mr20258262eda.16.1708513285522;
+        Wed, 21 Feb 2024 03:01:25 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id i23-20020a05640200d700b005648745b23bsm2429714edu.90.2024.02.21.03.01.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Feb 2024 03:01:25 -0800 (PST)
+Message-ID: <d9a49d77-32b1-45d1-b110-5e66155abad3@linaro.org>
+Date: Wed, 21 Feb 2024 12:01:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221103202.3628142-1-quic_kriskura@quicinc.com>
-In-Reply-To: <20240221103202.3628142-1-quic_kriskura@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 21 Feb 2024 12:56:40 +0200
-Message-ID: <CAA8EJprMd5tr91gm99GyP1oefO_=tNQzxKA6hmB-xtBNVTbeeQ@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom-snps: Fixed order of enabling regulators
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Add QPIC SPI NAND driver
+Content-Language: en-US
+To: Md Sadre Alam <quic_mdalam@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+ linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mtd@lists.infradead.org, quic_srichara@quicinc.com,
+ quic_varada@quicinc.com
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240219130412.GC3281@thinkpad>
+ <3ad2909d-4ac3-fff3-739d-b12a3408fa0f@quicinc.com>
+ <454a7e8d-70f5-4bf5-a3f1-bf9e42672c4c@linaro.org>
+ <bfa0edb7-02fd-42dd-2235-0ea34f362515@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <bfa0edb7-02fd-42dd-2235-0ea34f362515@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 21 Feb 2024 at 12:32, Krishna Kurapati
-<quic_kriskura@quicinc.com> wrote:
->
-> The SNPS Femto phy has 3 supplies, vdda-pll (0.88V), vdd18 (1.8V),
-> vdd33 (3.3V). The driver enables these in order of 0.88 -> 3.3 -> 1.88.
-> But on phy instances which have EUD attached, it is seen that not enabling
-> the regulators in the order of (0.88 -> 1.8V -> 3.3V) is causing the EUD to
-> reset the phy (issue seen rarely) thereby disturbing enumeration.
->
-> This change doesn't disturb operation of phy's where EUD is not present.
-> According to the some of the applicable power-supply ramp scenarios present
-> in data book: (DVDD is 0.88V, VDDH is 1.8V)
->
-> a) VDDH<#> and VDD33<#> held to 0 V (cannot be left floating) with DVDD
-> ramped to a valid level
-> b) VDD33<#> held to 0 V (cannot be left floating) with DVDD and VDDH<#>
-> ramped to their respective, valid levels
->
-> Modify the driver to power up the phy regulators in order of:
-> 0.88 -> 1.8 -> 3.3 respectively.
->
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->
-> Downstream kernels on QC targets use this sequence to power up
-> the phy and this has been tested extensively on multiple targets.
-> This change has been tested with upstream kernel on QCM6490-IDP
-> without EUD to ensure there is no loss or breakage of functionality.
->
->  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> index eb0b0f61d98e..e86d221b7397 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> @@ -79,7 +79,7 @@
->  #define LS_FS_OUTPUT_IMPEDANCE_MASK            GENMASK(3, 0)
->
->  static const char * const qcom_snps_hsphy_vreg_names[] = {
-> -       "vdda-pll", "vdda33", "vdda18",
-> +       "vdda-pll", "vdda18", "vdda33",
+On 21/02/2024 11:34, Md Sadre Alam wrote:
+> 
+> 
+> On 2/20/2024 5:06 PM, Krzysztof Kozlowski wrote:
+>> On 20/02/2024 12:32, Md Sadre Alam wrote:
+>>>
+>>>
+>>> On 2/19/2024 6:34 PM, Manivannan Sadhasivam wrote:
+>>>> On Thu, Feb 15, 2024 at 07:18:51PM +0530, Md Sadre Alam wrote:
+>>>>> This series of patches will add initial supports
+>>>>> for QPIC SPI NAND driver.
+>>>>>
+>>>>> Currently this driver support following commands
+>>>>>
+>>>>> -- RESET
+>>>>> -- READ ID
+>>>>> -- BLOCK ERASE
+>>>>> -- PAGE READ
+>>>>> -- PAGE WRITE
+>>>>> -- GET FEATURE
+>>>>> -- SET FEATURE
+>>>>> -- BAD BLOCK CHECK
+>>>>>
+>>>>> This driver has been tested with dd command with read/write page
+>>>>> with multiple file size 1MiB, 10MiB,40MiB etc.
+>>>>> Also tested with "mtd" command like mtd erase, mtd write, mtd verify etc.
+>>>>>
+>>>>
+>>>> This is not the first version isn't it? Where is the changelog describing what
+>>>> has changed since then?
+>>>
+>>>     The earlier patch was the RFC for design review only.
+>>
+>> RFC is state of patch, not version. This is v2 then.
+>>
+>> These RFC postings are really becoming mess. Some people make multiple
+>> RFCs and then post v1 hiding entire previous history... And why even
+>> bother with calling it RFC?
+> 
+>   Sorry, I was not aware of this. Shall I post the next one as V3
+>   and add references to the RFC patch and this patch in the cover
+>   letter of V3?
 
-NAK.
-The driver uses regulator_bulk_enable, which enables all three
-regulators simultaneously via async calls, thus your change doesn't
-have any effect.
+Yes, like with every posting.
 
-Also note, that these regulators are frequently shared between
-different consumers. As such, even if you have tight control of
-regulator ordering in the driver, other drivers might enable
-corresponding regulators on their own, breaking the ordering.
+Best regards,
+Krzysztof
 
--- 
-With best wishes
-Dmitry
 
