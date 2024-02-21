@@ -1,200 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-12021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75D9485D5BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:39:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 659D885D61D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:56:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 997641C22A41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:39:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D98D1C206A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:56:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCF9B1DA5E;
-	Wed, 21 Feb 2024 10:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440A73D566;
+	Wed, 21 Feb 2024 10:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oCJEdybu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wRxolPFq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB05228;
-	Wed, 21 Feb 2024 10:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3DE4C62
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 10:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708511935; cv=none; b=gSkL8BdBDqufc/h3SvpeH5EdErITomAi7xm7SfifW3MjTxhJEjay9iPnRy23osw9uCLGL5KXrmtT7DkIJbkZ4Y3rfSNt4GSPdwFCmkFgIvK3v2X467lb3Qk5T3KC5HyK1jlKUvhoqDBhUDcBaCfLvfI7dbBpLSW4xnCmkKmma7g=
+	t=1708513016; cv=none; b=lL9Buox1Hn5YCioLDsDbTx0YAhvr0z4I8pMTf49PGB96fabEWbPl2VbLVzuJVFMAy4/+gUzY1d6r7dzK6DMrdHyMWG5DmRxAIZtoCFBw9i5haumESP/boZ889HnYNwn/3QKHalpMBYLm3vspi6S8FvjlDe6VwU5OoArAHuihMvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708511935; c=relaxed/simple;
-	bh=nLif9cPksOec0uY6ZKcQ/m571IwMSv06xDWhdi4HLKM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kOG8g+V8dH2FFKnFxBwX0RrrUhIc85DQVC8rdNLOL9V2pSEddneplprUuvdG2LOh+6ETsmYTq4ZFg1csGsGqutxB1W5dN91kGxq7sWrmBhB5SEVd5hBji09Z5JO2a9+JMjy5vLfrYcweKX+m5iTpMWTdrOt7+Sb7mGTbuU5BNfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oCJEdybu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L4KGUU022184;
-	Wed, 21 Feb 2024 10:38:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=eQgXE2HnmbPldfjmzZ6CFMqQA6IzURGK0LKsk3Uwytk=; b=oC
-	JEdybuG4yDwR8lC0k0V9/xCaW7eXwbUpjaKNGjcsEX2EtaAd1W04EKaW7jORpOg2
-	5fHfokyeh1egbqECKsNdXtvEdUYV9/Ib0Cocl71MRwXOKw9AhOiLzTaPveO91Vf4
-	VyJ+978Hy6ADgVMzaOpGV4BYZhszozcnU7h+7RvNWopFDnE+/AVFM1zpuipv1I1B
-	BNCu4amNUWq6Glpm2yJiw71HXe2GovPXLM6Rk4LfMr7VBneZyuENUOr9YL4sSTZP
-	S0bEO7Ue6NtygCBq2RZYKoGj5QAPtWpu6E5I0Zr0f9/UhHsg+TZXfrgSBzF1izPz
-	wogjVPkp/wZmRRoIHC1Q==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd22rhnrm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 10:38:40 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LAcd7P030110
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 10:38:39 GMT
-Received: from [10.216.62.93] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
- 2024 02:38:33 -0800
-Message-ID: <6035a0d2-f784-c55d-acd5-aa3ffc470246@quicinc.com>
-Date: Wed, 21 Feb 2024 16:08:30 +0530
+	s=arc-20240116; t=1708513016; c=relaxed/simple;
+	bh=vbWMRmS1rFnN3OCYfqHmxe0l6A9GOkYIALwfyrOlRrY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dN24bn2iFCjOaedU/KSZMvMJzBzEh6XAOpjHh3pbZSwaX+lbdHvdFctdl/j/1I+rLpU41RLSWOSLegl/p4du258N2iWH1l8T64MPEiwz469DfzePeV3CiAL8WOxC2becuOBxlgGEgLgwpj0PXATWSbtCOO3q9URGLHNmUJVnnsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wRxolPFq; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dc6d24737d7so5810120276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 02:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708513011; x=1709117811; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=i+ncsQZDtkxlo5wIjHq/CdTQpHc5QZi5GaNWKD+dMSg=;
+        b=wRxolPFqKJ5spFJS732SEnqTalMhyxzyquFjBtWb+qkY7Cypys45JzvxUGEXZLdrw5
+         2/5q4Xpmb4zC5WvN46F83scAmDdhzuzl1X5M/oyNg10SvMhFN/fdFe4WanS0JAm41IkJ
+         9lidcGyPe5Jodb8iBuYNzl8Pf3d2TIVISkmu+RhoDhVIVNBEanN+xqGxv4C8O5UPsv5f
+         MLbtCALp7IZoP14OaMR33PNR2m3oeNv/6PFsKpVTgUItQPnwxWbYKyH4lkOWXulpTaMs
+         ItK2qV4GosRMHbujN/RnNCRX/G+osmDJDy+jnL3aMUO3kYnobzYVP+QX61FkgOq6bPpu
+         HA+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708513011; x=1709117811;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i+ncsQZDtkxlo5wIjHq/CdTQpHc5QZi5GaNWKD+dMSg=;
+        b=koNqmBYWbJPtrdEU+uHdjEZsgK/+8SPWZyY7kVIWyCBsycv8hM9YiisbtVmL7UBaVi
+         3DAEX1eV/SSL/acbSgmUIaSkJvjZJcbrG5m+vmiXwmqwaicT5GQqdHoNro/GtaanezP1
+         DT2WzXPG71ASJka6PUoWE+Atu1ut2B+2NhV/uhQorXgAwv3jEp8gHLLCt7f7mwHwYSdg
+         en9E7L3slv2+reI7t0BdfCfYVz+b4TCHsb/qScC23pwUeT3Zd19yfjuuz/bhETdw4ICc
+         WJF+iWKW9gGZLHM1nJe4Ygf1oDTYoFFbN3D4IGrl7guyKArG8fDMi4Z88pRz0vA5GjtN
+         hpAA==
+X-Forwarded-Encrypted: i=1; AJvYcCWo/rfxKL84quoEzc+ducLtKCLvipfuvesg7mfaDzxFcwbDITjFQsGhhzK4ZOrwkTuDm8wZShGCpapseMceqWdeFLtDASE0tBtDSjBN1Q==
+X-Gm-Message-State: AOJu0YxpQk3kPgvIWA2dgLqQshVeOe4npBTl/HQBgfGdNda5sJFLTCkk
+	+IymrRoo5pv+r5zLq/M56FJftYDBvxS1Ze68eV54MX2KXoeR3mdwtBjUp494rjlhUnYRo60K7Pz
+	73z5BkNzlzs8HSBV9rcJqpJjMgQPsXhHzT8IsIg==
+X-Google-Smtp-Source: AGHT+IEAHnosrh2HKr+vWyBNOZNSN17fCMu1+F8oggttg0/XQH/nIN/mS6ozHi+E8ndqPb5619KYo2+L25hzHEBSDrU=
+X-Received: by 2002:a25:b347:0:b0:dcc:5a25:ae88 with SMTP id
+ k7-20020a25b347000000b00dcc5a25ae88mr15176976ybg.19.1708513011384; Wed, 21
+ Feb 2024 02:56:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 2/5] drivers: mtd: nand: Add qpic_common API file
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
-        <vigneshr@ti.com>, <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <quic_srichara@quicinc.com>,
-        <quic_varada@quicinc.com>
-References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
- <20240215134856.1313239-3-quic_mdalam@quicinc.com>
- <CAA8EJpquDwDg+OrZKeJrTWEtokCF7uyHMyzCFK2etSsDip8_6Q@mail.gmail.com>
- <c574c9ab-0a47-2dc8-9ddd-c08f1b770d7e@quicinc.com>
- <CAA8EJprkwv0QstJTveM+06DbMjgBCEVBRhBb5i2QM6LxmmCQug@mail.gmail.com>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <CAA8EJprkwv0QstJTveM+06DbMjgBCEVBRhBb5i2QM6LxmmCQug@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PW6hze-lDCO-9iz0EAnxMZPpRzq_s9t4
-X-Proofpoint-GUID: PW6hze-lDCO-9iz0EAnxMZPpRzq_s9t4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=900 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402210082
+References: <20240221103202.3628142-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20240221103202.3628142-1-quic_kriskura@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 21 Feb 2024 12:56:40 +0200
+Message-ID: <CAA8EJprMd5tr91gm99GyP1oefO_=tNQzxKA6hmB-xtBNVTbeeQ@mail.gmail.com>
+Subject: Re: [PATCH] phy: qcom-snps: Fixed order of enabling regulators
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 21 Feb 2024 at 12:32, Krishna Kurapati
+<quic_kriskura@quicinc.com> wrote:
+>
+> The SNPS Femto phy has 3 supplies, vdda-pll (0.88V), vdd18 (1.8V),
+> vdd33 (3.3V). The driver enables these in order of 0.88 -> 3.3 -> 1.88.
+> But on phy instances which have EUD attached, it is seen that not enabling
+> the regulators in the order of (0.88 -> 1.8V -> 3.3V) is causing the EUD to
+> reset the phy (issue seen rarely) thereby disturbing enumeration.
+>
+> This change doesn't disturb operation of phy's where EUD is not present.
+> According to the some of the applicable power-supply ramp scenarios present
+> in data book: (DVDD is 0.88V, VDDH is 1.8V)
+>
+> a) VDDH<#> and VDD33<#> held to 0 V (cannot be left floating) with DVDD
+> ramped to a valid level
+> b) VDD33<#> held to 0 V (cannot be left floating) with DVDD and VDDH<#>
+> ramped to their respective, valid levels
+>
+> Modify the driver to power up the phy regulators in order of:
+> 0.88 -> 1.8 -> 3.3 respectively.
+>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>
+> Downstream kernels on QC targets use this sequence to power up
+> the phy and this has been tested extensively on multiple targets.
+> This change has been tested with upstream kernel on QCM6490-IDP
+> without EUD to ensure there is no loss or breakage of functionality.
+>
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> index eb0b0f61d98e..e86d221b7397 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> @@ -79,7 +79,7 @@
+>  #define LS_FS_OUTPUT_IMPEDANCE_MASK            GENMASK(3, 0)
+>
+>  static const char * const qcom_snps_hsphy_vreg_names[] = {
+> -       "vdda-pll", "vdda33", "vdda18",
+> +       "vdda-pll", "vdda18", "vdda33",
 
+NAK.
+The driver uses regulator_bulk_enable, which enables all three
+regulators simultaneously via async calls, thus your change doesn't
+have any effect.
 
-On 2/20/2024 9:37 PM, Dmitry Baryshkov wrote:
-> On Tue, 20 Feb 2024 at 17:59, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
->>
->>
->>
->> On 2/15/2024 8:30 PM, Dmitry Baryshkov wrote:
->>> On Thu, 15 Feb 2024 at 15:53, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
->>>>
->>>> Add qpic_common.c file which hold all the common
->>>> qpic APIs which will be used by both qpic raw nand
->>>> driver and qpic spi nand driver.
->>>>
->>>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>>> ---
->>>>    drivers/mtd/nand/Makefile            |    1 +
->>>>    drivers/mtd/nand/qpic_common.c       |  786 +++++++++++++++++
->>>>    drivers/mtd/nand/raw/qcom_nandc.c    | 1226 +-------------------------
->>>>    include/linux/mtd/nand-qpic-common.h |  488 ++++++++++
->>>>    4 files changed, 1291 insertions(+), 1210 deletions(-)
->>>>    create mode 100644 drivers/mtd/nand/qpic_common.c
->>>>    create mode 100644 include/linux/mtd/nand-qpic-common.h
->>>>
->>>> diff --git a/drivers/mtd/nand/Makefile b/drivers/mtd/nand/Makefile
->>>> index 19e1291ac4d5..131707a41293 100644
->>>> --- a/drivers/mtd/nand/Makefile
->>>> +++ b/drivers/mtd/nand/Makefile
->>>> @@ -12,3 +12,4 @@ nandcore-$(CONFIG_MTD_NAND_ECC) += ecc.o
->>>>    nandcore-$(CONFIG_MTD_NAND_ECC_SW_HAMMING) += ecc-sw-hamming.o
->>>>    nandcore-$(CONFIG_MTD_NAND_ECC_SW_BCH) += ecc-sw-bch.o
->>>>    nandcore-$(CONFIG_MTD_NAND_ECC_MXIC) += ecc-mxic.o
->>>> +obj-y += qpic_common.o
->>>> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
->>>> new file mode 100644
->>>> index 000000000000..4d74ba888028
->>>> --- /dev/null
->>>> +++ b/drivers/mtd/nand/qpic_common.c
->>>> @@ -0,0 +1,786 @@
->>>> +// SPDX-License-Identifier: GPL-2.0
->>>> +/*
->>>> + * QPIC Controller common API file.
->>>> + * Copyright (C) 2023  Qualcomm Inc.
->>>> + * Authors:    Md sadre Alam           <quic_mdalam@quicinc.com>
->>>> + *             Sricharan R             <quic_srichara@quicinc.com>
->>>> + *             Varadarajan Narayanan   <quic_varada@quicinc.com>
->>>
->>> This is a bit of an exaggeration. You are moving code, not writing new
->>> code. Please retain the existing copyrights for the moved code.
->> Ok
->>>
->>>> + *
->>>> + */
->>>> +
->>>> +#include <linux/mtd/nand-qpic-common.h>
->>>> +
->>>> +struct qcom_nand_controller *
->>>> +get_qcom_nand_controller(struct nand_chip *chip)
->>>> +{
->>>> +       return container_of(chip->controller, struct qcom_nand_controller,
->>>> +                           controller);
->>>> +}
->>>> +EXPORT_SYMBOL(get_qcom_nand_controller);
->>>
->>> NAK for adding functions to the global export namespace without a
->>> proper driver-specific prefix.
->> Ok, will fix in next patch
->>>
->>> Also, a bunch of the code here seems not so well thought. It was fine
->>> for an internal interface, but it doesn't look so good as a common
->>> wrapper. Please consider defining a sensible common code module
->>> interface instead.
->>
->>    QPIC controller will support both raw NAND as well Serial nand interface.
->>    This common API file was the part of raw NAND driver , since for serial
->>    nand most of the APIs from raw nand driver will be re-used that's why i
->>    have created this common API file, so that QPIC serial nand driver
->>    drivers/spi/spi-qpic-snand.c and QPIC raw NAND driver
->>    drivers/mtd/nand/raw/qcom_nandc.c can used these common APIs.
->>
->>    Could you please suggest how I should handle this in batter way.
-> 
-> Yes. Start by designing common accessor functions that form a
-> sufficient and complete API to access the hardware functionality. A
-> set of functions blindly moved from the existing driver usually do not
-> make such an API, because usually nobody cares enough about the driver
-> internals. It should be something that external user (NAND, SPI, etc)
-> can use without looking into the actual implementation of these
-> functions.
-  Thanks for suggestion. Will make the Common API more generic and
-  post in next patch.
-> 
+Also note, that these regulators are frequently shared between
+different consumers. As such, even if you have tight control of
+regulator ordering in the driver, other drivers might enable
+corresponding regulators on their own, breaking the ordering.
+
+-- 
+With best wishes
+Dmitry
 
