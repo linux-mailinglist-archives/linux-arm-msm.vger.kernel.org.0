@@ -1,140 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-12083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89E3F85E520
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 19:03:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99A2385E537
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 19:10:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4581D2853D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 18:03:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 54903283E70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 18:10:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1546F84FD9;
-	Wed, 21 Feb 2024 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36528527B;
+	Wed, 21 Feb 2024 18:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DhURHu2k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5nTa5SE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5885B84A4C;
-	Wed, 21 Feb 2024 18:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C35584FD8;
+	Wed, 21 Feb 2024 18:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708538608; cv=none; b=dMeyYzlKPdQ2lTuVv0+ikRm9UliymRb+9FTAGzhEk+sATkQI4ZpLDd8bw8tWVqt4bZKGO2+Vlzb49P10XhoQIqWryMTlwBtt/ng59SGbbU89jw+UUyARkaxq4ZWKHy6UxJPLK3vazZvehWsMitmuuCdgTTjoc/Zf9OqI3Qu4bG0=
+	t=1708539031; cv=none; b=cvrtwBi5lWElckc/fOJGsoG2w1n/6ObWkicyXxXhY7CS/x9FT7xVHG/S7yJyzLzimH9XVotilku8TB0NvSvt77lKrfflVCV2e5CfZptDSX35Ghsav9CCtwFMNX7OYcoKJ5463MVl5Lp/TZFdURDf1Y7x+1ONbg0IBgZSUzGcPaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708538608; c=relaxed/simple;
-	bh=Vky8g1xlYqX8x+MNnRdTFSxQJHnbFOZbAAvwLGvHWBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=U5wsseHs0V0nMfFKixPUdTgHSVSYMhVY1vkVYH8AZGMD3YyiucHtdduRRJkwP443CyaNU7htdhDLd0fzbGYY2/saFNoD+R1s/nIV+NCZhvVdupyC7jBfYVQiTmglaZF/OpDvdIa+XGMRohoffuT2L2MzPQHSCs7WGQ8qPIsimew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DhURHu2k; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41LDjvmi018517;
-	Wed, 21 Feb 2024 18:03:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Z1EM/p+jd2aox3yj3yzzpLjR9dADa2AsHCa27gf+ccc=; b=Dh
-	URHu2kgvqjX8cVZsUKF0RaKFmJbtzqHY7mermb1venLpxbS83zKEgC9MTuwoW3pw
-	2FlkqMBWvXiDvqaSWrXKeCKkrAEPgEUEonPL7VTQKYsAeuoiycqe1FolKijIN5xX
-	07wLnHHwoOBJNKToBEGk6IxXA+iYp85J6sy+f0B2t4BBdTW2lCwQ+/xK6YWLl5u9
-	nR017mCcix3kiZ4GCVvC7Zx2RmLDrvoX5c/EVnRV9/8A02lyyDF8MIQmVquTdU2h
-	sH/oLJ8iMOSiRFIaXlceAyIeJXvutWZYSJegZbiPaEiibxs91Zx8hRo2Q/0+2tUT
-	7NPSOzsKAkt5b5nsQOVg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd22s2rnk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 18:03:07 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LI36PJ004638
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 18:03:06 GMT
-Received: from [10.50.0.60] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
- 2024 10:03:02 -0800
-Message-ID: <e4cf41af-5415-f923-25f0-07e837bd7a1a@quicinc.com>
-Date: Wed, 21 Feb 2024 23:32:38 +0530
+	s=arc-20240116; t=1708539031; c=relaxed/simple;
+	bh=oX4EdpTpbO8MejBIv3YlvOvhveBN1t+BKjJS4l8AiCA=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=LsUqAbnV5rpNDY/WJ+gewlD83QK2lmbZTHTJLfcscCEV2tdOXgJglqv+alviyiYS9U4pnUaHZDNvXhepsPD6JHhLisTfWq9i9iOJvPxNYtHJs+PLiwq8xZVDc/xskRaCS+a4hSlA0+Fk8Sf4GpNE30yo8rJErfC9EUCDrQ6Qy50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5nTa5SE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 24B9AC43609;
+	Wed, 21 Feb 2024 18:10:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708539031;
+	bh=oX4EdpTpbO8MejBIv3YlvOvhveBN1t+BKjJS4l8AiCA=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=a5nTa5SEaMxM4vHu942onhLIICKUgYn7Q19DgYidK7JLBiT7FqaZCzgunXlwEJiuZ
+	 Sb45adoMh6XjrIiPjC3u2V5VDXR/MB1YAnZMnnxHTyDrEk58kaK/UzzHdEdIHp3teH
+	 P6p9rcbUpSIG8Vkf146UKlBQE7nABz2lVcFVmkbCjxPntTclLdOhZvzM2+ZvoPh7bm
+	 zcNhcPmOZ5JWv5pXJRXTqhwIQRVE5iakwdrF3z4fyc2kpRFNgK5mexBkgxW/lIBDov
+	 breV/8cxigGnl506a31c0XkugLdz0CpCie2BavlG0jH+vr0qll9Gf8QmdZbmEH/IjM
+	 vgJBEw4J7f6rA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 00E7FD84BD0;
+	Wed, 21 Feb 2024 18:10:31 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH 01/11] crypto: qce - Add support for crypto address read
-Content-Language: en-US
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <quic_varada@quicinc.com>
-References: <20231214114239.2635325-1-quic_mdalam@quicinc.com>
- <20231214114239.2635325-2-quic_mdalam@quicinc.com>
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <20231214114239.2635325-2-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gocQSBGbcrsfedRVDFd0zds5ifsNkyqN
-X-Proofpoint-GUID: gocQSBGbcrsfedRVDFd0zds5ifsNkyqN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-21_05,2024-02-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 clxscore=1011 priorityscore=1501
- mlxlogscore=999 spamscore=0 suspectscore=0 adultscore=0 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402210140
+Content-Transfer-Encoding: 8bit
+Subject: Re: [f2fs-dev] [PATCH] f2fs: doc: Fix bouncing email address for
+ Sahitya Tummala
+From: patchwork-bot+f2fs@kernel.org
+Message-Id: 
+ <170853903099.7043.6155002050076801898.git-patchwork-notify@kernel.org>
+Date: Wed, 21 Feb 2024 18:10:30 +0000
+References: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
+In-Reply-To: <20240202165208.4091800-1-quic_jhugo@quicinc.com>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: jaegeuk@kernel.org, chao@kernel.org, quic_stummala@quicinc.com,
+ quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-f2fs-devel@lists.sourceforge.net
 
+Hello:
 
+This patch was applied to jaegeuk/f2fs.git (dev)
+by Jaegeuk Kim <jaegeuk@kernel.org>:
 
-On 12/14/2023 5:12 PM, Md Sadre Alam wrote:
-> Get crypto base address from DT. This will use for
-> command descriptor support for crypto register r/w
-> via BAM/DMA
+On Fri, 2 Feb 2024 09:52:08 -0700 you wrote:
+> The servers for the @codeaurora domain are long retired and any messages
+> addressed there will bounce.  Sahitya Tummala has a .mailmap entry to an
+> updated address, but the documentation files still list @codeaurora
+> which might be a problem for anyone reading the documentation directly.
+> Update the documentation files to match the .mailmap update.
 > 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
->   drivers/crypto/qce/core.c | 9 +++++++++
->   drivers/crypto/qce/core.h | 1 +
->   2 files changed, 10 insertions(+)
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > 
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index 28b5fd823827..5af0dc40738a 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -192,6 +192,7 @@ static int qce_crypto_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
->   	struct qce_device *qce;
-> +	struct resource *res;
->   	int ret;
->   
->   	qce = devm_kzalloc(dev, sizeof(*qce), GFP_KERNEL);
-> @@ -205,6 +206,14 @@ static int qce_crypto_probe(struct platform_device *pdev)
->   	if (IS_ERR(qce->base))
->   		return PTR_ERR(qce->base);
->   
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> [...]
 
-  Can this be combined with devm_platform_get_and_ioremap_resource ?
-> +	if (!res)
-> +		return -ENOMEM;
-> +	qce->base_dma = dma_map_resource(dev, res->start, resource_size(res),
-> +					 DMA_BIDIRECTIONAL, 0);
+Here is the summary with links:
+  - [f2fs-dev] f2fs: doc: Fix bouncing email address for Sahitya Tummala
+    https://git.kernel.org/jaegeuk/f2fs/c/bb516cc086ca
 
-  unmap in remove and error cases ?
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-Regards,
-  Sricharan
+
 
