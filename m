@@ -1,140 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-12018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AF4E85D597
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:32:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2ACE285D5A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:34:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E869F1F23DA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:32:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 565521C21B6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:34:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCAD54414;
-	Wed, 21 Feb 2024 10:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 298144C87;
+	Wed, 21 Feb 2024 10:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hLtTYC54"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E3+vm1zt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC155228;
-	Wed, 21 Feb 2024 10:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EA83D561;
+	Wed, 21 Feb 2024 10:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708511559; cv=none; b=Axy9AxMeYKuBIiPl/5MRKJX86hT7BYJN7J3lRAztu+sRwvNQOU5jO6ydevjhlIrUNQVEGcW5VRcG39kJVPFQ3LWu74nL63YXyZzx4S81oAEZp5erezKFVlWFJXISbbTAiWCsKsw+MSvV9X1r20dD5xynPY0vsbLrJ03GTtLDrlM=
+	t=1708511668; cv=none; b=gCXFybEYegwTG23IJ0yFLpf/6s/P0TO4Hj6hEilHdiASWCEhs+bTmGQRHnu3EhvY1VWwplnh4tXZjKb8orogz5bwuIPuOM5oEM0suy4vpepsIQWCfhAqyaMZC9AR4SWYvhCDBInYBRK7fEVOjAcXxijQ7XRcE2ILRUGui0odYXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708511559; c=relaxed/simple;
-	bh=iyWQZCqhvtBUlqMeMmC15jBSDMJBqRuhKvoFlNVbKMk=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=H8nVONk5Q3dWGKw0X5X22NjwyagNq7kyxihWjgkIMxSnLW57210gWCzJoGowGiw3W1UZoDj+brQ5q+PUu8tUTN+a2hlG6FD2fqjO9KiQGkig+NU0ywp8n30Hem39GlL4FlBkThhT/8ZKgSuym5R/DqgVXWIj0Kq41K58w/yYJ48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hLtTYC54; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1708511668; c=relaxed/simple;
+	bh=z3aLnsh8Qe+1OmuVDN5NOlsZFSABSDdQj5+DEjz88lw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oq+vraEJYhAV7ruUQbhXQg3oMuJndduXQ9iQKVanGw387d7PNmvuMcLXzSRq8vH11nj/K8neYXM7gLpU4JQq3B8zK2st3tA1eBM4x4DJrrp5V8aEyiGWI8Lw7nhnZitWV6EmSSBLSfEcvd+SQC0qchxUqSocdCZBMqcaijO61Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E3+vm1zt; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L8u5ve027957;
-	Wed, 21 Feb 2024 10:32:22 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L6np3w029179;
+	Wed, 21 Feb 2024 10:34:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=v1jmQry
-	fga9BZDoQxP6DhwrR5DcM0MPSb+kne+KjKSc=; b=hLtTYC54cQt9nrspGJZ2D3L
-	y4hGqkbm4l+ASafkylcWSBiJ2u7/LeZ3s1OFP3WNHkqEvx7DlJq83UnRvk4wozMk
-	tmwsxX1m6sV2iU6IwjUPV09uMw2zp8bfFLWkMth7djaegCS5zZect+G/6OlYbuxM
-	krGhHv9hz+8eIIzFxYUOcAoaqMpPqdFeXJan4QmYtoiyXhE3eWfIiypQ8U2X8WxG
-	Qu10uyAfMGVzL0Nx4sdjuBUB7pHD0LQO7iImv1fS7M2J2P70N7tiiUAxSoeVuzwP
-	pJpak36EzD/+iCgd+sDVh98N2M90KSdx/mGzD4fkw3N7X0j8xtPW4lzYI2KtpxA=
-	=
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21usmvt-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=s15kuA4pjVy4qKgvcnbye/y/cqmB3GFypPX74p+09nQ=; b=E3
+	+vm1ztPVgjCqgYRi7TylETjlJKiLaJ4wrU2ThrCYxTUFTvAPQDhn+kfRoGuxOGrh
+	EGfhopK6p9JW011Nllbh0QEBV2/r9mQZ64cTcNhDEsy6dOlCcqYDX0eEw2G7NWzs
+	7MFtF3cAw1+fQ75I+HS0Q8Etf6tvy/FARHrGDpTfYcUWbMhfRfPLw76uJORSyBwZ
+	5JZSMCXjRm+fNzcXNyvE5sulXyO4a3dXmseGEA7zhSY3NDmzLgR4Gx6z2GtPSPj6
+	kdhQeU/sm6BiTnO5i9RDR3K8BSNzZnVnA80ClwyIPrx1V/tP95ugijPGl9lB38US
+	3i9t+kV7B11jo/3GMkxQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21usn0s-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 10:32:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LAWFqg005694
+	Wed, 21 Feb 2024 10:34:15 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LAYEro001339
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Feb 2024 10:32:15 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 21 Feb 2024 02:32:11 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay
- Abraham I" <kishon@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH] phy: qcom-snps: Fixed order of enabling regulators
-Date: Wed, 21 Feb 2024 16:02:02 +0530
-Message-ID: <20240221103202.3628142-1-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	Wed, 21 Feb 2024 10:34:14 GMT
+Received: from [10.216.62.93] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
+ 2024 02:34:08 -0800
+Message-ID: <bfa0edb7-02fd-42dd-2235-0ea34f362515@quicinc.com>
+Date: Wed, 21 Feb 2024 16:04:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 0/5] Add QPIC SPI NAND driver
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Manivannan
+ Sadhasivam" <manivannan.sadhasivam@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
+        <robh@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <miquel.raynal@bootlin.com>, <richard@nod.at>,
+        <vigneshr@ti.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240215134856.1313239-1-quic_mdalam@quicinc.com>
+ <20240219130412.GC3281@thinkpad>
+ <3ad2909d-4ac3-fff3-739d-b12a3408fa0f@quicinc.com>
+ <454a7e8d-70f5-4bf5-a3f1-bf9e42672c4c@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <454a7e8d-70f5-4bf5-a3f1-bf9e42672c4c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ILJFmlSJuSNWEwVZkyXON1nVzbmAYsHt
-X-Proofpoint-ORIG-GUID: ILJFmlSJuSNWEwVZkyXON1nVzbmAYsHt
+X-Proofpoint-GUID: MLVOkpa9aMrn448T-yV6pcqheFsX2HW6
+X-Proofpoint-ORIG-GUID: MLVOkpa9aMrn448T-yV6pcqheFsX2HW6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
  bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0 clxscore=1011
+ phishscore=0 mlxlogscore=770 impostorscore=0 malwarescore=0 clxscore=1015
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
  definitions=main-2402210081
 
-The SNPS Femto phy has 3 supplies, vdda-pll (0.88V), vdd18 (1.8V),
-vdd33 (3.3V). The driver enables these in order of 0.88 -> 3.3 -> 1.88.
-But on phy instances which have EUD attached, it is seen that not enabling
-the regulators in the order of (0.88 -> 1.8V -> 3.3V) is causing the EUD to
-reset the phy (issue seen rarely) thereby disturbing enumeration.
 
-This change doesn't disturb operation of phy's where EUD is not present.
-According to the some of the applicable power-supply ramp scenarios present
-in data book: (DVDD is 0.88V, VDDH is 1.8V)
 
-a) VDDH<#> and VDD33<#> held to 0 V (cannot be left floating) with DVDD
-ramped to a valid level
-b) VDD33<#> held to 0 V (cannot be left floating) with DVDD and VDDH<#>
-ramped to their respective, valid levels
+On 2/20/2024 5:06 PM, Krzysztof Kozlowski wrote:
+> On 20/02/2024 12:32, Md Sadre Alam wrote:
+>>
+>>
+>> On 2/19/2024 6:34 PM, Manivannan Sadhasivam wrote:
+>>> On Thu, Feb 15, 2024 at 07:18:51PM +0530, Md Sadre Alam wrote:
+>>>> This series of patches will add initial supports
+>>>> for QPIC SPI NAND driver.
+>>>>
+>>>> Currently this driver support following commands
+>>>>
+>>>> -- RESET
+>>>> -- READ ID
+>>>> -- BLOCK ERASE
+>>>> -- PAGE READ
+>>>> -- PAGE WRITE
+>>>> -- GET FEATURE
+>>>> -- SET FEATURE
+>>>> -- BAD BLOCK CHECK
+>>>>
+>>>> This driver has been tested with dd command with read/write page
+>>>> with multiple file size 1MiB, 10MiB,40MiB etc.
+>>>> Also tested with "mtd" command like mtd erase, mtd write, mtd verify etc.
+>>>>
+>>>
+>>> This is not the first version isn't it? Where is the changelog describing what
+>>> has changed since then?
+>>
+>>     The earlier patch was the RFC for design review only.
+> 
+> RFC is state of patch, not version. This is v2 then.
+> 
+> These RFC postings are really becoming mess. Some people make multiple
+> RFCs and then post v1 hiding entire previous history... And why even
+> bother with calling it RFC?
 
-Modify the driver to power up the phy regulators in order of:
-0.88 -> 1.8 -> 3.3 respectively.
-
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
-
-Downstream kernels on QC targets use this sequence to power up
-the phy and this has been tested extensively on multiple targets.
-This change has been tested with upstream kernel on QCM6490-IDP
-without EUD to ensure there is no loss or breakage of functionality.
-
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index eb0b0f61d98e..e86d221b7397 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -79,7 +79,7 @@
- #define LS_FS_OUTPUT_IMPEDANCE_MASK		GENMASK(3, 0)
- 
- static const char * const qcom_snps_hsphy_vreg_names[] = {
--	"vdda-pll", "vdda33", "vdda18",
-+	"vdda-pll", "vdda18", "vdda33",
- };
- 
- #define SNPS_HS_NUM_VREGS		ARRAY_SIZE(qcom_snps_hsphy_vreg_names)
--- 
-2.34.1
-
+  Sorry, I was not aware of this. Shall I post the next one as V3
+  and add references to the RFC patch and this patch in the cover
+  letter of V3?
+> 
+> Best regards,
+> Krzysztof
+> 
 
