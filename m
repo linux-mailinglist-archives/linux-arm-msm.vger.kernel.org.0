@@ -1,172 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-12012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13D4985D430
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:45:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E0C485D507
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 11:02:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97B2D1F278CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 09:45:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F71D1C20CAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 10:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD223D54C;
-	Wed, 21 Feb 2024 09:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EB8uQNK6"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D51534CB2E;
+	Wed, 21 Feb 2024 09:54:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1343C493
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 09:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DB641C7C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 09:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708508699; cv=none; b=IOaCGbJK9k1zPOP2E/5IrKY1EOFUdtPEdv50tNmju9ea4WzHiHBEZZuuptKPSQn/mIMg7MG5kD0JzImgzM1P4PGaSTmnq+tZ3XJ6aL9F7/pHo6xuJiqrC2WkMUZgncYVw7bu97Gw24FmrA3wBoIU1dtayC2zRCt1mE2OUSdSC+s=
+	t=1708509269; cv=none; b=qRHeeIhSMiAH+7iPYNEt7NoGB8NcpQ94bWKNxD5Lyn1VPj4pL2nbuSeM8aMbhREb7Jc2xytQF97FWj0EeJKLVySfohF/8khlM3EttVq1YgV8bZ4fhjbhmFh0wMA/dbZ03EixLi/lGBVcA5fyHj7ci0DpjSKhaU1IxnjTsS+bTBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708508699; c=relaxed/simple;
-	bh=/opIB55MMYKYaC78niYQAuyhzp2B1CswjFKDPDdn5Xk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=URXQrxrfSwmzornpD3BbaeGCvpm+vIxvSTX2AbrhWs8tvTuEVfd//DnUyEcNcmz3ShBMHTb7xYPVTR7vSQTLCprx/TJ+nuT3LTFgLZ7FF64G+mMAtq4KERgDEoPwpyqTp6bZgABUYr4vq15NFjOYxSb2LmyxloMF+EC0VtFVzUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EB8uQNK6; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a3e8c1e4aa7so45596166b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 01:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708508696; x=1709113496; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NyBaoVH2N/0Qpdr6Z5VWnZpm4sf6QgnERUX3ACGj03I=;
-        b=EB8uQNK6VFZNe3WYq8CHMy4J44WMAAaiHCqGROumV+EWVQhMQNGZsULAifrsSRUwgE
-         faG/Ze5n6vqAY/giFyBf3/1l9DFRjDtf1B4n87QO40x62e434qQShJKL9QZm9q98gRWd
-         5qfx3QlONdPD6P3pwX9QNCdZlPRsWtzQMJCdNlX0tsv4vRdDioLBc+JnqYjb70fZdos4
-         31IPELlOJMY1b36lVmx1HlFmYjxb3ywkH9xKjJjbZUCW8Db1cIVFTHEBfXfcomOYrUPy
-         Tci+yPSbVQikHaaygoLR9mtYJxxdK/SZb6ADkhYdDfttj5rLcHM503OdN9jsHDysBgQT
-         DeEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708508696; x=1709113496;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NyBaoVH2N/0Qpdr6Z5VWnZpm4sf6QgnERUX3ACGj03I=;
-        b=q4A0EXI+0LG8lpM1XjmxgV5eaKgigqIJ8fPngrYbQ+iTJf3+1BFzkySYfoEhjEcW51
-         v0ysla/QJq0Bbb5w90n/LU/IulUm0wglTZHT/B86NuneHT7GEEIaZgi9P4wqhne+Vcu0
-         gQcKkGo9tA4TgjSOM0qbr6jh16B1OtZfe1vairm1gUbsxYUKJ2RSeor5vmqNWo37monJ
-         jBoqCGBlMiQNZlbk3FGx0/de0It6oyYBc7JOdXvrgwb8Kl7kNFb511YA2YSFc2zfy1Jw
-         l4h+0hzdxRlc5HL/qLuIVJDEu98qg4u9y2dFk1RIARr68ayi+g/HuVL4fh50TswyGyEh
-         z96w==
-X-Forwarded-Encrypted: i=1; AJvYcCUaBCC2RuEwzMpVc5LBSprtq0lfeMuO6TKmSRKtBqpI5ShTKkolCIz2j/SC3zvS4GTDaXtMuavegKfVJQCO05BhkqWnh/Za90rs9ajeJw==
-X-Gm-Message-State: AOJu0YyN2JwE5POtLNHGsPMSd+gxsbwDsbHgYIEL2V8qIkle06NPD4iP
-	NZhKqUHicz2XtY8MzEMRWsCJga9lqjN4g55tofEhoDWWwNYlm3Tju8WPhJ+kLt0=
-X-Google-Smtp-Source: AGHT+IHKAvnXAoTx45vIQ/qJlrbVDVZ7kPxLCVw3sTsnFfwKS3/tPeqcsbS4/Vw6sYV6b+JfjsNYeA==
-X-Received: by 2002:a17:906:2b97:b0:a3f:50ae:52d with SMTP id m23-20020a1709062b9700b00a3f50ae052dmr418708ejg.10.1708508696477;
-        Wed, 21 Feb 2024 01:44:56 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id sn24-20020a170906629800b00a3e1939b23bsm4464478ejc.127.2024.02.21.01.44.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 01:44:55 -0800 (PST)
-Message-ID: <7ae0567d-e5d3-4e00-98f7-5139d5879f75@linaro.org>
-Date: Wed, 21 Feb 2024 10:44:52 +0100
+	s=arc-20240116; t=1708509269; c=relaxed/simple;
+	bh=4jrgDTIItOaqzUueSGfkLHel//P9YB1P9vaM2W3h81k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=USoJCa97/9qpqlDY0HEKNwZ94OmFg+LW9pvcDBshJrQ1KoaN11PdVm7GhY8cpsOxS2ifWMGGZVTX2cF4h87BJQlWbndOqbISPmga8PjuUUlxhbtv9QR5LOUyKgOQXdS66NuC0/a/WpLB4dDP1K3aNi4lkjX6hMCe8J/vV/Apm9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rcjIq-0007GT-3K; Wed, 21 Feb 2024 10:54:12 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rcjIo-0020pI-8r; Wed, 21 Feb 2024 10:54:10 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rcjIo-008mZ2-0W;
+	Wed, 21 Feb 2024 10:54:10 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: kernel@pengutronix.de,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Amol Maheshwari <amahesh@qti.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	John Stultz <jstultz@google.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Derek Kiernan <derek.kiernan@amd.com>,
+	Dragan Cvetic <dragan.cvetic@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Appana Durga Kedareswara rao <appana.durga.kedareswara.rao@amd.com>
+Subject: [PATCH 00/11] misc: Convert to platform remove callback returning void
+Date: Wed, 21 Feb 2024 10:53:44 +0100
+Message-ID: <cover.1708508896.git.u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/6] reset: gpio: ASoC: shared GPIO resets
-Content-Language: en-US
-To: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Frank Rowand
- <frowand.list@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, Chris Packham <chris.packham@alliedtelesis.co.nz>,
- Bartosz Golaszewski <brgl@bgdev.pl>, Sean Anderson <sean.anderson@seco.com>
-References: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240129115216.96479-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2007; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=4jrgDTIItOaqzUueSGfkLHel//P9YB1P9vaM2W3h81k=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl1cgqTOtIAO8z59oSIx/sIvhuKH1+b51NAFFWR 3bkknjc77KJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZdXIKgAKCRCPgPtYfRL+ Tk2MCACCKkCdjbNZyc29xxFm4VWa+DhS4+htkcYrw+AdxDNVtW4qk33M6GeSdZmSv2NHyRXr6/e eN0IlmfFp1fVqxEGMnYT8GDi23GMW10uOku+Lfn67lM0aeNnpY7zfosgREfEoNKbM/i5vWpoZHp brAQt+3AmSOat2+Ti1HlNfBW6HUGna/AG7Ymg44ojVw57dZg5/zrML+ZNcq0Z8aKVkDMojJ117Y NKTYvX4AR5Cq4ed/0UoJUPGi+OrhYSbO9+mj6sj298JriIeXAhhVaO7iRejCq4N53L4tXaePU3P Y1hef+xmfdWUvxcS+rNEwgwOHiSwDgSg4f56iCTdzP8ZN9FP
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On 29/01/2024 12:52, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> Dependencies / Merging
-> ======================
-> 1. Depends on !GPIOLIB stub:
->    https://lore.kernel.org/all/20240125081601.118051-3-krzysztof.kozlowski@linaro.org/
-> 
-> 2. Patch #2 (cpufreq: do not open-code of_phandle_args_equal()) and patch #4
->    (reset: Instantiate reset GPIO controller for shared reset-gpios) depend on OF
->    change (patch #1).
+Hello,
+
+this series converts all drivers below drivers/misc to struct
+platform_driver::remove_new(). See commit 5c5a7680e67b ("platform:
+Provide a remove callback that returns no value") for an extended
+explanation and the eventual goal.
+
+All conversations are trivial, because their .remove() callbacks
+returned zero unconditionally.
+
+There are no interdependencies between these patches, so they could be
+picked up individually. But I'd hope that Greg or Arnd picks them up all
+together.
+
+Best regards
+Uwe
+
+Uwe Kleine-König (11):
+  misc: atmel-ssc: Convert to platform remove callback returning void
+  cxl: Convert to platform remove callback returning void
+  misc: fastrpc: Convert to platform remove callback returning void
+  misc: hisi_hikey_usb: Convert to platform remove callback returning
+    void
+  mei: vsc: Convert to platform remove callback returning void
+  misc: open-dice: Convert to platform remove callback returning void
+  misc: sram: Convert to platform remove callback returning void
+  misc: ti-st: st_kim: Convert to platform remove callback returning
+    void
+  misc: vcpu_stall_detector: Convert to platform remove callback
+    returning void
+  misc: xilinx_sdfec: Convert to platform remove callback returning void
+  misc: xilinx_tmr_inject: Convert to platform remove callback returning
+    void
+
+ drivers/misc/atmel-ssc.c           | 6 ++----
+ drivers/misc/cxl/of.c              | 5 ++---
+ drivers/misc/fastrpc.c             | 6 ++----
+ drivers/misc/hisi_hikey_usb.c      | 6 ++----
+ drivers/misc/mei/platform-vsc.c    | 6 ++----
+ drivers/misc/open-dice.c           | 5 ++---
+ drivers/misc/sram.c                | 6 ++----
+ drivers/misc/ti-st/st_kim.c        | 5 ++---
+ drivers/misc/vcpu_stall_detector.c | 6 ++----
+ drivers/misc/xilinx_sdfec.c        | 5 ++---
+ drivers/misc/xilinx_tmr_inject.c   | 5 ++---
+ 11 files changed, 22 insertions(+), 39 deletions(-)
 
 
-Hi Philipp,
-
-I got acks from GPIO folks. The also provided stable tag with dependency:
-https://lore.kernel.org/all/20240213101000.16700-1-brgl@bgdev.pl/
-(which BTW already is in mainline, so you could just merge Linus' tree
-into your next branch)
-
-Can you take entire patchset?
-
-Best regards,
-Krzysztof
+base-commit: 4893c639cc3659cefaa675bf1e59f4e7571afb5c
+-- 
+2.43.0
 
 
