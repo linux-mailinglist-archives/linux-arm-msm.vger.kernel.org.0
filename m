@@ -1,107 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-12059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48B2C85DCB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:56:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCBA185DD67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 15:05:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A27D1C2370C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:56:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D9F51F22F4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:05:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B86D7C083;
-	Wed, 21 Feb 2024 13:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A94BB7E593;
+	Wed, 21 Feb 2024 14:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W0VR8Sr4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fiUyo0CB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFD97BB18;
-	Wed, 21 Feb 2024 13:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EF17C09A;
+	Wed, 21 Feb 2024 14:04:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523787; cv=none; b=ablVDBPXEiBdseQ2CqVPA+TH8A6rnuxXgbIkPGj1J8iSCx5kQA97MpAdGN/5YZTnCXfuyJS+L3uUkyJ8B2y2XePIYqEaFVlPUbZd801+DiKwzvMzDErareMu0eRU8wKNAz/WcpGA0f29P8CosN4gDOxmo7sM0awWopErVehZ0NQ=
+	t=1708524275; cv=none; b=Say+d2Gw5tK+s/BOdjJUYYwaunlSrAgumcsOP9N2EJsAv+AEyclmJiESSYBxtDNF4N/kyO8nOvsfQ1AmUq5B1VM9Of6Q1x9niel842dcObVcRVzOzvBnBQOql0TOp/OaLoKheO/toN+H4qSwW8L5Gc3FWrSxrfGT/Sc7gg+2f3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523787; c=relaxed/simple;
-	bh=FurAbRLSrj+WrRKW3LABQYLQlweDJrWbSesqU4LpggA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=evIy2StuUzqZWeTzTsfq92wJyb4WIvNMXhN64yN/7Sg3D/ewKveu1qvVBI/oqPLb5kZIGl1DI9xSUeUymK2Y/MQxzukSUdKfb29ahruqkHFBNNuxeku885MOY8/H7+aQR8cvqrS5nu4QZcU7cnrkm/GUqwYNz38Ski4DixeD5zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W0VR8Sr4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9821BC433F1;
-	Wed, 21 Feb 2024 13:56:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708523787;
-	bh=FurAbRLSrj+WrRKW3LABQYLQlweDJrWbSesqU4LpggA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=W0VR8Sr4N6zwNgpzxd03p24GPTGwTwfHy3Jny0P2EMSokCr6tGuM5m/izGBB8XoMD
-	 GIfvCZETcBVMHronNhjZzWN8FnppDXmFCD7x1dBPop+IVTbgk1Vg/dzOjYDCrlkPhc
-	 xs7JgXQUwOHJaHdt1iZfN3/P0CxuyulBPJYvGT9lquzOfQlM3qBZGYRoKW7Nm6w01w
-	 QgM6w0pToNTF1umQjZTHjAm7I9zORwwuP+IHXBBYnkM2omQmwDH7tkOMhqKntu00ap
-	 vV0I4vYlJ9owynikwU9O0QzhqnKH3mpCpm1Q7fXkakll7RnoOtwxSf5tmk0L5/lbz8
-	 24j0bvpbIF08A==
-From: Mark Brown <broonie@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-usb@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
-References: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
-Subject: Re: (subset) [PATCH v3 0/3] arm64: dts: qcom: qrb2210-rb1: enable
- Type-C support
-Message-Id: <170852378435.35408.11860058120076755324.b4-ty@kernel.org>
-Date: Wed, 21 Feb 2024 13:56:24 +0000
+	s=arc-20240116; t=1708524275; c=relaxed/simple;
+	bh=BKrPxKcNueFBfyqfTI+yCXKdSZ6PsLI13qpU7crpEYA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gOMA6qcvPNSTOepzWADAMvolEnovh4vLwQiNlQz/h3m+gKXlrzNqc5lgh6zyk67rbUEK3kauG9P5mqDpZ+aRn7XIv0JQsykRuhQM/djNIvbImPHdyMKXlZCV8bUoXuJBRytpmUI4IRZY27XImOSsFYpHjTsCjHCBMjfe6ouHuRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hu-msarkar-hyd.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fiUyo0CB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hu-msarkar-hyd.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41LDxSpe002944;
+	Wed, 21 Feb 2024 14:04:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=D/XNoT3LVPg+OC19k7J9
+	BFPd0mH4TA8Vu07Ukic7bnY=; b=fiUyo0CBEkUM8JKD4Qi8H67a11fejD7I6E2o
+	O16MmHx29ezTcis0LaWzEqXVE2d00+ry3MUgW1hy6YJp4WwfXCtv45aOD7Sa7uCD
+	2Du3zdBNpxaneHlcZtnDqNzko7OKfB+V/7eMD94Z+hzL0JbDA1GjUnb/3EkfurA/
+	hE+wUo5lPFcuahsgsQ68cKa/t/mqzekjW9lzp1mwGcHj1mi1aHcJxXjbHEo4y49b
+	jqqCxs7Usz4Z+W31YjxG3Yt317S5PxkKsO62JGZVSmnLDclyrLEVj9C9Gzvp9IKV
+	shtFJFTH9EkaH0gzQssnfblb6YAUnW7ibZHaqNeM6Ns8D7FpOA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdcrs0u77-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 14:04:15 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41LE4AUb013235;
+	Wed, 21 Feb 2024 14:04:10 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wanvkycen-1;
+	Wed, 21 Feb 2024 14:04:10 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41LE4Aar013227;
+	Wed, 21 Feb 2024 14:04:10 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41LE4AKF013215;
+	Wed, 21 Feb 2024 14:04:10 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 0)
+	id 7965C39B8; Wed, 21 Feb 2024 19:34:09 +0530 (+0530)
+From: root <root@hu-msarkar-hyd.qualcomm.com>
+To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
+        konrad.dybcio@linaro.org, manivannan.sadhasivam@linaro.org,
+        conor+dt@kernel.org, quic_nitegupt@quicinc.com
+Cc: quic_shazhuss@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nayiluri@quicinc.com, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/3] Add support for detecting Controller Level PCIe Errors
+Date: Wed, 21 Feb 2024 19:34:01 +0530
+Message-Id: <20240221140405.28532-1-root@hu-msarkar-hyd.qualcomm.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-a684c
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dAK7buY6I60OWndzdRr5nyyKJdwWyjCk
+X-Proofpoint-GUID: dAK7buY6I60OWndzdRr5nyyKJdwWyjCk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ mlxscore=0 adultscore=0 mlxlogscore=851 bulkscore=0 clxscore=1034
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402210109
 
-On Wed, 21 Feb 2024 01:58:49 +0200, Dmitry Baryshkov wrote:
-> Reuse Type-C support implemented for the PMI632 PMIC (found on Qualcomm
-> Robotics RB2 platform) and implement Type-C handling for the Qualcomm
-> Robotics RB1 platform.
-> 
-> 
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 
-Applied to
+Synopsys Controllers provide capabilities to detect various controller
+level errors. These can range from controller interface error to random
+PCIe configuration errors. This patch intends to add support to detect
+these errors and report it to userspace entity via sysfs, which can take
+appropriate actions to mitigate the errors.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+Also adding global irq support for PCIe RC and add corresponding change
+in PCIe dt-bindings.
 
-Thanks!
+Mrinmay Sarkar (2):
+  dt-bindings: PCI: qcom: Add global irq support for SA8775p
+  arm64: dts: qcom: sa8775p: Enable global irq support for SA8775p
 
-[1/3] regulator: dt-bindings: qcom,usb-vbus-regulator: add support for PM4125
-      commit: b9262cc1b988cdaf9bb5c2a4411d4ad4e7128e8d
+Nitesh Gupta (1):
+  PCI: qcom: Add support for detecting Controller Level PCIe Errors
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  26 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  12 +-
+ drivers/pci/controller/dwc/pcie-designware.h  |  26 ++
+ drivers/pci/controller/dwc/pcie-qcom.c        | 350 ++++++++++++++++++
+ 4 files changed, 408 insertions(+), 6 deletions(-)
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.40.1
 
 
