@@ -1,174 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-11990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-11991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E312585CFB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 06:35:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2165C85CFC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 06:37:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14495282CBB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 05:35:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A42E128327D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 05:37:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A803F39FC3;
-	Wed, 21 Feb 2024 05:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94A3D39FDC;
+	Wed, 21 Feb 2024 05:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KsG6NBf5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="csqpwUFz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94A839AE8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 05:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD85E39ADD;
+	Wed, 21 Feb 2024 05:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708493708; cv=none; b=dqLmycJ0kCmeV63K0U+tRsyFHFIzuy2oMvCY/MY9JMhN0CVG6g4v/2UL+kkfsG8g4pEOYomdVD4Nphu9liRbkpx0lb7sgDel/NLz1tJ4E5OM7fut0S18Tb8/BJMG4QqgklRmM/uBr//+3ee+yPcN1yTP5LU4SiTj3/I2aZeCyf4=
+	t=1708493810; cv=none; b=G3EfME8hhV2k5TRmA4vV6Az8YJS3twJkuXQNut6gXle43zaEmt2i9dvjWJxI762GFQq9xDqY/fgm1JwmzEPXguszxgJXMV8WupWRZOmLgpXO+877xGdBw6JhVH3jALjDpfHwYOlFurbmNuS2/TuNRJCCkMgM7AGv0vng6UryyWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708493708; c=relaxed/simple;
-	bh=r6zgvcn+F+40CdvzpyLEB2jfR6JRjSoUZ4GE4rAhELg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sLvItPIk98cxCYkjBNUoGTImnYb5PRPs/tX7J1di07rYbyI7sOz/2bV52UZX4PK5M/gi7HBkmw0MnFxCBv6LaUQ3vl79ILYy468f2696/Ywkg/sx2tl9yyvlGGEJMzv9DRp97BS7bzCyDJlWKe96/vSpAa/Xlog80JAdNJ+uC3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KsG6NBf5; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3c0a36077a5so3841886b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Feb 2024 21:35:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708493706; x=1709098506; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1hhr4ArsjVqdB0DiyfSSELvRr7XQBdiTPeH39+KVLxE=;
-        b=KsG6NBf589UxeFB0sCZ2G/DtrTLov2xIqmYuvvZJg66wISUJ/lidMqNKDkKcfEoahf
-         KSQl6/XIpNJinCDcje82sOMTghZOwHOqiYE3SyRhqae7v6nYaNBonktr+XZu6vbW7ewJ
-         +mW5JpIQXs4Ofan8ygt82g4/Z7yoBYfnnfg90taCwdv0HIZ0Zcaoql/Op2MFeAW0p7Vw
-         +/+d/L+HYqBoLHaGuxc39EVdqTxYySUKXOANnI1FrUhSmHLLlXAMuzwYueCs9BvybtFG
-         aBfgqkhl6cHg2qiy45t5aHGse7GVSxhHbTa0a6RubBH51sSqhuA2soqdjNISvScyg65f
-         LyZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708493706; x=1709098506;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1hhr4ArsjVqdB0DiyfSSELvRr7XQBdiTPeH39+KVLxE=;
-        b=UhQ22alKfzwLFdsSwzg/QhZmXl9lG6A+978e/sCLzNmBYa3bTSicbmvb+sI41L3RMW
-         4BpKGB2p8l5nvxv35N2R6nMq4hHnx0IrsdjQipo0SgFNFDN/lY0SdRKHo7++MIWjNVVX
-         4JC6i8hNuOvGtPNCSPDw2ABrEEpzC2qFyR5DiyX03wkcHtyAA6aW0LAtyETY8k7pqE1v
-         WGJ1HTnn/shcqt9y3sMUjEwZ/5pDt3iRUOAacJSVoloeOzy6p5/TxH3XWI1NmhDiuV/L
-         2v8UQuO/iJA0R4PT6ATG/efM4E/XmdaH6D8TLwHNdHlAAOoa1KUIkTIrVH7T6Myk5fio
-         39kA==
-X-Forwarded-Encrypted: i=1; AJvYcCVuJRQ3l8cxyhQlczQW/3S2QKFf0OUw0YU8PuNZoihQn5L5B1KvLkhtI7bTbvcTlETCAoIlCZNVwFdIhlVgrcZiIzqcDAxmrp2lt4C3cw==
-X-Gm-Message-State: AOJu0YziORFg/NzJio8fDw2zrGMBHgj+aJw3dqgXEcvgY4xbBrOvTHJI
-	uUHXJXDVDXne//Ew50LM7/3P5EfvaB5d16Kns6fzEI4iZVSXv9GYdq3ZtTxlIA==
-X-Google-Smtp-Source: AGHT+IHfq+3NGWy3J5i374ZZPFpMwfNrL45PZq0YLZf5MA0T+86521iKgf5TclQFlYXI+9s2KYHMWQ==
-X-Received: by 2002:a05:6808:190e:b0:3c0:3ae7:48fa with SMTP id bf14-20020a056808190e00b003c03ae748famr22256951oib.38.1708493706001;
-        Tue, 20 Feb 2024 21:35:06 -0800 (PST)
-Received: from thinkpad ([117.207.28.224])
-        by smtp.gmail.com with ESMTPSA id fn16-20020a056a002fd000b006e3dfb2ef4esm6481314pfb.95.2024.02.20.21.35.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Feb 2024 21:35:05 -0800 (PST)
-Date: Wed, 21 Feb 2024 11:04:57 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Siddharth Vadapalli <s-vadapalli@ti.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
-Subject: Re: [PATCH v2 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
-Message-ID: <20240221053457.GC11693@thinkpad>
-References: <20240216-dw-hdma-v2-0-b42329003f43@linaro.org>
- <20240216-dw-hdma-v2-1-b42329003f43@linaro.org>
- <70a2f29f-301d-40c6-bc37-abab35286caa@ti.com>
+	s=arc-20240116; t=1708493810; c=relaxed/simple;
+	bh=h/VjfafKWnZdt701kQi9hEaeMSuYAmya+J9erv+EEuM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IQ5U1Z3X/g7VApyNW81FVq+3M86IBWYaC1KUglVnbvUduzuAr9bh8w1+pjL50MXHsgI1w6JRsBX0MPUVUE2SSRcSplMkZbc8YkwJN0U2616I2c14YGXyd9Gvqv4iRuWhzCkgMDue1FzZzaJFAU2j/VCf5+anfHLPqUW5dRCaUTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=csqpwUFz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41L1jdSL030713;
+	Wed, 21 Feb 2024 05:36:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=S5n/WpV8JcN0mx2fE3uU/d+OZrGuwRrR1d3N//9CiFA=; b=cs
+	qpwUFzcl29oiOj+cr6STCjwPDDiknXqXp+BiwsKat9U3dEcTGj5KLCoLVseOafAy
+	1W1jatIWVkw+PUhTbQOimI693MkpC89cxcVvDZUWN3NUq4D0Zb9gkgO6Xer4m8EI
+	ALJuHSVKkF78jjz7xUrvWtDk7RWS9150zMExJmc3AfsSKDIxWNc3qpUFYKl3RiYm
+	RtnWvktckBz9gHcfsGNN0fEe9lGCTlrxeRSKJ5jlpbeO3WKa7rPKO0rBJB59uIpx
+	ax7IycEeJcNWjVCDKPkuqRjrAEwpoytBSQ+xePQTKMl31kXHH+oBzkDj595/zVQF
+	yXBXHBIjbJxMSF/xm4pQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wd21s924s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 05:36:23 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41L5aMKl003639
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 05:36:22 GMT
+Received: from [10.218.16.59] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 20 Feb
+ 2024 21:36:11 -0800
+Message-ID: <0b9e807d-e0ca-411c-9a2b-3d804bdf168c@quicinc.com>
+Date: Wed, 21 Feb 2024 11:06:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <70a2f29f-301d-40c6-bc37-abab35286caa@ti.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <jic23@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
+        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
+        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
+        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
+ <20231231171237.3322376-3-quic_jprakash@quicinc.com>
+ <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
+ <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
+ <f52b2d5e-b2b4-48ae-a6a6-fc00c89662d2@linaro.org>
+Content-Language: en-US
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <f52b2d5e-b2b4-48ae-a6a6-fc00c89662d2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fGcC1wH5IHx3LPFKis3LhLj_W6R4ZpCQ
+X-Proofpoint-GUID: fGcC1wH5IHx3LPFKis3LhLj_W6R4ZpCQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402210039
 
-On Tue, Feb 20, 2024 at 05:41:41PM +0530, Siddharth Vadapalli wrote:
-> On 24/02/16 11:04PM, Manivannan Sadhasivam wrote:
-> > In order to add support for Hyper DMA (HDMA), let's refactor the existing
-> > dw_pcie_edma_find_chip() API by moving the common code to separate
-> > functions.
-> > 
-> > No functional change.
-> > 
-> > Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware.c | 40 +++++++++++++++++++++++-----
-> >  1 file changed, 33 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> > index 250cf7f40b85..3a26dfc5368f 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> > @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
-> >  	.irq_vector = dw_pcie_edma_irq_vector,
-> >  };
-> >  
-> > -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
-> > +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
-> > +{
-> > +	pci->edma.dev = pci->dev;
-> > +
-> > +	if (!pci->edma.ops)
-> > +		pci->edma.ops = &dw_pcie_edma_ops;
-> > +
-> > +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
-> > +}
-> > +
-> > +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
-> >  {
-> >  	u32 val;
-> >  
-> > @@ -902,8 +912,6 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
-> >  
-> >  	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
-> >  		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
-> > -
-> > -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
-> >  	} else if (val != 0xFFFFFFFF) {
-> >  		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+Hi Krzysztof,
+
+On 2/17/2024 7:43 PM, Krzysztof Kozlowski wrote:
+> On 16/02/2024 11:39, Jishnu Prakash wrote:
+>> Hi Krzysztof,
+>>
+>> On 1/4/2024 1:48 PM, Krzysztof Kozlowski wrote:
+>>> On 31/12/2023 18:12, Jishnu Prakash wrote:
+>>>> For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
+>>>> following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+>>>>
+>>>> It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
+>>>> going through PBS(Programmable Boot Sequence) firmware through a single
+>>>> register interface. This interface is implemented on an SDAM (Shared
+>>>> Direct Access Memory) peripheral on the master PMIC PMK8550 rather
+>>>> than a dedicated ADC peripheral.
+>>>>
+>>>> Add documentation for PMIC5 Gen3 ADC and macro definitions for ADC
+>>>> channels and virtual channels (combination of ADC channel number and
+>>>> PMIC SID number) per PMIC, to be used by clients of this device.
+>>>>
+>>>> Changes since v2:
+>>>> - Moved ADC5 Gen3 documentation into a separate new file.
+>>> Changelog goes under ---.
+>>>
+>>> Why did you do this? What is the rationale? Sorry, this patchset goes
+>>> nowhere.
+>>
+>>
+>> I'll elaborate this more in the next patchset. There are two main
+>> reasons for adding this documentation in a new file:
 > 
-> Minor suggestion:
+> This was more than a month ago? You reply to my comment with 1.5 months
+> delay?
 > 
-> The above section prior to this patch was:
-> 	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
-> 		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> Sorry, I am not in the context and I am not going back to it. I have
+> many other emails where my questions are addressed faster than 1.5 months.
 > 
-> 		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
-> 	} else if (val != 0xFFFFFFFF) {
-> 		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+> The patch is not even in my mailbox, long gone.
+> Why you are making it so difficult for reviewers?
 > 
-> 		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
-> 	} else {
-> 		return -ENODEV;
-> 	}
-> 
-> And this patch is removing the call to dw_pcie_readl_dma() in the "if"
-> condition above. So the curly braces after this patch will only be
-> present because of the "else if" statement. So is the following change a
-> good idea?
+> You will get answers like I am not in context, sorry. Next time don't
+> respond after 1.5 months.
 > 
 
-Yes indeed. Actually, EDMA_MF_EDMA_LEGACY is the default mapping format (because
-its value is 0x0), but setting it explicitly would also make sense.
+You're right - I'll do my best to get back to review comments in a 
+reasonable time frame.
 
-- Mani
+> 
+>>
+>> 1.This device is not exactly like the existing QCOM VADC drivers as it
+>> now combines VADC functionality (reading ADC channel on client request)
+>> with ADC_TM functionality (thermal threshold monitoring).
+> 
+> Does no explain touching bindings. Your drivers don't matter for bindings.
+> 
+>>
+>> 2.Adding this device's bindings in the existing qcom,spmi-vadc.yaml file
+> 
+> No rationale was provided in commit msg.
+> 
+>> is not possible as it would require updating some of the existing
+>> top-level constraints. (for the older devices in that file, "reg" and
+>> "interrupts" can have at most one item, while this device can have more
+>> than one item under these properties.)
+> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+> How is this a problem?
+
+In qcom,spmi-vadc.yaml, we have the following top-level constraints for 
+the "reg" and "interrupts" properties:
+
+   reg:
+     maxItems: 1
+
+   interrupts:
+     maxItems: 1
+
+For the ADC5 Gen3 device being added now, these constraints cannot be 
+followed always, as there may be more than one peripheral under one 
+device instance, each with a corresponding interrupt. For example, the 
+above properties could be like this for a ADC5 Gen3 device:
+
+     reg = <0x9000>, <0x9100>;
+     interrupts = <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
+                  <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
+
+
+I could not overwrite the top-level constraints for the new device 
+"qcom,spmi-adc5-gen3" alone in qcom,spmi-vadc.yaml, so I tried to remove 
+the constraints from the top level and add them back conditionally for 
+all the device types separately, but you told me not to remove them 
+(full message: 
+https://lore.kernel.org/linux-iio/832053f4-bd5d-4e58-81bb-1a8188e7f364@linaro.org/)
+
+Since these constraints cannot be modified for a specific new device or 
+removed, I think the only way to accommodate this new device is to add 
+it in its own new file.
+
+Is this a sufficient justification for adding this documentation in a 
+new file or do you have any other suggestions?
+
+Thanks,
+Jishnu
+
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
