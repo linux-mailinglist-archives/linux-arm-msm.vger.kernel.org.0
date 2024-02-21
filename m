@@ -1,135 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-12079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C8C985E055
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 15:54:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 48E5685E1B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 16:45:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D6ED1C23FE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:54:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 792571C2455D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 15:45:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9E07FBB8;
-	Wed, 21 Feb 2024 14:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8061980C0B;
+	Wed, 21 Feb 2024 15:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VEkUQiPu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inS2MZoI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138557FBB3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 14:54:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B588060B;
+	Wed, 21 Feb 2024 15:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708527284; cv=none; b=gZtygcdzNGqnF1F30IpEQggA83X3i+cxl6te71ke85dRrA9sOUzrDvgF2FdspgXr06z9xfVxys9SJcMq8rZZYbeFMt7yqnNAtvTd7Na9YzG28KtONKlqEc67YuvuNqe5eGyfhi024z0W9VDKTk4lZlo14QVmUnWBgI8sswlTrn8=
+	t=1708530303; cv=none; b=oCRT9rHfZBOYqvbWgskL/dp+frsxXTRf5pFxMZXa2FEHiO3yh0s5ifLA+z7AMZkt2Amp6m/MF2aAC/N1FT5Dg2c7mYBZWpoqFZ8mnEqqXpR+KOXZEZ7ipFQpkQHrh9RJATNrBjnFgxgw/qI4BOCxZlOh+1EwD6UXHVrvPvod6yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708527284; c=relaxed/simple;
-	bh=d605qvE8oJLHFh8wYpuXeD8Ss2JHKYc9jQTlWWU/2bI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U6sVBpJg5SK9MvN++U1ooAJmzKMQ2PF3DMq89U0UMr+LjZqpOB4wU0NZds3j1QFP+4uNOJobsI05ptakPzFHGENwW5BzDAacgEZeuoZ7Pdsbt28ddbITwb7882qraG8TogmlFP9ZjbrPk9l4IzhQfGMe8sQOKv/tSGH6B7BvhM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VEkUQiPu; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a3d5e77cfbeso1173210966b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 06:54:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708527281; x=1709132081; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PwDrSDwbjDuhxc0snjMmTqWQWr4yGG/YePGvnYIgDzA=;
-        b=VEkUQiPuRTysHhqswZ0Unv01p4biFu22CZMoufZ12rNK2Aofk3L6Pm1+GqyS9YyFlE
-         ghwh+rIlsf1L2Ek4khEIWz/bC2mRCoy8uT4dPVaruQZbbwLv/UUwjGexH1DMoHU/h/hY
-         VyApC0OubwFJTskhwJYnGI8AFxnc+ERG9xuPVHcGQUa30aJlaAk0s2Y0ZLnJInuMyPa7
-         WJm0Wq2NWl0iUOpG8qCBmDCQVnH8fkdIm80UaXggsZUhSL+UD6kh1WNyrIe1tDlWxPU6
-         aWwEV+Nshtwd2JDrXOP0422nec9J+ZZvw6jupXRrvoZBraD37YzQf6mexQ97m5SLHqWL
-         YTaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708527281; x=1709132081;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PwDrSDwbjDuhxc0snjMmTqWQWr4yGG/YePGvnYIgDzA=;
-        b=b4Y79eoNv7MD+tgq+Km0HtxnyKN7ULS8gC0ag2F78SojKWRhtuExqJO4erj6v1ov8j
-         VaxLghmTqKvf8xJ3Cf4rieVOI8EN4vqmscivNXFimJn9Xvw/kmwJ7kKhklr2iwzigcHC
-         36RkcpKy1Mx/+XdAXsH+octeFStD8WMyo6uI2f0cEl35xlPiSCSG31t4+QGdxJoCCyOs
-         VnlMFd9i6ivISktQOUbBx1n7cfS2+8Uj1weiwB8NbbXlgLLXK0339jLl6F5PjKni5iFn
-         KJZVaTVQV1q5iym8WinPOzh1m8s9lnoC2lknXPVfEDiIZHNhl/gIHX2dzEYVN3Y8uzNV
-         wdzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvNKHLgYB1l4i1wnNkeKKPha6sQy+G1XjgI71eeMYKogl0ghq4BSumN6WxFK1SOs8J9uLjWBcJm/gxiagdSzDQnRRhuhD2qPN4wa8xXA==
-X-Gm-Message-State: AOJu0Yzdwfgund06E6Y2p7KKYsX3RrFieaNOgd4du7Ey38eSi7bYdKBn
-	KhaCc2rtxvAuulxd3VFtJsjiCnsVCjqbg+/TECKPTCCSQrk10iDOA3y7yHuAOnE=
-X-Google-Smtp-Source: AGHT+IFa0ka2O3YAMzNW85WaQJjneiiknkL9slfUTJVV+TJHkqkF2wZ1NixE8hX5BSi21jsQvB7kdQ==
-X-Received: by 2002:a17:906:fa87:b0:a3e:c6de:e5ae with SMTP id lt7-20020a170906fa8700b00a3ec6dee5aemr7804788ejb.0.1708527281343;
-        Wed, 21 Feb 2024 06:54:41 -0800 (PST)
-Received: from linaro.org ([188.24.162.93])
-        by smtp.gmail.com with ESMTPSA id mn6-20020a1709077b0600b00a3e12ded9b7sm4755684ejc.169.2024.02.21.06.54.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 06:54:40 -0800 (PST)
-Date: Wed, 21 Feb 2024 16:54:39 +0200
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: Add SMB2360 pmic dtsi
-Message-ID: <ZdYOr6/8dupbMdbF@linaro.org>
-References: <20240221-x1e80100-dts-smb2360-v2-0-037d183cc021@linaro.org>
- <20240221-x1e80100-dts-smb2360-v2-2-037d183cc021@linaro.org>
- <bc45229c-6412-4fd5-ba8e-28b293d7864b@linaro.org>
+	s=arc-20240116; t=1708530303; c=relaxed/simple;
+	bh=Dx1Syz9O7J+YAvuPHu3WZWipG8gNA1k5VFmM93qyay0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=f3BNrN+R112FhM2bHye12Px2+ozZyKUPWv01RUeUoewxfbIiNrsKOUd2+vuqBrn+5XWY/LIAVyufw3MKWF9zql/k7HoPTzD5aHpXgwP59PsdmgdWM7NXsS8/3bKhOjBuw82cVYPWLNKXMiiiFMUWMpyBxsueNUrmILc/SgpHz1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inS2MZoI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F0EC43142;
+	Wed, 21 Feb 2024 15:45:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708530302;
+	bh=Dx1Syz9O7J+YAvuPHu3WZWipG8gNA1k5VFmM93qyay0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=inS2MZoI7gFXzSn1OqaDYssIZN6F+jKDv0klzkkRDqjzr1Eid3oa1ab8ohcoq7RHl
+	 Ph/53TomNjZqyH/2+MJyw6w6r+vJyEB6H1dVH61lizDeZOD0R8MPh1PDRFYbQ2ubrE
+	 //Sr6E2bjoFqGp1iM5t7kSkr/lyBMOnIRtNFD1WyErTmUbx7yYiUnoCyzpH50yMYnO
+	 BbUREfBcFRGeWi34XfuyED1VwAbs+m8QLHHp9INeKs4zbx+8VcVdWdHOVmuRMEItML
+	 17u4UUbPksP9Q2kWvyM4XoexTdehAa1ZqL5ZKoRIVKxr9RuMpSHhJjMY/cMRSKWamG
+	 VYtLGZXxJEwhw==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Rob Herring <robh@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: spm: fix building with CONFIG_REGULATOR=n
+Date: Wed, 21 Feb 2024 16:44:51 +0100
+Message-Id: <20240221154457.2007420-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bc45229c-6412-4fd5-ba8e-28b293d7864b@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On 24-02-21 15:41:41, Konrad Dybcio wrote:
-> On 21.02.2024 15:38, Abel Vesa wrote:
-> > Add nodes for SMB2360 with the eUSB2 repeater nodes.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/smb2360.dtsi | 51 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 51 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/smb2360.dtsi b/arch/arm64/boot/dts/qcom/smb2360.dtsi
-> > new file mode 100644
-> > index 000000000000..8d7bdb56e6fe
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/smb2360.dtsi
-> > @@ -0,0 +1,51 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2023, Linaro Limited
-> > + */
-> > +
-> > +#include <dt-bindings/interrupt-controller/irq.h>
-> > +#include <dt-bindings/spmi/spmi.h>
-> > +
-> > +/ {
-> > +};
-> > +
-> > +&spmi_bus1 {
-> > +	smb2360h: pmic@7 {
-> 
-> Hm, I'm not 100% sure about bringing in this letter-suffix notation..
-> 
-> But then, is there anything better? What are they called in schematics?
-> SMB2360_n, perhaps?
+From: Arnd Bergmann <arnd@arndb.de>
 
+The newly added code causes a build failure when -Werror is set:
 
-Yeah, just realized that this is wrong. I need to do something like
-sc8280xp-pmics.dtsi.
+drivers/soc/qcom/spm.c:388:12: error: 'spm_get_cpu' defined but not used [-Werror=unused-function]
 
-There are different sources of information for the suffix, some of them 
-use smb2360k, some of them use smb2360_0. Will go with the second.
+Remove the #ifdef and instead use an IS_ENABLED() check that lets the
+compiler perform dead code elimination instead of the preprocessor.
 
-> 
-> konrad
+Fixes: 6496dba142f4 ("soc: qcom: spm: add support for voltage regulator")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/soc/qcom/spm.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
+index 5eefaec72a13..06e2c4c2a4a8 100644
+--- a/drivers/soc/qcom/spm.c
++++ b/drivers/soc/qcom/spm.c
+@@ -411,7 +411,6 @@ static int spm_get_cpu(struct device *dev)
+ 	return -EOPNOTSUPP;
+ }
+ 
+-#ifdef CONFIG_REGULATOR
+ static int spm_register_regulator(struct device *dev, struct spm_driver_data *drv)
+ {
+ 	struct regulator_config config = {
+@@ -474,12 +473,6 @@ static int spm_register_regulator(struct device *dev, struct spm_driver_data *dr
+ 
+ 	return 0;
+ }
+-#else
+-static int spm_register_regulator(struct device *dev, struct spm_driver_data *drv)
+-{
+-	return 0;
+-}
+-#endif
+ 
+ static const struct of_device_id spm_match_table[] = {
+ 	{ .compatible = "qcom,sdm660-gold-saw2-v4.1-l2",
+@@ -559,7 +552,10 @@ static int spm_dev_probe(struct platform_device *pdev)
+ 	if (drv->reg_data->reg_offset[SPM_REG_SPM_CTL])
+ 		spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
+ 
+-	return spm_register_regulator(&pdev->dev, drv);
++	if (IS_ENABLED(CONFIG_REGULATOR))
++		return spm_register_regulator(&pdev->dev, drv);
++
++	return 0;
+ }
+ 
+ static struct platform_driver spm_driver = {
+-- 
+2.39.2
+
 
