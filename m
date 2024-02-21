@@ -1,119 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-12080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48E5685E1B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 16:45:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2B5985E374
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 17:34:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 792571C2455D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 15:45:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E3F72848CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 16:34:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8061980C0B;
-	Wed, 21 Feb 2024 15:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AFFE80628;
+	Wed, 21 Feb 2024 16:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inS2MZoI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VYQtHztS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B588060B;
-	Wed, 21 Feb 2024 15:45:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FB033F7;
+	Wed, 21 Feb 2024 16:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708530303; cv=none; b=oCRT9rHfZBOYqvbWgskL/dp+frsxXTRf5pFxMZXa2FEHiO3yh0s5ifLA+z7AMZkt2Amp6m/MF2aAC/N1FT5Dg2c7mYBZWpoqFZ8mnEqqXpR+KOXZEZ7ipFQpkQHrh9RJATNrBjnFgxgw/qI4BOCxZlOh+1EwD6UXHVrvPvod6yI=
+	t=1708533288; cv=none; b=BOqGMID0ji4iuJ7xzPvVz2fATOcQjv1ZbEEAHmHB/TlYtsMTElrZavS37ZLlqW/tDMptFuIvnHmpxP7s47zejv5vNzawAOMM+WI5rmCUFz+AgW2YNQ1k2TmmgYKPTxDa+7yKruJkif76qUmH2NTmyHOExWP42hs6O5MWc5MUVA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708530303; c=relaxed/simple;
-	bh=Dx1Syz9O7J+YAvuPHu3WZWipG8gNA1k5VFmM93qyay0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=f3BNrN+R112FhM2bHye12Px2+ozZyKUPWv01RUeUoewxfbIiNrsKOUd2+vuqBrn+5XWY/LIAVyufw3MKWF9zql/k7HoPTzD5aHpXgwP59PsdmgdWM7NXsS8/3bKhOjBuw82cVYPWLNKXMiiiFMUWMpyBxsueNUrmILc/SgpHz1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inS2MZoI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F0EC43142;
-	Wed, 21 Feb 2024 15:45:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708530302;
-	bh=Dx1Syz9O7J+YAvuPHu3WZWipG8gNA1k5VFmM93qyay0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=inS2MZoI7gFXzSn1OqaDYssIZN6F+jKDv0klzkkRDqjzr1Eid3oa1ab8ohcoq7RHl
-	 Ph/53TomNjZqyH/2+MJyw6w6r+vJyEB6H1dVH61lizDeZOD0R8MPh1PDRFYbQ2ubrE
-	 //Sr6E2bjoFqGp1iM5t7kSkr/lyBMOnIRtNFD1WyErTmUbx7yYiUnoCyzpH50yMYnO
-	 BbUREfBcFRGeWi34XfuyED1VwAbs+m8QLHHp9INeKs4zbx+8VcVdWdHOVmuRMEItML
-	 17u4UUbPksP9Q2kWvyM4XoexTdehAa1ZqL5ZKoRIVKxr9RuMpSHhJjMY/cMRSKWamG
-	 VYtLGZXxJEwhw==
-From: Arnd Bergmann <arnd@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Rob Herring <robh@kernel.org>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: spm: fix building with CONFIG_REGULATOR=n
-Date: Wed, 21 Feb 2024 16:44:51 +0100
-Message-Id: <20240221154457.2007420-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1708533288; c=relaxed/simple;
+	bh=IXtBwQmKruZAza5PPfIoDncEL20X1bqJgYQkKgYdcEk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Yz+fkqOUNNouvjzu5w+CwHJuOQCp6Ztas7+r8QYCkyCGHlvXUFp51sl+MLv59j/H5DenwScKivE7kTVgQyDhOe4N6GppbMAgd1CUP1RwAB1H29XAzzFTHnNI7unbU//lSR1QZvVgLR0kPYlts3ibxXgjg7RUqWjAvxbIiMr10QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VYQtHztS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41LEqcH2019978;
+	Wed, 21 Feb 2024 16:34:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=7mzPo7coiqD4bNBtSp4s9OWc4VpfNlVHmmPxn0rzbcE=; b=VY
+	QtHztSYWfjmYHuZIDD3V74IjT+WlD2G0zVSu5bCMJK0scSmiaR0WFJe0QcgPP/PT
+	yiGWNJrOTjTZZDonnzKbKUZnybpzfnUz0oOXEoZEinc7KuY1W9dzMPGHhNb9ipwW
+	aABYTGhs5Bl0vuF1k04NiWEB4EbJfPxrBV2DdqXwOIhCLhaomQTiUaZ4PStTWcAd
+	BMoGzo6YDXkjPC2IXQHfIcD1Ep7qScKS0NZNsvTmVkVaJOkHpskVuM3E6yxPS0Yy
+	N+c+eNDhXFH51ZdnFWXWdtFfz6Y21FQZop6GBOeVdztLP4rALeTwwpT95XP4dXjK
+	KGPqXRWnRRpdKlLEa/Jw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdfm38tkk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 16:34:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LGYOuK022925
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 16:34:24 GMT
+Received: from [10.110.34.22] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
+ 2024 08:34:24 -0800
+Message-ID: <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
+Date: Wed, 21 Feb 2024 08:34:23 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: ath11k allocation failure on resume breaking wifi until power
+ cycle
+Content-Language: en-US
+To: Vlastimil Babka <vbabka@suse.cz>, Kalle Valo <kvalo@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Linux Wireless <linux-wireless@vger.kernel.org>,
+        <ath11k@lists.infradead.org>, LKML <linux-kernel@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
+References: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IN1DWg1r0Czox-TgoO1ISaa0L8hWUYuF
+X-Proofpoint-ORIG-GUID: IN1DWg1r0Czox-TgoO1ISaa0L8hWUYuF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-21_03,2024-02-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=711 bulkscore=0 impostorscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 phishscore=0 suspectscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402210128
 
-From: Arnd Bergmann <arnd@arndb.de>
+On 2/21/2024 6:39 AM, Vlastimil Babka wrote:
+> Hi,
+> 
+> starting with 6.8 rc series, I'm experiencing problems on resume from s2idle
+> on my laptop, which is Lenovo T14s Gen3:
+> 
+> LENOVO 21CRS0K63K/21CRS0K63K, BIOS R22ET65W (1.35 )
+> ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+> ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+> ath11k_pci 0000:01:00.0: fw_version 0x1106196e fw_build_timestamp 2024-01-12 11:30 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
+> 
+> The problem is an allocation failure happening on resume from s2idle. After
+> that the wifi stops working and even a reboot won't fix it, only a
+> poweroff/poweron cycle of the laptop.
+> 
+> This is order 4 (costly order), GFP_NOIO (maybe it's originally GFP_KERNEL
+> but we restrict to GFP_NOIO during resume) allocation, thus it's impossible
+> to do memory compaction and the page allocator gives up. Such high-order
+> allocations should have a fallback using smaller pages, or maybe it could at
+> least retry once the restricted GFP_NOIO context is gone.
+> 
+> I don't know why it never happened before 6.8, didn't spot anything obvious
+> and it happens too unreliably to go bisect. Any idea?
 
-The newly added code causes a build failure when -Werror is set:
+I've asked the development team to look at this, but in the interim can
+you apply the two hibernation patchsets to see if those cleanups also
+fix your problem:
 
-drivers/soc/qcom/spm.c:388:12: error: 'spm_get_cpu' defined but not used [-Werror=unused-function]
+[PATCH 0/5] wifi: ath11k: prepare for hibernation support
+https://lore.kernel.org/linux-wireless/20240221024725.10057-1-quic_bqiang@quicinc.com
 
-Remove the #ifdef and instead use an IS_ENABLED() check that lets the
-compiler perform dead code elimination instead of the preprocessor.
-
-Fixes: 6496dba142f4 ("soc: qcom: spm: add support for voltage regulator")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/soc/qcom/spm.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/soc/qcom/spm.c b/drivers/soc/qcom/spm.c
-index 5eefaec72a13..06e2c4c2a4a8 100644
---- a/drivers/soc/qcom/spm.c
-+++ b/drivers/soc/qcom/spm.c
-@@ -411,7 +411,6 @@ static int spm_get_cpu(struct device *dev)
- 	return -EOPNOTSUPP;
- }
- 
--#ifdef CONFIG_REGULATOR
- static int spm_register_regulator(struct device *dev, struct spm_driver_data *drv)
- {
- 	struct regulator_config config = {
-@@ -474,12 +473,6 @@ static int spm_register_regulator(struct device *dev, struct spm_driver_data *dr
- 
- 	return 0;
- }
--#else
--static int spm_register_regulator(struct device *dev, struct spm_driver_data *drv)
--{
--	return 0;
--}
--#endif
- 
- static const struct of_device_id spm_match_table[] = {
- 	{ .compatible = "qcom,sdm660-gold-saw2-v4.1-l2",
-@@ -559,7 +552,10 @@ static int spm_dev_probe(struct platform_device *pdev)
- 	if (drv->reg_data->reg_offset[SPM_REG_SPM_CTL])
- 		spm_set_low_power_mode(drv, PM_SLEEP_MODE_STBY);
- 
--	return spm_register_regulator(&pdev->dev, drv);
-+	if (IS_ENABLED(CONFIG_REGULATOR))
-+		return spm_register_regulator(&pdev->dev, drv);
-+
-+	return 0;
- }
- 
- static struct platform_driver spm_driver = {
--- 
-2.39.2
-
+[PATCH 0/3] wifi: ath11k: hibernation support
+https://lore.kernel.org/linux-wireless/20240221030026.10553-1-quic_bqiang@quicinc.com
 
