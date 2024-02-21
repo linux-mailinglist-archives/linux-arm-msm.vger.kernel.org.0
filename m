@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-12107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 334B785ED26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 00:39:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D29785ED2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 00:41:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E75D1F23652
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 23:39:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BE1DE1C2227E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 23:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA6EB12B15A;
-	Wed, 21 Feb 2024 23:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75C881752;
+	Wed, 21 Feb 2024 23:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GHWBp9rd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G08zCkDY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE5981726
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 23:38:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED5C12BEAA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 23:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708558739; cv=none; b=fYc4KyUok4QO7UqpR1Z6aVX+oBF+XYbP8Nd85uHFAXFAc7u81rmOYWSynznpAJp9WIV7VvBsSYqo3E8z6nsYfP8DfUDnCylPPbbnKcKzlHHlSHsTGbrEhfB3pjnoy4bPVk0Sd3mk71OCOBLOqg2n/bSwi0sxVg0jTbMRJA2LJjA=
+	t=1708558884; cv=none; b=FrXKb7dPy5V0BOdZpwdroGZSlRq8Sxtd+SthddY4m+VBNKZw4qXIgvI05q8tRccu5TAdf8H8eT/vW4oMirgdP/Eb+CuUmgsHVt9D7e9CBPaInTOtL56qooibqt/fyIPkNkDx4S+P5Qu/mzYVAdspaZkZ7jMbWA5Wdkz28AyDods=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708558739; c=relaxed/simple;
-	bh=zwQaUfTd5VGQ23NzTxo29zCF6MbG+EiG7CQ+klarN7E=;
+	s=arc-20240116; t=1708558884; c=relaxed/simple;
+	bh=FvoifoPM//IS5W9kYck02wtlG994BL//wpfQlUkE/K0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FAOG5Hvyd7sO24xkXOtXhHWHKNV1gGRwkQCImwuaSgzUrUoxriQn92ppH5xtANsqFJRc6oMEJJN1bgFBQCCtEb9aBBteLrAUkEUHenWIn1mTImUR5eTlKauAWlcsdRBkcam0hpQyuO5/6ePEtmDBzoAmgF2pKvhhQXnAionsSMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GHWBp9rd; arc=none smtp.client-ip=209.85.128.182
+	 To:Cc:Content-Type; b=R8UyKH3cM6YzIccabnf1yNdlCr4OhZsISSwDM1xg8ucvZhXYNtaKbB/eai96RfQAOl1an7tJCWbGI4V5nNQHri900uKwO2g8oHquFkR0XRH/VtWCGzihrpinSLckBwQnxhaVZ19SHiR33PFgZgJdfM4BfsW7yDnFgan3LAWNrTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G08zCkDY; arc=none smtp.client-ip=209.85.219.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-607d9c4fa90so75486477b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 15:38:57 -0800 (PST)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc6e080c1f0so6853767276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 15:41:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708558737; x=1709163537; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708558882; x=1709163682; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/dnZ6qXwhjaIXNXWlJKsv9Hd+U+Uq/9NkmI5u+eHav8=;
-        b=GHWBp9rdKNBLa9ItaUOjcsoQABVCL8u0XsemikGmqzKl1ZJtcac4+4OQs4HTZHNrie
-         /FHnkZVV5Z8y9Eee6s16au2tUW4qaaPY7z51g64PU95wU9fjM8g7dGsxcWDqZF03QjLb
-         ohLCtAMzwvPquEC+C2UyEqvcdUGdO2blu+SeJ6WcyBiW0LuWLtLRwSE1Pn0OvaR0oqvx
-         YBLWcTXYMG9fWR3undOueHHMq+A9sjorLqCWPGtYz8Jc2NEdXO2hPy+C/WWPGofk8Lah
-         Zss431F6P0VP1RE6H7WerMLZmmQyOdr8ABPEBiGTeOeLilD6KW+kvO9ZuPL6F+oeMwoo
-         wU4Q==
+        bh=gum7JHLE82lB2obWuKI41M7h3ZETASXy1kYfBRSiY+0=;
+        b=G08zCkDYlqw/9S1rH01XI3kWg8V47pcXeYM8Yb98f87tB76bQOTcQoOu24yC5I/cqh
+         gspGQgZF6BESd3xj71tLYjzxcG9HAShs/sGc0rKyWCB8+RLoybur/nLJEk/2FQGX9qFj
+         lGIoPop8ZA4J752mrjNtzeYLhFv9G29E2Aocr118HzU4pn6KqWu1riSKIcM4WQRF5N7C
+         Gkp1TJIIdKum7ntue5zzDzviLhZ/jCeDIDjdvBKOHdJRAD8+u7lG0+L5MoqER4lofpAT
+         yR0ZogRwfCZCtvXzKo5pJRaBUdvWhlZLXQTvxZATQTX7rtwcXAogFJM6jxYRxLE8B3Zg
+         z0TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708558737; x=1709163537;
+        d=1e100.net; s=20230601; t=1708558882; x=1709163682;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/dnZ6qXwhjaIXNXWlJKsv9Hd+U+Uq/9NkmI5u+eHav8=;
-        b=Kt30tdTR91k7MtrC7kjqkAGQ4fY9xVJO04VpPSG2tl5Jx0eBNQcwQkXMESO22xyL63
-         P4Gu2xie6N8tIXG041uz/WlbVnm6pEKn8aLhUXpEuHOc/kEoUS5jOzrrHuZQ65aR8mLj
-         3bYO1aY5nsMHWFoMFRn54ewpcb84pkFyi6n5ffWXGv+HE91V/0TOP9sA6rLU7hLfB/y9
-         MrgEzpE6cbbmk+IUoeP2mSxR5/ZXSRhF3LfYkGk7Ztp3HyNEMSQ3+021GCezBcK61kSc
-         //KADLoMJDmZODN1WCC67TmerSNt4wIQURu71LmYKG0dr2seDbDaRt3yWtC1kvuAtBAF
-         lPrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX5npwq10YMABbjmW++dyWCjW0NntqRlgbeCpryG3GUZRAxXFe3X/fnn67S2GgZ+nEDN6qFXoXxSrzqRuyP/IFNqZmb9Nycf2Yliwctfw==
-X-Gm-Message-State: AOJu0YzJ8pkSe1J45YF8NT+ZxGhPcfDj2UrMBCl3DnrGqqobv4FcOxwp
-	PMYQgpBgbN3z5vNTimMUx78APQHiApSgPdvgexWJGgE3Zugxut8FpKLrUvzpUkPTilyQTkLTXMV
-	tbmwNRG4iJITNyotFycLCM+DnPwHBi3NMOsEHZw==
-X-Google-Smtp-Source: AGHT+IE0tGrX7UsWdp8xy5caWpOZ9THC0fnnletXSK4P9Z3hp437QPqk/DB8NiySph7r7h/gOnZ8DNQ5BKCpKPKAobA=
-X-Received: by 2002:a81:7184:0:b0:604:230a:a823 with SMTP id
- m126-20020a817184000000b00604230aa823mr19674257ywc.50.1708558736962; Wed, 21
- Feb 2024 15:38:56 -0800 (PST)
+        bh=gum7JHLE82lB2obWuKI41M7h3ZETASXy1kYfBRSiY+0=;
+        b=aG5l0nB/tKhxTzuZ4UdMPuaRP2/F7Bsx3NJYZ5i3lW51089PbDN8Yw1VD1Xpmyi0+T
+         De0/q3E9pA12iZSAXUhtYCb+FQEmH1A3YUTIT/6vDSVwTjXYh+IsafPJt2ki38GcDKBU
+         YEMAG4Pum4gg6E7g5aELgSYOYt5AJE8yRpRCKdOLN6IwDg0ycnmHUwTU/M9ReJoYLHli
+         Deohwg1pL+kx2vhUXNelVNiowIaIWuYe1YKVVonoht6yHyG1yNNNmsFQ2tXwkN6ciyyj
+         +MxLUaxIf/EfRVKyrY+JpFxVeJfV2J3THvALyEDyr1GU8BnTQVEkuPyTBoEZR30gT6UZ
+         fOig==
+X-Forwarded-Encrypted: i=1; AJvYcCUpNR5vU7ysn4r/keuqsDhOGVSkSdKxJTpVoCdAVfcS8IYdbtMEjviAg5Y4bbDkpo5pXeN++FDfKM8egOBhy9n3sVzpYnFYHoSBUjySig==
+X-Gm-Message-State: AOJu0YwaPGI86yeF+S9gjrpRaUqXdvDQ7f+JGH50LVisINa6Wr5Qfg2p
+	OkrcLGArxDWa5A4lC0BnFKeLSsUftoo7ugVuPo1xVT5ipTNpGBvT533PB2E2xzv/h4zuPWyGElu
+	Mvp1dpkB4Q9r0iqnNJ7KyxPasXZna9NWeGQe9tQ==
+X-Google-Smtp-Source: AGHT+IEAyXZCJmUxworvOHx5M4iyWXoKGn83vXU9An74FKMewTDmsI1ABCTIrzsggAoLQPNkOHTcA/u8/Q2R45yYeFk=
+X-Received: by 2002:a25:48c8:0:b0:dcc:f8e5:c8c8 with SMTP id
+ v191-20020a2548c8000000b00dccf8e5c8c8mr763050yba.45.1708558882169; Wed, 21
+ Feb 2024 15:41:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com> <20240221-rb3gen2-dp-connector-v1-1-dc0964ef7d96@quicinc.com>
-In-Reply-To: <20240221-rb3gen2-dp-connector-v1-1-dc0964ef7d96@quicinc.com>
+References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com> <20240221-rb3gen2-dp-connector-v1-3-dc0964ef7d96@quicinc.com>
+In-Reply-To: <20240221-rb3gen2-dp-connector-v1-3-dc0964ef7d96@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 22 Feb 2024 01:38:45 +0200
-Message-ID: <CAA8EJprXXjvanBU_HGv7X_dS3nyZ867AsvKj5+S3pnWcpsk1ug@mail.gmail.com>
-Subject: Re: [PATCH 1/9] drm/msm/dp: Add DP support to combo instance in SC7280
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Date: Thu, 22 Feb 2024 01:41:11 +0200
+Message-ID: <CAA8EJpo=9vhM+5YzaFxUoYRuEWQyrMS8wLNPSF3K=bN5JwWyDw@mail.gmail.com>
+Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Enable MDP turbo mode
+To: Bjorn Andersson <quic_bjorande@quicinc.com>, Douglas Anderson <dianders@chromium.org>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
 	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
@@ -89,51 +89,36 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Thu, 22 Feb 2024 at 01:19, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
 >
-> When upstreamed the SC7280 DP controllers where described as one being
-> DP and one eDP, but they can infact both be DP or eDP.
+> The max frequency listed in the DPU opp-table is 506MHz, this is not
+> sufficient to drive a 4k@60 display, resulting in constant underrun.
 >
-> Extend the list of DP controllers to cover both instances, and rely on
-> the newly introduced mechanism for selecting which mode they should
-> operate in.
->
-> Move qcom,sc7280-edp to a dedicated list, to ensure existing DeviceTree
-> will continue to select eDP.
+> Add the missing MDP_CLK turbo frequency of 608MHz to the opp-table to
+> fix this.
+
+I think we might want to keep this disabled for ChromeOS devices. Doug?
+
 >
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7b8c695d521a..1792ba9f7259 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -129,7 +129,12 @@ static const struct msm_dp_desc sc7180_dp_descs[] = {
->  };
->
->  static const struct msm_dp_desc sc7280_dp_descs[] = {
-> -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
-> +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_en = true },
-> +       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .wide_bus_en = true },
-
-I think we need to keep .connector_type here, don't we?
-
-> +       {}
-> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index a19c278ebec9..a2a6717c6c87 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -4417,6 +4417,11 @@ opp-506666667 {
+>                                                 opp-hz = /bits/ 64 <506666667>;
+>                                                 required-opps = <&rpmhpd_opp_nom>;
+>                                         };
 > +
-> +static const struct msm_dp_desc sc7280_edp_descs[] = {
->         { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
->         {}
->  };
-> @@ -182,7 +187,7 @@ static const struct msm_dp_desc x1e80100_dp_descs[] = {
->  static const struct of_device_id dp_dt_match[] = {
->         { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
->         { .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
-> -       { .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_descs },
-> +       { .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_descs },
->         { .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_descs },
->         { .compatible = "qcom,sc8180x-edp", .data = &sc8180x_dp_descs },
->         { .compatible = "qcom,sc8280xp-dp", .data = &sc8280xp_dp_descs },
+> +                                       opp-608000000 {
+> +                                               opp-hz = /bits/ 64 <608000000>;
+> +                                               required-opps = <&rpmhpd_opp_turbo>;
+> +                                       };
+>                                 };
+>                         };
+>
 >
 > --
 > 2.25.1
