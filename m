@@ -1,113 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-12096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 289CC85EBA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 23:12:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D28FB85ECB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 00:19:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A9321C21B4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 22:12:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 889211F23A74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 23:19:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC44128394;
-	Wed, 21 Feb 2024 22:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F9E4129A8D;
+	Wed, 21 Feb 2024 23:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbkLrD9G"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="THqXg8nE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B2C127B6F;
-	Wed, 21 Feb 2024 22:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56F08663D;
+	Wed, 21 Feb 2024 23:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708553574; cv=none; b=B71t+wd4dGhZto/OFpPlBkreCFrAOLCRa2KFRGt9z+rSwtTN9MvCswFC0v4QHy6uF9M17du5scxLW20c/5alwK+KJ9e86BqavzGqrf6iCXmLj+/IMLq+skcQ5SoY9Key6IMX6C2nYeZuAZmpt8ifAQvgnjm0WQsrMPwuRtDw1pU=
+	t=1708557568; cv=none; b=knmLHfvRJy0WeEKVmwFx6aZ3i5m6VxkXWdZjcoshQK21sSLO3WmNRh5cf07Zf9Dnxg7qxAPHJGCGUzdDZR2Ht1x0RWwIl0zGIo4JVJeNuVd66t0FmAMwsoSvUMN+jaP9pn6vDHxeew/Bdwndi1coO4ie9akZI0C8tDSdkeDIvEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708553574; c=relaxed/simple;
-	bh=RhFTKg9ao3rZOUrt7OqVKcCNafpR0iCJP/rDyRvJXM8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=e2ACYimZDr4eLGTCsw4y1V+3jHJ/akkQKJzv642n9KyP6i5FPRWfKKAolTTcIlAgiAmUTO2utH3+MNMDo8ZTcf8uwoh7VvQpu3OXiTOWzJ9wa+2TR9Wehg7LHBoprCxmxVWmSk+pFCSxmZ3VMBWIlSzZ1GEFLD4sm0rx7/zdACI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbkLrD9G; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc6e080c1f0so6792624276.2;
-        Wed, 21 Feb 2024 14:12:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708553571; x=1709158371; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zvHohG/osJUUJ6MrbAQ8TEaNGcUB4t0Qr7/JkHGHUIo=;
-        b=EbkLrD9Gl5VYLj5TjQDyrvvX9HqdEBDqpl87b1p8tMfFOrQH2Ky6+VaCkGnBbgJKIG
-         BPjJzS1DrYyFlizi4qo06aHfJNBcDcFALXBN7Vgo82LiKMZbkU1OqQBcwc/CvbF9O+Yd
-         LDT4ySEIO+JpQzWrnfRvUsDse58/+rwp7wojzUVaaunFx18WntIGKtAHgXDV45hHlBgm
-         dv2Yi1D4yzcfag81r98sCilD3vzHJnQpOe0FmDoXclrxKHnBhwmdXCs9pujiLC7dwqN0
-         VsTgZ6NCfXgvYHO0lVcbKpe8W3t30tUlyLkGW+1j3o2/9WdMmavHuNVqWsLggDkxVVcZ
-         GwoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708553571; x=1709158371;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zvHohG/osJUUJ6MrbAQ8TEaNGcUB4t0Qr7/JkHGHUIo=;
-        b=AJ01ore7ylOjk6CC8jVKB18HYC0O7gEZ2dOmgbe79Nm4HOQaE/L9i30DVvONv0041K
-         eUWyrBZd9NlOyxQflu32o8xUPtLPF1XQuYfuk0mVPBebGsIUs+IT1FQ4k6tpJL5Y4qka
-         Xng3rS1RVsOE3zwbSpXAGZhqMZW1hlTMulvLXlSye35qxVGONnz9gGtpvxdYrY5A8Q3m
-         bd4O0YgzqIKlo7PnvG+fayhgD6Ao6QBU6LLUAcbvvCfHPNIsQeH1eVL8J+ONCXBoNHwj
-         r22kd4oRA3X2WJGoJBS8Ls0V6LYEpbxCMmX9n3HxvmcD2Yh6j3FudhO+/ELKbQq2GazD
-         Wenw==
-X-Forwarded-Encrypted: i=1; AJvYcCUt+WQ3ExwczNwT47hcJ6XJAeWKVv0Z9f41bE1CPyMtFEG8X8w/F51jAkpfBfjTyECsS+813E3eGSt+IkTFjxIUj5TPMd1LFu5uvmEIsxjyR56+jVjxLK84lNkCa9qHyLvJR3tTSbn7jBn8kQn1B/ZeHNN9/geCZmCn4jJhqq5vRWxWZtzfBHlwfkDURqd3bSzvOh2wfBsFrVt6RQHMX1ox1hMM4x9ktVUREJx69uyp70KpYcetjMv88Le+Cp9m1HVxL2HmmqsYOFcCGUcKgMgfcuBtUxnBNAFSFRmx6a0CCoZusUoXL3Jx74iIUbLg6QLv6n9ElcWappWwuEhphWo576U=
-X-Gm-Message-State: AOJu0YwuBB52KlfA5/86qoCjJNRAGIjgfE9KzAFvnsemLkVcbUduzc4J
-	FECSFxtMMIZWu9Gxq0EIM4sma2Mok2ooJlqs1CHKr8gQifYEIjEp
-X-Google-Smtp-Source: AGHT+IF7kP+13CFMgvNV4rXPEp1sBAjlnfLwnWDRvHGUt3wwBoE4opoEpDnOPFhvcnuSrbWo1HtsDQ==
-X-Received: by 2002:a25:9346:0:b0:dcc:76a0:503b with SMTP id g6-20020a259346000000b00dcc76a0503bmr692068ybo.13.1708553571608;
-        Wed, 21 Feb 2024 14:12:51 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id i19-20020a05620a405300b007858c17df9csm4712295qko.96.2024.02.21.14.12.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 14:12:50 -0800 (PST)
-Message-ID: <69a0df59-7d27-406b-b0a0-3e43f18b20bf@gmail.com>
-Date: Wed, 21 Feb 2024 14:12:45 -0800
+	s=arc-20240116; t=1708557568; c=relaxed/simple;
+	bh=UawKxY/wNEpZe/K6ZSBOrWoORz1ZeMn1m4HSMFS0WhU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=bJgqVDmFlIyTn2U9J2LNAH2F08HsHoKvtiE+F5TVicSL9sxYC+orK+lrZWSPTZYryhMLZQPzJQlnAZeSxqHRO1a+4WtR/WLHMuh+8fiT8e1jORkkYaGcMFJqa5cA8BIC/8Rlw0BfQq3+h/k7xNNpr3kngHDRsTat9JUyjiWjDpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=THqXg8nE; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41LNEoYG028626;
+	Wed, 21 Feb 2024 23:19:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=CelsGDIFSPLJqy
+	fTWpBCJuduVZTYRQTelZocddmgQHE=; b=THqXg8nE2G+HwdHynohBH/K53Zm95a
+	L3p8ffLBH29wrdHUk4cScjB8uYh/dS/oDKncmYlTa0pBNdzDFJ3zTwhNZneTpzq+
+	ppEeu1N7yd7WYzj8o6XU8Av/lq9Uv7XSrspjrJfsDdT+5KMPDF19XI9hEaEnd/6M
+	PrB0+KgUHKe7pdzboJ7eq9ERLjXFrs9ly+dt3yOPX/spFodD27Os3qvtVeHkB9qN
+	1ZhJ3pJ9WVWCuPBY13K1flu4EiMgFqyou1xFJT3HBCgLRJVUO7936i8C8zoTKq4P
+	bseTt6ONdybGVXpA0z55EngPsgcUSIYAF3rRvjxA7Pc/RBZkZIEbcdsg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdfx4hmpv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 23:19:14 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41LNJDok020290
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Feb 2024 23:19:13 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
+ 2024 15:19:13 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: [PATCH 0/9] arm64: dts: qcom: qcs6490-rb3gen2: Enable two displays
+Date: Wed, 21 Feb 2024 15:19:08 -0800
+Message-ID: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: constify of_phandle_args in xlate
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Chun-Kuang Hu <chunkuang.hu@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Linus Walleij <linus.walleij@linaro.org>, linux-phy@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
- netdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org
-References: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOyE1mUC/x3MQQqEMAxA0atI1hOo0YV6FXExbVPNJpVUhgHp3
+ S0u3+L/GwqbcIGlu8H4J0WyNvSfDsLx1Z1RYjOQo9GRm9H8sLMSxhNDVuVwZUMfY/LTTCmRg5a
+ exkn+73bdan0AX5LCMGYAAAA=
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708557553; l=1606;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=UawKxY/wNEpZe/K6ZSBOrWoORz1ZeMn1m4HSMFS0WhU=;
+ b=VgHOPv2y0TUisMlKhdQwzFNj5emloYz3HorglSQbNjzyMT9whYMj6lmIabHBG2z6g66EgDik7
+ LYpk2ossgV5CnDvwjylGFbmrNVdkMoKcSOFYoQ3jE1FCHk+GxvdbYh9
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: V37K1f2kbY2gyjU0XptpF_1ASXcal3l1
+X-Proofpoint-GUID: V37K1f2kbY2gyjU0XptpF_1ASXcal3l1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-21_09,2024-02-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ mlxlogscore=544 clxscore=1011 mlxscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402210184
 
-On 2/17/24 01:39, Krzysztof Kozlowski wrote:
-> The xlate callbacks are supposed to translate of_phandle_args to proper
-> provider without modifying the of_phandle_args.  Make the argument
-> pointer to const for code safety and readability.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+RB3Gen2 is capable of producing DisplayPort output on a dedicated
+mini-DP connector and USB Type-C.
 
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com> #Broadcom
+Utilize Abel's work for DP vs eDP selection to allow configuring both
+controllers in DP-mode, then enable the two output paths.
+
+Tested by driving fbcon to 4k@60 + 4k@30 concurrently.
+
+Depends on https://lore.kernel.org/linux-arm-msm/20240220-x1e80100-display-v4-0-971afd9de861@linaro.org/
+
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+Bjorn Andersson (9):
+      drm/msm/dp: Add DP support to combo instance in SC7280
+      arm64: dts: qcom: sc7280: Make eDP/DP controller default DP
+      arm64: dts: qcom: sc7280: Enable MDP turbo mode
+      arm64: dts: qcom: qcs6490-rb3gen2: Add DP output
+      arm64: dts: qcom: qcs6490-rb3gen2: Enable adsp and cdsp
+      arm64: dts: qcom: qcs6490-rb3gen2: Enable USB role switching
+      arm64: dts: qcom: qcs6490-rb3gen2: Introduce USB redriver
+      arm64: dts: qcom: qcs6490-rb3gen2: Enable USB Type-C display
+      arm64: defconfig: Enable sc7280 display and gpu clock controllers
+
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 154 ++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi   |   2 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi         |   7 +-
+ arch/arm64/configs/defconfig                 |   2 +
+ drivers/gpu/drm/msm/dp/dp_display.c          |   9 +-
+ 5 files changed, 170 insertions(+), 4 deletions(-)
+---
+base-commit: aba508318eec7acad2373296279d6447fd35f83f
+change-id: 20240209-rb3gen2-dp-connector-bddfb892ff20
+
+Best regards,
 -- 
-Florian
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
 
