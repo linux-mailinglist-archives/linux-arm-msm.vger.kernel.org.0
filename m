@@ -1,163 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-12054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6396A85DB24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:37:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0955085DBD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 14:46:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1ACFF282208
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:37:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3139D1C2088B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Feb 2024 13:46:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB1B57C082;
-	Wed, 21 Feb 2024 13:37:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eQGe8UlL"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B79777A03;
+	Wed, 21 Feb 2024 13:45:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB3C7BB14
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 13:37:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F54C4D5B7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 13:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522650; cv=none; b=L9I9iXh4asyl9WEgpWqfZ8KkTWf96GCfFWL7BLO41WcDgezu3fydmlD9cWDeYwc84/LAWj+VjffalSM4ZVeHI2REDai30r/OJ5fkaumSpnnUnxHIMwtbmczG2vgXqxTaEkyktzIv25/KfQ3mxrbO/Sef8yA0TGx92bkC38ucy6g=
+	t=1708523141; cv=none; b=K+uh8GGqTqUaqnj4TnHPCgMUnxPDG0/14w48k12Y+glTAkG7eXJKrdrt4w0Tp6908jSTQks7RjVVTUe0G6ufc2pArx+2hUujHbYkB6wp43D1vzATi6IosUbGaTZ09znq0fROwMaSmpoq5nZkJ81Ku73zSY2zYMInafWgh5nS/Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522650; c=relaxed/simple;
-	bh=rdN/6YII7vuoqoQ0M/mdYu6Vc/hmpn03eQ0O+V4PSVk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TjPdXUPd7EvqlcuW9o2zBUOid13veaJocn3lX7f+EVSZnHlqMu7+q82X5P8B7GEVZj1cHHJq6aqQNBU+daYDuz9TJVGmxQuAQ1gc25FnbOmYEvolfWPX+z8LMJZWgLzZY0/aA8nTV8ryExpmU0DSOfquF2ItCzMEMU43YMrxKOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eQGe8UlL; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a3566c0309fso793325766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 05:37:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708522647; x=1709127447; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5eajfoTymGJwv3pZSD39+xNRSQER4xqy/S/sNmOZC4U=;
-        b=eQGe8UlLa0rrKWQiw4jViMGv/0vi3l580D9u7GdG3dTBr5+vBKAyPV+BJ2iZcGbMiS
-         1HNfOmjBjJIvQA028HiuV9TeV7UpuGu/afDCO+MhdqRJnd95dRKm12BKSdZ2r9ORGrrZ
-         2E0eSpitx/Y9zdzgmTPNlZ7qBYNicg/cyaRKCl/P8KxNeJIZJgnn2LRJGSNzlgniUjFs
-         heH9kL6C5+RUqsBB+i0RuCEiMekEHVQ2Aj85sw6fJ6LeGd7Bp53P1zLiaabHa39riIcm
-         LXvLAFdhrljy7D6rVjj/mIJ4B2iZSrsMeO8DpCtshwweGpJaX6dcQMUnm8uDXKzp2/HO
-         FagQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708522647; x=1709127447;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5eajfoTymGJwv3pZSD39+xNRSQER4xqy/S/sNmOZC4U=;
-        b=kpStER9SCnJ2LBG1vjenFaeemZPF7Gn3uZPu+leDu0iEs/7pTZXijMCa+WQrSfyVay
-         pMhYv1o0J38VB4mmDsUCG+QgVFoGOHA2bIzmln0TEvs1BrSApJohd3P3ngAolweUGkI6
-         zFp/OmUnEjSKETbzMsbpuXtLLnBfXQ93GKHIuYOgVyN4V0zPN1kuFgz6bae0ypdRrNul
-         6lux4tQsd8W3BFFPgRl4+BDlXweAWTZsLR15TFogkBceN+5Gj8GY2MCtYMgRC35BaU9d
-         QviX+lB64DhNhJB5I+6YF5/CTWrumE0lBjMJUml5kWiuE4nZYhqOfvswUdJtVt49Sm4M
-         su2w==
-X-Forwarded-Encrypted: i=1; AJvYcCX7bIFgVXQEmVe6y8RjJXuq7xlIxeDPZH2ocdrpibfO9Kig78E41GFIjvbC0GxBYoG5Pmx9GOaBkRLTr0JKW20wQA0QSyCBurop0Zlm3Q==
-X-Gm-Message-State: AOJu0YzWxlBSa2wn31J46RSr2YlXM77zAfZvATA4YxTpAc+QjcdOD69J
-	ycSgfO++XvIeJQxUpPFSIHni4Ay+00qpQLIVmi6cNxch37PHsaPXkZcGITaDoEQ=
-X-Google-Smtp-Source: AGHT+IEIgR3cQ74TYoZyC61RuNeT+e7u1BkGFZFDGxQOH8KvSD7It6YYbD0Q2EyO71OLMdDyo8yuQg==
-X-Received: by 2002:a17:906:48cc:b0:a3e:6501:339d with SMTP id d12-20020a17090648cc00b00a3e6501339dmr6557544ejt.61.1708522647151;
-        Wed, 21 Feb 2024 05:37:27 -0800 (PST)
-Received: from [192.168.192.135] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id th7-20020a1709078e0700b00a3e059c5c5fsm4970319ejc.188.2024.02.21.05.37.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 05:37:26 -0800 (PST)
-Message-ID: <466efa71-bd42-46b7-b81f-2a70d80e3f03@linaro.org>
-Date: Wed, 21 Feb 2024 14:37:23 +0100
+	s=arc-20240116; t=1708523141; c=relaxed/simple;
+	bh=juEouuUJ136A2uRyt4uiuxJPTi66X9k73J4uyYTWJ0A=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=oiaLmwkTFKmAb2e4MY8xF79haVm+XWoXsBE8Y9KgsU6Xy71NF4rPgFAXLK5J9vNO0RRTcYUk77c9iOHeztCg1HkLorOPkHXZZP2FjFKe0paL90Mg+eCjEQ/zSnnyMLbm2BUu4ok6fNWh/UWZNgEzvSIN/XUT+uykCAq4XImDEv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmud-0006fc-1G; Wed, 21 Feb 2024 14:45:27 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmub-0023Ct-Qm; Wed, 21 Feb 2024 14:45:25 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1rcmub-0009z1-2Q;
+	Wed, 21 Feb 2024 14:45:25 +0100
+Message-ID: <8598dea60afa80effd7fad2650dc045bc36d0f0e.camel@pengutronix.de>
+Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Stanimir Varbanov
+ <stanimir.k.varbanov@gmail.com>, Vikash Garodia
+ <quic_vgarodia@quicinc.com>,  Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>,  Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, Stanimir Varbanov
+	 <stanimir.varbanov@linaro.org>, Mauro Carvalho Chehab
+	 <mchehab+huawei@kernel.org>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Wed, 21 Feb 2024 14:45:25 +0100
+In-Reply-To: <466efa71-bd42-46b7-b81f-2a70d80e3f03@linaro.org>
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+	 <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
+	 <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
+	 <ad20b872-0b50-4a16-b342-582d2f33eeca@linaro.org>
+	 <1cf19cf23ffd88d9ffb673e8f382f3b1d24545bb.camel@pengutronix.de>
+	 <466efa71-bd42-46b7-b81f-2a70d80e3f03@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/20] media: venus: pm_helpers: Use reset_bulk API
-Content-Language: en-US
-To: Philipp Zabel <p.zabel@pengutronix.de>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-20-3dac84b88c4b@linaro.org>
- <a25224f5d28aa65e8bfd14fe0a8f599b9f9e3f40.camel@pengutronix.de>
- <ad20b872-0b50-4a16-b342-582d2f33eeca@linaro.org>
- <1cf19cf23ffd88d9ffb673e8f382f3b1d24545bb.camel@pengutronix.de>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <1cf19cf23ffd88d9ffb673e8f382f3b1d24545bb.camel@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On 21.02.2024 14:34, Philipp Zabel wrote:
-> On Mi, 2024-02-14 at 22:20 +0100, Konrad Dybcio wrote:
->> On 14.02.2024 14:31, Philipp Zabel wrote:
->>> Hi Konrad,
->>>
->>> On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
->>>> All of the resets are toggled together. Use the bulk api to save on some
->>>> code complexity.
->>>>
->>>> The delay between resets is now correctly determined by the reset
->>>> framework.
->>>
->>> If this is a recent change, could you reference the commit?
->>
->> It's a series that recently landed in -next [1]
-> 
-> Missing link?
+On Mi, 2024-02-21 at 14:37 +0100, Konrad Dybcio wrote:
+> On 21.02.2024 14:34, Philipp Zabel wrote:
+> > On Mi, 2024-02-14 at 22:20 +0100, Konrad Dybcio wrote:
+> > > On 14.02.2024 14:31, Philipp Zabel wrote:
+> > > > Hi Konrad,
+> > > >=20
+> > > > On Fr, 2024-02-09 at 22:10 +0100, Konrad Dybcio wrote:
+> > > > > All of the resets are toggled together. Use the bulk api to save =
+on some
+> > > > > code complexity.
+> > > > >=20
+> > > > > The delay between resets is now correctly determined by the reset
+> > > > > framework.
+> > > >=20
+> > > > If this is a recent change, could you reference the commit?
+> > >=20
+> > > It's a series that recently landed in -next [1]
+> >=20
+> > Missing link?
+>=20
+> Yes, sorry!
+>=20
+> Konrad
+>=20
+> [1] https://lore.kernel.org/linux-arm-msm/20240105-topic-venus_reset-v2-0=
+-c37eba13b5ce@linaro.org/
 
-Yes, sorry!
+Thank you. With that,
 
-Konrad
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 
-[1] https://lore.kernel.org/linux-arm-msm/20240105-topic-venus_reset-v2-0-c37eba13b5ce@linaro.org/
-
-
+regards
+Philipp
 
