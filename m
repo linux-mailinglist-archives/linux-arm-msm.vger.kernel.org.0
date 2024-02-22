@@ -1,84 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-12133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A277085F0D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:16:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1ACB85F0E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:22:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E06FB24161
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:16:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A1B3B239DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:22:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50252134A1;
-	Thu, 22 Feb 2024 05:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B731C14;
+	Thu, 22 Feb 2024 05:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZQLXTAfk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JvjKCLiL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7C3D516
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE5610782
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708578992; cv=none; b=GuZwjcGzBqZf1wa6wSn/rQGayVjOXiSaXPRgCNwwrdnkUTKQx17XAYenaRp4oHnMIJ6WVVtiLyP+3NIqOAzcquVqJiqAvGefB72KbXh8hQmp7xt8dNgJtHUEVALfbdQBTKwdzW+QwjnrRtvCA8EHuxNz4X48OOaaGoaQGRyzOiQ=
+	t=1708579353; cv=none; b=N/3w++3E9y6EMZMcwmR2XDemiay7ZbPfjiQ3/l9H+Ti6bHX60z8e5OPKGSzR3hCKJE0SWn1K1DZpqu+kJzAoGpPZcMOD2wMdMBprFmaxZvOS+SQ/detM9+t9DETpfok/aFkKSOE1rlQycwtZLkJLZ8EmGGiv/2V3w+7FPTVI8aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708578992; c=relaxed/simple;
-	bh=EYqco1GKfph2qvviCl2qwp3U+UCjcwLr0vJ5cMoQcXI=;
+	s=arc-20240116; t=1708579353; c=relaxed/simple;
+	bh=YeT7pdFKBx0h2pjjLOX4Ge6GRmGK/bBs8ilNmslgI4s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Onc0+1A4eL9MhGTHgNOrfm3/CGmBc9FezhuNklm/vbG12mVcwrJSWRLzSl6/5UjKX2yPntJfChKC0JjBphVkGIiTHhwVhfWxWHGglohS+XUT+k4bFODjnxPHdbFZrynL8l2ThZQ8jSTk7a8Hhwg2kCWlx6HIA4VhY202gAj9Sss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZQLXTAfk; arc=none smtp.client-ip=209.85.210.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=CxFxaBZ+TGgoqzpV/nPu+6kC+X6EsmJaCojlqYD/2dt43/+LPAjyWJSnZtwNf1WxPxiVHEBrRWRgOqpEJ4scHReYNThe2qh3rqfz4Tj3jIs3hSiYXOUGLuzkXO0v5XqWtn+1lg1f4/OHe0HoF+KkHMeW9Gv09cgSgbt1cCdvb3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JvjKCLiL; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e4841ce028so1628094b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:16:30 -0800 (PST)
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-29a430c3057so263624a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708578990; x=1709183790; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708579351; x=1709184151; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=duIZxpvn6RingjjUFfVcxJVtZ2NkUSkNaC91pQVkegY=;
-        b=ZQLXTAfk0RvwuVmUULKeLpNK72O3zrBu5wE1qw3+2yR0JULUCbtWv8gI7vM34cq7BB
-         cxvlDNdpDt6w25riE3cK4aDqefh9ZoXIyIeU53K6P5ZKdsCBarecrUKVTeDMdaw2ff5U
-         tJe+UitS43xJ7zxgUQb8mQw4qtwPfr30WQCa3nXG2l4319NT6yG1FQ6EiJHXK9w8VKBj
-         WAfg5BMAdkMj6RH6NYBUIfTbHXTHchQkgOrjdUVHB8psQbEMG4lAfKJO6hQ13iidhH5G
-         oBwKYoVQFI8W1mAnM6j4t2Wo6/5g0uYPXnBnWBuXLby53HGl2R+es0dMmf4tvLRKSq9k
-         trTQ==
+        bh=uwlWZD+wtDen80T6/9sZq3GEC66Lq8p7KhscmDYdFLs=;
+        b=JvjKCLiLdzlMxvqKiI4/5LRU6LCQKRSi7l2b+PF10cSai5SsKQ+U/dRjq8VvEzquio
+         5S1oseAi9R6vEPcebDc/1C997RY7g2aQEffewovRHgWn3LuXgPcI2TqGkdYutmU8v7hf
+         oYwZMJ7UHcUlzJrogdbeblOX+hALcE9TUC2qTKzQoG9fB3JYQXoyAaYsli8KVKYwmm+R
+         O4tzOPYWCdpGhCNHjo1IPCQI1iGVCXx/kJwnoN51EE9qIyWldxTXVwhCBZ+7zjnOylAL
+         IH/fitNm0AZW2ymctVK2tUryT0er9kGYMRtlIlSDqnsq85BRYKEYyV2ILfM1RXdpMPQ7
+         MeVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708578990; x=1709183790;
+        d=1e100.net; s=20230601; t=1708579351; x=1709184151;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=duIZxpvn6RingjjUFfVcxJVtZ2NkUSkNaC91pQVkegY=;
-        b=Q7hGtybcVWBsyvXd7fiVUJfel/OV/nsAFEFMXbnZ1jytSumTYkTIKKEQRnFfMgwAGr
-         YP/ehMSpRY6uwtGTNf82MeUHMWRv/4cLJGxW9otsf92IHAeQBx8zGT+npXmevKXu/086
-         XAAVyd2J4oGLkmibzpflY79/505MqZ1mjmTpBrp0Ib4TRz/wvhsZ6y3O3TN+s17v2vO7
-         3mzeREw/RNfBNdbLA8EMRu2g6m3SbUfNG5TZniNoEneAJyBI/QKTG/bSy/vt9aP9WNkw
-         EcgrCzTR5V+qBr4dzRJhMlfe/KGBFOtMAcpqZCk5V8lbAZJ9zEVbt5EnEPpnDwmAa/YA
-         velw==
-X-Forwarded-Encrypted: i=1; AJvYcCVH8GBEXt9YQlQWYgI8uwKzNvXHHaUO/CPhm6oVg0+RCRy+Y7eN05jqOYxmRE9uxS90z1jEjFsjSpwfY6Rxl/yJpb1FzSlm2GM7vCk6sw==
-X-Gm-Message-State: AOJu0Yx6ML6we6HywJJN6sVbHmYXQiEXnYivE0+GYiWbU8fun4RQ3wJi
-	oai7evGazErH9SgU/EcdKOrzI7xTLkJqjccjRM1R4Qk4mSXL9kPIWjk7cll4tg==
-X-Google-Smtp-Source: AGHT+IF1BbQ0EnZKJMj1ATUyc9q4gcsnLCvpFzHDOMbytY3INdyz3p1P9lC6mFjFGyQVSpe1j4yvSg==
-X-Received: by 2002:a05:6a21:1693:b0:19e:b6e0:8d26 with SMTP id np19-20020a056a21169300b0019eb6e08d26mr19510388pzb.15.1708578990015;
-        Wed, 21 Feb 2024 21:16:30 -0800 (PST)
+        bh=uwlWZD+wtDen80T6/9sZq3GEC66Lq8p7KhscmDYdFLs=;
+        b=ZXiKLd9JUMSAnzkOaKMsTWzapAp5beYYJ0m8La1lCb05hL6JYeunr84ZnnP6Qwc5Uf
+         7s5SNVcn9dDlpvs+GiUuC9G+AR70enThq2hnkTjf17CW8H/23z+w4DEQ/V0QFkBSicze
+         OQh7AQiXZRGAIFdZqKj00iOGUg4d21QMS8RvjiR5kI51LZVNR246fUMr0EZRFiRy1orO
+         JLYfkeOkHTjAQ1btBm7sYz66S53swhS5paDJ+d+jnNv0oUfk+Y05rYLwVcw8I43md8Rn
+         0dOgzbuhAKM/nBOi0tKiMjwb4wZI3UzzEuadd0Gz/AocsVKKyOLWkNqeRFORkPeqr1YD
+         T+Hg==
+X-Forwarded-Encrypted: i=1; AJvYcCUr/G+KkGwAN5G3+wuTZK8N2zU6rydasJO9eKNRWwhqQaMAaaxQc4RtxN7SzF4macX5/2yGbbmx69nP/Hd/fFrnPRr4gsHOnAlMmXCPoQ==
+X-Gm-Message-State: AOJu0YwqrWCjDR94+ujECC4cdGw3WQFf2uR+GZg8AVVe1y9+FkMi1Y5p
+	cY9t7shcsSLp1ipjjN2cDoOHLmzN5a93g0fbknFO0++MmnMeVX5gNvWa8kxDeA==
+X-Google-Smtp-Source: AGHT+IGtRLKXNREdQdvyN73j1BKXIF78m/5KnAZe+HbQRQ+0TXw7vcCP0uf4rzHwh6ITtbi7qcGvYA==
+X-Received: by 2002:a17:90b:4f85:b0:299:9999:6bae with SMTP id qe5-20020a17090b4f8500b0029999996baemr8927857pjb.16.1708579351476;
+        Wed, 21 Feb 2024 21:22:31 -0800 (PST)
 Received: from thinkpad ([117.193.212.166])
-        by smtp.gmail.com with ESMTPSA id p11-20020a170902bd0b00b001dc35e04b02sm1933206pls.32.2024.02.21.21.16.25
+        by smtp.gmail.com with ESMTPSA id y13-20020a17090aca8d00b002995babd9b0sm10124988pjt.10.2024.02.21.21.22.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 21:16:29 -0800 (PST)
-Date: Thu, 22 Feb 2024 10:46:21 +0530
+        Wed, 21 Feb 2024 21:22:30 -0800 (PST)
+Date: Thu, 22 Feb 2024 10:52:22 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_parass@quicinc.com
-Subject: Re: [PATCH] bus: mhi: host: Change the trace string for the
- userspace tools mapping
-Message-ID: <20240222051621.GD3374@thinkpad>
-References: <20240218-ftrace_string-v1-1-27da85c1f844@quicinc.com>
+To: root <root@hu-msarkar-hyd.qualcomm.com>
+Cc: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
+	konrad.dybcio@linaro.org, conor+dt@kernel.org,
+	quic_nitegupt@quicinc.com, quic_shazhuss@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, shradha.t@samsung.com
+Subject: Re: [PATCH v1 0/3] Add support for detecting Controller Level PCIe
+ Errors
+Message-ID: <20240222052222.GE3374@thinkpad>
+References: <20240221140405.28532-1-root@hu-msarkar-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,69 +96,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240218-ftrace_string-v1-1-27da85c1f844@quicinc.com>
+In-Reply-To: <20240221140405.28532-1-root@hu-msarkar-hyd.qualcomm.com>
 
-On Sun, Feb 18, 2024 at 02:13:39PM +0530, Krishna chaitanya chundru wrote:
-> User space tools can't map strings if we use directly, as the string
-> address is internal to kernel.
-> 
-> So add trace point strings for the user space tools to map strings
-> properly.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
++ Shradha
 
-Applied to mhi-next!
+On Wed, Feb 21, 2024 at 07:34:01PM +0530, root wrote:
+> From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> 
+
+You are sending the patches from a wierd account. Please fix it.
+
+> Synopsys Controllers provide capabilities to detect various controller
+> level errors. These can range from controller interface error to random
+> PCIe configuration errors. This patch intends to add support to detect
+> these errors and report it to userspace entity via sysfs, which can take
+> appropriate actions to mitigate the errors.
+> 
+> Also adding global irq support for PCIe RC and add corresponding change
+> in PCIe dt-bindings.
+> 
+
+There is already a series submitted to add RAS support to DWC drivers [1] and
+I've provided comments to check with EDAC maintainers on using the EDAC
+framework. If they don't see this as a fit for their subsystem, then we can add
+it in DWC drivers.
 
 - Mani
 
-> ---
->  drivers/bus/mhi/host/main.c  | 4 ++--
->  drivers/bus/mhi/host/trace.h | 2 ++
->  2 files changed, 4 insertions(+), 2 deletions(-)
+[1] https://lore.kernel.org/all/20231130165514.GW3043@thinkpad/
+
+> Mrinmay Sarkar (2):
+>   dt-bindings: PCI: qcom: Add global irq support for SA8775p
+>   arm64: dts: qcom: sa8775p: Enable global irq support for SA8775p
 > 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 2d38f6005da6..15d657af9b5b 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1340,7 +1340,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->  	enum mhi_cmd_type cmd = MHI_CMD_NOP;
->  	int ret;
->  
-> -	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, "Updating");
-> +	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state, TPS("Updating"));
->  	switch (to_state) {
->  	case MHI_CH_STATE_TYPE_RESET:
->  		write_lock_irq(&mhi_chan->lock);
-> @@ -1407,7 +1407,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->  		write_unlock_irq(&mhi_chan->lock);
->  	}
->  
-> -	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, "Updated");
-> +	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state, TPS("Updated"));
->  exit_channel_update:
->  	mhi_cntrl->runtime_put(mhi_cntrl);
->  	mhi_device_put(mhi_cntrl->mhi_dev);
-> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
-> index d12a98d44272..368515dcb22d 100644
-> --- a/drivers/bus/mhi/host/trace.h
-> +++ b/drivers/bus/mhi/host/trace.h
-> @@ -84,6 +84,8 @@ DEV_ST_TRANSITION_LIST
->  #define dev_st_trans(a, b)		{ DEV_ST_TRANSITION_##a, b },
->  #define dev_st_trans_end(a, b)		{ DEV_ST_TRANSITION_##a, b }
->  
-> +#define TPS(x)	tracepoint_string(x)
-> +
->  TRACE_EVENT(mhi_gen_tre,
->  
->  	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+> Nitesh Gupta (1):
+>   PCI: qcom: Add support for detecting Controller Level PCIe Errors
 > 
-> ---
-> base-commit: ceeb64f41fe6a1eb9fc56d583983a81f8f3dd058
-> change-id: 20240218-ftrace_string-7677762aa63c
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  26 +-
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  12 +-
+>  drivers/pci/controller/dwc/pcie-designware.h  |  26 ++
+>  drivers/pci/controller/dwc/pcie-qcom.c        | 350 ++++++++++++++++++
+>  4 files changed, 408 insertions(+), 6 deletions(-)
 > 
-> Best regards,
 > -- 
-> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 2.40.1
 > 
 
 -- 
