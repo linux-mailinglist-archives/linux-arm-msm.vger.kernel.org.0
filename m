@@ -1,540 +1,394 @@
-Return-Path: <linux-arm-msm+bounces-12259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 881B2860647
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 00:12:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B65E8606CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 00:25:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1C5DB241E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 23:12:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C4C91C2285C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 23:25:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C936C18059;
-	Thu, 22 Feb 2024 23:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BBD5225D7;
+	Thu, 22 Feb 2024 23:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RcxIG+OR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gi+hhLAU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76A217BD5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 23:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828F1225AA;
+	Thu, 22 Feb 2024 23:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708643523; cv=none; b=ROQWfC6NqHHe9GLGFxiwV0+KYK3Y0lsbI5+0WqulzuPyO3CutqC4riTq4H1rI4zp3HbWmN594OwCVrwrftk3vFEnZrBMLZZ1vocock70iHgLfu6un+AIOMfcyMD6q1yqS74ezxDjJEAxEhpTXrbKR2TLr2Gdwm5zVWbtyDe/yCY=
+	t=1708643868; cv=none; b=X+9Rrd79Wm4puS1/ZwC3fpOP8iu0eIMAzmFeflfUwrz/2HVPLzLqo/1PQ7uD/QeiL6XJZezexkGKBfdtWHOFIQPl9Agzu5JIcdAFbyOoPZUa2UgbnSpvzQXW+Q85N6b7eub3089ZZYbysWHpLW5KRWpwYM03NFnhyBgrMv/9qDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708643523; c=relaxed/simple;
-	bh=QHoMvTKCD5fGTNb5T5F8SIYrx2Yk/3vjIdA7BgloLwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=h7Gqq1RRQg5wYs2E3pkZRWYtSYPr3hu/3uCj0JYTAIFkgESwIAOo4W1QqOeYoXwrHBKckbob6pph0EruUed0RVw5ULJ11jS2IPKorZN9qT+mgSVNa+iIAb5uNpHTg5p8yRg2MUkzg49AZSdcN987qazwItfTYSzplde2all2Nj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RcxIG+OR; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1708643868; c=relaxed/simple;
+	bh=AOXQpfud0y7B7Zjmjzynj1tmBM8+xLCEmeuqiuVG8tw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=TZSyox60IO3hLVj/VSDZVekkSyPIzc8JWsnEdq//j2Kl5PRBVxx9+Y5vGJn0wHljuxueUvwzYveCFUEKdHpHjMnaXhB7rVmtO3opRMOOwvTmd/6rSOX/1/5wB4XnguRBR/a2fbV37iVETRwV2eHPUcOaZbwNzmaNwJPcQiNv85M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gi+hhLAU; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41MMxZ7S009924;
-	Thu, 22 Feb 2024 23:11:55 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41MLfm5Q007618;
+	Thu, 22 Feb 2024 23:16:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=zxph8GCVePXqXCuKYQIlzmAhEzeCXIEAYRIYcF/Siyg=; b=Rc
-	xIG+OR1yNjlQPDz3/gP43QPn7dG/4fjQhYUewcAdNX7qvYrp+RDAcWXTOOVxlRrj
-	XDWmIw3pBMQQeEBgUHEWvXWr/dZWILomtTBsmmZG+W4N5JPv4R3KhlKd/gjxoxOy
-	x0xSP8l7RylGv13SlLreJUIn1HuNT9UiN9xcm8zXrbkCzfPSiWl0YJpFPqdFoR1d
-	i9eIK/PDI7cSjH7s1ysBlK0DomBDvcwHHa3pCFBumQuyKh8DMfQsb8TsL86qDWiZ
-	KGC0dWBinw9HDFZ11NDUJ9qpPg9gET7koW+2cXSrTqoyAOyR4PGUSQR7f6GkMV+T
-	Mvng6dh9WfvolhwSDSUg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3we2kf9pms-1
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=XU6+xTRmXZW3XB
+	1dId8rJpRe/W6T12K0CbLCDLT5g18=; b=gi+hhLAU2ba3uIi3jOPhbJiXi3JWLN
+	OAKUIhMifOStD6An+Dd1tQfIfZAysyQV4SsQwtfzcNjEvQxyd/Dx4hFLQPamlB5f
+	DMm9gtjats81Z+CNFYB16f5mpljzepAFal7RuiERCZXRqZ02T0ad/OTehgp6KfCf
+	Y6y3incHfCaL77Tjg8JEYeyHlSVsAS3/opB+UJLkPTHnGeCh+IEa7Cf1mjjuJFr3
+	2cdOtwRBK76BknbWa5bNnITTqdoJsIbpOwIQ02C7TPTzp9W2yxocltuhdTdPt+il
+	x8YfkybtAMBEaIL2FnnHKCsI6HKD20CgyUyYk6aB52AjWj899LNpVyIA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3weasbs60q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 23:11:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MNBsKt013024
+	Thu, 22 Feb 2024 23:16:28 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MNGRL5018187
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 23:11:54 GMT
-Received: from [10.71.111.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 22 Feb
- 2024 15:11:53 -0800
-Message-ID: <733ce21f-e9f4-40a1-1dd6-3bb47075d2d2@quicinc.com>
-Date: Thu, 22 Feb 2024 15:11:53 -0800
+	Thu, 22 Feb 2024 23:16:27 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 22 Feb 2024 15:16:26 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Subject: [PATCH v17 00/35] Drivers for Gunyah hypervisor
+Date: Thu, 22 Feb 2024 15:16:23 -0800
+Message-ID: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 13/19] drm/msm/dp: add VSC SDP support for YUV420 over
- DP
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <marijn.suijten@somainline.org>,
-        <neil.armstrong@linaro.org>
-References: <20240222194025.25329-1-quic_parellan@quicinc.com>
- <20240222194025.25329-14-quic_parellan@quicinc.com>
- <CAA8EJpoYwxzg=tNSYVMATZDTEML72+HHYDDcDyG3i2pFbuwCTg@mail.gmail.com>
- <39824013-0ec5-8198-6cfb-4c23e1136047@quicinc.com>
- <CAA8EJppUNem3CwhrmmBD0DBQfVK6CZOh-QkBXRhW4EBt89+Gyg@mail.gmail.com>
-From: Paloma Arellano <quic_parellan@quicinc.com>
-In-Reply-To: <CAA8EJppUNem3CwhrmmBD0DBQfVK6CZOh-QkBXRhW4EBt89+Gyg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-B4-Tracking: v=1; b=H4sIAMfV12UC/1WMyw6CMBQFf4V0bc3tE+rK/zAuailwFxZthUgI/
+ 24hEuPyTM7MTJKP6BM5FTOJfsSEfciDlYeCuM6G1lOsMyAcuGAcKtoOYbIdNYpbZ0utKw8knx/
+ RN/jeSpdr3h2mVx+nLTwyteJvg6m9kTkFygy3qq5KbgWcnwM6DO7o+jtZMyPTuyqBgfmpOqtaS
+ APy1kjnzb+6LMsHogBeoNwAAAA=
+To: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri
+	<quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu
+	<quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>,
+        Elliot Berman
+	<quic_eberman@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tahiTRj4wgVJvGv5HsfCurAbHLYnVMKF
-X-Proofpoint-GUID: tahiTRj4wgVJvGv5HsfCurAbHLYnVMKF
+X-Proofpoint-ORIG-GUID: hAraAheqf2O_bQQ1azDSjoPjnS7SSnde
+X-Proofpoint-GUID: hAraAheqf2O_bQQ1azDSjoPjnS7SSnde
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
- mlxscore=0 suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402220178
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 phishscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402220179
 
+Gunyah is a Type-1 hypervisor independent of any high-level OS kernel,
+and runs in a higher CPU privilege level. It does not depend on any
+lower-privileged OS kernel/code for its core functionality. This
+increases its security and can support a much smaller trusted computing
+base than a Type-2 hypervisor. Gunyah is designed for isolated virtual
+machine use cases and to support launching trusted+isolated virtual
+machines from a relatively less trusted host virtual machine.
 
-On 2/22/2024 1:56 PM, Dmitry Baryshkov wrote:
-> On Thu, 22 Feb 2024 at 23:28, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->>
->> On 2/22/2024 1:18 PM, Dmitry Baryshkov wrote:
->>> On Thu, 22 Feb 2024 at 21:40, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->>>> Add support to pack and send the VSC SDP packet for DP. This therefore
->>>> allows the transmision of format information to the sinks which is
->>>> needed for YUV420 support over DP.
->>>>
->>>> Changes in v5:
->>>>           - Slightly modify use of drm_dp_vsc_sdp_pack()
->>>>           - Remove dp_catalog NULL checks
->>>>           - Modify dp_utils_pack_sdp_header() to more clearly pack the
->>>>             header buffer
->>>>           - Move dp_utils_pack_sdp_header() inside of
->>>>             dp_catalog_panel_send_vsc_sdp to clearly show the relationship
->>>>             between the header buffer and the vsc_sdp struct
->>>>           - Due to the last point, remove the dp_utils_pack_vsc_sdp()
->>>>             function and only call drm_dp_vsc_sdp_pack() in
->>>>             dp_panel_setup_vsc_sdp_yuv_420()
->>>>
->>>> Changes in v4:
->>>>           - Remove struct msm_dp_sdp_with_parity
->>>>           - Use dp_utils_pack_sdp_header() to pack the SDP header and
->>>>             parity bytes into a buffer
->>>>           - Use this buffer when writing the VSC SDP data in
->>>>             dp_catalog_panel_send_vsc_sdp()
->>>>           - Write to all of the MMSS_DP_GENERIC0 registers instead of just
->>>>             the ones with non-zero values
->>>>
->>>> Changes in v3:
->>>>           - Create a new struct, msm_dp_sdp_with_parity, which holds the
->>>>             packing information for VSC SDP
->>>>           - Use drm_dp_vsc_sdp_pack() to pack the data into the new
->>>>             msm_dp_sdp_with_parity struct instead of specifically packing
->>>>             for YUV420 format
->>>>           - Modify dp_catalog_panel_send_vsc_sdp() to send the VSC SDP
->>>>             data using the new msm_dp_sdp_with_parity struct
->>>>
->>>> Changes in v2:
->>>>           - Rename GENERIC0_SDPSIZE macro to GENERIC0_SDPSIZE_VALID
->>>>           - Remove dp_sdp from the dp_catalog struct since this data is
->>>>             being allocated at the point used
->>>>           - Create a new function in dp_utils to pack the VSC SDP data
->>>>             into a buffer
->>>>           - Create a new function that packs the SDP header bytes into a
->>>>             buffer. This function is made generic so that it can be
->>>>             utilized by dp_audio
->>>>             header bytes into a buffer
->>>>           - Create a new function in dp_utils that takes the packed buffer
->>>>             and writes to the DP_GENERIC0_* registers
->>>>           - Split the dp_catalog_panel_config_vsc_sdp() function into two
->>>>             to disable/enable sending VSC SDP packets
->>>>           - Check the DP HW version using the original useage of
->>>>             dp_catalog_hw_revision() and correct the version checking
->>>>             logic
->>>>           - Rename dp_panel_setup_vsc_sdp() to
->>>>             dp_panel_setup_vsc_sdp_yuv_420() to explicitly state that
->>>>             currently VSC SDP is only being set up to support YUV420 modes
->>>>
->>>> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_catalog.c | 93 +++++++++++++++++++++++++++++
->>>>    drivers/gpu/drm/msm/dp/dp_catalog.h |  6 ++
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 ++
->>>>    drivers/gpu/drm/msm/dp/dp_panel.c   | 52 ++++++++++++++++
->>>>    drivers/gpu/drm/msm/dp/dp_reg.h     |  3 +
->>>>    drivers/gpu/drm/msm/dp/dp_utils.c   | 25 ++++++++
->>>>    drivers/gpu/drm/msm/dp/dp_utils.h   | 14 +++++
->>>>    7 files changed, 197 insertions(+)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> index 5d84c089e520a..bfc6f53ae167f 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>>> @@ -901,6 +901,99 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
->>>>           return 0;
->>>>    }
->>>>
->>>> +static void dp_catalog_panel_send_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp)
->>>> +{
->>>> +       struct dp_catalog_private *catalog;
->>>> +       u32 header[2];
->>>> +       u32 val;
->>>> +       int i;
->>>> +
->>>> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->>>> +
->>>> +       dp_utils_pack_sdp_header(&vsc_sdp->sdp_header, header);
->>>> +
->>>> +       dp_write_link(catalog, MMSS_DP_GENERIC0_0, header[0]);
->>>> +       dp_write_link(catalog, MMSS_DP_GENERIC0_1, header[1]);
->>>> +
->>>> +       for (i = 0; i < sizeof(vsc_sdp->db); i += 4) {
->>>> +               val = ((vsc_sdp->db[i]) | (vsc_sdp->db[i + 1] << 8) | (vsc_sdp->db[i + 2] << 16) |
->>>> +                      (vsc_sdp->db[i + 3] << 24));
->>>> +               dp_write_link(catalog, MMSS_DP_GENERIC0_2 + i, val);
->>>> +       }
->>>> +}
->>>> +
->>>> +static void dp_catalog_panel_update_sdp(struct dp_catalog *dp_catalog)
->>>> +{
->>>> +       struct dp_catalog_private *catalog;
->>>> +       u32 hw_revision;
->>>> +
->>>> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->>>> +
->>>> +       hw_revision = dp_catalog_hw_revision(dp_catalog);
->>>> +       if (hw_revision < DP_HW_VERSION_1_2 && hw_revision >= DP_HW_VERSION_1_0) {
->>>> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x01);
->>>> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x00);
->>>> +       }
->>>> +}
->>>> +
->>>> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp)
->>>> +{
->>>> +       struct dp_catalog_private *catalog;
->>>> +       u32 cfg, cfg2, misc;
->>>> +
->>>> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->>>> +
->>>> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
->>>> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
->>>> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
->>>> +
->>>> +       cfg |= GEN0_SDP_EN;
->>>> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
->>>> +
->>>> +       cfg2 |= GENERIC0_SDPSIZE_VALID;
->>>> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
->>>> +
->>>> +       dp_catalog_panel_send_vsc_sdp(dp_catalog, vsc_sdp);
->>>> +
->>>> +       /* indicates presence of VSC (BIT(6) of MISC1) */
->>>> +       misc |= DP_MISC1_VSC_SDP;
->>>> +
->>>> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=1\n");
->>>> +
->>>> +       pr_debug("misc settings = 0x%x\n", misc);
->>>> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
->>>> +
->>>> +       dp_catalog_panel_update_sdp(dp_catalog);
->>>> +}
->>>> +
->>>> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog)
->>>> +{
->>>> +       struct dp_catalog_private *catalog;
->>>> +       u32 cfg, cfg2, misc;
->>>> +
->>>> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->>>> +
->>>> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
->>>> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
->>>> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
->>>> +
->>>> +       cfg &= ~GEN0_SDP_EN;
->>>> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
->>>> +
->>>> +       cfg2 &= ~GENERIC0_SDPSIZE_VALID;
->>>> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
->>>> +
->>>> +       /* switch back to MSA */
->>>> +       misc &= ~DP_MISC1_VSC_SDP;
->>>> +
->>>> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=0\n");
->>>> +
->>>> +       pr_debug("misc settings = 0x%x\n", misc);
->>>> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
->>>> +
->>>> +       dp_catalog_panel_update_sdp(dp_catalog);
->>>> +}
->>>> +
->>>>    void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
->>>>                                   struct drm_display_mode *drm_mode)
->>>>    {
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
->>>> index 6cb5e2a243de2..3605252effb59 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
->>>> @@ -9,6 +9,7 @@
->>>>    #include <drm/drm_modes.h>
->>>>
->>>>    #include "dp_parser.h"
->>>> +#include "dp_utils.h"
->>>>    #include "disp/msm_disp_snapshot.h"
->>>>
->>>>    /* interrupts */
->>>> @@ -30,6 +31,9 @@
->>>>
->>>>    #define DP_AUX_CFG_MAX_VALUE_CNT 3
->>>>
->>>> +#define DP_HW_VERSION_1_0      0x10000000
->>>> +#define DP_HW_VERSION_1_2      0x10020000
->>>> +
->>>>    /* PHY AUX config registers */
->>>>    enum dp_phy_aux_config_type {
->>>>           PHY_AUX_CFG0,
->>>> @@ -124,6 +128,8 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
->>>>
->>>>    /* DP Panel APIs */
->>>>    int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
->>>> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp);
->>>> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog);
->>>>    void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
->>>>    void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
->>>>                                   struct drm_display_mode *drm_mode);
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> index bffb7bac2c2c8..a42b29f9902c1 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> @@ -1947,6 +1947,8 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
->>>>           dp_io = &ctrl->parser->io;
->>>>           phy = dp_io->phy;
->>>>
->>>> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
->>>> +
->>>>           /* set dongle to D3 (power off) mode */
->>>>           dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
->>>>
->>>> @@ -2021,6 +2023,8 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
->>>>           dp_io = &ctrl->parser->io;
->>>>           phy = dp_io->phy;
->>>>
->>>> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
->>>> +
->>>>           dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
->>>>
->>>>           dp_catalog_ctrl_reset(ctrl->catalog);
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> index db1942794f1a4..e425a5c86acdc 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->>>> @@ -4,6 +4,7 @@
->>>>     */
->>>>
->>>>    #include "dp_panel.h"
->>>> +#include "dp_utils.h"
->>>>
->>>>    #include <drm/drm_connector.h>
->>>>    #include <drm/drm_edid.h>
->>>> @@ -281,6 +282,53 @@ void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable)
->>>>           dp_catalog_panel_tpg_enable(catalog, &panel->dp_panel.dp_mode.drm_mode);
->>>>    }
->>>>
->>>> +static int dp_panel_setup_vsc_sdp_yuv_420(struct dp_panel *dp_panel)
->>>> +{
->>>> +       struct dp_catalog *catalog;
->>>> +       struct dp_panel_private *panel;
->>>> +       struct dp_display_mode *dp_mode;
->>>> +       struct drm_dp_vsc_sdp vsc_sdp_data;
->>>> +       struct dp_sdp vsc_sdp;
->>>> +       ssize_t len;
->>>> +
->>>> +       if (!dp_panel) {
->>>> +               DRM_ERROR("invalid input\n");
->>>> +               return -EINVAL;
->>>> +       }
->>>> +
->>>> +       panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
->>>> +       catalog = panel->catalog;
->>>> +       dp_mode = &dp_panel->dp_mode;
->>>> +
->>>> +       memset(&vsc_sdp_data, 0, sizeof(vsc_sdp_data));
->>>> +
->>>> +       /* VSC SDP header as per table 2-118 of DP 1.4 specification */
->>>> +       vsc_sdp_data.sdp_type = DP_SDP_VSC;
->>>> +       vsc_sdp_data.revision = 0x05;
->>>> +       vsc_sdp_data.length = 0x13;
->>>> +
->>>> +       /* VSC SDP Payload for DB16 */
->>>> +       vsc_sdp_data.pixelformat = DP_PIXELFORMAT_YUV420;
->>>> +       vsc_sdp_data.colorimetry = DP_COLORIMETRY_DEFAULT;
->>>> +
->>>> +       /* VSC SDP Payload for DB17 */
->>>> +       vsc_sdp_data.bpc = dp_mode->bpp / 3;
->>>> +       vsc_sdp_data.dynamic_range = DP_DYNAMIC_RANGE_CTA;
->>>> +
->>>> +       /* VSC SDP Payload for DB18 */
->>>> +       vsc_sdp_data.content_type = DP_CONTENT_TYPE_GRAPHICS;
->>>> +
->>>> +       len = drm_dp_vsc_sdp_pack(&vsc_sdp_data, &vsc_sdp);
->>>> +       if (len < 0) {
->>>> +               DRM_ERROR("unable to pack vsc sdp\n");
->>>> +               return len;
->>>> +       }
->>>> +
->>>> +       dp_catalog_panel_enable_vsc_sdp(catalog, &vsc_sdp);
->>>> +
->>>> +       return 0;
->>>> +}
->>>> +
->>>>    void dp_panel_dump_regs(struct dp_panel *dp_panel)
->>>>    {
->>>>           struct dp_catalog *catalog;
->>>> @@ -344,6 +392,10 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
->>>>           catalog->dp_active = data;
->>>>
->>>>           dp_catalog_panel_timing_cfg(catalog);
->>>> +
->>>> +       if (dp_panel->dp_mode.out_fmt_is_yuv_420)
->>>> +               dp_panel_setup_vsc_sdp_yuv_420(dp_panel);
->>>> +
->>>>           panel->panel_on = true;
->>>>
->>>>           return 0;
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
->>>> index 78785ed4b40c4..aa9f6c3e4ddeb 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
->>>> @@ -142,6 +142,7 @@
->>>>    #define DP_MISC0_SYNCHRONOUS_CLK               (0x00000001)
->>>>    #define DP_MISC0_COLORIMETRY_CFG_SHIFT         (0x00000001)
->>>>    #define DP_MISC0_TEST_BITS_DEPTH_SHIFT         (0x00000005)
->>>> +#define DP_MISC1_VSC_SDP                       (0x00004000)
->>>>
->>>>    #define DP_MISC0_COLORIMERY_CFG_LEGACY_RGB     (0)
->>>>    #define DP_MISC0_COLORIMERY_CFG_CEA_RGB                (0x04)
->>>> @@ -204,9 +205,11 @@
->>>>    #define MMSS_DP_AUDIO_CTRL_RESET               (0x00000214)
->>>>
->>>>    #define MMSS_DP_SDP_CFG                                (0x00000228)
->>>> +#define GEN0_SDP_EN                            (0x00020000)
->>>>    #define MMSS_DP_SDP_CFG2                       (0x0000022C)
->>>>    #define MMSS_DP_AUDIO_TIMESTAMP_0              (0x00000230)
->>>>    #define MMSS_DP_AUDIO_TIMESTAMP_1              (0x00000234)
->>>> +#define GENERIC0_SDPSIZE_VALID                 (0x00010000)
->>>>
->>>>    #define MMSS_DP_AUDIO_STREAM_0                 (0x00000240)
->>>>    #define MMSS_DP_AUDIO_STREAM_1                 (0x00000244)
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.c b/drivers/gpu/drm/msm/dp/dp_utils.c
->>>> index 3a44fe738c004..3c8db0e9adfa6 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_utils.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_utils.c
->>>> @@ -7,6 +7,8 @@
->>>>
->>>>    #include "dp_utils.h"
->>>>
->>>> +#define DP_SDP_HEADER_SIZE             8
->>>> +
->>>>    u8 dp_utils_get_g0_value(u8 data)
->>>>    {
->>>>           u8 c[4];
->>>> @@ -71,3 +73,26 @@ u8 dp_utils_calculate_parity(u32 data)
->>>>
->>>>           return parity_byte;
->>>>    }
->>>> +
->>>> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff)
->>>> +{
->>>> +       size_t length;
->>>> +
->>>> +       length = sizeof(header_buff);
->>>> +       if (length < DP_SDP_HEADER_SIZE)
->>>> +               return -ENOSPC;
->>>> +
->>>> +       memset(header_buff, 0, sizeof(header_buff));
->>> Just out of curiosity:
->>> 1) what is the amount of memory getting zeroed by this call?
->>> 2) what's the point in zeroing it if the next two lines will overwrite it?
->>>
->>> If nobody objects, I'll remove this line while applying.
->>>
->>> If that's fine,
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> Sounds good to me. Just didn't notice the redundancy of this line.
-> Please note the first question too. Do you understand the issue?
+Gunyah is an open source hypervisor. The source repo is available at
+https://github.com/quic/gunyah-hypervisor.
 
+The diagram below shows the architecture for AArch64.
 
-I'm assuming as the caller that the size of header_buff will always be 8 
-bytes. But I see the issue where the API doesn't actually know the size 
-of the header_buff and could set the whole header_buff to zero, when we 
-are only trying to modify the first two values of the array. I 
-originally had this line there since the header_buff[10] was a size of 
-40 bytes in a past implementation where I was trying to set all of the 
-values in the buffer to 0 before setting a select few to VSC SDP 
-specific values. This was my bad.
+::
 
+         VM A                    VM B
+     +-----+ +-----+  | +-----+ +-----+ +-----+
+     |     | |     |  | |     | |     | |     |
+ EL0 | APP | | APP |  | | APP | | APP | | APP |
+     |     | |     |  | |     | |     | |     |
+     +-----+ +-----+  | +-----+ +-----+ +-----+
+ ---------------------|-------------------------
+     +--------------+ | +----------------------+
+     |              | | |                      |
+ EL1 | Linux Kernel | | |Linux kernel/Other OS |   ...
+     |              | | |                      |
+     +--------------+ | +----------------------+
+ --------hvc/smc------|------hvc/smc------------
 
->
->> -Paloma
->>
->>
->>>> +
->>>> +       header_buff[0] = FIELD_PREP(HEADER_0_MASK, sdp_header->HB0) |
->>>> +               FIELD_PREP(PARITY_0_MASK, dp_utils_calculate_parity(sdp_header->HB0)) |
->>>> +               FIELD_PREP(HEADER_1_MASK, sdp_header->HB1) |
->>>> +               FIELD_PREP(PARITY_1_MASK, dp_utils_calculate_parity(sdp_header->HB1));
->>>> +
->>>> +       header_buff[1] = FIELD_PREP(HEADER_2_MASK, sdp_header->HB2) |
->>>> +               FIELD_PREP(PARITY_2_MASK, dp_utils_calculate_parity(sdp_header->HB2)) |
->>>> +               FIELD_PREP(HEADER_3_MASK, sdp_header->HB3) |
->>>> +               FIELD_PREP(PARITY_3_MASK, dp_utils_calculate_parity(sdp_header->HB3));
->>>> +
->>>> +       return length;
->>>> +}
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.h b/drivers/gpu/drm/msm/dp/dp_utils.h
->>>> index 5a505cbf3432b..7c056d9798dc3 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_utils.h
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_utils.h
->>>> @@ -6,6 +6,10 @@
->>>>    #ifndef _DP_UTILS_H_
->>>>    #define _DP_UTILS_H_
->>>>
->>>> +#include <linux/bitfield.h>
->>>> +#include <linux/bits.h>
->>>> +#include <drm/display/drm_dp_helper.h>
->>>> +
->>>>    #define HEADER_BYTE_0_BIT       0
->>>>    #define PARITY_BYTE_0_BIT       8
->>>>    #define HEADER_BYTE_1_BIT      16
->>>> @@ -15,8 +19,18 @@
->>>>    #define HEADER_BYTE_3_BIT      16
->>>>    #define PARITY_BYTE_3_BIT      24
->>>>
->>>> +#define HEADER_0_MASK      GENMASK(7, 0)
->>>> +#define PARITY_0_MASK      GENMASK(15, 8)
->>>> +#define HEADER_1_MASK      GENMASK(23, 16)
->>>> +#define PARITY_1_MASK      GENMASK(31, 24)
->>>> +#define HEADER_2_MASK      GENMASK(7, 0)
->>>> +#define PARITY_2_MASK      GENMASK(15, 8)
->>>> +#define HEADER_3_MASK      GENMASK(23, 16)
->>>> +#define PARITY_3_MASK      GENMASK(31, 24)
->>>> +
->>>>    u8 dp_utils_get_g0_value(u8 data);
->>>>    u8 dp_utils_get_g1_value(u8 data);
->>>>    u8 dp_utils_calculate_parity(u32 data);
->>>> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff);
->>>>
->>>>    #endif /* _DP_UTILS_H_ */
->>>> --
->>>> 2.39.2
->>>>
->
->
+     +----------------------------------------+
+     |                                        |
+ EL2 |            Gunyah Hypervisor           |
+     |                                        |
+     +----------------------------------------+
+
+Gunyah provides these following features.
+
+- Threads and Scheduling: The scheduler schedules virtual CPUs (VCPUs)
+  on physical CPUs and enables time-sharing of the CPUs.
+- Memory Management: Gunyah tracks memory ownership and use of all
+  memory under its control. It provides low level dynamic memory
+  management APIs on top of which higher level donation, lending and sharing
+  is built. Gunyah provides strong VM memory isolation for trusted VMs.
+- Interrupt Virtualization: Interrupts are managed by the hypervisor
+  and are routed directly to the assigned VM.
+- Inter-VM Communication: There are several different mechanisms
+  provided for communicating between VMs.
+- Device Virtualization: Para-virtualization of devices is supported
+  using inter-VM communication and virtio primitives. Low level architecture
+  features and devices such as cpu timers, interrupt controllers are supported
+  with hardware virtualization and emulation where required.
+- Resource Manager: Gunyah supports a "root" VM that initially owns all
+  VM memory and IO resources. The Gunyah Resource Manager is the default
+  bundled root VM and provides high-level services including dynamic VM
+  management and secure memory donation, lending and sharing.
+
+This series adds the basic framework for detecting that Linux is running
+under Gunyah as a virtual machine, communication with the Gunyah
+Resource Manager, and a sample virtual machine manager capable of
+launching virtual machines.
+
+Changes in v17:
+ - Replace RM's irq_chip with irq_create_fwspec_mapping
+ - Unmap lent memory from kernel logical map
+ - Small optimization to unlock folio earlier to allow vCPUs racing for
+   the same folio to run sooner
+ - Add missed "safe to lend" checks for a folio when constructing mem
+   parcel
+
+Changes in v16:
+https://lore.kernel.org/r/20240109-gunyah-v16-0-634904bf4ce9@quicinc.com
+ - Fleshed out memory reclaim while VM is running
+ - Documentation and comments
+
+Changes in v15:
+https://lore.kernel.org/r/20231215-gunyah-v15-0-192a5d872a30@quicinc.com
+ - First implementation of virtual machines backed by guestmemfd and
+using demand paging to provide memory instead of all up front.
+ - Use message queue hypercalls directly instead of traversing through
+mailbox framework.
+
+Changes in v14: https://lore.kernel.org/all/20230613172054.3959700-1-quic_eberman@quicinc.com/
+ - Coding/cosmetic tweaks suggested by Alex
+ - Mark IRQs as wake-up capable
+
+Changes in v13:
+https://lore.kernel.org/all/20230509204801.2824351-1-quic_eberman@quicinc.com/
+ - Tweaks to message queue driver to address race condition between IRQ
+and mailbox registration
+ - Allow removal of VM functions by function-specific comparison --
+specifically to allow
+   removing irqfd by label only and not requiring original FD to be
+provided.
+
+Changes in v12:
+https://lore.kernel.org/all/20230424231558.70911-1-quic_eberman@quicinc.com/
+ - Stylistic/cosmetic tweaks suggested by Alex
+ - Remove patch "virt: gunyah: Identify hypervisor version" and squash
+the
+   check that we're running under a reasonable Gunyah hypervisor into RM
+driver
+ - Refactor platform hooks into a separate module per suggestion from
+Srini
+ - GFP_KERNEL_ACCOUNT and account_locked_vm() for page pinning
+ - enum-ify related constants
+
+Changes in v11:
+https://lore.kernel.org/all/20230304010632.2127470-1-quic_eberman@quicinc.com/
+ - Rename struct gh_vm_dtb_config:gpa -> guest_phys_addr & overflow
+checks for this
+ - More docstrings throughout
+ - Make resp_buf and resp_buf_size optional
+ - Replace deprecated idr with xarray
+ - Refconting on misc device instead of RM's platform device
+ - Renaming variables, structs, etc. from gunyah_ -> gh_
+ - Drop removal of user mem regions
+ - Drop mem_lend functionality; to converge with restricted_memfd later
+
+Changes in v10:
+https://lore.kernel.org/all/20230214211229.3239350-1-quic_eberman@quicinc.com/
+ - Fix bisectability (end result of series is same, --fixups applied to
+wrong commits)
+ - Convert GH_ERROR_* and GH_RM_ERROR_* to enums
+ - Correct race condition between allocating/freeing user memory
+ - Replace offsetof with struct_size
+ - Series-wide renaming of functions to be more consistent
+ - VM shutdown & restart support added in vCPU and VM Manager patches
+ - Convert VM function name (string) to type (number)
+ - Convert VM function argument to value (which could be a pointer) to
+remove memory wastage for arguments
+ - Remove defensive checks of hypervisor correctness
+ - Clean ups to ioeventfd as suggested by Srivatsa
+
+Changes in v9:
+https://lore.kernel.org/all/20230120224627.4053418-1-quic_eberman@quicinc.com/
+ - Refactor Gunyah API flags to be exposed as feature flags at kernel
+level
+ - Move mbox client cleanup into gunyah_msgq_remove()
+ - Simplify gh_rm_call return value and response payload
+ - Missing clean-up/error handling/little endian fixes as suggested by
+Srivatsa and Alex in v8 series
+
+Changes in v8:
+https://lore.kernel.org/all/20221219225850.2397345-1-quic_eberman@quicinc.com/
+ - Treat VM manager as a library of RM
+ - Add patches 21-28 as RFC to support proxy-scheduled vCPUs and
+necessary bits to support virtio
+   from Gunyah userspace
+
+Changes in v7:
+https://lore.kernel.org/all/20221121140009.2353512-1-quic_eberman@quicinc.com/
+ - Refactor to remove gunyah RM bus
+ - Refactor allow multiple RM device instances
+ - Bump UAPI to start at 0x0
+ - Refactor QCOM SCM's platform hooks to allow
+CONFIG_QCOM_SCM=Y/CONFIG_GUNYAH=M combinations
+
+Changes in v6:
+https://lore.kernel.org/all/20221026185846.3983888-1-quic_eberman@quicinc.com/
+ - *Replace gunyah-console with gunyah VM Manager*
+ - Move include/asm-generic/gunyah.h into include/linux/gunyah.h
+ - s/gunyah_msgq/gh_msgq/
+ - Minor tweaks and documentation tidying based on comments from Jiri,
+Greg, Arnd, Dmitry, and Bagas.
+
+Changes in v5
+https://lore.kernel.org/all/20221011000840.289033-1-quic_eberman@quicinc.com/
+ - Dropped sysfs nodes
+ - Switch from aux bus to Gunyah RM bus for the subdevices
+ - Cleaning up RM console
+
+Changes in v4:
+https://lore.kernel.org/all/20220928195633.2348848-1-quic_eberman@quicinc.com/
+ - Tidied up documentation throughout based on questions/feedback received
+ - Switched message queue implementation to use mailboxes
+ - Renamed "gunyah_device" as "gunyah_resource"
+
+Changes in v3:
+https://lore.kernel.org/all/20220811214107.1074343-1-quic_eberman@quicinc.com/
+ - /Maintained/Supported/ in MAINTAINERS
+ - Tidied up documentation throughout based on questions/feedback received
+ - Moved hypercalls into arch/arm64/gunyah/; following hyper-v's implementation
+ - Drop opaque typedefs
+ - Move sysfs nodes under /sys/hypervisor/gunyah/
+ - Moved Gunyah console driver to drivers/tty/
+ - Reworked gh_device design to drop the Gunyah bus.
+
+Changes in v2: https://lore.kernel.org/all/20220801211240.597859-1-quic_eberman@quicinc.com/
+ - DT bindings clean up
+ - Switch hypercalls to follow SMCCC 
+
+v1: https://lore.kernel.org/all/20220223233729.1571114-1-quic_eberman@quicinc.com/
+
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+Elliot Berman (35):
+      docs: gunyah: Introduce Gunyah Hypervisor
+      dt-bindings: Add binding for gunyah hypervisor
+      gunyah: Common types and error codes for Gunyah hypercalls
+      virt: gunyah: Add hypercalls to identify Gunyah
+      virt: gunyah: Add hypervisor driver
+      virt: gunyah: msgq: Add hypercalls to send and receive messages
+      gunyah: rsc_mgr: Add resource manager RPC core
+      gunyah: vm_mgr: Introduce basic VM Manager
+      gunyah: rsc_mgr: Add VM lifecycle RPC
+      gunyah: vm_mgr: Add VM start/stop
+      virt: gunyah: Translate gh_rm_hyp_resource into gunyah_resource
+      virt: gunyah: Add resource tickets
+      gunyah: vm_mgr: Add framework for VM Functions
+      virt: gunyah: Add hypercalls for running a vCPU
+      virt: gunyah: Add proxy-scheduled vCPUs
+      gunyah: Add hypercalls for demand paging
+      gunyah: rsc_mgr: Add memory parcel RPC
+      mm/interval_tree: Export iter_first/iter_next
+      arch/mm: Export direct {un,}map functions
+      virt: gunyah: Add interfaces to map memory into guest address space
+      gunyah: rsc_mgr: Add platform ops on mem_lend/mem_reclaim
+      virt: gunyah: Add Qualcomm Gunyah platform ops
+      virt: gunyah: Implement guestmemfd
+      virt: gunyah: Add ioctl to bind guestmem to VMs
+      virt: gunyah: guestmem: Initialize RM mem parcels from guestmem
+      virt: gunyah: Share guest VM dtb configuration to Gunyah
+      gunyah: rsc_mgr: Add RPC to enable demand paging
+      virt: gunyah: Enable demand paging
+      gunyah: rsc_mgr: Add RPC to set VM boot context
+      virt: gunyah: Allow userspace to initialize context of primary vCPU
+      virt: gunyah: Add hypercalls for sending doorbell
+      virt: gunyah: Add irqfd interface
+      virt: gunyah: Add IO handlers
+      virt: gunyah: Add ioeventfd
+      MAINTAINERS: Add Gunyah hypervisor drivers section
+
+ .../bindings/firmware/gunyah-hypervisor.yaml       |  82 ++
+ Documentation/userspace-api/ioctl/ioctl-number.rst |   1 +
+ Documentation/virt/gunyah/index.rst                | 135 +++
+ Documentation/virt/gunyah/message-queue.rst        |  68 ++
+ Documentation/virt/index.rst                       |   1 +
+ MAINTAINERS                                        |  12 +
+ arch/arm64/Kbuild                                  |   1 +
+ arch/arm64/gunyah/Makefile                         |   3 +
+ arch/arm64/gunyah/gunyah_hypercall.c               | 279 ++++++
+ arch/arm64/include/asm/gunyah.h                    |  57 ++
+ arch/arm64/mm/pageattr.c                           |   3 +
+ drivers/virt/Kconfig                               |   2 +
+ drivers/virt/Makefile                              |   1 +
+ drivers/virt/gunyah/Kconfig                        |  47 +
+ drivers/virt/gunyah/Makefile                       |   9 +
+ drivers/virt/gunyah/guest_memfd.c                  | 987 ++++++++++++++++++++
+ drivers/virt/gunyah/gunyah.c                       |  52 ++
+ drivers/virt/gunyah/gunyah_ioeventfd.c             | 139 +++
+ drivers/virt/gunyah/gunyah_irqfd.c                 | 187 ++++
+ drivers/virt/gunyah/gunyah_platform_hooks.c        | 117 +++
+ drivers/virt/gunyah/gunyah_qcom.c                  | 220 +++++
+ drivers/virt/gunyah/gunyah_vcpu.c                  | 590 ++++++++++++
+ drivers/virt/gunyah/rsc_mgr.c                      | 836 +++++++++++++++++
+ drivers/virt/gunyah/rsc_mgr.h                      | 144 +++
+ drivers/virt/gunyah/rsc_mgr_rpc.c                  | 602 +++++++++++++
+ drivers/virt/gunyah/vm_mgr.c                       | 993 +++++++++++++++++++++
+ drivers/virt/gunyah/vm_mgr.h                       | 215 +++++
+ drivers/virt/gunyah/vm_mgr_mem.c                   | 356 ++++++++
+ include/linux/gunyah.h                             | 483 ++++++++++
+ include/uapi/linux/gunyah.h                        | 378 ++++++++
+ mm/interval_tree.c                                 |   3 +
+ 31 files changed, 7003 insertions(+)
+---
+base-commit: ffd2cb6b718e189e7e2d5d0c19c25611f92e061a
+change-id: 20231208-gunyah-952aca7668e0
+
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
+
 
