@@ -1,144 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-12202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C021D85FE2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:37:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6068F85FE6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:50:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 722881F27EDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 16:37:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C5CF1C25A31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 16:50:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CCC515350A;
-	Thu, 22 Feb 2024 16:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0C75153BE1;
+	Thu, 22 Feb 2024 16:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H8OQXrXL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tvw+TbRx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C50D14F9E2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 16:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698341552E2;
+	Thu, 22 Feb 2024 16:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708619851; cv=none; b=drMGeUND0dyVDSnjk4n1xIauvONSOGPGiJWENKryEcrIPoNrlMymjtdd0dNfAiRyr+iEHQYcVjo1K54DscLabk/B1sBkRVYTZhufU2hJyodVtLgKk6HCNqYkEhztR5z0A2G1+f/0Z52lejPv7RvfGpmSpUJqQOVbhvThyapKYyw=
+	t=1708620616; cv=none; b=lP6qA8rMjiGcKKIsjzd1uvfK+nk6GTQdEKmEUw2Uu2YiqKM98TUBP/tF8D4gkZ66ENUUwOAAy9oRb5b1k5kwKS15jadgyMBU4AQwdOA5TJYeiYKVno5jI78GSYLeybiV4ipuaZrdk20gIJQG6jUaYYy/U0Y+szrDIxFkRMpFtt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708619851; c=relaxed/simple;
-	bh=7TaWjSMnr9SyJaL1rSnUq6UVe3SDZbweU+CU/JSE12o=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Y8eSuZE0O2W0vWthiFl9qXmQk8Ijg8D20KMviSxVjcIIx+gP9qQImSoAo7GG4hAP+Jf9hE3YyNokb5G0qVjZaYc6dk00BiTDkqReL0J+tPwp9DDcywITxw5kYWwEkuiEUQhO6UsFRTRhTgKXbKDvo7Kq8q1P/UrhcmCfuVijNLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H8OQXrXL; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso8429800a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 08:37:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708619848; x=1709224648; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ythAlB5fOuduCOWoNXa4hv2/pnJOcPq8G9cfPzDgUoI=;
-        b=H8OQXrXLleYyVLeshdY3zehihi+qwT/Nk6N+ArWW1TNbRoUb6v5aJbow9wQcaklDB1
-         /rlt6vftkl6XzIk36t4Ka9C3tDXlm2v3g4Ac6vALE+5v1vEOt+xuUUTNAi/q2FYD/vSM
-         ZCMZ3b9i+myf1lPeAbQzCTCJMTRi+sJcjLHVH3ugrRiNyERuBRASVEHvpii5C91c+oPy
-         IamZL503BYj+lm38EAjmS4Tq+uN4O9mSmXiWtmR3pqftboA+/n9FrbVL5xIdIbSP+lOW
-         K6GoU2vUCQYX3GCMyWBClShmo3wM2T5+PurN6kKpz1JBi3FqNWIOC89H3YyXeO4UFFEo
-         KKUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708619848; x=1709224648;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ythAlB5fOuduCOWoNXa4hv2/pnJOcPq8G9cfPzDgUoI=;
-        b=kcLYEFJ65EteV8AR9KT9YY4DpFo7T3yVUeWh+OKKFsz74z/1o+hr4tS25X107acSy2
-         rIu4pdQ47N3A5H7DJpsIPkP/wOZyyM3AINwQWvRwFvUGKXZLIuiMgpzP2rjsJ0LwB9Q8
-         4ZVlyX2As7tdkZg+i4EQNjHJ0mt3MMPtCn9xq+WYuXsi5ZbkJOO2/iATI8JrOPll9T2Q
-         sUzkKydx39UZl0ZBbIs05Ef56NtGIMADKcslR85+d6VWGc0s0djkCE7Fyq2iybbpoi0z
-         4U68lQfEpsp366v6WiKRepGdp9AWD52nXqWxDCHa0TfLCT0Vd3PIUrPrTfw1N8JX7lSV
-         sguw==
-X-Forwarded-Encrypted: i=1; AJvYcCVkSW5arMjE6TK+iiMHqLxQyec0VO2+6hBSEqK93FRDDc9vF2gsKj7fcb/+IAHGlHvGnORYg1AF6fxLc3H654A4rM2SgDzh/yiWFc5NQA==
-X-Gm-Message-State: AOJu0YxvGPJWLs46dEHiP/kgUHQKVEjZw1kROzLBjq2zDO73F+pdsUWG
-	gCga6O2m26Li9YTwL8QPJnw1tEdBO5K8Yscr+zRSsHic/Uwg9kgcn4nnLV9QQE4=
-X-Google-Smtp-Source: AGHT+IEDqRBn3wWYrrFcXKIOrpL73QXc+7HDhyj6TIw4Ua/8t6GPiVQ6GsEbJRHzFBalKuA1vFJmwg==
-X-Received: by 2002:a05:6402:5246:b0:565:2183:d296 with SMTP id t6-20020a056402524600b005652183d296mr2969008edd.27.1708619847900;
-        Thu, 22 Feb 2024 08:37:27 -0800 (PST)
-Received: from krzk-bin.. ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id u19-20020aa7d993000000b005653c441a20sm614191eds.34.2024.02.22.08.37.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Feb 2024 08:37:27 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: linux-usb@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH usb next] ASoC: Revert "ASoC: dt-bindings: Update example for enabling USB offload on SM8250"
-Date: Thu, 22 Feb 2024 17:32:04 +0100
-Message-Id: <20240222163204.65468-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1708620616; c=relaxed/simple;
+	bh=jzgZY6zqPBSGD9YD0BKd1woI2fsVxRaFtsSJDMgRhhk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J/tn9odHoUhM0IQq5h0NydKvPcyAv7442KA8WUPWl9OrUdpdmUbLKkU+YvJnesZRCIhzY1undkeIM7Zz12zan9I6LvqUDLFBKokFi972+d8XRNjkMrJqdFTCmkiF1UjbBQlWWSu3MUGOzURnEWEnP88EpvsG1xIJYi/Z12S5oxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tvw+TbRx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECBCC433F1;
+	Thu, 22 Feb 2024 16:50:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708620616;
+	bh=jzgZY6zqPBSGD9YD0BKd1woI2fsVxRaFtsSJDMgRhhk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Tvw+TbRxk808PShE8X9kFc2djAPrBKVC3fPeou9JAwUeFEgmjlzWOarpNx0+DXxXp
+	 FY0YTS2GBnXJ8RYNdGq67aBx2KngY9DLAKutqHQVO0KNrhxMZI5IkYerQNXazGQ3ZT
+	 5n4TcWfuvwzo6M219lB8xUPyWUvLvyFowGO4IEdhX0zwlMEUT5sLea+jainoyh1OKv
+	 kzY0fPn9XEObThLrabLoLo9ypfpUfRGXIN3L3zury9khOitSoyV596qjtHyC3tk23z
+	 xOrc2HACbJB10923znohknE3lWyuIEnltcwgOxcuxXr6X8DJWxCDy7cXhRi8Nsdcja
+	 +SVhesevS2Z3w==
+Date: Thu, 22 Feb 2024 16:50:08 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+	corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+	Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+	robh+dt@kernel.org, konrad.dybcio@linaro.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	alsa-devel@alsa-project.org
+Subject: Re: [PATCH v17 36/51] ASoC: dt-bindings: Update example for enabling
+ USB offload on SM8250
+Message-ID: <bdc57138-e67e-47ae-8cf1-b8be5aeb2369@sirena.org.uk>
+References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
+ <20240217001017.29969-37-quic_wcheng@quicinc.com>
+ <7dc9e80e-0875-4dfc-adf9-9bfad2fb8589@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cOd1FR6fHMWZvLvO"
+Content-Disposition: inline
+In-Reply-To: <7dc9e80e-0875-4dfc-adf9-9bfad2fb8589@linaro.org>
+X-Cookie: I have accepted Provolone into my life!
 
-This reverts commit a9c83252bff616cf3a38d55b7c6a6ad63667f2dd from USB
-tree, because it depends on other DT bindings changes which were not
-applied.  This commit alone causes dt_binding_check failures:
 
-  Documentation/devicetree/bindings/sound/qcom,sm8250.example.dts:97.44-45 syntax error
+--cOd1FR6fHMWZvLvO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Thu, Feb 22, 2024 at 05:24:58PM +0100, Krzysztof Kozlowski wrote:
+> On 17/02/2024 01:10, Wesley Cheng wrote:
+> > Add an example on enabling of USB offload for the Q6DSP.  The routing c=
+an
+> > be done by the mixer, which can pass the multimedia stream to the USB
+> > backend.
+> >=20
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> > ---
+> >  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
+> >  1 file changed, 15 insertions(+)
 
----
+> This broke next.
 
-Greg,
+> Wesley, are you sure you explained dependencies in this patch? Why is
+> next failing on this now?
 
-Please take this revert. Original commit should go via Mark's ASoC.
----
- .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 ---------------
- 1 file changed, 15 deletions(-)
+It's surprising to see this merged at all while the series is still in
+review?
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-index 49e4f5bbe9dd..2ab6871e89e5 100644
---- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-@@ -227,21 +227,6 @@ examples:
-                 sound-dai = <&vamacro 0>;
-             };
-         };
--
--        usb-dai-link {
--            link-name = "USB Playback";
--            cpu {
--                sound-dai = <&q6afedai USB_RX>;
--            };
--
--            codec {
--                sound-dai = <&usbdai USB_RX>;
--            };
--
--            platform {
--                sound-dai = <&q6routing>;
--            };
--        };
-     };
- 
-   - |
--- 
-2.34.1
+--cOd1FR6fHMWZvLvO
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmXXez8ACgkQJNaLcl1U
+h9CQogf/Rty+PzQj/jpG1Fsxu7+MaMcQMkpn1XF2iLD4N1C1cgT6z9UpSyhYC29E
+LHR1HWRiqckOMwnBNyrckGk+mP6PMkGkzqMGBb+rZskMwRX1hCrLkGQzNKVZiugQ
+mirk1eX7etmEaXOAwVT8dKNa34Z/YQXUmEe4lXM6fOpDXhoDDe+5DI8C50Xecsvr
+f/dVZiWq7Nl43QJfHimKiSHAR5JfIeiIBFKcJhTGLVhGAK/juChu9IK1bUnkXffT
+7s+3Fqk5c4YbZ8g4WogDEToJkKAt1dQMf4GSJ21Dhn1xy0sewSXnKSilzX5ieLSR
+PFrYDeV9DWhxNldEQDfvR+DPP/XWpQ==
+=xlAH
+-----END PGP SIGNATURE-----
+
+--cOd1FR6fHMWZvLvO--
 
