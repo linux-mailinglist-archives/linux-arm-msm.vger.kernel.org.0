@@ -1,247 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-12147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F98E85F46D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 10:33:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BA5A85F4B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 10:42:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 738F81C2114A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 09:33:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C19271F261CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 09:42:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95156374FD;
-	Thu, 22 Feb 2024 09:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="htI2uwYS"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F77939857;
+	Thu, 22 Feb 2024 09:41:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C889836B02
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 09:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277EB38F88;
+	Thu, 22 Feb 2024 09:41:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708594404; cv=none; b=R4l42V/bXrAE3gRIcK7M3JHOMYssE58Y4rizOU/x9gxqJjyGVwoD62WiBdgd1FFL7nJqgf1u81moumUl+k8mDjpwsJtN1blueiMNECHWhRZy+v2mRH6VDwQghSYohwRVmOFf5buLo1Dlvxwpt5/p/Crn/83+RnEU1kanIrQ9vio=
+	t=1708594864; cv=none; b=igT+ptz4Szek3FSkHL3ngfu2lot0aEIrYt7Dokmz/mVYC/jCgCwcTDynINjbSrGlE0tVhhKiCzBAY+oPjBLsD+8Os2Zo9DG63EEuG/KI4eSOtlQmmGRm4V7jsFocJdKiD+lBahXRtHT8T3iKkotdnk9ULaflxc14qJbj6YsKj5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708594404; c=relaxed/simple;
-	bh=dP8RdzkphJeuDSol23NMhvj/UZpW44n5G6pBD5kxGeA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QmuUI1tbPEPEI3pMVmE2KRP9h3hlMDeCBz1rfCvAbyOyUiIEKZ/IqLWLdvBZrKxs8MxaJ2q0qzVhWRPmSefiGSy6c6CMCFyzzXZ09Ms/aRgrAEK3cYH1zQXdOHEaioMk9pHDFTE1fjG7ZdFRIEgCvrHf6bQ1N2vuhSurcy6B6JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=htI2uwYS; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41272d42207so15785975e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 01:33:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708594401; x=1709199201; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fDXr5JamV/3Ee7kU0PpVPCxgNjfs/qLOTnSmkmTZcYM=;
-        b=htI2uwYSAwsEj3ldPnyxA99KPi1N0viJpf5hWq1xCg5t0oSDiXaJC3qZ0tx+LYgHOH
-         kQRokLbaacpJBnaczaKi+IMj3yTmSZtntSQhCVQGdBy0mEY7xqXx1q2oXc0nej4HnA7d
-         u7wvn899omG0RvaSYHbRBiQ2GCzLNKGqR/bJVVBerxF6plj38LUpWrekPRP8+/ZiBY4v
-         7HiOoIwGKvKSBqrWXWdZR+pIBQ0mdieMWtwDnK/h7clttX4rEq5cfXO6smhxFDZPpTNr
-         rwL/4uW9df7d/HqKfUEAenaHptMydq/pf14h9moKKHfPRcMK1tzmplY46NKWMcujZ5DE
-         m4yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708594401; x=1709199201;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fDXr5JamV/3Ee7kU0PpVPCxgNjfs/qLOTnSmkmTZcYM=;
-        b=HXyZ0axbv+mH2vcInijTtKI3jH4hzy1OJ1uv2TgeEruCRqtoi5bA9/w8V3WGWhf6jf
-         CXWBALicbUvFqvvvVmu4Ea+ek3oFKZcxFMUpBlQ7sNieqjanQZNHbA/yAi327hATe+a4
-         Q/NKLctsL0VjZYlVn3wWqVEa31bItwTNLw2ufqZgoyDUGqYCFNjNkbDbB/Hj2mZaV2y2
-         c9atv5ULrAZSaOMtxvSrftlzsOHnN62N4yAm2NBymM1J4RBVacGi9nZ54fbph2ick2J6
-         j8KGdNP2h6fX99aOOMF9UPgAtFihUZw6AFRAraaMcC5ruGLLwUmUTeJjKN/iKQNVHXYM
-         /MNg==
-X-Gm-Message-State: AOJu0Yz//QQsMyxprEpAl6qNDyDVflICBpJLw4OO5cRgHYZF8KyblP7n
-	P9p10AgtJlzIYDeqePxuVA1cvnVGW4fvqkpi+Qr+9shkON230MEtsGJLUTnb8wk=
-X-Google-Smtp-Source: AGHT+IGQu/yEpWedhYCkg4zb3W4HcuXrKU1CRJjLn7mYmNeF7dYQsYTZdr8SRbdKAYubrdbuo5Wz6w==
-X-Received: by 2002:a05:600c:81e:b0:40f:b0d9:113 with SMTP id k30-20020a05600c081e00b0040fb0d90113mr15595647wmp.36.1708594401122;
-        Thu, 22 Feb 2024 01:33:21 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c3d:c732:acf9:f53b? ([2a01:e0a:982:cbb0:c3d:c732:acf9:f53b])
-        by smtp.gmail.com with ESMTPSA id r17-20020a05600c459100b004124907f43fsm20589536wmo.12.2024.02.22.01.33.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Feb 2024 01:33:20 -0800 (PST)
-Message-ID: <dd9fa912-203a-4089-ac15-a73658aa2a09@linaro.org>
-Date: Thu, 22 Feb 2024 10:33:19 +0100
+	s=arc-20240116; t=1708594864; c=relaxed/simple;
+	bh=izL9Oq4UHurOw7CRpcyqlGslqY6aPINI+2U4okB5bTM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VC726LSgCorZvBJ2nw/nOuMqBvPyBoCQzTS1WCv3P17tnZ/+qnPks/w4bSdbtagWwq0/3QwQY3W/zakON9AfGt8W/CLtOcxc0yah5ZVBnutP2sJNaxTIHu7E+UYq8Ri28G1Pk8AdT5SG18toyzjQ5c/ydVG45nHcfzS4tJ/BO40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 55813100DE9CD;
+	Thu, 22 Feb 2024 10:40:52 +0100 (CET)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 2F84A3210D; Thu, 22 Feb 2024 10:40:52 +0100 (CET)
+Date: Thu, 22 Feb 2024 10:40:52 +0100
+From: Lukas Wunner <lukas@wunner.de>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczy??ski <kw@linux.com>, Rob Herring <robh@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] PCI: Add D3 support for PCI bridges in DT based
+ platforms
+Message-ID: <20240222094052.GA25101@wunner.de>
+References: <20240221051958.GA11693@thinkpad>
+ <20240221182000.GA1533634@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: qcs6490-rb3gen2: Enable USB Type-C
- display
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
- <20240221-rb3gen2-dp-connector-v1-8-dc0964ef7d96@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20240221-rb3gen2-dp-connector-v1-8-dc0964ef7d96@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240221182000.GA1533634@bhelgaas>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 22/02/2024 00:19, Bjorn Andersson wrote:
-> With MDSS, pmic_glink, and the redriver in place, wire up the various
-> components to enable USB Type-C display on the RB3gen2.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 63 +++++++++++++++++++++++++++-
->   1 file changed, 61 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> index 171ed979d55f..4bf1c6351467 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -149,7 +149,15 @@ port@1 {
->   					reg = <1>;
->   
->   					pmic_glink_ss_in: endpoint {
-> -						remote-endpoint = <&usb_1_dwc3_ss>;
-> +						remote-endpoint = <&redriver_usb_con_ss>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +
-> +					pmic_glink_sbu_in: endpoint {
-> +						remote-endpoint = <&redriver_usb_con_sbu>;
->   					};
->   				};
->   			};
-> @@ -476,6 +484,36 @@ typec-mux@1c {
->   
->   		retimer-switch;
->   		orientation-switch;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				redriver_usb_con_ss: endpoint {
-> +					remote-endpoint = <&pmic_glink_ss_in>;
-> +				};
-> +			};
-> +
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				redriver_phy_con_ss: endpoint {
-> +					remote-endpoint = <&usb_dp_qmpphy_out>;
-> +					data-lanes = <0 1 2 3>;
-> +				};
-> +			};
-> +
-> +			port@2 {
-> +				reg = <2>;
-> +
-> +				redriver_usb_con_sbu: endpoint {
-> +					remote-endpoint = <&pmic_glink_sbu_in>;
-> +				};
-> +			};
+On Wed, Feb 21, 2024 at 12:20:00PM -0600, Bjorn Helgaas wrote:
+>   1) D3hot doesn't work per spec.  This sounds like a hardware
+>      defect in the device that should be a quirk based on
+>      Vendor/Device ID, not something in DT.  I don't actually know if
+>      this is common, although there are several existing quirks that
+>      mention issues with D3.
 
-Nice to see the SBU switching works :-)
+My recollection is that putting Root Ports into D3hot on older x86
+systems would raise MCEs, which is why pci_bridge_d3_possible() only
+allows D3hot in cases which are known to work (e.g. Thunderbolt
+controllers, machines with a recent BIOS).  It was a conservative
+policy chosen to avoid regressions.
+
+I don't know if similar issues exist on non-ACPI systems.  If they
+don't exist, platform_pci_bridge_d3() could just return true for
+all devicetree-based systems.  Might be worth testing if any systems
+can be found which exhibit issues with such a policy.  That would
+obviate the need to specify "supports-d3" in the devicetree.
+Quite the opposite, ports which are known not to work could be
+blacklisted.  Of course if it turns out that's the majority then
+whitelisting via "supports-d3" is a better option.
 
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+>   2) The platform doesn't support putting the bridge in D3cold and
+>      back to D0.  I don't understand this either because I assumed DT
+>      would describe *hardware*, and "supports-d3" might imply the
+>      presence of hardware power control, but doesn't tell us how to
+>      operate it, and it must be up to a native driver to know how to
+>      do it.
 
+I think we're putting devices into D3hot first before cutting power
+(i.e. putting them into D3cold), so knowing that D3hot is safe is
+basically a prerequisite for D3cold.
 
-> +		};
->   	};
->   };
->   
-> @@ -483,6 +521,15 @@ &mdss {
->   	status = "okay";
->   };
->   
-> +&mdss_dp {
-> +	status = "okay";
-> +};
-> +
-> +&mdss_dp_out {
-> +	data-lanes = <0 1>;
-> +	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
-> +};
-> +
->   &mdss_edp {
->   	status = "okay";
->   };
-> @@ -534,7 +581,7 @@ &usb_1_dwc3_hs {
->   };
->   
->   &usb_1_dwc3_ss {
-> -	remote-endpoint = <&pmic_glink_ss_in>;
-> +	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
->   };
->   
->   &usb_1_hsphy {
-> @@ -554,6 +601,18 @@ &usb_1_qmpphy {
->   	status = "okay";
->   };
->   
-> +&usb_dp_qmpphy_out {
-> +	remote-endpoint = <&redriver_phy_con_ss>;
-> +};
-> +
-> +&usb_dp_qmpphy_usb_ss_in {
-> +	remote-endpoint = <&usb_1_dwc3_ss>;
-> +};
-> +
-> +&usb_dp_qmpphy_dp_in {
-> +	remote-endpoint = <&mdss_dp_out>;
-> +};
-> +
->   &wifi {
->   	memory-region = <&wlan_fw_mem>;
->   };
-> 
+Thanks,
+
+Lukas
 
