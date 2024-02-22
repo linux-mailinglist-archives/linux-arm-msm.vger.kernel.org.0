@@ -1,167 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-12130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE3D285F04E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:01:57 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62ECC85F057
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:06:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42F222840A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 04:01:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD6961F210DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 04:06:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC12617578;
-	Thu, 22 Feb 2024 04:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B741775E;
+	Thu, 22 Feb 2024 04:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CFi4hf+Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h5u1EeSn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24359175B5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 04:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153DA175B5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 04:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708574513; cv=none; b=Do7j3rDR0JpZeW5c+zNoj1BOjGE149QtlJnv8+pajG1q4xBvZzASP+VBAIRJ3M2GR5jTRQRDrQUgZh649ySdxSZnh9W+AHnzHVoZEDL1n0jfSSYyWp+e7CtWnkA5D6r6ObJxOb6GaQ04z8oMQr5NIG6VMeVEJBMV14RCjMSQVNY=
+	t=1708574800; cv=none; b=TSkYcCLxyQfDSQ/0uQgwN09yLWcfyxTKokgI3ViurQFZIkCNPR1IshSGGbgwjxKJaU6p9eJoVTUU66dyUuhHr8h/M4QuvdwAdfzeTE47PB4XL0+hOfsPDOrNb1cDtjL6DBHuI8NeWl0VN92p769ZDDq/U0rTnO8ZaVwbbQbfbys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708574513; c=relaxed/simple;
-	bh=1DqHzr3QAz4XD2JcRhhUcwAQtSo1ubyexqzQLkSXPMc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jS3ZnRAXYWqnWmkmr99tSUoLDqjiAPxfOQLDeiDzE7DQgrPHuWIdtHSiy3/xs6kd3+UUBoo6N6COkgZvSnFm+uPNC3kJdpuSV9Q7kRVq8LVws+exUX/6xX/UvhWljUBwJJ+F/cM/jxAXZyQI8imBhV+RYDuEHsHJJlCrS+R44+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CFi4hf+Y; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1708574800; c=relaxed/simple;
+	bh=Oll19zsaxLp+ZZqDdVlR3wuJZCzW4xzyBuSKxDQ0WU0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M/9VYIE+WiHkAw7DuU7/K8lVl/sAm0zEOutpcDYJY2dQX4xAIUvurccEAoSgmMP0VC0cGFuZNiQ1dT2+yoHXrZJkOLJUdZsym0kcfC4aIlHP829+KCWxQNRsCuT4NT+WbqLpXXigWDh3Y6mV8qrblTJkf45nX5jgZoHHx8KP6nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h5u1EeSn; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6083dc087b3so39877147b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 20:01:51 -0800 (PST)
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5c6bd3100fcso4384576a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 20:06:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708574511; x=1709179311; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sj35YOjK6RKB4C5ExxVych1pGfUJCfir8o97Bxs9Vxs=;
-        b=CFi4hf+YefGisns3uINQkbPASHrd3kl9MHjhhDfd4oIuHPw3Al78SNgYAauNHVUL74
-         MRIuDRRL/eaMxu55ej7amZuMPHr4/503HAcIoBYbMOehmmjbKgKhF0JwWwmExTSx2RM9
-         daHK7UgHZliQvW6eZo5Vhrv2/ut3o6UfsiaXVvdOia21j/2omxB7ae21OXIef655zuCd
-         zFvqHJeG0jqQC6MN6tMW2iUBS7Xt/lomRjI6B/XzGugelCpu/OIedyb/XZXc/yLeIJDz
-         S1hF/uSOEPgw6FB3OXuHrEtVVHxSnjb7sVFnEEpGVscVFqj4RsGAWCnVeZZhefTUkE+B
-         kQXg==
+        d=linaro.org; s=google; t=1708574797; x=1709179597; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TpJrdqhFrvQ0edeTwSKLJEayZ6GvBYYXFZmjWChyYsw=;
+        b=h5u1EeSnh/gglgtUl1AeyBL6uuAnU8yTQ8N5+gCF8/gKTUR3jb89TlJTiLwjcQQk8n
+         kx/fY7KhDNS+0FU0mdCCPWgH5tQwiZsIsAITZP7VsZKbKeQEZ0Z4uSN+MPBi/sHzYcP5
+         +pX+AYJf/gSEndxEbXpO8oHwr+yBlghmRFSwLTjxNl8WrfICRVRgcKqz2kvY28DU0IQe
+         hLp/pC4mslMsewsFmbkyrZS/8/tmV3eHdoLB4tykiI+t5AW7EmezLe50BzI9WyPfkRnz
+         eF7QwJZESFw8P4hSdHqkYxMnoQ+GUkle5n15q8GgZvdgkjgEuAuNTsknkASUBTjlgV9f
+         YMXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708574511; x=1709179311;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sj35YOjK6RKB4C5ExxVych1pGfUJCfir8o97Bxs9Vxs=;
-        b=qwFi5dVnvgIK5kqmMvnJGdCC3R4+5IJ5pWSRVpH+QcuVivIVMjeWTqBVrzKyKzF0YL
-         yWp0RNKFvTitg97S5V6tn460mh50SEwXMgoew6FwZ+RpE77md17M57Q+Cq0qgHwL21v7
-         9ypS9WqrdtV5+QvAjd5YhRgRUJWsQiKletLiv2pmqJyqzGBpS6uyKNV0UpW1tmToGiFs
-         P9RqXVOMgraW6pP2zniSBmznnu2csIPUCjGDJ+XQpWltDbAyvbPsr6NXwNL4LAUn742a
-         UO/Ua5gH9xt/T0JDZr/HN5GOpxz59kSrRNfWH/clhBQ196RezooVox5bi5+LtztL1nf+
-         A8Jw==
-X-Forwarded-Encrypted: i=1; AJvYcCXhoOVM2ryuamqCFxpSHNsHk2CMGAwfQd+mUXuqM1UP4HxkHmPpWSU/b4UWsb22FpIkjT/MgfOo1Z6+gHNwe6cQLna+8kIMozEvYBAmXg==
-X-Gm-Message-State: AOJu0Yy/uDDPxbX1I5lOEa0VSvE+pbblViNmy1TU17FIuK4Y8DQ96uQY
-	vyD1MW0Ejeq8E2WUu0QPQxrjj+Bqw9aNO1Dc7BS3s1lq6uQGuB21hFWPZmvXpr8o+7IbqqeCr6v
-	gdFDY2YAe3TYL25j6F7+mSnt81Zan0Rc2+WOEyw==
-X-Google-Smtp-Source: AGHT+IG7ga8Qwv736rdMo9Jd6hOdoA/3LAjM8sRFm6VRm7EEEGVF9fa5s36oG1kV9WzIB5M4xsWL1nKyzNF2W5KfJjg=
-X-Received: by 2002:a25:2944:0:b0:dbc:decf:e511 with SMTP id
- p65-20020a252944000000b00dbcdecfe511mr1272238ybp.6.1708574511204; Wed, 21 Feb
- 2024 20:01:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708574797; x=1709179597;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TpJrdqhFrvQ0edeTwSKLJEayZ6GvBYYXFZmjWChyYsw=;
+        b=M/U7zLMe+CO1uhIndKHAC2AuTZgeUfyWL1pnGFC+YY/2nIprt0DWb8khjfcLQZkiuB
+         zvpNXdhmxx7BHsUSHT1suR2UZSM3cGxf15V9BPeXj/AwGK7LQTpMQkrpzo54IontPcbT
+         loS6BpUifJBp8wt8SzPGa95uQarXks5cfktpx2zNmgegdvJ8r/zvjrqn2OCzV+dQ4TKN
+         U2foqp1wrdv21Xmx7b4pW29nY0RA6IRLtN4upkbN19yYo+eiBmXUCSQzqrrEmpZq/itR
+         BZjku4zx+uebFA1eGSQFXQ1bMqOfTx0OKT/QKmjANihhPcrP7r/R/tWNDdyjmRpP7RPe
+         1pZA==
+X-Forwarded-Encrypted: i=1; AJvYcCUnE0emk7+upt+w9qTKFOEiZBmw3pJcK3nS+qs+DLV4KFISgEfxwcCQSAv+Mm/7lOI1MWVZ7zcGqCgSkLjP6md65jqa+FZzcExhveZrNA==
+X-Gm-Message-State: AOJu0YwG2SDMikD4CkUmHwvo7YzFNo6lzpwhHvvdCCzM7cMJjBKGXXGy
+	aDrPRIwHfB2d16EuXap6+kYMquQ6yHIZOGFdtaLMxHcSvgOD4LivR0VReX455w==
+X-Google-Smtp-Source: AGHT+IGB0ygkFw7v1Et17l2Q1xivnY3Th2mwC9DGiv4KRj9nV6Y2WYuziamel6IQCMgxOtG3fJToHQ==
+X-Received: by 2002:a17:90b:2347:b0:29a:4e7c:c139 with SMTP id ms7-20020a17090b234700b0029a4e7cc139mr207696pjb.28.1708574797366;
+        Wed, 21 Feb 2024 20:06:37 -0800 (PST)
+Received: from thinkpad ([117.193.212.166])
+        by smtp.gmail.com with ESMTPSA id nd12-20020a17090b4ccc00b00297317e5e04sm2729947pjb.52.2024.02.21.20.06.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Feb 2024 20:06:37 -0800 (PST)
+Date: Thu, 22 Feb 2024 09:36:29 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Lukas Wunner <lukas@wunner.de>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] PCI: Add D3 support for PCI bridges in DT based
+ platforms
+Message-ID: <20240222040629.GB3374@thinkpad>
+References: <20240221051958.GA11693@thinkpad>
+ <20240221182000.GA1533634@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
- <20240221-rb3gen2-dp-connector-v1-1-dc0964ef7d96@quicinc.com>
- <CAA8EJprXXjvanBU_HGv7X_dS3nyZ867AsvKj5+S3pnWcpsk1ug@mail.gmail.com> <20240222034727.GG2936378@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20240222034727.GG2936378@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 22 Feb 2024 06:01:39 +0200
-Message-ID: <CAA8EJpotx0PiJ6geGUerOihnH3v5a=cm4ngpHsU1aKDOYtoAeg@mail.gmail.com>
-Subject: Re: [PATCH 1/9] drm/msm/dp: Add DP support to combo instance in SC7280
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240221182000.GA1533634@bhelgaas>
 
-On Thu, 22 Feb 2024 at 05:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Thu, Feb 22, 2024 at 01:38:45AM +0200, Dmitry Baryshkov wrote:
-> > On Thu, 22 Feb 2024 at 01:19, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> > >
-> > > When upstreamed the SC7280 DP controllers where described as one being
-> > > DP and one eDP, but they can infact both be DP or eDP.
-> > >
-> > > Extend the list of DP controllers to cover both instances, and rely on
-> > > the newly introduced mechanism for selecting which mode they should
-> > > operate in.
-> > >
-> > > Move qcom,sc7280-edp to a dedicated list, to ensure existing DeviceTree
-> > > will continue to select eDP.
-> > >
-> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++--
-> > >  1 file changed, 7 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > index 7b8c695d521a..1792ba9f7259 100644
-> > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > @@ -129,7 +129,12 @@ static const struct msm_dp_desc sc7180_dp_descs[] = {
-> > >  };
-> > >
-> > >  static const struct msm_dp_desc sc7280_dp_descs[] = {
-> > > -       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
-> > > +       { .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_en = true },
-> > > +       { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .wide_bus_en = true },
-> >
-> > I think we need to keep .connector_type here, don't we?
-> >
->
-> No, Abel removes the need for that in his patches - and while that logic
-> is slightly broken in the RFC I think it looks good.
+On Wed, Feb 21, 2024 at 12:20:00PM -0600, Bjorn Helgaas wrote:
+> On Wed, Feb 21, 2024 at 10:49:58AM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Feb 20, 2024 at 04:02:40PM -0600, Bjorn Helgaas wrote:
+> > > On Wed, Feb 14, 2024 at 05:16:09PM +0530, Manivannan Sadhasivam wrote:
+> > > > Currently, PCI core will enable D3 support for PCI bridges only when the
+> > > > following conditions are met:
+> > > 
+> > > Whenever I read "D3", I first have to figure out whether we're talking
+> > > about D3hot or D3cold.  Please save me the effort :)
+> > 
+> > Both actually, that's why I used "D3" as in the spec. I should've explicitly
+> > mentioned that in the commit message.
+> > 
+> > > > 1. Platform is ACPI based
+> > > > 2. Thunderbolt controller is used
+> > > > 3. pcie_port_pm=force passed in cmdline
+> > > 
+> > > Are these joined by "AND" or "OR"?  I guess probably "OR"?
+> > > 
+> > > "... all the following conditions are met" or "... one of the
+> > > following conditions is met" would clarify this.
+> > 
+> > Will use "one of the..."
+> > 
+> > > > While options 1 and 2 do not apply to most of the DT based
+> > > > platforms, option 3 will make the life harder for distro
+> > > > maintainers. Due to this, runtime PM is also not getting enabled
+> > > > for the bridges.
+> > > > 
+> > > > To fix this, let's make use of the "supports-d3" property [1] in
+> > > > the bridge DT nodes to enable D3 support for the capable
+> > > > bridges. This will also allow the capable bridges to support
+> > > > runtime PM, thereby conserving power.
+> > > 
+> > > Looks like "supports-d3" was added by
+> > > https://github.com/devicetree-org/dt-schema/commit/4548397d7522.
+> > > The commit log mentions "platform specific ways", which suggests maybe
+> > > this is D3cold, since D3hot should be supported via PMCSR without any
+> > > help from the platform.
+> > > 
+> > > So I *guess* this really means "platform provides some non-architected
+> > > way to put devices in D3cold and bring them back to D0"?
+> > 
+> > By reading the comments and git log of the pci_bridge_d3_possible()
+> > function in drivers/pci/pci.c, we can understand that some of the
+> > old bridges do not support both D3hot and D3cold. And to
+> > differentiate such bridges, platforms have to notify the OS using
+> > some ways.
+> > 
+> > ACPI has its own implementation [1] and DT uses "supports-d3"
+> > property.
+> > 
+> > And yes, in an ideal world PMCSR should be sufficient for D3hot, but
+> > you know the PCI vendors more than me ;)
+> 
+> So it sounds like this is supposed to cover two cases:
+> 
+>   1) D3hot doesn't work per spec.  This sounds like a hardware
+>      defect in the device that should be a quirk based on
+>      Vendor/Device ID, not something in DT.  I don't actually know if
+>      this is common, although there are several existing quirks that
+>      mention issues with D3.
+> 
 
-Let's see v2 first.
+I'd love to use quirks if we started from that. But right now, quirks are not
+used and there are multiple checks based on various factors [1], including
+relying on ACPI. So that's the reason I went with DT based approach.
 
->
-> Regards,
-> Bjorn
->
-> > > +       {}
-> > > +};
-> > > +
-> > > +static const struct msm_dp_desc sc7280_edp_descs[] = {
-> > >         { .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
-> > >         {}
-> > >  };
-> > > @@ -182,7 +187,7 @@ static const struct msm_dp_desc x1e80100_dp_descs[] = {
-> > >  static const struct of_device_id dp_dt_match[] = {
-> > >         { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
-> > >         { .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
-> > > -       { .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_descs },
-> > > +       { .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_descs },
-> > >         { .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_descs },
-> > >         { .compatible = "qcom,sc8180x-edp", .data = &sc8180x_dp_descs },
-> > >         { .compatible = "qcom,sc8280xp-dp", .data = &sc8280xp_dp_descs },
-> > >
-> > > --
-> > > 2.25.1
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+If quirks has to be used now, then it has to be used for both ACPI and DT based
+platforms. For DT it won't be an issue since nobody bothered until now, but for
+ACPI, we need to add quirks for all the bridges in the wild which is not
+feasible.
 
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pci.c#n3116
 
+>   2) The platform doesn't support putting the bridge in D3cold and
+>      back to D0.  I don't understand this either because I assumed DT
+>      would describe *hardware*, and "supports-d3" might imply the
+>      presence of hardware power control, but doesn't tell us how to
+>      operate it, and it must be up to a native driver to know how to
+>      do it.
+> 
+
+"supports-d3" implies that both D3hot and D3cold works as in the spec and the OS
+can handle it appropriately. If this is absent, then OS should not transition
+the bridge to any of the D3 states. I don't understand what is the confusion
+here. This is similar to what we already have for ACPI (whether or not it is
+correct is another topic).
+
+> These are two vastly different scenarios, and I would really like to
+> untangle them so they aren't conflated.  I see that you're extending
+> platform_pci_bridge_d3(), which apparently has that conflation baked
+> into it already, but my personal experience is that this is really
+> hard to maintain.
+> 
+
+I do agree that it is not in a good shape, but there is no better solution other
+than making use of the DT property. If you have any better idea, please suggest.
+
+- Mani
+
+> > > > Ideally, D3 support should be enabled by default for the more recent PCI
+> > > > bridges, but we do not have a sane way to detect them.
+> > > > 
+> > > > [1] https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/pci-pci-bridge.yaml#L31
+> 
+> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pci-acpi.c#n976
+> > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > > This patch is tested on Qcom SM8450 based development board with an out-of-tree
+> > > > DT patch.
+> > > > 
+> > > > NOTE: I will submit the DT patches adding this property for applicable bridges
+> > > > in Qcom SoCs separately.
+> > > > 
+> > > > Changes in v3:
+> > > > - Fixed kdoc, used of_property_present() and dev_of_node() (Lukas)
+> > > > - Link to v2: https://lore.kernel.org/r/20240214-pcie-qcom-bridge-v2-1-9dd6dbb1b817@linaro.org
+> > > > 
+> > > > Changes in v2:
+> > > > - Switched to DT based approach as suggested by Lukas.
+> > > > - Link to v1: https://lore.kernel.org/r/20240202-pcie-qcom-bridge-v1-0-46d7789836c0@linaro.org
+> > > > ---
+> > > >  drivers/pci/of.c  | 12 ++++++++++++
+> > > >  drivers/pci/pci.c |  3 +++
+> > > >  drivers/pci/pci.h |  6 ++++++
+> > > >  3 files changed, 21 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> > > > index 51e3dd0ea5ab..24b0107802af 100644
+> > > > --- a/drivers/pci/of.c
+> > > > +++ b/drivers/pci/of.c
+> > > > @@ -786,3 +786,15 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
+> > > >  	return slot_power_limit_mw;
+> > > >  }
+> > > >  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
+> > > > +
+> > > > +/**
+> > > > + * of_pci_bridge_d3 - Check if the bridge is supporting D3 states or not
+> > > > + *
+> > > > + * @node: device tree node of the bridge
+> > > > + *
+> > > > + * Return: %true if the bridge is supporting D3 states, %false otherwise.
+> > > > + */
+> > > > +bool of_pci_bridge_d3(struct device_node *node)
+> > > > +{
+> > > > +	return of_property_present(node, "supports-d3");
+> > > > +}
+> > > > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+> > > > index d8f11a078924..8678fba092bb 100644
+> > > > --- a/drivers/pci/pci.c
+> > > > +++ b/drivers/pci/pci.c
+> > > > @@ -1142,6 +1142,9 @@ static inline bool platform_pci_bridge_d3(struct pci_dev *dev)
+> > > >  	if (pci_use_mid_pm())
+> > > >  		return false;
+> > > >  
+> > > > +	if (dev_of_node(&dev->dev))
+> > > > +		return of_pci_bridge_d3(dev->dev.of_node);
+> > > > +
+> > > >  	return acpi_pci_bridge_d3(dev);
+> > > >  }
+> > > >  
+> > > > diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> > > > index 2336a8d1edab..10387461b1fe 100644
+> > > > --- a/drivers/pci/pci.h
+> > > > +++ b/drivers/pci/pci.h
+> > > > @@ -635,6 +635,7 @@ int of_pci_get_max_link_speed(struct device_node *node);
+> > > >  u32 of_pci_get_slot_power_limit(struct device_node *node,
+> > > >  				u8 *slot_power_limit_value,
+> > > >  				u8 *slot_power_limit_scale);
+> > > > +bool of_pci_bridge_d3(struct device_node *node);
+> > > >  int pci_set_of_node(struct pci_dev *dev);
+> > > >  void pci_release_of_node(struct pci_dev *dev);
+> > > >  void pci_set_bus_of_node(struct pci_bus *bus);
+> > > > @@ -673,6 +674,11 @@ of_pci_get_slot_power_limit(struct device_node *node,
+> > > >  	return 0;
+> > > >  }
+> > > >  
+> > > > +static inline bool of_pci_bridge_d3(struct device_node *node)
+> > > > +{
+> > > > +	return false;
+> > > > +}
+> > > > +
+> > > >  static inline int pci_set_of_node(struct pci_dev *dev) { return 0; }
+> > > >  static inline void pci_release_of_node(struct pci_dev *dev) { }
+> > > >  static inline void pci_set_bus_of_node(struct pci_bus *bus) { }
+> > > > 
+> > > > ---
+> > > > base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+> > > > change-id: 20240131-pcie-qcom-bridge-b6802a9770a3
+> > > > 
+> > > > Best regards,
+> > > > -- 
+> > > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
