@@ -1,198 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-12252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22C65860546
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 22:57:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 875B8860637
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 00:08:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4644D1C2428E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 21:57:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41AAE286E33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 23:08:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 995C514B815;
-	Thu, 22 Feb 2024 21:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A391D20B02;
+	Thu, 22 Feb 2024 23:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nz1yzJeF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n0dgbacE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30A812D1F8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 21:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57181864A;
+	Thu, 22 Feb 2024 23:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708639072; cv=none; b=BY+wIiutnR97SPEPgMC+8cNLbuD6lbRnFwdqXoji3TVyR1TymK3dNWKlbxlI+5hBdHycqZcLT1v8xC99fBbBYCRdnaKYEi0a2dmiJLS/BUCjP6GhMIrL/aWp0dl9h5674CisuYuaSrsFeV+no/hxw0pIiPaBk66P88jJuHP5iwc=
+	t=1708643298; cv=none; b=ePU7KbzYAlQQZQR971ansi3Qbcn0ZvVQ+2jSZSy9FcTQk3Yzqoa6vv8HQ7H0MmRrBdpav4xO/fAdycBCUTrIls616WYGthtiGrWpBs8icELO0RG4sA+8RoJIl4XxxUtJCWtOAuapTxaEs840B7wRxW8D5fOJCcSeKEHbiiI8pPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708639072; c=relaxed/simple;
-	bh=ULBN7qGM8ll7Mf7Jw7jx7iOpo1oKcdTj+Wx7EWQJj7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rmPFqe4aRJYUOWpsLtgpoEmXjXdMjKtY72teFHQiM5JxWkKpHSsWHXCqimfNGnV2y5cEaHMktDbnvMfYuGEw0KBGuyYNEpP+OYgfaI2gVZ867g5J8eaVoZ/rr5m87JI3SVuAq4QUdAajfU9hwxmlEVct0BlpQ7sMjApHPpcwtHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nz1yzJeF; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dc6cbe1ac75so250471276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 13:57:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708639069; x=1709243869; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4XHmaR9j8yfoG0uE39iuFTe1DexLU+BkdLhrhgZ69f8=;
-        b=Nz1yzJeFC484xajQc691qX9YPbFayM75xmrIHj6GpO7Hf1Sdspt/DPJsS0NQlIhTqV
-         63DggsV2Iq+NfAthmUe8bx2TRf+6OjGHergNYffHNgxFsy5ty5AVvNb3roN1KH2LGL0O
-         T3sVclTYIBe22TgxSC9/eE8lOpchbCxF7tAXzpLp/+fu4kktnPcLLdlJhXcdG8cf7Y4d
-         94UgeZl7ueGVrszuyu4C4M5H/8ZzuWXFhUL9+kxzDfo7Cvemdo5jFsR0HnFLYn1SSGlP
-         vaEM8gSsMrHtS26f6T1QL1QX7gQnPIvaDVPrOH/2Ftt/u4q5FJh0+mmU5+/dUHq7N3lB
-         VjIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708639069; x=1709243869;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4XHmaR9j8yfoG0uE39iuFTe1DexLU+BkdLhrhgZ69f8=;
-        b=DNZT4JZ7nJu2xcf64nxgXN3fU0YZEbG9HatAuDLGqA/soPvpmCLIUi1GQySqYrvCOv
-         BoEkx0vE4pDK0ytUlSliAsO10u6WpeiURsbfU+QhWsknMn/5bqgjaa2WT5vEYR/lTTqs
-         5HvwbjBCm26wD1f0Bov99A76X2U8CW4DjSYomU5ZNMcunVmbOCoTu15Mo7umNes/Gw0F
-         fozWhUUwfEqABFdS4AJmiwRQUd9xLAoYPWG6ctxAtyIz3RaLok3xWu3D001p941T6D56
-         AWnr1MxepL2Vq1ylVOk8bAmrmDEN2KRyRJbnYTGTqjc6l0NjCFB/rVr2A1/dUWha2SKZ
-         9/Tg==
-X-Forwarded-Encrypted: i=1; AJvYcCWM+USBv28IwMnrF7f1HLGXlfgZ7zD1FNL3+jbxIx4DRC33vkeHCrekE+ulDJT9ib6XA1v4wCOhhfXiBGJN8EU2sTSBhMXrqTLrFQWXuw==
-X-Gm-Message-State: AOJu0YzFM6LirS1zgvO02+tD0HQoM+0f9eeFOBfgVDt3mfKQu4OeJEqD
-	hI0vMPteAH4Tq3levWsjLEx5QtaL7i0s+yAMgOQop5lDX4Yvf7jIPRNFPTx92YKkeqt1mJYIZGk
-	SmAu50UJmVlkbtWMMNrzoN9mcY1bZ/MYRvOmHuw==
-X-Google-Smtp-Source: AGHT+IEooe9B8N6cL2q2BcKTYJut84BKs61FZ74FRMTKD+cxJmhoC80CFQcsBQiqtKzpqIhdxxvGsZVHWhiuA15XmGA=
-X-Received: by 2002:a25:a243:0:b0:dcf:2908:485c with SMTP id
- b61-20020a25a243000000b00dcf2908485cmr2027103ybi.3.1708639069649; Thu, 22 Feb
- 2024 13:57:49 -0800 (PST)
+	s=arc-20240116; t=1708643298; c=relaxed/simple;
+	bh=1D67/mPVlMD7ke1rp9N2k/nIv32BdFuF+09t2rgxBz0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fJY5bw3WYu59xfzA0ZNEOx965SigU1z0RfUe4SziuNqWuaW7zf9AQgcmfvQWwvm9RqRaurwVueWVP9hZ3Xk21su4tEariZr/GFCA8Op/s+OcfV2sYrIHHn+LLoJ8lp9IW5ZbNabwFLJ4oya63JoD1kv8HgfPNm3VEQzXrivaV4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n0dgbacE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41MLiPtB021602;
+	Thu, 22 Feb 2024 23:08:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=XPoJMjX
+	mGQ4kcptMPlhI6nE0j7PL7Mx3eZx7q5qBBdw=; b=n0dgbacE/5SRUUGztg4CDKL
+	CM2GIETcKevippfcJSgApNECCICy0T07N4sGseOwgA+JJsEQTyl7Ij8xBL2KLp84
+	hExPvPYoK8itzW3HkQaw6Vu9yGrFdbUGxF2nZEDX18qjHDk8L8N/whyQ2KMr/ZrR
+	Qq/lcdFn9x0vHXPJFI/hqV+0Fr2giWnGiKuapb1XHhbKmr4UrBSjov7QoZ9fLxWQ
+	n2j1BPEqHPrVrbCMdKT5L9pjHxrKW2RF0yGTqUTQSOxW7x72E0NOdDXohiCHZB3C
+	xwGPjPS9eE3yPKyBhbcNoaol8jhyHwu5EHLXGLn3s7ecO29er4v1zahREmMUpbQ=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3we2kf9pcf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Feb 2024 23:08:10 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MN89Ff017666
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Feb 2024 23:08:09 GMT
+Received: from hu-uchalich-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 22 Feb 2024 15:08:07 -0800
+From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+Subject: [PATCH v3 0/5] LLCC: Support for Broadcast_AND region
+Date: Thu, 22 Feb 2024 15:07:52 -0800
+Message-ID: <cover.1708551850.git.quic_uchalich@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240222-fd-rm-state-v5-1-4a6c81e87f63@linaro.org> <318495d1-3366-1ca8-72a2-8927cb1b4835@quicinc.com>
-In-Reply-To: <318495d1-3366-1ca8-72a2-8927cb1b4835@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 22 Feb 2024 23:57:38 +0200
-Message-ID: <CAA8EJppf+Vt4tGP9YFMmhh4wdm+U=_Fq5D8J1YpZjzEBS=Td3Q@mail.gmail.com>
-Subject: Re: [PATCH v5] drm/msm/dpu: add current resource allocation to dumped state
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: VDSipTSQMxikcqQczaHUmArNjg7Z_-Ax
+X-Proofpoint-GUID: VDSipTSQMxikcqQczaHUmArNjg7Z_-Ax
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=528 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402220178
 
-On Thu, 22 Feb 2024 at 23:53, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 2/22/2024 1:47 PM, Dmitry Baryshkov wrote:
-> > Provide atomic_print_state callback to the DPU's private object. This
-> > way the debugfs/dri/0/state will also include RM's internal state.
-> >
-> > Example output (RB5 board, HDMI and writeback encoder enabled)
-> >
-> > resource mapping:
-> >       pingpong=31 36 # # # # - - - - -
-> >       mixer=31 36 # # # # -
-> >       ctl=# # 31 36 # #
-> >       dspp=# # # #
-> >       dsc=# # # # - -
-> >       cdm=#
-> >
->
-> Thanks, this LGTM now, one nit below.
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Changes in v5:
-> > - Extracted the common helper for printing RM state
-> > - Changed the code to print '#' for unused/unmapped blocks (Abhinav)
-> > - Link to v4: https://lore.kernel.org/r/20240219-fd-rm-state-v4-1-b47f14ef27c2@linaro.org
-> >
-> > Changes in v4:
-> > - Split the patch from the virual wide planes series
-> > - Reworked the output format
-> > - Added the CDM block into the dump
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 12 +++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  2 ++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 56 +++++++++++++++++++++++++++++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  8 +++++
-> >   4 files changed, 78 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > index 723cc1d82143..9f3697e1eacb 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > @@ -353,9 +353,18 @@ static void dpu_kms_global_destroy_state(struct drm_private_obj *obj,
-> >       kfree(dpu_state);
-> >   }
-> >
-> > +static void dpu_kms_global_print_state(struct drm_printer *p,
-> > +                                    const struct drm_private_state *state)
-> > +{
-> > +     const struct dpu_global_state *global_state = to_dpu_global_state(state);
-> > +
-> > +     dpu_rm_print_state(p, global_state);
-> > +}
-> > +
-> >   static const struct drm_private_state_funcs dpu_kms_global_state_funcs = {
-> >       .atomic_duplicate_state = dpu_kms_global_duplicate_state,
-> >       .atomic_destroy_state = dpu_kms_global_destroy_state,
-> > +     .atomic_print_state = dpu_kms_global_print_state,
-> >   };
-> >
-> >   static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
-> > @@ -371,6 +380,9 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
-> >       drm_atomic_private_obj_init(dpu_kms->dev, &dpu_kms->global_state,
-> >                                   &state->base,
-> >                                   &dpu_kms_global_state_funcs);
-> > +
-> > +     state->rm = &dpu_kms->rm;
-> > +
-> >       return 0;
-> >   }
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > index d1207f4ec3ae..2512c9bd08df 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > @@ -131,6 +131,8 @@ struct vsync_info {
-> >   struct dpu_global_state {
-> >       struct drm_private_state base;
-> >
-> > +     struct dpu_rm *rm;
-> > +
-> >       uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
-> >       uint32_t mixer_to_enc_id[LM_MAX - LM_0];
-> >       uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > index 724537ab776d..1a56ddca536d 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > @@ -634,3 +634,59 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
-> >
-> >       return num_blks;
-> >   }
-> > +
-> > +static void dpu_rm_print_state_helper(struct drm_printer *p,
-> > +                                         struct dpu_hw_blk *blk,
-> > +                                         uint32_t mapping)
->
-> Not sure if its the mail client, but is this aligned with the opening brace?
+This series adds:
+1. Device tree register mapping for Broadcast_AND region in SM8450,
+SM8550, SM8650.
+2. LLCC driver updates to reflect addition of Broadcast_AND regmap.
 
-No, it is shifted to the right. Will fix while applying.
+To support CSR programming, a broadcast interface is used to program all
+channels in a single command. Until SM8450 there was only one broadcast
+region (Broadcast_OR) used to broadcast write and check for status bit
+0. From SM8450 onwards another broadcast region (Broadcast_AND) has been
+added which checks for status bit 1.
 
->
-> Please double check once. Rest LGTM.
->
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+This series updates the device trees from SM8450 onwards to have a
+mapping to this Broadcast_AND region. It also updates the llcc_drv_data
+structure with a regmap for Broadcast_AND region and corrects the
+broadcast region used to check for status bit 1.
 
+Changes in v3:
+- Removed new example in dt-bindings patch and ran 'make
+DT_CHECKER_FLAGS=-m dt_binding_check'
+- Use of ternary operator in llcc_update_act_ctrl()
+- Add comment before initialization of Broadcast_AND regmap in probe
+function
+- Move DeviceTree patches to the end
 
+Changes in v2:
+- Added an additional check in the case old DT files are used for
+above mentioned chipsets for backwards compatibility
+- Moved addition of if check in llcc_update_act_ctrl() to a separate
+"Fixes" patch; not part of this series
+
+Link to v2: https://lore.kernel.org/all/cover.1707202761.git.quic_uchalich@quicinc.com/
+Link to v1: https://lore.kernel.org/all/cover.1706296015.git.quic_uchalich@quicinc.com/
+
+Unnathi Chalicheemala (5):
+  dt-bindings: arm: msm: Add llcc Broadcast_AND register
+  soc: qcom: llcc: Add regmap for Broadcast_AND region
+  arm64: dts: qcom: sm8450: Add mapping to llcc Broadcast_AND region
+  arm64: dts: qcom: sm8550: Add mapping to llcc Broadcast_AND region
+  arm64: dts: qcom: sm8650: Add mapping to llcc Broadcast_AND region
+
+ .../devicetree/bindings/cache/qcom,llcc.yaml  | 27 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  5 ++--
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  6 +++--
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |  6 +++--
+ drivers/soc/qcom/llcc-qcom.c                  | 15 ++++++++++-
+ include/linux/soc/qcom/llcc-qcom.h            |  4 ++-
+ 6 files changed, 54 insertions(+), 9 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
 
