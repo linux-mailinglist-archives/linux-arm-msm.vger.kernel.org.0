@@ -1,92 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-12134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1ACB85F0E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:22:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BEA685F103
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:40:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A1B3B239DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:22:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAD1C28442B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:40:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B731C14;
-	Thu, 22 Feb 2024 05:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A858412B7E;
+	Thu, 22 Feb 2024 05:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JvjKCLiL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yA3a6G4Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE5610782
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A821779FE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:40:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708579353; cv=none; b=N/3w++3E9y6EMZMcwmR2XDemiay7ZbPfjiQ3/l9H+Ti6bHX60z8e5OPKGSzR3hCKJE0SWn1K1DZpqu+kJzAoGpPZcMOD2wMdMBprFmaxZvOS+SQ/detM9+t9DETpfok/aFkKSOE1rlQycwtZLkJLZ8EmGGiv/2V3w+7FPTVI8aQ=
+	t=1708580408; cv=none; b=UkAkkqU69BPKxSztacuep2PycGrTXp3d7JQuhFvkCBrpgIHK2gUbg/JJ2KvVa7K5PJb3Fcik41Xqb0wFCMZym5zsMyCpKnX5R3wZIuft4pXHdx41X30ksRTIzKdBSkdus8cQNww6cZ1JNqWI7KJV3wUkyD9pitMc3H+mspflkQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708579353; c=relaxed/simple;
-	bh=YeT7pdFKBx0h2pjjLOX4Ge6GRmGK/bBs8ilNmslgI4s=;
+	s=arc-20240116; t=1708580408; c=relaxed/simple;
+	bh=yQg5gh5MmRiYiePzpcNDaEGQQlXwpQVZ5S9UlbGqOKk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CxFxaBZ+TGgoqzpV/nPu+6kC+X6EsmJaCojlqYD/2dt43/+LPAjyWJSnZtwNf1WxPxiVHEBrRWRgOqpEJ4scHReYNThe2qh3rqfz4Tj3jIs3hSiYXOUGLuzkXO0v5XqWtn+1lg1f4/OHe0HoF+KkHMeW9Gv09cgSgbt1cCdvb3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JvjKCLiL; arc=none smtp.client-ip=209.85.216.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=czmRSZWVynjPU2qZl9bR9dtLRZNodUvWFyCERp3AEVHT6Qp/UILqhhFuk9VUUB0NhUWxoPHHRDIf0Q9iAfDtELl9feiErl3wQwrMm/r6Q8uqJmmSTuOU29/em2lZQS2dCjzaXZ24dZ/yot8WsCKr3LGHaX2jgbMssebnExPxZWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yA3a6G4Y; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-29a430c3057so263624a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:22:32 -0800 (PST)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d73066880eso70674425ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708579351; x=1709184151; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708580405; x=1709185205; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=uwlWZD+wtDen80T6/9sZq3GEC66Lq8p7KhscmDYdFLs=;
-        b=JvjKCLiLdzlMxvqKiI4/5LRU6LCQKRSi7l2b+PF10cSai5SsKQ+U/dRjq8VvEzquio
-         5S1oseAi9R6vEPcebDc/1C997RY7g2aQEffewovRHgWn3LuXgPcI2TqGkdYutmU8v7hf
-         oYwZMJ7UHcUlzJrogdbeblOX+hALcE9TUC2qTKzQoG9fB3JYQXoyAaYsli8KVKYwmm+R
-         O4tzOPYWCdpGhCNHjo1IPCQI1iGVCXx/kJwnoN51EE9qIyWldxTXVwhCBZ+7zjnOylAL
-         IH/fitNm0AZW2ymctVK2tUryT0er9kGYMRtlIlSDqnsq85BRYKEYyV2ILfM1RXdpMPQ7
-         MeVA==
+        bh=3Y9cstFcLJ3tBNiN3xZNH0htetDh7AF1BjirZ0v0JP4=;
+        b=yA3a6G4YY3W2ec4pZWFbuAw3o8YsO/DpZ2v/bxDBVZXjb6RSSNLWbRjCuTBWSjjxEM
+         NyvHIpg3xvN1xo+e+aK7q6SvTF5gmP+L3n9C9rK9DTl7RiGPhjecrrI7cOaaHt8ovH+u
+         yPk7P4y5E/ka7uJVrXEv6qbPkytJrSy0syBAT7GvC8p5AqgVtfVdopE9xAcae3DeY3WB
+         TOZt0F3khXRZZnQTqCZyZnre/ku4PmO2gMhG4oHu3ITmO9tOHYhAJ6ZTYrrB+AO0/QKn
+         RnVYum/M8Bqh/dhKJF17oH6GkQm/lKR2J+IgntYQiwuTQGzzkgP3JDMT6/ZacTRN6tDu
+         YPZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708579351; x=1709184151;
+        d=1e100.net; s=20230601; t=1708580405; x=1709185205;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uwlWZD+wtDen80T6/9sZq3GEC66Lq8p7KhscmDYdFLs=;
-        b=ZXiKLd9JUMSAnzkOaKMsTWzapAp5beYYJ0m8La1lCb05hL6JYeunr84ZnnP6Qwc5Uf
-         7s5SNVcn9dDlpvs+GiUuC9G+AR70enThq2hnkTjf17CW8H/23z+w4DEQ/V0QFkBSicze
-         OQh7AQiXZRGAIFdZqKj00iOGUg4d21QMS8RvjiR5kI51LZVNR246fUMr0EZRFiRy1orO
-         JLYfkeOkHTjAQ1btBm7sYz66S53swhS5paDJ+d+jnNv0oUfk+Y05rYLwVcw8I43md8Rn
-         0dOgzbuhAKM/nBOi0tKiMjwb4wZI3UzzEuadd0Gz/AocsVKKyOLWkNqeRFORkPeqr1YD
-         T+Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCUr/G+KkGwAN5G3+wuTZK8N2zU6rydasJO9eKNRWwhqQaMAaaxQc4RtxN7SzF4macX5/2yGbbmx69nP/Hd/fFrnPRr4gsHOnAlMmXCPoQ==
-X-Gm-Message-State: AOJu0YwqrWCjDR94+ujECC4cdGw3WQFf2uR+GZg8AVVe1y9+FkMi1Y5p
-	cY9t7shcsSLp1ipjjN2cDoOHLmzN5a93g0fbknFO0++MmnMeVX5gNvWa8kxDeA==
-X-Google-Smtp-Source: AGHT+IGtRLKXNREdQdvyN73j1BKXIF78m/5KnAZe+HbQRQ+0TXw7vcCP0uf4rzHwh6ITtbi7qcGvYA==
-X-Received: by 2002:a17:90b:4f85:b0:299:9999:6bae with SMTP id qe5-20020a17090b4f8500b0029999996baemr8927857pjb.16.1708579351476;
-        Wed, 21 Feb 2024 21:22:31 -0800 (PST)
+        bh=3Y9cstFcLJ3tBNiN3xZNH0htetDh7AF1BjirZ0v0JP4=;
+        b=n8Pk9CcqzR/yVByyiax8C+G5vWaeXXXVY+/Y3jPI/OSgIUqOzv4sV06hoXrm6RK38M
+         sz3D+cZ2igz8ksERKaas9jKhye6KYn8P1/7O3JhE8ER+u+m1p3RMTy7KyDCDmgDnYj47
+         /SqF8tfhVp90frS2qqY0bsZfZ7uL7QG+7RiVn8ZlJFywwYtj7z0vp0Hr2ssXueqfeKur
+         P+6uGqz3RmzmLiTd1vYjtUGnQd9G5MivOe1aAd1KP8vKbFiR0E/EI/fqsGwIsZJSnp8D
+         7myRwtovwIb2x+jVxZOY1MNdN0mHA/CinHP3AOHhVleOt0rlxy/o5qliJqXL67Qf9ivG
+         xDLA==
+X-Forwarded-Encrypted: i=1; AJvYcCW96b30ONu9WR6b+7qPti/h1kxS3iXTSAkX5Rps5NxjElDE4gYejfnTOjGcoEXmFgBbCR49X5nTJ36zi/VQBO3tTnXAy1aHl5jT4CgNFQ==
+X-Gm-Message-State: AOJu0YxCb/XS1Td3RNsDUW7Mei24b2bPhelD7w+tY4AFTb2TwYc6tnw3
+	GLkjcD23egIGzguFA+VpBYjP9NON73rUpVo0YxNd7qdFSSyu2m+ec5X/gEuifQ==
+X-Google-Smtp-Source: AGHT+IFn4K4spZaFAlnGs4H1E3Uij1heQB4mMHjFctMYMEn7odiUXiBji21giUzbHQ3n3f4SslXQMg==
+X-Received: by 2002:a17:902:c402:b0:1db:28bd:2949 with SMTP id k2-20020a170902c40200b001db28bd2949mr28591618plk.0.1708580405108;
+        Wed, 21 Feb 2024 21:40:05 -0800 (PST)
 Received: from thinkpad ([117.193.212.166])
-        by smtp.gmail.com with ESMTPSA id y13-20020a17090aca8d00b002995babd9b0sm10124988pjt.10.2024.02.21.21.22.25
+        by smtp.gmail.com with ESMTPSA id lf5-20020a170902fb4500b001db43f3629dsm9043678plb.140.2024.02.21.21.40.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 21:22:30 -0800 (PST)
-Date: Thu, 22 Feb 2024 10:52:22 +0530
+        Wed, 21 Feb 2024 21:40:04 -0800 (PST)
+Date: Thu, 22 Feb 2024 11:09:58 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: root <root@hu-msarkar-hyd.qualcomm.com>
-Cc: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
-	konrad.dybcio@linaro.org, conor+dt@kernel.org,
-	quic_nitegupt@quicinc.com, quic_shazhuss@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, shradha.t@samsung.com
-Subject: Re: [PATCH v1 0/3] Add support for detecting Controller Level PCIe
- Errors
-Message-ID: <20240222052222.GE3374@thinkpad>
-References: <20240221140405.28532-1-root@hu-msarkar-hyd.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/21] arm64: dts: qcom: sc8280xp: Add PCIe bridge node
+Message-ID: <20240222053958.GF3374@thinkpad>
+References: <20240221-pcie-qcom-bridge-dts-v1-0-6c6df0f9450d@linaro.org>
+ <20240221-pcie-qcom-bridge-dts-v1-9-6c6df0f9450d@linaro.org>
+ <9d6c617a-bc3a-47c4-a988-b41b804d8cfe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,51 +90,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240221140405.28532-1-root@hu-msarkar-hyd.qualcomm.com>
+In-Reply-To: <9d6c617a-bc3a-47c4-a988-b41b804d8cfe@linaro.org>
 
-+ Shradha
-
-On Wed, Feb 21, 2024 at 07:34:01PM +0530, root wrote:
-> From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+On Wed, Feb 21, 2024 at 01:39:01PM +0100, Konrad Dybcio wrote:
+> On 21.02.2024 04:41, Manivannan Sadhasivam wrote:
+> > On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
+> > for each controller instance. Hence, add a node to represent the bridge.
+> > 
+> > While at it, let's remove the bridge properties from board dts as they are
+> > now redundant.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  8 -----
+> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 40 ++++++++++++++++++++++
+> >  2 files changed, 40 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index def3976bd5bb..f0a0115e08fa 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -733,14 +733,6 @@ &pcie4 {
+> >  	status = "okay";
+> >  
+> >  	pcie@0 {
+> > -		device_type = "pci";
+> > -		reg = <0x0 0x0 0x0 0x0 0x0>;
+> > -		#address-cells = <3>;
+> > -		#size-cells = <2>;
+> > -		ranges;
+> > -
+> > -		bus-range = <0x01 0xff>;
+> > -
+> >  		wifi@0 {
+> 
+> This doesn't seem right, pleas use a label
 > 
 
-You are sending the patches from a wierd account. Please fix it.
-
-> Synopsys Controllers provide capabilities to detect various controller
-> level errors. These can range from controller interface error to random
-> PCIe configuration errors. This patch intends to add support to detect
-> these errors and report it to userspace entity via sysfs, which can take
-> appropriate actions to mitigate the errors.
-> 
-> Also adding global irq support for PCIe RC and add corresponding change
-> in PCIe dt-bindings.
-> 
-
-There is already a series submitted to add RAS support to DWC drivers [1] and
-I've provided comments to check with EDAC maintainers on using the EDAC
-framework. If they don't see this as a fit for their subsystem, then we can add
-it in DWC drivers.
+Why? A node label is useful if we want to reference it at the root level in
+board dts, but here it is not.
 
 - Mani
-
-[1] https://lore.kernel.org/all/20231130165514.GW3043@thinkpad/
-
-> Mrinmay Sarkar (2):
->   dt-bindings: PCI: qcom: Add global irq support for SA8775p
->   arm64: dts: qcom: sa8775p: Enable global irq support for SA8775p
-> 
-> Nitesh Gupta (1):
->   PCI: qcom: Add support for detecting Controller Level PCIe Errors
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  26 +-
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  12 +-
->  drivers/pci/controller/dwc/pcie-designware.h  |  26 ++
->  drivers/pci/controller/dwc/pcie-qcom.c        | 350 ++++++++++++++++++
->  4 files changed, 408 insertions(+), 6 deletions(-)
-> 
-> -- 
-> 2.40.1
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
