@@ -1,163 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-12171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 312F385F8ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 13:56:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5038985F914
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 14:02:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFF0C1F21198
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 12:56:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 050CB286E30
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 13:02:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E77B212DDB0;
-	Thu, 22 Feb 2024 12:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA99D132470;
+	Thu, 22 Feb 2024 13:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hicX5ReW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mF8b9PpX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4685A47F64;
-	Thu, 22 Feb 2024 12:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1312412EBCC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 13:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708606572; cv=none; b=TUl7CUEt9BwvKFEYqlHCspVgUImro+Ql7KKm5jLPivhcE/QBGW4nQgeOZyXpPWxsWcRgDwAXw381CUOoMvd8Y728k6jMSswNlYmo5+VTiev3qYq5zVFH64oZfbxiQKrl9KsUesiOyL3Xuz3ceSok+MPsOa9ytyEKN5aji+TM7t0=
+	t=1708606913; cv=none; b=vGnGeQsq7CYVMvRX9TQThw1AjKeGnzgJISwIZdm7PNjut2Q8VfY2q8Q9sqTWDXR++Idl+rKlJ9e7lD+su3mX+0ublbdlfqZ32BMe7vczha8R7bXRexTpB5/un/029Zgzgpy4tJuPz5dCPVwmM5WNLE3M5aq8/tEignaV+bUGV2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708606572; c=relaxed/simple;
-	bh=7dqHVymEpv+mbY9Ii99AQPmzVOgGT6bep74WvflVCio=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c60sinTakyKydZPhYLbmeSrqqK+EStADd6oBOiK0BMnXr6Yj7pnAzAOQs+kwBD1SQ8Dt3idoVIUJyitW4NT37lXMWSwZ8ABvcy2gLtyxyagMmw74fGj/WWy6xviO35NU3EOcyZj2fGP65Et2XXFPxHR/4+cNoH2ci2z9nwGOwK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hicX5ReW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41M1cGao002544;
-	Thu, 22 Feb 2024 12:55:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type; s=
-	qcppdkim1; bh=F0djyJzQX2boq62he0FY77tfcSeF1hlmz7vhqN4MXI8=; b=hi
-	cX5ReW/Wtbbl0RCaW7zmhbOWSWfcCYUzS2uyeit+CfyTYagLhSoI5dpbWZgLsyft
-	S/15vAvWsFnB+EV4bAROnOpfa2NdbCJzoAivOTohuNShB5mrz1k2unXHRho32bqd
-	c+C0Cwn/Ec2vPogIhW23JJkl5R7C+1nYK6YViS0yRBBapWCkHpiuvMmdKL+eSphF
-	68sWDc/j0mPawcjX4Oq4aqagiqJnxdaQxQyPyV57+Y/DkTvLLRiBFwRm9pDYljD7
-	ZJVKwCbrx03RZSZYIctC8rrQZ1XhgwopqWjvo+GjY9hwBrRAQUvxi3jPFh4InwdW
-	dpKuznfDkvBJjFTsFIMA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdvsehkac-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 12:55:56 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MCtseU013656
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 12:55:54 GMT
-Received: from hu-sarohasa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 22 Feb 2024 04:55:45 -0800
-From: Sarosh Hasan <quic_sarohasa@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu
-	<joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring
-	<robh@kernel.org>
-CC: <kernel@quicinc.com>, Sneh Shah <quic_snehshah@quicinc.com>,
-        Suraj Jaiswal
-	<quic_jsuraj@quicinc.com>
-Subject: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Update link clock rate only for RGMII
-Date: Thu, 22 Feb 2024 18:25:17 +0530
-Message-ID: <20240222125517.3356-1-quic_sarohasa@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1708606913; c=relaxed/simple;
+	bh=9zC3a/lUBBoHG92n62uz1igUDeqMpK/0eJHMsRGQvwY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JvMGjegd3hx1aCcKYvwdxbm4eVIPNjtudSPTFbcQccEzsFq9I7GnLdSvMRkdlNFjJP7pSXB2ANJTMZ0jAHZTfX5NtWM+tyaUaugcNCrYfzMzkyq+l+SkhyF+A+q7HGdckI5Ot3zxIvRYy16+sYEjoz613lebho87L0Y2yAi4L94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mF8b9PpX; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5129cdae3c6so2191689e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:01:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708606910; x=1709211710; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m7Z26rH0nxtWAPBPvE/KxZ0NHjlwRm5O/7QOSN2/Ky0=;
+        b=mF8b9PpXDpthGYHQOPyBJgfTwj/UQtTrU1m0/EVniS7hxHKaKMMd9yw1W2eLqJoA6e
+         lTnhz0ZRyZVpjgUvKZ4N6a7BGC8Nz/vUP70MyR8KRkuceXY+cFe4DreBnws6hU5Jhy3C
+         QISH21uoUuRdR0bmZVQU5ogw9bwI3UtU/oYZvs5JtnT86jKNcnTRZpRF3XswhONGofq9
+         ZXXVZtsRvmFKWzPkZx+1/+a69Pqr2rdxtQxDrqJ5fsH2FBvW9FrDixqMlHEG+BQ1nd/B
+         LR0tLFnCDUESdUD3Tx+Wpy1gdOBwPmNbGd1bZE/XqreNyGAqQgroxBIMzoLmfVlmDiAu
+         AgFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708606910; x=1709211710;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m7Z26rH0nxtWAPBPvE/KxZ0NHjlwRm5O/7QOSN2/Ky0=;
+        b=JLSdgRCgVamvidym6Dp4vQDC/oj68HFcN2ptSrcv1lops/g3ZkceiwcehgtlrOGqmQ
+         o//LlWzL/fjl9jdEj+E575c/W0vbAqKlAoCB1Ej7sbFj1xTIZX9Y6M11Rxad+zTsxD8q
+         jiISreLsDGv8IMQiBVTfbbavDrBTM3X34FGrjF7BKTPXUl+wq80quZi/d/jPh9qQMUBk
+         XhuiHGgq9jI8Bmss7FFJpP/AzOjzEN/GfPjpv1+4Z1DrJe5HtIKrZzWsnpLaRYJI1TWn
+         2pgY93fiCoW47io/rZwWEyXPQqv19suBaiE8DaJcy1J8puW27dv3rZWaVdrVwcCzorro
+         X15Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXXD1ek9+WyNVZ8nZboHRpgUs0GKX8ebX83C8/5nQbPFKdF7yzZZWNkk0P9XErwAOFXx/lMtW6LDihGngDl+Rud7Z9v4I5Cj9LxiKuwCQ==
+X-Gm-Message-State: AOJu0YxBJ6+7kfOVrSOocNlrgg0vdyAEAQSkUKAW8bp+HvlI0oa8zCis
+	crWlknnXjf/fjKdXbelETJEstcQbzyV1hr3q9P0iGmjp48pH0z+M2gZOtq2GwBU=
+X-Google-Smtp-Source: AGHT+IGkf5An0FRhTN8uAcXotjLH9vOh29NQ0tafltetUlELSWRNWwvu9X3GqAFXb4b17ycZtwCaOQ==
+X-Received: by 2002:a05:6512:3a88:b0:512:ba3a:5368 with SMTP id q8-20020a0565123a8800b00512ba3a5368mr9141098lfu.48.1708606910048;
+        Thu, 22 Feb 2024 05:01:50 -0800 (PST)
+Received: from [172.30.204.125] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id o6-20020ac24e86000000b0051186931619sm2055814lfr.146.2024.02.22.05.01.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Feb 2024 05:01:49 -0800 (PST)
+Message-ID: <54b8c58a-6288-4ae6-9ed7-aa7b212e63da@linaro.org>
+Date: Thu, 22 Feb 2024 14:01:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6qj-1LaJaYXMpzY-ZwzeqVmwy3LF1NrY
-X-Proofpoint-GUID: 6qj-1LaJaYXMpzY-ZwzeqVmwy3LF1NrY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_10,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=998 adultscore=0
- malwarescore=0 phishscore=0 impostorscore=0 mlxscore=0 clxscore=1011
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2402120000 definitions=main-2402220103
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Update link
+ clock rate only for RGMII
+Content-Language: en-US
+To: Sarosh Hasan <quic_sarohasa@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Jose Abreu <joabreu@synopsys.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ Prasad Sodagudi <psodagud@quicinc.com>, Andrew Halaney
+ <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>
+Cc: kernel@quicinc.com, Sneh Shah <quic_snehshah@quicinc.com>,
+ Suraj Jaiswal <quic_jsuraj@quicinc.com>
+References: <20240222125517.3356-1-quic_sarohasa@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240222125517.3356-1-quic_sarohasa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Updating link clock rate for different speeds is only needed when
-using RGMII, as that mode requires changing clock speed when the link
-speed changes. Let's restrict updating the link clock speed in
-ethqos_update_link_clk() to just RGMII. Other modes such as SGMII
-only need to enable the link clock (which is already done in probe).
 
-Signed-off-by: Sarosh Hasan <quic_sarohasa@quicinc.com>
----
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 31631e3f89d0..9cd144fb3005 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -169,21 +169,23 @@ static void rgmii_dump(void *priv)
- static void
- ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
- {
--	switch (speed) {
--	case SPEED_1000:
--		ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
--		break;
-+	if (phy_interface_mode_is_rgmii(ethqos->phy_mode)) {
-+		switch (speed) {
-+		case SPEED_1000:
-+			ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
-+			break;
- 
--	case SPEED_100:
--		ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
--		break;
-+		case SPEED_100:
-+			ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
-+			break;
- 
--	case SPEED_10:
--		ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
--		break;
--	}
-+		case SPEED_10:
-+			ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
-+			break;
-+		}
- 
--	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
-+		clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
-+	}
- }
- 
- static void ethqos_set_func_clk_en(struct qcom_ethqos *ethqos)
--- 
-2.17.1
+On 2/22/24 13:55, Sarosh Hasan wrote:
+> Updating link clock rate for different speeds is only needed when
+> using RGMII, as that mode requires changing clock speed when the link
+> speed changes. Let's restrict updating the link clock speed in
+> ethqos_update_link_clk() to just RGMII. Other modes such as SGMII
+> only need to enable the link clock (which is already done in probe).
+> 
+> Signed-off-by: Sarosh Hasan <quic_sarohasa@quicinc.com>
+> ---
+>   .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 26 ++++++++++---------
+>   1 file changed, 14 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 31631e3f89d0..9cd144fb3005 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -169,21 +169,23 @@ static void rgmii_dump(void *priv)
+>   static void
+>   ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
+>   {
+> -	switch (speed) {
+> -	case SPEED_1000:
+> -		ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
+> -		break;
+> +	if (phy_interface_mode_is_rgmii(ethqos->phy_mode)) {
+> +		switch (speed) {
+> +		case SPEED_1000:
+> +			ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
+> +			break;
+>   
+> -	case SPEED_100:
+> -		ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
+> -		break;
+> +		case SPEED_100:
+> +			ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
+> +			break;
+>   
+> -	case SPEED_10:
+> -		ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
+> -		break;
+> -	}
+> +		case SPEED_10:
+> +			ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
+> +			break;
+> +		}
+>   
+> -	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+> +		clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+> +	}
+>   }
 
+if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
+	return 0;
+
+[leave the rest unchanged]
+
+?
+
+Konrad
 
