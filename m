@@ -1,225 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-12128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B05085F034
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 04:52:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 935AD85F03A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 04:53:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3BEA81C22B33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 03:52:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6FDE1C22D01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 03:53:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9012417564;
-	Thu, 22 Feb 2024 03:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3465517583;
+	Thu, 22 Feb 2024 03:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nOWL5E2H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n6zlQWiM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010EA7E9;
-	Thu, 22 Feb 2024 03:51:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17617548
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 03:53:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708573918; cv=none; b=qNlDn/YJYmPv6Uxpb16RM7+3gyTyTO80gfztRTFAZwkKiCcCdfvQg2zEsS194WhZB6fD+KabsxMen0AIVnWzBYvNQQuapDR7U7ufss2GpOG5TJM0ua/MXtiyL2dASzJhoECKGrNDABG8E1Bkafrei1d5zpiquYQ/JBOqbrZXi6k=
+	t=1708574003; cv=none; b=KlsGceWlMNcufgLqiHsHG0UNG9WjlLDFXf+aCYKepp1kg1FgwMto1m0g4fw6crcNxOb933QU7EHQN5cFgtqKKDcsWK9/SwBZQZ/JjxOrt+Aau6kUd3VMqjaPeBfn8eAeHoMO9TdA45UYtvvMUZFzQ28izUh0snu4hlbdy5+8n+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708573918; c=relaxed/simple;
-	bh=WMdwUdLfDrRv5+bpye5rSRR//nHXrH5XULr67UtTC+Q=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o16TKLpkmpkD6oU8jjhXY8oZEVx5ZvsfHx2ao4X/zxzdu2Kg34k1XTP6s/hds8/rVl3i1SXaZgrjeP0HRSd+R3JDv6grsPBHTxA2rpRGX1lRdwiJf2OkGq/Mrc5aCLSA6r24JB57ZIzoapuDskQUZZrZRLPifdMytpNcrHw6bPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nOWL5E2H; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41M3P4kg023077;
-	Thu, 22 Feb 2024 03:51:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=bBrRt8+UcRRQOmueHEAeP
-	jB5q/POTrKdOmEwEWV+9mc=; b=nOWL5E2HFx2aZP4RUQ1ReMiFa9AyBE7F8QQLa
-	DHQDGbbmgGlQ79L/RzberhIjyZpY4S4E2DE+MUv9Gv5J8CLQHW9UcGzc5Q49u66w
-	JY+H0XitAA8jWMDbkQPXnSZGPRu7SXT9dqZFCx/vERMMbXXIIDQfOHo8Jmes/GZ9
-	Iim3tkQ9XL5XUg4EMr1spChf2IChTA+iYMoovdmKXkvt8ItehLo7dSItJ93F6EsO
-	tOdFTbfnrr99fcOFDhf17lnKirF09/ZErmGm3oBSbCAZmUnOkMJaRjW1xSIY1am5
-	SFGCCm4n0QDsxQkgnwsoA4OXoIxSqg7p2zTrK6KN5CBhZDH4w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdpe6s0jh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 03:51:47 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41M3pkdD006448
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 03:51:46 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 21 Feb 2024 19:51:45 -0800
-Date: Wed, 21 Feb 2024 19:51:44 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: qcs6490-rb3gen2: Enable USB role
- switching
-Message-ID: <20240222035144.GH2936378@hu-bjorande-lv.qualcomm.com>
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
- <20240221-rb3gen2-dp-connector-v1-6-dc0964ef7d96@quicinc.com>
- <CAA8EJppAVehWUeLAqEAq8A3nq-o2g=8GK--XRVWtDV7-0BCskA@mail.gmail.com>
+	s=arc-20240116; t=1708574003; c=relaxed/simple;
+	bh=tZSUF+07IUAnAMW8uKD39BXTVkVqbfNvcpIp6GexzPY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EgTG2R6QEM3CCJBYNSoI+xlDA73J2lfX4C5Ke44GNGEWT46ksCdJmMsb5Vd49uM7IB6/On1JTuZOy6+A6mU9yPdS4MSn8aFUrWAELpxvWWp5ULL8lm28ziHwI6/LlD+KCXA+ovvpAvb2ls5Tx2meqV3MYtOHt/h0mUy01cAuA98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n6zlQWiM; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6e459b39e2cso358088b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 19:53:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708574001; x=1709178801; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OLPExIgj7iCP20OJfok9slllim21o6Wl4PPsBW1kw1Q=;
+        b=n6zlQWiMXMj03mCZFl3jhTB/TmN5O1XCkaQLi1KBKPsc+rpnxqKuLtfwEPIphhuDMP
+         VSv9jJbICsLibjIdbmszWg2FLyEJRvBM3dSEe8KhynipE+RbEZlUiSOvBevQM/ckrhAD
+         dm0NFYQWXRfRaSFlWEpbvNYQIT/Hd6kAdJHi3NFNQqOkkXXT2j5SnA0wsmBBMjlJBqMA
+         vRGUBsI7scAuhv1hkQPHCB+RC6hadmdAb3uosuqBK5Ck0agzbyAhWdJkE12SEryZoMaw
+         Fa97CnHwTH/H+mH2ZGTCXlCxQFYKRPZ0FvPWyH1/jUGkkCMjAQ2wNeaJXdndVdVUbI1G
+         YE8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708574001; x=1709178801;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OLPExIgj7iCP20OJfok9slllim21o6Wl4PPsBW1kw1Q=;
+        b=NLOe9ehf6P2Kqt8HMeh8YgW7hA0eI9dMxIHDjeOWGzqOIv+sZEeY4InuYMsaLNYAF2
+         elr6tju6XF38Mj48svOoCJRuSDSd93uia6W6+UMuGDXhKd1GEIUN8TMLvwnTlj0mO9At
+         fRjy7dgPL/1ruIOEHgkZVWglZ+59D7yIY9RLnTGcmEbDwz+3sIjcUJJ8lRzk1pDJsjkV
+         C2h/ZpLxpqUCV4Z81Cb1T2XsQv1qwdnWawm4kxtHl8wy10Go90kr9Mxl7Ywlh5H4h9io
+         4MSpoOcqIKkyVvtkfR8m21otiBljbBwFLecx2rCDreK5cjc2kl/krCF2ldZiUlRZgWPa
+         ZVJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKn1v+Azp3DQJMmv520LED1vf7B+ApS1moJRJMD01nDOqX9iZrLmDl94D9N/ohMyaaTZGGTwF+hXKgkLr2GSrrT2yDoGM4ZDfDJ5p6bw==
+X-Gm-Message-State: AOJu0Ywz78JTmtWE79vSpecv+fOFhAnAT/z+CFer/1iuPNHmkkFdzGmw
+	Yp3Hnq+CeRBJEKRPBP47pnUtjoiiLvlPgqAkXEh6utSPXhevXSGUh1SVPfECbw==
+X-Google-Smtp-Source: AGHT+IGPdc5oeMDvakyByul0H+HAc4a+oalJcnes6Zq18SNWiS4uQ6DEtIJa0l0Ew5uFaIh4UTPyUA==
+X-Received: by 2002:a05:6a20:9f86:b0:19e:6ea7:dfb with SMTP id mm6-20020a056a209f8600b0019e6ea70dfbmr2314079pzb.28.1708574000786;
+        Wed, 21 Feb 2024 19:53:20 -0800 (PST)
+Received: from thinkpad ([117.193.212.166])
+        by smtp.gmail.com with ESMTPSA id z2-20020a634c02000000b005dc816b2369sm9549117pga.28.2024.02.21.19.53.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Feb 2024 19:53:20 -0800 (PST)
+Date: Thu, 22 Feb 2024 09:23:12 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/10] dt-bindings: PCI: qcom: Do not require
+ 'msi-map-mask'
+Message-ID: <20240222035312.GA3374@thinkpad>
+References: <20240212165043.26961-1-johan+linaro@kernel.org>
+ <20240212165043.26961-3-johan+linaro@kernel.org>
+ <e396cf20-8598-4437-b635-09a4a737a772@linaro.org>
+ <Zcy4Atjmb6-wofCL@hovoldconsulting.com>
+ <59bd6e54-0d5d-4e1a-818a-475a96c223ff@linaro.org>
+ <20240216165406.GD39963@thinkpad>
+ <ZdRXpQnbDbojlMkV@hovoldconsulting.com>
+ <20240221052607.GB11693@thinkpad>
+ <ZdXQ4h03J9pi81Vq@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAA8EJppAVehWUeLAqEAq8A3nq-o2g=8GK--XRVWtDV7-0BCskA@mail.gmail.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JXx_JMRckSe4prl6xmUmKQSKHx8TnlNv
-X-Proofpoint-ORIG-GUID: JXx_JMRckSe4prl6xmUmKQSKHx8TnlNv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_01,2024-02-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 mlxlogscore=999 clxscore=1015 bulkscore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402220027
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZdXQ4h03J9pi81Vq@hovoldconsulting.com>
 
-On Thu, Feb 22, 2024 at 01:50:12AM +0200, Dmitry Baryshkov wrote:
-> On Thu, 22 Feb 2024 at 01:19, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> >
-> > With the ADSP remoteproc loaded pmic_glink can be introduced and wired
-> > up to provide role and orientation switching signals.
-> >
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 48 +++++++++++++++++++++++++++-
-> >  1 file changed, 47 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > index ab498494caea..079bf43b14cc 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > @@ -121,6 +121,41 @@ debug_vm_mem: debug-vm@d0600000 {
-> >                 };
-> >         };
-> >
-> > +       pmic-glink {
-> > +               compatible = "qcom,qcm6490-pmic-glink", "qcom,pmic-glink";
-> > +
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               connector@0 {
-> > +                       compatible = "usb-c-connector";
-> > +                       reg = <0>;
-> > +                       power-role = "dual";
-> > +                       data-role = "dual";
-> > +
-> > +                       ports {
-> > +                               #address-cells = <1>;
-> > +                               #size-cells = <0>;
-> > +
-> > +                               port@0 {
-> > +                                       reg = <0>;
-> > +
-> > +                                       pmic_glink_hs_in: endpoint {
-> > +                                               remote-endpoint = <&usb_1_dwc3_hs>;
-> > +                                       };
-> > +                               };
-> > +
-> > +                               port@1 {
-> > +                                       reg = <1>;
-> > +
-> > +                                       pmic_glink_ss_in: endpoint {
-> > +                                               remote-endpoint = <&usb_1_dwc3_ss>;
+On Wed, Feb 21, 2024 at 11:30:58AM +0100, Johan Hovold wrote:
+> On Wed, Feb 21, 2024 at 10:56:07AM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Feb 20, 2024 at 08:41:25AM +0100, Johan Hovold wrote:
+> > > On Fri, Feb 16, 2024 at 10:24:06PM +0530, Manivannan Sadhasivam wrote:
 > 
-> This should be connected to the QMP PHY rather than to the USB host.
+> > > > msi-map-mask is definitely needed as it would allow all the devices under the
+> > > > same bus to reuse the MSI identifier. Currently, excluding this property will
+> > > > not cause any issue since there is a single device under each bus. But we cannot
+> > > > assume that is going to be the case on all boards.
+> > > 
+> > > Are you saying that there is never a use case for an identity mapping?
+> > > Just on Qualcomm hardware or in general?
+> > > 
+> > > It looks like we have a fairly large number of mainline devicetrees that
+> > > do use an identity mapping here (i.e. do not specify 'msi-map-mask') and
+> > > the binding document also has an explicit example of this.
+> > > 
+> > > 	Documentation/devicetree/bindings/pci/pci-msi.txt
+> > 
+> > I don't know how other platforms supposed to work without this property for more
+> > than one devices. Maybe they were not tested enough?
+> 
+> Seems a bit far fetched since it's also an example in the binding.
+> 
+> In fact, only the two Qualcomm platforms that you added 'msi-map-mask'
+> for use it.
+> 
+> > But for sure, Qcom SoCs require either per device MSI identifier or
+> > msi-map-mask.
+> 
+> But isn't the mapping set up by the boot firmware and can differ between
+> platforms?
+> 
+> The mapping on sc8280xp looks quite different from sm8450/sm8650:
+> 
+> 	msi-map = <0x0 &gic_its 0x5981 0x1>,
+> 		  <0x100 &gic_its 0x5980 0x1>;
+> 	msi-map-mask = <0xff00>;
+> 
+> Here it's obvious that the mask is needed, whereas for sc8280xp:
+> 
+> 	msi-map = <0x0 &its 0xa0000 0x10000>;
+> 
+> it's not obvious what the mask should be. In fact, it looks like
+> Qualcomm intended a linear mapping here as the length is 0x10000 and
+> they left out the mask.
+> 
+> And after digging through the X13s ACPI tables, this is indeed how the
+> hardware is configured, which means that we should not use a
+> 'msi-map-mask' property for sc8280xp and that this patch is correct.
 > 
 
-Ahh, you're right, otherwise the orientation-switch below isn't of much
-use.
+Right. Confirmed the same with the hw team. On Qcom SoCs ITS mapping is
+relatively similar to SMMU stream IDs. So on SM8450 and other mobile targets
+making use of SMMUv2, only 128 SIDs are available, hence only 128 MSI
+identifiers. But on SC8280XP and other similar ones, SMMUv3 is used, so there
+are 65536 SIDs available and also the MSI identifiers. So yes, this SoC indeed
+supports linear mapping of MSI identifiers and so the mask is not required.
 
-> Also it might be better to squash this patch with the patch 8. Or at
-> least to get redriver into the picture in this patch (and keep only
-> display-related parts in that patch).
-> 
+Thanks!
 
-The idea was to only bring in the pmic-glink here and then do the
-plumbing between all the components separately, but I guess the
-orientation-switch in the redriver means that it should go here as
-well...
+- Mani
 
-I'll shuffle this into something that makes sense.
-
-Thanks,
-Bjorn
-
-> 
-> > +                                       };
-> > +                               };
-> > +                       };
-> > +               };
-> > +       };
-> > +
-> >         vph_pwr: vph-pwr-regulator {
-> >                 compatible = "regulator-fixed";
-> >                 regulator-name = "vph_pwr";
-> > @@ -476,7 +511,16 @@ &usb_1 {
-> >  };
-> >
-> >  &usb_1_dwc3 {
-> > -       dr_mode = "peripheral";
-> > +       dr_mode = "otg";
-> > +       usb-role-switch;
-> > +};
-> > +
-> > +&usb_1_dwc3_hs {
-> > +       remote-endpoint = <&pmic_glink_hs_in>;
-> > +};
-> > +
-> > +&usb_1_dwc3_ss {
-> > +       remote-endpoint = <&pmic_glink_ss_in>;
-> >  };
-> >
-> >  &usb_1_hsphy {
-> > @@ -491,6 +535,8 @@ &usb_1_qmpphy {
-> >         vdda-phy-supply = <&vreg_l6b_1p2>;
-> >         vdda-pll-supply = <&vreg_l1b_0p912>;
-> >
-> > +       orientation-switch;
-> > +
-> >         status = "okay";
-> >  };
-> >
-> >
-> > --
-> > 2.25.1
-> >
-> 
-> 
-> --
-> With best wishes
-> Dmitry
+-- 
+மணிவண்ணன் சதாசிவம்
 
