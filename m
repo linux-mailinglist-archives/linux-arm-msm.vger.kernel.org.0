@@ -1,523 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-12248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 530FC8604CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 22:28:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9525B860515
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 22:47:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB63DB21091
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 21:28:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B16601C238A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 21:47:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E3DD73F13;
-	Thu, 22 Feb 2024 21:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4945312D1EC;
+	Thu, 22 Feb 2024 21:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LRoClRPp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C61kuCGt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BBC6AF97
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 21:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7301773F3D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 21:47:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708637293; cv=none; b=gu/7ISudp2CWly6XivwHBXjmzruPQE07NJkOWrwcR1uVyCQ5c1Ffq2IFwH2SCo4EEMUGQFNnIc8mFHhEZ/26ygavzXo/Oa5jCRn1qFevpoPXMfIDlewYipxFHowYHrCzFRUpvdv6VuaMmOCLvuFWRUyF9YZDvjhAbEOuqurWQIc=
+	t=1708638476; cv=none; b=NLI5/sbhrTa8xBs8d6I0kpDbxsJ48kKcZq3tDB0rlPXJLoS/9jOBL44c3MactZEaWgcfIbSinbK22RN50os/nweqqLq6kENcFxtk+yjOnCvClM4iaaKS3evU2pSQ4g21jTDUIH4RxmGMvqy6eFqIR9b1RflJ2Ffly1SU+8XgnFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708637293; c=relaxed/simple;
-	bh=sI9ja6EISRm8UEnEATk6UCNvr3FmsxlEAj9ylSiO/cQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nQ55HxphLu/KCJsGO+65kMKJ2YXSRhU1zwjUmlUj4xvzURMBdfFgh2WPMzIlS5xRftup7wYGNGc3cU4uTH8aUHBtLONW8/i+Fox8MprAn36bGhk1cgJANmO1IikoeObwe/KZb2B6LtglxC62bKKXA1cvCoGvbThOZJ64p/tJ/ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LRoClRPp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41MKwX0d023936;
-	Thu, 22 Feb 2024 21:28:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=iSnYZJldnnSjkwoFns5P95lVH9etUUMnUHV8jA4arEY=; b=LR
-	oClRPp2vmqzClzSuC80mWpEKdxr1e9YleLb9g+Xfn1arb8ir9wg6sJyjLoo54wxM
-	fUOdjGEziOt93yuFD7UE1ltGJo5n9fKDMqUHdOYB/Xr8gDi5NKI10XGCWyGbfdWl
-	8v10PYqZtITEq/X6gp9VaWzenazdvxAIoZXW8ypO33HgV6wXVwNNm8M9sx+uWX8l
-	npYlVGtpPp7cNMsbcuKl4lAck6zIfo3dqo9qk6NsnyVGGlM7E6Rfe2WAbivrkTDg
-	sTR9aFOBpKjgzC2tf1WST1boC96zfaRkQ8glNzk2ypGlJF/xTVNBUjN0/q61QeBu
-	vpbyFeAlidy/SblpLgvA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3we97tg8u3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 21:28:03 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MLS2jP005981
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 21:28:02 GMT
-Received: from [10.71.111.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 22 Feb
- 2024 13:28:02 -0800
-Message-ID: <39824013-0ec5-8198-6cfb-4c23e1136047@quicinc.com>
-Date: Thu, 22 Feb 2024 13:28:01 -0800
+	s=arc-20240116; t=1708638476; c=relaxed/simple;
+	bh=Mlmw0HVUAhFZVbUgUT+SpXowG3yNg4H4nNZdYPrO3tM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=P4T+v0syzlKTtb51j0QaIpLITfM6JLrBAbWj+s02eSj7opZFn2yUwU0UtvMqIUlCV7Erl3i/0odNQHtuXMYSusB3jfd6vpfxu0EK9LmBLJ04Gcc+Q7zrpcOJMGQ0xZKmLLW4fCBsa/o63WG3s/ZCjhUGKQ8wlvRW8/scq7r/aao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C61kuCGt; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512e01b3da3so333914e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 13:47:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708638471; x=1709243271; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=27JArFoy7FgcSAJAKndgjFV/Dxo1giUsa3CZ68xb2WY=;
+        b=C61kuCGtEeObR/m3IWsmkA+DDOYsl7ozG+2bG7ebb1kBNYfGb5ESF1s+1Z21Za8yL9
+         0Ea5P07NCr3qG50gsKQd+MuHMKxUOxUT36HP6SRgSmdB0RL88r4AJTFOrFw62qkikKBA
+         6I1KU2Gzm/uaYiktJPfT+fo3fFPIlekzLaB0Z6tUEnpHEr4BUWPN0R8KoofQKlUUu6uI
+         Tnk6lJP7xxvjZ7WGznEDsabQVXQxa+sOhMoeeC3lhqPQ+grmlogKfQ3yNhGmHnh7Hd8s
+         hUmqV2T915s8J5nT9QJoq3uSyyZQrxcC1iuIeG28MnRwdJZL2szDO8F4YUWNAPRV7OaS
+         D72g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708638471; x=1709243271;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=27JArFoy7FgcSAJAKndgjFV/Dxo1giUsa3CZ68xb2WY=;
+        b=q1s8uCnpdQUEfseb7Ao0eKtfZS//VZLCjy7kBriiy+5JuzFk/YZ9QWUKwV8Qb/RBeF
+         OyF+82/eYNVn3m9TbZSz4zwpcMBuxaka5jcIQskQDO3WusNuc8arV+ugm0AniomA7eIz
+         FkhiUsFhETzBXzaGKmo5AlKIE7dc0JRWOxcObjP0Mi8fjtrzPx7itA5fBFS0WoE5YmTk
+         x+lXee1MWQZPjhKmNw5RPUDUnJiei+2m5PqZtX1qahm3/j40vUbkqOLDtDtVKhJ70VmK
+         ZJAEZebiZOTHTW/WBko0YCZJTTl6pW9aUVaqez48EPtAgZuBtjLR0wqj+Z0UfX2ACuR6
+         cwfQ==
+X-Gm-Message-State: AOJu0YzcZIHDvIiUDKTzIuC7AWS6zNol4eqHzBGU83cM7ra9tmdSGvLk
+	Mn8VK4R5fI5Q0tpMvDlTY3XwEMXSAvLoSfabveHhr0w3ItnsqkEvawZijijuffM=
+X-Google-Smtp-Source: AGHT+IGeTH/W80T+tFl6ii56yNpwnGORtLpMr2fJHrzihvoDvLmDGgS7QqhvQECjABGJyan2PjHAIA==
+X-Received: by 2002:a05:6512:3e16:b0:512:ba3a:5368 with SMTP id i22-20020a0565123e1600b00512ba3a5368mr318345lfv.48.1708638471403;
+        Thu, 22 Feb 2024 13:47:51 -0800 (PST)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id r8-20020a19ac48000000b00512d4acc9f8sm744918lfc.254.2024.02.22.13.47.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Feb 2024 13:47:50 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 22 Feb 2024 23:47:49 +0200
+Subject: [PATCH v5] drm/msm/dpu: add current resource allocation to dumped
+ state
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v5 13/19] drm/msm/dp: add VSC SDP support for YUV420 over
- DP
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <marijn.suijten@somainline.org>,
-        <neil.armstrong@linaro.org>
-References: <20240222194025.25329-1-quic_parellan@quicinc.com>
- <20240222194025.25329-14-quic_parellan@quicinc.com>
- <CAA8EJpoYwxzg=tNSYVMATZDTEML72+HHYDDcDyG3i2pFbuwCTg@mail.gmail.com>
-From: Paloma Arellano <quic_parellan@quicinc.com>
-In-Reply-To: <CAA8EJpoYwxzg=tNSYVMATZDTEML72+HHYDDcDyG3i2pFbuwCTg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: h3PZJ_9Lr0MWtEObIbGfo9uyl1EEmNPQ
-X-Proofpoint-ORIG-GUID: h3PZJ_9Lr0MWtEObIbGfo9uyl1EEmNPQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402220168
+Message-Id: <20240222-fd-rm-state-v5-1-4a6c81e87f63@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAATB12UC/23MQQqDMBCF4avIrDvFhIjaVe8hLqKZ6EBryiSEF
+ vHuTV13+T943w6RhCnCrdpBKHPksJVoLhXMq90WQnalQdfa1Fr16B3KE2OyiXBySquub8zUdlA
+ eLyHP71MbxtIrxxTkc+LZ/Nb/TjaocDKtV4a8bmd9f/BmJVyDLDAex/EFUKuVaacAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5724;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=Mlmw0HVUAhFZVbUgUT+SpXowG3yNg4H4nNZdYPrO3tM=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+r1g2xOlnsjm6YY9fj93OnVP03Ys6xi8qqp63z27J/dV
+ iftHFfdyWjMwsDIxSArpsjiU9AyNWZTctiHHVPrYQaxMoFMYeDiFICJhG9g/2f8Z4XE31kfpnKX
+ Cp6JjNqhdiy3lcfz6O1PUr66lVoVUzMvXFx2tb3QpuOGYfjbXwbpKV05O5zjJy2f8OSYenPMvY1
+ FQhpsTlnHHau4AxXOPWL+lmYp5GQx2XHjjjMqGtMD5Du/Sx5lCuEoW8DPc9bgZcUT7pLTC2L36p
+ wv/e5llrXo+l3Hw15vrnBw6QQf2v+gKr7D/m7mvTZ53UJlT7/mu4d32FqFTmR8FRobxVy4kYs9w
+ Tpn4qKiBQFOFVvUxRIOu3TVGZlo8kmxigsES5u/Xp50ZnEBV1ne7SmX/Ku38rodsNu878yNBeFv
+ Js+c94v92XSDpjdmChtqC69ri6yJ0RCSXG+0XjTR81YXAA==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
+Provide atomic_print_state callback to the DPU's private object. This
+way the debugfs/dri/0/state will also include RM's internal state.
 
-On 2/22/2024 1:18 PM, Dmitry Baryshkov wrote:
-> On Thu, 22 Feb 2024 at 21:40, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->> Add support to pack and send the VSC SDP packet for DP. This therefore
->> allows the transmision of format information to the sinks which is
->> needed for YUV420 support over DP.
->>
->> Changes in v5:
->>          - Slightly modify use of drm_dp_vsc_sdp_pack()
->>          - Remove dp_catalog NULL checks
->>          - Modify dp_utils_pack_sdp_header() to more clearly pack the
->>            header buffer
->>          - Move dp_utils_pack_sdp_header() inside of
->>            dp_catalog_panel_send_vsc_sdp to clearly show the relationship
->>            between the header buffer and the vsc_sdp struct
->>          - Due to the last point, remove the dp_utils_pack_vsc_sdp()
->>            function and only call drm_dp_vsc_sdp_pack() in
->>            dp_panel_setup_vsc_sdp_yuv_420()
->>
->> Changes in v4:
->>          - Remove struct msm_dp_sdp_with_parity
->>          - Use dp_utils_pack_sdp_header() to pack the SDP header and
->>            parity bytes into a buffer
->>          - Use this buffer when writing the VSC SDP data in
->>            dp_catalog_panel_send_vsc_sdp()
->>          - Write to all of the MMSS_DP_GENERIC0 registers instead of just
->>            the ones with non-zero values
->>
->> Changes in v3:
->>          - Create a new struct, msm_dp_sdp_with_parity, which holds the
->>            packing information for VSC SDP
->>          - Use drm_dp_vsc_sdp_pack() to pack the data into the new
->>            msm_dp_sdp_with_parity struct instead of specifically packing
->>            for YUV420 format
->>          - Modify dp_catalog_panel_send_vsc_sdp() to send the VSC SDP
->>            data using the new msm_dp_sdp_with_parity struct
->>
->> Changes in v2:
->>          - Rename GENERIC0_SDPSIZE macro to GENERIC0_SDPSIZE_VALID
->>          - Remove dp_sdp from the dp_catalog struct since this data is
->>            being allocated at the point used
->>          - Create a new function in dp_utils to pack the VSC SDP data
->>            into a buffer
->>          - Create a new function that packs the SDP header bytes into a
->>            buffer. This function is made generic so that it can be
->>            utilized by dp_audio
->>            header bytes into a buffer
->>          - Create a new function in dp_utils that takes the packed buffer
->>            and writes to the DP_GENERIC0_* registers
->>          - Split the dp_catalog_panel_config_vsc_sdp() function into two
->>            to disable/enable sending VSC SDP packets
->>          - Check the DP HW version using the original useage of
->>            dp_catalog_hw_revision() and correct the version checking
->>            logic
->>          - Rename dp_panel_setup_vsc_sdp() to
->>            dp_panel_setup_vsc_sdp_yuv_420() to explicitly state that
->>            currently VSC SDP is only being set up to support YUV420 modes
->>
->> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dp/dp_catalog.c | 93 +++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_catalog.h |  6 ++
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 ++
->>   drivers/gpu/drm/msm/dp/dp_panel.c   | 52 ++++++++++++++++
->>   drivers/gpu/drm/msm/dp/dp_reg.h     |  3 +
->>   drivers/gpu/drm/msm/dp/dp_utils.c   | 25 ++++++++
->>   drivers/gpu/drm/msm/dp/dp_utils.h   | 14 +++++
->>   7 files changed, 197 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
->> index 5d84c089e520a..bfc6f53ae167f 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
->> @@ -901,6 +901,99 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
->>          return 0;
->>   }
->>
->> +static void dp_catalog_panel_send_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp)
->> +{
->> +       struct dp_catalog_private *catalog;
->> +       u32 header[2];
->> +       u32 val;
->> +       int i;
->> +
->> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->> +
->> +       dp_utils_pack_sdp_header(&vsc_sdp->sdp_header, header);
->> +
->> +       dp_write_link(catalog, MMSS_DP_GENERIC0_0, header[0]);
->> +       dp_write_link(catalog, MMSS_DP_GENERIC0_1, header[1]);
->> +
->> +       for (i = 0; i < sizeof(vsc_sdp->db); i += 4) {
->> +               val = ((vsc_sdp->db[i]) | (vsc_sdp->db[i + 1] << 8) | (vsc_sdp->db[i + 2] << 16) |
->> +                      (vsc_sdp->db[i + 3] << 24));
->> +               dp_write_link(catalog, MMSS_DP_GENERIC0_2 + i, val);
->> +       }
->> +}
->> +
->> +static void dp_catalog_panel_update_sdp(struct dp_catalog *dp_catalog)
->> +{
->> +       struct dp_catalog_private *catalog;
->> +       u32 hw_revision;
->> +
->> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->> +
->> +       hw_revision = dp_catalog_hw_revision(dp_catalog);
->> +       if (hw_revision < DP_HW_VERSION_1_2 && hw_revision >= DP_HW_VERSION_1_0) {
->> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x01);
->> +               dp_write_link(catalog, MMSS_DP_SDP_CFG3, 0x00);
->> +       }
->> +}
->> +
->> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp)
->> +{
->> +       struct dp_catalog_private *catalog;
->> +       u32 cfg, cfg2, misc;
->> +
->> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->> +
->> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
->> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
->> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
->> +
->> +       cfg |= GEN0_SDP_EN;
->> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
->> +
->> +       cfg2 |= GENERIC0_SDPSIZE_VALID;
->> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
->> +
->> +       dp_catalog_panel_send_vsc_sdp(dp_catalog, vsc_sdp);
->> +
->> +       /* indicates presence of VSC (BIT(6) of MISC1) */
->> +       misc |= DP_MISC1_VSC_SDP;
->> +
->> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=1\n");
->> +
->> +       pr_debug("misc settings = 0x%x\n", misc);
->> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
->> +
->> +       dp_catalog_panel_update_sdp(dp_catalog);
->> +}
->> +
->> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog)
->> +{
->> +       struct dp_catalog_private *catalog;
->> +       u32 cfg, cfg2, misc;
->> +
->> +       catalog = container_of(dp_catalog, struct dp_catalog_private, dp_catalog);
->> +
->> +       cfg = dp_read_link(catalog, MMSS_DP_SDP_CFG);
->> +       cfg2 = dp_read_link(catalog, MMSS_DP_SDP_CFG2);
->> +       misc = dp_read_link(catalog, REG_DP_MISC1_MISC0);
->> +
->> +       cfg &= ~GEN0_SDP_EN;
->> +       dp_write_link(catalog, MMSS_DP_SDP_CFG, cfg);
->> +
->> +       cfg2 &= ~GENERIC0_SDPSIZE_VALID;
->> +       dp_write_link(catalog, MMSS_DP_SDP_CFG2, cfg2);
->> +
->> +       /* switch back to MSA */
->> +       misc &= ~DP_MISC1_VSC_SDP;
->> +
->> +       drm_dbg_dp(catalog->drm_dev, "vsc sdp enable=0\n");
->> +
->> +       pr_debug("misc settings = 0x%x\n", misc);
->> +       dp_write_link(catalog, REG_DP_MISC1_MISC0, misc);
->> +
->> +       dp_catalog_panel_update_sdp(dp_catalog);
->> +}
->> +
->>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
->>                                  struct drm_display_mode *drm_mode)
->>   {
->> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
->> index 6cb5e2a243de2..3605252effb59 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
->> @@ -9,6 +9,7 @@
->>   #include <drm/drm_modes.h>
->>
->>   #include "dp_parser.h"
->> +#include "dp_utils.h"
->>   #include "disp/msm_disp_snapshot.h"
->>
->>   /* interrupts */
->> @@ -30,6 +31,9 @@
->>
->>   #define DP_AUX_CFG_MAX_VALUE_CNT 3
->>
->> +#define DP_HW_VERSION_1_0      0x10000000
->> +#define DP_HW_VERSION_1_2      0x10020000
->> +
->>   /* PHY AUX config registers */
->>   enum dp_phy_aux_config_type {
->>          PHY_AUX_CFG0,
->> @@ -124,6 +128,8 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
->>
->>   /* DP Panel APIs */
->>   int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
->> +void dp_catalog_panel_enable_vsc_sdp(struct dp_catalog *dp_catalog, struct dp_sdp *vsc_sdp);
->> +void dp_catalog_panel_disable_vsc_sdp(struct dp_catalog *dp_catalog);
->>   void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
->>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
->>                                  struct drm_display_mode *drm_mode);
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index bffb7bac2c2c8..a42b29f9902c1 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1947,6 +1947,8 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
->>          dp_io = &ctrl->parser->io;
->>          phy = dp_io->phy;
->>
->> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
->> +
->>          /* set dongle to D3 (power off) mode */
->>          dp_link_psm_config(ctrl->link, &ctrl->panel->link_info, true);
->>
->> @@ -2021,6 +2023,8 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
->>          dp_io = &ctrl->parser->io;
->>          phy = dp_io->phy;
->>
->> +       dp_catalog_panel_disable_vsc_sdp(ctrl->catalog);
->> +
->>          dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
->>
->>          dp_catalog_ctrl_reset(ctrl->catalog);
->> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
->> index db1942794f1a4..e425a5c86acdc 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->> @@ -4,6 +4,7 @@
->>    */
->>
->>   #include "dp_panel.h"
->> +#include "dp_utils.h"
->>
->>   #include <drm/drm_connector.h>
->>   #include <drm/drm_edid.h>
->> @@ -281,6 +282,53 @@ void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable)
->>          dp_catalog_panel_tpg_enable(catalog, &panel->dp_panel.dp_mode.drm_mode);
->>   }
->>
->> +static int dp_panel_setup_vsc_sdp_yuv_420(struct dp_panel *dp_panel)
->> +{
->> +       struct dp_catalog *catalog;
->> +       struct dp_panel_private *panel;
->> +       struct dp_display_mode *dp_mode;
->> +       struct drm_dp_vsc_sdp vsc_sdp_data;
->> +       struct dp_sdp vsc_sdp;
->> +       ssize_t len;
->> +
->> +       if (!dp_panel) {
->> +               DRM_ERROR("invalid input\n");
->> +               return -EINVAL;
->> +       }
->> +
->> +       panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
->> +       catalog = panel->catalog;
->> +       dp_mode = &dp_panel->dp_mode;
->> +
->> +       memset(&vsc_sdp_data, 0, sizeof(vsc_sdp_data));
->> +
->> +       /* VSC SDP header as per table 2-118 of DP 1.4 specification */
->> +       vsc_sdp_data.sdp_type = DP_SDP_VSC;
->> +       vsc_sdp_data.revision = 0x05;
->> +       vsc_sdp_data.length = 0x13;
->> +
->> +       /* VSC SDP Payload for DB16 */
->> +       vsc_sdp_data.pixelformat = DP_PIXELFORMAT_YUV420;
->> +       vsc_sdp_data.colorimetry = DP_COLORIMETRY_DEFAULT;
->> +
->> +       /* VSC SDP Payload for DB17 */
->> +       vsc_sdp_data.bpc = dp_mode->bpp / 3;
->> +       vsc_sdp_data.dynamic_range = DP_DYNAMIC_RANGE_CTA;
->> +
->> +       /* VSC SDP Payload for DB18 */
->> +       vsc_sdp_data.content_type = DP_CONTENT_TYPE_GRAPHICS;
->> +
->> +       len = drm_dp_vsc_sdp_pack(&vsc_sdp_data, &vsc_sdp);
->> +       if (len < 0) {
->> +               DRM_ERROR("unable to pack vsc sdp\n");
->> +               return len;
->> +       }
->> +
->> +       dp_catalog_panel_enable_vsc_sdp(catalog, &vsc_sdp);
->> +
->> +       return 0;
->> +}
->> +
->>   void dp_panel_dump_regs(struct dp_panel *dp_panel)
->>   {
->>          struct dp_catalog *catalog;
->> @@ -344,6 +392,10 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
->>          catalog->dp_active = data;
->>
->>          dp_catalog_panel_timing_cfg(catalog);
->> +
->> +       if (dp_panel->dp_mode.out_fmt_is_yuv_420)
->> +               dp_panel_setup_vsc_sdp_yuv_420(dp_panel);
->> +
->>          panel->panel_on = true;
->>
->>          return 0;
->> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
->> index 78785ed4b40c4..aa9f6c3e4ddeb 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
->> @@ -142,6 +142,7 @@
->>   #define DP_MISC0_SYNCHRONOUS_CLK               (0x00000001)
->>   #define DP_MISC0_COLORIMETRY_CFG_SHIFT         (0x00000001)
->>   #define DP_MISC0_TEST_BITS_DEPTH_SHIFT         (0x00000005)
->> +#define DP_MISC1_VSC_SDP                       (0x00004000)
->>
->>   #define DP_MISC0_COLORIMERY_CFG_LEGACY_RGB     (0)
->>   #define DP_MISC0_COLORIMERY_CFG_CEA_RGB                (0x04)
->> @@ -204,9 +205,11 @@
->>   #define MMSS_DP_AUDIO_CTRL_RESET               (0x00000214)
->>
->>   #define MMSS_DP_SDP_CFG                                (0x00000228)
->> +#define GEN0_SDP_EN                            (0x00020000)
->>   #define MMSS_DP_SDP_CFG2                       (0x0000022C)
->>   #define MMSS_DP_AUDIO_TIMESTAMP_0              (0x00000230)
->>   #define MMSS_DP_AUDIO_TIMESTAMP_1              (0x00000234)
->> +#define GENERIC0_SDPSIZE_VALID                 (0x00010000)
->>
->>   #define MMSS_DP_AUDIO_STREAM_0                 (0x00000240)
->>   #define MMSS_DP_AUDIO_STREAM_1                 (0x00000244)
->> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.c b/drivers/gpu/drm/msm/dp/dp_utils.c
->> index 3a44fe738c004..3c8db0e9adfa6 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_utils.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_utils.c
->> @@ -7,6 +7,8 @@
->>
->>   #include "dp_utils.h"
->>
->> +#define DP_SDP_HEADER_SIZE             8
->> +
->>   u8 dp_utils_get_g0_value(u8 data)
->>   {
->>          u8 c[4];
->> @@ -71,3 +73,26 @@ u8 dp_utils_calculate_parity(u32 data)
->>
->>          return parity_byte;
->>   }
->> +
->> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff)
->> +{
->> +       size_t length;
->> +
->> +       length = sizeof(header_buff);
->> +       if (length < DP_SDP_HEADER_SIZE)
->> +               return -ENOSPC;
->> +
->> +       memset(header_buff, 0, sizeof(header_buff));
-> Just out of curiosity:
-> 1) what is the amount of memory getting zeroed by this call?
-> 2) what's the point in zeroing it if the next two lines will overwrite it?
->
-> If nobody objects, I'll remove this line while applying.
->
-> If that's fine,
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Example output (RB5 board, HDMI and writeback encoder enabled)
 
+resource mapping:
+	pingpong=31 36 # # # # - - - - -
+	mixer=31 36 # # # # -
+	ctl=# # 31 36 # #
+	dspp=# # # #
+	dsc=# # # # - -
+	cdm=#
 
-Sounds good to me. Just didn't notice the redundancy of this line.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v5:
+- Extracted the common helper for printing RM state
+- Changed the code to print '#' for unused/unmapped blocks (Abhinav)
+- Link to v4: https://lore.kernel.org/r/20240219-fd-rm-state-v4-1-b47f14ef27c2@linaro.org
 
--Paloma
+Changes in v4:
+- Split the patch from the virual wide planes series
+- Reworked the output format
+- Added the CDM block into the dump
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 12 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 56 +++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  8 +++++
+ 4 files changed, 78 insertions(+)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 723cc1d82143..9f3697e1eacb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -353,9 +353,18 @@ static void dpu_kms_global_destroy_state(struct drm_private_obj *obj,
+ 	kfree(dpu_state);
+ }
+ 
++static void dpu_kms_global_print_state(struct drm_printer *p,
++				       const struct drm_private_state *state)
++{
++	const struct dpu_global_state *global_state = to_dpu_global_state(state);
++
++	dpu_rm_print_state(p, global_state);
++}
++
+ static const struct drm_private_state_funcs dpu_kms_global_state_funcs = {
+ 	.atomic_duplicate_state = dpu_kms_global_duplicate_state,
+ 	.atomic_destroy_state = dpu_kms_global_destroy_state,
++	.atomic_print_state = dpu_kms_global_print_state,
+ };
+ 
+ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+@@ -371,6 +380,9 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+ 	drm_atomic_private_obj_init(dpu_kms->dev, &dpu_kms->global_state,
+ 				    &state->base,
+ 				    &dpu_kms_global_state_funcs);
++
++	state->rm = &dpu_kms->rm;
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index d1207f4ec3ae..2512c9bd08df 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -131,6 +131,8 @@ struct vsync_info {
+ struct dpu_global_state {
+ 	struct drm_private_state base;
+ 
++	struct dpu_rm *rm;
++
+ 	uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
+ 	uint32_t mixer_to_enc_id[LM_MAX - LM_0];
+ 	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 724537ab776d..1a56ddca536d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -634,3 +634,59 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 
+ 	return num_blks;
+ }
++
++static void dpu_rm_print_state_helper(struct drm_printer *p,
++					    struct dpu_hw_blk *blk,
++					    uint32_t mapping)
++{
++	if (!blk)
++		drm_puts(p, "- ");
++	else if (!mapping)
++		drm_puts(p, "# ");
++	else
++		drm_printf(p, "%d ", mapping);
++}
++
++
++void dpu_rm_print_state(struct drm_printer *p,
++			const struct dpu_global_state *global_state)
++{
++	const struct dpu_rm *rm = global_state->rm;
++	int i;
++
++	drm_puts(p, "resource mapping:\n");
++	drm_puts(p, "\tpingpong=");
++	for (i = 0; i < ARRAY_SIZE(global_state->pingpong_to_enc_id); i++)
++		dpu_rm_print_state_helper(p, rm->pingpong_blks[i],
++					  global_state->pingpong_to_enc_id[i]);
++	drm_puts(p, "\n");
++
++	drm_puts(p, "\tmixer=");
++	for (i = 0; i < ARRAY_SIZE(global_state->mixer_to_enc_id); i++)
++		dpu_rm_print_state_helper(p, rm->mixer_blks[i],
++					  global_state->mixer_to_enc_id[i]);
++	drm_puts(p, "\n");
++
++	drm_puts(p, "\tctl=");
++	for (i = 0; i < ARRAY_SIZE(global_state->ctl_to_enc_id); i++)
++		dpu_rm_print_state_helper(p, rm->ctl_blks[i],
++					  global_state->ctl_to_enc_id[i]);
++	drm_puts(p, "\n");
++
++	drm_puts(p, "\tdspp=");
++	for (i = 0; i < ARRAY_SIZE(global_state->dspp_to_enc_id); i++)
++		dpu_rm_print_state_helper(p, rm->dspp_blks[i],
++					  global_state->dspp_to_enc_id[i]);
++	drm_puts(p, "\n");
++
++	drm_puts(p, "\tdsc=");
++	for (i = 0; i < ARRAY_SIZE(global_state->dsc_to_enc_id); i++)
++		dpu_rm_print_state_helper(p, rm->dsc_blks[i],
++					  global_state->dsc_to_enc_id[i]);
++	drm_puts(p, "\n");
++
++	drm_puts(p, "\tcdm=");
++	dpu_rm_print_state_helper(p, rm->cdm_blk,
++				  global_state->cdm_to_enc_id);
++	drm_puts(p, "\n");
++}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+index e3f83ebc656b..e63db8ace6b9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+@@ -89,6 +89,14 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 	struct dpu_global_state *global_state, uint32_t enc_id,
+ 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+ 
++/**
++ * dpu_rm_print_state - output the RM private state
++ * @p: DRM printer
++ * @global_state: global state
++ */
++void dpu_rm_print_state(struct drm_printer *p,
++			const struct dpu_global_state *global_state);
++
+ /**
+  * dpu_rm_get_intf - Return a struct dpu_hw_intf instance given it's index.
+  * @rm: DPU Resource Manager handle
 
->
->> +
->> +       header_buff[0] = FIELD_PREP(HEADER_0_MASK, sdp_header->HB0) |
->> +               FIELD_PREP(PARITY_0_MASK, dp_utils_calculate_parity(sdp_header->HB0)) |
->> +               FIELD_PREP(HEADER_1_MASK, sdp_header->HB1) |
->> +               FIELD_PREP(PARITY_1_MASK, dp_utils_calculate_parity(sdp_header->HB1));
->> +
->> +       header_buff[1] = FIELD_PREP(HEADER_2_MASK, sdp_header->HB2) |
->> +               FIELD_PREP(PARITY_2_MASK, dp_utils_calculate_parity(sdp_header->HB2)) |
->> +               FIELD_PREP(HEADER_3_MASK, sdp_header->HB3) |
->> +               FIELD_PREP(PARITY_3_MASK, dp_utils_calculate_parity(sdp_header->HB3));
->> +
->> +       return length;
->> +}
->> diff --git a/drivers/gpu/drm/msm/dp/dp_utils.h b/drivers/gpu/drm/msm/dp/dp_utils.h
->> index 5a505cbf3432b..7c056d9798dc3 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_utils.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_utils.h
->> @@ -6,6 +6,10 @@
->>   #ifndef _DP_UTILS_H_
->>   #define _DP_UTILS_H_
->>
->> +#include <linux/bitfield.h>
->> +#include <linux/bits.h>
->> +#include <drm/display/drm_dp_helper.h>
->> +
->>   #define HEADER_BYTE_0_BIT       0
->>   #define PARITY_BYTE_0_BIT       8
->>   #define HEADER_BYTE_1_BIT      16
->> @@ -15,8 +19,18 @@
->>   #define HEADER_BYTE_3_BIT      16
->>   #define PARITY_BYTE_3_BIT      24
->>
->> +#define HEADER_0_MASK      GENMASK(7, 0)
->> +#define PARITY_0_MASK      GENMASK(15, 8)
->> +#define HEADER_1_MASK      GENMASK(23, 16)
->> +#define PARITY_1_MASK      GENMASK(31, 24)
->> +#define HEADER_2_MASK      GENMASK(7, 0)
->> +#define PARITY_2_MASK      GENMASK(15, 8)
->> +#define HEADER_3_MASK      GENMASK(23, 16)
->> +#define PARITY_3_MASK      GENMASK(31, 24)
->> +
->>   u8 dp_utils_get_g0_value(u8 data);
->>   u8 dp_utils_get_g1_value(u8 data);
->>   u8 dp_utils_calculate_parity(u32 data);
->> +ssize_t dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff);
->>
->>   #endif /* _DP_UTILS_H_ */
->> --
->> 2.39.2
->>
->
+---
+base-commit: 41c177cf354126a22443b5c80cec9fdd313e67e1
+change-id: 20240219-fd-rm-state-bd1218954b78
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
