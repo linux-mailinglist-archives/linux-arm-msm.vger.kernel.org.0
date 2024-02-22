@@ -1,221 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-12138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7BC885F1B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 08:04:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D9D0985F222
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 08:48:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA0641C22785
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 07:03:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 151911C21320
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 07:48:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07FD512E4F;
-	Thu, 22 Feb 2024 07:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AACB1799A;
+	Thu, 22 Feb 2024 07:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HXo8kNGP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bIkAmb3D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387BAA47;
-	Thu, 22 Feb 2024 07:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708585436; cv=fail; b=tFqwPmhF8HBN1joRiVs4QylOhl88rKT3A0j6Uu6h4QvstejO3iGPZUcIRUENYhRilf0e3Z3IdmIfzMdSvUA6dftheVxur4x1sKtl2J15coeJuPVqx/Wehiu4+cGGHdeP8fIe+5LYoJitCRAOl+MOIDQBLEXs7WrMPA2/oMfiXTM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708585436; c=relaxed/simple;
-	bh=xkFsfdwTo7LXa+TTdUdPApwzYYxabKLIEo3Q5l07Ad0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=RhZ6B9+FzhGSjdvXWi7dhKWmCHnOHKl8rxA6GgybXcyLPEolcLmnUWDW6vVMPRjZDygYCrYCsHiBiB9MP6fsaqX/c2VBmdzNyG71+TteAjp0aNdXdkBmPX8g+Y3Q08ed7Z8wPqFfcZTqGnB+1ny8OFtWYxLghPDrBTi1YmVEKmY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HXo8kNGP; arc=fail smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708585435; x=1740121435;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=xkFsfdwTo7LXa+TTdUdPApwzYYxabKLIEo3Q5l07Ad0=;
-  b=HXo8kNGP1s/LTheqpHLcuNjekuSRCxyKi/Va84sZSFfiAWf/X4b/Z+0x
-   nIJPs9hDIo9E3ns6dWFpUX+6fLAR/fDTVcLap7g3PaFIxs6ierAe+dLbc
-   uNrY8EPAq4HXS1zlSNbWR9ytlvgmJ6/xx7PDA6kjQgSo6gPTQ39euM5mf
-   wcCm0X5KMaTUEsixyi2JFri8DQrd9z77LW14Gy6ZjTHx7POm5ocSfu5uL
-   m+GAelrIxaiypLP7t15x3fDx8JElOawE/R0Gt7RlslQd9wD9DLtJcszcj
-   Rte+NOyru3HTr2B14jBhL/PXsXEC4kd/E1C/OoD/RMdM5L+f33jFXjxwq
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10991"; a="20342845"
-X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
-   d="scan'208";a="20342845"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2024 23:03:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
-   d="scan'208";a="10080581"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 21 Feb 2024 23:03:54 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 21 Feb 2024 23:03:54 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 21 Feb 2024 23:03:53 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 21 Feb 2024 23:03:53 -0800
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 21 Feb 2024 23:03:53 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Foze7x8X43GI1MHbVU+Z+yPWEackm6ZQiv6yZTzCQq2ch2gqZfeqvYSQHNo5VxJmgb4dYSJpZTYNlZ8NgYoJ1XuVqJ7wGE4NSl/DqnLS5k03gDwwK4tZtqCWTDYp34GMjbVs4BBH0V9UHYPCtG7h/KQ8r28RDNmcFmk4HdloPPUcKZfCpatFSvYV7umfAHDlArdtoCXgFb+X+W9UwtnSBYWEgN+Xn0CRvBBVjV3559ZAChE9iwLJsDaQfa3F5WkDa4f96+IWmiBeCY4KBuBmnRJ5Ypp7Syur1+gsINe1XUQgMhfzhf45H3VCpTEbuAPVGOpnSTzzijMf5Ugf7Z/Afw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LNxBOAjFUcXdHlaNDF4FGMT0Mop78ksFi0yVuC0VXOI=;
- b=ePoX0vUpQdz0dJm9cwF+weJV+uqPiEWrm1jFRXJHUA/ubV70qLbe5dRYqYfUOm9xyuDSr0s3BhPlNwe89yIYnOxJfHLS0OiFX3jLx4LmPaxhZdHIfXaWOlmONoJr+WoDkfM63SE8gw71ELwQOX0iHpTU9GWgFb7yi5IKOt8lBXsw2amGRQRg6ksvGtEu0urDLRzcZNk1Ey4XruWk3PuaVWHofT6OsomZ1+C/GWQ8mtzQ38Nh4zP0RHknOlFueQ0naJuRR0l82SGrvvP4BY7jgyXS4EyP1oOlxASKHAj/1iqssU7u8N1xlEJ8EYs88/toyYwJT5X0WYAD0zS9hWusVA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from MW5PR11MB5787.namprd11.prod.outlook.com (2603:10b6:303:192::7)
- by MN0PR11MB5962.namprd11.prod.outlook.com (2603:10b6:208:371::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.22; Thu, 22 Feb
- 2024 07:03:51 +0000
-Received: from MW5PR11MB5787.namprd11.prod.outlook.com
- ([fe80::9b79:ed7c:6689:13fd]) by MW5PR11MB5787.namprd11.prod.outlook.com
- ([fe80::9b79:ed7c:6689:13fd%6]) with mapi id 15.20.7316.018; Thu, 22 Feb 2024
- 07:03:51 +0000
-From: "Wu, Wentong" <wentong.wu@intel.com>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, "srinivas.kandagatla@linaro.org"
-	<srinivas.kandagatla@linaro.org>
-CC: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: RE: [PATCH v1 00/16] Add missing features to FastRPC driver
-Thread-Topic: [PATCH v1 00/16] Add missing features to FastRPC driver
-Thread-Index: AQHaVaLTQb0BbylwmECnc+VpaWctyrEWDpxA
-Date: Thu, 22 Feb 2024 07:03:51 +0000
-Message-ID: <MW5PR11MB5787AB2459CBFB0DF1E43BF58D562@MW5PR11MB5787.namprd11.prod.outlook.com>
-References: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
-In-Reply-To: <20240202064039.15505-1-quic_ekangupt@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW5PR11MB5787:EE_|MN0PR11MB5962:EE_
-x-ms-office365-filtering-correlation-id: 0e8e83cc-e7f4-4dcc-02da-08dc33746cb6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: QvU3vzlUKAma4vh0GdsabfR4FjTIkzmkXS0+3eOW3PT/mscjaegg2PMnWX5xcp4iFfFFnprN7YEOQBUcswz7Sif7G+O2uKI0rVvCkb+C1mnC9oN4GALG7TXYyicYBg+nmaYauRVrn55c1AZ01YA1pVfD7kIGb/udx9cCI1m4f3k1LjYDOqv0XFCgPsljHGSz2UKEtOqn5aUs0PsMFAzVnn+0UUe5DGtCnPyLcdDx+WlGKRTGVBsd2rMhA4RGTPKoYrHdlZ3Lw/4xCC7n904u17Ehb0J2Fi2NV9VbJvWMt/YfzfFf7hJD0UtSBUbVmGEFE8L4Qb4VOV2JEWfe4FPtohpPfead29xW85IXiPzR1ajhb4qvwwmgEZMuA35tfXFBhekZKGYSiz//bOFSzQQlwJd/TJIoG+NiaDm6WovtAcPhz3mI4nf+hO2dq1r1+Z7LLU9dXbGsmOAu3HGFPWfF/txb+0io/A8ngv25oUKwLiYOGX9CQDRyp7adi7J+Mby+cUTqA4yunmLmg28Uws5TWP7QA4AnxD4FapCy5BSio1or0f/hjCLp/B7kju3cRb5HlFJJrzfFWpo8KigIcgMDP/w8OQZLvAv7l2KcPO/QBbDJO08TqCjOMohyHehYptsJ
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW5PR11MB5787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?4o8BbvP+bE3eB3AKY7uyVq2iVJlHYShCQJCnV7qZARsqjvev6IyAdZQn8FQ7?=
- =?us-ascii?Q?SmLF2/CJonfKvqqv1zN+2RXzbnKiUeAHamcnGAAG3mIMQgdZds4vq5w7jZPx?=
- =?us-ascii?Q?ZbY3YSeZLt5Xt2XP069vHaRSkqyyh5manX8t/WMKWDUxSyhgeVePk4hTXcVW?=
- =?us-ascii?Q?BsTUa21qoIppXw7zOFlkhKmrwXQC/cT1nGW/SivCDjQB9M3TXcdeO/kWANO0?=
- =?us-ascii?Q?iM5SCcPA2oJIF2DE2avgQCHEY/MeggGPb95bJhHXQiSZk+DvljX48aSDvDPE?=
- =?us-ascii?Q?hbAZkBJSqB07h/0V7cAGtu7CDGTXBqpKsdRptuUYPOy2Luc5t1Qeg4jSWOqd?=
- =?us-ascii?Q?G1c2PmZT5zQfVWnVrPPMf1n9GEzk9nVK5bi2fAFzHibnhzqeXxRgwPFf50tp?=
- =?us-ascii?Q?3VQT2+Y0W5RerITKvqaILoH4UBrGr8sj/B1gWERVBFaT+2V7QZx0VGnghy1m?=
- =?us-ascii?Q?96CgeWaRsCtRYuzLMvzBrERJqwalmbqoVJhqR2qKfXPRBNKween2Ech1iFQV?=
- =?us-ascii?Q?r4BLUpSmpF0jpCVkhhQn8yXk1XmW2zsJpkZcK9Q8kj5jrlQu5VvFO9ZS8NCe?=
- =?us-ascii?Q?t4Bbs8DuG3fYamw3N4Qu2t/6/63cyRT1IG1vdczoU7V+fqCdhNvR+edbhf5w?=
- =?us-ascii?Q?Xu0BELNetCVFVxnO3c0ckgVzYRHyM0c9VY6gtz5nUtV3s1XtWDtbR89xHhn0?=
- =?us-ascii?Q?GzOoID4TFTJ5D7gwsMwKLnHUP6WeW4S/4btDJn/riUX1iianF3zwcINgX7aD?=
- =?us-ascii?Q?M55cIOJYpC9xo/60jhIt9Gf9S7Y3aMWJDZUbV1cGIDYtRjlYF7g4N3n6Dlou?=
- =?us-ascii?Q?mv+m5Ceo8ZzVwMqepCEQwtgGghSOrPKVEnkmHGv4TJ3gOqVAvgv2/8uTYcjj?=
- =?us-ascii?Q?yYtmbvldcaJMQRCGHmH5ViFCeM6bzVVLW4jrs6iaXE2I7lj+eM2LLVxHnxTj?=
- =?us-ascii?Q?fT1paQOlH/ZvLntQvhpa4cCIZ7/U6Q5Ifg+8v89w1Ua/MKB7WFu0hX+DFb1i?=
- =?us-ascii?Q?sPn41MMeU6RNMm+zKEB6e2JCiKeu6z1Y6YX0mjKgrPXg0FROI18O5OsihgpL?=
- =?us-ascii?Q?8f5ul7MIKFAvdzbxyUr8oWdoiGLF7azPUf8ptSVNq9gePe6EduspaqFEZ/fM?=
- =?us-ascii?Q?Ak+ca9P7IUSwkoHbdrSrb8kyObNvv+yFgYVOCrRoz5Dwc2xor3gfsUghzZRu?=
- =?us-ascii?Q?3gAaA/xPfIbmElSkgu5NwNFNAj1ds/U7cJtD9LcHJbbSaYr/bc+JNQIBCB4q?=
- =?us-ascii?Q?slnW/6YZdQ/Ouc4z9waHwZ2NhmY9R3Dz1RalD2P9g1BvA5BaZMWthwQomNKe?=
- =?us-ascii?Q?U3GsfDUwkSO3Yi8Ele4ApkTQk/jq2XoN4u0QeQpYWTvmpkCeryU0ZMi9qqh0?=
- =?us-ascii?Q?a8uopre7xQOZv0H7bNLQGzzV+Pwm2lJnMejeBAoX8d6qScEj6QupDjVtNMAD?=
- =?us-ascii?Q?RAYEPb5K2SARs5BUmLC/lDHEO2v+TgqASNVmWw3syZsiMzurU8NS1TX8xTw0?=
- =?us-ascii?Q?rXzVw77zpNvx5clhJgvE/g3FTc/TsVIoSBKdbxC3HqGES2EzI+0mLlHJDSle?=
- =?us-ascii?Q?NYhEx9ebDAvlc5L+I3NIaxORxtS4UYzPxb5pQVxp?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2311CBC;
+	Thu, 22 Feb 2024 07:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708588133; cv=none; b=R0GrY/qO2tRyjcfTBf+5oQqbGh3BbexG0O0vjmtC829w9CpfUEwGliF1SXf4ej7R5Y95hG2jnhDoBLwJc32m+DUgNriaW4RXuUfmNunWuyQNmUetOL3VBcGX6Wr0LprPXKVt7c9Vjy8Hk1EF1wNuC3XjwO6j0FC4tIOrz04ptgE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708588133; c=relaxed/simple;
+	bh=8KSbFOTKvnmtiBvPf5gWoGvyX7fsCaZvv7zdHfKgQOI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NRW2o5vcHbh4qStXKdFytWU4bqMM43IZJ98F2YzugHx9xZBYwS0pmO9sD7i7nYN/OhHOj4T1RqIRqw/2Ahn9b5ZIwpMUPLY+y5hYFCOVDiNWUCxwpxmtcSy/4uprpgWxCYuOVpRuNgU8rOU8fqc1EysQwcSX6nByTEiaJ2872zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bIkAmb3D; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41M3kI7X011318;
+	Thu, 22 Feb 2024 07:48:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=psqBUKQGbSXbbAVz6siNfbT5CXvozy5U7okkg1Pdo+U=; b=bI
+	kAmb3DoGAkSsJ/hHT6Udv8/yp0Ek0VtrvE99Jya7DTOIY4kv35ENxk+HZcAjTXlH
+	dkiV92pNGvT3yGsxXKNEeRDOIqs8Hc61ovtCQcsS6SSWvdsjzb4jrYwIUL8q6nQu
+	1WTpmRz2oQPh+paNQbuYVMwcjU50MexPsBF9NnV4AXNZMhI3wslfIKAywW1VFQ1s
+	moH8lN5c/CpipQ4LzCILjEGutnj+5wG2AtXPG8RHHwRhp4FVVmLQOpwJHWPFI2T1
+	jB8d5AaLRl28/69/ks3zppSRN0fAsiCrcNODH/H0gF3t1EJYiWlbRsQ08AYWdSXU
+	ugC2N4ALn/PyiSBAI5BA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdckvb1jf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Feb 2024 07:48:48 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41M7mlWk029379
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Feb 2024 07:48:47 GMT
+Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
+ 2024 23:48:46 -0800
+Message-ID: <77f6bbf6-add1-4f3b-9c10-5292e032c758@quicinc.com>
+Date: Thu, 22 Feb 2024 15:48:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW5PR11MB5787.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0e8e83cc-e7f4-4dcc-02da-08dc33746cb6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Feb 2024 07:03:51.2463
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IWVNXDXW4hpgXeRJeFCG8jBWO2/15fGKh+LRMopKOLpR3SXsqknp9nbGKjFLF0fiG3BOT8BU0JI0WFMaRN+kHQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB5962
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] net: qrtr: support suspend/hibernation
+Content-Language: en-US
+To: Jeff Johnson <quic_jjohnson@quicinc.com>, <ath11k@lists.infradead.org>,
+        <mhi@lists.linux.dev>
+CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20240221030026.10553-1-quic_bqiang@quicinc.com>
+ <20240221030026.10553-3-quic_bqiang@quicinc.com>
+ <dc54be43-e27f-4b5b-9b84-cf0856370abf@quicinc.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <dc54be43-e27f-4b5b-9b84-cf0856370abf@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: khza-GBEbGNQoETOuHopejsYeNiKfW8u
+X-Proofpoint-ORIG-GUID: khza-GBEbGNQoETOuHopejsYeNiKfW8u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_05,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402220061
 
-> From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> This patch series adds the listed features that have been missing in
-> upstream fastRPC driver.
 
-Thanks for the patch, and is there any latency data on driver side?
 
-BR,
-Wentong
->=20
-> - Redesign and improve remote heap management.
-> - Add static PD restart support for audio and sensors PD using
->   PDR framework.
-> - Add changes to support multimode invocation ioctl request. This
->   ioctl call facilitates multiple types of requests from user including
->   CRC check, performance counters, shared context bank usage, etc.
->   This series also carries patch to save and restore interrupted
->   context.
-> - Add early wakeup support to allow DSP user to send early response
->   to CPU and improve fastrpc performance.
-> - Add polling mode support with which driver polls on memory to avoid
->   CPU from going to low power modes.
-> - Add notifications frameworks to provide users with the DSP PD status
->   notifications.
-> - Add a control mechanism to allow users to clean up DSP user PD
-> - Add wakelock management support
-> - Add DSP signalling support
-> - Add check for untrusted applications and allow trusted processed to
->   offload to system unsigned PD.
->=20
-> Ekansh Gupta (16):
->   misc: fastrpc: Redesign remote heap management
->   misc: fastrpc: Add support for unsigned PD
->   misc: fastrpc: Add static PD restart support
->   misc: fastrpc: Add fastrpc multimode invoke request support
->   misc: fastrpc: Add CRC support for remote buffers
->   misc: fastrpc: Capture kernel and DSP performance counters
->   misc: fastrpc: Add support to save and restore interrupted
->   misc: fastrpc: Add support to allocate shared context bank
->   misc: fastrpc: Add early wakeup support for fastRPC driver
->   misc: fastrpc: Add polling mode support for fastRPC driver
->   misc: fastrpc: Add DSP PD notification support
->   misc: fastrpc: Add support for users to clean up DSP user PD
->   misc: fastrpc: Add wakelock management support
->   misc: fastrpc: Add DSP signal support
->   misc: fastrpc: Restrict untrusted apk to spawn privileged PD
->   misc: fastrpc: Add system unsigned PD support
->=20
->  drivers/misc/fastrpc.c      | 1949 +++++++++++++++++++++++++++++++----
->  include/uapi/misc/fastrpc.h |  112 ++
->  2 files changed, 1844 insertions(+), 217 deletions(-)
->=20
-> --
-> 2.17.0
->=20
+On 2/22/2024 2:24 AM, Jeff Johnson wrote:
+> On 2/20/2024 7:00 PM, Baochen Qiang wrote:
+>> MHI devices may not be destroyed during suspend/hibernation, so need
+>> to unprepare/prepare MHI channels throughout the transition.
+>>
+>> The RFC version adds new API to MHI stack with which an MHI controller
+>> driver can do unprepare/prepare directly by itself, see
+>>
+>> https://patchwork.kernel.org/project/linux-wireless/patch/20231127162022.518834-3-kvalo@kernel.org/
+>>
+>> Although it works well Mani pointed out that the design is not good
+>> because MHI channels are managed by MHI client driver thus should not
+>> be touched by others. See the discussion
+>>
+>> https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+>>
+>> This version changes to add suspend/resume callbacks to achieve the
+>> same purpose. The suspend callback is called in the late suspend stage,
+>> this means MHI channels are still alive at suspend stage, and that makes
+>> it possible for an MHI controller driver to communicate with others over
+>> those channels at suspend stage. While the resume callback is called in
+>> the early resume stage, for a similar reason.
+>>
+>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+>>
+>> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+>> ---
+>>   net/qrtr/mhi.c | 29 +++++++++++++++++++++++++++++
+>>   1 file changed, 29 insertions(+)
+>>
+>> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+>> index 9ced13c0627a..b54a6c2113e9 100644
+>> --- a/net/qrtr/mhi.c
+>> +++ b/net/qrtr/mhi.c
+>> @@ -118,6 +118,32 @@ static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
+>>   };
+>>   MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
+>>   
+>> +static int qcom_mhi_qrtr_pm_suspend_late(struct device *dev)
+> 
+> Don't your new functions also need to be annotated as __maybe_unused?
+OK, will add __maybe_unused in next version.
+
+> 
+>> +{
+>> +	struct mhi_device *mhi_dev = container_of(dev, struct mhi_device, dev);
+>> +
+>> +	mhi_unprepare_from_transfer(mhi_dev);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int qcom_mhi_qrtr_pm_resume_early(struct device *dev)
+>> +{
+>> +	struct mhi_device *mhi_dev = container_of(dev, struct mhi_device, dev);
+>> +	int rc;
+>> +
+>> +	rc = mhi_prepare_for_transfer_autoqueue(mhi_dev);
+>> +	if (rc)
+>> +		dev_err(dev, "failed to prepare for autoqueue transfer %d\n", rc);
+>> +
+>> +	return rc;
+>> +}
+>> +
+>> +static const struct dev_pm_ops __maybe_unused qcom_mhi_qrtr_pm_ops = {
+> 
+> this does not need to be __maybe_unused, see below
+> 
+>> +	SET_LATE_SYSTEM_SLEEP_PM_OPS(qcom_mhi_qrtr_pm_suspend_late,
+>> +				     qcom_mhi_qrtr_pm_resume_early)
+>> +};
+>> +
+>>   static struct mhi_driver qcom_mhi_qrtr_driver = {
+>>   	.probe = qcom_mhi_qrtr_probe,
+>>   	.remove = qcom_mhi_qrtr_remove,
+>> @@ -126,6 +152,9 @@ static struct mhi_driver qcom_mhi_qrtr_driver = {
+>>   	.id_table = qcom_mhi_qrtr_id_table,
+>>   	.driver = {
+>>   		.name = "qcom_mhi_qrtr",
+>> +#ifdef CONFIG_PM
+> 
+> conditional compilation isn't necessary here since the 'pm' member is
+> always present
+Sure, will remove that in next version.
+
+> 
+>> +		.pm = &qcom_mhi_qrtr_pm_ops,
+>> +#endif
+>>   	},
+>>   };
+>>   
+> 
 
