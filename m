@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-12209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06E4885FF1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 18:18:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ADAE85FF20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 18:18:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1506287C79
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:18:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BDA781F2C925
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:18:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCED9158D6C;
-	Thu, 22 Feb 2024 17:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ECEA158D92;
+	Thu, 22 Feb 2024 17:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PudsjMuV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w5FaFJCO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648D5157E9D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 17:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080011586F6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 17:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708622237; cv=none; b=qYRBXcrEgj/qjlwS+r/4m44XbJTrx4NPNReGfrhKlYQCky/jSBRJ465AfwA1D4MYaNLNi9zS2H0EYjNPiKWV24qVxHFfXiFHtnsFnHzggCVyD5r360F1nxJrTWUECYtY4RITLEP5oNCzhwMdqTwnAuNuW44NmESam2QGiW6DQnQ=
+	t=1708622239; cv=none; b=kHGJLAzuddwjvf0/9ABCv8DKhr+EOo3GyM6axBaz8oQSVlekLIrlYSrHZa/LxBAV6fdH4GA8QvSE7wjgpwOnu9IVYdMDYduBXau5tdxBeXUjZW4OWEumAIVaCCJlAZBUVsbeypvUoY63e6HoVBeFm1U6r0wPAq4eoLlN9ymysfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708622237; c=relaxed/simple;
-	bh=UqVawexoXcAUNjwQgThum7xtct1LHK27SiESG7oajqc=;
+	s=arc-20240116; t=1708622239; c=relaxed/simple;
+	bh=4o1+/xiccn6IbZFyFdK5VsobG9GOTyhsglvL8I9FFnU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D0w+rCvYFekUOLIG/RyEbXlulgwzleS+wqfg2lLsl355GGFqZVFY2a6MUV5KvcMboGKcQMA3rZBzeEF+LXNcOvgLB+EevWg+SM571I9Ql7v6WsG8nISCeLrzJWZ1oMvAAnERS+Awl2DB5lm4qZPalkE8Q2URnK9Aqfh3LH/5mS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PudsjMuV; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:To:Cc; b=qEI9to2Y586qP4GR4X4tfByDPpLqU95+okLwBgJC/LesXkeNU8k20RLXrPdg90E8rXT/jQUkP6AVwkR9ohF48WcRwrdHXBFhzuNVDAmprUwSOw81y/UBjtsmZCCr4oMSSh5p3KoxqG013adkWoSkfWQ3hVbFG83G+xEpS4p5DpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w5FaFJCO; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4128d15ae56so4511315e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 09:17:15 -0800 (PST)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-41272d42207so19720835e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 09:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708622234; x=1709227034; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708622235; x=1709227035; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MXl97YK3+0rCThc5an+WREKX5C7QOu/wAYiVjW1hlOk=;
-        b=PudsjMuVpEbyX8N47ZXyITQdzqq5N/f+vP3x+GLq0EGI/H+HWldB04JRiSlyOsi4tE
-         /ds1RKvD9Pm/KUT23exLAow7DGWarVtzpz/Wst8dmiGOimF9W9a5gzvS9e0BQHWy1M37
-         mVBQT00ZtIEq4jGaO8r/Q0zn4O7fxZ1LvhvZYUqSuM1CG9KvqkIzKhDuYx7nLlt2F88v
-         rNU/F3wjDMxAB3tfEzkXwjEWooHsFypQeS0KMx4dR/UbEaRI0wYVN2mmRkzJUBiTtIaC
-         rpsuZnKNTsaKcc3Lq/Ec8eKRIdJLcxfS1O9sPRYAtqOceWapQgQM0rBszqVJwxMHJfUa
-         3HCA==
+        bh=MvlvisPT5Ben13N2VpV4ugUj5QGv6luxiD0ao9BxeLo=;
+        b=w5FaFJCO9D3RAF9eLMmVH3O+Yto/r9JtGBF+hRwr4fn6LD0Ga9YcnM4c5OIy/ZsU8B
+         0Ikzg1yHEe6uLBX/p/EXm8Njv4sWlT6baWKiDSZuOlLUUpvAXjYsyo99OszN9HRvZoHc
+         VuNih3CzpHGcn5SV+gQtO2kG+ghLssrYcvm9tgRRvCyLJyipvSUl2zHPyD0qimO5kVPw
+         +m4Poay8z1kKhaUM0Ii4XjfkTu2Bao13C4gLVoCyZnRKUI1uDBLmIVoiSbF43s8DLZyc
+         qVYaC2/XsLMU4ZM5Pn3cP61aWAOR8Ek05PfQBk+XqM61Ep3RG6m62GEOlItDu9gynIcX
+         l1aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708622234; x=1709227034;
+        d=1e100.net; s=20230601; t=1708622235; x=1709227035;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MXl97YK3+0rCThc5an+WREKX5C7QOu/wAYiVjW1hlOk=;
-        b=HDqnUqAYljXfQDJp2iwof8GELc+WjGU3HfsIZDY3/qVRCigzKn6MPYo1nS3JE8lvPu
-         xzR4gBliPrl/ue6hx47lr50EIiNuxSpmf6rT8vbaKxMyiaqb4tzKOYd9VCTc+YVed7rg
-         Gr/f/4t6dsM8qyBp6v2CnQ8L/c7TMvPF9yZgbrnMNccbujBW5+MJZwIwGxlckEJcCg6U
-         S5YOClKLq1XrO44Jyv+Pkp9sDyDPgLltUWNmb8g+EgqrFmze5PlAzvJmYyBYlfSdbEy0
-         RUqd+7CSqRUR+XdmF2OOIFBmqqRPnS0+j/ytJLg/kZHDgERbuHgBOluqFfQFV/g/jGPF
-         bFbQ==
-X-Gm-Message-State: AOJu0Yx4q4+i5f6vrkfZYBnT9XdGagP/bN5g+WQSN9wKZlafw1WdlWMG
-	ccdoGdu7XDRrjkKwhVzC7GM0wvuasmVUL54991avkb/OhN/A0wIs1qr1LAmmBaQ=
-X-Google-Smtp-Source: AGHT+IEbWME5JZZSPL/evAFLw0AcaVWXfZvcRXo8iGg5J7VZ7izp0ZxzS2rcZNN5Q1ndOdIwDLiAUw==
-X-Received: by 2002:a05:600c:4503:b0:411:ae8e:5945 with SMTP id t3-20020a05600c450300b00411ae8e5945mr15360251wmo.36.1708622233882;
-        Thu, 22 Feb 2024 09:17:13 -0800 (PST)
+        bh=MvlvisPT5Ben13N2VpV4ugUj5QGv6luxiD0ao9BxeLo=;
+        b=AP4YGDdIhY1uY882MIpck2zjiRLubwRA/L6GT408QFur4klxX6RCZxkLwV9bKxRGO1
+         k0CX/beaGRNir1Xjfz9UdbhDOd7TsKIiCoitace7y5d7DqlMHgapdSRUZ1MyI8pw80D6
+         cxN3pEYjqP42CU8BUnS2Or4kYyumQw9SAwDCYHXFagdGBkZsTG+wAmyY52oBcv7f8yO4
+         bmm9R6eEyXZdSl/3uO8QvOvE89Q3T9WzyYBJboyoPq+v0ZN6FeDpKy3KbKwm/4Rnes+E
+         PBJOc9QInkwzT5UM9wa2RJwKVCeBTefSIvasp5gyHvzOcrV9LNVCZSjKNpcGa83uwHf0
+         PzjA==
+X-Gm-Message-State: AOJu0Yw5yH7/ZLXiRPr6wJZeFuIaI15vXFwPXvaJdlp6qyoMn7xrLQe9
+	PHXlA1/ZW1pjY60tkbnqMHv0MCvr0unve6JfNUTKK9ABtj46hHyQkhCf9dFhLCY=
+X-Google-Smtp-Source: AGHT+IFh0J92vILaksmRT7F3B/QT/Hprse3K5+Rx3tOAYoCDqO3ED1yTgMeYAb00DS3QuDi++fmveA==
+X-Received: by 2002:a05:600c:a386:b0:411:ee70:ed5c with SMTP id hn6-20020a05600ca38600b00411ee70ed5cmr16596123wmb.12.1708622235258;
+        Thu, 22 Feb 2024 09:17:15 -0800 (PST)
 Received: from [127.0.1.1] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id u7-20020a7bc047000000b0040fe4b733f4sm6656512wmc.26.2024.02.22.09.17.12
+        by smtp.gmail.com with ESMTPSA id u7-20020a7bc047000000b0040fe4b733f4sm6656512wmc.26.2024.02.22.09.17.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Feb 2024 09:17:13 -0800 (PST)
+        Thu, 22 Feb 2024 09:17:14 -0800 (PST)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Thu, 22 Feb 2024 17:17:03 +0000
-Subject: [PATCH v6 5/6] media: qcom: camss: Add sc8280xp support
+Date: Thu, 22 Feb 2024 17:17:04 +0000
+Subject: [PATCH v6 6/6] media: qcom: camss: vfe-17x: Rename camss-vfe-170
+ to camss-vfe-17x
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240222-b4-camss-sc8280xp-v6-5-0e0e6a2f8962@linaro.org>
+Message-Id: <20240222-b4-camss-sc8280xp-v6-6-0e0e6a2f8962@linaro.org>
 References: <20240222-b4-camss-sc8280xp-v6-0-0e0e6a2f8962@linaro.org>
 In-Reply-To: <20240222-b4-camss-sc8280xp-v6-0-0e0e6a2f8962@linaro.org>
 To: hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com, 
@@ -94,151 +95,36 @@ Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.13-dev-4e032
 
-Add in functional logic throughout the code to support the sc8280xp.
+vfe-170 and vfe-175 can be supported in the same file with some minimal
+indirection to differentiate between the silicon versions.
+
+sdm845 uses vfe-170, sc8280xp uses vfe-175-200. Lets rename the file to
+capture its wider scope than vfe-170 only.
 
 Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 23 +++++++++++++++++---
- drivers/media/platform/qcom/camss/camss-csiphy.c   |  1 +
- drivers/media/platform/qcom/camss/camss-vfe.c      | 25 +++++++++++++++++-----
- drivers/media/platform/qcom/camss/camss-video.c    |  1 +
- 4 files changed, 42 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/camss/Makefile                             | 2 +-
+ drivers/media/platform/qcom/camss/{camss-vfe-170.c => camss-vfe-17x.c} | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-index 66ff48aeab64..df7e93a5a4f6 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-@@ -513,6 +513,10 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
- 		r = &lane_regs_sm8250[0][0];
- 		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
- 		break;
-+	case CAMSS_8280XP:
-+		r = &lane_regs_sc8280xp[0][0];
-+		array_size = ARRAY_SIZE(lane_regs_sc8280xp[0]);
-+		break;
- 	default:
- 		WARN(1, "unknown cspi version\n");
- 		return;
-@@ -548,13 +552,26 @@ static u8 csiphy_get_lane_mask(struct csiphy_lanes_cfg *lane_cfg)
- 	return lane_mask;
- }
- 
-+static bool csiphy_is_gen2(u32 version)
-+{
-+	bool ret = false;
-+
-+	switch (version) {
-+	case CAMSS_845:
-+	case CAMSS_8250:
-+	case CAMSS_8280XP:
-+		ret = true;
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
- static void csiphy_lanes_enable(struct csiphy_device *csiphy,
- 				struct csiphy_config *cfg,
- 				s64 link_freq, u8 lane_mask)
- {
- 	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
--	bool is_gen2 = (csiphy->camss->res->version == CAMSS_845 ||
--			csiphy->camss->res->version == CAMSS_8250);
- 	u8 settle_cnt;
- 	u8 val;
- 	int i;
-@@ -576,7 +593,7 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
- 	val = 0x00;
- 	writel_relaxed(val, csiphy->base + CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(0));
- 
--	if (is_gen2)
-+	if (csiphy_is_gen2(csiphy->camss->res->version))
- 		csiphy_gen2_config_lanes(csiphy, settle_cnt);
- 	else
- 		csiphy_gen1_config_lanes(csiphy, cfg, settle_cnt);
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 264c99efeae8..45b3a8e5dea4 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -578,6 +578,7 @@ int msm_csiphy_subdev_init(struct camss *camss,
- 		break;
- 	case CAMSS_845:
- 	case CAMSS_8250:
-+	case CAMSS_8280XP:
- 		csiphy->formats = csiphy_formats_sdm845;
- 		csiphy->nformats = ARRAY_SIZE(csiphy_formats_sdm845);
- 		break;
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 2062be668f49..d875237cf244 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -225,6 +225,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
- 	case CAMSS_660:
- 	case CAMSS_845:
- 	case CAMSS_8250:
-+	case CAMSS_8280XP:
- 		switch (sink_code) {
- 		case MEDIA_BUS_FMT_YUYV8_1X16:
- 		{
-@@ -1518,6 +1519,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 			break;
- 		case CAMSS_845:
- 		case CAMSS_8250:
-+		case CAMSS_8280XP:
- 			l->formats = formats_rdi_845;
- 			l->nformats = ARRAY_SIZE(formats_rdi_845);
- 			break;
-@@ -1595,6 +1597,23 @@ static const struct media_entity_operations vfe_media_ops = {
- 	.link_validate = v4l2_subdev_link_validate,
- };
- 
-+static int vfe_bpl_align(struct vfe_device *vfe)
-+{
-+	int ret = 8;
-+
-+	switch (vfe->camss->res->version) {
-+	case CAMSS_845:
-+	case CAMSS_8250:
-+	case CAMSS_8280XP:
-+		ret = 16;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
- /*
-  * msm_vfe_register_entities - Register subdev node for VFE module
-  * @vfe: VFE device
-@@ -1661,11 +1680,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
- 		}
- 
- 		video_out->ops = &vfe->video_ops;
--		if (vfe->camss->res->version == CAMSS_845 ||
--		    vfe->camss->res->version == CAMSS_8250)
--			video_out->bpl_alignment = 16;
--		else
--			video_out->bpl_alignment = 8;
-+		video_out->bpl_alignment = vfe_bpl_align(vfe);
- 		video_out->line_based = 0;
- 		if (i == VFE_LINE_PIX) {
- 			video_out->bpl_alignment = 16;
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index a89da5ef4710..54cd82f74115 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -1028,6 +1028,7 @@ int msm_video_register(struct camss_video *video, struct v4l2_device *v4l2_dev,
- 		break;
- 	case CAMSS_845:
- 	case CAMSS_8250:
-+	case CAMSS_8280XP:
- 		video->formats = formats_rdi_845;
- 		video->nformats = ARRAY_SIZE(formats_rdi_845);
- 		break;
+diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+index 4e2222358973..0d4389ab312d 100644
+--- a/drivers/media/platform/qcom/camss/Makefile
++++ b/drivers/media/platform/qcom/camss/Makefile
+@@ -14,7 +14,7 @@ qcom-camss-objs += \
+ 		camss-vfe-4-1.o \
+ 		camss-vfe-4-7.o \
+ 		camss-vfe-4-8.o \
+-		camss-vfe-170.o \
++		camss-vfe-17x.o \
+ 		camss-vfe-480.o \
+ 		camss-vfe-gen1.o \
+ 		camss-vfe.o \
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+similarity index 100%
+rename from drivers/media/platform/qcom/camss/camss-vfe-170.c
+rename to drivers/media/platform/qcom/camss/camss-vfe-17x.c
 
 -- 
 2.43.0
