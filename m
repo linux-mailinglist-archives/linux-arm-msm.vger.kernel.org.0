@@ -1,86 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-12135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BEA685F103
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:40:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAFED85F11B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 06:47:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAD1C28442B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:40:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F8B0B237AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 05:47:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A858412B7E;
-	Thu, 22 Feb 2024 05:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E005112B81;
+	Thu, 22 Feb 2024 05:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yA3a6G4Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ul/ppe0Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A821779FE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D96210942
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 05:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708580408; cv=none; b=UkAkkqU69BPKxSztacuep2PycGrTXp3d7JQuhFvkCBrpgIHK2gUbg/JJ2KvVa7K5PJb3Fcik41Xqb0wFCMZym5zsMyCpKnX5R3wZIuft4pXHdx41X30ksRTIzKdBSkdus8cQNww6cZ1JNqWI7KJV3wUkyD9pitMc3H+mspflkQ0=
+	t=1708580868; cv=none; b=oNPg9vHkve4f1j0KaYSJjOsF7r7m2oOYoxGGuCdgg4y9gbJnpCjJ6lPi758zpXwUKRoP6vhPh+lMHdFZUtMjDWiC0TNb9VaCJqG9DJ6veLVCYpig1BqBLX+4dqw/jEiKv1rsfYrL1JzLhxIIUcUd35is4LXFAg8I1CULJ0zqjZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708580408; c=relaxed/simple;
-	bh=yQg5gh5MmRiYiePzpcNDaEGQQlXwpQVZ5S9UlbGqOKk=;
+	s=arc-20240116; t=1708580868; c=relaxed/simple;
+	bh=qdDEQ/odklpLTC89u2grpARtU2NkpDJ3xSWe0VUu6UY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=czmRSZWVynjPU2qZl9bR9dtLRZNodUvWFyCERp3AEVHT6Qp/UILqhhFuk9VUUB0NhUWxoPHHRDIf0Q9iAfDtELl9feiErl3wQwrMm/r6Q8uqJmmSTuOU29/em2lZQS2dCjzaXZ24dZ/yot8WsCKr3LGHaX2jgbMssebnExPxZWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yA3a6G4Y; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=onLqLip6m0nNNN2Yeraq2N7FJblFzxvBKHks/8i4EwcEROmxWkEyH0+x6V4u0mbU4zOomCLv0X6AmfTxa38rtVp35NHCUafseo3+UVst+HSyZ7RLE9xY438KL4uTfBCc9Ttiw6reeRUQcl/8vDJlImwEb3ob/+FMQr8gofpAxtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ul/ppe0Y; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d73066880eso70674425ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:40:05 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6e457fab0e2so342117b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Feb 2024 21:47:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708580405; x=1709185205; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708580866; x=1709185666; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=3Y9cstFcLJ3tBNiN3xZNH0htetDh7AF1BjirZ0v0JP4=;
-        b=yA3a6G4YY3W2ec4pZWFbuAw3o8YsO/DpZ2v/bxDBVZXjb6RSSNLWbRjCuTBWSjjxEM
-         NyvHIpg3xvN1xo+e+aK7q6SvTF5gmP+L3n9C9rK9DTl7RiGPhjecrrI7cOaaHt8ovH+u
-         yPk7P4y5E/ka7uJVrXEv6qbPkytJrSy0syBAT7GvC8p5AqgVtfVdopE9xAcae3DeY3WB
-         TOZt0F3khXRZZnQTqCZyZnre/ku4PmO2gMhG4oHu3ITmO9tOHYhAJ6ZTYrrB+AO0/QKn
-         RnVYum/M8Bqh/dhKJF17oH6GkQm/lKR2J+IgntYQiwuTQGzzkgP3JDMT6/ZacTRN6tDu
-         YPZg==
+        bh=wSWmeGU/PHEWXrJBkyrdMCv0vQ2HmKobzP0FHV/IZQY=;
+        b=ul/ppe0Ys0tdOppd+Dygcuxs5uzpbBUWoI88prMGpADwiSWfswYtfsgjVQaDbceI3r
+         v6klax3A0mE8EKBNWo/mJ02spHqw21oGB+EqfQmRFlUVKrz5Sb6F+qfXDOG/DBSc8kLK
+         bQk4we4YgxgRXidVT1riMmugMXUNmLoVnvWFhOBd8dJq/ikyb6zoHU4lNNHapD3i9ZUn
+         SknFuzC9Ee5u/Jt1o3SAzJDW3JIw/AaBHKqAeyVB11j186z5jm2ZO4l6ZTaAcQE2edzi
+         mIV4jDEJFa7pGxsGDrz0rQkJNVhZRY73faXzmkyiOuN1Ji4nIYGwWjfpEfuCyXTKWeYs
+         SXgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708580405; x=1709185205;
+        d=1e100.net; s=20230601; t=1708580866; x=1709185666;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Y9cstFcLJ3tBNiN3xZNH0htetDh7AF1BjirZ0v0JP4=;
-        b=n8Pk9CcqzR/yVByyiax8C+G5vWaeXXXVY+/Y3jPI/OSgIUqOzv4sV06hoXrm6RK38M
-         sz3D+cZ2igz8ksERKaas9jKhye6KYn8P1/7O3JhE8ER+u+m1p3RMTy7KyDCDmgDnYj47
-         /SqF8tfhVp90frS2qqY0bsZfZ7uL7QG+7RiVn8ZlJFywwYtj7z0vp0Hr2ssXueqfeKur
-         P+6uGqz3RmzmLiTd1vYjtUGnQd9G5MivOe1aAd1KP8vKbFiR0E/EI/fqsGwIsZJSnp8D
-         7myRwtovwIb2x+jVxZOY1MNdN0mHA/CinHP3AOHhVleOt0rlxy/o5qliJqXL67Qf9ivG
-         xDLA==
-X-Forwarded-Encrypted: i=1; AJvYcCW96b30ONu9WR6b+7qPti/h1kxS3iXTSAkX5Rps5NxjElDE4gYejfnTOjGcoEXmFgBbCR49X5nTJ36zi/VQBO3tTnXAy1aHl5jT4CgNFQ==
-X-Gm-Message-State: AOJu0YxCb/XS1Td3RNsDUW7Mei24b2bPhelD7w+tY4AFTb2TwYc6tnw3
-	GLkjcD23egIGzguFA+VpBYjP9NON73rUpVo0YxNd7qdFSSyu2m+ec5X/gEuifQ==
-X-Google-Smtp-Source: AGHT+IFn4K4spZaFAlnGs4H1E3Uij1heQB4mMHjFctMYMEn7odiUXiBji21giUzbHQ3n3f4SslXQMg==
-X-Received: by 2002:a17:902:c402:b0:1db:28bd:2949 with SMTP id k2-20020a170902c40200b001db28bd2949mr28591618plk.0.1708580405108;
-        Wed, 21 Feb 2024 21:40:05 -0800 (PST)
+        bh=wSWmeGU/PHEWXrJBkyrdMCv0vQ2HmKobzP0FHV/IZQY=;
+        b=cRRG/GT5LoPC37TlFqURNyDz/iKWzbvvIdaLHwEXFSA+RfDZBjqGSOG7k5w4GC88Mb
+         xLYbLSGtJZyG+gwvRUQJlaw1VxMHWS0vWgv3JgNKvtiyuW8vfJID3rOU+yl2+xraMt5F
+         jtxmEQmmrDpxJoNx3jTKQmuntiDiRGTUhhRCr158gfKazIe6PbZ6VfQUpxBvPBzlLYRS
+         qPyK6KAHa0p3z6gxfLly/XKLnzvdvvAnvXuRSzdDhWd0SCpaI7iQL3DjIP7u35WBKBE6
+         26SswAI2bFFJ5OzkuZUm2BIvpCuBLVJcInUpYL/ZZtvxH+a7cqunQs+QiYBZeU+4DKzj
+         weUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdJtPeZZxsJFYav5FpBVMaPuNSi1gdmBVvM1OFlDJVOJW44a+wZ50PQPKZDPWUIPv1fM0d9B3jn8aNajnpDgMhASTQZMDppjWN5lFaUQ==
+X-Gm-Message-State: AOJu0YzlLw750XvpUvaWMudB5btQam/GtZeNwe9VT7EoPsvDV74xT1JP
+	nJVbGqmv8vDuj1HKJjGD/gQ6R8LioVDybilKfZFdgjG5ZweHgmMwvrLBY5uLcQ==
+X-Google-Smtp-Source: AGHT+IHcAZ7rWFCCCCrNCo/vjZ7VNYn7nL2POZRFMS+2IBVvi+pUx8xK0KHdEmv6esp16oSwmLVbuA==
+X-Received: by 2002:a05:6a00:2d0f:b0:6e0:4a19:8da6 with SMTP id fa15-20020a056a002d0f00b006e04a198da6mr2882834pfb.3.1708580866081;
+        Wed, 21 Feb 2024 21:47:46 -0800 (PST)
 Received: from thinkpad ([117.193.212.166])
-        by smtp.gmail.com with ESMTPSA id lf5-20020a170902fb4500b001db43f3629dsm9043678plb.140.2024.02.21.21.40.02
+        by smtp.gmail.com with ESMTPSA id fn16-20020a056a002fd000b006e3dfb2ef4esm8623980pfb.95.2024.02.21.21.47.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 21:40:04 -0800 (PST)
-Date: Thu, 22 Feb 2024 11:09:58 +0530
+        Wed, 21 Feb 2024 21:47:45 -0800 (PST)
+Date: Thu, 22 Feb 2024 11:17:39 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/21] arm64: dts: qcom: sc8280xp: Add PCIe bridge node
-Message-ID: <20240222053958.GF3374@thinkpad>
-References: <20240221-pcie-qcom-bridge-dts-v1-0-6c6df0f9450d@linaro.org>
- <20240221-pcie-qcom-bridge-dts-v1-9-6c6df0f9450d@linaro.org>
- <9d6c617a-bc3a-47c4-a988-b41b804d8cfe@linaro.org>
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Kalle Valo <kvalo@kernel.org>,
+	Linux Wireless <linux-wireless@vger.kernel.org>,
+	ath11k@lists.infradead.org, LKML <linux-kernel@vger.kernel.org>,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org
+Subject: Re: ath11k allocation failure on resume breaking wifi until power
+ cycle
+Message-ID: <20240222054739.GG3374@thinkpad>
+References: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
+ <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,47 +88,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9d6c617a-bc3a-47c4-a988-b41b804d8cfe@linaro.org>
+In-Reply-To: <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
 
-On Wed, Feb 21, 2024 at 01:39:01PM +0100, Konrad Dybcio wrote:
-> On 21.02.2024 04:41, Manivannan Sadhasivam wrote:
-> > On Qcom SoCs, the PCIe host bridge is connected to a single PCIe bridge
-> > for each controller instance. Hence, add a node to represent the bridge.
+On Wed, Feb 21, 2024 at 08:34:23AM -0800, Jeff Johnson wrote:
+> On 2/21/2024 6:39 AM, Vlastimil Babka wrote:
+> > Hi,
 > > 
-> > While at it, let's remove the bridge properties from board dts as they are
-> > now redundant.
+> > starting with 6.8 rc series, I'm experiencing problems on resume from s2idle
+> > on my laptop, which is Lenovo T14s Gen3:
 > > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  8 -----
-> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 40 ++++++++++++++++++++++
-> >  2 files changed, 40 insertions(+), 8 deletions(-)
+> > LENOVO 21CRS0K63K/21CRS0K63K, BIOS R22ET65W (1.35 )
+> > ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+> > ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+> > ath11k_pci 0000:01:00.0: fw_version 0x1106196e fw_build_timestamp 2024-01-12 11:30 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
 > > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > index def3976bd5bb..f0a0115e08fa 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> > @@ -733,14 +733,6 @@ &pcie4 {
-> >  	status = "okay";
-> >  
-> >  	pcie@0 {
-> > -		device_type = "pci";
-> > -		reg = <0x0 0x0 0x0 0x0 0x0>;
-> > -		#address-cells = <3>;
-> > -		#size-cells = <2>;
-> > -		ranges;
-> > -
-> > -		bus-range = <0x01 0xff>;
-> > -
-> >  		wifi@0 {
-> 
-> This doesn't seem right, pleas use a label
-> 
+> > The problem is an allocation failure happening on resume from s2idle. After
+> > that the wifi stops working and even a reboot won't fix it, only a
+> > poweroff/poweron cycle of the laptop.
+> > 
 
-Why? A node label is useful if we want to reference it at the root level in
-board dts, but here it is not.
+Looks like WLAN is powered down during s2idle, which doesn't make sense. I hope
+Jeff will figure out what's going on.
+
+But if you can share the dmesg after enabling the debug prints of both ath11k
+and MHI, it will help a lot.
 
 - Mani
+
+> > This is order 4 (costly order), GFP_NOIO (maybe it's originally GFP_KERNEL
+> > but we restrict to GFP_NOIO during resume) allocation, thus it's impossible
+> > to do memory compaction and the page allocator gives up. Such high-order
+> > allocations should have a fallback using smaller pages, or maybe it could at
+> > least retry once the restricted GFP_NOIO context is gone.
+> > 
+> > I don't know why it never happened before 6.8, didn't spot anything obvious
+> > and it happens too unreliably to go bisect. Any idea?
+> 
+> I've asked the development team to look at this, but in the interim can
+> you apply the two hibernation patchsets to see if those cleanups also
+> fix your problem:
+> 
+> [PATCH 0/5] wifi: ath11k: prepare for hibernation support
+> https://lore.kernel.org/linux-wireless/20240221024725.10057-1-quic_bqiang@quicinc.com
+> 
+> [PATCH 0/3] wifi: ath11k: hibernation support
+> https://lore.kernel.org/linux-wireless/20240221030026.10553-1-quic_bqiang@quicinc.com
 
 -- 
 மணிவண்ணன் சதாசிவம்
