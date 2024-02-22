@@ -1,144 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-12211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41D4A85FF71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 18:32:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B620B85FFDD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 18:43:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F00722818D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:32:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 562401F2894B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 17:43:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F281F155313;
-	Thu, 22 Feb 2024 17:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D721157E72;
+	Thu, 22 Feb 2024 17:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kL2z3nZO"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="BiO1UabS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp35.i.mail.ru (smtp35.i.mail.ru [95.163.41.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C4615696C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 17:32:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F255E155A5D;
+	Thu, 22 Feb 2024 17:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708623149; cv=none; b=LPsBRH8ZwHzLiyo1o1H79DPHRP0dNq13Pz0tUuwx4PoJUXKUW+TLPb/U25cEd0KGC0hchdlryyK2OF13NEzGFs8bfD6fMM3gDnUtBcBAhsj70AAPDXVqQUudVA17CLIdWGwM56S2p+AieBU0wolOuC5s9jmaSsJq/d9R5i/Kwmc=
+	t=1708623786; cv=none; b=nMNH/5TsNEYKHPCIRkwqX0Z5XJIfMOKb2hAWeXQstbOGUXSS55aTKqGmZTAXkg050QBWYP+HwqnOHW7iYEEYXBdY5oh7soEXcrECu/u3LAYLgtJoIcdP6eH9rlexpw8l/1AosFlK76ASLfy3gvMCvuElC7ZYfpM7HcR7gh5VGVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708623149; c=relaxed/simple;
-	bh=XoXX/VGE3vTnIw/F8JWFhSua5GxofxdO60mrbzWRe4U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SfNwdI+MSgGR26cIVTXrtx1iGMUhCxkPUTsnMmjuWC3rDd4z2/80fXYC98TASG14ADkkqNfiLbiBg2qr3GUnlREQLPqGDdfeG6ZkcZ7Q0OKxY0wRnEeANsuQy2q4EdQWaHjmg04L8qQbNPJk0CeYdCJtWXb39O17rhpznunbVU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kL2z3nZO; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6083dc087b3so47190777b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 09:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708623147; x=1709227947; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uHYuztdiqcnoWxT8IYhA0vORd3mYh+h0ETbBCJU2hFs=;
-        b=kL2z3nZOztxBINmjthIYNqVOy3nfyv/QdwJy5XKPUavBawjUiJABSK0rke1Q7dk2OC
-         5xRwENisjn6J61ztzxE5N37C6bKsqFg6x8aDlDUVPBBKkReDoPj1gGjEtCqp+Pw5b43/
-         mTXqPi/lMZ7bZjrLhp0PJzTCjQ9i6809PRR8tRDlnGXPle8q3J2KUetLO69vjGGV60UZ
-         7UpZYS7/R3OFBD+x5eS5seyg30f7WQlTiT42qsJBbzIQgwDFe2BK4THRJqZI51PaUm6x
-         lA23xd5eLA6c0uVSdHs8ZWLptddS+pSNR9cBmfULeT9IlUdmIa9tXnO3q2vZaomGw3C1
-         lE5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708623147; x=1709227947;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uHYuztdiqcnoWxT8IYhA0vORd3mYh+h0ETbBCJU2hFs=;
-        b=idBM43bPBXLeD331Br6C5mnNS5F9b8YllQAfJpr12r9jR/fUtzT5IgjdfYgIDGt/Yh
-         KBhecLfL9wE+7C6A6NQ1UwO9ua9RRaaxoUgyJ8sNe4BLzgO+ZtpqVxhndqgUzDmeqUbs
-         7/5U/vGognSe5slRnUa2D4ZQd/HjCIq4ijYcpNQijp5fChhLR8ilRuNL5gH5mjUsgllh
-         4LZJba6p/+cXTVVsE2bmK0zUTBgyQvJga/5cmOWqaAvNIMXNSK2r9XFM0xvLyTcq3EGW
-         GtqN1gcFL4X1p7lVg1gNhXDe8iNUpSz0MxaZl2e/7d/LuEs6K91D0cbOc8qxQ/dF0PU7
-         vjuw==
-X-Forwarded-Encrypted: i=1; AJvYcCXVL0iY9gMj0fP+XiRBcFTI3HukreXUzY+xwZ80bvVUUHS62A3HOqqc+M9jxy/35KBP+5I08KRsXkndHZrFvosDcF1jbwV5Bhe8kfCL6g==
-X-Gm-Message-State: AOJu0Yz+tNM8+EDpOokBLoC9pSTZlLua3hH0P6+TgiMfz2VNSJEIVNim
-	rF/JvU7JL/UZnKpcJgpAQLLTReNvpesF7Fg16iX5spHkBlWi0/SS0gQUHZve5vGRpiy7ayACWi0
-	f8rBDl5U3TgKtin0v96ChjmB2QN6j4aNvdiOuug==
-X-Google-Smtp-Source: AGHT+IEChpsE7RSvYtvlDilze7tlEfcebE5fWeV9v6TUsqyy6KJBLB0hOKOdzrs9KYPLmaKn2wbmU4LNaaPxNFAv0eU=
-X-Received: by 2002:a81:6c0f:0:b0:608:7488:8691 with SMTP id
- h15-20020a816c0f000000b0060874888691mr6826857ywc.38.1708623147287; Thu, 22
- Feb 2024 09:32:27 -0800 (PST)
+	s=arc-20240116; t=1708623786; c=relaxed/simple;
+	bh=WIVrwDsBbPzNaMTb/dnHv/LOTju4W7kM0gkxzAbBHjE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Kh02kaervwlX/M84H9C1vHgnRa2OxPGNK/VPZtGVGLA/8HQVxTlVOXlkjwt/5tkniIRY6SLxZP5lkNitjQAyDKKd1GyZ3Imsxms/iC2Xxm3bubEL+vI56R2G4yIOoNPBj98jnn/g983/huld2/Cyig8+dvk5Fs/vVlTQ+MztneM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=BiO1UabS; arc=none smtp.client-ip=95.163.41.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=1TenuOkcG5evzoXACnxDUOLvNvTUV6mwDyHgHdTFX6U=; t=1708623783; x=1708713783; 
+	b=BiO1UabS3WtRHwzHu4jq4ZVGUYECgnHMUVqxYDATusNP3DUuvn+bRnJsyFZ/MDN5Ld9AHWzxFQF
+	Zw2d6ViRaz76hbC5od3dhoRbNAWw1VGREahFUlwP4VKydrpU+lqzj285p4BpkuGXUoyBw0DbRuVyN
+	8BFRUQhLkIzsaGGYEWo=;
+Received: by smtp35.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1rdD5x-0000000BMIH-1gOl; Thu, 22 Feb 2024 20:42:54 +0300
+From: Danila Tikhonov <danila@jiaxyga.com>
+To: andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	djakov@kernel.org,
+	robh@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Danila Tikhonov <danila@jiaxyga.com>
+Subject: [PATCH v2 0/2]  Add interconnect support for SM7150 SoC
+Date: Thu, 22 Feb 2024 20:42:48 +0300
+Message-ID: <20240222174250.80493-1-danila@jiaxyga.com>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
- <20240221-rb3gen2-dp-connector-v1-3-dc0964ef7d96@quicinc.com>
- <CAA8EJpo=9vhM+5YzaFxUoYRuEWQyrMS8wLNPSF3K=bN5JwWyDw@mail.gmail.com>
- <8313a7c3-3ace-4dee-ad27-8f51a06cd58c@linaro.org> <CAA8EJpqFj5nf8d_=Uoup7qg+nQrxqQU-DHbL3uSP138m9AcXLw@mail.gmail.com>
- <8fcb5816-2d59-4e27-ba68-8e0ed6e7d839@linaro.org> <CAA8EJporaUuddHHqpyYHiYSu=toHmrDxSHf9msZUJoym4Nz72g@mail.gmail.com>
- <20240222150423.GI2936378@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20240222150423.GI2936378@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 22 Feb 2024 19:32:15 +0200
-Message-ID: <CAA8EJpqd=1KV_dN8AURQDcFDDyO+YtbC59gM7ftt+HohGM93hg@mail.gmail.com>
-Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Enable MDP turbo mode
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Douglas Anderson <dianders@chromium.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp35.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9A0539DA8B638EEE24480D7EFA423187C2F2D41C068758ED8182A05F5380850404C228DA9ACA6FE275F91DB108F9063E233594132A326AF8B58F75731F803AB97B13BC05B40DCEAA5A7398ABDDC9FB8BB
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE72E2D36A15E1833D8EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063764BF1E09E94CC6278638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8EF89892920D8F9F2E3BE5448EA843F6215E66FA7512B0D92CC7F00164DA146DAFE8445B8C89999728AA50765F7900637A359038F01FFAF82389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC878444BBB7636F62AF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C6A1CB4668A9CA5FAAD7EC71F1DB884274AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3056D5A8E4C6B598EBA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C3CD42BCEBB57B85E635872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C1DE0DAB: 0D63561A33F958A5D26ACACEAAE7E4505002B1117B3ED6969193E638BD89DD93D57BAD45EC4C5DE1823CB91A9FED034534781492E4B8EEADF12279BA039A6965C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFD2B247E9CF04F14960109914BCFAB4729AE3539482CB76B6A0CA6D78E6D66DEADDCE95BB4BF576A60C89D780EEF94DBEEA0DBE6432E8D8EFDEAC876D50C401A62B426FFEA59737B1AF108DC32EA72A8402C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojjw0udeJQYBTEXJUu31OKJw==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981B30287F184E31E97BC5A20191D90C84F23187A5E454F60C90BEC391E8E0905FF2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 
-On Thu, 22 Feb 2024 at 17:04, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Thu, Feb 22, 2024 at 11:46:26AM +0200, Dmitry Baryshkov wrote:
-> > On Thu, 22 Feb 2024 at 11:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> > >
-> > >
-> > >
-> > > On 2/22/24 10:04, Dmitry Baryshkov wrote:
-> > > > On Thu, 22 Feb 2024 at 10:56, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> > > >>
-> > > >>
-> > > >>
-> > > >> On 2/22/24 00:41, Dmitry Baryshkov wrote:
-> > > >>> On Thu, 22 Feb 2024 at 01:19, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> > > >>>>
-> > > >>>> The max frequency listed in the DPU opp-table is 506MHz, this is not
-> > > >>>> sufficient to drive a 4k@60 display, resulting in constant underrun.
-> > > >>>>
-> > > >>>> Add the missing MDP_CLK turbo frequency of 608MHz to the opp-table to
-> > > >>>> fix this.
-> > > >>>
-> > > >>> I think we might want to keep this disabled for ChromeOS devices. Doug?
-> > > >>
-> > > >> ChromeOS devices don't get a special SoC
-> > > >
-> > > > But they have the sc7280-chrome-common.dtsi, which might contain a
-> > > > corresponding /delete-node/ .
-> > >
-> > > What does that change? The clock rates are bound to the
-> > > SoC and the effective values are limited by link-frequencies
-> > > or the panel driver.
-> >
-> > Preventing the DPU from overheating? Or spending too much power?
-> >
->
-> Perhaps I'm misunderstanding the implementation then, are we always
-> running at the max opp? I thought the opp was selected based on the
-> current need for performance?
+Add dtbindings and driver support for the Qualcomm SM7150 SoC.
 
-Yes. My concern was whether the Chrome people purposely skipped this
-top/turbo freq for any reason. In such a case, surprising them by
-adding it to all platforms might be not the best idea. I hope Doug can
-comment here.
+Changes in v2:
+- dt-bindings: Drop "'#interconnect-cells': true"
+- driver: Unwrap qnoc_of_match entities and add a space before the closing
+curly bracket (Konrad)
+- driver: Use core_initcall instead of module_platform_driver (Konrad)
+- Link to v1:
+https://lore.kernel.org/all/20240218183239.85319-1-danila@jiaxyga.com/
 
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Georgi Djakov <djakov@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-pm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+
+Danila Tikhonov (2):
+  dt-bindings: interconnect: Add Qualcomm SM7150 DT bindings
+  interconnect: qcom: Add SM7150 driver support
+
+ .../interconnect/qcom,sm7150-rpmh.yaml        |   84 +
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/sm7150.c            | 1754 +++++++++++++++++
+ drivers/interconnect/qcom/sm7150.h            |  140 ++
+ .../interconnect/qcom,sm7150-rpmh.h           |  150 ++
+ 6 files changed, 2139 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sm7150-rpmh.yaml
+ create mode 100644 drivers/interconnect/qcom/sm7150.c
+ create mode 100644 drivers/interconnect/qcom/sm7150.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sm7150-rpmh.h
 
 -- 
-With best wishes
-Dmitry
+2.43.2
+
 
