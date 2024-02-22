@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-12225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D53D986030C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 20:42:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1F6486030E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 20:42:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AF0E283A3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 19:42:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76C73284457
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Feb 2024 19:42:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFB596AF9D;
-	Thu, 22 Feb 2024 19:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FA0A12D203;
+	Thu, 22 Feb 2024 19:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="abhpW/vk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KLlCBjbe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F546AF8B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 19:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E1E6AF98
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Feb 2024 19:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708630851; cv=none; b=f+L8wLTcu/vXmGJOQeJ9Hs3xq5P7/hTuiGP72dBmV7MjQtoaxW91m0rP41e7YwN2YkVaY9EfAQ2AtNQBgPfMYeBVuRYawllxHdLaSYxq1f5PVcgzBO2R8ygvRvJ/wR/ukhP784O8BCpCzidScoxD9w8sx5ZTA/MJitFmejfCqjk=
+	t=1708630854; cv=none; b=k5tzHHlTcIE6G4PPtwCMUkiSAegHMER4n1q5p/gpUdKR7VjIKNmh3AvZxccgj9+eHLfRBvntKIKmpsY4AYktVWYTWs893CE3A0X/6lO0HzMt3wzPEMjXRrRXTjfc4H2KuYxNp1p6lyRQPyAszO0k3E8LjCIdirLBWcLQgmyV7aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708630851; c=relaxed/simple;
-	bh=e9nmO60E2yHaP0jElU3yrkMQ0wUt+MD63CpYix31CAE=;
+	s=arc-20240116; t=1708630854; c=relaxed/simple;
+	bh=2d1tozlNQB1WaoN0jmpwcCrXu/Y1rBwnzQZNrYHfBE4=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U2floh4jzAK1vYdd2yM033aj+aJlwlMP9iflhkPRWQQItPyDXjoeh5oY9ctuGXGbWThzg+osaM8/9oESVoHNFCPP8mOuzDB4fGw+O92hoeA6mJOOBdIVIcV7eaYYLx3yt7oq+kEpywhKapuCv4+FWZKqIMBGh8X2dTjmsZKySsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=abhpW/vk; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=AIbUFaWkbyEfxtw/yQP7BR7PaVmwWfDg3sqK6moIhZKqhzKU51gUus2ugfw1S+XgWrbtBkfL2O27oaXT51KgENX0Hu3lMoq+6Ta6QXavUioJwnNVX7gR87i74stRog79FrohfwsF9Gl3Gkbg4X5kU0QdA8ktHoZ9ShlhCEOQHNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KLlCBjbe; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41M4wpE0012123;
-	Thu, 22 Feb 2024 19:40:44 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41MGuGrS007692;
+	Thu, 22 Feb 2024 19:40:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
 	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=y0BLfJOKhmKukjBBBxbaYedzwzAqtFVvUi3jaGAotXc=; b=ab
-	hpW/vkvrx3JU8T83HidS5i8k3m1kp6qu0V+KAJZfH805aE4axAygfrDOz7O+PicF
-	Pc2i6INy4UBUtTeRMF72Ib3igl1u8/COHjhwr92N0gXCVnBnDwIjNbao8htJwfhJ
-	QH0JeckcIdtHV+/g80z+fTSSzhSs2QV2H2zyfRiX/SChg5LPOpN6nasVUv70l2eN
-	OUm0KQexf4b1gcOigyPJ4i+ZRkBXZXLb9KQ0t+nYlXnqG74x5QYlFc4JKX1GwuD2
-	MM+bKsrp4DRU8i0goxAV8uuGIITLcAa+dP+sPf8YS9QiVOYs+uqvKJR+DcDZx371
-	qGC/sSKi4w8OSFb4P3uQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdvwwb03q-1
+	qcppdkim1; bh=HBrPW0kAG99W+LVmSwfv3zIvOrDezoOWsbZYjrKsA8I=; b=KL
+	lCBjbeYgLBjoFKDSBWjy3PaFhJjKhwZhvDpeetUs3UH8z17AnNRgAQETmGfPFSd7
+	46x0laK1bGwPXCc5W/KTsSE5qr8u93K/+kw/KSr9VLyFFl+emCEKn7G008Oj1PE1
+	rWvt8TZia9Sh+mZrGW5lvDZTQlAT6mF5cfwqoxNF5ul60IrOYLHjYwevbvcRkNoE
+	wlZds/P+z6AN14JAt7ljU+3B613ZyJUktT+UFy27GhSnhEyAX+VHzhDVXoNLKxgx
+	urlzh3L+hDzHgQQP75+QkLTNjn/M/TGsJjUE7kOmCPKqL1/SqRsQOhpgSWipM7fx
+	QfK7ZfNlrM/xdlI9nkaw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wea7crt6u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 22 Feb 2024 19:40:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MJehji029769
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41MJeitu018300
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Feb 2024 19:40:43 GMT
+	Thu, 22 Feb 2024 19:40:44 GMT
 Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 22 Feb 2024 11:40:42 -0800
+ 15.2.1118.40; Thu, 22 Feb 2024 11:40:43 -0800
 From: Paloma Arellano <quic_parellan@quicinc.com>
 To: <freedreno@lists.freedesktop.org>
 CC: Paloma Arellano <quic_parellan@quicinc.com>,
@@ -64,9 +64,9 @@ CC: Paloma Arellano <quic_parellan@quicinc.com>,
         <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
         <quic_jesszhan@quicinc.com>, <quic_khsieh@quicinc.com>,
         <marijn.suijten@somainline.org>, <neil.armstrong@linaro.org>
-Subject: [PATCH v5 05/19] drm/msm/dpu: move dpu_encoder_helper_phys_setup_cdm to dpu_encoder
-Date: Thu, 22 Feb 2024 11:39:50 -0800
-Message-ID: <20240222194025.25329-6-quic_parellan@quicinc.com>
+Subject: [PATCH v5 06/19] drm/msm/dp: rename wide_bus_en to wide_bus_supported
+Date: Thu, 22 Feb 2024 11:39:51 -0800
+Message-ID: <20240222194025.25329-7-quic_parellan@quicinc.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240222194025.25329-1-quic_parellan@quicinc.com>
 References: <20240222194025.25329-1-quic_parellan@quicinc.com>
@@ -82,235 +82,126 @@ X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HHp0SNigsyBN0JqGl4hoWap2kA-Esez3
-X-Proofpoint-GUID: HHp0SNigsyBN0JqGl4hoWap2kA-Esez3
+X-Proofpoint-ORIG-GUID: XMkZK4TAn-huFyI92QBvTvxs_c8cA3nK
+X-Proofpoint-GUID: XMkZK4TAn-huFyI92QBvTvxs_c8cA3nK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- spamscore=0 impostorscore=0 mlxlogscore=999 clxscore=1015 phishscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2402220154
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402220154
 
-Move dpu_encoder_helper_phys_setup_cdm to dpu_encoder in preparation for
-implementing YUV420 over DP, which requires CDM compatibility.
-
-Changes in v2:
-	- Slightly change the wording of the commit text to make clear
-	  that YUV over DP requires CDM
+Rename wide_bus_en to wide_bus_supported in dp_display_private to
+correctly establish that the parameter is referencing if wide bus is
+supported instead of enabled.
 
 Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 78 +++++++++++++++++
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  9 ++
- .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 83 -------------------
- 3 files changed, 87 insertions(+), 83 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 42 ++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 8932f38a41b2d..1905e8653b77a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2117,6 +2117,84 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 	ctl->ops.clear_pending_flush(ctl);
- }
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index c8e1bbebdffe2..792191f67717f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -114,7 +114,7 @@ struct dp_display_private {
+ 	struct dp_event event_list[DP_EVENT_Q_MAX];
+ 	spinlock_t event_lock;
  
-+void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc,
-+				       const struct dpu_format *dpu_fmt,
-+				       u32 output_type)
-+{
-+	struct dpu_hw_cdm *hw_cdm;
-+	struct dpu_hw_cdm_cfg *cdm_cfg;
-+	struct dpu_hw_pingpong *hw_pp;
-+	int ret;
-+
-+	if (!phys_enc)
-+		return;
-+
-+	cdm_cfg = &phys_enc->cdm_cfg;
-+	hw_pp = phys_enc->hw_pp;
-+	hw_cdm = phys_enc->hw_cdm;
-+
-+	if (!hw_cdm)
-+		return;
-+
-+	if (!DPU_FORMAT_IS_YUV(dpu_fmt)) {
-+		DPU_DEBUG("[enc:%d] cdm_disable fmt:%x\n", DRMID(phys_enc->parent),
-+			  dpu_fmt->base.pixel_format);
-+		if (hw_cdm->ops.bind_pingpong_blk)
-+			hw_cdm->ops.bind_pingpong_blk(hw_cdm, PINGPONG_NONE);
-+
-+		return;
-+	}
-+
-+	memset(cdm_cfg, 0, sizeof(struct dpu_hw_cdm_cfg));
-+
-+	cdm_cfg->output_width = phys_enc->cached_mode.hdisplay;
-+	cdm_cfg->output_height = phys_enc->cached_mode.vdisplay;
-+	cdm_cfg->output_fmt = dpu_fmt;
-+	cdm_cfg->output_type = output_type;
-+	cdm_cfg->output_bit_depth = DPU_FORMAT_IS_DX(dpu_fmt) ?
-+			CDM_CDWN_OUTPUT_10BIT : CDM_CDWN_OUTPUT_8BIT;
-+	cdm_cfg->csc_cfg = &dpu_csc10_rgb2yuv_601l;
-+
-+	/* enable 10 bit logic */
-+	switch (cdm_cfg->output_fmt->chroma_sample) {
-+	case DPU_CHROMA_RGB:
-+		cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
-+		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-+		break;
-+	case DPU_CHROMA_H2V1:
-+		cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
-+		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-+		break;
-+	case DPU_CHROMA_420:
-+		cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
-+		cdm_cfg->v_cdwn_type = CDM_CDWN_OFFSITE;
-+		break;
-+	case DPU_CHROMA_H1V2:
-+	default:
-+		DPU_ERROR("[enc:%d] unsupported chroma sampling type\n",
-+			  DRMID(phys_enc->parent));
-+		cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
-+		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-+		break;
-+	}
-+
-+	DPU_DEBUG("[enc:%d] cdm_enable:%d,%d,%X,%d,%d,%d,%d]\n",
-+		  DRMID(phys_enc->parent), cdm_cfg->output_width,
-+		  cdm_cfg->output_height, cdm_cfg->output_fmt->base.pixel_format,
-+		  cdm_cfg->output_type, cdm_cfg->output_bit_depth,
-+		  cdm_cfg->h_cdwn_type, cdm_cfg->v_cdwn_type);
-+
-+	if (hw_cdm->ops.enable) {
-+		cdm_cfg->pp_id = hw_pp->idx;
-+		ret = hw_cdm->ops.enable(hw_cdm, cdm_cfg);
-+		if (ret < 0) {
-+			DPU_ERROR("[enc:%d] failed to enable CDM; ret:%d\n",
-+				  DRMID(phys_enc->parent), ret);
-+			return;
-+		}
-+	}
-+}
-+
- #ifdef CONFIG_DEBUG_FS
- static int _dpu_encoder_status_show(struct seq_file *s, void *data)
- {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index 204d7cc3c1de8..f43d57d9c74e1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -381,6 +381,15 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
-  */
- void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc);
+-	bool wide_bus_en;
++	bool wide_bus_supported;
  
-+/**
-+ * dpu_encoder_helper_phys_setup_cdm - setup chroma down sampling block
-+ * @phys_enc: Pointer to physical encoder
-+ * @output_type: HDMI/WB
-+ */
-+void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc,
-+				       const struct dpu_format *dpu_fmt,
-+				       u32 output_type);
-+
- /**
-  * dpu_encoder_vblank_callback - Notify virtual encoder of vblank IRQ reception
-  * @drm_enc:    Pointer to drm encoder structure
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 072fc6950e496..32a7a31b667be 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -264,89 +264,6 @@ static void dpu_encoder_phys_wb_setup_ctl(struct dpu_encoder_phys *phys_enc)
+ 	struct dp_audio *audio;
+ };
+@@ -123,7 +123,7 @@ struct msm_dp_desc {
+ 	phys_addr_t io_start;
+ 	unsigned int id;
+ 	unsigned int connector_type;
+-	bool wide_bus_en;
++	bool wide_bus_supported;
+ };
+ 
+ static const struct msm_dp_desc sc7180_dp_descs[] = {
+@@ -132,8 +132,8 @@ static const struct msm_dp_desc sc7180_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sc7280_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -145,22 +145,22 @@ static const struct msm_dp_desc sc8180x_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sc8280xp_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
+-	{ .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
++	{ .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+ static const struct msm_dp_desc sc8280xp_edp_descs[] = {
+-	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
+-	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
+-	{ .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
+-	{ .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
++	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
++	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
++	{ .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
++	{ .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -785,9 +785,9 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+ 		goto error_ctrl;
  	}
+ 
+-	/* populate wide_bus_en to differernt layers */
+-	dp->ctrl->wide_bus_en = dp->wide_bus_en;
+-	dp->catalog->wide_bus_en = dp->wide_bus_en;
++	/* populate wide_bus_supported to different layers */
++	dp->ctrl->wide_bus_en = dp->wide_bus_supported;
++	dp->catalog->wide_bus_en = dp->wide_bus_supported;
+ 
+ 	return rc;
+ 
+@@ -1257,7 +1257,7 @@ static int dp_display_probe(struct platform_device *pdev)
+ 	dp->name = "drm_dp";
+ 	dp->id = desc->id;
+ 	dp->dp_display.connector_type = desc->connector_type;
+-	dp->wide_bus_en = desc->wide_bus_en;
++	dp->wide_bus_supported = desc->wide_bus_supported;
+ 	dp->dp_display.is_edp =
+ 		(dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
+ 
+@@ -1403,7 +1403,7 @@ bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	return dp->wide_bus_en;
++	return dp->wide_bus_supported;
  }
  
--/**
-- * dpu_encoder_helper_phys_setup_cdm - setup chroma down sampling block
-- *                                     This API does not handle DPU_CHROMA_H1V2.
-- * @phys_enc:Pointer to physical encoder
-- */
--static void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc,
--					      const struct dpu_format *dpu_fmt,
--					      u32 output_type)
--{
--	struct dpu_hw_cdm *hw_cdm;
--	struct dpu_hw_cdm_cfg *cdm_cfg;
--	struct dpu_hw_pingpong *hw_pp;
--	int ret;
--
--	if (!phys_enc)
--		return;
--
--	cdm_cfg = &phys_enc->cdm_cfg;
--	hw_pp = phys_enc->hw_pp;
--	hw_cdm = phys_enc->hw_cdm;
--
--	if (!hw_cdm)
--		return;
--
--	if (!DPU_FORMAT_IS_YUV(dpu_fmt)) {
--		DPU_DEBUG("[enc:%d] cdm_disable fmt:%x\n", DRMID(phys_enc->parent),
--			  dpu_fmt->base.pixel_format);
--		if (hw_cdm->ops.bind_pingpong_blk)
--			hw_cdm->ops.bind_pingpong_blk(hw_cdm, PINGPONG_NONE);
--
--		return;
--	}
--
--	memset(cdm_cfg, 0, sizeof(struct dpu_hw_cdm_cfg));
--
--	cdm_cfg->output_width = phys_enc->cached_mode.hdisplay;
--	cdm_cfg->output_height = phys_enc->cached_mode.vdisplay;
--	cdm_cfg->output_fmt = dpu_fmt;
--	cdm_cfg->output_type = output_type;
--	cdm_cfg->output_bit_depth = DPU_FORMAT_IS_DX(dpu_fmt) ?
--			CDM_CDWN_OUTPUT_10BIT : CDM_CDWN_OUTPUT_8BIT;
--	cdm_cfg->csc_cfg = &dpu_csc10_rgb2yuv_601l;
--
--	/* enable 10 bit logic */
--	switch (cdm_cfg->output_fmt->chroma_sample) {
--	case DPU_CHROMA_RGB:
--		cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
--		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
--		break;
--	case DPU_CHROMA_H2V1:
--		cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
--		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
--		break;
--	case DPU_CHROMA_420:
--		cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
--		cdm_cfg->v_cdwn_type = CDM_CDWN_OFFSITE;
--		break;
--	case DPU_CHROMA_H1V2:
--	default:
--		DPU_ERROR("[enc:%d] unsupported chroma sampling type\n",
--			  DRMID(phys_enc->parent));
--		cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
--		cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
--		break;
--	}
--
--	DPU_DEBUG("[enc:%d] cdm_enable:%d,%d,%X,%d,%d,%d,%d]\n",
--		  DRMID(phys_enc->parent), cdm_cfg->output_width,
--		  cdm_cfg->output_height, cdm_cfg->output_fmt->base.pixel_format,
--		  cdm_cfg->output_type, cdm_cfg->output_bit_depth,
--		  cdm_cfg->h_cdwn_type, cdm_cfg->v_cdwn_type);
--
--	if (hw_cdm->ops.enable) {
--		cdm_cfg->pp_id = hw_pp->idx;
--		ret = hw_cdm->ops.enable(hw_cdm, cdm_cfg);
--		if (ret < 0) {
--			DPU_ERROR("[enc:%d] failed to enable CDM; ret:%d\n",
--				  DRMID(phys_enc->parent), ret);
--			return;
--		}
--	}
--}
--
- /**
-  * dpu_encoder_phys_wb_atomic_check - verify and fixup given atomic states
-  * @phys_enc:	Pointer to physical encoder
+ void dp_display_debugfs_init(struct msm_dp *dp_display, struct dentry *root, bool is_edp)
 -- 
 2.39.2
 
