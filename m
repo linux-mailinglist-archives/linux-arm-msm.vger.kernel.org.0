@@ -1,109 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-12394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F26F86171E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 17:09:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F226986178F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 17:19:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B420E1C21693
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:09:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E1E11C20DF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:19:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6C4B1292DF;
-	Fri, 23 Feb 2024 16:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37526128386;
+	Fri, 23 Feb 2024 16:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k+zVQjvr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aCvwFv21"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D05839FB;
-	Fri, 23 Feb 2024 16:08:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10F48663D;
+	Fri, 23 Feb 2024 16:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708704507; cv=none; b=KigkX1yXZm95CoVTyxCcg30eiaEpFgPYFnT8VJ4yVffF2hgwBugcaL/Z7OidrNkWE27acaSXfyVXqOaD/vZGizpcZc9VmvwMhD2lxBNaX7FwvU+qRq4HDFZhx5/GMsiiN7RScpkCLfjUuEH1Z76E7DT4KtSwHhN3nL7s4RI0T2E=
+	t=1708704929; cv=none; b=HXkutJRmhJAxLvYTZ7TqaHDEo+WBm2N0wrt+Y1wkYigpEmmUSO+OUHEsHSDM+lRgygfmnAZ/YJiKYJ91/bsZp9osxCiUhhTwGRqfUcg8tKSqpCTE09ELALjFmH+Hj/CyCyoDxk84oEiWdZ+c4nLqbU2RzhGJsKdZm/hSyQLRdLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708704507; c=relaxed/simple;
-	bh=lgbREh7v0NnG/ICl5sLmpbx22EKj66y9siwDJ5sOCG8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=m5Jw81aKWy/gHtTVM/O2NyeXDnlriK2I++ju0Kpeo/LsOe0/qww8ZGKJg/+e5IIJArmCgj7UOYTuS6eZdW5t/7NL3J49LPaLQCNuUrwREuluA9Hg0YJ1OyY3A7pTfE51qbsNJfWYOQAXUCVrZFV5QpX7xPHja3UrkBcrkyiMow8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k+zVQjvr; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1708704929; c=relaxed/simple;
+	bh=VSra52zqMJWH7KipolICK24PTwHPt/FGUYZKU1aK0UA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kfVHxU9+XMbQX/fFmUYWnkDLOHywMa47VQ/gxoHZx3mbOUT0RDX4KwiHOBT4RDoNdquReB6HeR/4PuZacIuNohSHiXKg0O4a//TTj2LXumSZ1FMlG3+0SpNPE4fT1Qr8AOAgT3qtld8Cf/YNBKKdms5PB1aLI7apYgNWGpBO9mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aCvwFv21; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41NDNanl018265;
-	Fri, 23 Feb 2024 16:08:17 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41NBZXHU008808;
+	Fri, 23 Feb 2024 16:15:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=SccUfYPJX3UO95qLD6HfOHJFsJDW0CMTKEANJbGg3V4=; b=k+
-	zVQjvryPwSZKjaNrcsnhUstJ4UUyKh5p0H3KOJUUlvjxURSmLQJQ7Q+9KZZwxiTL
-	tivnLzLcjkIq80ONJ6IRLx/Xs1rinAt7tQ0Nv3jqRO0oVIw3Ub5NnRcdZ+odbKjh
-	q/7zichH2AR0qQv9c4PWSUKZmqYKDhUsYm+PiqG+xflrCK1hAQdbAqzw4YRL9cZ0
-	cAvlKgKQmrtTg91D72M2L5XilucCwlHv44bc0ysXDoY1DBC9vILz0hgEbzVlD17H
-	FYif6h+ZEIJq2uv5ruSd0AgWV8FK3wSkf1pu/pWw769rc6YonMppmECYT4VHGIZ0
-	SwNJs52uQRkUWuZcL3Gg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wer8ms0m8-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=DX1+LZJ
+	RS0HgO0vf8V4rF3WsGTPxp2gnvPc0W+M9/7Q=; b=aCvwFv21jYCnMLKfJkpZT8V
+	1T1AcJhnDzG6/Ph+Omk0+umEH6Pqsb07eyAtm6grFWgwfAXf0XxtozQ70n2b0ygg
+	mimuBeQkEFnisjDFx4vy7PxooHmwoMiilo5Pj/kmQZlP34Cp2enlkhLX1ifHlxHk
+	uZba0knevGup9dagsPNEsf1JvsOul9HXLN3AVXHQRKgoR/x8gU//J7eHX4XQeRC3
+	PXtWOVt93gWyO3f+q4aKnOxW+gX3WXAd6MnWPmmwA8PqQ7+BNDtrVvPaS0m0o+xN
+	kytN0ZEKaCfln9/n2NwQH2At5Ejm+JStCi92uZsJj99cfww/iDpGe4gi4nm7jIw=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3weqxd10ty-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 16:08:17 +0000 (GMT)
+	Fri, 23 Feb 2024 16:15:10 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41NG8GNA016082
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41NGFApB012261
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 16:08:16 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 23 Feb
- 2024 08:08:12 -0800
-Message-ID: <c1bd881c-2181-8fd1-e28c-1a34fee2ffa8@quicinc.com>
-Date: Fri, 23 Feb 2024 09:08:12 -0700
+	Fri, 23 Feb 2024 16:15:10 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 23 Feb 2024 08:15:09 -0800
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <wim@linux-watchdog.org>, <linux@roeck-us.net>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <quic_rjendra@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+Subject: [PATCH RESEND] dt-bindings: watchdog: qcom-wdt: Update maintainer to Rajendra Nayak
+Date: Fri, 23 Feb 2024 09:14:55 -0700
+Message-ID: <20240223161455.4009469-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] accel/qaic: Constify aic100_channels
-Content-Language: en-US
-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
-        Carl Vanderlip
-	<quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya
-	<quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240222-mhi-const-accel-qaic-v1-1-028db0dd9098@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240222-mhi-const-accel-qaic-v1-1-028db0dd9098@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qp9esPXD3y-RZVk2Q7fnVK_CtCQ7KlQF
-X-Proofpoint-ORIG-GUID: qp9esPXD3y-RZVk2Q7fnVK_CtCQ7KlQF
+X-Proofpoint-GUID: AgA-Zzuh_EuwhtnO0KaU0hfY7UhSt7HJ
+X-Proofpoint-ORIG-GUID: AgA-Zzuh_EuwhtnO0KaU0hfY7UhSt7HJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-23_02,2024-02-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- adultscore=0 malwarescore=0 bulkscore=0 clxscore=1015 mlxscore=0
- impostorscore=0 mlxlogscore=741 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402230117
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 mlxlogscore=966 malwarescore=0
+ suspectscore=0 phishscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402230118
 
-On 2/22/2024 6:06 PM, Jeff Johnson wrote:
-> MHI allows the channel configs to be const, so constify
-> aic100_channels to prevent runtime modification.
-> 
-> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+The servers for the @codeaurora domain are long retired and any messages
+sent there will bounce. Sai has left the company and appears no longer
+active in the community which leaves this binding orphaned. Rajendra Nayak
+has volunteered to take over as maintainer.
 
-Applied to drm-misc-next
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+---
 
--Jeff
+Rob, will you take this into your tree for 6.9?
+
+ Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+index a4f35c598cdb..47587971fb0b 100644
+--- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: Qualcomm Krait Processor Sub-system (KPSS) Watchdog timer
+ 
+ maintainers:
+-  - Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
++  - Rajendra Nayak <quic_rjendra@quicinc.com>
+ 
+ properties:
+   $nodename:
+-- 
+2.34.1
+
 
