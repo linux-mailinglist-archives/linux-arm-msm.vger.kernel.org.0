@@ -1,302 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-12315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41186860D35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 09:52:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D712860D75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 10:04:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 656FB1C2279A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 08:52:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2919F2838EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 09:04:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99E951B97C;
-	Fri, 23 Feb 2024 08:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20FB21A58B;
+	Fri, 23 Feb 2024 09:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uFdGHXnF"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="FMWnDQCI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47F91AADE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 08:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D7C1864C;
+	Fri, 23 Feb 2024 09:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708678339; cv=none; b=rlYkxqO6WYfQxMW2jc0hHDgZGAvj+sZm8tfY4rEZC5Vd+OOhU4NYDcQGmmmp0xy76g1N8gC3kJrzlkLBu+Hws348aWFVw0gQ4ZneNJUFTlQUT9K5Zjh4sa5vvG4+0h4YHu03aWu6azJgwFDol6xHvNVUjzJYSIzZp+bKDwHSNqU=
+	t=1708679081; cv=none; b=lIZtNhxinl+Zb636K1MFAXDgrDJ4nu2Xh9wS2ETaf/4atwH935d732/1MN29hlVNxcrw+hcGsD1WLD/PGD+z1rvJ6GJzSPmLaAS5dGYWsNgp86lGhgD+PrckmJMPB+k09oo8knB1jdCpL7wV7SsHl45hruQkSpHN6Ek6nHGhAmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708678339; c=relaxed/simple;
-	bh=shI4snK4SsxOr92XTKwkqdy4D04fYRsYSgmhbyc1cr4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=STGUHL8fIoTD3cL38YrfnLeyxlqKKpuf9DHDAf5KBqzIRIk+KLLaiZln1QbVCfVgpARD6a0vplxT9myoNXPq/lG2KxR/w0HZ8clxn3GvanJ+U0Hrbr1oRGQIt3xF5/tsgMjGBizX9lAy51RxVSQX6TQkCcRK/PzuMXl0J1rIjMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uFdGHXnF; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-412698ac6f9so662805e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 00:52:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708678336; x=1709283136; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xOESMyan+flAcJ4QttQasCea652A8wI1qP6NEVlibnU=;
-        b=uFdGHXnFaTjkGa9xnppKUpRrr8BP904AefOFqhWPwxKkDas5argaR9sK4KTGr8ab2x
-         0Ro87QL8icI6VTYIfnu0JnoYRli4vPY2RLThBuKldXxich8uzt4P+0Nqt6aa3d9uihcx
-         x/Q29+u/TApABp+D8qY0z3Xmk6XNaui14rZXGBnBSWmP+hrRq9Sg71bkyuhYl1EZ3sti
-         uovibTYl639Djf5FUK/pQvroUZlp4E6zjIiHSTGZ+JFysFpLk0KqKQh13V9f1m8bx87Q
-         6cgoaBjPRnM4CvMFuTq9erUb5RBs7dEb0j1EP3GJZy//bURb8EGGMeGGLjzoODqvu/t3
-         5Q8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708678336; x=1709283136;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xOESMyan+flAcJ4QttQasCea652A8wI1qP6NEVlibnU=;
-        b=eWWv6BnolCEInCEVxFT2nS5qd6cqWp3LKDqtyfqOwu4qQfBajZwlWbhsdp2kOoCBI2
-         SOFpHgGYXMFKe46a9CPB3v7MiEa64QEHk+y9/b1MBkPK1o3kGwvshsvrtKXXQTwoDnbS
-         I04oYIFDWwOK0JEa1QyorgjmKqI87D8uTwiBqpXWFYqCCnNhs0AWeA7ujhTVbs1s/prU
-         z0N33k/sPeUk98Px6sMOmLUWC1OCJR7kHXY2l3BPjBZqRZ1zCuvC1ezfum4STs2do0lU
-         UtE7H4JvwNOM+FhbSfJZgBD7X5bbs+A1W9lxjNbz7uzf9qtffnxhgCdSMXmz0yZ+f15I
-         3g7A==
-X-Gm-Message-State: AOJu0YwsSQwGq+mK+EkRTVH3G+9bHjJ2KAjcXzS+QF6PsnFWhWGY+o7z
-	X8Hd4zhsIZN3AAPm+000XPTdf7tGE0JLszWQXSTF3D1O07P+hQnODdNyCOE2sgA=
-X-Google-Smtp-Source: AGHT+IH+WDC6Z/LWIIcjsEM2gQNaVzqWbm5wn6zeMmr/8jgZTRAZj6SXck8c8lp6Yy7mXhKTnXZzIg==
-X-Received: by 2002:a5d:6602:0:b0:33d:31ec:e09c with SMTP id n2-20020a5d6602000000b0033d31ece09cmr1134748wru.11.1708678336103;
-        Fri, 23 Feb 2024 00:52:16 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 11-20020a056000156b00b0033d1b760125sm2028168wrz.92.2024.02.23.00.52.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Feb 2024 00:52:15 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 23 Feb 2024 09:52:09 +0100
-Subject: [PATCH 3/3] arch: arm64: dts: sm8650-hdk: add support for the
- Display Card overlay
+	s=arc-20240116; t=1708679081; c=relaxed/simple;
+	bh=TQspUFQIuS/lSdvzU4xISypGBS54MESafBqD3EWI+Tw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TxBjvNP7I9jwaGDp8xSed8Ak5p7vB405XlcvVXS7ntE/2y9eMySzyYAeYe6k74jk+xeezL7A0sfewlFYSw5JkD+zM6l2cW3qx+6eWGljsniHYMX0eFMAQeh62Ko8zQJcHpf+jUjc9sDeQuRif9S4VSy6PX/Z7Fi4E1yqLC45M6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=FMWnDQCI; arc=none smtp.client-ip=198.47.23.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from lelv0265.itg.ti.com ([10.180.67.224])
+	by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 41N94CTN079911;
+	Fri, 23 Feb 2024 03:04:12 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1708679052;
+	bh=MV0WiK50sWpN/D2ImeC0rSquTMqXvPnv7oAy3Kp3On8=;
+	h=Date:From:To:CC:Subject:References:In-Reply-To;
+	b=FMWnDQCIfisZAGk69C4E8+umZIj282DKybEUJATKNTRPywDjTxwlUV4TFvhNbrOAt
+	 yLBzWAyA2r9pSy/MuO6zFoz3xAe5lSTBusQeL2x2MhvnpUZHW7v7s4uydcHFpSvEO8
+	 KPRWyBLNs9F1oIwV05gMSU6ipLVNEqCDrGZsubkc=
+Received: from DFLE109.ent.ti.com (dfle109.ent.ti.com [10.64.6.30])
+	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 41N94CQE013247
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Fri, 23 Feb 2024 03:04:12 -0600
+Received: from DFLE105.ent.ti.com (10.64.6.26) by DFLE109.ent.ti.com
+ (10.64.6.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Fri, 23
+ Feb 2024 03:04:11 -0600
+Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Fri, 23 Feb 2024 03:04:11 -0600
+Received: from localhost (dhruva.dhcp.ti.com [172.24.227.68])
+	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 41N94Bs1027980;
+	Fri, 23 Feb 2024 03:04:11 -0600
+Date: Fri, 23 Feb 2024 14:34:10 +0530
+From: Dhruva Gole <d-gole@ti.com>
+To: "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
+CC: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Mark Rutland
+	<mark.rutland@arm.com>, <andersson@kernel.org>,
+        <ulf.hansson@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-pm@vger.kernel.org>, <quic_lsrao@quicinc.com>,
+        <stable@vger.kernel.org>
+Subject: Re: [PATCH] firmware/psci: Move psci_init_system_suspend() to
+ late_initcall()
+Message-ID: <20240223090410.mgsu47wqinw33wep@dhruva>
+References: <20240219-suspend_ops_late_init-v1-1-6330ca9597fa@quicinc.com>
+ <ZdOP5oAwZvEhNAsn@lpieralisi>
+ <dc16acc1-6ad1-4a81-8eeb-aadaf837ff2c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240223-topic-sm8650-upstream-hdk-v1-3-ccca645cd901@linaro.org>
-References: <20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org>
-In-Reply-To: <20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4636;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=shI4snK4SsxOr92XTKwkqdy4D04fYRsYSgmhbyc1cr4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl2Fy8KVDMNW30PPi+lOoHGGKXVvpIv/Weks0SDrL9
- Gu9nvY2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZdhcvAAKCRB33NvayMhJ0aFtD/
- 9B3J0lQK3PQdAExaHPQu0VtLisRXRH34xh0m6S0FPtyw3SuO1OTzaZYcHt9YZDU+b1OiuLJOkj4Ddo
- tO+Y6K/Ghlx4ItipzhnaELD7iaFPcoTUMmClBhHnV1iPx/1RiOLFAZOVzlmuf9mCymwnxvvTvr68Sr
- ebIE2pn1pDM3xPjLvr9OurMdsdeUTZPNQACiJnsLLV6TyVV7FqWJVn8oALVJxjWPvi9zG4Xtgu3VZA
- 7KoZP/IZrDeHeZMRaRAogaRFzDUX1PSvI3s+0S1Iw1oIO0FUa9NOKD6i+diXIKatac6Zl4dXmD2mh1
- 994qqAtCmE3Nuq3nHspVOBGExD5out2/mAVrgV+NU7TruR4DzwiY83T+a4ldh17IhT5oIMPXEyeaPg
- oKPD+fjGgVe6LT0q8zx5xtNq86s9IJTh76+GXFbfVcr8FX1Fg1sBgSwCVAWYdkd7owLzU9O5gpj1ko
- f8AKQ9FPm+zTWJoUo+N5GGtMxg17uX7Krwqo7qOeu3ShlppCgJnKvGsVJqf+ycUlnKHwFx8aSHDV6W
- op0wiFKHHKmVKzq8VP2H8jVShlxTDXvuvICc8b/el+TjPqiWm6sKHeTMNQRM82elVtzuQl2cUeaBH/
- ZQTOkWddHsYgW8QyEaeDcWJ4bl1echudY/LHMcb3yocWR5BCrLJW/aLQurTA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <dc16acc1-6ad1-4a81-8eeb-aadaf837ff2c@quicinc.com>
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-With the SM8650-HDK, a Display Card kit can be connected to provide
-a VTDR6130 display with Goodix Berlin Touch controller.
+On Feb 20, 2024 at 11:18:39 +0530, Maulik Shah (mkshah) wrote:
+> 
+> 
+> On 2/19/2024 10:59 PM, Lorenzo Pieralisi wrote:
+> > On Mon, Feb 19, 2024 at 03:02:04PM +0530, Maulik Shah wrote:
+> > > psci_init_system_suspend() invokes suspend_set_ops() very early during
+> > > bootup even before kernel command line for mem_sleep_default is setup.
+> > > This leads to kernel command line mem_sleep_default=s2idle not working
+> > > as mem_sleep_current gets changed to deep via suspend_set_ops() and never
+> > > changes back to s2idle.
+> > > 
+> > > Move psci_init_system_suspend() to late_initcall() to make sure kernel
+> > > command line mem_sleep_default=s2idle sets up s2idle as default suspend
+> > > mode.
+> > 
+> > Why can't we fix it the other way around, namely enforce
+> > mem_sleep_current according to the mem_sleep_default command line
+> > even if suspend_set_ops() was already called ?
+> 
+> yes, this may be fixed other way also and i did not implement other way
+> since mem_sleep_default_setup() only update mem_sleep_default and to avoid
+> this race, it needs to also need to update mem_sleep_current along
+> with it. Below change also resolves the issue.
+> 
+> --- a/kernel/power/suspend.c
+> +++ b/kernel/power/suspend.c
+> @@ -192,6 +192,7 @@ static int __init mem_sleep_default_setup(char *str)
+>                 if (mem_sleep_labels[state] &&
+>                     !strcmp(str, mem_sleep_labels[state])) {
+>                         mem_sleep_default = state;
+> +                       mem_sleep_current = state;
+>                         break;
+>                 }
+> 
+> however it may be erasing thin line between mem_sleep_default v/s
+> mem_sleep_current as both gets updated while set up of mem_sleep_default.
+> 
+> if this change looks Ok, i can send v2 with it.
 
-In order to route the DSI lanes to the connector for the Display
-Card kit, a switch must be changed on the board.
+Honestly, I don't see too much of a problem with this, it only makes
+sense that we're starting off with a default sleep state which means
+that it will be considered as "current" sleep state.
 
-The HDMI nodes are disabled since the DSI lanes are shared with
-the DSI to HDMI transceiver.
+For the issue that you described originally, I think this is a fine
+solution.
 
-Add support for this card as an overlay and apply it it at
-build-time to the sm8650-hdk dtb.
+> 
+> > 
+> > Just asking, I am not super keen on using initcalls ordering, it
+> > looks fragile to me.
+> 
+> i agree with above.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   4 +
- .../boot/dts/qcom/sm8650-hdk-display-card.dtso     | 151 +++++++++++++++++++++
- 2 files changed, 155 insertions(+)
+Same.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4f48c98451de..566997db4b37 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -241,6 +241,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-+
-+sm8650-hdk-display-card-dtbs	:= sm8650-hdk.dtb sm8650-hdk-display-card.dtbo
-+
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk-display-card.dtso b/arch/arm64/boot/dts/qcom/sm8650-hdk-display-card.dtso
-new file mode 100644
-index 000000000000..b9de6c9ce10e
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8650-hdk-display-card.dtso
-@@ -0,0 +1,151 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024, Linaro Limited
-+ */
-+
-+/*
-+ * Display Card kit overlay
-+ * This requires S5702 Switch 7 to be turned to OFF to route DSI0 to the display panel
-+ */
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-+
-+/dts-v1/;
-+/plugin/;
-+
-+&i2c6 {
-+	status = "disabled";
-+};
-+
-+&lt9611_1v2 {
-+	status = "disabled";
-+};
-+
-+&lt9611_3v3 {
-+	status = "disabled";
-+};
-+
-+&vreg_bob_3v3 {
-+	status = "disabled";
-+};
-+
-+&lt9611_codec {
-+	status = "disabled";
-+};
-+
-+&mdss_dsi0 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	panel@0 {
-+		compatible = "visionox,vtdr6130";
-+		reg = <0>;
-+
-+		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+
-+		vddio-supply = <&vreg_l12b_1p8>;
-+		vci-supply = <&vreg_l13b_3p0>;
-+		vdd-supply = <&vreg_l11b_1p2>;
-+
-+		pinctrl-0 = <&disp0_reset_n_active>, <&mdp_vsync_active>;
-+		pinctrl-1 = <&disp0_reset_n_suspend>, <&mdp_vsync_suspend>;
-+		pinctrl-names = "default", "sleep";
-+
-+		port {
-+			panel0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+
-+	/*
-+	 * DTC requires to have both endpoints when compiling the overlay
-+	 * and also requires the #address/size-cells + reg properties
-+	 */
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		port@1 {
-+			reg = <1>;
-+
-+			mdss_dsi0_out: endpoint {
-+				remote-endpoint = <&panel0_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&spi4 {
-+	/* DTC requires the #address/size-cells to compile DTBO */
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	status = "okay";
-+
-+	touchscreen@0 {
-+		compatible = "goodix,gt9916";
-+		reg = <0>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <162 IRQ_TYPE_LEVEL_LOW>;
-+
-+		reset-gpios = <&tlmm 161 GPIO_ACTIVE_LOW>;
-+
-+		avdd-supply = <&vreg_l14b_3p2>;
-+
-+		spi-max-frequency = <1000000>;
-+
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <2400>;
-+
-+		pinctrl-0 = <&ts_irq>, <&ts_reset>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&tlmm {
-+	disp0_reset_n_active: disp0-reset-n-active-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	disp0_reset_n_suspend: disp0-reset-n-suspend-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	mdp_vsync_active: mdp-vsync-active-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	mdp_vsync_suspend: mdp-vsync-suspend-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	ts_irq: ts-irq-state {
-+		pins = "gpio161";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+		output-disable;
-+	};
-+
-+	ts_reset: ts-reset-state {
-+		pins = "gpio162";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
 
 -- 
-2.34.1
-
+Best regards,
+Dhruva Gole <d-gole@ti.com>
 
