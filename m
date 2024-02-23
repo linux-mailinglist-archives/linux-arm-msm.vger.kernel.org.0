@@ -1,145 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-12354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49C758613F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EE478613FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:32:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03BCB284DCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:28:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDDE02852AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E6180030;
-	Fri, 23 Feb 2024 14:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87E75CB0;
+	Fri, 23 Feb 2024 14:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qlxz5wU2"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="q1JvnxXT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3085D73D;
-	Fri, 23 Feb 2024 14:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C425979CC;
+	Fri, 23 Feb 2024 14:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708698494; cv=none; b=GBw1Uz2HUkjQ0AFrG5m1oUtVmHzaEhf9hIlIJ+pGE/W+5CoFdIeTeOjZLDsJAVVR+wDpJ8L8YIOzavxQYT43FP/OfJX6IcaJ5+GQ3Kpg/u66wxzWv+euTNXZ4NpXEPho1dEciK1fq1NNGpitcjWCo1GiHXk4mL7oyFwEodPEmMU=
+	t=1708698745; cv=none; b=BL8Q1xZ7xL7ZLPxqxfOsPxjYnfSajlWBzzkMakRgF2fwCHVw48bHaFab0hM+FVnY+mZvCZetEYFyansbW2UNl62CH4ECO57ctBED4Xfo+S6UupaxgVy71BXLbh7nANQlojJgB5NDA9mTokmSYJIoDqrWXOUxEGivwJjwuwYSWfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708698494; c=relaxed/simple;
-	bh=1bwXd+3rlYqKr6S6RrkPkb1QhvUSeD3Xj0QpioEvp0g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mSrVz1UUA3lsaquLoFStDE6ks72c9gih/zEg26KSxtKVDJT1PZnLigSxtIe+aGqYD9HOqHSJfrPjTQSTF+R/ZGLOCAjYx2B/8SlqSyCcr1vL8G44BrSzbxls9aZqCVBChQshvW0oe1zoRZCud9hjskBy5/cod1mpPLOYh5pphQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qlxz5wU2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D79C433C7;
-	Fri, 23 Feb 2024 14:28:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708698493;
-	bh=1bwXd+3rlYqKr6S6RrkPkb1QhvUSeD3Xj0QpioEvp0g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qlxz5wU2ZZTXuwZG085sWfqP0F0ZnnIzu6kH36RXg2c3DhQcDJz0r1vaSMXDi6pHv
-	 FpJQo8I04ZwU+Z/Aw3NTR5GecprmB+3GUuv56Q3x7H3OZsyIQbgHAvTk3waIZw35ie
-	 sE2qErqjfc7sqTKAcmUQKdIkEhUuXYCDGRIIrdudl8Mg0ekVlKrmIfF35bHxKpw1II
-	 JKiQE90ysGmye3bdhRVEvdYe5PWnJrfjs39aUE982s5p23bZTn0t/oE8fdPg3BhFog
-	 S9PXQKo/F10Ty92RN3E4CqTP6PjUJ6ejXMNcJ3dpx+VPdExSoePrXbaJzYlIT1kBJN
-	 G9M+5U/KqYuIg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rdWXB-000000004vJ-1N7T;
-	Fri, 23 Feb 2024 15:28:18 +0100
-Date: Fri, 23 Feb 2024 15:28:17 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Vinod Koul <vkoul@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm bridge
- use-after-free
-Message-ID: <ZdirgQdjn1Pg75--@hovoldconsulting.com>
-References: <20240217150228.5788-1-johan+linaro@kernel.org>
- <170868613914.4029284.5549880672870201262.b4-ty@linaro.org>
- <3c4246b6-431a-442e-8ace-3b0d0e67743f@linaro.org>
- <ZdiU2z8rzo542_Ih@hovoldconsulting.com>
- <d4049823-ad24-4426-887b-9c66cdd96318@linaro.org>
- <CAA8EJppYHdSmsWMk-u=QaAaHWqjFj8zs4CF947eeex6iV4dsYw@mail.gmail.com>
+	s=arc-20240116; t=1708698745; c=relaxed/simple;
+	bh=jiMJsyiTNHv8UOOvPguE/ydpC4lYJNHBv7Q8fPcd5vw=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=grlL2NpDAx7gUApnQp4Z8lyVpIqKuRPBd0yy0a7/sXRaBnMgousxv/YUvDsyC0uWrEM+u+Y+lCi+oPJRBnLPEhIT0y8klK8VTMlJlyD5jpsGxEXGZOK+9f2cAtW/R4nNqeoYnCN0CRoB/EK6uDK/7koUQ2TfdlQ3lfu4uk5GN5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=q1JvnxXT; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 81FE0408D8;
+	Fri, 23 Feb 2024 19:32:19 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1708698739; bh=jiMJsyiTNHv8UOOvPguE/ydpC4lYJNHBv7Q8fPcd5vw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=q1JvnxXTtJ3QhyO00A/qk6Ygn5aeMNvly1UmdUKktB4H7OxrI9esp/pwqHM0iUxVa
+	 /jkGL1o67J8wqqZuSQCZIGBEyH8ZgXGJgG0QjEEl8vb/IXysGhsi8sPP4ndwY3sYgO
+	 g8Fwjt4BsNE6RmUxRE4pMeGWG0DWhLbJr2OWd24I1EXIPVG6oEUb8OLb+/JB3BTwJs
+	 SiqSgVQ8yoU/3nTJKUiEUievYmOo/14iXdbTa+riOvjxI9iS2BVhDinNK21Ba0ehnR
+	 V+oO8zZNuCra5R+b9DxSwauCA8GNRqaj2ArPhMDiyVX1d0J/sOOAiDm2QmkKzoiV0D
+	 R8Ia+QYER9I5Q==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJppYHdSmsWMk-u=QaAaHWqjFj8zs4CF947eeex6iV4dsYw@mail.gmail.com>
+Date: Fri, 23 Feb 2024 19:32:17 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Sebastian Reichel <sebastian.reichel@collabora.com>, Hans de Goede
+ <hdegoede@redhat.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] power: supply: Add Acer Aspire 1 embedded
+ controller driver
+In-Reply-To: <qoidm5wujjbeoc2hlraky26wuwmuaxi2atyl6ehovhvffdbfeh@g5gunqdei45m>
+References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
+ <20240220-aspire1-ec-v3-2-02cb139a4931@trvn.ru>
+ <qoidm5wujjbeoc2hlraky26wuwmuaxi2atyl6ehovhvffdbfeh@g5gunqdei45m>
+Message-ID: <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 23, 2024 at 04:18:08PM +0200, Dmitry Baryshkov wrote:
-> On Fri, 23 Feb 2024 at 15:52, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> > On 23/02/2024 13:51, Johan Hovold wrote:
-> > > On Fri, Feb 23, 2024 at 12:03:10PM +0100, Neil Armstrong wrote:
-> > >> On 23/02/2024 12:02, Neil Armstrong wrote:
-
-> > >>> Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-fixes)
-> > >>>
-> > >>> [1/6] drm/bridge: aux-hpd: fix OF node leaks
-> > >>>         https://cgit.freedesktop.org/drm/drm-misc/commit/?id=9ee485bdda68d6d3f5728cbe3150eb9013d7d22b
-> > >>> [2/6] drm/bridge: aux-hpd: separate allocation and registration
-> > >>>         (no commit info)
-> > >>> [3/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
-> > >>>         (no commit info)
-> > >>> [4/6] soc: qcom: pmic_glink: Fix boot when QRTR=m
-> > >>>         (no commit info)
-> > >>> [5/6] phy: qcom-qmp-combo: fix drm bridge registration
-> > >>>         (no commit info)
-> > >>> [6/6] phy: qcom-qmp-combo: fix type-c switch registration
-> > >>>         (no commit info)
-> > >>>
-> > >>
-> > >> To clarify, I only applied patch 1 to drm-misc-fixes
-> > >
-> > > Ok, but can you please not do that? :)
-> > >
-> > > These patches should go in through the same tree to avoid conflicts.
-> > >
-> > > I discussed this with Bjorn and Dmitry the other day and the conclusion
-> > > was that it was easiest to take all of these through DRM.
-> >
-> > I only applied patch 1, which is a standalone fix and goes into a separate tree,
-> > for the next patches it would be indeed simpler for them to go via drm-misc when
-> > they are properly acked.
+Sebastian Reichel писал(а) 22.02.2024 04:41:
+> Hi,
 > 
-> I think PHY patches can go through a usual route (phy/next or
-> phy/fixes).
+> On Tue, Feb 20, 2024 at 04:57:13PM +0500, Nikita Travkin wrote:
+>> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
+>> controller to control the charging and battery management, as well as to
+>> perform a set of misc functions.
+>>
+>> Unfortunately, while all this functionality is implemented in ACPI, it's
+>> currently not possible to use ACPI to boot Linux on such Qualcomm
+>> devices. To allow Linux to still support the features provided by EC,
+>> this driver reimplments the relevant ACPI parts. This allows us to boot
+>> the laptop with Device Tree and retain all the features.
+>>
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>>  drivers/power/supply/Kconfig           |  14 +
+>>  drivers/power/supply/Makefile          |   1 +
+>>  drivers/power/supply/acer-aspire1-ec.c | 453 +++++++++++++++++++++++++++++++++
+> 
+> I think this belongs into drivers/platform, as it handles all bits of
+> the EC.
+> 
 
-They can, but I've explicitly asked Vinod to ack them so that they can
-go in with the rest of the series through DRM.
+Hm, I initially submitted it to power/supply following the c630 driver,
+but I think you're right... Though I'm not sure where in platform/ I'd
+put this driver... (+CC Hans)
 
-They also fix a regression that came in through DRM in 6.8-rc1 (the
-bridge rework which started registering child devices) so it makes sense
-to also route the fix the same way. And to do it for this cycle.
+Seems like most of the things live in platform/x86 but there is no i.e.
+platform/arm64...
 
-> For patches 3 and 4 I'd need an ack from Bjorn to merge
-> them through drm-misc-next or drm-misc-fixes.
+Hans, (as a maintainer for most things in platform/) what do you think
+would be the best place to put this (and at least two more I'd expect)
+driver in inside platform/? And can we handle it through the
+platform-driver-x86 list?
 
-You have Bjorn's ack. He's reviewed all the patches for this purpose and
-we discussed this in person two days ago.
+> [...]
+> 
+>>  3 files changed, 468 insertions(+)
+>>
+>> diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
+>> index 3e31375491d5..e91a3acecb41 100644
+>> --- a/drivers/power/supply/Kconfig
+>> +++ b/drivers/power/supply/Kconfig
+>> @@ -985,4 +985,18 @@ config FUEL_GAUGE_MM8013
+>>  	  the state of charge, temperature, cycle count, actual and design
+>>  	  capacity, etc.
+>>
+>> +config EC_ACER_ASPIRE1
+>> +	tristate "Acer Aspire 1 Emedded Controller driver"
+>> +	depends on I2C
+>> +	depends on DRM
+>> +	help
+>> +	  Say Y here to enable the EC driver for the (Snapdragon-based)
+>> +	  Acer Aspire 1 laptop. The EC handles battery and charging
+>> +	  monitoring as well as some misc functions like the lid sensor
+>> +	  and USB Type-C DP HPD events.
+>> +
+>> +	  This driver provides battery and AC status support for the mentioned
+> 
+> I did not see any AC status bits?
+> 
 
-And, again, this has to go in for *this* cycle. You broke the display on
-the X13s and other machines so this cannot wait for 6.9.
+I was referring to whatever ACPI spec calls "AC Adapter" but I guess
+I should have used the word "charger" instead... Will reword this.
 
-Johan
+>> [...]
+> 
+>> +	case POWER_SUPPLY_PROP_PRESENT:
+>> +		val->intval = 1;
+> 
+> You have an unused ASPIRE_EC_FG_FLAG_PRESENT, that looks like it
+> should be used here?
+> 
+
+Oh, you're right! I think I initially didn't have this property and
+added it like this as a reaction to that upower change that made it
+consider everything not explicitly present as absent.
+
+I've just checked what is reported after unplugging the battery and
+seems like the flag (as well as everything else) is gone. Will change
+the driver to read the flag.
+
+Thanks for your review!
+Nikita
+
+>> [...]
+> 
+> Otherwise the power-supply bits LGTM.
+> 
+> -- Sebastian
 
