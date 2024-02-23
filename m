@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-12411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01F74861E8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 22:10:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EEA2861EA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 22:19:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 241F91C238F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 21:10:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B95E328AAEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 21:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8574C148FF5;
-	Fri, 23 Feb 2024 21:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0B71493AC;
+	Fri, 23 Feb 2024 21:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bi+ot12s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PH1DbRgf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE01D85C7C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 21:10:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3191149388
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 21:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708722657; cv=none; b=DELYd7Di6Pz9ELVZmyqhZ+so7zF/+zENDFi2AY1XSRPNVEljnnlwLJ+DnsIoVjLuDCj/oVzPMP8pDEwcVLH9cbK/52POuBn0PjLHpIgjx3T/CPTXUuAXxPm9JuZkuKYMnLxL2b9kIUvk0V5qcJ5JtwHFxENi1kunbQjPzi3babY=
+	t=1708723145; cv=none; b=e5mp8J4vQlwCQVcJXrKiLewEJhjFSdOzYHTohfjtKKGPvdzFfW4U9veVvCApuFRm816IeoQVeo5r4LCXstWjo7g4YXilGzy2J5086zZO7H++QhM7UCIp+SiPJg7i9vDijH6yNbwfxzmmjub0jJ6ylylo4xXltq7fJL3SQHQdnWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708722657; c=relaxed/simple;
-	bh=zLfaBPQQ/PChVmxN6vpfoSLBNRdvKq4jQqRP2+O0sUQ=;
+	s=arc-20240116; t=1708723145; c=relaxed/simple;
+	bh=4U611Q4elBg4t0AMJVYfZNMjDBB50VZmE+qFAsL6RK0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=omRLwpU+SFR7f7jATPukQ0m2MQlYUUBfLMNpqqfKa9JOpHpsq4Jgk0Pl663Ue6JWvRnO2EBA5DLEfvWYg/mAHBgU7DB1dfWU8ViPLbwSgxvd5t7togxz/xsLl9v+BGAOLsy9ACZEYGIrKKYsKM3vvsisE3cE3tEtDYHEL73+7PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bi+ot12s; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=rfxlw6CNTL5V3KOSAqVsH5wDzViNtjA6odLa89pj94Gs6lYitrxHi+SOpVg5bM8q3he0EV9XIbH6gu2qCq2SlCbrwUdcI7yDhw8V8z9fF1wIWHwgb/5kdRWs7EfKINuMU7eqtr4GWCI1kZ3ddJHrQnK/ottwb2ZTmUDp10heP/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PH1DbRgf; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a3d5e77cfbeso234370366b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:10:55 -0800 (PST)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a3f5808b0dfso176818366b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:19:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708722654; x=1709327454; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=brDT2YXF8x8KzS2bAH7c1UHxnZms6mIqOBc2rPT/eec=;
-        b=Bi+ot12sSPPWiJd4UxeO3J/+6vvUyvvisiqqoYcDUeQAzCQLAxY092awLenxUlOBg3
-         HdiKbrwdvHpuV+LAxIFWd5XS7H8pWVp28WYUGsNGM2kDZZc7+Ki/XuqbOf+E4x9MzcUE
-         dihyW1LbOApegVhIo95SSdSYeMIBUhqZbhqzCR2F/gyhszSJLQ7MGFQrBKmSR1oUyHmC
-         ibDdrto7Wc2fyByMNf3fyZ+deelZ9jAQ3D2SIz0Pzw9BtkgOKEDGmwSlDlp69uYCV6zo
-         /Wn8KON55XRwd6IFFIVgNIxndOQgMJi9JFUEx5cRMDBjfoATE1iAWx8sOKbvJq4BAl4y
-         pwVg==
+        d=linaro.org; s=google; t=1708723141; x=1709327941; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YDAHKg/xY0dKdy72D5kG+TPXcRiOx6D/NRETdEr9dSc=;
+        b=PH1DbRgf+YqA7UKhX9i/xCFCNu21ka6MmQj5bqkD2jVpM9a+oVVAj8DuVDa9oHPa+Z
+         PeGsFk+WFFE4e2ALnjZNdXnXdl7d009igpvLUo8beAY2MB+GAxvPPrMiGtc9rbZmhldd
+         XxCAMbAe/9Wrat/XZnEsGTzT/vP3wY37Fwo9dHbfC457mj3SDQtrMoZ3z6Ih/1JjM4Tw
+         KMowouEkkvMhWaCjF5/7j81J83x3t3aerRJ//su8WEUMJ54PXbF9MWCBBG0zLwPQPLVT
+         KbF6j3LLz+bShVlAh9Ks7CkFnBWrVcmGuedwo1l9WAswdOPddOm15ysJ3R8lQ8QBLHGX
+         wKoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708722654; x=1709327454;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=brDT2YXF8x8KzS2bAH7c1UHxnZms6mIqOBc2rPT/eec=;
-        b=f2coHbw3SnVXdcd3z0U7yYUW/hcqofW7U5e/QOUuVkbZTki+hwn8wnHZ/IduB/zevd
-         0fPfRnSFp6DQ2SWLwjHChttA/RFXnIZSfXkwAccNmrOlEccPTu79CSgwZXYIo6ZPlOtx
-         fJJfs+PgR/CjZh+zB2gooXQa5FReYZSVIFQdyiwOL2Rn1To7A1cxZiWGpuIxyKnm2pK0
-         GTtwDXm6vOEq/Cq/DnpsT8SEuPB8onBoN9+f/VfvXs1JWLXexWBO4vXR6i+VLWb/TFsY
-         ZI+V+xpXXTzyCJRj0pbScVLE5C94HR5nz2lIXXQs3VA1e57Oz97LajstWLuuH0UxzMH6
-         pOgw==
-X-Gm-Message-State: AOJu0Yz7XSAaSZ2i5BvRKUJBl4DWsKvlGO1X+p+zRrHPcIMnD+QI9OO8
-	6LEN3YkrmOzvgCVoTyjEeGkGs05g1o3ai/IXame9k2cwvbkEuops0TBiPN2wx78=
-X-Google-Smtp-Source: AGHT+IENyNqGiyGuCGeSB03nxXbt7g7grkwi1tJiTGl4k5p72DlF2FORlui6OfziRrMuxknRyi5GsQ==
-X-Received: by 2002:a17:907:b9d0:b0:a3e:cd8d:39c3 with SMTP id xa16-20020a170907b9d000b00a3ecd8d39c3mr781477ejc.38.1708722654037;
-        Fri, 23 Feb 2024 13:10:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708723141; x=1709327941;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YDAHKg/xY0dKdy72D5kG+TPXcRiOx6D/NRETdEr9dSc=;
+        b=wA1tiJDXUneslNJ5cUFX2hVpbp+uRyMKVKESl8Msq9VLhPZeo/OpqXlPtxj/wI6G5A
+         C7ApU9R6NWCvZueRSMqSOF48tXWhVSnke5dF7vl3jLfryDtMx64Qp7yh8PuWg2WybWtY
+         +L08S/opcK8fKn/met5yVMY+f9HceLMSEX7cWn/lo2Q9pVhTq0WoS3Mru6YDywSxEKYa
+         PCzMBkXz0az9+2ZQd6rP0GhfW/9JM9k/jC+RI+kxTOXuy6CL9CCtLJhlB4AY3O0Av6dM
+         EXV/8tSEwsp5NqaIs+7IIu88/XGFQb+/VrmVjJXWXhrVDe3u5Gzy5TS4HToctu2eqOeS
+         NdLA==
+X-Gm-Message-State: AOJu0Yzf0DZxKpaeqXG/oYtjJNq5jLA0zAXPnZRJKqcUV+xiT5n4NH5y
+	3JB0rXNyHg8b0ztpaQPxZlTymTzfd8iKcBng9yQVj7ysWz8M2skVJ3wurEUzQZk=
+X-Google-Smtp-Source: AGHT+IHOg7pXiT0AFZA/1QFt3MRtosBGj3lEqvVg28cc7hzqw7tFNkxREUX1zxQigtViZXRUXpQPHw==
+X-Received: by 2002:a17:906:1353:b0:a3d:1df3:9d35 with SMTP id x19-20020a170906135300b00a3d1df39d35mr552886ejb.23.1708723141183;
+        Fri, 23 Feb 2024 13:19:01 -0800 (PST)
 Received: from [192.168.179.2] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id rs6-20020a170907890600b00a3e48deecd4sm6313016ejc.222.2024.02.23.13.10.50
+        by smtp.gmail.com with ESMTPSA id js20-20020a170906ca9400b00a3f947c55besm1660040ejb.92.2024.02.23.13.18.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Feb 2024 13:10:53 -0800 (PST)
-Message-ID: <a3356079-bd55-4852-9bb3-b5362a1c953e@linaro.org>
-Date: Fri, 23 Feb 2024 22:10:47 +0100
+        Fri, 23 Feb 2024 13:19:00 -0800 (PST)
+Message-ID: <6ad10b1a-a15b-4877-bc73-90e17be67806@linaro.org>
+Date: Fri, 23 Feb 2024 22:18:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,29 +75,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 05/35] virt: gunyah: Add hypervisor driver
-To: Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Murali Nalajal <quic_mnalajal@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
- Carl van Schaik <quic_cvanscha@quicinc.com>,
- Philip Derrin <quic_pderrin@quicinc.com>,
- Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
- Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba
- <tabba@google.com>, Sean Christopherson <seanjc@google.com>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-5-1e9da6763d38@quicinc.com>
+Subject: Re: [PATCH 2/3] soc: qcom: socinfo: Add X1E80100 SoC ID table entry
 Content-Language: en-US
+To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240223-x1e80100-socinfo-v1-0-be581ca60f27@linaro.org>
+ <20240223-x1e80100-socinfo-v1-2-be581ca60f27@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -135,28 +121,17 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240222-gunyah-v17-5-1e9da6763d38@quicinc.com>
+In-Reply-To: <20240223-x1e80100-socinfo-v1-2-be581ca60f27@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23.02.2024 00:16, Elliot Berman wrote:
-> Add driver to detect when running under Gunyah. It performs basic
-> identification hypercall and populates the platform bus for resource
-> manager to probe.
+On 23.02.2024 15:37, Abel Vesa wrote:
+> Add SoC Info support for the X1E80100 platform.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
 
-[...]
-
-> +
-> +	/* Might move this out to individual drivers if there's ever an API version bump */
-> +	if (gunyah_api_version(&gunyah_api) != GUNYAH_API_V1) {
-> +		pr_info("Unsupported Gunyah version: %u\n",
-> +			gunyah_api_version(&gunyah_api));
-
-Weird for this not to be an error, but it's probably not worth resending
-over if it's the only thing
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
