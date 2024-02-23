@@ -1,127 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-12349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E586D861384
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:04:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEE368613D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:20:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0F182840E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:04:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3B2FEB22CFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:20:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B56BC81749;
-	Fri, 23 Feb 2024 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EFF77F7D0;
+	Fri, 23 Feb 2024 14:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EhLSdOqi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uuix5bik"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319BF7F7CE;
-	Fri, 23 Feb 2024 14:04:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF567EEEF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 14:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708697048; cv=none; b=r0VS2y+fcpAa5RXVb1tJrjqIIHJpJNjO1Hw+Jxl5f/Y2x1Ze7tSmp113Vu0NadOQw2DA4/8GgZjCAZbPx61+BfTEFMSGFqxAc1dx/LHjoEnxPVcIUBcHn5o13+RJvYz4+t2pu7bcGPfETtV8q0Au/6bW3XUTw0ZWWEo41ruvOP0=
+	t=1708697903; cv=none; b=h01doJKAhx/RNLnjcFHFGFuiZ6G/eHmo/qqpKU4vFjHzGPOlsa6CVqRQ35FXAemMWBIeKkQuX/AWw3F909xymJJCAknYhQUBOOYtIRAycDL8EU+y44l5IJHG/fm9s4RWnwgPZ/KUi3NSPrYMAEc+VkMCz+krAHTtH3GT+5FwAUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708697048; c=relaxed/simple;
-	bh=6zFKPfSq/dPkmiQlyzYijAw/+3dco/HlSYqi/nA8RFU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=eOHrG3v6Vv8h81sCopRSdVYKr3QqCJBmaKNsPrqYhg4UIIczJtTZ4EJMrZVbF+ZQ4XiiRbW2Wpp7r7XShkBCfNvF10bgjK41Kzd/alb3P2YNdYzPLB7py384u0gKINSLH0XWPsS3TNGi1QnWgYNkOdgeDEtdqy/qJL5D69Np+vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EhLSdOqi; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41NDwtiI024616;
-	Fri, 23 Feb 2024 14:04:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=S6TjjnY9ya3yPNRYoR9BlnP5pFjxgwSUBzco+q9+rRs=; b=Eh
-	LSdOqiooish3ta+Q5+BhyWaIW8JIu+VVzjBzaUPXyuAehiW1dcsVxXPe9Z9vjJHB
-	W5zWEC1lRGC23NnZTL/niFavY7XXr2CbeRPwAv1Y1psRTFrslFk5scCSP0B8O50W
-	K1ui0wcrqel8IShCEj1j59X3EqsfEfjyQdKOw6R2fLxl6UMGNF5Hvk8mnwMuGKLC
-	rThEHogeAMT1U/lCDUlIoJZTQRzu+WlzfeSb86a53hFAmXo5SOrfi1961oJd9jP0
-	uyHRztbnuP1hbrfy3+/AoVrEugR/6h2SRFqjowGVMmjYbTnOUwum78Mx/RohZuZT
-	qWh5H/Q6qybAn3ik+vrw==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3we3233bhp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 14:04:00 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41NE2Yr3026559;
-	Fri, 23 Feb 2024 14:03:57 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wanvme28e-1;
-	Fri, 23 Feb 2024 14:03:56 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41NE3ubH027415;
-	Fri, 23 Feb 2024 14:03:56 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41NE3uel027410;
-	Fri, 23 Feb 2024 14:03:56 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
-	id A777014C5; Fri, 23 Feb 2024 19:33:55 +0530 (+0530)
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org,
-        manivannan.sadhasivam@linaro.org, robh@kernel.org
-Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_schintav@quicinc.com,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: [PATCH v5 3/3] arm64: dts: qcom: sa8775p: Mark PCIe EP controller as cache coherent
-Date: Fri, 23 Feb 2024 19:33:40 +0530
-Message-Id: <1708697021-16877-4-git-send-email-quic_msarkar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1708697021-16877-1-git-send-email-quic_msarkar@quicinc.com>
-References: <1708697021-16877-1-git-send-email-quic_msarkar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pn8R6x47Gi4HNrUx-dg8rbMwIehUCpqF
-X-Proofpoint-GUID: pn8R6x47Gi4HNrUx-dg8rbMwIehUCpqF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_15,2024-02-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 mlxlogscore=999 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402230102
+	s=arc-20240116; t=1708697903; c=relaxed/simple;
+	bh=HX4TUSWSsGsJPJcz5laMwy2GWSZ/MRJtO55N1YPwBtI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YlLdjxfeL3jMz+kT1qdIXQCa0GvMDiZFXj00ioOLgHPs9FB6Rb9BJpVs/AQIeDcSjY4f6EiPwmTZF1pCJuKI+GimLt5TQgF/vs0l0m5Azao/7QrJZ/wf6yfoa2TQ11O8Y4HpTGFyJvlMPnyfQYsFZzfu1qFS0s0m1V5C0G8xvvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uuix5bik; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dcc73148611so927243276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 06:18:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708697900; x=1709302700; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R19d00zAe0ESb2W1wfQWoMVwkbh2mKJoTeu+62qXKLU=;
+        b=Uuix5bik05hshGSFS+elh24cUmuSawIIxz+Z0ZYmu0RAIJ6/qMBF92f+Kf25yC54jj
+         VDJnu211xVQPfp3BLphWiWw0wPSjlN1E0hZeBnPd/iDETrxfTDBb05oRFWiBaRHdq8UQ
+         Ai9JWsdO3zPhWL1jBk7z9yDiY2bSHw9Kz4ee3cYRBs0OViy8zsGxNduqb9A5EIHmYTvi
+         F+43srEtFbOf5VYQSjrkj6fObI9uc/jdZVxN9BCV5eyS1EApJWnlWG5/aeMi1MJC5L83
+         wutcUuYT4opGw0F5483FkaQVGb2aT6yMpTCx9x0+WBK19tuUVQqdjsa/HA3oLWRUmWQT
+         p72g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708697900; x=1709302700;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R19d00zAe0ESb2W1wfQWoMVwkbh2mKJoTeu+62qXKLU=;
+        b=SQ2EoIt1Nq4U+W2DNxjPawdaAM7ya4F8ehO28tYmYFl7+DtPjwLkaCbOdWX5Y/Qssm
+         cbV8NTP0PJqbH7mkZTp74fLM9pFWU4g/FhbsFUmX4PXYZ6vrSkQfOXmpBcHa3uWoKT4X
+         Ixinbl+UpREC7gVwDn8u/r7fnuodwE/5mxsGw7ah3xTSOykiBtmeDZ9VSlWqJgmwAFOL
+         nOFhUV8R4uPgLCRF8TSTX97moxPQWIo/iEfOP+j7wabJeXQBtwKYnXjS0K0SDNjBGVnE
+         goPwKBi+fHiqjLwsf1jBiAczyLE8bnLpBgTX24cHKLjhjNS8E/JpR23Lxb/YaczgvSIA
+         lTnA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3cubhb3EHQFW2wcchCfeRoFjkD2oqRkRG2uHOQTmkCPbdoTBiCGr0w0bgfZlqC/O6QXi/1RItr+zFVlVyZG1jBeqiXvWdDWCLKtGY6w==
+X-Gm-Message-State: AOJu0YwuOvURXFytrRRc7yRXpj8j5HopF4zl+nKzpIef8Eaqx3XKXffs
+	kes16ehBFlqz/FDiDi+RD3IWHrkpHylu2Psmv2iCM1NG5b6ZDO41sx3iYTPphdwqGFchXGEW9fi
+	LD1IeLiFmFAj78F698ihljZZJ/3XHb8om7wI6ww==
+X-Google-Smtp-Source: AGHT+IF70UF5LUoWVCUdf5eKhR2KmxVP4WJANJz9muRW2tleCLa7psg2DI+FTnDe298CK4P04Z21/Fhm5EKyGZLzPvY=
+X-Received: by 2002:a25:6b03:0:b0:dc7:32e5:a707 with SMTP id
+ g3-20020a256b03000000b00dc732e5a707mr1990018ybc.61.1708697900641; Fri, 23 Feb
+ 2024 06:18:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20240217150228.5788-1-johan+linaro@kernel.org>
+ <170868613914.4029284.5549880672870201262.b4-ty@linaro.org>
+ <3c4246b6-431a-442e-8ace-3b0d0e67743f@linaro.org> <ZdiU2z8rzo542_Ih@hovoldconsulting.com>
+ <d4049823-ad24-4426-887b-9c66cdd96318@linaro.org>
+In-Reply-To: <d4049823-ad24-4426-887b-9c66cdd96318@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 23 Feb 2024 16:18:08 +0200
+Message-ID: <CAA8EJppYHdSmsWMk-u=QaAaHWqjFj8zs4CF947eeex6iV4dsYw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
+To: neil.armstrong@linaro.org
+Cc: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Vinod Koul <vkoul@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Jonas Karlman <jonas@kwiboo.se>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-The PCIe EP controller on SA8775P supports cache coherency, hence add
-the "dma-coherent" property to mark it as such.
+On Fri, 23 Feb 2024 at 15:52, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 23/02/2024 13:51, Johan Hovold wrote:
+> > On Fri, Feb 23, 2024 at 12:03:10PM +0100, Neil Armstrong wrote:
+> >> On 23/02/2024 12:02, Neil Armstrong wrote:
+> >>> Hi,
+> >>>
+> >>> On Sat, 17 Feb 2024 16:02:22 +0100, Johan Hovold wrote:
+> >>>> Starting with 6.8-rc1 the internal display sometimes fails to come up on
+> >>>> machines like the Lenovo ThinkPad X13s and the logs indicate that this
+> >>>> is due to a regression in the DRM subsystem [1].
+> >>>>
+> >>>> This series fixes a race in the pmic_glink_altmode driver which was
+> >>>> exposed / triggered by the transparent DRM bridges rework that went into
+> >>>> 6.8-rc1 and that manifested itself as a bridge failing to attach and
+> >>>> sometimes triggering a NULL-pointer dereference.
+> >>>>
+> >>>> [...]
+> >>>
+> >>> Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-fixes)
+> >>>
+> >>> [1/6] drm/bridge: aux-hpd: fix OF node leaks
+> >>>         https://cgit.freedesktop.org/drm/drm-misc/commit/?id=9ee485bdda68d6d3f5728cbe3150eb9013d7d22b
+> >>> [2/6] drm/bridge: aux-hpd: separate allocation and registration
+> >>>         (no commit info)
+> >>> [3/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
+> >>>         (no commit info)
+> >>> [4/6] soc: qcom: pmic_glink: Fix boot when QRTR=m
+> >>>         (no commit info)
+> >>> [5/6] phy: qcom-qmp-combo: fix drm bridge registration
+> >>>         (no commit info)
+> >>> [6/6] phy: qcom-qmp-combo: fix type-c switch registration
+> >>>         (no commit info)
+> >>>
+> >>
+> >> To clarify, I only applied patch 1 to drm-misc-fixes
+> >
+> > Ok, but can you please not do that? :)
+> >
+> > These patches should go in through the same tree to avoid conflicts.
+> >
+> > I discussed this with Bjorn and Dmitry the other day and the conclusion
+> > was that it was easiest to take all of these through DRM.
+>
+> I only applied patch 1, which is a standalone fix and goes into a separate tree,
+> for the next patches it would be indeed simpler for them to go via drm-misc when
+> they are properly acked.
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+I think PHY patches can go through a usual route (phy/next or
+phy/fixes). For patches 3 and 4 I'd need an ack from Bjorn to merge
+them through drm-misc-next or drm-misc-fixes.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index d98020273f0e..53c31c7034a8 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3713,6 +3713,7 @@ pcie0_ep: pcie-ep@1c00000 {
- 				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
- 		interconnect-names = "pcie-mem", "cpu-pcie";
- 
-+		dma-coherent;
- 		iommus = <&pcie_smmu 0x0000 0x7f>;
- 		resets = <&gcc GCC_PCIE_0_BCR>;
- 		reset-names = "core";
+
 -- 
-2.40.1
-
+With best wishes
+Dmitry
 
