@@ -1,93 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-12331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D768886114C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:16:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FF828611D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:46:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1090A1C21962
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 12:16:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC30B1F21C1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 12:46:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A98397B3D1;
-	Fri, 23 Feb 2024 12:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E487E767;
+	Fri, 23 Feb 2024 12:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iwAAV5G0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KGyzFhm7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694D75C90C;
-	Fri, 23 Feb 2024 12:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98397E59A;
+	Fri, 23 Feb 2024 12:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708690564; cv=none; b=FVE5LOxGkozSS8G1bjL1zpWdyLLMpu4teT7RGtw+U4m549lJVnCJt740e/JMyiEV+CuzldpvV2+JGYn15JMvrntuCCc6mS1CEm352HopHiTNNJiR7lo0e/Nxi0/40MCsmmgVG9q6pfmzkQ1XqwtzeaoeH6uxdD/CrCXkxaDgWys=
+	t=1708692372; cv=none; b=GduW+N5EXegSiHjvx7/5I7lxs776dUv1txDubB5VY2ddSKUwZN4CUPMRv8jcvhAIcWCd6NUjIX7ZCFyNGmBkLhzfBoXQLna5RkXjKhdWZlmTZYNkF3mFostaMOvR7LyaEfZgkf8Ofbw3gLSAijC1S9IIZV+ylqGMoU9JoarJUYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708690564; c=relaxed/simple;
-	bh=JCFDC8egWyXQb7HABdNFJAfvo0AUNIyjCWnepDQI21c=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=CKtNHIMj9xNxddcNQ4oHyJlR3Q4GVE5xdoaLOsfUnJGAEyc8T6ohTBNwqj5p2DnhODOyxCFz0ymCb5T12+qMDE/Y+hN93lSB4XUwkRCDjCV7KPT8DBEgn7r+vr94bwDkbH5+q7FWRHvYJbPQAzXmVuB5XhKoJVWQ2bRl74RthWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iwAAV5G0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02934C433C7;
-	Fri, 23 Feb 2024 12:15:57 +0000 (UTC)
+	s=arc-20240116; t=1708692372; c=relaxed/simple;
+	bh=D8T1iuzJvdgAM8BRFbh+hcm3BNH2Qr3Lwn/NyFiXNCc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZEJ5tI5Lly38Ryp0yQDc9fbPq4jpkY72WXtocF17RDOTd2GqgM+rFTqBBiXaD8uBIEvDgNM/8XbAOMxRHMma/2Mjuh4PlDCyWles+5lYTir+/A1Y74nVnSNgbfENXwsREN+cWHHJNkYZeacTC9yDuIjJ9G8XuT0FklwPmgfh0mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KGyzFhm7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAACC43330;
+	Fri, 23 Feb 2024 12:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708690563;
-	bh=JCFDC8egWyXQb7HABdNFJAfvo0AUNIyjCWnepDQI21c=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=iwAAV5G0xRLinAtkNwS/UDub21NcNA/YD1kSoIhSJS+aJCIHz/rumU3D1Lenn5wnk
-	 HkGxD26tSsFekC+CXQG5DAxyM5Nzw7ypVnkoX0qMWTFo45T7vyZh1ulJdmcw6I6vSI
-	 UJ6q6aPRVM14waxuS1UmjG5fRjGbU95J8syQO6PWLp28QwLU5RigoqYeGbzTnehotR
-	 OZnD6ewlC3ECto1MNL2V+wyAZ3smxhQ8ivngTmijPejLtLKy0AU+B7T3E2jt7ju1IV
-	 UjCjpAXG60xgL49D4fBUMAYJ90iueYRNijtk1m0BQrN7+M/KilrjgPT1EIM/oblm0X
-	 /pGqEA5bFmyQw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Linus Walleij <linus.walleij@linaro.org>, linux-phy@lists.infradead.org, 
- linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev, 
- linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org, 
- netdev@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-tegra@vger.kernel.org, linux-gpio@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
-References: <20240217093937.58234-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] phy: constify of_phandle_args in xlate
-Message-Id: <170869055762.530534.10335046810476136989.b4-ty@kernel.org>
-Date: Fri, 23 Feb 2024 17:45:57 +0530
+	s=k20201202; t=1708692372;
+	bh=D8T1iuzJvdgAM8BRFbh+hcm3BNH2Qr3Lwn/NyFiXNCc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KGyzFhm7ILcP3GXTrYTNj37Jh2zhruTwranObf38pQndYH7SSUnzadWU1wxvtVqj0
+	 qTGEmV4Z32EIlEq08c7XGJWna2x3lkMwtjveIcgiZzFHU7xsYgbwwdTwGuHnX3OXST
+	 D1RXLNWq7+TUq2rxjavltUsvelEuCedCo/UgMgiOBANfVyo8HOL+zEYG5v9759klGd
+	 XzGpmYxdh5qbOaiVl0PTN47io8YGapFWIoQRRXww6R3c5dEImt6XFTlmI66N5sPwyv
+	 pNjksVmglMRXjR1DsnofXknnuHe1WXJvOO0RcaQUuLlURH0OKARgmF2OmmZCK5jnyA
+	 DXYjaTvKn/lDA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rdUwR-000000002kC-3nOA;
+	Fri, 23 Feb 2024 13:46:15 +0100
+Date: Fri, 23 Feb 2024 13:46:15 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Vinod Koul <vkoul@kernel.org>, Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH 2/6] drm/bridge: aux-hpd: separate allocation and
+ registration
+Message-ID: <ZdiTlwTOCROGD_AY@hovoldconsulting.com>
+References: <20240217150228.5788-1-johan+linaro@kernel.org>
+ <20240217150228.5788-3-johan+linaro@kernel.org>
+ <CAA8EJpoxe8BmyFqMC5yrqdx-Sx2VR_2gT3x6WT9MyhdLuw+xmA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoxe8BmyFqMC5yrqdx-Sx2VR_2gT3x6WT9MyhdLuw+xmA@mail.gmail.com>
 
-
-On Sat, 17 Feb 2024 10:39:37 +0100, Krzysztof Kozlowski wrote:
-> The xlate callbacks are supposed to translate of_phandle_args to proper
-> provider without modifying the of_phandle_args.  Make the argument
-> pointer to const for code safety and readability.
+On Thu, Feb 22, 2024 at 10:57:07PM +0200, Dmitry Baryshkov wrote:
+> On Sat, 17 Feb 2024 at 17:03, Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > Combining allocation and registration is an anti-pattern that should be
+> > avoided. Add two new functions for allocating and registering an dp-hpd
+> > bridge with a proper 'devm' prefix so that it is clear that these are
+> > device managed interfaces.
+> >
+> >         devm_drm_dp_hpd_bridge_alloc()
+> >         devm_drm_dp_hpd_bridge_add()
+> >
+> > The new interface will be used to fix a use-after-free bug in the
+> > Qualcomm PMIC GLINK driver and may prevent similar issues from being
+> > introduced elsewhere.
+> >
+> > The existing drm_dp_hpd_bridge_register() is reimplemented using the
+> > above and left in place for now.
+> >
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Thanks for reviewing.
+
+> Minor nit below.
+
+> > diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
+> > index c4c423e97f06..4453906105ca 100644
+> > --- a/include/drm/bridge/aux-bridge.h
+> > +++ b/include/drm/bridge/aux-bridge.h
+> > @@ -9,6 +9,8 @@
+> >
+> >  #include <drm/drm_connector.h>
+> >
+> > +struct auxiliary_device;
+> > +
+> >  #if IS_ENABLED(CONFIG_DRM_AUX_BRIDGE)
+> >  int drm_aux_bridge_register(struct device *parent);
+> >  #else
+> > @@ -19,10 +21,23 @@ static inline int drm_aux_bridge_register(struct device *parent)
+> >  #endif
+> >
+> >  #if IS_ENABLED(CONFIG_DRM_AUX_HPD_BRIDGE)
+> > +struct auxiliary_device *devm_drm_dp_hpd_bridge_alloc(struct device *parent, struct device_node *np);
+> > +int devm_drm_dp_hpd_bridge_add(struct device *dev, struct auxiliary_device *adev);
 > 
+> I had a pretty close idea during prototyping, but I ended up doing it
+> as a single function for the following reasons:
+> 
+> First, this exports the implementation detail that internally the code
+> uses an aux device.
 
-Applied, thanks!
+That's not an issue. The opposite, with interfaces trying to do too much
+and hide details from the developers so that they can no longer reason
+about what is going on, is a real problem though.
 
-[1/1] phy: constify of_phandle_args in xlate
-      commit: 00ca8a15dafa990d391abc37f2b8256ddf909b35
+> Also, by exporting the aux device the code becomes less type-safe. By
+> mistake one can call devm_drm_dp_hpd_bridge_add() on any aux device,
+> which is not necessarily the HPD bridge.
 
-Best regards,
--- 
-~Vinod
+No. First, that is currently not even an issue either as the
+registration interface is safe to use with any aux device.
 
+Second, if you cared about about type-safety you wouldn't have used a
+struct device pointer for drm_aux_hpd_bridge_notify() which you back
+cast to an aux device.
 
+> I'd prefer to see an opaque device-specific structure instead. WDYT?
+
+That should have been there from the start. But I'm not interested in
+cleaning up this mess beyond what is minimally required to fix the
+regressions it caused.
+
+This can be reworked for 6.9 or later.
+
+> >  struct device *drm_dp_hpd_bridge_register(struct device *parent,
+> >                                           struct device_node *np);
+> >  void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status status);
+
+Johan
 
