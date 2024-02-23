@@ -1,60 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-12397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED82D8617DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 17:28:50 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C50398618B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 18:02:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DB0728A14C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:28:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 027931C24892
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 17:02:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B1A884FB4;
-	Fri, 23 Feb 2024 16:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BDF612AAE0;
+	Fri, 23 Feb 2024 17:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FDL5Y02+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+1xBZ+4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D8D84FA1;
-	Fri, 23 Feb 2024 16:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DD7128815;
+	Fri, 23 Feb 2024 17:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708705728; cv=none; b=X+Ay9TQKHRmfb7nVgy2KEZ7gZT+UZGHPOD7ItvBTEoVibdNvxui3AIRL+OC+6Z/dnz8P81Heaa1awThC1hCqjtLrKIjUWWwcq7fjaopL/La4/ALUEeoh86fVpMrwydpM+9Eq+TgAoNIkP4nA5OPvdQ8wnsy4n1+/15N7yn5hi0o=
+	t=1708707745; cv=none; b=NljWXrqEg53VKSaaGHf9e/mbxzd95o/tJOn1SgXOynHSnuYRRZ0TEt20TPM/fC0FZqB6fJx+PKJa3ysjRStUquMUpQxr14HguutUfY+g6D9oHBKV8tgX7Y1LJEPXdcB1vCPvyGC+eo0UiL1MRNpmsmVdtfqjW6l0WAaKqkCJOuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708705728; c=relaxed/simple;
-	bh=MKwvCMy8mgFWdbvzLyOsYqWArU5NYYRlO+TE1+VYsX0=;
+	s=arc-20240116; t=1708707745; c=relaxed/simple;
+	bh=2o5JTRd3DSLZEMCMjL2aEPBU20fNxBNrc7mjVBw+7kc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=THWjdJbxbQXqH9E2Rn03bwdM856BmnRkYgBMMQr3l3F80GATp/FLSVOG7/Zf3A3mmIUbkEPh0Phvm7khqRGZmtBrQxvwqxuM3LdjPK7OqACBxBgZ92kvyeSA4ZNDi83/tvo/A0QJ++WFeVAhtyPk9roAQ/UbtCL1gzazg1WRptc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FDL5Y02+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4B0C433F1;
-	Fri, 23 Feb 2024 16:28:44 +0000 (UTC)
+	 MIME-Version:Content-Type; b=tg+QMNmlMSb8G2DhJiHuWUU68XP6j9rUGlcGSyIdc+HaznXyFPIK9h4LGgbQpwVSo9TrWgeiHbv2EnHc1alkExjPdf19uhgFZJwbNwtcLxqOmKwuRckXUctwSl88PGqPsm9+CggLaW0yB6+yRw9HJMq4GwG30UrhHRAtQKvheNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+1xBZ+4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6338FC433F1;
+	Fri, 23 Feb 2024 17:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708705727;
-	bh=MKwvCMy8mgFWdbvzLyOsYqWArU5NYYRlO+TE1+VYsX0=;
+	s=k20201202; t=1708707745;
+	bh=2o5JTRd3DSLZEMCMjL2aEPBU20fNxBNrc7mjVBw+7kc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=FDL5Y02+HEIiYaW0kbThPhPZ5tpkcEb6j8qRIscIJQcZKJqdHUcl6flVaSz66yUg7
-	 BMle0D2XUu60z49ecU5S+lXh/RmAHkziGc6RKUdso/xlD6G0q5n0Zt7vxBMkZsyQGK
-	 AFlWcWyfa2TV/wK+DwSvpPQasjAsjE8ySm5hFRTwRICxPrl7KRIzksFx26MA2v/6ui
-	 CCak8RETlNWeV49Jpu+d/FMOHeWtejvHrT+7JV6vztuGSAfTjH8GYlJShrwVMj6toa
-	 q1AmEnwkCppWTlGYZPTqGd02csea04b7DzYGhkuVFo2uHJ9H7tkiGTTXR1MEPMZnQm
-	 wvsZC8x59WyVA==
+	b=o+1xBZ+4fsS6hVxXlzE4Esjcw5DWE+4AqLCXAV/E6hescN5VFBzaVp5Ml59UVr1Vj
+	 NzMDNV2UJfA3il+FBx6bweSe4q5iNn+Y/+Okyy8D9oxMiQJFZ7ov+9NLXfrATx7QB+
+	 XvZXB3wXhotzo91inun1fUnroamTPKzvz5IwEWq5UPGOpRldJMjPJc9i8upC/fq++8
+	 FQlwge+dM5xQ14mVJVPiJ0s3ILgC5sJg1czRw6U13HxhT74bm8j+UbSL+41i/95ral
+	 vu/+41W8+SF6cvkjkAKA2HG8euWXKsu98br8kgE2I8D8kcRd5Xk5bIIG9HoQYnHKY6
+	 SlXDMhmaJSzog==
 From: Lee Jones <lee@kernel.org>
-To: lee@kernel.org, daniel.thompson@linaro.org, jingoohan1@gmail.com, 
- pavel@ucw.cz, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
- conor+dt@kernel.org, andersson@kernel.org, quic_kgunda@quicinc.com, 
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20240202180151.4116329-1-quic_jhugo@quicinc.com>
-References: <20240202180151.4116329-1-quic_jhugo@quicinc.com>
-Subject: Re: (subset) [PATCH] dt-bindings: backlight: qcom-wled: Fix
- bouncing email addresses
-Message-Id: <170870572457.1740438.258994199463486668.b4-ty@kernel.org>
-Date: Fri, 23 Feb 2024 16:28:44 +0000
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Lee Jones <lee@kernel.org>, Daniel Thompson <daniel.thompson@linaro.org>, 
+ Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ "G.Shark Jeong" <gshark.jeong@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Maximilian Weigand <mweigand@mweigand.net>, Luca Weiss <luca@z3ntu.xyz>
+Cc: dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20240220-lm3630a-fixups-v1-0-9ca62f7e4a33@z3ntu.xyz>
+References: <20240220-lm3630a-fixups-v1-0-9ca62f7e4a33@z3ntu.xyz>
+Subject: Re: (subset) [PATCH 0/4] Various fixes for the lm3630a backlight
+ driver
+Message-Id: <170870774114.1756675.11800657479764151316.b4-ty@kernel.org>
+Date: Fri, 23 Feb 2024 17:02:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,22 +71,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Mailer: b4 0.12.4
 
-On Fri, 02 Feb 2024 11:01:51 -0700, Jeffrey Hugo wrote:
-> Bjorn is no longer at Linaro.  Update his email address to @kernel to
-> match the .mailmap entry.
+On Tue, 20 Feb 2024 00:11:18 +0100, Luca Weiss wrote:
+> On the MSM8974 Nexus 5 and OnePlus One phones (latter doesn't have
+> display upstream) the display backlight was turning off whenever you
+> would write a brightness to sysfs since a recent commit to the driver
+> (kernel v6.5).
 > 
-> The servers for @codeaurora are long retired and messages sent there
-> will bounce.  Update Kiran's email address to match the .mailmap entry.
-> 
-> This will help anyone that is looking to reach out about this binding
-> and is not using .mailmap to pre-process their message.
+>   backlight: lm3630a: Turn off both led strings when display is blank
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: backlight: qcom-wled: Fix bouncing email addresses
-      commit: f842d487c6a2f17a9d4d9bbcbfdb90b49adac71d
+[1/4] backlight: lm3630a: Initialize backlight_properties on init
+      commit: 4602c7615989e6e7052e317995a66014eb318082
+[2/4] backlight: lm3630a: Don't set bl->props.brightness in get_brightness
+      commit: ebb3b9a65b56e9b21841ab9a15b946407cd6b104
+[3/4] backlight: lm3630a: Use backlight_get_brightness helper in update_status
+      commit: 3c40590fafd4cc2447fb482a640c450e1a58ffa1
 
 --
 Lee Jones [李琼斯]
