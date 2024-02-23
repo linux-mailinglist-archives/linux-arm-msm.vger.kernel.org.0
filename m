@@ -1,190 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-12347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D0C686135F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:53:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA15E861380
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:04:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE4711F2438B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:52:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0244B22132
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:04:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42B07F7E8;
-	Fri, 23 Feb 2024 13:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CECDC7F7D3;
+	Fri, 23 Feb 2024 14:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tkv3VesT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aF7w5mQZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30F781723
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3053B7E798;
+	Fri, 23 Feb 2024 14:04:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708696353; cv=none; b=WrCgK1V6+Ya9FxFdMsCW9wRMIJuTiG0vPsja5ZCYc7bP1VmcFpA5XeszMrfqECX7LXW/UEm6lIhL/g6TicS0q+OaVabyVQlbgwvgkxj+WukRb5SS56AOnWWtmPcOwo0/WcRAzE438+BCny84hvmeSrQ1Dvav2oUJb1iVXQ7GcGE=
+	t=1708697047; cv=none; b=SFYVq91ZRRYQzi9kV10elso7VcOnilkkzsW8jmG1ZWzebH7hgSbYj+BWITt8mrT/GYXcR6cip9ewM2506I4SHA65ClDos+bdZ8TvAp6T+hTA1fk6DLj3gcPkCbUqh/fjTBkCIqe9RBsIFEFsxweWF/su5iv88YNjhLyPZbLd+DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708696353; c=relaxed/simple;
-	bh=NzFRH/hD+LHAn7VgPtmLztnUE0rHvW9QplrqkiMWXgk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JOp0+KJFBU+A/FlKsgeDP3l5/mMSQSMEQBAnnOJSQOVrhmZXg/PXvkDyFm7m4N9Rks4FTbuUGkubEKsTxZFux4CUnChizHA5lHZBkXfCleDzbkRHJo4GK6y/B4viYCGLYoLQZfoY+nCFGODT6uHjiDqbU3cEUa3oDc9m07fIESY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tkv3VesT; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d24a727f78so12341761fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 05:52:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708696350; x=1709301150; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=w1CCwIgy2o0ymKg9g36BhlVJ3/o2uKolikgKrUSItNU=;
-        b=Tkv3VesTeC4Pg0H5lbnPrHWmR0ZMsgFnMPZEL2q8MjwrvA6yec3OyYDiZBq2N211uV
-         06dvFn+CLXiGL1YvB8RWXI3XE0TW4QS71QW3KKiMzNzhMM4ewXbObgBa/zelP99nAWZ4
-         t155u0gdXOkXROqfW0bqsGjuYYyR7f+SVDAxqPbWPfwkNQlGGJxcuKh/8rxsdBcrzakU
-         s5elG6eHNi3EF0JtT/E1GTFed+b7+IrMD+jpnXb2sOg7ddrIPMqKjkkhnylMzH9t6EZ8
-         E4UJtidntQAOumnsEc8WuJrfVLL9Bm++qm7HEaKa5eDThj2I/yzdVCjHsYKE8NDvQstP
-         ZBVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708696350; x=1709301150;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=w1CCwIgy2o0ymKg9g36BhlVJ3/o2uKolikgKrUSItNU=;
-        b=UdAPhSMirM8HdZlwJiHQku7omEH9JapVd4iqYLJy4T/vZjaG06tcyixjwa1wCyowuR
-         /Krx7pXGi4krkSLCaoH1kA5asc2O4v1JoJ2h1xM9RAhCxP1hi4lKyIUHiUl+FEN8qAs2
-         tqXJSFEoCuU+O/m2fnbf9TKj56NXE6dYqElzxkYpedVbcOE34tzferdDuKNqv0Gv/gks
-         8TInW9V3F87XKeHYt9tjwF2UI2/jkV0Hm3fqurFJPrqGB6jjd5ncWWk/c9N8doK+FA4U
-         /46rF2/PmlbU5Go2sBsvOrlZ1qP713/d+kO9vpNEC9JN0gsfzb34GaXJCKIwJgOBZ7xW
-         whkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVHR3MKladIyLsQndPHpjLcg28dq30m/xkJRW/tPYCa2xf6H4/pmx2UctZ/eF7GOG3ACeJsyRTOfX3iHf1VYhgHKJZ6PquMW/NICf3EHA==
-X-Gm-Message-State: AOJu0YwD/bOqgxqAoiqCQNDXR1kyESQvq7+W8IPMZrbcwVVVUFjt6hPO
-	FTP3j8GQYQaHjMO0oDE94aJnIE4BX6QNGp+dd8XcNfRWcB1fDIpGNEozm4lwVwQ=
-X-Google-Smtp-Source: AGHT+IHwE4oGRP6USExRO9u406ra40dfIlFnqLpaAW/cH+0rg8oNyYrx9Dp27AHc45IId+0tm6AYEw==
-X-Received: by 2002:a2e:7411:0:b0:2d2:3661:487a with SMTP id p17-20020a2e7411000000b002d23661487amr1474672ljc.9.1708696349892;
-        Fri, 23 Feb 2024 05:52:29 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:58e3:6b80:c446:11f4? ([2a01:e0a:982:cbb0:58e3:6b80:c446:11f4])
-        by smtp.gmail.com with ESMTPSA id t6-20020a05600c198600b004129228da2dsm2444760wmq.31.2024.02.23.05.52.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Feb 2024 05:52:29 -0800 (PST)
-Message-ID: <d4049823-ad24-4426-887b-9c66cdd96318@linaro.org>
-Date: Fri, 23 Feb 2024 14:52:28 +0100
+	s=arc-20240116; t=1708697047; c=relaxed/simple;
+	bh=nM40QHzYL1kwG2zb35krcUIqERe+VLJRE/J43CVPmVw=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=t0+/I33O8iC1vEMl4u0DB4XkK9oNlxcwrqmF4V3ijEO3xNdZB9I1BHcM51MxGy3S3zN8qOpc6A3wft4bpzZT99gBgcBdH7fmKGzsuAre8x1TXJ1D0Z6iHEi9BkZrWtul5lc9iR8hPuUVf8ZNcvoQylXALk+gQBOL57uooo74O/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aF7w5mQZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41NDvndw018420;
+	Fri, 23 Feb 2024 14:03:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=1mgJOW5SMwFM
+	2S8R8LzsDNYwGCjSr8J/HH+/75aLe24=; b=aF7w5mQZXV05NkBroo2HHMmUTgtD
+	mEZJKnZeVB7APNG0SDY3+ecddv2T5JgIQSaS7etgP9sUSIZE1blHDPUU2IvREkxg
+	Z1wNFn4Rqvpvl+bKedTIod69gdMlF+4CPqwuyMsGPY4KbHvK8/6dIIKde8Vw2q9A
+	wBoeaB6a2c+U23KJfh8MyoGN4yNfRPFr7IX4xwEHxEEW3eZt8nWCB2ug/rTn4z6Q
+	vfXqoqPq/cSAx699PKq1eLk2QqDFpmnXwMot+ff3JpUtiVK56TuzeDXaLkX8XpoB
+	+6gDzlp6zgNtN1RaWha/6quDUYl/OdVK8dGAB2KyepL0P3uyQpP2TgH+Pw==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wesgg0hsg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Feb 2024 14:03:55 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 41NE2Yr2026559;
+	Fri, 23 Feb 2024 14:03:52 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wanvme27t-1;
+	Fri, 23 Feb 2024 14:03:52 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41NE3qBo027350;
+	Fri, 23 Feb 2024 14:03:52 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 41NE3qSF027347;
+	Fri, 23 Feb 2024 14:03:52 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+	id 718DA14C5; Fri, 23 Feb 2024 19:33:51 +0530 (+0530)
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, konrad.dybcio@linaro.org,
+        manivannan.sadhasivam@linaro.org, robh@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_schintav@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: [PATCH v5 0/3] arm64: qcom: sa8775p: add cache coherency support for SA8775P
+Date: Fri, 23 Feb 2024 19:33:37 +0530
+Message-Id: <1708697021-16877-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vpn7AjzS49pQmA8aqIQKDmgZ30uYzrJb
+X-Proofpoint-ORIG-GUID: vpn7AjzS49pQmA8aqIQKDmgZ30uYzrJb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_15,2024-02-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402230102
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm bridge
- use-after-free
-Content-Language: en-US, fr
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Vinod Koul <vkoul@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- Jonas Karlman <jonas@kwiboo.se>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Kuogee Hsieh <quic_khsieh@quicinc.com>, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20240217150228.5788-1-johan+linaro@kernel.org>
- <170868613914.4029284.5549880672870201262.b4-ty@linaro.org>
- <3c4246b6-431a-442e-8ace-3b0d0e67743f@linaro.org>
- <ZdiU2z8rzo542_Ih@hovoldconsulting.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ZdiU2z8rzo542_Ih@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 23/02/2024 13:51, Johan Hovold wrote:
-> On Fri, Feb 23, 2024 at 12:03:10PM +0100, Neil Armstrong wrote:
->> On 23/02/2024 12:02, Neil Armstrong wrote:
->>> Hi,
->>>
->>> On Sat, 17 Feb 2024 16:02:22 +0100, Johan Hovold wrote:
->>>> Starting with 6.8-rc1 the internal display sometimes fails to come up on
->>>> machines like the Lenovo ThinkPad X13s and the logs indicate that this
->>>> is due to a regression in the DRM subsystem [1].
->>>>
->>>> This series fixes a race in the pmic_glink_altmode driver which was
->>>> exposed / triggered by the transparent DRM bridges rework that went into
->>>> 6.8-rc1 and that manifested itself as a bridge failing to attach and
->>>> sometimes triggering a NULL-pointer dereference.
->>>>
->>>> [...]
->>>
->>> Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-fixes)
->>>
->>> [1/6] drm/bridge: aux-hpd: fix OF node leaks
->>>         https://cgit.freedesktop.org/drm/drm-misc/commit/?id=9ee485bdda68d6d3f5728cbe3150eb9013d7d22b
->>> [2/6] drm/bridge: aux-hpd: separate allocation and registration
->>>         (no commit info)
->>> [3/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
->>>         (no commit info)
->>> [4/6] soc: qcom: pmic_glink: Fix boot when QRTR=m
->>>         (no commit info)
->>> [5/6] phy: qcom-qmp-combo: fix drm bridge registration
->>>         (no commit info)
->>> [6/6] phy: qcom-qmp-combo: fix type-c switch registration
->>>         (no commit info)
->>>
->>
->> To clarify, I only applied patch 1 to drm-misc-fixes
-> 
-> Ok, but can you please not do that? :)
-> 
-> These patches should go in through the same tree to avoid conflicts.
-> 
-> I discussed this with Bjorn and Dmitry the other day and the conclusion
-> was that it was easiest to take all of these through DRM.
+Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
+in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
+the requester is indicating that there no cache coherency issues exit
+for the addressed memory on the host i.e., memory is not cached. But
+in reality, requester cannot assume this unless there is a complete
+control/visibility over the addressed memory on the host.
 
-I only applied patch 1, which is a standalone fix and goes into a separate tree,
-for the next patches it would be indeed simpler for them to go via drm-misc when
-they are properly acked.
+And worst case, if the memory is cached on the host, it may lead to
+memory corruption issues. It should be noted that the caching of memory
+on the host is not solely dependent on the NO_SNOOP attribute in TLP.
 
-Neil
+So to avoid the corruption, this patch overrides the NO_SNOOP attribute
+by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
+needed for other upstream supported platforms since they do not set
+NO_SNOOP attribute by default.
 
-> 
-> With Vinod acking the PHY patches, I believe you have what you need to
-> merge the whole series now?
-> 
-> Johan
+This series is to enable cache snooping logic in both RC and EP driver
+and add the "dma-coherent" property in dtsi to support cache coherency
+in SA8775P platform.
+
+Dependency
+----------
+
+Depends on:
+https://lore.kernel.org/all/1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com/
+https://lore.kernel.org/all/20240216-dw-hdma-v2-4-b42329003f43@linaro.org/ [1]
+
+V4 -> V5:
+- Updated commit message in both Patch1 and patch2
+- change variable name from no_snoop_override to
+  enable_cache_snoop
+- rebased patch2 on top of [1]
+
+v3 -> v4:
+- added new cfg(cfg_1_34_0) for SA8775P in both RC and EP driver.
+- populated a flag in the data structures instead of doing
+  of_device_is_compatible() in both RC and EP patch.
+- update commit mesaage and added reveiwed-by tag in commit message
+  in dtsi patch.
+
+v2 -> v3:
+- update commit message(8755 -> 8775).
+
+v1 -> v2:
+- update cover letter with explanation.
+- define each of these bits and ORing at usage time rather than
+  directly writing value in register.
+
+Mrinmay Sarkar (3):
+  PCI: qcom: Enable cache coherency for SA8775P RC
+  PCI: qcom-ep: Enable cache coherency for SA8775P EP
+  arm64: dts: qcom: sa8775p: Mark PCIe EP controller as cache coherent
+
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi     |  1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 20 +++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-qcom.c    | 20 +++++++++++++++++++-
+ 3 files changed, 37 insertions(+), 4 deletions(-)
+
+-- 
+2.40.1
 
 
