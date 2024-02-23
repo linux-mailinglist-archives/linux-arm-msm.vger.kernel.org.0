@@ -1,133 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-12333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99D058611F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:51:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F9718612E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:40:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EDF01F21BF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 12:51:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 626C2B22D41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:40:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0FDE7B3F8;
-	Fri, 23 Feb 2024 12:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB4AF7F466;
+	Fri, 23 Feb 2024 13:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="evV+Boqp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O1pfL0Nj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B717AE45;
-	Fri, 23 Feb 2024 12:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3418322EF5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708692696; cv=none; b=dMWC/8lZH5+gZsqMsKDLwuuNx38TDSuEMlkLb0iXSzhtgaVrPo84NFiyTXys4RMATGIanigySfqVRjFveZwh/fHbIefbADqTHbLJllItb2DH52YsmzHZJ3illaEPIAcduQvqY6K2UR9voeMtYHQaptRndtGwZLLVNAT2UVKFKGY=
+	t=1708695577; cv=none; b=hF5kBuLvW4HDXl+vpX5RavJJP2ZqL4QDA+2cYkC8RcjOmAHkSzDwclEtBe123SdOsn2r7SNzHjOeguY3C0yt8x6+EpgWb6uhZ2ngGou579A3fMxtjk2QQ+SKXUMw5vTbNYe6Dt5hG/mhlwuz24lMIoE/Qf7Sfc8KxGcoN2OMqjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708692696; c=relaxed/simple;
-	bh=1lJXy4uKYL7pJq5F8Vo9jDbbuH8lfKzhYgyljzDs/n0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BFlNLaCyB3COIPLPuLGAXJ0hs65J29khpahW2Z5UIigLtgKJUVKgceZURquxlexVGGL18mg1PK1kwkMz25+IvUKjObEDzNS4kkwAxDix+8rItBpRtwQP7kfnuLM15dSnU2uwCdAkb0ioWkMuHDvL8XZF/fMz0rDyUC3iHPrTgjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=evV+Boqp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC6DC433F1;
-	Fri, 23 Feb 2024 12:51:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708692696;
-	bh=1lJXy4uKYL7pJq5F8Vo9jDbbuH8lfKzhYgyljzDs/n0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=evV+Boqp9I4YqNzKSjDSoquLBTJkguhMnylBUp+eSde9n7BkMk3q9Lg60i9e8XMX6
-	 KnVD7vHyg/cySaCtEXVuP/bnIKdedXSHu565Z9tnXNSUs8YPe1xFIzRKuV5Lg0ZXQV
-	 l5kazV2J2jYV5p1S+u6WGNhBVb5rBFr+fQm9xY0lkYDytbFklcGTP7cg/mrT3n3tmj
-	 s3PjVAYReKFME7zw5SaGqKfCDkAiLyIE41BxO+3TiTxQhRYcsaiqUTsS88rk0XN1+O
-	 AHCRTL2asQ7U5XUr+EIzkSF1syZ/XvtniJ/7iKjkLOcduxCRcGwgDdWDqckgm/Fjq3
-	 7vD74+f1h5vkw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rdV1f-000000002l8-1Rm4;
-	Fri, 23 Feb 2024 13:51:40 +0100
-Date: Fri, 23 Feb 2024 13:51:39 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Vinod Koul <vkoul@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: Re: [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm bridge
- use-after-free
-Message-ID: <ZdiU2z8rzo542_Ih@hovoldconsulting.com>
-References: <20240217150228.5788-1-johan+linaro@kernel.org>
- <170868613914.4029284.5549880672870201262.b4-ty@linaro.org>
- <3c4246b6-431a-442e-8ace-3b0d0e67743f@linaro.org>
+	s=arc-20240116; t=1708695577; c=relaxed/simple;
+	bh=Twp7tfSTw0JcrYxColLY4Ax9TG/pkPRhM7VLYkZRS4A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XXpapI9Fnh4tbeQjd7dTDs6yhOOBap+CzSCbVO9EMNyxH03eYJvyyYCxsHF4rVESEptK6RX4SkvZYqe7eqSN2wBSCgZXFVqJulcQSTq3G3x+qpmxSltmxh4BB67NwpeG0Hr86AvsVzuI0QOZq2XnQvE5vx7XJCzPfAquMqZJG+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O1pfL0Nj; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7c4949661a2so30826239f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 05:39:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708695575; x=1709300375; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d4x2sMmK8Ljy9DYC/W73ZknuhG0GdB53Q7DPx/D50TQ=;
+        b=O1pfL0NjKwcPNi6v4TRbX29zYKLHT9rMUoyBA4x2AZuL0ZSjaepb9uKDoEpUo3cMzk
+         pJ9Imwnzko2bF3xyF4oqRTx3yD+bDoWAtWke12lKiK1u8FVmMYJGv8J2C24svYf45wow
+         xTp4qQ7ZXEjU1BbrXn5OZ5+fmmRd7M2ERjJrtmT00sj5N8j1m7DmsgMNOtWy11a1fKPo
+         hcJpWg8Baju6GSUd/gPvjBVW95iGZhqW/sUnGZfMc8y420mj4lABxgkkREtMgbtuiX7t
+         x5sulLg0C39I3Dyt0Tk4ZZ6wxXAdpSwCzpD1TyKtIhVYM2/ckv/0/PlqMbrtc+tbvB9/
+         pxLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708695575; x=1709300375;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d4x2sMmK8Ljy9DYC/W73ZknuhG0GdB53Q7DPx/D50TQ=;
+        b=UDDWFr47+ewAPlSFaFaLJnZ0lx5RON/ATTKcTaCKt48rQlDveZ+T1IepcP0+z4TO4R
+         ypG7L081pteAH9YehdwN9YIL5R4ra7Hu4FR6ge0XqXLWC9Ja8IcIEqT24Qi1sIYDHErh
+         Npds+b2GkOLezWjtvcryYUBGh4z0kxxGYLurY3afMD5/mnULIqmHeP7nVFm2xZ/mu1iX
+         37WZ7lUAGhrFtUaw50KIlDE+zcpz+xcil3JNi4+dofzfkTql3BXR69XratuWI1sXEI9/
+         QGII6vlOLw3ehiM7685e1YIElTHvhHVh6X0cqXFS408WH2C22sxA8jIQ3HQNfoQi7Ze+
+         RkYg==
+X-Forwarded-Encrypted: i=1; AJvYcCU+D0jRJhJGoMnOdY5pdLQBHki/8jEAL8JLY5gx6w+AA9u2F2t6cVDbuLx7u18Rd0MzFW1AGyol/I0I/SxNlOingeu8rSlxrYE6igrqmg==
+X-Gm-Message-State: AOJu0Yxm7bzdstbHLcaGO91Z3ZIGMB+8syEYtnzT22fNvUTKH3g4YOwU
+	QYnQRzsSKepbs/cxW3BwVtEU6QBe9/mQLKLUlqGmXJ5L/uCSN59dwrt/dP+sBak=
+X-Google-Smtp-Source: AGHT+IFrz5R0BlotlFi4jZ+FPrD+nKWN+cqkiTi9yfrUfHfyDhCGmqbGauLW7N/Kb+gQyn8NGnS1AQ==
+X-Received: by 2002:a6b:c90e:0:b0:7c7:9185:e58e with SMTP id z14-20020a6bc90e000000b007c79185e58emr1936714iof.12.1708695575154;
+        Fri, 23 Feb 2024 05:39:35 -0800 (PST)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id p11-20020a6b630b000000b007c76a2d6a98sm1836838iog.53.2024.02.23.05.39.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Feb 2024 05:39:34 -0800 (PST)
+From: Alex Elder <elder@linaro.org>
+To: davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com
+Cc: mka@chromium.org,
+	andersson@kernel.org,
+	quic_cpratapa@quicinc.com,
+	quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com,
+	quic_subashab@quicinc.com,
+	elder@kernel.org,
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/6] net: ipa: don't abort system suspend
+Date: Fri, 23 Feb 2024 07:39:24 -0600
+Message-Id: <20240223133930.582041-1-elder@linaro.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3c4246b6-431a-442e-8ace-3b0d0e67743f@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 23, 2024 at 12:03:10PM +0100, Neil Armstrong wrote:
-> On 23/02/2024 12:02, Neil Armstrong wrote:
-> > Hi,
-> > 
-> > On Sat, 17 Feb 2024 16:02:22 +0100, Johan Hovold wrote:
-> >> Starting with 6.8-rc1 the internal display sometimes fails to come up on
-> >> machines like the Lenovo ThinkPad X13s and the logs indicate that this
-> >> is due to a regression in the DRM subsystem [1].
-> >>
-> >> This series fixes a race in the pmic_glink_altmode driver which was
-> >> exposed / triggered by the transparent DRM bridges rework that went into
-> >> 6.8-rc1 and that manifested itself as a bridge failing to attach and
-> >> sometimes triggering a NULL-pointer dereference.
-> >>
-> >> [...]
-> > 
-> > Thanks, Applied to https://anongit.freedesktop.org/git/drm/drm-misc.git (drm-misc-fixes)
-> > 
-> > [1/6] drm/bridge: aux-hpd: fix OF node leaks
-> >        https://cgit.freedesktop.org/drm/drm-misc/commit/?id=9ee485bdda68d6d3f5728cbe3150eb9013d7d22b
-> > [2/6] drm/bridge: aux-hpd: separate allocation and registration
-> >        (no commit info)
-> > [3/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
-> >        (no commit info)
-> > [4/6] soc: qcom: pmic_glink: Fix boot when QRTR=m
-> >        (no commit info)
-> > [5/6] phy: qcom-qmp-combo: fix drm bridge registration
-> >        (no commit info)
-> > [6/6] phy: qcom-qmp-combo: fix type-c switch registration
-> >        (no commit info)
-> > 
-> 
-> To clarify, I only applied patch 1 to drm-misc-fixes
+Currently the IPA code aborts an in-progress system suspend if an
+IPA interrupt arrives before the suspend completes.  There is no
+need to do that though, because the IPA driver handles a forced
+suspend correctly, quiescing any hardware activity before finally 
+turning off clocks and interconnects.
 
-Ok, but can you please not do that? :)
+This series drops the call to pm_wakeup_dev_event() if an IPA
+SUSPEND interrupt arrives during system suspend.  Doing this
+makes the two remaining IPA power flags unnecessary, and allows
+some additional code to be cleaned up--and best of all, removed.
+The result is much simpler (and I'm really glad not to be using
+these flags any more).
 
-These patches should go in through the same tree to avoid conflicts.
+The first patch implements the main change.  The second and
+third remove the flags that were used to determine whether to
+call pm_wakeup_dev_event().  The next two remove a function that
+becomes a trivial wrapper, and the last one just avoids writing
+a register unnecessarily.
 
-I discussed this with Bjorn and Dmitry the other day and the conclusion
-was that it was easiest to take all of these through DRM.
+Note that the first two patches will have checkpatch warnings,
+because checkpatch disagrees with my compiler on what to do when
+a block contains only a semicolon.  I went with what the compiler
+recommends.
 
-With Vinod acking the PHY patches, I believe you have what you need to
-merge the whole series now?
+clang says: warning: suggest braces around empty body
+checkpatch: WARNING: braces {} are not necessary for single statement blocks
 
-Johan
+					-Alex
+
+Alex Elder (6):
+  net: ipa: don't bother aborting system resume
+  net: ipa: kill IPA_POWER_FLAG_SYSTEM
+  net: ipa: kill the IPA_POWER_FLAG_RESUMED flag
+  net: ipa: move ipa_interrupt_suspend_clear_all() up
+  net: ipa: kill ipa_power_suspend_handler()
+  net: ipa: don't bother zeroing an already zero register
+
+ drivers/net/ipa/ipa_interrupt.c | 50 ++++++++++++++++-----------------
+ drivers/net/ipa/ipa_interrupt.h |  8 ------
+ drivers/net/ipa/ipa_power.c     | 33 ----------------------
+ drivers/net/ipa/ipa_power.h     | 11 --------
+ 4 files changed, 25 insertions(+), 77 deletions(-)
+
+-- 
+2.40.1
+
 
