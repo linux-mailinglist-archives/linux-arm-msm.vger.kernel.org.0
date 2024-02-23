@@ -1,139 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-12319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59858860E53
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 10:41:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D38860F13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 11:19:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8AA4E1C227DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 09:41:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B50AA286FE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 10:19:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C86F35CDD5;
-	Fri, 23 Feb 2024 09:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B5315D471;
+	Fri, 23 Feb 2024 10:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vVazC6xJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GeCoMpt8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E16B5CDCC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 09:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3741642A;
+	Fri, 23 Feb 2024 10:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708681249; cv=none; b=VeAITpCeJzeAM7sKKaCo/QDVjmLBQWMcxaQ0IiAueLLw+rMotQHLTkswdBtzHf2DL1wFjRUQcBnkOzpJ0ZRHvGGju8ohkCX/GUKsH7k94pgjqyfh+hXZzbKMa01RwRw9zBFRSSO0C9+s1dDfUrqkuFtwro4DhgRVKrpCNqykw1U=
+	t=1708683531; cv=none; b=h318X2qX+B+cPMKDdy6yaqIZM7IcAPOdxgi5as0f9NvVOGY4jXuZHpHScNsaem/DvevXWbPRHtNoc2VIqZTWb42Iu74pLwMxQdyFlLOduZQZkXQZiSm+cw1nF/TdncqrZd94A9xaTyAsLTzKt67GTqZlLM8Dy4zcZI9vBpuSk2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708681249; c=relaxed/simple;
-	bh=rAZRRa29e7xVYk8Hc95CB+iUlw9D84lT7pBp2nK1EwU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sZe1dMAafu1O1+n7OS+n5qsKQMPmFhr00H2rDQWuapcMIQCCZN7yA7hBdkUdLV21zzrvKkeHCU2DRstl4325uYogjnZP1TwyYKHM0JEMHXMTWsKYFutygy3MOQbyuurs8CpJDiBB8wIfRY7rDM83kTRelcL9EReWJGF6HfIJ76s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vVazC6xJ; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4125e435b38so984355e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 01:40:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708681246; x=1709286046; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sClHUEJjf2CmNxz7CFNtdXtyCHWqVxiZ5wHj9LbF+v0=;
-        b=vVazC6xJNXY34o/6DEjjJLQ4bGnRcVls8AwL3GGHuTsPtQMfHCLZO70YmeWCBj+JQT
-         lLR9M0WNI0CkXxu6T+jFQS1EERdesAjFDHy/oR7JkakiZeUP3/TaLwzz0NYPSlqNaJeQ
-         UdhEmQgmEqiuis1dLJAhMTX/U1LaNV1CBclJeHrSVTQmDkTV6wQj4TIs6d4YNFLhZCpM
-         q2cUac4oBwnqLDdNe9sdQP54ChZvWRY6igr6lOww3Qsgdec9HbMtDG6ZFpTQR80qj0HT
-         5Oq0h3T/6JCK7XPa5JkWUH8xxhBiWkMb1ydX6HRfDOVaQT6Ub4iv6pJQsWvYt/uM6zkb
-         TImw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708681246; x=1709286046;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sClHUEJjf2CmNxz7CFNtdXtyCHWqVxiZ5wHj9LbF+v0=;
-        b=NK02i1Eto8y5D62BwX6qTGqjMaq0P6bg8Z/DOyL3LmNvTupq59TQus0LpQ+Cvw4jvn
-         /25u2Rqqaf+sgxHbJmUlFjgfg5LqLs8RsDRwJ9T+ymgVoGVZY+s1ypWc4eJfsl2G4GkN
-         CZ5WNaqxymANWUTs6eqEeWe6Uv0UJDW7hkmg3H/ZMu8OiRL8jsg/VzF89Z7fxE20COw7
-         fWCYUHHpCdi8BVEHbIy6BvjTi+vHTYE1SfEIl7CkNT14ALTR54lQJHgJ1R2DF5Dwkv0t
-         51790RgDiUlV376QKtrDD6lN9pukrc66kenyOaKl1JIG9HX/DvSAIDYCZQhAx1d9MnQo
-         pPNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXqBxniO9277DIPeKPnhhYd9jZkaeCzqFHZexjl/E33JUKmr6TYYqNNua6NSF0MeaYCksTr889vrkHjVggoSF6w3FCu+7LIpQ2jRM3qXg==
-X-Gm-Message-State: AOJu0Yz+Cak3KX2PR327FVLZWBkYWcgBDaBwfi/HWX5m6iaQCoHrHAM0
-	Kic4lJS6/4WyGQVSHveZ8BoqlYLaJEpnZ/P6vt4ZbVX6rJLQw0/NyAB/gXpMeJM=
-X-Google-Smtp-Source: AGHT+IEjHAxBxVh5OtjxN2vdFCneVCDEeOmLFcQppDjrnwdgtaLb9VFSu0mgNJ/TFI9Q41H4TYKdiA==
-X-Received: by 2002:a05:600c:5117:b0:412:96e2:96aa with SMTP id o23-20020a05600c511700b0041296e296aamr194323wms.28.1708681246371;
-        Fri, 23 Feb 2024 01:40:46 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id t6-20020a05600c198600b004129228da2dsm1676084wmq.31.2024.02.23.01.40.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Feb 2024 01:40:45 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 23 Feb 2024 10:40:40 +0100
-Subject: [PATCH] usb: typec: ucsi: fix UCSI on SM8550 & SM8650 Qualcomm
- devices
+	s=arc-20240116; t=1708683531; c=relaxed/simple;
+	bh=0kvbSqosJ5PV6gzc4ndMjbUoqfFey9a9gTa/COfANw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=J6Rq2jg8rSVE+BquwIoRtRP9+TbCVfH04MqNCwwslgJrctnYt3ZC7G/mNkWcAVdDZyiDyZ0NmkKHN3oqvzOaCJdv8ASBOb64SrFbEqYltY7XpVaGdCH/GuFkvW4P3Yv5scrA+rimGPMxyrYXFSYeVLm877RIQ87AYyQnpNTHAm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GeCoMpt8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41N7u7iV027179;
+	Fri, 23 Feb 2024 10:18:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=C2pBHnwMTIW0Lt1mPFv3jlV9ek01TT1xsSVaoZixcdw=; b=Ge
+	CoMpt80TaowAfNcB52WBhNG2Qp5pRwVIrZN3AM07+OT/cE8Ow8ntwJmiwpcypCI1
+	cTEupLNU6uIx0hAWB2iqyhgcNs0MrAGW/xV3H8ln4K+drhSrFSnYsyRIdPRCExrI
+	KJJ/93TprC6jh0Iep74FG9YlxY7mqCKBFVSuL96zIR23DglI+YrZ8CDFg88o1wOd
+	hB6YG+YirQFNjkgildBu57OiYBUq+zFOKzsgW752yr56VVnro0B9rw1iLZFfKwf9
+	12vATnB3ZtXCZ1/KAAzRcw1MTuagAG57twMjIjpf/fiKJbX/GgF90G0rz5rRny6y
+	i2nqO457aZmFrFjlqgwg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3weqcf88xp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Feb 2024 10:18:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41NAIXm2010206
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Feb 2024 10:18:33 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 23 Feb
+ 2024 02:18:27 -0800
+Message-ID: <3a6d301d-16f6-4a11-8be5-6bbb6eb501f4@quicinc.com>
+Date: Fri, 23 Feb 2024 15:48:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com>
+ <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com>
+ <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+ <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com>
+ <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
+ <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com>
+ <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
+ <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com>
+ <CAA8EJppP_bAPRH7Upnq8dO7__xQPOJ6F_Lc-fpRAcutKKzk0eA@mail.gmail.com>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <CAA8EJppP_bAPRH7Upnq8dO7__xQPOJ6F_Lc-fpRAcutKKzk0eA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240223-topic-sm8550-upstream-ucsi-no-pdos-v1-1-8900ad510944@linaro.org>
-X-B4-Tracking: v=1; b=H4sIABdo2GUC/x3NQQqDMBBA0avIrB1IpzVoryJdhGRSZ2ESMloK4
- t0NLt/m/wOUq7DCuzug8k9Ucmp49B34xaUvo4RmIEMvQ/TELRfxqOs4DAb3oltlt+LuVTBlLCE
- rWorBBWunOBlooVI5yv+ezJ/zvABx+dvKdAAAAA==
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1260;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=rAZRRa29e7xVYk8Hc95CB+iUlw9D84lT7pBp2nK1EwU=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl2GgdjlLJk4bh0zWaDYCcISwdOQmXeslMUStbkNsY
- ndCVxl6JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZdhoHQAKCRB33NvayMhJ0SVsEA
- DDl13NERujQDeoEBdaWpzFTUuOBR6UZhyBlRfdJ6lGVF7r0EUs0b5/KjVyShkVAVcA4liqGODKA+kU
- Kd/6VAUN+nZKU8mqBuwdBqUSrQmmYJR8VVRYG7rtjjjh6/c9XcU2C+2Kd4a2lLnhW0wvkv2dsz39Xp
- YbOJ53ky+sZwGk92lFkDBAIiSx1GJ/IwIZ6myDkBa5pzB8huVte71/4SEJTVUzuZ939eH4v9yHY0XU
- g74E4GMTQiR16vZgZbMgVfG/hM3pi4J7FA86F2UaGofoIRe/FasEhdMdijxAP3uwHqLOf3Rem209E8
- +lwM/HzDmYXb2VOW3NPPnzieEkTOiIYXxquZ1nrY5sKLylqaPWbTapz8wLB/q2CKZ2r3GKlldtTHjo
- pt65I9G1+0eNWNJuloRhGfe5QavHa9yZZI3O9eTmSaMYeBmyrrm+aIsf3YlAYOjKDulr9QgDqil1FN
- pEGeslk+P+uLBy3jjlSw6mKQ7k0epUCXxwK/MX8VbAJ77EUjmMNJCqQcMswyETNOAtqBG5w+OdYpYz
- uOK94ueF4Ro+2Kvb7DYw0yrzbf+UPi3Rx9GzN+nT0BimpL9iToRz8Q/APPlT4Oc2bHgN51q8dr7R1o
- iuunGkz8tVTQy2JRRXyjwd5BV50Gb24zsUxQY6w6SZgM0HSi7TIYimPeQ0MA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TBM5zPBMFRANid5D1Kx_kZprPk2Mx-1T
+X-Proofpoint-GUID: TBM5zPBMFRANid5D1Kx_kZprPk2Mx-1T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=865
+ impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402230073
 
-On SM8550 and SM8650 Qualcomm platforms a call to UCSI_GET_PDOS for
-non-PD partners will cause a firmware crash with no
-easy way to recover from it.
 
-Add UCSI_NO_PARTNER_PDOS quirk for those platform until we find
-a way to properly handle the crash.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/usb/typec/ucsi/ucsi_glink.c | 1 +
- 1 file changed, 1 insertion(+)
+On 2/19/2024 3:53 PM, Dmitry Baryshkov wrote:
+> On Sun, 18 Feb 2024 at 06:29, Kathiravan Thirumoorthy
+> <quic_kathirav@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
+>>> On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
+>>> <quic_kathirav@quicinc.com> wrote:
+>>>>
+>>>>
+>>>> <snip>
+>>>>
+>>>>>> Reason being, to access the NSSCC clocks, these GCC clocks
+>>>>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
+>>>>>> should be turned ON. But CCF disables these clocks as well due to the
+>>>>>> lack of consumer.
+>>>>>
+>>>>> This means that NSSCC is also a consumer of those clocks. Please fix
+>>>>> both DT and nsscc driver to handle NSSNOC clocks.
+>>>>
+>>>>
+>>>> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
+>>>> enable the same in the NSSCC driver probe.
+>>>
+>>> Or use them through pm_clk. This might be better, as the system
+>>> doesn't need these clocks if NSSCC is suspended.
+>>
+>>
+>> IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so
+>> that, can I enable these clocks in NSSCC driver probe itself?
+> 
+> There is a difference between PM (suspend/resume) and runtime PM.
+> 
+> 
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index 0bd3f6dee678..932e7bf69447 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -302,6 +302,7 @@ static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
- 	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{ .compatible = "qcom,sm8350-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
-+	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
- 	{}
- };
- 
+Thanks Dmitry. IIUC your question correctly, runtime PM for the 
+peripherals are not supported (except CPU cores which supports DVFS). 
+Since these are router based products, once system is powered on, all 
+the peripherals are configured to the required frequency and it will be 
+never go into low power modes.
 
----
-base-commit: 33e1d31873f87d119e5120b88cd350efa68ef276
-change-id: 20240223-topic-sm8550-upstream-ucsi-no-pdos-62fdad669f90
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+Please let me know if this answers your questions.
 
