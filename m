@@ -1,121 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-12404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD49C861C07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 19:45:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23895861C65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 20:20:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52750B24C19
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 18:45:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8BB45B232F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 19:20:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE8A71448DE;
-	Fri, 23 Feb 2024 18:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 186FA143C40;
+	Fri, 23 Feb 2024 19:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2FBGXpg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C4F143C7F;
-	Fri, 23 Feb 2024 18:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64023142645
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 19:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708713908; cv=none; b=ORTvMd3ACEcf13KXOpCUTkzInyjX3JMog5Y6o3gk0NtvoCD8VAXTimEYAR3rYCrSsibTxh++P2TjKTWhF2lrZQ3JOVfs6VDDjeia5Up6yd5IgKwvG0zUWb4HNLx3TCTYTeZMIzmk+4eJsEryVq5UNfI1mHdo8M9Kb8vCWz9G5/Y=
+	t=1708716027; cv=none; b=E2DsmlxmTdDdSpNOeuvD62YmGZHx09bDQL8uu3V/kK50VPupBRvoyCd14lG/Z6/ZC02pBCl8fmoHKTdxemyzGaBISIrqBTtVX6WJ0XNwloSxNWgpqjf4emc1w1GGld4lKp/VxEeIWZJ8wWNOIZh+WfBdR9ssiYj8QB4Zt0jTcqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708713908; c=relaxed/simple;
-	bh=HNxDQrAqfHomkkBAL+GsWJU+Nkbn4bLBCPF0LWecwlI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mH8XCKDle3MAUNNmPjBhTAoJf8lgWMqqOLY/1IwskOvfca79pAs0qZuk2PuwroASSBLtVEASVc4GEm+gPccW/cTRU4/KsGBsxuHoONvRWQiKYbckgjgSWIfTFSZdmDXKmLMVL7vnDSd8oo4QUUv8u/SljNoZDDP/KBLdJowgpIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3ACC433C7;
-	Fri, 23 Feb 2024 18:45:01 +0000 (UTC)
-Date: Fri, 23 Feb 2024 13:46:53 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: LKML <linux-kernel@vger.kernel.org>, Linux Trace Kernel
- <linux-trace-kernel@vger.kernel.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- <linuxppc-dev@lists.ozlabs.org>, <kvm@vger.kernel.org>,
- <linux-block@vger.kernel.org>, <linux-cxl@vger.kernel.org>,
- <linux-media@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
- <amd-gfx@lists.freedesktop.org>, <intel-gfx@lists.freedesktop.org>,
- <intel-xe@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
- <freedreno@lists.freedesktop.org>, <virtualization@lists.linux.dev>,
- <linux-rdma@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <iommu@lists.linux.dev>, <linux-tegra@vger.kernel.org>,
- <netdev@vger.kernel.org>, <linux-hyperv@vger.kernel.org>,
- <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
- <ath11k@lists.infradead.org>, <ath12k@lists.infradead.org>,
- <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
- <linux-usb@vger.kernel.org>, <linux-bcachefs@vger.kernel.org>,
- <linux-nfs@vger.kernel.org>, <ocfs2-devel@lists.linux.dev>,
- <linux-cifs@vger.kernel.org>, <linux-xfs@vger.kernel.org>,
- <linux-edac@vger.kernel.org>, <selinux@vger.kernel.org>,
- <linux-btrfs@vger.kernel.org>, <linux-erofs@lists.ozlabs.org>,
- <linux-f2fs-devel@lists.sourceforge.net>, <linux-hwmon@vger.kernel.org>,
- <io-uring@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <bpf@vger.kernel.org>, <linux-wpan@vger.kernel.org>, <dev@openvswitch.org>,
- <linux-s390@vger.kernel.org>, <tipc-discussion@lists.sourceforge.net>,
- Julia Lawall <Julia.Lawall@inria.fr>
-Subject: Re: [FYI][PATCH] tracing/treewide: Remove second parameter of
- __assign_str()
-Message-ID: <20240223134653.524a5c9e@gandalf.local.home>
-In-Reply-To: <0aed6cf2-17ae-45aa-b7ff-03da932ea4e0@quicinc.com>
-References: <20240223125634.2888c973@gandalf.local.home>
-	<0aed6cf2-17ae-45aa-b7ff-03da932ea4e0@quicinc.com>
-X-Mailer: Claws Mail 3.19.1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1708716027; c=relaxed/simple;
+	bh=M5k+Z4nPDwnRiBjbOv3TCMIZZge42YuOc06DAKki524=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fkUi0zqOTPRgr0XhMDtevJDf4pNAHaLZmF8cbiuI1UAZ8p+ZUnTxY+EbGxXg9QS26gS2LBEp04OQBbc5c21HcsdI5tGmOSfV8rojYM8gKdh2YRrdQGLxxGJG42SK764kd96Wfsrt5KB3lDW1r4d9HfzKqMB+udXm4XBPvWLaNM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K2FBGXpg; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-56454c695e6so2195928a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 11:20:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708716023; x=1709320823; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M5k+Z4nPDwnRiBjbOv3TCMIZZge42YuOc06DAKki524=;
+        b=K2FBGXpgybSe7SFnFlLLoG4pvtlX4s1C1wv7oSD0iA12lie+h85ycWS83f/Dw7bHSu
+         VK6Eutfz6JdqY+Fl68h1awhsurKYsvYPLTPPd/3IGePUnZ2Yvws95znPwfN47d1l2fY/
+         oiWFenO65vgl6vkYWFD5LGusV7oT10ttwY5+VepscWD5jfJKGCsoZTGoxakl2DvgcuT0
+         WJLcOrte6NMmxg5TXQcbKtPRDG9y/vZpPcVyQCo1tnTd7ByWeK0JhfaTX2a+NH81qfgm
+         NxSiNE4XKM8ACuSfThTqKtMI1IqmZwuhQrinJSF20QXjziQ1pij3oE5NrtEmraD7Z5p3
+         2a3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708716023; x=1709320823;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M5k+Z4nPDwnRiBjbOv3TCMIZZge42YuOc06DAKki524=;
+        b=pGmJH6J/EVoWmeE/I9+E4dT6alQz8niA499spNom1YgB4N6K2BE59HrRJyBjpH2LTM
+         UyoBuhW4sqWhO4qAExOccHRz0Zvi0tW3JC7FkqLBkWu4Fq00vkzTMqI3rqkQnRDPrtyR
+         irjx03A3V56qqroXzwe/qNRdfyNI8k4TNLiqGcvwZw/XGzodCVisOq77FYglTSSdW4HL
+         40WaIWoBYcHlKiyTrU/uDw9R1VTzMk91ixaq4mrZVAZWBcLNaQzjR0BQDV/xS8rfaMxq
+         HMxueF7mydLD0hqmG7+jU7fFZ1/4smzBvpQW0i39IlTbfme1Eb/vXFcoeLwtmN30TO5C
+         PhOA==
+X-Forwarded-Encrypted: i=1; AJvYcCWjf2dhBoYQ2YPQsvVghJtuhiho+OzNa9JmiE8u/88DDV7p0Tn9bnRM9u4QezoVuIxHOfXgWTbb2Dp2mWrCL3Juc6FKoJnz+QC1yrqEEA==
+X-Gm-Message-State: AOJu0YwS2ruliyx1z9VCMMpdQXXZ3j4zmtlNvpVOS1iikmJrt2eXLYoc
+	TZrlyDVe0S3m2U+gevdXFwFAWeynDR/rIPwp8feiQCW8b7ivAgUY+daWx3kJkpCX8LV0CPma/1l
+	sy0Vn3VhDjZByHwc4yz1wHNUwM3M=
+X-Google-Smtp-Source: AGHT+IFxzxNvseF7FRtNGReSOFATSOOCh/1iiT7dXL+XxvU/9GXBLYa5JADHu4mYKLvEoJ+ZN/R02g6XFdvoxwcEuBM=
+X-Received: by 2002:aa7:cb4f:0:b0:565:7ce5:abdf with SMTP id
+ w15-20020aa7cb4f000000b005657ce5abdfmr600067edt.9.1708716022607; Fri, 23 Feb
+ 2024 11:20:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20240220121741.2994222-1-dmitry.baryshkov@linaro.org>
+ <54a3f3d9-ad3e-4828-96c0-61dd81c61d76@collabora.com> <CAA8EJpq-17XSwmoT1HKVgxi=fUKD-fETtwbtpznR+RY+iFCE6w@mail.gmail.com>
+In-Reply-To: <CAA8EJpq-17XSwmoT1HKVgxi=fUKD-fETtwbtpznR+RY+iFCE6w@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 23 Feb 2024 11:20:10 -0800
+Message-ID: <CAF6AEGtsL2pwQQ2pDDbYmRmp57aX2WjtD4qsZ=J_p07b+o2Tkw@mail.gmail.com>
+Subject: Re: [PATCH] drm: ci: uprev IGT
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Helen Koike <helen.koike@collabora.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 23 Feb 2024 10:30:45 -0800
-Jeff Johnson <quic_jjohnson@quicinc.com> wrote:
+On Wed, Feb 21, 2024 at 6:36=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 20 Feb 2024 at 16:31, Helen Koike <helen.koike@collabora.com> wro=
+te:
+> >
+> >
+> >
+> > On 20/02/2024 09:17, Dmitry Baryshkov wrote:
+> > > Bump IGT revision to pick up Rob Clark's fixes for the msm driver:
+> > >
+> > > - msm_submit@invalid-duplicate-bo-submit,Fail
+> > >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> > Do you have a gitlab pipeline link I can check?
+>
+> Before uprev: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1109455
+>
+> After uprev: https://gitlab.freedesktop.org/drm/msm/-/pipelines/1109501
 
-> On 2/23/2024 9:56 AM, Steven Rostedt wrote:
-> > From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
-> > 
-> > [
-> >    This is a treewide change. I will likely re-create this patch again in
-> >    the second week of the merge window of v6.9 and submit it then. Hoping
-> >    to keep the conflicts that it will cause to a minimum.
-> > ]
-> > 
-> > With the rework of how the __string() handles dynamic strings where it
-> > saves off the source string in field in the helper structure[1], the
-> > assignment of that value to the trace event field is stored in the helper
-> > value and does not need to be passed in again.  
-> 
-> Just curious if this could be done piecemeal by first changing the
-> macros to be variadic macros which allows you to ignore the extra
-> argument. The callers could then be modified in their separate trees.
-> And then once all the callers have be merged, the macros could be
-> changed to no longer be variadic.
+jfyi a couple more fixes landed after this, for kms_plane_cursor
+(skips->pass) and kms_universal_plane (fail->pass)..
 
-I weighed doing that, but I think ripping off the band-aid is a better
-approach. One thing I found is that leaving unused parameters in the macros
-can cause bugs itself. I found one case doing my clean up, where an unused
-parameter in one of the macros was bogus, and when I made it a used
-parameter, it broke the build.
+I have additional fixes for kms_bw, and kms_plane_scaling still
+waiting for review
 
-I think for tree-wide changes, the preferred approach is to do one big
-patch at once. And since this only affects TRACE_EVENT() macros, it
-hopefully would not be too much of a burden (although out of tree users may
-suffer from this, but do we care?)
-
-Now one thing I could do is to not remove the parameter, but just add:
-
-	WARN_ON_ONCE((src) != __data_offsets->item##_ptr_);
-
-in the __assign_str() macro to make sure that it's still the same that is
-assigned. But I'm not sure how useful that is, and still causes burden to
-have it. I never really liked the passing of the string in two places to
-begin with.
-
--- Steve
+BR,
+-R
 
