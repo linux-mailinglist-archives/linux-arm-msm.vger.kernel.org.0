@@ -1,191 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-12410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63F51861E2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 21:53:07 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01F74861E8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 22:10:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 482C3B2291E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 20:53:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 241F91C238F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 21:10:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7CF146E96;
-	Fri, 23 Feb 2024 20:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8574C148FF5;
+	Fri, 23 Feb 2024 21:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cw+HpZ5B"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bi+ot12s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A5926291
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 20:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE01D85C7C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 21:10:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708721574; cv=none; b=KAD2ucrthxFBEXwf1ELbbozsA04PASH6FnAdC9JiGW1tXqBFKPcyFLL3STvw/ca9ImUeXrB0dweZ2uYOfAPhchMRH+rF+LT+VSYVVOE97nEai/soabZk6xxApOAiAYIig7q2NkTj4jlvq8k9VnCoQtx6uAns+z6LImY4LpQYPyc=
+	t=1708722657; cv=none; b=DELYd7Di6Pz9ELVZmyqhZ+so7zF/+zENDFi2AY1XSRPNVEljnnlwLJ+DnsIoVjLuDCj/oVzPMP8pDEwcVLH9cbK/52POuBn0PjLHpIgjx3T/CPTXUuAXxPm9JuZkuKYMnLxL2b9kIUvk0V5qcJ5JtwHFxENi1kunbQjPzi3babY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708721574; c=relaxed/simple;
-	bh=n2xMVgNJCTCFhDUromHbPvL5mRoUyWkPJfqjF4Y21Wg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mo0OeIkFnTtFxNILGVyn6BoIPNhpR6wzDrHwc3ipDPE4pirbHA/ZuBafkXZYm6gqlutLN1pyv02R5jkCKJTS+DQWFqNLJ9XbEf8nnLM/5vADIfyRSkxc6xeeeis1lJIdU0+lJ9w3EE1Jw4JLheRnWm5lg1jQ1R1kts/mEM9zCr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cw+HpZ5B; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1708722657; c=relaxed/simple;
+	bh=zLfaBPQQ/PChVmxN6vpfoSLBNRdvKq4jQqRP2+O0sUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=omRLwpU+SFR7f7jATPukQ0m2MQlYUUBfLMNpqqfKa9JOpHpsq4Jgk0Pl663Ue6JWvRnO2EBA5DLEfvWYg/mAHBgU7DB1dfWU8ViPLbwSgxvd5t7togxz/xsLl9v+BGAOLsy9ACZEYGIrKKYsKM3vvsisE3cE3tEtDYHEL73+7PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bi+ot12s; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dcbc6a6808fso857047276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 12:52:52 -0800 (PST)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a3d5e77cfbeso234370366b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708721571; x=1709326371; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NxODghQMamK2SljX5x9IFGf+/9bKTXqE2yI7GzUqoio=;
-        b=cw+HpZ5B+SQM/bE0j92+3lNI5keheEJ383iP72NKc9yBkXcw6fEIB7jomkAHMMnDpv
-         whFzE338pRa65ADClXjaAkCcDcgG+e6lKZJyxcGuVGU2ZU1J7lQJ7g2z8rqAGYOk9Lse
-         xQpzwKzSomV5SSYQuBNQ1j1DkHIJbd0g2P+/jVEf4+UC8UlHXQryZ5pUoLC/h6eOzbkS
-         gXfuLNc1jIbB4YYIqorbrIhkyfPX8Vrw0a/17wcQUdnLfWLIU48Huv7hPBWq5HPFKpxd
-         zIW7q2RBVrHp1SV++0pP6faLDJJJwNZIbQ2QTb+z0Reyxsj1xyoK9paS4pF3T6qxaM3T
-         mn4w==
+        d=linaro.org; s=google; t=1708722654; x=1709327454; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=brDT2YXF8x8KzS2bAH7c1UHxnZms6mIqOBc2rPT/eec=;
+        b=Bi+ot12sSPPWiJd4UxeO3J/+6vvUyvvisiqqoYcDUeQAzCQLAxY092awLenxUlOBg3
+         HdiKbrwdvHpuV+LAxIFWd5XS7H8pWVp28WYUGsNGM2kDZZc7+Ki/XuqbOf+E4x9MzcUE
+         dihyW1LbOApegVhIo95SSdSYeMIBUhqZbhqzCR2F/gyhszSJLQ7MGFQrBKmSR1oUyHmC
+         ibDdrto7Wc2fyByMNf3fyZ+deelZ9jAQ3D2SIz0Pzw9BtkgOKEDGmwSlDlp69uYCV6zo
+         /Wn8KON55XRwd6IFFIVgNIxndOQgMJi9JFUEx5cRMDBjfoATE1iAWx8sOKbvJq4BAl4y
+         pwVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708721571; x=1709326371;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NxODghQMamK2SljX5x9IFGf+/9bKTXqE2yI7GzUqoio=;
-        b=QsRnMUXdBe0ElV1kJBkPqwJPJ7BQQtfTIPJ7bZdKTviObvpL68zs08Ct4/xKSBTmqn
-         nlnanqHyRX2ngoQ+j96Pa1cXriPUibfljQFSZvdq6vCOs31Ewa2N/ZzBBuN2jOZ7Rn5V
-         ICV1pyjE5EUqI1FkuDx5944JIrOGKlXL0XyFVZh2ZOjj8J2B08mQI1Z4aOACF1Xr/y5r
-         683/iYATFDfohLllF+8uiBi+1cNo1Vx3fsODgCWcHk6ZCw+6/H7gwSEcV4aciEVoW3EM
-         8ipltw94NYsyx/IveatGOh53ibnIYAhQvUrpRZ35ID+eKfnsTtJwNYkDFAtJsG4i2GDa
-         zQpw==
-X-Forwarded-Encrypted: i=1; AJvYcCUnL3PtSXTY3aiF7GZNnnRRTbhjN+OR/6a/zEjcjR/EMZ748X2z5LNd1Ifm/H3h7VTxDi1nznuz9HZjZCzUzoIAfVaqSRhACH437ilbOA==
-X-Gm-Message-State: AOJu0YxixtMJZBOIbrxnbjvrTme3GfzguOJjoopMzCkjAQWh2vecu0xx
-	vCmepsQL+TauMv0oYaJgQ7R5zIMdEfhTAVyLfcz678Prauy/MLdn+9Pv0r5SRumYFwHG2epg657
-	q9jT6JvvDdkqYIt06NH/QsSGgzxYxfSxCwKmKTiGGJwq/5517
-X-Google-Smtp-Source: AGHT+IHZ4hv1SyiQwuPj/DGpQnYbZ1k7ZnN6iq5FQGS2hnMIJawQ/6XD7dXtl7UaSQWqFV1jxKvJifN7iBXBctwJ910=
-X-Received: by 2002:a05:6902:2ca:b0:dc6:9d35:f9aa with SMTP id
- w10-20020a05690202ca00b00dc69d35f9aamr972227ybh.19.1708721571664; Fri, 23 Feb
- 2024 12:52:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708722654; x=1709327454;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=brDT2YXF8x8KzS2bAH7c1UHxnZms6mIqOBc2rPT/eec=;
+        b=f2coHbw3SnVXdcd3z0U7yYUW/hcqofW7U5e/QOUuVkbZTki+hwn8wnHZ/IduB/zevd
+         0fPfRnSFp6DQ2SWLwjHChttA/RFXnIZSfXkwAccNmrOlEccPTu79CSgwZXYIo6ZPlOtx
+         fJJfs+PgR/CjZh+zB2gooXQa5FReYZSVIFQdyiwOL2Rn1To7A1cxZiWGpuIxyKnm2pK0
+         GTtwDXm6vOEq/Cq/DnpsT8SEuPB8onBoN9+f/VfvXs1JWLXexWBO4vXR6i+VLWb/TFsY
+         ZI+V+xpXXTzyCJRj0pbScVLE5C94HR5nz2lIXXQs3VA1e57Oz97LajstWLuuH0UxzMH6
+         pOgw==
+X-Gm-Message-State: AOJu0Yz7XSAaSZ2i5BvRKUJBl4DWsKvlGO1X+p+zRrHPcIMnD+QI9OO8
+	6LEN3YkrmOzvgCVoTyjEeGkGs05g1o3ai/IXame9k2cwvbkEuops0TBiPN2wx78=
+X-Google-Smtp-Source: AGHT+IENyNqGiyGuCGeSB03nxXbt7g7grkwi1tJiTGl4k5p72DlF2FORlui6OfziRrMuxknRyi5GsQ==
+X-Received: by 2002:a17:907:b9d0:b0:a3e:cd8d:39c3 with SMTP id xa16-20020a170907b9d000b00a3ecd8d39c3mr781477ejc.38.1708722654037;
+        Fri, 23 Feb 2024 13:10:54 -0800 (PST)
+Received: from [192.168.179.2] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id rs6-20020a170907890600b00a3e48deecd4sm6313016ejc.222.2024.02.23.13.10.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Feb 2024 13:10:53 -0800 (PST)
+Message-ID: <a3356079-bd55-4852-9bb3-b5362a1c953e@linaro.org>
+Date: Fri, 23 Feb 2024 22:10:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240222-fd-dpu-yv16-yv24-v1-1-4aa833cdc641@linaro.org> <6334793a-1204-85b3-4f91-7859b83f79ed@quicinc.com>
-In-Reply-To: <6334793a-1204-85b3-4f91-7859b83f79ed@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 23 Feb 2024 22:52:40 +0200
-Message-ID: <CAA8EJpr3BJF_F231L3D8Qmx0Onvua7wcm2g=FM_YxMukw5-swQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: add support for 4:2:2 and 4:4:4 planar YCbCr
- plane formats
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 05/35] virt: gunyah: Add hypervisor driver
+To: Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Murali Nalajal <quic_mnalajal@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>,
+ Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+ Carl van Schaik <quic_cvanscha@quicinc.com>,
+ Philip Derrin <quic_pderrin@quicinc.com>,
+ Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+ Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba
+ <tabba@google.com>, Sean Christopherson <seanjc@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-5-1e9da6763d38@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240222-gunyah-v17-5-1e9da6763d38@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 23 Feb 2024 at 22:48, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 2/22/2024 3:43 AM, Dmitry Baryshkov wrote:
-> > The DPU driver provides support for 4:2:0 planar YCbCr plane formats.
-> > Extend it to also support 4:2:2 and 4:4:4 plat formats.
-> >
->
-> I checked myself and also internally on this. On sm8250, the DPU planes
-> do not support YUV444 and YUV422 (and the corresponding YVU formats).
->
-> May I know what was the reference to add these formats to DPU
-> considering that even downstream sources didn't add them?
+On 23.02.2024 00:16, Elliot Berman wrote:
+> Add driver to detect when running under Gunyah. It performs basic
+> identification hypercall and populates the platform bus for resource
+> manager to probe.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
 
-No reference. I was interested in checking different YUV formats for
-the test. It worked, so I wanted to discuss this. In the end, we are
-just changing several bits, which are used for other formats.
+[...]
 
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Full-screen (1080p@60) YV24 gave me underruns on SM8250 until I bumped
-> > the clock inefficiency factor from 105 to 117. I'm not sure that it is a
-> > correct way to handle it, so I'm sending this as an RFC. If we agree
-> > that bumping the .clk_inefficiency_factor is a correct way, I'll send
-> > v2, including catalog changes.
-> >
-> > I had no such issues for the YV16/YU16 formats.
->
-> We don't support this too on sm8250. But interesting it worked.
+> +
+> +	/* Might move this out to individual drivers if there's ever an API version bump */
+> +	if (gunyah_api_version(&gunyah_api) != GUNYAH_API_V1) {
+> +		pr_info("Unsupported Gunyah version: %u\n",
+> +			gunyah_api_version(&gunyah_api));
 
-As I wrote, YV24 also works if I slightly bump the clock inefficiency.
-I think this points out that maybe we should calculate clock factor
-dynamically.
+Weird for this not to be an error, but it's probably not worth resending
+over if it's the only thing
 
->
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 24 ++++++++++++++++++++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++++
-> >   2 files changed, 28 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > index e366ab134249..1b763cd95e5a 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > @@ -475,6 +475,30 @@ static const struct dpu_format dpu_format_map[] = {
-> >               C1_B_Cb, C2_R_Cr, C0_G_Y,
-> >               false, DPU_CHROMA_420, 1, DPU_FORMAT_FLAG_YUV,
-> >               DPU_FETCH_LINEAR, 3),
-> > +
-> > +     PLANAR_YUV_FMT(YUV422,
-> > +             0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> > +             C2_R_Cr, C1_B_Cb, C0_G_Y,
-> > +             false, DPU_CHROMA_H2V1, 1, DPU_FORMAT_FLAG_YUV,
-> > +             DPU_FETCH_LINEAR, 3),
-> > +
-> > +     PLANAR_YUV_FMT(YVU422,
-> > +             0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> > +             C1_B_Cb, C2_R_Cr, C0_G_Y,
-> > +             false, DPU_CHROMA_H2V1, 1, DPU_FORMAT_FLAG_YUV,
-> > +             DPU_FETCH_LINEAR, 3),
-> > +
-> > +     PLANAR_YUV_FMT(YUV444,
-> > +             0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> > +             C2_R_Cr, C1_B_Cb, C0_G_Y,
-> > +             false, DPU_CHROMA_RGB, 1, DPU_FORMAT_FLAG_YUV,
-> > +             DPU_FETCH_LINEAR, 3),
-> > +
-> > +     PLANAR_YUV_FMT(YVU444,
-> > +             0, COLOR_8BIT, COLOR_8BIT, COLOR_8BIT,
-> > +             C1_B_Cb, C2_R_Cr, C0_G_Y,
-> > +             false, DPU_CHROMA_RGB, 1, DPU_FORMAT_FLAG_YUV,
-> > +             DPU_FETCH_LINEAR, 3),
-> >   };
-> >
-> >   /*
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > index ccbee0f40ad7..949c86a44ec7 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > @@ -195,6 +195,10 @@ static const uint32_t plane_formats_yuv[] = {
-> >       DRM_FORMAT_YVYU,
-> >       DRM_FORMAT_YUV420,
-> >       DRM_FORMAT_YVU420,
-> > +     DRM_FORMAT_YUV422,
-> > +     DRM_FORMAT_YVU422,
-> > +     DRM_FORMAT_YUV444,
-> > +     DRM_FORMAT_YVU444,
-> >   };
-> >
-> >   static const u32 rotation_v2_formats[] = {
-> >
-> > ---
-> > base-commit: ffa0c87f172bf7a0132aa960db412f8d63b2f533
-> > change-id: 20240222-fd-dpu-yv16-yv24-6bf152dfa7f3
-> >
-> > Best regards,
-
-
-
--- 
-With best wishes
-Dmitry
+Konrad
 
