@@ -1,65 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-12308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 862C7860AC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 07:23:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA2B3860B29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 08:09:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 301E81F24BF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 06:23:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B202285CEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 07:09:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4479B12B9B;
-	Fri, 23 Feb 2024 06:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32E0134A3;
+	Fri, 23 Feb 2024 07:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiTwVPlT"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="iwwqeyI9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF15212E45;
-	Fri, 23 Feb 2024 06:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1A64414;
+	Fri, 23 Feb 2024 07:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708669388; cv=none; b=RkR4c/0r0aTwZGhJ7ayzWgaAntETg/dlTCCK+Q234cwGDnYAa0gceYVDA76G9DwvEWtM7UjqfMpzcRCcPs61lXWumz6GS3abhsB7ShJNLoJlwr6whwpOKvZEop4FFytbUVQrjZ0lWBx7q5yvBkKce0hpQAHBtq4BNWe1AHYWNV8=
+	t=1708672185; cv=none; b=sBctHtSs6UFbM2dZtCa4NZcUfXrMoXlRpmO/Euwc1m/NyA+gXTBmEMjyRQ6j2YdNnHk+iqAtYir58fhj5aPFJvbiArwV9c0JZJB4DMwG8cKRLFHktMELTraqDAee6CGhPkoAS2aVs7OYwCOyb6Gy4SUOL3NSOYt7b6vcTeppWEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708669388; c=relaxed/simple;
-	bh=E0nEqPdV2QlHfBxw2rYP1kW7aUMpkrIUH2IEVRz8+Ng=;
+	s=arc-20240116; t=1708672185; c=relaxed/simple;
+	bh=Zz70VcC6ec8uW9MYAOTjf18dTlcTTAeDita2hNGYrmI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DdyIO6LMYI3cgxhn+vrBE3bNiIAntHIJ2PyijmTad9kXYuGbsxjVUGKHPug8S0C5WmBOgHDKVx34EFWWOt5y2UooxjgCkjsFjBDGdqDY6670bMl3feSRS/66mSHIu7DZBw5ZAEiiEEFTyPA/ZHonr1v4+gOjaEfcJJ65PpOUpjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiTwVPlT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983D9C433F1;
-	Fri, 23 Feb 2024 06:23:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708669387;
-	bh=E0nEqPdV2QlHfBxw2rYP1kW7aUMpkrIUH2IEVRz8+Ng=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xiTwVPlTadYJUCbYRaOeLO2ibb8HrtR2M6XYADwpIfsigHwnxriJngyeqk5OZ1b5r
-	 VfBsZGzawMJmDLSfopA0qKl34P6dpi0Q33ZTgREiACCotz5QGIDkinTyiEF4UWiUOy
-	 CiQJdAj0wYjK+oj//dnPgCS94k1TQ0a6weahgmPU=
-Date: Fri, 23 Feb 2024 07:23:03 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-	perex@perex.cz, conor+dt@kernel.org, corbet@lwn.net,
-	lgirdwood@gmail.com, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
-	bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH v17 36/51] ASoC: dt-bindings: Update example for enabling
- USB offload on SM8250
-Message-ID: <2024022359-harmonize-bath-4a7c@gregkh>
-References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
- <20240217001017.29969-37-quic_wcheng@quicinc.com>
- <7dc9e80e-0875-4dfc-adf9-9bfad2fb8589@linaro.org>
- <bdc57138-e67e-47ae-8cf1-b8be5aeb2369@sirena.org.uk>
- <2024022300-routing-baffling-7ce0@gregkh>
+	 Content-Type:Content-Disposition:In-Reply-To; b=RZBDAt3NpKM9xe0xlGSL2XVIv24W/JwcUAZCVCog82JR1vSPCe6gmgrDaNe1xEZ6ZA4gppJihCkHISLixtTtK3BW87cF0MlMsncu8zeCbmZjLrxzuqM5sBZsPVRPi+eDqufCTRC8ge8fvnxvBX8SNxQRUpxESBK9hCC0M8r3WAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=iwwqeyI9; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=m+Owkp1rvs3wqHimfEH8BwiCegvG2RGz55AKhwheUbg=; b=iwwqeyI9c3+8e3/yCE9TC/w5CH
+	+apLO/tqnHj5OoEfskS2+ieWWgT6wYzNDVHvLRUwZCrkIRWwHo0xJ1V7anDQ2Z2tcXnO5OkeyDwlB
+	OYvrcCpFFGqai+oPl73PV76BDln7Vcb8zlKN3VhzOYCOZ1ju0MawnKpEf/NFKZxR0Van91cOu2bbx
+	7yMT2BVLFcJE5nNV9q6xK60ppA8eZzGA5zDW2AkwKAregxIwBLSQT6mfq6dkikHwvD0kk8yGu3M0b
+	evY+e5fafMmBj4yVCqPfcV9bHRRMBY26AF9b5bihcdFFw1bGbqxouM33wVdEeNI2goEITiCuBSog3
+	fApTjHIQ==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rdPgi-00000008G7y-2lsb;
+	Fri, 23 Feb 2024 07:09:40 +0000
+Date: Thu, 22 Feb 2024 23:09:40 -0800
+From: Christoph Hellwig <hch@infradead.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Alex Elder <elder@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Murali Nalajal <quic_mnalajal@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+	Carl van Schaik <quic_cvanscha@quicinc.com>,
+	Philip Derrin <quic_pderrin@quicinc.com>,
+	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+	Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Fuad Tabba <tabba@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+Subject: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map functions
+Message-ID: <ZdhEtH7xzbzdhS2j@infradead.org>
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,33 +81,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2024022300-routing-baffling-7ce0@gregkh>
+In-Reply-To: <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-On Fri, Feb 23, 2024 at 06:59:30AM +0100, Greg KH wrote:
-> On Thu, Feb 22, 2024 at 04:50:08PM +0000, Mark Brown wrote:
-> > On Thu, Feb 22, 2024 at 05:24:58PM +0100, Krzysztof Kozlowski wrote:
-> > > On 17/02/2024 01:10, Wesley Cheng wrote:
-> > > > Add an example on enabling of USB offload for the Q6DSP.  The routing can
-> > > > be done by the mixer, which can pass the multimedia stream to the USB
-> > > > backend.
-> > > > 
-> > > > Acked-by: Rob Herring <robh@kernel.org>
-> > > > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> > > > ---
-> > > >  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
-> > > >  1 file changed, 15 insertions(+)
-> > 
-> > > This broke next.
-> > 
-> > > Wesley, are you sure you explained dependencies in this patch? Why is
-> > > next failing on this now?
-> > 
-> > It's surprising to see this merged at all while the series is still in
-> > review?
+On Thu, Feb 22, 2024 at 03:16:42PM -0800, Elliot Berman wrote:
+> Firmware and hypervisor drivers can donate system heap memory to their
+> respective firmware/hypervisor entities. Those drivers should unmap the
+> pages from the kernel's logical map before doing so.
 > 
-> I took the first 10 and then these dt patches as I thought those were
-> safe to take also given the review.  If I should revert them, I'll
-> gladly do so.
+> Export can_set_direct_map, set_direct_map_invalid_noflush, and
+> set_direct_map_default_noflush.
 
-Now reverted.
+Err, not they should not.  And not using such super low-level interfaces
+from modular code.
 
