@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-12307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F390860A88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 07:00:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 862C7860AC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 07:23:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05F92284559
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 06:00:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 301E81F24BF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 06:23:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD7A1125B0;
-	Fri, 23 Feb 2024 06:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4479B12B9B;
+	Fri, 23 Feb 2024 06:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRkXg/2G"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiTwVPlT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70C8125A8;
-	Fri, 23 Feb 2024 06:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF15212E45;
+	Fri, 23 Feb 2024 06:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708668005; cv=none; b=GH9FgmCEp594q1zdeCSXF5UJ4QcTL1d27zQn+TSPZHU/BqvWOmLr5BUpnCD/cFb830k7ipNrH3RyPcQ0J79ilYze5Tez3KYpKrGDGo3VW0xs+2H1f3dZaB0np/BjBu3sW5FEsr2HUQM6AJ9l9iDBzYSfl5r3rJUfpbhS598QT/g=
+	t=1708669388; cv=none; b=RkR4c/0r0aTwZGhJ7ayzWgaAntETg/dlTCCK+Q234cwGDnYAa0gceYVDA76G9DwvEWtM7UjqfMpzcRCcPs61lXWumz6GS3abhsB7ShJNLoJlwr6whwpOKvZEop4FFytbUVQrjZ0lWBx7q5yvBkKce0hpQAHBtq4BNWe1AHYWNV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708668005; c=relaxed/simple;
-	bh=sHUvsRjDQ6XZxQcJVWrcNMqRKCZ3kcvH9jVZL6N749I=;
+	s=arc-20240116; t=1708669388; c=relaxed/simple;
+	bh=E0nEqPdV2QlHfBxw2rYP1kW7aUMpkrIUH2IEVRz8+Ng=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pec/Mns0RJdzKnMGB4jcrZJ+RoENqwIuDOYKiWBe1R/MaO08MQgqKFGBZNSa8mZkR3XNs/qUzBVLmOdoQ16YqMjGZmN+7S3foNvv7mfEtQvJNyUiCADcKyEGyIqCi+AOxMEvL8SNOubJ91Rvz+huz75cMijJUiVkGvL5SDjqsEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRkXg/2G; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD44CC433F1;
-	Fri, 23 Feb 2024 06:00:04 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=DdyIO6LMYI3cgxhn+vrBE3bNiIAntHIJ2PyijmTad9kXYuGbsxjVUGKHPug8S0C5WmBOgHDKVx34EFWWOt5y2UooxjgCkjsFjBDGdqDY6670bMl3feSRS/66mSHIu7DZBw5ZAEiiEEFTyPA/ZHonr1v4+gOjaEfcJJ65PpOUpjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiTwVPlT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983D9C433F1;
+	Fri, 23 Feb 2024 06:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708668005;
-	bh=sHUvsRjDQ6XZxQcJVWrcNMqRKCZ3kcvH9jVZL6N749I=;
+	s=korg; t=1708669387;
+	bh=E0nEqPdV2QlHfBxw2rYP1kW7aUMpkrIUH2IEVRz8+Ng=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qRkXg/2GMFnYIQ59Evo+IDsjPX8UZU/R8CP0DRLZnTGLO34rxQbVglPLqCpX0G9N7
-	 +/FXhRkCExqqwBuWcx/RPE7UzdT5uB7SzBsHdYAg68Svpk/eJeb+l/M0eszo0hk8a2
-	 LN236zyscT4isoBB4ixdHgwGToJdnsBGqSq3l+h8=
-Date: Fri, 23 Feb 2024 07:00:02 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-usb@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH usb next] ASoC: Revert "ASoC: dt-bindings: Update example
- for enabling USB offload on SM8250"
-Message-ID: <2024022346-hardware-shank-519c@gregkh>
-References: <20240222163204.65468-1-krzysztof.kozlowski@linaro.org>
+	b=xiTwVPlTadYJUCbYRaOeLO2ibb8HrtR2M6XYADwpIfsigHwnxriJngyeqk5OZ1b5r
+	 VfBsZGzawMJmDLSfopA0qKl34P6dpi0Q33ZTgREiACCotz5QGIDkinTyiEF4UWiUOy
+	 CiQJdAj0wYjK+oj//dnPgCS94k1TQ0a6weahgmPU=
+Date: Fri, 23 Feb 2024 07:23:03 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+	perex@perex.cz, conor+dt@kernel.org, corbet@lwn.net,
+	lgirdwood@gmail.com, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
+	bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH v17 36/51] ASoC: dt-bindings: Update example for enabling
+ USB offload on SM8250
+Message-ID: <2024022359-harmonize-bath-4a7c@gregkh>
+References: <20240217001017.29969-1-quic_wcheng@quicinc.com>
+ <20240217001017.29969-37-quic_wcheng@quicinc.com>
+ <7dc9e80e-0875-4dfc-adf9-9bfad2fb8589@linaro.org>
+ <bdc57138-e67e-47ae-8cf1-b8be5aeb2369@sirena.org.uk>
+ <2024022300-routing-baffling-7ce0@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,24 +68,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240222163204.65468-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <2024022300-routing-baffling-7ce0@gregkh>
 
-On Thu, Feb 22, 2024 at 05:32:04PM +0100, Krzysztof Kozlowski wrote:
-> This reverts commit a9c83252bff616cf3a38d55b7c6a6ad63667f2dd from USB
-> tree, because it depends on other DT bindings changes which were not
-> applied.  This commit alone causes dt_binding_check failures:
+On Fri, Feb 23, 2024 at 06:59:30AM +0100, Greg KH wrote:
+> On Thu, Feb 22, 2024 at 04:50:08PM +0000, Mark Brown wrote:
+> > On Thu, Feb 22, 2024 at 05:24:58PM +0100, Krzysztof Kozlowski wrote:
+> > > On 17/02/2024 01:10, Wesley Cheng wrote:
+> > > > Add an example on enabling of USB offload for the Q6DSP.  The routing can
+> > > > be done by the mixer, which can pass the multimedia stream to the USB
+> > > > backend.
+> > > > 
+> > > > Acked-by: Rob Herring <robh@kernel.org>
+> > > > Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> > > > ---
+> > > >  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
+> > > >  1 file changed, 15 insertions(+)
+> > 
+> > > This broke next.
+> > 
+> > > Wesley, are you sure you explained dependencies in this patch? Why is
+> > > next failing on this now?
+> > 
+> > It's surprising to see this merged at all while the series is still in
+> > review?
 > 
->   Documentation/devicetree/bindings/sound/qcom,sm8250.example.dts:97.44-45 syntax error
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Greg,
-> 
-> Please take this revert. Original commit should go via Mark's ASoC.
+> I took the first 10 and then these dt patches as I thought those were
+> safe to take also given the review.  If I should revert them, I'll
+> gladly do so.
 
-Ah, now I see this, yes, I'll go queue this up right now, thanks!
-
-greg k-h
+Now reverted.
 
