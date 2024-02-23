@@ -1,152 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-12429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0B42861F62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 23:10:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97EA5861FCF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 23:32:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB49B286E8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 22:10:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C5481F236CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 22:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1149314CAC1;
-	Fri, 23 Feb 2024 22:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A3517BD8;
+	Fri, 23 Feb 2024 22:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZpLO6XnX"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="KDiQaAq1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF49214CAAB;
-	Fri, 23 Feb 2024 22:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9C91119B;
+	Fri, 23 Feb 2024 22:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708726203; cv=none; b=WU+1S+MaXACWlXCvnJcaE29u0kZC7dImyhy6Xh++a9D7MlwFnnVyg+rcrymiYhvYY8VPQ/35p7AxPhX6xIb+QkQ3rjnzsFfvFz/aktXcg0yrP7hFwCo0XQM73hpyqExnm2t6ALPZObeZdlBC9Cl9REOiRj7hdBZO/S7VfyrAJG8=
+	t=1708727560; cv=none; b=hPKTGyp9TTFIlorEqLeq4lHOJ5RvYGWezT5ICmEyFMCU2zS5ZS/FybDQ/390fwDaZdf+Fg1WHUKIBvcaFhpTIX7yjgHFK9wxlz02epxXfNuMibG6LWiH7Z9PuoJ9Tbi2JxTbh4KbgiV3YhY2Xag/eBYMuWoa/L5OqsRcB/5LyQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708726203; c=relaxed/simple;
-	bh=ddVApPNuf6tVk4Tbz93m9z7lMVLzrLppfynOoPkXXNM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=G9SYZfa5RIKWuWHKWEJLUeZ3e6nSeIn/cJhUzc1khzMBLY7jMx3NWuDQBxYzHg6txhpfKOumy4RQIymRLOS9I1tHqQyiP7WghD+icH4hxJxo5bLRL70ud0aNzU9bCteAAVjKpaU1+GPL6MUt/xsqL8MpWwIcT7gAUwOMVqIrnnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZpLO6XnX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52FC433F1;
-	Fri, 23 Feb 2024 22:10:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708726202;
-	bh=ddVApPNuf6tVk4Tbz93m9z7lMVLzrLppfynOoPkXXNM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=ZpLO6XnX/konsdIIp8e+tRfeWzOtu1/s2BVvcXtk8MmrAw/V47QQD7APMk6oe8F6s
-	 2S5+EXTzP3qucJYpskwL3rvw8khnQoURsGphXbEOWwGFfi9J6ktiBJ/r3ebyNm1YJ7
-	 PPZbolW144cK7L7xtgvEXl3ibrEcAXOWtqxccI2fSIOgLZhODAdGzKFsi1uJPKi/4o
-	 XZADSyNx0OIdw/mlI+DSv/Yz/wgHF5JOv+/fEq7jtLluOmgbX7rlcFsPB2ozmA/5nQ
-	 +7xUfBuoUrh7yJWFwnLS92ZqOpxsjclNAgRnCB0alW1DzDpZH36+POAG+n051sZg/m
-	 I+uV4hjCDB1SA==
-Date: Fri, 23 Feb 2024 16:10:00 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 04/12] PCI: qcom: Add support for disabling ASPM L0s
- in devicetree
-Message-ID: <20240223221000.GA118088@bhelgaas>
+	s=arc-20240116; t=1708727560; c=relaxed/simple;
+	bh=PSs1k4yhOaJo0FhDXl1IC/61LVXaUjlUC3glDlqHR+s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fO0i7LcyLgV2PN8k2kNf4G+io1RPmdLHzF9IQ04Xf4avyN9+QBeeFErwQIGmPER7ymxqGw0jIhKNKwYLczls4FHS8lLrIeYYHldIDDpTwGnDsuTfF/ykp1n6ur4A+slfNXuSIVZNewnS19oNZkHtA31iBJmC8M6pHSnOMKnURUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=KDiQaAq1; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1708727554;
+	bh=PSs1k4yhOaJo0FhDXl1IC/61LVXaUjlUC3glDlqHR+s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KDiQaAq1lyRcjhTQW47KCHDEbmn5dw4W0sqCeown0uhw6TzmHSV93fpjvZU7swVkI
+	 +KXHOAjYoD/aE5QDrVnCfbI2k1hOSE7EDK9EM59hbVqhXqYj0345NiO/75as3pQJdr
+	 zGONe1b+drG4lF1T8vkB/mewsMfc8XJmd0VKY1POhpnut9rDJ/qF5uGj96+k5eBxFY
+	 G4Bu1fgzzbHkFsPjhWljBjV+hgUPexoljU9qGO9YTfzrHmjqq33JMir2C46wM/em+E
+	 X+6cxY3dC5gCPfR8z5zl72ZmyVpfxeTZTNUGUJPVxKHVMLZ741ADY3cO42YAMTllGK
+	 ADnx4v9lvELjA==
+Received: from mercury (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sre)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CB97C3780627;
+	Fri, 23 Feb 2024 22:32:34 +0000 (UTC)
+Received: by mercury (Postfix, from userid 1000)
+	id 4818D1060C95; Fri, 23 Feb 2024 23:32:34 +0100 (CET)
+Date: Fri, 23 Feb 2024 23:32:34 +0100
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Nikita Travkin <nikita@trvn.ru>
+Cc: Hans de Goede <hdegoede@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] power: supply: Add Acer Aspire 1 embedded
+ controller driver
+Message-ID: <wr4awfmyip3fe5y4xpv6xajigsvc4qftawonkolrtsamr3pumb@aio2ishg3o7c>
+References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
+ <20240220-aspire1-ec-v3-2-02cb139a4931@trvn.ru>
+ <qoidm5wujjbeoc2hlraky26wuwmuaxi2atyl6ehovhvffdbfeh@g5gunqdei45m>
+ <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+ <xelebhoitnwguhewahw26xopl5btjo5ezznjjaeb2zfyy2bpcr@7pmclezshwck>
+ <6e3fb1080c54cfc38dc3c3e79e32a53d@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="x3dnrs6dj67zatrw"
 Content-Disposition: inline
-In-Reply-To: <20240223152124.20042-5-johan+linaro@kernel.org>
+In-Reply-To: <6e3fb1080c54cfc38dc3c3e79e32a53d@trvn.ru>
 
-On Fri, Feb 23, 2024 at 04:21:16PM +0100, Johan Hovold wrote:
-> Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting
-> 1.9.0 ops") started enabling ASPM unconditionally when the hardware
-> claims to support it. This triggers Correctable Errors for some PCIe
-> devices on machines like the Lenovo ThinkPad X13s, which could indicate
-> an incomplete driver ASPM implementation or that the hardware does in
-> fact not support L0s.
 
-Are there any more details about this?  Do the errors occur around
-suspend/resume, a power state transition, or some other event?  Might
-other DWC-based devices be susceptible?  Is there a specific driver
-you suspect might be incomplete?
+--x3dnrs6dj67zatrw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do you want the DT approach because the problem is believed to be
-platform-specific?  Otherwise, maybe we should consider reverting
-9f4f3dfad8cf until the problem is understood?
+Hi,
 
-Could this be done via a quirk like quirk_disable_aspm_l0s()?  That
-currently uses pci_disable_link_state(), which I don't think is
-completely safe because it leaves the possibility that drivers or
-users could re-enable L0s, e.g., via sysfs.
+On Fri, Feb 23, 2024 at 08:34:29PM +0500, Nikita Travkin wrote:
+> Sebastian Reichel =D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=B0) 23.02.2024 20:04:
+> > On Fri, Feb 23, 2024 at 07:32:17PM +0500, Nikita Travkin wrote:
+> >> >> + This driver provides battery and AC status support for the mentio=
+ned
+> >> > I did not see any AC status bits?
+> >>
+> >> I was referring to whatever ACPI spec calls "AC Adapter" but I guess
+> >> I should have used the word "charger" instead... Will reword this.
+> >=20
+> > But you only register a power-supply device for the battery and not
+> > for the AC adapter/charger. When you write "and AC status support" I
+> > would have expected something similar to this (that's from ACPI AC
+> > adapter driver):
+> >=20
+> > $ cat /sys/class/power_supply/AC/uevent
+> > POWER_SUPPLY_NAME=3DAC
+> > POWER_SUPPLY_TYPE=3DMains
+> > POWER_SUPPLY_ONLINE=3D1
+>=20
+> Ah, I see... Yeah looking at it one more time, I mistakenly assumed the
+> acpi ac code uses the same data fields as the battery but seems like it
+> reads the single online flag from a different place. I don't think there
+> is really a point on implementing that field since we can still easily
+> track the battery charging/discharging status so I will probably omit it
+> for now. Will reword the help text to not mention charger/ac adapter.
 
-This patch is nice because IIUC it directly changes PCI_EXP_LNKCAP,
-which avoids that issue, but quirk_disable_aspm_l0s() could
-conceivably be reimplemented to cache PCI_EXP_LNKCAP in struct pci_dev
-so quirks could override it, as we do with struct pci_dev.devcap.
+If you have the information easily available, it's a good plan to
+expose it.
 
-> Add support for disabling ASPM L0s in the devicetree when it is not
-> supported on a particular machine and controller.
-> 
-> Note that only the 1.9.0 ops enable ASPM currently.
-> 
-> Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
-> Cc: stable@vger.kernel.org      # 6.7
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 09d485df34b9..0fb5dc06d2ef 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -273,6 +273,25 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->  	return 0;
->  }
->  
-> +static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
-> +{
-> +	u16 offset;
-> +	u32 val;
-> +
-> +	if (!of_property_read_bool(pci->dev->of_node, "aspm-no-l0s"))
-> +		return;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +
-> +	dw_pcie_dbi_ro_wr_en(pci);
-> +
-> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> +	val &= ~PCI_EXP_LNKCAP_ASPM_L0S;
-> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> +
-> +	dw_pcie_dbi_ro_wr_dis(pci);
-> +}
-> +
->  static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
->  {
->  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> @@ -962,6 +981,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  
->  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  {
-> +	qcom_pcie_clear_aspm_l0s(pcie->pci);
->  	qcom_pcie_clear_hpc(pcie->pci);
->  
->  	return 0;
-> -- 
-> 2.43.0
-> 
+Without a charger reporting online status at least the kernel's
+power_supply_is_system_supplied() will return false (which is e.g.
+used by AMD GPU driver to select power profile).
+
+Generic userspace (i.e. upower) probably behaves similar, since
+battery status is not the same as AC connceted. A system might
+not charge the battery but still run from AC itself.
+
+-- Sebastian
+
+--x3dnrs6dj67zatrw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmXZHPcACgkQ2O7X88g7
++ppExA/6Ay7wM3uN5mNgDtWxq1XLrsykjXSgSsYKJzByjQuageupwDlF6Rx6lKXQ
+X8UjL4r8YlEaGyce2L8uYaoH9KN0ge45v/CiEKZo2PJyCBpQGW8rbO1rNlZampi+
+y2jSurRj8aUrbgToM0Q2tiZQWU3CLJzu0TsFZ0/7sfgEzaEzFurQ0k3nvTNYARLN
+ayqnP6NIDb18AFwToW5jdoe8c+MweBK4XhjNNZeiFAsnCe4LgKSjr0aHdeGwJh1F
+AGffLuHnc/TSWecDaKQG8NaZV9KIjzYHZwULTWFQwvIaFnMSNFJLyaZX91NGV4Sc
+R7HZVdSm/3Q60PvKQ9ZkseRbLSHHRJQTvj8akX5sLfD4L7CMe19tPqcaDB50jIUi
+VJdqCrq9lZLJVfbJDKVysLHfTNHBrm948FxOdFgd/chETFCDODrRJZ+W96+rb7uC
+m/CoGtow7mSP1Tm183JktlamMk7c+D2qj2xF6mfRJMIT1816qA7hfZNB6YQyky++
+pw8kRos46RCCOrhRInZqJGy5DBz3JDZqqMWJFDQYdxQaZM0m7J2PST/auCUhK14v
+Uo8bjWdbR7BBFLB5FXAGONH/bdihhnD8er1H5LIDzPmxv8ASQxC924BEozSya/4J
+aEox1XhdHHsQpCByVX7kL2afGt574rkvnyOwT9WLf8RA2KCjROg=
+=gazE
+-----END PGP SIGNATURE-----
+
+--x3dnrs6dj67zatrw--
 
