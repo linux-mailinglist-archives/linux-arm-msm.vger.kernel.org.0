@@ -1,121 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-12299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CA818608A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 03:00:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BEA18608DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 03:30:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE5961C21E86
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 02:00:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18CF8B233C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 02:30:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1230CB670;
-	Fri, 23 Feb 2024 02:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015B2B65D;
+	Fri, 23 Feb 2024 02:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="horjrIZ3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K4FH8x4p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1BE8BF9;
-	Fri, 23 Feb 2024 02:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DBC53A1;
+	Fri, 23 Feb 2024 02:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708653636; cv=none; b=lijAWZhV+MKfE3rHUU1oLdtKAY/5PGgqZ+uo6pEXPCNWr9Fwk1mYIzHGLJvVq9VFa3wFty1q8H2jqK2gxNdKW7pYmGd3zOtdzwvb5CDgyI9/4cx47gGgPV2TL1K4rpOHqNm3nQUvt3j+W4rdrPcVzSZzDJFMOOuxytd/1lVe3Zo=
+	t=1708655426; cv=none; b=fKItNTr7PCVExxl1Y2WSpx5b+vOgNF7r/v1vg5C1XQI396IAm8pFH8D6MUjJgdTfwCgh5nE3NizxEX9jkDN3F32r4lwgAdC0+ogh4OwMjL2TYhlGKdPZFRbIg4AskmjHMGDiV3XWGCOb02pghEaCd9BTfrhw2VYyNUBfNZy+BOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708653636; c=relaxed/simple;
-	bh=OJDfnVJSg3jkeSoz4vJPLXupTf+um5nChVNJXpHzJfI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=gKxPjtMTYWPHfaVsP5wjHZDNU60pxMzqwaWiU4+sS4oF0ixflBLEcN0z/dAbSC/MIgMxZtBFNlx7dVbXhsMlyrvsuOpYi7iSPC6rOuPiyqdRniHIwOo4Xarcr+nQHinKU6cxtgU+sp07ILK0KxpyB+gcgojW3tw+Hxjntzb5ASo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=horjrIZ3; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1708655426; c=relaxed/simple;
+	bh=6QMcmMdy40naLssBFX90biB9LsZ2HSl6t8lbxLjcVDc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kEch3NbYitLdUl5JNzbR7y/D54H3ynzJErSUZynKUKt7rvZmyNi8rBHqRVioTkjoIGRLqgehYkeIBlUiHs4jxcbOn5Nqwt9eLLkE5MC7shu9v2kid8YM4MCaLo3Odd9Odq76N2EQFs+U5TX4YSTlczF24+zhNp1zHT9lBswL5b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K4FH8x4p; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41N1Rfsu030093;
-	Fri, 23 Feb 2024 02:00:27 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41N1JrbX008046;
+	Fri, 23 Feb 2024 02:30:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=M51
-	KKqBp/vj9yqdyEByL4qmhSGQ5SSE2/FALZr/2vME=; b=horjrIZ3DGlFEP6oNQ+
-	isqDK1Plt2fILZ7bF64WJuYi30WUAeK5jyhlnwqaFqfXnz6YuvEudh3GsLW5tPO0
-	nL0T3Jsa6JuG0dm2Vsew4MeWR9PrqWfb6diSJcLMvpbRQXvDsfKWdzp9NbtBJpGj
-	ccugXveZtDM+EoHq4Rp1VonzTbtcN9E7KAyc2H9aNGQxFnSJa0ZoDalZw5GRn28y
-	mxeIU7y46Yf9CuIlGlirBFMdq/qlHJ6eCast3aObpPXBdherDIZ3RIZFddSXE6Gc
-	vw394uB1kJA1eQs6Dgnh9GkrOIx13MZz5Iw+X+a+4H6XkZNBHoCtXBeaFDIpLHns
-	7Gg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3weg88r78q-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ZQoKlLmpcj4tLpSPGRAcAAKjZ+QeHTzLffJ0r1QFfjI=; b=K4
+	FH8x4pvypkcCldztlNYxt0fngC05IssU78RrWCgr1RMPnbJlVwcVtX/Z0WCOmMFf
+	dJyO+a3VgNTNJK0e5MGPYB+yfoYIPg5iZlc3hRYQxpTDajV1SU7FHBguQFI7P+9i
+	KMyBoGmSCwn05zxVYy6s1upTT9d2tX5PgqnJPOoVamcoqiDXd3TdwRk9fRsy+GIF
+	EB0VvPw4RZjmvbOmriX+6dC0lYU+iPMKsRxhmo2PfefeNHeNXmW4sAmBKKfTykbb
+	FZm4aIiHm/A/sIaed6+RZdVvDvvOhqmuObakOETcyGddMHRdn+1p7SBIUfQOLttJ
+	9MtkcceRuGI6pFbowMAA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdw13atqn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 02:00:27 +0000 (GMT)
+	Fri, 23 Feb 2024 02:30:13 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41N20QO4026888
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41N2UC63009122
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 02:00:26 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
+	Fri, 23 Feb 2024 02:30:12 GMT
+Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 22 Feb
- 2024 18:00:23 -0800
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Date: Thu, 22 Feb 2024 18:00:23 -0800
-Subject: [PATCH] bus: mhi: host: pci_generic: constify
- modem_telit_fn980_hw_v1_config
+ 2024 18:30:10 -0800
+Message-ID: <d19fc422-27f7-442a-94e5-3c71e46be227@quicinc.com>
+Date: Fri, 23 Feb 2024 10:30:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] wifi: ath11k: hibernation support
+Content-Language: en-US
+To: <ath11k@lists.infradead.org>, <mhi@lists.linux.dev>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20240221030026.10553-1-quic_bqiang@quicinc.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <20240221030026.10553-1-quic_bqiang@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240222-mhi-const-bus-mhi-host-pci_generic-v1-1-d4c9b0b0a7a5@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIADb812UC/x3NQQqDQAxA0atI1g1orFB6lSLFZjJOFp2RiUpBv
- HuDy7f5/wCTqmLwbA6osqtpyY7u1gCnKc+CGtxALd1bIsJvUuSSbcXPZpdScSys71myxxiHEOI
- jdn3oBwYPLVWi/q7JazzPP1fnHwB0AAAA
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Jeff Johnson
-	<quic_jjohnson@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FLXGPFSrDFmU3YGFzCT0QbfwhRLjxrMC
-X-Proofpoint-GUID: FLXGPFSrDFmU3YGFzCT0QbfwhRLjxrMC
+X-Proofpoint-ORIG-GUID: -40mxRou_Ua3Uec0TILNGZdQzNH7NMoj
+X-Proofpoint-GUID: -40mxRou_Ua3Uec0TILNGZdQzNH7NMoj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=967
- malwarescore=0 suspectscore=0 impostorscore=0 clxscore=1015 adultscore=0
- phishscore=0 priorityscore=1501 bulkscore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402230012
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0 mlxscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2402230015
 
-MHI expects the controller configs to be const, and all of the other ones
-in this file already are, so constify modem_telit_fn980_hw_v1_config.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
----
- drivers/bus/mhi/host/pci_generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index cd6cd14b3d29..51639bfcfec7 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -538,7 +538,7 @@ static struct mhi_event_config mhi_telit_fn980_hw_v1_events[] = {
- 	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
- };
- 
--static struct mhi_controller_config modem_telit_fn980_hw_v1_config = {
-+static const struct mhi_controller_config modem_telit_fn980_hw_v1_config = {
- 	.max_channels = 128,
- 	.timeout_ms = 20000,
- 	.num_channels = ARRAY_SIZE(mhi_telit_fn980_hw_v1_channels),
+On 2/21/2024 11:00 AM, Baochen Qiang wrote:
+> Currently in ath11k we keep the firmware running on the WLAN device when the
+> network interface (wlan0) is down. The problem is that this will break
+> hibernation, obviously the firmware can't be running after the whole system is
+> powered off. To power down the ath11k firmware for suspend/hibernation some
+> changes both in MHI subsystem and ath11k are needed.
+> 
+> This patchset fixes a longstanding bug report about broken hibernation support:
+> 
+> https://bugzilla.kernel.org/show_bug.cgi?id=214649
+> 
+> There already is an RFC version which has been tested by multiple users with
+> positive results:
+> 
+> https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
+> 
+> Basically the RFC version adds two APIs to MHI stack: with the first one ath11k
+> is able to keep MHI devices when going to suspend/hibernation, getting us rid of
+> the probe deferral issue when resume back. while with the second one ath11k could
+> manually prepare/unprepare MHI channels by itself, which is needed because QRTR
+> doesn't probe those channels automatically in this case.
+> 
+> Mani, the MHI maintainer, firstly doesn't like that version and insists that an
+> MHI device should be destroyed when suspend/hibernation, according to his
+> understanding on device driver model. See
+> 
+> https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+> 
+> After a long discussion Mani thought we might need a new PM callback with which
+> ath11k is able to wait until kernel unblocks device probe and thus MHI channels
+> get probed. So we came to the kernel PM list and there Mani realized that his
+> understanding is not correct so he finally agrees to keep MHI device during
+> suspend/hibernation. See
+> 
+> https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+> 
+> Mani also pointed out that an MHI controller driver (ath11k here) should not touch
+> MHI channels directly because those channels are managed by the corresponding MHI
+> client driver (QRTR here). To address this, we come up with this version.
+> 
+> Compared with that RFC version, this version adds PM callbacks in QRTR module:
+> suspend callback unprepares MHI channels during suspend and resume callback
+> prepares those channels during resume. In this way ath11k doesn't need to do
+> unprepare/prepare work by itself so those two APIs added in RFC version are
+> removed now.
+> 
+> The power down/up procedure requires a specific sequence in which PM callbacks
+> of wiphy, ath11k and QRTR are called, this is achieved by exploiting the
+> child-father relationship between their device struct, and also the PM framework
+> which separates whole suspend/resume process into several stages. Details in
+> patch [3/3].
+> 
+> Depends on:
+> wifi: ath11k: rearrange IRQ enable/disable in reset path
+> wifi: ath11k: remove MHI LOOPBACK channels
+> wifi: ath11k: do not dump SRNG statistics during resume
+> wifi: ath11k: fix warning on DMA ring capabilities event
+> wifi: ath11k: thermal: don't try to register multiple times
+> 
+> Baochen Qiang (3):
+>    bus: mhi: host: add mhi_power_down_no_destroy()
+>    net: qrtr: support suspend/hibernation
+>    wifi: ath11k: support hibernation
+> 
+>   drivers/bus/mhi/host/internal.h        |   4 +-
+>   drivers/bus/mhi/host/pm.c              |  36 +++++++--
+>   drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
+>   drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
+>   drivers/net/wireless/ath/ath11k/core.h |   6 +-
+>   drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
+>   drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
+>   drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
+>   drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
+>   drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
+>   include/linux/mhi.h                    |  15 +++-
+>   net/qrtr/mhi.c                         |  29 +++++++
+>   12 files changed, 218 insertions(+), 60 deletions(-)
+> 
+> 
+> base-commit: 707e306f3573fa321ae197d77366578e4566cff5
+> prerequisite-patch-id: d3f76112f9a55195c71459e0edf3a4ecf8af9181
+> prerequisite-patch-id: 340d15aad1d3c1c3c93d9d996e1c96226c8bad8f
+> prerequisite-patch-id: 98cdd37a68df4f651a065145e946d92c43be799e
+> prerequisite-patch-id: a19ed13af0c894b7f9b22cedc99029991f48e47c
+> prerequisite-patch-id: b5ad50fae6167c7c2b60cc063a8d460f7ddd4997
 
----
-base-commit: 3ab6aff5793c3c7bdf6535d9b0024544a4abbdd5
-change-id: 20240222-mhi-const-bus-mhi-host-pci_generic-5ddf8f13d35c
-
+Hi Mani, may I have your comments on this series?
 
