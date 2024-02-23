@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-12338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C26A8612F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:41:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 704CF8612F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 14:41:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B73431F25271
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:41:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8226B209B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 13:41:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4FF982C63;
-	Fri, 23 Feb 2024 13:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14DB6839E0;
+	Fri, 23 Feb 2024 13:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fy8UyQ56"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O8aUQ4jG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93E47FBC5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560328288E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 13:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708695582; cv=none; b=f/Y+SN0dLNMro+bmUivRMI6QZoRlCbuU3Y+URZfRnzK8R+4q4phm6ZG9fiYsC0d6cdqSdZk1wi5GT3NnE/27ynaob/AkMRbaTpfLtpR0GHSTRllPVm25+iiJb6WJHpGh7Q6uv+pYVn5tCmmskXre0pYFqdmVYOz5pw6CCESyjjw=
+	t=1708695584; cv=none; b=lMWChom1/M3Sewu3JdHew3uxe9QrPJxF0J3qQE8/nu1ivLqzpschbxC0xsddcrtRncjbZWEojQVolIakuYccxbgSrrP1KdI/08Cxl+gQbxapQ8SnHfYQm5Cp/wjCibeVqdxWKIJZmHZW5q4JEIkeFtCSirFs4bizxcKaKGrUYrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708695582; c=relaxed/simple;
-	bh=46OEvxCUZOG0ruOPXMwETLi+p6CGJ5C1qF9K+H3PvbY=;
+	s=arc-20240116; t=1708695584; c=relaxed/simple;
+	bh=Pj2JWq0/eV8U5LfntKGtg4RB7pCZupoH1JIKsRgKPx4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gBlV5nQUIju4hQGpVwYBNAPX/ZswuZzRW0mELgqG1RTQBZT4hjPE7C2A8fEYT3Q6QmcSw9X84fGVAjSmHGUQhmAkTWiqiOm9Zu0XXHpe151FY8vx1x7+UgDXclZRerJsKiMLIj2/Es/YGi7iH8nbrfeCmVd0WyGsAStiyPNizZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fy8UyQ56; arc=none smtp.client-ip=209.85.166.47
+	 MIME-Version; b=kFIcAOHvpJu1d2TOGcE77X38aBdI/knsKxL/KZRZ6IQYUe/yLEASdfvS4heLXtVte2qX6lULwFEpeq4QPwQmGxPbjomfguyzNcPPa1hTN7WshIzLnfhZPJQEdwROWArwmf7P17cT3E5rzER0kCVWDPgiPxHojVSSojQq98gxyOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O8aUQ4jG; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-7c784a9ff80so11041339f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 05:39:40 -0800 (PST)
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-7c490498729so33903439f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 05:39:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708695580; x=1709300380; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708695581; x=1709300381; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BNgvh3MFbGff8zkaafQFr7XhBPRC4e9c/AqOz6KeXsg=;
-        b=fy8UyQ56ZSKhdxF6HxdkERCDoUoESlk/Vpc5+e7gT85ga3AJsWgj/nHTf47Pv2FMHT
-         onMN/aUe7P4/pUS3IMo5nfUYJwINwhfqOC/YqJCt7Gm7VqzXZuIb+s8T1coHETuPgVx8
-         IGm4kTTFf8vbHuRp+7cll4H9S0Zs/1cxnqvdnRCo5Bl99MRl3O0EbD0aA8+TV0ktGXjb
-         TW4Cx6zYj8ZgboBdNVRWuOcv94i4Su//ederFIAmA50opVHkyfbUq+cWpqE5mUbi6uFe
-         kAoZftsUZPIl5PjG0GGJ/OmJMtfkM1QNFcQoDPqYZg6RetI7Pm7DrV7N4fHEsLgX54kJ
-         7Txw==
+        bh=IBcLB2tUwTkIv16rWdqMqkrF0q8yxOXRHBRsAy8swM0=;
+        b=O8aUQ4jG8lmp01u37oDalWNDeLhO+v+TJ3ReXTGeydJoKZfVztBW7iRbn8Zh5mgcuf
+         2eTnQvbdB7/ZD6jrn9y7nGSzWafOTkHCDVbOGNLSUSvqv4QJwC9/M0yNqwPC1IRPCPta
+         84uyrHOO9UeagFQp99cekpspM/I/Bt2HfljyMRyAgZZdydsR+IwrzQqF5RfSWBr0XPCX
+         EXD5wli/cAaSg/ToK5E5bKzHIa7grD7UP7eHfSkK2jEsdz427FfaG7o+hVLqaFDLtTRg
+         3gLy0hfr0uEdxlK1T6HbkybysFmtruxXUaFF93acFQWe3U/7UYESt/zuzgGBah19eVSj
+         1m+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708695580; x=1709300380;
+        d=1e100.net; s=20230601; t=1708695581; x=1709300381;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BNgvh3MFbGff8zkaafQFr7XhBPRC4e9c/AqOz6KeXsg=;
-        b=CzNZ6X2JWoXoyIIY74jzMe5EAzPGDGUc+3kQTUS9CshRtBabZj1xqLv0wkRTnIiQin
-         7rpqggzPiZUAIKswzbMr2374C1lOtld+VSWdbsFTcmn5jX43tuwoYvAGS8Dcf3o1Rs9s
-         Esrg8EFsZnFId60/q/hmf8n7GYP5lRv5dXiZCH7Q8Pe+N7RAg7vFdZem/agkwKjEWESu
-         f4vgQq1zhjapI54tqInz1QhfWWLCfSox4DK0D5PAJjiSjS2OLmouyDjKEP1rwfu2I/iI
-         IB/tnPWMXQ1kPjVBsZgGsJ07xgeOukGP8IjGA/DTZK5/DK4/ILOO8EK7eIq1WXANLdll
-         4QdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXVf+X3vunG8JpOSpIVk7GrLgaNwwMqb4lHk5b3kHW+CZZ3oKdXa+MqolMb+z56xDlPc/NzCQfHsTV+05VXebMlQez0nowUxXfu55l5rA==
-X-Gm-Message-State: AOJu0Yy9+8RKQAeNWBK2FUrtgITWjSSFC1qNjLk8IqFrwifLkX4Kx7Mg
-	hZp8xN+VI0hlPgp6/d0fcjjnaDUQfUq6vn0E62h06DF0lOYtFv84je26Hn1Bde4=
-X-Google-Smtp-Source: AGHT+IG9LWtZiZctodKf3c6/8tnMA+P+/9qmimvMxAU8H3yJNcXRsCx5CtJ9MtjwKxyLhZiHcWpWPA==
-X-Received: by 2002:a6b:c9d7:0:b0:7c4:9cb9:dac with SMTP id z206-20020a6bc9d7000000b007c49cb90dacmr1796068iof.19.1708695580130;
-        Fri, 23 Feb 2024 05:39:40 -0800 (PST)
+        bh=IBcLB2tUwTkIv16rWdqMqkrF0q8yxOXRHBRsAy8swM0=;
+        b=ATc2PbKD4pcPd34MH10yQhvDJsFrigiuYiRJVlS6zgVJ8iLB5pYXZfjYvURdu5KJC9
+         hpAdxzcIDBINLynJDy7vxp1/swROhZnIgsXSDFNHbsmy+mo7ObqqevFJur2qk/g28pFQ
+         vw+eH0EOSpiPz8kz4NnqUfe+1A0bsmJwv3UWWnT4I9cuaR3ZXHpoxVyp2WXhqO7m3Pnk
+         /y6f0J0Wg8qfrCLEqI1rd5my6rVxx+CR/kF6n9nKovk9P61w1oWTtnxRWDF1spM3Kk1U
+         Rp1Sh5Xb9enkcvwxeUCxbLZJLe7BfVQldruLrXhO6NmCuGkLTqhiGXTB/dzQK7bDd0JJ
+         zT4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXAdb1D1FNbMDVy0wfQo4Sd3xiIsQOb2T4zXzyH82WpEFVsKqcoiDDavXBjuBhdCK5amml/L+FzMBCSKcjd1hdDIuhDPm6/n6h4Pb2ukw==
+X-Gm-Message-State: AOJu0YwzJH+bJq1N3qvhSBj2nm9NPC64plu9dil+H+Hv2rE2QgKPcSH9
+	qTSPxx1fkMaxLjxssAIzGgZ2kMNgzaU9275FXK68kMaMXOnILYufDO7etrgGLeM=
+X-Google-Smtp-Source: AGHT+IG5YOuxXZsiAWHenMCPy9sDchco4RRy8B330LWJc57qG3Jmlqz4IFLtHq/b6aqPGK8KOIQCeA==
+X-Received: by 2002:a5d:9c12:0:b0:7c6:67e4:b151 with SMTP id 18-20020a5d9c12000000b007c667e4b151mr2049467ioe.9.1708695581405;
+        Fri, 23 Feb 2024 05:39:41 -0800 (PST)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id p11-20020a6b630b000000b007c76a2d6a98sm1836838iog.53.2024.02.23.05.39.38
+        by smtp.gmail.com with ESMTPSA id p11-20020a6b630b000000b007c76a2d6a98sm1836838iog.53.2024.02.23.05.39.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Feb 2024 05:39:39 -0800 (PST)
+        Fri, 23 Feb 2024 05:39:41 -0800 (PST)
 From: Alex Elder <elder@linaro.org>
 To: davem@davemloft.net,
 	edumazet@google.com,
@@ -82,9 +82,9 @@ Cc: mka@chromium.org,
 	netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 4/6] net: ipa: move ipa_interrupt_suspend_clear_all() up
-Date: Fri, 23 Feb 2024 07:39:28 -0600
-Message-Id: <20240223133930.582041-5-elder@linaro.org>
+Subject: [PATCH net-next 5/6] net: ipa: kill ipa_power_suspend_handler()
+Date: Fri, 23 Feb 2024 07:39:29 -0600
+Message-Id: <20240223133930.582041-6-elder@linaro.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240223133930.582041-1-elder@linaro.org>
 References: <20240223133930.582041-1-elder@linaro.org>
@@ -96,81 +96,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The next patch makes ipa_interrupt_suspend_clear_all() static,
-calling it only within "ipa_interrupt.c".  Move its definition
-higher in the file so no declaration is needed.
+Now that ipa_power_suspend_handler() is a trivial wrapper around
+ipa_interrupt_suspend_clear_all(), we can open-code it in the one
+place it's used, and get rid of the function.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- drivers/net/ipa/ipa_interrupt.c | 48 ++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ drivers/net/ipa/ipa_interrupt.c |  4 ++--
+ drivers/net/ipa/ipa_interrupt.h |  8 --------
+ drivers/net/ipa/ipa_power.c     |  6 ------
+ drivers/net/ipa/ipa_power.h     | 11 -----------
+ 4 files changed, 2 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index a78c692f2d3c5..e5e01655e8c28 100644
+index e5e01655e8c28..501962cc4e90f 100644
 --- a/drivers/net/ipa/ipa_interrupt.c
 +++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -43,6 +43,30 @@ struct ipa_interrupt {
- 	u32 enabled;
+@@ -44,7 +44,7 @@ struct ipa_interrupt {
  };
  
-+/* Clear the suspend interrupt for all endpoints that signaled it */
-+void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt)
-+{
-+	struct ipa *ipa = interrupt->ipa;
-+	u32 unit_count;
-+	u32 unit;
-+
-+	unit_count = DIV_ROUND_UP(ipa->endpoint_count, 32);
-+	for (unit = 0; unit < unit_count; unit++) {
-+		const struct reg *reg;
-+		u32 val;
-+
-+		reg = ipa_reg(ipa, IRQ_SUSPEND_INFO);
-+		val = ioread32(ipa->reg_virt + reg_n_offset(reg, unit));
-+
-+		/* SUSPEND interrupt status isn't cleared on IPA version 3.0 */
-+		if (ipa->version == IPA_VERSION_3_0)
-+			continue;
-+
-+		reg = ipa_reg(ipa, IRQ_SUSPEND_CLR);
-+		iowrite32(val, ipa->reg_virt + reg_n_offset(reg, unit));
-+	}
-+}
-+
- /* Process a particular interrupt type that has been received */
- static void ipa_interrupt_process(struct ipa_interrupt *interrupt, u32 irq_id)
+ /* Clear the suspend interrupt for all endpoints that signaled it */
+-void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt)
++static void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt)
  {
-@@ -205,30 +229,6 @@ ipa_interrupt_suspend_disable(struct ipa_interrupt *interrupt, u32 endpoint_id)
- 	ipa_interrupt_suspend_control(interrupt, endpoint_id, false);
+ 	struct ipa *ipa = interrupt->ipa;
+ 	u32 unit_count;
+@@ -94,7 +94,7 @@ static void ipa_interrupt_process(struct ipa_interrupt *interrupt, u32 irq_id)
+ 		 * caused the interrupt, so defer clearing until after
+ 		 * the handler has been called.
+ 		 */
+-		ipa_power_suspend_handler(ipa, irq_id);
++		ipa_interrupt_suspend_clear_all(interrupt);
+ 		fallthrough;
+ 
+ 	default:	/* Silently ignore (and clear) any other condition */
+diff --git a/drivers/net/ipa/ipa_interrupt.h b/drivers/net/ipa/ipa_interrupt.h
+index 12e3e798ccb38..53e1b71685c75 100644
+--- a/drivers/net/ipa/ipa_interrupt.h
++++ b/drivers/net/ipa/ipa_interrupt.h
+@@ -34,14 +34,6 @@ void ipa_interrupt_suspend_enable(struct ipa_interrupt *interrupt,
+ void ipa_interrupt_suspend_disable(struct ipa_interrupt *interrupt,
+ 				   u32 endpoint_id);
+ 
+-/**
+- * ipa_interrupt_suspend_clear_all - clear all suspend interrupts
+- * @interrupt:	IPA interrupt structure
+- *
+- * Clear the TX_SUSPEND interrupt for all endpoints that signaled it.
+- */
+-void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt);
+-
+ /**
+  * ipa_interrupt_simulate_suspend() - Simulate TX_SUSPEND IPA interrupt
+  * @interrupt:	IPA interrupt structure
+diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+index eee251d67f81a..0f635b8356bfb 100644
+--- a/drivers/net/ipa/ipa_power.c
++++ b/drivers/net/ipa/ipa_power.c
+@@ -194,12 +194,6 @@ u32 ipa_core_clock_rate(struct ipa *ipa)
+ 	return ipa->power ? (u32)clk_get_rate(ipa->power->core) : 0;
  }
  
--/* Clear the suspend interrupt for all endpoints that signaled it */
--void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt)
+-void ipa_power_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
 -{
--	struct ipa *ipa = interrupt->ipa;
--	u32 unit_count;
--	u32 unit;
--
--	unit_count = DIV_ROUND_UP(ipa->endpoint_count, 32);
--	for (unit = 0; unit < unit_count; unit++) {
--		const struct reg *reg;
--		u32 val;
--
--		reg = ipa_reg(ipa, IRQ_SUSPEND_INFO);
--		val = ioread32(ipa->reg_virt + reg_n_offset(reg, unit));
--
--		/* SUSPEND interrupt status isn't cleared on IPA version 3.0 */
--		if (ipa->version == IPA_VERSION_3_0)
--			continue;
--
--		reg = ipa_reg(ipa, IRQ_SUSPEND_CLR);
--		iowrite32(val, ipa->reg_virt + reg_n_offset(reg, unit));
--	}
+-	/* Acknowledge/clear the suspend interrupt on all endpoints */
+-	ipa_interrupt_suspend_clear_all(ipa->interrupt);
 -}
 -
- /* Simulate arrival of an IPA TX_SUSPEND interrupt */
- void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt)
+ static int ipa_power_retention_init(struct ipa_power *power)
  {
+ 	struct qmp *qmp = qmp_get(power->dev);
+diff --git a/drivers/net/ipa/ipa_power.h b/drivers/net/ipa/ipa_power.h
+index 718aacf5e2b23..227cc04bea806 100644
+--- a/drivers/net/ipa/ipa_power.h
++++ b/drivers/net/ipa/ipa_power.h
+@@ -30,17 +30,6 @@ u32 ipa_core_clock_rate(struct ipa *ipa);
+  */
+ void ipa_power_retention(struct ipa *ipa, bool enable);
+ 
+-/**
+- * ipa_power_suspend_handler() - Handler for SUSPEND IPA interrupts
+- * @ipa:	IPA pointer
+- * @irq_id:	IPA interrupt ID (unused)
+- *
+- * If an RX endpoint is suspended, and the IPA has a packet destined for
+- * that endpoint, the IPA generates a SUSPEND interrupt to inform the AP
+- * that it should resume the endpoint.
+- */
+-void ipa_power_suspend_handler(struct ipa *ipa, enum ipa_irq_id irq_id);
+-
+ /**
+  * ipa_power_setup() - Set up IPA power management
+  * @ipa:	IPA pointer
 -- 
 2.40.1
 
