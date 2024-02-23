@@ -1,109 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-12375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B5B686154F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:13:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B1FA861587
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:23:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 335D31C23001
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:13:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 402F228753B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:23:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881757175E;
-	Fri, 23 Feb 2024 15:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C39D485262;
+	Fri, 23 Feb 2024 15:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eJJMsG6n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BwTHzWzs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB44A5FEE5;
-	Fri, 23 Feb 2024 15:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6EC83A0D;
+	Fri, 23 Feb 2024 15:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708701200; cv=none; b=pIcjT5SrG4fjBpEDTDURMKzikJnciRc94jcN1wAwBrlie6x5P0ZMAymCxU2oNELjqrtIevoNG9dRYefuZe51gkgXWtroV/I6xmfqjsS1xWvpO/NwY/xCXevFWHPj8hCfSUmq3gCWVl2GKUJOrsYxkco+4iBw28iOL6yamK3hzvQ=
+	t=1708701788; cv=none; b=KrpR8ER9dWc1xcw4ynpZ2+Pzekv6t77dOxm1UfSFxYxO6KALrvi4Ya+Lodn6hhEeV4qQaTdr1Uand3bEq58wg8UTcG1tSTULkIvbVNm53aqm9kNLVWjr+QQrfEB/2VMrSGcxyWhPkHFNt7Oblh4u0CEdtKsluhs/UHPnYPRjkyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708701200; c=relaxed/simple;
-	bh=WFnOyzagEoL2XMAHfjJHHnkD1L2Pm476EQxtsVG/O7o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uQvE+HuLT3h7A8j1Tmtm+GfIDH3IUFEPJW37sIlj/G6957bpYOVj3UxWjO2GjMgm3kq9Ho6QFCKngv2257c8hFFcBy81JedKSwxQQyfVrJzOyzqv5kyrYfyRYcDEYRPsdxLRVrypKS8z0GxKkPL+Y+lyAI4+qj2bUfdzLsUc+WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eJJMsG6n; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41N9RQtH007795;
-	Fri, 23 Feb 2024 15:13:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=NI4LeKwprpZtjLkpzn66X7efzVrPdTCPBGszzolQ1cE=; b=eJ
-	JMsG6nCvv2k+5QyECjO4ximmOoxEkGt5yk+2i6H4Mszx0xeuels1iuT2M2OZe+ib
-	7mvKGBDUNDy1XPyZ9Xsp0xwXecU6AwhYFK5+EfGI3tVK4x5Ww/6g3Wfa84XHALNN
-	qdYWY0ZFEYNLsFCBzK7IrYiWywnPMD8bp7wyc1P0uxo5747QCEJixMpHkEJPDvSY
-	GPX5kvEe6i9489gxseUczVYcviwYse8cveFVOkUvZkSUlb0+/qGy5Q5/BhTYqoD7
-	fgZC7KoSURVIflhtniSK76fdtYw10rV1VXRzlw4izoPLlwvuL1f8mOCq0XnTsgfC
-	HIAjW2jO6lnJtXwKfSkA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wer8mruj0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 15:13:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41NFDB9q020906
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Feb 2024 15:13:11 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 23 Feb
- 2024 07:13:07 -0800
-Message-ID: <add8e7de-a153-4d8e-7226-a5ec177a4223@quicinc.com>
-Date: Fri, 23 Feb 2024 08:13:07 -0700
+	s=arc-20240116; t=1708701788; c=relaxed/simple;
+	bh=9shxrV37X/hKYhC7+xafRBxXkbpYRJ8dJYB3wBS8aq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BLOL9n7tF5+le8pZTh8ROqBCKTFXlXowQNGZNIwNz/fxBdIk5uEy+9BPJBi8JObhNuXAaDNKrmdtSw8TLb5Jr6/+ZuZPooX/4ZMTk8+/sU2v+DndfIzVAfwYWtUzjod83UyUShpJ5SOuGxXq3AGoXaiNRhzXHxnY3iQWesc0f5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BwTHzWzs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0DFC433B2;
+	Fri, 23 Feb 2024 15:23:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708701786;
+	bh=9shxrV37X/hKYhC7+xafRBxXkbpYRJ8dJYB3wBS8aq0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BwTHzWzsu/Zd0FkgYEt+VHXbuKOy5OgClB6+XaV77LhCiG9PBCZEJSKEHkrmIK+Wf
+	 BYa+b8S/A4inKzgNzR6f8Q58lkxDXjPL60D1qxqVFHC8raTHfuiPBwzhIIWw6RJzl1
+	 Vc3DrZWsRQseLG/eRus7+GfMAQbdeHRR9gHwhxx2V1euwi0wrVDRwp1ZzRDepbvcj3
+	 84k8dfFLc/xbsPA9emz04nCyG/95jqxWDRj5LHy2yfqXhwWJIavpBhIlWJj9ewSvlq
+	 wgvtR3xw0ssPqYPpQZWnnez0cCIwStZ/r8bZZQ1eJlDu7ngNu6XiBpQxf+ZEM9bw+1
+	 IXsRPM0H507SA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1rdXOI-000000005FT-0JA2;
+	Fri, 23 Feb 2024 16:23:10 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and GICv3 ITS enable
+Date: Fri, 23 Feb 2024 16:21:12 +0100
+Message-ID: <20240223152124.20042-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] accel/qaic: Constify aic100_channels
-Content-Language: en-US
-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
-        Carl Vanderlip
-	<quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya
-	<quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240222-mhi-const-accel-qaic-v1-1-028db0dd9098@quicinc.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240222-mhi-const-accel-qaic-v1-1-028db0dd9098@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CsL34TIa0p9Sz7JxxjFGxwAcZmzsryZ6
-X-Proofpoint-ORIG-GUID: CsL34TIa0p9Sz7JxxjFGxwAcZmzsryZ6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-23_01,2024-02-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- adultscore=0 malwarescore=0 bulkscore=0 clxscore=1011 mlxscore=0
- impostorscore=0 mlxlogscore=825 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402230111
+Content-Transfer-Encoding: 8bit
 
-On 2/22/2024 6:06 PM, Jeff Johnson wrote:
-> MHI allows the channel configs to be const, so constify
-> aic100_channels to prevent runtime modification.
-> 
-> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+This series addresses a few problems with the sc8280xp PCIe
+implementation.
 
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+The DWC PCIe controller can either use its internal MSI controller or an
+external one such as the GICv3 ITS. Enabling the latter allows for
+assigning affinity to individual interrupts, but results in a large
+amount of Correctable Errors being logged on both the Lenovo ThinkPad
+X13s and the sc8280xp-crd reference design.
 
-I plan to apply to drm-misc-next before the rc6 freeze.
+It turns out that these errors are always generated, but for some yet to
+be determined reason, the AER interrupts are never received when using
+the internal MSI controller, which makes the link errors harder to
+notice.
+
+On the X13s, there is a large number of errors generated when bringing
+up the link on boot. This is related to the fact that UEFI firmware has
+already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
+link at Gen3 generates a massive amount of errors until the Wi-Fi
+firmware is restarted. This has now also been shown to cause the Wi-Fi
+to sometimes not start at all on boot for some users.
+
+A recent commit enabling ASPM on certain Qualcomm platforms introduced
+further errors when using the Wi-Fi on the X13s as well as when
+accessing the NVMe on the CRD. The exact reason for this has not yet
+been identified, but disabling ASPM L0s makes the errors go away. This
+could suggest that either the current ASPM implementation is incomplete
+or that L0s is not supported with these devices.
+
+Note that the X13s and CRD use the same Wi-Fi controller, but the errors
+are only generated on the X13s. The NVMe controller on my X13s does not
+support L0s so there are no issues there, unlike on the CRD which uses a
+different controller. The modem on the CRD does not generate any errors,
+but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
+when not used, which could indicate that there are bigger problems with
+the ASPM implementation. I don't have a modem on my X13s so I have not
+been able to test whether L0s causes any trouble there.
+
+Enabling AER error reporting on sc8280xp could similarly also reveal
+existing problems with the related sa8295p and sa8540p platforms as they
+share the base dtsi.
+
+After discussing this with Bjorn Andersson at Qualcomm we have decided
+to go ahead and disable L0s for all controllers on the CRD and the
+X13s.
+
+Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
+significant impact on the power consumption (and there are indications
+that this applies generally for L0s on these platforms).
+
+***
+
+As this series fixes a regression in 6.7 (which enabled ASPM) and fixes
+a user-reported problem with the Wi-Fi often not starting at boot, I
+think we should merge this series for the 6.8 cycle. The final patch
+enabling the GIC ITS should wait for 6.9.
+
+The DT bindings and PCI patch are expected to go through the PCI tree,
+while Bjorn A takes the devicetree updates through the Qualcomm tree.
+
+Note that the devicetree binding updates will conflict with the
+following series which was just merged for 6.9 today:
+
+	https://lore.kernel.org/lkml/513dfb69-aea1-4848-8755-613e03c65843@linaro.org/
+
+The resolution is simply to add 'required-opps' and 'aspm-no-l0s' to the
+new 'qcom,pcie-common.yaml' schema file instead of 'qcom,pcie.yaml',
+while removing 'msi-map-mask'.
+
+***
+
+Johan
+
+
+Changes in v2
+ - drop RFC from ASPM patches and add stable tags
+ - reorder patches and move ITS patch last
+ - fix s/GB/MB/ typo in Gen2 speed commit messages
+ - fix an incorrect Fixes tag
+ - amend commit message X13 wifi link speed patch after user
+   confirmation that this fixes the wifi startup issue
+ - disable L0s also for modem and wifi on CRD
+ - disable L0s also for nvme and modem on X13s
+
+
+Johan Hovold (12):
+  dt-bindings: PCI: qcom: Allow 'required-opps'
+  dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+  dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+  PCI: qcom: Add support for disabling ASPM L0s in devicetree
+  arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+  arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
+  arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
+  arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for NVMe
+  arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for modem and Wi-Fi
+  arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for Wi-Fi
+  arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for NVMe and modem
+  arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  6 +++++-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  7 +++++++
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  7 +++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 17 +++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 20 +++++++++++++++++++
+ 5 files changed, 55 insertions(+), 2 deletions(-)
+
+-- 
+2.43.0
+
 
