@@ -1,130 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-12372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64FF686151D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:04:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41AB0861527
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 16:06:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 179021F22CD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:04:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF64DB20F49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Feb 2024 15:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F367175E;
-	Fri, 23 Feb 2024 15:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 896857175E;
+	Fri, 23 Feb 2024 15:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VyJmqqsg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pG46sheQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2B29AF;
-	Fri, 23 Feb 2024 15:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACA929AF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 15:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708700684; cv=none; b=hSiLhTcLL7ckatWIB+gSYq4idV+WoqQoRr4OdTQSeP8rvb5ZOppMlWE2jSN4QHvkshiTK1S11mr4AbQvbRUoSAQ7TR+NWkieo0qVLSdVqJ4UhxWf0rp5Jx5H3vrADiWV0W9gNtLJVYTPvuvFCEbKTYVuaLkqbtZdGsOtX9YYWVE=
+	t=1708700782; cv=none; b=RMaJepCOCNoTmewxtyUSZypjTIobXci4mk83bHECld7F4MwBOZNzXMR5DWDSKPxt8yOhrvCD73raP6jJuGMzuBU18rQhArAwXb1ZLfG6VdWw80vviBxU9WNycgPd/rMe5pKriuUXeACSX4GCHnQtJfVHozB/nHRK6dHOOJOldVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708700684; c=relaxed/simple;
-	bh=5x6pYf9qLTpW8AR7rB7BIZ/ftWmhCe5nScEqQHk3wMQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R0nlfI9McLxMuFSXlZxCKHMkFFgjLxFP09lDQEQ0E8Z3hW1lYmBfAjy4wuxzgCuYP+Kz1tsz2ezmGbH62JppLtQmWEg61u8WO2s6YpdIqcpogwow+UjXBPci7pU4OurmJLTkHhEduoFiD30QWEttwyxsdJwrTv60DnVBMGJCjdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VyJmqqsg; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1708700676;
-	bh=5x6pYf9qLTpW8AR7rB7BIZ/ftWmhCe5nScEqQHk3wMQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VyJmqqsgpm5U9Y5HtXtI531KmUgmHHitp9i69QI4A+zH5d52EXsfvN55wwYd1KTvP
-	 5SL2CNKtxJ29VXhp+eRVRNcg1/MrKgpLyuAnPxl7KRtEvZc+y8lBvVxQT8LYJLF/FR
-	 IRnVg9ZGUjzW5p9qC/0LoFwwm58SkAtvIrtZjEFgJ+GQXjqhdMiB1xjSND/T/a9OiH
-	 FD0ihu5q66PVpVWD1Fe6rVdSRSU9Se9SwOtuGxtF9A7Wn/gEcyDhXB8vig62Z5ErTY
-	 9DS/5EMBwG18wOc0EqHvYkQSoxMutq4GruMj63dhD8Pe1nKj3e05JIgP4qmyGE0UyU
-	 /EvO+Rx6WTX+w==
-Received: from mercury (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sre)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 94627378000E;
-	Fri, 23 Feb 2024 15:04:36 +0000 (UTC)
-Received: by mercury (Postfix, from userid 1000)
-	id 352031060C95; Fri, 23 Feb 2024 16:04:36 +0100 (CET)
-Date: Fri, 23 Feb 2024 16:04:36 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Nikita Travkin <nikita@trvn.ru>
-Cc: Hans de Goede <hdegoede@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] power: supply: Add Acer Aspire 1 embedded
- controller driver
-Message-ID: <xelebhoitnwguhewahw26xopl5btjo5ezznjjaeb2zfyy2bpcr@7pmclezshwck>
-References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
- <20240220-aspire1-ec-v3-2-02cb139a4931@trvn.ru>
- <qoidm5wujjbeoc2hlraky26wuwmuaxi2atyl6ehovhvffdbfeh@g5gunqdei45m>
- <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+	s=arc-20240116; t=1708700782; c=relaxed/simple;
+	bh=X0urF8PTOLTnSGAFxgaALR8kxbAgRsy7o0cdpZScDMg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HQRB9z/4pnTzPL1qrCsNv9D6/UHgOMZEPt9Pw0tS8rXGtOSwzopn78On9ns7Q+h2LLDXArs8fEIW+h3WUGnuQe2w030dq3bAbZvO20zHcoeHmIkoA9dnqKpFtGCQMWDPugB/mH4HR4BtHofyQgxCbZvB0ipWFF8diryh5c+BQto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pG46sheQ; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d2533089f6so9639861fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 07:06:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708700779; x=1709305579; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4sJGs1NYZ5QUnzqdBB1Q8b+bNbJNb63ZLKIOCTbd53c=;
+        b=pG46sheQReakcqs32/t5ZiJgxeD49hsHsnso+dcl4BGKpvIy9vl2MoqSMb7QeQWrR4
+         zvyxAD09Go943rhpJ1SCoLUe99zjqOjuejtfW+54PZ/HWOpfGIrCEdPE6fVjVwlL2YDl
+         LONVCPy6oWa+u5FEf2TLJ76ASQNOuMx8ih/4SJJhPgsh9p3HI6fk9xpgaY6sKObrEfm4
+         /D+D0L59H6CLMX7ACVOL+7FB+FYSbpyIv//HHEc4Tte3xmLxf0Mcg7qkGL512LYkiz4y
+         IQd1FYAb1+SzNPbYvWCHOSudjmCRC1yqMJWlJJfMG3XqeN+J7e/b0rgLf4nzNzNXoQYA
+         8ZeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708700779; x=1709305579;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4sJGs1NYZ5QUnzqdBB1Q8b+bNbJNb63ZLKIOCTbd53c=;
+        b=b0X0KfmuTIB/aLMjQ82EMX4NMc4Gtq1qqhavBXa/0sx487q1YviD7RX4slH7OXUgrf
+         jHWdmK/p0kqd01hfdO94DIB6JBVue9lvSButnVErI3GrKOri8DnXVtQwqKT41B4kh+14
+         dWSWNOYNruxLy+Bx7E2awbXXh8fRw5peCggPj0QqZ//RHsIWS9eSP4DmyCcNe1GA6isI
+         5+zbZ6JplVeoff8jN3rIYXH64u1YA/V4gQJWpvVeNsomGa/U3hegVG5X3tbyzv0CjQ7s
+         gc5GPhUaudWV+25a+v4mlCi5450bDeyKqiJCqIFHDtmvwspuHaxyGh1EVk9ZKDzwKgpQ
+         ZcqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUFDXYr4Fp328gAcorW5zpAhXHP0IH2myyt7cvMexpiiLOfPQYzZfjhDbtZabLdjkPPExi11W3fIYLkPn/kDfq+WYvD7MOiy28HssiaVg==
+X-Gm-Message-State: AOJu0YzkhCvel9yZ6fcLOEJRb/10+yPI3/NtKw0FGP9dUKDQzkR+hC/Z
+	ZxA7PTkLXpRsuG3i3PttLbBtr9NXljhugM+d5KJb5bO2VuJ/oxCYc0id6Lza4bQ=
+X-Google-Smtp-Source: AGHT+IGfCIE307IqSzsAUBlWRNDb7b8z9zOXY/2OH+3bNQA44KSVllJBbJFnbX+Qnh3P7Q37qv1Exw==
+X-Received: by 2002:a2e:a488:0:b0:2d2:61fd:7c2d with SMTP id h8-20020a2ea488000000b002d261fd7c2dmr63698lji.17.1708700778286;
+        Fri, 23 Feb 2024 07:06:18 -0800 (PST)
+Received: from eriador.lan (dzyjmhyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a00e:a300::227])
+        by smtp.gmail.com with ESMTPSA id u24-20020a2e91d8000000b002d0c8fa072asm2681353ljg.20.2024.02.23.07.06.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Feb 2024 07:06:17 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Vinod Koul <vkoul@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Cc: Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org
+Subject: Re: (subset) [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
+Date: Fri, 23 Feb 2024 17:06:15 +0200
+Message-ID: <170870071756.13438.16980480346490993922.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240217150228.5788-1-johan+linaro@kernel.org>
+References: <20240217150228.5788-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zxpcrmzfdpf2u4kj"
-Content-Disposition: inline
-In-Reply-To: <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
+On Sat, 17 Feb 2024 16:02:22 +0100, Johan Hovold wrote:
+> Starting with 6.8-rc1 the internal display sometimes fails to come up on
+> machines like the Lenovo ThinkPad X13s and the logs indicate that this
+> is due to a regression in the DRM subsystem [1].
+> 
+> This series fixes a race in the pmic_glink_altmode driver which was
+> exposed / triggered by the transparent DRM bridges rework that went into
+> 6.8-rc1 and that manifested itself as a bridge failing to attach and
+> sometimes triggering a NULL-pointer dereference.
+> 
+> [...]
 
---zxpcrmzfdpf2u4kj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied to drm-misc-fixes, thanks!
 
-Hi,
+[2/6] drm/bridge: aux-hpd: separate allocation and registration
+      commit: e5ca263508f7e9d2cf711edf3258d11ca087885c
+[3/6] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
+      commit: b979f2d50a099f3402418d7ff5f26c3952fb08bb
+[4/6] soc: qcom: pmic_glink: Fix boot when QRTR=m
+      commit: f79ee78767ca60e7a2c89eacd2dbdf237d97e838
 
-On Fri, Feb 23, 2024 at 07:32:17PM +0500, Nikita Travkin wrote:
-> >> + This driver provides battery and AC status support for the mentioned
-> >=20
-> > I did not see any AC status bits?
->=20
-> I was referring to whatever ACPI spec calls "AC Adapter" but I guess
-> I should have used the word "charger" instead... Will reword this.
+Note, PHY patches (5,6) do not have dependency on the drm patch, so they can go
+through the phy/fixes tree.
 
-But you only register a power-supply device for the battery and not
-for the AC adapter/charger. When you write "and AC status support" I
-would have expected something similar to this (that's from ACPI AC
-adapter driver):
-
-$ cat /sys/class/power_supply/AC/uevent
-POWER_SUPPLY_NAME=3DAC
-POWER_SUPPLY_TYPE=3DMains
-POWER_SUPPLY_ONLINE=3D1
-
--- Sebastian
-
---zxpcrmzfdpf2u4kj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmXYs+8ACgkQ2O7X88g7
-+pp0pQ/+I8r1MIK+6d+62Nhgu1dizPhWY5c5s1DPh3CbJHrAhUlfgaTisBQBldsz
-WkzDoOnYEG1lLDSlhsi+0/JbfufNry+gewlCbZ+WR8xPi/R7Zczp94TVvnVixD3e
-TJeyAlv4adPN1FJs7YIVnZE8e77xb8VeCTUq0vLXWlFi0hLt4lHyAdZk9ZihokTO
-EvKw/1rdVPn1Ztu5EIRZkPfHJvnOlnahTqcV/CEb5Q1W6vq+A4TS8cY1GkJXGGBc
-FTDbMPeaYn/VWxIyqKCgatcd1ypqP5mWhm7JdARSe1vMQw2InVyoNjMmG5I1HxBT
-ndudYQhftgOiDpeh8QcdfxFOhT5Yp9/rAO/DKm68URKBh3mbb0EZvIk46afZPIls
-+DfLtw5FeWNnU5Q0Ak8JY6mFEyqOMLR5IpSUAuHxY4STLsKBDStHBVwYZn0+C4D2
-QmNj9IgWAq51SJVKHWOB1afsPP1JPIyDJsHF8jCubdoAOlywd/HyxPlHXpFqxQsA
-JxvFM/mGHseeE/Q05UNMApNxdn/+wao1bXF2h1JSpW3VOwOSRdLqFJ4I7HzlGpD9
-9uxdqBb/3wRTLsZKIRchIQtbG6j88meODLU7kq4+Yn+UlEVLktfxHFztK5aPfoLy
-ngO2wlTKZs6wUAJuGJJidndXx21+4SJloIOhaLRHO2tmhEG6c1U=
-=X9fX
------END PGP SIGNATURE-----
-
---zxpcrmzfdpf2u4kj--
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
