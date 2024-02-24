@@ -1,322 +1,307 @@
-Return-Path: <linux-arm-msm+bounces-12450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D83DA86233A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 07:57:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECF89862380
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 09:52:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A72AB22D0C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 06:57:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CC8A1C2192E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 08:52:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CAD12595;
-	Sat, 24 Feb 2024 06:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 292A117C6E;
+	Sat, 24 Feb 2024 08:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xeq+Vggr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bm3CxjUB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C389E4C9F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 06:55:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93AA175AA
+	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 08:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708757774; cv=none; b=pDUMhlnSnTiijiNjlbZUUmgT5f8ow31RGKsHkuo4a2Z0XelPRcRvR2VIhGnShXnl6RsMw1q66EfeagZoVrZvMflEr65ZaWTVtlUfu0WYW95f7Pa7te+mtc9564ds/hpx7ZRSVdRTYX8RuNECYvLJxZMr6KkdgJz4RmWZR+l0/qc=
+	t=1708764747; cv=none; b=r1sfPDGytf/2R6vjrOMgewPMN6GxwWtvIs5aOb8qBMv0l/NxBtkqGfGzEVsN9w1cdF90rGfUbim4EHOz937wXbFOYeNQycj9ecAtLcTVhuvgNfIVKm0POPZVShfcxO0nSpv5bAsXr5nQ6QwjOQDXQKRIIIdZcIIzy8AwbzOmg2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708757774; c=relaxed/simple;
-	bh=RlSifbzPxBtpu7PujRxYQXRm0HNOIzR8xSzjMWcC9aI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dcwJpIyZcs807b6oaos7N5r0oIyn6cLzEbTOF9rk7C4S6AMCdKgorWcLQxpziUn56hPV38hM/lWIHZxoKx58tmEwWmb96jK0Jl21mtOlhd7DMp2tSOYgpHZsALWMGsq6S4rGDoWw1nS+H575mG9WUYnJkFqzqxkYpSyXve9/aH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xeq+Vggr; arc=none smtp.client-ip=209.85.215.178
+	s=arc-20240116; t=1708764747; c=relaxed/simple;
+	bh=01M370sC9slZyT8sM2oTN7VEL7xSUJ13fdACwlJZF9A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=vDp1bAHrNOyuCSmmXjk2aHuZyQLHP1cy/v/X7A4MMiks3JR/FbsV7ZjnYhO9DCtF/KZ9uR/Lb6+Ha1wAbFTF1R4xb4Qz9fYCZSwP8JRNqq3NLvlx1A+u/xInWAFF69wwd/R+JihrhTyfdX9hMsYnT68Jg+mwhk9J5niOA9bSrQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bm3CxjUB; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5ce942efda5so1174048a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 22:55:53 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5645960cd56so1383823a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 00:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708757751; x=1709362551; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x7a40LFXPNdbxmfoEEZhDO4KpnySFv1la0Joe27Qfts=;
-        b=Xeq+VggrPuLNeTEqB88/Z2mswIxo95t9YlexWB2/PqhuvdkMZgUFzbKiiPssx/C8ZT
-         a4olQvY7tKZdDELxa7krnfaa9uY9G1EI4xj3rScVTiAQfn+bntULZqq3GKgHRSqeVpUP
-         uj0m7m/GZJF4dOWWWNLItsVCzpHL5TKdxAj7sYCaDBOi9pv000PeEv+c6ncaas8hWKJm
-         KFrAEWd1uJQSBcyjRwLhhqtRweIGt56KpurrjinDx9yzihkmajhQFB7/MVDdplN6hntu
-         HLtMkUtpsy8OscyeOSn6pgVg0EbTgh+XS4m00CRCLFphKt6AZ/I/dpdWmVL7+jltsN1F
-         Dd4g==
+        d=linaro.org; s=google; t=1708764743; x=1709369543; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oRZkRZDlh9klaaBz4WWG7UFrWtv71YHpmObQ4nbgflA=;
+        b=bm3CxjUBpY6Ng/EIAeysGsPFRh8aXFHbDhpshFo3NEVwPcy8zHameEefLEqzwFVbX1
+         jo0p2dxpXvcxeC+v4PMdqAFyCwNjfF+gSpFqpCfTOPl3wjukwKu+ziiViCIKpIHAhQd+
+         ZFtbJb0xp0NR7318uKNeJxIp3At1oTZIYmQii0wqRI4kImuLQHCty+2hpGPT9iutLaSo
+         dz3yYvkmay18F53oDRqvrj9HY6lq3TqBAIVh7k98gn/0SpN+pisohfP4DlbDsHd1pIzI
+         C/AxsS+cFDLiOg1GVQQcLFZQJEhkI1F2P0apOg4blrmuOhOABmLhRyJHoQAmCaKdr5Jw
+         2sxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708757751; x=1709362551;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x7a40LFXPNdbxmfoEEZhDO4KpnySFv1la0Joe27Qfts=;
-        b=ohxaU6t2qfOUk/rGzmr3dBjBDIcaTiaWPaHZt6deN2M6E89ve3sGL6RerBhsIWY9RE
-         WBK9wW52Buh2SIaXjVJdBENvSMcpuR2+viU2FEWM0tCFI9J9Ng06DqkrvQJ6woyTD5vp
-         STrhq10q+M4vLq8wHIuxV+C33Qp8AfioONZ8BmjIbBHDJGe1IPxAll1KUAE7PeQ04YBt
-         s4U8Pxjk6eb+1zYmyBCyAAaZDRiywX7SDUsId+ltmzSxkYQH6kdYqIb9ae7Mbvae+U7k
-         OmK+Eegr3vuOZZHRois33UvMX8F4WjlQ5mLNkPe/QwKK+g2NE5evcpUpSefFaqN+yNdY
-         mYDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVBBR7gx4jqrx++ij7SSGy+3nfbbw9u+XfO58c5LhDugMbG+JL3rL3o9CaPb02TtYp0axn5zrmytZHCQ14JVHW5zGLYVg+BVxd1B1o1Qg==
-X-Gm-Message-State: AOJu0YzOlfS4sQR0g9y1D/vU9DY4Mtd7ZlxUBsBdcGXPrsTwKjSksvnw
-	TGhe03ef5pkshOLlJefFGmBUccdaGIvnvQ/C9cVRRxQSiwtfosvYRLGx6LCOyg==
-X-Google-Smtp-Source: AGHT+IEnmjPufGU7gBJ9H9QW+12UD2lgzlRAOajQe9hGXsq6LLeTPTiiOQarSarYh6PhYynFshwacg==
-X-Received: by 2002:a05:6a20:9598:b0:19e:a9e6:bfa with SMTP id iu24-20020a056a20959800b0019ea9e60bfamr3027765pzb.0.1708757750928;
-        Fri, 23 Feb 2024 22:55:50 -0800 (PST)
-Received: from [127.0.1.1] ([120.138.12.46])
-        by smtp.gmail.com with ESMTPSA id r5-20020aa78b85000000b006e4cb7f4393sm502932pfd.165.2024.02.23.22.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Feb 2024 22:55:50 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Sat, 24 Feb 2024 12:24:16 +0530
-Subject: [PATCH v8 10/10] PCI: dwc: ep: Add Kernel-doc comments for APIs
+        d=1e100.net; s=20230601; t=1708764743; x=1709369543;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oRZkRZDlh9klaaBz4WWG7UFrWtv71YHpmObQ4nbgflA=;
+        b=KsYzw0jjH7hHQG8Oq7+HIcOqNiBLHLrV4BJKFAq5cfSxkQZEy91iST2f52XhaB9jxi
+         DoejUAIkSCW0gvkLrvFSbkqw7E6BEZd0P6i20l+QN33ZfM5obUiNXFe3pFFJDBsDLmF0
+         15G8B2RyP7E4HVAD2bp9QFk1iIf10epuff4L51yEKp6HbLX/3xb34xiRFgNmYFzkvupu
+         zRv/7IIdefvtlyEFVMk1CPWvQhalGP4yaDBK5NYvT8ocabYm+DwEQm7bR8d375oETh4u
+         YLJBdS++6m5OjuNdSZFzxQscgsB8AzElrdhFtobzo6GmIkDiPhlXvpbbR8G3dFJw8Cu3
+         TcBA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsL1g9w5Es2ChuTJpPmTwR5/80CNwoK0GMBA6jWCbtJiy4UKqR39q8/EiZGm+rFZGLjUu/q4w38uyzjGYVHQKsvM39hlu+cesI+TvlOA==
+X-Gm-Message-State: AOJu0YwzkxhkrWqHVKyLlDXsirY7qj7ByvWJrs1IGp+wgtFCnZw8GnB0
+	kmevJk2iuMoBSIKTkF2Nj6eQhyxNJZXiCNlGOsVAlB0XXrmUWXAZefsvea4AhIo=
+X-Google-Smtp-Source: AGHT+IGcD3Nad9XcN39rjJjikpkLcxiCL6yvaHvQKM25T39V0rvWV2ljOlY8QDsl652WLfyRgmPHtQ==
+X-Received: by 2002:a17:906:b844:b0:a3f:47de:66bb with SMTP id ga4-20020a170906b84400b00a3f47de66bbmr1211837ejb.70.1708764743190;
+        Sat, 24 Feb 2024 00:52:23 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id mj9-20020a170906af8900b00a3e94142018sm389732ejb.132.2024.02.24.00.52.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Feb 2024 00:52:22 -0800 (PST)
+Message-ID: <50ab0f43-9dd0-414c-b722-a406e04d9a48@linaro.org>
+Date: Sat, 24 Feb 2024 09:52:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-pci-dbi-rework-v8-10-64c7fd0cfe64@linaro.org>
-References: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
-In-Reply-To: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
-To: Jingoo Han <jingoohan1@gmail.com>, 
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Marek Vasut <marek.vasut+renesas@gmail.com>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Kishon Vijay Abraham I <kishon@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
- Vignesh Raghavendra <vigneshr@ti.com>, Richard Zhu <hongxing.zhu@nxp.com>, 
- Lucas Stach <l.stach@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
- Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>, 
- Roy Zang <roy.zang@nxp.com>, 
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
- Masami Hiramatsu <mhiramat@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
- Niklas Cassel <cassel@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6191;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=RlSifbzPxBtpu7PujRxYQXRm0HNOIzR8xSzjMWcC9aI=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl2ZKYnORPJAWrZSvv2GaYNbEOsO2cd6ddhplS2
- ocQMoz+VY+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZdmSmAAKCRBVnxHm/pHO
- 9YJTB/4v7GuuRmbe0Zwxyo+tPfe7wHbF32OdBIEyJDAlpDhSmzu3hPTLA+GHTrWRvAi6LR1NxT2
- Geo7LAwfZyhTd9XHUj1LW6nZrP8HaeDHPpDeXdvury4TXEt/nJzaT6X46L8T4ZPVWeZjpnIAAUO
- VaRk25wB0GFN7qHOWP519/7zTqgE1Nvq8NwsPFJ0L+qF9PyDM5JQwqErlcoaeDE1ydE5VlfzHYY
- S0NyUgjfXf6OXkZduIxZ1Nre1D9jeGRMFFCPfwgmlDMMTWa2NPAg4BZtJhmQTJ3EZfldk6/srKQ
- baoBX4atAMnwFSU17XOzGeL6mEXH21rwVc7gH//Kc3x3mXaT
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/18] power: sequencing: implement the subsystem and
+ add first users
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: neil.armstrong@linaro.org, Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Kalle Valo <kvalo@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240216203215.40870-1-brgl@bgdev.pl>
+ <CAA8EJppt4-L1RyDeG=1SbbzkTDhLkGcmAbZQeY0S6wGnBbFbvw@mail.gmail.com>
+ <e4cddd9f-9d76-43b7-9091-413f923d27f2@linaro.org>
+ <CAA8EJpp6+2w65o2Bfcr44tE_ircMoON6hvGgyWfvFuh3HamoSQ@mail.gmail.com>
+ <4d2a6f16-bb48-4d4e-b8fd-7e4b14563ffa@linaro.org>
+ <CAA8EJpq=iyOfYzNATRbpqfBaYSdJV1Ao5t2ewLK+wY+vEaFYAQ@mail.gmail.com>
+ <CAMRc=Mfnpusf+mb-CB5S8_p7QwVW6owekC5KcQF0qrR=iOQ=oA@mail.gmail.com>
+ <CAA8EJppY7VTrDz3-FMZh2qHoU+JSGUjCVEi5x=OZgNVxQLm3eQ@mail.gmail.com>
+ <b9a31374-8ea9-407e-9ec3-008a95e2b18b@linaro.org>
+ <CAA8EJppWY8c-pF75WaMadWtEuaAyCc5A1VLEq=JmB2Ngzk-zyw@mail.gmail.com>
+ <CAMRc=Md6SoXukoGb4bW-CSYgjpO4RL+0Uu3tYrZzgSgVtFH6Sw@mail.gmail.com>
+ <CAA8EJprUM6=ZqTwWLB8rW8WRDqwncafa-szSsTvPQCOOSXUn_w@mail.gmail.com>
+ <CAMRc=Metemd=24t0RJw-O9Z0-cg4mESouOfvMVLs_rJDCwRBPQ@mail.gmail.com>
+ <CAA8EJprJTj7o0ATrQbF_38tW+kLspF1nBySg+_y_RWmadVnV9A@mail.gmail.com>
+ <CAMRc=MfkQuaJ3FnVwbVKQRQEgmJKbZh7SJoK3Kbmb5ebzE2rKA@mail.gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CAMRc=MfkQuaJ3FnVwbVKQRQEgmJKbZh7SJoK3Kbmb5ebzE2rKA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-All of the APIs are missing the Kernel-doc comments. Hence, add them.
+On 22/02/2024 13:50, Bartosz Golaszewski wrote:
+> On Thu, Feb 22, 2024 at 1:47 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On Thu, 22 Feb 2024 at 14:27, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>
+>>> On Thu, Feb 22, 2024 at 12:27 PM Dmitry Baryshkov
+>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>
+>>>> On Thu, 22 Feb 2024 at 13:00, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>>
+>>>>> On Mon, Feb 19, 2024 at 11:21 PM Dmitry Baryshkov
+>>>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>>>
+>>>>>> On Mon, 19 Feb 2024 at 19:18, <neil.armstrong@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On 19/02/2024 13:33, Dmitry Baryshkov wrote:
+>>>>>>>> On Mon, 19 Feb 2024 at 14:23, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>>>>>>
+>>>>>>>>> On Mon, Feb 19, 2024 at 11:26 AM Dmitry Baryshkov
+>>>>>>>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> [snip]
+>>>>>>>>>
+>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>> For WCN7850 we hide the existence of the PMU as modeling it is simply not
+>>>>>>>>>>>>>>> necessary. The BT and WLAN devices on the device-tree are represented as
+>>>>>>>>>>>>>>> consuming the inputs (relevant to the functionality of each) of the PMU
+>>>>>>>>>>>>>>> directly.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> We are describing the hardware. From the hardware point of view, there
+>>>>>>>>>>>>>> is a PMU. I think at some point we would really like to describe all
+>>>>>>>>>>>>>> Qualcomm/Atheros WiFI+BT units using this PMU approach, including the
+>>>>>>>>>>>>>> older ath10k units present on RB3 (WCN3990) and db820c (QCA6174).
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> While I agree with older WiFi+BT units, I don't think it's needed for
+>>>>>>>>>>>>> WCN7850 since BT+WiFi are now designed to be fully independent and PMU is
+>>>>>>>>>>>>> transparent.
+>>>>>>>>>>>>
+>>>>>>>>>>>> I don't see any significant difference between WCN6750/WCN6855 and
+>>>>>>>>>>>> WCN7850 from the PMU / power up point of view. Could you please point
+>>>>>>>>>>>> me to the difference?
+>>>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>> The WCN7850 datasheet clearly states there's not contraint on the WLAN_EN
+>>>>>>>>>>> and BT_EN ordering and the only requirement is to have all input regulators
+>>>>>>>>>>> up before pulling up WLAN_EN and/or BT_EN.
+>>>>>>>>>>>
+>>>>>>>>>>> This makes the PMU transparent and BT and WLAN can be described as independent.
+>>>>>>>>>>
+>>>>>>>>>>  From the hardware perspective, there is a PMU. It has several LDOs. So
+>>>>>>>>>> the device tree should have the same style as the previous
+>>>>>>>>>> generations.
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> My thinking was this: yes, there is a PMU but describing it has no
+>>>>>>>>> benefit (unlike QCA6x90). If we do describe, then we'll end up having
+>>>>>>>>> to use pwrseq here despite it not being needed because now we won't be
+>>>>>>>>> able to just get regulators from WLAN/BT drivers directly.
+>>>>>>>>>
+>>>>>>>>> So I also vote for keeping it this way. Let's go into the package
+>>>>>>>>> detail only if it's required.
+>>>>>>>>
+>>>>>>>> The WiFi / BT parts are not powered up by the board regulators. They
+>>>>>>>> are powered up by the PSU. So we are not describing it in the accurate
+>>>>>>>> way.
+>>>>>>>
+>>>>>>> I disagree, the WCN7850 can also be used as a discrete PCIe M.2 card, and in
+>>>>>>> this situation the PCIe part is powered with the M.2 slot and the BT side
+>>>>>>> is powered separately as we currently do it now.
+>>>>>>
+>>>>>> QCA6390 can also be used as a discrete M.2 card.
+>>>>>>
+>>>>>>> So yes there's a PMU, but it's not an always visible hardware part, from the
+>>>>>>> SoC PoV, only the separate PCIe and BT subsystems are visible/controllable/powerable.
+>>>>>>
+>>>>>> From the hardware point:
+>>>>>> - There is a PMU
+>>>>>> - The PMU is connected to the board supplies
+>>>>>> - Both WiFi and BT parts are connected to the PMU
+>>>>>> - The BT_EN / WLAN_EN pins are not connected to the PMU
+>>>>>>
+>>>>>> So, not representing the PMU in the device tree is a simplification.
+>>>>>>
+>>>>>
+>>>>> What about the existing WLAN and BT users of similar packages? We
+>>>>> would have to deprecate a lot of existing bindings. I don't think it's
+>>>>> worth it.
+>>>>
+>>>> We have bindings that are not reflecting the hardware. So yes, we
+>>>> should gradually update them once the powerseq is merged.
+>>>>
+>>>>> The WCN7850 is already described in bindings as consuming what is PMUs
+>>>>> inputs and not its outputs.
+>>>>
+>>>> So do WCN6855 and QCA6391 BlueTooth parts.
+>>>>
+>>>
+>>> That is not true for the latter, this series is adding regulators for it.
+>>
+>> But the bindings exist already, so you still have to extend it,
+>> deprecating regulator-less bindings.
+>>
+>> Bartosz, I really don't understand what is the issue there. There is a
+>> PMU. As such it should be represented in the DT and it can be handled
+>> by the same driver as you are adding for QCA6390.
+>>
+> 
+> The issue is that we'll pull in the pwrseq subsystem for WCN7850 which
+> clearly does not require it in practice.
+> 
+> I'd like to hear Krzysztof, Conor or Rob chime in here and make the
+> decision on how to proceed.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-designware-ep.c | 92 +++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+There's like 12 emails here, so please don't just point "MR X, please
+read everything to find the question I want to ask", but just ask the
+question with short intro. We all (and I bet you as well) are way too
+busy to read long threads...
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index fed4c2936c78..cdcb33a279db 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -14,6 +14,11 @@
- #include <linux/pci-epc.h>
- #include <linux/pci-epf.h>
- 
-+/**
-+ * dw_pcie_ep_init_notify - Notify EPF drivers about EPC initialization
-+ *			    complete
-+ * @ep: DWC EP device
-+ */
- void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
- {
- 	struct pci_epc *epc = ep->epc;
-@@ -22,6 +27,14 @@ void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_init_notify);
- 
-+/**
-+ * dw_pcie_ep_get_func_from_ep - Get the struct dw_pcie_ep_func corresponding to
-+ *				 the endpoint function
-+ * @ep: DWC EP device
-+ * @func_no: Function number of the endpoint device
-+ *
-+ * Return: struct dw_pcie_ep_func if success, NULL otherwise.
-+ */
- struct dw_pcie_ep_func *
- dw_pcie_ep_get_func_from_ep(struct dw_pcie_ep *ep, u8 func_no)
- {
-@@ -52,6 +65,11 @@ static void __dw_pcie_ep_reset_bar(struct dw_pcie *pci, u8 func_no,
- 	dw_pcie_dbi_ro_wr_dis(pci);
- }
- 
-+/**
-+ * dw_pcie_ep_reset_bar - Reset endpoint BAR
-+ * @pci: DWC PCI device
-+ * @bar: BAR number of the endpoint
-+ */
- void dw_pcie_ep_reset_bar(struct dw_pcie *pci, enum pci_barno bar)
- {
- 	u8 func_no, funcs;
-@@ -431,6 +449,13 @@ static const struct pci_epc_ops epc_ops = {
- 	.get_features		= dw_pcie_ep_get_features,
- };
- 
-+/**
-+ * dw_pcie_ep_raise_intx_irq - Raise INTx IRQ to the host
-+ * @ep: DWC EP device
-+ * @func_no: Function number of the endpoint
-+ *
-+ * Return: 0 if success, errono otherwise.
-+ */
- int dw_pcie_ep_raise_intx_irq(struct dw_pcie_ep *ep, u8 func_no)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -442,6 +467,14 @@ int dw_pcie_ep_raise_intx_irq(struct dw_pcie_ep *ep, u8 func_no)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_raise_intx_irq);
- 
-+/**
-+ * dw_pcie_ep_raise_msi_irq - Raise MSI IRQ to the host
-+ * @ep: DWC EP device
-+ * @func_no: Function number of the endpoint
-+ * @interrupt_num: Interrupt number to be raised
-+ *
-+ * Return: 0 if success, errono otherwise.
-+ */
- int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
- 			     u8 interrupt_num)
- {
-@@ -490,6 +523,15 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_raise_msi_irq);
- 
-+/**
-+ * dw_pcie_ep_raise_msix_irq_doorbell - Raise MSIX to the host using Doorbell
-+ *					method
-+ * @ep: DWC EP device
-+ * @func_no: Function number of the endpoint device
-+ * @interrupt_num: Interrupt number to be raised
-+ *
-+ * Return: 0 if success, errno otherwise.
-+ */
- int dw_pcie_ep_raise_msix_irq_doorbell(struct dw_pcie_ep *ep, u8 func_no,
- 				       u16 interrupt_num)
- {
-@@ -509,6 +551,14 @@ int dw_pcie_ep_raise_msix_irq_doorbell(struct dw_pcie_ep *ep, u8 func_no,
- 	return 0;
- }
- 
-+/**
-+ * dw_pcie_ep_raise_msix_irq - Raise MSIX to the host
-+ * @ep: DWC EP device
-+ * @func_no: Function number of the endpoint device
-+ * @interrupt_num: Interrupt number to be raised
-+ *
-+ * Return: 0 if success, errno otherwise.
-+ */
- int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
- 			      u16 interrupt_num)
- {
-@@ -556,6 +606,12 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
- 	return 0;
- }
- 
-+/**
-+ * dw_pcie_ep_cleanup - Cleanup DWC EP resources
-+ * @ep: DWC EP device
-+ *
-+ * Cleans up the DWC EP specific resources like eDMA etc...
-+ */
- void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -564,6 +620,13 @@ void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_cleanup);
- 
-+/**
-+ * dw_pcie_ep_deinit - Deinitialize the endpoint device
-+ * @ep: DWC EP device
-+ *
-+ * Deinitialize the endpoint device. EPC device is not destroyed since that will
-+ * taken care by Devres.
-+ */
- void dw_pcie_ep_deinit(struct dw_pcie_ep *ep)
- {
- 	struct pci_epc *epc = ep->epc;
-@@ -635,6 +698,14 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
- 	dw_pcie_dbi_ro_wr_dis(pci);
- }
- 
-+/**
-+ * dw_pcie_ep_init_registers - Initialize DWC EP specific registers
-+ * @ep: DWC EP device
-+ *
-+ * Initialize the registers (CSRs) specific to DWC EP. This API should be called
-+ * only when the endpoint receives an active refclk (either from host or
-+ * generated locally).
-+ */
- int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -718,6 +789,10 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_init_registers);
- 
-+/**
-+ * dw_pcie_ep_linkup - Notify EPF drivers about link up event
-+ * @ep: DWC EP device
-+ */
- void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
- {
- 	struct pci_epc *epc = ep->epc;
-@@ -726,6 +801,14 @@ void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
- 
-+/**
-+ * dw_pcie_ep_linkdown - Notify EPF drivers about link down event
-+ * @ep: DWC EP device
-+ *
-+ * Non-sticky registers are also initialized before sending the notification to
-+ * the EPF drivers. This is needed since the registers need to be initialized
-+ * before the link comes back again.
-+ */
- void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-@@ -743,6 +826,15 @@ void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_linkdown);
- 
-+/**
-+ * dw_pcie_ep_init - Initialize the endpoint device
-+ * @ep: DWC EP device
-+ *
-+ * Initialize the endpoint device. Allocate resources and create the EPC
-+ * device with the endpoint framework.
-+ *
-+ * Return: 0 if success, errno otherwise.
-+ */
- int dw_pcie_ep_init(struct dw_pcie_ep *ep)
- {
- 	int ret;
+If I got it correctly, you ask if some other, existing QCA/WCN chips
+should be changed to this PMU approach?
 
--- 
-2.25.1
+If yes, then:
+1. It depends whether they have the PMU, so some sort of analysis of
+datasheet should be done.
+2. You could but you don't have to. Bindings were done, they represent
+the hardware more-or-less, maybe less, but still good enough.
+3. It does not have to impact actual behavior of Linux. You don't have
+to bind entire pwrseq driver to that QCA/WCN compatible. Anyway Linux
+behavior is here a bit separate question - it can change, it can stay
+the same, up to you.
+
+Best regards,
+Krzysztof
 
 
