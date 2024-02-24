@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-12453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C42C862426
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 11:20:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BA4486242C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 11:20:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B787FB2292A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 10:20:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D61D1F23406
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 10:20:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50C8B20DCF;
-	Sat, 24 Feb 2024 10:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 139DF1B977;
+	Sat, 24 Feb 2024 10:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x1S1Cv2K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m+twM2BJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9121A1BDC8
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 10:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0649F210EE
+	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 10:20:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708770008; cv=none; b=NhMm26GpRrFA2nqYZ+7EcBFRhXUbZ7oBBwpCVA6YJ/biTAG6FNMhlKrOT6/KWwHzWgLAd+zLi9xnAgg0roTIqL3No5zvdLqLq06WZ7qmf6k7f3pbXtmThmiSe9cz4aSnZHC2cGRLgRzyjQnG+BDJoQe6y8XzX8vBhMU5H6X+I+Q=
+	t=1708770036; cv=none; b=PXg9zZiQ6r2ehUkO5iTb4fdtN9HbYgAMHDADlTwYAdosj1QGyPKSgSJ1KhS1LqcSf9INgpHKJ4hWMrIxcxuT3U6yd5YSlfkQo3l53i/LUcmIwRk6JOODrYKDRhK/D1QDWjlJJ4MRX3pipINwdhmD5/ZcxLk0R9VKW7W6/aLCPwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708770008; c=relaxed/simple;
-	bh=XFdFq4GlDxk/3FhYtaG3goGA8xDbbWERqDLONWkuRZY=;
+	s=arc-20240116; t=1708770036; c=relaxed/simple;
+	bh=YuENufFZlkquVDgBO8dU5fPnVLvolpMSzEAzC6ycgJ4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bb5Ds2xG0AbImVaETzJf33Vi6lrGHARFpm/9nhVV3dAG28wdhDOUnqnVzTKbHagEJQnxJB6E5mMv97JGZbmWrRk+3WS0jMePyIun1F4t/7O5CsJWMT7cgyME+3fLfx/rEauBsDg6vCmmQ8xa1V5kxlk7P3CDoxY/U66fy2aisZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x1S1Cv2K; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=fHIbaOyRo1oXVkCxL9QJiOF4UauK1yFydTmkMeIKMXPZMaiaDzPkLqKEqtEVA4W6Bf3HKlfwy+qoecPmf1ASAhZZlQ2Mx8wEz805EfIMI0JIuwW0koI3tTR/O0gzWcdVacDm/B3NIlQfJszX/RE5zi4K7SFEeuo/mEHUM+rVXY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m+twM2BJ; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-563fe793e1cso2169156a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 02:20:06 -0800 (PST)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a3ed9cae56fso220819966b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 02:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708770005; x=1709374805; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708770032; x=1709374832; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ApU6AfFvWi/q790wOpN8O82HdElurnEssuBxhU9cyfg=;
-        b=x1S1Cv2KeaRMCinKOXUhucHSPvjolHP90h9XM9qmMwIPEaAxdaQ8ZjfYFgZilRy64a
-         ykM/WQPAD3HfAkBzU2VgfQQ6CE7EyB2XaCcsFPyNCaztDB5+JB3+N/IsHBakeMfaAkdI
-         13xm3GVhvQTgmKzOA0nA7Ziue5AGqc7g/Lb0Zt1B8ZGZgLuibmR2FbPsoJWnQa/vIUaf
-         oOw13bscqdc6+j7Ba2kOr63nCOQdZT5HFs8uq602ZsdIV2DuaBL0R+McR+DvZBxuHFxI
-         hbMjKIG7bQagXK6t8GDg1VfNHZQZbdxCBOvwGNSkKMl/dfRAGSuH7uq5mdvzDpFvwhZx
-         Oefg==
+        bh=6vNTny4pXEvjs6cRGbtYbmBpJ/7oEEZ1oHIPJLYTMGc=;
+        b=m+twM2BJ7n/KxBVGLyA2LPOjLDBDe8FKl4EJkw99fgbD0CX9t5cZML6NEJ32YK52pl
+         QpBPM8p6omegeqTPa4DqWuW31S/aoflB3AqQ3EbOQXMXTcx3W6V0EZkcVNIg/Kj0H6VQ
+         PJUCJa3SfnhBr7kSTEROgVwoaSIvDzsDj2ec61ZR1ocV4hJNgWSBeDKO7eSJEp+blYiP
+         REhdPeoQag5wKSAXbggjckAdX164m6DivnQxuK/f79MU53gYoPInIP1RqTbAck+Bh2uc
+         blArVX0IMnHSmgNsdx2JGeiqDYTjbTWl7gVj7tVJOKpSGQJ/+NNA0nzdLpXJ4gvxgM83
+         fxbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708770005; x=1709374805;
+        d=1e100.net; s=20230601; t=1708770032; x=1709374832;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ApU6AfFvWi/q790wOpN8O82HdElurnEssuBxhU9cyfg=;
-        b=sKdw2gzsnLfcNGJtyq4WNFXuXZYYeqmbltaL9czj/PWzqCdM8SPDIoXakMroCDMxbC
-         x+pwFlrePZrVx63+MvDMCziee+FrPjP+IMurZ+hwz7X30ne0fpVpDjvpQyOfz8ojzK5E
-         tpf6zdw7a8XsVxaYKtDUkTWVMZnuw7ytexouNsLgE9q3xo8IX+k0S7xiAqR/JbG9dRDb
-         EBYL/LFDw+CDVnmsf5c2NmMrVqjgiSNwijdpQ0fRyZF2GZmnOPhphGo2p99Sveg9BjfN
-         1HS53aw9Gx9T5SeIlLfWqquYysLR3ynz0O3n4vbdG7kgf5HDfRsh8Q8CpO6n9KK88isW
-         +8OA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbzH5GUvEmBfrpHPJg1haT4oNM9o7POHwAouLEuJjRqYd+rmA+lHMXuzxSR3W8cr6UWP2KxgAHwuMOj8N30qiMq0vBeHTAg+1Y8lBZZQ==
-X-Gm-Message-State: AOJu0YyayKQX5i/nKAJ1m7rU6EOFYnuZFXkmT/hnsdiSYuQF6d1+Kv58
-	cxbFsrN4vPZYi9ul3P1FWwitcixtRitIdMxfKkemwwIoqZP/2aaCe4r64PHckUg=
-X-Google-Smtp-Source: AGHT+IFilsIOfNZqlUkt6rYbnUuRbauKrIwciMrlLjUXuZY8aQ6ePcLUA51RbhyxdGK+Rc8mNwiMTQ==
-X-Received: by 2002:a17:906:c448:b0:a3e:9e4d:dafb with SMTP id ck8-20020a170906c44800b00a3e9e4ddafbmr1244293ejb.29.1708770005163;
-        Sat, 24 Feb 2024 02:20:05 -0800 (PST)
+        bh=6vNTny4pXEvjs6cRGbtYbmBpJ/7oEEZ1oHIPJLYTMGc=;
+        b=saJxK2u+/m/LLOHWXbVlRIgPOaTf4bZpXGslWFrDBdxMJCIGcfZM7sRtCVLiX7Bd/x
+         fLx4I/rr/QPdkJhVSAMzFdMfIF5IEo0kC9p4htoTRrNEcRX+twNotXtrJltD+P9RfGCo
+         HNWOIF8mp12evcXWOKhQDtS7gWukR8F34sC+kdxekE6ZK7Okue0aLj4tn1dQI7nuVBX3
+         iQ1RMce1tHG2xew2au7A3pstVfhtSv8nnsdsCX378x+W8ell3nMcuWcDxwkITTwElJaG
+         kleS1fFW+pNgHMlLaZCwBSVnv4zjUEsq+zp8yKp/O8YpDqQ+acbRzkxbB5fpy05Yyldo
+         sSgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVD2XE2BZgZso1haHWU3Lj0Z3wAWS89EybX06UYvGvOiOcEgs99dejtuPME+5Iuthm4wWC8hcTRDAZYxjgv738x8ClK9gjadAJodKQssw==
+X-Gm-Message-State: AOJu0YyTtupRApIMLgS4vgxG+ksBkQY7K6JT46UUUonHGg9dG5m5Pfjk
+	DLrxEGDpOfXlBB48iov47tI2zMZYKCW4RHuymP9hanOq56+5p+Lb9g4W8HCnhGQ=
+X-Google-Smtp-Source: AGHT+IF3zlbidJ8Y4ckq/68GuEwgnY31iAGOnONoOCQuXMzjrT09Tf8KnvgKz/qSnMzCwBuDwHnjCQ==
+X-Received: by 2002:a17:906:2844:b0:a3f:adad:9ce1 with SMTP id s4-20020a170906284400b00a3fadad9ce1mr1848309ejc.18.1708770032416;
+        Sat, 24 Feb 2024 02:20:32 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id k10-20020a17090646ca00b00a3d004237ebsm447339ejs.212.2024.02.24.02.20.03
+        by smtp.gmail.com with ESMTPSA id k10-20020a17090646ca00b00a3d004237ebsm447339ejs.212.2024.02.24.02.20.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Feb 2024 02:20:04 -0800 (PST)
-Message-ID: <16a8884a-c67b-42d3-bd9e-8bfca3786a8f@linaro.org>
-Date: Sat, 24 Feb 2024 11:20:03 +0100
+        Sat, 24 Feb 2024 02:20:31 -0800 (PST)
+Message-ID: <133c1185-8e13-4471-8e00-8968b38df970@linaro.org>
+Date: Sat, 24 Feb 2024 11:20:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,19 +76,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: nvmem: qcom,spmi-sdam: update maintainer
+Subject: Re: [PATCH v2 1/7] dt-bindings: clock: Add Qcom QCM2290 GPUCC
 Content-Language: en-US
-To: David Collins <quic_collinsd@quicinc.com>,
- Rob Herring <robh+dt@kernel.org>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+ Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-References: <20240223232955.1907552-1-quic_collinsd@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20240219-topic-rb1_gpu-v2-0-2d3d6a0db040@linaro.org>
+ <20240219-topic-rb1_gpu-v2-1-2d3d6a0db040@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -134,20 +141,18 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240223232955.1907552-1-quic_collinsd@quicinc.com>
+In-Reply-To: <20240219-topic-rb1_gpu-v2-1-2d3d6a0db040@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/02/2024 00:29, David Collins wrote:
-> Emails to Shyam bounce (reason: 585 5.1.1 <sthella@codeaurora.org>:
-> Recipient address rejected: undeliverable address: No such user here.)
-> so change the maintainer to be me.  I work on qcom,spmi-sdam as well
-> as other PMIC peripheral devices.
+On 23/02/2024 22:21, Konrad Dybcio wrote:
+> Add device tree bindings for graphics clock controller for Qualcomm
+> Technology Inc's QCM2290 SoCs.
 > 
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
