@@ -1,171 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-12437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98BD2862100
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 01:07:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF565862145
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 01:37:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E37628861F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 00:07:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BCEB0B24B26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Feb 2024 00:37:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57EAF38B;
-	Sat, 24 Feb 2024 00:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CFCB17C8;
+	Sat, 24 Feb 2024 00:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hLMTI8JS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NHes8mXW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C08F182
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Feb 2024 00:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7334C139D;
+	Sat, 24 Feb 2024 00:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708733255; cv=none; b=nVPfwH6KgoQIFk6GRn8nFHc2dq+JNXyr8sdK9y91IPLdvBP2Cw2DHPNFZQVEp769eOXGdjfd7fd3rA2BQpbI4luPolhOr/SSUlfXQUmqmYH5VjLBtlSRx3Fvs7mFEN0mbgk5XHT5I1wDHw070Sw/2m5l5b28CCZJW47VDureI/Y=
+	t=1708735067; cv=none; b=XtxTKGWUuoCnpYjnJkuQRWHYRAMIKljbyEaED9Esn9ucMFt+3RcXJTG9Ay+sid0f5nFLAWSckNPKE/MbDwLLnalsNtIZCFAIYj7K+Zqz/8kNFT6bsoKmtVieToSxaajGobl5VevlowIMb5FMbVvWKH3KScyY2jLIAXO+NL2bQDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708733255; c=relaxed/simple;
-	bh=2o21MVF3HyO3lY0XRfIs2jlh9WAVsOYPA8puXNidXdw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dbLrP6XnGdmC1aEILqrLLWxQOQYakwPh6lecbrt8rsqaisy5Q01Pfo7JrmIqoXnejXih1QOm8UM2D53/ICSm62sOIPZ0/lTjQ93ZGKyinafPM70lwiMkGQhuknvngeeiVvT7avZbgVlrv0J/hV9wdpwzNOl0s1UFJz6/IXQ+7F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hLMTI8JS; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-56454c695e6so2533619a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Feb 2024 16:07:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708733251; x=1709338051; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6SOHcP8DrDhZ2e1SgGmWFGExWevqxMGqoGRYxVcIJl8=;
-        b=hLMTI8JSpC6OyOCpDQqlWMeZMs2/xNJ+McMAZDnKJd+QLq/X/JhT90b5QJqGZlidyi
-         MEI7Daan/CrTW/ifqAmmwkO87/aTRs6UTY29pZX7sXPI9vV2DE3AmDMkEMC/kEAidGFF
-         IoQNJ6xTVOyLn59kduEdwnQa/2UXkJv8YZUKa+JuecC+eIugIJlVz0gOUbNZObD5RUYH
-         D4NDAjLDunMTn24GV+NRYhDDz3Xk7aJdol+x8CqhRGPuEgJUoWlc1Kxb749WkdxhZhbp
-         vvPv67SDxgvW3q7J1bMzI+WXfCS9Ddw9zP24WG9DZuHIRS7/NwYUw+zfpAtvXohAexef
-         4kzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708733251; x=1709338051;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6SOHcP8DrDhZ2e1SgGmWFGExWevqxMGqoGRYxVcIJl8=;
-        b=nXQ0m5uKL/gObk3L9yzL/O0KoOur00mZFLBDTto4Q2qW2GN/sVKxDq8e2e1CfdBY2O
-         PYe37MZi3dhLM0uMwyeqyaU6EjvaIZ0VuDndokqhn7uvvjV5Zzf1r9U7O78tW+Tjjh3j
-         E3El2qOm6JnU2yuKkqjLO8bkSIUpSzz7i7yXw4X4d+D2IeNZV93CeqZxRAgb0Crw5A6e
-         fKoyJhvezgrOc7mD0udziPa3Y7ozXKiyhtje3PoGqtPTPYLtxaSR8o11dtaS5WTMeHuR
-         ON1lAxA+oLB938z+G+n6R79FMr2Ele3kasBSnFEC+fzhNxBgQv0YiRQ5o5xWDa53ZLD0
-         nB9w==
-X-Forwarded-Encrypted: i=1; AJvYcCVOY0NXogKWDKL9uYdxzlxPSYAMLJsjmhk0wpTaIgCNoIddYudlXdzPcYBaWBxgFOVDlKaMTz2ajqFfMM4Cf04yVFzfGIhLd7pcLyVI8A==
-X-Gm-Message-State: AOJu0YwYe3RF9Q9iKtJ8oKeuD66FgWig/uuTTOS/q4ox+DeARrw4mti3
-	jTaUiNiuUTAzyuMhoxNiSJXWHuD9HSqnbSml6/dJ/j5UnsDqQPISoZaDxdk97fw=
-X-Google-Smtp-Source: AGHT+IEIadmHk63HemoRWWxsA7Fy0W6ljpj9vbzDd37Xdks0UbSJKjAuyBp4GlqH/FgPBWYb2ydAGg==
-X-Received: by 2002:a05:6402:528c:b0:565:26e7:4987 with SMTP id en12-20020a056402528c00b0056526e74987mr1257577edb.5.1708733250749;
-        Fri, 23 Feb 2024 16:07:30 -0800 (PST)
-Received: from [192.168.179.2] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id z6-20020a50cd06000000b00563918a48cfsm40041edi.40.2024.02.23.16.07.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Feb 2024 16:07:30 -0800 (PST)
-Message-ID: <640775cb-3508-4228-aa94-2e4b7b6b2b6d@linaro.org>
-Date: Sat, 24 Feb 2024 01:07:26 +0100
+	s=arc-20240116; t=1708735067; c=relaxed/simple;
+	bh=o+dopF+3QwhP/VzUwOvK66g+AD4WW3W8duM1P1rkaZA=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TNKne2VT+JxzDd3KuQ80VT2KabSgWJ4ewknGH/nxvzLBz0CZmRmlAFy9QuvoV6UiTxezxUq95aEjBWK+wiRJ2fRsypkWIdqJ7fhXj7TFFLx/pagZ15rVLadHp3oqrZ1DLnt/nH/zHODXYpbE/2T+NqqtKqR0wsI5lm8e0odMBJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NHes8mXW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41O0KQ2Y031296;
+	Sat, 24 Feb 2024 00:37:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=TAeKBPeqKN87BGLYsho5A
+	H76OwarAu5agw9ZvchmLfo=; b=NHes8mXWQwz+Zos60T+OXib+qAd5JkD7dW26c
+	MImKO0FPFpCh58zeMhEvB09Tze2Ok9lYUzTEDazN+cROyP+yDbWzhVOReN3A3k9s
+	r4wto++of7SWLXR3tiuMBVXHJXY0z+mrC65Jy5gTawMM3miTNhaU9EpJnyLz5qGA
+	RDr9zor2WwX/ssKl4UrzuiOR8MhZB/vnB5gKsCmkttGxsfg7tG3XwxWsjnU1wFDz
+	BprDCg64EDrhfjZGil1A5Lr5orGF/+SVq1/h4/6yjuJ+5Pe64Ug4PTtKR6FXT/6K
+	dVTkNTzNzEoXmPEYb6ctfQu3+dk92VKi7A5oBTLFKwHLkocgw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wf5tt80mr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Feb 2024 00:37:25 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41O0bOEZ019289
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Feb 2024 00:37:24 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 23 Feb 2024 16:37:23 -0800
+Date: Fri, 23 Feb 2024 16:37:23 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
+        Quentin Perret <qperret@google.com>,
+        Chris Goldsworthy
+	<quic_cgoldswo@quicinc.com>,
+        Android KVM <android-kvm@google.com>,
+        "Patrick
+ Daly" <quic_pdaly@quicinc.com>
+CC: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri
+	<quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu
+	<quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map functions
+Message-ID: <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
+Mail-Followup-To: Christoph Hellwig <hch@infradead.org>, 
+	Will Deacon <will@kernel.org>, Quentin Perret <qperret@google.com>, 
+	Chris Goldsworthy <quic_cgoldswo@quicinc.com>, Android KVM <android-kvm@google.com>, 
+	Patrick Daly <quic_pdaly@quicinc.com>, Alex Elder <elder@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Murali Nalajal <quic_mnalajal@quicinc.com>, 
+	Trilok Soni <quic_tsoni@quicinc.com>, Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, 
+	Carl van Schaik <quic_cvanscha@quicinc.com>, Philip Derrin <quic_pderrin@quicinc.com>, 
+	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba <tabba@google.com>, 
+	Sean Christopherson <seanjc@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
+ <ZdhEtH7xzbzdhS2j@infradead.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] PCI: qcom-ep: Enable cache coherency for SA8775P
- EP
-Content-Language: en-US
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>, andersson@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- manivannan.sadhasivam@linaro.org, robh@kernel.org
-Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
- quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
- dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
- quic_vbadigan@quicinc.com, quic_schintav@quicinc.com,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org
-References: <1708697021-16877-1-git-send-email-quic_msarkar@quicinc.com>
- <1708697021-16877-3-git-send-email-quic_msarkar@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <1708697021-16877-3-git-send-email-quic_msarkar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZdhEtH7xzbzdhS2j@infradead.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gNcA6io5WictnmGGjeI8Vk68WZWdapO8
+X-Proofpoint-GUID: gNcA6io5WictnmGGjeI8Vk68WZWdapO8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-23_07,2024-02-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ spamscore=0 impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402240001
 
-On 23.02.2024 15:03, Mrinmay Sarkar wrote:
-> Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
-> in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
-> the requester is indicating that there no cache coherency issues exit
-> for the addressed memory on the host i.e., memory is not cached. But
-> in reality, requester cannot assume this unless there is a complete
-> control/visibility over the addressed memory on the host.
+On Thu, Feb 22, 2024 at 11:09:40PM -0800, Christoph Hellwig wrote:
+> On Thu, Feb 22, 2024 at 03:16:42PM -0800, Elliot Berman wrote:
+> > Firmware and hypervisor drivers can donate system heap memory to their
+> > respective firmware/hypervisor entities. Those drivers should unmap the
+> > pages from the kernel's logical map before doing so.
+> > 
+> > Export can_set_direct_map, set_direct_map_invalid_noflush, and
+> > set_direct_map_default_noflush.
 > 
-> And worst case, if the memory is cached on the host, it may lead to
-> memory corruption issues. It should be noted that the caching of memory
-> on the host is not solely dependent on the NO_SNOOP attribute in TLP.
-> 
-> So to avoid the corruption, this patch overrides the NO_SNOOP attribute
-> by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
-> needed for other upstream supported platforms since they do not set
-> NO_SNOOP attribute by default.
-> 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 89d06a3e6e06..369954649254 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -45,6 +45,7 @@
->  #define PARF_SLV_ADDR_MSB_CTRL			0x2c0
->  #define PARF_DBI_BASE_ADDR			0x350
->  #define PARF_DBI_BASE_ADDR_HI			0x354
-> +#define PARF_NO_SNOOP_OVERIDE			0x3d4
+> Err, not they should not.  And not using such super low-level interfaces
+> from modular code.
 
-Any reason for this to be unsorted?
+Hi Cristoph,
+ 
+We've observed a few times that Linux can unintentionally access a page
+we've unmapped from host's stage 2 page table via an unaligned load from
+an adjacent page. The stage 2 is managed by Gunyah. There are few
+scenarios where even though we allocate and own a page from buddy,
+someone else could try to access the page without going through the
+hypervisor driver. One such instance we know about is
+load_unaligned_zeropad() via pathlookup_at() [1].
+ 
+load_unaligned_zeropad() could be called near the end of a page. If the
+next page isn't mapped by the kernel in the stage one page tables, then
+the access from to the unmapped page from load_unaligned_zeropad() will
+land in __do_kernel_fault(), call fixup_exception(), and fill the
+remainder of the load with zeroes. If the page in question is mapped in
+stage 1 but was unmapped from stage 2, then the access lands back in
+Linux in do_sea(), leading to a panic().
+ 
+Our preference would be to add fixup_exception() to S2 PTW errors for
+two reasons:
+1. It's cheaper to do performance wise: we've already manipulated S2
+   page table and prevent intentional access to the page because
+   pKVM/Gunyah drivers know that access to the page has been lost.
+2. Page-granular S1 mappings only happen on arm64 with rodata=full.
+ 
+In an off-list discussion with the Android pkvm folks, their preference
+was to have the pages unmapped from stage 1. I've gone with that
+approach to get started but welcome discussion on the best approach.
+ 
+The Android (downstream) implementation of arm64 pkvm is currently
+implementing a hack where s2 ptw faults are given back to the host as s1
+ptw faults (i.e. __do_kernel_fault() gets called and not do_sea()) --
+allowing the kernel to fixup the exception.
+ 
+arm64 pKVM will also face this issue when implementing guest_memfd or
+when donating more memory to the hyp for s2 page tables, etc. As far as
+I can tell, this isn't an issue for arm64 pKVM today because memory
+isn't being dynamically donated to the hypervisor.
+ 
+Thanks,
+Elliot
 
-Konrad
+[1]:
+path_lookupat+0x340/0x3228
+filename_lookup+0xbc/0x1c0
+__arm64_sys_newfstatat+0xb0/0x4a0
+invoke_syscall+0x58/0x118
+
 
