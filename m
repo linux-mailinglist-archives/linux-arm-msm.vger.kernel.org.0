@@ -1,159 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-12482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E300F862CB1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 20:57:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD33B862CD0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:25:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F3081F212EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 19:57:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AD5C283211
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 20:25:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174E11B952;
-	Sun, 25 Feb 2024 19:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5D9A1B295;
+	Sun, 25 Feb 2024 20:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k5uQwNMa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FEdfdOa4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734891B948;
-	Sun, 25 Feb 2024 19:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192FFEADD
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 20:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708891051; cv=none; b=lm2venVpwVh4sk3+etmYPO71E3vwRDRI4R25wcO8kr5RLyfuTXVfvRiESlGeweZaj8tXK4oJ2eqgk3R/trSiyaSlzX87egMWTAEnhDfAo/ysMO5tT871XhCeb6XKfh7IEbZD88tb/uNrVSjcM44YVVMxfsrw/QNvan80Y7XmyR8=
+	t=1708892751; cv=none; b=g0c18875WKqLyDkF15w8fP8hT9Cx5ryC61Spm+P5Rm9I4T5bRTYAiEeCL2Z9//XgzsoNrXNKWF5+UDBvhikg00AbKrdzHkFLjwHoR6LNffqG/lz8YPfIvMlAHoER0k0gYx0Wbqjbh4dDHtXHjHaSiVS/YqI667pOWISij5nRv+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708891051; c=relaxed/simple;
-	bh=GPbhxPGQ8WjKkNX6KVf5ljpJ7euE7GoIQJaemJZK+X8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TOB7lyPHK9kd5n2q/aZrVJ3Fgged24SBixGROAsMuDLmXVZMG0onyh8cJkHvSD2bT8tfFW/X2JmFWabdWNkc6CIJxIc8AgpirqDbOeEOaW8iqfc+eiGvSv3SpnthOPo2AiuylkoURI57B3ju7Btfy6IWsVNYJNmhBPwUxKu7oX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k5uQwNMa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41PJqlr2023991;
-	Sun, 25 Feb 2024 19:57:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bzbwxhBL3/ANprITyQ8JbsOn+1U7PpwwKhIsh+TwLn0=; b=k5
-	uQwNMayS8SPJrXP8N+Iku0IiFQfkByOZJKEI8o30Zgqiebh4W6oaKEw555KVxdGf
-	1zXut/ztli66m3slz1vpub83J7gfhYaSLVUlKytMdOuyxATqS5maytcFPIQpifqW
-	s+kqFc4aRBKUXQ+GPT+QN12W1G+I/CkLg2H61ueEhq0kmEmkSkAsv5lRu0925y3f
-	vbJtc2+ZUJrpdk2M/5tSuCD9el3Z0/2i5FRlRXaHCNzXhdFAKrXz6zz2SNEWHHXv
-	n2cLkAn45DK5cWv4CgveM0c177wOSfxMqys7Kg2ugl7R7oYy0BhTv/D1hC9+dT8s
-	PkLgAg+YyDwKU6nnMPZA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wf65htg1d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 25 Feb 2024 19:57:20 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41PJvKxt011190
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 25 Feb 2024 19:57:20 GMT
-Received: from [10.110.76.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 25 Feb
- 2024 11:57:19 -0800
-Message-ID: <33e38ac8-f41e-ca66-0b75-e72990691a80@quicinc.com>
-Date: Sun, 25 Feb 2024 11:57:18 -0800
+	s=arc-20240116; t=1708892751; c=relaxed/simple;
+	bh=mff2Bx4f88etHoqdVo+jEmdrbqPgNQ/kWaOd8DhYTIc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Qyb731c0mYRZNk7cXcP4fHlWYeZp6UrKwN3WiZgF6SmA128mrB25GcK8Q/gfCcmjKc3ltB4Ax/kel3TDmfJ3ZNA6XSQi5NANWSDrtH6eGbYSEIcHq12FBTUrs/KTAsa+nsK7QGj1MDLmYWEIAF1Bd34PlPeceB96AxcBDmWhgSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FEdfdOa4; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5654f700705so3199288a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 12:25:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708892748; x=1709497548; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2R/XFG9oaY6y18sf9Tff4jPtjEwP6MJBf+0W5rEV324=;
+        b=FEdfdOa42388OHWHA+D8OtVM+zbelK8SXIUPZ6xTtm9gElBK/yTcyOdveLJCvI1Kiy
+         NB+oJ6IGhNyPv8uVd5fuSnZI4GIapC5G93ocuVQuOzgotaK0hAPbTjPlHhEGoyIgRagL
+         r1bB7UQanZ4AnBNqWy4F1fVHRR8iQEl/H1uN7m9vukRLhDYi99XWo7z3mZkzQJSvgR8g
+         IVMR+nvaaMnuKdtAM2bZBjbwgn8z3/x6ZByNSdBoOgA9Q1nEIFWgGSt7K/S6h2Rf/iq0
+         DJIKHiM6y5t9BCBY+BYGOzZFwhn6HmSIoJ36WULHuwpKKLmfKQ8PTioAZdPzQXVYhR3v
+         /ZhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708892748; x=1709497548;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2R/XFG9oaY6y18sf9Tff4jPtjEwP6MJBf+0W5rEV324=;
+        b=gqPgALnuVSRmZznEiF9C0xzSQU5b+YjX1iuR0Vpc98UmU2+iPl+TMzbaBhvsaLLXa6
+         7YPuR8NwqZQ468KRq/DbXnJNXHiuk92W9i6sx9ks2SBS4rvrGznAajbocQ00IYK34eYA
+         FrH4bDlP0hPKjaSTYjh7UKlRTPUmIwPTEAm0jMwgE6LVc2wF62CeLzDvYUl50KSlDl0H
+         9a2sbyK6ot+TmBkORi8/3X7rsizdkhRR1sIjDmKcKT+FGkOZn+lt6VsngVkYKsK9KjYY
+         afbSIGH2EfbvTvUEoE89ImKTlUgNOdjrFBWrHy3f1tREcq8XrAVp1RII4SelxwfwCDGc
+         0DVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXrpk+D38Cz1qgKxBDogUZBBkywrw2EUPVPVJrApz07ZbFTEV8pzQw3YMYG2OiCufuROhKvzauUEFswr4SX2sIcWmt2X1doIEd73HcmVQ==
+X-Gm-Message-State: AOJu0YwAAlQIKib01wPJ4zRGRaj6Bj3y4JP8B7jn+6DBumIerdTNogah
+	aLSSBJg1EXkc3fUjNXYJo/r+P3eQH7dtgtvoQ5E0FfdxtCiVzPqEcKGUvA4yw2E=
+X-Google-Smtp-Source: AGHT+IGJLb0LFIjQmJVb1XHJRopVy/BJfdLpJRuaWdrDVNDspvP1AdwQpIQuP1OWlnVfy6L/oZZsTQ==
+X-Received: by 2002:a17:906:140c:b0:a3e:dcd2:2746 with SMTP id p12-20020a170906140c00b00a3edcd22746mr3685269ejc.3.1708892748480;
+        Sun, 25 Feb 2024 12:25:48 -0800 (PST)
+Received: from krzk-bin.. ([178.197.222.116])
+        by smtp.gmail.com with ESMTPSA id a26-20020a170906685a00b00a3f0dbdf106sm1741491ejs.105.2024.02.25.12.25.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Feb 2024 12:25:48 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Chris Lew <quic_clew@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] soc: qcom: geni-se: drop unused kerneldoc struct geni_wrapper param
+Date: Sun, 25 Feb 2024 21:25:44 +0100
+Message-Id: <20240225202545.59113-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 3/3] drm/msm/dpu: capture snapshot on the first
- commit_done timeout
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: Steev Klimaszewski <steev@kali.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240225-fd-dpu-debug-timeout-v3-0-252f2b21cdcc@linaro.org>
- <20240225-fd-dpu-debug-timeout-v3-3-252f2b21cdcc@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240225-fd-dpu-debug-timeout-v3-3-252f2b21cdcc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vlGMjNgEnjeSetryRp6Ml3GVa7Vzu-Jh
-X-Proofpoint-GUID: vlGMjNgEnjeSetryRp6Ml3GVa7Vzu-Jh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-25_23,2024-02-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- bulkscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2402250159
+Content-Transfer-Encoding: 8bit
 
+Drop description of non-existing 'struct geni_wrapper' member:
 
+  qcom-geni-se.c:99: warning: Excess struct member 'to_core' description in 'geni_wrapper'
 
-On 2/25/2024 6:12 AM, Dmitry Baryshkov wrote:
-> In order to debug commit_done timeouts, capture the devcoredump state
-> when the first timeout occurs after the encoder has been enabled.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/soc/qcom/qcom-geni-se.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-This looks fine now. Once we discuss patch 2, I can ack this.
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index bdcf44b85b2f..2e8f24d5da80 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -89,7 +89,6 @@
+  * @base:		Base address of this instance of QUP wrapper core
+  * @clks:		Handle to the primary & optional secondary AHB clocks
+  * @num_clks:		Count of clocks
+- * @to_core:		Core ICC path
+  */
+ struct geni_wrapper {
+ 	struct device *dev;
+-- 
+2.34.1
 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 30f349c8a1e5..3cae07bf0b9b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -126,6 +126,8 @@ enum dpu_enc_rc_states {
->    * @base:		drm_encoder base class for registration with DRM
->    * @enc_spinlock:	Virtual-Encoder-Wide Spin Lock for IRQ purposes
->    * @enabled:		True if the encoder is active, protected by enc_lock
-> + * @commit_done_timedout: True if there has been a timeout on commit after
-> + *			enabling the encoder.
->    * @num_phys_encs:	Actual number of physical encoders contained.
->    * @phys_encs:		Container of physical encoders managed.
->    * @cur_master:		Pointer to the current master in this mode. Optimization
-> @@ -172,6 +174,7 @@ struct dpu_encoder_virt {
->   	spinlock_t enc_spinlock;
->   
->   	bool enabled;
-> +	bool commit_done_timedout;
->   
->   	unsigned int num_phys_encs;
->   	struct dpu_encoder_phys *phys_encs[MAX_PHYS_ENCODERS_PER_VIRTUAL];
-> @@ -1226,6 +1229,8 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
->   	else if (disp_info->intf_type == INTF_DSI)
->   		dpu_enc->wide_bus_en = msm_dsi_wide_bus_enabled(priv->dsi[index]);
->   
-> +	dpu_enc->commit_done_timedout = false;
-> +
->   	mutex_lock(&dpu_enc->enc_lock);
->   	cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
->   
-> @@ -2436,6 +2441,10 @@ int dpu_encoder_wait_for_commit_done(struct drm_encoder *drm_enc)
->   			DPU_ATRACE_BEGIN("wait_for_commit_done");
->   			ret = phys->ops.wait_for_commit_done(phys);
->   			DPU_ATRACE_END("wait_for_commit_done");
-> +			if (ret == -ETIMEDOUT && !dpu_enc->commit_done_timedout) {
-> +				dpu_enc->commit_done_timedout = true;
-> +				msm_disp_snapshot_state(drm_enc->dev);
-> +			}
->   			if (ret)
->   				return ret;
->   		}
-> 
 
