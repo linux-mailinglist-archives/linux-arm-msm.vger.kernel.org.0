@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-12491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87669862CF8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 22:00:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DB92862CFB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 22:00:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23FED1F21E52
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:00:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A4582B21103
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:00:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6300C8C10;
-	Sun, 25 Feb 2024 21:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D92521B94E;
+	Sun, 25 Feb 2024 21:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NE9GVINS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cL0DCeNH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C575E2F58
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 21:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321121B949
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 21:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708894816; cv=none; b=iIhtt3CuLP942kJv1Owu5lebzV2OsbhAulfBnjhQjocyWxdCbxqh5j7rw/06YZZL4DIpxw4pVCVB764fIKrIh2miWzKFAi/8EoTi30bqa6lheRWLnwilTEAmX3Q97zmR/VGgjH/7LtWi/6yML2YF8KUy+csChNi2yucJEp8Q2Fc=
+	t=1708894831; cv=none; b=IWNDOLUKICC+hp00kI6ewIb/MPgQk0e+/GZ4+Yrj2J5JSPGTmLSqer3BpfeUcRxakLiW/YVEBpW/LPJflsq55s8Hox85//2D4FepHR1YgIVPn9c5hvveOwpIiDc3Xvj9Td3F1cJ7ZCEwgDq5r8+tR35eaKqsS9Y6DFYcv3yQABk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708894816; c=relaxed/simple;
-	bh=RGnNJIFh2RlxUmTf+Jzt1Dq2dHc/VwgJ5UcUdS+OMfs=;
+	s=arc-20240116; t=1708894831; c=relaxed/simple;
+	bh=pO/fjfqP52luWPyzHvXMSRdec7CH5CUXt6VU7mcGtoQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i3tWzLqfw1xEAl1KQC1CbJ0wXDNqNvUnTl0DVyJTObABvb/qkNTimaoQ7W0E7JgpDJW2Nzih5u0WfUuyKL6AkF0p/XEeZAW86OnWl3KQ5skTJj8iIhAKv/4MakrcPxEEMI5tfo5ECT5zCwol4ybUikPT7wxHNJrQEdaenOUgJ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NE9GVINS; arc=none smtp.client-ip=209.85.167.182
+	 To:Cc:Content-Type; b=e3QPZbmQtd73ubpm5lZosP13oFFaKtXIGRg6FXPQmemsJlCwv5PDNfu5xfHheJ2psPvwkxDA14moXFzau30e0tosmlfrmQv/4Qpfk0VeJ+PxhWpTvq9QP4IcYKkq1vOOvuOX94g5YNW5Csg3mQtptX41ux3YdNDgHJwjNY3P9cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cL0DCeNH; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-3bb9d54575cso2085694b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 13:00:14 -0800 (PST)
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc238cb1b17so2640315276.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 13:00:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708894814; x=1709499614; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708894829; x=1709499629; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VTc8BgiqrwORqW1mws8ASxivs+vKldj5oWJyp0R6vLI=;
-        b=NE9GVINS2qFWfiUWKyBakvO4wSHMySBRMVSl/MVDHDdNLpNtzJROtAt6+GAEqDList
-         dykR5RVt9CnLS3MmZhTCkXA03N+Rn2RvPMYCwdRLaLf8fBucaHfPPxAlP2MqUcKhzqsk
-         syPQNUFDv+HX/78LHiZmwzca56SLwgpPpiDpVCblAoX03h2U3fSKh6mFUWLquq8bSIeq
-         h6wNAgdvgkBUflvgyjE86qgoo6TkSWqELDAvHHSKYV5F7vPIGH7by2enLNcURZiaqZUa
-         SLMoc55IDiOmm0CMAk+QRCvSRSMGRzNQkdSZnnYMvyf+0xSqLmWdNhM+BwyoeEak+sFu
-         FJJA==
+        bh=xgGCNw14CM63x3Ljb6h7tLbgFJYcbu+B0DpPVMSSl9o=;
+        b=cL0DCeNHmaGgHTSr5ThlOtkdmt5076ISlLNRlPumuvDFZZPsgGyTngH6VAH5dRNPss
+         dtel/YGBzsp4Q+jtVK1DyQ5e0YGaRRExLWqj3K3+UuRdVuXIJxKZUwYGkY3xowweKwZc
+         EC0nMdzDHJDjUTyzFRh2tiX1yVcrvfxxLQwonWZwh1qscokStbe2wJE/KYFIkAjEr6LI
+         yVHIK3qkQK6T6nzM3QC9fIdNOy9BtBtvSF/pPPsrTioWcIUBVxPmrtbe0mPLBuczZOG+
+         pHeUUAruEZ3qBinJs6LfLzNZKXcLXXqQ6Q8paJ1cSezV+RoJa7ZI63HdIjyjCDhwJTzi
+         zYwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708894814; x=1709499614;
+        d=1e100.net; s=20230601; t=1708894829; x=1709499629;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VTc8BgiqrwORqW1mws8ASxivs+vKldj5oWJyp0R6vLI=;
-        b=K7VW6uin8lunY3k9WkLw+VVqqS02kajH4VnO3+kuRtj1w3Z+1uPMZQoOELfr23P2Cc
-         HfPq9mLN1KEUn+zcf8f6xuscYC0ER1tl3rI1pNF0+ZEW/8zS0i+qpvDsjwQ2p0hghBRT
-         IvqFQyESJinnw8wTQZodaeu1mUczFYi5aKa6Rrb0YViS1P/CH67tX96hgMOBslfSFqff
-         0ynP+8IAlneS87g+YVE3ex+yWiYP+jRcD1XQx4D0r2VeWo+I4UzdbvU0F0Ki8HFtKrMH
-         h3RyvojmIUo8Fo4fUpz65mncnILeJGHY/hSJTBItUMTxYRdlY71mhWRvBBhFD4A1i5ZT
-         6deQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWaUGv6cT+mRgqdE6qeY6AxPHNdDVtPC1IHW1JlTqjVN33R7wxGwiSsJzn08mkd+wBhCZObce4Eue/2hngtq6omifxyxCafWl8r9YJptg==
-X-Gm-Message-State: AOJu0YwFZGqBq1yMndG+IczQnPUa9Z7M5C9XuXZws38HrDJIHw4UiFxz
-	k1sThiSk6viPyb6AT21DcWLHGBfleoP60X/dF4LCxCTQkoH4haZPFvO9d5c4KJuQIYtIsMbD7aP
-	Ce0S9+2G8eQFATya+6fZyhDdBak59p+Iv3sPxRg==
-X-Google-Smtp-Source: AGHT+IFdc0B7r0WWDHCZB3fKTckGL+wqd/Gdd8YziT9x9zVc2VZGhoIvTE0GCz3w3kcIFq43L0vVQvGlTDRZpVyRJWE=
-X-Received: by 2002:a05:6808:2085:b0:3c1:51c1:f4ee with SMTP id
- s5-20020a056808208500b003c151c1f4eemr7018711oiw.48.1708894813963; Sun, 25 Feb
- 2024 13:00:13 -0800 (PST)
+        bh=xgGCNw14CM63x3Ljb6h7tLbgFJYcbu+B0DpPVMSSl9o=;
+        b=f5MtNVOrjoN79jJN/bsZKJ6XCZG0p2RJjeqaWvoz2u7pxlMhK4a/0AIAHjzwAUQUCv
+         ACqOGSP1SLYLgnf4ynifjeWWtq9YSwgm6d9kPV7yFyEtKWPD0eDYQYDDQyILAu3sol5K
+         gFgwBdWuDWfgt9Gkc8ACEBuW/xu7fqGRGBecG13DQbz6iU+PqszKgLYocTd2vCyQoeBV
+         6HLXf3un2uOHRXfGLqrhxe7J2KBF4KHubZN1So29RCEhN4oMeALzLih0xWGulbEOYhHQ
+         SedBCU2WTWTaBlEFBjShlfq5QXNNGBA44QUzB4YOSsvoOuOMHYkcsRFtCPVqdjB7asrK
+         lHig==
+X-Forwarded-Encrypted: i=1; AJvYcCV1RXGNzlPZJZOUZYzp+lV0AsNHO/9ZE0Kww86iD1u8es4uRiAEIpEQL3MwptH2kWRJisIIFwE+olQisCR7Baz167PR2aHMeJVt7Ab2wg==
+X-Gm-Message-State: AOJu0YyTapb2BW0FntSHwnh0vrOiGmxWxaAIOcKub87wS8iZU7L8cRjG
+	+Gz8Tc0nmdPMkt2Y7cJL0BZn3/Z4A2afnLEfhs3aEr6vovb8t6HxFSngQPEdl738zD422Z4Of+H
+	00GHLLv8aCm1XNWNnw4MmLdPSGjU6yPaCYGNI5g==
+X-Google-Smtp-Source: AGHT+IG07sqdBrmi76PmU6vRNgZgcPLN/vUFwAZQm2ZOZ34/pUmYl31b6jlNceVxM1Nl7J/4FC7Dd5QCHvjuD/E3jKk=
+X-Received: by 2002:a25:684b:0:b0:dc7:4bc5:72cf with SMTP id
+ d72-20020a25684b000000b00dc74bc572cfmr3218800ybc.14.1708894829190; Sun, 25
+ Feb 2024 13:00:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240225-gcc-ipq5018-register-fixes-v1-0-3c191404d9f0@gmail.com> <20240225-gcc-ipq5018-register-fixes-v1-1-3c191404d9f0@gmail.com>
-In-Reply-To: <20240225-gcc-ipq5018-register-fixes-v1-1-3c191404d9f0@gmail.com>
+References: <20240225-gcc-ipq5018-register-fixes-v1-0-3c191404d9f0@gmail.com> <20240225-gcc-ipq5018-register-fixes-v1-2-3c191404d9f0@gmail.com>
+In-Reply-To: <20240225-gcc-ipq5018-register-fixes-v1-2-3c191404d9f0@gmail.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 25 Feb 2024 23:00:02 +0200
-Message-ID: <CAA8EJpqX5kwiQdPsSbJM=-7hd6mqwOSw_=7zyWOWQOi4=QYFJw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] clk: qcom: gcc-ipq5018: fix 'enable_reg' offset of 'gcc_gmac0_sys_clk'
+Date: Sun, 25 Feb 2024 23:00:18 +0200
+Message-ID: <CAA8EJprEhxN7_bHnq7rJRbBUQUKyjSGBpCiLT_bDLmwF5SjO7A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] clk: qcom: gcc-ipq5018: fix 'halt_reg' offset of 'gcc_pcie1_pipe_clk'
 To: Gabor Juhos <j4g8y7@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
 	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
@@ -86,24 +86,39 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Sun, 25 Feb 2024 at 19:33, Gabor Juhos <j4g8y7@gmail.com> wrote:
 >
-> The value of the 'enable_reg' field in the 'gcc_gmac0_sys_clk'
-> clock definition seems wrong as it is greater than the
-> 'max_register' value defined in the regmap configuration.
-> Additionally, all other gmac specific branch clock definitions
-> within the driver uses the same value both for the 'enable_reg'
-> and for the 'halt_reg' fields.
+> The following table shows the values of the 'halt_reg' and the
+> 'enable_reg' fields from the pcie clocks defined in the current
+> driver:
 >
-> Due to the lack of documentation the correct value is not known.
-> Looking into the downstream driver does not help either, as that
-> uses the same (presumably wrong) value [1].
+>   clock                        halt_reg    enable_reg
 >
-> Nevertheless, change the 'enable_reg' field of 'gcc_gmac0_sys_clk'
-> to use the value from the 'halt_reg' field so it follows the pattern
-> used in other gmac clock definitions. The change is based on the
-> assumption that the register layout of this clock is the same
-> as the other gmac clocks.
+>   gcc_pcie0_ahb_clk            0x75010     0x75010
+>   gcc_pcie0_aux_clk            0x75014     0x75014
+>   gcc_pcie0_axi_m_clk          0x75008     0x75008
+>   gcc_pcie0_axi_s_bridge_clk   0x75048     0x75048
+>   gcc_pcie0_axi_s_clk          0x7500c     0x7500c
+>   gcc_pcie0_pipe_clk           0x75018     0x75018
 >
-> 1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r4/drivers/clk/qcom/gcc-ipq5018.c?ref_type=heads#L1889
+>   gcc_pcie1_ahb_clk            0x76010     0x76010
+>   gcc_pcie1_aux_clk            0x76014     0x76014
+>   gcc_pcie1_axi_m_clk          0x76008     0x76008
+>   gcc_pcie1_axi_s_bridge_clk   0x76048     0x76048
+>   gcc_pcie1_axi_s_clk          0x7600c     0x7600c
+>   gcc_pcie1_pipe_clk                 8*    0x76018
+>
+> Based on the table, it is quite likely that the pcie0 and the pci1
+> clocks are using the same register layout, however it seems that
+> the value of the 'halt_reg' field in the 'gcc_pcie1_pipe_clk' clock
+> is wrong.
+>
+> In the downstream driver [1], the same '0x76018' value is used for
+> both the 'halt_reg' and for the 'enable_reg' fields of the
+> 'gcc_pcie1_pipe_clk' clock.
+>
+> Update the current driver to use the same value used downstream as
+> probably that is the correct value.
+>
+> 1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r4/drivers/clk/qcom/gcc-ipq5018.c?ref_type=heads#L2316
 >
 > Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
 > Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
@@ -113,7 +128,8 @@ On Sun, 25 Feb 2024 at 19:33, Gabor Juhos <j4g8y7@gmail.com> wrote:
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
---
+
+-- 
 With best wishes
 Dmitry
 
