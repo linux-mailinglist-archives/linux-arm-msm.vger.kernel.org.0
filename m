@@ -1,111 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-12493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 255E4862CFF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 22:00:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC9C0862D07
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 22:04:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA6181F21EFE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:00:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F5E3281838
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D94D1AADB;
-	Sun, 25 Feb 2024 21:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 454382F58;
+	Sun, 25 Feb 2024 21:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tksXgWRG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KQDl6K2S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058B11B81D
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 21:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB051367;
+	Sun, 25 Feb 2024 21:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708894846; cv=none; b=QGrUX/s2qsb72ENGhvSRtNMaZ7VE9J4hcbbuhqPchD9jz42Y/KhBGSfKF7S4Pk1Dn5qqkzK0XYbCZR/p2sKmzfxyd9aZMEpStAA8DKOH7zaIhmoLQ8wfd8UrBPMKMnM/uqshO3YU4AuVM3m35MAaqs1RlyQ7mva/5RSgHmRqPjE=
+	t=1708895036; cv=none; b=Lw4rmlBlL7RMbgzFv6WO5n3sOXNPtnQTzKrwVGkl9ettriKbg9vrMtmmLPaX3nvFjP9Fu9xj05oiTq0KPNi4oAVFaO9IYQTswgny2SM0MMkeHpnE0QOtAxmxuk3LAw30muwp6lFN9tmD4QJgmINujly62+wZ+BpB52CFlyTwkIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708894846; c=relaxed/simple;
-	bh=unlIYXL3BwizleLlMEBQGYNfHGKdQOyg0kKHZe9dPEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=E9cEC0oGe2s8ueeCGiBFEuOOQOt/j7pGF+ajYhEYdRlTFh0HrX0Y7ospodC6amlo0YunmeHiRBWJOJOPKK/i0QEwUS1qjK/5wt/Hy33M7TyHcTpiFNN+M0XT7jXT5PetK9s/+ZI2CQ0R0gKiP5E6TbnTXxnrQF0gdlpkp0rmvx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tksXgWRG; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6084e809788so13747427b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 13:00:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708894844; x=1709499644; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KqbMk46NxtU+fpvdDcQrXCuDM/dEl6vfrxJr2Yihlwg=;
-        b=tksXgWRGOsSgTIqcFZmmzJOxF6Cxkq8yU2hps6BDvX9wo48Kpt/PBHN0BdletCN8jG
-         sloPCuUyKtPprdw4qZ6i7fUSRFg4p46dRxULw0UaQgDGEIBU+0YKG05Fqzhz5b9hh3Hm
-         RZcrFL9iwC8OxCyQm/AXlywB8d+c0Vs9U4cWXaMCDbnz7OmiG9NlPkCWb5Z3R8igCfAs
-         Zcy7Wbvm9l5KdlV9Uh7ABVFREOtyddOZlYHgITrssUaFMqsG3NtzaCYtoxHRgqvIcM+a
-         WEY754Vi8kwv0gdT891lOQUn63yN7smvXA0hzUO1XBYQ868pBg4PSuI1jvmeUpG59dpa
-         XFJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708894844; x=1709499644;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KqbMk46NxtU+fpvdDcQrXCuDM/dEl6vfrxJr2Yihlwg=;
-        b=p/QcdlwitQLevnNjSZCjysIy33G4Bpx/5Fkj6xbpJeXI3Q/+4YSFczTWqNTEySMrPg
-         XVt9h/HDpWvkrNPQgJupZDfoXovsZrJXk7qHkwLo7KMAgFS1nOyPY02VjiNXLRkn6w5T
-         IkT1KLtv3Qd8/3suZB5so9mO3TsOPZ+vuEu0O6AU0tGMTyLZqnBQ9sbWD8sba/3pf8G8
-         gzrDRbhNFGF6cdEpUI4KdeB32Qtue6s+5KiEAO2BoNAHPx4hGo4WVA71QRy3LfjYOMl5
-         dguGs0nNn42duOsxqv/aVJhxfZyZPpW88T7A63GPGqHwzNr2whJfrMjjF7TaFQttJr5K
-         1JVA==
-X-Forwarded-Encrypted: i=1; AJvYcCUeKnR7vLxang1tsfEJegIyAWERP/ZrJbH1jjFgtuJGuuUhI5/lMnRQkSkuMMQTpfOdfukiPme5TAhl8r0AAZx1DIpUHjd0AKcYDcgNtw==
-X-Gm-Message-State: AOJu0YylvuikOFAcnMQEBywSMsxstGS79EjWP+iE3LX1h3MP3Bxh05Ng
-	xwUd3hbaM3NXWtDqknYoYCjhPAyyB4+g9FDcM0WG3yXARGVEKLT5IB0Iw3eII6vsVgM8+SbL0RD
-	Xqo+y+61HIaAtR0fGB9D4g0g9gVyIOfEpafZLfQ==
-X-Google-Smtp-Source: AGHT+IEqqz8HfqIigknKKk7AO/yotuhTPLw8B2KFACuiv8hx5tb8SwwFs8WBzSRjLRJOs2BSRjve+1IeMNGqw34uTP4=
-X-Received: by 2002:a25:7e07:0:b0:dcd:a331:40ee with SMTP id
- z7-20020a257e07000000b00dcda33140eemr2928290ybc.14.1708894844066; Sun, 25 Feb
- 2024 13:00:44 -0800 (PST)
+	s=arc-20240116; t=1708895036; c=relaxed/simple;
+	bh=nE4Tnfy5+zj0NK2k6hoQYQYro8P8p/E8b1VECg0XNhk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SV/VjzFUpUahEmkza2aMM7n7FiVdRPFXWAqEdm5FhVVa3SpWveq/r6Ki+EfyNedSD4wp8Rjy9qFwQcphn+91Ey3bkrL5Ct7UP0MyejZvV/XDCgQZRUpSqE9byXmRu2fGCXy/tvhRr0ENZkokaM+ICVljQfmnlr7K8tGZw2L//n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KQDl6K2S; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41PL2MPi029136;
+	Sun, 25 Feb 2024 21:03:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Qa9yCTpTWOGr0nlp+bsQ9GEdf7ISmn60BAOC6chAG6g=; b=KQ
+	Dl6K2S1B8X51PfXuoC5IHDiQ9ViJoHLLBuRB6+hKA7PPmSZl/jIWYmoX3w9PD6Xg
+	SmmqSdQRZlvQRpvLMUUp6MGlNRmK0zzhJmPwDBLobAcYcr4oQ/BmygKhLSjLci70
+	Tv32BvmhhjA8bWen4X8z9ylAzUvDP9eYgYToJQ0pplo4h4M4ui4sTDKL4RZLmIjo
+	6vzBmca+MvoJfZHNg7mN0EdJbpX5s51OoBTNgzNDgzZ7aDkfYs/5TRH25pGI0htu
+	+Du8y2D+Pg9DNFppTlGeXolwBcxsAHNUq41wr5MzZf5tG8J9Dvb78fTCHpguqZvs
+	opR+lUfzeVsVWp7dGuCg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wf8ubac0e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 25 Feb 2024 21:03:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41PL3hLX008579
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 25 Feb 2024 21:03:43 GMT
+Received: from [10.110.76.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 25 Feb
+ 2024 13:03:42 -0800
+Message-ID: <293d04ae-f6ca-3362-5924-cdd789888360@quicinc.com>
+Date: Sun, 25 Feb 2024 13:03:40 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240225-gcc-ipq5018-register-fixes-v1-0-3c191404d9f0@gmail.com> <20240225-gcc-ipq5018-register-fixes-v1-3-3c191404d9f0@gmail.com>
-In-Reply-To: <20240225-gcc-ipq5018-register-fixes-v1-3-3c191404d9f0@gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 25 Feb 2024 23:00:33 +0200
-Message-ID: <CAA8EJpr19P6P7COjP8YpFgK4x41Q8M8A3+n_avtzfpKBAuxBpA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clk: qcom: gcc-ipq5018: fix register offset for
- GCC_UBI0_AXI_ARES reset
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, Varadarajan Narayanan <quic_varada@quicinc.com>, 
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 1/3] drm/msm/dpu: make "vblank timeout" more useful
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Steev Klimaszewski <steev@kali.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240225-fd-dpu-debug-timeout-v3-0-252f2b21cdcc@linaro.org>
+ <20240225-fd-dpu-debug-timeout-v3-1-252f2b21cdcc@linaro.org>
+ <4e6b41f4-27a6-4c65-dc03-67437a9716ed@quicinc.com>
+ <CAA8EJppNfdDsrMQA3cUR18b2so2qaw1fcFNMz0fW9rMSzFrysg@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppNfdDsrMQA3cUR18b2so2qaw1fcFNMz0fW9rMSzFrysg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zKTH_YHEalCvYn2B29eO31mCHYiW4Cne
+X-Proofpoint-GUID: zKTH_YHEalCvYn2B29eO31mCHYiW4Cne
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-25_25,2024-02-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 mlxlogscore=792 spamscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402250168
 
-On Sun, 25 Feb 2024 at 19:34, Gabor Juhos <j4g8y7@gmail.com> wrote:
->
-> The current register offset used for the GCC_UBI0_AXI_ARES reset
-> seems wrong. Or at least, the downstream driver uses [1] the same
-> offset which is used for other the GCC_UBI0_*_ARES resets.
->
-> Change the code to use the same offset used in the downstream
-> driver and also specify the reset bit explicitly to use the
-> same format as the followup entries.
->
-> 1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4.r4/drivers/clk/qcom/gcc-ipq5018.c?ref_type=heads#L3773
->
-> Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
->  drivers/clk/qcom/gcc-ipq5018.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--- 
-With best wishes
-Dmitry
+On 2/25/2024 12:57 PM, Dmitry Baryshkov wrote:
+> On Sun, 25 Feb 2024 at 21:44, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/25/2024 6:12 AM, Dmitry Baryshkov wrote:
+>>> We have several reports of vblank timeout messages. However after some
+>>> debugging it was found that there might be different causes to that.
+>>> To allow us to identify the DPU block that gets stuck, include the
+>>> actual CTL_FLUSH value into the timeout message.
+>>>
+>>
+>> the flush register shall also be part of the coredump in patch 3. so why
+>> is this needed?
+> 
+> I'd prefer to keep it. The devcoredump captures all registers, while
+> CTL_FLUSH points to the actual bit without the need to analyze the
+> coredump. At the very least, it allows us to analyze whether the issue
+> is the same or not (compare SSPP_DMA2 on c630 vs LM_1 on sdm660)
+> without looking into the dump.
+> 
+
+Ok, sg
+
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> index 2aa72b578764..6058706f03e4 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> @@ -480,7 +480,7 @@ static int dpu_encoder_phys_vid_wait_for_commit_done(
+>>>                (hw_ctl->ops.get_flush_register(hw_ctl) == 0),
+>>>                msecs_to_jiffies(50));
+>>>        if (ret <= 0) {
+>>> -             DPU_ERROR("vblank timeout\n");
+>>> +             DPU_ERROR("vblank timeout: %x\n", hw_ctl->ops.get_flush_register(hw_ctl));
+>>>                return -ETIMEDOUT;
+>>>        }
+>>>
+>>>
+> 
+> 
+> 
 
