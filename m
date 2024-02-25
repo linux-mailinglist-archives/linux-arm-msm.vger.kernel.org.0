@@ -1,101 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-12487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8005F862CEA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:47:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82486862CEC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 21:47:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 44E60B214DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 20:47:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 464D328315B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 20:47:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80D591B949;
-	Sun, 25 Feb 2024 20:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6CE1B947;
+	Sun, 25 Feb 2024 20:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JbMcQ7Ii"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nsvVq1pD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0484C1B948
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 20:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5971B94A
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 20:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708894018; cv=none; b=mzPjWlNBl846qLCKxZ2hC3CBaoKRL2sMuMVSXGZ1M3NlHSeslgwVtO4pR7kJj1F03u1ySmsb6pBxMSmqd/42A5v8XmCQGmegUTlXavu/kN+iNY00IjAqbXzKkdgshnbvoxTDsErsJ6gkyqzgNk4y+e1H6Tv16AyXbCc/1zcsRdM=
+	t=1708894037; cv=none; b=Q5PWwtsF8XBuoBx6X5BCKEH/3jvRnrN+AefXV8azu7RqzH2efTGgYc/jE49+1ySDwZ4qhTqguGapdcSJjJ/G5KIwYNxvVPY0Zl5iFsqbCWO0nuiMJdaSGt8LWc18CTJ95/zffAwMaI9/7oYj007q9ogL6B852gly3b9MyYP30SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708894018; c=relaxed/simple;
-	bh=sE7UpPpq14m6j1C5fjYJz6pL/gBGgixJwDk3zBLz1LE=;
+	s=arc-20240116; t=1708894037; c=relaxed/simple;
+	bh=orWtM2LUxedNHJGeLMiagIv7Wxt7W0zqoM/kf6ZlpTg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fMo8ESBQkIt60ahvf0tWow7x6vUtVH7p6guWct5LuNCbPVZVdytoq4Eeh58SkuumZRDkknjb8F2ApHNNgTr/Rvp8v0Ix83yXnlXQAnjMZoM5/25Wa7Mei7qHhlJd8gfP6lNcWe9QXe7NOF9k0jbpEV+9qpM9KGZj9XWmXb2eIQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JbMcQ7Ii; arc=none smtp.client-ip=209.85.166.53
+	 To:Cc:Content-Type; b=LDdLQAnaHbFQHZMbwmIP8e7WUt4HIuO3CQRigfModWiXrTmzqfZIQ+XCqDB4t9CUjgPWViHvkpClCpYIpOK333JTI8Ul/fmPkaM9NqcEM2TTYtQSZl4vzOzi0vCTYf6MtCwD8vi+gBLaKfK+l/AQlSPhWsFNxlu79jBH+G9EVIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nsvVq1pD; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7c78573f31aso116367339f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 12:46:56 -0800 (PST)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-608d4d18887so10643877b3.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 12:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708894016; x=1709498816; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708894035; x=1709498835; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fP0+4HWFw0qnQgXN16N53EqzsauNUwws4Q93UfRzHx8=;
-        b=JbMcQ7Ii6vhGOHKqIk/6ZKZCvrQtQinhqyfUalCOBgLhp+xha6WiAYbgAxq2lbkjjh
-         IYJqIxhKggDPDOn39oiBavH6Z2w0lmCt+Sb1ajpeAv58Rf6ihPvCSYu1nD5aRS4EfmFf
-         XqLEFX6nSiDMQzAmIz5a7MNbllY3Zbhx0BPv3+ZGSc255EREFlYboJ3SbThSEOXD5yZa
-         0OG7Vgd53BGzDY2oOohzvBTmNGdn3N79Ou8SqO5/55oQyfb81u70nN7oMjukG7Av220R
-         aDBdFUh3fQ5W2Lde566NDygA3Iw5G3l+/sQgpeoCFTa8H/Zp7ypqk5hcSrgRaG8uE72I
-         +pIw==
+        bh=d77eu/FHVZi6zJ1GDoPzIaF8g+AKSzhW0pKJcjrEGhg=;
+        b=nsvVq1pDa/F9T/4CYMxDS08Zg4m0Bnwg1WppeYEkOxmQJlBVA0MJE/FhmFypef5Xxi
+         XD5ckNBQMftUUPa9qgvL92lOShxxDsouHzhvm1cGifRUuFoBH1Eio3sdMQAsLd53silH
+         kfWz2toP/UWA/FEJGBf70GIEDZLzXXEzNoOab2MdPbh07a3GiDvUaQkq0nFFK5grOEAl
+         oD5ppdN4CycebhrcJlPN968kY3+nCa7qfdmLMlOpb97JsNJnkyhnhK5gINF7g+gBol2h
+         ymlDKz71d+KO6FGO1DSqONx9+soTsBDdug36kwiU9FbvgtrRekbPuORHI0uR3OHpPmOA
+         R2fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708894016; x=1709498816;
+        d=1e100.net; s=20230601; t=1708894035; x=1709498835;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fP0+4HWFw0qnQgXN16N53EqzsauNUwws4Q93UfRzHx8=;
-        b=VWslYA6YsIhbWJ0A2Fgl9u+V4sulxau6xV/gJEfntZQzSBk+1xNZ0xpg8ZP+2G3ncB
-         yIRYKhvSenOPVGKxP3k9LRcIlZBMd9QTN0UevshkZ4aJG0tYNCRiKRriCa9r4C04O+k8
-         Noe9JJF9agCKL3VkqHtdZ8xjgYlLDMz78z1tlYk1uhFlweGsDXntzY5j7MjjCRJoBoQ5
-         PhcAeM0DUIK4g0YBaoSWuTG+PGYZrh6lxpQ1Ge+GXBa3kkIiul3fxIYvxWiyjKO0GhJ3
-         5hQz9MintQ8WG6+dhCdo8uVIZipOWL1K8f85RnhfJ09PJ87Rphf9FC7SUh/V6vp3GD0B
-         7k5g==
-X-Forwarded-Encrypted: i=1; AJvYcCW0Hu5ACh+mMcq1vVL31HO3v3MlUh5nI70pq4M+4BWS5UmohHqbXv7QnXgZVXfVfVkcNrk/kJyF6HCNtnONG0UG/xeJgmAyMZG/Gyi8bg==
-X-Gm-Message-State: AOJu0YzM/Qlc6dxd5Pvxk7nc2A80XiPL/0E3v1k9bKNvo3EdkFVFEwm2
-	Q0XAkVk7glc+R7YKHehf1QAWlgrsnccqBJ435MvkDMfYSisuB02rsNTR316M0oLF+29SR1Ii61H
-	d7/Vnaw5D4201WvBj1VVd33KKvsNQLUS3S8XXmw==
-X-Google-Smtp-Source: AGHT+IH30JucjSV92EMaK6FP3kuwTYaUFcc6+QVaz4blJzc7lhZK3wG5byZhUyFYLDGqCziSm3HL8i5G+2N6h2Bqk2I=
-X-Received: by 2002:a05:6602:2c86:b0:7c7:97e5:48ad with SMTP id
- i6-20020a0566022c8600b007c797e548admr8177997iow.16.1708894016207; Sun, 25 Feb
- 2024 12:46:56 -0800 (PST)
+        bh=d77eu/FHVZi6zJ1GDoPzIaF8g+AKSzhW0pKJcjrEGhg=;
+        b=K60Ypgvg16hwhUKGL3I2Ai3ZiDpQ7v23D3L+kpJXq4TczZ5Epehcn5t3YWpA9380Me
+         QyZ/ZF8ilYDDD9vKLqqdbPNqxFQ8CyIOSuTKMAPp54/9uvi3mLpm6idge1a7KjvuubPe
+         w67fRg5mjZAfq8McAdQHzEQjKjpo+MeIleVwiAqmutMCwpiGruj9uOK0KuWbqXCtOG/y
+         yT0X+YyajLAJIr7KDJxuONH+i9w/77hpA4+N7bY44EBblBn/lg8Uq45XodMqqEYpppkq
+         /FbCX7+XCw4GzZViwa40WJl3kK68WTTTHD0agp3rQ4siL+g6N3q9nOsE09dHLhHGc4kn
+         9aWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXoQEbbiYDAdxHS0pcbgymR/on5GVdIGZsbiT5BIFikR6I0dr6LTjF6waghC5So4UDyaN6AAuxHFnS3E6zkgOkkEhJzG8gWxARTZ18Xw==
+X-Gm-Message-State: AOJu0Yx1jtPqflpIjitreOJfvZBTzcB+kLfWQ2rd3DzlGdLbDwJvkNV7
+	nGKts6ftFoivxKbH7XQrAWnxR9ej9mA5+Ms+xeNPbJRWM4glGFikrimyIrvLnUM9hEtQHZnNbXO
+	fylFZvL/1VGkcwMl2G5Rg2b8GzkO1fq1+mVxKoA==
+X-Google-Smtp-Source: AGHT+IHTnUYcauY35oVfOaINpJ+/FyG5PANCFBjjE7zzg2RMkicpeC2FUdwaReaUnviNUVeuuUM34JGalg5D0RwPxwg=
+X-Received: by 2002:a25:8d05:0:b0:dcc:b719:4e4f with SMTP id
+ n5-20020a258d05000000b00dccb7194e4fmr2970999ybl.53.1708894035178; Sun, 25 Feb
+ 2024 12:47:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240225202545.59113-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20240225202545.59113-1-krzysztof.kozlowski@linaro.org>
+References: <20240225202545.59113-1-krzysztof.kozlowski@linaro.org> <20240225202545.59113-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240225202545.59113-2-krzysztof.kozlowski@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 25 Feb 2024 22:46:45 +0200
-Message-ID: <CAA8EJppVN72sfz_rjn2K4Za+nBUva3KqP4RRaus3Cs3U+UZQiw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] soc: qcom: geni-se: drop unused kerneldoc struct
- geni_wrapper param
+Date: Sun, 25 Feb 2024 22:47:04 +0200
+Message-ID: <CAA8EJppZrmCTR6tdJQzv-bOBi=BFtZZE7ZBDFDPo49DQOk1_TQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] soc: qcom: aoss: add missing kerneldoc for qmp members
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
 	Chris Lew <quic_clew@quicinc.com>, linux-arm-msm@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 25 Feb 2024 at 22:25, Krzysztof Kozlowski
+On Sun, 25 Feb 2024 at 22:26, Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Drop description of non-existing 'struct geni_wrapper' member:
+> Add missing kerneldoc to silence:
 >
->   qcom-geni-se.c:99: warning: Excess struct member 'to_core' description in 'geni_wrapper'
+>   qcom_aoss.c:93: warning: Function parameter or struct member 'debugfs_root' not described in 'qmp'
+>   qcom_aoss.c:93: warning: Function parameter or struct member 'debugfs_files' not described in 'qmp'
 >
+> Fixes: d51d984c5525 ("soc: qcom: aoss: Add debugfs interface for sending messages")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  drivers/soc/qcom/qcom-geni-se.c | 1 -
->  1 file changed, 1 deletion(-)
+>  drivers/soc/qcom/qcom_aoss.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
 -- 
 With best wishes
