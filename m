@@ -1,159 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-12475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E894862C33
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 18:09:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4888862C47
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 18:33:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E275CB21043
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 17:09:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59B791F219B1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 17:33:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913481802E;
-	Sun, 25 Feb 2024 17:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8231862E;
+	Sun, 25 Feb 2024 17:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu05TE0Y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U8E7mzWI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1E917756;
-	Sun, 25 Feb 2024 17:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB2813FE7;
+	Sun, 25 Feb 2024 17:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708880983; cv=none; b=APW012DDKAaJ1ejGCf5eXYKMXNiYVqsY60s0KnyCbRUdADnNeBO7LYD7w/AU9PIHT8C5S1yXjl/j6b9PvqilaBGXqarPWw3n97C6m3Z4SfB6wZTul2TI+2hGBYvw9FOMt6OgeU69/GDEuBJWq5+ydIPiFXeWwDdkQnV7520TiUk=
+	t=1708882397; cv=none; b=HeizG91QWpy67F9s5tCLcWb7Xb/UQpPGf7zcIg+LQ+SrCsreZDJ18q9rPNVd5LKy5GGuOhriT0B7dT/NpKx2Eec9bkiMvJykbBVApQaxNGr0axT8IqOn+bG80/G2IXII2tJsgGlc3HIM+VmiAl3geuegUaTHW0+x3OaxzyVCL2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708880983; c=relaxed/simple;
-	bh=AuzeUpAuvt0i584TLDXKXK/SGBp3CXpbKtMT3HhI5CU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c0f9yap/3pCBKaXJW7E20j/r9/fL2wMGerxetRTVPdCZVdikfUjoZejKXGJIqpvmuF3m3SQ6VQ1jN1nIUsG7FqFaHd/t3O1WCilHhjBUE9BqTVsx0LUPh4eYTnzKKnU/+462MIF5rxbuVg675k42D1z99XtIBGxd/GO6JktO1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wu05TE0Y; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1708882397; c=relaxed/simple;
+	bh=6G1QXHrfF3PrUu8EJMiV6E2rCJyUs76wIVXZXtRfU10=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=G6nMoc2m8VXcSOeDFpcVdZWsdk2JfxXGAh95K4FexBVDy++514oRdEqVRTPkDEZDNvF2T/tc7qtHRuxUlKhRc/wxilEvEWTYLgjk39KkR13av02njygv5qzgmChBKC9ive973S2wbf7TEZ/s9m0kbZ4lSd/b9hxn1WPn3YwXaFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U8E7mzWI; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so376619566b.2;
-        Sun, 25 Feb 2024 09:09:39 -0800 (PST)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-512ed314881so1941398e87.2;
+        Sun, 25 Feb 2024 09:33:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708880978; x=1709485778; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kkn6pd7i45J0ICc+RJDxPZ9ytlkUDwXcvF4anYGRf8c=;
-        b=Wu05TE0Y79et+4vYhxEucbG5Gbdbqn6++DlKcDrhNISrLp3imRVkSSv5yunySHyaP2
-         mBes0RuNpsE72uxiTTKjBccQi0DJWmCXSX3VRxuYZ350eJiTAbRin6GeSCUv1SQdmAhs
-         utjPbYvTLdZ30yS1A1diFoZoVs47NIOSMz2Shf+ZgdS9QbPilj9nwNp2ASal1xFiwBV9
-         0aparemQxMLmFnaoTn6kK6mvyqhTjOHLvO6zxqtTWSYwi7q+s8lfJY3XzSeh1JYS/qhN
-         22EGwY3mgvpYFIuZCvFc9Kup39ChIVUnJ/vGxy3JYMlY7f4eqTrqpzQNtBG5NzDlkcNg
-         lUhQ==
+        d=gmail.com; s=20230601; t=1708882394; x=1709487194; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=guZl2SPxCQZuSLI8sxbmLDgy6Gf8KaBzLtPq3zTulKk=;
+        b=U8E7mzWI+Lj4L7uASItdPRj5y67+x4eBNy23KMX+lf0ufBdbJyyGmNl8oBROKICtNq
+         pDWHUvC9ohYZB1j/avYeGFDQbXWFbUdqY7akaB3fIt7IvGW2OaxarpW4e41aJttvbGlG
+         fp2jfiYDuk0mzdnQKHoWPycoZubBtnk/I7OcGew45KKbFY3q8CHGD2xqKKOf4zLjJfjR
+         /4RLXpl7czexxptMZNK/yQL8owjcWahaY61IGUKnUozZtmvVSsr2EksUbutkLDfguwBr
+         pfrgPnHBHFitUmGDm1n8PMIuJemKPm5Pby6GKrO5btANrxj8Ez/Rz9Yy+Hjyo2VmZ1Ww
+         fSQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708880978; x=1709485778;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kkn6pd7i45J0ICc+RJDxPZ9ytlkUDwXcvF4anYGRf8c=;
-        b=vTt1XbgBhowT+z1hZzoLuREFm3w9Gu+HYp25JyKXJ800FYOwVL3/7OEGG2hWpRzd9C
-         88ovl08ISpdwPYchgzmw8zKQvB6n6M8ahfzMNPgX4dgHdqWWSX6VGBX5KjGfCB2++Gd0
-         4ePv6eI55fPciaoq3licHHp12kpxnErfiAOCYI32gmxi3XyHqDJj/3lsycL+J1SLoCGl
-         GCK0GxUj1tX6aLN047gF1d85e0WP+8XFFYSLjwe84rtJj5Gsp7VwjicpDbADWeVKlfh3
-         9nN/IqPY+EX5KDTiEfO5bJ1AYrHEtaYq7Xt107+pFhBnDsCv8FRy4qg/IpYA0cE8Q+FJ
-         JOGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXoJnjB7oQMShigiTDm+s6z2WlXY6QttZRHwqaptGaTk8V3rvJHi9SDJ/kKePWUG+FXcghFauNLFFG4aRoKFYpIcT5Mk0vOn65KHw8Q6pSnOm7FDMXQLM/lG6++vw9c5G3G8rKB7xzfPA==
-X-Gm-Message-State: AOJu0Yx+MI2wG7MgJ1xNVF5jxJtXpfdKBBrVwmxQtdBoKQfzBv7a2/Rx
-	lbEeQbELGuRGYzUoukyu4Dwe/UDoAdI+o3mRXGTLE4QOK09b23GN
-X-Google-Smtp-Source: AGHT+IGszEAq6BHv80snpKx/oNaWod/Norc7ugu9RaQQjfW1h7yVcb61ikCupAMtWez9i6TQpfioDQ==
-X-Received: by 2002:a17:906:3653:b0:a3e:9df6:7f0a with SMTP id r19-20020a170906365300b00a3e9df67f0amr3589352ejb.68.1708880978429;
-        Sun, 25 Feb 2024 09:09:38 -0800 (PST)
-Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.gmail.com with ESMTPSA id jw4-20020a17090776a400b00a434cae86ebsm187939ejc.219.2024.02.25.09.09.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Feb 2024 09:09:37 -0800 (PST)
-Message-ID: <c5556062-1761-48ae-a028-6180637f9cc7@gmail.com>
-Date: Sun, 25 Feb 2024 18:09:36 +0100
+        d=1e100.net; s=20230601; t=1708882394; x=1709487194;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=guZl2SPxCQZuSLI8sxbmLDgy6Gf8KaBzLtPq3zTulKk=;
+        b=R3w5/VIXnYDdaIrllCSkqNcF2+UNtd8D77Tf4d+m2QMXN5B/APICIkH0Z7YrSH1vTN
+         eDuWlt8Itys8NnDxoaIanw9WiDh3bC9JNtD7cGG2zP7Er1Fv/6ksLGS8pusppV4HFb/E
+         wKf3wpo4XQcKCI6J3p2bQKrbgozDP1vE2fQYe/9bw76dkByWPq9sSDqbi9rtv5+xW0wA
+         4jquzJiJEKjUC8Luq3s/MwqplyLdUXxEoifWMWwbedbTzJ4VLhIjuR5bD8vE7CDlq914
+         lzMpvllPV+LXa5WiPRWMbSiXVkXVsMx/qSDxwSh+fky65pj5l7/y6NRnuPprIe1YUaDM
+         iyLw==
+X-Forwarded-Encrypted: i=1; AJvYcCWg66XkVddM1e81kwb9OpVqAcvF0eCdrNfQQ5vuGYNCmmmloPH0ts0uJaGMd3Dv0wVS1V3Splbwv3uj5g7QdfHk5b6tCV+PWMINihrWSSL3RzsEtrU18HylPkGY1AFsMwnw+09nL7Nr
+X-Gm-Message-State: AOJu0Yy7lpVhUeLmKL6iMCferCSLuxNQMpWin6N6Ofu6fgMl2YN4F51e
+	LHhxDkTMgX9XaCMfw9+ReGDUsCY8OxBNiWrcCURKVl6JdWJRKeqh
+X-Google-Smtp-Source: AGHT+IEOB/A4CBDtTq4B7V56JsdIwuBT64zm0RXlGsqaRZc7kyEeglcGgSWT4OVjYzg44bllC9ofTg==
+X-Received: by 2002:a19:9103:0:b0:512:caa2:18db with SMTP id t3-20020a199103000000b00512caa218dbmr2787232lfd.35.1708882394136;
+        Sun, 25 Feb 2024 09:33:14 -0800 (PST)
+Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id cw16-20020a170907161000b00a4306ac853fsm1182007ejd.206.2024.02.25.09.33.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Feb 2024 09:33:13 -0800 (PST)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH 0/3] clk: qcom: gcc-ipq5018: fix some register offsets
+Date: Sun, 25 Feb 2024 18:32:53 +0100
+Message-Id: <20240225-gcc-ipq5018-register-fixes-v1-0-3c191404d9f0@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: add TP-Link Archer AX55 v1
-Content-Language: hu
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240223-archer-ax55-v1-v1-0-99f8fa2c3858@gmail.com>
- <20240223-archer-ax55-v1-v1-2-99f8fa2c3858@gmail.com>
- <fb14acfa-5b43-4ce7-93f4-9f6681152ca7@linaro.org>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <fb14acfa-5b43-4ce7-93f4-9f6681152ca7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMV522UC/x2MQQqDQAwAvyI5G4jpLrj9SvEga1xz2dqkFEH8u
+ 0uPwzBzgoupODy7E0x+6vquDYa+g7zNtQjq0hiYOBBzwJIz6v6JNIxoUtS/YrjqIY6PFBLFyLQ
+ uM7TBbvIXrX9N13UDakE50mwAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.12.3
 
-Hi Krzysztof,
+The purpose of this small series is to fix some, presumably wrong
+register offsets in the 'gcc-ipq5018' driver.
 
-> On 23/02/2024 09:17, Gabor Juhos wrote:
+The patches are based on v6.8-rc5.
 
-<snip>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Gabor Juhos (3):
+      clk: qcom: gcc-ipq5018: fix 'enable_reg' offset of 'gcc_gmac0_sys_clk'
+      clk: qcom: gcc-ipq5018: fix 'halt_reg' offset of 'gcc_pcie1_pipe_clk'
+      clk: qcom: gcc-ipq5018: fix register offset for GCC_UBI0_AXI_ARES reset
 
->> ---
->> Note: running 'make CHECK_DTBS=y qcom/ipq5018-tplink-archer-ax55-v1.dtb'
->> shows the following:
->>
->>     DTC_CHK arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb
->>   <...>/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupts: [[0, 62, 4]] is too short
->>   	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
->>   <...>/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names: ['hs_phy_irq'] is too short
->>   	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
->>   <...>/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupts: [[0, 62, 4]] is too short
->>   	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
->>   <...>/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names:0: 'pwr_event' was expected
->>   	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
->>   <...>/arch/arm64/boot/dts/qcom/ipq5018-tplink-archer-ax55-v1.dtb: usb@8af8800: interrupt-names: ['hs_phy_irq'] is too short
->>   	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
->>
->> This is not caused by the new device tree per se but comes from
->> the usb@8af8800 node defined in ipq5018.dtsi. Running the check
->> on 'qcom/ipq5018-rdp432-c2.dtb' shows the same.
-> 
-> Thanks for noticing and describing. Appreciated!
+ drivers/clk/qcom/gcc-ipq5018.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+---
+base-commit: b401b621758e46812da61fa58a67c3fd8d91de0d
+change-id: 20240224-gcc-ipq5018-register-fixes-394905520fda
 
-FWIW, I have checked that in the meantime. The warning happens since commit
-53c6d854be4e ("dt-bindings: usb: dwc3: Clean up hs_phy_irq in binding").
-Reverting that eliminates the warning.
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
-> 
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->>  .../dts/qcom/ipq5018-tplink-archer-ax55-v1.dts     | 133 +++++++++++++++++++++
->>  2 files changed, 134 insertions(+)
-> 
-> ...
-
-<snip>
-
->> +
->> +&tlmm {
->> +	button_pins: button-pins-state {
->> +		pins = "gpio25", "gpio31";
->> +		bias-pull-up;
->> +		drive-strength = <8>;
->> +		function = "gpio";
-> 
-> Usually we keep 'function' as second property, after 'pins', but there
-> is no need to send new version just for that.
-
-Sorry, it is my fault. I should have noticed that pattern based on the other dts
-files. Nevertheless, I can send a v2 or a follow-up patch to fix the ordering so
-we can avoid having a bad example in the tree.
-
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Thank you for the review!
-
-Regards,
-Gabor
 
