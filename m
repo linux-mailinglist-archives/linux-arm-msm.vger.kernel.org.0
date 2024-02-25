@@ -1,57 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-12463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9231986288D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 01:19:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E7D48628E9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 03:52:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EBDB1F2182D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 00:19:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 348B71F20FBE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Feb 2024 02:52:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB88353A0;
-	Sun, 25 Feb 2024 00:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 240B08BF6;
+	Sun, 25 Feb 2024 02:52:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hwcWXWh3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87C5382
-	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 00:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22768BF2
+	for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 02:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708820365; cv=none; b=P8syqJi0ly42ZenlJnc0NHlImfHOCqfUx2a3WxIetRPzU70WqRGI2h/bt9iu2s6qxVVMMzmzva8mQnUYRy/cldLO6k/Z7SgfAE/L/C52r1N1J7j8SazK01mmfY2wB/BoKiTY7t4TjJKAXg2m6Ij0LO35kLuFgXwL35yPwgyUt9A=
+	t=1708829528; cv=none; b=Xhj3q1JiK7DqUTdY5GFA8NuKwXrBilYivM4daVfwgJV5u0673PZx3ICJZJtfOJAmcl9q5jBzXdKsfyccxwRqcn5zYSuQbD7HEls9tBwt1tGHAMI3QqR7vZo0xE9aYJPTuq1XN2lNkyrlb0aoMSjxAf0d52L8YSRtk0KBl18I190=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708820365; c=relaxed/simple;
-	bh=nduO32j5qsm2coGafczycwKiA7C3nN/RZtlpKylZp5w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BqPbXq6li4U+a3c5auUEYJkFPSWzjNaNdLGpR24VaUyU+qPB4fNr6hJ5vNHkkrb3cAFBYJUCAlnLDchoRDGrSE0S0XnvWpVjxM4F6OJTEZMPTT3bo0M2nfMiqR1cLPBH+Guc6I5YkZ1Q3QAtPmwSlW1M4xwFLYttmFJQpXmsAiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1re2Eg-00083G-Sz; Sun, 25 Feb 2024 01:19:18 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1re2Ef-002hqj-KN; Sun, 25 Feb 2024 01:19:17 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1re2Ef-00BECA-1l;
-	Sun, 25 Feb 2024 01:19:17 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+	s=arc-20240116; t=1708829528; c=relaxed/simple;
+	bh=adKQk8IQu/VzxOGNCArekvRYJ/UhLYvCr94PFG2f6vA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KRIM2TiA13uLsHHBDPwYgArRUdAaVmGxpUpx4zhKgP3KsCN9do6GEdL984xAph+0e3Dvzj9xVVS0hz6YkUoVMSNOQWxw7lEDGrYndtPAfi8JqSBqerfMrKD72LdcYxyiTtzFGMouAqtUf88FtiJxlYcVAt0qel4SPbz10dO8hbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hwcWXWh3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE2FC433C7;
+	Sun, 25 Feb 2024 02:52:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708829527;
+	bh=adKQk8IQu/VzxOGNCArekvRYJ/UhLYvCr94PFG2f6vA=;
+	h=From:List-Id:To:Cc:Subject:Date:From;
+	b=hwcWXWh3vD3mfUrXoVMF+MO8ZOTFHsrzqUzK4RKW1novQ2RLz75hh18lqCPKXhTh6
+	 W31RSdSErEbe8qkVpAhmPOjHWqfmMcsTqcKFRdHJgg8qIJEXN1UM+azm8CtPZvjIcY
+	 KY25+nZDXIQBM7nXgCLNL9Scpt+vbtDxZU1O90buNFr520Zir9BEFgXeiQx5yIeGpB
+	 L9Q+wBW9KC7R0mrXPw2VK0maRABVFXTgRyQwwlGs1l+KlUG+lUvkzzdJzGL52Vn/+U
+	 CoQ/7SGF8KzIv87JQ8l0X5ZBEeIfkRA8UD5hrgTWgK5Xwed7Wq7GTfUtbBUklBMuOE
+	 ty2Tn7BEPrNCQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	kernel@pengutronix.de
-Subject: [PATCH] slimbus: Convert to platform remove callback returning void
-Date: Sun, 25 Feb 2024 01:19:12 +0100
-Message-ID: <20240225001911.46196-2-u.kleine-koenig@pengutronix.de>
+	linux-arm-kernel@lists.infradead.org,
+	Andy Gross <agross@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Olof Johansson <olof@lixom.net>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [GIT PULL] Qualcomm ARM64 DeviceTree fixes for 6.8
+Date: Sat, 24 Feb 2024 20:52:04 -0600
+Message-ID: <20240225025205.479589-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -59,114 +61,42 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3643; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=nduO32j5qsm2coGafczycwKiA7C3nN/RZtlpKylZp5w=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl2od/k84X9L/jnA4xVjpD/FS1Oq1ut4DOBU2JD nWnORsIjxyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZdqHfwAKCRCPgPtYfRL+ Tma/B/9fj/E01fkh3HM/1jPSKl/FEuPGo9t5r8YvISAPTQg/Y1E4YAwcY1KH0t02RNpMTGBXmIQ ciEYUjifs409s/zUJODLnI47S0y2rMlWop/92joRodcPvI/vdbjVFdCnPubLRuZrObS2t4rQb8L R+oZ1ielvLZGqdazd32u61DXasmc6VffzGKhaN3TXmLOs/ddLgF+pRzSoRURyzF0dBEd7S82cab v/NhhX0NKz7GPIDbnCXY+/8erBosc4DdhiEvQLRqP2SPcISksX31aYfkUG8tLShob7Rvldmr49I DYo+ZnJmtVudPSz93oS36Homhhd2GQHXSfyGoqjhtBp7/nqN
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+The following changes since commit 6613476e225e090cc9aad49be7fa504e290dd33d:
 
-Trivially convert the slimbus drivers from always returning zero in the
-remove callback to the void returning variant.
+  Linux 6.8-rc1 (2024-01-21 14:11:32 -0800)
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/slimbus/qcom-ctrl.c     |  5 ++---
- drivers/slimbus/qcom-ngd-ctrl.c | 11 ++++-------
- 2 files changed, 6 insertions(+), 10 deletions(-)
+are available in the Git repository at:
 
-diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
-index 400b7b385a44..7d632fad1300 100644
---- a/drivers/slimbus/qcom-ctrl.c
-+++ b/drivers/slimbus/qcom-ctrl.c
-@@ -626,7 +626,7 @@ static int qcom_slim_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_slim_remove(struct platform_device *pdev)
-+static void qcom_slim_remove(struct platform_device *pdev)
- {
- 	struct qcom_slim_ctrl *ctrl = platform_get_drvdata(pdev);
- 
-@@ -635,7 +635,6 @@ static int qcom_slim_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(ctrl->rclk);
- 	clk_disable_unprepare(ctrl->hclk);
- 	destroy_workqueue(ctrl->rxwq);
--	return 0;
- }
- 
- /*
-@@ -721,7 +720,7 @@ static const struct of_device_id qcom_slim_dt_match[] = {
- 
- static struct platform_driver qcom_slim_driver = {
- 	.probe = qcom_slim_probe,
--	.remove = qcom_slim_remove,
-+	.remove_new = qcom_slim_remove,
- 	.driver	= {
- 		.name = "qcom_slim_ctrl",
- 		.of_match_table = qcom_slim_dt_match,
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index efeba8275a66..a5aa364f562e 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1675,14 +1675,12 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
-+static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
- {
- 	platform_driver_unregister(&qcom_slim_ngd_driver);
--
--	return 0;
- }
- 
--static int qcom_slim_ngd_remove(struct platform_device *pdev)
-+static void qcom_slim_ngd_remove(struct platform_device *pdev)
- {
- 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
- 
-@@ -1697,7 +1695,6 @@ static int qcom_slim_ngd_remove(struct platform_device *pdev)
- 
- 	kfree(ctrl->ngd);
- 	ctrl->ngd = NULL;
--	return 0;
- }
- 
- static int __maybe_unused qcom_slim_ngd_runtime_idle(struct device *dev)
-@@ -1740,7 +1737,7 @@ static const struct dev_pm_ops qcom_slim_ngd_dev_pm_ops = {
- 
- static struct platform_driver qcom_slim_ngd_ctrl_driver = {
- 	.probe = qcom_slim_ngd_ctrl_probe,
--	.remove = qcom_slim_ngd_ctrl_remove,
-+	.remove_new = qcom_slim_ngd_ctrl_remove,
- 	.driver	= {
- 		.name = "qcom,slim-ngd-ctrl",
- 		.of_match_table = qcom_slim_ngd_dt_match,
-@@ -1749,7 +1746,7 @@ static struct platform_driver qcom_slim_ngd_ctrl_driver = {
- 
- static struct platform_driver qcom_slim_ngd_driver = {
- 	.probe = qcom_slim_ngd_probe,
--	.remove = qcom_slim_ngd_remove,
-+	.remove_new = qcom_slim_ngd_remove,
- 	.driver	= {
- 		.name = QCOM_SLIM_NGD_DRV_NAME,
- 		.pm = &qcom_slim_ngd_dev_pm_ops,
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.8
 
-base-commit: 33e1d31873f87d119e5120b88cd350efa68ef276
--- 
-2.43.0
+for you to fetch changes up to cb0bbdc4cc327ee91ba21ff744adbe07885db2b8:
 
+  arm64: dts: qcom: sm6115: Fix missing interconnect-names (2024-02-03 11:37:47 -0600)
+
+----------------------------------------------------------------
+Qualcomm ARM64 DeviceTree fixes for 6.8
+
+This marks an additional GPIO as protected on SM8650 devices, to avoid
+a system reset caused by a security violation with some firmware
+versions.
+
+It also adds the missing interconnect-names, which resolves a regression
+where one of the I2C busses on SM6115 devices would no longer probe in
+Linux.
+
+----------------------------------------------------------------
+Konrad Dybcio (1):
+      arm64: dts: qcom: sm6115: Fix missing interconnect-names
+
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8650-qrd: add gpio74 as reserved gpio
+      arm64: dts: qcom: sm8650-mtp: add gpio74 as reserved gpio
+
+ arch/arm64/boot/dts/qcom/sm6115.dtsi    | 3 +++
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 2 +-
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
