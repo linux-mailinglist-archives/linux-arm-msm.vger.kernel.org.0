@@ -1,118 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-12521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40ED7866E47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 10:25:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B179D866E4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 10:25:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFB78284FB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 09:25:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A74F286276
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 09:25:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46BFE5A785;
-	Mon, 26 Feb 2024 08:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8B995B04F;
+	Mon, 26 Feb 2024 08:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AAXuhphx"
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="PBkRM6fm";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="Dai91Ri6";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="PBkRM6fm";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="Dai91Ri6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B35B59B73;
-	Mon, 26 Feb 2024 08:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4745B043;
+	Mon, 26 Feb 2024 08:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708937098; cv=none; b=pS0BVOkrpDqw7VH1T6VyWfBVo88xRO4bzbckhUde1wazH+97Fj3UcuWmq6bwuTwElMEvlu3Ndlg2Cs5e71NsaTlsg3fssTPc0wB4mQhoHbjRIFmHJxCKNWPFv/n1ui69ES/u/qSxrxHRpObXlPriO4qYY6pXpRp8k4QncbLyz8o=
+	t=1708937122; cv=none; b=T7S77fx4yI6TslsDkxo9Qgqn2RHZX6Sb5FnBMJavQ8NkwyRPwTDkG1v09aYLYFUbiaSKupuDnU1IOsTRDhF1vBLuy8s3xmaYd2vsf5RKt6pscNyxcs/Sq4bsjN11ZEM2chtyeySGwt1qCLdn4h4KFyZLaWwGXvDe4gC0M5P2lOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708937098; c=relaxed/simple;
-	bh=54vlDP3Fhi6fRB4B/nA0vEoDKYSZvhP6W39zIROQxNY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZdFhp5/Uq0burQ3jBOIURvJEQvGB4x4avRA0RSQ1kZqU7LgFxQi/NfnqALXoWqkHy3+t8TWBHvDPIQ3SUDHRyPybGtGC9b5UVqnRdTa9wxO/RNpsBqQ0NH4KjlKHbE0oXH/UutuvYu0mvecrcqTvVK+YgKgA7xBid7dpfCtfm9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AAXuhphx; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708937096; x=1740473096;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=54vlDP3Fhi6fRB4B/nA0vEoDKYSZvhP6W39zIROQxNY=;
-  b=AAXuhphxwo623AAxtNhP7TAUsLHrBNX6wSXx3kPTIn7cbI0ugu8xu1Jc
-   Pa9V9HjbqfimhmMW/jfrYyTDnyqmRe/1nUeuoqm74eJQUX9yeNJlt31CD
-   h4xRCCC1kn75R7kabR/ys33TmEsDGXspcbygQQ4k4M0KA6l216Ux9ns1J
-   uT3gZXeo/vp45nTtLh2laZ9owYhyxRW0U4rhZQrW12HL5AoepmK/ygcZ1
-   2YwrabKBatxrlskIB88eR3NSrCnaggOyAl310BdYt8ureIT5l7RPWsaad
-   YgYbUqaVRmlv47K1gkxi1abUZjU1zDtbofqsCAHEWhf5AeVTHywOqk7NP
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="6995146"
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
-   d="scan'208";a="6995146"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2024 00:44:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="937029553"
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
-   d="scan'208";a="937029553"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 26 Feb 2024 00:44:52 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 26 Feb 2024 10:44:51 +0200
-Date: Mon, 26 Feb 2024 10:44:51 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] usb: typec: ucsi: fix UCSI on SM8550 & SM8650 Qualcomm
- devices
-Message-ID: <ZdxPg0+DHX7/zede@kuha.fi.intel.com>
-References: <20240223-topic-sm8550-upstream-ucsi-no-pdos-v1-1-8900ad510944@linaro.org>
+	s=arc-20240116; t=1708937122; c=relaxed/simple;
+	bh=u1Uk/L1IrDcZRw5xoA8GWBJ3cV7BLElyTityFQ63bWw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PbfhWBnfwyGU9Y36xxhVxHVu73Ek45U+A/HRAuT69gmj/0sLjJAsKPYY0W8/vRSfUu08+1bqyHOz8ymD6DK9uQW+iQDioKc63GPqKvfiKMvPbeVtihdDQyIqfL0nj8Kv0A1GzH3z4FynUN3T4Dkt0gM+yncp5AFIFn8FiLbICfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=PBkRM6fm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=Dai91Ri6; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=PBkRM6fm; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=Dai91Ri6; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id DC91D1FB3C;
+	Mon, 26 Feb 2024 08:45:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1708937117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lDNCpqpWyCkrHeQ7/zkg5D0/ATBvTrpfH/+EnnRRQpU=;
+	b=PBkRM6fmokE6jjHDdz8GB36mu7HbbxclHhhnWXeZwysKGoyzxEWjnY/jPplKMKaKM99Ezj
+	cPtdoc7kgrMVbdCDmV/htbc8CpLDN0Ie2cww4yJxPHBuFtufv/mggKHHSjIsSuYNArM0cA
+	SD/Vcs4c2uSv8rKGnpw3XETQ2A/oCwQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1708937117;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lDNCpqpWyCkrHeQ7/zkg5D0/ATBvTrpfH/+EnnRRQpU=;
+	b=Dai91Ri6pWuqMHPB2xjKfgEgy9cpl1XoFPn9dtEfRQAwfcO1SkHbOOInI0bH9SQhuMF7OW
+	7iktYSiqDiJFArAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1708937117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lDNCpqpWyCkrHeQ7/zkg5D0/ATBvTrpfH/+EnnRRQpU=;
+	b=PBkRM6fmokE6jjHDdz8GB36mu7HbbxclHhhnWXeZwysKGoyzxEWjnY/jPplKMKaKM99Ezj
+	cPtdoc7kgrMVbdCDmV/htbc8CpLDN0Ie2cww4yJxPHBuFtufv/mggKHHSjIsSuYNArM0cA
+	SD/Vcs4c2uSv8rKGnpw3XETQ2A/oCwQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1708937117;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lDNCpqpWyCkrHeQ7/zkg5D0/ATBvTrpfH/+EnnRRQpU=;
+	b=Dai91Ri6pWuqMHPB2xjKfgEgy9cpl1XoFPn9dtEfRQAwfcO1SkHbOOInI0bH9SQhuMF7OW
+	7iktYSiqDiJFArAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C234213A58;
+	Mon, 26 Feb 2024 08:45:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id kmwTL51P3GWSFQAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Mon, 26 Feb 2024 08:45:17 +0000
+Message-ID: <a36b35a9-fb37-4afe-a718-a47dfe658cb5@suse.cz>
+Date: Mon, 26 Feb 2024 09:45:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240223-topic-sm8550-upstream-ucsi-no-pdos-v1-1-8900ad510944@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: ath11k allocation failure on resume breaking wifi until power
+ cycle
+Content-Language: en-US
+To: Baochen Qiang <quic_bqiang@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Jeff Johnson <quic_jjohnson@quicinc.com>, Takashi Iwai <tiwai@suse.de>,
+ Jiri Slaby <jirislaby@kernel.org>
+Cc: Kalle Valo <kvalo@kernel.org>,
+ Linux Wireless <linux-wireless@vger.kernel.org>, ath11k@lists.infradead.org,
+ LKML <linux-kernel@vger.kernel.org>, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org
+References: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
+ <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
+ <20240222054739.GG3374@thinkpad>
+ <38c36d16-9cc1-4f03-b758-4a3ba90f8aa4@suse.cz>
+ <abc0c24f-2137-41eb-bb99-80aea8dacdb2@quicinc.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <abc0c24f-2137-41eb-bb99-80aea8dacdb2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=PBkRM6fm;
+	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=Dai91Ri6
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.50 / 50.00];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 XM_UA_NO_VERSION(0.01)[];
+	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	 TO_DN_SOME(0.00)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_TRACE(0.00)[suse.cz:+];
+	 MX_GOOD(-0.01)[];
+	 RCPT_COUNT_SEVEN(0.00)[11];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 BAYES_HAM(-3.00)[100.00%];
+	 ARC_NA(0.00)[];
+	 R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 FROM_HAS_DN(0.00)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 MIME_GOOD(-0.10)[text/plain];
+	 DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:dkim,suse.com:url];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 RCVD_TLS_ALL(0.00)[]
+X-Spam-Score: -4.50
+X-Rspamd-Queue-Id: DC91D1FB3C
+X-Spam-Flag: NO
 
-On Fri, Feb 23, 2024 at 10:40:40AM +0100, Neil Armstrong wrote:
-> On SM8550 and SM8650 Qualcomm platforms a call to UCSI_GET_PDOS for
-> non-PD partners will cause a firmware crash with no
-> easy way to recover from it.
+On 2/26/24 03:09, Baochen Qiang wrote:
 > 
-> Add UCSI_NO_PARTNER_PDOS quirk for those platform until we find
-> a way to properly handle the crash.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> On 2/23/2024 11:28 PM, Vlastimil Babka wrote:
+>> On 2/22/24 06:47, Manivannan Sadhasivam wrote:
+>>> On Wed, Feb 21, 2024 at 08:34:23AM -0800, Jeff Johnson wrote:
+>>>> On 2/21/2024 6:39 AM, Vlastimil Babka wrote:
+>>>>> Hi,
+>>>>>
+>>>>> starting with 6.8 rc series, I'm experiencing problems on resume from s2idle
+>>>>> on my laptop, which is Lenovo T14s Gen3:
+>>>>>
+>>>>> LENOVO 21CRS0K63K/21CRS0K63K, BIOS R22ET65W (1.35 )
+>>>>> ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+>>>>> ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+>>>>> ath11k_pci 0000:01:00.0: fw_version 0x1106196e fw_build_timestamp 2024-01-12 11:30 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
+>>>>>
+>>>>> The problem is an allocation failure happening on resume from s2idle. After
+>>>>> that the wifi stops working and even a reboot won't fix it, only a
+>>>>> poweroff/poweron cycle of the laptop.
+>>>>>
+>>>
+>>> Looks like WLAN is powered down during s2idle, which doesn't make sense. I hope
+>>> Jeff will figure out what's going on.
+>> 
+>> You mean the firmware is supposed to power it down/up transparently without
+>> kernel involvement? Because it should be powered down to save the power, no?
+> Let me clarify: from backtrace info, seems you are using a kernel with 
+> the hibernation-support patches [1] applied, which are not accepted yet 
+> to mainline kernel or even 
+> git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Oh, you're right. Sorry for confusing you all. The rc kernel builds we have
+for openSUSE have nearly no non-upstream patches so it didn't really occur
+to me to double check if there might be in the area.
 
-> ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 0bd3f6dee678..932e7bf69447 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -302,6 +302,7 @@ static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
->  	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
->  	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
->  	{ .compatible = "qcom,sm8350-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
-> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)UCSI_NO_PARTNER_PDOS, },
->  	{}
->  };
->  
-> 
-> ---
-> base-commit: 33e1d31873f87d119e5120b88cd350efa68ef276
-> change-id: 20240223-topic-sm8550-upstream-ucsi-no-pdos-62fdad669f90
-> 
-> Best regards,
-> -- 
-> Neil Armstrong <neil.armstrong@linaro.org>
+Seems Takashi (Cc'd) added them indeed to make hibernation work:
+https://bugzilla.suse.com/show_bug.cgi?id=1207948#c51
 
--- 
-heikki
+But then, why do they affect also s2idle, is it intentional? And why I only
+started seeing the problems in 6.8, the patches are there since August.
+
+> So this is why you see WLAN firmware is powered down during suspend.
+> 
+> [1] 
+> https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
+> 
+>> 
+>> But I just found out that when I build my own kernel using the distro config
+>> as base but reduced by make localmodconfig, the "mhi mhi0: Requested to
+>> power ON" and related messages don't occur anymore, so there's something
+>> weird going on.
+> Here your own kernel doesn't include the hibernation-support patches, right?
+
+Right.
+
+
 
