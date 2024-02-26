@@ -1,171 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-12524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0FD866F0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 10:46:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF615866FAD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 11:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E2B11C214AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 09:46:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 807391F256B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 10:01:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C41262C198;
-	Mon, 26 Feb 2024 09:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B29282033E;
+	Mon, 26 Feb 2024 09:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QNmlGj/8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1Lwlc1n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45220249F8;
-	Mon, 26 Feb 2024 09:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35411EF1C;
+	Mon, 26 Feb 2024 09:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708938709; cv=none; b=fhUK7Uxw0FnSuDyChphNOeHrZpmJjl2koFQIWE8D5tpS2BI9cvWK0/uc5lJuADTY8LHs5dNzmEp0RepU8fDwr9Ls31aqgu52IEYMHLPYzYmkBmGCdnNIXkjMa9HUohwoM68Z7yjxRMcG4kd17qFEe8tnCaqLQx8XgCCpoB87mNo=
+	t=1708940273; cv=none; b=nZMUU2vFMjYMnjix9pRqCBZaOaAnRjejzlRAQqbx+28aAHbA7PdGx/+G5tp0wTSoFxBpwBlf0HbE2gfjDmALW8oWh/GOjmulTbnI7whUmE+pUmCkIZhkqcdUcxIMx9DUo2x2mBKCLMXMIG5DbrTHlxb86vySJJNtxQxScXbM4eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708938709; c=relaxed/simple;
-	bh=x/ilEKn/8MMA6kW/i6VzzDdhwp4h6oo0eJYB82oMBig=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QJxCF4EY98Z0DVvzNpMoUqphzvO9zg0mhBkZL8CckN/A7zyvkKy7e5lwfBFmVhqg850HK2HVbL6I3TK4ZrBWCFCxZ7vyrAHT/rATUgdfS7qphd7MgellZO0zdRFzlovlblF/zMKDyPvdeJot6R9In8VsO2jlbt1tc9vMfw2X1ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QNmlGj/8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41Q8To2L001388;
-	Mon, 26 Feb 2024 09:11:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=yWtXZicRpAgfXVyVIenJ7IEvf1Z/owV8NiuVYwSM6g4=; b=QN
-	mlGj/8doloXJgW/zQh1eC5g2zK6uh6EiEGlBh/gHENrsUjdfKVC6TsZO5gpgcvwP
-	9J2Ptn7oKsAhez73cU34YzfXso5pevtTxLShOAoKAOr9Cn6qiVJbv/QpOl77UOWj
-	5uFvUIxMkrpitX80yKyk3hf3+qTwSMBV31gTCAi33an0d9Xu/wChpacoeO+Px6S9
-	qrj9VR03umaXEVT53gR7ME7yGM8miIpR6bQvFnIk7KPBBtveLmu122zL6tIzMk0v
-	0HfDIjRd/snNI4mNCPNgD2v9S8HCYqU7mGoVLkK5GL37ggY+DbICFBSXejo5q2kT
-	JZT8cR4KTarydC8RLlXQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wgkxngefp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 09:11:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41Q9BMxn015875
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 09:11:22 GMT
-Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
- 2024 01:11:20 -0800
-Message-ID: <34123ee0-26c9-4240-8d58-aba02f7c66b9@quicinc.com>
-Date: Mon, 26 Feb 2024 17:11:17 +0800
+	s=arc-20240116; t=1708940273; c=relaxed/simple;
+	bh=+M/IcrkC4KiqVSgKEfF4MEPWWH07B+P/vlCcnh7YeNg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rgPyfyTUrf4PDlUtoR/y2lJ1K05SZX9xPjyrTV6dLDgQabvjKgPB+uA4saiPJa6itwXB+ABRg5vttBeBN7jRinTEMUcNkb4UgaCZdyrkn+B7hV1+vZUrSzz1AGb6VGDR5LYF0rNwF+8sNcg60OXAGgA4MzT0IjuBoqZB3jssJ8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f1Lwlc1n; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso2720838a12.3;
+        Mon, 26 Feb 2024 01:37:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708940270; x=1709545070; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dpglvbug8B6rz9FHKHRWvwGpjAjoa19+rytvw+mL+G8=;
+        b=f1Lwlc1nJ23KoFpVKfKTBefiJxDqBhxJLy3yztn2bHXbQcz6AA4Lr1/8EZykTn8d51
+         omSe/nkP4SAUj+5q+0EnKHOnkM1FUk19dWnm+SANNb2gnOPuD1uWgFlmIvB+zhu5yCwC
+         VaR/IBca1owsr15UV9uNZr9XH66ZcDb3vedWfYhuSV/nFSfsBfazgXtFpwJGVw+ts4ZH
+         MplEZyDDHsic35Yi4NILEi1nW8bFWi8WogbKs/1l/juLmYc4Oz2cbn6jelf1TNE7Fhk5
+         vXgLdLe5vQJq3GL340H5h7FqVvFOYKFacyk94U/X0C6qtwjxfWhQIvgTHLU1fNJadfEy
+         ZlCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708940270; x=1709545070;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dpglvbug8B6rz9FHKHRWvwGpjAjoa19+rytvw+mL+G8=;
+        b=JliV5GyzGuinQbX3clhgUl5ToQ2M0N/C3GFkUJy2eaD2h6uEHLx01izaOni/8YfbMj
+         Xh95eO8n/yygbk+wxz+7qhYBkLPJH9TBxScICrTr4bh4ewI1rXZwlAFl+efoxe+BSL8V
+         jLqWloJflqoinHsqCFcbd+24sFXiXHFJIEfDuIQJNcBTl/3wi6BaHnwcIIAiCXgFNZlh
+         tFCjA5Gn6epNB1X+1xHrkTQepHkNJLW14gaukMnPu9yedumasx/7uVLpl6YFl1EH7FBv
+         j+P/eB3KS8P+yA6E6YNE+YVGTsqNvFjUWuLs4EA9U1Ungo5PLvUQd6VzirtPvlDGgdyD
+         /+8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUwv7JZPP5xu+QXwIGte+Gi0cR3qI5GJDRtPuveomu2PPfJ9CDlV5S8EUduJRiz3Edp5MUa7XI1688Qtbbntra2UVsN/hOCoYvq764wpGRR5Gro3IMCd7pHlnaD+7XXNo9zrVXl+V0MjpujxWqfVFCIgqC+cRuk3uoXnpBe7fXHzuoBVZ/xHdgyHzstZiC2u0UHbeomFv3XISMlOrdhKcs5Er9+
+X-Gm-Message-State: AOJu0YzObl3bpeVFUMDjtCFQfUudij0I+iSs9EDzuxEk7hTaCuDrTb1D
+	aNW2hRimsJWw3w5voLLsdreg8mjCWNAXUut5Vsfn8fPWeP+UJ/Jv
+X-Google-Smtp-Source: AGHT+IFpjaJu2T4JoRmMtw8TqqMu8ND9Hg9Vv19TGQBE+b1X9rROjlzEQ5fx+rLOm05RPrsgBI8FWQ==
+X-Received: by 2002:aa7:d9c8:0:b0:565:ebf3:e28a with SMTP id v8-20020aa7d9c8000000b00565ebf3e28amr1603276eds.31.1708940270082;
+        Mon, 26 Feb 2024 01:37:50 -0800 (PST)
+Received: from unknown.netbird.cloud (net-93-65-126-20.cust.vodafonedsl.it. [93.65.126.20])
+        by smtp.googlemail.com with ESMTPSA id fd13-20020a056402388d00b00562d908daf4sm2158595edb.84.2024.02.26.01.37.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Feb 2024 01:37:49 -0800 (PST)
+From: Gianluca Boiano <morf3089@gmail.com>
+To: Pavel Machek <pavel@ucw.cz>,
+	Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Gianluca Boiano <morf3089@gmail.com>
+Subject: [PATCH v2 1/3] leds: qcom-lpg: Add support for PMI8950 PWM
+Date: Mon, 26 Feb 2024 10:37:30 +0100
+Message-ID: <20240226093732.3478845-1-morf3089@gmail.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
+References: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ath11k allocation failure on resume breaking wifi until power
- cycle
-Content-Language: en-US
-To: Vlastimil Babka <vbabka@suse.cz>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Jeff Johnson <quic_jjohnson@quicinc.com>, Takashi Iwai <tiwai@suse.de>,
-        Jiri Slaby <jirislaby@kernel.org>
-CC: Kalle Valo <kvalo@kernel.org>,
-        Linux Wireless
-	<linux-wireless@vger.kernel.org>,
-        <ath11k@lists.infradead.org>, LKML
-	<linux-kernel@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
-References: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
- <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
- <20240222054739.GG3374@thinkpad>
- <38c36d16-9cc1-4f03-b758-4a3ba90f8aa4@suse.cz>
- <abc0c24f-2137-41eb-bb99-80aea8dacdb2@quicinc.com>
- <a36b35a9-fb37-4afe-a718-a47dfe658cb5@suse.cz>
-From: Baochen Qiang <quic_bqiang@quicinc.com>
-In-Reply-To: <a36b35a9-fb37-4afe-a718-a47dfe658cb5@suse.cz>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -x6WQcKEukRq5dnajDIZ21WCOKyZ4tlh
-X-Proofpoint-GUID: -x6WQcKEukRq5dnajDIZ21WCOKyZ4tlh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_05,2024-02-23_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402260068
+Content-Transfer-Encoding: 8bit
 
+The PMI8950 PMIC contains 1 PWM channel
 
+Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+---
+ drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-On 2/26/2024 4:45 PM, Vlastimil Babka wrote:
-> On 2/26/24 03:09, Baochen Qiang wrote:
->>
->>
->> On 2/23/2024 11:28 PM, Vlastimil Babka wrote:
->>> On 2/22/24 06:47, Manivannan Sadhasivam wrote:
->>>> On Wed, Feb 21, 2024 at 08:34:23AM -0800, Jeff Johnson wrote:
->>>>> On 2/21/2024 6:39 AM, Vlastimil Babka wrote:
->>>>>> Hi,
->>>>>>
->>>>>> starting with 6.8 rc series, I'm experiencing problems on resume from s2idle
->>>>>> on my laptop, which is Lenovo T14s Gen3:
->>>>>>
->>>>>> LENOVO 21CRS0K63K/21CRS0K63K, BIOS R22ET65W (1.35 )
->>>>>> ath11k_pci 0000:01:00.0: wcn6855 hw2.1
->>>>>> ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
->>>>>> ath11k_pci 0000:01:00.0: fw_version 0x1106196e fw_build_timestamp 2024-01-12 11:30 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
->>>>>>
->>>>>> The problem is an allocation failure happening on resume from s2idle. After
->>>>>> that the wifi stops working and even a reboot won't fix it, only a
->>>>>> poweroff/poweron cycle of the laptop.
->>>>>>
->>>>
->>>> Looks like WLAN is powered down during s2idle, which doesn't make sense. I hope
->>>> Jeff will figure out what's going on.
->>>
->>> You mean the firmware is supposed to power it down/up transparently without
->>> kernel involvement? Because it should be powered down to save the power, no?
->> Let me clarify: from backtrace info, seems you are using a kernel with
->> the hibernation-support patches [1] applied, which are not accepted yet
->> to mainline kernel or even
->> git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git.
-> 
-> Oh, you're right. Sorry for confusing you all. The rc kernel builds we have
-> for openSUSE have nearly no non-upstream patches so it didn't really occur
-> to me to double check if there might be in the area.
-> 
-> Seems Takashi (Cc'd) added them indeed to make hibernation work:
-> https://bugzilla.suse.com/show_bug.cgi?id=1207948#c51
-> 
-> But then, why do they affect also s2idle, is it intentional? And why I only
-Yes, it's intentional. When suspend/resume, ath11k does the same for 
-either a s2idle suspend or a deep one.
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index 6bdc5b923f98..9467c796bd04 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -1693,6 +1693,13 @@ static const struct lpg_data pm8941_lpg_data = {
+ 	},
+ };
+ 
++static const struct lpg_data pmi8950_pwm_data = {
++	.num_channels = 1,
++	.channels = (const struct lpg_channel_data[]) {
++		{ .base = 0xb000 },
++	},
++};
++
+ static const struct lpg_data pm8994_lpg_data = {
+ 	.lut_base = 0xb000,
+ 	.lut_size = 64,
+@@ -1819,6 +1826,7 @@ static const struct of_device_id lpg_of_table[] = {
+ 	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
+ 	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
+ 	{ .compatible = "qcom,pmi632-lpg", .data = &pmi632_lpg_data },
++	{ .compatible = "qcom,pmi8950-pwm", .data = &pmi8950_pwm_data },
+ 	{ .compatible = "qcom,pmi8994-lpg", .data = &pmi8994_lpg_data },
+ 	{ .compatible = "qcom,pmi8998-lpg", .data = &pmi8998_lpg_data },
+ 	{ .compatible = "qcom,pmc8180c-lpg", .data = &pm8150l_lpg_data },
+-- 
+2.44.0
 
-> started seeing the problems in 6.8, the patches are there since August.
-> 
->> So this is why you see WLAN firmware is powered down during suspend.
->>
->> [1]
->> https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
->>
->>>
->>> But I just found out that when I build my own kernel using the distro config
->>> as base but reduced by make localmodconfig, the "mhi mhi0: Requested to
->>> power ON" and related messages don't occur anymore, so there's something
->>> weird going on.
->> Here your own kernel doesn't include the hibernation-support patches, right?
-> 
-> Right.
-> 
-> 
-> 
 
