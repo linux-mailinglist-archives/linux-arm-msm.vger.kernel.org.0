@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-12504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97C128667EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 03:12:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7EAA8667F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 03:12:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51BAC280F87
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 02:12:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E0FF281978
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 02:12:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB90FDF44;
-	Mon, 26 Feb 2024 02:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 014F9EAC0;
+	Mon, 26 Feb 2024 02:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SETr7nFg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lL+VWtMq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9A633EC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D322EEB5
 	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 02:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708913517; cv=none; b=iBoI/dQQN1Uza4A55Pg5R70DJp1aZ2CQbsC2zwV25YAhULpJ4THLl+67uz6QErmFao58XlzWgwSkA+qjfKYiYX+pXlmDZvIM23yLojgNv9U+j1DtXR8HdWoBRnh0QgMxFx6jk1OldNLMdfQQQN59qFy9DDqPsX3kKpT5AU4qji4=
+	t=1708913518; cv=none; b=XFVWocQAneBRoeL62q/axdiCaM6G/VXk4s2NDLkG75d5f4whdbjfrfCvKH7pUkLi18cqc74UgYMfQf4D7XRQATUnGkb1KuyXJB4TyLLGGMZxuaSPADctO+vSQGagmq4fts/akKkJBXDyYGKcarzzZ6e8eeM3ZMhxYQPKq+xqlVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708913517; c=relaxed/simple;
-	bh=cdm61gYGUySsFxPZ5ngtMYEu8AnIiXIGfprwz9M15j0=;
+	s=arc-20240116; t=1708913518; c=relaxed/simple;
+	bh=JyJ2naEA9+YJx/+oipu+eUllHx2U7M8qpx+d+P3kb+o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RUr4ykPX1zx0ySZgDxsp9xB536E0RRqbP7hQis4w0SIPGQPX1plQknKnO/iyTLPejFu626NTX7xomZwH3O0yD65NZX/pbD9gfZyo4Fi8W/KFnX1lQZLzxaOvGWJHpduRhSiUk+l2wi/QjpMxSfg9kVk2XvwcIpTNgELbqzL+dq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SETr7nFg; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:To:Cc; b=I63+wZv2OjXPUEK4ulXUEFgW+8SW+Hz82pUpU0GxbZivQrGvY2QzJVUfh/qcxoltuuo+B1GLRBnjpwSWuCGKY9gXUfO64nYQNdEA81+uH1vEHBCGe2wzORCKjcYpPTwGXxASwvcQY/lvSVQBQjYCPdFstJp5Ou+VW8Mg14t1G3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lL+VWtMq; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-512f1c95a06so1580369e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 18:11:55 -0800 (PST)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-512b29f82d1so3426904e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 18:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708913514; x=1709518314; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1708913515; x=1709518315; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=w3E7dzOhxFiHb1JCqkhJvLIWTzxr8XDqqA0WBoNbgeo=;
-        b=SETr7nFghbbOI0G/a5bafZto2x4LxkUrkS4qwT1eGqYTpTzcX+/mfn6i+6yNRnlrpG
-         ti5yTRk/UU8C0aOncZ5Qc+OffuZjThrFgBJ7UREo8+G3h46G3b9wmHkDa03wyKAMKxb3
-         cm4zwakBgn3EajsORwZnDaHQ+HEWSHZypk4hOBRkyO8W6EmaTV0TjGoeQo7HVp3xlmCf
-         86rL4fGUSvqkw5TduqiSf6kO0wW1xJNItHLFjtmVUPexcte33XnJb4TBpQ2tAgHTsqj3
-         woRvDODaiVQZ9x/s40vfhXXveVUhqklQT1fF7jSFDv5ba3M97z7gQRJgi3KezsSTkicF
-         dZFg==
+        bh=18tJ6UzqGWS5ZS/rCnpPVeNsGeBIHv5z+8hQsl9S7jI=;
+        b=lL+VWtMqas+uG1y93l4GZGFjDOxzbb4s40zh/03l5oF36oSDH2Vnz3kCAXHj0pDKeB
+         KkiI4EwGp++B7M7/6v+RLDNxGK9ed6oggCuIR78dAbW1OUwHKXFahqZXbUbc9/wsuGlo
+         5YvAIdvYq5bUcKkhZjntUO/YjV68LUw2g4Ivd+sD097/xzHIDfa8IcPuv82Hcge3tDFL
+         5uOBWOMoOTwcbfVpmrNIq+v+Ub32Ob6+UZV2AbmgzU/5yrnzMvuFkPVwy19OqAI3QRAP
+         EwWymoE74UVamR8kV5R67RAnjWe7Vchw779mg0UmWtVwz3jlld1fHk5EqyK8DshfTkbV
+         z+Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708913514; x=1709518314;
+        d=1e100.net; s=20230601; t=1708913515; x=1709518315;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w3E7dzOhxFiHb1JCqkhJvLIWTzxr8XDqqA0WBoNbgeo=;
-        b=T/i3FmUWPaxaqDAZ9460OOKkogbNbDBcuaO2kq5imIs7+Le4Apm4NZ31Xax8t98oj7
-         VHFjusIIygGqXlaKGtf5R+pQgfEZxW4wcCZHFiCF3WLy750TU1xowMVgOI6UT4x8Kt2z
-         sXsSJbjNkj0jzd9PqU+V3gByLSNwP3rM7dGQvbzVgClffucZR6V4dgQDgHgBIDm0bpt2
-         1DuGndjQFNR1zKSoI4rDEWhnEKYAehOJz4sCyjP/mZa4YaTsQ+hWT98PlZH4M3NHyMds
-         AgFgvmmo64htFuiJ2QKxEujmX8s71dbC74iRn7P7RbemcfRL0DsT7yKmwTZkt7nUms3k
-         PY4w==
-X-Forwarded-Encrypted: i=1; AJvYcCWhZ0brA7E8YxBkWJNvG7ebNl/UNW2HFMvYB5iZ/zXgif2f9xX0ND0wwLNUe5/o1KMAN6Oe3G65qLTGBh62j6zLuTNISx7xIJS9gaDZQg==
-X-Gm-Message-State: AOJu0YwgGaPnJ+TDnLlOVAkGekqFyi1eiVScYTiU8bNGPSnOUihau1ic
-	8FVSN+hV8T165lUo2WznJo86KuMpwby4/xqcMhrWsKLosvf7zBlvE/MSZfOmSJg=
-X-Google-Smtp-Source: AGHT+IELdSvsYandsvUg2/9kXl+Uxy6kAqgjNUnscBWDJrEMCJeiyutSYFowciKyHufpcYsErIDaEQ==
-X-Received: by 2002:a05:6512:2007:b0:512:b43d:6694 with SMTP id a7-20020a056512200700b00512b43d6694mr1524362lfb.32.1708913514398;
-        Sun, 25 Feb 2024 18:11:54 -0800 (PST)
+        bh=18tJ6UzqGWS5ZS/rCnpPVeNsGeBIHv5z+8hQsl9S7jI=;
+        b=US3HXQ3/5oGiqctmC2uYkK4Z6h77AjI6zvfe0uWMMXpXE1TgcvzoHmXvXipnozVAyq
+         z9/HgB7X8qesTDizk3jmvA6njIZB7ldXIAecto8Esb96umTdUY0ZMJa77vqEoR7Y2Fkz
+         /HN6zefaKeTCqOaItNTRMMQ5ohUTtbDNX36A9pVO0yUOCqM9V/dAKX4lkpSNocuGtgKA
+         F1xJcwCOmOJZo9jnAVQJuSbg3hcuqsG/PDGEycFAipMZBbv2+oo7MYpwOmqeGulqc71J
+         DztjMyeoFnK+tw3N9DYdhq73Bsfn3uvoUCy1d/MhmNiEksoX7TPVuYNbzvoEZh/2flaS
+         rIOA==
+X-Forwarded-Encrypted: i=1; AJvYcCUm9Yj1ZQ8KbesphfesVw+c5zNjORdpQNNYazjlI2UvxUV3LW+VLPdPrLzn7vvQI4qIl39EvDxYYJy2xshU4UHqcB/BUgQRr8wTvAKROw==
+X-Gm-Message-State: AOJu0YyK9ThzJ9Wt/rzRdXjeQhW5pUUIZmHdBDeO4iQiDf1gpdETbVKP
+	Hzx2HVSS4YhTZIH1SZ6h/JcYE8o+sD5t36WX2fu48rywqKPOhVHZ550ftFBVc6U=
+X-Google-Smtp-Source: AGHT+IGx7Awy//hcII4n+oRauO+5C95ueBAjeHayplcepthN/F68ja0f/KxiVX2XJaG/pH3wqhgU4w==
+X-Received: by 2002:a05:6512:2109:b0:512:b932:7913 with SMTP id q9-20020a056512210900b00512b9327913mr2888939lfr.41.1708913515397;
+        Sun, 25 Feb 2024 18:11:55 -0800 (PST)
 Received: from umbar.lan (dzyjmhybhls-s--zn36gy-3.rev.dnainternet.fi. [2001:14ba:a00e:a300:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id m11-20020a056512358b00b00512e39ce472sm676176lfr.175.2024.02.25.18.11.53
+        by smtp.gmail.com with ESMTPSA id m11-20020a056512358b00b00512e39ce472sm676176lfr.175.2024.02.25.18.11.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 18:11:53 -0800 (PST)
+        Sun, 25 Feb 2024 18:11:54 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 26 Feb 2024 04:11:44 +0200
-Subject: [PATCH RFC 08/12] drm/msm/headergen: don't output full file paths
+Date: Mon, 26 Feb 2024 04:11:45 +0200
+Subject: [PATCH RFC 09/12] drm/msm/headergen: generate _shipped files
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240226-fd-xml-shipped-v1-8-86bb6c3346d2@linaro.org>
+Message-Id: <20240226-fd-xml-shipped-v1-9-86bb6c3346d2@linaro.org>
 References: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
 In-Reply-To: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
 To: Masahiro Yamada <masahiroy@kernel.org>, 
@@ -90,49 +90,84 @@ Cc: linux-kbuild@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1228;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1828;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=cdm61gYGUySsFxPZ5ngtMYEu8AnIiXIGfprwz9M15j0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl2/NhT7+nEsdNbK4/t6/GWM4DvV+yrpaxToNms
- 1msEgdr7MCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdvzYQAKCRCLPIo+Aiko
- 1e7GB/46EXHrORsKwaZpnKqF3lwzDU5kEbixRHeZy/SKsQys8wDF7msZstYUfIfros0SjXuGoJK
- Dnkg92e8E+Aa/GXa3/qWfkJyBPoeSogz78JZvkb5iGhuQtwqjBVXd4S6bt84CSWqyCuN2Hn4OwR
- JSEJKGu4AKK7xgMekhm4rGTlO71vF5cFSaJGR9gWtV4JncK9yEV/nWYgAp5kMd/v1/Cm85zBGaT
- DWhIM/JBGe7S+XnNITrRCrsy/HwgjSwFvTr7eKH1wb9+z16h/UIbqVWk08eguBjp14TwL41ILeY
- BFsjSb0hpnYqVsm//J92J5mLTKGYUaI9/tOZHzQ65jM/CN/1
+ bh=JyJ2naEA9+YJx/+oipu+eUllHx2U7M8qpx+d+P3kb+o=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl2/NhQ5hUimItcSECWaPO/JC8mPEonJzKnRRJr
+ ZQN9JCP0jyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZdvzYQAKCRCLPIo+Aiko
+ 1XAgB/47QZNDdURBNmftlahtNPqFQ41iZc3XuPDbBZhQR69OOxcWir3zjFsCoPTsBoKQHuKDu5p
+ QGsdtUFWG1eJAsrdIIer0q5RugUFdgC5MB+dwQ6rlDDkwyRYAzRfmoodyXCV6PEc6y7farR0RpK
+ 2lOSZb9+Fi39wUWtH9RpTOJjRQ3BZY1AgkfvT06IUs02MNq7jm5RQDLnLz+ymEVHcdgBqkr3ZHd
+ 2qdP8LuCXHR2g6uJoyXVsQE/h5JCHCoB73otR85c/w23NZc1KddSlzF9hzAEcEna1gBy0ZqyzBx
+ J/rpd4H7zDnzZ+b+5OHDn3PWqehjd9jn81a8GmSQcEco5tJ2
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-In order to reduce noise, include just the file name into the generated
-file headers.
+Change headergen semantics to generate the .xml.h_shipped files instead
+of just generating headers.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/headergen2/headergen2.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/headergen2/headergen2.c | 33 +++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/headergen2/headergen2.c b/drivers/gpu/drm/msm/headergen2/headergen2.c
-index d5a3eb7562ee..2e5c4593d865 100644
+index 2e5c4593d865..7d884fa547b2 100644
 --- a/drivers/gpu/drm/msm/headergen2/headergen2.c
 +++ b/drivers/gpu/drm/msm/headergen2/headergen2.c
-@@ -377,13 +377,14 @@ static void printhead(struct fout f, struct rnndb *db) {
- 		"The rules-ng-ng source files this header was generated from are:\n");
- 	unsigned maxlen = 0;
- 	for(i = 0; i < db->filesnum; ++i) {
--		unsigned len = strlen(db->files[i]);
-+		unsigned len = strlen(basename(db->files[i]));
- 		if(len > maxlen)
- 			maxlen = len;
+@@ -417,30 +417,41 @@ static void printhead(struct fout f, struct rnndb *db) {
+ 
+ int main(int argc, char **argv) {
+ 	char *file;
++	char *out_dir;
+ 	struct rnndb *db;
+ 	int i, j;
+ 
+-	if (argc < 2) {
+-		fprintf(stderr, "Usage:\n\theadergen database-file\n");
+-		exit(1);
++	if (argv[1] && !strcmp(argv[1], "--no-asserts")) {
++		no_asserts = true;
++		argv++;
++		argc--;
  	}
- 	for(i = 0; i < db->filesnum; ++i) {
--		unsigned len = strlen(db->files[i]);
--		fprintf(f.file, "- %s%*s ", db->files[i], maxlen - len, "");
-+		char *name = basename(db->files[i]);
-+		unsigned len = strlen(name);
-+		fprintf(f.file, "- %s%*s ", name, maxlen - len, "");
- 		print_file_info(f.file, db->files[i]);
+ 
+-	if ((argc >= 3) && !strcmp(argv[1], "--no-asserts")) {
+-		no_asserts = true;
+-		file = argv[2];
+-	} else {
+-		file = argv[1];
++	if (argc != 3) {
++		fprintf(stderr, "Usage:\n\theadergen database-file out-dir\n");
++		exit(1);
  	}
- 	fprintf(f.file,
+ 
++	file = argv[1];
++	out_dir = argv[2];
++
+ 	rnn_init();
+ 	db = rnn_newdb();
+ 	rnn_parsefile (db, file);
+ 	rnn_prepdb (db);
+ 	for(i = 0; i < db->filesnum; ++i) {
+-		char *dstname = malloc(strlen(db->files[i]) + 3);
++		char *curfile = basename(db->files[i]);
++		char *dstname;
+ 		char *pretty;
+-		strcpy(dstname, db->files[i]);
+-		strcat(dstname, ".h");
++		int ret;
++
++		ret = asprintf(&dstname, "%s/%s.h_shipped",
++			       out_dir, curfile);
++		if (ret < 0) {
++			perror("asprintf");
++			exit(1);
++		}
++
+ 		struct fout f = { db->files[i], fopen(dstname, "w") };
+ 		if (!f.file) {
+ 			perror(dstname);
 
 -- 
 2.39.2
