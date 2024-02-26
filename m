@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-12518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7DCF866A6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 08:05:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B41DA866B28
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 08:42:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CACB91C214EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 07:05:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3FE0D1F210D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 07:42:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E61161BC4A;
-	Mon, 26 Feb 2024 07:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B608222F19;
+	Mon, 26 Feb 2024 07:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vqdwiVI/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U129Lutg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFF918E2A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 07:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C3020337
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 07:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708931122; cv=none; b=hU7NglZ30cPM5NEDn/QqqrIvMin4wHispTcxC4uyQY0vvhFvJ9APgS3wqfHiOkkLxnMIOYXhPe4xWRXAoFhNTRrBXmqjPPh8Jtf29PC/aDiOdCZm8KUhWz6O5ER3prZqTlCBEtIbXqNksPSdPRdnl5LGB4Ptm9hRpfJDLBHWpnQ=
+	t=1708933115; cv=none; b=VGPE3DwUlcEJcmeAefpXMOCwFRn9kzROuGZ0RImdzknYkShBj3SetDFZIjhjz3RMC98IE3NPTNpf8f/dTpBJOp0SPfCoIDSmUViXFp1ITLFSQVh+dNgt1g7JKsF5txp5ynudjXN6TYV4AXe8azKcxUt7aiE3nYRFBrYW2U/pvs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708931122; c=relaxed/simple;
-	bh=nYgb0HWRu8YyT74BAkDx/Un2/2W4bfQcIXn1jyX5dhM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UZDEDIrkwbFEgbgtIETKGQGa8/xfTvDAfww1P2DR4d9xuQ05HYXsR8QFMWi318uXy0AchnpeLfSD6SFv6IrXLyehsL2nmw2v8jHQpgjRXsnttvV4eE0xOmbT36o5FwVpvai+2oB1GML81JlO1V/00sCk9PTk1JtkhuCQ40GZ/SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vqdwiVI/; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1708933115; c=relaxed/simple;
+	bh=+NYXiToGv6Bw5ipxy6JHiAvqvCchBBV1B9pFU08SOFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=g/au1wRikk4Gg+5xiVYDt7nqroNMHH4g1lM7Imjox9AXI+ZDWc9PdenwNlXqjiPGKvyhBZFtdAAASdckPG5uznESool2GjdLtkpIUQO9n2QArP16OyUUWBJHXS5XitJq5RzC7SOYNH14cj+WoPKtt9zunhUxtphO3c64RP4mMk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U129Lutg; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a3e550ef31cso286922666b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 23:05:20 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5654f700705so3595929a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Feb 2024 23:38:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708931119; x=1709535919; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYlFi0LHJsAlgLIGIcShBABCv/yjhadsmMI/Fg1bJc4=;
-        b=vqdwiVI/1DJk7LGizjcFH5cs6ouJiV9eMSTxMDadht7qUSLjsgiN5hdNykkihzzx+d
-         lu2kERgqS5s5TnQd/1JhcF7IZUxLSGf5/u2Mvuh6jh4/PkXVaJbNiYhMgfb47ztR5+2d
-         etdb81nLd6C22nb/hfFJO8rVYFRAeg2TC4N4IDsdQzSYNaSm6Q7ZyuCi0jEEyzuGzOgj
-         MtA3MM4VLR1x6j6kRRL5RK4rFBgHJzmTkqepKFjyHcdAPW1mx6LNDWj16OGy4DHYvIfJ
-         mo8LvXCDLtIGztiEYgKQDU1HYrI3Ir3vrn06OCVqbxTaZvPtP1wOjVBFQpveZdVbn6GV
-         XDqQ==
+        d=linaro.org; s=google; t=1708933111; x=1709537911; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nhl8D1trvmYSomiJ2vy2c18xLRQl5neLGIl58WAU5a8=;
+        b=U129LutgN3V5IgRggPSDQCeUzIfTLzBhyEoBnRGCnJcKeLIehzNMKRP8XIgowV8dM0
+         uRxJextY/rJHq6SBsPRfkwZTVi3COejALzTL59XnkJ5c6LBE0f78gEhZtDRDmqPV2xnX
+         /3vA24ew211JUs1vl7j384jC85YUm1bZPJnBL1ptrmtzFqYTYTsEw1xJ+H0q460FrgfY
+         00a8ricSiI7D+1FPPwAXqAWTQTUFaf1MivVCo/jz44/SUsVpUlfoiI+NbFaj68s1Lvpw
+         AlvPU/h20L+uwCZH9JlbiA2midLOePd/EDxySoyDRLSLHXLhS35bBxCOJDyOH4MCl0lP
+         ZIuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708931119; x=1709535919;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zYlFi0LHJsAlgLIGIcShBABCv/yjhadsmMI/Fg1bJc4=;
-        b=BJdoOANFrCTq4mP2Kp34wg2+ajr1NI/kkFTMTC9vMilnhT6JqAvjiaCJq4eh36+AFM
-         q3BweE3h8RAu2zbexaSujtRPNzRQbt/dK7Terd1bIjsGMcwzG2++OMi6YmrASZzNVXHv
-         9yAzXqPq0aN8vwkzhCqG/KcFjQSvZyg+lzXePkqzEd0SIXqaLJI/Teg5/1QVROGxMyAA
-         SxeDB5J561i/gXle9eMVqxGxk/TKp51WpdoEvGOkJQxRQFtzRAH0vjumDCKZj1gZJnz1
-         Yjp9MWi3DPcVguOKUUK3tRXj91YuU+jfs94YVmPnFsV7b13FNERFnv4wUJ7Xf4F492ii
-         dOMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX9vCfaIBPLAkJpqCObVebJrgR3URYXizTMwPMR9uoF+FYiSxe4pKlGBx3lEZnnrO7FYNHdsOalsnphWRoudxT8LNfWkfyCs3q1ybzG2g==
-X-Gm-Message-State: AOJu0YxWHvlvo4ckJZh7a4jcas7UidivQHrIh78lT466PRktZATtKtvr
-	5QftwBF6PZYuHC1kCIo7FKyqo3/D5bdyq7+wU6bPIPbF/uVUS233PwTSONyzgWg=
-X-Google-Smtp-Source: AGHT+IGIUhAHxmHdb5Nr/f680qAPCsRQZ4ihTdSW0wFJ2SVbK0DFLJ2t/Vzjxxd1NO9R08tbikOw7Q==
-X-Received: by 2002:a17:906:c34b:b0:a42:f194:9cd6 with SMTP id ci11-20020a170906c34b00b00a42f1949cd6mr3273335ejb.7.1708931119395;
-        Sun, 25 Feb 2024 23:05:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708933111; x=1709537911;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nhl8D1trvmYSomiJ2vy2c18xLRQl5neLGIl58WAU5a8=;
+        b=jO+XY7OFksLpTtuyEWA29YOr9XYnOluBG2wteYYnuNMxPNxuiShwn3eyVGfJ0s4AQ0
+         xkGLmaNBZr8K3+VNhXfV4W04AkyKJ/TVeZzPvXV+2j7XN14FXu9SnpQF6wff/e9i1Gja
+         DHNEUbvpSWQgXjMmy5lzTE73v6blumx7CsunpbiywsdTbNqOVRkH6H+rnhx5/F6EWpwv
+         eiuk9Zhn7QvKdhDke+k1+uhtaNcujz/BB8+P5vSd3aG1BcURb7k30ktz3LOkgYvg/sTU
+         gIZPTx4Tu9VE2u7u4TbWHTUbwS7CzMP+IaWNtKTNqxAwtGhBKAE1ZrprDMunqz7SSbfO
+         hLRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCpo77CQW5O2IseQgARGtG32079CvHW2og2tG537Ljdy7dDbN+B9YJwBfXcPdJeK5p2k21AuGcelRv+aUeEjBd1rmVCJdIqRbgOfCbqg==
+X-Gm-Message-State: AOJu0YzeAXPNxWuQ11KK8YN+UOHM0UkPxqS3kMhCWI9oAcaE5qdsywAQ
+	gNlvVTsx3hdSdudpmBqdM/CL4h670yTTPoryin3/68YcZK94Kpoedn7G2DpynFk=
+X-Google-Smtp-Source: AGHT+IEIET3+k3JIWIosASTG2pQOTXA4W1e+XHd5iJ+6CG1WBhOYkYClZPLIBBcXL0cYCpN5iLhsNQ==
+X-Received: by 2002:a05:6402:5246:b0:565:e282:33d8 with SMTP id t6-20020a056402524600b00565e28233d8mr2174754edd.38.1708933111003;
+        Sun, 25 Feb 2024 23:38:31 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id vi17-20020a170907d41100b00a43215bff13sm1269633ejc.117.2024.02.25.23.05.17
+        by smtp.gmail.com with ESMTPSA id m7-20020aa7c487000000b00563f8233ba8sm2070682edq.7.2024.02.25.23.38.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Feb 2024 23:05:18 -0800 (PST)
-Message-ID: <a762f756-1a92-4d82-be38-098bacaf25dc@linaro.org>
-Date: Mon, 26 Feb 2024 08:05:16 +0100
+        Sun, 25 Feb 2024 23:38:30 -0800 (PST)
+Message-ID: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
+Date: Mon, 26 Feb 2024 08:38:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +76,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8953-lenovo-kuntao: Add initial
- device tree
-To: Raihan Ahamed <raihan1999ahamed@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org
-References: <20240226055615.79195-1-raihan1999ahamed@gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: leds: leds-qcom-lpg: Add support for
+ PMI8950 PWM
 Content-Language: en-US
+To: Gianluca Boiano <morf3089@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240224224951.1357644-1-morf3089@gmail.com>
+ <20240224224951.1357644-2-morf3089@gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -135,63 +133,31 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240226055615.79195-1-raihan1999ahamed@gmail.com>
+In-Reply-To: <20240224224951.1357644-2-morf3089@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26/02/2024 06:55, Raihan Ahamed wrote:
-> Lenovo P2 is a handset using the MSM8953 SoC released in 2016
+On 24/02/2024 23:49, Gianluca Boiano wrote:
+> Update leds-qcom-lpg binding to support PMI8950 PWM.
 > 
-> Add a device tree for with initial support for:
-> 
-> - GPIO keys
-> - SDHCI (internal and external storage)
-> - USB Device Mode
-> - WCNSS (WiFi/BT)
-> - Regulators
-> 
-> Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
+> Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/msm8953-lenovo-kuntao.dts   | 240 ++++++++++++++++++
->  2 files changed, 241 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
+>  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 39889d5f8e12..aebfb1ae728c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -49,6 +49,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-lenovo-kuntao.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts b/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
-> new file mode 100644
-> index 000000000000..2fd6345bbe15
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
-> @@ -0,0 +1,240 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (C) 2024, Raihan Ahamed <raihan1999ahamed@gmail.com>
-> + */
-> +/dts-v1/;
-> +
-> +#include "msm8953.dtsi"
-> +#include "pm8953.dtsi"
-> +#include "pmi8950.dtsi"
-> +
-> +/delete-node/ &qseecom_mem;
-> +
-> +/ {
-> +	model = "Lenovo P2";
-> +	compatible = "lenovo,kuntao", "qcom,msm8953";
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> index 6649ca2ec805..ea617fad5a4e 100644
+> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -27,6 +27,7 @@ properties:
+>            - qcom,pm8994-lpg
+>            - qcom,pmc8180c-lpg
+>            - qcom,pmi632-lpg
+> +          - qcom,pmi8950-pwm
 
-Missing bindings.
+You will need to update the if: as well. Last commit Anjelique Melendez
+made there a bit of a mess... Please rebase on top of:
+https://lore.kernel.org/linux-devicetree/20240226073713.19045-1-krzysztof.kozlowski@linaro.org/T/#t
 
 Best regards,
 Krzysztof
