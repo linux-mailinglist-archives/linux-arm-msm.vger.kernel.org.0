@@ -1,178 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-12571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E441B867B0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 17:03:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AD1B867C13
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 17:32:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12CD41C28C16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 16:03:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E71E1C2AA8B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 16:32:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BA8612BF26;
-	Mon, 26 Feb 2024 16:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C41712E1DC;
+	Mon, 26 Feb 2024 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VjOpFIK3"
+	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="LomV6Oc+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2048.outbound.protection.outlook.com [40.107.247.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E79112BF00
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 16:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708963377; cv=none; b=eApI1RUJ0XEpuXWiaNYFF9pYk78HEI6eiU/vkrwa18nXQcogrfT0QE4P6Mg/orkFV0bEmdcjFn2GxykVQXClhQ8NIzUauZ6WhiJWp1OAdy4BBLEsnwjryNaIjwkGRGy9FrejvCjiWzIRJARQZ+7Nsjv0rhn7bleA74XfFydTHro=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708963377; c=relaxed/simple;
-	bh=wTNfxtjjEuUsYp1JNTlYg2x2iUW0rS+mI/kNL5uqq8k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kzvwpdtQAU7TxwUpgU6IO/RHDLAN3HMaqTj+4+ezHs16B13yRdWACN0PuDHgYPOVaIZp6w1oBlwqdI22KJCTCP5HtpCnbXsQxsap9UHaqv8Ag632e4a2fuYi2OtrT3BOQ9Z01Dltnqj/PsjFAP26C1JINVQkssUQwgxRuyERsXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VjOpFIK3; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-512f6f263a6so1231645e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 08:02:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1708963373; x=1709568173; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wTNfxtjjEuUsYp1JNTlYg2x2iUW0rS+mI/kNL5uqq8k=;
-        b=VjOpFIK3xVR7oPT8c2BChY1eaRZ2pxu2+XBHljH/Tq6iGZniqNgXqCzPcVbNdSbx9G
-         v8sRQOE8FdooJUpslY416eX9Wc1qqBWjNZiRbP0+1kuRiHw9QN5nyh42T2EvYllMscDl
-         BxGlL204M6IAKwDMNkDtvxRozbJpVCbIIk+Fk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708963373; x=1709568173;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wTNfxtjjEuUsYp1JNTlYg2x2iUW0rS+mI/kNL5uqq8k=;
-        b=md7M1SWhHXionNUj5/n/DluiPULDWk82lO2lv62Ki71VddduuH+uplI295dWqXkhnm
-         K1/EwO8K21AUzUcCa/3dMqFBx5eHtaD/+4fxt6A2XtY5Ylam8aBRmOC/oNzZcav/jDv0
-         nnX9lDOEF87OpTYhTv1ijHO3BKWyyZy4JQVZDXWJJUJ97hQmlXbJ3Z320trqed8UrTNh
-         l0oShcKBF58zth0PYmEpqau24Rn/Y1VudkDGI70uFqbDRGkKERIEvz1+16sTfeWnYYpv
-         JYB37X7mbyGe4HtPcSsa4yFs4IQ30HSEKNe22IXhaaCXvCpripDNXmoRGBYlhhU9vG7q
-         lwnw==
-X-Forwarded-Encrypted: i=1; AJvYcCWdXlRShgOKIdaTNexEfC63+b3wWzeXOmuy6M3UjK+ec1Una32jPjdvATw1D1g29t/FQR14thtw680seNuyKLncG82Arb1LsbRVTe93IQ==
-X-Gm-Message-State: AOJu0YwtEFlCW61yM3DYRY0GaXcmbnPq41lYVADCIJkalQaz+tsGMdK1
-	rFsC5D7zbxNyHzyGgSLv2uSDAkhME/3neka75YpRj5sUsq3cBt+JmnmGBQD3mXOPdOZsKemfB4X
-	dPvft
-X-Google-Smtp-Source: AGHT+IHlE0YhTgz5kZcdby8Y01GlN+X1PjxNt7P+XCJOx9UtznE75QC78NGxABRojPcDmlMZ16NZDw==
-X-Received: by 2002:a05:6512:33d5:b0:512:fe39:5d0e with SMTP id d21-20020a05651233d500b00512fe395d0emr2545666lfg.9.1708963373368;
-        Mon, 26 Feb 2024 08:02:53 -0800 (PST)
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com. [209.85.167.51])
-        by smtp.gmail.com with ESMTPSA id j22-20020ac24556000000b0051301a42641sm146634lfm.174.2024.02.26.08.02.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Feb 2024 08:02:53 -0800 (PST)
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-512eed6e77cso5110e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 08:02:53 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWrZ4oCbyprzNf5H186UCZrQU6gZc2H4CLJzo46F6AvAconMEprZXPCqqsRURaBAakrVVZtJ2chBYeJChMMmdRRF6O83/dKqaAvJofmFg==
-X-Received: by 2002:a50:9f28:0:b0:562:9d2:8857 with SMTP id
- b37-20020a509f28000000b0056209d28857mr330238edf.6.1708962985791; Mon, 26 Feb
- 2024 07:56:25 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A0E12C814;
+	Mon, 26 Feb 2024 16:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.247.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708964686; cv=fail; b=OSrn+uSlGyK73Ytt2NZGQZgbYg05eyXiYklz47gUm8pCJwGTwYH/IS2HESFuS5Rb+xMwmePKOdmeWbXhGrDglDEUjP6BNsZX0811L0/42G1cInCIV2BsnNS5erABNb78zuRYgXxE3Trms1z1DcyL3KM3aEx9/imsDfCAdgBJZgU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708964686; c=relaxed/simple;
+	bh=SVhZXmQHJ0A6n5mHBw7I63zBrfaBOGPtz/gJKkBwJ2E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=uNdQOCks6TraLDxSPW2gdSp3ZRH7k/HX9CgXWQ3AXirjbfOhKkgEmk3ilR5EM3JxXqntd19CQ/00n3L+LXgQc0Yy8zlzQa2in8Ntf+KEqHigN3e3DSXO1yshOAnkSl5CVNTAJZmygQlcMKATDQFsVFzlH2xDblpYjtzk9et83Ds=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=LomV6Oc+; arc=fail smtp.client-ip=40.107.247.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OvoRxvN4pHQW7+5aIDCthd1DE9KXKA6G4caVyoX5qMT6gGfrPguQ/xGLGx6LHZ9cfocryS73aGgoerm2OGir6lTarQl37zEWvkEEOehU2meOCrbbhyh3K9FYdXMAqLfalWdgrbgmvitxZ86T1xh1RNyt1EtJa3sysxuR6ZHQLPI9h+FM+4O/VSdmh8zhKhfUBtn2KnzB13nTI6Ai0zjjxUtGiSiMQ0fSizvdakbvXhVfmhGV4iRl37un+fWoSIV97lwkb5c7u//ZZKVoQyKaPlu4Bp+dsDrqc9HGTzBYDMv9OR9ndumNJNnz/FjL6oshgR/N+aMpgk6GHMtuHppgYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cVmpDvJZetSr2KLfB9OMWey29guyLBOI/SueWA0eRB0=;
+ b=WXtiD4iUA25ySV8pUof14HZ+isCHVG7ExvBfhmFVZOeZ84gOvWzmx0yumr81LZM1+9d2Zh/+3wVi9HZ7nQhgMHVRdwJgTYpFwaZIfTx0atW+RqgmKCRQULJEbsX81yPf6zuRPkZRnaSVzSzK+iWDfTxS2ZncBg27VkxFyMYmgP4EgHIXpMxNFoJ+ODRgKr58IMECR2/YpEUpuNRRuFoxdyXgO+CwCcv9DsxTK0BVnaTce4hEfA21M4KHJDTdDYV3lCv4VObpfQ2jsYZxEirpvR0HliK7SnkUm/u6V0Sdd+m4YFg5oV4kC48iEa2SVDxBkPidOHrwnh3t7Fq8ltlgKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cVmpDvJZetSr2KLfB9OMWey29guyLBOI/SueWA0eRB0=;
+ b=LomV6Oc+bc5amA3XqiJ2zTXSIFvvvSXV2L6xrCBuwfVGUUS86Nk3D3A8SjUQElkyq01AO1pFUHDcFJ+HrB9ezRfjCSdhMGdo4RffvqCbB5Ouci7Gj2x8jv4wkhyIu5pdEmomod7vVA7BcJjytOcAJ9FowOhFl9zJEkPf6myYC70=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
+ by DB9PR04MB9866.eurprd04.prod.outlook.com (2603:10a6:10:4ef::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.33; Mon, 26 Feb
+ 2024 16:24:41 +0000
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::9af4:87e:d74:94aa]) by PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::9af4:87e:d74:94aa%7]) with mapi id 15.20.7316.032; Mon, 26 Feb 2024
+ 16:24:41 +0000
+Date: Mon, 26 Feb 2024 11:24:31 -0500
+From: Frank Li <Frank.li@nxp.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v3 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
+Message-ID: <Zdy7PxDO7d8YIKG2@lizhi-Precision-Tower-5810>
+References: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
+ <20240226-dw-hdma-v3-1-cfcb8171fc24@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240226-dw-hdma-v3-1-cfcb8171fc24@linaro.org>
+X-ClientProxiedBy: SJ0PR13CA0112.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c5::27) To PAXPR04MB9642.eurprd04.prod.outlook.com
+ (2603:10a6:102:240::14)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221-rb3gen2-dp-connector-v1-0-dc0964ef7d96@quicinc.com>
- <20240221-rb3gen2-dp-connector-v1-3-dc0964ef7d96@quicinc.com>
- <CAA8EJpo=9vhM+5YzaFxUoYRuEWQyrMS8wLNPSF3K=bN5JwWyDw@mail.gmail.com>
- <8313a7c3-3ace-4dee-ad27-8f51a06cd58c@linaro.org> <CAA8EJpqFj5nf8d_=Uoup7qg+nQrxqQU-DHbL3uSP138m9AcXLw@mail.gmail.com>
- <8fcb5816-2d59-4e27-ba68-8e0ed6e7d839@linaro.org> <CAA8EJporaUuddHHqpyYHiYSu=toHmrDxSHf9msZUJoym4Nz72g@mail.gmail.com>
- <20240222150423.GI2936378@hu-bjorande-lv.qualcomm.com> <CAA8EJpqd=1KV_dN8AURQDcFDDyO+YtbC59gM7ftt+HohGM93hg@mail.gmail.com>
-In-Reply-To: <CAA8EJpqd=1KV_dN8AURQDcFDDyO+YtbC59gM7ftt+HohGM93hg@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 26 Feb 2024 07:56:09 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XJVFX-GkL-wiAoi=r6tdiDHkJ_aFSpx6FE6+gFT5xJjA@mail.gmail.com>
-Message-ID: <CAD=FV=XJVFX-GkL-wiAoi=r6tdiDHkJ_aFSpx6FE6+gFT5xJjA@mail.gmail.com>
-Subject: Re: [PATCH 3/9] arm64: dts: qcom: sc7280: Enable MDP turbo mode
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|DB9PR04MB9866:EE_
+X-MS-Office365-Filtering-Correlation-Id: d5661e94-98c7-4ba0-0b1a-08dc36e76f4e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	DoUNNKXKmI0KKvm8rCQBI711A+WK3FYYj8KWxwojTOjg/JXbcIWqaOLuPB5ouzzvPVe+uv5yNQhDi3XvWDcHuQdF3JlBgKUT2MHLo9iAw0JrKKz6mfhdC/hhbjVi6FIkF5uiat7SXvUDLgX34HnX84x8esZCbayZpctY9bYaIeu54gpoX+KMrEZdemzdFioewuof5d43Zj6g3IOSiQdoH4qVSHfUWWEyjt0Lc9XdXR+PpHKa9ex13sBN1kONg2czG2gWQ+n4+hJCvOaXPs+tOldClXtzKCcFwjIwl7ceKbuCiylzG+l1KQjdPiundwGmn1nkrGwx41IpqcNYUFAWDAScvb2eHK3v149iGYj2jMah0Wt/v+KFYLulP+C9QLMiYdkUhp7Hz8WwMsIec3I2Pja7weAX9hNlM/XNI2pXQqJ657QObsV+fjiOZrRkbVZ5N4PEvfOifeRGVSs7vdidr5PD9OAYibiQrJs0GsF68Ejg6Cy0rxhoAge5+tVFXNlyKy88aHaWlIBfuzr37Rs1zfeQNIyf0agoR3WjQD+DGAgVh2aJtwmhmkWF9AoLGoL2xicnp2zdzRgLmUxDVdnRrUS6UQtX/RwwWvep5MYQbNkJbBLzqbGtyvC02AD1HM/0lLAES1rJdewkO9aVrMs5sZnRIqEaABJ7p+JVWfLlorrM2LYHhz+AG72aSRajn4jKuupNdkeqDlqJm8N0ePKBSMuL3Q2l16klDZZASVcKaYI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(38350700005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?qinck6f5h/1eJeDar/X32IMyzHgib+2FYBd85rQaQNW0olUVstVh5XmYg6ym?=
+ =?us-ascii?Q?xet0TMU0ep/d281sPJLQv1BQIywJCJMtjWUVB1Fskpl2H03lDilJghGQcDso?=
+ =?us-ascii?Q?orvrB8dNKoR8rsf9s3/xHIAjFYCETloDi2/CsizY05EMBcVq2Mq20G+h31G8?=
+ =?us-ascii?Q?GGKsONYnqveuGimxaS/QrusP8d20oGPjb5W+YPEqIHw0BCtVHRkvawCIdOxY?=
+ =?us-ascii?Q?1C6T+oVRxqQcYjHawqv1HIBE98U03F75y/jIReTutLl62n1xeui3hla78G5/?=
+ =?us-ascii?Q?KxrDQZ8SdHpPgVG3WKGor1yaA3+C91hAzw02Ia2rUZDekKGiPeXY+ZJeBHr6?=
+ =?us-ascii?Q?/TjYOFGmSrWvigTXqjkkGOc8DF0dy4w5YdUkEY14OS2gQSISv/hP2rYy0nYN?=
+ =?us-ascii?Q?1VS+a0r3Ovmcgvx+l59hb3jAJDruyS2SWaajP+1PNvcAZZrXiq9iLuK9fPui?=
+ =?us-ascii?Q?89kqIxMa6NuFlBJFpHNnzFykPzY++BI0WhbqLZduTZtyuJ5E3zwBi6OfQpvo?=
+ =?us-ascii?Q?6V4+EgIjdBc+R3hM9kUi7FMcpZxqgrgkkwMbs48OJO4TmIXJ193zNEEdaQk+?=
+ =?us-ascii?Q?pcf1hYc7XL98q3AVgTSPq8IoJjZwcEaRTZjfI7DlQwuYmWae/nB4tunaWDrg?=
+ =?us-ascii?Q?FB86r/h9uoegt/jVtVs/FWAWpwVfracs2fLa3IdL2dinMdzMXvzJOrH2J1KC?=
+ =?us-ascii?Q?mKSH4nfj1zsQblDQYeLzesWngVCR0piBMcOvr6WMyiKA4ReqIv/ipSU8N6gm?=
+ =?us-ascii?Q?180ESLBLOlFEekWPnycSjpGK3dK6HLzUJSy88tRMcLd2UPpycAmUVoNhAbZ5?=
+ =?us-ascii?Q?bznH4VoeRwTr7BnXI+gZ9ku9Vx5RqP7uW2TNcYI6WuYkMwDJx+lRcd81S1QM?=
+ =?us-ascii?Q?/hZcIx2vr6EkLXFvEYiO2wv+JRR4m0QVVlxdNr6aWC6LktI5yg/bBQpqcGkm?=
+ =?us-ascii?Q?AOafnUj4proPKsQ6x24n+AR/RAFkuZswdk64UNkNX94Qxs4TpfvDsxREV2ar?=
+ =?us-ascii?Q?6WnX/p0qbR9bpCz0z2YKnNdKTcW30Y/18IQghByG4JjnMfWJphvpXSZegAn1?=
+ =?us-ascii?Q?QYphz596uZuVbTj3cuP+HIGc4mRRM2+eEhyP7LYYayLEeLBR2Hy8SD/kVPgY?=
+ =?us-ascii?Q?om+z3s+LAqMXEhE6CzQgS3ACZEOr9IOgim5sSFtJUguDyFsDRIlv7DSMHg65?=
+ =?us-ascii?Q?Er3IjbyCz7nu7jSe8rJTiVB6cF+kclq4fnAmByq3OqJO+Luf0NuJJifAETny?=
+ =?us-ascii?Q?4efBaHu5r9nSJsW+8PqsvEweQUvg9/cVO6o4lenvdbKuOBW/aWuBqPHiA/z2?=
+ =?us-ascii?Q?i2LhC8k4+6VieHQAvBuYZ8aQil4Kf5tShZ4RhkTCjBNUjdKnwciXvKfl8RBI?=
+ =?us-ascii?Q?66TcBL2/2QyCza4ueTnPcOUGp+esz2bzcMyzn/5ibsBze8u15jSA4KXHvuPR?=
+ =?us-ascii?Q?mo3qaPDHZXeoNd0/5cV1qKCB7oXADhQZ9iN0bmBTFPpReubkgv1QaqeU4pqF?=
+ =?us-ascii?Q?KoVL8cdnU8sCKUP7OJI/6LXvvbpw3AVUGmz1qLwjtMZdKJuIfRx37O5bQH9t?=
+ =?us-ascii?Q?3qNrHazTdZbKfiAlJdv/Mj+944U8oT9Tufb961s6?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5661e94-98c7-4ba0-0b1a-08dc36e76f4e
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2024 16:24:41.3918
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3UKRAIeI++ncYlDtYxm/4Iz7qR8R8VbmQQM111sk6XzX7VA0+W+cHsRVLeeOLYQdajpGVp9W3fPc8gbyPHSTnw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB9866
 
-Hi,
+On Mon, Feb 26, 2024 at 05:07:26PM +0530, Manivannan Sadhasivam wrote:
+> In order to add support for Hyper DMA (HDMA), let's refactor the existing
+> dw_pcie_edma_find_chip() API by moving the common code to separate
+> functions.
+> 
+> No functional change.
+> 
+> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On Thu, Feb 22, 2024 at 9:32=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 22 Feb 2024 at 17:04, Bjorn Andersson <quic_bjorande@quicinc.com>=
- wrote:
-> >
-> > On Thu, Feb 22, 2024 at 11:46:26AM +0200, Dmitry Baryshkov wrote:
-> > > On Thu, 22 Feb 2024 at 11:28, Konrad Dybcio <konrad.dybcio@linaro.org=
-> wrote:
-> > > >
-> > > >
-> > > >
-> > > > On 2/22/24 10:04, Dmitry Baryshkov wrote:
-> > > > > On Thu, 22 Feb 2024 at 10:56, Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
-> > > > >>
-> > > > >>
-> > > > >>
-> > > > >> On 2/22/24 00:41, Dmitry Baryshkov wrote:
-> > > > >>> On Thu, 22 Feb 2024 at 01:19, Bjorn Andersson <quic_bjorande@qu=
-icinc.com> wrote:
-> > > > >>>>
-> > > > >>>> The max frequency listed in the DPU opp-table is 506MHz, this =
-is not
-> > > > >>>> sufficient to drive a 4k@60 display, resulting in constant und=
-errun.
-> > > > >>>>
-> > > > >>>> Add the missing MDP_CLK turbo frequency of 608MHz to the opp-t=
-able to
-> > > > >>>> fix this.
-> > > > >>>
-> > > > >>> I think we might want to keep this disabled for ChromeOS device=
-s. Doug?
-> > > > >>
-> > > > >> ChromeOS devices don't get a special SoC
-> > > > >
-> > > > > But they have the sc7280-chrome-common.dtsi, which might contain =
-a
-> > > > > corresponding /delete-node/ .
-> > > >
-> > > > What does that change? The clock rates are bound to the
-> > > > SoC and the effective values are limited by link-frequencies
-> > > > or the panel driver.
-> > >
-> > > Preventing the DPU from overheating? Or spending too much power?
-> > >
-> >
-> > Perhaps I'm misunderstanding the implementation then, are we always
-> > running at the max opp? I thought the opp was selected based on the
-> > current need for performance?
->
-> Yes. My concern was whether the Chrome people purposely skipped this
-> top/turbo freq for any reason. In such a case, surprising them by
-> adding it to all platforms might be not the best idea. I hope Doug can
-> comment here.
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-Thanks for thinking of us! In this case, I think the only users left
-of the sc7280 Chrome devices are folks like Rob and then a few folks
-on Qualcomm's display team (like Abhinav), so if they're happy with
-the change then I have no objections.
-
-In any case, I'm not aware of any reason why this would have been
-skipped for Chrome. The Chrome devices were always intended to support
-4K so I assume this was an oversight and nothing more. ...of course,
-as Abhinav points out Chrome devices are currently limited to HBR2 + 2
-lanes DP so they can't go 4K60 anyway.
-
-In any case, in case it matters, feel free to have:
-
-Acked-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.c | 52 +++++++++++++++++++++-------
+>  1 file changed, 39 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 250cf7f40b85..193fcd86cf93 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
+>  	.irq_vector = dw_pcie_edma_irq_vector,
+>  };
+>  
+> -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
+> +{
+> +	pci->edma.dev = pci->dev;
+> +
+> +	if (!pci->edma.ops)
+> +		pci->edma.ops = &dw_pcie_edma_ops;
+> +
+> +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +}
+> +
+> +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+>  
+> @@ -900,24 +910,27 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  	else
+>  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+>  
+> -	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+> -		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> -
+> -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+> -	} else if (val != 0xFFFFFFFF) {
+> -		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+> +	/* Set default mapping format here and update it below if needed */
+> +	pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+>  
+> +	if (val == 0xFFFFFFFF && pci->edma.reg_base)
+> +		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> +	else if (val != 0xFFFFFFFF)
+>  		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
+> -	} else {
+> +	else
+>  		return -ENODEV;
+> -	}
+>  
+> -	pci->edma.dev = pci->dev;
+> +	return 0;
+> +}
+>  
+> -	if (!pci->edma.ops)
+> -		pci->edma.ops = &dw_pcie_edma_ops;
+> +static int dw_pcie_edma_find_channels(struct dw_pcie *pci)
+> +{
+> +	u32 val;
+>  
+> -	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +	if (pci->edma.mf == EDMA_MF_EDMA_LEGACY)
+> +		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+> +	else
+> +		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+>  
+>  	pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
+>  	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
+> @@ -930,6 +943,19 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  	return 0;
+>  }
+>  
+> +static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +{
+> +	int ret;
+> +
+> +	dw_pcie_edma_init_data(pci);
+> +
+> +	ret = dw_pcie_edma_find_mf(pci);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return dw_pcie_edma_find_channels(pci);
+> +}
+> +
+>  static int dw_pcie_edma_irq_verify(struct dw_pcie *pci)
+>  {
+>  	struct platform_device *pdev = to_platform_device(pci->dev);
+> 
+> -- 
+> 2.25.1
+> 
 
