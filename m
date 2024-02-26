@@ -1,282 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-12565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 566C186788D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 15:33:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A482867A37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 16:28:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B563291D7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 14:33:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2121EB3967D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 15:24:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB7C51E4A1;
-	Mon, 26 Feb 2024 14:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8034312D766;
+	Mon, 26 Feb 2024 15:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mhm1a7rQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zeK1VO/g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155FB10FD;
-	Mon, 26 Feb 2024 14:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F28112C551
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 15:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708957867; cv=none; b=l/FZBaGEyJ02wJYrLeWOHTEQJZmSnjNaiABH2fI/GZvyDztwe/TGJpgFV8g/yX9e/lmosRybYs+cwHolq5iND24w7fq0gyxi7w3NX0jzUGV4+8A2kIV+q26oomo4OM7+3556aMHJIsdXjZWjNXI7DL99thEIvhINFMan3YP/eRQ=
+	t=1708960961; cv=none; b=IJ2WzkxsyjzQattyp9UwprP2rYnIsXs9iaiyihZ/qTWJ6MaXxTcVYSFWT45x8nHXhlBK0dtWfLF02whOWCrT63q6r2Qbm++RdUwjxboDLvxPqlBNP5ckXItZOXmmnoCWvHQxtEZlAvH8+mJJ/+XL92K/d2UWQmE+G/6N4ZMcUTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708957867; c=relaxed/simple;
-	bh=3fqVpvy1Mz/o8PvdOg079crd2oxvVAgNqK27DSdzAUo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UBDbaYg/vf3Cbize2YNpjmH6f5rAZPhJoB9oRidKbKlqmYmkdQtnHPmfHPefKL4NrA43w7/ZoDggT/my0tWEioKGi9nRP6/Q1fARjhSQU8tDlPH7JhVqYjv+BWAJ2+5Y8nqB6LXBIxnAMDtYIusXkjQl4/SCyMnYAsWAasxfemc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mhm1a7rQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41QDHiAa006388;
-	Mon, 26 Feb 2024 14:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=umc3VMohf9OigsAiiagbLYGvg9j4jvqUCXxcDfNX7oY=; b=mh
-	m1a7rQOmxw4BKmcyeeQ9DmVLF75Mj/FCP0Cy50wQYxJTe4zvVK7lsgomFefjcNHr
-	jh/tYSKKRILuFEqzaSI2A650c0xrRn+boj82QUVPHQun2B7rwdosRsAkls32rREF
-	mf9Y16RrZ4GtZ/sjMLTEN5orzR7trSJoHEMMp+yGiZKtDAAkP2V44sOd3DFSRFL5
-	0cYhv2sI9uM96IOWp55dmN+1Zy8ujoCg+0tS6yrVvRGQANCuMwC+Gyrbx88J9RBq
-	q2siTKneSQO6Rlc3KB36HKxYcaA7WVeu0xyuy00ikXFlytcD9FqsvrwPB5BU1aK0
-	qS0YH2a2vV+p4oLzpSAg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wgkxn9478-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 14:30:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41QEURW8027191
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 14:30:27 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
- 2024 06:30:23 -0800
-Message-ID: <3914555d-3c89-a5c5-2906-0bd24d0bf735@quicinc.com>
-Date: Mon, 26 Feb 2024 20:00:20 +0530
+	s=arc-20240116; t=1708960961; c=relaxed/simple;
+	bh=37wQmO+YdaEsa3xL7Q6rKO9ox5eQT6E5utt65Fi0uWE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Z/HiC7aj+gMKAh4HpK1roE9qtVvraYH/j7H1ft0v6sWI/cYeXfqbXyqdP3CTzeHb9VmcSSdo6TSDxACqaY3ZP+wns/ktxGeb3Vlwby6GSQRjbFMXl0pQ1nfeWuwPWEQ1vUigLQaf5+SHONpccOD6dB9SwRNiHusG97zWnbOIQEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zeK1VO/g; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33d28468666so2960816f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 07:22:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708960958; x=1709565758; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=onsSHtOKzEIZICx5NzIaNglbxD6fxTitMyvZQ+hIAqU=;
+        b=zeK1VO/g6vNqLIHxNEMJ1OGZstMbOTQVVpRQmBwQvwJvZzc0+6RHmbBCPKpMcw52FO
+         8jZ3VhXnzdG+Eh7YRbbvnrW/IRF4+YbvpWMjRI+qjNvnt9dS9xSfq8+L4PVQF+HoYW5o
+         nAbmwuRcMtvuGUos7kPD1hFA+jTidw+6OLre9laXWJHg6GM3axatywuI252AaKCEL5oI
+         Kyky0jM6YRLuO3chk8lbvE4PSuRzy6ccqTFpupmirFn2WeBjoGO5ZT+MdhOeJbRLKHfA
+         8hGRiFicQb1NAu+giaOIh07ii3sSN3twWuhwcJyVp6tQLHAIYKZM+zAU902d2O2phYjx
+         7UWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708960958; x=1709565758;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=onsSHtOKzEIZICx5NzIaNglbxD6fxTitMyvZQ+hIAqU=;
+        b=h7FZMRSMTeJJWjj/SdMVSzpkyHR3lqzXciAVWcqOTt9iDNpxwSprzGnxTcTJDxtuFL
+         ZUqANUBBYL+Kegdx9qHxAiJ/07j3Z+CsGTlESpT1JVAyxL0tG9o9KjjS3fxdUph28hcC
+         RJPrdjN8b9Z3XdTrsu/+bF/QNERCwvmeB5LD+9Y+eir6dYkg5lGepZs3GvgLpw/tX5Vv
+         hE/PzDKniFJiLN11C04noC8rNzJKbq0CEn6RTlZRIaYXgd0I5hO4JmGaNLIYN/szKN4U
+         nCEeF2S70AmWAdFSCuGQx97t2czDbuMNg4jdyK/z9oWIPKpBWvQr4fGMv5Cg4VGLN+Vz
+         QfVA==
+X-Gm-Message-State: AOJu0Yz7qXrSVMnTT9bjzS70wADoJvB21f4lks24748Jwm8TLGaOxcia
+	7yWf4BaDQrFsHqPs7E8GnDkPxWjjrqjBJKjP0Ck87I0M5mmjA+VYBTZSBthpEz4=
+X-Google-Smtp-Source: AGHT+IHmIAE28QIf+BOgjzS1zi4WvdZf+4TEqP7lmYyZmGNVY7QdJSt90PHhdVd7cN8dHnYUh/tiRg==
+X-Received: by 2002:adf:cc91:0:b0:33d:46b6:395b with SMTP id p17-20020adfcc91000000b0033d46b6395bmr4861177wrj.7.1708960957695;
+        Mon, 26 Feb 2024 07:22:37 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id bv20-20020a0560001f1400b0033d73e1505bsm8687383wrb.18.2024.02.26.07.22.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Feb 2024 07:22:37 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Mon, 26 Feb 2024 16:22:36 +0100
+Subject: [PATCH] phy: qcom: qmp-combo: fix sm8650 voltage swing table
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFC WIP PATCH] venus: add qcom,no-low-power property
-Content-Language: en-US
-To: Marc Gonzalez <mgonzalez@freebox.fr>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: DT <devicetree@vger.kernel.org>,
-        linux-media
-	<linux-media@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Stanimir
- Varbanov <stanimir.k.varbanov@gmail.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob
- Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Pierre-Hugues Husson <phh@phh.me>
-References: <0843621b-386b-4173-9e3c-9538cdb4641d@freebox.fr>
- <f6e68756-72a1-4c32-968d-3d6adaa153c9@linaro.org>
- <CAA8EJpq=G21h87W69_4U-BZ=Sa5VEs15Y-zE-G5x9VxVx4qjsA@mail.gmail.com>
- <81dc6452-4039-4eb4-92ba-df248215fca2@linaro.org>
- <b8325dbf-67c5-4898-bc23-ff093ae6e14a@freebox.fr>
- <87db77f7-fda4-4cf7-adfd-8545c40c3365@linaro.org>
- <10fe67af-0572-4faa-91c6-fce9c8f9dc92@linaro.org>
- <6342e92d-eed0-45c2-8f04-3779aa2e521d@freebox.fr>
- <4ab95e87-c912-469b-b8d4-be0cf0e4710b@linaro.org>
- <a8c5b27c-47a9-044a-78e8-51c67acf19a6@quicinc.com>
- <c6a9c20e-02d3-4334-badd-2efe5be9ce7e@freebox.fr>
- <d5abf142-3a2b-454c-660a-249c0fb25208@quicinc.com>
- <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <33382ecb-8a73-4d2f-96b1-8048df7a6414@freebox.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nLWlf8kc4MYW1RNcCiFEY-Ot6zngaJmO
-X-Proofpoint-GUID: nLWlf8kc4MYW1RNcCiFEY-Ot6zngaJmO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_10,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 impostorscore=0 clxscore=1015 malwarescore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402260109
+Message-Id: <20240226-topic-sm8650-upstream-combo-phy-swing-update-v1-1-08707ebca92a@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALus3GUC/x2NSQrDMAwAvxJ0rsAxzkK/UnpwbDXRwQuW04WQv
+ 8f0OAzMHCBUmATu3QGF3iycYoP+1oHbbFwJ2TcGrbRRWo9YU2aHEuZxULhnqYVsQJfCkjBvP5Q
+ Px7UJbyuh6Rc76dlMyjtoyVzoxd//7vE8zwsAV5SofgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3818;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=37wQmO+YdaEsa3xL7Q6rKO9ox5eQT6E5utt65Fi0uWE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl3Ky8MrhetOzd/dgn1AZoOgkWz4JjSAOJRRohsEox
+ zH+aA8CJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZdysvAAKCRB33NvayMhJ0XvsEA
+ Ci9Nb/Lc28Ri7tvyVr3ZqwThwYr/pTkkgAMKkiA/vmAc0zcpefA/hoWPMmyUnCH3M23irg11jFIITH
+ 9iHaokAjzj7XniUL2vqOvwb5+TtZsRjCvJPOjL+XHHPCivmtDDJTC0p0biANppJjmUHwQOc964Mt+x
+ hm1Yirt4Q3sqlgZEq/djlV7zd+2qB3mv35tQfEs5+8FbMUNgtD6YqZDUxwdGc9sZrknECYE5/y/oC4
+ rV+kWH32K1FSWscWykvM9mGUxdN3lAImUVqZBqmObdWZN3/MOGUBdQnurMd5TKfETxE9DTlHLH/8fl
+ i6YkbKmFHABfDxy9nlpaCuohzoBtbkbEBGvH9tXVwKPawQ3fko45Y6314QxtHjcudlwzwVmHDy2IxV
+ CTag5bSdAs+F1twLcsz351vaZGCEdMp7dYggFCRmTUa+pepIGfI3jbnfg82yJDsom7wmT4RHcfPeRE
+ YIpLjW1iRIP91ydrHJ66gVpMEYiRHQs3CQopmOSNoxSWDj6lQXYWpuQiNer4f+ldkMtmbL6FOEomMG
+ tVSQG245OaPB6eULzyCd8YWf2rathd+tnoe0G3phzlGGeBRrVXGfXABhzxeKpLRVkamvlXTOi39rY8
+ Py4TE3eKnodh78TFCtJcL6zbtM13EI/USVy3tXplexWm726bcqGBwXVXOFdA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+The QMP USB3/DP PHY found in the SM8650 SoC requires a slighly
+different Voltage Swing table for HBR/RBR link speeds.
 
-On 2/26/2024 6:39 PM, Marc Gonzalez wrote:
-> On 23/02/2024 14:48, Vikash Garodia wrote:
-> 
->> On 2/20/2024 8:15 PM, Marc Gonzalez wrote:
->>
->>> On 20/02/2024 14:53, Vikash Garodia wrote:
->>>
->>>> msm8998 supports configuring the VCodec (venus core0) GDSC in HW power control
->>>> mode. Could you please check and confirm if the driver is configuring only the
->>>> VCodec GDSC and not the venus GDSC. Look for the attribute
->>>> "qcom,support-hw-trigger" in vendor dt file.
->>>
->>> [ Vendor DTS for easy reference: ]
->>> [ https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998.dtsi ]
->>>
->>> In the queue, we have a patch enabling the Venus Decoder (VDEC) in mainline.
->>> (It is using the previously proposed "qcom,no-low-power" mechanism, but that
->>> might not be necessary, if I understand correctly?)
->>>
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
->>> index 2793cc22d381a..5084191be1446 100644
->>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
->>> @@ -3000,6 +3000,56 @@ mdss_dsi1_phy: phy@c996400 {
->>>  			};
->>>  		};
->>>  
->>> +		venus: video-codec@cc00000 {
->>> +			compatible = "qcom,msm8998-venus";
->>> +			reg = <0x0cc00000 0xff000>;
->>> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
->>> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
->>> +			clocks = <&mmcc VIDEO_CORE_CLK>,
->>> +				 <&mmcc VIDEO_AHB_CLK>,
->>> +				 <&mmcc VIDEO_AXI_CLK>,
->>> +				 <&mmcc VIDEO_MAXI_CLK>;
->>> +			clock-names = "core", "iface", "bus", "mbus";
->>> +			iommus = <&mmss_smmu 0x400>,
->>> +				 <&mmss_smmu 0x401>,
->>> +				 <&mmss_smmu 0x40a>,
->>> +				 <&mmss_smmu 0x407>,
->>> +				 <&mmss_smmu 0x40e>,
->>> +				 <&mmss_smmu 0x40f>,
->>> +				 <&mmss_smmu 0x408>,
->>> +				 <&mmss_smmu 0x409>,
->>> +				 <&mmss_smmu 0x40b>,
->>> +				 <&mmss_smmu 0x40c>,
->>> +				 <&mmss_smmu 0x40d>,
->>> +				 <&mmss_smmu 0x410>,
->>> +				 <&mmss_smmu 0x411>,
->>> +				 <&mmss_smmu 0x421>,
->>> +				 <&mmss_smmu 0x428>,
->>> +				 <&mmss_smmu 0x429>,
->>> +				 <&mmss_smmu 0x42b>,
->>> +				 <&mmss_smmu 0x42c>,
->>> +				 <&mmss_smmu 0x42d>,
->>> +				 <&mmss_smmu 0x411>,
->>> +				 <&mmss_smmu 0x431>;
->>> +			memory-region = <&venus_mem>;
->>> +			status = "disabled";
->>> +			qcom,no-low-power; /*** WORK AROUND LOW-POWER ISSUE ***/
->>> +
->>> +			video-decoder {
->>> +				compatible = "venus-decoder";
->>> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
->>> +				clock-names = "core";
->>> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
->>> +			};
->>> +
->>> +			video-encoder {
->>> +				compatible = "venus-encoder";
->>> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
->>> +				clock-names = "core";
->>> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
->>> +			};
->>> +		};
->>> +
->>>  		mmss_smmu: iommu@cd00000 {
->>>  			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
->>>  			reg = <0x0cd00000 0x40000>;
->>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->>> index a712dd4f02a5b..ad1705e510312 100644
->>> --- a/drivers/media/platform/qcom/venus/core.c
->>> +++ b/drivers/media/platform/qcom/venus/core.c
->>> @@ -585,6 +585,43 @@ static const struct venus_resources msm8996_res = {
->>>  	.fwname = "qcom/venus-4.2/venus.mbn",
->>>  };
->>>  
->>> +static const struct freq_tbl msm8998_freq_table[] = {
->>> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
->>> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
->>> +	{  489600, 346666667 },	/* 1080p @ 60 */
->>> +	{  244800, 150000000 },	/* 1080p @ 30 */
->>> +	{  108000,  75000000 },	/* 720p @ 30 */
->>> +};
->>> +
->>> +static const struct reg_val msm8998_reg_preset[] = {
->>> +    { 0x80124, 0x00000003 },
->>> +    { 0x80550, 0x01111111 },
->>> +    { 0x80560, 0x01111111 },
->>> +    { 0x80568, 0x01111111 },
->>> +    { 0x80570, 0x01111111 },
->>> +    { 0x80580, 0x01111111 },
->>> +    { 0xe2010, 0x00000000 },
->>> +};
->>> +
->>> +static const struct venus_resources msm8998_res = {
->>> +	.freq_tbl = msm8998_freq_table,
->>> +	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
->>> +	.reg_tbl = msm8998_reg_preset,
->>> +	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
->>> +	.clks = {"core", "iface", "bus", "mbus"},
->>> +	.clks_num = 4,
->>> +	.vcodec0_clks = { "core" },
->>> +	.vcodec1_clks = { "core" },
->>> +	.vcodec_clks_num = 1,
->>> +	.max_load = 2563200,
->>> +	.hfi_version = HFI_VERSION_3XX,
->>> +	.vmem_id = VIDC_RESOURCE_NONE,
->>> +	.vmem_size = 0,
->>> +	.vmem_addr = 0,
->>> +	.dma_mask = 0xddc00000 - 1,
->>> +	.fwname = "qcom/venus-4.4/venus.mbn",
->>> +};
->>> +
->>>  static const struct freq_tbl sdm660_freq_table[] = {
->>>  	{ 979200, 518400000 },
->>>  	{ 489600, 441600000 },
->>> @@ -891,6 +928,7 @@ static const struct venus_resources sc7280_res = {
->>>  static const struct of_device_id venus_dt_match[] = {
->>>  	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
->>>  	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
->>> +	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
->>>  	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
->>>  	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
->>>  	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
->>>
->>>
->>>
->>> @Vikash, are you saying that perhaps the DTS for video-codec@cc00000
->>> needs to be written slightly differently?
->>
->>
->> Certainly yes. For ex, in the clock list, i do not see the core clocks listed
->> i.e clk_mmss_video_subcore0_clk and clk_mmss_video_subcore1_clk. You can refer
->> the downstream video DT node [1] and then align it as per venus driver
->> [1]
->> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
-> 
-> 
-> If I understand correctly (which is far from certain),
-> we should base the "qcom,msm8998-venus" DT node on
-> "qcom,sdm845-venus-v2" rather than "qcom,msm8996-venus" ?
-Thats correct, but thats just another way to do the configuration. With the
-existing node, is video decode as well as encode working ?
+Add a new hbr/rbr voltage switch table named "v6" used in a new
+sm8650 qmp_phy_cfg struct replacing the sm8550 fallback used for
+the sm8650 compatible.
 
-Regards,
-Vikash
+Fixes: 80c1afe8c5fe ("phy: qcom: qmp-combo: add QMP USB3/DP PHY tables for SM8650")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 54 ++++++++++++++++++++++++++++++-
+ 1 file changed, 53 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 546d3c6bee32..66991886da87 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -1377,6 +1377,13 @@ static const u8 qmp_dp_v5_voltage_swing_hbr_rbr[4][4] = {
+ 	{ 0x3f, 0xff, 0xff, 0xff }
+ };
+ 
++static const u8 qmp_dp_v6_voltage_swing_hbr_rbr[4][4] = {
++	{ 0x27, 0x2f, 0x36, 0x3f },
++	{ 0x31, 0x3e, 0x3f, 0xff },
++	{ 0x36, 0x3f, 0xff, 0xff },
++	{ 0x3f, 0xff, 0xff, 0xff }
++};
++
+ static const u8 qmp_dp_v6_pre_emphasis_hbr_rbr[4][4] = {
+ 	{ 0x20, 0x2d, 0x34, 0x3a },
+ 	{ 0x20, 0x2e, 0x35, 0xff },
+@@ -1996,6 +2003,51 @@ static const struct qmp_phy_cfg sm8550_usb3dpphy_cfg = {
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+ };
+ 
++static const struct qmp_phy_cfg sm8650_usb3dpphy_cfg = {
++	.offsets		= &qmp_combo_offsets_v3,
++
++	.serdes_tbl		= sm8550_usb3_serdes_tbl,
++	.serdes_tbl_num		= ARRAY_SIZE(sm8550_usb3_serdes_tbl),
++	.tx_tbl			= sm8550_usb3_tx_tbl,
++	.tx_tbl_num		= ARRAY_SIZE(sm8550_usb3_tx_tbl),
++	.rx_tbl			= sm8550_usb3_rx_tbl,
++	.rx_tbl_num		= ARRAY_SIZE(sm8550_usb3_rx_tbl),
++	.pcs_tbl		= sm8550_usb3_pcs_tbl,
++	.pcs_tbl_num		= ARRAY_SIZE(sm8550_usb3_pcs_tbl),
++	.pcs_usb_tbl		= sm8550_usb3_pcs_usb_tbl,
++	.pcs_usb_tbl_num	= ARRAY_SIZE(sm8550_usb3_pcs_usb_tbl),
++
++	.dp_serdes_tbl		= qmp_v6_dp_serdes_tbl,
++	.dp_serdes_tbl_num	= ARRAY_SIZE(qmp_v6_dp_serdes_tbl),
++	.dp_tx_tbl		= qmp_v6_dp_tx_tbl,
++	.dp_tx_tbl_num		= ARRAY_SIZE(qmp_v6_dp_tx_tbl),
++
++	.serdes_tbl_rbr		= qmp_v6_dp_serdes_tbl_rbr,
++	.serdes_tbl_rbr_num	= ARRAY_SIZE(qmp_v6_dp_serdes_tbl_rbr),
++	.serdes_tbl_hbr		= qmp_v6_dp_serdes_tbl_hbr,
++	.serdes_tbl_hbr_num	= ARRAY_SIZE(qmp_v6_dp_serdes_tbl_hbr),
++	.serdes_tbl_hbr2	= qmp_v6_dp_serdes_tbl_hbr2,
++	.serdes_tbl_hbr2_num	= ARRAY_SIZE(qmp_v6_dp_serdes_tbl_hbr2),
++	.serdes_tbl_hbr3	= qmp_v6_dp_serdes_tbl_hbr3,
++	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v6_dp_serdes_tbl_hbr3),
++
++	.swing_hbr_rbr		= &qmp_dp_v6_voltage_swing_hbr_rbr,
++	.pre_emphasis_hbr_rbr	= &qmp_dp_v6_pre_emphasis_hbr_rbr,
++	.swing_hbr3_hbr2	= &qmp_dp_v5_voltage_swing_hbr3_hbr2,
++	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v5_pre_emphasis_hbr3_hbr2,
++
++	.dp_aux_init		= qmp_v4_dp_aux_init,
++	.configure_dp_tx	= qmp_v4_configure_dp_tx,
++	.configure_dp_phy	= qmp_v4_configure_dp_phy,
++	.calibrate_dp_phy	= qmp_v4_calibrate_dp_phy,
++
++	.regs			= qmp_v6_usb3phy_regs_layout,
++	.reset_list		= msm8996_usb3phy_reset_l,
++	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
++	.vreg_list		= qmp_phy_vreg_l,
++	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
++};
++
+ static int qmp_combo_dp_serdes_init(struct qmp_combo *qmp)
+ {
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+@@ -3625,7 +3677,7 @@ static const struct of_device_id qmp_combo_of_match_table[] = {
+ 	},
+ 	{
+ 		.compatible = "qcom,sm8650-qmp-usb3-dp-phy",
+-		.data = &sm8550_usb3dpphy_cfg,
++		.data = &sm8650_usb3dpphy_cfg,
+ 	},
+ 	{
+ 		.compatible = "qcom,x1e80100-qmp-usb3-dp-phy",
+
+---
+base-commit: 8552c902efe7ef670b6961fb8885b67961aeb629
+change-id: 20240226-topic-sm8650-upstream-combo-phy-swing-update-41ba728470dc
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
