@@ -1,133 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-12539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B195986725A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 11:59:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDDA486726B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 12:00:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E28E31C26245
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 10:59:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87DD328A4FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 11:00:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A087C1CD30;
-	Mon, 26 Feb 2024 10:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C12420314;
+	Mon, 26 Feb 2024 10:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nb2rg0g4"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UyUmWxsZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25DC1CD0C;
-	Mon, 26 Feb 2024 10:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAAE1F933
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 10:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708945093; cv=none; b=iVU0ExR2VuZbfHqI0o/GiYEAIdALk+8L8FgyKzMS1P6Dy/QoPFG+WV9+SgzkmMbRAZyVIkfPnUce/muyf93rhDs8dyCnS7ff6CKfXu3WtEs3D55J1YG4GRTDfVtqkWwk0o+Za3A3Mb726cVRVvEX28Fd7XDu6XQRwLJdHkdI8Uc=
+	t=1708945154; cv=none; b=GW7oU5nN7n0JyK0XlIjt25Qj8YAc6k+fnbdf0fbKpnhGsY1yec1F1cRj5GH1T0MQ88+dqWvhKtYn8GOTJOxpO5m82FyvR9ib9Snvec9b2saSjCTVqFJuGYicmIyjNrzlUj4W5xgyyARKnTU0+jCms46oo2wUHZL9TdyWbmrKfpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708945093; c=relaxed/simple;
-	bh=+M/IcrkC4KiqVSgKEfF4MEPWWH07B+P/vlCcnh7YeNg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcnWxYICDM4YTAbS0S7JvIjkPo1+fKegRixFEo5WqxVzv/Sj+3c7bWJKjvXPy//NVK7iMNtfkfCqE6v1+iGAyc6SfNX7luSFZ2nS2tKVH+WDyhc+CpVxBHQoMRehcPYHXXEcfCfqynGxsX1DS8rFsf96U8MpFIMw37+zI8OR3YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nb2rg0g4; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-563cb3ba9daso2823397a12.3;
-        Mon, 26 Feb 2024 02:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708945090; x=1709549890; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dpglvbug8B6rz9FHKHRWvwGpjAjoa19+rytvw+mL+G8=;
-        b=Nb2rg0g47TxtWTRp+xwiGcZChBALbmlu6u9bSrhXbkb7gAVW2ZlL5O/3V0IOJm8OHR
-         4dvi3cxrO6v2wPdkFODBd2VOBqS1++JsMyKHApeBCD5628dsIdxEalZSclEwiIlj0pIk
-         vZDM9AKmLM9YKSJFrTdrwZGSNTzXwV04yAjQaXEq9ALE2CdquiNZs/Fgvl/nOP0QR22p
-         EtVKIpYowHzpYhKhZtZoySh8sT4Xnxy3d72sAE+Il+FTXa0vnYmblPsN2D+OxNKfSeel
-         AfYYeVPbl7XuSzygDNYdd4Lh3YjWOaeYmgPKia/B5jnvSvrNF7Z4lWbPp/5dtdII5PuO
-         VDwA==
+	s=arc-20240116; t=1708945154; c=relaxed/simple;
+	bh=Hm4zAdQ4GDiOUyZuyai9dxp0y9ODMI0oisWl9PvStsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dJNAL/ztrb/vCDsIgGnDOM7Nyp7sVAE5bU1G5Ot6Rjy0y9B6URn3WBDEvR1QXNO2c7P58lJspZdmiaJ3Fszxi2h814WDcaD4+n54YX9idSERJ8N1iRU+0C4d1RFcShbZWblOmrScJDH3ekX1BMct9CdXqk0RGwf4An+de6wdXOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UyUmWxsZ; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1708945151;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yLwmtbKMH5gchD1DVzVsDxkSCGg6eb5ZnmDAF0IJ7vw=;
+	b=UyUmWxsZ1Lax64Fv55OsvJWuDeFyIxZ9Jvv8lxzMaTQPiuGqKY2MYPfDvUcvGQuLpsyqxC
+	vEyenTIyQ0eoXIsp0MB81N3jD67qsKI05AdYWk7wXpVLoWdSu5iC82gGLVlX0n27PbtPvN
+	Y9eMH/oeXUKrUeMnxxtjwkAL52ualXs=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-cNHLIHw-N3exNyJfK7KxhA-1; Mon, 26 Feb 2024 05:59:10 -0500
+X-MC-Unique: cNHLIHw-N3exNyJfK7KxhA-1
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-a3ee69976dfso108572966b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 02:59:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708945090; x=1709549890;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dpglvbug8B6rz9FHKHRWvwGpjAjoa19+rytvw+mL+G8=;
-        b=u72Uv+C7NRW1/R+dzdQbW3sEiivOOm5HirzSgdJ7AizKXhXwGD6DfcPxoiTQMMD1Y3
-         kjLl79HpP6sqr8945cw9Bt+XdZnmE+ahFFMy01KF4lddseNv2iYLayUFSVFYi4oIrkV5
-         h5r0v6SZ/CabwbpUCkFmk40Xt1jThfDGAVekpi6910dagpNC9TfvTsys2goc+o2jb7q6
-         4RqUA6aFF428I5b1+fnmVLAoeuTk0hAO4P3DBMIMAnQRrvEkTVED5os0Gj/vvc3MnHwM
-         bY6Z7lFz2XgPSFf+YLHuotdQn8RGk85UEvrmmuHTZGLOM7q2DtW3zC18f7mzxK0J3HmD
-         i0DQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWiA+ovq2zxcSlUGNGxYZY8Ho715VdxmIC++EpIoxZPStUr03X2ABAgm9nALBG8AIlAeoq102kzo9XEgxU8Wo2RwdlaRzmlGByZzWXYju8oy6/TzYALFLX/3WOgct4nonX21s6hSQioTIURlsJ3zBPIouVUSsZcTuqQ2qLKfnhc1AyRjX90aMAkWP8NyLV8pF3kOO8GUXeozlUK1tK/61SO1r2p
-X-Gm-Message-State: AOJu0Yx1pl7mfuWk0It7jMJw/yLfPU78evgV1T0pzb6xCi4nGlWxwoC+
-	kbtU3+Hrn78cbMClOU25p8LPsoJEkiDq3z3aXoA9C7OF8szRFpLOPH5WW69CaW0=
-X-Google-Smtp-Source: AGHT+IHlLHZm/lD5o0ODr2jph5YVCXmo4l+6pEuWoFbGcmWuhZ7+htWa73xP6x7O+DkYRUE1lW866g==
-X-Received: by 2002:a17:906:ce5b:b0:a3e:cb18:d4f with SMTP id se27-20020a170906ce5b00b00a3ecb180d4fmr3911722ejb.30.1708945090018;
-        Mon, 26 Feb 2024 02:58:10 -0800 (PST)
-Received: from unknown.netbird.cloud (net-93-65-126-20.cust.vodafonedsl.it. [93.65.126.20])
-        by smtp.googlemail.com with ESMTPSA id f19-20020a170906085300b00a3fce8c0f99sm2315769ejd.191.2024.02.26.02.58.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 02:58:09 -0800 (PST)
-From: Gianluca Boiano <morf3089@gmail.com>
-To: Pavel Machek <pavel@ucw.cz>,
-	Lee Jones <lee@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Gianluca Boiano <morf3089@gmail.com>
-Subject: [PATCH 1/3] leds: qcom-lpg: Add support for PMI8950 PWM
-Date: Mon, 26 Feb 2024 11:57:45 +0100
-Message-ID: <20240226105747.3547856-1-morf3089@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
-References: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
+        d=1e100.net; s=20230601; t=1708945149; x=1709549949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yLwmtbKMH5gchD1DVzVsDxkSCGg6eb5ZnmDAF0IJ7vw=;
+        b=K6xXT0CHfEsUhSo3iu9kMcvF/Edj1y5qWWw5Rl4sBncqogyco840bfrw6U3aLDOXF6
+         ocS7yfmG1aDvEtcB1lZ4dVMaGx9FTRrTe8LLsh8VFegzM8N3qR4V4T+Ot0HkDZiINknU
+         tmH+VAQzBGO3pSt8z5WWZ72lfd61BB+USup8HlEKAzs9wKRV/TcWVXBwYh0K9IbCTuGg
+         I6gCMxykL1Hs81J5o9nDnll+3++VyyzLpHUFNYB6gx6C6tu9NNMrA02mIPi5V80z64Fp
+         9pWVU+9Nm7oYjrpxy0CVWiseiBGgT7hZAMlDHYMiquXAb8KOLCzKmnhWcfqpzXUliXXj
+         keSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQI90Dlj5SzlSpcJAKJRpRHH5tj1cooQR9+RytyUuojpIQs0tYCqbxhjnPZC5UFry1+iRoJgSqVXCjy9p3Bffufx41bNqKWiuejBkqPQ==
+X-Gm-Message-State: AOJu0YzUuKwJjcgn8ln3pL08gA0eWvG4TnePK2LUHLXaiOoeMBtG0CfH
+	5YElln+VGaYZqtqysCe/Ce0E0keuEv7DG2h4loHstA5MdfFq3xVtMTpiZaQ7syO4A1keqib0leI
+	+UO/wTzYg3eo7kk9ZsnWCAunnYpRi2seE4U8mwGFx47OQzxK+xdRl6+v41Rqyt4kmgCtlJKg=
+X-Received: by 2002:a17:906:3397:b0:a3f:d797:e6e2 with SMTP id v23-20020a170906339700b00a3fd797e6e2mr4111294eja.28.1708945149018;
+        Mon, 26 Feb 2024 02:59:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbVwLt4Av7nV0P9ftMnJykmqz01tHlbTHcunaAafulySeFvYABGEE8KC9dLJAXOuFSaKVfLQ==
+X-Received: by 2002:a17:906:3397:b0:a3f:d797:e6e2 with SMTP id v23-20020a170906339700b00a3fd797e6e2mr4111285eja.28.1708945148658;
+        Mon, 26 Feb 2024 02:59:08 -0800 (PST)
+Received: from [10.40.98.142] ([78.108.130.194])
+        by smtp.gmail.com with ESMTPSA id wb5-20020a170907d50500b00a3e48782f08sm2322285ejc.27.2024.02.26.02.59.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Feb 2024 02:59:08 -0800 (PST)
+Message-ID: <edec3bee-8604-49a9-8e2f-6c21e852ef6c@redhat.com>
+Date: Mon, 26 Feb 2024 11:59:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] power: supply: Add Acer Aspire 1 embedded
+ controller driver
+Content-Language: en-US
+To: Nikita Travkin <nikita@trvn.ru>,
+ Sebastian Reichel <sebastian.reichel@collabora.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org
+References: <20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru>
+ <20240220-aspire1-ec-v3-2-02cb139a4931@trvn.ru>
+ <qoidm5wujjbeoc2hlraky26wuwmuaxi2atyl6ehovhvffdbfeh@g5gunqdei45m>
+ <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <7c429d2110dbac68d0c82c8fb8bfb742@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The PMI8950 PMIC contains 1 PWM channel
+Hi,
 
-Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
----
- drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
++Ilpo (fellow pdx86 maintainer)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 6bdc5b923f98..9467c796bd04 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -1693,6 +1693,13 @@ static const struct lpg_data pm8941_lpg_data = {
- 	},
- };
- 
-+static const struct lpg_data pmi8950_pwm_data = {
-+	.num_channels = 1,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb000 },
-+	},
-+};
-+
- static const struct lpg_data pm8994_lpg_data = {
- 	.lut_base = 0xb000,
- 	.lut_size = 64,
-@@ -1819,6 +1826,7 @@ static const struct of_device_id lpg_of_table[] = {
- 	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
- 	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
- 	{ .compatible = "qcom,pmi632-lpg", .data = &pmi632_lpg_data },
-+	{ .compatible = "qcom,pmi8950-pwm", .data = &pmi8950_pwm_data },
- 	{ .compatible = "qcom,pmi8994-lpg", .data = &pmi8994_lpg_data },
- 	{ .compatible = "qcom,pmi8998-lpg", .data = &pmi8998_lpg_data },
- 	{ .compatible = "qcom,pmc8180c-lpg", .data = &pm8150l_lpg_data },
--- 
-2.44.0
+On 2/23/24 15:32, Nikita Travkin wrote:
+> Sebastian Reichel писал(а) 22.02.2024 04:41:
+>> Hi,
+>>
+>> On Tue, Feb 20, 2024 at 04:57:13PM +0500, Nikita Travkin wrote:
+>>> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
+>>> controller to control the charging and battery management, as well as to
+>>> perform a set of misc functions.
+>>>
+>>> Unfortunately, while all this functionality is implemented in ACPI, it's
+>>> currently not possible to use ACPI to boot Linux on such Qualcomm
+>>> devices. To allow Linux to still support the features provided by EC,
+>>> this driver reimplments the relevant ACPI parts. This allows us to boot
+>>> the laptop with Device Tree and retain all the features.
+>>>
+>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>>> ---
+>>>  drivers/power/supply/Kconfig           |  14 +
+>>>  drivers/power/supply/Makefile          |   1 +
+>>>  drivers/power/supply/acer-aspire1-ec.c | 453 +++++++++++++++++++++++++++++++++
+>>
+>> I think this belongs into drivers/platform, as it handles all bits of
+>> the EC.
+>>
+> 
+> Hm, I initially submitted it to power/supply following the c630 driver,
+> but I think you're right... Though I'm not sure where in platform/ I'd
+> put this driver... (+CC Hans)
+> 
+> Seems like most of the things live in platform/x86 but there is no i.e.
+> platform/arm64...
+> 
+> Hans, (as a maintainer for most things in platform/) what do you think
+> would be the best place to put this (and at least two more I'd expect)
+> driver in inside platform/? And can we handle it through the
+> platform-driver-x86 list?
+
+I guess that adding a drivers/platform/aarch64 map for this makes
+sense, with some comments in the Makefile and in the Kconfig
+help explaining that this is for PC/laptop style EC drivers,
+which combine multiple logical functions in one, only!
+
+Assuming that we are only going to use this for such EC drivers,
+using the platform-driver-x86 mailinglist for this makes sense
+since that is where are the people are with knowledge of e.g.
+userspace APIs for various typical EC functionalities.
+
+It might even make sense to also use:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git
+
+As git tree for this and send pull-reqs to Linus for this
+together with the other pdx86 for the same reasons.
+
+I would be open to that as long as this is strictly limited to
+EC (like) drivers.
+
+Ilpo, what do you think about this ?
+
+Regards,
+
+Hans
+
+
+
+
+
+
+
+
+> 
+>> [...]
+>>
+>>>  3 files changed, 468 insertions(+)
+>>>
+>>> diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
+>>> index 3e31375491d5..e91a3acecb41 100644
+>>> --- a/drivers/power/supply/Kconfig
+>>> +++ b/drivers/power/supply/Kconfig
+>>> @@ -985,4 +985,18 @@ config FUEL_GAUGE_MM8013
+>>>  	  the state of charge, temperature, cycle count, actual and design
+>>>  	  capacity, etc.
+>>>
+>>> +config EC_ACER_ASPIRE1
+>>> +	tristate "Acer Aspire 1 Emedded Controller driver"
+>>> +	depends on I2C
+>>> +	depends on DRM
+>>> +	help
+>>> +	  Say Y here to enable the EC driver for the (Snapdragon-based)
+>>> +	  Acer Aspire 1 laptop. The EC handles battery and charging
+>>> +	  monitoring as well as some misc functions like the lid sensor
+>>> +	  and USB Type-C DP HPD events.
+>>> +
+>>> +	  This driver provides battery and AC status support for the mentioned
+>>
+>> I did not see any AC status bits?
+>>
+> 
+> I was referring to whatever ACPI spec calls "AC Adapter" but I guess
+> I should have used the word "charger" instead... Will reword this.
+> 
+>>> [...]
+>>
+>>> +	case POWER_SUPPLY_PROP_PRESENT:
+>>> +		val->intval = 1;
+>>
+>> You have an unused ASPIRE_EC_FG_FLAG_PRESENT, that looks like it
+>> should be used here?
+>>
+> 
+> Oh, you're right! I think I initially didn't have this property and
+> added it like this as a reaction to that upower change that made it
+> consider everything not explicitly present as absent.
+> 
+> I've just checked what is reported after unplugging the battery and
+> seems like the flag (as well as everything else) is gone. Will change
+> the driver to read the flag.
+> 
+> Thanks for your review!
+> Nikita
+> 
+>>> [...]
+>>
+>> Otherwise the power-supply bits LGTM.
+>>
+>> -- Sebastian
+> 
 
 
