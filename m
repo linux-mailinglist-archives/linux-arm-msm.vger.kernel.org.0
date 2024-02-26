@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-12546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23732867364
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 12:39:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB7F4867367
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 12:39:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 461271C24953
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 11:39:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5682E1F29AAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 11:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2F3D1F606;
-	Mon, 26 Feb 2024 11:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F09F01CFB6;
+	Mon, 26 Feb 2024 11:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="liVJl3i9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sszqh8j4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C7A1DA53
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 11:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0281138DD5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 11:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708947471; cv=none; b=DLAk7/2A9kGOcAIrjAC2HXSaKDXhIi9Zd8WtCjR98kZBVEKAABOmIn/qUsuEHlvoyyD5HtTxedTz7qhtnIgBiivjJgfEbnba9Nl253NtBAhDdibcFUFJjmfD4VDmC9XOMeHhX3f3EoMUz6R81dCEmS2wYaM20XIAHOPxxmkgjos=
+	t=1708947476; cv=none; b=XGNdvIycGgNmHjvhXPePY0jesgjqvUJfMzEtjQ+5+NUzBQi9HpcGj9pUimn40MFWSwIAPejCpv2BmY4STToba/R5BzsOwj7QHI4CcUvenuF617smWOEGOIXOuHbV1dWhYt2UGgGQsYfcKoFJUoKZH9YBMtwknRHLShsfvDswDPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708947471; c=relaxed/simple;
-	bh=zN4H7AL9yEWwBMPFUse2kPeWuj9c3TyK31dCtLQBVwU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VyY/WhcrwCU1Z6wcKeswB1KTKxl9c+nmWfVbuHpQkeSPAV/3lWAQTJoKmMhVO1Nb029wN8H6QPjx+9IBymZrySOEZsUQx2Bcbh30FjyDv1LjCkhxt2aqKK8zYwT6ERy5G0/o7jHNPOU2GGqo+BtWdMvl7qdiTu5VJN1TJcH9F5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=liVJl3i9; arc=none smtp.client-ip=209.85.222.174
+	s=arc-20240116; t=1708947476; c=relaxed/simple;
+	bh=WcbOX7Mto0c1BGHRXqQ6U7dCJ8afc+aUAohuOTqaRuY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=RLy0WU7DpPer2WdkyYJ5SqbCtAlNTYxD8vFUs0kx+2Rn9AqCoauMI22ohgTsF1aSJJWuGoXVM2HEpHKmH6wD+uxV1x0TM4HsdCxTYIRbGAkByZ+PKSarfVFuZfQ2jsN0yC0aMsOsRce4vemU7snmreTsIztkQsO3ms5lg3xx+a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sszqh8j4; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-787bc70dfc7so157056985a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 03:37:49 -0800 (PST)
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-42a9c21f9ecso11573951cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 03:37:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708947468; x=1709552268; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yOtDU75r2JA5nMqmgqSfs6LZtJBpRoh0ipLmkGMw850=;
-        b=liVJl3i9xCmrH9zhq8o1WhqU3jVj4q6wdYxEpJeW9obDIk2gNHciJWvVAcahATIzkh
-         lSSPipVAh/+joi7aK0go8IeuKgqaiy2rrxkLhUPiBXlWz02DBdG973xL+aDTtUQMlTM5
-         7m2pbIbvmPK2+YNYm8z/3eme2/0V1L2RhQ0yWSq38JAkQWJLsFRl3jn8x0qSfLPnhnnm
-         xV5qQnCEE+LbSm9zwwqZo8lG1Jb2Bte+Mt4Q0CX7rj9Lbk6caPZnDQbt+VTbkP+1N+8z
-         DwstsUQkMOhLrl5LYE7VN+83ZonmAwF1/weltCnW4GlfyUSBR1NlulaTNMhVCC3Uf9SB
-         tYWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708947468; x=1709552268;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1708947474; x=1709552274; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yOtDU75r2JA5nMqmgqSfs6LZtJBpRoh0ipLmkGMw850=;
-        b=eRdmSLg3XdFvqeZJboQ6/QbiG942//VllRRRK88y0/6ihx2t8hqgUud5OP2i092OIw
-         n1Ubnw6yCtbzpcha1xPqQc0Nfna7B2jwcONBiuUp45ku/gf6kQirqrUtmMOK2c+ZhCFO
-         ycTf8IP36/rfbMoK82aAc3mW7sJXz7Y6ODuTlAPPlPpJT/jqUXE32VI/w5xGWanmHgMs
-         ejtKwMGe2M/u7573APGURwNlz3n5b5UjLpr28TmdooBMzlIPxR9jzddIjg0cV3w45O3u
-         CGkp4k6WouklCgadJUyRFvLg06In/2pXCn0dc++ji/W+l443sb6V3WIqtUuc5EKlrYsa
-         yzDw==
-X-Forwarded-Encrypted: i=1; AJvYcCUWxlSA1uK5teOX0lP2TiFWhL+uIdxWcNe174UtduWLlupNw6ztVXKGUxbCbKesOJx3IUkzuQtslJO/PFb/NY/chq7bqDws9KLG1RyF9A==
-X-Gm-Message-State: AOJu0YxPy+nWNivUEyVdiObYzfz5WfY5tIhNEnj77FMU2WAodK7wYYZ5
-	TOMan1ZyfjYUuIl8C2MghykerHvJafsuV6vqmy2JdKdXUo4r81ElhrazNDxzjA==
-X-Google-Smtp-Source: AGHT+IHRlLAac3t/t+Ib99/W27Guf/dv3EWDLEDqeS4bxH0DZ+XkVc/0i/w22EDz3k2nxlw6LuR/Kw==
-X-Received: by 2002:a05:620a:7f9:b0:787:1a78:fbe9 with SMTP id k25-20020a05620a07f900b007871a78fbe9mr6385524qkk.56.1708947468464;
-        Mon, 26 Feb 2024 03:37:48 -0800 (PST)
+        bh=EYL0y9tWhN7SH+jeAOGY/jbLEk1NIed7kqGutW5jR3I=;
+        b=sszqh8j4DerttvwpHxTcjUQzBhDGiWbZmhkguBqQaYK0ub3fMWO/U3x9rUhPia6485
+         MWTw3UsQODCLCNO5Ji7djMTPbt42mDfxpgdQfWAliI5rvJnwnf4V5/D3M7sn2ZkrncvJ
+         y+BxK5y9bi9nktDGABLanvR1sTapGK6SFQu2lqN4huboZhtQUH3rgvJ+g1+Bs0MkAZze
+         ZarImE0xLnSac6sC+WaxXsDz13UFCDPjhnqqo+bxQ1euucGWgBDIrn+8J7DDJo/yzRlo
+         tkv7aMOBNpPqush9RXtTjzvJQOl6UlK8hDMSr7okdJznq2ynvTobCd3dC2thzZRRLCNl
+         nIBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708947474; x=1709552274;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EYL0y9tWhN7SH+jeAOGY/jbLEk1NIed7kqGutW5jR3I=;
+        b=lSOk46a3xyHSs/XXIel9EWAVwTxosiCKw4D9zp9xJZZ/8MGrP6LlJN9uKzlNqkfi5N
+         ZVUsm+SH3myds9N9hNNo0pKep4otpNDVl/LGCkk5InYEsKV3btFesbjBIFRk03SG0pzy
+         CBXQ1PGnHRnfn5OOHVaveQiWKzw8fkVeD3ZsJG8DKe3VRFK8ZtTpFgtKLhqma1zd+a0k
+         jw1aIvIpLXGsNWmYiVwMS1kok2DPoaGJ6vTkrtDYzFXF6AQe30MPCGhCguTVaklIgMB5
+         IWRIvbHn7qQi3BkYBlknKuKEM2j2TBXb9Ed9osZc+yOyn4Qfo3ZL470LByjkO+oQjLgx
+         Hf1w==
+X-Forwarded-Encrypted: i=1; AJvYcCU8Lcf/HJHTZSVmjkV36GbUDIEXLRzphIZxR3iBfRTf+KQrOMMFCPgbq1KFDdbOwukVMkhFHBh6VF+VXxlfmT2/zS2ycObZnYLLf/4BJA==
+X-Gm-Message-State: AOJu0YyDPzkvWotDFYoNlENzbQvdoHHxRyUDR7XgcNERDBm4YEq16LSA
+	WFcbMoUMts0d4UzB9kNCt7418W6W1xo+xZALTcHhQva7D+GJdnv1DIxIVxHAYg==
+X-Google-Smtp-Source: AGHT+IHuWpaOENwwArEM6m/vdlMMGgNpfJ/kNDP4tXZvfsnC4dwJbFir7UIomSl1kHxj0YReiFgf8w==
+X-Received: by 2002:ac8:5701:0:b0:42e:7f29:9efc with SMTP id 1-20020ac85701000000b0042e7f299efcmr4475781qtw.39.1708947474011;
+        Mon, 26 Feb 2024 03:37:54 -0800 (PST)
 Received: from [127.0.1.1] ([117.202.184.81])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05620a0c8f00b007878babb96asm2341842qki.94.2024.02.26.03.37.42
+        by smtp.gmail.com with ESMTPSA id q15-20020a05620a0c8f00b007878babb96asm2341842qki.94.2024.02.26.03.37.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 03:37:47 -0800 (PST)
+        Mon, 26 Feb 2024 03:37:53 -0800 (PST)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 0/5] PCI: dwc: Add support for integrating HDMA with DWC
- EP driver
-Date: Mon, 26 Feb 2024 17:07:25 +0530
-Message-Id: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
+Date: Mon, 26 Feb 2024 17:07:26 +0530
+Subject: [PATCH v3 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPV33GUC/2XMQQ7CIBCF4as0sxYzDqRJXXkP0wUUKJMoGDCoa
- bi72K3L/+Xl26C4zK7Aedggu8qFU+whDwMsQcfVCba9gZAU0mkU9iWCvWsxKmsXnLyRaKC/H9l
- 5fu/Sde4duDxT/uxwpd/6b1QSKIwiSROi9Epebhx1TseUV5hba1/oduAdnwAAAA==
+Message-Id: <20240226-dw-hdma-v3-1-cfcb8171fc24@linaro.org>
+References: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
+In-Reply-To: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
 To: Jingoo Han <jingoohan1@gmail.com>, 
  Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
  Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -92,93 +92,118 @@ To: Jingoo Han <jingoohan1@gmail.com>,
 Cc: Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Siddharth Vadapalli <s-vadapalli@ti.com>, 
- Mrinmay Sarkar <quic_msarkar@quicinc.com>
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2608;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2890;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=zN4H7AL9yEWwBMPFUse2kPeWuj9c3TyK31dCtLQBVwU=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl3Hf+ugscH906dxKa1q956AiK7dO/M8tdcr6fT
- aiph35AMmeJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZdx3/gAKCRBVnxHm/pHO
- 9VIPB/90Qib9s9ybHOJjZTFAzC+LuAX4iTj/eAvrr+mXEaxKJgMyz/Zaxr3LoPGnq9TeHvyOSh+
- rk8EqkZ8yGo+jFjQru/9eO3BCZEAaZQgbP4dgHuLgkKBkUOl91uC1af3moCy9egzAqAnXVcZJ2k
- lgcJf7eOuH+Db/euhh8+4bvApFvNG2KBCWI+e3lP8A4MARip6kPe7hc924+LzcG1RAg2CLJXK6w
- qGIQeCoU/d5wx0OiCOz8HGQpUWTXeTSDOes8m4P9WVTwWHQih8n5oYyZ8DV4yoURYsgxiaE43QX
- O+qByCZy8Q9LEQTmuuv+cv8fJuWCq5nxdUXlYbYny/O34vIw
+ bh=WcbOX7Mto0c1BGHRXqQ6U7dCJ8afc+aUAohuOTqaRuY=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl3HgFyYup7jym/LtqWaupNXR74OV2VbzwWJrkH
+ tEM6mBeAL6JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZdx4BQAKCRBVnxHm/pHO
+ 9R86B/958Cp/+Pz70HZ9LC1l9vbXmsJZ5PmimkFurM1/Bd9WLaQ9SIK6kpmWAQhnckUZySHX48C
+ X75w//3ffLd1MeUhpOQNERUXyl7+SEj5Ugydpun2zp+9PMxYWxZ2gpUWII4d/O5oR1WqER5qMNi
+ SOQ6VUSBgJ+L7cGr89i4H/vrQoPASGw1lWTYRZ10BMeyOWoSyqelXUFGCBt122rc3UiueeGKH7R
+ kjA16aYf4z8vZedV2pfzr/cu6+AW4qb8qiP9bNDSbeDlMZbp3jqTGKHTpIIt/fdigwip67GrNkC
+ nADoNQAZQPsD3mfgstgk1VLFQXjZch0KhwolrHK8kfTgkmi0
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-Hello,
+In order to add support for Hyper DMA (HDMA), let's refactor the existing
+dw_pcie_edma_find_chip() API by moving the common code to separate
+functions.
 
-This series adds support for integrating HDMA with the DWC EP driver.
+No functional change.
 
-Hyper DMA (HDMA) is already supported by the dw-edma dmaengine driver.
-Unlike it's predecessor Embedded DMA (eDMA), HDMA supports only unroll
-mapping format and doesn't support auto detecting the read/write channels.
-
-Hence, this series modifies the existing eDMA code to work with HDMA by
-honoring the platform supplied mapping format and read/write channels
-count.
-
-The platform drivers making use of HDMA should pass the EDMA_MF_HDMA_NATIVE
-flag and provide channels count. In this series, HDMA support is added for
-the Qcom SA8775P SoC and the DMA support in enabled in MHI EPF driver as
-well.
-
-Testing
--------
-
-Tested on Qualcomm SA8775P Ride board.
-
-Dependency
-----------
-
-Depends on:
-https://lore.kernel.org/dmaengine/20240129-b4-feature_hdma_mainline-v7-0-8e8c1acb7a46@bootlin.com/
-https://lore.kernel.org/all/1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com/
-
-NOTE: I've taken over this series from Mrinmay who posted v1:
-https://lore.kernel.org/linux-pci/1705669223-5655-1-git-send-email-quic_msarkar@quicinc.com/
-
-- Mani
-
-Changes in v3:
-
-- Collected review tags
-- Minor code refactoring (Siddharth)
-- Link to v2: https://lore.kernel.org/r/20240216-dw-hdma-v2-0-b42329003f43@linaro.org
-
-Changes in v2:
-
-- Dropped dmaengine patches (Sergey)
-- Reworked dw_pcie_edma_find_chip() to support both eDMA and HDMA (Sergey)
-- Skipped MF and channel detection if glue drivers have provided them (Sergey)
-- Addressed review comments in pcie-qcom-ep and pci-epf-mhi drivers (Mani)
-
+Suggested-by: Serge Semin <fancer.lancer@gmail.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
-Manivannan Sadhasivam (3):
-      PCI: dwc: Refactor dw_pcie_edma_find_chip() API
-      PCI: dwc: Skip finding eDMA channels count if glue drivers have passed them
-      PCI: dwc: Pass the eDMA mapping format flag directly from glue drivers
+ drivers/pci/controller/dwc/pcie-designware.c | 52 +++++++++++++++++++++-------
+ 1 file changed, 39 insertions(+), 13 deletions(-)
 
-Mrinmay Sarkar (2):
-      PCI: qcom-ep: Add HDMA support for SA8775P SoC
-      PCI: epf-mhi: Enable HDMA for SA8775P SoC
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 250cf7f40b85..193fcd86cf93 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
+ 	.irq_vector = dw_pcie_edma_irq_vector,
+ };
+ 
+-static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
++static void dw_pcie_edma_init_data(struct dw_pcie *pci)
++{
++	pci->edma.dev = pci->dev;
++
++	if (!pci->edma.ops)
++		pci->edma.ops = &dw_pcie_edma_ops;
++
++	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
++}
++
++static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+ {
+ 	u32 val;
+ 
+@@ -900,24 +910,27 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+ 	else
+ 		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+ 
+-	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+-		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+-
+-		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+-	} else if (val != 0xFFFFFFFF) {
+-		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
++	/* Set default mapping format here and update it below if needed */
++	pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+ 
++	if (val == 0xFFFFFFFF && pci->edma.reg_base)
++		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
++	else if (val != 0xFFFFFFFF)
+ 		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
+-	} else {
++	else
+ 		return -ENODEV;
+-	}
+ 
+-	pci->edma.dev = pci->dev;
++	return 0;
++}
+ 
+-	if (!pci->edma.ops)
+-		pci->edma.ops = &dw_pcie_edma_ops;
++static int dw_pcie_edma_find_channels(struct dw_pcie *pci)
++{
++	u32 val;
+ 
+-	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
++	if (pci->edma.mf == EDMA_MF_EDMA_LEGACY)
++		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
++	else
++		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+ 
+ 	pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
+ 	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
+@@ -930,6 +943,19 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+ 	return 0;
+ }
+ 
++static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
++{
++	int ret;
++
++	dw_pcie_edma_init_data(pci);
++
++	ret = dw_pcie_edma_find_mf(pci);
++	if (ret)
++		return ret;
++
++	return dw_pcie_edma_find_channels(pci);
++}
++
+ static int dw_pcie_edma_irq_verify(struct dw_pcie *pci)
+ {
+ 	struct platform_device *pdev = to_platform_device(pci->dev);
 
- drivers/pci/controller/dwc/pcie-designware.c | 74 +++++++++++++++++++---------
- drivers/pci/controller/dwc/pcie-designware.h |  5 +-
- drivers/pci/controller/dwc/pcie-qcom-ep.c    | 23 ++++++++-
- drivers/pci/controller/dwc/pcie-rcar-gen4.c  |  2 +-
- drivers/pci/endpoint/functions/pci-epf-mhi.c |  1 +
- 5 files changed, 78 insertions(+), 27 deletions(-)
----
-base-commit: fdd10aee7740a53c370a867b8743a8c8945d1db1
-change-id: 20240216-dw-hdma-64ddc09fb30b
-
-Best regards,
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+2.25.1
 
 
