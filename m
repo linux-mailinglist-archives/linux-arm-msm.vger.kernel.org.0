@@ -1,373 +1,717 @@
-Return-Path: <linux-arm-msm+bounces-12515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3938D8669C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 06:57:07 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FDF8866A05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 07:24:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CBD21C208B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 05:57:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 051B51F229A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 06:24:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDC8F1B947;
-	Mon, 26 Feb 2024 05:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63EAE1B948;
+	Mon, 26 Feb 2024 06:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEB0Qrhx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6E3fD2f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413BA1802E;
-	Mon, 26 Feb 2024 05:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399BB1BC4C;
+	Mon, 26 Feb 2024 06:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708927021; cv=none; b=uwu4n7t67H5aR1hL0h8VSwj4BeF99sfyX/Dbwnbp2yVbfVN11wETElVys1g0zodjmyQEgs8EfZG+6O2Tjx5aVIJWZtZx81MICj0i2yvfN6YMWXQA28XdGgii1yhOHv0yoN2ZIa+OBjjKQNXL7dXzYVYHEiCrdrfAHaDDx9zNKLc=
+	t=1708928680; cv=none; b=JJmVeMdPsdKcvIdnf0QV14TZNfXyauNVmdQuO6dPmvkm8PLkwfr0RP49rnyUSznLaD50Dn3hTqNs7O5sT2NxsdpcHqET7UmCiizNxJr99nD3nas1o0lRxBv6LVDg7xm/Hz7O5oiyOyOgVyjkWtYWfqNJqmhOrqOrHPXjjpsruRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708927021; c=relaxed/simple;
-	bh=OD61sqYHXm1jSGLlEinUOHdglfSSEaDeo8V8wcqBC9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NKJ1WYxg0mkhy2+K4tkSulZ2s3OX4dIjOcpauIYx2uVUHR1GiogEzagbzK5pO6FimSiNIfSVMXjMhbQ9KACTxMsKQ6EEc9QfaBUD70oIN3dyodVXfFQUSJK+Q2b3ULZTiT3XaP25D0Ugtfy84HfhntN1AjKw046twBpKwXOGY40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eEB0Qrhx; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c199237eaeso1189928b6e.0;
-        Sun, 25 Feb 2024 21:57:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708927019; x=1709531819; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AGFrdHM3G/5t2T8ZvOHKM53CfUGS1QDwXMQcIm3VM/g=;
-        b=eEB0QrhxQUd6ewIohVLgnr0y4huQwLzY8rfpN+LcK5CGilWNTIbzvnYaWJkJDLSouO
-         JbnV5mnTiHQ4D8yH094uxICm3XeID0Nm7a6j4ZUK0cx814T6/HJUz9RQC+8Xq63N2pMZ
-         4UBxOuvVzEBRlsiw8OE9B+TWvUtQaRix/t6BfJgleMZYCf5IBvp1LtmRb6TNRHC2M8+b
-         qZ6c1P4f4f5IdO8JuO1DiDt738BY9Ufbw5HZBNKDulw1f4YQC9Vjmqt5oLtU4r/aVXZ6
-         eEM4LbcPo2Zti6ga7Bef2KkdQTyXPBCXiP1DNR3iyH8YtkglO1sPDHtfU0PP53lGHCQK
-         57fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708927019; x=1709531819;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AGFrdHM3G/5t2T8ZvOHKM53CfUGS1QDwXMQcIm3VM/g=;
-        b=VSurPFcv6CthWIKXg31o9u/cFwGVGIAwsiqKc61Lb4+v5nzba34lGWh4XuIluPlk0j
-         91zLFtXdbbd0/cWP4LtPI8+OcsU1JhdlGxqHLzss1LUNVnMUjhPgU+rp91h75Nu2F0hq
-         cucTEfrTosKzvKNQ/BSme5AxoGpXPnXutrbEVcVuUn9CEWtqfmAvBDta9s8ikFWJ7FyI
-         r1vhr1sNxSRSEgi6jGBj9skFoV5fmOCn/lAdxDPV8xD0XGpewZGFpagU4uhPhuFdZcnb
-         mCnvpVTdgKud2k4MKpRdMoARSaGfxCgvsX3WXnxt+fek6Z5DZH/x0mGdQGkkDjeVhBSo
-         rrcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXkgF1phb3lWg14ffJyePSFFNDHOhtB8LNXo9C/yNiTvbJwNNa/xxxgrwg4juhHbUEopeeKjUuu7k9F4GUZ1m65g7bUjgu5WUV9Xy/DNFeS1lBm2N1KXkplW660hleP2EZcqPpNUel8jgrEnby95tOl4YBmldaWsGLJNZZ5KlL5ClE3QG68ASb6SrJ3SUJLED5n5nwqW+W/dyh/vHHKA4oMVQ0A2orQECo=
-X-Gm-Message-State: AOJu0YzcW4MPZWK6c7wxACwW9Px8K/7Tbr8CW5zUSQ7TiwZXHlsRcDcx
-	Kyl4AqoBsvU7mK2LvM1hkvvnQ4Pw4b0c09xb3Qq07euq+nIc322yU4ZxBTCWJAwd+g==
-X-Google-Smtp-Source: AGHT+IFKs2m5kw3I1l7sEjWzLUndTl0FNnzpmNHBRd/Ca5q7cLMIYz82sOQdu4IOtifdGp9N/o2tEQ==
-X-Received: by 2002:aca:280e:0:b0:3bf:e478:6f41 with SMTP id 14-20020aca280e000000b003bfe4786f41mr5951840oix.14.1708927019316;
-        Sun, 25 Feb 2024 21:56:59 -0800 (PST)
-Received: from localhost.localdomain ([115.187.42.119])
-        by smtp.gmail.com with ESMTPSA id b27-20020aa78edb000000b006e4195cccb5sm625865pfr.133.2024.02.25.21.56.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 21:56:58 -0800 (PST)
-From: Raihan Ahamed <raihan1999ahamed@gmail.com>
-To: 
-Cc: raihan1999ahamed@gmail.com,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8953-lenovo-kuntao: Add initial device tree
-Date: Mon, 26 Feb 2024 11:25:56 +0530
-Message-ID: <20240226055615.79195-1-raihan1999ahamed@gmail.com>
-X-Mailer: git-send-email 2.43.2
+	s=arc-20240116; t=1708928680; c=relaxed/simple;
+	bh=lnNliCP7oBXghRWAs30hwEZCnF6QAKtylOViOnxKfRw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NABj2804THnlq+pubOORq/oasvnmrkdRi+sI2QfPQNep9Iflw4ISvtAbuTjBZk6H+c8XO8buTfeWAfsTJenj6lCI0/tZs/1kJjI+1oqgGbZuPxVym9K3SRA61iY8fqSazsD/8fU/I3oXYPqDQm2oRe1LDLRLG+ErPPSvQRmuQcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6E3fD2f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB3DC433F1;
+	Mon, 26 Feb 2024 06:24:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708928679;
+	bh=lnNliCP7oBXghRWAs30hwEZCnF6QAKtylOViOnxKfRw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=f6E3fD2fdXnNohMEfc8l/X+P0pbxcpHDmmYiesK5oiTeoY0RZKlse3pv4toBXkwVP
+	 +oE5nr66R20vJKyCJK7jm8SuYUNzMwmCxWDuHhbo7td5bO9Eeoe6Aen2ykmiBAoOhO
+	 c0/FqR5J0rMSLSFMlkl9x0IWk2XnLKOCTgYk7SxqEuyD6X/DtzNGVK9oB1IpiBGLXi
+	 vIwMHgW9q9lcxGwHsqC9p2+/FFvkwTzEGYq5uBy9OZbkA/zDv4ycxOQ7P8Is4galOU
+	 59UwPoFPuQW3FHxMZDXnKwh7FC9PPBaAHBpG1edCvsfAnKx2EkcHX8m2HQEGnd9Qju
+	 QvrG8JT8wOC/w==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d09cf00214so43424821fa.0;
+        Sun, 25 Feb 2024 22:24:39 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWIEM0k1N06zM3Hx9Fw1ZjEQF78DYOzYWFT2MTQznu8Ad/KGRviCdFg+r3/VEyzQzj5fO2KTTvlKC62jQwIx2MCh3PN8wbPLxJhM/gyPHVZ+WbAweJ6pe2k91Q9Pg4/KxrK/JZfkoEgRspDOg==
+X-Gm-Message-State: AOJu0Yx+jZ7Ka/gOh4N0scn1oFy0+iBpkqPsErzZP8VUHS7WxR6xwHsS
+	HnGqsXRjW4NnegTaLl6sh9hCl05GZ2rMcM9YzqG69DhXiV5/3TQKrTQtOg7U9BJ3y7UsyhmC6Bw
+	KT1tRFX/HaCyR0e88uu3yTJDdneE=
+X-Google-Smtp-Source: AGHT+IH9Z8XfKuNn0g7DyRgqBWnk517exVIQabprTcQ9uQP6OR5pc6IqXJggAR5ucRfuNQ5D11UFzxeLWCHU0xViz6o=
+X-Received: by 2002:ac2:418b:0:b0:512:cc79:9e45 with SMTP id
+ z11-20020ac2418b000000b00512cc799e45mr3496291lfh.23.1708928677986; Sun, 25
+ Feb 2024 22:24:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
+In-Reply-To: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 26 Feb 2024 15:24:01 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQDhpAirfbb1zExH1auWkMPzncA9XpSrkv4odXOWZdQzA@mail.gmail.com>
+Message-ID: <CAK7LNAQDhpAirfbb1zExH1auWkMPzncA9XpSrkv4odXOWZdQzA@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/12] drm/msm: add support for regenerating shipped
+ xml.h headers
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Lenovo P2 is a handset using the MSM8953 SoC released in 2016
+On Mon, Feb 26, 2024 at 11:11=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Currently display-related register headers are generated from XML files
+> shipped withing Mesa source tree. This is not fully optimal: it requires
+> multi-stage process of the changes first being landed to Mesa and only
+> then synced to the kernel tree.
+>
+> Move original XML files to the kernel tree and generate header files if
+> required.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Add a device tree for with initial support for:
 
-- GPIO keys
-- SDHCI (internal and external storage)
-- USB Device Mode
-- WCNSS (WiFi/BT)
-- Regulators
 
-Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/msm8953-lenovo-kuntao.dts   | 240 ++++++++++++++++++
- 2 files changed, 241 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
+Linus Torvalds is negative about version-controlling
+shipped copies.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 39889d5f8e12..aebfb1ae728c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -49,6 +49,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-lenovo-kuntao.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts b/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
-new file mode 100644
-index 000000000000..2fd6345bbe15
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
-@@ -0,0 +1,240 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2024, Raihan Ahamed <raihan1999ahamed@gmail.com>
-+ */
-+/dts-v1/;
-+
-+#include "msm8953.dtsi"
-+#include "pm8953.dtsi"
-+#include "pmi8950.dtsi"
-+
-+/delete-node/ &qseecom_mem;
-+
-+/ {
-+	model = "Lenovo P2";
-+	compatible = "lenovo,kuntao", "qcom,msm8953";
-+	chassis-type = "handset";
-+	qcom,msm-id = <0x125 0x00>;
-+	qcom,board-id = <0x41 0x82b1 0x41 0x83b0>;
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&gpio_key_default>;
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		qseecom_mem: qseecom@84a00000 {
-+			reg = <0x0 0x84a00000 0x0 0x1900000>;
-+			no-map;
-+		};
-+
-+		ramoops@8ee00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0x8ee00000 0x0 0x80000>;
-+			console-size = <0x40000>;
-+			ftrace-size = <0x15000>;
-+			record-size = <0x5000>;
-+			pmsg-size = <0x2000>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&hsusb_phy {
-+	vdd-supply = <&pm8953_l3>;
-+	vdda-pll-supply = <&pm8953_l7>;
-+	vdda-phy-dpdm-supply = <&pm8953_l13>;
-+
-+	status = "okay";
-+};
-+
-+&pm8953_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8953-regulators";
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s6-supply = <&vph_pwr>;
-+		vdd_s7-supply = <&vph_pwr>;
-+		vdd_l1-supply = <&pm8953_s3>;
-+		vdd_l2_l3-supply = <&pm8953_s3>;
-+		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-+		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-+		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-+
-+		pm8953_s1: s1 {
-+			regulator-min-microvolt = <863000>;
-+			regulator-max-microvolt = <1152000>;
-+		};
-+
-+		pm8953_s3: s3 {
-+			regulator-min-microvolt = <1224000>;
-+			regulator-max-microvolt = <1224000>;
-+		};
-+
-+		pm8953_s4: s4 {
-+			regulator-min-microvolt = <1896000>;
-+			regulator-max-microvolt = <2048000>;
-+		};
-+
-+		pm8953_l1: l1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1100000>;
-+		};
-+
-+		pm8953_l2: l2 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8953_l3: l3 {
-+			regulator-min-microvolt = <925000>;
-+			regulator-max-microvolt = <925000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8953_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
-+
-+		pm8953_l8: l8 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+
-+		pm8953_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8953_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l11: l11 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8953_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8953_l13: l13 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3125000>;
-+		};
-+
-+		pm8953_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8953_l17: l17 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8953_l19: l19 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8953_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8953_l23: l23 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8953_l8>;
-+	vqmmc-supply = <&pm8953_l5>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8953_l11>;
-+	vqmmc-supply = <&pm8953_l12>;
-+
-+	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_off>;
-+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <135 4>;
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&wcnss {
-+	vddpx-supply = <&pm8953_l5>;
-+
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3660b";
-+
-+	vddxo-supply = <&pm8953_l7>;
-+	vddrfa-supply = <&pm8953_l19>;
-+	vddpa-supply = <&pm8953_l9>;
-+	vdddig-supply = <&pm8953_l5>;
-+};
--- 
-2.43.2
 
+https://lore.kernel.org/all/CAHk-=3DwgSEi_ZrHdqr=3D20xv+d6dr5G895CbOAi8ok+7=
+-CQUN=3DfQ@mail.gmail.com/
+
+
+
+
+We are decreasing *_shipped files.
+
+
+This patch set will increase them.
+
+
+[Before]
+
+./arch/powerpc/platforms/cell/spufs/spu_save_dump.h_shipped
+./arch/powerpc/platforms/cell/spufs/spu_restore_dump.h_shipped
+./fs/unicode/utf8data.c_shipped
+./drivers/scsi/aic7xxx/aic7xxx_reg_print.c_shipped
+./drivers/scsi/aic7xxx/aic79xx_seq.h_shipped
+./drivers/scsi/aic7xxx/aic79xx_reg.h_shipped
+./drivers/scsi/aic7xxx/aic79xx_reg_print.c_shipped
+./drivers/scsi/aic7xxx/aic7xxx_reg.h_shipped
+./drivers/scsi/aic7xxx/aic7xxx_seq.h_shipped
+./drivers/scsi/53c700_d.h_shipped
+./drivers/net/wan/wanxlfw.inc_shipped
+./drivers/tty/vt/defkeymap.c_shipped
+
+
+[After]
+
+./arch/powerpc/platforms/cell/spufs/spu_save_dump.h_shipped
+./arch/powerpc/platforms/cell/spufs/spu_restore_dump.h_shipped
+./fs/unicode/utf8data.c_shipped
+./drivers/scsi/aic7xxx/aic7xxx_reg_print.c_shipped
+./drivers/scsi/aic7xxx/aic79xx_seq.h_shipped
+./drivers/scsi/aic7xxx/aic79xx_reg.h_shipped
+./drivers/scsi/aic7xxx/aic79xx_reg_print.c_shipped
+./drivers/scsi/aic7xxx/aic7xxx_reg.h_shipped
+./drivers/scsi/aic7xxx/aic7xxx_seq.h_shipped
+./drivers/scsi/53c700_d.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_7nm.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_28nm_8960.xml.h_shipped
+./drivers/gpu/drm/msm/registers/sfpb.xml.h_shipped
+./drivers/gpu/drm/msm/registers/mdp_common.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi.xml.h_shipped
+./drivers/gpu/drm/msm/registers/hdmi.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_14nm.xml.h_shipped
+./drivers/gpu/drm/msm/registers/mdp5.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_10nm.xml.h_shipped
+./drivers/gpu/drm/msm/registers/mdp4.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_28nm.xml.h_shipped
+./drivers/gpu/drm/msm/registers/dsi_phy_20nm.xml.h_shipped
+./drivers/net/wan/wanxlfw.inc_shipped
+./drivers/tty/vt/defkeymap.c_shipped
+
+
+
+Of course, this is because those generated headers were
+version-controlled without _shipped, but now they
+have been renamed to *_shipped
+
+
+
+Since you are adding the original XML files,
+how about generating those headers all the time?
+
+
+For example see
+7c0303ff7e67b637c47d8afee533ca9e2a02359b
+
+
+
+If you hide the tool behind DRM_MSM_GENERATE_HEADERS,
+nobody would notice the fact that
+drivers/gpu/drm/msm/headergen2/ is low quality code
+that sprinkle warnings.
+
+
+I cannot compile this patch set in the first place
+irrespective of DRM_MSM_GENERATE_HEADERS
+(presumably for a different reason) though.
+
+
+
+
+
+
+drivers/gpu/drm/msm/headergen2/rnndec.c: In function =E2=80=98rnndec_decode=
+val=E2=80=99:
+drivers/gpu/drm/msm/headergen2/rnndec.c:187:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  187 |                                 asprintf (&res, "%s%s%s",
+ctx->colors->eval, ctmp, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/adreno/a5xx_preempt.c:5:10: fatal error:
+msm_gem.h: No such file or directory
+    5 | #include "msm_gem.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+drivers/gpu/drm/msm/headergen2/rnndec.c:216:57: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  216 |
+asprintf (&res, "%s%s%s", color, bitfields[i]->name,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:218:57: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  218 |
+asprintf (&tmp, "%s | %s%s%s", res, color, bitfields[i]->name,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:230:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  230 |                                         asprintf (&subval,
+"%s%#"PRIx64"%s", ctx->colors->err, field_val, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:235:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  235 |                                         asprintf (&res,
+"%s%s%s =3D %s", ctx->colors->rname, bitfields[i]->name,
+ctx->colors->reset, subval);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:237:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  237 |                                         asprintf (&tmp, "%s |
+%s%s%s =3D %s", res, ctx->colors->rname, bitfields[i]->name,
+ctx->colors->reset, subval);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:245:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  245 |                                         asprintf (&res,
+"%s%#"PRIx64"%s", ctx->colors->err, value & ~mask,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:247:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  247 |                                         asprintf (&tmp, "%s |
+%s%#"PRIx64"%s", res, ctx->colors->err, value & ~mask,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:253:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  253 |                                 asprintf (&res, "%s0%s",
+ctx->colors->num, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:254:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  254 |                         asprintf (&tmp, "{ %s }", res);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:260:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  260 |                         asprintf (&res, "%s%#"PRIx64"%s",
+ctx->colors->num, value, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:264:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  264 |                                 asprintf (&res, "%s-%lf%s",
+ctx->colors->num,
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  265 |
+((double)((UINT64_C(1) << width) - value)) / ((double)(1 <<
+ti->radix)),
+      |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  266 |                                                 ctx->colors->reset)=
+;
+      |                                                 ~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:271:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  271 |                         asprintf (&res, "%s%lf%s", ctx->colors->num=
+,
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~
+  272 |                                         ((double)value) /
+((double)(1LL << ti->radix)),
+      |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  273 |                                         ctx->colors->reset);
+      |                                         ~~~~~~~~~~~~~~~~~~~
+  CC [M]  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.o
+drivers/gpu/drm/msm/headergen2/rnndec.c:276:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  276 |                         asprintf (&res, "%sr%"PRIu64".%c%s",
+ctx->colors->num, (value >> 2), "xyzw"[value & 0x3],
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:279:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  279 |                         asprintf (&res, "%s%"PRIu64"%s",
+ctx->colors->num, value, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:283:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  283 |                                 asprintf (&res,
+"%s-%"PRIi64"%s", ctx->colors->num, (UINT64_C(1) << width) - value,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:285:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  285 |                                 asprintf (&res,
+"%s%"PRIi64"%s", ctx->colors->num, value, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:289:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  289 |                                 asprintf (&res, "%sFALSE%s",
+ctx->colors->eval, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:291:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  291 |                                 asprintf (&res, "%sTRUE%s",
+ctx->colors->eval, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:298:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  298 |                                 asprintf(&res, "%s%f%s",
+ctx->colors->num,
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  299 |                                         val.d, ctx->colors->reset);
+      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:301:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  301 |                                 asprintf(&res, "%s%f%s",
+ctx->colors->num,
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  302 |                                         val.f, ctx->colors->reset);
+      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a5xx_preempt.o] Error 1
+make[6]: *** Waiting for unfinished jobs....
+drivers/gpu/drm/msm/headergen2/rnndec.c:304:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  304 |                                 asprintf(&res, "%s%f%s",
+ctx->colors->num,
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  305 |                                         float16(value),
+ctx->colors->reset);
+      |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:313:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  313 |                         asprintf (&res, "%s%#"PRIx64"%s",
+ctx->colors->num, value, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:317:17: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  317 |                 asprintf (&tmp, "%s | %s%#"PRIx64"%s", res,
+ctx->colors->err, value_orig & ~typeinfo_mask(ti),
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/adreno/a6xx_gpu.c:5:10: fatal error: msm_gem.h: No
+such file or directory
+    5 | #include "msm_gem.h"
+      |          ^~~~~~~~~~~
+  CC [M]  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.o
+compilation terminated.
+drivers/gpu/drm/msm/headergen2/rnndec.c: In function =E2=80=98trymatch=E2=
+=80=99:
+drivers/gpu/drm/msm/headergen2/rnndec.c:394:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  394 |                                 asprintf (&res->name,
+"%s%s%s", ctx->colors->rname, elems[i]->name, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:400:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  400 |                                         asprintf (&tmp,
+"%s+%s%#"PRIx64"%s", res->name, ctx->colors->err, offset,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:424:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  424 |                                         asprintf (&name,
+"%s%s%s", ctx->colors->rname, elems[i]->name, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:429:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  429 |                                         asprintf (&tmp,
+"%s.%s", name, res->name);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:439:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  439 |                                 asprintf (&name, "%s%s%s",
+ctx->colors->rname, elems[i]->name, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:445:41: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  445 |                                         asprintf (&tmp,
+"%s.%s", name, res->name);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c:452:33: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  452 |                                 asprintf (&tmp,
+"%s+%s%#"PRIx64"%s", name, ctx->colors->err, offset,
+ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c: In function =E2=80=98appendidx=E2=
+=80=99:
+drivers/gpu/drm/msm/headergen2/rnndec.c:332:17: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  332 |                 asprintf (&res, "%s[%s%s%s]", name,
+ctx->colors->eval, index_name, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a6xx_gpu.o] Error 1
+drivers/gpu/drm/msm/headergen2/rnndec.c:334:17: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  334 |                 asprintf (&res, "%s[%s%#"PRIx64"%s]", name,
+ctx->colors->num, idx, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/rnndec.c: In function =E2=80=98rnndec_decode=
+addr=E2=80=99:
+drivers/gpu/drm/msm/headergen2/rnndec.c:477:9: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  477 |         asprintf (&res->name, "%s%#"PRIx64"%s",
+ctx->colors->err, addr, ctx->colors->reset);
+      |
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~
+drivers/gpu/drm/msm/headergen2/headergen2.c: In function =E2=80=98printtype=
+info=E2=80=99:
+drivers/gpu/drm/msm/headergen2/headergen2.c:159:25: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  159 |                         asprintf(&typename, "enum %s", ti->name);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/headergen2.c: In function =E2=80=98printdele=
+m=E2=80=99:
+drivers/gpu/drm/msm/headergen2/headergen2.c:245:17: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  245 |                 asprintf(&offsetfn, "__offset_%s", elem->name);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/msm/headergen2/headergen2.c:254:17: warning: ignoring
+return value of =E2=80=98asprintf=E2=80=99 declared with attribute
+=E2=80=98warn_unused_result=E2=80=99 [-Wunused-result]
+  254 |                 asprintf(&regname, "REG_%s", elem->fullname);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from drivers/gpu/drm/msm/adreno/a4xx_gpu.h:7,
+                 from drivers/gpu/drm/msm/adreno/a4xx_gpu.c:4:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a4xx_gpu.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/adreno_device.c:9:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/adreno_device.o] Error 1
+drivers/gpu/drm/msm/adreno/a5xx_gpu.c:12:10: fatal error: msm_gem.h:
+No such file or directory
+   12 | #include "msm_gem.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a5xx_gpu.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/a3xx_gpu.h:10,
+                 from drivers/gpu/drm/msm/adreno/a3xx_gpu.c:9:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a3xx_gpu.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/a6xx_hfi.c:10:
+drivers/gpu/drm/msm/adreno/a6xx_gmu.h:12:10: fatal error: msm_drv.h:
+No such file or directory
+   12 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a6xx_hfi.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/a2xx_gpu.h:7,
+                 from drivers/gpu/drm/msm/adreno/a2xx_gpu.c:4:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+In file included from drivers/gpu/drm/msm/adreno/adreno_gpu.c:19:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a2xx_gpu.o] Error 1
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/adreno_gpu.o] Error 1
+In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h:13,
+                 from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c:=
+8:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h:15:10: fatal error: msm_drv.h:
+No such file or directory
+   15 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:26:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h:15:10: fatal error: msm_drv.h:
+No such file or directory
+   15 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.o] Error 1
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/a5xx_gpu.h:7,
+                 from drivers/gpu/drm/msm/adreno/a5xx_power.c:6:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/adreno/a5xx_power.o] Error 1
+In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c:15:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h:15:10: fatal error: msm_drv.h:
+No such file or directory
+   15 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.o] Error 1
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:21:10: fatal error:
+msm_drv.h: No such file or directory
+   21 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.o] Error 1
+In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h:13,
+                 from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c:=
+6:
+drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h:15:10: fatal error: msm_drv.h:
+No such file or directory
+   15 | #include "msm_drv.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+make[6]: *** [scripts/Makefile.build:243:
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.o] Error 1
+In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu.h:8,
+                 from drivers/gpu/drm/msm/adreno/a6xx_gmu.c:14:
+drivers/gpu/drm/msm/adreno/adreno_gpu.h:15:10: fatal error: msm_gpu.h:
+No such file or directory
+   15 | #include "msm_gpu.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+
+
+
+
+> ---
+> Dmitry Baryshkov (12):
+>       kbuild: create destination directory for _shipped handling
+>       drm/msm/mdp5: add writeback block bases
+>       drm/msm/hdmi: drop qfprom.xml.h
+>       drm/msm/dsi: drop mmss_cc.xml.h
+>       drm/msm: use _shipped suffix for all xml.h files
+>       drm/msm/headergen: import source files from freedreno/envytools
+>       drm/msm/headergen: use asprintf instead of custom aprintf
+>       drm/msm/headergen: don't output full file paths
+>       drm/msm/headergen: generate _shipped files
+>       drm/msm: import XML registers database
+>       drm/msm: tie regeneration of shipped headers
+>       drm/msm: sync shipped headers database
+>
+>  drivers/gpu/drm/msm/Makefile                       |   80 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |   11 +
+>  drivers/gpu/drm/msm/disp/mdp_common.xml.h          |  111 --
+>  drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |  131 --
+>  drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |   70 -
+>  drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |   61 -
+>  drivers/gpu/drm/msm/headergen2/colors.c            |   61 +
+>  drivers/gpu/drm/msm/headergen2/colors.h            |   49 +
+>  drivers/gpu/drm/msm/headergen2/headergen2.c        |  514 ++++++++
+>  drivers/gpu/drm/msm/headergen2/path.c              |   64 +
+>  drivers/gpu/drm/msm/headergen2/rnn.c               | 1363 ++++++++++++++=
+++++++
+>  drivers/gpu/drm/msm/headergen2/rnn.h               |  243 ++++
+>  drivers/gpu/drm/msm/headergen2/rnndec.c            |  550 ++++++++
+>  drivers/gpu/drm/msm/headergen2/rnndec.h            |   59 +
+>  drivers/gpu/drm/msm/headergen2/util.h              |  113 ++
+>  drivers/gpu/drm/msm/headergen2/util/u_debug.h      |   12 +
+>  drivers/gpu/drm/msm/registers/.gitignore           |    5 +
+>  .../{dsi/dsi.xml.h =3D> registers/dsi.xml.h_shipped} |   38 +-
+>  .../dsi_phy_10nm.xml.h_shipped}                    |   37 +-
+>  .../dsi_phy_14nm.xml.h_shipped}                    |   37 +-
+>  .../dsi_phy_20nm.xml.h_shipped}                    |   37 +-
+>  .../dsi_phy_28nm.xml.h_shipped}                    |   37 +-
+>  .../dsi_phy_28nm_8960.xml.h_shipped}               |   37 +-
+>  .../dsi_phy_7nm.xml.h_shipped}                     |   37 +-
+>  .../hdmi.xml.h =3D> registers/hdmi.xml.h_shipped}    |  111 +-
+>  .../mdp4.xml.h =3D> registers/mdp4.xml.h_shipped}    |   37 +-
+>  .../mdp5.xml.h =3D> registers/mdp5.xml.h_shipped}    |   39 +-
+>  .../gpu/drm/msm/registers/mdp_common.xml.h_shipped |  114 ++
+>  drivers/gpu/drm/msm/registers/sfpb.xml.h_shipped   |   67 +
+>  drivers/gpu/drm/msm/registers/xml/dsi.xml          |  390 ++++++
+>  drivers/gpu/drm/msm/registers/xml/dsi_phy_10nm.xml |  102 ++
+>  drivers/gpu/drm/msm/registers/xml/dsi_phy_14nm.xml |  135 ++
+>  drivers/gpu/drm/msm/registers/xml/dsi_phy_20nm.xml |  100 ++
+>  drivers/gpu/drm/msm/registers/xml/dsi_phy_28nm.xml |  180 +++
+>  .../drm/msm/registers/xml/dsi_phy_28nm_8960.xml    |  134 ++
+>  drivers/gpu/drm/msm/registers/xml/dsi_phy_7nm.xml  |  230 ++++
+>  drivers/gpu/drm/msm/registers/xml/edp.xml          |  239 ++++
+>  .../drm/msm/registers/xml/freedreno_copyright.xml  |   40 +
+>  drivers/gpu/drm/msm/registers/xml/hdmi.xml         | 1015 ++++++++++++++=
++
+>  drivers/gpu/drm/msm/registers/xml/mdp4.xml         |  480 +++++++
+>  drivers/gpu/drm/msm/registers/xml/mdp5.xml         |  806 ++++++++++++
+>  drivers/gpu/drm/msm/registers/xml/mdp_common.xml   |   89 ++
+>  drivers/gpu/drm/msm/registers/xml/mmss_cc.xml      |   48 +
+>  drivers/gpu/drm/msm/registers/xml/msm.xml          |   32 +
+>  drivers/gpu/drm/msm/registers/xml/rules-ng.xsd     |  457 +++++++
+>  drivers/gpu/drm/msm/registers/xml/sfpb.xml         |   17 +
+>  scripts/Makefile.lib                               |    2 +-
+>  47 files changed, 8034 insertions(+), 587 deletions(-)
+> ---
+> base-commit: ffa0c87f172bf7a0132aa960db412f8d63b2f533
+> change-id: 20240225-fd-xml-shipped-ba9a321cdedf
+>
+> Best regards,
+> --
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+
+
+--=20
+Best Regards
+Masahiro Yamada
 
