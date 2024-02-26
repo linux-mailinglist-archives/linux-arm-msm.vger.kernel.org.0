@@ -1,74 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-12604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E98BF867E91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 18:32:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5C6D867F95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 19:10:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A8991F23F26
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 17:32:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 626471F23EBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 18:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 844D412D77D;
-	Mon, 26 Feb 2024 17:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B0DC12EBE9;
+	Mon, 26 Feb 2024 18:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rZ79AmTF"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="U9uBdYs0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A137E12CD80
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 17:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D912DDAB;
+	Mon, 26 Feb 2024 18:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708968761; cv=none; b=sy2Hcq24xhU26F7fJHO9yWWaxTCOLAbU4lAw8jei8Yzhg3E2QPmvDIwZeZ9x3YpUFP6aAU56uKnZI/Shbsk0c9B9e3ln3CpJbxCuNavxvXnY8+NQdiVLu2HJRkNWHr6Kp9WBickHtPW6MuUEUrempHrDNTlF6R0nFQY4o1uZ6kA=
+	t=1708971047; cv=none; b=Tg8gIvfLLeY7iP9AZ7lA4DVSJgy/RR/j9WH6EuZ1rnJAhp4u0A2GKMnfv513PBlQn9R+jHPP6vuvBNpJtXaqqarD1l+m2pR9YnvBO0ZzKxRsFVHjI6UpXXarjzZTh6QecFvgoeOgTkr7JHCzx7cp2PEgRjth+UYdkITrJMibotE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708968761; c=relaxed/simple;
-	bh=jYI0Mh1uhn6Nyq2vB/K7SQzen2+rR581YIAH6CYgxz0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K9NW7Efl684QI0EMbkcST4E+eeCn6PLN3pq/T1kbuTysITsxneGPLFDI1vs072QKVFwkGhDFaKweEUFSijkdxf8PSB3LxGI7+Y/6FEzw448JyVZaFR6jlHT62g5cpqQuJMpOYrWNsmturYhusiVRlJ/HRhNnFbQ2IJh1C3hFwgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rZ79AmTF; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a293f2280c7so483555666b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 09:32:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708968758; x=1709573558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m4GW1x35sYauLIfEoAjSJr8bEUmsmDLYbSZDkkGXyo8=;
-        b=rZ79AmTFOYKsQI8w02JKIyXq6fOjf3ucKCjrOmPCcg63BYS1JpOW47RRYsfDznmmct
-         TlX76vf3M8C6nhb2nKuWOhRiz79Xnqd+NWanqZ0UN8vKmcUlqNlNojHrLwZ+uMO7gx1P
-         KGYW0kr1MYCdHmQ9HqtQa2DFgl8SsRmdgKH+f6KxWg6yCL0Zh+ATN+pJ5jTbYQj+kGeR
-         vAgG1+BPRs9zWxMeKUxI4SHERO36yGH1L9IxgleazdZrxcIXG8KbfKOW2pAFSUj7wJ6b
-         Laehsux3OufbT4vNBEKuvufOeZylwy17ej8Pn1WewfyrJEVlZNPbdMD/80KEl0x9zqI7
-         HrSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708968758; x=1709573558;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m4GW1x35sYauLIfEoAjSJr8bEUmsmDLYbSZDkkGXyo8=;
-        b=dKTQZQKdcvyVkcIRw48/AyGxQ8Vw9kusxLV3pjYxOcUwPkJZZS+I4N/pOqmbvf7+aN
-         KNpAgfyqRjD2TeneZWewkASLThOyxI2LaXxLPxppQ+ry5eIb+YSMbzT3E6i7mwVOgEe5
-         h37X+Am8JJfvE23BLn6MxoZ7pk+hbBp3udN2xwF4a2oDqlcHANMUO7qe/t6s/5VFfI8Q
-         0IR37W53ND7c4MAXzSjjbo6t+stLWv1gWmPLjw35L+y26b6Cn1WWvUgvIjIovT8tAzdo
-         YVUCxovwdjT9bE/NVBks9Djp+o56wkEvyfjkF47btv9LK9DO8F1IkKnvdzUgXyOc0bhg
-         S5Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCVYih3npgdTJcpz3Xve6u1+JbAuL8H83CyB/yxA5N36QFsk0ux0U7o7JapzWO3i2oR4EzF4V3tdoJ/nazmPdSYRNdISbQIlnErn2GZkYg==
-X-Gm-Message-State: AOJu0YzN7RYC/LQx76xj97/OUcqoVdV/+SGAP9yzwrwpQn9t+HapnIui
-	+Dg+FLKlNeDa9sEtDphcXZMuPW3S4QdNjem4iUWI8L6ub3Ly5hZPpefYuJami4E=
-X-Google-Smtp-Source: AGHT+IEqKIQIdcv8EKOmB98hBc7cakFXkMLo7/Zz0KvlEsGsTukTkGpFQSqjW0oL5K1G4DhCXAPU/w==
-X-Received: by 2002:a17:906:3b03:b0:a3d:b6c2:fc58 with SMTP id g3-20020a1709063b0300b00a3db6c2fc58mr5232223ejf.2.1708968758011;
-        Mon, 26 Feb 2024 09:32:38 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id ss3-20020a170907c00300b00a4395e9debasm124391ejc.201.2024.02.26.09.32.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Feb 2024 09:32:37 -0800 (PST)
-Message-ID: <3a2dfec8-b574-42fe-a17d-b844b4bb35cd@linaro.org>
-Date: Mon, 26 Feb 2024 18:32:35 +0100
+	s=arc-20240116; t=1708971047; c=relaxed/simple;
+	bh=hEcSAUnbz3n2LmN/VICAPNTSRgNLRrDuxbmA81pv+gc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=NWO0z8GmO7zKYT7OmNPdaMJU5JoIJSbUu8QDBUIeZH78K9e2PHSmMSmuOOwzhb1ib9sORSPlhDDaD4SC3Lsr5uvNQ9pzmR11jUrrciMkGKUdH7N6KGnhfI6k3wSDAMvORLdV33m5s4Gb7FOE0hPIcm6e0ycvaOCBX4zBVsxOpf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=U9uBdYs0; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708971027; x=1709575827; i=markus.elfring@web.de;
+	bh=hEcSAUnbz3n2LmN/VICAPNTSRgNLRrDuxbmA81pv+gc=;
+	h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+	b=U9uBdYs0pyb8l68xKrPVdFxo+9R6SFhdyVj0qGgcTg0RhLPhCBqMfZSsLbLwffgw
+	 NPdhLA/7pVO1KvXo9RAX7V0plpEvhzl8NZtzvJq6zC66402lXz/n7pY2KnzhsQo6o
+	 hfFvaSQ6sLF0/5WFni8w/0MY9prEcYE1cU/muPkig/kXZHucZ4sLIj/Dh4KYfWK/x
+	 ISJJllgT1chX7prypVqI7rgiQYBMXWWmda5Mqpjy46R+VOV4gQ2XRbq+PT0iThxjn
+	 98ilyJnjZRy+20E+/eumTWhwpyNPDUcz14poOLPqqwE4+OnaADIeCsDOk6H9aibz0
+	 jaeZPr7P7+JstHgLDw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.86.95]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MdfCH-1r5bnP3TLF-00ZZmS; Mon, 26
+ Feb 2024 19:10:26 +0100
+Message-ID: <5a9e4cb8-824e-4f62-bfc0-ea4b89f27ebf@web.de>
+Date: Mon, 26 Feb 2024 19:10:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,102 +53,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Add Lenovo P2
-Content-Language: en-US
-To: Raihan Ahamed <raihan1999ahamed@gmail.com>,
- krzysztof.kozlowski+dt@linaro.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org
-References: <a762f756-1a92-4d82-be38-098bacaf25dc@linaro.org>
- <20240226094256.5736-1-raihan1999ahamed@gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240226094256.5736-1-raihan1999ahamed@gmail.com>
+To: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Akhil P Oommen <quic_akhilpo@quicinc.com>, Daniel Vetter <daniel@ffwll.ch>,
+ David Airlie <airlied@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Douglas Anderson <dianders@chromium.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Content-Language: en-GB
+Cc: LKML <linux-kernel@vger.kernel.org>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: [PATCH] drm/msm/a6xx: Improve error handling in a6xx_gmu_rpmh_init()
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:/rqSBuUqEf/kYjvRFzsIYsjAmaIC0le+OIDvKdMIX+8WRAJdbvl
+ 8xwPiSyrSPo6Uq3TD7VkFy/4q1yq3KcxaapAQ8yTWrHKAUP7/6CW+W2I0E3NnApXUkdeTVy
+ C37ffE9OObkJus66qXJuXQOSKy2Nlq1xqgpKUeMUh8cQDRpBgOzi1GIZaLtxqAksq/Uqad3
+ 0+Sfc8wsFIIZklRtaqINA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:FdpfUuTW3hE=;qT2la4ln01wFUxHSA5KyVXPa8uk
+ bDSBGRNcQ4L4T1mJBcXVHoxB1VWh5FJclNOYqCZ57T5LREm+BsdB5UErNW5PWjINDxAqgt9yF
+ bHZuDp4nsQy8IHTUBVBBwdS8BYlTaommVav7DoNWzuaWSLK3bgIZ/4husDam4OHkeWvh1yA2l
+ jSw5gRDiub6AkaTER5SqzR0isjTloSOc1JotE33+qSkMsFInCaT9Pbb/XD7cxVEICd/m0TwP/
+ toWrMP9BgtWS6gvJismpLsrafU1ALQmNQv9f+hKE/5/q7LOpaGBWLCgS2+gjJnTt/WIYStJDu
+ zMxuKErCIZWdFpuuGwf19t3ToeccyXIhyzBTfrkG0m0A/PdnGzr0SZWJR3qEDc/FYTCTi5OLD
+ Km8RMtHDAJHLmOm1ssV4oh4yyAaViUHQJ4w05J7DP0E8+Rm+5PO+RpW8mSm0Nj3gHFLE7qqad
+ +13N4vRaAxpXuw0wRuIu1CmCKfNMmNvIlAtKUNv5bFuoOZ7lzzPfApVppqeV0Bf3RLctJHdZp
+ kD+9awVAmnHyE8adXLKbTqidYs0fWhkOmmRoEK10UPQFD/ldum8P/e42Jc67LZ07uGTMwrkBW
+ zyMHcsTGW2gxsLwEqyoBbmhi+CEcxANF7sny2jh5s/jAvLjPKe17oQ4qfxHBzHDRXgWegYqC4
+ J/m05LSMWYWYAl5amEVilbMD+bkuLejUoY1r3bXQo2ronNaxaCNgAeI7u4rWyLr3XNXsirSV7
+ pJvVq8B+XWt1x4uyljPbZpoopgtBEOKic+QlEushrvcR96JProjtUuobJsdeim0VFNYrkz/xs
+ iif2Pl/N+X5WlPB1CpGE+VK9GdMf7PqPbLEWbiRJcBVaE=
 
-On 26/02/2024 10:41, Raihan Ahamed wrote:
-> Document the compatible for the MSM8953-based Lenovo P2
-> 
-> smartphone released in 2016
+From: Markus Elfring <elfring@users.sourceforge.net>
+Date: Mon, 26 Feb 2024 18:46:38 +0100
 
-It seems you split one sentence over multiple lines. Please join them
-and finish with full stop.
+The label =E2=80=9Cerr=E2=80=9D was used as a target for two statements de=
+spite of
+the implementation detail that failure conditions could be handled better.
 
-Also, this appeared in some odd place. Do not attach (thread) your
-patchsets to some other threads (unrelated or older versions). This
-buries them deep in the mailbox and might interfere with applying entire
-sets.
+* Thus return directly after a call of the function =E2=80=9Ca6xx_gmu_get_=
+mmio=E2=80=9D
+  failed at the beginning.
 
+* Reorder affected statements at the end.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+* Adjust a jump target.
 
+* Omit an extra pointer check which became unnecessary
+  with this refactoring.
 
----
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+=2D--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/a=
+dreno/a6xx_gmu.c
+index 8c4900444b2c..55a34f11eb9a 100644
+=2D-- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -525,7 +525,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	bool pdc_in_aop =3D false;
 
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
+ 	if (IS_ERR(pdcptr))
+-		goto err;
++		return;
 
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+ 	if (adreno_is_a650(adreno_gpu) ||
+ 	    adreno_is_a660_family(adreno_gpu) ||
+@@ -541,7 +541,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	if (!pdc_in_aop) {
+ 		seqptr =3D a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
+ 		if (IS_ERR(seqptr))
+-			goto err;
++			goto unmap_io_pdc;
+ 	}
 
-Best regards,
-Krzysztof
+ 	/* Disable SDE clock gating */
+@@ -634,11 +634,11 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+
+ 	a6xx_rpmh_stop(gmu);
+
+-err:
+-	if (!IS_ERR_OR_NULL(pdcptr))
+-		iounmap(pdcptr);
+ 	if (!IS_ERR_OR_NULL(seqptr))
+ 		iounmap(seqptr);
++
++unmap_io_pdc:
++	iounmap(pdcptr);
+ }
+
+ /*
+=2D-
+2.43.2
 
 
