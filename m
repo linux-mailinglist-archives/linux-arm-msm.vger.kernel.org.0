@@ -1,161 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-12560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16C46867520
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 13:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B055886757A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 13:45:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFF9028EB65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 12:37:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 600C1288DC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 12:45:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4FBD7F470;
-	Mon, 26 Feb 2024 12:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686EC7F7D0;
+	Mon, 26 Feb 2024 12:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KYiXEiK6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFATgu95"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1AD7F464
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 12:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AB57F475;
+	Mon, 26 Feb 2024 12:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708951031; cv=none; b=uWn2uDBbR3UA3jt/9uUDpuK37EGzJeJ4aFvQyOut3+eJ45UVd2tXTMmKbt/r9mpUVG872DdXReNWxfd1Oh0zOfM7HSU2S8qIsJ7sCS7IGjr10DzooB3hRLnCOz7EHIQm1AZZw7wPyqjmi0x8G6FNVFK1gdnKioRsmQXNYmpu7lU=
+	t=1708951523; cv=none; b=pwoHvbtWGMmGjkzl4EwA0/yjlkWkYh1Z/8mz8sKzi+6cMo7lUbzpsiP9iz+bRGghQTc5jzGwWNDQlNYeDHanlLrxrvlmmNqC3nK7BNcj8f8X8V0hCdvMYb5voSbayxFpwfPV8sFglDd4uBm/mXW9ySDiBmzIGWaxsWYpNuUeFoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708951031; c=relaxed/simple;
-	bh=aVrg05gFN6gF07jSoKxNFCBAr9F4xnKSDzKrqxIrgsA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=VM36dcgQA024lgLx1q54fKrK8vZstULk+sGoa0RNkG5wxPvCdA0vAKOaoTQ5z86pxfg85kuDyFyPyQGe2tIOBwZO+mqVh3DZ45XRkIq2BHrIGuWjTr8TqrDckiweSqYV8n9XMsxQkkP4hOidHBcP+PnWJGHSCwza0prxuTrzMDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KYiXEiK6; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a3d484a58f6so418405566b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 04:37:09 -0800 (PST)
+	s=arc-20240116; t=1708951523; c=relaxed/simple;
+	bh=TZVUR9ocsVnQ0pHZ0RxO5osTV317Ybr1stOPtvhwMVI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t46Slly8HLYvTB+l2aSCZ8zafU9GX8dKLscZ/VQVgmWGzScMcQQhnrBFf/Dh+QEYfGXlstAZ1Wk9sJT6ap53Uodfko8my/vW6v8JyG3CFvEdhYBoRgDcO2uuzD7y8erOZZjU3Z8W/ykjJIXeviyWHVxPtXkVK83+I/7BDjVFl8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFATgu95; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d22b8c6e0dso30821091fa.2;
+        Mon, 26 Feb 2024 04:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708951028; x=1709555828; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gx91zwBp6J4wIkJmb7feqxWb+xcR8MZvWqQyfTznWt4=;
-        b=KYiXEiK6ukyjLKNHuxj1k4pgtdpUE3lzyDqSDaGKLkjhvz29/Vp/w3EzRDUOXSHxVg
-         caLbAz99Ox3YRFchCW6vy5NRyBkjrB/Jn1tVXrbfWS5cIU+i9R2093t8+coyoHC3mdcl
-         hXlvzM9znvY6LbQMM6h0BloFJw77uzFHWG057WGmiqsJmtFxeo73MMqhAb6bFGSJHGVp
-         6qXrWqd7hgCu66O8mRor82SnC08eDwTqwS24cLt+Htl/LFNIvLkLrBjXSzbec0SS1g74
-         mT76r/03xYKinB0t3b6AtMvH1yxydHlUj0QvIPW3sQikKh+KNYhOZOmZ8brjPxQZP+I9
-         QZ9Q==
+        d=gmail.com; s=20230601; t=1708951519; x=1709556319; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5inM5MIJdH95rtY5NIhYJAB5BjouiCH5y6Mv4miue6E=;
+        b=CFATgu955PKZ5Q3KOI/IJrC4V/mVJUHH78HzHoPcgVhmJ47kFoWlHNbJHqKMJBCMt3
+         xfXtTgcAltKvTw178tvGpS3pgHgYwneheFHXE8/fZRM+nR5+MnlnYEFkkRkaIlh+SG7o
+         CPtYYh7FuDIHRaAhtLm8OaA4e+kON0V/5RDnaxh3LMLI7Yg/cD+oH7ID69xEHqzAaHOv
+         uQDnxBV2h5CKt3V56cjDrlfPZbFNZXIc3yhGDNNm1z2Y9AcHKRjsxoCfjSx1GccREqzK
+         aLh1wN75U1qLh0d5YYPFOS5Hb7tvXC+CuFEkdUScAG/L5ZSbWUkFWB+indjKd7n6mwDc
+         laug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708951028; x=1709555828;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gx91zwBp6J4wIkJmb7feqxWb+xcR8MZvWqQyfTznWt4=;
-        b=NlLoAJ46jQJejXpKf6fOQyZhkU3/owcV6FPG2rrXO+BkgYQbwrFbe+XvEkPMRihjpO
-         nO6BQWDtjObwIhTzuA3DI8sqDPfb87TrPXrDod2eAfyr/rS81N1d6c0vBnRkBny1Spfg
-         U+lqfPqtsqhcGgfPGCcLpE5xXFw36n4Jn1pHpCkgWAx401zpNxvhhsphWjykK5HdBxd+
-         L+1864N1gKFDNTZOcQBd29VrvwIXGjEb73DqrRkKCCqLrHkBI0jq5rADcdPISDuqZG2v
-         KZr6Shr5t2IcrAqhXZNoGw3BndVy8cGoLmk294IsrrLuAVlKHLjZdekT4tC1HbHrzu3/
-         AxuA==
-X-Forwarded-Encrypted: i=1; AJvYcCUYNiQ9GKSkrVWfx44tLy/QLQzrJny5GmjrazDndCQgpiUsY1iHxU5qblR0MZYOcDg2Dj0UGHbrlXcF0+7XiDuKQ2BZcazpBI1UDG4+hQ==
-X-Gm-Message-State: AOJu0YwJBMuOwTcM0sm1y2rK1pc9oo9mTMD7uIS6m0iVvYb3di5sPlPG
-	muh1GjV2MWwQKHCd+vKhdGtzvnpTT4WIktgN2Zog6ESovuMsEjKyk76xu9o/iB6OCMyq2gwD5fY
-	w
-X-Google-Smtp-Source: AGHT+IEJl0RX8TJrnTEYd08ZRUB6pO66avu+jKYtkWS36jLGhyDAyYuJkLLKi6SS9HUeWvveqilK3g==
-X-Received: by 2002:a17:906:384f:b0:a3f:2d9c:c66b with SMTP id w15-20020a170906384f00b00a3f2d9cc66bmr4545865ejc.22.1708951028256;
-        Mon, 26 Feb 2024 04:37:08 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id hw21-20020a170907a0d500b00a432f3bc3a5sm1350060ejc.76.2024.02.26.04.37.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Feb 2024 04:37:07 -0800 (PST)
-Message-ID: <44025481-f001-4247-8b7a-f8c0f105f489@linaro.org>
-Date: Mon, 26 Feb 2024 13:37:05 +0100
+        d=1e100.net; s=20230601; t=1708951519; x=1709556319;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5inM5MIJdH95rtY5NIhYJAB5BjouiCH5y6Mv4miue6E=;
+        b=T85w89LF+2Ak4Pg2bk1QcrJGoNapnimwcuMk/aUV1mdJVr8MY/7L/uQhdOsEFeFJnS
+         SXrS4yU404YrP8YfMuutu3wHk6OyCKMVyhKb9TDCFlTNWLMF/DYCrtsicZT93K78LZN/
+         k6/EFV75GiMMuGfQrmp/mcgP6sA2teOItULNoYRU6Zt2TFchSyUbNcl8qPYlTNpIc27S
+         EfLPqRmlj/p86Kkyvp6VG5qtTG63H/lm/7vfV++0FuJR5EDFkvpbnieBWn56MOtRrA+R
+         58KSIlx0IvZjBFzfCGFTGNMmXaKfJeDLdgoZW9iquOHlomwCj+TgGeFrMwVsX3DY1K6B
+         idLw==
+X-Forwarded-Encrypted: i=1; AJvYcCVwL6czKDZvcJvlFmsGYvj5UJKFd8MyUikkFWJXfvBWg2VOR52U2A3fdxdSwTf+cPugRzqkmzy95b8RiBNfsdWHma3L0sw/XV/bTskNrB85c24pHKHujTTzK9moWPCGcr+1fS732lcemdhe7S48cLn08hyRSnNGwim5xjNHt8WOD0pJFI4U/GPX3hXngD+iNRxHWAOBkirlbO5nstAuUKmcGs+3Qi1TAEhz
+X-Gm-Message-State: AOJu0YyQC72C4iP+P3PjcWpcH0d04NFCA4qUlXh9Kly4xOSSa/MNAP6s
+	dUDQs6HeT5/jEiycxQLN5JZz+WLqwgSQxkwY4ZsoZsAFkmSIc9eM
+X-Google-Smtp-Source: AGHT+IFTcXELJgIuddDmuX7MVZviLk/f/Js23B+qxWOY8L55q/M6wGDtHgANSMV7Pitn4EaDSF8hvA==
+X-Received: by 2002:a05:6512:3605:b0:512:fccc:f289 with SMTP id f5-20020a056512360500b00512fcccf289mr1822609lfs.6.1708951519358;
+        Mon, 26 Feb 2024 04:45:19 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id f21-20020a193815000000b00512d8cecd78sm856365lfa.197.2024.02.26.04.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Feb 2024 04:45:18 -0800 (PST)
+Date: Mon, 26 Feb 2024 15:45:16 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Siddharth Vadapalli <s-vadapalli@ti.com>, 
+	Jingoo Han <jingoohan1@gmail.com>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Marek Vasut <marek.vasut+renesas@gmail.com>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v3 1/5] PCI: dwc: Refactor dw_pcie_edma_find_chip() API
+Message-ID: <fielxplkgrvz5qmqrrq5ahmah5yqx7anjylrlcqyev2z2cl2wo@3ltyl242vkba>
+References: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
+ <20240226-dw-hdma-v3-1-cfcb8171fc24@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] dt-bindings: leds: leds-qcom-lpg: Add support for
- PMI8950 PWM
-Content-Language: en-US
-To: Gianluca Boiano <morf3089@gmail.com>, Pavel Machek <pavel@ucw.cz>,
- Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-leds@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <d17121a0-ca14-41fd-9802-bb4118629e34@linaro.org>
- <20240226105747.3547856-1-morf3089@gmail.com>
- <20240226105747.3547856-3-morf3089@gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240226105747.3547856-3-morf3089@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240226-dw-hdma-v3-1-cfcb8171fc24@linaro.org>
 
-On 26/02/2024 11:57, Gianluca Boiano wrote:
-> Update leds-qcom-lpg binding to support PMI8950 PWM.
+Hi Manivannan
+
+On Mon, Feb 26, 2024 at 05:07:26PM +0530, Manivannan Sadhasivam wrote:
+> In order to add support for Hyper DMA (HDMA), let's refactor the existing
+> dw_pcie_edma_find_chip() API by moving the common code to separate
+> functions.
 > 
-> Signed-off-by: Gianluca Boiano <morf3089@gmail.com>
+> No functional change.
+> 
+> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
-> Changes:
+>  drivers/pci/controller/dwc/pcie-designware.c | 52 +++++++++++++++++++++-------
+>  1 file changed, 39 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 250cf7f40b85..193fcd86cf93 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -880,7 +880,17 @@ static struct dw_edma_plat_ops dw_pcie_edma_ops = {
+>  	.irq_vector = dw_pcie_edma_irq_vector,
+>  };
+>  
+> -static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +static void dw_pcie_edma_init_data(struct dw_pcie *pci)
+> +{
+> +	pci->edma.dev = pci->dev;
+> +
+> +	if (!pci->edma.ops)
+> +		pci->edma.ops = &dw_pcie_edma_ops;
+> +
+> +	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+> +}
+> +
+> +static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+>  
+> @@ -900,24 +910,27 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  	else
+>  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+> 
 
-Three different patchsets, two with random versioning, all attached to
-one thread.
+> -	if (val == 0xFFFFFFFF && pci->edma.reg_base) {
+> -		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> -
+> -		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+> -	} else if (val != 0xFFFFFFFF) {
+> -		pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+> +	/* Set default mapping format here and update it below if needed */
+> +	pci->edma.mf = EDMA_MF_EDMA_LEGACY;
+>  
+> +	if (val == 0xFFFFFFFF && pci->edma.reg_base)
+> +		pci->edma.mf = EDMA_MF_EDMA_UNROLL;
+> +	else if (val != 0xFFFFFFFF)
+>  		pci->edma.reg_base = pci->dbi_base + PCIE_DMA_VIEWPORT_BASE;
+> -	} else {
+> +	else
+>  		return -ENODEV;
+> -	}
 
-Sorry, that's just confusing.
-1. Version your patchsets.
-2. Send them as separate thread.
+Sorry for not posting my opinion about this earlier, but IMO v2 code
+was more correct than this one. This version makes the code being not
+linear as it was in v2, thus harder to comprehend:
 
-Just use b4 and avoid half of review complains...
+1. Setting up a default value and then overriding it or not makes the
+reader to keep in mind the initialized value which is harder than to
+just read what is done in the respective branch.
 
-Best regards,
-Krzysztof
+2. Splitting up the case clause with respective inits and the mapping
+format setting up also makes it harder to comprehend what's going on.
+In the legacy case the reg-base address and the mapping format init are
+split up while they should have been done simultaneously only if (val
+!= 0xFFFFFFFF).
 
+3. The most of the current devices has the unrolled mapping (available
+since v4.9 IP-core), thus having the mf field pre-initialized produces
+a redundant store operation for the most of the modern devices.
+
+4. Getting rid from the curly braces isn't something what should be
+avoided at any cost and doesn't give any optimization really. It
+doesn't cause having less C-lines of the source code and doesn't
+improve the code readability.
+
+So to speak, I'd suggest to get back the v2 implementation here.
+
+>  
+> -	pci->edma.dev = pci->dev;
+> +	return 0;
+> +}
+>  
+> -	if (!pci->edma.ops)
+> -		pci->edma.ops = &dw_pcie_edma_ops;
+> +static int dw_pcie_edma_find_channels(struct dw_pcie *pci)
+> +{
+> +	u32 val;
+>  
+> -	pci->edma.flags |= DW_EDMA_CHIP_LOCAL;
+
+> +	if (pci->edma.mf == EDMA_MF_EDMA_LEGACY)
+> +		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
+> +	else
+> +		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
+
+Just dw_pcie_readl_dma(pci, PCIE_DMA_CTRL)
+
+-Serge(y)
+
+>  
+>  	pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
+>  	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
+> @@ -930,6 +943,19 @@ static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+>  	return 0;
+>  }
+>  
+> +static int dw_pcie_edma_find_chip(struct dw_pcie *pci)
+> +{
+> +	int ret;
+> +
+> +	dw_pcie_edma_init_data(pci);
+> +
+> +	ret = dw_pcie_edma_find_mf(pci);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return dw_pcie_edma_find_channels(pci);
+> +}
+> +
+>  static int dw_pcie_edma_irq_verify(struct dw_pcie *pci)
+>  {
+>  	struct platform_device *pdev = to_platform_device(pci->dev);
+> 
+> -- 
+> 2.25.1
+> 
 
