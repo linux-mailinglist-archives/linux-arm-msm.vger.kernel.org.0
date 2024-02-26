@@ -1,123 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-12615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 970268683ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 23:43:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD443868470
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 00:05:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C4D11F22D15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 22:43:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE9781C20EBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 23:05:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20DFC133416;
-	Mon, 26 Feb 2024 22:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB5613541A;
+	Mon, 26 Feb 2024 23:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TtGwtBzn"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="biDX9XVZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74678132C09
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 22:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0541350CF;
+	Mon, 26 Feb 2024 23:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708987418; cv=none; b=idkQIVHUeFGUE4/TNLBTJ/0djFc0qP2faSXoDYoBcbT+cm9IHO55noirglIPydwxIqQBgv2pYHh62whsUiEK0rUPM/qJGh4+y33t85ytADkbMBDjZsrrEjRYNUq0AvUf82ppCj+bo4SsNxJ+3eaKO52iQ9AJJo5fErG6/ptYd1E=
+	t=1708988733; cv=none; b=BJXvR+hJGMTG3JVQgq3YZQl8wu6+blAkV7DqXdGf6dS3jAeRWq9uStCHzNQhaS+tRULNLjX6LcUb56aOvt6YTPQ0hkZnmQWJ8WxNpjJbG1NRakgfPFmuIY7k/vM20JwT3BsSd1hm/++g2C8c4K+iz/QZRpbHIPslYwLLAkkw5LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708987418; c=relaxed/simple;
-	bh=YGvnF3uX1nQyIBNb/hGeLoc0zs2SRDSIUCLoo6AYTas=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Z/OXvtnHFj6j4t0rLeL5udTl5waHzW3DUPyT/zLEL0EyYfjX0Z8i8AYiWm1PoIlA+Uk4KIRyWnbZyHHX5aybOjV2Yoja0rEmCzQwX1HhJ0H+PIFWmgkVwgKYSIxMpOwrTf9LdRACRD9cBM0AgUsoLV7dbengUPOBe35smIc08JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TtGwtBzn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41QLn6vv021378;
-	Mon, 26 Feb 2024 22:43:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=ZWbXPrxjhVDeIiibeDRIez4zT+ecRa5q9YmguADga+Q=; b=Tt
-	GwtBznK4KwHEh8YgapzD+5OhxfAZxPR4FaHaakw9bmVnnf5DuQnOxuJVif2lWR7k
-	68REh9Y0Is/YWK3uitKe37H35Z057QfroLAuTrqoM6e6kSy+0StTs4l+46tZbuMI
-	fyr98ci8YVhRRpKj8e1pBRrnpg7D5TqPr4T/vCy2RHoh4IKgZlHELo41YYORVDAQ
-	XGahMaVP1EtYKNEaS8awEkclcV5ytARRxi4YgweiavSPEQsAhxbppW5J2DBM3qcz
-	NdsfcY8VzHNuS6Ii92qh10f1eUQvXjoQ+1zd8H4itkoIhuS6ZcakB7b312LA6mT8
-	uhrVl15L1w49lYrQU1hw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wgkxq28y7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 22:43:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41QMhRYx017405
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 22:43:27 GMT
-Received: from [10.110.56.192] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
- 2024 14:43:25 -0800
-Message-ID: <59d25296-e285-fdf9-5270-ad0f786768b1@quicinc.com>
-Date: Mon, 26 Feb 2024 14:43:24 -0800
+	s=arc-20240116; t=1708988733; c=relaxed/simple;
+	bh=TWzun0oNIPfc6lqE3DTPBQ4RosQxCFz5BwOT4xEIKSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMoQgVUQ3eG48O6dhBw23K0PTlj9/PBaBgQlh+gvDohGBR/ixek/svdURsq7h6ETxb49siW81EoGOMjwRS/cqKDji0LsSoxrRt75Jx3OJe5NMAa+mIfK0UHZoGSqhDD9tcIWuCworOvS1Kdtnq2oEaQlWsRSyvYo/3uxOLqgViQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=biDX9XVZ; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=pYmdkgX1dVrE40bWWH7YizC1+wHj2Ilzj2iousZ5MvQ=; b=biDX9XVZoNS+cu+iILmQSUl1K+
+	Qg9ttG/A56qZt0e4lsHbOPZw1aHansTRFWg7u3iBfNdZv0inSyJh+RRvOrrYAm72UhuCMqRUD/KCG
+	5Ojfv0AiI7kvUVIbFYnMiYQiIeYZlZGzXUM38f9nmsFFD8fcu/6Cn2Xmyc4O66l8g7+w=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1rek2P-008lo4-S6; Tue, 27 Feb 2024 00:05:33 +0100
+Date: Tue, 27 Feb 2024 00:05:33 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Sarosh Hasan <quic_sarohasa@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>, Rob Herring <robh@kernel.org>,
+	kernel@quicinc.com, Sneh Shah <quic_snehshah@quicinc.com>,
+	Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Update link
+ clock rate only for RGMII
+Message-ID: <89c54319-82d0-4cb3-b3be-ccdf6dcf2742@lunn.ch>
+References: <20240222125517.3356-1-quic_sarohasa@quicinc.com>
+ <54b8c58a-6288-4ae6-9ed7-aa7b212e63da@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dp: fix runtime_pm handling in
- dp_wait_hpd_asserted
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, David Airlie
-	<airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
-References: <20240226223446.4194079-1-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240226223446.4194079-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i-AfnFJ22IsWUHgiTLtIZJcYN5ZBej2q
-X-Proofpoint-GUID: i-AfnFJ22IsWUHgiTLtIZJcYN5ZBej2q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1015
- malwarescore=0 mlxlogscore=999 suspectscore=0 spamscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402260176
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <54b8c58a-6288-4ae6-9ed7-aa7b212e63da@linaro.org>
 
-
-
-On 2/26/2024 2:34 PM, Dmitry Baryshkov wrote:
-> The function dp_wait_hpd_asserted() uses pm_runtime_get_sync() and
-> doesn't care about the return value. Potentially this can lead to
-> unclocked access if for some reason resuming of the DP controller fails.
+> >   static void
+> >   ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
+> >   {
+> > -	switch (speed) {
+> > -	case SPEED_1000:
+> > -		ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
+> > -		break;
+> > +	if (phy_interface_mode_is_rgmii(ethqos->phy_mode)) {
+> > +		switch (speed) {
+> > +		case SPEED_1000:
+> > +			ethqos->link_clk_rate =  RGMII_1000_NOM_CLK_FREQ;
+> > +			break;
+> > -	case SPEED_100:
+> > -		ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
+> > -		break;
+> > +		case SPEED_100:
+> > +			ethqos->link_clk_rate =  RGMII_ID_MODE_100_LOW_SVS_CLK_FREQ;
+> > +			break;
+> > -	case SPEED_10:
+> > -		ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
+> > -		break;
+> > -	}
+> > +		case SPEED_10:
+> > +			ethqos->link_clk_rate =  RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ;
+> > +			break;
+> > +		}
+> > -	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+> > +		clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
+> > +	}
+> >   }
 > 
-> Change the function to use pm_runtime_resume_and_get() and return an
-> error if resume fails.
-> 
-> Fixes: e2969ee30252 ("drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_aux.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
+> if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
+> 	return 0;
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+It is a void function, so no 0, but otherwise this does look less
+invasive.
+
+   Andrew
 
