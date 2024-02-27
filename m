@@ -1,184 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-12691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E86D386905D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:24:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F1DF869065
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:25:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 602E3B226BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:24:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B27401C245E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:25:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D13B1419AD;
-	Tue, 27 Feb 2024 12:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEA8013A274;
+	Tue, 27 Feb 2024 12:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GewXukva"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QiXTSOo7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBA61419A6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 12:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F0D13A273;
+	Tue, 27 Feb 2024 12:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709036519; cv=none; b=jZfQTzc9U55Yl4qxLv0WGk3PRLY8uH085BjYnHHm0/nGyaLPvgy4hmmkp84xJnc4aDXUuzE/RflD84kgHoI9+2hGtJyLJJgarvbcyJq70kG4qXj7+8+39CIAQ6YCIeWPDiRig0OBfgp6exvVT/dM4LRsBN2jRvwCLW5cZ+oNJso=
+	t=1709036690; cv=none; b=DBJGp+dz5d1vwaeLp+mudSKqjTX6I7fAf+3G1L1x9ARrEymPcwprz2B4zwFYy4u8ILzDh4PAGkiaimRBOvQzx8wTCiwKcU1UBOwVZ0LxaPNKlqbNQCy/DuElc/QsfbcG1hVUariKWAq4iRUNc4eYpEljTReTyhEX9/23+7gULro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709036519; c=relaxed/simple;
-	bh=OS7E+/QQezCuwcjLO9iExKTfqPQ2LbBPhoHoghWs9UE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QjilxWEW4ou7DgR4OsxEbVDH8YVRfGVPla6/gt13NWUZvdzcQuUNS5ChJvDIpJZ8apqVpId4sYS+ZZkFQiXyRBvJ2r6Zg9YfPbkv5JjiIIY/W0ZQJ6Bq0Hl3oe/qpsyFZw2er7MDqOEfZToZZfixXc8FJS9uv6O1N22z53jIq+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GewXukva; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1dca3951ad9so18560895ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 04:21:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709036515; x=1709641315; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Fox2FOTrnn7H7ARtUpilsDQjBFro1sbb1UtQfPOSFHk=;
-        b=GewXukvadPyjq8mmPdVrgdexPxxyZVm5taQLw4UE8uzO1qUZywn25e1hJOamHZRCwn
-         yY+fYRQ8cx2oj0K3Cn0m0LlooL1bgs+2XFfZJwLd2QmFcpgqANpbYHXxKYXJRTtr/IY5
-         54ykV2o0Lwwn2FjqEAhg5xUQj9vmNHZ24yruwhr6w7w6Nw/fz8WwRIg/HvWqz6JmzNTK
-         NGvIyAFIELJm2LZ539C/VM+BNa1k9PKPHXKVhOxVPtyXRJBTFys9lI3XaxtMM3MXeo/N
-         as6NuVHKMzRAOzFJ9NXZBZFLeLvQptX86wJ0CeHmULxbgBk9ACo8WuXLMj05/Bnsad29
-         hBMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709036515; x=1709641315;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fox2FOTrnn7H7ARtUpilsDQjBFro1sbb1UtQfPOSFHk=;
-        b=LMwsVxOzUgFfwcbYwEsdKJyDRkbf5Ebqd5PclP3vP5q4JotclYzabKny3dkh/o6P/U
-         ZA107cPo3rtaOMpWCtjvj3xGUOWKvdnZ3yXcjjehHbb6u7Cl5OM1gmNV5maWYLnXaF8P
-         6fYVVMvE+uluV4bzHooReqKYeqx5C1dNt4GdXOrZkr8h3ybOZ304i+5XvQePO3Lr+S+8
-         byWxeSu3QuywLY1ZMYvZtOQBYbgcPysCODuaPPmSjyY5L0nxvu5JUPXd6+4AKWf/CU89
-         /juH2T5kCnqRDr1pWiiRRYYnyKFADlMAOOIm1ovPzNhN2jsMFe9z4MB3c7SOcye03Eda
-         pOMw==
-X-Forwarded-Encrypted: i=1; AJvYcCW23oASGWnBwoKetYxaa0gOG7DlIxoq59JMcFRAHRPSNfNqLXCwIl4wtx/DrgfbWFrYmB7hZcrI9yrx0MG7JBU/Mdhr0WD4MnKImMOnYw==
-X-Gm-Message-State: AOJu0YySZ8wXnqk3HWjGtdea2rHpMjbmgfUxWSYv6/3dWCi+S0pdx7Cj
-	fKAGXPdb4MAeJf4GBNOfsj8I+fi9LdBCOQOxMZXMLNTJLYi/pX9Amy/NrmiS3A==
-X-Google-Smtp-Source: AGHT+IHOZyIvtu9udPjddxeRBkjckef05G60ZrgUBTNS/Hn/UgLmDOmQzD5ShaYiOTnnINlgtxpJEw==
-X-Received: by 2002:a17:903:181:b0:1dc:b173:f27b with SMTP id z1-20020a170903018100b001dcb173f27bmr4528891plg.32.1709036515334;
-        Tue, 27 Feb 2024 04:21:55 -0800 (PST)
-Received: from thinkpad ([117.213.97.177])
-        by smtp.gmail.com with ESMTPSA id h8-20020a170902b94800b001dba356b96esm1406270pls.306.2024.02.27.04.21.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 04:21:54 -0800 (PST)
-Date: Tue, 27 Feb 2024 17:51:41 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Frank Li <Frank.li@nxp.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-	Niklas Cassel <cassel@kernel.org>
-Subject: Re: [PATCH v8 06/10] PCI: dwc: ep: Call dw_pcie_ep_init_registers()
- API directly from all glue drivers
-Message-ID: <20240227122141.GN2587@thinkpad>
-References: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
- <20240224-pci-dbi-rework-v8-6-64c7fd0cfe64@linaro.org>
- <ZdzEoXwU42rFCF/W@lizhi-Precision-Tower-5810>
+	s=arc-20240116; t=1709036690; c=relaxed/simple;
+	bh=aVwTDpgYEdrZI3vDH6C4TNu2Fx5LABUkuIt5XlkGYq4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pHakDffHSgHCPyxJLDnJGXiEVk1aSQFA/Gx/yfssDleLNQq7WdENLz2ULXpH7LxyUnj3mx+Cc5x+DZLN4gtq/fkyCLVkYAlVRTPqhhVOv3ba3emWwfYHZ1sOo5zX4A1RIu+JiSaGx6ciVuZRSjsUBVqOM8hLZ/UPPRPXMyFqHHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QiXTSOo7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9YfbS000519;
+	Tue, 27 Feb 2024 12:24:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=IE0VW1j
+	h448aXmao0Jg+0epM3kKiquSK6nql7Ie2IiI=; b=QiXTSOo708baJAvVb21hQKP
+	TOBdJL+Tct79R0Ufi4KMUV2gwvbvfqhEHme2KnoM35HIvTjEvX0au/IkefuCkvet
+	gVo/cwx9o8eBHnBOy8bhLsgVkQ2MRWQg6uOr1MeKGAC+A5E0kP2yfleD1uU/T/tH
+	FcNSYjwzn9ve92ZW8dQKp9YZ9TRV1p9zRoYYrWGS667xLNVnr8JAf2IGdQe5HWqe
+	fOjb1Egp3cWzp19apgiJkk5LsYNyu1trolep4qT9XHL+AzGYnjAXUctikvn9vArY
+	vMVoCH/HqaDzWYG+PSpqspwgHyWQomfyy11Tk979CXk1a7OyYUlL9sAhy2nc5fA=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh6nrh5f2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 12:24:42 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RCOfwQ012738
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 12:24:41 GMT
+Received: from grosikop.eu.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 27 Feb 2024 04:24:38 -0800
+From: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
+        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
+Subject: [PATCH 0/9] Move camss version related defs in to resources
+Date: Tue, 27 Feb 2024 14:24:06 +0200
+Message-ID: <20240227122415.491-1-quic_grosikop@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZdzEoXwU42rFCF/W@lizhi-Precision-Tower-5810>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DPlZSTGkA2ZjpVmzaoz_y-UkkIArSU5m
+X-Proofpoint-ORIG-GUID: DPlZSTGkA2ZjpVmzaoz_y-UkkIArSU5m
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_11,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 clxscore=1011 suspectscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 mlxlogscore=938 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402270097
 
-On Mon, Feb 26, 2024 at 12:04:33PM -0500, Frank Li wrote:
-> On Sat, Feb 24, 2024 at 12:24:12PM +0530, Manivannan Sadhasivam wrote:
-> > Currently, dw_pcie_ep_init_registers() API is directly called by the glue
-> > drivers requiring active refclk from host. But for the other drivers, it is
-> > getting called implicitly by dw_pcie_ep_init(). This is due to the fact
-> > that this API initializes DWC EP specific registers and that requires an
-> > active refclk (either from host or generated locally by endpoint itsef).
-> > 
-> > But, this causes a discrepancy among the glue drivers. So to avoid this
-> > confusion, let's call this API directly from all glue drivers irrespective
-> > of refclk dependency. Only difference here is that the drivers requiring
-> > refclk from host will call this API only after the refclk is received and
-> > other drivers without refclk dependency will call this API right after
-> > dw_pcie_ep_init().
-> > 
-> > This change will also allow us to remove the "core_init_notifier" flag in
-> > the later commits.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pci-dra7xx.c           |  7 +++++++
-> >  drivers/pci/controller/dwc/pci-imx6.c             |  8 ++++++++
-> >  drivers/pci/controller/dwc/pci-keystone.c         |  9 +++++++++
-> >  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  7 +++++++
-> >  drivers/pci/controller/dwc/pcie-designware-ep.c   | 22 ----------------------
-> >  drivers/pci/controller/dwc/pcie-designware-plat.c |  9 +++++++++
-> >  drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 12 +++++++++++-
-> >  drivers/pci/controller/dwc/pcie-uniphier-ep.c     | 13 ++++++++++++-
-> >  8 files changed, 63 insertions(+), 24 deletions(-)
+The different resources required for different camss versions are
+split in to two groups:
 
-[...]
+1. Camss device related. In this group are all resources described
+in the device tree, clocks, regulators etc.
 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > index ed1f2afd830a..278bdc9b2269 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > @@ -729,7 +729,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
-> >  	struct device *dev = pci->dev;
-> >  	struct platform_device *pdev = to_platform_device(dev);
-> >  	struct device_node *np = dev->of_node;
-> > -	const struct pci_epc_features *epc_features;
-> >  
-> >  	INIT_LIST_HEAD(&ep->func_list);
-> >  
-> > @@ -775,29 +774,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
-> >  		goto err_exit_epc_mem;
-> >  	}
-> >  
-> > -	if (ep->ops->get_features) {
-> > -		epc_features = ep->ops->get_features(ep);
-> > -		if (epc_features->core_init_notifier)
-> > -			return 0;
-> > -	}
-> 
-> why remove this check?
-> 
+2. Sub-device specific resources. In the initialization
+of the each sub-device, the version of camss is passed.
+Based on this version the sub-device adds: hw layer support,
+per pad formats, number of dma's etc.
 
-There is no point in keeping this check since we are removing the call to
-dw_pcie_ep_init_registers() below. But I should've described this change in the
-commit message.
+The code for "1" group lives in camss.c itself. However the "2" group
+is spread across all sub-device implementations including video device.
 
-- Mani
+This kind of separation is not very convenient when adding new hw
+version. The reason is that you need to add support in all sub-device
+implementations.
+
+There were some improvements in this direction where some of the
+hw version related definitions were moved in to the "1". One
+example is attaching of the hw operations.
+
+This series aim to improve the things more and add additional definitions
+in to the "1".
+
+
+What is included:
+
+- Remove all format definitions from camss video. The will be passed
+  by the parent sub-device
+
+- Make camss generic format definition mapping, containing mbus to
+  v4l2 mapping, mbus bpp and other required fields used by the
+  sub-device and video node.
+
+- Add per sub-device type union in the resources, different
+  sub-devices are using different resources, as an example: is_lite flag.
+
+- Move camss link operation in to the resources. Currently one
+  function supports different topologies depending of the number
+  of devices. As hw version support increases this is not good
+  way of supporting different topologies.
+
+- Add parent device ops in to the resources. This resolves
+  inter-dependencies of vfe and csid. Csid requests the clocks
+  regulators etc from parent device instead calling directly vfe
+  functions.
+
+- Some cleanups in csid code for split the configuration of
+  RX and testgen and RDI.
+
+Atanas Filipov (1):
+  media: qcom: camss: Decompose register and link operations
+
+Milen Mitkov (3):
+  media: qcom: camss: Designate lite subdevices in resources
+  media: qcom: camss: Split testgen, RDI and RX for CSID 170
+  media: qcom: camss: Decouple VFE from CSID
+
+Radoslav Tsvetkov (5):
+  media: qcom: camss: Add per sub-device type resources
+  media: qcom: camss: Attach formats to VFE resources
+  media: qcom: camss: Attach formats to CSID resources
+  media: qcom: camss: Attach formats to CSIPHY resources
+  media: qcom: camss: Move format related functions
+
+ drivers/media/platform/qcom/camss/Makefile    |   1 +
+ .../platform/qcom/camss/camss-csid-4-1.c      | 132 +---
+ .../platform/qcom/camss/camss-csid-4-7.c      | 160 +----
+ .../platform/qcom/camss/camss-csid-gen2.c     | 410 +++++--------
+ .../media/platform/qcom/camss/camss-csid.c    | 512 +++++++++++++++-
+ .../media/platform/qcom/camss/camss-csid.h    |  32 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |  73 +--
+ .../media/platform/qcom/camss/camss-csiphy.h  |  23 +-
+ .../media/platform/qcom/camss/camss-format.c  |  98 +++
+ .../media/platform/qcom/camss/camss-format.h  |  67 ++
+ .../media/platform/qcom/camss/camss-vfe-170.c |  10 +-
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   4 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |   6 +-
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |   6 +-
+ .../platform/qcom/camss/camss-vfe-gen1.c      |   8 +-
+ drivers/media/platform/qcom/camss/camss-vfe.c | 483 +++++++++------
+ drivers/media/platform/qcom/camss/camss-vfe.h |  22 +-
+ .../media/platform/qcom/camss/camss-video.c   | 294 +--------
+ .../media/platform/qcom/camss/camss-video.h   |   5 +-
+ drivers/media/platform/qcom/camss/camss.c     | 577 +++++++++++++-----
+ drivers/media/platform/qcom/camss/camss.h     |  28 +-
+ 21 files changed, 1656 insertions(+), 1295 deletions(-)
+ create mode 100644 drivers/media/platform/qcom/camss/camss-format.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-format.h
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.17.1
+
 
