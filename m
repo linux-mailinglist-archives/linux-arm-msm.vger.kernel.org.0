@@ -1,121 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-12664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63F04868D14
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:12:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D3FB868D6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:23:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 141721F24962
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:12:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2489528E5FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:23:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E56137C5F;
-	Tue, 27 Feb 2024 10:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E2061384A3;
+	Tue, 27 Feb 2024 10:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kB89Gxti"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DiNtSMHw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE51C137C2D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 10:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4E1137C42
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 10:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709028766; cv=none; b=DpUBiH8nG9+cW+vSZV8EYXfOk/7z/Vpu8tvJfisuNa83wR3mJ3BYeWJoPVOIw5NmQH0hOfbhkA1aID/jLpYEmLvKEWgd+LsbbjipmNCXZ8sThwOG90tLeCDLc5Z+ITq9oic6Dijcdkg/uNjwv9tQ5GvUW7BV125MEOr5qJy4ku8=
+	t=1709029410; cv=none; b=jj1CpkiX5XIlLOYVMhmO+wln+22UuaUxKL2DxJgUjTc6ItoTgvo1sLmIY368+C/6hQmvjTCNISeDdT9yauruNG5rBLdaDkAvekqSdh3WlWhwc74P0gOwtINLiXGRY5zH/6SX6xdmDSTkKyy60bHgirDbSOHFvVilFDeG+SgSZzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709028766; c=relaxed/simple;
-	bh=RPCuL5Zw1DFBhHuejMGcZGxtCQR3v1sWQkrzuFlOItw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VQD5+qM1Lj3D//0Za64tf5ZlhlksBZht0YH+zbDP5bWk4RL9MNs3N4aPGTxjof/m9JBxc0FwKZpcabe9xCfcjMzqMRysMIZkBEcWfnxHOBVdwIpAUgwW2lbNJTaADfEHFxBQhqN2cpC2vCX0I6dSFQOxXr+pZ205Br0c9P6CclU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kB89Gxti; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-512fe342841so1598516e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 02:12:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709028763; x=1709633563; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xdcTuKOvy0EUhMzr/avSzwKVXZwTIOQgOR4V6+G/+Rk=;
-        b=kB89Gxtic681XuWzwVRiaaSR5JV8/Qh2YIUtDwLeVvGUBCgYgCZ//l9iHV28/FaGyK
-         wlLB61x0NGBDbnOaDyRd486jCLFfRX4cxHpsgt6qzC+MttknQMEUbY91AFLtbikTOrYI
-         EXXldOwRk67Jj4PTBp7vd1VMNrmqmGyy6BwGdWxqDaLogzQXlDyFvKlbQ8HqVL9Xg6N+
-         5QUesUgq7ycp6M3gKV5CrKzNuTmNXc40J8AGdjBd3KgY4RuVVk/J2HlRIolpPLpu/a9/
-         OWvAZRdEn6lP/7M8C4syQV9AJ7a/dS/PJW3tC4MYfV6EXK2x/O7zktC2EQCA7hNIQbYO
-         86xg==
+	s=arc-20240116; t=1709029410; c=relaxed/simple;
+	bh=2Q9KDrmM9tt6dM0nCK12JSvCihakXCdWBvUsQ+hydqc=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=meNKRv0vJKryyRBVjMQeqRFSb0h14CGtIuTkJrLipI/Z9DMZiuPgw9KgCcT3GBPaHCPKpYqk59sVEB3OX/r3zqz9K/L8UidQQ6cO/5/uos37jrzrZmVL82BeW8KgYWAynJcxgHxeyY5KXLDwvUYrH1SLUPsTUTsdq20k/J7nz8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DiNtSMHw; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1709029407;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=WtGehCEFfElimHD+TqShgtHsXC4dbFxlCmNc54Gi17M=;
+	b=DiNtSMHww6O/gV7Ta0ZGR4KSarrPv4KtoUwUDjkl+0zkaGfc6GfqJep9TrjDAOUp85o1SM
+	kt+C3+wec8ccd6js7tJSjGxrUniWYHft9ZMjyP0SovpqRhEpC0UkUVgyAKpMulw5Nw9hJu
+	mR5kIxJdMoh6dsQq8FwQpqUVtoJNq5o=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-694-WXCppDC9Mf6yMv5j2xdCpA-1; Tue, 27 Feb 2024 05:23:25 -0500
+X-MC-Unique: WXCppDC9Mf6yMv5j2xdCpA-1
+Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-21e5a8045ecso606961fac.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 02:23:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709028763; x=1709633563;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1709029405; x=1709634205;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xdcTuKOvy0EUhMzr/avSzwKVXZwTIOQgOR4V6+G/+Rk=;
-        b=BWY9rKpM2bgALpdb93vWkMKxox1csjV5T79Lub3bEQ6Z6AnfY3VCoaYEeeGGZ5ILCh
-         xbtWYw9GzO3N+pk1bB9ui9yYN+QzI+YOMwrhOGqcTcXA5ifW7XpqzKFr1WIqxAP5oBYm
-         uZOzgNtuUo5rha/V1OMLB7TLWNHzPDRpXQwTOzPttxullDXD0sEuiDN8+TrFr7xkjW1D
-         rRdTwmhN/i0WzqzttM5T0WuPF/YC2DU/5KRKM/KkZgSgBbptFHUk0ynVRHt7ht0/thyh
-         rRJ4B6jxobWtYn38GX+48gSPgqsC2m5MkUyvBxGfSiDBS5szLyYgNwhOwdOT7TBed4ZE
-         zBJw==
-X-Forwarded-Encrypted: i=1; AJvYcCWh4WWiVufsFHSmlJ+eT8mQPEfp4MmN8NczDQ9xmI/RAMi8BDoKNvY3Avl+1tUGK+vMSo52cTlag99y0qTphq4GlQuuhRGAKUUKSvzgPg==
-X-Gm-Message-State: AOJu0YzeeJLRFkVHVlCKHJdBw/wtL7thsJ3Pd9pxZNQvv+qEHohiZQMW
-	qpGpb3JPPNWQWZSOKcNuRI43zPwyHOxCZ9DV0yoLRKKzC/gbxr3eH7DWqKNdlu8=
-X-Google-Smtp-Source: AGHT+IEuX+LAvgGR0dujrY6Se1xlvX+40UrwavICTj8b1/cNQL1xPoiOn1bdI5jJdrL4sEXbMeapyQ==
-X-Received: by 2002:a05:6512:11cf:b0:512:f389:d6e0 with SMTP id h15-20020a05651211cf00b00512f389d6e0mr2702097lfr.4.1709028763072;
-        Tue, 27 Feb 2024 02:12:43 -0800 (PST)
-Received: from [172.30.204.241] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id x18-20020ac24892000000b005128d0e2a07sm1136919lfc.308.2024.02.27.02.12.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Feb 2024 02:12:42 -0800 (PST)
-Message-ID: <f5b373cf-79fb-4d62-9d3f-9a9ffbfb5d8a@linaro.org>
-Date: Tue, 27 Feb 2024 11:12:37 +0100
+        bh=WtGehCEFfElimHD+TqShgtHsXC4dbFxlCmNc54Gi17M=;
+        b=bmGWGYcoJjGD1FjpdERYZ7QZ4hlu+IwMf84pM3Ai2Ey1BGKaflihXzY9W2bPYDmDJX
+         Mqp53FSjEnLLktZ0aZdeeAm2WZhA2RGnNgvUJD68kGJAk4w8qs31dxVOIDnj5Nb93sp5
+         CMO/NYH5uO8tY5qaDkfPmna75/jlNMjfJ8qowkbO2Ise+eqURMrBBuUyTy6osBXdeWtd
+         H31BTC9eOO1uF+rElmB6X0HqCRc24hGHG7Fjy6+rwSBMYwcmFvVhrg9c/w+WrkKrqMYS
+         euWwT/tyIEYoekif6tQRUszin6ibAO16nBY5MJutldMS/fpbSzN1zpMr+DB0mSnA5Hna
+         khtw==
+X-Forwarded-Encrypted: i=1; AJvYcCVhQsyGYwsZmUMsw0o/6xFQdI4qg/kpM/M/QKbPJ2BW+p70t0HRs9upZgRTesxDxI614GhAoggvZYCdkMI+6L1JGFSQQr8+Bi0xg3s2VA==
+X-Gm-Message-State: AOJu0YyVZ3yzqKLGgxswZ5bgAreoz9L12bmRQkRtUeSrpHkKJH3uKqmP
+	eCcPXXXGtFaieISYLDvx7YY3JXRxtIC8QoSV8lpMu8auaYSBhNtXbgurW5WKp55R0ZiNexhZW6Z
+	sJFl7umZcZJb3Cv1nUVIq1fxvtoLNNyiX5enpVb88yiukZuDNehlCWn/KHdv5/4c=
+X-Received: by 2002:a05:6871:7806:b0:21e:c50a:5e91 with SMTP id oy6-20020a056871780600b0021ec50a5e91mr10378084oac.0.1709029405167;
+        Tue, 27 Feb 2024 02:23:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOrA1Nby4BCC+kPq5RbsZ68EDRxHVTjrQk/S01m5vEVtY4OYChDEowwg6U8GBImhvB3q18FA==
+X-Received: by 2002:a05:6871:7806:b0:21e:c50a:5e91 with SMTP id oy6-20020a056871780600b0021ec50a5e91mr10378065oac.0.1709029404831;
+        Tue, 27 Feb 2024 02:23:24 -0800 (PST)
+Received: from gerbillo.redhat.com (146-241-245-60.dyn.eolo.it. [146.241.245.60])
+        by smtp.gmail.com with ESMTPSA id r3-20020a056830134300b006e496865b32sm1128766otq.43.2024.02.27.02.23.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 02:23:23 -0800 (PST)
+Message-ID: <f656e38ff276f6c73d0b59eb301528cf3ae322e9.camel@redhat.com>
+Subject: Re: [PATCH net-next 1/6] net: ipa: don't bother aborting system
+ resume
+From: Paolo Abeni <pabeni@redhat.com>
+To: Alex Elder <elder@linaro.org>, davem@davemloft.net, edumazet@google.com,
+  kuba@kernel.org
+Cc: mka@chromium.org, andersson@kernel.org, quic_cpratapa@quicinc.com, 
+ quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+ quic_subashab@quicinc.com,  elder@kernel.org, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org
+Date: Tue, 27 Feb 2024 11:23:18 +0100
+In-Reply-To: <20240223133930.582041-2-elder@linaro.org>
+References: <20240223133930.582041-1-elder@linaro.org>
+	 <20240223133930.582041-2-elder@linaro.org>
+Autocrypt: addr=pabeni@redhat.com; prefer-encrypt=mutual; keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] A702 support
-To: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20240219-topic-rb1_gpu-v2-0-2d3d6a0db040@linaro.org>
- <20240227101055.GA13753@willie-the-truck>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240227101055.GA13753@willie-the-truck>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
+On Fri, 2024-02-23 at 07:39 -0600, Alex Elder wrote:
+> The IPA interrupt can fire if there is data to be delivered to a GSI
+> channel that is suspended.  This condition occurs in three scenarios.
+>=20
+> First, runtime power management automatically suspends the IPA
+> hardware after half a second of inactivity.  This has nothing
+> to do with system suspend, so a SYSTEM IPA power flag is used to
+> avoid calling pm_wakeup_dev_event() when runtime suspended.
+>=20
+> Second, if the system is suspended, the receipt of an IPA interrupt
+> should trigger a system resume.  Configuring the IPA interrupt for
+> wakeup accomplishes this.
+>=20
+> Finally, if system suspend is underway and the IPA interrupt fires,
+> we currently call pm_wakeup_dev_event() to abort the system suspend.
+>=20
+> The IPA driver correctly handles quiescing the hardware before
+> suspending it, so there's really no need to abort a suspend in
+> progress in the third case.  We can simply quiesce and suspend
+> things, and be done.
+>=20
+> Incoming data can still wake the system after it's suspended.
+> The IPA interrupt has wakeup mode enabled, so if it fires *after*
+> we've suspended, it will trigger a wakeup (if not disabled via
+> sysfs).
+>=20
+> Stop calling pm_wakeup_dev_event() to abort a system suspend in
+> progress in ipa_power_suspend_handler().
+>=20
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+> Note: checkpatch warns: braces {} are not necessary...
+>=20
+>  drivers/net/ipa/ipa_power.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+> index 128a816f65237..694bc71e0a170 100644
+> --- a/drivers/net/ipa/ipa_power.c
+> +++ b/drivers/net/ipa/ipa_power.c
+> @@ -220,8 +220,9 @@ void ipa_power_suspend_handler(struct ipa *ipa, enum =
+ipa_irq_id irq_id)
+>  	 * system suspend, trigger a system resume.
+>  	 */
+>  	if (!__test_and_set_bit(IPA_POWER_FLAG_RESUMED, ipa->power->flags))
+> -		if (test_bit(IPA_POWER_FLAG_SYSTEM, ipa->power->flags))
+> -			pm_wakeup_dev_event(&ipa->pdev->dev, 0, true);
+> +		if (test_bit(IPA_POWER_FLAG_SYSTEM, ipa->power->flags)) {
+> +			;
+> +		}
 
+FTR, I would have dropped the whole 'if' statement above and the
+related comment in this patch, saving a few checkpatch warnings. Not a
+big deal since the the chunk is removed a few patches later.
 
-On 2/27/24 11:10, Will Deacon wrote:
-> On Fri, Feb 23, 2024 at 10:21:36PM +0100, Konrad Dybcio wrote:
->> Bit of a megaseries, bunched together for your testing convenience..
->> Needs mesa!27665 [1] on the userland part, kmscube happily spins.
->>
->> I'm feeling quite lukewarm about the memory barriers in patch 3..
->>
->> Patch 1 for Will/smmu, 5-6 for drm/msm, rest for qcom
-> 
-> I'm guessing you don't really expect me to take the clock bindings?!
+Cheers,
 
-Sorry, I didn't remove this hunk from v1 (where it was smmu changes
-that you already took)!
+Paolo
 
-Konrad
 
