@@ -1,129 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-12660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2945868CBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:56:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8715B868CBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:56:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C744283881
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 09:56:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E97581F24A56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 09:56:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A301369B8;
-	Tue, 27 Feb 2024 09:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3A4E133285;
+	Tue, 27 Feb 2024 09:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OiFV8mT3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27C313699C;
-	Tue, 27 Feb 2024 09:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A22013699C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 09:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709027759; cv=none; b=gGKALv32GWBb33rVUMLxjSKE7wWHkk6Aa5KAvoXqSDNKH9G2R1U59XUISaHa2jGyV00+smkJZWF82q/0zrJzwIxuvMxTxKT+JIQHCu9YfQTBMOv5hC8/TwqD6BzgnlLJAQtLsvoxdVryfpAc1ZWEQKSJQmzNUen4oLXAplI8sH4=
+	t=1709027770; cv=none; b=mqn63+w3zjwYrwdJu6jmoCabgTd8TY2K73I7TXyDNNumhcKnVesEahZNb2rrPUxksJMh0nVf6i6O/sNA1EMa7HDFJUq89qZEMgB7xxVakMvweV3vsP4nIxuxQiEMDZ/NRAVEeZMIx86CRTccnYv7uFVv77HT1o0Yv4PteKbhPoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709027759; c=relaxed/simple;
-	bh=xq3qBvU4gk1ltWqMXc7Ql/8kJ/Mxz+rJm9geJy5TnhA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b1AgDgSOaG/iJx5l8qbaVSPvVtF/c6haCP4jPGs8RQEqB0o1yN8/s95P2TJ4A8MMiGT4Q0uMJLbVkw/H9Razt8p79xV4KnPhO29ePPgOz0svUNO5CX28pS3dz7Ky+Y8gilGj9JJw4v+yrwuUZcRksz3rlT6f9WbA2XP8gqm85Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 3cf98a80e6454bb8b1d6f00fd9077175-20240227
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.37,REQID:162797f2-c538-442e-bc87-ce312ef5383f,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:-5
-X-CID-INFO: VERSION:1.1.37,REQID:162797f2-c538-442e-bc87-ce312ef5383f,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:-5
-X-CID-META: VersionHash:6f543d0,CLOUDID:d9de43ff-c16b-4159-a099-3b9d0558e447,B
-	ulkID:2402271312595MEHZP25,BulkQuantity:5,Recheck:0,SF:24|17|19|44|64|66|1
-	02,TC:nil,Content:0,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:nil,BEC:
-	nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 1,FCT|NGT
-X-CID-BAS: 1,FCT|NGT,0,_
-X-CID-FACTOR: TF_CID_SPAM_FSI,TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-UUID: 3cf98a80e6454bb8b1d6f00fd9077175-20240227
-Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
-	(envelope-from <chentao@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 763447630; Tue, 27 Feb 2024 17:55:49 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
-	by mail.kylinos.cn (NSMail) with SMTP id 493D2E000EBC;
-	Tue, 27 Feb 2024 17:55:49 +0800 (CST)
-X-ns-mid: postfix-65DDB1A5-1319371114
-Received: from kernel.. (unknown [172.20.15.254])
-	by mail.kylinos.cn (NSMail) with ESMTPA id 6132CE000EBC;
-	Tue, 27 Feb 2024 17:55:48 +0800 (CST)
-From: Kunwu Chan <chentao@kylinos.cn>
-To: manivannan.sadhasivam@linaro.org
-Cc: chentao@kylinos.cn,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev
-Subject: Re: [PATCH] bus: mhi: ep: Simplify the allocation of slab caches in mhi_ep_register_controller
-Date: Tue, 27 Feb 2024 17:55:47 +0800
-Message-Id: <20240227095547.160357-1-chentao@kylinos.cn>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240227051236.GA2587@thinkpad>
-References: <20240227051236.GA2587@thinkpad>
+	s=arc-20240116; t=1709027770; c=relaxed/simple;
+	bh=0vkry09dbrjmRYGjaxCJORMsWZUMZhqHrh0ALLXIcFI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o55CiFfhXvV78qFcggHwBFNlgN2PTQQjnclQfbjNtKQCQMRhGLq+h9vFr/VM8/w/cvtyV6557tZ5wtaFnSLChzXm6NRnvjXPGFsFKNmkne19W3nce6n0DQ4TwcEIPn73PmXSnQxim6RAMmCMLlVoIAGiYZclrfBYH6hUGjTlW+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OiFV8mT3; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1dcab44747bso13212155ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 01:56:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709027768; x=1709632568; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Q0zvhbCPiCFCYCeFD7LK8Y8h9az5jZBUIzn1XEZBm2A=;
+        b=OiFV8mT3qKOTMLwplZf0jPvlGIJrNuRVbPB0JvoL/1d0m5oXNhDw5nN8h4R5SeO2fh
+         3rnT+XIjjtHJ1GR3vJHgPISW9/V2cQspAiMoced/KbQsu+YhU53gb7JKcagnBlELQ3d3
+         gob6beO/NlWY6nnFZDYU1OAR7RiEOBqGs6QYd5YMgtPRexNi45yTn5Wkfqf8WygZ122p
+         Cpyre+sLicOwCMl8GXunuft3epN53k0LTO/+JXZ1xXHEeR/9vW6+sHz6fTZZvNGTjY0R
+         qXN4R6zlIRScRyie7Uqs/bx7KKy+NHd6zkvJw2EC9xTVC23Z/smWsHllKOfftxwy+rA6
+         Gx+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709027768; x=1709632568;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0zvhbCPiCFCYCeFD7LK8Y8h9az5jZBUIzn1XEZBm2A=;
+        b=xLUFfZQCVmHHQgVt85rqlCPttVpAl2HFZRHtcpLO/nTFhPjDKo81q3fo5Phwdassmv
+         Q86wxrCLwYDlMK8qKKfWBPQm1CqcxgEv1Nq/RdSBeKGZlQ+Op4nOM1irF1/oJbNDlsiB
+         sxZvLMFEJtMeiLRsNEqmtNjMHPx+JN8M6g7iRCRkGmdSshbDJyOa3EB/uXO90DHxnB0P
+         zZ1p35UmiI+iag82Q/31M9ORUCFARTOyu7qZFszDpPU4Lj+dgAVkEIK83VJMsQuEHRVR
+         +wc9Z1t3fpGBC7k3Oi4G96zULn5j755ozraA2pLGWVdM9PuZmf8eZJ6DeicDc7709pRi
+         lqxA==
+X-Forwarded-Encrypted: i=1; AJvYcCVKeOdkR5SBJ1tuZA4iMJBLs/Hn/W1UfzYEAYdmBkC8YkAAfqC6J+HnW5XqMNbMvpg8NKC040ABOTKLgPw3pXxJOtDEaF5V0VJJSI/Wug==
+X-Gm-Message-State: AOJu0YxCb1VaO9Jv/U0CfWRECUNCdVy2pFj4DifAC4xaIoH8szlsX6y3
+	dCkD31bqg1BZFnXGGPEikIdF5TLLJrVA7DQEnWYiNSKI8r+l0xQeAbW7c1NRaQ==
+X-Google-Smtp-Source: AGHT+IE9YTOwwA5pib+X9K66GLYALzgiY71GH4bQuMmT3p83XMqAy3UfA9W4xlkOJqFp3BKOBu0+Xw==
+X-Received: by 2002:a17:903:24e:b0:1dc:7890:72d6 with SMTP id j14-20020a170903024e00b001dc789072d6mr10534336plh.22.1709027768485;
+        Tue, 27 Feb 2024 01:56:08 -0800 (PST)
+Received: from thinkpad ([117.213.97.177])
+        by smtp.gmail.com with ESMTPSA id jz12-20020a170903430c00b001dca68b97d3sm1149704plb.44.2024.02.27.01.56.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 01:56:08 -0800 (PST)
+Date: Tue, 27 Feb 2024 15:26:02 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Baochen Qiang <quic_bqiang@quicinc.com>
+Cc: ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
+Subject: Re: [PATCH v2 2/3] net: qrtr: support suspend/hibernation
+Message-ID: <20240227095602.GK2587@thinkpad>
+References: <20240227063613.4478-1-quic_bqiang@quicinc.com>
+ <20240227063613.4478-3-quic_bqiang@quicinc.com>
+ <20240227071531.GD2587@thinkpad>
+ <7b743820-850a-4871-a0d8-aded36e11aba@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=8bit
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b743820-850a-4871-a0d8-aded36e11aba@quicinc.com>
 
-Thanks for the reply.
-> > On Wed, Feb 21, 2024 at 04:59:37PM +0800, Kunwu Chan wrote:
-> > Use the new KMEM_CACHE() macro instead of direct kmem_cache_create
-> > to simplify the creation of SLAB caches.
-> >=20
->=20
-> There are multiple instances of kmem_cache_create() in this driver. Cou=
-ld you
-> change them also?
+On Tue, Feb 27, 2024 at 04:39:41PM +0800, Baochen Qiang wrote:
+> 
+> 
+> On 2/27/2024 3:15 PM, Manivannan Sadhasivam wrote:
+> > On Tue, Feb 27, 2024 at 02:36:12PM +0800, Baochen Qiang wrote:
+> > > MHI devices may not be destroyed during suspend/hibernation, so need
+> > > to unprepare/prepare MHI channels throughout the transition, this is
+> > > done by adding suspend/resume callbacks.
+> > > 
+> > > The suspend callback is called in the late suspend stage, this means
+> > > MHI channels are still alive at suspend stage, and that makes it
+> > > possible for an MHI controller driver to communicate with others over
+> > > those channels at suspend stage. While the resume callback is called
+> > > in the early resume stage, for a similar reason.
+> > > 
+> > > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+> > > 
+> > > Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+> > 
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Could you please confirm if this patch can be applied separately and won't cause
+> > regression?
+> Just searched the kernel and found another two drivers using IPCR channels,
+> one is pci_epf_mhi_driver in drivers/pci/endpoint/functions/pci-epf-mhi.c
+> and the other is mhi_pci_driver in drivers/bus/mhi/host/pci_generic.c.
+> 
+> For pci_epf_mhi_driver, this is not impacted because the devices for those
+> channels are attached to mhi_ep_bus_type while QRTR MHI driver attached to
+> mhi_bus_type.
+> 
+> For mhi_pci_driver, I am afraid there would be regressions caused by this
+> patch. The regression is because when system suspends, mhi_pci_suspend() is
+> called and then qcom_mhi_qrtr_pm_suspend_late() called, however the latter
+> would fail because MHI is moved to M3 state by call mhi_pm_suspend() in
+> mhi_pci_suspend(). To address this, there might be two options: the first is
+> to move mhi_pci_suspend() to a late suspend stage which would be called
+> after qcom_mhi_qrtr_pm_suspend_late(). and the second is to avoid whole QRTR
+> suspend operation in such cases. I prefer the second one, because if MHI is
+> going to suspend, instead of power down, it is pointless to unprepare MHI
+> channels and re-prepare them after resume back. We can achieve this purpose
+> by adding a status_cb() to QRTR MHI driver which would be called when MHI
+> goes to low power mode. And then QRTR MHI driver could decide not to
+> suspend/resume if low power mode is notified.
+> 
+> Your thoughts?
+> 
 
-Sure, I'll change all of them if possible in v2 patch.
+I'd rather query the MHI state of the device in suspend/resume callback using
+mhi_get_mhi_state(mhi_dev->mhi_cntrl) and if the device is found to be in M3
+(suspend) state, then I'd skip prepare/unprepare part.
 
->=20
-> - Mani
->=20
-> > Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-> > ---
-> >  drivers/bus/mhi/ep/main.c | 4 +---
-> >  1 file changed, 1 insertion(+), 3 deletions(-)
-> >=20
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index 65fc1d738bec..7b61d384b2b6 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -1493,9 +1493,7 @@ int mhi_ep_register_controller(struct mhi_ep_cn=
-trl *mhi_cntrl,
-> >  		goto err_destroy_ev_ring_el_cache;
-> >  	}
-> > =20
-> > -	mhi_cntrl->ring_item_cache =3D kmem_cache_create("mhi_ep_ring_item"=
-,
-> > -							sizeof(struct mhi_ep_ring_item), 0,
-> > -							0, NULL);
-> > +	mhi_cntrl->ring_item_cache =3D KMEM_CACHE(mhi_ep_ring_item, 0);
-> >  	if (!mhi_cntrl->ev_ring_el_cache) {
-> >  		ret =3D -ENOMEM;
-> >  		goto err_destroy_tre_buf_cache;
-> > --=20
-> > 2.39.2
-> >=20
-> >=20
->=20
-> --=20
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
->=20
- Thanks,
-	Kunwu.Chan
+Because this makes it clear that, if the device is in suspend state, then no
+need for the client drivers to unprepare/prepare the channels.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
