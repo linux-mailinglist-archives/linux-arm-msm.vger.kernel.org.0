@@ -1,163 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-12665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D3FB868D6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:23:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CCFF868D9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:30:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2489528E5FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:23:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB265B24C06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E2061384A3;
-	Tue, 27 Feb 2024 10:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F18F5577D;
+	Tue, 27 Feb 2024 10:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DiNtSMHw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfvCUwI4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4E1137C42
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 10:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541B32A8C1;
+	Tue, 27 Feb 2024 10:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709029410; cv=none; b=jj1CpkiX5XIlLOYVMhmO+wln+22UuaUxKL2DxJgUjTc6ItoTgvo1sLmIY368+C/6hQmvjTCNISeDdT9yauruNG5rBLdaDkAvekqSdh3WlWhwc74P0gOwtINLiXGRY5zH/6SX6xdmDSTkKyy60bHgirDbSOHFvVilFDeG+SgSZzE=
+	t=1709029832; cv=none; b=BSJ9fIeGiRSbfNaP2k9VRS/kGivSCaUPWOsCc9IX3AaGKWw/i1ubHt9mhbljAgPopNXRco00lpEGd7i78ge8AkYMagfNKrdi9Zk34Ci96A1d20HiMgOwSQsOWnUiFyQmlB+lJbGTjZCKjbjqkcSJTSjL7I7dbXz8NP2FmMJUCG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709029410; c=relaxed/simple;
-	bh=2Q9KDrmM9tt6dM0nCK12JSvCihakXCdWBvUsQ+hydqc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=meNKRv0vJKryyRBVjMQeqRFSb0h14CGtIuTkJrLipI/Z9DMZiuPgw9KgCcT3GBPaHCPKpYqk59sVEB3OX/r3zqz9K/L8UidQQ6cO/5/uos37jrzrZmVL82BeW8KgYWAynJcxgHxeyY5KXLDwvUYrH1SLUPsTUTsdq20k/J7nz8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DiNtSMHw; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1709029407;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=WtGehCEFfElimHD+TqShgtHsXC4dbFxlCmNc54Gi17M=;
-	b=DiNtSMHww6O/gV7Ta0ZGR4KSarrPv4KtoUwUDjkl+0zkaGfc6GfqJep9TrjDAOUp85o1SM
-	kt+C3+wec8ccd6js7tJSjGxrUniWYHft9ZMjyP0SovpqRhEpC0UkUVgyAKpMulw5Nw9hJu
-	mR5kIxJdMoh6dsQq8FwQpqUVtoJNq5o=
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-WXCppDC9Mf6yMv5j2xdCpA-1; Tue, 27 Feb 2024 05:23:25 -0500
-X-MC-Unique: WXCppDC9Mf6yMv5j2xdCpA-1
-Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-21e5a8045ecso606961fac.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 02:23:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709029405; x=1709634205;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WtGehCEFfElimHD+TqShgtHsXC4dbFxlCmNc54Gi17M=;
-        b=bmGWGYcoJjGD1FjpdERYZ7QZ4hlu+IwMf84pM3Ai2Ey1BGKaflihXzY9W2bPYDmDJX
-         Mqp53FSjEnLLktZ0aZdeeAm2WZhA2RGnNgvUJD68kGJAk4w8qs31dxVOIDnj5Nb93sp5
-         CMO/NYH5uO8tY5qaDkfPmna75/jlNMjfJ8qowkbO2Ise+eqURMrBBuUyTy6osBXdeWtd
-         H31BTC9eOO1uF+rElmB6X0HqCRc24hGHG7Fjy6+rwSBMYwcmFvVhrg9c/w+WrkKrqMYS
-         euWwT/tyIEYoekif6tQRUszin6ibAO16nBY5MJutldMS/fpbSzN1zpMr+DB0mSnA5Hna
-         khtw==
-X-Forwarded-Encrypted: i=1; AJvYcCVhQsyGYwsZmUMsw0o/6xFQdI4qg/kpM/M/QKbPJ2BW+p70t0HRs9upZgRTesxDxI614GhAoggvZYCdkMI+6L1JGFSQQr8+Bi0xg3s2VA==
-X-Gm-Message-State: AOJu0YyVZ3yzqKLGgxswZ5bgAreoz9L12bmRQkRtUeSrpHkKJH3uKqmP
-	eCcPXXXGtFaieISYLDvx7YY3JXRxtIC8QoSV8lpMu8auaYSBhNtXbgurW5WKp55R0ZiNexhZW6Z
-	sJFl7umZcZJb3Cv1nUVIq1fxvtoLNNyiX5enpVb88yiukZuDNehlCWn/KHdv5/4c=
-X-Received: by 2002:a05:6871:7806:b0:21e:c50a:5e91 with SMTP id oy6-20020a056871780600b0021ec50a5e91mr10378084oac.0.1709029405167;
-        Tue, 27 Feb 2024 02:23:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOrA1Nby4BCC+kPq5RbsZ68EDRxHVTjrQk/S01m5vEVtY4OYChDEowwg6U8GBImhvB3q18FA==
-X-Received: by 2002:a05:6871:7806:b0:21e:c50a:5e91 with SMTP id oy6-20020a056871780600b0021ec50a5e91mr10378065oac.0.1709029404831;
-        Tue, 27 Feb 2024 02:23:24 -0800 (PST)
-Received: from gerbillo.redhat.com (146-241-245-60.dyn.eolo.it. [146.241.245.60])
-        by smtp.gmail.com with ESMTPSA id r3-20020a056830134300b006e496865b32sm1128766otq.43.2024.02.27.02.23.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 02:23:23 -0800 (PST)
-Message-ID: <f656e38ff276f6c73d0b59eb301528cf3ae322e9.camel@redhat.com>
-Subject: Re: [PATCH net-next 1/6] net: ipa: don't bother aborting system
- resume
-From: Paolo Abeni <pabeni@redhat.com>
-To: Alex Elder <elder@linaro.org>, davem@davemloft.net, edumazet@google.com,
-  kuba@kernel.org
-Cc: mka@chromium.org, andersson@kernel.org, quic_cpratapa@quicinc.com, 
- quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
- quic_subashab@quicinc.com,  elder@kernel.org, netdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org
-Date: Tue, 27 Feb 2024 11:23:18 +0100
-In-Reply-To: <20240223133930.582041-2-elder@linaro.org>
-References: <20240223133930.582041-1-elder@linaro.org>
-	 <20240223133930.582041-2-elder@linaro.org>
-Autocrypt: addr=pabeni@redhat.com; prefer-encrypt=mutual; keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+	s=arc-20240116; t=1709029832; c=relaxed/simple;
+	bh=b+TmIZM1BbzBrs8DPklmaQytiyICHGa9Tx0B0KH98gs=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=VSveGgxwYQ8PB9ECV6maG7yxddVI57VJT9Zql/gT57DClz/dOzaLZfdORbFvmE8MLVYMd0mSsQPdeXBhFwsbjOYQ5Y8H0BsuYEajiWPg5055ywTvKAQKRTo/fJON/ZGyJ2KpDny7m1PF8Tya5vsQjRVCpZ21alS4/DQeMZV5dPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfvCUwI4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0FA02C43390;
+	Tue, 27 Feb 2024 10:30:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709029831;
+	bh=b+TmIZM1BbzBrs8DPklmaQytiyICHGa9Tx0B0KH98gs=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=YfvCUwI4tvPaW9gmzzc/9luJe2CCvi77NHfMBnrR9KbKUi7UQp0XND5fbAU8FDL2f
+	 4m0IW4qTGP/pLECfqC7GE8s0urYua2Sgp8CYnYXAWqkiLXZd8dHIZRUUpCYjRtgQUI
+	 nL1VgSSugvKLl7qctMTJEVjiF8e5S2YaF3Y8y2awb3vZaEHQnB1s9+cIb3HcCIghKA
+	 +Z0Zaz3RUkIp1Rkw7boGBTFAL2+cSpZAWXEBSSozXPL2s1fXe5DWc95YzifMvgFJqz
+	 dq9PC9GpU1vle625tJ/N0hefzWyuwFUHgzdzQ7GT1/YZ0qmDZsA2P8+F/+EDwj2QMe
+	 Imr//gcJaiPRg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7957D88FB6;
+	Tue, 27 Feb 2024 10:30:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next 0/6] net: ipa: don't abort system suspend
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170902983094.8915.2318266650538047473.git-patchwork-notify@kernel.org>
+Date: Tue, 27 Feb 2024 10:30:30 +0000
+References: <20240223133930.582041-1-elder@linaro.org>
+In-Reply-To: <20240223133930.582041-1-elder@linaro.org>
+To: Alex Elder <elder@linaro.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
+ quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+ quic_jponduru@quicinc.com, quic_subashab@quicinc.com, elder@kernel.org,
+ netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 
-On Fri, 2024-02-23 at 07:39 -0600, Alex Elder wrote:
-> The IPA interrupt can fire if there is data to be delivered to a GSI
-> channel that is suspended.  This condition occurs in three scenarios.
->=20
-> First, runtime power management automatically suspends the IPA
-> hardware after half a second of inactivity.  This has nothing
-> to do with system suspend, so a SYSTEM IPA power flag is used to
-> avoid calling pm_wakeup_dev_event() when runtime suspended.
->=20
-> Second, if the system is suspended, the receipt of an IPA interrupt
-> should trigger a system resume.  Configuring the IPA interrupt for
-> wakeup accomplishes this.
->=20
-> Finally, if system suspend is underway and the IPA interrupt fires,
-> we currently call pm_wakeup_dev_event() to abort the system suspend.
->=20
-> The IPA driver correctly handles quiescing the hardware before
-> suspending it, so there's really no need to abort a suspend in
-> progress in the third case.  We can simply quiesce and suspend
-> things, and be done.
->=20
-> Incoming data can still wake the system after it's suspended.
-> The IPA interrupt has wakeup mode enabled, so if it fires *after*
-> we've suspended, it will trigger a wakeup (if not disabled via
-> sysfs).
->=20
-> Stop calling pm_wakeup_dev_event() to abort a system suspend in
-> progress in ipa_power_suspend_handler().
->=20
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
-> Note: checkpatch warns: braces {} are not necessary...
->=20
->  drivers/net/ipa/ipa_power.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
-> index 128a816f65237..694bc71e0a170 100644
-> --- a/drivers/net/ipa/ipa_power.c
-> +++ b/drivers/net/ipa/ipa_power.c
-> @@ -220,8 +220,9 @@ void ipa_power_suspend_handler(struct ipa *ipa, enum =
-ipa_irq_id irq_id)
->  	 * system suspend, trigger a system resume.
->  	 */
->  	if (!__test_and_set_bit(IPA_POWER_FLAG_RESUMED, ipa->power->flags))
-> -		if (test_bit(IPA_POWER_FLAG_SYSTEM, ipa->power->flags))
-> -			pm_wakeup_dev_event(&ipa->pdev->dev, 0, true);
-> +		if (test_bit(IPA_POWER_FLAG_SYSTEM, ipa->power->flags)) {
-> +			;
-> +		}
+Hello:
 
-FTR, I would have dropped the whole 'if' statement above and the
-related comment in this patch, saving a few checkpatch warnings. Not a
-big deal since the the chunk is removed a few patches later.
+This series was applied to netdev/net-next.git (main)
+by Paolo Abeni <pabeni@redhat.com>:
 
-Cheers,
+On Fri, 23 Feb 2024 07:39:24 -0600 you wrote:
+> Currently the IPA code aborts an in-progress system suspend if an
+> IPA interrupt arrives before the suspend completes.  There is no
+> need to do that though, because the IPA driver handles a forced
+> suspend correctly, quiescing any hardware activity before finally
+> turning off clocks and interconnects.
+> 
+> This series drops the call to pm_wakeup_dev_event() if an IPA
+> SUSPEND interrupt arrives during system suspend.  Doing this
+> makes the two remaining IPA power flags unnecessary, and allows
+> some additional code to be cleaned up--and best of all, removed.
+> The result is much simpler (and I'm really glad not to be using
+> these flags any more).
+> 
+> [...]
 
-Paolo
+Here is the summary with links:
+  - [net-next,1/6] net: ipa: don't bother aborting system resume
+    https://git.kernel.org/netdev/net-next/c/4b2274d3811a
+  - [net-next,2/6] net: ipa: kill IPA_POWER_FLAG_SYSTEM
+    https://git.kernel.org/netdev/net-next/c/54f19ff7676f
+  - [net-next,3/6] net: ipa: kill the IPA_POWER_FLAG_RESUMED flag
+    https://git.kernel.org/netdev/net-next/c/dae5d6e8f0ec
+  - [net-next,4/6] net: ipa: move ipa_interrupt_suspend_clear_all() up
+    https://git.kernel.org/netdev/net-next/c/ef63ca78da2e
+  - [net-next,5/6] net: ipa: kill ipa_power_suspend_handler()
+    https://git.kernel.org/netdev/net-next/c/423df2e09d3b
+  - [net-next,6/6] net: ipa: don't bother zeroing an already zero register
+    https://git.kernel.org/netdev/net-next/c/f9345952e74a
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
