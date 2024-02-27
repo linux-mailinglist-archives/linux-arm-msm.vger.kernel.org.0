@@ -1,151 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-12711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEDA2869244
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:33:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC66A8692A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:37:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0BE831C21380
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:33:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8042A283466
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:37:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B560B13A87C;
-	Tue, 27 Feb 2024 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B23A13DBA5;
+	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j+KKGwdY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGUhtyOl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C672F2D;
-	Tue, 27 Feb 2024 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A61D13B79F;
+	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040825; cv=none; b=CoubUdz888BYkfXe4dv47JsfrM+xeP2Da6PIZAX+v/s8tq7c/bSs3a4oA3NkMt3NUI6RYU0rn1iRXlVwF6gxcRrRwAkWuNFBLiaQ8andDOBnJro47vtCwuAItLvhb/FsYZ1YJtGHpJDxwsvc+9Ncu9OcOAceFJpuZPd0T2g/Ogw=
+	t=1709041039; cv=none; b=P3l97krUudpeqsbFfdg4m1PWMSA5BsXOem/SCnPjRJmTeJTFHRDBjucRjJ5k0cMQJhy8oHDy+OjUVk41rNHx04nAh+zxdu+lA8gT7Rn7wT3k+y0NBu3DzQB8dWmisa5oeo1Rfgxk68ckya0GK0Hps3E8yXEQyQExV7f9mUgn06w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040825; c=relaxed/simple;
-	bh=N4hJ3rbmGb3aGfm5/rEMCgX5Pes2gJRcb4blBbA46Mc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=IK4CYmkINV15FDOcVl6fB4aP08hJKCBoTCgrcI2eE0Y7NtlPygR4yv1eYR6hgKTqdnRBfaE+0gVyJthYPHX7OnlHakqi+DiHn2SqaAkjihM526ZCRwUWICxhmKlpplpRuZoxyhZlvk+wDxhhgJTffogbSGkX1udUrHJGtbA7c2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j+KKGwdY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62612C433F1;
-	Tue, 27 Feb 2024 13:33:45 +0000 (UTC)
+	s=arc-20240116; t=1709041039; c=relaxed/simple;
+	bh=H1c/bi5IfYB1iSUBfPU6PzkgJpun/PjAJmV416IBnMo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E4ffLRmMZJs/wTS27sJ7I28BQ8gTp9FtxwfMtn8dBNUFTELJjZj2sLNlZjzStt+w5zUBa+SXwpSuxkcu3SKW7ClWWyVWGGCT2tgIAPBZEHI0JnciD9VCEcxNasObYp0vJy+hoNjpND7bC7VwoqRtnKRqfkqtajvePhXgr8eAP/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGUhtyOl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AD9C433A6;
+	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709040825;
-	bh=N4hJ3rbmGb3aGfm5/rEMCgX5Pes2gJRcb4blBbA46Mc=;
-	h=Date:From:To:Cc:Subject:From;
-	b=j+KKGwdYVHf4Tps9pQpbbdwOVyN1f5D00T5l2uPn0z+U9Z71vnoyhCH8hccVsAPRn
-	 B4CWq8Fi8VISDe+Tw9/VF0x1XBM4QjhYB/kAsoXEqHCxxPkOQPr3thYXhZ5+lF85YC
-	 Gh1LEOPgBmK5u7QTsgaShhK2d+kWWU8wiPfIsuw51hwsdsmca03112rf89TcL7ixId
-	 oE/vXOZ2B0MjrHC5g8BZEPovxvkFrzioBSOB0uJWL6z1Eeri9s0MuohrwAKDDsAJGG
-	 ZC26uynk0qS79KXi+o4U+u4mBddkaKQbYwiHtPKIHGiyyoDiVQ0rBk+COt0IRLypSs
-	 JwHL1kvqbFXzQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rexae-000000000VL-23Zy;
-	Tue, 27 Feb 2024 14:33:48 +0100
-Date: Tue, 27 Feb 2024 14:33:48 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: drm/msm: DisplayPort hard-reset on hotplug regression in 6.8-rc1
-Message-ID: <Zd3kvD02Qvsh2Sid@hovoldconsulting.com>
+	s=k20201202; t=1709041039;
+	bh=H1c/bi5IfYB1iSUBfPU6PzkgJpun/PjAJmV416IBnMo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=oGUhtyOleFDlVprD+BHiw5msYy/xXs7n8MPnqXIQXA7gm9Hx35qZCdT4MhSOkx4hP
+	 rz+kq2hfyJ9mFuFg2rQVbGqBXf+nptZOB8OM7UT6xaUH3iMMaxxSmajFqxPHBnzAR2
+	 Z9GJJwS9G96S3zO0litfHxufug7uCe1lCZFFT56C87WkeQDL+I4v4QXuX8grK9DK9D
+	 3pWJdu1qsuFeWnfa5CV7khEuxTM+E2w8PI8eWAJ2bCM15KQYtu69N3jg2cCT2OyII3
+	 zJcPL97J4E6ztRARi9eXcpjCj5XiuknpZeMhbq6LZztKrzW9e2bfKWRYyIWLElKDeT
+	 ca9EXgFPfgyVw==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d299b4ad6aso6253751fa.1;
+        Tue, 27 Feb 2024 05:37:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVgNfEOMMgUcZ8yAb6NZ8shSj9KY9s0ABYFaEi7uD7kPospD1lnx4ZSNAefMnvc/t+sMkndaZp2/AoJmmm2KJ0CFN+0wTI2vxBcEo6UtaLioKehCGJMJZgBUrFp99G53tRc8SEQFbHCtuZnHdVOhmLQR7SeALudoOQn/MAX3gSdabBvhGrg4fveyM3Nn30+OVkJ67Se7Ej7AWcM0akpaBZDA0dH
+X-Gm-Message-State: AOJu0YyXmFy4A9xiTp1WE9AbjH6NS0kh5XVFQejDAI9s4b/wZG3KzF+8
+	xJsAiqytGo9z7N4s2VyOC7IsaO5dl8MZH3VdMe8pNgD0z7dykXzb+zRNShNb7Wzc3Ln9XLHU4lB
+	iVkT9Xu7T68Vq8/JfhbOM7IzQIQ==
+X-Google-Smtp-Source: AGHT+IG5QHJKq6z8x6+mL6APDMaMcHT+R6XCLzJCa5meAUVodTB8s4RdbL4+VxRoHLTrkZTvWB3wRm4Tes8nApxV0wo=
+X-Received: by 2002:a05:6512:1317:b0:512:f4f6:9343 with SMTP id
+ x23-20020a056512131700b00512f4f69343mr3796213lfu.26.1709041037258; Tue, 27
+ Feb 2024 05:37:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240129092512.23602-1-quic_tengfan@quicinc.com> <20240129092512.23602-2-quic_tengfan@quicinc.com>
+In-Reply-To: <20240129092512.23602-2-quic_tengfan@quicinc.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Tue, 27 Feb 2024 07:37:05 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
+Message-ID: <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: update compatible name
+ for match with driver
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, linus.walleij@linaro.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Jan 29, 2024 at 3:25=E2=80=AFAM Tengfei Fan <quic_tengfan@quicinc.c=
+om> wrote:
+>
+> Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
+> to match the compatible name in sm4450 pinctrl driver.
+>
+> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.y=
+aml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> index bb08ca5a1509..bb675c8ec220 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> @@ -17,7 +17,7 @@ allOf:
+>
+>  properties:
+>    compatible:
+> -    const: qcom,sm4450-pinctrl
+> +    const: qcom,sm4450-tlmm
 
-Since 6.8-rc1 I have seen (and received reports) of hard resets of the
-Lenovo ThinkPad X13s after connecting and disconnecting an external
-display.
+I think you forgot to update the example:
 
-I have triggered this on a simple disconnect while in a VT console, but
-also when stopping Xorg after having repeatedly connected and
-disconnected an external display and tried to enable it using xrandr.
-
-In the former case, the last (custom debug) messages printed over an SSH
-session were once:
-
-    [  948.416358] usb 5-1: USB disconnect, device number 3
-    [  948.443496] msm_dpu ae01000.display-controller: msm_fbdev_client_hotplug
-    [  948.443723] msm-dp-display ae98000.displayport-controller: dp_power_clk_enable - type = 1, enable = 0
-    [  948.443872] msm-dp-display ae98000.displayport-controller: dp_ctrl_phy_exit
-    [  948.445117] msm-dp-display ae98000.displayport-controller: dp_ctrl_phy_exit - done
-    
-and then the hypervisor resets the machine.
-
-Hotplug in Xorg seems to work worse than it did with 6.7, which also had
-some issues. Connecting a display once seems to work fine, but trying to
-re-enable a reconnected display using xrandr sometimes does not work at
-all, while with 6.7 it usually worked on the second xrandr execution.
-
-xrandr reports the reconnected display as disconnected:
-
-    Screen 0: minimum 320 x 200, current 1920 x 1200, maximum 5120 x 4096
-    eDP-1 connected primary 1920x1200+0+0 (normal left inverted right x axis y axis) 286mm x 178mm
-       1920x1200     60.03*+
-       1600x1200     60.00  
-    DP-1 disconnected (normal left inverted right x axis y axis)
-    DP-2 disconnected 1920x1200+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
-      1920x1200 (0x40c) 154.000MHz +HSync -VSync
-            h: width  1920 start 1968 end 2000 total 2080 skew    0 clock  74.04KHz
-            v: height 1200 start 1203 end 1209 total 1235           clock  59.95Hz
-
-Running 'xrandr --output DP-2 --auto' 2-3 times makes xrandr report the
-display as connected, but the display is still blank (unlike with 6.7).
-
-A few times after having exercised hotplug this way, the machine hard
-resets when Xorg is later stopped. Once I saw the following log messages
-on an SSH session but they may not have been printed directly before
-the hard reset:
-
-    [  214.555781] [drm:dpu_encoder_phys_vid_wait_for_commit_done:492] [dpu error]vblank timeout
-    [  214.555843] [drm:dpu_kms_wait_for_commit_done:483] [dpu error]wait for commit done returned -110
-
-Note that this appears to be unrelated to the recently fixed Qualcomm
-power domain driver bug which can trigger similar resets when
-initialising the display subsystem on boot. Specifically, I have
-triggered the hotplug resets described above also with the fix applied.
-[1]
-
-Reverting commit e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify()
-to report HPD status changes") which fixes the related VT console
-regression does not seem to make any difference. [2]
-
-Daniel Thompson reports that reverting the whole runtime PM series
-appears to make the hard resets he has seen with DisplayPort hotplug go
-away however:
-
-	https://lore.kernel.org/lkml/1701472789-25951-1-git-send-email-quic_khsieh@quicinc.com/
-
-So for now, let's assume that these regressions were also introduced (or
-triggered) by commit 5814b8bf086a ("drm/msm/dp: incorporate pm_runtime
-framework into DP driver").
-
-Johan
-
-
-[1] https://lore.kernel.org/lkml/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com/
-[2] https://lore.kernel.org/lkml/Zd3YPGmrprxv-N-O@hovoldconsulting.com/
-
-
-#regzbot introduced: 5814b8bf086a
+Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.example.dtb:
+/example-0/pinctrl@f100000: failed to match any schema with
+compatible: ['qcom,sm4450-tlmm']
 
