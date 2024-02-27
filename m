@@ -1,50 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-12666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CCFF868D9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:30:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C679D868DE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 11:44:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB265B24C06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:30:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C1F628191A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:44:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F18F5577D;
-	Tue, 27 Feb 2024 10:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4C051386AB;
+	Tue, 27 Feb 2024 10:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YfvCUwI4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RA1WKoqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541B32A8C1;
-	Tue, 27 Feb 2024 10:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA9C137C42;
+	Tue, 27 Feb 2024 10:44:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709029832; cv=none; b=BSJ9fIeGiRSbfNaP2k9VRS/kGivSCaUPWOsCc9IX3AaGKWw/i1ubHt9mhbljAgPopNXRco00lpEGd7i78ge8AkYMagfNKrdi9Zk34Ci96A1d20HiMgOwSQsOWnUiFyQmlB+lJbGTjZCKjbjqkcSJTSjL7I7dbXz8NP2FmMJUCG4=
+	t=1709030687; cv=none; b=Pb/vB5diP+tupU4kPQhCxrZkAE/CX8tP9P7/rCtEhTHuOlYh/MG4oqnD0+2umFJnbza1QueRaeXi2f8o1sQhV+ndtOgj88iMZKWedWqrdYxcYLABeHpcqtnFZ0c3LGmcV3i8ymoafybR2g+3z1bZfbNgAxqQVbaL5/qrcYgZjLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709029832; c=relaxed/simple;
-	bh=b+TmIZM1BbzBrs8DPklmaQytiyICHGa9Tx0B0KH98gs=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=VSveGgxwYQ8PB9ECV6maG7yxddVI57VJT9Zql/gT57DClz/dOzaLZfdORbFvmE8MLVYMd0mSsQPdeXBhFwsbjOYQ5Y8H0BsuYEajiWPg5055ywTvKAQKRTo/fJON/ZGyJ2KpDny7m1PF8Tya5vsQjRVCpZ21alS4/DQeMZV5dPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfvCUwI4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0FA02C43390;
-	Tue, 27 Feb 2024 10:30:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709029831;
-	bh=b+TmIZM1BbzBrs8DPklmaQytiyICHGa9Tx0B0KH98gs=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=YfvCUwI4tvPaW9gmzzc/9luJe2CCvi77NHfMBnrR9KbKUi7UQp0XND5fbAU8FDL2f
-	 4m0IW4qTGP/pLECfqC7GE8s0urYua2Sgp8CYnYXAWqkiLXZd8dHIZRUUpCYjRtgQUI
-	 nL1VgSSugvKLl7qctMTJEVjiF8e5S2YaF3Y8y2awb3vZaEHQnB1s9+cIb3HcCIghKA
-	 +Z0Zaz3RUkIp1Rkw7boGBTFAL2+cSpZAWXEBSSozXPL2s1fXe5DWc95YzifMvgFJqz
-	 dq9PC9GpU1vle625tJ/N0hefzWyuwFUHgzdzQ7GT1/YZ0qmDZsA2P8+F/+EDwj2QMe
-	 Imr//gcJaiPRg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7957D88FB6;
-	Tue, 27 Feb 2024 10:30:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1709030687; c=relaxed/simple;
+	bh=YZVMohEoz2FiLgHoSgvJdIphNQvbIflAXKA8nwYiUF0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IajogrPF3BJMeYkIrNZ7fIRnZMKyrcTcr5x0mTX53+C6yTj8ymLXqZJO8as0ZBpL7ihBvhC64WQoIP7+DEN7b/yl68+cZfR42PUkAI8nkyLXmBqPMqTjBAqW1bXwnt0P3Y+lLQzWMqL5eIXRDsf9ssh81EekKl91aaWZ/YrBZBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RA1WKoqE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9YAeB002460;
+	Tue, 27 Feb 2024 10:44:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=BzBNEPI
+	RM3EW33DjvO4ncX3d6Tc7CfQR1rwcBY6Omc0=; b=RA1WKoqEqlGcfxZ4xpcY5C8
+	9OjrLnAIud9vtZdx7OqH6s9PwUL2md2ygAhIum3FVbJH+vOsxxWs9a4KeNPbLYbT
+	2efybYQUj2dXQJ26CH4fIO89fLoF3ub+D5RYduWd4twTLSSkwB8cPzws7UXe+/v0
+	GmPrsymAaShoow4Y7zt017Hgx5S8z0ajpD95ZHzIGKrVyuMchyMuK0jzZ3AVOReq
+	iqIZBFkq3OH+8lQmeiCa9sYTcsGSf16oRT9Q6tkWfCBNt4iP8EWRvmK6IfxfhKvM
+	vbVKb3vyKt5kmH0jRwov2KjmBVcG+/WYbg6BUd9rCeMp+WvIdeE//b7J0pOiTvw=
+	=
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh64qh1ud-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 10:44:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RAicTB029191
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 10:44:38 GMT
+Received: from bqiang-SFF.qca.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 27 Feb 2024 02:44:36 -0800
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+To: <ath11k@lists.infradead.org>, <manivannan.sadhasivam@linaro.org>
+CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <quic_bqiang@quicinc.com>
+Subject: [PATCH v3 0/3] wifi: ath11k: hibernation support
+Date: Tue, 27 Feb 2024 18:44:24 +0800
+Message-ID: <20240227104427.7505-1-quic_bqiang@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,60 +70,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/6] net: ipa: don't abort system suspend
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <170902983094.8915.2318266650538047473.git-patchwork-notify@kernel.org>
-Date: Tue, 27 Feb 2024 10:30:30 +0000
-References: <20240223133930.582041-1-elder@linaro.org>
-In-Reply-To: <20240223133930.582041-1-elder@linaro.org>
-To: Alex Elder <elder@linaro.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
- quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
- quic_jponduru@quicinc.com, quic_subashab@quicinc.com, elder@kernel.org,
- netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zpCuUjEd57oJCsR9tcysTua3qWVRj7p3
+X-Proofpoint-GUID: zpCuUjEd57oJCsR9tcysTua3qWVRj7p3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=975 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270083
 
-Hello:
+Currently in ath11k we keep the firmware running on the WLAN device when the
+network interface (wlan0) is down. The problem is that this will break
+hibernation, obviously the firmware can't be running after the whole system is
+powered off. To power down the ath11k firmware for suspend/hibernation some
+changes both in MHI subsystem and ath11k are needed.
 
-This series was applied to netdev/net-next.git (main)
-by Paolo Abeni <pabeni@redhat.com>:
+This patchset fixes a longstanding bug report about broken hibernation support:
 
-On Fri, 23 Feb 2024 07:39:24 -0600 you wrote:
-> Currently the IPA code aborts an in-progress system suspend if an
-> IPA interrupt arrives before the suspend completes.  There is no
-> need to do that though, because the IPA driver handles a forced
-> suspend correctly, quiescing any hardware activity before finally
-> turning off clocks and interconnects.
-> 
-> This series drops the call to pm_wakeup_dev_event() if an IPA
-> SUSPEND interrupt arrives during system suspend.  Doing this
-> makes the two remaining IPA power flags unnecessary, and allows
-> some additional code to be cleaned up--and best of all, removed.
-> The result is much simpler (and I'm really glad not to be using
-> these flags any more).
-> 
-> [...]
+https://bugzilla.kernel.org/show_bug.cgi?id=214649
 
-Here is the summary with links:
-  - [net-next,1/6] net: ipa: don't bother aborting system resume
-    https://git.kernel.org/netdev/net-next/c/4b2274d3811a
-  - [net-next,2/6] net: ipa: kill IPA_POWER_FLAG_SYSTEM
-    https://git.kernel.org/netdev/net-next/c/54f19ff7676f
-  - [net-next,3/6] net: ipa: kill the IPA_POWER_FLAG_RESUMED flag
-    https://git.kernel.org/netdev/net-next/c/dae5d6e8f0ec
-  - [net-next,4/6] net: ipa: move ipa_interrupt_suspend_clear_all() up
-    https://git.kernel.org/netdev/net-next/c/ef63ca78da2e
-  - [net-next,5/6] net: ipa: kill ipa_power_suspend_handler()
-    https://git.kernel.org/netdev/net-next/c/423df2e09d3b
-  - [net-next,6/6] net: ipa: don't bother zeroing an already zero register
-    https://git.kernel.org/netdev/net-next/c/f9345952e74a
+There already is an RFC version which has been tested by multiple users with
+positive results:
 
-You are awesome, thank you!
+https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
+
+Basically the RFC version adds two APIs to MHI stack: with the first one ath11k
+is able to keep MHI devices when going to suspend/hibernation, getting us rid of
+the probe deferral issue when resume back. while with the second one ath11k could
+manually prepare/unprepare MHI channels by itself, which is needed because QRTR
+doesn't probe those channels automatically in this case.
+
+Mani, the MHI maintainer, firstly doesn't like that version and insists that an
+MHI device should be destroyed when suspend/hibernation, according to his
+understanding on device driver model. See
+
+https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+
+After a long discussion Mani thought we might need a new PM callback with which
+ath11k is able to wait until kernel unblocks device probe and thus MHI channels
+get probed. So we came to the kernel PM list and there Mani realized that his
+understanding is not correct so he finally agrees to keep MHI device during
+suspend/hibernation. See
+
+https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+
+Mani also pointed out that an MHI controller driver (ath11k here) should not touch
+MHI channels directly because those channels are managed by the corresponding MHI
+client driver (QRTR here). To address this, we come up with this version.
+
+Compared with that RFC version, this version adds PM callbacks in QRTR module:
+suspend callback unprepares MHI channels during suspend and resume callback
+prepares those channels during resume. In this way ath11k doesn't need to do
+unprepare/prepare work by itself so those two APIs added in RFC version are
+removed now.
+
+The power down/up procedure requires a specific sequence in which PM callbacks
+of wiphy, ath11k and QRTR are called, this is achieved by exploiting the
+child-father relationship between their device struct, and also the PM framework
+which separates whole suspend/resume process into several stages. Details in
+patch [3/3].
+
+v3:
+ - skip QRTR suspend/resume if MHI device is found to be in suspend state.
+
+v2:
+ - add comment on why destroying the device is optional in
+   mhi_pm_disable_transition().
+ - rename mhi_power_down_no_destroy() as mhi_power_down_keep_dev().
+ - refine API description of mhi_power_down() and
+   mhi_power_down_keep_dev().
+ - add/remove __maybe_unused to QRTR PM callbacks.
+ - remove '#ifdef CONFIG_PM'.
+ - refine commit log of patch 1/3 and 2/3.
+
+Baochen Qiang (3):
+  bus: mhi: host: add mhi_power_down_keep_dev()
+  net: qrtr: support suspend/hibernation
+  wifi: ath11k: support hibernation
+
+ drivers/bus/mhi/host/internal.h        |   4 +-
+ drivers/bus/mhi/host/pm.c              |  42 ++++++++--
+ drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
+ drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
+ drivers/net/wireless/ath/ath11k/core.h |   6 +-
+ drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
+ drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
+ drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
+ drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
+ drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
+ include/linux/mhi.h                    |  18 ++++-
+ net/qrtr/mhi.c                         |  46 +++++++++++
+ 12 files changed, 244 insertions(+), 60 deletions(-)
+
+
+base-commit: c39a5cfa0448f3afbee78373f16d87815a674f11
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.25.1
 
 
