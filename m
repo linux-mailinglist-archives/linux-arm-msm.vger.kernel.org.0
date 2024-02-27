@@ -1,259 +1,411 @@
-Return-Path: <linux-arm-msm+bounces-12762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81A6869DE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:39:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF8AB869E01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:41:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5CDF8281AD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:39:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9186528E4B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:41:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10294D9F3;
-	Tue, 27 Feb 2024 17:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFBC94E1DD;
+	Tue, 27 Feb 2024 17:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="MBdV5KSJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MXzxcu70"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-db3eur04on2082.outbound.protection.outlook.com [40.107.6.82])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8FD1E896;
-	Tue, 27 Feb 2024 17:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.6.82
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709055546; cv=fail; b=JSn67K57gGYsLWJgycMh7JqWWdwHjYcqI10OruN+8Wp8PIIHIuiCOibd/mWR6gaxNfrOCNdJZG5apn1Xtea5fokn/pWEYEDDz9LmxhMsiBK6fZX6Vv6pC6lYayfZ/e6z8BFv5PTdlQM8/7Z6dFWE4HP8ZJrJmdS9RsF+KbVpZaY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709055546; c=relaxed/simple;
-	bh=+II4BuTHSPtiFd1ULeDsAtTNF9M6AG3tiNt39fWX56A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=WcK5odQmgOBT8FaECUoe6U1GqYvPLP/dnZi52mQY55GeLTyMlshgWhQ7RIx7nIlR6oeyqcUEfxi0uUJgQ97E+NUrLYD3fuOetKlZ2GsVviVRgea+NxLhMqhsfHO/x2ZldkneHWrz1NLuG9jWIyOhYLwpi97i3lFwBu6jVOEQJwg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=MBdV5KSJ; arc=fail smtp.client-ip=40.107.6.82
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CqNnTINMJ35Vn9BPG1glmplhEcAnPHee6VSf6Kw0156WrOEgK1oJ6zgzJRvZdleBfh6re9suEB5tV0xDPBLgojf7UcZ8/LXZKqGXxiJnmLNUBWYbYwynXNwIc8+cFUkU2t4KvjaOzF9NF6BCAOYe6C4sEkarUaENXqRR4A1/x1Rf56kDETWSIPevz2bQe79VzryFEHWU4dpoDtFYgZZHE6R6trg5yOuAynhWvrUVQiYjrzj8+mGCJRN+laXON2qIZN2tfmdmxXfHyMhWfXScxckOcvobQNX8eqP/MEXehBuYT214yczXW95PXaidku2j/np/pWSns3ELqK0XCaI+Kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Uz+DHxDCUx/FREkCFHetlvIkgz5rnHJhyGZqQgtzvtA=;
- b=KqHFy4RZMpnnO4dvXrefJKPh+GOvNl1liOlm85HU0CM1cc7gKb1//LaOqMVClMFXspsE2I29wLWuApslO+J5IF+G+RZDeUxYxjDn4tiaCz/zC6H4RUraEcq8A3KzK6gZN7HkPIW5Ob06giRrBBSoEa+DcCG0/Ix7mUZQW/4cwA7cmK0y2D06Q5N5E0Gxv9rN4GMe424rjt8hYbD+AMjFVweNVqNQnD8qT29VCb6Matw3QNYR1XvDR6L4DcCCVXfALGkERnvC6iIOoQMh1JeSuGmGR+W0glULJnO1/+tOTYnZSf+NLCBXs+jA1LSENuH3Os+FitSlJKkrkqfEtPAwgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Uz+DHxDCUx/FREkCFHetlvIkgz5rnHJhyGZqQgtzvtA=;
- b=MBdV5KSJVlgjqhJcp5Kt0c3uqkEbR6i964GRL1L/54YPUnmkprJ1TSi1VdxjIXDEDd2E1EHbaZEcq5okBNfOakJS65eWzvmb5/NvOqCdO8OLGp46AyJsm7WHh5j5BRyXjjj+L4vYdLsE8ZrAmT0TBDsNncc36yX1WagqZrfWm/Q=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
- by AS1PR04MB9631.eurprd04.prod.outlook.com (2603:10a6:20b:476::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.39; Tue, 27 Feb
- 2024 17:39:01 +0000
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::9af4:87e:d74:94aa]) by PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::9af4:87e:d74:94aa%7]) with mapi id 15.20.7316.035; Tue, 27 Feb 2024
- 17:39:01 +0000
-Date: Tue, 27 Feb 2024 12:38:52 -0500
-From: Frank Li <Frank.li@nxp.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>
-Subject: Re: [PATCH v3 3/5] PCI: dwc: Pass the eDMA mapping format flag
- directly from glue drivers
-Message-ID: <Zd4eLBXscaV1WkbV@lizhi-Precision-Tower-5810>
-References: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
- <20240226-dw-hdma-v3-3-cfcb8171fc24@linaro.org>
- <Zdy8lVU6r+JO6OSJ@lizhi-Precision-Tower-5810>
- <20240227074533.GH2587@thinkpad>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240227074533.GH2587@thinkpad>
-X-ClientProxiedBy: SJ0PR13CA0235.namprd13.prod.outlook.com
- (2603:10b6:a03:2c1::30) To PAXPR04MB9642.eurprd04.prod.outlook.com
- (2603:10a6:102:240::14)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2701E524;
+	Tue, 27 Feb 2024 17:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709055602; cv=none; b=hJI0EDydVy3TLfAm3B0OPJMNKb5LUY3p1AgM0X0tRlEIquNOkaKzR48lrLSrcZKrlyvwFTg22FvIw4MlmHafmGYik/g9DBrAmL50zc+NCSP+E0v3X63+ol6dHcSz32De0HaOwheW5J+r0rj+UA6J8seelY/Fb6LoJF09LrAnK0E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709055602; c=relaxed/simple;
+	bh=J+Qf494lfNq3LePXrKTx2B6PI0N6djHhZDEFsxTP9TQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=mPOuxmEgng/EjWcuWSjPlnkEY1Www0YeIsTSfi4JUo5dVHfhGsTXNmch0RPogg6RTF5WQ1JECXH+WH35T3ppufHQjfckoM8o5iuff/PjAYHZGpK2yjmgBTFKgUdqblOUX48g9mroTRKkCDxz99o3L0ytz2p1aSSuHek6MuwpwsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MXzxcu70; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RGZnlS017434;
+	Tue, 27 Feb 2024 17:39:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=ipA
+	19ju5YtdseUDDRZCyFMshM2dKIhhzcLfNk1aXXlc=; b=MXzxcu70eJb7gxBJDQk
+	OyLodt8pNtgO7ObNih9BLPsJSpYcTIs0s76PkERnJVonPnEEnyYbJo4Q7hg5yQn2
+	yT7aKxWDe05tyQcenyNYM53kgF87JNOO4N3pv7MyQq5IKPqKqHzmslC2tVV2XIG2
+	QDjzrgSmS0yiHSwTU0Qg7jDFvLr7PVhyaet0FdNnNNqVbiI7UUkVWuFEp4lTjlAh
+	1+QlEOTRp/pn6dClzMbtfrZHTQQEwuHpUMh6z2iQB8iU0kU1BqizI4/Swk8rzSxw
+	rbZ8HIxgi4klc+fnAHSLwOK6EmNWmq/ZlCpTAoDp81TrKIMmM2qgzniayv5GDXjA
+	ztg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whkd5g5cm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 17:39:56 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RHducF010810
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 17:39:56 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 09:39:55 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Date: Tue, 27 Feb 2024 09:39:54 -0800
+Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Name the regulators
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|AS1PR04MB9631:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0869dcb-5ae4-48c2-a44f-08dc37bafbdb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	bba4ZIzMCjk0T6rP7F+6TsCLyqxwZKx6QvLd53uQqvEN7lQd0t+UCMf0Xj3PBhWt9uQSkXsG4vuS4AHw3Dd8SwTlcmrgiTkUivF50cmc1cI2dcT+OTeb8ZHYAw3kWTIBtkpyZXX8dPWJryGtlo2Wtj1X1CpI5cUBFXl+7OB0mbCJvS1/wrdbkXDMCLukWh1Ubou+7eNQA64z/ISQ5b8j4SQDaf/sdwV/OhFHGNYycP7QufoCiHrDToUMfJ55VYlb4yNCZ3uQGsVsgajDNtaswmNeJRKSnKK22wanroPAGmbmgXoU849Kg64lEE9yjpn+TbzfBa1ZgH9j1oOhirzSWUVKuoA0WMZXtMcUNUwR7fZns48SXcgtFjlTGOme8gMmknMGPhYVsgRdhtR/GfRhCgcIjkQKSpycC7OQHW5kE0e1Ai7OSmv5/BHuJippTc3gNH+/VYVoBCcx3fAHXnuIb0Z1htAxjjk57A7OcTHfHb0k1JgU2ZhF4+xvpzeJA6BxevoqzyO7thlv7UAekkTfvCauFKWZiOk+nXZItjfaBhmmKaTzF/ZhaRLKFkY25/Al5XWaSbqYoKX1z9BjiJvkg73zle8UlZvtBbqntE9kVSRf0lEKCHaLdUWu5jdDHCogWZjlNCJL0DmYeOuI/DdJK8Iy1pRb3l7rygjYDEhHSXYETLHvgYw3mJImkcNyn5ilubPmzsjZTb9Ro713uClu30JA1ZKODyjPefOPHESMH2g=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(38350700005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZW82bkNQYk84bUFGMU5YVEtCREp6UGQ2S1dvM2phL3RDWjdBRkRGYWpSVGIw?=
- =?utf-8?B?TjlybFFZTmFTTkVKV1FldW8vRitBU3A3TzlPNzRWWk5FODVtQkdPbEhjL29S?=
- =?utf-8?B?VndHUXQxdEtaWkhhODJxY21Id0lkbnRKb1p4UmoreHZodnNudytLQUFOeVl2?=
- =?utf-8?B?STlpY1FPd0xsR0dvUlNpMUFrL090bzNxK00zVlNmSXlJM2lRcCtBRi9kc0hR?=
- =?utf-8?B?Y3VMcXU1ZkQranM0RGFrTUZpbUZWU1RSY3ZUcktMc0hieE9GK1BieUNRajdx?=
- =?utf-8?B?dlM4ZEVRVjdqZDhqM1dmK1dibGIxWnRPWXpDczkxbWdWQUl3WERDd0xsTXVy?=
- =?utf-8?B?WU8vaGg2b21scGg1ZTRWT0R3NU1uNytnMG5aME1lK0hlYkdPN1ZhT241QU5k?=
- =?utf-8?B?dzhjQW1UWGdPd1JIdXRhT0tJcDRuUUpEZ2Jrd1hSWEFjdk94Z1pnL3l4NTRM?=
- =?utf-8?B?RVhoejIxWkxiVE02dkFWa3JDRlFQZC9RZ01XanNFdWJyZFgwZ3NnK3gyYitk?=
- =?utf-8?B?K3FrakRONmNQejRYT1JyRkJFa3dpa0xnOG4zc1RlK29rekNvNjAxTXdqaWtM?=
- =?utf-8?B?SGtaY2dHYTlmdTZHVnlETFBjb3JvQjlHUVErYnhjSGFoMnlaUTIxWkcxeWJk?=
- =?utf-8?B?ZUJFYVNwV2lXSGMrelRHS1VRdlBIdFpTY3BxUUVCZWwreE1TeE92NEVQSWRr?=
- =?utf-8?B?OHcvYzhaeWdGN0d6WndYVjRSVis5cWt3VTJ6SnkxR1pKNHVrZXpDaXN2bWgr?=
- =?utf-8?B?aWtweXRoZEl4MzgxR08zYkgvM1ErSENIV1IzOWRsL0xoSGZWOTF5VWtLR0dD?=
- =?utf-8?B?U25TdElKMnhwY1RHNHljYTNCUlFya2Zxd2JjaFphNHVQVHNYN0ZTMDdqT0ZL?=
- =?utf-8?B?UktETXIzRU1abXNyekdiaEExNFBLdlhBWDFJaWpNaXJZejNhSnhyemdwOVpo?=
- =?utf-8?B?NnhsWVI0RDlZRGI5NS9QNU9kS1Q5N3luVjlhMUJ4Mzd2SW9aQ0wxK3hiay92?=
- =?utf-8?B?WXdnWE5TOWxqTmI5S3hGdzBDc2xzKzFWT3Rtb1N0SU9JZEZvNUVPL2h0MFMx?=
- =?utf-8?B?Njd6NWN3dUc5dnpnS1phWnZjcXZKSzNPNEM5ZWpuK28wTi9saTFxYU5ZSnJu?=
- =?utf-8?B?Y0xSNml5dVM2N2RrTXZIZU9oK3RBVXMwVW8wa0ZlY0M4anBqbFZ3WE9RZmxw?=
- =?utf-8?B?K2tyMkZpZ0tDa2o5c3duOWpXQU5pSnRzaVhSRTBtVEV0SnloZlo1ZjZpQS9u?=
- =?utf-8?B?cisxbFlzQThzZTJjSCt3Z2JwVjRBclZ3b2wrNDFCSEkvV0hlREVDeHRyK1Bx?=
- =?utf-8?B?Ump6VDdHWCtsRzV0cE4rZGZVR1JVSjF2WnZoMEU3alJQeVJIMHJZaWNYeFVD?=
- =?utf-8?B?QSswQ3kzZWRXVkVaYkNvc1hZbzl1aythaHFodEhJVzd3QWNuUWlJQ3g1OEN0?=
- =?utf-8?B?V1RBU1FRQmFEVUNOWEcrV3FIRWp4TkZHRTVLbVlybXNPU1hFZCt6VWtQell0?=
- =?utf-8?B?SU5XSGZLbE1HWXZja3IwbWFoOWpHTlVrQzB1eXBEaU8vT1hBL3o0ZlVZUU5m?=
- =?utf-8?B?MnhXUzNUMzV4NG5uUlF4S1RrVnFmQ0l0eEEzLy83UEVPYnpTRWgvcmVxa2hI?=
- =?utf-8?B?LzhkZXFlbmVpS1VwN29GUTQ4dTYzbHNueWVnTjVpbmNRRGlONmZaR2o0SkpM?=
- =?utf-8?B?a1lvMUowMnZmNVBCUnhYdlNhQlNGYmw0OW9UR3dvWEUrWGVWZFZlTm9GMXRl?=
- =?utf-8?B?VzhMdUtxTFRsS00zVytkc0JQTW16Ly9XZGx2RkZ1NVZQeG9TR0ZGY2JUUHpr?=
- =?utf-8?B?YmhUVFVYYlAyQk0wWERmc1RwNWtUTVBaZEZTc2hNelBKM2xDeTNIbDRPNE1i?=
- =?utf-8?B?dkZFTnBsNkJHMUZrSm00RVdJbTAwYUR4c0p3L0Fvdzlwb1JQOW9GWG5GZnpp?=
- =?utf-8?B?TllZM0hmUWVaMDY2anVBUnhVNU1VS3EvKzhXbEJXWklTSTdmMXh5Y00vNGQ3?=
- =?utf-8?B?V3B3bVhHeVBGRmpSVUMzbk05TEI4RVRGTHVVclN5MVI4Y3ZhQVlMa2RlckJt?=
- =?utf-8?B?ZkZhVjFEcThvZDBKQzlSRUc5cDZYZ3M2eHRwYXNjdVVyNXltVnhSTnNPVWtW?=
- =?utf-8?Q?LMvQ9JgAxhm/L+yNl/PDIyL96?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0869dcb-5ae4-48c2-a44f-08dc37bafbdb
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 17:39:00.9632
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: h71/rqnC+xSjYz2GcEuSb43lYWiAKJSQsM298C3fmCmKfkxR4NnKIIn5TAAgPoK3HkIM6AjH2PeJN9qhTpN1CA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR04MB9631
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240227-rb3gen2-regulator-names-v1-1-63ceb845dcc8@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAGoe3mUC/x3MQQ6CMBBG4auQWTMJjEWEqxgXFX7qJFLIVAkJ4
+ e42Lr/FewclmCJRXxxk2DTpEjPqsqDh5WMA65hNUomrRFq25yUgChvC9+0/i3H0MxLf/OA6QeO
+ aa0u5Xg2T7v/z/XGeP0UmdlVpAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1709055595; l=9390;
+ i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
+ bh=J+Qf494lfNq3LePXrKTx2B6PI0N6djHhZDEFsxTP9TQ=;
+ b=PEKMCv/4EnZ+seSXtGsZGGxuz/+ap4JKuM46X/sCeXp+R3uGKUPFGgLu59cuYQNAVxwU2jmcg
+ ataHDq8BvhLANFnC8UYFiNkvpI9wT8FnXs/10/VLhvpyZkSb5ryPXG4
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
+ pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Er_E3ZPMV4mYKrG84nNZ1QLa9rdJ-w65
+X-Proofpoint-ORIG-GUID: Er_E3ZPMV4mYKrG84nNZ1QLa9rdJ-w65
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_05,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=764 malwarescore=0
+ suspectscore=0 bulkscore=0 spamscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270136
 
-On Tue, Feb 27, 2024 at 01:15:33PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Feb 26, 2024 at 11:30:13AM -0500, Frank Li wrote:
-> > On Mon, Feb 26, 2024 at 05:07:28PM +0530, Manivannan Sadhasivam wrote:
-> > > Instead of maintaining a separate capability for glue drivers that cannot
-> > > support auto detection of the eDMA mapping format, let's pass the mapping
-> > > format directly from them.
-> > 
-> > Sorry, what's mapping? is it register address layout?
-> > 
-> 
-> Memory map containing the register layout for iATU, DMA etc...
+Without explicitly specifying names for the regualtors they are named
+based on the DeviceTree node name. This results in multiple regulators
+with the same name, making debug prints and regulator_summary inpossible
+to reason about.
 
-the world 'map' is too general. can you use 'register map' at least at one
-place? There are bunch 'map' related DMA, such iommu map, stream id map, 
-memory page map. The reader need go though whole thread to figure out it is
-register map. 
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 41 ++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-Frank 
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index 97824c769ba3..63ebe0774f1d 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -153,129 +153,151 @@ regulators-0 {
+ 		vdd-l14-l16-supply = <&vreg_s8b_1p272>;
  
-> 
-> - Mani
-> 
-> > Frank
-> > 
-> > > 
-> > > This will simplify the code and also allow adding HDMA support that also
-> > > doesn't support auto detection of mapping format.
-> > > 
-> > > Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> > > Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-designware.c | 16 +++++++++-------
-> > >  drivers/pci/controller/dwc/pcie-designware.h |  5 ++---
-> > >  drivers/pci/controller/dwc/pcie-rcar-gen4.c  |  2 +-
-> > >  3 files changed, 12 insertions(+), 11 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> > > index ce273c3c5421..3e90b9947a13 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> > > @@ -894,18 +894,20 @@ static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
-> > >  {
-> > >  	u32 val;
-> > >  
-> > > +	/*
-> > > +	 * Bail out finding the mapping format if it is already set by the glue
-> > > +	 * driver. Also ensure that the edma.reg_base is pointing to a valid
-> > > +	 * memory region.
-> > > +	 */
-> > > +	if (pci->edma.mf != EDMA_MF_EDMA_LEGACY)
-> > > +		return pci->edma.reg_base ? 0 : -ENODEV;
-> > > +
-> > >  	/*
-> > >  	 * Indirect eDMA CSRs access has been completely removed since v5.40a
-> > >  	 * thus no space is now reserved for the eDMA channels viewport and
-> > >  	 * former DMA CTRL register is no longer fixed to FFs.
-> > > -	 *
-> > > -	 * Note that Renesas R-Car S4-8's PCIe controllers for unknown reason
-> > > -	 * have zeros in the eDMA CTRL register even though the HW-manual
-> > > -	 * explicitly states there must FFs if the unrolled mapping is enabled.
-> > > -	 * For such cases the low-level drivers are supposed to manually
-> > > -	 * activate the unrolled mapping to bypass the auto-detection procedure.
-> > >  	 */
-> > > -	if (dw_pcie_ver_is_ge(pci, 540A) || dw_pcie_cap_is(pci, EDMA_UNROLL))
-> > > +	if (dw_pcie_ver_is_ge(pci, 540A))
-> > >  		val = 0xFFFFFFFF;
-> > >  	else
-> > >  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
-> > > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > > index 26dae4837462..995805279021 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > > +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > > @@ -51,9 +51,8 @@
-> > >  
-> > >  /* DWC PCIe controller capabilities */
-> > >  #define DW_PCIE_CAP_REQ_RES		0
-> > > -#define DW_PCIE_CAP_EDMA_UNROLL		1
-> > > -#define DW_PCIE_CAP_IATU_UNROLL		2
-> > > -#define DW_PCIE_CAP_CDM_CHECK		3
-> > > +#define DW_PCIE_CAP_IATU_UNROLL		1
-> > > +#define DW_PCIE_CAP_CDM_CHECK		2
-> > >  
-> > >  #define dw_pcie_cap_is(_pci, _cap) \
-> > >  	test_bit(DW_PCIE_CAP_ ## _cap, &(_pci)->caps)
-> > > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > > index e9166619b1f9..3c535ef5ea91 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > > @@ -255,7 +255,7 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
-> > >  	rcar->dw.ops = &dw_pcie_ops;
-> > >  	rcar->dw.dev = dev;
-> > >  	rcar->pdev = pdev;
-> > > -	dw_pcie_cap_set(&rcar->dw, EDMA_UNROLL);
-> > > +	rcar->dw.edma.mf = EDMA_MF_EDMA_UNROLL;
-> > >  	dw_pcie_cap_set(&rcar->dw, REQ_RES);
-> > >  	platform_set_drvdata(pdev, rcar);
-> > >  
-> > > 
-> > > -- 
-> > > 2.25.1
-> > > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+ 		vreg_s1b_1p872: smps1 {
++			regulator-name = "vreg_s1b_1p872";
+ 			regulator-min-microvolt = <1840000>;
+ 			regulator-max-microvolt = <2040000>;
+ 		};
+ 
+ 		vreg_s2b_0p876: smps2 {
++			regulator-name = "vreg_s2b_0p876";
+ 			regulator-min-microvolt = <570070>;
+ 			regulator-max-microvolt = <1050000>;
+ 		};
+ 
+ 		vreg_s7b_0p972: smps7 {
++			regulator-name = "vreg_s7b_0p972";
+ 			regulator-min-microvolt = <535000>;
+ 			regulator-max-microvolt = <1120000>;
+ 		};
+ 
+ 		vreg_s8b_1p272: smps8 {
++			regulator-name = "vreg_s8b_1p272";
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1500000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_RET>;
+ 		};
+ 
+ 		vreg_l1b_0p912: ldo1 {
++			regulator-name = "vreg_l1b_0p912";
+ 			regulator-min-microvolt = <825000>;
+ 			regulator-max-microvolt = <925000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l2b_3p072: ldo2 {
++			regulator-name = "vreg_l2b_3p072";
+ 			regulator-min-microvolt = <2700000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l3b_0p504: ldo3 {
++			regulator-name = "vreg_l3b_0p504";
+ 			regulator-min-microvolt = <312000>;
+ 			regulator-max-microvolt = <910000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l4b_0p752: ldo4 {
++			regulator-name = "vreg_l4b_0p752";
+ 			regulator-min-microvolt = <752000>;
+ 			regulator-max-microvolt = <820000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		reg_l5b_0p752: ldo5 {
++			regulator-name = "reg_l5b_0p752";
+ 			regulator-min-microvolt = <552000>;
+ 			regulator-max-microvolt = <832000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l6b_1p2: ldo6 {
++			regulator-name = "vreg_l6b_1p2";
+ 			regulator-min-microvolt = <1140000>;
+ 			regulator-max-microvolt = <1260000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l7b_2p952: ldo7 {
++			regulator-name = "vreg_l7b_2p952";
+ 			regulator-min-microvolt = <2400000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l8b_0p904: ldo8 {
++			regulator-name = "vreg_l8b_0p904";
+ 			regulator-min-microvolt = <870000>;
+ 			regulator-max-microvolt = <970000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l9b_1p2: ldo9 {
++			regulator-name = "vreg_l9b_1p2";
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1304000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l11b_1p504: ldo11 {
++			regulator-name = "vreg_l11b_1p504";
+ 			regulator-min-microvolt = <1504000>;
+ 			regulator-max-microvolt = <2000000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l12b_0p751: ldo12 {
++			regulator-name = "vreg_l12b_0p751";
+ 			regulator-min-microvolt = <751000>;
+ 			regulator-max-microvolt = <824000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l13b_0p53: ldo13 {
++			regulator-name = "vreg_l13b_0p53";
+ 			regulator-min-microvolt = <530000>;
+ 			regulator-max-microvolt = <824000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l14b_1p08: ldo14 {
++			regulator-name = "vreg_l14b_1p08";
+ 			regulator-min-microvolt = <1080000>;
+ 			regulator-max-microvolt = <1304000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l15b_0p765: ldo15 {
++			regulator-name = "vreg_l15b_0p765";
+ 			regulator-min-microvolt = <765000>;
+ 			regulator-max-microvolt = <1020000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l16b_1p1: ldo16 {
++			regulator-name = "vreg_l16b_1p1";
+ 			regulator-min-microvolt = <1100000>;
+ 			regulator-max-microvolt = <1300000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l17b_1p7: ldo17 {
++			regulator-name = "vreg_l17b_1p7";
+ 			regulator-min-microvolt = <1700000>;
+ 			regulator-max-microvolt = <1900000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l18b_1p8: ldo18 {
++			regulator-name = "vreg_l18b_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <2000000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l19b_1p8: ldo19 {
++			regulator-name = "vreg_l19b_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <2000000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+@@ -304,109 +326,128 @@ regulators-1 {
+ 		vdd-bob-supply = <&vph_pwr>;
+ 
+ 		vreg_s1c_2p19: smps1 {
++			regulator-name = "vreg_s1c_2p19";
+ 			regulator-min-microvolt = <2190000>;
+ 			regulator-max-microvolt = <2210000>;
+ 		};
+ 
+ 		vreg_s2c_0p752: smps2 {
++			regulator-name = "vreg_s2c_0p752";
+ 			regulator-min-microvolt = <750000>;
+ 			regulator-max-microvolt = <800000>;
+ 		};
+ 
+ 		vreg_s5c_0p752: smps5 {
++			regulator-name = "vreg_s5c_0p752";
+ 			regulator-min-microvolt = <465000>;
+ 			regulator-max-microvolt = <1050000>;
+ 		};
+ 
+ 		vreg_s7c_0p752: smps7 {
++			regulator-name = "vreg_s7c_0p752";
+ 			regulator-min-microvolt = <465000>;
+ 			regulator-max-microvolt = <800000>;
+ 		};
+ 
+ 		vreg_s9c_1p084: smps9 {
++			regulator-name = "vreg_s9c_1p084";
+ 			regulator-min-microvolt = <1010000>;
+ 			regulator-max-microvolt = <1170000>;
+ 		};
+ 
+ 		vreg_l1c_1p8: ldo1 {
++			regulator-name = "vreg_l1c_1p8";
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1980000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l2c_1p62: ldo2 {
++			regulator-name = "vreg_l2c_1p62";
+ 			regulator-min-microvolt = <1620000>;
+ 			regulator-max-microvolt = <1980000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l3c_2p8: ldo3 {
++			regulator-name = "vreg_l3c_2p8";
+ 			regulator-min-microvolt = <2800000>;
+ 			regulator-max-microvolt = <3540000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l4c_1p62: ldo4 {
++			regulator-name = "vreg_l4c_1p62";
+ 			regulator-min-microvolt = <1620000>;
+ 			regulator-max-microvolt = <3300000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l5c_1p62: ldo5 {
++			regulator-name = "vreg_l5c_1p62";
+ 			regulator-min-microvolt = <1620000>;
+ 			regulator-max-microvolt = <3300000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l6c_2p96: ldo6 {
++			regulator-name = "vreg_l6c_2p96";
+ 			regulator-min-microvolt = <1650000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l7c_3p0: ldo7 {
++			regulator-name = "vreg_l7c_3p0";
+ 			regulator-min-microvolt = <3000000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l8c_1p62: ldo8 {
++			regulator-name = "vreg_l8c_1p62";
+ 			regulator-min-microvolt = <1620000>;
+ 			regulator-max-microvolt = <2000000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l9c_2p96: ldo9 {
++			regulator-name = "vreg_l9c_2p96";
+ 			regulator-min-microvolt = <2700000>;
+ 			regulator-max-microvolt = <35440000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l10c_0p88: ldo10 {
++			regulator-name = "vreg_l10c_0p88";
+ 			regulator-min-microvolt = <720000>;
+ 			regulator-max-microvolt = <1050000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l11c_2p8: ldo11 {
++			regulator-name = "vreg_l11c_2p8";
+ 			regulator-min-microvolt = <2800000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l12c_1p65: ldo12 {
++			regulator-name = "vreg_l12c_1p65";
+ 			regulator-min-microvolt = <1650000>;
+ 			regulator-max-microvolt = <2000000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_l13c_2p7: ldo13 {
++			regulator-name = "vreg_l13c_2p7";
+ 			regulator-min-microvolt = <2700000>;
+ 			regulator-max-microvolt = <3544000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+ 		vreg_bob_3p296: bob {
++			regulator-name = "vreg_bob_3p296";
+ 			regulator-min-microvolt = <3008000>;
+ 			regulator-max-microvolt = <3960000>;
+ 		};
+
+---
+base-commit: 22ba90670a51a18c6b36d285fddf92b9887c0bc3
+change-id: 20240227-rb3gen2-regulator-names-8ac492e54567
+
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
+
 
