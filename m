@@ -1,110 +1,283 @@
-Return-Path: <linux-arm-msm+bounces-12656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4428868BED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:15:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4E61868C60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 10:37:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DFCF1F223A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 09:15:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E49901C20C1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 09:37:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FA0413540A;
-	Tue, 27 Feb 2024 09:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52016136981;
+	Tue, 27 Feb 2024 09:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MKVeki77"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XLalJAtM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C178130E48;
-	Tue, 27 Feb 2024 09:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8814E135A75;
+	Tue, 27 Feb 2024 09:37:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709025308; cv=none; b=ppUbLS5rpfdql+IfsCKJ5ZyEJGnwQCxRdMQfy7LbURo5wYBSBWVcFTyNWz1lFBUIO9qo/ZUZ/uSKItyFQGzr+3Rdf4HzPMe6EvJ55V9JjYYIBvyzpXIPLq2xG1gk3JOqpvb1vvz+DF5CAjQQIIL06IAJVi2EYNOwVovugoIFu1k=
+	t=1709026644; cv=none; b=II8p8lsT0uHBfk+Tom2UCK+MvnPXKX/lLAp9LTr75wqRRLKUJ9jmgfl3pOBIHG5KZ1vtO9YXdTrl43FScOnI8+Hb1yB2Tg8tjSzsOt3YbbNKG1fBaJqEyHjsLgNXWvk4UOgXSk9LP/HArLt6WWu7TdASgYzaqxeFF2kdB7QhMps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709025308; c=relaxed/simple;
-	bh=OjwlO1YDIYRy2SrU90fAQgq6NHCYBwyxJt2f+KcNtUk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HsZ0oruiiCMUiK3ilVJzswVF2zXGYOL6paw7t0MqStvSXmvKdKBvfIy7eRYZNcFibtmHlqgljoWyRRFuhUe363ySNThiUoh1eg070WJ70xyBVckXKnvm6MhKikPYvr1aHu+bmyYArFKrQnhxg+Qpotd/o68dpEqUDkRIYVqf3ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MKVeki77; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94890C43390;
-	Tue, 27 Feb 2024 09:15:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709025307;
-	bh=OjwlO1YDIYRy2SrU90fAQgq6NHCYBwyxJt2f+KcNtUk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MKVeki77rVnHBhTizyjJFkV+SqRRaZV1Ft/Z+fFec6r7poZ2WxeUrCRv67YodSdAJ
-	 pnhBgltU5E7qXPC7vEGJQhshGWvkyYPVPNbVRhFonwy0R7i080d4Q3dksc5shCYqvH
-	 x9p48CUo3ubQGj/60Y13ibsALWAdB1BOrikLQf4OoEamco5Gu/1FZyw9kuG7jEhAuN
-	 HSvA7+HEOJoHD2jSqch6p/BaOz8xI6YvCqlxCzGs137q56sxVtKT87mrpsF2Xprozo
-	 hGCZzuC6f61qsG7Es55nX4/kITIHriS1GMcMIooQPxiOqS5dFkXgS0opf1XPmLIJRg
-	 n9axIMimTE07Q==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1retYM-000000002Uu-0Zij;
-	Tue, 27 Feb 2024 10:15:10 +0100
-Date: Tue, 27 Feb 2024 10:15:10 +0100
-From: Johan Hovold <johan@kernel.org>
-To: quic_bjorande@quicinc.com
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
-Message-ID: <Zd2oHl0cVQr3mhmd@hovoldconsulting.com>
-References: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+	s=arc-20240116; t=1709026644; c=relaxed/simple;
+	bh=KWWRW3EhxeTGgJPUwozk2/bEvmRjwj3S46pzNTZtE/w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=r2EXUC2mkoocIYAxwTqm9xN75SH1p+LX1L7xqo0hN4nN/UJWg2RYLZocw0XBbTyc/o41Q1Qr8DX4+n5xSQ0ocASFIxLJ2Wwvxv8A7VpfXcR7ED6+IF4cwf2mYkXWw2XJnfP11zbScuKtlNdEuRhy/UMEMlgKRlFzRl+Ebh2GZ9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XLalJAtM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9XxAv031474;
+	Tue, 27 Feb 2024 09:37:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ZSPXY1KQK9kLzjHc2C6RIo1LKNvV7yesMu6Mxo6z4+E=; b=XL
+	alJAtMcR/8ckZKpyqjmOI+mLCPeGsXMvk1fJX9NcK2qTgU6YYEGNNMDit07BuGGf
+	OzYhRcu3Pp5sws9gd+u02tq7whpbBw1uCNMbcZfDWRGW7/Xvrg2OR4sB3SFx5vcw
+	rWp7V5Dov6tUWlIiGvNOH/89Vvq5kuf1UwBsp0FbIHku+fWNZMHsXDs+/fz0j5Fp
+	sAcBylOVdDpmEVwUPXqZ2cVdyawl1UMV8sVEdiIfJTZeDyrXgEpbNzVf2g2x8as1
+	BYU5t4TtuK8U+g6eGxrLjCRxFBxqqnvKEHrPfhzRJxnM2GWWVdsyngQtZ66A4tcY
+	PEbFqeV/zYqiUjl5vq1A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whccw83u5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 09:37:18 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41R9bHXB021436
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 09:37:17 GMT
+Received: from [10.214.66.209] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 01:37:11 -0800
+Message-ID: <15d09da8-7bb9-4e64-9808-af72c5a110ec@quicinc.com>
+Date: Tue, 27 Feb 2024 15:07:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add initial support for rb5gen2 HDK
+ board
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240202133638.4720-1-quic_wasimn@quicinc.com>
+ <20240202133638.4720-4-quic_wasimn@quicinc.com>
+ <CAA8EJppnNZOWN5F0fOKhUGN-pk3T9L+kOd-AiNO0tcDNm8Bbxw@mail.gmail.com>
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+In-Reply-To: <CAA8EJppnNZOWN5F0fOKhUGN-pk3T9L+kOd-AiNO0tcDNm8Bbxw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: g2Pv9FCXyzfRntvby0GgNxiVZshXdUVZ
+X-Proofpoint-ORIG-GUID: g2Pv9FCXyzfRntvby0GgNxiVZshXdUVZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ spamscore=0 mlxlogscore=999 mlxscore=0 phishscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270075
 
-On Mon, Feb 26, 2024 at 05:49:57PM -0800, Bjorn Andersson via B4 Relay wrote:
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
-> the domain")' aimed to make sure that a power-domain that is being
-> enabled without any particular performance-state requested will at least
-> turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
-> required-opps properties.
-> 
-> But in the event that aggregation happens on a disabled power-domain, with
-> an enabled peer without performance-state, both the local and peer
-> corner are 0. The peer's enabled_corner is not considered, with the
-> result that the underlying (shared) resource is disabled.
-> 
-> One case where this can be observed is when the display stack keeps mmcx
-> enabled (but without a particular performance-state vote) in order to
-> access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
-> is flushed the state of the peer (mmcx) is not considered and mmcx_ao
-> ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
-> several times, but has been painted over in DeviceTree by adding an
-> explicit vote for the lowest non-disabled performance-state.
-> 
-> Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
-> Reported-by: Johan Hovold <johan@kernel.org>
-> Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
-> Cc:  <stable@vger.kernel.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> This issue is the root cause of a display regression on SC8280XP boards,
-> resulting in the system often resetting during boot. It was exposed by
-> the refactoring of the DisplayPort driver in v6.8-rc1.
 
-This fixes the hard resets I've been seeing since rc1 when initialising
-the display subsystem of the Lenovo ThinkPad X13s at boot. With some
-instrumentation added I can see the resets coinciding with the call to
-rpmhpd_aggregate_corner() for 'mx_ao':
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+On 2/2/2024 8:23 PM, Dmitry Baryshkov wrote:
+> On Fri, 2 Feb 2024 at 15:37, Wasim Nazir <quic_wasimn@quicinc.com> wrote:
+>>
+>> RB5gen2 hardware development kit is based on QCS8550-Rb5gen2 SOM
+>> for IOT solutions.
+>> This initial version describes VPH_PWR, UART & USB3.1.
+>>
+>> On-board PMICs:
+>> - PMR735D
+>> - PM8010
+>>
+>> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 6fdde64d7540..8840b219d6d5 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -93,6 +93,7 @@ dtb-$(CONFIG_ARCH_QCOM)       += qcs404-evb-1000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-4000.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qcs6490-rb3gen2.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qcs8550-aim300-aiot.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)        += qcs8550-rb5gen2-hdk.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qdu1000-idp.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qrb2210-rb1.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += qrb4210-rb2.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts
+>> new file mode 100644
+>> index 000000000000..6f4c68402823
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-hdk.dts
+>> @@ -0,0 +1,136 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include "qcs8550-rb5gen2.dtsi"
+>> +#include "pm8010.dtsi"
+>> +#include "pmr735d_a.dtsi"
+>> +#include "pmr735d_b.dtsi"
+>> +
+>> +/ {
+>> +       model = "Qualcomm Technologies, Inc. QCS8550 RB5Gen2 HDK";
+>> +       compatible = "qcom,qcs8550-rb5gen2-hdk", "qcom,qcs8550-rb5gen2",
+>> +                       "qcom,qcs8550", "qcom,qcm8550", "qcom,sm8550";
+>> +
+>> +       aliases {
+>> +               serial0 = &uart7;
+>> +       };
+>> +
+>> +       chosen {
+>> +               stdout-path = "serial0:115200n8";
+>> +       };
+>> +
+>> +       pmic-glink {
+>> +               compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
+>> +               #address-cells = <1>;
+>> +               #size-cells = <0>;
+>> +
+>> +               connector@0 {
+>> +                       compatible = "usb-c-connector";
+>> +                       reg = <0>;
+>> +                       power-role = "dual";
+>> +                       data-role = "dual";
+>> +
+>> +                       ports {
+>> +                               #address-cells = <1>;
+>> +                               #size-cells = <0>;
+>> +
+>> +                               port@0 {
+>> +                                       reg = <0>;
+>> +
+>> +                                       pmic_glink_hs_in: endpoint {
+>> +                                               remote-endpoint = <&usb_1_dwc3_hs>;
+>> +                                       };
+> 
+> SS lines unconnected?
+> SBU is unconnected?
+> 
+This is the initial patch with basic support and that's why only HS is 
+added. Other features are planned in incremental patch by respective 
+team. I will update the commit message in next patch version.
+>> +                               };
+>> +                       };
+>> +               };
+>> +       };
+>> +
+>> +       vph_pwr: vph-pwr-regulator {
+>> +               compatible = "regulator-fixed";
+>> +               regulator-name = "vph_pwr";
+>> +               regulator-min-microvolt = <3700000>;
+>> +               regulator-max-microvolt = <3700000>;
+>> +
+>> +               regulator-always-on;
+>> +               regulator-boot-on;
+>> +       };
+>> +};
+>> +
+>> +&apps_rsc {
+>> +       regulators-0 {
+>> +               vdd-bob1-supply = <&vph_pwr>;
+>> +               vdd-bob2-supply = <&vph_pwr>;
+>> +       };
+>> +
+>> +       regulators-2 {
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +       };
+>> +
+>> +       regulators-3 {
+>> +               vdd-s1-supply = <&vph_pwr>;
+>> +               vdd-s3-supply = <&vph_pwr>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +               vdd-s6-supply = <&vph_pwr>;
+>> +       };
+>> +
+>> +       regulators-4 {
+>> +               vdd-s1-supply = <&vph_pwr>;
+>> +               vdd-s3-supply = <&vph_pwr>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +               vdd-s7-supply = <&vph_pwr>;
+>> +       };
+>> +
+>> +       regulators-5 {
+>> +               vdd-s1-supply = <&vph_pwr>;
+>> +               vdd-s2-supply = <&vph_pwr>;
+>> +               vdd-s3-supply = <&vph_pwr>;
+>> +               vdd-s4-supply = <&vph_pwr>;
+>> +               vdd-s5-supply = <&vph_pwr>;
+>> +               vdd-s6-supply = <&vph_pwr>;
+>> +       };
+>> +};
+>> +
+>> +&pm8550b_eusb2_repeater {
+>> +       vdd18-supply = <&vreg_l15b_1p8>;
+>> +       vdd3-supply = <&vreg_l5b_3p1>;
+>> +};
+>> +
+>> +&uart7 {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&usb_1 {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&usb_1_dwc3 {
+>> +       dr_mode = "otg";
+>> +       usb-role-switch;
+>> +};
+>> +
+>> +&usb_1_dwc3_hs {
+>> +       remote-endpoint = <&pmic_glink_hs_in>;
+>> +};
+>> +
+>> +&usb_1_hsphy {
+>> +       vdd-supply = <&vreg_l1e_0p88>;
+>> +       vdda12-supply = <&vreg_l3e_1p2>;
+>> +
+>> +       phys = <&pm8550b_eusb2_repeater>;
+>> +
+>> +       status = "okay";
+>> +};
+>> +
+>> +&usb_dp_qmpphy {
+>> +       vdda-phy-supply = <&vreg_l3e_1p2>;
+>> +       vdda-pll-supply = <&vreg_l3f_0p88>;
+>> +
+>> +       status = "okay";
+>> +};
+>> --
+>> 2.43.0
+>>
+>>
+> 
+> 
+
+Thanks & Regards,
+Wasim
 
