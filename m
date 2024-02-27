@@ -1,298 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-12619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F199E8684A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 00:39:38 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8232986863C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 02:45:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6D4628602B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Feb 2024 23:39:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3085E284B21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 01:45:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E395060864;
-	Mon, 26 Feb 2024 23:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BE636139;
+	Tue, 27 Feb 2024 01:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JKD/mmga"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T5VWn8dP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C8E135A45;
-	Mon, 26 Feb 2024 23:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E1A2916;
+	Tue, 27 Feb 2024 01:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708990772; cv=none; b=qoPli6Hwg2kP/r80rj9UkrHcIRSxBVPCEhFOvwFaxHftGmCZfknVEgOFJDI8KH0EjnxHeINoy3FXuwNpWNN3ZaFDKNm1gDjQVw5qkZbLQHd69TYMsi5i8YOxhGlqpU7T5GI+Xev02vYfTf+nxLAQnljJoUI5qhRVMJikyALs+0Y=
+	t=1708998349; cv=none; b=o/yMwPzMqufWkUzk/rjBp6W2M44mlXauMqRiTdTKy3bUtZVnHCk9CJJ+3Y8Ia0dYe1MWQpTa8DK/CQx3Xk7K83++FX6uy0LP99NG6K1C/Cpkx+S3fJQacJMkdRi9hgC9OZW8nVUcay+rOetq1JnPK7I78M7VepbbVBwzWFTogOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708990772; c=relaxed/simple;
-	bh=LBsDG7x+L2RgZ9+8CmKrZnwTM2Di8QZ15x/al32okDQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Pf0eVGOfeTLCpObh6uxH/UPYYiAoQitC7ZP4xCl8QcYHY/ycrOag5qI6hDwr4INDzfqTR06NJdyIbCWc+gfe02Yc7pcd8aRjnhmANm8BGIWpotVjjjMHZtQuYzoiB+GYZ4xHHW3URuLclyZvgc5PbbKR59UYDfz4RluYS6k3qlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JKD/mmga; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B02C433C7;
-	Mon, 26 Feb 2024 23:39:31 +0000 (UTC)
+	s=arc-20240116; t=1708998349; c=relaxed/simple;
+	bh=SCXTahozD0TxiPX08IBsjicUaCXkNVF/+0u0TFeGY0I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gFVcC15jdQlKc9qpygUl5zHFTgUy2K3GwCz2IoYj1PxGT4yiC2dExQxOVidKn8eSsBBSU1sAR0ZZ1r/SiI0xx8PRE0xRp4KRLKzxXgPqOjUdjuJMN5+RpzpATo0K1HSd8s7wo0gxovmvbSipjgrdBnAIyIQwHtLhhYGa4TDZYwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T5VWn8dP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 91AB6C433F1;
+	Tue, 27 Feb 2024 01:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708990772;
-	bh=LBsDG7x+L2RgZ9+8CmKrZnwTM2Di8QZ15x/al32okDQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=JKD/mmgaPkhXmLE9c0bRhTd+egtdeB1UalSsRvnV5aFQXvlR3TpzlLjnieG67exjR
-	 pE8HzqWM3eCkHXUHaH8kjzPuwMhHLJ6iJ4U8B+i6jGeQ9BaqtlchXfxC8AbZcU3Czf
-	 H5I68yEZBal7GOtu0sbWEXefxZxOvDejfMQ5ZTDYTQMd/tpEn+nxSbbQUk5PXUKE0u
-	 6PUvl9AfHJwqbEZwTDPgNLvtCaE/Jhdat2RdO9MwF1od9SCHuXyxz3tk7yeLOulvHP
-	 cprGUnOr1F7g3oRwNYy3sVM+Lzng7SsxVgg8aHZRz9RVDHqfLAFyw6WmOcr9M5bQhb
-	 2aPQYcoSoynZw==
-Date: Mon, 26 Feb 2024 17:39:30 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Lukas Wunner <lukas@wunner.de>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3] PCI: Add D3 support for PCI bridges in DT based
- platforms
-Message-ID: <20240226233930.GA215487@bhelgaas>
+	s=k20201202; t=1708998348;
+	bh=SCXTahozD0TxiPX08IBsjicUaCXkNVF/+0u0TFeGY0I=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=T5VWn8dPeHK/BBBoReSynEEv2vsnw2mgT+50PP5WMZn5QWRppdg3qhNAtJWbVG8mw
+	 K2qZXAuICBrlc4chwCrYja/aWcxhztOBun55O6kdCGDPnt7nMywIX2xe0/Ev8KzFyA
+	 TzxH9xeeNsFGfC6+U0jBvGZzWPiSubayJsafM68G3BYVg9a5uq6ePqLOVmhb2YKDMz
+	 ZoXpx7xEF4SQghz8q/x5yxByMhwaWi+7/vlRfTlnrXZFQeoIPiDM3a+8OPn9bLivfU
+	 qyN123mGd6GlLAcE7qiKGbUNiE2GptW8L82QXeisl4DEuraUijFLwkK7la6UE/2Nwy
+	 dCq5Wgr7oNZuw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75FB0C48BF6;
+	Tue, 27 Feb 2024 01:45:48 +0000 (UTC)
+From:
+ Bjorn Andersson via B4 Relay <devnull+quic_bjorande.quicinc.com@kernel.org>
+Date: Mon, 26 Feb 2024 17:49:57 -0800
+Subject: [PATCH] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240222040629.GB3374@thinkpad>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAMQ/3WUC/x2MwQqDMBAFf0X27EIMbWz9FfEQ40tdaGPYgBTEf
+ zd4nIGZgwpUUGhoDlLsUmRLFbq2obD69AHLUpmssQ9jrWPNvzUvjOTnLzhsmqAc5c/hCdNH9PP
+ 75ajmWVH1vR6n87wAZf/r0WoAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Stephen Boyd <swboyd@chromium.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
+ stable@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3004;
+ i=quic_bjorande@quicinc.com; h=from:subject:message-id;
+ bh=8TOgtVhYO01rdpfAVMwK9WI6pflXIuB4DQQcEbm8Zmw=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBl3T/r3KXQprzkHna4SseXUKD0ooMTxVhZKDW9m
+ mWQ0+8CJmiJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZd0/6xUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcUW4w//YlZS5dc2FBsqrTddOHzidbibnEQwzDs1tWPmyqH
+ jKcngixr+2OP4XYmR/HEBprSaEe/UXls884Ema6ucg5EQtpOIrMqfxWHEptQljfkVwuhHxiav5y
+ hR9pSDgBfIkmZYnlp+AI8VM+pQyqQB3nTZ0mgu1YTxtEIomgOZ8ifzTXMPvSrtWtU0pEXDpzE8y
+ amaeZShoEQMs238EpgfWhbFTKWqPlUKCdVmjyjIZ/TAnE4haRDpKnCInDvpGaTXJSeK+X1cdzAu
+ Iduu4QSFutGx/mTaLJF3I4UqWzUrFmEy/apAtGhOGnpNTkrAjR/euygJQY9OREp0OEvM+FEfjzj
+ yn0Xi/zNqMBnEzn5vd7340NM6wSq6oHBJp9dmzLyIAimCcN9A5z769c8SZ+hacWXEZlNqdizJ34
+ Wv8iaWi/Rkzc7XUG/Tlx+jtdEqS1313uA1f3HPDfr3VtQ+mN4t7Ex3z4qLFKaslXbunA4AEBLK9
+ INzGCitwuDBUSh2NtR0fu5ZOAiQCb7g+gIMON1aDQcD39lbnwfX8rMxYv9zNYZvtnr7z4NbUkAF
+ 0G/5IeNCRrIoQ42hHlRhVCkG5WnjZRGZbgLEIxHyxLHVUnNPXs+bCCftycKzr4BIUDfIK9W4TGz
+ /ltQREquxuqJMmPH8tYwmHjE2s2CdDyeBQHzWutRavxA=
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
+ fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+X-Endpoint-Received:
+ by B4 Relay for quic_bjorande@quicinc.com/default with auth_id=118
+X-Original-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reply-To: <quic_bjorande@quicinc.com>
 
-On Thu, Feb 22, 2024 at 09:36:29AM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Feb 21, 2024 at 12:20:00PM -0600, Bjorn Helgaas wrote:
-> > On Wed, Feb 21, 2024 at 10:49:58AM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Feb 20, 2024 at 04:02:40PM -0600, Bjorn Helgaas wrote:
-> > > > On Wed, Feb 14, 2024 at 05:16:09PM +0530, Manivannan Sadhasivam wrote:
-> > > > > Currently, PCI core will enable D3 support for PCI bridges only when the
-> > > > > following conditions are met:
-> > > > 
-> > > > Whenever I read "D3", I first have to figure out whether we're talking
-> > > > about D3hot or D3cold.  Please save me the effort :)
-> > > 
-> > > Both actually, that's why I used "D3" as in the spec. I should've explicitly
-> > > mentioned that in the commit message.
-> > > 
-> > > > > 1. Platform is ACPI based
-> > > > > 2. Thunderbolt controller is used
-> > > > > 3. pcie_port_pm=force passed in cmdline
-> > > > 
-> > > > Are these joined by "AND" or "OR"?  I guess probably "OR"?
-> > > > 
-> > > > "... all the following conditions are met" or "... one of the
-> > > > following conditions is met" would clarify this.
-> > > 
-> > > Will use "one of the..."
-> > > 
-> > > > > While options 1 and 2 do not apply to most of the DT based
-> > > > > platforms, option 3 will make the life harder for distro
-> > > > > maintainers. Due to this, runtime PM is also not getting enabled
-> > > > > for the bridges.
-> > > > > 
-> > > > > To fix this, let's make use of the "supports-d3" property [1] in
-> > > > > the bridge DT nodes to enable D3 support for the capable
-> > > > > bridges. This will also allow the capable bridges to support
-> > > > > runtime PM, thereby conserving power.
-> > > > 
-> > > > Looks like "supports-d3" was added by
-> > > > https://github.com/devicetree-org/dt-schema/commit/4548397d7522.
-> > > > The commit log mentions "platform specific ways", which suggests maybe
-> > > > this is D3cold, since D3hot should be supported via PMCSR without any
-> > > > help from the platform.
-> > > > 
-> > > > So I *guess* this really means "platform provides some non-architected
-> > > > way to put devices in D3cold and bring them back to D0"?
-> > > 
-> > > By reading the comments and git log of the pci_bridge_d3_possible()
-> > > function in drivers/pci/pci.c, we can understand that some of the
-> > > old bridges do not support both D3hot and D3cold. And to
-> > > differentiate such bridges, platforms have to notify the OS using
-> > > some ways.
-> > > 
-> > > ACPI has its own implementation [1] and DT uses "supports-d3"
-> > > property.
-> > > 
-> > > And yes, in an ideal world PMCSR should be sufficient for D3hot, but
-> > > you know the PCI vendors more than me ;)
-> > 
-> > So it sounds like this is supposed to cover two cases:
-> > 
-> >   1) D3hot doesn't work per spec.  This sounds like a hardware
-> >      defect in the device that should be a quirk based on
-> >      Vendor/Device ID, not something in DT.  I don't actually know if
-> >      this is common, although there are several existing quirks that
-> >      mention issues with D3.
-> > 
-> 
-> I'd love to use quirks if we started from that. But right now, quirks are not
-> used and there are multiple checks based on various factors [1], including
-> relying on ACPI. So that's the reason I went with DT based approach.
-> 
-> If quirks has to be used now, then it has to be used for both ACPI and DT based
-> platforms. For DT it won't be an issue since nobody bothered until now, but for
-> ACPI, we need to add quirks for all the bridges in the wild which is not
-> feasible.
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pci.c#n3116
-> 
-> >   2) The platform doesn't support putting the bridge in D3cold and
-> >      back to D0.  I don't understand this either because I assumed DT
-> >      would describe *hardware*, and "supports-d3" might imply the
-> >      presence of hardware power control, but doesn't tell us how to
-> >      operate it, and it must be up to a native driver to know how to
-> >      do it.
-> 
-> "supports-d3" implies that both D3hot and D3cold works as in the
-> spec and the OS can handle it appropriately. If this is absent, then
-> OS should not transition the bridge to any of the D3 states. I don't
-> understand what is the confusion here. This is similar to what we
-> already have for ACPI (whether or not it is correct is another
-> topic).
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-What does "the OS can handle it appropriately" mean?  Whatever it
-means, it sounds like a property of the OS, not a property of the
-device.
+Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
+the domain")' aimed to make sure that a power-domain that is being
+enabled without any particular performance-state requested will at least
+turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
+required-opps properties.
 
-I don't know what "D3cold works as in the spec" means, either.  The
-spec says how D3cold affects internal device state, but it doesn't say
-anything about how to put devices in D3cold or back in D0.
+But in the event that aggregation happens on a disabled power-domain, with
+an enabled peer without performance-state, both the local and peer
+corner are 0. The peer's enabled_corner is not considered, with the
+result that the underlying (shared) resource is disabled.
 
-> > These are two vastly different scenarios, and I would really like to
-> > untangle them so they aren't conflated.  I see that you're extending
-> > platform_pci_bridge_d3(), which apparently has that conflation baked
-> > into it already, but my personal experience is that this is really
-> > hard to maintain.
-> 
-> I do agree that it is not in a good shape, but there is no better
-> solution other than making use of the DT property. If you have any
-> better idea, please suggest.
+One case where this can be observed is when the display stack keeps mmcx
+enabled (but without a particular performance-state vote) in order to
+access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
+is flushed the state of the peer (mmcx) is not considered and mmcx_ao
+ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
+several times, but has been painted over in DeviceTree by adding an
+explicit vote for the lowest non-disabled performance-state.
 
-The longer this goes on the worse shape we are in because we're always
-adding new special cases.
+Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
+Reported-by: Johan Hovold <johan@kernel.org>
+Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+This issue is the root cause of a display regression on SC8280XP boards,
+resulting in the system often resetting during boot. It was exposed by
+the refactoring of the DisplayPort driver in v6.8-rc1.
+---
+ drivers/pmdomain/qcom/rpmhpd.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-The fundamental problem I have is that "supports-d3" doesn't say
-anything specific other than "current Linux can put the device in
-D3hot or D3cold and get it back out again".  I think DT should tell us
-characteristics of the device or the platform, e.g., "PMCSR doesn't
-work to enter/leave D3hot on this device" or "regulator X controls
-main power to the device to enter/leave D3cold".
+diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
+index 3078896b1300..47df910645f6 100644
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -692,6 +692,7 @@ static int rpmhpd_aggregate_corner(struct rpmhpd *pd, unsigned int corner)
+ 	unsigned int active_corner, sleep_corner;
+ 	unsigned int this_active_corner = 0, this_sleep_corner = 0;
+ 	unsigned int peer_active_corner = 0, peer_sleep_corner = 0;
++	unsigned int peer_enabled_corner;
+ 
+ 	if (pd->state_synced) {
+ 		to_active_sleep(pd, corner, &this_active_corner, &this_sleep_corner);
+@@ -701,9 +702,11 @@ static int rpmhpd_aggregate_corner(struct rpmhpd *pd, unsigned int corner)
+ 		this_sleep_corner = pd->level_count - 1;
+ 	}
+ 
+-	if (peer && peer->enabled)
+-		to_active_sleep(peer, peer->corner, &peer_active_corner,
++	if (peer && peer->enabled) {
++		peer_enabled_corner = max(peer->corner, peer->enable_corner);
++		to_active_sleep(peer, peer_enabled_corner, &peer_active_corner,
+ 				&peer_sleep_corner);
++	}
+ 
+ 	active_corner = max(this_active_corner, peer_active_corner);
+ 
 
-But right now it sounds like a mixture of "PMCSR works correctly to
-enter/leave D3hot" and "some unspecified software can control main
-power to this device".
+---
+base-commit: b401b621758e46812da61fa58a67c3fd8d91de0d
+change-id: 20240226-rpmhpd-enable-corner-fix-c5e07fe7b986
 
-Putting devices in D3cold and back in D0 needs some kind of platform
-support like ACPI methods or a native power management driver that
-knows how to control power on a specific platform.  That's completely
-different from D3hot, where the PCI spec tells us all we need to know.
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
 
-> > > > > Ideally, D3 support should be enabled by default for the more recent PCI
-> > > > > bridges, but we do not have a sane way to detect them.
-> > > > > 
-> > > > > [1] https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/pci-pci-bridge.yaml#L31
-> > 
-> > > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pci-acpi.c#n976
-> > > 
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > ---
-> > > > > This patch is tested on Qcom SM8450 based development board with an out-of-tree
-> > > > > DT patch.
-> > > > > 
-> > > > > NOTE: I will submit the DT patches adding this property for applicable bridges
-> > > > > in Qcom SoCs separately.
-> > > > > 
-> > > > > Changes in v3:
-> > > > > - Fixed kdoc, used of_property_present() and dev_of_node() (Lukas)
-> > > > > - Link to v2: https://lore.kernel.org/r/20240214-pcie-qcom-bridge-v2-1-9dd6dbb1b817@linaro.org
-> > > > > 
-> > > > > Changes in v2:
-> > > > > - Switched to DT based approach as suggested by Lukas.
-> > > > > - Link to v1: https://lore.kernel.org/r/20240202-pcie-qcom-bridge-v1-0-46d7789836c0@linaro.org
-> > > > > ---
-> > > > >  drivers/pci/of.c  | 12 ++++++++++++
-> > > > >  drivers/pci/pci.c |  3 +++
-> > > > >  drivers/pci/pci.h |  6 ++++++
-> > > > >  3 files changed, 21 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/pci/of.c b/drivers/pci/of.c
-> > > > > index 51e3dd0ea5ab..24b0107802af 100644
-> > > > > --- a/drivers/pci/of.c
-> > > > > +++ b/drivers/pci/of.c
-> > > > > @@ -786,3 +786,15 @@ u32 of_pci_get_slot_power_limit(struct device_node *node,
-> > > > >  	return slot_power_limit_mw;
-> > > > >  }
-> > > > >  EXPORT_SYMBOL_GPL(of_pci_get_slot_power_limit);
-> > > > > +
-> > > > > +/**
-> > > > > + * of_pci_bridge_d3 - Check if the bridge is supporting D3 states or not
-> > > > > + *
-> > > > > + * @node: device tree node of the bridge
-> > > > > + *
-> > > > > + * Return: %true if the bridge is supporting D3 states, %false otherwise.
-> > > > > + */
-> > > > > +bool of_pci_bridge_d3(struct device_node *node)
-> > > > > +{
-> > > > > +	return of_property_present(node, "supports-d3");
-> > > > > +}
-> > > > > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> > > > > index d8f11a078924..8678fba092bb 100644
-> > > > > --- a/drivers/pci/pci.c
-> > > > > +++ b/drivers/pci/pci.c
-> > > > > @@ -1142,6 +1142,9 @@ static inline bool platform_pci_bridge_d3(struct pci_dev *dev)
-> > > > >  	if (pci_use_mid_pm())
-> > > > >  		return false;
-> > > > >  
-> > > > > +	if (dev_of_node(&dev->dev))
-> > > > > +		return of_pci_bridge_d3(dev->dev.of_node);
-> > > > > +
-> > > > >  	return acpi_pci_bridge_d3(dev);
-> > > > >  }
-> > > > >  
-> > > > > diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> > > > > index 2336a8d1edab..10387461b1fe 100644
-> > > > > --- a/drivers/pci/pci.h
-> > > > > +++ b/drivers/pci/pci.h
-> > > > > @@ -635,6 +635,7 @@ int of_pci_get_max_link_speed(struct device_node *node);
-> > > > >  u32 of_pci_get_slot_power_limit(struct device_node *node,
-> > > > >  				u8 *slot_power_limit_value,
-> > > > >  				u8 *slot_power_limit_scale);
-> > > > > +bool of_pci_bridge_d3(struct device_node *node);
-> > > > >  int pci_set_of_node(struct pci_dev *dev);
-> > > > >  void pci_release_of_node(struct pci_dev *dev);
-> > > > >  void pci_set_bus_of_node(struct pci_bus *bus);
-> > > > > @@ -673,6 +674,11 @@ of_pci_get_slot_power_limit(struct device_node *node,
-> > > > >  	return 0;
-> > > > >  }
-> > > > >  
-> > > > > +static inline bool of_pci_bridge_d3(struct device_node *node)
-> > > > > +{
-> > > > > +	return false;
-> > > > > +}
-> > > > > +
-> > > > >  static inline int pci_set_of_node(struct pci_dev *dev) { return 0; }
-> > > > >  static inline void pci_release_of_node(struct pci_dev *dev) { }
-> > > > >  static inline void pci_set_bus_of_node(struct pci_bus *bus) { }
-> > > > > 
-> > > > > ---
-> > > > > base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-> > > > > change-id: 20240131-pcie-qcom-bridge-b6802a9770a3
-> > > > > 
-> > > > > Best regards,
-> > > > > -- 
-> > > > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > 
-> > > 
-> > > -- 
-> > > மணிவண்ணன் சதாசிவம்
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
 
