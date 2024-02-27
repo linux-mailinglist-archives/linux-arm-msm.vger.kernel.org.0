@@ -1,164 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-12720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1AD869920
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 15:53:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B02038699E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:10:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B38431F24DBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:53:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22BF31F21DE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 15:10:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB6C54BFE;
-	Tue, 27 Feb 2024 14:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7A7014A09B;
+	Tue, 27 Feb 2024 15:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+ZIqWP2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LlOiVQRF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F151420DF;
-	Tue, 27 Feb 2024 14:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436CF14A4C1;
+	Tue, 27 Feb 2024 15:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709045590; cv=none; b=UGfh90ZgDBZ00nVin5WKvEPelBnsvvLBDTThfxU/2Iqzb6fm7B7mdB4IETQznkr6JxXVrsO+PtaX00Tji/COfxFYYuDFvLPVtuxQmSwjmgnbjpj75ZGkKmqm//MIHOl/PxAUOcuTY2uotyiLndskjVT+6nzTjDbRXD75ZnLS9eU=
+	t=1709046453; cv=none; b=fJUv12b8Gu/pqU87vm84gEsFlRozl4u4InuNjv7LW7ORiyvaYsIrsZn43cHyDUHoNWeIJ76XvYaXpoEyeaRIIXSha9suvnN3Mobd74KM+h+FziEkljmt22XU4cOXk45GzvO348oZoOiGA/1pBWdvPVKdNNT++SmZMTuEF4d8iZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709045590; c=relaxed/simple;
-	bh=YlS+XLPkpbAB4xgj3+7khXh6HKkBzhmjNhKtEN3j9xw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rx6LBfcZWh4YnrLK6K3TfACTHwF5bRIa3Jp5ppMn2WEmenRyV+c5rB3q6ETXUkXRok6dHggP599Nq0Pvjzy0U3puheCLi8HFlswXYSoXgqF60jx+bNJqISmi+gRuiRXfEr6B3SsZyDwRDnwDK9uJKny36yUhxkDsUGjLhefJzEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+ZIqWP2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286A7C433F1;
-	Tue, 27 Feb 2024 14:53:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709045590;
-	bh=YlS+XLPkpbAB4xgj3+7khXh6HKkBzhmjNhKtEN3j9xw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=o+ZIqWP2hpAAfsiYuOmt5JxabM8OEhtC/GyTaCjzvDEPL3/2n9i7cvRC/ML7XTEIw
-	 ADfHYc0jqxaiCOqcYPHJYZB+Obh6uQbGN6RJRN+mPDVAswyoIeO03Bhm+D8dB587Kx
-	 UkY3B3YyS0jPFOb7F81rZxHFFuipAbjVqXI3YpTmoVsvL4kSSEMu6A9dq0SRPBbSpn
-	 g0MWwv44NyZdjIk81sZt8qdWWof0z6YrayjoiTd1g93UJWZ2nQCt+WMk3P+68iVXue
-	 q+DzEKAjWbjcoxW1mnb1Mac80/jBEcGElBDS3pJ3dpCeFHAHGATzJ49IB13sf1xdQE
-	 7zP2FerHGWR5g==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d094bc2244so52005611fa.1;
-        Tue, 27 Feb 2024 06:53:10 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVGklBRXaeJd8KzsxRuZ2ClY2XgsKFiWveakYpGZt22W95sVPBpA+IaAWL368f9Em0a1CZBMvfoPz4EylPWCAQ+02bu8MbK8kg56klvuHglfciSlDcs694x+X92qb77WfOBB3IvKf1wHhHxNw==
-X-Gm-Message-State: AOJu0Ywow9oWzPjv5Ba4G5GjKQbNsCpz4oyt8pcOhRg1KhqrlfTYAzgW
-	3A02JPxXKxq3e5xNtKDo3PXK9Svz4ihiYazXhM8/lo1E6B32gJLQuUMG2wEuL1uxzrNEf/Z1mnf
-	brtJxEYdr+P/aXBMjx4Q5ohnSBpA=
-X-Google-Smtp-Source: AGHT+IFdU5+QVtAGPROXQ3gMPQ7H3jlS9Zb3pV4/rSiCMlShMF/7Qkq67XHHVbRlo7IYf5l0wDT+UNh7zTNTp0CQxA4=
-X-Received: by 2002:a05:651c:2128:b0:2d2:3fac:5fdc with SMTP id
- a40-20020a05651c212800b002d23fac5fdcmr7612423ljq.10.1709045588717; Tue, 27
- Feb 2024 06:53:08 -0800 (PST)
+	s=arc-20240116; t=1709046453; c=relaxed/simple;
+	bh=nbBHPd7hWnt+9fYQpHo+4Cb/SCBb82djYs8mBUn7M3s=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=b0NmLj+y1MXJOXdSHAPBv12ugay1lig64DKfyosXwmMXIoe4OYl9ELHJgodfDJUE0Zkor0K/JPtnscrEeuAO6WdLbyjw5kVqlLuoZGResu1eQCVjcK0Je/EPq9yp5H6Nw7QlU0Ev1im93JuXpqf5K5QlJsFh1I63cErQLSjGXoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LlOiVQRF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RBjuWF011343;
+	Tue, 27 Feb 2024 15:07:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:from:to:cc:references
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=u9sTptxpOGNQHmo+HL35UVlPPUynBEERtiX8yI981Ko=; b=Ll
+	OiVQRFHPm/nyxkkAPb8BD/BVtUdTA1VVFij/PheD0+xu8Ux2Yr3p7L2C9gTL3SQF
+	KSBhl+k8G1Y1DbD4T4BsJw3C/3Zw6c29fuLBhENUtWqsyZh6xDHT9528ELrR1+r5
+	YR4fPZrz8biPemT4XkP0cu76Vs+k+pkQhbjkNUfVCz+xrLL6rf9RAAO+n4btn03y
+	6Y7RQHgA9S/Ezlsnl78Hm5zQrqtGZWUc6g05dmnWV8ohPEXkTv05ut92bIkCipMI
+	+cmBR+GekmpJCwsbpYc7Oct6TamabQ0HtQ/iQRNJvc/z+yhw4tUAfaSlzBLGu7qU
+	XK+oLcfqntKWmreJo0+g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whd7b0s58-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 15:07:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RF74Pp021840
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 15:07:04 GMT
+Received: from [10.216.43.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 07:07:01 -0800
+Message-ID: <9f084781-2233-4b36-8b1c-db1fa9a9db49@quicinc.com>
+Date: Tue, 27 Feb 2024 20:36:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
- <20240226-fd-xml-shipped-v1-1-86bb6c3346d2@linaro.org> <CAK7LNASGcs9Y3Xr87EBQhwB3Ep_t8aYFE=nCq2Rr04krwn9Thg@mail.gmail.com>
- <CAA8EJpqhjXjaKKhp3HGxpwN+fLnL9tC_T1ibpK4TVmgayeaQwg@mail.gmail.com>
-In-Reply-To: <CAA8EJpqhjXjaKKhp3HGxpwN+fLnL9tC_T1ibpK4TVmgayeaQwg@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 27 Feb 2024 23:52:32 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASTCNRQBG3DAFaMi4k4LUfoeU7q-JV4q8TLFqrD4YLSww@mail.gmail.com>
-Message-ID: <CAK7LNASTCNRQBG3DAFaMi4k4LUfoeU7q-JV4q8TLFqrD4YLSww@mail.gmail.com>
-Subject: Re: [PATCH RFC 01/12] kbuild: create destination directory for
- _shipped handling
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Feb 26, 2024 at 8:01=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Mon, 26 Feb 2024 at 08:33, Masahiro Yamada <masahiroy@kernel.org> wrot=
-e:
-> >
-> > On Mon, Feb 26, 2024 at 11:11=E2=80=AFAM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > The driver might decide to put the _shipped files to the subdir.
-> >
-> >
-> >
-> > Please stop this sentence.
-> >
-> > This sounds like we are not learning.
-> >
-> > https://lore.kernel.org/all/CAHk-=3DwgSEi_ZrHdqr=3D20xv+d6dr5G895CbOAi8=
-ok+7-CQUN=3DfQ@mail.gmail.com/
-> >
-> >
-> >
-> >
-> > > In such
-> > > case the cmd_copy might fail because the destination directory is not
-> > > present. Call mkdir -p to make sure that the destination directory is
-> > > present.
-> >
-> >
-> > There is no justification for this.
-> >
-> > If you need a single generated directory
-> > (drivers/gpu/drm/msm/registers/, divers/gpu/drm/msm/generated/ or whate=
-ver)
-> > that should be super simple.
-> >
-> > Why does scripts/Makefile.lib need the modification?
->
-> Could you please tell me how I should handle this?
-> I was looking for a way to generate
-> drivers/gpu/drm/msm/registers/foo.xml.h and then use it during
-> compilation.
-> In drivers/gpu/drm/msm/Makefile I added $(obj)/registers/foo.xml.h as
-> a dependency to the corresponding object files and then added
-> drivers/gpu/drm/msm/registers/foo.xml.h_shipped file.
-> This way Kbuild/make will attempt to call cmd_copy to generate target
-> file, which thanks to VPATH expansion boils down to `cat
-> $(srctree)/$(src)/registers/foo.xml.h_shopped >
-> $(obj)/registers/foo.xml.h`. However this breaks as there is no
-> $(obj)/registers.
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] watchdog: qcom: fine tune the max timeout value
+ calculation
+Content-Language: en-US
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+To: Guenter Roeck <linux@roeck-us.net>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wim Van
+ Sebroeck <wim@linux-watchdog.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240116-wdt-v2-1-501c7694c3f0@quicinc.com>
+ <2c4f9829-138d-41a5-8810-d13cf749fded@roeck-us.net>
+ <67ed3805-40cb-4f00-9d0d-b0fd012d6221@quicinc.com>
+In-Reply-To: <67ed3805-40cb-4f00-9d0d-b0fd012d6221@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eq9d10-VwcsDL5E0n_LL7x96ZGksmBKy
+X-Proofpoint-ORIG-GUID: eq9d10-VwcsDL5E0n_LL7x96ZGksmBKy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_01,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402270117
 
 
 
-One simple solution is to use $(shell mkdir -p ...)
-to create the output directory.
+On 2/3/2024 12:07 PM, Kathiravan Thirumoorthy wrote:
+> 
+> 
+> On 1/16/2024 8:32 PM, Guenter Roeck wrote:
+>> On 1/16/24 00:22, Kathiravan Thirumoorthy wrote:
+>>> To determine the max_timeout value, the below calculation is used.
+>>>
+>>>     max_timeout = 0x10000000 / clk_rate
+>>>
+>>> cat 
+>>> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
+>>> 8388
+>>>
+>>> However, this is not valid for all the platforms. IPQ SoCs starting from
+>>> IPQ40xx and recent Snapdragron SoCs also has the bark and bite time 
+>>> field
+>>> length of 20bits, which can hold max up to 32 seconds if the clk_rate is
+>>> 32KHz.
+>>>
+>>> If the user tries to configure the timeout more than 32s, then the value
+>>> will be truncated and the actual value will not be reflected in the HW.
+>>>
+>>> To avoid this, lets add a variable called max_tick_count in the 
+>>> device data,
+>>> which defines max counter value of the WDT controller. Using this, 
+>>> max-timeout
+>>> will be calculated in runtime for various WDT contorllers.
+>>>
+>>> With this change, we get the proper max_timeout as below and restricts
+>>> the user from configuring the timeout higher than this.
+>>>
+>>> cat 
+>>> /sys/devices/platform/soc@0/b017000.watchdog/watchdog/watchdog0/max_timeout
+>>> 32
+>>>
+>>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>
+>> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> 
+> 
+> Guenter / Will, Can this be picked for v6.9? I don't see this in linux- 
+> next yet, so please consider this as a gentle reminder!
 
-scripts/Makefile.build does a similar thing.
+
+Guenter / Will, Gentle Reminder... is this change queued for v6.9?
 
 
-
-You can add the following to drivers/gpu/drm/msm/Makefile.
-
-
-
-# Create output directory when CONFIG_DRM_MSM is defined.
-# This avoids creating the output directory during 'make clean'
-ifdef CONFIG_DRM_MSM
-$(shell mkdir -p $(obj)/registers)
-endif
-
-
-
-
-
-
-
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
+> 
+>>
+>>> ---
+>>> Changes in v2:
+>>> - drop the minimum timeout change from 30s to 32s
+>>> - Link to v1: 
+>>> https://lore.kernel.org/r/20240111-wdt-v1-1-28c648b3b1f3@quicinc.com
+>>> ---
+>>>   drivers/watchdog/qcom-wdt.c | 7 +++++--
+>>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+>>> index 9e790f0c2096..006f9c61aa64 100644
+>>> --- a/drivers/watchdog/qcom-wdt.c
+>>> +++ b/drivers/watchdog/qcom-wdt.c
+>>> @@ -41,6 +41,7 @@ static const u32 reg_offset_data_kpss[] = {
+>>>   struct qcom_wdt_match_data {
+>>>       const u32 *offset;
+>>>       bool pretimeout;
+>>> +    u32 max_tick_count;
+>>>   };
+>>>   struct qcom_wdt {
+>>> @@ -177,11 +178,13 @@ static const struct watchdog_info 
+>>> qcom_wdt_pt_info = {
+>>>   static const struct qcom_wdt_match_data match_data_apcs_tmr = {
+>>>       .offset = reg_offset_data_apcs_tmr,
+>>>       .pretimeout = false,
+>>> +    .max_tick_count = 0x10000000U,
+>>>   };
+>>>   static const struct qcom_wdt_match_data match_data_kpss = {
+>>>       .offset = reg_offset_data_kpss,
+>>>       .pretimeout = true,
+>>> +    .max_tick_count = 0xFFFFFU,
+>>>   };
+>>>   static int qcom_wdt_probe(struct platform_device *pdev)
+>>> @@ -236,7 +239,7 @@ static int qcom_wdt_probe(struct platform_device 
+>>> *pdev)
+>>>        */
+>>>       wdt->rate = clk_get_rate(clk);
+>>>       if (wdt->rate == 0 ||
+>>> -        wdt->rate > 0x10000000U) {
+>>> +        wdt->rate > data->max_tick_count) {
+>>>           dev_err(dev, "invalid clock rate\n");
+>>>           return -EINVAL;
+>>>       }
+>>> @@ -260,7 +263,7 @@ static int qcom_wdt_probe(struct platform_device 
+>>> *pdev)
+>>>       wdt->wdd.ops = &qcom_wdt_ops;
+>>>       wdt->wdd.min_timeout = 1;
+>>> -    wdt->wdd.max_timeout = 0x10000000U / wdt->rate;
+>>> +    wdt->wdd.max_timeout = data->max_tick_count / wdt->rate;
+>>>       wdt->wdd.parent = dev;
+>>>       wdt->layout = data->offset;
+>>>
+>>> ---
+>>> base-commit: 9e21984d62c56a0f6d1fc6f76b646212cfd7fe88
+>>> change-id: 20240111-wdt-5bd079ecf14d
+>>>
+>>> Best regards,
+>>
+> 
 
