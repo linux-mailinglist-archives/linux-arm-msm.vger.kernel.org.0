@@ -1,70 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-12745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ACD6869C19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:28:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0385B869C2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:32:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAA1D28F50A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:28:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 152CB1C231E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:32:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C508D1487FE;
-	Tue, 27 Feb 2024 16:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D9391DA37;
+	Tue, 27 Feb 2024 16:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="FNRfL+9U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mA+RoLAB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18FB148300;
-	Tue, 27 Feb 2024 16:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231ED1C6B0;
+	Tue, 27 Feb 2024 16:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709051298; cv=none; b=adqVTe2OF4WQP9WkAwQhKZ5KhW0zbm2U8230rXEdU/R/hB63JQj/TMCS/6CfxHPLt3gNmjwmw8EtyauA8fdUCSTpxa+/4jA8zBXgExVogbxzfA3mSp+ayfnqbY7uaubw0xkwbXr82C1y0BDcw5iMzBsNYw8zDpIw84oUT4lqsn0=
+	t=1709051529; cv=none; b=T2nKbOtFIDunUSPMwhWZpK5PWaYwibD+QP7gk8ikntcljUDCoUHAuoYutrQQIWBzP7vyTnhAFVO/77gNl8h4p3D/DMihUUS5x/UaGcOWyov+hTkXhU96U4wmH/NnlXG12ekLnSTLxx3DfcJ+oQetKZ0cbIffA1UDV/tK+4UTjPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709051298; c=relaxed/simple;
-	bh=zBoRncRpaabg/PphISSG21C84uO5bjeWeT18G6pOYKI=;
+	s=arc-20240116; t=1709051529; c=relaxed/simple;
+	bh=RVOmV7opcG+gfaoaK7ZieDs/a184WdxcY859DX5OCug=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LvCvLblF8Ni5w0hRxmXZaBWhRzaKLhbkbWREN+dFk2BfdEgzwCxPcKSwDkPUTbr63VHnkkelv6mWOFI2Hmgk2+RCUc8JiOYyQxLALnVCRog5zTmjJBF3WiXAKlUtj0LW+ahK/57+cxVikynlUOxm4Yz7Nx0CSf4nwsBwD/GVxdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=FNRfL+9U; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ieaqldWYxlts8vxb1oirRiS9OuCsnlGmA+e1W7mof58=; b=FNRfL+9UCjzORcduefVPxbH4Zp
-	mAgLGcE0Gz4hkr4nWBKxWYtIgwbszvE1/Q1mR+pSTZMTIdnI0077bhHaP/vWk5ojJ8W5VIxgxPxjq
-	UDtOqr8DMn0PKTSxpryfZqw7IwmVuHF7TKC/NK+054c/s3EjmbNMp3Jaax5u3IG2EfBRwb4omu91c
-	0BdLh6R+LtdhQOnuwwNK3I0i3nGWlJbTzdTLi9JiSRx6b/u0+NbJ7o/J40upfEXE0nxRCPLq2ruNV
-	BcGapW0kpYiC0pZOcyIZdPDdOpqHiHTGnXOo3dIj5C/pMeBfem8dpixeQ3mHVKBYkrip+u3w9EHDO
-	QVzgxMRQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:50536)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rf0JN-0000eA-1d;
-	Tue, 27 Feb 2024 16:28:09 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rf0JM-0007Wi-JB; Tue, 27 Feb 2024 16:28:08 +0000
-Date: Tue, 27 Feb 2024 16:28:08 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Robert Marko <robimarko@gmail.com>
-Cc: andrew@lunn.ch, hkallweit1@gmail.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	ansuelsmth@gmail.com
-Subject: Re: [PATCH net-next 1/2] net: phy: qcom: qca808x: add helper for
- checking for 1G only model
-Message-ID: <Zd4NmB/RLRXFDpjh@shell.armlinux.org.uk>
-References: <20240227162030.2728618-1-robimarko@gmail.com>
- <20240227162030.2728618-2-robimarko@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=bRRIIyriPV7rnekSguAALYZW3RMeXIlLk2ybQZVK9lxfU9RfAIbiX1owwQ5Ys9XywbqgJ2SrxtFzdrNanJ0i0+6eGEklXfxw59TNIQVDzsXd1rntuRj1yEAybKGLqti8fuKCJ0RvdjUid0GqHRJjOQk6niFtmkb9SX145HAAjWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mA+RoLAB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63488C433C7;
+	Tue, 27 Feb 2024 16:32:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709051528;
+	bh=RVOmV7opcG+gfaoaK7ZieDs/a184WdxcY859DX5OCug=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mA+RoLAB5nO4H9jo6BOsampkp8zSGaN6IXadt41IaJ5KW3HoWIhooPDFMSy1Znsw5
+	 4Ijj59HZfiLZ7T7Sufm2wwUwYqwXUIxrs0JD76I33pm+B5US4URMQkY1BqHRd4ikSb
+	 chkfhAE4TWq1BKv6zpaqQb/cz9GjCYj9diquUmFS/y1JsOolrNuWmabTqJ1pC3bYm2
+	 X+vcW3aIjTT/qNtn4f+vy25KJG09gLkyx7h70f0m+V8SXmJLKYJMv0YkDY9ugsjU0u
+	 a4ZXXgYBscERlYOWbuCTUw/g6jHEax7H3u+QOj+BfCTW3vcIhoqfoRIDDGsIVJdF3L
+	 NoiYkXFTfvG3g==
+Date: Tue, 27 Feb 2024 10:32:05 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Guru Das Srinagesh <quic_gurus@quicinc.com>, 
+	Andrew Halaney <ahalaney@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v7 00/12] arm64: qcom: add and enable SHM Bridge support
+Message-ID: <wgvkhq3ljjrwnqiwojvwvjuiiy4o5gfx5bctaklvmpe3v6pusr@6rwtg5npr3au>
+References: <20240205182810.58382-1-brgl@bgdev.pl>
+ <htsty5siakcu2nxxapiuq7pgs27tjwkb3yxgmfs3bonsl6kylw@joa2viypstoa>
+ <98dea91a-5d2b-432e-8949-46179c824d1b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,20 +64,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240227162030.2728618-2-robimarko@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <98dea91a-5d2b-432e-8949-46179c824d1b@linaro.org>
 
-On Tue, Feb 27, 2024 at 05:19:28PM +0100, Robert Marko wrote:
-> +	if (QCA808X_PHY_CHIP_TYPE_1G & ret)
-> +		return true;
-> +	else
-> +		return false;
+On Mon, Feb 19, 2024 at 03:17:24PM +0000, Srinivas Kandagatla wrote:
+> On 17/02/2024 19:58, Bjorn Andersson wrote:
+> > On Mon, Feb 05, 2024 at 07:27:58PM +0100, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > 
+> > > We've established the need for using separate secured memory pools for
+> > > SCM and QSEECOM
+> > 
+> > Where has this need been established, what is the actual problem you're
+> > solving with this series?
+> 
+> SHMbridge will restrict the amount of memory that TZ can see, making system
+> more secure.
+> 
 
-	return !!(QCA808X_PHY_CHIP_TYPE_1G & ret);
+Then tell me this in the cover letter and commit messages.
 
-is a shorter way to write that.
+> Need for having different pools makes this more scalable overall, so that
+> different usecases can run seamlessly. ex: loading a TA and SCM calls.
+> 
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+How is it more scalable to give each "client" a chunk of 256KB instead
+of them sharing a pool of ~4GB memory?
+
+> > 
+> > Does SCM and QSEECOM, as it's implemented in the kernel today, not work
+> > satisfactory?
+> > 
+> > > as well as the upcoming scminvoke driver.
+> > > 
+> > 
+> > Is smcinvoke driver upstreaming blocked by not transitioning the scm
+> > driver to a "secure memory pool"?
+> > 
+> > Is this happening now, or do we need to merge this series when that day
+> > comes?
+> 
+> SMCInvoke development is happening now, I see no reason for this patchset to
+> wait for it.
+> 
+
+As presented, I see no reason to merge this series.
+
+> This series can go as it is for two reasons.
+> 1> improves system security in general
+> 2> Hardware Wrapped key support patches also use this which are also in good
+> shape and tested, ready to be merged.
+> 
+
+Then tell me this in the cover letter and commit messages!
+
+
+It's not sufficient that I happen to know the answer to these questions,
+neither community nor maintainer should not have to guess these things.
+
+Regards,
+Bjorn
 
