@@ -1,106 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-12712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC66A8692A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:37:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6549869377
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:45:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8042A283466
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:37:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 234991C23112
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:45:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B23A13DBA5;
-	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33EF01420DC;
+	Tue, 27 Feb 2024 13:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGUhtyOl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BpTFH5np"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A61D13B79F;
-	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B331419A9;
+	Tue, 27 Feb 2024 13:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041039; cv=none; b=P3l97krUudpeqsbFfdg4m1PWMSA5BsXOem/SCnPjRJmTeJTFHRDBjucRjJ5k0cMQJhy8oHDy+OjUVk41rNHx04nAh+zxdu+lA8gT7Rn7wT3k+y0NBu3DzQB8dWmisa5oeo1Rfgxk68ckya0GK0Hps3E8yXEQyQExV7f9mUgn06w=
+	t=1709041498; cv=none; b=jrMoNu1Hkk2kwmlLlKzdSx/Y960WsRJ5yKuwt+0C8qFaI+sGdzsRE7V+QaP8gq2esOp989r2QVhBncMyQ1vsibiGf0yGSVydZi3qIBAC4PKxGB+Bxm8/s672Fm7mfmwGIPWADXVuR7tWOD71Qm/7qkd21lM39ll28mH0VzIF3ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041039; c=relaxed/simple;
-	bh=H1c/bi5IfYB1iSUBfPU6PzkgJpun/PjAJmV416IBnMo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=E4ffLRmMZJs/wTS27sJ7I28BQ8gTp9FtxwfMtn8dBNUFTELJjZj2sLNlZjzStt+w5zUBa+SXwpSuxkcu3SKW7ClWWyVWGGCT2tgIAPBZEHI0JnciD9VCEcxNasObYp0vJy+hoNjpND7bC7VwoqRtnKRqfkqtajvePhXgr8eAP/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGUhtyOl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AD9C433A6;
-	Tue, 27 Feb 2024 13:37:19 +0000 (UTC)
+	s=arc-20240116; t=1709041498; c=relaxed/simple;
+	bh=UPZNsUJYN9E994wAoevWRJNCB5jFPFI8m0dQ1K5I25w=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=JcUqVQ5+xw98vyTlA0Dlnt/IxnR0QmE2TfOXuSdUon2hSkfCHVQ4tbAYDEhHcvWyC/H1mBbj2hk/40wi0BE1Nn6+9MZ2OA0UYq7z2o0IpjUI7hbnFepv0BPNa73eq/NFaK/ED901o+eQilIF1i5cHGA7bVujQey+x9h3gByp8vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BpTFH5np; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68985C433C7;
+	Tue, 27 Feb 2024 13:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709041039;
-	bh=H1c/bi5IfYB1iSUBfPU6PzkgJpun/PjAJmV416IBnMo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=oGUhtyOleFDlVprD+BHiw5msYy/xXs7n8MPnqXIQXA7gm9Hx35qZCdT4MhSOkx4hP
-	 rz+kq2hfyJ9mFuFg2rQVbGqBXf+nptZOB8OM7UT6xaUH3iMMaxxSmajFqxPHBnzAR2
-	 Z9GJJwS9G96S3zO0litfHxufug7uCe1lCZFFT56C87WkeQDL+I4v4QXuX8grK9DK9D
-	 3pWJdu1qsuFeWnfa5CV7khEuxTM+E2w8PI8eWAJ2bCM15KQYtu69N3jg2cCT2OyII3
-	 zJcPL97J4E6ztRARi9eXcpjCj5XiuknpZeMhbq6LZztKrzW9e2bfKWRYyIWLElKDeT
-	 ca9EXgFPfgyVw==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d299b4ad6aso6253751fa.1;
-        Tue, 27 Feb 2024 05:37:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVgNfEOMMgUcZ8yAb6NZ8shSj9KY9s0ABYFaEi7uD7kPospD1lnx4ZSNAefMnvc/t+sMkndaZp2/AoJmmm2KJ0CFN+0wTI2vxBcEo6UtaLioKehCGJMJZgBUrFp99G53tRc8SEQFbHCtuZnHdVOhmLQR7SeALudoOQn/MAX3gSdabBvhGrg4fveyM3Nn30+OVkJ67Se7Ej7AWcM0akpaBZDA0dH
-X-Gm-Message-State: AOJu0YyXmFy4A9xiTp1WE9AbjH6NS0kh5XVFQejDAI9s4b/wZG3KzF+8
-	xJsAiqytGo9z7N4s2VyOC7IsaO5dl8MZH3VdMe8pNgD0z7dykXzb+zRNShNb7Wzc3Ln9XLHU4lB
-	iVkT9Xu7T68Vq8/JfhbOM7IzQIQ==
-X-Google-Smtp-Source: AGHT+IG5QHJKq6z8x6+mL6APDMaMcHT+R6XCLzJCa5meAUVodTB8s4RdbL4+VxRoHLTrkZTvWB3wRm4Tes8nApxV0wo=
-X-Received: by 2002:a05:6512:1317:b0:512:f4f6:9343 with SMTP id
- x23-20020a056512131700b00512f4f69343mr3796213lfu.26.1709041037258; Tue, 27
- Feb 2024 05:37:17 -0800 (PST)
+	s=k20201202; t=1709041497;
+	bh=UPZNsUJYN9E994wAoevWRJNCB5jFPFI8m0dQ1K5I25w=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=BpTFH5npiGPdjFAX15Ns3qHO7gEAmnOAd9hgv/nbaTRXgF0nTuPJCZtodcC/iZXSI
+	 t+IRExFpBXrUkmHami2rp5qycpahjuucv7xKnTFoEf9V/TxrK9brJeHaw/yXDOdHoM
+	 zFcbaGPPr9/HWMIHGdsnPBJWCt8Plply1uL6DPzms2EUppWenOl44GV6xnvp7n820F
+	 xEBDfZJzHpVc8y0wVPDrKBNGx4Ua3y3W79RdDWuChpXDkR/ZjFz8YI8hqfAoBzpFgt
+	 QoZ79mUie4NuLjaans0yKLdoxE3l04VnU/DW9nOCMqd3cjSiyio5txcGxWCHkh1Mdu
+	 hmmxmxYtaQ1oQ==
+Date: Tue, 27 Feb 2024 07:44:56 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129092512.23602-1-quic_tengfan@quicinc.com> <20240129092512.23602-2-quic_tengfan@quicinc.com>
-In-Reply-To: <20240129092512.23602-2-quic_tengfan@quicinc.com>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Tue, 27 Feb 2024 07:37:05 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
-Message-ID: <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: update compatible name
- for match with driver
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, linus.walleij@linaro.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Rob Herring <robh@kernel.org>
+To: Raihan Ahamed <raihan1999ahamed@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>, devicetree@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, robh+dt@kernel.org, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Tony Luck <tony.luck@intel.com>, 
+ linux-hardening@vger.kernel.org
+In-Reply-To: <20240226195516.174737-1-raihan1999ahamed@gmail.com>
+References: <20240226055615.79195-1-raihan1999ahamed@gmail.com>
+ <20240226195516.174737-1-raihan1999ahamed@gmail.com>
+Message-Id: <170904127267.3703741.9339449368620984308.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: Add Lenovo P2
 
-On Mon, Jan 29, 2024 at 3:25=E2=80=AFAM Tengfei Fan <quic_tengfan@quicinc.c=
-om> wrote:
->
-> Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
-> to match the compatible name in sm4450 pinctrl driver.
->
-> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+
+On Tue, 27 Feb 2024 01:24:41 +0530, Raihan Ahamed wrote:
+> Document the compatible for the MSM8953-based Lenovo P2 smartphone released in 2016.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.y=
-aml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-> index bb08ca5a1509..bb675c8ec220 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-> @@ -17,7 +17,7 @@ allOf:
->
->  properties:
->    compatible:
-> -    const: qcom,sm4450-pinctrl
-> +    const: qcom,sm4450-tlmm
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-I think you forgot to update the example:
 
-Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.example.dtb:
-/example-0/pinctrl@f100000: failed to match any schema with
-compatible: ['qcom,sm4450-tlmm']
+My bot found new DT warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/msm8953-lenovo-kuntao.dtb' for 20240226195516.174737-1-raihan1999ahamed@gmail.com:
+
+arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dtb: gpu@1c00000: clock-names:5: 'anyOf' conditional failed, one must be fixed:
+	'core' was expected
+	'iface' was expected
+	'mem' was expected
+	'mem_iface' was expected
+	'alt_mem_iface' was expected
+	'gfx3d' was expected
+	'rbbmtimer' was expected
+	'rbcpr' was expected
+	from schema $id: http://devicetree.org/schemas/display/msm/gpu.yaml#
+arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dtb: iommu@1c48000: compatible: 'oneOf' conditional failed, one must be fixed:
+	'qcom,msm8953-iommu' is not one of ['qcom,msm8976-iommu']
+	'qcom,msm-iommu-v1' was expected
+	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
+
+
+
+
+
 
