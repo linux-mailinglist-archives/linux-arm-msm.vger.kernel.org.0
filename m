@@ -1,126 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-12746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0385B869C2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:32:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B7CE869CFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:59:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 152CB1C231E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:32:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CD271C24DBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:59:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D9391DA37;
-	Tue, 27 Feb 2024 16:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 569C32421D;
+	Tue, 27 Feb 2024 16:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mA+RoLAB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WEu5AY+5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231ED1C6B0;
-	Tue, 27 Feb 2024 16:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E124520314;
+	Tue, 27 Feb 2024 16:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709051529; cv=none; b=T2nKbOtFIDunUSPMwhWZpK5PWaYwibD+QP7gk8ikntcljUDCoUHAuoYutrQQIWBzP7vyTnhAFVO/77gNl8h4p3D/DMihUUS5x/UaGcOWyov+hTkXhU96U4wmH/NnlXG12ekLnSTLxx3DfcJ+oQetKZ0cbIffA1UDV/tK+4UTjPk=
+	t=1709053152; cv=none; b=mxe0up6Gv8U45heQvjnmNTvRz1Ec0TQ1gK6VroZtbJtunZZXOaGcD1kt0aDh9u+AE5qieS4YZLx2B88xXovNyZ+uuXcJugEkurMklWjXhRuUcQX6zxW53i5HSPV4olhpTbDSyzGhjASJLX8WNPqJOYdmQkJWmZ7lUGT4z5f6WRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709051529; c=relaxed/simple;
-	bh=RVOmV7opcG+gfaoaK7ZieDs/a184WdxcY859DX5OCug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bRRIIyriPV7rnekSguAALYZW3RMeXIlLk2ybQZVK9lxfU9RfAIbiX1owwQ5Ys9XywbqgJ2SrxtFzdrNanJ0i0+6eGEklXfxw59TNIQVDzsXd1rntuRj1yEAybKGLqti8fuKCJ0RvdjUid0GqHRJjOQk6niFtmkb9SX145HAAjWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mA+RoLAB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63488C433C7;
-	Tue, 27 Feb 2024 16:32:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709051528;
-	bh=RVOmV7opcG+gfaoaK7ZieDs/a184WdxcY859DX5OCug=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mA+RoLAB5nO4H9jo6BOsampkp8zSGaN6IXadt41IaJ5KW3HoWIhooPDFMSy1Znsw5
-	 4Ijj59HZfiLZ7T7Sufm2wwUwYqwXUIxrs0JD76I33pm+B5US4URMQkY1BqHRd4ikSb
-	 chkfhAE4TWq1BKv6zpaqQb/cz9GjCYj9diquUmFS/y1JsOolrNuWmabTqJ1pC3bYm2
-	 X+vcW3aIjTT/qNtn4f+vy25KJG09gLkyx7h70f0m+V8SXmJLKYJMv0YkDY9ugsjU0u
-	 a4ZXXgYBscERlYOWbuCTUw/g6jHEax7H3u+QOj+BfCTW3vcIhoqfoRIDDGsIVJdF3L
-	 NoiYkXFTfvG3g==
-Date: Tue, 27 Feb 2024 10:32:05 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Guru Das Srinagesh <quic_gurus@quicinc.com>, 
-	Andrew Halaney <ahalaney@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, 
-	Alex Elder <elder@linaro.org>, Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v7 00/12] arm64: qcom: add and enable SHM Bridge support
-Message-ID: <wgvkhq3ljjrwnqiwojvwvjuiiy4o5gfx5bctaklvmpe3v6pusr@6rwtg5npr3au>
-References: <20240205182810.58382-1-brgl@bgdev.pl>
- <htsty5siakcu2nxxapiuq7pgs27tjwkb3yxgmfs3bonsl6kylw@joa2viypstoa>
- <98dea91a-5d2b-432e-8949-46179c824d1b@linaro.org>
+	s=arc-20240116; t=1709053152; c=relaxed/simple;
+	bh=tJQntz2HimOxkDqUs3Bko8vXdwa/USReYFCaj0wua9k=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QVWywIJICPZAj+my0xtqnVQPjwsHD0JCPtJcx3F5guCTLJwsyt9DwMneoPOTbDD23CodPZDktg03Vc2/PfIBAPgPjoWmH7rhB7IAqbdNUH44D9FhXPk0PlX3MO8CJH2QWITC4jqSmwQexFcLEZnOL4oGhdPjbqM2+XoxfcFUo2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WEu5AY+5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RGZhh2017175;
+	Tue, 27 Feb 2024 16:53:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ztHPw0M
+	rfKKaicbtEazrwB1M2B9Fp4OILHUWsSe9udU=; b=WEu5AY+57LnL/IpI6MiAriw
+	6iDTsue2QPCh/O7mGZaBzttuCgbE0AfnmrIBaHw+kUSaO9E/pRI4msUsm7m90yw+
+	aQf5bbF0FkFIMaGCN362hYkibzBGeyZz623ta1XFAs/J20zHBm68pcJF1J2hzdEX
+	B57xrbK1PV4X7IqQk/+vedX/A1Lqf/YxSWr6XamYejOn7sny8Hajn4nCwJU+QGxj
+	1zqBj5BSiWbmHjMQimTV2vT9l99slejGx61havMnmYtGGH1+7ZYulK3LW/adOkzp
+	JOIiVhOA1Vw42xAeeBGNN7Z+yCu/Kg++A6wbsJiztD/vDW8BGPXw7wbyaf4wwiw=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whkd5g1dv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 16:53:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RGrdw6027315
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 16:53:39 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 27 Feb 2024 08:53:34 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <dietmar.eggemann@arm.com>, <marcan@marcan.st>, <sven@svenpeter.dev>,
+        <alyssa@rosenzweig.io>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <xuwei5@hisilicon.com>, <zhanjie9@hisilicon.com>
+CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <linux-arm-kernel@lists.infradead.org>,
+        <asahi@lists.linux.dev>, <linux-pm@vger.kernel.org>,
+        Sibi Sankar
+	<quic_sibis@quicinc.com>
+Subject: [PATCH 0/2] Fix per-policy boost behavior 
+Date: Tue, 27 Feb 2024 22:23:07 +0530
+Message-ID: <20240227165309.620422-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <98dea91a-5d2b-432e-8949-46179c824d1b@linaro.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: o0L9HL1enTUEY6zBTZhXckawndGtb3Bg
+X-Proofpoint-ORIG-GUID: o0L9HL1enTUEY6zBTZhXckawndGtb3Bg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_03,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=903 malwarescore=0
+ suspectscore=0 bulkscore=0 spamscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270130
 
-On Mon, Feb 19, 2024 at 03:17:24PM +0000, Srinivas Kandagatla wrote:
-> On 17/02/2024 19:58, Bjorn Andersson wrote:
-> > On Mon, Feb 05, 2024 at 07:27:58PM +0100, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > 
-> > > We've established the need for using separate secured memory pools for
-> > > SCM and QSEECOM
-> > 
-> > Where has this need been established, what is the actual problem you're
-> > solving with this series?
-> 
-> SHMbridge will restrict the amount of memory that TZ can see, making system
-> more secure.
-> 
+Fix per-policy boost behavior by incorporating per-policy boost flag
+in the policy->max calculation and setting the correct per-policy
+boost_enabled value on devices that use cpufreq_enable_boost_support().
 
-Then tell me this in the cover letter and commit messages.
+Logs reported-by Dietmar Eggemann [1]:
 
-> Need for having different pools makes this more scalable overall, so that
-> different usecases can run seamlessly. ex: loading a TA and SCM calls.
-> 
+[1] https://lore.kernel.org/lkml/265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com/
 
-How is it more scalable to give each "client" a chunk of 256KB instead
-of them sharing a pool of ~4GB memory?
+Sibi Sankar (2):
+  cpufreq: Fix per-policy boost behavior on SoCs using
+    cpufreq_boost_set_sw
+  cpufreq: apple-soc: Align per-policy and global boost flags
 
-> > 
-> > Does SCM and QSEECOM, as it's implemented in the kernel today, not work
-> > satisfactory?
-> > 
-> > > as well as the upcoming scminvoke driver.
-> > > 
-> > 
-> > Is smcinvoke driver upstreaming blocked by not transitioning the scm
-> > driver to a "secure memory pool"?
-> > 
-> > Is this happening now, or do we need to merge this series when that day
-> > comes?
-> 
-> SMCInvoke development is happening now, I see no reason for this patchset to
-> wait for it.
-> 
+ drivers/cpufreq/apple-soc-cpufreq.c |  1 +
+ drivers/cpufreq/cpufreq.c           | 15 +++++++++------
+ drivers/cpufreq/freq_table.c        |  2 +-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-As presented, I see no reason to merge this series.
+-- 
+2.34.1
 
-> This series can go as it is for two reasons.
-> 1> improves system security in general
-> 2> Hardware Wrapped key support patches also use this which are also in good
-> shape and tested, ready to be merged.
-> 
-
-Then tell me this in the cover letter and commit messages!
-
-
-It's not sufficient that I happen to know the answer to these questions,
-neither community nor maintainer should not have to guess these things.
-
-Regards,
-Bjorn
 
