@@ -1,130 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-12749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 174C0869CDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:54:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8907C869CDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:53:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7379282845
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:54:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11C521F26A22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:53:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1145D2C6A8;
-	Tue, 27 Feb 2024 16:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF44622091;
+	Tue, 27 Feb 2024 16:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UGvvmZQ2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L06IGUwV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F3D20B38;
-	Tue, 27 Feb 2024 16:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B674020DD3;
+	Tue, 27 Feb 2024 16:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709052852; cv=none; b=YyQ2XikuSVlAlmhmZ/2N/MR51rpZ6WaZx7fhbV9LRAYCxtn4N/GrmN/uHDORCJipt1+6q6ff3O550vg4w2cCOnJXOY7y90xiYXaNpQ3Q7T5kiulCs0pxgq7vFtkA7cOEhORNqRLVa8AVBw4wyZu2fOpscoAOcsfAOw6Gn2mkaWQ=
+	t=1709052822; cv=none; b=W/cDyk6Bw1rsxen8j876esu4VoPhaPAS5wtzY0wMIZfSPFm/Lrdx8/Pu8G8p7Ud8VyDBal/4hPxmJHJF6JgL0tYzQdc++ny/DoHIS2nmZmaiff2Mr3FpvCc0tMX1R75y048h1AI6KeWZlOL8Ur9GspytzAQMMXScZKgwynGDk1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709052852; c=relaxed/simple;
-	bh=ORmW0WBG9KWPvbCXc8G4LCpMmf42CvrygThu8ao8NgI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nVl9UNjRIfJl5wmbkIjmMtp6PFOhwlSU8Va0+Nc8gDlQQxLQzb795KODBc6EbPCFZmN1/nlI6PPfPr4rQdFNuTmCqxK6Xp3Kx6zv0vyuTBPShWRNCJRvUzRxICAeDQn+Qt9nUaObZoK7SGbMwwo+yw4QnWgqAzvX4kjjQQ4tP5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UGvvmZQ2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RAto7V008656;
-	Tue, 27 Feb 2024 16:53:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=Xp1rHqH7daGk6V3hwTqtNayvUghKARCkNNKi0hgJW7Y=; b=UG
-	vvmZQ2ILsxzeyqYBfNToIyqjiUgdKhtT5TGaG0nn9q9KjZxIZxT6S6bhzaWNrsgq
-	PvT5H1avgvRGBNj6d6QAt8YjJZcCitYb5Nus4CGvj2Bh2/pLaUz36Rp4J2nURc4b
-	LHyrM14EjaPOETb524qb97iQMksUMgcCGpKXcw6SuXhxNrTt+oJnvQ6CqJ11JI83
-	HCbx1Flno1CCuMYqiUrcxmDbT7VFcEq1E2RQfn7NEQnwvRnHjrALMLQhMyAxe3vv
-	8ne10xnajE/CrtHP1YDoBnYW42YTcu5Yjq1wDZWlSqd1oAVcLhCmhm4ZGnmpInud
-	RXHCES4xAazM7BeJxlaA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whedvrw05-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 16:53:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RGroFU008292
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 16:53:50 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 27 Feb 2024 08:53:45 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <dietmar.eggemann@arm.com>, <marcan@marcan.st>, <sven@svenpeter.dev>,
-        <alyssa@rosenzweig.io>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <xuwei5@hisilicon.com>, <zhanjie9@hisilicon.com>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <linux-arm-kernel@lists.infradead.org>,
-        <asahi@lists.linux.dev>, <linux-pm@vger.kernel.org>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>
-Subject: [PATCH 2/2] cpufreq: apple-soc: Align per-policy and global boost flags
-Date: Tue, 27 Feb 2024 22:23:09 +0530
-Message-ID: <20240227165309.620422-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240227165309.620422-1-quic_sibis@quicinc.com>
-References: <20240227165309.620422-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1709052822; c=relaxed/simple;
+	bh=rTVznIzRoo7ftBFMSk3M6Jhh3OfJTP2NXWI3JNzboA8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b+KWG2vA5PCR7Fs4IEBAQAHtpfx9FvWwc/7b+qKn43rL6BLVC9mPHuvGKqL/YRUANWbgbw85SGQOatCDiZWdYmwOr0Txtxds3osmylRgJMWszEzPS+3+WZN9SP0FdHFEGgLT0MO+RVYpwlAACxIJkYSDYHTIvj7oy1QUORDu2yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L06IGUwV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C975BC433C7;
+	Tue, 27 Feb 2024 16:53:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709052822;
+	bh=rTVznIzRoo7ftBFMSk3M6Jhh3OfJTP2NXWI3JNzboA8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=L06IGUwViZdc6tmmuKSKWefjzHwXE3dvZ/jMg0VJIpADs+24U8auHGPZTkVqHxhUu
+	 E4Y+aYrJKr+5615JhB3YpqECQ3sjv3ORArxjtuVWycDK2voWCiSVyUf77OAnJHWHGS
+	 Prf5TaX3JYyLLwie9Rny0/8NbFC/OjiluOZAlq056YVScw/U1ZFCdOPYtlukIfVqJO
+	 cU4sX/KZITTdg82DMiPrLshpB3IJZzrJGA7iPNxE2kooQAYwphqbM2ViFCM5HjhxVi
+	 yD9mI4Sl799Arp3ARhaQi+UfuUWbrYYZV602ZOiFXI/m+B9aYQ2tnpot5SaPWsmCoL
+	 Y1x1gkB+/wwBg==
+Date: Tue, 27 Feb 2024 10:53:39 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Guru Das Srinagesh <quic_gurus@quicinc.com>, 
+	Andrew Halaney <ahalaney@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Deepti Jaggi <quic_djaggi@quicinc.com>
+Subject: Re: [PATCH v7 08/12] firmware: qcom: qseecom: convert to using the
+ TZ allocator
+Message-ID: <odnisr4flot3rgwwqpjob3qtw63jow7hcj4guy6ao6spdz6fm4@wtcm62o3hgxm>
+References: <20240205182810.58382-1-brgl@bgdev.pl>
+ <20240205182810.58382-9-brgl@bgdev.pl>
+ <yu5uhamdlygti3jo73ipy3gxhcmgxrm5g6imgqg6ksleim4ton@npvzlex2j4xi>
+ <CAMRc=Mctm-cyYPpu-Vb+fr1cWJPUW49shaa9HEXYp+rkF_CHUw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GVzO79U-yeiPTRFZ4WX9MhuCVs55PVoh
-X-Proofpoint-ORIG-GUID: GVzO79U-yeiPTRFZ4WX9MhuCVs55PVoh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-27_03,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxlogscore=999 clxscore=1015 bulkscore=0 mlxscore=0 lowpriorityscore=0
- spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2402270130
+In-Reply-To: <CAMRc=Mctm-cyYPpu-Vb+fr1cWJPUW49shaa9HEXYp+rkF_CHUw@mail.gmail.com>
 
-With the cpufreq_driver.boost_enabled flag set by default, the per-policy
-boost flags are left in a disabled state. Fix this by enabling the
-per-policy boost flag by default on policies supporting boost.
+On Tue, Feb 20, 2024 at 10:54:02AM +0100, Bartosz Golaszewski wrote:
+> On Sun, Feb 18, 2024 at 4:08 AM Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Mon, Feb 05, 2024 at 07:28:06PM +0100, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Drop the DMA mapping operations from qcom_scm_qseecom_app_send() and
+> > > convert all users of it in the qseecom module to using the TZ allocator
+> > > for creating SCM call buffers.
+> >
+> > This reads as if this is removal of duplication, now that we have the TZ
+> > allocation. But wasn't there something about you not being able to mix
+> > and match shmbridge and non-shmbridge allocations in the interface, so
+> > this transition is actually required? Or did I get that wrong and this
+> > just reduction in duplication?
+> >
+> 
+> What is the question exactly? Yes it is required because once we
+> enable SHM bridge, "normal" memory will no longer be accepted for SCM
+> calls.
+> 
 
-Logs:
-root:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
-1
-0
-0
+This fact is not covered anywhere in the series.
 
-Fixes: 218a06a79d9a ("cpufreq: Support per-policy performance boost")
-Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/cpufreq/apple-soc-cpufreq.c | 1 +
- 1 file changed, 1 insertion(+)
+> > > Together with using the cleanup macros,
+> > > it has the added benefit of a significant code shrink.
+> >
+> > That is true, but the move to using cleanup macros at the same time as
+> > changing the implementation makes it unnecessarily hard to reason about
+> > this patch.
+> >
+> > This patch would be much better if split in two.
+> >
+> 
+> I disagree. If we have a better interface in place, then let's use it
+> right away, otherwise it's just useless churn.
+> 
 
-diff --git a/drivers/cpufreq/apple-soc-cpufreq.c b/drivers/cpufreq/apple-soc-cpufreq.c
-index 021f423705e1..b85c250e30d0 100644
---- a/drivers/cpufreq/apple-soc-cpufreq.c
-+++ b/drivers/cpufreq/apple-soc-cpufreq.c
-@@ -289,6 +289,7 @@ static int apple_soc_cpufreq_init(struct cpufreq_policy *policy)
- 		} else {
- 			apple_soc_cpufreq_hw_attr[1] = &cpufreq_freq_attr_scaling_boost_freqs;
- 			apple_soc_cpufreq_driver.boost_enabled = true;
-+			policy->boost_enabled = true;
- 		}
- 	}
- 
--- 
-2.34.1
+The functional change and the use of cleanup macros, could be done
+independently of each other, each one fully beneficial on their own.
 
+As such I don't find it hard to claim that they are two independent
+changes.
+
+> > > As this is
+> > > largely a module separate from the SCM driver, let's use a separate
+> > > memory pool.
+> > >
+> >
+> > This module is effectively used to read and write EFI variables today.
+> > Is that worth statically removing 256kb of DDR for? Is this done solely
+> > because it logically makes sense, or did you choose this for a reason?
+> >
+> 
+> Well, it will stop working (with SHM bridge enabled) if we don't. We
+> can possibly release the pool once we know we'll no longer need to
+> access EFI variables but I'm not sure if that makes sense? Or maybe
+> remove the pool after some time of driver inactivity and create a new
+> one when it's needed again?
+> 
+
+Sounds like a good motivation to me, let's document it so that the next
+guy understand why this was done.
+
+Regards,
+Bjorn
+
+> Bart
+> 
+> [snip]
 
