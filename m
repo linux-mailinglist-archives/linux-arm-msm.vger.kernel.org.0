@@ -1,144 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-12709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8F318690F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:54:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94E3D86914D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:05:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2636F1C21188
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:54:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B5F9285DCC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:05:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3C4413B2A5;
-	Tue, 27 Feb 2024 12:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C006413AA4A;
+	Tue, 27 Feb 2024 13:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e4eWfO5e"
+	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="Cg4NfOZ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82D713B299
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 12:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AB013AA45;
+	Tue, 27 Feb 2024 13:05:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709038418; cv=none; b=nSVlE/FqROxrq8q1UcyqYzbhtCKDnp/YgCXesqsUY8PxnyXOmztfUvd3T4uZFMYMl3C3HrQF4Wd5VMTRCz7hVcmJ1+njAcF2cOprAnngkvJgGtnan0Wff86MVMLMlXxYq54EvhI9sdmelJBoopaLlvN1u3sA5Uk87IDxJ2cLPP8=
+	t=1709039125; cv=none; b=LbZrF1KXn6qFfIHhGPhu39+8VAMH/9+12QNf9S/dsxF1n03m6vr17ZTpqdeN0IYkC+gLXIQD7hP0rIO4CUFAXx9RbO2+INRGTjealOMa8Eez1i16i4uKiM6BExn9k2798PR2yc3b+2tfJbzlKbvmZeT/JTTX5fDZlob4pSBA8a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709038418; c=relaxed/simple;
-	bh=lugX5F4h8/NMtld2zD59gonUAOKUZrpUFx2+QOqsR0o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZlCwLv77pO0nSvenx/elgStaaDYNev7e0HqedJzTrZFEEGNII6N9CEaLbKwf/JbkUNtLvZIWRNUKbkODOaCZjz92lT3pqVNfQPx2aIrkAKYBVVQetWBJa0HiA1kkOEkekBTuXcw3Ahwvd3iFAGCOMiMVXrxvr5C17+W9nJp100U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e4eWfO5e; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6e4d48a5823so3398799b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 04:53:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709038416; x=1709643216; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b8WH+QKuLCiKAooO9eGaApqHPwVDB9t7UHH/XROmJSQ=;
-        b=e4eWfO5etoXdBdnnrWr3t121+yd/hg6d5Rkk2KnVS4U0quaCFHrycN5mgvoT9IBcVv
-         bRaGRD8mRbkJTXmqU4Ms8gYSjEmL8Bdz9OKabJ07BH0925/94aPyYrar5Dvbs76tlHpw
-         q4Klu07pkKEhXOxIjkJZf/iGCqTv7EuFkUxliU23ioG33W7lgQFE3LoHdTvckoWJQYaG
-         p1Jw9saujYaZyp8axiKUS4WUjthBAp/FSGZLJU2YuChPyoC2jiSX3N7eb3SX7LpF5qGQ
-         3axqc1Vgxv5pkwv5t/6i34tsojVhaD6hOwyPleVPo2j38V6qY/FK/c25T19+/7yLSAc5
-         O5Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709038416; x=1709643216;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b8WH+QKuLCiKAooO9eGaApqHPwVDB9t7UHH/XROmJSQ=;
-        b=S6SsJHpE0DesULWZkANn27W5I0M8+Rj6qp/LvIno32SCmiZUXwatVf+tFpWdTdv6Iz
-         rPNRpyKwyg0Dr1MibkfHlfN/FrMu6xt6ePYY/AnHGOC8YCNSutHVwvJYNPA2aG7vUodx
-         Wqoxg/EDFIDPa00DJ9pJD7GAowZQLJGuqTQQUDmijFhb3GkuJFD9Z4BM5XVoBX6NmmmO
-         kTgIGZ1tFyJ65/bb5whIM17p5S+m+8zJ+kiawtqX2yUOZsIXBD1tTG/Bqg0TEuzKtYuj
-         Qbe1UPdVjD4T3e/ZUCqysN4XULvmBP8ujpTheUowxm3qZ/IKSZV9uuAolR++aouruuqt
-         G8HA==
-X-Gm-Message-State: AOJu0Yxuc93j9VzQol9u4cfzSMqP3MoxlAlXtgKNQsUFC7wojq3yfi6T
-	RCsarGSNUnJ+uSml61zZTEJvGwrE6a3OpJNr6RFkvM3zjfFNamwGg+DEge3qkR8=
-X-Google-Smtp-Source: AGHT+IF57wEBY//BS0sDsW7thY5o90BHZJ1n5nEUshFNRxLEF1AZFDiyKAMALjfGexJtGmhq6VaKmw==
-X-Received: by 2002:a05:6a00:4ba6:b0:6e5:bdf:7df7 with SMTP id kt6-20020a056a004ba600b006e50bdf7df7mr5568352pfb.7.1709038416134;
-        Tue, 27 Feb 2024 04:53:36 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id r7-20020aa78b87000000b006e48b04d8c0sm5841193pfd.64.2024.02.27.04.53.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 04:53:35 -0800 (PST)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 27 Feb 2024 13:53:06 +0100
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8650: add missing
- qcom,non-secure-domain property
+	s=arc-20240116; t=1709039125; c=relaxed/simple;
+	bh=eOPhigOJczbuwsV584EKmBiN7JFDGME1qn3xvfIPaXI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jDOmAUp0jqbA8WbjCgQ0r34i2PI4JSy0PHqECDF/8bae06CRGwCC5tp75Fvq705W756dS78uHx5nJ32ULDktWGMOwEm1cstNGh1GANjUrSNHO4iV9I1Ew42zcIG2vTAawtlmNzXXb/MLuF7YuQCHMRMvW6tgTBFy+dZd25D978U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=Cg4NfOZ0; arc=none smtp.client-ip=80.237.130.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	In-Reply-To:References; bh=ZgGnPyp+t6CDuIJOxG2eFF8f52fwW7PChDnQXlWlBiU=;
+	t=1709039123; x=1709471123; b=Cg4NfOZ07MPQPcntNyUtqqPnhm2nUjyCsrerychcHi96f0n
+	xLxjMW5e+JM87f2dDIc1fBO7nRbGXeUroRebLkW/RpzaI7EWEMqpvRRICYjHTGgQXyuQzrmA7TI//
+	qH+pvsHzxuTkJv9kh6Ft0QTNZXo4HOq0c5IvFZ/iQIQZlaRxK+H23RLfuuR/H4/bs9jxN1uHuFuNM
+	FJwSO8cp0yAt+MEfHoG3iAhktnHaOyWJQlu/IumhGgPpxQESPSdfi4ZWTv+ao42qFtujly9e6V2cv
+	iOXzZ7vGF49D731UC4BStppr5aqedYkml0CxsSVZJ1mb+0jyNcahMYegEc2+dP/A==;
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1rex96-0008H6-RV; Tue, 27 Feb 2024 14:05:20 +0100
+Message-ID: <8c444bff-99ae-410a-9c8f-96ec6d3ae2e3@leemhuis.info>
+Date: Tue, 27 Feb 2024 14:05:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: drm/msm: VT console DisplayPort regression in 6.8-rc1
+Content-Language: en-US, de-DE
+To: Johan Hovold <johan@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <Zd3YPGmrprxv-N-O@hovoldconsulting.com>
+From: "Linux regression tracking #update (Thorsten Leemhuis)"
+ <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <Zd3YPGmrprxv-N-O@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240227-topic-sm8x50-upstream-fastrpc-non-secure-domain-v1-3-15c4c864310f@linaro.org>
-References: <20240227-topic-sm8x50-upstream-fastrpc-non-secure-domain-v1-0-15c4c864310f@linaro.org>
-In-Reply-To: <20240227-topic-sm8x50-upstream-fastrpc-non-secure-domain-v1-0-15c4c864310f@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=914;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=lugX5F4h8/NMtld2zD59gonUAOKUZrpUFx2+QOqsR0o=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl3ds2B2CJaQMvWvEIPjVZsxSZhFy8O3ULkkhIYyC4
- Zuz8eGSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZd3bNgAKCRB33NvayMhJ0RrcD/
- oCa28b8Zcv2mDOaSUEQ5dnw93PG+1AbRszXTlk5h4ugGwPmigfby5mZR4K6TTtBSRqbMP0O+wTX2JD
- di5z7yyOKWa6Hh2lAHsZhbLYZC/Zdk+hCtoyWFcDq/U2AK3buMZOUFKk22CvfR1ESHr7I4U5mngWQR
- +B+w8bLvAcObzZtq4SMWac6Aw9dA7NGmJAXJc7nu/dMzyCO3Lm6TytqrVEr91AT1HA+YuYa0Sg5I6X
- JetkKmaB7g+PVY+Nkr66jiUxIfJGbwoLzJTpD9K9clFcpyLE7VvqZhzS7jlOkTBXCvbhMB1etr8kyI
- S7Nc8KZyJRj9OkzDxFciuJf4OXXkj+ev8HdYHiRyHzyLLMQmkukyagSu0H5RvyH2AOtegTxOreJUtY
- O7JojHW1exuRdw2p8/wDw+MChFqdT5lk++1gIuNWOr552IK+n+Heva6sZcFl2nLTs4Ue5SQM9qUitY
- IUXRXCAAylkDHrHktwphl24/jJbOIsb48/1ID553MYm1UNusR4mTZLdsHLSSHWPaj5GxAHuPiBV76N
- MYZPMaLsqyDBlJ8M+O/zwp8Jm/kGeJHJ6u3YDzNpM0rcJkaFwJQlFQw9/74WQirc6k/nvT1ua6sOwz
- X3h6c2o8PHCwqtVAbQmKsjSW8enkj0sZrdQyK14CilvZFUDGvhNoWrobT97A==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1709039123;f703608c;
+X-HE-SMSGID: 1rex96-0008H6-RV
 
-By default the DSP domains are non secure, add the missing
-qcom,non-secure-domain property to mark them as non-secure.
+[send with a reduced set of recipients, we all get enough mail already]
 
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+On 27.02.24 13:40, Johan Hovold wrote:
+> 
+> Since 6.8-rc1 the VT console is no longer mirrored on an external
+> display on coldplug or hotplug on the Lenovo ThinkPad X13s.
+>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 12ba839f215e..ca45277b7c47 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -4845,6 +4845,8 @@ fastrpc {
- 
- 					label = "adsp";
- 
-+					qcom,non-secure-domain;					
-+
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -5002,6 +5004,8 @@ fastrpc {
- 
- 					label = "cdsp";
- 
-+					qcom,non-secure-domain;					
-+
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
+Thx for the report!
 
--- 
-2.34.1
+> I've previously reported this here:
+> 
+> 	https://gitlab.freedesktop.org/drm/msm/-/issues/50
 
+Then let's tell regzbot about is as well, in case the ticket comes back
+to life now:
+
+#regzbot duplicate: https://gitlab.freedesktop.org/drm/msm/-/issues/50
+
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+If I did something stupid, please tell me, as explained on that page.
 
