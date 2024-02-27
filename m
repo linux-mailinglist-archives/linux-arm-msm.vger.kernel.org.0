@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-12717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 814C0869809
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 15:28:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3067869812
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 15:28:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CF371F2C8A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:28:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 09BD2B2418E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 14:28:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4517A145328;
-	Tue, 27 Feb 2024 14:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D612145B32;
+	Tue, 27 Feb 2024 14:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IVaU9pZj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pevypelx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87B14037E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 14:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2445114534C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 14:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044054; cv=none; b=CGSgJVhd4GJOUVC6FE/+qiEapRIsxPMd9GEPmnlLT1Sr2z840SxG31fC8+bPFTPTKOo1xyjXkWkhvUDyRJwtLayxFvHSgoVpzOvo8es1ctqkKTIJnQF5yzC/nk5k1sFpPxk1SQv58QZtgkPdUscNv9o0wSG8CXRQpc4yf8OpBkE=
+	t=1709044056; cv=none; b=C0/n9HjyB40ykXFQ/pvMbwkYBUCkOzPj3P5oFY/P+imQcGLbPhs+hLSYJjSAdDbTFPOkdY9XwFE/UozTsb2GF1GE6Skk6jpUmr2McpGXl8b/9BU2t9Dqi6PXq7gPWgCdLMxX5NA5fczwg2ioH4ty5ThrH+3hfU4IZ551m3cmzss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044054; c=relaxed/simple;
-	bh=bsf32Y7coVxxTSmKbLEaQtO9FBe/PteLHrHMoCJPWNs=;
+	s=arc-20240116; t=1709044056; c=relaxed/simple;
+	bh=ab6q27R3QlFLFfpy8puelAUfdFCANtrxW82g4p7AAaY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lzVc5gNS8YJoT4AZdfGKeCFhmx4asqP+WfAqHHCvdPlAFqPuS32/mizxXyGSCtAHO/nrg+uENyzmeBRQY7tZ4OWMpLsewRPRMad1dc1o0XhtQBS8ayAOi9RlgOlQSAtWylaQ+jW2vZvUcxaVVTS3wqnX1e70xVV+PdOfL3FdbRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IVaU9pZj; arc=none smtp.client-ip=209.85.208.47
+	 MIME-Version; b=T+buYwUCsxeqyZz+/RLIFIWSAGHwfJU/ntRBX8auBWBZsx/XQ1FLjlsnxs6QvfIN/4GBt/fPlKb21F+KgHW74DbqfNzVSeUzjHoL6TLlFkH6sVpbwqEEb7mbm+P2Z0G0020zzvxYTuoyncN5n6DuNIjbMxZ01cmgXnUXX/IUerw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pevypelx; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-563f675be29so4644738a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 06:27:31 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56454c695e6so7562155a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 06:27:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709044050; x=1709648850; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709044051; x=1709648851; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=33B8gJG0ZgTkJiJm72SjJZHXMoaZN/mFMW+Qqrnw2t8=;
-        b=IVaU9pZjuhsJ1zFdWoQuozQa/7/tNS0nLICblbHILCW1ry233EHzqkgoT8YUpqGBKt
-         rhGoXZvL6bWtUWfYfK/cfnuSiA+/a0Ocw/1a1qQB58Y44jTpiNZDEI5WLHIVSghsn3ZM
-         0iSlcEIYdi1HSh+YUO9uhlrwIGCluVz3B+9V4nOV2ypHMuOgxyeH1sWBxs6soA0ogbhV
-         fc5ivc8DFjr18AAdn3ALiLJmZia244q7SzOQgREktIAFyqHkN98yqIr87QF6mIZdgM7l
-         QAYMcWfOJbdsmurYm4L3MHu1HqAdrSFQMwCps1oSGgYT4+Mj75PwD6YKuQIuuOdeq81K
-         fz0Q==
+        bh=nsr/AiI0N0LjdjI2GsJqDjqyT+l1PI1B8gFeuYj95io=;
+        b=pevypelxVUn9u8BZ9ayxMCkHazDRu/0KV1ltZNr6QC6TF+DKYXYNbiNCdWz0CV7Ytk
+         pDNKsZbWYo1T9qlU3kLhHy3OhocuuEYZHWYr5V6wZX1rJnNbAZLK7sZXbBtGCpe17mdI
+         n8GAnZeS1dSXTPRiuKfC0Zb1895kjxDIEOT4bWhdHouH4iLjNYSLXVshaeg5El7M8/1f
+         qeodq3OJUYRPgfX7ZDx1isbsZzrY+obvujDE2PGPWfq0kv8GHcop32XibVs6YWxpw595
+         INzVjT0xNoAI2v1TJ1aejGpNQc1jrJlgb/LaBSWRhrXEzEAs9cZ8EIK5kt2AMH/gUeQ1
+         TdqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709044050; x=1709648850;
+        d=1e100.net; s=20230601; t=1709044051; x=1709648851;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=33B8gJG0ZgTkJiJm72SjJZHXMoaZN/mFMW+Qqrnw2t8=;
-        b=I4jkVWnOd0JdADqR3AvJLbP8KYYOMG6AS4638OJ7lLf/zoSJw0gSVIEjrwKimkf7lO
-         V9GIsTzqpWzNu06wuv3MSSDqHArAW9hJMwOaEy2c1uIEmrdGy4ucvWf1Mh+G3pq49O+4
-         RqrKmjcvXbRg7ysU7z3Y8zlk31fbCzxlRtAnpgRjAvuWXL690JTn9z+4b7d5cXJP8OoC
-         lvsPEMpjluxBgXXD4kimM0RBkTDS5wb3ZrawpgXoJPehW8MyG+ULKY0aTp2dzlNf8JGQ
-         c+cLqdxVj22it/BzuXTWPwfcrhh/EX4ms5EoBItZdBywiWBUSEPeJW1Zl8A0FPfAyp7D
-         i/YA==
-X-Forwarded-Encrypted: i=1; AJvYcCWwJ0lB+az/g43QPzOEV5DzT5fgCA+YLCQLqmzFHIX3+bqE9jkwGr/0RgXmBM7z7xF5gxBY+8gEWLXbTNEngHqRGS0nwkbqN7g+3vGmYA==
-X-Gm-Message-State: AOJu0YwcgYTbynM++a348f0xUH5tGdyVu5JI8nQXQ5IwgWNVKsRhaSQD
-	iSy/XzOI7VMHFBDL71jONwIorSu847i6+ZwV2+JTQb3rSoSeBVuurqLiVjK+8wU=
-X-Google-Smtp-Source: AGHT+IEij7029UEKKPfIsg6SV1R+vPsLyeR6KBl+70fxTzEzohEkoVCooioBYOnozthxWZTZ/05cSw==
-X-Received: by 2002:a05:6402:3456:b0:565:7116:d533 with SMTP id l22-20020a056402345600b005657116d533mr7046605edc.6.1709044050058;
-        Tue, 27 Feb 2024 06:27:30 -0800 (PST)
+        bh=nsr/AiI0N0LjdjI2GsJqDjqyT+l1PI1B8gFeuYj95io=;
+        b=mKZwwUTN91YufrMv85gnFOu8Zzligt71igPXnJVs3Z6o/i99hqtXW+P+RtNJ1UAP6e
+         v7SpxegqyzNw3Dhv/bxL4EXbred7rsaUyU5OuRYFMeEVRB1imsOlH6xqNgzlO9ll4sA4
+         5nJnIYKXbABKR5OfzGDUXBRCLTbkoFHUkF9HSD9YeuiQi8DXLFxfqu/dUj3or+kpJW71
+         oijoo5A8jrhik+TCBjaVKrym7aO2huZkTX0tiXNQhvGOsUpMDvIDFZD3ISxjDd9aldGI
+         MP+n8ERIWijAu6qR5yj7lhaeEO8LZUuHXpGzcX/KrLZwDUN9yjxWo5FrRz9rNtV+feRK
+         HvyA==
+X-Forwarded-Encrypted: i=1; AJvYcCW43bF2BXCqBgeG59yO2O21cyyCrRkWyd6WSH3fMmASsYPbnXjy81fnUZfLocifzuvEyad3D60zl3GzGDBRC1VIaE8zHmKwwk02WPa1Qw==
+X-Gm-Message-State: AOJu0Yynf8F4JIUULfptZkSmmSsFX80ubsi8UUlPiQKoty06mVDf2ZlW
+	Z9k0MxC7QQp5mwCMhyQSW9cQoQqoaf+6TfUFvOR75VnXxOyd3aI6gZ7A86Rqwbk=
+X-Google-Smtp-Source: AGHT+IFusTJZzlMLAmX1/SlunCdlq9zrBA5BARec3/3Z2lzwXCSXw2wRXASMrtR7vVo7sQdCMlx+Mg==
+X-Received: by 2002:aa7:ccd4:0:b0:565:f077:d872 with SMTP id y20-20020aa7ccd4000000b00565f077d872mr4712627edt.15.1709044051484;
+        Tue, 27 Feb 2024 06:27:31 -0800 (PST)
 Received: from krzk-bin.. ([178.197.222.116])
-        by smtp.gmail.com with ESMTPSA id u16-20020aa7d550000000b00564c7454bf3sm813689edr.8.2024.02.27.06.27.28
+        by smtp.gmail.com with ESMTPSA id u16-20020aa7d550000000b00564c7454bf3sm813689edr.8.2024.02.27.06.27.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 06:27:29 -0800 (PST)
+        Tue, 27 Feb 2024 06:27:31 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -80,9 +80,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/3] arm64: dts: qcom: x1e80100-crd: switch WSA8845 speakers to shared reset-gpio
-Date: Tue, 27 Feb 2024 15:27:24 +0100
-Message-Id: <20240227142725.625561-2-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/3] arm64: defconfig: enable reset-gpio driver as module
+Date: Tue, 27 Feb 2024 15:27:25 +0100
+Message-Id: <20240227142725.625561-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227142725.625561-1-krzysztof.kozlowski@linaro.org>
 References: <20240227142725.625561-1-krzysztof.kozlowski@linaro.org>
@@ -94,94 +94,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Each pair of WSA8845 speakers share the powerdown SD_N GPIO, thus this
-GPIO is specified twice in each WSA8845 device node.  Such DTS was added
-hoping non-exclusive GPIO usage would be accepted, but it turned out
-otherwise: it is not supported by the Linux kernel.
-
-Linux kernel however supports sharing reset GPIOs, when used bia the
-reset controller framework as implemented in commit 26c8a435fce6 ("ASoC:
-dt-bindings: qcom,wsa8840: Add reset-gpios for shared line") and
-commit c721f189e89c ("reset: Instantiate reset GPIO controller for
-shared reset-gpios").
-
-Convert the property with shutdown GPIO to "reset-gpios" to use
-mentioned Linux kernel feature.  This allows to bring all four speakers
-out of reset.
+Qualcomm X1E80100-CRD board uses shared reset GPIOs for speakers: each
+pair out of four speakers share the GPIO.  Enable the reset-gpio driver
+which handles such case seamlessly.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 ---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Dependencies merged by respective maintainers for next release:
-1. ASoC: commit 26c8a435fce6 ("ASoC: dt-bindings: qcom,wsa8840: Add
-   reset-gpios for shared line")
-2. reset: commit c721f189e89c ("reset: Instantiate reset GPIO controller
-   for shared reset-gpios").
----
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index d7ba45953277..266a461f4882 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -802,13 +802,14 @@ &smb2360_2_eusb2_repeater {
- &swr0 {
- 	status = "okay";
- 
-+	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
-+	pinctrl-names = "default";
-+
- 	/* WSA8845, Left Woofer */
- 	left_woofer: speaker@0,0 {
- 		compatible = "sdw20217020400";
- 		reg = <0 0>;
--		pinctrl-0 = <&spkr_01_sd_n_active>;
--		pinctrl-names = "default";
--		powerdown-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
- 		#sound-dai-cells = <0>;
- 		sound-name-prefix = "WooferLeft";
- 		vdd-1p8-supply = <&vreg_l15b_1p8>;
-@@ -819,8 +820,7 @@ left_woofer: speaker@0,0 {
- 	left_tweeter: speaker@0,1 {
- 		compatible = "sdw20217020400";
- 		reg = <0 1>;
--		/* pinctrl in left_woofer node because of sharing the GPIO*/
--		powerdown-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
-+		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
- 		#sound-dai-cells = <0>;
- 		sound-name-prefix = "TwitterLeft";
- 		vdd-1p8-supply = <&vreg_l15b_1p8>;
-@@ -853,13 +853,14 @@ wcd_tx: codec@0,3 {
- &swr3 {
- 	status = "okay";
- 
-+	pinctrl-0 = <&wsa2_swr_active>, <&spkr_23_sd_n_active>;
-+	pinctrl-names = "default";
-+
- 	/* WSA8845, Right Woofer */
- 	right_woofer: speaker@0,0 {
- 		compatible = "sdw20217020400";
- 		reg = <0 0>;
--		pinctrl-0 = <&spkr_23_sd_n_active>;
--		pinctrl-names = "default";
--		powerdown-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
-+		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
- 		#sound-dai-cells = <0>;
- 		sound-name-prefix = "WooferRight";
- 		vdd-1p8-supply = <&vreg_l15b_1p8>;
-@@ -870,8 +871,7 @@ right_woofer: speaker@0,0 {
- 	right_tweeter: speaker@0,1 {
- 		compatible = "sdw20217020400";
- 		reg = <0 1>;
--		/* pinctrl in right_woofer node because of sharing the GPIO*/
--		powerdown-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
-+		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
- 		#sound-dai-cells = <0>;
- 		sound-name-prefix = "TwitterRight";
- 		vdd-1p8-supply = <&vreg_l15b_1p8>;
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 3f44aebafda8..746ea4499e72 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1473,6 +1473,7 @@ CONFIG_PWM_VISCONTI=m
+ CONFIG_SL28CPLD_INTC=y
+ CONFIG_QCOM_PDC=y
+ CONFIG_QCOM_MPM=y
++CONFIG_RESET_GPIO=m
+ CONFIG_RESET_IMX7=y
+ CONFIG_RESET_QCOM_AOSS=y
+ CONFIG_RESET_QCOM_PDC=m
 -- 
 2.34.1
 
