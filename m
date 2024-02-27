@@ -1,81 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-12630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19C30868804
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 04:48:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D86D2868817
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 04:55:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF1C91F217EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:48:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CB061C217EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:55:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCFE24D10A;
-	Tue, 27 Feb 2024 03:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F143F364AA;
+	Tue, 27 Feb 2024 03:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxLfaoLs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTrLlMjX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBE747F58;
-	Tue, 27 Feb 2024 03:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EEA4CDE0;
+	Tue, 27 Feb 2024 03:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709005672; cv=none; b=ZJruT7RlqXOCZcaytjFy9if/qzLmROEHcRv43BT9ZxZD+g0LVyGEWHMcTN+0Hxc5qtwqfzxscwRUKwVjJN8zD9pSqA7Iv4AKXpa5pkaE9zI9MbhiOOVGUlFgS13hZJDSqwvLANlms0iT31/LdOkJ6MINFxELOGSGTwaxBaFW28E=
+	t=1709006104; cv=none; b=JO/mgZI2cs02g7N1WGe5HhchqbJ/CnwXsrD68TQBcg86z5gKkSuzr2CRYGOA/9B9JKU/NKnWAJ8mST9oiB++4uXuTXnirly8q8Gu4HdIh1OGUMnqdh2gnZptozYDJ592DU38nSO2JEWgoUG+LMIPSDeKf9KVmGVJ/Apf4E27rRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709005672; c=relaxed/simple;
-	bh=oTtNtJRD4tWbdLZHoDbBhpMmZL9HWWEgulD3nR6OEbc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uFQ+VPskhWR2S2TuwPFz1IDPfFrV/L/GetfKVjdaTtpG6LZrSp8ctLmoMqfV2JhqZICi9fxHRKD+CwzFWD/8x/GXRZeRH+WLYtRowXjXqbq9fvZE5/jhw2dtL9JR/SEd78pApmTvqBaN4iuNR4hi1M1HBg86n9TUyOxrwpEgQrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxLfaoLs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0441CC433C7;
-	Tue, 27 Feb 2024 03:47:51 +0000 (UTC)
+	s=arc-20240116; t=1709006104; c=relaxed/simple;
+	bh=GapRhH6Ok62RJMtMFM7fqvjgxBgjNKUulRJwiJTDpRY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GJJVt8SUDpE8e97A1hY1wA0HY3xX6Gh3t5D0+b5qjQ1rDDK+XBSRsN6ECClfgl/dFH3Vd/XBkj67Qqx2CbkJz2b156IxTX8L0lformJB0h2sfXGVz/oG3nLm3g+Dp11HHzjpBeWIlIyRYo6HL9ADQWI3PUvQHrr/vgxYg/8aQoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTrLlMjX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE542C43394;
+	Tue, 27 Feb 2024 03:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709005672;
-	bh=oTtNtJRD4tWbdLZHoDbBhpMmZL9HWWEgulD3nR6OEbc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GxLfaoLsYv/fRa4fXHH6ZoouZ3xEZK2ZeJaBHQo82smn2Pbau1CocRBBKhGpnABC7
-	 fbA+EPoZyPfq+J5b5foC0NaZhTjD6Geg/yfChgj+SSL+o4LuNhpin7WXj/2fzINTvo
-	 nhnTVFe2fPxZnMZOo+kLy5SBKN3TpAeKF+qgmJh475EckgOA+BCeW64pG32+rQ7Qwc
-	 PB8OO6ZjbZz1siZP2v6DH6vu+G9jPWTGNVYh7bmvKCG9zTUPDJ89BN/oTLxWNGnl92
-	 UuHbQrlkQLnpW6IRwQVdnZZhK6nNjhJo0cz9So1Oi/V2Ag4Z9NbVkGu4GXo26KM3d1
-	 X/FNrZtb9tSDQ==
-Date: Mon, 26 Feb 2024 21:47:49 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,glink-rpm-edge: drop
- redundant type from label
-Message-ID: <170900566917.2662551.9847010419670899364.robh@kernel.org>
-References: <20240226122854.86197-1-krzysztof.kozlowski@linaro.org>
+	s=k20201202; t=1709006104;
+	bh=GapRhH6Ok62RJMtMFM7fqvjgxBgjNKUulRJwiJTDpRY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=mTrLlMjX/+85j1Qik9LUrEUIPSGS/IIWHxZbi/K6RhtrnbpBYdwh7KC+WHJZk1dJH
+	 o136O7M9cCBrJRyTK5ZO4VAmu4ouLE1ArFofsbFxNRJ+a8c2dfHpjLJ6efsr1LcuWX
+	 qyaDnrxqCwCRikGfwfnV+0I76TIaC1zVWppLh6VDVe0pR5ONXcdSG0dFHywNw8voFA
+	 hBlNEQnsbdtWOP1zT1Ix/hRig9SravsJ0aIZoDLincjCTXjIpiZ28gtJP4LLiXMINC
+	 MqTI70oc9oTlnw52Xn6U51t1XFpHPT7h4m43I/Vwg8dotyrQfOcOoUoFHnbNZ3aKBF
+	 zD0HaymskfPoQ==
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512ff385589so1917052e87.1;
+        Mon, 26 Feb 2024 19:55:03 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXCuQK0vAlB3sbjL3aPPEq3FvP1Cw1AF6oojkyv3sKFKSupwCHQnTFZE0v1DEmUwfOrHiQE0aAI6jRtKr32gj5Ua3TQQHX15H2rZFuTAvfz/c4NAF9SH2YwU0t0GpOhC3Zw+ZnNBUVbq10fl1u5wSstBWc65Z1HZ3lGztmC5zGvquXcngnqaYX9GHAWaPHc2tljPKidCniLT33rpUV72j36fkdrRK65+n4=
+X-Gm-Message-State: AOJu0Yy0Oz5Q08ETrEv68ElEV6e0DRd59vZLb5jyKTbyG55G94ZWIYi7
+	EkQK23YnKZwJF9JSEFrjWFPnZFr4ek49QpLTYDUjh4BLHcdAbTbvy6tvSHJrpvMej48K0v9Rohi
+	nwMaX2Tz19hbt8OcwoZnX3aiHUQ==
+X-Google-Smtp-Source: AGHT+IEa5SEn2U+j2tz2rEkGzuP63uIymMu+x3njmMP2xVTj3Tb+5qkgznrNTzN48OXftf7xrzekiuie5b0+ROvcOPY=
+X-Received: by 2002:a05:6512:2241:b0:513:34b:67ec with SMTP id
+ i1-20020a056512224100b00513034b67ecmr965394lfu.58.1709006102187; Mon, 26 Feb
+ 2024 19:55:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240226122854.86197-1-krzysztof.kozlowski@linaro.org>
+References: <20240226055615.79195-1-raihan1999ahamed@gmail.com>
+ <20240226195516.174737-1-raihan1999ahamed@gmail.com> <20240226195516.174737-2-raihan1999ahamed@gmail.com>
+In-Reply-To: <20240226195516.174737-2-raihan1999ahamed@gmail.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Mon, 26 Feb 2024 21:54:48 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+Z5UA1jEJSL0tRSXrC+Juud6ZMXtvR9ne5Cn_-cw9UzA@mail.gmail.com>
+Message-ID: <CAL_Jsq+Z5UA1jEJSL0tRSXrC+Juud6ZMXtvR9ne5Cn_-cw9UzA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: msm8953-lenovo-kuntao: Add
+ initial device tree
+To: Raihan Ahamed <raihan1999ahamed@gmail.com>
+Cc: krzysztof.kozlowski+dt@linaro.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>, 
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Feb 26, 2024 at 1:56=E2=80=AFPM Raihan Ahamed
+<raihan1999ahamed@gmail.com> wrote:
+>
+> Lenovo P2 is a handset using the MSM8953 SoC released in 2016
+>
+> Add a device tree with initial support for:
+>
+> - GPIO keys
+> - SDHCI (internal and external storage)
+> - USB Device Mode
+> - WCNSS (WiFi/BT)
+> - Regulators
+>
+> Acked-by: Rob Herring <robh+dt@kernel.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On Mon, 26 Feb 2024 13:28:54 +0100, Krzysztof Kozlowski wrote:
-> dtschema defines label as string, so $ref in other bindings is
-> redundant.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml      | 1 -
->  1 file changed, 1 deletion(-)
-> 
+We gave no such tag. I'd suggest you go read what these mean.
 
-Acked-by: Rob Herring <robh@kernel.org>
-
+Rob
 
