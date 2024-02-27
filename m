@@ -1,177 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-12767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0B94869EE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:20:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C94B869F2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:33:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 01098B2455F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:20:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8A2E1F2CDEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:33:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9AF149E01;
-	Tue, 27 Feb 2024 18:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07698347A2;
+	Tue, 27 Feb 2024 18:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="phSOurph"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="4/2NlhRr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2045.outbound.protection.outlook.com [40.107.93.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78111487D8;
-	Tue, 27 Feb 2024 18:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709057848; cv=none; b=iYbLcmIK7ElVQkEmpAVpa181efoU0T0jtH2ec0JBWH9ci0/0xRlWqnO4cvXuw16SAPOjy4ddqx495bgJ/Bhi5ArnZNeeR5BXgIzFoBE1/LrgTP6hK77tGguS9DJz5hIguOeKh0e+pGssiT8uLIIOQQjYqfxE268FUEA19hTcrvM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709057848; c=relaxed/simple;
-	bh=zAsfk+v4hJQHezpar3y9bfxnsJGJOGSKx2JbFHeCxXM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GLlHk+I5c6QFAQrkyV+v/Cp/M+XNGmvpnAErszNo+cSzaetdM0ECd+396V8pdcIXZ5pvDx/5j/EjHJLyl4QIy+XY1io06shPop9rZysh10CPXRe2Tjsd7QFgk5g9++z83oqw/Ahh5p8IUjNQZqXEZYgLMqNk1YN+Lk7WR4i8yoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=phSOurph; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9Y43L004484;
-	Tue, 27 Feb 2024 18:17:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=ornixnyEGdWMbFwNeDMGNQb9hYIkJYlnDtUaJ6GrfQ8=; b=ph
-	SOurphNJeuGw3Lsf1A0AT6CsAzIuey4z21gIpqJ4hErPFuknPAGR5pPbhjqemBnR
-	8IEPKqjhxlxbiIfXDoQ+vAZ4bHBrIQjYh9F5vIJ0a01XN0icou2fIzm3o3VrdQAV
-	DGWwL4veU0Gaq6RDF0/4pHcUIJXrqvtU3wB82laHU868aYPvJEzNu7r9Ycu9Ahz9
-	/EWAmLLe7jjfgacAPbTkDKuf7HEpwCuZNtH+HhCOQOH0nruIfkBes/qV8mGvV2aZ
-	Deu65RpXf1kKd67vYMFPi0ONr4eNf+rwbpvl55cd52NpNKLl6Dz2r83FUs2H+U0D
-	EH4FJMYhUYimpMHIrf5w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whd7b18t2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 18:17:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RIH3Ae010219
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 18:17:03 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 27 Feb 2024 10:16:59 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
-        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
-        <pierre.gondois@arm.com>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V3 2/2] cpufreq: scmi: Register for limit change notifications
-Date: Tue, 27 Feb 2024 23:46:32 +0530
-Message-ID: <20240227181632.659133-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240227181632.659133-1-quic_sibis@quicinc.com>
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F9D200A6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 18:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709058818; cv=fail; b=DSSepNZ6A0n+OIMxc/DrWLykXKkqz006jgBnYLkvwVk+HFTs0CtkEZK52F51TeLDNYGIw1fujIjUztmPJXG3cOsD5aEwgztDVJ/nGByK4qhWNAZjrUx2CmequGQ7pe2IiYWuKNHygR4uzQw9RBbvhof3JjMNYleHKlFqyWAZVdU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709058818; c=relaxed/simple;
+	bh=gfsJedLtgp3+aUW173vOJmujHRJkvuoyrnZUIKW0Nwk=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=kdwI1ONoQSMNMDDVEHzyJ5O22MKQzFOq+R2iIeAp6MM4NqNZWa8cL75j0OOOUTScrcXoXIf2nCxpQ7PvNVb47IlAEFDU4azSqC6ZjcR6JbmXf7dcQEUj1aANUhK4CUs2wlYOLwjh43FgeUJ+IigVzKYCZXBzs7KIeP5vKZqoK0U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=4/2NlhRr; arc=fail smtp.client-ip=40.107.93.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bRDw0hIt9D57YxZC1ygdXvMlFrS4oiUXarVfVz6tFfKtS0HtX3FMpwr1IqpICMjtZGWtUsBLzhfG7pOQy3dW6MiH4c5waru34VPZer/A4dXgoYQcPO6y+mqnBPUXYzJPQz/mwlSkO1uTCQMj9uKE5ytdHBvywysPqGJajrtRf83ohytznC8mDWNdkFiRI0/jv7wJzXRd39CGZNtQ/3mpdyFhV42hLcDChSncfE4BMtPrTftfx/UB7GtkoIxapgIRGOg8QilEuTbEVegZipUgTW5ZdEUNGBPjBT1zuo4sHRaQfTkBgXOED2UNi0KtDHS0332JiVF/9CFV6mZWBfmrRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cTafJyqYABwni96NENvs6BmdGcvAKY3wkpe1CehqlHo=;
+ b=nKg/ybmN6glx6NaNSUuqojRoNG+kBmFrbzbEGoktzvengqcRNpnTKR4ZgjjdW725YDbDYqKIMknIUvosnv8oyx4dSivqmNceDahYJwsLIb2HZ3KnDpCaEtk5ZiA98kNnnWuLXjb1Dkv8tUeTrDoHAeJrPj8+hhB3SLB89ZWziOvvlsTYVTC30A1wF7/94Lv/Y6zHr1Yg7qlZQ9FwnbeUL/9Cb37KvWs/ZUSYSCjr2m8HczQL8twS4p1fnVxEiFYSrnWbw9aewW9gDOnt0+jYH9oQbbSmMpwyP0DBdv9KTYsQzTZ43OjPH90dGkYAwiwFVKSW96+L2W6a2Ttcl15pTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cTafJyqYABwni96NENvs6BmdGcvAKY3wkpe1CehqlHo=;
+ b=4/2NlhRr63Ega71FLqSd3ed7F0uGLLBA+/BLFLprqpycBULGT1cXXQ9q180yRg1e2qwNN/yH64vdQxeRb491F2M//imTH500FN/HZXW08wuek/t1vksnSOAfqJm0FRXUQGqSd064Xog+wCRRAJ+w/bd+OugbrzO4ExaXVILXkz0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
+ by DM6PR12MB4266.namprd12.prod.outlook.com (2603:10b6:5:21a::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.39; Tue, 27 Feb
+ 2024 18:33:32 +0000
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::f2b6:1034:76e8:f15a]) by PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::f2b6:1034:76e8:f15a%6]) with mapi id 15.20.7316.031; Tue, 27 Feb 2024
+ 18:33:31 +0000
+Message-ID: <e3eb2794-b90e-4300-96b4-61f6b45b5518@amd.com>
+Date: Tue, 27 Feb 2024 19:33:21 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/13] drm: Fix reservation locking for pin/unpin and
+ console
+Content-Language: en-US
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch, airlied@gmail.com,
+ mripard@kernel.org, maarten.lankhorst@linux.intel.com,
+ sumit.semwal@linaro.org, robdclark@gmail.com, quic_abhinavk@quicinc.com,
+ dmitry.baryshkov@linaro.org, sean@poorly.run, marijn.suijten@somainline.org,
+ suijingfeng@loongson.cn, kherbst@redhat.com, lyude@redhat.com,
+ dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com,
+ alexander.deucher@amd.com, Xinhui.Pan@amd.com, zack.rusin@broadcom.com,
+ bcm-kernel-feedback-list@broadcom.com
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ amd-gfx@lists.freedesktop.org
+References: <20240227113853.8464-1-tzimmermann@suse.de>
+ <d854f70b-1d62-4da7-bfbd-2184456d1d25@collabora.com>
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <d854f70b-1d62-4da7-bfbd-2184456d1d25@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AS4P250CA0010.EURP250.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5df::7) To PH7PR12MB5685.namprd12.prod.outlook.com
+ (2603:10b6:510:13c::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZEb7q_z4kIURjHSXm1GTUsykMg-r9OjA
-X-Proofpoint-ORIG-GUID: ZEb7q_z4kIURjHSXm1GTUsykMg-r9OjA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-27_05,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2402270142
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|DM6PR12MB4266:EE_
+X-MS-Office365-Filtering-Correlation-Id: fea19e46-3403-4cd8-b38a-08dc37c2994d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	fYW+uKGWD9gVOrIQCcxDQvisYOqvBKCAMbi24tljOu5AuqVaTQ+CQFEKbQjZ6nb64A0fKmGo6+sX2EqzNXPAS4OEL7kPv5eJnBM2/FNPBzJHO0KeoBPU7sBh/CzmpsnFYhLnMVVkXcXBa+4wRdy5GuXyZXmpsfXlpokRHk2glA/ndYerkELxAT5VF1Ke71g1VMPvsf12k518EXTvf0G3rk6gDhY9yjnFWhnW4fufJ+fxWnEddAtMPCLcNF6VwqS44lr9BO4zqGBliQw3PUMECYqmUBFCjRInYIMwxqa1SFYqtm7ywo39DjZCBlR8Az3RVATOt2cj3Te+XE7zxF6dm6OoF82SjOipuMjNv+6PJ198SkLzB4k3xRBFQFmnc5YLQl5WgvoNfCHpku+nu9kdIuMB1Zc51daHIm+Q0BAMv5qPKzcYWsove6xmb8xsnuuknnf1+IKkvmk3bboQqvkJxzJGCXFPuoKTA1Fi20UEAAeKRkwnkOLaa0mIySSM4z8mLyI7axuBA8d9Tnrjv/EEnc8poJ2Nbjx88aJGGl3vKbxNZsOMYyiAMqGVpmjVzKstZ/4meACSaH/1HHDj98cv9jeWINzjNIjvp39EvjXqXmpC/W7xGA3armrWMIZv+U22PjM5gLJvW612eh4g04mSUvXHlqALSzwOyqgSVVHytdpF3pyKPvOtv3+L9P8FmkkhfGobC020Nl/+g9DIBSB8wA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(921011);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TnFYSVJkUTRUNTJpRTIyUTZhQlVnbjJDd0lMY0p1QkVyV0NuYS83MmNWNVBt?=
+ =?utf-8?B?SE90MzFMY3RuWnVJMktYeEdXbUpyZVp6T0RJTHovbmJxVzJlbkx1bDRxdDdZ?=
+ =?utf-8?B?UHJ5eVlhakFML0xBVW9UY0hxNVVHcXJyZS9OV2ZoMmJkVzYwYUpTclRtVkFX?=
+ =?utf-8?B?SHVVQXVVQUY0cGloaGh6Qk9WaWJtWkQ0UkhtLzFvdVV3ekdnNURpZGRRbFJh?=
+ =?utf-8?B?YlI0SjdsM0FYMzFQRWloMFBvWGxJL2xKUWNLUnhOTWdva2xWRzEzSEtwRk1I?=
+ =?utf-8?B?dHpGVzdNazAyKzZpcENod1NGU1hMVVVsOXhkeks5eS9sTCtQNGhpTXZ2V1ZG?=
+ =?utf-8?B?RExtSWlOd0cycWlldGR3WFloVk11ZCtHVnA1YTAwZUk3VTVOZkxuRDUvdmdh?=
+ =?utf-8?B?ZkxydEd2Q3JoQmZGaHlvSDZ1Uk9ISDR4R2lreElmQlpGaGJqMmUwZXlJM0Ry?=
+ =?utf-8?B?UjcxN3Q2aFBWeE5McjBmcjdVVGwwQzloVGhEZUU2cVVyOWFTMmVHdk5ZcE44?=
+ =?utf-8?B?NUpHWnkxaFBKTVZhY0VNQkV4TjhMb2ZsZG4vQ1FqYjhVdC9oS3BBYXRHaUtF?=
+ =?utf-8?B?bWMwNnhQWDg5T0pHSC9QMXl0S29jbHBwSEdZZHBvOFEzZWxsSWhpMC9jK25h?=
+ =?utf-8?B?VHdmNlZyMlNleXc2Ynhzc3pSQTlxU3lYYldhbXFnUVpuTDFOT1VjeGpaOGFo?=
+ =?utf-8?B?bDhlMFJsWVNaZ2dub0t6UEZNNmJOQWIwQUlvcktEcXQ5Nm1SemJ6VzRyUFVH?=
+ =?utf-8?B?MEdCeGI0RUp0Y2FPdExhT3BaeWZvRG9uOTYxYUhVK0VORDc2QXpjc0ZPMmpI?=
+ =?utf-8?B?Z2doTnE2V3EvOCt3cUVCbmJNQlAxaFBzbm16YmRMcHM1dmdIc1gxQTJ5cnhU?=
+ =?utf-8?B?R29ielkyTDFQRWttNEVMUVVHQUVVT0EvdmRiV05GY1BERUM1YW9VZ3lqQXBQ?=
+ =?utf-8?B?U3JDWEMyaXRwRE5aNDFKWVBaM0xhZ0kwZFFuTEVJWEIyUHB3UFhsZGdtV0sw?=
+ =?utf-8?B?WkNNWXZpbmVSMkVHeG9mYlU4bVpVTXNNYjJDUTNMSDVjTG1DWXBpdFVTWnBr?=
+ =?utf-8?B?bXovRzA1R05QMFk0M0VxZTMzek55cWlZTDlnSWphd250OUNQR2pDbCtJVDQx?=
+ =?utf-8?B?WUdhY1E2aDFBWmIxbnhOaFc5ZWFJT0I0VFBLTjg0TFJkc0xjT2p4NWRNTTZX?=
+ =?utf-8?B?WXpDTjlLR2N5ZXRybnVRbkJaYVVlNWU5ajJpQzdRcXBmMFZtZ05sRkQzdFJn?=
+ =?utf-8?B?UW8yT0lGeWFZbU81dUNSWHlOMTZBUlBLQTZNY1VVMUJpZkdlK3RzT0J0OERi?=
+ =?utf-8?B?d2RwelplbGF6K0h6V1Y4N0JLYkRTT1lmRTgvcUhZSHIyMjhsekw0VzdIUU9w?=
+ =?utf-8?B?VGpVSGNvWTZZci9pTndBcEpaNVQ4Y1B2NGJPWXp6bnBOMXFBbXlpekZsU0pX?=
+ =?utf-8?B?aXlDR0V2Mk1lQmxsQk5SV0NTdWRGbHJWcU9ySmEwb1VkUDd1V0lyUEp6VElZ?=
+ =?utf-8?B?YTRDYXp6TE9wcGhKNGFxb3hLeWFGallVeE1LZWxVMmpSbXV0QlBqaVVGM1RY?=
+ =?utf-8?B?bENGZng1MENYc0JhcjRZTENMYWxOWm8vV0hHd3ZwME9TV1BuQXJobHUxeS9m?=
+ =?utf-8?B?NFFwSE1pbmY4cUFUTkFmMTV0blFud3FoOWxGa0RuUWxHQldBQUN6NHBmOXBp?=
+ =?utf-8?B?RGlTaU5GMEl3alNtNHRqWmFMZTJ4SmdRVEZ2R1c5WHlnVjg4TjJnY0hNRWF0?=
+ =?utf-8?B?RnhiTmJhRWdCWHFEUWExMndna3J6MGlzOG9VZUNFNFRRREhBU0ZmM3RzNHNN?=
+ =?utf-8?B?T3cwVkFBeTl5QjFsenRZUGZueExUY09ORXRCUHJOeFNzMnN3eXlPbmgyNW9n?=
+ =?utf-8?B?MlRkWElKN1dSRlo3dlFENU1JMGJEOTEzemUxQzM1Y2ZJM0lIc2Qvenc0bHBn?=
+ =?utf-8?B?cU5DaVlHeG9rT0pzTHJZaENJcU41cUxncEgrMjZQNHEvbFZjVm1zV2d5MHZN?=
+ =?utf-8?B?aHhDcHc5ZGFyaVpRR0krUjkyRzZEUmZvSkhJODhRNm1PMXptUkhpVGIrZFQr?=
+ =?utf-8?B?K29sR0dCUkx2amQwS0s0eDRXUVdpOEdERGdQaU15L20xdk53OTFxb3FBdDFh?=
+ =?utf-8?Q?tdquSlAUT8Fisa51OEvEuLQo1?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fea19e46-3403-4cd8-b38a-08dc37c2994d
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 18:33:31.7823
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oo4dA+57OPmRT8J/Ay3phvzPGSoT++f21wqO6INvPQQmJTzp8Gmrqwt81Zk0jvyy
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4266
 
-Register for limit change notifications if supported and use the throttled
-frequency from the notification to apply HW pressure.
+Am 27.02.24 um 19:14 schrieb Dmitry Osipenko:
+> Hello,
+>
+> Thank you for the patches!
+>
+> On 2/27/24 13:14, Thomas Zimmermann wrote:
+>> Dma-buf locking semantics require the caller of pin and unpin to hold
+>> the buffer's reservation lock. Fix DRM to adhere to the specs. This
+>> enables to fix the locking in DRM's console emulation. Similar changes
+>> for vmap and mmap have been posted at [1][2]
+>>
+>> Most DRM drivers and memory managers acquire the buffer object's
+>> reservation lock within their GEM pin and unpin callbacks. This
+>> violates dma-buf locking semantics. We get away with it because PRIME
+>> does not provide pin/unpin, but attach/detach, for which the locking
+>> semantics is correct.
+>>
+>> Patches 1 to 8 rework DRM GEM code in various implementations to
+>> acquire the reservation lock when entering the pin and unpin callbacks.
+>> This prepares them for the next patch. Drivers that are not affected
+>> by these patches either don't acquire the reservation lock (amdgpu)
+>> or don't need preparation (loongson).
+>>
+>> Patch 9 moves reservation locking from the GEM pin/unpin callbacks
+>> into drm_gem_pin() and drm_gem_unpin(). As PRIME uses these functions
+>> internally it still gets the reservation lock.
+>>
+>> With the updated GEM callbacks, the rest of the patchset fixes the
+>> fbdev emulation's buffer locking. Fbdev emulation needs to keep its
+>> GEM buffer object inplace while updating its content. This required
+>> a implicit pinning and apparently amdgpu didn't do this at all.
+>>
+>> Patch 10 introduces drm_client_buffer_vmap_local() and _vunmap_local().
+>> The former function map a GEM buffer into the kernel's address space
+>> with regular vmap operations, but keeps holding the reservation lock.
+>> The _vunmap_local() helper undoes the vmap and releases the lock. The
+>> updated GEM callbacks make this possible. Between the two calls, the
+>> fbdev emulation can update the buffer content without have the buffer
+>> moved or evicted. Update fbdev-generic to use vmap_local helpers,
+>> which fix amdgpu. The idea of adding a "local vmap" has previously been
+>> attempted at [3] in a different form.
+>>
+>> Patch 11 adds implicit pinning to the DRM client's regular vmap
+>> helper so that long-term vmap'ed buffers won't be evicted. This only
+>> affects fbdev-dma, but GEM DMA helpers don't require pinning. So
+>> there are no practical changes.
+>>
+>> Patches 12 and 13 remove implicit pinning from the vmap and vunmap
+>> operations in gem-vram and qxl. These pin operations are not supposed
+>> to be part of vmap code, but were required to keep the buffers in place
+>> for fbdev emulation. With the conversion o ffbdev-generic to to
+>> vmap_local helpers, that code can finally be removed.
+> Isn't it a common behaviour for all DRM drivers to implicitly pin BO
+> while it's vmapped? I was sure it should be common /o\
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+No, at least amdgpu and radon doesn't pin kmapped BOs and I don't think 
+nouveau does either.
 
-v3:
-* Sanitize range_max received from the notifier. [Pierre]
-* Update commit message.
+> Why would you want to kmap BO that isn't pinned?
 
- drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+The usual use case is to call the ttm kmap function when you need CPU 
+access.
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 76a0ddbd9d24..78b87b72962d 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -25,9 +25,13 @@ struct scmi_data {
- 	int domain_id;
- 	int nr_opp;
- 	struct device *cpu_dev;
-+	struct cpufreq_policy *policy;
- 	cpumask_var_t opp_shared_cpus;
-+	struct notifier_block limit_notify_nb;
- };
- 
-+const struct scmi_handle *handle;
-+static struct scmi_device *scmi_dev;
- static struct scmi_protocol_handle *ph;
- static const struct scmi_perf_proto_ops *perf_ops;
- static struct cpufreq_driver scmi_cpufreq_driver;
-@@ -151,6 +155,20 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
- 	NULL,
- };
- 
-+static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
-+{
-+	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
-+	struct scmi_perf_limits_report *limit_notify = data;
-+	struct cpufreq_policy *policy = priv->policy;
-+
-+	policy->max = clamp(limit_notify->range_max_freq/HZ_PER_KHZ, policy->cpuinfo.min_freq,
-+			    policy->cpuinfo.max_freq);
-+
-+	cpufreq_update_pressure(policy);
-+
-+	return NOTIFY_OK;
-+}
-+
- static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- {
- 	int ret, nr_opp, domain;
-@@ -269,6 +287,15 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 		}
- 	}
- 
-+	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
-+	ret = handle->notify_ops->devm_event_notifier_register(scmi_dev, SCMI_PROTOCOL_PERF,
-+							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-+							&domain,
-+							&priv->limit_notify_nb);
-+	if (ret)
-+		dev_warn(cpu_dev,
-+			 "failed to register for limits change notifier for domain %d\n", domain);
-+
- 	priv->policy = policy;
- 
- 	return 0;
-@@ -342,8 +369,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
- {
- 	int ret;
- 	struct device *dev = &sdev->dev;
--	const struct scmi_handle *handle;
- 
-+	scmi_dev = sdev;
- 	handle = sdev->handle;
- 
- 	if (!handle)
--- 
-2.34.1
+When the buffer hasn't moved we can use the cached CPU mapping, if the 
+buffer has moved since the last time or this is the first time that is 
+called we setup a new mapping.
+
+> Shouldn't TTM's vmap() be changed to do the pinning?
+
+Absolutely not, no. That would break tons of use cases.
+
+Regards,
+Christian.
+
+>
+> I missed that TTM doesn't pin BO on vmap() and now surprised to see it.
+> It should be a rather serious problem requiring backporting of the
+> fixes, but I don't see the fixes tags on the patches (?)
+>
 
 
