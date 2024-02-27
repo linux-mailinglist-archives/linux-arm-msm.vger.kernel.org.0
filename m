@@ -1,127 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-12632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61809868881
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 06:12:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 737A8868886
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 06:14:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2370B283A1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 05:12:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12A611F249D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 05:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFC08F4EB;
-	Tue, 27 Feb 2024 05:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F83951C55;
+	Tue, 27 Feb 2024 05:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LH9oTEp0"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="HaIdc1OD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B33651C55
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 05:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6290252F72
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 05:14:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709010764; cv=none; b=pkleR52Kf4AmF7tVhKRl8KwMlRrBYWDeK/xV5OWeJF7o3XmOFRnCTan1Z8GnBjo7MFvo1SK7HsS2IifGCxicgRMSfuRK53p4bUeLL7OoSthE3euBD0jYI1abyT4btFhLPtbGXomM8d58TjtFJPCsg32u/jetMf98bv6LAm1qWDE=
+	t=1709010860; cv=none; b=bkNNE1Kws5vZ8eUsZ+cVUQQ1YcWrTATXKydqaa724ggtlJ0IK3Ih2ykAE3D+l5w4hvMxWMzU0oyzzz09FE3d2IjWYYiJcEzLuUdbnekyebbwTP9LqdZyO0EnU9gqS8FhXkNi5fm066MRAHCv5z4FsvUqSuEMq9eydsDhDBDp6cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709010764; c=relaxed/simple;
-	bh=hD+1erHDD0d+qn8eQRrLe1jV8E3tcFZSQN29WUyNEwI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MW2qb/bm+UOqm5fCj//lTGf9/FGcjaQAl2QAc93zDXtPaWq30isfH4/1GB/M0y4iNw0b9QrlOGrkxNT2t3fqazaua8P+pWg67Jg7Raml6qUFkn6O6mYEOUTD/4UsMWPK0HktzXPghz+N2ureapI3yq3chJaswYyAPqnOEhqGq+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LH9oTEp0; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6e46dcd8feaso1236844b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 21:12:42 -0800 (PST)
+	s=arc-20240116; t=1709010860; c=relaxed/simple;
+	bh=Wgvaos4tMDHQHCPQqba3sjMn7hXYBzfhsdVtj292alY=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V73yQxbK3k1xvT3uxWNBJlBMCkvWS2y6KlaShwbPnW+HGDGrCkLMEFXhq50lajAEpNfOhmb3w8yzgk0bIq1IcHKNbDzaGBZsrN8GQ0J2jXxvzsVWV6EqmeXVGS0U0FljRkSOdKquvQVJaZ3OPPvgXFeWKIPKDkOdWsDvFZ+NNmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=HaIdc1OD; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-512be9194b7so3919957e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 21:14:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709010762; x=1709615562; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=om7VjZgz57k46padP27CCq6xGxWmJL9MnSyfraSemmA=;
-        b=LH9oTEp0SnKvYZNT0Q8o9zWM5Hk3mSKwCmoqFhQIxQaAkL8BPSGZW05z+noByqGt5T
-         z5Kzhx/aI4Bq6m4yFTX5IcAn9cP1iV+zxbKnTFAq8wevBTUqKsaioqLnqIyeVntuFhfo
-         JS/a5jdEWFYNMZmqsWnR6/dvYbTs8wiMN6RbA4yubqt1ohFmwjfs+NmL2BP232K8y2Ws
-         9HsEWY1tHXh28UYZFTWYVyewP8DUQcdYplYFVAm4bKUl6yf/8rIkZmOs+20rgJfSY/Db
-         5PxgShAAL7z6oxNIqbwtiYLm+nATyLiXIahEqQTd59mCknDvXOx2eFq4jSY8/L2yG5Nc
-         UZLA==
+        d=chromium.org; s=google; t=1709010857; x=1709615657; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=M+BQPLCLZpqrKhiNrmiNzr4nlNlMBixVqIVv6pIcROQ=;
+        b=HaIdc1ODNMxlOsrywwjh3RFkhQkvE3ZYafJeIPdrulpSwzeyUh9AsW00piKpLZwlAn
+         URKPTxrOjN6tp3uNO/23dvbMa8rCNcPWCGKsLEUpR4u+hEhbOUACjMVMgfSSI2VdkKrp
+         BeOJ58jSLmi9W5fgMeWm98PxiiN0y2MQmDwmM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709010762; x=1709615562;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=om7VjZgz57k46padP27CCq6xGxWmJL9MnSyfraSemmA=;
-        b=kxz2A5gp0lerbdfKlXFvcCtVL6Im4/P71NZmCM8dB7ybIDDX1nwgj8wnUl6leLkCCJ
-         zpGKs5HTuXgGWfcLEXGRSaWKvQktX8W+20poYayVDEn/00HY45P8P4U04USus7sLed5u
-         4lmH6ONMNAzq5mWIA8yN9VPnQ21EfmAczv89v8UVstv7DAqnviNCTs+aRtVfANhg8LJt
-         KjHQLT0iauoXUXOTcWHoDCyZkHY8gxOqfDqYYBQx9u18Oj/jlTrv03C0trZmhaLxcXgP
-         TaasmsnqcYmsbQNWWwG879gl5JLpKZg2ECuMXNwsZLkPT7B8fyCHKkiAe8hJtVBg+E1p
-         lJuw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvQNtcH4fWLvEhbKodWMp7cXV5+xhyMPVKTV8WzanUOIN5gaSbt/Sm0e4cwiGxqYlMjnX6W1uGGvCiS6bzezBwhjIbmvASsncOuzJynw==
-X-Gm-Message-State: AOJu0Yx94cqbyxn/FXBC74PgBnEklwIcjH8QorGZA7HWNibgnGXD+eec
-	hysfoi5DyakN/vfnSn182C2C8qKxoT4E9MvzrkrmbLbCIi1t41jcTMXArjVYXw==
-X-Google-Smtp-Source: AGHT+IF9E+Pe6ObLGEz1Rd/QEiuM5drfmC7FqhljGuWpXIu+Zcn2nXK7XarpiosRDl2ku9C55mgLEw==
-X-Received: by 2002:aa7:868d:0:b0:6de:1b57:ca8c with SMTP id d13-20020aa7868d000000b006de1b57ca8cmr8804747pfo.23.1709010761738;
-        Mon, 26 Feb 2024 21:12:41 -0800 (PST)
-Received: from thinkpad ([117.202.184.81])
-        by smtp.gmail.com with ESMTPSA id u5-20020aa78485000000b006e4de94c112sm4951846pfn.66.2024.02.26.21.12.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 21:12:41 -0800 (PST)
-Date: Tue, 27 Feb 2024 10:42:36 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Kunwu Chan <chentao@kylinos.cn>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: ep: Simplify the allocation of slab caches in
- mhi_ep_register_controller
-Message-ID: <20240227051236.GA2587@thinkpad>
-References: <20240221085937.167200-1-chentao@kylinos.cn>
+        d=1e100.net; s=20230601; t=1709010857; x=1709615657;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M+BQPLCLZpqrKhiNrmiNzr4nlNlMBixVqIVv6pIcROQ=;
+        b=NOMexVlj9Emsw8dC4gmtZh9TuV8yvDCsiFyCpGLwIhCAZ48wnMCdrZspLWZ4XUjVLg
+         5fOKbRc8SuTu3Mxn1fGGNuPxh+k8lBPa11o05SGbVzfcIrnatNE1G1t1ZrY2xuLLiuOx
+         0Nf7AjUk1NeGuOgBmQ0C3MBDurUfVvJ6KHpTTHrV5sYJUNsz+YjWnPtZVdkcVJaaq2/5
+         3N/TrDvSTpxo6rsmWGbBy839o4R4xe4lfh0wcSN0d9k4EP05lu2bolmQTGNJ60XacK+R
+         gYMmaMYZMo5MjZj8GjsvfiCoYUElNqSBcNNNSH3lGVnkTTIs3vdSuVQUjszIBQZUczcz
+         CyTQ==
+X-Gm-Message-State: AOJu0Yx0nIyRtSysakT9lXZXGLyOJC8h3ecREzi2ADEppPVpW6IxbrD9
+	H8Qr6tvnm4Sl+zwIWDkOtrrrkdQRXMIVcd1HiJrAOe+CmIvTzynsTk+YDcd18Pj9TjjYg9dW7eL
+	kg356bu8EGcWUuA+3/2PpiezE/GDLC/+YiHaW
+X-Google-Smtp-Source: AGHT+IEyr7KXQAxsoRvnnHsDV6pqu0w4lJ40YXWqL0S1fUTZrVkMUjLcnZFHznlTZjulbsH6+afvAMnzVzmlCSDcWyk=
+X-Received: by 2002:a05:6512:991:b0:512:ee1f:b5af with SMTP id
+ w17-20020a056512099100b00512ee1fb5afmr4441994lft.41.1709010856400; Mon, 26
+ Feb 2024 21:14:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Feb 2024 21:14:15 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240221085937.167200-1-chentao@kylinos.cn>
+In-Reply-To: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+References: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Mon, 26 Feb 2024 21:14:15 -0800
+Message-ID: <CAE-0n525gwp5kJGgw9Pnz+h2K6FbuqSG79KfMj_EnueZ-RYnuA@mail.gmail.com>
+Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
+To: Bjorn Andersson <andersson@kernel.org>, 
+	Bjorn Andersson via B4 Relay <devnull+quic_bjorande.quicinc.com@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	quic_bjorande@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 21, 2024 at 04:59:37PM +0800, Kunwu Chan wrote:
-> Use the new KMEM_CACHE() macro instead of direct kmem_cache_create
-> to simplify the creation of SLAB caches.
-> 
-
-There are multiple instances of kmem_cache_create() in this driver. Could you
-change them also?
-
-- Mani
-
-> Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Quoting Bjorn Andersson via B4 Relay (2024-02-26 17:49:57)
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
+>
+> Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
+> the domain")' aimed to make sure that a power-domain that is being
+> enabled without any particular performance-state requested will at least
+> turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
+> required-opps properties.
+>
+> But in the event that aggregation happens on a disabled power-domain, with
+> an enabled peer without performance-state, both the local and peer
+> corner are 0. The peer's enabled_corner is not considered, with the
+> result that the underlying (shared) resource is disabled.
+>
+> One case where this can be observed is when the display stack keeps mmcx
+> enabled (but without a particular performance-state vote) in order to
+> access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
+> is flushed the state of the peer (mmcx) is not considered and mmcx_ao
+> ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
+> several times, but has been painted over in DeviceTree by adding an
+> explicit vote for the lowest non-disabled performance-state.
+>
+> Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
+> Cc:  <stable@vger.kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  drivers/bus/mhi/ep/main.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 65fc1d738bec..7b61d384b2b6 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -1493,9 +1493,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->  		goto err_destroy_ev_ring_el_cache;
->  	}
->  
-> -	mhi_cntrl->ring_item_cache = kmem_cache_create("mhi_ep_ring_item",
-> -							sizeof(struct mhi_ep_ring_item), 0,
-> -							0, NULL);
-> +	mhi_cntrl->ring_item_cache = KMEM_CACHE(mhi_ep_ring_item, 0);
->  	if (!mhi_cntrl->ev_ring_el_cache) {
->  		ret = -ENOMEM;
->  		goto err_destroy_tre_buf_cache;
-> -- 
-> 2.39.2
-> 
-> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
