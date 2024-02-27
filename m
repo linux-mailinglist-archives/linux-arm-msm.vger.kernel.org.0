@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-12687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 664FC86902C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:19:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40C3E869036
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:20:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A0021C22EEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:19:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2BB91F21B2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:20:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFDEE13AA36;
-	Tue, 27 Feb 2024 12:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5AF13AA46;
+	Tue, 27 Feb 2024 12:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BK7t47nZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DRgOlaoI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27C313AA2D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 12:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4128813B2B2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 12:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709036018; cv=none; b=h4jF9uKmrMNF7IO1AnDQmE+kAz7WU5rriNR63DYOKAO/Z5YIWoUjzTaLk/QFVfJv4dRMGVBDdFhRFDsFHhmqJLexybaE2KZsn4Y4p+d9SO7yFo0cEfZvuMhi8Jbiuljuu05xwZguNoqUCje0KgbOtHtQSD7eBJS89Fqr/c4Tz9w=
+	t=1709036170; cv=none; b=YWt70qsFGfVL9FuPxZpHroiqaQqUG0jZiey3cLtcAr4ED/cOQp0+OOTG79OjrMd07s7/Brfu1bS4HDYYaecW9uQ5vkbwOb+8Z8wyTV7Abr7DPWmnwPEDaARQK9Ius9AMAG7vXK0YDV/SKXmHF5usRSU+gLpZvlId91FvgPXclng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709036018; c=relaxed/simple;
-	bh=Zmhzr0x0yS6K+jxQnhGiVyEeNBFj6wt9trNQsaL6DvQ=;
+	s=arc-20240116; t=1709036170; c=relaxed/simple;
+	bh=tzPFWddcLinFLpylocZ1/c9Pw+LLiJOMXtoyrSnUv84=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OeZO26QmswdehoeVSjQmV9l5BQHsKrjnEStZK71rluibJPUaIdI2g0k+Hvkxx9uyOL5tYNw/PUhuvdyHT2IlU/A1Txb5X+BPAAZ03DdFGPkNKqjLuH7VJq/Hrwo9RKFAeKqU/uu90U4AfK9DqyUZK4A8OqjGfZKg/8ZRbxWyDFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BK7t47nZ; arc=none smtp.client-ip=209.85.210.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=SA0qaRW4ofnHhlHKDxossjKtbmnX4kKXztWSst+7/tWTgb4iluLNnw6ux3jRIK3u1Afg0Jh3yxZUJF0GXevge3/nSch6hFodvN0qsdRT3SgEejHG4wRbJePvGV7Nd1ALKOdVkbWfpHCIVMQUBEgcNjS0QE5Av3yxkcSumruHd0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DRgOlaoI; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6e4670921a4so2273491b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 04:13:36 -0800 (PST)
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1dcab44747bso14240665ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 04:16:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709036016; x=1709640816; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709036168; x=1709640968; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=pJLDRZfBIvlr7lerWpgs/xrh5kRQFmy2mrKRu1JKvyc=;
-        b=BK7t47nZUecAU6k/8Wpot0b48eqQHq2Aau8nTAA/+CN+5qrWL+N1xV+M7uRDWM7SIZ
-         cuY8qE4RGGySCbH2SfJsWx/GMz7eiA6SlvcK9OYm6R0rNErQprVwGoitqn66pS8F7uKA
-         dVLUz5BESNkh1KdaB4Z1SNW3/70Ki/yrvJvQLoyWTR7XB67rl9grwAhD2izzfgWyYDUf
-         BxRQKW/qaRAVXMGWQOj5MtjjQgXgW6nUBa7vVqaRa9146a6r4zqpU4723sbXKqzOl6ri
-         pEKhwM//jhRoOzf3yeUx6N770RgmaVDBzlME2rqHx8jsOC/d1bZzdng7zDQRMlph5eq/
-         gyFQ==
+        bh=uSLLi43HACJeFnFP6SO2dnx7por0WBtfnRzS4Kl+dFE=;
+        b=DRgOlaoILplzROniUBC00Aej3FSvb+NdI89fFCAljYVCjVExYNnDbSFmmnvwMf01GI
+         tgyl3FntVeTJxIELL1ebFD7+eHxIMW9KVO1siN+sc/0SRFDWUvsZxgboRtryCAre2MpV
+         bUzeFsSIvmmV4I9uTdCAaTB4D/MWgBvQkMKkVZtnersQ2yeQjdK8jz/Qzz3lMc6xQPVJ
+         YN44PI/Rfb2NiSIxgLAHqWICcy/KbM1SGAsSlAHfsy7CeDNEC+bRPmlAyCrE61bq0pT1
+         eUHoBJHFMgTlAlaW//20UQkQ5mVXbVfDRZ44g00rmtyIL6riTiqcN/er60l8tTgIU3yG
+         K5ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709036016; x=1709640816;
+        d=1e100.net; s=20230601; t=1709036168; x=1709640968;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pJLDRZfBIvlr7lerWpgs/xrh5kRQFmy2mrKRu1JKvyc=;
-        b=UtLD4nbQwvWQyLNFdewp+S7j0OnAxnlecjrvi49x1M2ZauToj8udMnn1vYKXqPQV3M
-         RvXOaGmdwcrT6sJTTGyPOiQZHQ9e105hsyZXJA9+hg4hZwl73vCrQkzeRtMwYv4h8a9r
-         gTEJat2sYEANEaByPgNYZiN4KP7/7b7Qut1mS26w6yOqiH0oSNLxmdkkP4Yxahi6SKcC
-         37JX8Ri94nXQs0fE5Ew0HDnRLbzlxOOTAhPjf6Zks5rG5nr7sZoA60CPJTgX3KySAvzW
-         eo/AEXgPu1nDZvF4B1zfy0qb5ycMYTausycOihbLbAjxzBDtorFk8EoB+re+dThTj2D2
-         iXFA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvurgmEXcZno+bBqhlaj0JjGNSIOCW4EboZnFfCIa2ghAr9qI7tgKUixnbUzspZR/UHZQw5xjAtI2Q7cWYlaJCgn2ZjK+iIdB9E+5bbw==
-X-Gm-Message-State: AOJu0Yy4m96fhHycbbhuyCt5F8pKbZTVBMHNpFxYxI3DdENTftq1Z/z0
-	tbrLhehxJXqy53jWaKlznisYZNMJLXwwa+Uccb+Jt31hkNSM7+RoorxalwIXfw==
-X-Google-Smtp-Source: AGHT+IGjxS8z4dBtBJgcXuzY+oK7lfPUpsSn+E9YZ/5dHJibyntUwmW17beAiUBhPM2LR0ImZwFjiA==
-X-Received: by 2002:a05:6a00:2d20:b0:6e5:3ec7:c068 with SMTP id fa32-20020a056a002d2000b006e53ec7c068mr3942818pfb.24.1709036015957;
-        Tue, 27 Feb 2024 04:13:35 -0800 (PST)
+        bh=uSLLi43HACJeFnFP6SO2dnx7por0WBtfnRzS4Kl+dFE=;
+        b=oY7GwGHYd0o+MG2ae64VpoJRsHTZDylhBhO/c4dBy1lsbtEjLkA7DnSGlLI4Zz88qi
+         tTUMr1WMfDi0L4RFPtSFsQp320zgEcgmzn3iT07fwpHckgV2MjcQ3sSTQuNkfW2pS3AK
+         CqgZ1xZGpc6TELmArmheQ+AewAD9dBzZKOZr5fe3ZgFKKRc95LCnnOjA8lskDD0MgIVr
+         uww35UOINJJfwrocY3Es0MCHzpN2ifbWGxd+YaOQlhl9frm3ok+46jNCNJy5yL+DfyQL
+         sPlsUcxib9rbbP8RMY9Uqf+Xl+Z8QVIcrSxyJLWwbOKa0KbXLDh6FS3IourHX+Ja/R+B
+         xVpA==
+X-Forwarded-Encrypted: i=1; AJvYcCWpS0jTF814K2BV4jfPLyyEcL33eQHuGGgqizVdGDbJNbmRuU/n6prWhFTn8iFwM5quzXlWrsjME3kSZBg2bqZ+cTV8nQAyfF08WEYJ9A==
+X-Gm-Message-State: AOJu0YwwxYAUyfzsTlJPUAIVmcGYdEbPNesuPRq+rdHzlaX3Dim/6yAb
+	9ashsKsA0X2FeJD6m4tnHzDDC8BuoilFK2WkNawhm4zViPNyg5+C2j6HFHVMvg==
+X-Google-Smtp-Source: AGHT+IH3s4jVwUk0+mZ0PnkQjYfLsEztotgFamFw6AI38DUq7t0+HX+BXSCN6Z/P0Ih71C7CE+4/+g==
+X-Received: by 2002:a17:902:7c92:b0:1db:c3cb:b088 with SMTP id y18-20020a1709027c9200b001dbc3cbb088mr9769914pll.35.1709036168326;
+        Tue, 27 Feb 2024 04:16:08 -0800 (PST)
 Received: from thinkpad ([117.213.97.177])
-        by smtp.gmail.com with ESMTPSA id r26-20020aa7845a000000b006e481014bf9sm5717110pfn.200.2024.02.27.04.13.33
+        by smtp.gmail.com with ESMTPSA id o9-20020a1709026b0900b001db693d89fdsm1405598plk.179.2024.02.27.04.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 04:13:35 -0800 (PST)
-Date: Tue, 27 Feb 2024 17:43:29 +0530
+        Tue, 27 Feb 2024 04:16:08 -0800 (PST)
+Date: Tue, 27 Feb 2024 17:46:02 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: Baochen Qiang <quic_bqiang@quicinc.com>
 Cc: ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev
 Subject: Re: [PATCH v3 2/3] net: qrtr: support suspend/hibernation
-Message-ID: <20240227121329.GL2587@thinkpad>
+Message-ID: <20240227121602.GM2587@thinkpad>
 References: <20240227104427.7505-1-quic_bqiang@quicinc.com>
  <20240227104427.7505-3-quic_bqiang@quicinc.com>
 Precedence: bulk
@@ -106,7 +106,14 @@ On Tue, Feb 27, 2024 at 06:44:26PM +0800, Baochen Qiang wrote:
 > 
 > Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Btw, you forgot to CC netdev folks. Here is the list that get_maintainer.pl
+returns:
+
+"David S. Miller" <davem@davemloft.net> (maintainer:NETWORKING [GENERAL])
+Eric Dumazet <edumazet@google.com> (maintainer:NETWORKING [GENERAL])
+Jakub Kicinski <kuba@kernel.org> (maintainer:NETWORKING [GENERAL])
+Paolo Abeni <pabeni@redhat.com> (maintainer:NETWORKING [GENERAL])
+netdev@vger.kernel.org (open list:NETWORKING [GENERAL])
 
 - Mani
 
