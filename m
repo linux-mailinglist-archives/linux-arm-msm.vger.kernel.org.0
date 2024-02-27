@@ -1,198 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-12651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 563A0868A1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 08:45:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC6CB868AB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 09:25:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C21ED1F232B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 07:45:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7FC4287F7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 08:25:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27AF655E5D;
-	Tue, 27 Feb 2024 07:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 677C056461;
+	Tue, 27 Feb 2024 08:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uAzeuhSk"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="dHrfEq1v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5387454BD8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 07:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CE056460
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 08:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709019945; cv=none; b=AZRkGIsGYkUSkut+S4meVb1Ofq7yVIT/GvTYI6gxICNkXFajrC9ySMqrrEw3yfxoeAZEFSrO6jR133CRcy2Kun0X2CoUWb56FcTbC77asrLyoQ7GcaepuM2E6uXbx0AmCwv1zx0D0IT6uGd/o9v+mcuXaIihNGrmSqDe6osgAMM=
+	t=1709022304; cv=none; b=OJwnhZ3MqONDxV/8jltsFK0JbSAQEJ0Ry2L/adIRKVX1uDkYLTXfal+soxPK3viFFarKC2puPp/kXg0oo8f/6TS618GGF8JSdbwmSUbztpGdb/5zBR9p04oS276N0m4wgBc0mRnKn6u8C50jNx0koW5UYjB0/fOqszgNbEv8O08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709019945; c=relaxed/simple;
-	bh=LHY1soh3TSDneqtCq2eVyxDXi8p5oUsCqKFJ1MDn28Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R5wI/lZMaIY1mcKmjiVmwn/Mt9ggKe/+nUzRVNgAk0osPgdyffwonQe2aJC+LfYMo2PngTa2y7zl/yBV6aJDztXn6TWcX6RNg6/DJwva3wmDEBDPBmEi7w1d0bhS0SNLw1DgDNRhbujhm1r9dSIh3iV8uxzU6ymBrWzkCVJrm8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uAzeuhSk; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d7881b1843so30203295ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 23:45:42 -0800 (PST)
+	s=arc-20240116; t=1709022304; c=relaxed/simple;
+	bh=EVI7vz5Qsf5hXRlkN8Ggko0P8CCIhLHJjlFi+HodR6Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SRMRr9d+P1yqs3WnUhLsnv1KYClJfERZEQ69DIzNJazCKKyLsy+rU7jW3Sc1QR6N9IU7Lv5jqivUWd8zlNoH+nYcnhbfq9N1mRjr5fFAoL6q1+epQLDe/5XjKu6ihagoflgwWR6wwdYZAD3D8yIp+wtaFefcjhOYT285tr0gu8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=dHrfEq1v; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-4d16e766fb0so356818e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 00:25:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709019942; x=1709624742; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vz+b24keEy8SKVGT/zsCqIzqYg8F8QonmdaHU6M1RMQ=;
-        b=uAzeuhSkOi5XC1Q0+LXKPKFqfcxiFqsB8qz0ePNLB5Ake664f9qZtlJr11kjCjTM3k
-         5XSJOvLPth+sySUqR76VsavJ38Ce2Wb77YyOw++TwqOkGmAs7n24lYUwfJPMOZfeTjUB
-         jbVH1AKHaV/NlTPoPUnC5inlX0LGqhmIQao1TdsAoSoFrYF1D6OHK5cT+kflJzY5VdkJ
-         /148x+GZ5g6WmLtcOPQVkpuEZRgH6EIiR1Tg1NZAnz03+ZWZ9YdUq+isPrk9d2fUVReK
-         yHYMfKVXQ1qSFTdYD0MPAK8JaWLFrK6ceXpTVMJtVYCHdqTAVCf9ImO5iIRxAkjnUJH5
-         gvxg==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1709022301; x=1709627101; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F3oEZ83ksqzh/6Sv0YNt9LyEJ4eUjhxHm5FyNz/Llm4=;
+        b=dHrfEq1v4rBba3ZnKS0wVcQQiTW55EgwCtGAN0kx2vMV/85Pn+nvuyqSYz4xq33lgQ
+         6pyS9PrGpxFNt+wLtsGljCD+0sJf0qo5/rgsOWjDK/c78uorH5V+6s3QyCqUm+mhlCRz
+         eGX5ZMegOvavZ2xckr+Ezwy3Ph8RzfAFuRimACpqUqumvzR/KbvDFoKBcjiQMD1VeZTy
+         QHoztsVcZT57sGJQ36WG36Zi2QNUgLPk1/XXb92dT9Q4KcNnHC7DhDS7L2t/+b/c/jpx
+         4lkFTWRVGanm3NFK23xlLyxHgy8885aLEbWCn7GVbNHGB7Rrugf17gHuQiayHBgmW3vy
+         1WgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709019942; x=1709624742;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vz+b24keEy8SKVGT/zsCqIzqYg8F8QonmdaHU6M1RMQ=;
-        b=CeNC73Nfxxoxs/YrGlHj6ATjOiu42hIiO8ZzqOgtCskZ9zw/q8PdlfFVEVWXs3UtPx
-         waiwb5lEOmWkAytgkyUbemRsxqit2t7qJhx/fw8igtbQPtiNsq+7+R7JL4XR+AVtxhb4
-         oB51KVV1FxwI2OfOgxL8Mg35FVE7Qv09GezcSRGh1xXFfU5bmgSFlbWF473mn63ettly
-         a+uRFQfxw6IpMUYgxyNuZFaMaLLSFfMDEVFTV2Zu+tpkOa7G9wKcaba4SRcZ4CT0DHjH
-         3Abuz6jIf4WbwxCL7T62xFlAoKFHa8SG3fZZsdTw0L2BMubxlv3rUbUDLmlC2Ak6hJHC
-         0+1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWaP3H9Wmub/ByI2GvzvIqWIOzwiimFf9UTquMd8DhKwEnBVKxSlkt+cTYmaYrAaCthe/euQciCYeS0wgPBU8RP4/zDNB4rjchC2u6waA==
-X-Gm-Message-State: AOJu0YyFS/OFeIY4oDh/mTUGcpEHaSzH/fsFVkRzi0aTMTRjtSshA3Gm
-	Sd3F8oII5uFypYzfV5oXwaC5ixH5l8ItknA39SBavtpluYyXt/690V7Q1XEexw==
-X-Google-Smtp-Source: AGHT+IGoPWkNE6JIjVJz1XqdnjAP9lGvBAm0VujbexvNFkLOg4OzNepoOaOycaMqUlL+eVesMoK8lA==
-X-Received: by 2002:a17:902:db0e:b0:1dc:b77e:1973 with SMTP id m14-20020a170902db0e00b001dcb77e1973mr1593245plx.53.1709019941652;
-        Mon, 26 Feb 2024 23:45:41 -0800 (PST)
-Received: from thinkpad ([117.213.97.177])
-        by smtp.gmail.com with ESMTPSA id l20-20020a170902e2d400b001d71729ec9csm884589plc.188.2024.02.26.23.45.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 23:45:41 -0800 (PST)
-Date: Tue, 27 Feb 2024 13:15:33 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Frank Li <Frank.li@nxp.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>
-Subject: Re: [PATCH v3 3/5] PCI: dwc: Pass the eDMA mapping format flag
- directly from glue drivers
-Message-ID: <20240227074533.GH2587@thinkpad>
-References: <20240226-dw-hdma-v3-0-cfcb8171fc24@linaro.org>
- <20240226-dw-hdma-v3-3-cfcb8171fc24@linaro.org>
- <Zdy8lVU6r+JO6OSJ@lizhi-Precision-Tower-5810>
+        d=1e100.net; s=20230601; t=1709022301; x=1709627101;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F3oEZ83ksqzh/6Sv0YNt9LyEJ4eUjhxHm5FyNz/Llm4=;
+        b=mLQWdskxx5t7COckpLTTU4d59gmQBP4FB1NI5We6dtTb6RCyStHl86myy5a0P5Ajkg
+         lY+jYOTxSZx87tvwySL6FcEj2fwmXPsGO1wultvzukdB8qqUsA28mLNEmbgw6o2AddDy
+         agE7pSCcQn5tlYDltR9JNSm2HWLvKbZM5yWe1gtBJ+rydcjNriyGl8rEbRK98hEZx1DY
+         AAuhkvlbMXkqQet768cVEU8wuFTGaLT1PjDcJxW7iHHqPXVTU95pmZtkAzw8/UP/vWn5
+         OFhDKj1Hi2snsM6HQB+uDD9FKrHtbX6TwlnFDzuX8kMjFe6obGaX3HnqOqhzTWhQw7NS
+         fbHw==
+X-Forwarded-Encrypted: i=1; AJvYcCWFRJWufyF2kaPsAr8wmCwE/BGL/H30N8r31zY+BrcyXTmxxYF8n8g2PN4gOxm8SRYr5Lnl8BttdSmZkFj941Y6JqXKJwIopfI+x6LhMQ==
+X-Gm-Message-State: AOJu0YwL2M2xry2PkckXFIPdNRK8xxhn7zaQEjeR2dc3K3IfvSa+cun/
+	Vgh4AJyGpm1aQqnuULNCfpROLjXWxxAXzm8jeWSbXE2QJrZns1MV2JtSilrNU+yTpotndA+SPVT
+	3YcJJP9X5L2IYU6/s12OU5DIca1xd0Ot+lqc86Q==
+X-Google-Smtp-Source: AGHT+IGfKT0WSHnAi9Z8ZhGjHZH5g4Gvo7KWsZdo46pVngPbJr7w6ihyB9HdDw37XGWSuSg0MNM0ZD4/shwz7CPfuAo=
+X-Received: by 2002:a1f:da41:0:b0:4cb:2662:3653 with SMTP id
+ r62-20020a1fda41000000b004cb26623653mr5475489vkg.9.1709022301389; Tue, 27 Feb
+ 2024 00:25:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zdy8lVU6r+JO6OSJ@lizhi-Precision-Tower-5810>
+References: <20240205182810.58382-1-brgl@bgdev.pl> <20240205182810.58382-3-brgl@bgdev.pl>
+ <tnylagkmj36lve2ub5voumtkqjdy6j3hr6yyk4mqkaabvc3gdv@voaiu2oqi73o>
+ <CAMRc=McmfufqqEvouRCjY1ukVB_ie1r5QEocqRUK0VBheEq5Hg@mail.gmail.com>
+ <CAMRc=Mc_iwMzKznfUknm+RwS3jN_GimpirdTDVCPtnYYS_1PNg@mail.gmail.com> <20240226102955.GA19256@hu-kuldsing-hyd.qualcomm.com>
+In-Reply-To: <20240226102955.GA19256@hu-kuldsing-hyd.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 27 Feb 2024 09:24:50 +0100
+Message-ID: <CAMRc=MdfU0=JBrAJMkeg8XV6SWPybY+rDMG5_Cei1haGGsHmpw@mail.gmail.com>
+Subject: Re: [PATCH v7 02/12] firmware: qcom: scm: enable the TZ mem allocator
+To: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Guru Das Srinagesh <quic_gurus@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Maximilian Luz <luzmaximilian@gmail.com>, Alex Elder <elder@linaro.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Deepti Jaggi <quic_djaggi@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 26, 2024 at 11:30:13AM -0500, Frank Li wrote:
-> On Mon, Feb 26, 2024 at 05:07:28PM +0530, Manivannan Sadhasivam wrote:
-> > Instead of maintaining a separate capability for glue drivers that cannot
-> > support auto detection of the eDMA mapping format, let's pass the mapping
-> > format directly from them.
-> 
-> Sorry, what's mapping? is it register address layout?
-> 
+On Mon, Feb 26, 2024 at 11:30=E2=80=AFAM Kuldeep Singh
+<quic_kuldsing@quicinc.com> wrote:
+>
+> > > > As we're not moving from the callers freely allocating what they ne=
+ed,
+> > > > to a fixed sized pool of 256kb. Please document why 256kb was choos=
+en,
+> > > > so that we have something to fall back on when someone runs out of =
+this
+> > > > space, or wonders "why not 128kb?".
+> > > >
+> > >
+> > > If you worry about these pools being taken out of the total memory an=
+d
+> > > prefer to have a way to avoid it, I was thinking about another
+> > > build-time mode for the allocator - one where there's no pool but it
+> > > just allocates chunks using dma_alloc_coherent() like before and pool
+> > > size is ignored. Does it sound good?
+> > >
+> >
+> > Or we could even have an argument for the initial size of the pool and
+> > then once it's exhausted, we'd add a new chunk (maybe twice the size?)
+> > and so on.
+>
+> Hi Bartosz,
+>
+> Thanks for shmbridge patch series. Few questions.
+>
+>         1. With current design of every client maintaining it's own pool,
+>         For any target, we might end up occupying lot more space by
+>         different clients than we actually need.
+>
 
-Memory map containing the register layout for iATU, DMA etc...
+Technically there are only up to two, three in the future with scminvoke.
 
-- Mani
+>         2. Also, there's no option to configure pool size for each client=
+ at
+>         runtime level and a fixed 256K value is chosen for qcom_scm/qseec=
+om.
 
-> Frank
-> 
-> > 
-> > This will simplify the code and also allow adding HDMA support that also
-> > doesn't support auto detection of mapping format.
-> > 
-> > Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> > Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-designware.c | 16 +++++++++-------
-> >  drivers/pci/controller/dwc/pcie-designware.h |  5 ++---
-> >  drivers/pci/controller/dwc/pcie-rcar-gen4.c  |  2 +-
-> >  3 files changed, 12 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> > index ce273c3c5421..3e90b9947a13 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> > @@ -894,18 +894,20 @@ static int dw_pcie_edma_find_mf(struct dw_pcie *pci)
-> >  {
-> >  	u32 val;
-> >  
-> > +	/*
-> > +	 * Bail out finding the mapping format if it is already set by the glue
-> > +	 * driver. Also ensure that the edma.reg_base is pointing to a valid
-> > +	 * memory region.
-> > +	 */
-> > +	if (pci->edma.mf != EDMA_MF_EDMA_LEGACY)
-> > +		return pci->edma.reg_base ? 0 : -ENODEV;
-> > +
-> >  	/*
-> >  	 * Indirect eDMA CSRs access has been completely removed since v5.40a
-> >  	 * thus no space is now reserved for the eDMA channels viewport and
-> >  	 * former DMA CTRL register is no longer fixed to FFs.
-> > -	 *
-> > -	 * Note that Renesas R-Car S4-8's PCIe controllers for unknown reason
-> > -	 * have zeros in the eDMA CTRL register even though the HW-manual
-> > -	 * explicitly states there must FFs if the unrolled mapping is enabled.
-> > -	 * For such cases the low-level drivers are supposed to manually
-> > -	 * activate the unrolled mapping to bypass the auto-detection procedure.
-> >  	 */
-> > -	if (dw_pcie_ver_is_ge(pci, 540A) || dw_pcie_cap_is(pci, EDMA_UNROLL))
-> > +	if (dw_pcie_ver_is_ge(pci, 540A))
-> >  		val = 0xFFFFFFFF;
-> >  	else
-> >  		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > index 26dae4837462..995805279021 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > @@ -51,9 +51,8 @@
-> >  
-> >  /* DWC PCIe controller capabilities */
-> >  #define DW_PCIE_CAP_REQ_RES		0
-> > -#define DW_PCIE_CAP_EDMA_UNROLL		1
-> > -#define DW_PCIE_CAP_IATU_UNROLL		2
-> > -#define DW_PCIE_CAP_CDM_CHECK		3
-> > +#define DW_PCIE_CAP_IATU_UNROLL		1
-> > +#define DW_PCIE_CAP_CDM_CHECK		2
-> >  
-> >  #define dw_pcie_cap_is(_pci, _cap) \
-> >  	test_bit(DW_PCIE_CAP_ ## _cap, &(_pci)->caps)
-> > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > index e9166619b1f9..3c535ef5ea91 100644
-> > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > @@ -255,7 +255,7 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
-> >  	rcar->dw.ops = &dw_pcie_ops;
-> >  	rcar->dw.dev = dev;
-> >  	rcar->pdev = pdev;
-> > -	dw_pcie_cap_set(&rcar->dw, EDMA_UNROLL);
-> > +	rcar->dw.edma.mf = EDMA_MF_EDMA_UNROLL;
-> >  	dw_pcie_cap_set(&rcar->dw, REQ_RES);
-> >  	platform_set_drvdata(pdev, rcar);
-> >  
-> > 
-> > -- 
-> > 2.25.1
-> > 
+You mean via a module parameter?
 
--- 
-மணிவண்ணன் சதாசிவம்
+>         Pool size will be same for each target and thus making it less
+>         scalabale if there's adjustment needed at target specific level.
+>         Ex: For a low DDR memory target, pool size should scale down acco=
+rdingly
+>         as 256K will become a big ask but there's no way to choose specif=
+ic pool
+>         size for just one target.
+
+Do we really have any low-DDR platforms that would be affected by this
+change? Even for db401c the 256K is a tiny fraction of the total
+memory.
+
+>                 2.1 One way to do configure custom pool size value is to =
+add new
+>                 property in qcom_scm/qseecom or client DT node and then c=
+reate
+>                 pool of size with this provided value. Though there are w=
+ays to
+>                 tackle this, but still clients specifying it's own pool s=
+ize
+>                 will always fetch more CMA region than what is actually n=
+eeded.
+>
+> Can you please share your ideas as well for upcoming version.
+>
+
+I will propose a new solution with several configuration options for
+pools. Including scaling the pool size as needed. I hope to send it
+this week.
+
+Bart
+
+> Regards
+> Kuldeep
 
