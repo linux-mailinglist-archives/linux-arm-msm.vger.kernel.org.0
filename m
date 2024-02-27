@@ -1,196 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-12771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547F1869F44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:42:47 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A52A869F49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:45:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 754021C2320C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:42:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E639C1F23E79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97CE24F881;
-	Tue, 27 Feb 2024 18:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5D414DA1D;
+	Tue, 27 Feb 2024 18:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OD4KwaAW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gi0ny6b+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3204CB55
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 18:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5DC250F8;
+	Tue, 27 Feb 2024 18:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709059355; cv=none; b=RLhSOTm/bpmLM33glhVLKV1UdWUEz7pNAb2ybZlSzJm4r+FY/kivbhcYgIptJwegZnVEgAHiTy18S7KLc2G1PN5IJiMwN9UFo29ZjDyAtiDuH/6H1DgCjf65Vv1EePcbWP4NL1BS5AcJ1QMgGkc+nLUGS2u4ooBfV7EgSAMsezw=
+	t=1709059520; cv=none; b=FM7AJ/6aFOdisEFlLkRm+953JtqtY0meq2OJ3oDVY7lPmNjJVc/nKSZg7rYOaHricFO5ncxDexPfOZEleYx54UfzscNFD29LLIPLi7RanAhv5F0sf9qcRPiiwJQtnHhxQx2ImOoiz+tWx1owi4AtbT8xxmZtmitubgX89yvxHBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709059355; c=relaxed/simple;
-	bh=TeDNuU90ly9acziamBX1PT4TgShziEBCnefgqu8SzNE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IuoIoth4rZCiF3ILrgbIQ3+EPYZ83JVPuaRAhu80Jko3gEoevewV1/mMVCb9xEwWFHDU11mlb48Y3NpAS0rtkGm63sY5ZCpUv8eHnRSbd6A6PdZu6lqvegiYAZS81kljMn6BpUOf3auAu1xF6uXwDHcWfZN0Ofme16JFK+5k9CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OD4KwaAW; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-5cdbc4334edso3392574a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 10:42:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709059352; x=1709664152; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+6rCPg+j8C1jvS9yOkEQeWpFYDNNuRJYfgnyrNY8KDs=;
-        b=OD4KwaAW5YRbf3nRwotlMQFuGPEEQqHOJ7Grl8+wj/23FYaYlioTcxFCEPN63qpWKD
-         hcYHUCyBIGz+FtHeflthN/eGvK1w69FWDyuHH/KTYHjvrUdSKiUwNz0ZotyZ5POM2g4v
-         yDZM1uFw1HbGFn088iaXuQyCN5hxuOaglTMjSrJ2IZwxiEDaZ1w7eAfSr8otQ4UJ0UIm
-         Ef1sK7HMi64X4tr86rsDgPzHi49PF4Z1ZGCsAeYOKvF2qjg+Jl5qQRjoKTKbNNLYHj9C
-         41mq4i8R/qHdas64GsuSAmwzz/M/qED9491WlJtJW26KtBhCRSbuTKIiaDnE7IQkbIXV
-         c8iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709059352; x=1709664152;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+6rCPg+j8C1jvS9yOkEQeWpFYDNNuRJYfgnyrNY8KDs=;
-        b=QguXxOWZmu0yaGNW1VDSIDCOWAra45G+nK2xORvvDg+ey5PpinKHYdJneOGZTkdACp
-         1H+f1lXDCPiU6nQzR4AXpaCvxwCNxzgyNT+SJGmffFEe+KsQkCRQfAeC62Gn8IaQg08h
-         wHfHOpqrbqiV2erMY7IhRNjNHdUULBEu/QQU6h7EWctvlLjyhgkPGK22Dlt0lv/vFRUX
-         Fr6NgFB6KXjrOupanmg/7iFQnJfglU8irJCPGY3IFBfJ9W76xETduluvBTiExqpWyTHz
-         ZFpBA+IOq/jLJ4iQ1XI3E/kg7fIXEBbzHuaSPwyeD1Qwsqc5q6AHnbHHt3Hd1Sh/5zit
-         kxxA==
-X-Forwarded-Encrypted: i=1; AJvYcCUGc7etyKQ9uOHHkVPdzfUxHe2PzX+1p0zkIawsuTgU3cFf28LLdKI7I8FmRKG6zn/ZQlT12Z5TN/EW/2W2IKRn//MlCxgP0uNptTLA3g==
-X-Gm-Message-State: AOJu0YxFIB6N7amn1LvYuZ1dW+LZpW917mdN++HaF3EIAMivNgWoQr85
-	EObiyYmkY7XbH/TNyqhc061csP33ikkcIAovlzBUkyZl3SiAr/cYVPgSBc/qbA==
-X-Google-Smtp-Source: AGHT+IHGnijMDtvZJeDBn9BB121pNvr/sMLOiP6/y+CYwXPpfHEAryi1aO3yqqkJry/L7BDxwUlTZw==
-X-Received: by 2002:a17:90a:4285:b0:299:6a7f:cc09 with SMTP id p5-20020a17090a428500b002996a7fcc09mr7865801pjg.33.1709059351862;
-        Tue, 27 Feb 2024 10:42:31 -0800 (PST)
-Received: from thinkpad ([117.213.97.177])
-        by smtp.gmail.com with ESMTPSA id nr14-20020a17090b240e00b00299332505d7sm3758838pjb.26.2024.02.27.10.42.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 10:42:31 -0800 (PST)
-Date: Wed, 28 Feb 2024 00:12:18 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Frank Li <Frank.li@nxp.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-	Niklas Cassel <cassel@kernel.org>
-Subject: Re: [PATCH v8 06/10] PCI: dwc: ep: Call dw_pcie_ep_init_registers()
- API directly from all glue drivers
-Message-ID: <20240227184218.GT2587@thinkpad>
-References: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
- <20240224-pci-dbi-rework-v8-6-64c7fd0cfe64@linaro.org>
- <ZdzEoXwU42rFCF/W@lizhi-Precision-Tower-5810>
- <20240227122141.GN2587@thinkpad>
- <Zd4bybN0malf5uBe@lizhi-Precision-Tower-5810>
+	s=arc-20240116; t=1709059520; c=relaxed/simple;
+	bh=o6ryqFc0iRLpn12KsCmb1ExGOk9ZvjbvZO4rjOxDm5E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=emaKvfyq2y8zUHYcOy8K9A7IR49mCSJLhwS72t9z2ukqA/B/rh9HAyUfmcdtNqXcYpseH4L8I7b+K/BZKFC1iWepZEhJI3L1woNajZ7qbt6BDDjU2Kjv0Ofy9cqW8d+QUI6Vdv5Plgx7jrpwn/mXjKTrIRRW/lzlxYra6EO9NAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gi0ny6b+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9Xt0l007042;
+	Tue, 27 Feb 2024 18:45:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=JrqRRbgc0E8hZuTZ0QjDpC4MFhJKGpkorTSXbHuQ8pk=; b=gi
+	0ny6b+WLIypBB7T3hrxXssw2Mruhxi9yIHfrSQ+4w0NIBfZuoN506s7cf9dTgbvM
+	5EQlegwGJ+2Cfk0qWa9yQoqmJEMM9DHOAJYP1zzMMzXZNViBkH2/vh8C/E6m8NYW
+	jce1NZ7iOGfxTmVwttlmOiFk9gZ8EPxEa2qjAEmGjntONwZ32CZ5X8mwxRaOP0oj
+	dKZyEi27emnlmEl3VuxuXwFY81xOfwc9DcdOYpBrHq1andnREhkZLSS96K515+HA
+	/qLzfMrQqGytLvU4WvdddvD4wAGXydo4A2sE8ShjGMKhMKr9AFrE5OKu4kuzudVW
+	adzugJXzsA+VSrfWSEPg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh8auhyyc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 18:45:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RIj6bn004350
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 18:45:06 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 10:45:02 -0800
+Message-ID: <642ac3e4-d083-43fd-c0db-24e2bc4cb6a9@quicinc.com>
+Date: Wed, 28 Feb 2024 00:14:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zd4bybN0malf5uBe@lizhi-Precision-Tower-5810>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/3] cpufreq: scmi: Add boost frequency support
+Content-Language: en-US
+To: Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Sudeep Holla
+	<sudeep.holla@arm.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+CC: <cristian.marussi@arm.com>, <rafael@kernel.org>,
+        <morten.rasmussen@arm.com>, <lukasz.luba@arm.com>, <sboyd@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <nm@ti.com>
+References: <20240117110443.2060704-1-quic_sibis@quicinc.com>
+ <20240123060827.a3vszziftj6pszt3@vireshk-i7> <Za-RtBrSxI-j4Jdx@bogus>
+ <e968092a-dc2b-4351-9489-acf874bbc7b6@arm.com>
+ <01b3d0ed-3fd3-86c6-7b0f-48d34a5d9ba8@quicinc.com>
+ <265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mgjl9uWlg_EzxmRYGgK-gt0gxlloXHvl
+X-Proofpoint-GUID: mgjl9uWlg_EzxmRYGgK-gt0gxlloXHvl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_05,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 clxscore=1015
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270145
 
-On Tue, Feb 27, 2024 at 12:28:41PM -0500, Frank Li wrote:
-> On Tue, Feb 27, 2024 at 05:51:41PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Feb 26, 2024 at 12:04:33PM -0500, Frank Li wrote:
-> > > On Sat, Feb 24, 2024 at 12:24:12PM +0530, Manivannan Sadhasivam wrote:
-> > > > Currently, dw_pcie_ep_init_registers() API is directly called by the glue
-> > > > drivers requiring active refclk from host. But for the other drivers, it is
-> > > > getting called implicitly by dw_pcie_ep_init(). This is due to the fact
-> > > > that this API initializes DWC EP specific registers and that requires an
-> > > > active refclk (either from host or generated locally by endpoint itsef).
-> > > > 
-> > > > But, this causes a discrepancy among the glue drivers. So to avoid this
-> > > > confusion, let's call this API directly from all glue drivers irrespective
-> > > > of refclk dependency. Only difference here is that the drivers requiring
-> > > > refclk from host will call this API only after the refclk is received and
-> > > > other drivers without refclk dependency will call this API right after
-> > > > dw_pcie_ep_init().
-> > > > 
-> > > > This change will also allow us to remove the "core_init_notifier" flag in
-> > > > the later commits.
-> > > > 
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  drivers/pci/controller/dwc/pci-dra7xx.c           |  7 +++++++
-> > > >  drivers/pci/controller/dwc/pci-imx6.c             |  8 ++++++++
-> > > >  drivers/pci/controller/dwc/pci-keystone.c         |  9 +++++++++
-> > > >  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  7 +++++++
-> > > >  drivers/pci/controller/dwc/pcie-designware-ep.c   | 22 ----------------------
-> > > >  drivers/pci/controller/dwc/pcie-designware-plat.c |  9 +++++++++
-> > > >  drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 12 +++++++++++-
-> > > >  drivers/pci/controller/dwc/pcie-uniphier-ep.c     | 13 ++++++++++++-
-> > > >  8 files changed, 63 insertions(+), 24 deletions(-)
-> > 
-> > [...]
-> > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > > > index ed1f2afd830a..278bdc9b2269 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> > > > @@ -729,7 +729,6 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
-> > > >  	struct device *dev = pci->dev;
-> > > >  	struct platform_device *pdev = to_platform_device(dev);
-> > > >  	struct device_node *np = dev->of_node;
-> > > > -	const struct pci_epc_features *epc_features;
-> > > >  
-> > > >  	INIT_LIST_HEAD(&ep->func_list);
-> > > >  
-> > > > @@ -775,29 +774,8 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
-> > > >  		goto err_exit_epc_mem;
-> > > >  	}
-> > > >  
-> > > > -	if (ep->ops->get_features) {
-> > > > -		epc_features = ep->ops->get_features(ep);
-> > > > -		if (epc_features->core_init_notifier)
-> > > > -			return 0;
-> > > > -	}
-> > > 
-> > > why remove this check?
-> > > 
-> > 
-> > There is no point in keeping this check since we are removing the call to
-> > dw_pcie_ep_init_registers() below. But I should've described this change in the
-> > commit message.
+
+
+On 2/15/24 20:27, Dietmar Eggemann wrote:
+> On 13/02/2024 08:35, Sibi Sankar wrote:
+>>
+>>
+>> On 1/31/24 20:37, Dietmar Eggemann wrote:
+>>> On 23/01/2024 11:15, Sudeep Holla wrote:
+>>>> On Tue, Jan 23, 2024 at 11:38:27AM +0530, Viresh Kumar wrote:
+>>>>> On 17-01-24, 16:34, Sibi Sankar wrote:
 > 
-> Sperated patch will be helpful. This clean up does not related with other
-> change.
+> [...]
 > 
 
-Well this is not a generic cleanup that could be moved to a separate patch. Due
-to the changes in this patch, the use of the flag becomes redundant. So it has
-to removed here itself.
+[...]
 
-- Mani
+>>> BTW, what's the use case you have in mind for this feature? Is it to cap
+>>> high OPPs for CPUs in a certain CPUfreq policy?
+>>
+>> Yeah, that's exactly the use case for X1E. Boost frequencies defined in
+>> the SoC are achievable by only one CPU in a cluster i.e. either the
+>> other CPUs in the same cluster should be in low power mode or offline.
+>> So it's mostly for book keeping i.e. we wouldn't to intimate incorrectly
+>> that the CPUs are running at max possible frequency when it's actually
+>> running at a lower frequency.
+> 
+> I see.
+> 
+> What about the issue with the settings of the global and the per-policy
+> 'boost' file?
+> 
+> On my Juno-r0 the initial boost values are:
+> 
+> (1) Initial setting:
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
+> 1
+> 0
+> 0
+> 
+> Should they not all be 1 ?
+> 
+> 
+> (2) Disabling system-wide boost
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > boost
+> 
+> Here I see 'cpufreq_pressure > 0' for all CPUs.
+> 
+> 
+> (3) Enabling system-wide boost
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 1 > boost
+> 
+> And here 'cpufreq_pressure == 0' for all CPUs.
+> 
+> 
+> (4) Disabling boost for policy0.
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# echo 0 > policy0/boost
+> 
+> root@juno:/sys/devices/system/cpu/cpufreq# cat boost policy*/boost
+> 1
+> 0
+> 1
+> 
+> Here nothing happened. But I was expecting to see 'cpufreq_pressure > 0'
+> for CPUs of policy0:
+> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+https://patchwork.kernel.org/project/linux-arm-msm/cover/20240227165309.620422-1-quic_sibis@quicinc.com/
+
+Finally got some time to fix this, I've posted out the fix and re-spun
+the series as well. This should fix the default values of per-policy
+boost flags as well.
+
+-Sibi
+
+> root@juno:/sys/devices/system/cpu/cpufreq# cat policy0/affected_cpus
+> 0 3 4 5
 
