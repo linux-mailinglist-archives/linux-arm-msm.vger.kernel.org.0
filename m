@@ -1,157 +1,338 @@
-Return-Path: <linux-arm-msm+bounces-12635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3954D8688B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 06:40:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67C698688F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 07:29:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6734D1C22006
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 05:40:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8D721F242CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 06:29:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA07952F8F;
-	Tue, 27 Feb 2024 05:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E64B953377;
+	Tue, 27 Feb 2024 06:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHjdJZ7X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XqydEXpN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0986D52F87;
-	Tue, 27 Feb 2024 05:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3BE5336E;
+	Tue, 27 Feb 2024 06:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709012417; cv=none; b=UhpvrrdXKhBuQbkMmR/2lzQD+9TV4iiO1zxFS2jmG9u/sYLHfRoyd7ajrrQO0seJSui60jWXRlt3WXSEa4ziI6g7E+6PbidQk4um7zV2SBZyiCCnG0Tq5N9WBs3qk57aTwAlFqL/Gd7QH+RQHwMVZ47Sx3EVgl7OlNMjWgAIaSg=
+	t=1709015357; cv=none; b=ew8GylQgixlel3+K3MmYbJ3qy23iY0OArCxDOibWT/2wZViWs3YtQ3yPQOnBJeRcdy7RpWxc2tD658gRhIHZ6Ge/mUYN4oOj+iPiBdLAvcuVYn3F2nu+CRgHgqtFfmaO90SQcPrWOCmA7N4ek3abAI96m2lUSj9UPaG2/vikcoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709012417; c=relaxed/simple;
-	bh=+6eq/f9Tmy106iT9TwTGE+dX/adDfzYQzTvxXDtIyCE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ovaUSA8X0yAVEAzXTJfRgqWBQLuke7gC1TtmOY1dlwBQ2bFN2P2kUI61JDsxISNgDe6jE1ZiDMZ5WEtj9c5JMqHc3EdJA7ZJSNC/MsorcId6RVSgtTjLf5M1ScyAjB39mMoNogdTqILpPiI8ZDfO0Ug1HnyHJAMTNlfYZWRCBjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZHjdJZ7X; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-512e1991237so3206409e87.1;
-        Mon, 26 Feb 2024 21:40:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709012413; x=1709617213; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sOQsAxKqGhTJfZZYcKVcf/XQO7LmQkwuY4v0xs+Hoic=;
-        b=ZHjdJZ7XweVYLtnIBdTH0sv1zL4GgSqgEYETuP92ovU6T/r4mOiYIknAoQ1wNlVTee
-         S6ZsyTCjXS2i0RlkLKyjMOMuJ9jqrF59dT2+LUTDM5G5Ksr6BRYq+Su1e1s/Qe6o3SZB
-         TPgC0agvhrR5yltwcmiQVW4Bc0wRzsdeMH5y7Gqs4Xpj8mIPvn6WDgSQ5S90IOnYZrhe
-         +hxwjFAEAeSFvqd5pQdRGM4wV8hLVBVq2UzwSr/kV/O//mjF4wLHhuKB5B5gSxhtZYuc
-         q4e0r2mvaTm26bqEx0STGFvwD1ZiTK5DuyaRV9GsOjz1yl1saNbWD3yrbzMC37m6Aa5g
-         zJ8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709012413; x=1709617213;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sOQsAxKqGhTJfZZYcKVcf/XQO7LmQkwuY4v0xs+Hoic=;
-        b=hx5jwVWU7hNWjmoG2JPIzezmnaAazRTFtwiqblJCJPQJL3yi4xmsNShS6tInvXBWQC
-         95oHfIWAX7pqLjqPQemJ178GODn4cSwFPOgo2ta1D4aHKHr4HzCC+AwtQU0JO/sBCzTL
-         tjigGBlhnROp/5sHycXegS8iB/+SK2Q9GRzi/wVTjCVk4lpyioVBGVhZ4OrDNrpAzslj
-         4gYZE6pTlHIzOLBkOUnrmRiw4z8RpDbTDtuD2CGCpBfiCMiOBZnCKocxj58Cmass+8Lp
-         MWFndhza3swzxUqLdX3x4g5blL759yNgW5PTmXJ6twTe+JCBpggyFmeKsHOHI0q+fzfk
-         RNzA==
-X-Forwarded-Encrypted: i=1; AJvYcCXf67NOdLVK+VPkQ0ngioGHluOL8Mb5TTCU1Srvte/mSozUA5WQDaah8+oiHRPNpa6s+LsNKnXnRvbYWmqh7hCg1kPrKxIdT1G3EK8B5N8HD2EYzXvlQRG7AeMmVeNblQIYZWUPH8Eo/HP2mkRwfbScichMTfSccm8jV74ptRSoWVZ7MOfOi/lPZvFS0a48wWMUxoclBI65QkakZWRezeZTkYiAiHjZO6I=
-X-Gm-Message-State: AOJu0YxGX12LWKvgCaeh6Ovg+4zhGcc2v32fPlS+ayIJ0ZhCVjdF90on
-	bpP2CcyStgc9ZqFkwttNSiF7z3rmsBKOzeJAudFWhQHmu2hFz/mmNSN/59z3q99ztdSTmvvX0J7
-	8Ko6sZZOn/uABj7rYYnTQEEZ/P5Y=
-X-Google-Smtp-Source: AGHT+IHbvFOaaALOTL6UGMbm9bPbdAdKYCZInM58FlSITvmPdjUio+/WwAoWEmUcXcTDW0h35GUZ+2gg6b8WcR30Oig=
-X-Received: by 2002:ac2:46cb:0:b0:512:db3c:702f with SMTP id
- p11-20020ac246cb000000b00512db3c702fmr2663203lfo.9.1709012412994; Mon, 26 Feb
- 2024 21:40:12 -0800 (PST)
+	s=arc-20240116; t=1709015357; c=relaxed/simple;
+	bh=fPa6TWVMZjngBRgiuS+rjeBx7lnR5aUXK4o6jDtPPBA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oUy1g8CWJ4+kBIcXBHRGQ479GiOKOSsxUhjJhG4HVFTXbUOou6tBvpsStWj7QMksbSui7V55lXIs1wXgmFCUI0jZ/5RAd4dWfQj862FutbR8go/kRpYNBnhMwV7w8/BK+96h7ctPdIzAX/c6FCLdnU4gMaHz2bMjaBDRUlYfIqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XqydEXpN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R5s1xr008920;
+	Tue, 27 Feb 2024 06:29:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=4EEgC2z2c5LElvw2LIh/ssUFuIK4JNpxaFYKe9bwlco=; b=Xq
+	ydEXpNVEHZVjtpyzcpmoOAwFlBRnOQ19A2O0XG1geJxrQSRvaMAVzWY+VbRF2yKb
+	U5bdjMH5Y8gxXmcF9qdcVTV2T9MvbZfJFkDhbrIeuJeaon3ubaBdsSzFZ0qft9z0
+	euWi8yis4X6QHgw0pTRBuLpwl7NukzoiAFfb+VDYJxopsfOETrMyh4NPmk1b2E51
+	vWd9z772jmOg4QwGjKbLtIT3kayDmPNI36FHPOxcHm5gLGS7Vj4PFkQtDyTe0Xfr
+	0Aoyg6Ji0vmKHv21H8dPUPmcTO6esslb84SyyZQvQkc3ymx5MSxcD51lc0ojF54f
+	wVpQLW6UEhuJUFOhKmwg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wha078240-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 06:29:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41R6T9f1019668
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 06:29:09 GMT
+Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
+ 2024 22:29:08 -0800
+Message-ID: <5a92d18e-a3a9-4d06-a6d3-de67889d7b3b@quicinc.com>
+Date: Tue, 27 Feb 2024 14:29:05 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240226055615.79195-1-raihan1999ahamed@gmail.com> <170896502279.859050.12118817690939109079.robh@kernel.org>
-In-Reply-To: <170896502279.859050.12118817690939109079.robh@kernel.org>
-From: Raihan Ahamed <raihan1999ahamed@gmail.com>
-Date: Tue, 27 Feb 2024 11:10:01 +0530
-Message-ID: <CANt1HJtS-WcdUO3s4+sYSHJffRr_KQ-GQ7FKtbOK560cNu5UyA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: msm8953-lenovo-kuntao: Add initial
- device tree
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	Kees Cook <keescook@chromium.org>, Rob Herring <robh+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
-	Tony Luck <tony.luck@intel.com>, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] bus: mhi: host: add mhi_power_down_no_destroy()
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <ath11k@lists.infradead.org>, <mhi@lists.linux.dev>,
+        <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20240221030026.10553-1-quic_bqiang@quicinc.com>
+ <20240221030026.10553-2-quic_bqiang@quicinc.com>
+ <20240226121542.GD8422@thinkpad>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <20240226121542.GD8422@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: a3MWLLzuGkT-eL8WBaOEyAb7nBHtAwi-
+X-Proofpoint-GUID: a3MWLLzuGkT-eL8WBaOEyAb7nBHtAwi-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 clxscore=1015 suspectscore=0 bulkscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 spamscore=0
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2402270050
 
-I have checked with latest dtschema before sending version 3, it does
-not give anything related to gpu and iommu.
 
-On Mon, Feb 26, 2024 at 10:24=E2=80=AFPM Rob Herring <robh@kernel.org> wrot=
-e:
->
->
-> On Mon, 26 Feb 2024 11:25:56 +0530, Raihan Ahamed wrote:
-> > Lenovo P2 is a handset using the MSM8953 SoC released in 2016
-> >
-> > Add a device tree for with initial support for:
-> >
-> > - GPIO keys
-> > - SDHCI (internal and external storage)
-> > - USB Device Mode
-> > - WCNSS (WiFi/BT)
-> > - Regulators
-> >
-> > Signed-off-by: Raihan Ahamed <raihan1999ahamed@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >  .../boot/dts/qcom/msm8953-lenovo-kuntao.dts   | 240 ++++++++++++++++++
-> >  2 files changed, 241 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dts
-> >
->
->
-> My bot found new DT warnings on the .dts files added or changed in this
-> series.
->
-> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-> are fixed by another series. Ultimately, it is up to the platform
-> maintainer whether these warnings are acceptable or not.
->
-> If you already ran DT checks and didn't see these error(s), then
-> make sure dt-schema is up to date:
->
->   pip3 install dtschema --upgrade
->
->
-> New warnings running 'make CHECK_DTBS=3Dy qcom/msm8953-lenovo-kuntao.dtb'=
- for 20240226055615.79195-1-raihan1999ahamed@gmail.com:
->
-> arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dtb: gpu@1c00000: clock-na=
-mes:5: 'anyOf' conditional failed, one must be fixed:
->         'core' was expected
->         'iface' was expected
->         'mem' was expected
->         'mem_iface' was expected
->         'alt_mem_iface' was expected
->         'gfx3d' was expected
->         'rbbmtimer' was expected
->         'rbcpr' was expected
->         from schema $id: http://devicetree.org/schemas/display/msm/gpu.ya=
-ml#
-> arch/arm64/boot/dts/qcom/msm8953-lenovo-kuntao.dtb: iommu@1c48000: compat=
-ible: 'oneOf' conditional failed, one must be fixed:
->         'qcom,msm8953-iommu' is not one of ['qcom,msm8976-iommu']
->         'qcom,msm-iommu-v1' was expected
->         from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.y=
-aml#
->
->
->
->
->
+
+On 2/26/2024 8:15 PM, Manivannan Sadhasivam wrote:
+> On Wed, Feb 21, 2024 at 11:00:24AM +0800, Baochen Qiang wrote:
+>> ath11k fails to resume:
+>>
+>> ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
+>>
+>> This happens because when calling mhi_sync_power_up() the MHI subsystem
+>> eventually calls device_add() from mhi_create_devices() but the device
+>> creation is deferred:
+>>
+>> mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
+>>
+>> The reason for deferring device creation is explained in dpm_prepare():
+>>
+>>          /*
+>>           * It is unsafe if probing of devices will happen during suspend or
+>>           * hibernation and system behavior will be unpredictable in this case.
+>>           * So, let's prohibit device's probing here and defer their probes
+>>           * instead. The normal behavior will be restored in dpm_complete().
+>>           */
+>>
+>> Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
+>> called and thus MHI channels are not prepared:
+>>
+>> So what this means that QRTR is not delivering messages and the QMI connection
+>> is not working between ath11k and the firmware, resulting a failure in firmware
+>> initialization.
+>>
+>> To fix this add new function mhi_power_down_no_destroy() which doesn't destroy
+>> the devices for channels during power down. This way we avoid probe defer issue
+>> and finally can get ath11k hibernation working with the following patches.
+>>
+> 
+> Upto this line is the actual commit message and below should be moved to the
+> comments section of the patch.
+I would like to remove below info since they are included in the cover 
+letter already. And even keeping them in the comment section won't make 
+them visible after patch got merged.
+
+> 
+>> Actually there is an RFC version of this change and it gets positive results
+>> from multiple users. Firstly Mani doesn't like this idea and insists that an
+>> MHI device should be destroyed when going to suspend/hibernation, see
+>>
+>> https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+>>
+>> Then Mani changed his mind after a further discussion with kernel PM guys,
+>> see
+>>
+>> https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+>>
+>> So we come up with the regular version and it is almost identical with that RFC
+>> version.
+>>
+>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+>>
+>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+>> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+>> ---
+>>   drivers/bus/mhi/host/internal.h |  4 +++-
+>>   drivers/bus/mhi/host/pm.c       | 36 +++++++++++++++++++++++++++------
+>>   include/linux/mhi.h             | 15 +++++++++++++-
+>>   3 files changed, 47 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+>> index 091244cf17c6..8ce4aec56425 100644
+>> --- a/drivers/bus/mhi/host/internal.h
+>> +++ b/drivers/bus/mhi/host/internal.h
+>> @@ -86,6 +86,7 @@ enum dev_st_transition {
+>>   	DEV_ST_TRANSITION_FP,
+>>   	DEV_ST_TRANSITION_SYS_ERR,
+>>   	DEV_ST_TRANSITION_DISABLE,
+>> +	DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE,
+>>   	DEV_ST_TRANSITION_MAX,
+>>   };
+>>   
+>> @@ -96,7 +97,8 @@ enum dev_st_transition {
+>>   	dev_st_trans(MISSION_MODE,	"MISSION MODE")		\
+>>   	dev_st_trans(FP,		"FLASH PROGRAMMER")	\
+>>   	dev_st_trans(SYS_ERR,		"SYS ERROR")		\
+>> -	dev_st_trans_end(DISABLE,	"DISABLE")
+>> +	dev_st_trans(DISABLE,		"DISABLE")		\
+>> +	dev_st_trans_end(DISABLE_DESTROY_DEVICE, "DISABLE (DESTROY DEVICE)")
+>>   
+>>   extern const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX];
+>>   #define TO_DEV_STATE_TRANS_STR(state) (((state) >= DEV_ST_TRANSITION_MAX) ? \
+>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+>> index 8b40d3f01acc..5686d32f7458 100644
+>> --- a/drivers/bus/mhi/host/pm.c
+>> +++ b/drivers/bus/mhi/host/pm.c
+>> @@ -468,7 +468,8 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
+>>   }
+>>   
+>>   /* Handle shutdown transitions */
+>> -static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>> +static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl,
+>> +				      bool destroy_device)
+>>   {
+>>   	enum mhi_pm_state cur_state;
+>>   	struct mhi_event *mhi_event;
+>> @@ -530,8 +531,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>>   	dev_dbg(dev, "Waiting for all pending threads to complete\n");
+>>   	wake_up_all(&mhi_cntrl->state_event);
+>>   
+>> -	dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
+>> -	device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
+> 
+> I'd be nice to add a comment here on why destroying the device is optional.
+> 
+>> +	if (destroy_device) {
+>> +		dev_dbg(dev, "Reset all active channels and remove MHI devices\n");
+>> +		device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_destroy_device);
+>> +	}
+>>   
+>>   	mutex_lock(&mhi_cntrl->pm_mutex);
+>>   
+>> @@ -821,7 +824,10 @@ void mhi_pm_st_worker(struct work_struct *work)
+>>   			mhi_pm_sys_error_transition(mhi_cntrl);
+>>   			break;
+>>   		case DEV_ST_TRANSITION_DISABLE:
+>> -			mhi_pm_disable_transition(mhi_cntrl);
+>> +			mhi_pm_disable_transition(mhi_cntrl, false);
+>> +			break;
+>> +		case DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE:
+>> +			mhi_pm_disable_transition(mhi_cntrl, true);
+>>   			break;
+>>   		default:
+>>   			break;
+>> @@ -1175,7 +1181,8 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>>   }
+>>   EXPORT_SYMBOL_GPL(mhi_async_power_up);
+>>   
+>> -void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+>> +static void __mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful,
+>> +			     bool destroy_device)
+>>   {
+>>   	enum mhi_pm_state cur_state, transition_state;
+>>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>> @@ -1211,15 +1218,32 @@ void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+>>   	write_unlock_irq(&mhi_cntrl->pm_lock);
+>>   	mutex_unlock(&mhi_cntrl->pm_mutex);
+>>   
+>> -	mhi_queue_state_transition(mhi_cntrl, DEV_ST_TRANSITION_DISABLE);
+>> +	if (destroy_device)
+>> +		mhi_queue_state_transition(mhi_cntrl,
+>> +					   DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE);
+>> +	else
+>> +		mhi_queue_state_transition(mhi_cntrl,
+>> +					   DEV_ST_TRANSITION_DISABLE);
+>>   
+>>   	/* Wait for shutdown to complete */
+>>   	flush_work(&mhi_cntrl->st_worker);
+>>   
+>>   	disable_irq(mhi_cntrl->irq[0]);
+>>   }
+>> +
+>> +void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful)
+>> +{
+>> +	__mhi_power_down(mhi_cntrl, graceful, true);
+>> +}
+>>   EXPORT_SYMBOL_GPL(mhi_power_down);
+>>   
+>> +void mhi_power_down_no_destroy(struct mhi_controller *mhi_cntrl,
+> 
+> How about "mhi_power_down_keep_dev"? Not the best of the API naming suggestion,
+> but it reflects what the API does.
+> 
+>> +			       bool graceful)
+>> +{
+>> +	__mhi_power_down(mhi_cntrl, graceful, false);
+>> +}
+>> +EXPORT_SYMBOL_GPL(mhi_power_down_no_destroy);
+>> +
+>>   int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+>>   {
+>>   	int ret = mhi_async_power_up(mhi_cntrl);
+>> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+>> index 474d32cb0520..39a6a944a52c 100644
+>> --- a/include/linux/mhi.h
+>> +++ b/include/linux/mhi.h
+>> @@ -647,12 +647,25 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl);
+>>   int mhi_sync_power_up(struct mhi_controller *mhi_cntrl);
+>>   
+>>   /**
+>> - * mhi_power_down - Start MHI power down sequence
+>> + * mhi_power_down - Start MHI power down sequence. See also
+> 
+> How about?
+> 
+> 	/**
+> 	 * mhi_power_down - Power down the MHI device and also destroy the
+> 	 * 		    'struct device' for the channels associated with it.
+> 
+> 	 ...
+> 
+> 	 * See also mhi_power_down_keep_dev() which is a variant of
+> 	 * this API that keeps the 'struct device' for channels (useful during
+> 	 * suspend/hibernation).
+> 	 */
+> 
+>> + * mhi_power_down_no_destroy() which is a variant of this for
+>> + * suspend/hibernation.
+>> + *
+>>    * @mhi_cntrl: MHI controller
+>>    * @graceful: Link is still accessible, so do a graceful shutdown process
+>>    */
+>>   void mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful);
+>>   
+>> +/**
+>> + * mhi_power_down_no_destroy - Start MHI power down sequence but don't destroy
+>> + * struct devices for channels. This is a variant for mhi_power_down() and
+>> + * would be useful in suspend/hibernation.
+>> + *
+> 
+> 	/**
+> 	 * mhi_power_down_keep_dev - Power down the MHI device but keep the
+> 	 * 			     'struct device' for the channels
+> 	 *			     associated with it.
+> 
+> 	 ...
+> 
+> 	 * This is a variant of 'mhi_power_down' and useful in scenarios such as
+> 	 * suspend/hibernation where destroying of the 'struct device' is not
+> 	 * needed.
+> 	 */
+> 
+> - Mani
+> 
+>> + * @mhi_cntrl: MHI controller
+>> + * @graceful: Link is still accessible, so do a graceful shutdown process
+>> + */
+>> +void mhi_power_down_no_destroy(struct mhi_controller *mhi_cntrl, bool graceful);
+>> +
+>>   /**
+>>    * mhi_unprepare_after_power_down - Free any allocated memory after power down
+>>    * @mhi_cntrl: MHI controller
+>> -- 
+>> 2.25.1
+>>
+>>
+> 
 
