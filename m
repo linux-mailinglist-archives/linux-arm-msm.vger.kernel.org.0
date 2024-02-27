@@ -1,407 +1,347 @@
-Return-Path: <linux-arm-msm+bounces-12701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B20D869081
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:28:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6F48869098
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 13:31:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4C75B24C67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:28:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 409E8B29BE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 12:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61ECE1468FF;
-	Tue, 27 Feb 2024 12:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B93EB1386A4;
+	Tue, 27 Feb 2024 12:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lupge9mM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uxjmrQQQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821B0145FF0;
-	Tue, 27 Feb 2024 12:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440951E50B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 12:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709036718; cv=none; b=HU0AQ1f6rA8dt3YmODQ/pE0dWmAlL++xWB8IGNONIDlNeOiPNWBDvmmB/3p/wB4CBnaK4roR/Avnnmem2MnJIg1edbwHGB8y+86L3OdKix/mAHua7lMWp+YhYhwcHttZQ09v843vSor6DfnemRPQinCKRQ7WpQqOqEcIUbJ58tc=
+	t=1709037042; cv=none; b=JnLH8NOBb2tttq7ranhDIMlLnRSKVVWbQt1US/KLpC23F3ku7n6q4pM7b9Wd4ywSecqvps7fs2sni+PO0hltyXv7e1djIIE5PZstjA+iA6LyVExCoPrPUKIsGQ56eTRUSjxEhFOQuWKaK8Ml6sCq0G/gfPYPzjzAvFrIWgTjSsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709036718; c=relaxed/simple;
-	bh=aBf4qn7jya1cVaKMMd/kzd02KipjVxsYjZ/HKtUTBMA=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UFmOrCfkNjBVcsswk+t4tROc1z5LtVSv54SJf/dhP3jkQ6iUo4vzjl+IkYl1Dw9/mjF9gTYWIRzlS2+AE5c8xfqwxXT+T12QMI/NxQY8YaCnkhXKeBxyBCPYB6EM9CDs3S975L3pciyucHons5hUj0zqd3R/LDgbTOP4ycORxQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lupge9mM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R9Yv9h025167;
-	Tue, 27 Feb 2024 12:25:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=WOHgVY/PntFVNf7qazMcY/FWhEytsvCAFYVY0jGBgvE=; b=Lu
-	pge9mMiDgLJKz6KkiLsHlQ+4mIlYg2ZV+qZnfmwaC1ESadDuHYJ4/c7tImAqm48a
-	8v1EDOT89voTdfwVDvLb5TnZx5D7r0KiUwjHmkTqog0sQFJI4B1p5dn/SP0aadID
-	MMHgW8ku6RRptY4PBSl7bCLb2N1zNdEoiNuLFslWm7iCI6zbBIZkTzUZT9kCC4tv
-	0o1wKTNvfbtmv9TDTYOuLRol6h4n+5x4z8NHDYd6W6agLKHWA/Z4XR9uiKuni2GO
-	fFyS51DwdR9rw5AYLcCUV86lhT0h4TO5EVgSPli/tH09bi1aTSqBTtkSKo9b5ds+
-	n+6gxmc7FarZAJAWzPoA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh85qry8x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 12:25:10 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RCPAvo004041
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 12:25:10 GMT
-Received: from grosikop.eu.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 27 Feb 2024 04:25:07 -0800
-From: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
-Subject: [PATCH 9/9] media: qcom: camss: Decouple VFE from CSID
-Date: Tue, 27 Feb 2024 14:24:15 +0200
-Message-ID: <20240227122415.491-10-quic_grosikop@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240227122415.491-1-quic_grosikop@quicinc.com>
-References: <20240227122415.491-1-quic_grosikop@quicinc.com>
+	s=arc-20240116; t=1709037042; c=relaxed/simple;
+	bh=O/kuFE0nhepxHQA2HCwyTojuRxGXcFLyovWl96ySoYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSyLjeBweJKmusbAMJ5FjV4vni2I2sUYtCawwkTvWdT/LwyNF8XEJREGXb4q7inusyw7faURTaaMrpZkS/xL236pYI5JarEugVNH/LPejPlWKu/3NMQqmzOi2kQx6elfELtOwvIiN2X4rTTvZslEZN+mGjHsF+FHfrmUlhY0WoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uxjmrQQQ; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e46db0cf82so2728249b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 04:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709037039; x=1709641839; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wrm6zOCUYamX5/HzD4TWzGE4UW/wSmlHUiwPxwaSkho=;
+        b=uxjmrQQQ97gpQlUxEQoAD1ubFPE1AgnSYXuvkFTW4HJyDLY+1xIjKHX9xFDKnGm0dj
+         lq/u5bhpytswVu5WpBdEJoGREYt4SObd+bluVagetA5p4dd85Z36YFL/K5Z8M3PX7Mgm
+         48mwyvo/6AVOxhEoI+8D8HrorxDbeGFr8MwyNtHgDBjev7+fP5STZGTwva/gc1PLMUw1
+         SaD3iHImzFUgRVizv08SlXyFuFg9jAYQ7T2TxF4Hq0hUL8cr8B8R4GGCf7snZWqHt7mK
+         Lbqv9cGGwD+eIOAaZ3xRZynzG9gBbTDZHsFvVEGDpoaW5UKc+OwfW1Z8Y8430hCyFYRj
+         84tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709037039; x=1709641839;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wrm6zOCUYamX5/HzD4TWzGE4UW/wSmlHUiwPxwaSkho=;
+        b=fwH51lzr4DkJakJbwvOGwb1Jag4K8rIYmCaD4uocKkMfMeu25ZJBRSgVn2bBDJB3FN
+         0Egu8pSQYnyahmC7WO9nqappVQ0lwf9HUNiPtQtoo6pAywu1PNk66jfj6HRVrA2aotFs
+         5SRJlhgq+/dbY7FsEVpSfML6oWLjz+HMSQhC1yCifX6B2e733yecm7A4PHlQPH6pjeKi
+         GbvBHUOp5XVWIz+hr3sJ/SYCs0/nvudleT4kjhnDx3TA2nIlO9cTMwa9m18ykWHCdC04
+         /cK1SaijZOArO0KIjbztt+ICOwk9slpQc2p7dfMymsZANXaIhcPzMEg9ASgsi2i2kRck
+         NN9A==
+X-Forwarded-Encrypted: i=1; AJvYcCWxiQA3Gmg/d3uOlyYXDH3+Grx+z8ZURDdS1WudStlVRnLAy/rVWDv7vC3ppqP7L+MPshdxyWxhpN2KGXfo9srehorxa4gmXcWZmUv5GQ==
+X-Gm-Message-State: AOJu0YyP7veGV82qkTyRLawEZp8SjxLbSbm18So7D9o3BlvYjV7L2tgp
+	M1ZTZ5hVH/6hQf6bnG8/MY51s9SkkGu3kjOEbFiyUM7DczXUFuYqaudM6dT1RA==
+X-Google-Smtp-Source: AGHT+IF1SucMaGZmVzLO3Vi7Owg0MIIBRBMVFqlTO53r97tXf67o+cg/pWiwgklC+Ex3rLhnBWIXYA==
+X-Received: by 2002:aa7:86c2:0:b0:6e4:870c:19b0 with SMTP id h2-20020aa786c2000000b006e4870c19b0mr8383712pfo.24.1709037039619;
+        Tue, 27 Feb 2024 04:30:39 -0800 (PST)
+Received: from thinkpad ([117.213.97.177])
+        by smtp.gmail.com with ESMTPSA id p19-20020a056a000b5300b006e5003f6e33sm5042416pfo.161.2024.02.27.04.30.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 04:30:39 -0800 (PST)
+Date: Tue, 27 Feb 2024 18:00:24 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Frank Li <Frank.li@nxp.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	Niklas Cassel <cassel@kernel.org>
+Subject: Re: [PATCH v8 08/10] PCI: dwc: ep: Add a generic
+ dw_pcie_ep_linkdown() API to handle LINK_DOWN event
+Message-ID: <20240227123024.GO2587@thinkpad>
+References: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
+ <20240224-pci-dbi-rework-v8-8-64c7fd0cfe64@linaro.org>
+ <ZdzH2lOSwBsIp/Jc@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Oqo9_v47YFC8_zAZgl7YcxJNakHQKXzO
-X-Proofpoint-GUID: Oqo9_v47YFC8_zAZgl7YcxJNakHQKXzO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402270097
+In-Reply-To: <ZdzH2lOSwBsIp/Jc@lizhi-Precision-Tower-5810>
 
-From: Milen Mitkov <quic_mmitkov@quicinc.com>
+On Mon, Feb 26, 2024 at 12:18:18PM -0500, Frank Li wrote:
+> On Sat, Feb 24, 2024 at 12:24:14PM +0530, Manivannan Sadhasivam wrote:
+> > The PCIe link can go to LINK_DOWN state in one of the following scenarios:
+> > 
+> > 1. Fundamental (PERST#)/hot/warm reset
+> > 2. Link transition from L2/L3 to L0
+> 
+> From L0 to L2/l3
+> 
 
-Decouple the direct calls to VFE's vfe_get/put in the CSID subdev
-in order to prepare for the introduction of IFE subdev.
+I don't understand what you mean here. Link down won't happen while moving from
+L0 to L2/L3, it is the opposite.
 
-Also decouple CSID base address from VFE since on the Titan platform
-CSID register base address resides within VFE's base address.
+> > 
+> > In those cases, LINK_DOWN causes some non-sticky DWC registers to loose the
+> > state (like REBAR, PTM_CAP etc...). So the drivers need to reinitialize
+> > them to function properly once the link comes back again.
+> > 
+> > This is not a problem for drivers supporting PERST# IRQ, since they can
+> > reinitialize the registers in the PERST# IRQ callback. But for the drivers
+> > not supporting PERST#, there is no way they can reinitialize the registers
+> > other than relying on LINK_DOWN IRQ received when the link goes down. So
+> > let's add a DWC generic API dw_pcie_ep_linkdown() that reinitializes the
+> > non-sticky registers and also notifies the EPF drivers about link going
+> > down.
+> > 
+> > This API can also be used by the drivers supporting PERST# to handle the
+> > scenario (2) mentioned above.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-ep.c | 111 ++++++++++++++----------
+> >  drivers/pci/controller/dwc/pcie-designware.h    |   5 ++
+> >  2 files changed, 72 insertions(+), 44 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > index 278bdc9b2269..fed4c2936c78 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > @@ -14,14 +14,6 @@
+> >  #include <linux/pci-epc.h>
+> >  #include <linux/pci-epf.h>
+> >  
+> > -void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+> > -{
+> > -	struct pci_epc *epc = ep->epc;
+> > -
+> > -	pci_epc_linkup(epc);
+> > -}
+> > -EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+> > -
+> 
+> No sure why git remove this block and add these back.
+> 
 
-Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-Signed-off-by: Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>
----
- .../media/platform/qcom/camss/camss-csid.c    | 16 +++--
- .../media/platform/qcom/camss/camss-csid.h    |  1 +
- drivers/media/platform/qcom/camss/camss.c     | 61 +++++++++++++++++++
- drivers/media/platform/qcom/camss/camss.h     |  8 +++
- 4 files changed, 81 insertions(+), 5 deletions(-)
+Because, we are adding dw_pcie_ep_linkdown() API way below and it makes sense to
+move this API also to keep it ordered. Maybe I should've described it in commit
+message.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 5b23f5b8746d..858db5d4ca75 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -602,7 +602,6 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	struct csid_device *csid = v4l2_get_subdevdata(sd);
- 	struct camss *camss = csid->camss;
- 	struct device *dev = camss->dev;
--	struct vfe_device *vfe = &camss->vfe[csid->id];
- 	int ret = 0;
- 
- 	if (on) {
-@@ -611,7 +610,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		 * switching on the CSID. Do so unconditionally, as there is no
- 		 * drawback in following the same powering order on older SoCs.
- 		 */
--		ret = vfe_get(vfe);
-+		ret = csid->res->parent_dev_ops->get(camss, csid->id);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -663,7 +662,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		regulator_bulk_disable(csid->num_supplies,
- 				       csid->supplies);
- 		pm_runtime_put_sync(dev);
--		vfe_put(vfe);
-+		csid->res->parent_dev_ops->put(camss, csid->id);
- 	}
- 
- 	return ret;
-@@ -1021,6 +1020,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
- 	csid->id = id;
- 	csid->res = &res->csid;
- 
-+	if (dev_WARN_ONCE(dev, !csid->res->parent_dev_ops,
-+			  "Error: CSID depends on VFE/IFE device ops!\n")) {
-+		return -EINVAL;
-+	}
-+
- 	csid->res->hw_ops->subdev_init(csid);
- 
- 	/* Memory */
-@@ -1031,9 +1035,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
- 		 * VFE to be initialized before CSID
- 		 */
- 		if (id >= 2) /* VFE/CSID lite */
--			csid->base = camss->vfe[id].base + VFE_480_LITE_CSID_OFFSET;
-+			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
-+				+ VFE_480_LITE_CSID_OFFSET;
- 		else
--			csid->base = camss->vfe[id].base + VFE_480_CSID_OFFSET;
-+			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
-+				 + VFE_480_CSID_OFFSET;
- 	} else {
- 		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
- 		if (IS_ERR(csid->base))
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-index 0e385d17c250..8cdae98e4dca 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.h
-+++ b/drivers/media/platform/qcom/camss/camss-csid.h
-@@ -157,6 +157,7 @@ struct csid_hw_ops {
- struct csid_subdev_resources {
- 	bool is_lite;
- 	const struct csid_hw_ops *hw_ops;
-+	const struct parent_dev_ops *parent_dev_ops;
- 	const struct csid_formats *formats;
- };
- 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 244849db39dc..47df325a2ca9 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -32,6 +32,8 @@
- #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
- #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
- 
-+static const struct parent_dev_ops vfe_parent_dev_ops;
-+
- static const struct camss_subdev_resources csiphy_res_8x16[] = {
- 	/* CSIPHY0 */
- 	{
-@@ -87,6 +89,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_1,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_1
- 		}
- 	},
-@@ -109,6 +112,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_1,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_1
- 		}
- 	},
-@@ -226,6 +230,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -248,6 +253,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -270,6 +276,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -292,6 +299,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	}
-@@ -445,6 +453,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -470,6 +479,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -495,6 +505,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	},
-@@ -520,6 +531,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
- 		.type = CAMSS_SUBDEV_TYPE_CSID,
- 		.csid = {
- 			.hw_ops = &csid_ops_4_7,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_4_7
- 		}
- 	}
-@@ -715,6 +727,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.csid = {
- 			.is_lite = false,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -741,6 +754,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.csid = {
- 			.is_lite = false,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -767,6 +781,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	}
-@@ -960,6 +975,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = false,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -978,6 +994,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = false,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -995,6 +1012,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	},
-@@ -1012,6 +1030,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.csid = {
- 			.is_lite = true,
- 			.hw_ops = &csid_ops_gen2,
-+			.parent_dev_ops = &vfe_parent_dev_ops,
- 			.formats = &csid_formats_gen2
- 		}
- 	}
-@@ -1306,6 +1325,48 @@ void camss_pm_domain_off(struct camss *camss, int id)
- 	}
- }
- 
-+static int vfe_parent_dev_ops_get(struct camss *camss, int id)
-+{
-+	int ret = -EINVAL;
-+
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		ret = vfe_get(vfe);
-+	}
-+
-+	return ret;
-+}
-+
-+static int vfe_parent_dev_ops_put(struct camss *camss, int id)
-+{
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		vfe_put(vfe);
-+	}
-+
-+	return 0;
-+}
-+
-+static void __iomem
-+*vfe_parent_dev_ops_get_base_address(struct camss *camss, int id)
-+{
-+	if (id < camss->res->vfe_num) {
-+		struct vfe_device *vfe = &camss->vfe[id];
-+
-+		return vfe->base;
-+	}
-+
-+	return NULL;
-+}
-+
-+static const struct parent_dev_ops vfe_parent_dev_ops = {
-+	.get = vfe_parent_dev_ops_get,
-+	.put = vfe_parent_dev_ops_put,
-+	.get_base_address = vfe_parent_dev_ops_get_base_address
-+};
-+
- /*
-  * camss_of_parse_endpoint_node - Parse port endpoint node
-  * @dev: Device
-diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-index fb997b94fd70..362a84bcb2bc 100644
---- a/drivers/media/platform/qcom/camss/camss.h
-+++ b/drivers/media/platform/qcom/camss/camss.h
-@@ -142,6 +142,12 @@ struct camss_clock {
- 	u32 nfreqs;
- };
- 
-+struct parent_dev_ops {
-+	int (*get)(struct camss *camss, int id);
-+	int (*put)(struct camss *camss, int id);
-+	void __iomem *(*get_base_address)(struct camss *camss, int id);
-+};
-+
- void camss_add_clock_margin(u64 *rate);
- int camss_enable_clocks(int nclocks, struct camss_clock *clock,
- 			struct device *dev);
-@@ -152,6 +158,8 @@ s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
- int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
- int camss_pm_domain_on(struct camss *camss, int id);
- void camss_pm_domain_off(struct camss *camss, int id);
-+int camss_vfe_get(struct camss *camss, int id);
-+void camss_vfe_put(struct camss *camss, int id);
- void camss_delete(struct camss *camss);
- 
- #endif /* QC_MSM_CAMSS_H */
+- Mani
+
+> 
+> >  void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep)
+> >  {
+> >  	struct pci_epc *epc = ep->epc;
+> > @@ -603,19 +595,56 @@ static unsigned int dw_pcie_ep_find_ext_capability(struct dw_pcie *pci, int cap)
+> >  	return 0;
+> >  }
+> >  
+> > +static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
+> > +{
+> > +	unsigned int offset, ptm_cap_base;
+> > +	unsigned int nbars;
+> > +	u32 reg, i;
+> > +
+> > +	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+> > +	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
+> > +
+> > +	dw_pcie_dbi_ro_wr_en(pci);
+> > +
+> > +	if (offset) {
+> > +		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> > +		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> > +			PCI_REBAR_CTRL_NBAR_SHIFT;
+> > +
+> > +		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> > +			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> > +	}
+> > +
+> > +	/*
+> > +	 * PTM responder capability can be disabled only after disabling
+> > +	 * PTM root capability.
+> > +	 */
+> > +	if (ptm_cap_base) {
+> > +		dw_pcie_dbi_ro_wr_en(pci);
+> > +		reg = dw_pcie_readl_dbi(pci, ptm_cap_base + PCI_PTM_CAP);
+> > +		reg &= ~PCI_PTM_CAP_ROOT;
+> > +		dw_pcie_writel_dbi(pci, ptm_cap_base + PCI_PTM_CAP, reg);
+> > +
+> > +		reg = dw_pcie_readl_dbi(pci, ptm_cap_base + PCI_PTM_CAP);
+> > +		reg &= ~(PCI_PTM_CAP_RES | PCI_PTM_GRANULARITY_MASK);
+> > +		dw_pcie_writel_dbi(pci, ptm_cap_base + PCI_PTM_CAP, reg);
+> > +		dw_pcie_dbi_ro_wr_dis(pci);
+> > +	}
+> > +
+> > +	dw_pcie_setup(pci);
+> > +	dw_pcie_dbi_ro_wr_dis(pci);
+> > +}
+> > +
+> >  int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  {
+> >  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> >  	struct dw_pcie_ep_func *ep_func;
+> >  	struct device *dev = pci->dev;
+> >  	struct pci_epc *epc = ep->epc;
+> > -	unsigned int offset, ptm_cap_base;
+> > -	unsigned int nbars;
+> >  	u8 hdr_type;
+> >  	u8 func_no;
+> > -	int i, ret;
+> >  	void *addr;
+> > -	u32 reg;
+> > +	int ret;
+> >  
+> >  	hdr_type = dw_pcie_readb_dbi(pci, PCI_HEADER_TYPE) &
+> >  		   PCI_HEADER_TYPE_MASK;
+> > @@ -678,38 +707,7 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  	if (ep->ops->init)
+> >  		ep->ops->init(ep);
+> >  
+> > -	offset = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
+> > -	ptm_cap_base = dw_pcie_ep_find_ext_capability(pci, PCI_EXT_CAP_ID_PTM);
+> > -
+> > -	dw_pcie_dbi_ro_wr_en(pci);
+> > -
+> > -	if (offset) {
+> > -		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
+> > -		nbars = (reg & PCI_REBAR_CTRL_NBAR_MASK) >>
+> > -			PCI_REBAR_CTRL_NBAR_SHIFT;
+> > -
+> > -		for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL)
+> > -			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, 0x0);
+> > -	}
+> > -
+> > -	/*
+> > -	 * PTM responder capability can be disabled only after disabling
+> > -	 * PTM root capability.
+> > -	 */
+> > -	if (ptm_cap_base) {
+> > -		dw_pcie_dbi_ro_wr_en(pci);
+> > -		reg = dw_pcie_readl_dbi(pci, ptm_cap_base + PCI_PTM_CAP);
+> > -		reg &= ~PCI_PTM_CAP_ROOT;
+> > -		dw_pcie_writel_dbi(pci, ptm_cap_base + PCI_PTM_CAP, reg);
+> > -
+> > -		reg = dw_pcie_readl_dbi(pci, ptm_cap_base + PCI_PTM_CAP);
+> > -		reg &= ~(PCI_PTM_CAP_RES | PCI_PTM_GRANULARITY_MASK);
+> > -		dw_pcie_writel_dbi(pci, ptm_cap_base + PCI_PTM_CAP, reg);
+> > -		dw_pcie_dbi_ro_wr_dis(pci);
+> > -	}
+> > -
+> > -	dw_pcie_setup(pci);
+> > -	dw_pcie_dbi_ro_wr_dis(pci);
+> > +	dw_pcie_ep_init_non_sticky_registers(pci);
+> >  
+> >  	return 0;
+> >  
+> > @@ -720,6 +718,31 @@ int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep)
+> >  }
+> >  EXPORT_SYMBOL_GPL(dw_pcie_ep_init_registers);
+> >  
+> > +void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+> > +{
+> > +	struct pci_epc *epc = ep->epc;
+> > +
+> > +	pci_epc_linkup(epc);
+> > +}
+> > +EXPORT_SYMBOL_GPL(dw_pcie_ep_linkup);
+> > +
+> > +void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
+> > +{
+> > +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> > +	struct pci_epc *epc = ep->epc;
+> > +
+> > +	/*
+> > +	 * Initialize the non-sticky DWC registers as they would've reset post
+> > +	 * LINK_DOWN. This is specifically needed for drivers not supporting
+> > +	 * PERST# as they have no way to reinitialize the registers before the
+> > +	 * link comes back again.
+> > +	 */
+> > +	dw_pcie_ep_init_non_sticky_registers(pci);
+> > +
+> > +	pci_epc_linkdown(epc);
+> > +}
+> > +EXPORT_SYMBOL_GPL(dw_pcie_ep_linkdown);
+> > +
+> >  int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+> >  {
+> >  	int ret;
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > index f8e5431a207b..152969545b0a 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > @@ -668,6 +668,7 @@ static inline void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus,
+> >  
+> >  #ifdef CONFIG_PCIE_DW_EP
+> >  void dw_pcie_ep_linkup(struct dw_pcie_ep *ep);
+> > +void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep);
+> >  int dw_pcie_ep_init(struct dw_pcie_ep *ep);
+> >  int dw_pcie_ep_init_registers(struct dw_pcie_ep *ep);
+> >  void dw_pcie_ep_init_notify(struct dw_pcie_ep *ep);
+> > @@ -688,6 +689,10 @@ static inline void dw_pcie_ep_linkup(struct dw_pcie_ep *ep)
+> >  {
+> >  }
+> >  
+> > +static inline void dw_pcie_ep_linkdown(struct dw_pcie_ep *ep)
+> > +{
+> > +}
+> > +
+> >  static inline int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+> >  {
+> >  	return 0;
+> > 
+> > -- 
+> > 2.25.1
+> > 
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
 
