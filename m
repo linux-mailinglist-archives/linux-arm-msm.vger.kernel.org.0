@@ -1,216 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-12778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A54ED86A0B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 21:18:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 717CD86A226
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 23:08:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A3FD1F2CFA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 20:18:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D83D41F2240F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 22:08:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C87A14A4E0;
-	Tue, 27 Feb 2024 20:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4287351009;
+	Tue, 27 Feb 2024 22:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pv5xJnwr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nFnhvRmF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF371D6A8;
-	Tue, 27 Feb 2024 20:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3837E14F977
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 22:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709065117; cv=none; b=IoBbq9RPeIgOV4EGhmuTujRsRe4dkhNCHFimLDCbZMn+8rSMC7gpQOqqkglBO4+4CnJiZLfrf+NdtZM4YrHFYLdviteX7Axy4+DDLNujYeFdKWt92ljqOJmNIGjLBosB7dT1XA4OFt5XWNFADqQWcJX7/oSpvoUb2/Z0HVY5tws=
+	t=1709071693; cv=none; b=e72q3it3XSxDcsaXZAX8+dkg6ZdELbe4Fpbq8rDAGHPkZ6itimyTYHRkcwpPhDleh0gk87mRh0xnMshkeE5pErJP2BWrjcb1t0rMstS95PDXSiZRlGvbr3t76zAZzWvB5DYzlS550R2xnVKyOPC/kfAZwuHkKpYLV5EmeMOHt4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709065117; c=relaxed/simple;
-	bh=Omw2AFlabYc6Uv/pPNvj6uwfjg7jm6qsUDunD9xzfyU=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dwXVVEJQnO6+rSxn9DgiDo4cnAXPGoCFIt58yd9oaW3lAqkk7DV0b8bi/ro9X9eaSg8cpl6jkabU0U3wVeQ1oAEhOpcXqk3uo2sHz3crC+bqAnKkgbFgg7B8KoybuHd01u2fNNv+2WBYUsejIP8B/QzKMwjYoQUyqu1F22LPGbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pv5xJnwr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RJviMO007057;
-	Tue, 27 Feb 2024 20:18:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=e2w7ryFE/HSd9HuCDuAjH
-	wUSM1goBIdC5YFc2t7i9nY=; b=pv5xJnwr1jLGI/BxHi+Uk0C3cV9Si1liSYy2G
-	4rXAIvnAQLtEPd30g74LT8t7p2jnITD2fIRdNQe3wh3iAXQJ/izHs1+GPHIx9QcU
-	qamy2nFBNY5pcRn0hDLPw7DQYpSZxKDMqYPenFEP037Ujxso41xyTUCoQ4ClTYOR
-	IfpArBzjFP3RmDdKLo2bcmqUQdsyjU7rF4Vcw4vKHklXnN5PgWXhJblOlm0yHZJJ
-	3AdfXgVpDHaJFrSe+U236OSd8KajqaWmb6edZiunjA2VsgdycDAEXga+zNnAs4AG
-	SLelrJAj5TZWPhP1u29m6I72RfRNvY66uTEG5n4vQGA/Z02NQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whccw9mma-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 20:18:10 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RKI93B005443
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 20:18:09 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 27 Feb 2024 12:18:09 -0800
-Date: Tue, 27 Feb 2024 12:18:07 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Abel Vesa <abel.vesa@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        "Maarten
- Lankhorst" <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Johan Hovold <johan@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] drm/msm/dp: Add support for setting the eDP mode
- from devicetree
-Message-ID: <20240227201807.GA3552737@hu-bjorande-lv.qualcomm.com>
-References: <20240222-x1e80100-display-refactor-connector-v2-0-bd4197dfceab@linaro.org>
- <20240222-x1e80100-display-refactor-connector-v2-2-bd4197dfceab@linaro.org>
+	s=arc-20240116; t=1709071693; c=relaxed/simple;
+	bh=HVwnkvfCdKmRfyrfIq1ta/A/M2cqgWz/WkEaUOILu4s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=iQ0CW/vFqfQK6C5mBeiOf0b1BRdbdlfoMstYJ2hELcxAs0ktiKimIYKt0LkkaQKkORhf9e9Bd60Uiw+Oiqn84fjftB5+JAve/ZmwCJU45L6EAlahfGEpJ0JocLMfc/rAkIiY32kV14fiBxjHFrT7VMcVMFe0GtffBM4230xwY9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nFnhvRmF; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d208be133bso74154411fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 14:08:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709071689; x=1709676489; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vQcCMyGhfzH8PgY8TmCUpxm6Vv1tc9M/NiJQlsbF4kI=;
+        b=nFnhvRmFow1leDAyZ0SyUQSOuTYRFvYvOtHQuJv7KOCcrmX83uZmRrdVwJv1MN4CTt
+         Lyai2+OEx+PwwwgGwueOnuOlUpNx4BuAbOlcm1SRU5se12FxV3Xxcq6N9glr8r3X8x4D
+         RLEgznqT5CzfQYUXMRycuRg2sPHloAwz12Rkw7ntBCJ76o3376Zy557NHFI5X8tCojmF
+         yWMGIQJDgGZpzFP8WuqyGY5l+gHNhD4tkVDs7LHE+K0ifcNjIPQUsfwnxe0Hy/mYYsHr
+         rLo3YduEtEchZ0FEYeUN0HD2ibTUspYz9ot04qq6nHO2Nluyc80SZb7eAUlUUSqXo8VM
+         VEbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709071689; x=1709676489;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vQcCMyGhfzH8PgY8TmCUpxm6Vv1tc9M/NiJQlsbF4kI=;
+        b=NtcKO7WywchGVMuEvUrw+9NC+wzwsJOP/D0dN4q38o39hLW4sD5Ms/zuhs1DLrRIc9
+         ZaoRLHIkUHh968QNq6y+Zq7adbsF8IMmT9x8xd50/mMF/nbnO5n7S6HJt1wQhfLEDgPL
+         4/YU5DzSpmxrDn9mXI7lDNvqzu/+sKtmILi2P+hWG1VYzPvMRjmzbgv1wZQjKpKDHqO9
+         IjUyGKaSjMmfi+fTEvi9F4Aect/VLyF18oCJmEoKp/6uwXCqDtsKZdBrXbjDuvdiSYHc
+         9Y+/l9v5Mpyu/FV/a6fxJLpXQhZhpb2pVsBva3PHkWTa/vBkWNeOuWHO/uEyGaRAh+M9
+         5kpg==
+X-Forwarded-Encrypted: i=1; AJvYcCUERpPAF6hSzKEl3zAJy+DalrZtR2RDLvahlsjx/mIa1CxHUlRhse4lp6hVuix9JyAnbjQx6c78sjRYH2nRmEK4hFYCcXkvRRmv775h+Q==
+X-Gm-Message-State: AOJu0YzxV3rwFAG95asf+j0tu2+yuctebwSWGLhq1YDpHK+Fygm1Gj3/
+	iLLrFvhAqhkdOb9BupQMj7jzWmrklBA7yu+9bFi+LXQZ1x8/DMaTwc8ZusNhziQ=
+X-Google-Smtp-Source: AGHT+IH+yL8luTEsjdTKKoRDh0vC98sjxGym7Upqf/nybKJw0zX+NrxDgIIl50EzB430cRbyTNIPgw==
+X-Received: by 2002:a19:f505:0:b0:512:e58c:7bf1 with SMTP id j5-20020a19f505000000b00512e58c7bf1mr7137757lfb.40.1709071689142;
+        Tue, 27 Feb 2024 14:08:09 -0800 (PST)
+Received: from umbar.lan (dzyjmhybhls-s--zn36gy-3.rev.dnainternet.fi. [2001:14ba:a00e:a300:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id d3-20020a0565123d0300b0051317bf8b39sm94466lfv.287.2024.02.27.14.08.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 14:08:08 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH] Revert "drm/msm/dp: use drm_bridge_hpd_notify() to report HPD status changes"
+Date: Wed, 28 Feb 2024 00:08:08 +0200
+Message-Id: <20240227220808.50146-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240222-x1e80100-display-refactor-connector-v2-2-bd4197dfceab@linaro.org>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7Y-y7cA2TCkDyHCOXdCQNmI9ecLK4unI
-X-Proofpoint-ORIG-GUID: 7Y-y7cA2TCkDyHCOXdCQNmI9ecLK4unI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-27_07,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- spamscore=0 mlxlogscore=999 mlxscore=0 phishscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402270158
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 22, 2024 at 05:55:07PM +0200, Abel Vesa wrote:
-> Instead of relying on different compatibles for eDP and DP, use
-> the is-edp property from DT to figure out the connector type and
-> then pass on that information to the PHY.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+This reverts commit e467e0bde881 ("drm/msm/dp: use
+drm_bridge_hpd_notify() to report HPD status changes").
 
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+The commit changed the way how the MSM DP driver communicates
+HPD-related events to the userspace. The mentioned commit made some of
+the HPD events being reported earlier. This way userspace starts poking
+around. It interacts in a bad way with the dp_bridge_detect and the
+driver's state machine, ending up either with the very long delays
+during hotplug detection or even inability of the DP driver to report
+the display as connected.
 
-Regards,
-Bjorn
+A proper fix will involve redesigning of the HPD handling in the MSM DP
+driver. It is underway, but it will be intrusive and can not be thought
+about as a simple fix for the issue. Thus, revert the offending commit.
 
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 11 +++++++++++
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  1 +
->  drivers/gpu/drm/msm/dp/dp_display.c | 17 ++++++++++++++---
->  3 files changed, 26 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 320f17fce9a6..bd81cc6bd5e3 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1533,6 +1533,17 @@ void dp_ctrl_set_psr(struct dp_ctrl *dp_ctrl, bool enter)
->  	}
->  }
->  
-> +int dp_ctrl_phy_set_mode(struct dp_ctrl *dp_ctrl, int submode)
-> +{
-> +	struct dp_ctrl_private *ctrl;
-> +	struct phy *phy;
-> +
-> +	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> +	phy = ctrl->phy;
-> +
-> +	return phy_set_mode_ext(phy, PHY_MODE_DP, submode);
-> +}
-> +
->  void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
->  {
->  	struct dp_ctrl_private *ctrl;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index fa014cee7e21..a10d1b19d172 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -32,6 +32,7 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
->  			struct phy *phy);
->  
->  void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable);
-> +int dp_ctrl_phy_set_mode(struct dp_ctrl *dp_ctrl, int mode);
->  void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_irq_phy_exit(struct dp_ctrl *dp_ctrl);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e4433891becb..e01b41ad2e2a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1229,6 +1229,7 @@ static int dp_display_probe(struct platform_device *pdev)
->  	int rc = 0;
->  	struct dp_display_private *dp;
->  	const struct msm_dp_desc *desc;
-> +	bool is_edp;
->  
->  	if (!pdev || !pdev->dev.of_node) {
->  		DRM_ERROR("pdev not found\n");
-> @@ -1243,13 +1244,17 @@ static int dp_display_probe(struct platform_device *pdev)
->  	if (!desc)
->  		return -EINVAL;
->  
-> +	is_edp = (desc->connector_type == DRM_MODE_CONNECTOR_eDP) ||
-> +		 of_property_read_bool(pdev->dev.of_node, "is-edp");
-> +
->  	dp->dp_display.pdev = pdev;
->  	dp->name = "drm_dp";
->  	dp->id = desc->id;
-> -	dp->dp_display.connector_type = desc->connector_type;
-> +	dp->dp_display.connector_type = is_edp ?
-> +					DRM_MODE_CONNECTOR_eDP :
-> +					DRM_MODE_CONNECTOR_DisplayPort;
->  	dp->wide_bus_en = desc->wide_bus_en;
-> -	dp->dp_display.is_edp =
-> -		(dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
-> +	dp->dp_display.is_edp = is_edp;
->  
->  	rc = dp_init_sub_modules(dp);
->  	if (rc) {
-> @@ -1257,6 +1262,12 @@ static int dp_display_probe(struct platform_device *pdev)
->  		return -EPROBE_DEFER;
->  	}
->  
-> +	rc = dp_ctrl_phy_set_mode(dp->ctrl, is_edp ? PHY_SUBMODE_EDP : PHY_SUBMODE_DP);
-> +	if (rc) {
-> +		DRM_ERROR("setting PHY submode failed\n");
-> +		goto err;
-> +	}
-> +
->  	/* setup event q */
->  	mutex_init(&dp->event_mutex);
->  	init_waitqueue_head(&dp->event_q);
-> 
-> -- 
-> 2.34.1
-> 
+Fixes: e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify() to report HPD status changes")
+Link: https://gitlab.freedesktop.org/drm/msm/-/issues/50
+Reported-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/Zd3YPGmrprxv-N-O@hovoldconsulting.com/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index d37d599aec27..4c72124ffb5d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -329,10 +329,26 @@ static const struct component_ops dp_display_comp_ops = {
+ 	.unbind = dp_display_unbind,
+ };
+ 
++static void dp_display_send_hpd_event(struct msm_dp *dp_display)
++{
++	struct dp_display_private *dp;
++	struct drm_connector *connector;
++
++	dp = container_of(dp_display, struct dp_display_private, dp_display);
++
++	connector = dp->dp_display.connector;
++	drm_helper_hpd_irq_event(connector->dev);
++}
++
+ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 					    bool hpd)
+ {
+-	struct drm_bridge *bridge = dp->dp_display.bridge;
++	if ((hpd && dp->dp_display.link_ready) ||
++			(!hpd && !dp->dp_display.link_ready)) {
++		drm_dbg_dp(dp->drm_dev, "HPD already %s\n",
++				(hpd ? "on" : "off"));
++		return 0;
++	}
+ 
+ 	/* reset video pattern flag on disconnect */
+ 	if (!hpd) {
+@@ -348,7 +364,7 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 
+ 	drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
+ 			dp->dp_display.connector_type, hpd);
+-	drm_bridge_hpd_notify(bridge, dp->dp_display.link_ready);
++	dp_display_send_hpd_event(&dp->dp_display);
+ 
+ 	return 0;
+ }
+-- 
+2.39.2
+
 
