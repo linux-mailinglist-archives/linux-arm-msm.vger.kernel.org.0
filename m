@@ -1,63 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-12751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F227869CF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:56:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82F52869D36
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:09:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BDBD28B2A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 16:56:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3E61EB2793C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 17:09:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7CE04C63D;
-	Tue, 27 Feb 2024 16:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2102D4E1CB;
+	Tue, 27 Feb 2024 17:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nCR9YSNx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OV1FbHlu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC6E4CB45;
-	Tue, 27 Feb 2024 16:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FE74C63D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 17:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709052976; cv=none; b=LHlj/jD62iog8MDD13knpDJ+5ldzVZcK50tW7tVrQrv7wv/RFjCQsU97vTOm4Psj+D1MoUFZv99FBKMNH8UoPFcqUsvSC32ZEn84gobrEPUblfcxW1KG09HV1APzo+axLZPsH9VGH/NNUicWSL0oA6RKx17t/XWWT7RoVLDYNpo=
+	t=1709053732; cv=none; b=qQ59s0VNLrWg5iNNh3AtWltbe8+9Al9BOSdKI6ZqbjW7SNlXxLQXG4c0WUb9Y1rbaxscNxlcGi+YPfpS18xlSinyxGX/9+EsCsDb/eO5CwLoK37YW381FAuwFZtY1CUyudxmXIL5ijaiYqdv5RnFMIiGZx7YBokhGeIfQqdDQCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709052976; c=relaxed/simple;
-	bh=mgo4yeLW+ttbeoLLIJzNjCrFuHKZlPxeJXjaNZAMcI0=;
+	s=arc-20240116; t=1709053732; c=relaxed/simple;
+	bh=LyIC2a8YCi8H35J3OmUP2FanwA/jMrbgvLb5jpkEIFM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MpdjDFDb7wH44WZr9rEdFfrQZw7VN1dcIKjwR1rNsB2dqYCbahkQ2jJU1SgIf9o65bH3HEufgpjkwJoeuyfONqgIluxLHt1Q3mxrJeO3uz46EXOxvRFNX/6j/YSXHWe3lESNWrPgvUxfZ7n5qPbxUppQBEH8KsVKh0J0fzMm8xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nCR9YSNx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5D0C43390;
-	Tue, 27 Feb 2024 16:56:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709052976;
-	bh=mgo4yeLW+ttbeoLLIJzNjCrFuHKZlPxeJXjaNZAMcI0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nCR9YSNxDsGHxuUxMe5KNkYXeWRSiNau8RDAEKw2r0FpQZxwnp7Ug5CEVJCr1WgXL
-	 44/PFr6XlhBYZ31wanYypbkwUXPk/V6zFkm5pfOuEaOi71F+Zp88Lnf//B3cMondZJ
-	 SutV0wVSlQUUUq/kyrofo8LlH5kjd5+Om1zIeFkyLunuq9YtnAOvUNNydMbS4MJ5GL
-	 h5xsZQy6w922uQT/HRZU+HD/Oj28Nrz1bQ9wA5z4hXZzB3q99ZL/SJJxR8rBcm2K5S
-	 5FDwUy54QkNe9o1gD1kg3KnMEsOUXO+EP0yczauP4ewdn7GbOGTEYlg6oKirt4UAe1
-	 FKQRBWaxc7RaA==
-Date: Tue, 27 Feb 2024 10:56:13 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Guru Das Srinagesh <quic_gurus@quicinc.com>, 
-	Andrew Halaney <ahalaney@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, 
-	Alex Elder <elder@linaro.org>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Deepti Jaggi <quic_djaggi@quicinc.com>
-Subject: Re: [PATCH v7 10/12] firmware: qcom: tzmem: enable SHM Bridge support
-Message-ID: <mq63i2dlfop67zzs5q4r7v7ogeoqdi74h6rapgyur5y6a33kyo@cdxckvywotxd>
-References: <20240205182810.58382-1-brgl@bgdev.pl>
- <20240205182810.58382-11-brgl@bgdev.pl>
- <7pybw4wxlzxfl65yuqxzks5w7uq52hosyq53etlzas6i6o5l6d@vxd4sykcxora>
- <CAMRc=MfTtcFb=7vDfkFiaPYvb+o6o4zd_RnYd2om+cAiaKY2dQ@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z48XCZvJpmrBOP8dwajzNQfpMwpIznw/WJ700PZDxxXQq3QGSMJyx7RaCR8EcCPLDF0CJN5XDQly5X9Szo69tyvlDG4WAaj9Z64i/g/ZeRyiN5agcY3BN5kgCJ7FrAN7c7BWvps4XM2MlegiBfZ39eUP4URHg2p0FK5OHIFCxd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OV1FbHlu; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1dc75972f25so38259855ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 09:08:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709053729; x=1709658529; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lmc3sjc8em17oChCJSQpaOzbhd1qpZMy7Z0nwlTPyEc=;
+        b=OV1FbHluXUQPzO7NWQ4faDtrR1AkKEeiRAfRi/Yoqt1b9ql8Ne85nQy1UPWVbl91lv
+         AdZpy+i78t4JRIivHJDth32osYdT9Nv+OJ7DCro5zZFlHp0+9cj7raWYuD5wgfgW4w6B
+         0e5ONboExYxPEjlR//w5nvSveC7Nn1DlZBcu73j35kPznjlDSAu5ezY9HNxOp+P29rNZ
+         Nw4Xm5SJTlxNtawSsP6ZJqqlclKODCgezbhSLwy/CEnSZxJO7H9yTNSFc9MsT9u0aOKB
+         ONoyzPGs8Ab+kTrRnrbwdGLc3kT6/tVW4HnEcnKyN9I6le7xE6uGOAhxTdWi1xdDEChi
+         bSFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709053729; x=1709658529;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lmc3sjc8em17oChCJSQpaOzbhd1qpZMy7Z0nwlTPyEc=;
+        b=r4EC01+i6Ax5Do1PR0dtaTpXLDlzBiuchBSRlRlGTmTKJP50zviDxbOjjy/RLVsmWE
+         76Ek4vC9ghdvv8H4yPtYV6V1pdyI0FJho6WLrr4M3cvUMfBL0s6w0f0Wcv/IqSA5+VEj
+         vHtlpvQ3Rq3qfPUgNABzIqGA6eweukPwbUm/SIpAnJiGBBbHRwMJpQzfsbxj3nIbzhqw
+         KBBeRvsdHvsSt4fQSg6HYoWO4/LE9n44oiqI7SJPTrTAPZiQpnHg+JRNEUWV0tudUeWd
+         RLd42pkKxl/0JhV4CPvXhi0yJKcqH4N7m6BZrpg1ovfdDAAmflEyh9VaeQ6XXZO87Bwj
+         iqBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXlVyGirqUwj1oZ+XZxvX7CH08eFSyCP6pk1pFNlygPZaAN8/5O4+xGmkGiFyZVCdXAO5/ZiNmG8Ig3K3WlX4RZ/tHg1Jr7HanGGreOYg==
+X-Gm-Message-State: AOJu0Yx4N6hgkt3etY6AoaPVuhVGtAho//HETTDkL+5A1pgVgnbjlaBi
+	dmQd6nVR4KDhe05xx2l3QGRgg2SSluBCZSRIBjyCZZmkaPT3bXgMVXIwes4BGg==
+X-Google-Smtp-Source: AGHT+IHfCTuVOr5Vdon+2BmyjsKL8DKicx4h9TEm+qIcTGywS1ZZGmFjLcn17HKfB8h/qvkApA/qPA==
+X-Received: by 2002:a17:902:6b49:b0:1d9:8832:f800 with SMTP id g9-20020a1709026b4900b001d98832f800mr9202931plt.8.1709053729485;
+        Tue, 27 Feb 2024 09:08:49 -0800 (PST)
+Received: from thinkpad ([117.213.97.177])
+        by smtp.gmail.com with ESMTPSA id d1-20020a170902c18100b001c407fac227sm1765279pld.41.2024.02.27.09.08.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 09:08:48 -0800 (PST)
+Date: Tue, 27 Feb 2024 22:38:40 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Lukas Wunner <lukas@wunner.de>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	quic_krichai@quicinc.com, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3] PCI: Add D3 support for PCI bridges in DT based
+ platforms
+Message-ID: <20240227170840.GR2587@thinkpad>
+References: <20240227073057.GF2587@thinkpad>
+ <20240227162535.GA239073@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,59 +93,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MfTtcFb=7vDfkFiaPYvb+o6o4zd_RnYd2om+cAiaKY2dQ@mail.gmail.com>
+In-Reply-To: <20240227162535.GA239073@bhelgaas>
 
-On Thu, Feb 22, 2024 at 05:24:19PM +0100, Bartosz Golaszewski wrote:
-> On Sun, Feb 18, 2024 at 4:41 AM Bjorn Andersson <andersson@kernel.org> wrote:
-> >
-> > On Mon, Feb 05, 2024 at 07:28:08PM +0100, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> 
-> [snip]
-> 
-> > >
-> > > +config QCOM_TZMEM_MODE_SHMBRIDGE
-> > > +     bool "SHM Bridge"
-> > > +     help
-> > > +       Use Qualcomm Shared Memory Bridge. The memory has the same alignment as
-> > > +       in the 'Default' allocator but is also explicitly marked as an SHM Bridge
-> > > +       buffer.
-> > > +
-> > > +       With this selected, all buffers passed to the TrustZone must be allocated
-> > > +       using the TZMem allocator or else the TrustZone will refuse to use them.
-> >
-> > It's funny how this is the only place in the whole series I can find
-> > this mentioned. One could from this statement guess that the eluding
-> > scminvoke requires shmbridge and that this patch series exists solely
-> > to facilitate the requirement stated in this paragraph.
-> >
-> 
-> Yes, scminvoke *requires* SHM bridge. So does the wrapped key support.
-> No, this is not the only reason as - as stated by Srini - it improves
-> overall safety of the system for all users.
-> 
-> > Either this guess is correct and this should have been made clear in
-> > the commit messages, or I'm guessing wrong here, in which case I need
-> > some help to figure out why this series exists.
-> >
-> 
-> This series exists and IMO should get upstream soon to facilitate
-> adding new security features (in addition to improving existing ones).
+On Tue, Feb 27, 2024 at 10:25:35AM -0600, Bjorn Helgaas wrote:
 
-This needs to be stated in the cover letter/commit messages.
+[...]
 
-> As there are at least two such features in development (mentioned
-> above) pushing this series upstream will make it easier to develop
-> them independently.
+> > Ok, I got the issue. TBH, I added the device tree property based on
+> > the existing quirks for the ACPI devices. But none of the DT based
+> > platforms I'm aware of (even the legacy Qcom MSM8996 chipset
+> > released in early 2016) doesn't have any issue with D3hot. But I'm
+> > just nervous to assume it is the case for all the DT based platforms
+> > in the wild.
+> > 
+> > But to proceed further, what is your preference? Should we ammend
+> > the DT property to make it explicit that the propery only focuses on
+> > the D3hot capability of the bridge and it works as per the spec
+> > (PMCSR) or bite the bullet and enable D3hot for all the non-ACPI
+> > platforms?
+> > 
+> > We can add quirks for the bridges later on if we happen to receive
+> > any bug report.
+> 
+> I would assume all devices support D3hot via PMCSR per spec.  We can
+> add quirks if we discover something that doesn't.
 > 
 
-Show me the work-in-progress code and I will entertain this argument.
+When you say "all devices", are you referring to bridges in DT platforms or the
+bridges across all platforms?
 
-Regards,
-Bjorn
+- Mani
 
-> Bart
+> If we add annotations that "this device works correctly", we're
+> digging a hole for ourselves because it's impossible to remove those
+> annotations and they complicate all future maintenance.
 > 
-> [snip]
+> Bjorn
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
