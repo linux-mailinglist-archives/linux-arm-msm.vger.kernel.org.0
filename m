@@ -1,111 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-12621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E489868669
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 02:51:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DEF0868693
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:08:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C62A028F2CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 01:51:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73AF91F235D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 02:08:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A7763D0;
-	Tue, 27 Feb 2024 01:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9693DEAEB;
+	Tue, 27 Feb 2024 02:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOUFT3IQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p3iOFnrb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CC46139;
-	Tue, 27 Feb 2024 01:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1CC748A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 02:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708998669; cv=none; b=orSxhWI9U11K+nIv3ub4+4FJvMaOmB8Bjz0BamYl9+mur+nQvOYtaFZOn2AcVDCS78RG2pAOfaXetBz/gnTtlk+3ZTPHqF8M7+dg7BI6ftn2ANyCMo8v5OIZUE8JwYmywJxDIkh3oJm45QJWpb0yt0x6KAOa9fQU/lojFvebEr4=
+	t=1708999684; cv=none; b=h7AtQeNIOJG+IQ3Nd0wGmI56sik62wkUdVPaBKUDyiB4PtbyX5L5K+KP7L8tSjr4XtvdKi5F7AfCBHJnfy1UVBhwRXINe3+6DTPMOwM/x02PgX1WSlC5Po3yxfoWTaNG8XehfWRFOlmWTNpAwPOBnvksxWQw4M/qF3SVONNZJrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708998669; c=relaxed/simple;
-	bh=n8eF5bWyKZHUY/oPzbkl9hpUCBFpfLEQiqjx9qsZYvE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ajlTZll4et8QT+w2xcUGCG4+BFaVyy3Curvw6RnJjeC9uLaH62ReDg+BRQK3kwRjz/cMZxpEE6TJ89kRrgBGLK1nlF0PXleB7+cudmaz0Ol3kehGLzORUSDnwxWCU3ODtPMgdQCZrfIDSwCNMN9zor6dX1BqGx1BYnYT3lX/1aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOUFT3IQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CECC433F1;
-	Tue, 27 Feb 2024 01:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708998668;
-	bh=n8eF5bWyKZHUY/oPzbkl9hpUCBFpfLEQiqjx9qsZYvE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MOUFT3IQ+Up8bd1i/za3BXLI6Tq4c0lROTl4jDDnP2AJvmukLwLWVPuHoaL4Z/oCq
-	 +hi1YFbB9vyEnf9oI/ClKGaOhpkWczIWV5Gcjga7pO+ePZWxUNgOaEzW68DUJarD33
-	 TReAP227DTWpDq4JnCBUHID6klaMxEgcOA2PIDIkYGafsiTzo8Qcef6TutmtYNs94U
-	 1wQp9RlUWLPUsvlE7utk+rwxtxzJWj201kFKkoL7+KJe96afubSohSzmzV9r6tZJEa
-	 WrNu/R71fNCxxjAkC8H+ZGe2xiD80B90slLK9hczJ2E/3pOGKLHfr4eVL7Ai7kjbhQ
-	 DFEjcJNvSeeBA==
-Date: Mon, 26 Feb 2024 19:51:05 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: make dispcc cast minimal
- vote on MMCX
-Message-ID: <vxyst4gls5idecrgzjadm44xlwflfbwn5lvlss6tdru4kb2wtb@tzynrbvmdwsg>
-References: <20240226211123.4192907-1-dmitry.baryshkov@linaro.org>
+	s=arc-20240116; t=1708999684; c=relaxed/simple;
+	bh=e20cSwHxUYKaM7UrngPan3hSH8QhKOwaTuiejGgEcE4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QlvZ7WtOXlxpCE5NDj30/dDKYRVNZ1OxVWBTPBrHeV6xkc7MLz3qqaE5gH9Myp5b3wh1tSACmMhfWeGrAxnjz/SBR8yH3XeSvsVhZKfj4ISD4fSsbQqFBtgo/0LHqb3kgS5nm3scYqZc1dTRrfEOCfpDdWHGIaiaKuHD1H8CvtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p3iOFnrb; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-513031ce058so674856e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Feb 2024 18:08:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1708999681; x=1709604481; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pKgrsbDtRhtTwJSZwi3Iuzq+IR/GTbO5ckHV4gkPPIQ=;
+        b=p3iOFnrbTQr/7RKe5s/anuR/LwIioxh3JG8ddLkcRNGnuphUUYQjc3X1UEVEnL8AsJ
+         0zUMkNNHTq4iiIWeBkgBRFshqt5D4p5R5i1BqQ8FRQsIVK3ZURlaNljgkmQJ/+ddxH73
+         ImUMW6sz18ltZJqX6DsNS4pKreDclyOXsxacBfjNo6LPXkURgT6S4jS2vXjBDgWNYSs+
+         WTb87u/n1R6gRoubcjE2DP7tWm35saG4sZ+s7iC4cbGL20zh0RvI38IE0CuxrV5WHTR0
+         6s6+XcgEcRjG8raaZ8B3YmO1yAR/5ChFwb0aiQO/X+sAyWUvweSl7CEuT0+drOycake0
+         eboA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708999681; x=1709604481;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pKgrsbDtRhtTwJSZwi3Iuzq+IR/GTbO5ckHV4gkPPIQ=;
+        b=Zj14/4rd8DA9K3vf8W798apVeS2kK1CMHWrrZonm/icpeOAxFxEPaL0SN/maMCikUU
+         e1CjilzapHZUZJg6jPg69/OX9DCgXI7PSiePMRb45klhc+Zklkf5w58r9Pdrpx6/MxJF
+         r2BBcAo1l/ThaJEj6YgfCNXoaq+OhjCliD9r6nUQpV2Xvp/YpLy2WfcmQwPQRIcDMl+M
+         nXZ8HcbrY0++PPhM84VIWwRBg801HLNHkC0GjVxMGkB/3bxNBvlNqNbJwlX1khBXXRpr
+         TjjX2j+3Ip/iPX8UEIgBPCcLRA/DZ0MdRfJGpxR7+R+nk3UgjeTooPdf+itbO9evKYef
+         2tJg==
+X-Gm-Message-State: AOJu0YzOOI/0kysYs05gdiSJkBlhfd99Qz1UuOwtG8ob/Qoa2wMNCZX7
+	MUnaSsuq/aGc7W/weqFHAsbHg577yy17LNM2B1pnG2nsPboMxeb/v9KwQ11TRsQ=
+X-Google-Smtp-Source: AGHT+IGXqMoQl1y3QKQ7aoLgd/YCYjjNvpDVJY5uZK5Inh7UBk//uGb/IfQsf0Y8r17C33Kt0AmV4Q==
+X-Received: by 2002:a05:6512:324f:b0:512:b84e:e7a1 with SMTP id c15-20020a056512324f00b00512b84ee7a1mr4873359lfr.5.1708999680724;
+        Mon, 26 Feb 2024 18:08:00 -0800 (PST)
+Received: from [172.30.204.180] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id r28-20020ac25a5c000000b00512e40ef364sm1035102lfn.108.2024.02.26.18.07.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Feb 2024 18:08:00 -0800 (PST)
+Message-ID: <615042d9-4a8c-45c2-be17-756e9635a8af@linaro.org>
+Date: Tue, 27 Feb 2024 03:07:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240226211123.4192907-1-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
+Content-Language: en-US
+To: quic_bjorande@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Stephen Boyd <swboyd@chromium.org>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>,
+ stable@vger.kernel.org
+References: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 26, 2024 at 11:11:23PM +0200, Dmitry Baryshkov wrote:
-> Add required-opps property to the display clock controller. This makes
-> it cast minimal vote on the MMCX lane to prevents resets caused by the
-> DisplayPort / panel probing.
+
+
+On 2/27/24 02:49, Bjorn Andersson via B4 Relay wrote:
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-
-Interesting wording, this is exactly what e3e56c050ab6 ("soc: qcom:
-rpmhpd: Make power_on actually enable the domain") was supposed to do
-(cast minimal enabled vote).
-
-And sure enough, there's a bug in my patch:
-https://lore.kernel.org/linux-arm-msm/20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com/T/#u
-
-Regards,
-Bjorn
-
-> Fixes: 57d6ef683a15 ("arm64: dts: qcom: sc8280xp: Define some of the display blocks")
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
+> the domain")' aimed to make sure that a power-domain that is being
+> enabled without any particular performance-state requested will at least
+> turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
+> required-opps properties.
+> 
+> But in the event that aggregation happens on a disabled power-domain, with
+> an enabled peer without performance-state, both the local and peer
+> corner are 0. The peer's enabled_corner is not considered, with the
+> result that the underlying (shared) resource is disabled.
+> 
+> One case where this can be observed is when the display stack keeps mmcx
+> enabled (but without a particular performance-state vote) in order to
+> access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
+> is flushed the state of the peer (mmcx) is not considered and mmcx_ao
+> ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
+> several times, but has been painted over in DeviceTree by adding an
+> explicit vote for the lowest non-disabled performance-state.
+> 
+> Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
+> Cc:  <stable@vger.kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index febf28356ff8..ec85c81f65cd 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3938,6 +3938,7 @@ dispcc0: clock-controller@af00000 {
->  				 <0>,
->  				 <0>;
->  			power-domains = <&rpmhpd SC8280XP_MMCX>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
->  
->  			#clock-cells = <1>;
->  			#power-domain-cells = <1>;
-> @@ -5034,6 +5035,7 @@ dispcc1: clock-controller@22100000 {
->  				 <0>,
->  				 <0>;
->  			power-domains = <&rpmhpd SC8280XP_MMCX>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
->  
->  			#clock-cells = <1>;
->  			#power-domain-cells = <1>;
-> -- 
-> 2.39.2
-> 
+> This issue is the root cause of a display regression on SC8280XP boards,
+> resulting in the system often resetting during boot. It was exposed by
+> the refactoring of the DisplayPort driver in v6.8-rc1.
+> ---
+
+Very good find, thanks!
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 
