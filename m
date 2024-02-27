@@ -1,141 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-12628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 806C38687AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 04:19:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F34A8687C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 04:29:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3640C1F2303B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:19:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE5122835FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:29:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C43311B28D;
-	Tue, 27 Feb 2024 03:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331B71B28D;
+	Tue, 27 Feb 2024 03:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZBA3rHCJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ax96dnXx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0761EB31;
-	Tue, 27 Feb 2024 03:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3DE12B75;
+	Tue, 27 Feb 2024 03:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709003957; cv=none; b=JCZQnyb2dq/k0ObnRO1FQOSigxm+icxnW8pZYR4DezmgsUfypntqLKTM5YQ0XVlWg0qGIiiUizO7Ij9sdT6oqsGJdTHf215NELcFmrJJyUDpQYjj4Pc17oKyl4PNG4Xeihq+xNxWQo5VM0ub+PVv2KM3dQ86BDTZko9xGDTppEs=
+	t=1709004587; cv=none; b=q5/w+aKImzvzfbjr9jqe7LJQAXDEquoXrKPezsJx7D/hP+BfBF7VrOAb03P08wDFf8WgMldezMeNZNFI6LLlAMgpHMl5lqPN7ZAI8usEMg5rwc1d3USE3VydjhnBpZ58PPFjP5nNqqxrg59671i3C9aA7RKdJo7/qh5ZRS20Aa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709003957; c=relaxed/simple;
-	bh=HyQeAkfIsrXp7lnK7bPc8oR0V4wM6K6OMlQPcGXMiCA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bMsCJnmZ6ayBj6psaR+ijZew/WlshXS6p57HzgymN8azXpgOPEI1Vw/l/pWXwJKJe5SPkR0sBIWsPIaaMecc+vZhOQCksyLmHV/kHEdHWTus1KdIymPhkc53soKf80x+pj83FgmEWo/RThRFnTOxmXMwgQEOHjwWUqjFylluGnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZBA3rHCJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41QNsnxr009857;
-	Tue, 27 Feb 2024 03:19:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=y2+n+K4VEk1Ekg1azTwyrDXlJqc1pengbDN8GywlNTw=; b=ZB
-	A3rHCJaWDsBiegF2zvodsukg1pD1JG4gPWKXNA3srNI2ikI5wRk7yRFRWelAVHIM
-	HqcYH9wkb8lC0wd5Vy5y4KUTtg8Nafx8UaboGI8VUWW3rdlRzl9eTpapvwyGwiEb
-	DNRmO1CXDGLmgnJIlIxQlyjjHun/Maoa5l4pv3XdLt7aILg5uPIVQl7FKqmktppm
-	CBf7wX/rHXyZ0UTTA6l3eOXaKlEZeAGCloZ+TrsT1H/EKUd83PdspvRhTRxX52EI
-	Ndldz8e+1CBAtUmTjaVd/sX5iEr8gfOnrixvEYDBOyTJODcUIPXS5XfC0w696rsN
-	BKLYER30F4DanIvfav5g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wgkxq2r7k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 03:19:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41R3J7ae006121
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 03:19:07 GMT
-Received: from [10.110.56.192] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
- 2024 19:19:06 -0800
-Message-ID: <adb2956b-c600-4e86-8c56-87ceb70162d6@quicinc.com>
-Date: Mon, 26 Feb 2024 19:19:05 -0800
+	s=arc-20240116; t=1709004587; c=relaxed/simple;
+	bh=PbO3bY7v829gg1IDZCPUZSdq4KzbKx2n62G+pK1sFDI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dzsOUqLvl3Dkht8qyQb7yWO8oqMjPx3OJpLkQA9uSpZq+aO7ITix/abdLH4hf+bWHTmZku5dX5KeVufDlOPOiDnc44EOaZwiN/qsF7B867KfZ/uzERwg3m94yQVBULKCcfoXF4QQ4Xhv37ffsQrs2dHgc4RbGZaigojiCIGLzEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ax96dnXx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7A5C43394;
+	Tue, 27 Feb 2024 03:29:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709004586;
+	bh=PbO3bY7v829gg1IDZCPUZSdq4KzbKx2n62G+pK1sFDI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Ax96dnXxkxu8RHIhyoshWA9FfATjtaSk3DhZT3/qR9Skj6FA4aKfp6EIR71GOzDoq
+	 EeS0LvagwoVql7+JFIkzthyvX+pIGLO1uXak5Ua9va20+RFdvM2R1Ys4CZH+F186/5
+	 kFVTbsVHaCZjaMffNdGdFHpzf4u/Jo8rTmh+mZkw3Og/s8p45+iGBfYCkVIgK3BPQp
+	 QCs1JTowZKml5nIzR8iPlstsbXU5H/KD0XFttphrkc9cG+1mb0Z1sDppKvSJbXTHxz
+	 9cIZC1L1sc3H5IRpvWzqABMEL+/qAYEuPP6NqJiu9lBSHMkci3UNM7R6ayHHC88Gdh
+	 5lgeHDWLlOzPw==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d29111272eso14222601fa.0;
+        Mon, 26 Feb 2024 19:29:46 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXRzojpZw90iUcyDay+AMEFTwxjB9Aq0GdXSxu4k9kqW9kbtOV8mmzcCXlcEtPS+NCM2gfsTZHM86Q/kehTuxxeiRahHz2W7j6v6/Lg8fdLjh8zHY4GYjbFUNML3Vv+NoDx5sqRxv8FOKn8WQ==
+X-Gm-Message-State: AOJu0Yw1PLILXI0mTuP1CoSWaReRq6Um40dTNxYgIUVwK86ElV4sXW8L
+	UVGw7EmR2d30V85uCY2RGSVmr5o/DE1PACcc3IPRO9XxD2KOIKhST0HkDby2kHdEN8nR4ML7ktm
+	B9RnKUyh3K2wqNDJUF7YnCMoTVxQ=
+X-Google-Smtp-Source: AGHT+IEN5BN0+IfYhtY5KkvP3G7KdFLbDw6kvjAQ7IBhqxFHBEWQjHjvlLnOT09TheBp+TnxJKyTZut06ED13DYqfMA=
+X-Received: by 2002:a2e:3316:0:b0:2d1:26f0:8167 with SMTP id
+ d22-20020a2e3316000000b002d126f08167mr5270312ljc.35.1709004585013; Mon, 26
+ Feb 2024 19:29:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Fix enabled_corner aggregation
-Content-Language: en-US
-To: <quic_bjorande@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ulf Hansson
-	<ulf.hansson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Johan Hovold <johan@kernel.org>,
-        <stable@vger.kernel.org>
-References: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240226-rpmhpd-enable-corner-fix-v1-1-68c004cec48c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qZ-77PHJpcQJTzmczVJLxZopCVLGS0C9
-X-Proofpoint-ORIG-GUID: qZ-77PHJpcQJTzmczVJLxZopCVLGS0C9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- spamscore=0 clxscore=1011 malwarescore=0 impostorscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402270025
+References: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org>
+ <CAK7LNAQDhpAirfbb1zExH1auWkMPzncA9XpSrkv4odXOWZdQzA@mail.gmail.com> <CAA8EJpotuep1MDmNvNAYAC98peK9GFUVeUJ8G-GBwunSPrsUGQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpotuep1MDmNvNAYAC98peK9GFUVeUJ8G-GBwunSPrsUGQ@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Tue, 27 Feb 2024 12:29:08 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATwM_8imfbYZKEL5WjvxgAgu1bY3p74CiP69H4QxO9B1w@mail.gmail.com>
+Message-ID: <CAK7LNATwM_8imfbYZKEL5WjvxgAgu1bY3p74CiP69H4QxO9B1w@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/12] drm/msm: add support for regenerating shipped
+ xml.h headers
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Feb 26, 2024 at 7:49=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+
+> Could you please specify how you tried to compile the code? I can see
+> warnings from headrgen2, but I'm really puzzled by the errors from the
+> MSM driver itself.
 
 
 
-On 2/26/2024 5:49 PM, Bjorn Andersson via B4 Relay wrote:
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> Commit 'e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable
-> the domain")' aimed to make sure that a power-domain that is being
-> enabled without any particular performance-state requested will at least
-> turn the rail on, to avoid filling DeviceTree with otherwise unnecessary
-> required-opps properties.
-> 
-> But in the event that aggregation happens on a disabled power-domain, with
-> an enabled peer without performance-state, both the local and peer
-> corner are 0. The peer's enabled_corner is not considered, with the
-> result that the underlying (shared) resource is disabled.
-> 
-> One case where this can be observed is when the display stack keeps mmcx
-> enabled (but without a particular performance-state vote) in order to
-> access registers and sync_state happens in the rpmhpd driver. As mmcx_ao
-> is flushed the state of the peer (mmcx) is not considered and mmcx_ao
-> ends up turning off "mmcx.lvl" underneath mmcx. This has been observed
-> several times, but has been painted over in DeviceTree by adding an
-> explicit vote for the lowest non-disabled performance-state.
-> 
-> Fixes: e3e56c050ab6 ("soc: qcom: rpmhpd: Make power_on actually enable the domain")
-> Reported-by: Johan Hovold <johan@kernel.org>
-> Closes: https://lore.kernel.org/linux-arm-msm/ZdMwZa98L23mu3u6@hovoldconsulting.com/
-> Cc:  <stable@vger.kernel.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> This issue is the root cause of a display regression on SC8280XP boards,
-> resulting in the system often resetting during boot. It was exposed by
-> the refactoring of the DisplayPort driver in v6.8-rc1.
-> ---
->   drivers/pmdomain/qcom/rpmhpd.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
+I applied this patch set onto v6.8-rc6.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+masahiro@zoe:~/ref/linux(testing7)$ git log --oneline  -15
+40eb59f162cc (HEAD -> testing7) drm/msm: sync shipped headers database
+ae850f45f243 drm/msm: tie regeneration of shipped headers
+45401d4034ef drm/msm: import XML registers database
+491e4d41308e drm/msm/headergen: generate _shipped files
+6766c628c097 drm/msm/headergen: don't output full file paths
+e48e9a8eaf21 drm/msm/headergen: use asprintf instead of custom aprintf
+b12d6fb5d2a0 drm/msm/headergen: import source files from freedreno/envytool=
+s
+4699358f5c5b drm/msm: use _shipped suffix for all xml.h files
+295fcf923852 drm/msm/dsi: drop mmss_cc.xml.h
+a15c0faba637 drm/msm/hdmi: drop qfprom.xml.h
+6811afe14414 drm/msm/mdp5: add writeback block bases
+feee4929582e kbuild: create destination directory for _shipped handling
+d206a76d7d27 (tag: v6.8-rc6, origin/master, origin/HEAD, master) Linux 6.8-=
+rc6
+e231dbd452a7 Merge tag 'bcachefs-2024-02-25' of
+https://evilpiepirate.org/git/bcachefs
+5197728f8182 bcachefs: fix bch2_save_backtrace()
+
+
+I see the build errors with arm64 defconfig.
+
+[build step]
+
+  $ git clean -fdx
+  $ make ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu- defconfig
+  $ make ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu-  -j$(nproc)
+
+
+
+
+
+
+As I commented in 05/12, -I$(srctree)/$(src) is lost.
+
+
+I was able to build it with the following fix-up.
+
+
+
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ ccflags-y :=3D -I $(srctree)/$(src)
+-ccflags-y :=3D -I $(obj)/registers
++ccflags-y +=3D -I $(obj)/registers
+ ccflags-y +=3D -I $(srctree)/$(src)/disp/dpu1
+ ccflags-$(CONFIG_DRM_MSM_DSI) +=3D -I $(srctree)/$(src)/dsi
+ ccflags-$(CONFIG_DRM_MSM_DP) +=3D -I $(srctree)/$(src)/dp
+
+
+
+
+
+
+Better fixes would be to use #include "" properly.
+It should be relative to the source file.
+
+
+
+
+
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+index 592b296aab22..cf878490abd0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+@@ -9,7 +9,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/notifier.h>
+ #include <linux/soc/qcom/qcom_aoss.h>
+-#include "msm_drv.h"
++#include "../msm_drv.h"
+ #include "a6xx_hfi.h"
+
+ struct a6xx_gmu_bo {
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index c9c55e2ea584..3a109453db31 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2,9 +2,9 @@
+ /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
+
+
+-#include "msm_gem.h"
+-#include "msm_mmu.h"
+-#include "msm_gpu_trace.h"
++#include "../msm_gem.h"
++#include "../msm_mmu.h"
++#include "../msm_gpu_trace.h"
+ #include "a6xx_gpu.h"
+ #include "a6xx_gmu.xml.h"
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index bc14df96feb0..007788bf38ce 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -12,7 +12,7 @@
+ #include <linux/firmware.h>
+ #include <linux/iopoll.h>
+
+-#include "msm_gpu.h"
++#include "../msm_gpu.h"
+
+ #include "adreno_common.xml.h"
+ #include "adreno_pm4.xml.h"
+
+
+
+
+
+
+
+
+
+--=20
+Best Regards
+Masahiro Yamada
 
