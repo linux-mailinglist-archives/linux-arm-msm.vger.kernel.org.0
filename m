@@ -1,194 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-12625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F5A186875A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:43:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D752386879B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 04:14:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82E3E1C23106
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 02:43:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 716C01F24A33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 03:14:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5148B12E4D;
-	Tue, 27 Feb 2024 02:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8180B182BB;
+	Tue, 27 Feb 2024 03:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K3P+HLrW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ssg/Qxyh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB083F9D6;
-	Tue, 27 Feb 2024 02:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5F51EB5F;
+	Tue, 27 Feb 2024 03:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709001832; cv=none; b=BVwZ8UkOcndJ/8eW6H14JCvtmMgQdMXiqflD72SCpzIPJ+lqy+OltXDJgvPlq5XI6VRLrrl3sziD67XjIH0fkZWGKUWHE8HoqyBmbuZmMw4rBEminzPHsBbMOFWjCvHzH711tUQiQfk8KEGsSnyIX0VSkCSqq6NuAcmhRFrwsnw=
+	t=1709003662; cv=none; b=rcbUNJEx3dKrHPTaRFrFfGnmed5IGUi5rvdsZaDTCM0NRhItZFiGxGOtuxrlqUa/pFNs4aW/8heARld0vCyh/vrp37Ey7RmhUW5MpeXzrG87wjjeWTsJPXaaWUENpoc1H63Jd2Mpd/Vks86csQS2xlc1clyXQ/AsxoOjF6i5+OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709001832; c=relaxed/simple;
-	bh=0rBaYrhjjbDQhp+AZBedM5oqy0rSlMucmIfhYXoIJdg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ifIaDU2n2NWlBEqKcWhisPDVHsYE1wdFTbjUu1VM0FEY3eNfQ8V2zgdq9xbjPcsypleOTKbUldgveGr4sjwr+tnGLS1AbDAjCLZx+WFilJssqj/uDm/B+9GOso4lY7lKnOiHyxfBIR3NicKXxzAu3K4nC6iJLa0MvSOTfQ2wnKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K3P+HLrW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41R2ZaNO017304;
-	Tue, 27 Feb 2024 02:43:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=X6Qij/Sg8Qx+ON/9hRVN3E2aeuPek8GuhZQMBxJyBdk=; b=K3
-	P+HLrWOoqZ37D0j+6pgOhvyMG8VpSmJPZ7OHRQue0DmfzaWdAkBkvdLb/EyRaPP5
-	c1izvJkoR9W8lgOI3i90MCp0+YUh/XAGTzrxMi1S1k/7f4ZA3paEyCPwPt1e+hr2
-	1rhfq3YJa9FbpYozXVtOhywJnwb95wMZIU/sCLafUd3i1bNXAk0qmuiL49II0+Qo
-	95n2sziFOJcGr+6PHwoUhLNNahPJf5l4C3RUi2m7jDqg+jeHxMNQUxvHlccCxe+n
-	147uKW1MbCtyVjhxVuZZVfqkU7T+xoJ0uoyBc9DCX7OCRFQlxqvXvDh822X2vV98
-	+GT2kEDEqP+hWhotKG4Q==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wgwjvhccj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 02:43:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41R2hSQL028221
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 02:43:28 GMT
-Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 26 Feb
- 2024 18:43:25 -0800
-Message-ID: <c4b7ec62-7d2d-438b-904d-d935e09e517c@quicinc.com>
-Date: Tue, 27 Feb 2024 10:43:22 +0800
+	s=arc-20240116; t=1709003662; c=relaxed/simple;
+	bh=+NW+lDyow4SyOhdect9IQeTUOPcisVXIrgGQDYWrvvk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uPiI5Y7w0BpoPRJBvseKjbZAsefscBLMSinfFkE6EX0FEtznZPpTNxBL7rKmAJq5oRfi3dFJwXvmOrTMp/hiaHdzQsQ8LmloWd4SPecMOo01GSaWn8WhmYchXnsnXEoCMDktxHGoMCcH5EP8xlzhEHoaoMRJ5CtyHAdbITWZsYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ssg/Qxyh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF34C43394;
+	Tue, 27 Feb 2024 03:14:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709003661;
+	bh=+NW+lDyow4SyOhdect9IQeTUOPcisVXIrgGQDYWrvvk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Ssg/QxyhOJaeXFkrLJMUmAPDsXzwnBE39E8CbEID4AG+W2Lrcs0+nNu7jmx0PXCxF
+	 cnbeHjJ2SUUMjwauBStXvT5oqhuwl+v6R7c/65O4crURWAjGoIG22VNzPM5wlYBxTC
+	 8RNm0ixH0fdmzjPZFx1ToA7AKAsoY7v3onj4O/PjhYzQ+pV5nQ5FCM06JVhiW9BLgM
+	 fvqymuS0NHMjw1uv4TldwG+GVT0efutR1R4XYCijr5OQwgzD9PrSXMr3PBctISK76m
+	 VwAAeuTulVMVcsczI1+bN8+PB7Fop1CuC2BNuBppAYaGyzdqBqcX27lC0FvJQze6GK
+	 RW9Tp/Cv4uYqA==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d2991e8c12so2330241fa.0;
+        Mon, 26 Feb 2024 19:14:21 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUXTGVCFJYMynt5t1J926V+Io5eFQGskml6PQBfWIKRGBdIzJxL8O70t2GkDt/lFBDJ7ehvI6TtP4s5QqC+I+3f+J1FX7xU4JR6i02jubAf733+zoq2v7XlY9VsYXYpBR+Ujo376N3ZzbQw5A==
+X-Gm-Message-State: AOJu0YyosyE1lyGXQ6STsjcnw91VXEib2ykMBmudAJrxTJdjZ2GUQl+y
+	ru97x6jkKy8tpv4Yx2J7esA5DrOdow5dLGhGjpeaKxGmyhnGB5oDWdwzE2uhx1wrxvxxnkJ7rJ3
+	YKgMFbnDENVJOSuNjBl7W5cVzxyw=
+X-Google-Smtp-Source: AGHT+IHZR4anyPKBr3MB8qJcW7vCCqkYdpYN/Q5FVYBf6CE/Thk6VlcOx5h6wQFjPwPvyD+a8+DWJDi/ANHG223b+SE=
+X-Received: by 2002:a2e:712:0:b0:2d2:8051:3248 with SMTP id
+ 18-20020a2e0712000000b002d280513248mr2491810ljh.18.1709003660412; Mon, 26 Feb
+ 2024 19:14:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ath11k allocation failure on resume breaking wifi until power
- cycle
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Vlastimil Babka <vbabka@suse.cz>,
-        Jeff Johnson
-	<quic_jjohnson@quicinc.com>,
-        Takashi Iwai <tiwai@suse.de>, Jiri Slaby
-	<jirislaby@kernel.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        Linux Wireless
-	<linux-wireless@vger.kernel.org>,
-        <ath11k@lists.infradead.org>, LKML
-	<linux-kernel@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
-References: <96481a45-3547-4d23-ad34-3a8f1d90c1cd@suse.cz>
- <0994ae16-8174-4a04-b454-1974b16bc106@quicinc.com>
- <20240222054739.GG3374@thinkpad>
- <38c36d16-9cc1-4f03-b758-4a3ba90f8aa4@suse.cz>
- <abc0c24f-2137-41eb-bb99-80aea8dacdb2@quicinc.com>
- <a36b35a9-fb37-4afe-a718-a47dfe658cb5@suse.cz>
- <34123ee0-26c9-4240-8d58-aba02f7c66b9@quicinc.com>
- <20240226114307.GA8422@thinkpad>
-From: Baochen Qiang <quic_bqiang@quicinc.com>
-In-Reply-To: <20240226114307.GA8422@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: g2R9GFnrcCSVv5Pci-Gf-CbRMGV8Ur5E
-X-Proofpoint-ORIG-GUID: g2R9GFnrcCSVv5Pci-Gf-CbRMGV8Ur5E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- clxscore=1015 adultscore=0 bulkscore=0 phishscore=0 impostorscore=0
- mlxscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402270021
+References: <20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org> <20240226-fd-xml-shipped-v1-5-86bb6c3346d2@linaro.org>
+In-Reply-To: <20240226-fd-xml-shipped-v1-5-86bb6c3346d2@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Tue, 27 Feb 2024 12:13:43 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARi+VwYKfVy3c2B4NKJq_VxMKQE8t8fWBF4qXJfNYA4JQ@mail.gmail.com>
+Message-ID: <CAK7LNARi+VwYKfVy3c2B4NKJq_VxMKQE8t8fWBF4qXJfNYA4JQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 05/12] drm/msm: use _shipped suffix for all xml.h files
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Feb 26, 2024 at 11:11=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Move non-GPU xml.h files into the ./registers subdir and add the
+> _shipped suffix. The GPU files are left intact for now, since they
+> require processing via a gen_headers.py, while display headers are
+> regenerated using headergen2
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/Makefile                       | 53 ++++++++++++++++=
+++----
+>  .../{dsi/dsi.xml.h =3D> registers/dsi.xml.h_shipped} |  0
+>  .../dsi_phy_10nm.xml.h_shipped}                    |  0
+>  .../dsi_phy_14nm.xml.h_shipped}                    |  0
+>  .../dsi_phy_20nm.xml.h_shipped}                    |  0
+>  .../dsi_phy_28nm.xml.h_shipped}                    |  0
+>  .../dsi_phy_28nm_8960.xml.h_shipped}               |  0
+>  .../dsi_phy_7nm.xml.h_shipped}                     |  0
+>  .../hdmi.xml.h =3D> registers/hdmi.xml.h_shipped}    |  0
+>  .../mdp4.xml.h =3D> registers/mdp4.xml.h_shipped}    |  0
+>  .../mdp5.xml.h =3D> registers/mdp5.xml.h_shipped}    |  0
+>  .../mdp_common.xml.h_shipped}                      |  0
+>  .../sfpb.xml.h =3D> registers/sfpb.xml.h_shipped}    |  0
+>  13 files changed, 43 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 543e04fa72e3..89c9f5f93b85 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -1,5 +1,6 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  ccflags-y :=3D -I $(srctree)/$(src)
+> +ccflags-y :=3D -I $(obj)/registers
+
+
+This accidentally overwrites ccflags-y defined above.
+So, "-I $(srctree)/$(src)" is lost.
 
 
 
-On 2/26/2024 7:43 PM, Manivannan Sadhasivam wrote:
-> On Mon, Feb 26, 2024 at 05:11:17PM +0800, Baochen Qiang wrote:
->>
->>
->> On 2/26/2024 4:45 PM, Vlastimil Babka wrote:
->>> On 2/26/24 03:09, Baochen Qiang wrote:
->>>>
->>>>
->>>> On 2/23/2024 11:28 PM, Vlastimil Babka wrote:
->>>>> On 2/22/24 06:47, Manivannan Sadhasivam wrote:
->>>>>> On Wed, Feb 21, 2024 at 08:34:23AM -0800, Jeff Johnson wrote:
->>>>>>> On 2/21/2024 6:39 AM, Vlastimil Babka wrote:
->>>>>>>> Hi,
->>>>>>>>
->>>>>>>> starting with 6.8 rc series, I'm experiencing problems on resume from s2idle
->>>>>>>> on my laptop, which is Lenovo T14s Gen3:
->>>>>>>>
->>>>>>>> LENOVO 21CRS0K63K/21CRS0K63K, BIOS R22ET65W (1.35 )
->>>>>>>> ath11k_pci 0000:01:00.0: wcn6855 hw2.1
->>>>>>>> ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
->>>>>>>> ath11k_pci 0000:01:00.0: fw_version 0x1106196e fw_build_timestamp 2024-01-12 11:30 fw_build_id WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37
->>>>>>>>
->>>>>>>> The problem is an allocation failure happening on resume from s2idle. After
->>>>>>>> that the wifi stops working and even a reboot won't fix it, only a
->>>>>>>> poweroff/poweron cycle of the laptop.
->>>>>>>>
->>>>>>
->>>>>> Looks like WLAN is powered down during s2idle, which doesn't make sense. I hope
->>>>>> Jeff will figure out what's going on.
->>>>>
->>>>> You mean the firmware is supposed to power it down/up transparently without
->>>>> kernel involvement? Because it should be powered down to save the power, no?
->>>> Let me clarify: from backtrace info, seems you are using a kernel with
->>>> the hibernation-support patches [1] applied, which are not accepted yet
->>>> to mainline kernel or even
->>>> git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git.
->>>
->>> Oh, you're right. Sorry for confusing you all. The rc kernel builds we have
->>> for openSUSE have nearly no non-upstream patches so it didn't really occur
->>> to me to double check if there might be in the area.
->>>
->>> Seems Takashi (Cc'd) added them indeed to make hibernation work:
->>> https://bugzilla.suse.com/show_bug.cgi?id=1207948#c51
->>>
->>> But then, why do they affect also s2idle, is it intentional? And why I only
->> Yes, it's intentional. When suspend/resume, ath11k does the same for either
->> a s2idle suspend or a deep one.
->>
-> 
-> That's a terrible idea for usecases like Android IMO. s2idle happens very often
-> on Android platforms (screen lock) and do you want to powerdown the WLAN device
-> all the time?
-I am not familiar with Android case. Is WoWLAN enabled in that case? I 
-am asking this because if WoWLAN is enabled ath11k goes another path and 
-only calls mhi_pm_suspend()/resume() instead of mhi_power_down()/up().
+It should be
 
-> 
-> Even though it offers power saving, I'm worried about the latency and possible
-> teardown of the chipset. Later is only valid if the chipset undergoes complete
-> power cycle though.
-> 
-> - Mani
-> 
->>> started seeing the problems in 6.8, the patches are there since August.
->>>
->>>> So this is why you see WLAN firmware is powered down during suspend.
->>>>
->>>> [1]
->>>> https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
->>>>
->>>>>
->>>>> But I just found out that when I build my own kernel using the distro config
->>>>> as base but reduced by make localmodconfig, the "mhi mhi0: Requested to
->>>>> power ON" and related messages don't occur anymore, so there's something
->>>>> weird going on.
->>>> Here your own kernel doesn't include the hibernation-support patches, right?
->>>
->>> Right.
->>>
->>>
->>>
-> 
+  ccflags-y +=3D -I $(obj)/registers
+
+
+
+I see several build errors.
+
+
+
+
+
+--=20
+Best Regards
+Masahiro Yamada
 
