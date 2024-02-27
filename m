@@ -1,148 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-12765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72865869EB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:15:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30F87869EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 19:20:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 124351F23017
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:15:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF56628FBEC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Feb 2024 18:20:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D994F5E6;
-	Tue, 27 Feb 2024 18:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76C28149E08;
+	Tue, 27 Feb 2024 18:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="g3bMKRZR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DXFGhH+D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB33E145354
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 18:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0655F14900A;
+	Tue, 27 Feb 2024 18:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709057705; cv=none; b=h5G8rWoePlrA6ec+KzM96yj3GXSw5FUdbAVID+bQbSwS44oBuLxDTl6R7FyErwZ39Y4RMpOQVWy7UJK2eWt4HPQHABky2uU1uj5Dc7LKnGJX3iiUq3uxBdGJYVlNbEOyW2iRzUW9Ae0kIz6SmJtAQr+aqg6vxukvuTN2j2eYnZY=
+	t=1709057848; cv=none; b=N9xYvX/dx8O7/jzJ1nGDYPyDq2+YC/x+X1UfoZXHXdDO9bB+H3oFkMmBFs2DWVklFfBmgkceJCroy7WbcogtMgJLdJqll3hiPogfZTtKqqonrz5gqMeM70wVOSScaNgNO62MD3uPdXPI5x/uIsMQaAhfHxRRFNKxLW5YQ4Umw9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709057705; c=relaxed/simple;
-	bh=+YGlht2j8DKNiyJTxizt7m7K6VT5e57wafvM3lFhmI0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WYef12y/VDOjSoZSZsnknwL+aMGpXx8bDRozk7+xZkSdGcHerPaHTsTPS4AL4GCNQyOMrSXZdP9goWH6NLliHEmzOSjfUi2b3spd+UWVVR1v2+gve9MmL2P6tocrtq+fkJLwLjd5PlPvpFJLW9urq4Rf6yol4WVGVOjFvihSslM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=g3bMKRZR; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1709057701;
-	bh=+YGlht2j8DKNiyJTxizt7m7K6VT5e57wafvM3lFhmI0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=g3bMKRZR8z46141kcoZ+/3ISYqCWcnf2sDx309BP6HtZ5OMyM1xvUwcax9hAxy/B5
-	 91N9GfiPOvoR2alFxNnQpooyTqAtUmAs7HqMK4pX8L7whYcPnyjZUgKN1r8u4hdUH+
-	 UJyn17e6HXA+5rPlTmHYhxPngj5uSP3icELO1rnNY5dGY7bN42Ot7nvW4LvB+ot4SJ
-	 CAUG+el9HsuiCmXP9KodUlbfOb8o2QlAVUATRalEsdXHFC1EaJ+nxfqwvOz5fR26aK
-	 b7fTsR1RrX7ubrIkRzSSVbLTTyjQTwLI9hmQapb+GkZp7FmwoVVsFrg2CWGAe2iGdc
-	 bLXAlX4YE+fZQ==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dmitry.osipenko)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CDEBB378000B;
-	Tue, 27 Feb 2024 18:14:59 +0000 (UTC)
-Message-ID: <d854f70b-1d62-4da7-bfbd-2184456d1d25@collabora.com>
-Date: Tue, 27 Feb 2024 21:14:57 +0300
+	s=arc-20240116; t=1709057848; c=relaxed/simple;
+	bh=soFbcjoCMKHiXlrF0ZQPg4FHkybdwxlXBqaSN5M+K2Q=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ar6AvSYoPurJVYF8yYr+5AeQ4M3M+tJLtq0ZbMO/xIdGeM/ze7LOU0+FXm8IdLYjAGFaZdQMv7RhonpXfcZF8REQY94NuZOxuj4TAT72RHpPL7VoYvh0fKRrbe7Hn9tGpm/AIuFm7CyivtxBU2eInvtd797IP9YOF+DQYiOv7u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DXFGhH+D; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41REtsiv000632;
+	Tue, 27 Feb 2024 18:17:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Ys14KMU
+	3oPL3LFpr7OW5dhv3rtV7a6GsUM3wxhdIW0k=; b=DXFGhH+D6S1kxFJI9PODwv8
+	1s1XKIsI5H9BTq2zg2cwdNj7VJfQBCYZscWyQItG5pRjTUNlUD131q3IfMvm1Kyl
+	7LmxSowCAdkTk/v3JZgFigwEUgyXbb0WhZaWXfGxyxKKyuihYkbxHwt2qc68nNy/
+	yUH+N2AH4jGjbVuu41UlFb+0xA0DY/ov0sAMNNsWso5zJGeZsch2bej7MhpnIC00
+	8swAC48k5ifvU0uM8QQDdOgGCUMY/xVN44oOOCxwGm0xtzT0Eqqfl+afoHG5zivz
+	+kurhrDtLh662/StlV57DKPYJEYqyns8SPn13w43rS9IzcPJ8S3YYP+vWTXiW2w=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh8auhwng-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 18:17:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RIGsSd010056
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Feb 2024 18:16:54 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 27 Feb 2024 10:16:50 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
+        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
+        <pierre.gondois@arm.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V3 0/2] firmware: arm_scmi: Register and handle limits change notification
+Date: Tue, 27 Feb 2024 23:46:30 +0530
+Message-ID: <20240227181632.659133-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] drm: Fix reservation locking for pin/unpin and
- console
-To: Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
- airlied@gmail.com, mripard@kernel.org, maarten.lankhorst@linux.intel.com,
- christian.koenig@amd.com, sumit.semwal@linaro.org, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
- marijn.suijten@somainline.org, suijingfeng@loongson.cn, kherbst@redhat.com,
- lyude@redhat.com, dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com,
- alexander.deucher@amd.com, Xinhui.Pan@amd.com, zack.rusin@broadcom.com,
- bcm-kernel-feedback-list@broadcom.com
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
- amd-gfx@lists.freedesktop.org
-References: <20240227113853.8464-1-tzimmermann@suse.de>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <20240227113853.8464-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 07iWVyjgIa2u2zJb_dWB6XGTugUnQELX
+X-Proofpoint-GUID: 07iWVyjgIa2u2zJb_dWB6XGTugUnQELX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_05,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=753 clxscore=1015
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402270142
 
-Hello,
+This series registers for scmi limits change notifications to determine
+the throttled frequency and apply HW pressure.
 
-Thank you for the patches!
+V3:
+* Sanitize range_max received from the notifier. [Pierre]
+* Drop patches 1/2 from v2. [Cristian]
+* Update commit message in patch 2.
 
-On 2/27/24 13:14, Thomas Zimmermann wrote:
-> Dma-buf locking semantics require the caller of pin and unpin to hold
-> the buffer's reservation lock. Fix DRM to adhere to the specs. This
-> enables to fix the locking in DRM's console emulation. Similar changes
-> for vmap and mmap have been posted at [1][2]
-> 
-> Most DRM drivers and memory managers acquire the buffer object's
-> reservation lock within their GEM pin and unpin callbacks. This
-> violates dma-buf locking semantics. We get away with it because PRIME
-> does not provide pin/unpin, but attach/detach, for which the locking
-> semantics is correct.
-> 
-> Patches 1 to 8 rework DRM GEM code in various implementations to
-> acquire the reservation lock when entering the pin and unpin callbacks.
-> This prepares them for the next patch. Drivers that are not affected
-> by these patches either don't acquire the reservation lock (amdgpu)
-> or don't need preparation (loongson).
-> 
-> Patch 9 moves reservation locking from the GEM pin/unpin callbacks
-> into drm_gem_pin() and drm_gem_unpin(). As PRIME uses these functions
-> internally it still gets the reservation lock.
-> 
-> With the updated GEM callbacks, the rest of the patchset fixes the
-> fbdev emulation's buffer locking. Fbdev emulation needs to keep its
-> GEM buffer object inplace while updating its content. This required
-> a implicit pinning and apparently amdgpu didn't do this at all.
-> 
-> Patch 10 introduces drm_client_buffer_vmap_local() and _vunmap_local().
-> The former function map a GEM buffer into the kernel's address space
-> with regular vmap operations, but keeps holding the reservation lock.
-> The _vunmap_local() helper undoes the vmap and releases the lock. The
-> updated GEM callbacks make this possible. Between the two calls, the
-> fbdev emulation can update the buffer content without have the buffer
-> moved or evicted. Update fbdev-generic to use vmap_local helpers,
-> which fix amdgpu. The idea of adding a "local vmap" has previously been
-> attempted at [3] in a different form.
-> 
-> Patch 11 adds implicit pinning to the DRM client's regular vmap
-> helper so that long-term vmap'ed buffers won't be evicted. This only
-> affects fbdev-dma, but GEM DMA helpers don't require pinning. So
-> there are no practical changes.
-> 
-> Patches 12 and 13 remove implicit pinning from the vmap and vunmap
-> operations in gem-vram and qxl. These pin operations are not supposed
-> to be part of vmap code, but were required to keep the buffers in place
-> for fbdev emulation. With the conversion o ffbdev-generic to to
-> vmap_local helpers, that code can finally be removed.
+V2:
+* Rename opp_xlate -> freq_xlate [Viresh]
+* Export cpufreq_update_pressure and use it directly [Lukasz]
 
-Isn't it a common behaviour for all DRM drivers to implicitly pin BO
-while it's vmapped? I was sure it should be common /o\
+Depends on:
+HW pressure v5: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240220145947.1107937-1-vincent.guittot@linaro.org/
+boost frequency support: https://patchwork.kernel.org/project/linux-arm-msm/cover/20240227173434.650334-1-quic_sibis@quicinc.com/
 
-Why would you want to kmap BO that isn't pinned?
+Sibi Sankar (2):
+  cpufreq: Export cpufreq_update_pressure
+  cpufreq: scmi: Register for limit change notifications
 
-Shouldn't TTM's vmap() be changed to do the pinning?
-
-I missed that TTM doesn't pin BO on vmap() and now surprised to see it.
-It should be a rather serious problem requiring backporting of the
-fixes, but I don't see the fixes tags on the patches (?)
+ drivers/cpufreq/cpufreq.c      |  3 ++-
+ drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
+ include/linux/cpufreq.h        |  2 ++
+ 3 files changed, 32 insertions(+), 2 deletions(-)
 
 -- 
-Best regards,
-Dmitry
+2.34.1
 
 
