@@ -1,131 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-12878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D959686B28E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:02:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CC4486B2AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:06:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AAC91C20A5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:02:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A4991F27B17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:06:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87BC215B112;
-	Wed, 28 Feb 2024 15:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7E715AAAC;
+	Wed, 28 Feb 2024 15:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRcwuPkZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cuJtgoZc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7B215B10B;
-	Wed, 28 Feb 2024 15:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3826D158D95;
+	Wed, 28 Feb 2024 15:06:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709132534; cv=none; b=eq8rUs7GFX6pn4c4mBc/OqfXHafHzqvIhRrYAZjxo1dmUv6e/3uGnoze6mc4Pz3Tj9YFAdl9u5Cjj9R4YWZbQYIFsrUhq1bhkOvG2yWh46VPn/3P38iaPNukdrD4pF46+x/t/vR54T6HHevly16GtePwVeqdmwWZyqhudWQNjUY=
+	t=1709132779; cv=none; b=C01H/oor52q5IogfNAT2a6EVWDnS/AR9wBdhpgzKY47xaMuSTm2WYVA+Q89zHsnrLt8+oLgsSuyFTlfN8QkO53lpsSruu+mfZoD6u+P6yl22VTZtRULqbgyTnKKrmVpX31DQuHSxLTv+iC3TRg9akPQ/VmqChjmkxto5Okglyks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709132534; c=relaxed/simple;
-	bh=1h0tpGxcynD1O0R4NRR/i+De45HCdF5xEsAzG7MDeMU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=FOcci6OTF8KgZN8Q32fQBQmXvXv0eEco2Sm/rSRzt3vq1x/4xuCVaw8gXpV5bDKoaAF2ZmjlfxQuoBwMu82yOeD/JreDC9WHyAr9RDuqWkStOXfuvlRmvjE5b9fs75fHD9jrlYwXlqkkFkxrzoQA0leoN/3c/FxK9o4DPYM9rMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRcwuPkZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E083C433F1;
-	Wed, 28 Feb 2024 15:02:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709132533;
-	bh=1h0tpGxcynD1O0R4NRR/i+De45HCdF5xEsAzG7MDeMU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=rRcwuPkZWbNDhlstKgewJW1iuTveAeETmAIIn/Cyjn53mKuBU+wIpzejaQhxX4gCI
-	 qjIpsUmLKEceub+UmV79SnSPh0OPLihS5bKkrHixbjeiy7JO3z7jPydN96yFD2NtDH
-	 WEWle1LV1qZaTpwKxz4LFHBwmuiuH2bEX5M7vA90zfZNJjO3w3kkd576aWaZxRBx+p
-	 S66f14HEbwznBf0fHgi3qF2bBq9Ox7YY1MrsZmBe39ZnhCc594iW3y9NUL9OcpXI3C
-	 xkbCJbGrGP5/ZZxkC5BcppKi0peDrareJDI/PU1fSBMGjochi09rFPEBGaGSfcZ3UL
-	 5n7pv7Lu7Y4cw==
-Date: Wed, 28 Feb 2024 09:02:11 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, konrad.dybcio@linaro.org,
-	manivannan.sadhasivam@linaro.org, robh@kernel.org,
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	dmitry.baryshkov@linaro.org, quic_krichai@quicinc.com,
-	quic_vbadigan@quicinc.com, quic_schintav@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
-Message-ID: <20240228150211.GA271700@bhelgaas>
+	s=arc-20240116; t=1709132779; c=relaxed/simple;
+	bh=Nhhx092QbZ4h8cC+srBIa9hfIgVvSLuTFr4ASjJywqg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BiyW72Zax6n5sk/Ay1aDzDIBZTanQc7OCXePkHAUioQ9s+ljAnQLeNWY2sMwUUo9nXMv+ip46zZshuZlAX6CwmyqSpi8dzVR/dzXxsE/SKfN3aJlgX2XOXm+oVjYIgBIeG3rejhgS6NQG7PoWMpXI3il/eNqyXPdtFW4RFs1db0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cuJtgoZc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S97PuM023466;
+	Wed, 28 Feb 2024 15:06:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=HamPLu5eUOVkk8MAjs6EMRDM7eqBMUeCObTL/0iqx0w=; b=cu
+	JtgoZczs/l0XVkHmUJLkGhgF1xM3rsq8E9B3Z9v0UR1RKaysxeoRU37xww3swwbS
+	VmIbjWSraHGBzCHKbUM6lGNXJHGdiTTYKNccFCx9iqwIWtbTgSfv5iYmp29DCLGg
+	XQKeAsnZSjVll90ap6RzE/xZSvZptS9mF9kHZa093i9Dv6/EBgxzL72wOcEGsYyA
+	YdCD9oPRCfhcwgywuF60FpRR4HZY7Jo1EWKd8eF8F/HxTUQu2dkBlixVmyngjCjD
+	lmYM6anaE0bg28C0F2DrdEc9teOBbFTqS9Eul1xFwZwHL0Uf2xsbMMXFvaf5bemw
+	qtG5/wldFK6KZ3vO27oA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whw3f1etd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 15:06:11 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SF6B96020991
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 15:06:11 GMT
+Received: from [10.216.40.135] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
+ 2024 07:06:03 -0800
+Message-ID: <e7241633-d92f-2ab0-a318-60769c12ed50@quicinc.com>
+Date: Wed, 28 Feb 2024 20:36:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <02e44f17-39cd-46ec-b236-bc4f502d705e@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 0/3] Add support for the IPQ5321 SoC
+Content-Language: en-US
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael
+ J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
+References: <20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9uDMigNbzYUPGiGJlvBZrDgbc1Zc9rfj
+X-Proofpoint-GUID: 9uDMigNbzYUPGiGJlvBZrDgbc1Zc9rfj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-28_07,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=829 spamscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ mlxscore=0 clxscore=1011 malwarescore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2402280119
 
-On Wed, Feb 28, 2024 at 06:34:11PM +0530, Mrinmay Sarkar wrote:
-> On 2/24/2024 4:24 AM, Bjorn Helgaas wrote:
-> > On Fri, Feb 23, 2024 at 07:33:38PM +0530, Mrinmay Sarkar wrote:
-> > > Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
-> > > in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
-> > > the requester is indicating that there no cache coherency issues exit
-> > > for the addressed memory on the host i.e., memory is not cached. But
-> > > in reality, requester cannot assume this unless there is a complete
-> > > control/visibility over the addressed memory on the host.
-> > 
-> > Forgive my ignorance here.  It sounds like the cache coherency issue
-> > would refer to system memory, so the relevant No Snoop attribute would
-> > be in DMA transactions, i.e., Memory Reads or Writes initiated by PCIe
-> > Endpoints.  But it looks like this patch would affect TLPs initiated
-> > by the Root Complex, not those from Endpoints, so I'm confused about
-> > how this works.
-> > 
-> > If this were in the qcom-ep driver, it would make sense that setting
-> > No Snoop in the TLPs initiated by the Endpoint could be a problem, but
-> > that doesn't seem to be what this patch is concerned with.
->
-> I think in multiprocessor system cache coherency issue might occur.
-> and RC as well needs to snoop cache to avoid coherency as it is not
-> enable by default.
 
-My mental picture isn't detailed enough, so I'm still confused.  We're
-talking about TLPs initiated by the RC.  Normally these would be
-because a driver did a CPU load or store to a PCIe device MMIO space,
-not to system memory.
 
-But I guess you're suggesting the RC can initiate a TLP with a system
-memory address?  And this TLP would be routed not to a Root Port or to
-downstream devices, but it would instead be kind of a loopback and be
-routed back up through the RC and maybe IOMMU, to system memory?
-
-I would have expected accesses like this to be routed directly to
-system memory without ever reaching the PCIe RC.
-
-> and we are enabling this feature for qcom-ep driver as well.
-> it is in patch2.
+On 2/28/2024 8:21 PM, Kathiravan Thirumoorthy wrote:
+> IPQ5321 SoC belong to IPQ5332 family. Add the SoC ID and the cpufreq
+> support. Maximum cpufreq for IPQ5321 is 1.1GHZ, which is determined
+> based on the eFuse.
 > 
-> Thanks
-> Mrinmay
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+for the series..
+
+-Mukesh
+
+> ---
+> Kathiravan Thirumoorthy (3):
+>        dt-bindings: arm: qcom,ids: Add SoC ID for IPQ5321
+>        soc: qcom: socinfo: Add SoC ID for IPQ5321
+>        cpufreq: qcom-nvmem: add support for IPQ5321
 > 
-> > > And worst case, if the memory is cached on the host, it may lead to
-> > > memory corruption issues. It should be noted that the caching of memory
-> > > on the host is not solely dependent on the NO_SNOOP attribute in TLP.
-> > > 
-> > > So to avoid the corruption, this patch overrides the NO_SNOOP attribute
-> > > by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
-> > > needed for other upstream supported platforms since they do not set
-> > > NO_SNOOP attribute by default.
-> > > 
-> > > 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for this
-> > > platform. Assign enable_cache_snoop flag into struct qcom_pcie_cfg and
-> > > set it true in cfg_1_34_0 and enable cache snooping if this particular
-> > > flag is true.
-> > s/intruduce/introduce/
-> > 
-> > Bjorn
+>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
+>   drivers/soc/qcom/socinfo.c           | 1 +
+>   include/dt-bindings/arm/qcom,ids.h   | 1 +
+>   3 files changed, 3 insertions(+)
+> ---
+> base-commit: 20af1ca418d2c0b11bc2a1fe8c0c88f67bcc2a7e
+> change-id: 20240228-ipq5321-sku-support-bd07056d5e01
+> 
+> Best regards,
 
