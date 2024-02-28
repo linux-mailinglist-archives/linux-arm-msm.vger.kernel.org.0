@@ -1,175 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-12857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75B5186ABBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 10:57:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2561686ABE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 11:10:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A453F1C23562
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 09:57:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B75FF1F27646
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 10:10:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5727F364AC;
-	Wed, 28 Feb 2024 09:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C05F7364AE;
+	Wed, 28 Feb 2024 10:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nq6H48DA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A/Yt6XK8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28590364A1;
-	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A27E3613E;
+	Wed, 28 Feb 2024 10:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709114243; cv=none; b=sTPYva+Ux7VYIZ+Vzf4MZa0BvGBH/rqGyIJyAZYLGihvSGkaidupe0FrTFYlElytp0LerScjtinFqFQx19puX3fpr7Ihjtbgb2CrvDduTz1GwwEvDrwAyOYlCRKHEVs6rFqHvSY4wcwapVFRxJz0JXJr1n0FFs9XjUbwrpt8qQY=
+	t=1709115016; cv=none; b=fsQ1apoOtLZnc17sMXeQ+D7bEnZV1yMVbjM6aOz73MkPURJJ26aDbviHoyAWY5lbi+B2jCj/B9wWqDuancLCbSlt6lUhVKK8be0ZbL7n5xZ60h9XjPw43sLF6Wih2D7BOb17aai+G/xDw9aHSq04V/5eXPXPE6YGgDCcrvBQJ8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709114243; c=relaxed/simple;
-	bh=WqWwgEoSuM/1pfV16dEakkeAH3YcAqhmmNupq9ppA1Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lOAqWDKX/AulS9ojI43sCXvBHxZI9k9adQrs93B7w0h8nLgYg78Jk0/pHP8Ixqr5OWzQhNEQDYlf+fwCX14vx0mEmsRESjnSVZO9lVU2JjZUKQhpBdS0OC7oVBJKxxOEcPgunju7LV+cA2Q8/GRxCNRFuGeBlD1joeGQ9tt5Ij8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nq6H48DA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8431AC43601;
-	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709114242;
-	bh=WqWwgEoSuM/1pfV16dEakkeAH3YcAqhmmNupq9ppA1Y=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=nq6H48DAVrY/8pkNU5QxJrcv1K3r+3ksrL4PMifDSq+lBu7dReIToJ+O81d0mBho/
-	 uJiTik7wFCTrgkS0ApAd0viVsj99JrEpyv309vpGS0iEqob2Yx+OSg3JEfAtaWeqlV
-	 kz1jiteAXzVwjY7JN/zZ/ZSmCln8VNTRFMv2LjUm0yB/4RHCQ7pVdzW2rW6M1oUlN8
-	 i01xWO9u8sluyVrUo+CQn9IDoKy0lu1UCyO+RCBhW7lO9SsTc0wkngcQX3qoFWzDMv
-	 4YesggC4eyEHKWFs2auF6Kuwk+bmlRrRcy2tFglRdF8I69vECLc6BTdoi1LugJ6S5Z
-	 +OsnKGo1r4mxg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C317C54E41;
-	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
-From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
-Date: Wed, 28 Feb 2024 17:56:42 +0800
-Subject: [PATCH RESEND v2] arm64: dts: qcom: qcm6490-idp: enable pwrkey and
- volume-up/down function
+	s=arc-20240116; t=1709115016; c=relaxed/simple;
+	bh=gDrqe1TCdETutZDRLxWC3iPRvaMUjmZdXz4Pg6I6EyA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VEonGOu6lz38hqwrokmXSiABa7Yvm8desQymJdzlfPawnT4Tju4u5s614EwkNCusoy35m06CdxbTWuvJTrkS1sWgEhD59vJ3mE7jZG2uLW/TyBjJlXpEm8B7RtU9jAf0MVc5V9KUsMeoy21oTB4VVJOUjRRsCTEAsra2XdiLxdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A/Yt6XK8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S6VSf8009700;
+	Wed, 28 Feb 2024 10:09:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=F/s+thCeoDRDTCkLO/eC1Mvzb84PqPQpXoHEQ1eWBiA=; b=A/
+	Yt6XK8AhRgCQbjBtMjCSZqzDYrSnINWozkr0vnVTGqqJSVGHymK9ivj/k0x0o1uN
+	WYGtIoILPxfjc78PTJA2OvnoML0+UUsGUo585Mz1fSiPpVKaYw2klS+rrwXdCLCT
+	NOLUfZMGA963L5jPhQhT5QgIjm4N2uS2kmjpxTrQj63Y06y3+BDuTehFIK2+3y4O
+	5pb84JAY8o+RLBsmvEr/e2GS2g+5g4FFXlOGTMNsVqffYyYS0Fj8/f0QOlXMkGTH
+	zAjFwwNcdU00wbbm8hT+H/ChkIni/GoHbS5kvBpqw3VrFXSkj4+lGzbX84rg/B7y
+	zwz8ukycaCKE09OmzmFw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whp65sgwe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 10:09:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SA9gv8015023
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 10:09:42 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
+ 2024 02:09:37 -0800
+Message-ID: <9cc4e465-9979-e4cc-3d2d-84cca307f19e@quicinc.com>
+Date: Wed, 28 Feb 2024 15:39:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/2] Fix per-policy boost behavior
+Content-Language: en-US
+To: Viresh Kumar <viresh.kumar@linaro.org>
+CC: <dietmar.eggemann@arm.com>, <marcan@marcan.st>, <sven@svenpeter.dev>,
+        <alyssa@rosenzweig.io>, <rafael@kernel.org>, <xuwei5@hisilicon.com>,
+        <zhanjie9@hisilicon.com>, <sudeep.holla@arm.com>,
+        <cristian.marussi@arm.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
+        <linux-arm-kernel@lists.infradead.org>, <asahi@lists.linux.dev>,
+        <linux-pm@vger.kernel.org>
+References: <20240227165309.620422-1-quic_sibis@quicinc.com>
+ <20240228050703.lixqywrtxravegc6@vireshk-i7>
+ <c165dd32-1e51-2fac-38ae-dd7300d36372@quicinc.com>
+ <20240228063511.rcntpb3dhbbhf7fb@vireshk-i7>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20240228063511.rcntpb3dhbbhf7fb@vireshk-i7>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240228-gpio-keys-v2-1-3beb60225abe@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709114240; l=2151;
- i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
- bh=uxn7urf55wldvs+MTDmzxYHE9lWSCWgorQZPNSBSB4Q=;
- b=7Da8as+oy3m1yGMGfVVIbVkvXvAEUqwESMBAZ8FKdwg/rPLTR/zEubfFlBhbBEQzVD9qyJOG/
- iXN3z9sCd3pCNpSg8xSlHYEKKIDKWxw+nfeL1I6MbryL/HosjE0gpGp
-X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
- pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
-X-Endpoint-Received:
- by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
-X-Original-From: Hui Liu <quic_huliu@quicinc.com>
-Reply-To: <quic_huliu@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 56b7fyYeCFjEwNtiQNInKEoxnAAVmICM
+X-Proofpoint-ORIG-GUID: 56b7fyYeCFjEwNtiQNInKEoxnAAVmICM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-28_04,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 mlxscore=0
+ adultscore=0 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402280080
 
-From: Hui Liu <quic_huliu@quicinc.com>
 
-Add configurations to enable pwrkey, volume-up and volume-down function.
 
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
----
-Changes in v2:
-- Update the commit description.
-- Link to v1: https://lore.kernel.org/r/20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 43 ++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+On 2/28/24 12:05, Viresh Kumar wrote:
+> On 28-02-24, 10:44, Sibi Sankar wrote:
+>> In the existing code, per-policy flags doesn't have any impact i.e.
+>> if cpufreq_driver boost is enabled and one or more of the per-policy
+>> boost is disabled, the cpufreq driver will behave as if boost is
+>> enabled.
+> 
+> I see. Good catch. The first patch is fine, just explain the problem
+> properly and mention that no one is checking the policy->boost_enabled
+> field. It is never read.
+> 
+>> I had to update the policy->boost_enabled value because we seem
+>> to allow enabling cpufreq_driver.boost_enabled from the driver, but I
+>> can drop that because it was just for book keeping.
+> 
+> So with cpufreq_driver->boost_enabled at init time, policy's
+> boost_enabled must be set too. Do that in the core during
+> initialization of the policy instead.
+> 
+>> I didn't want
+>> to include redundant info from another mail thread that I referenced in
+>> the cover letter, but will add more info in the re-spin.
+> 
+> You don't have to, but you need to explain the exact problem in a bit
+> more detail since it wasn't obvious here.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index acf145d1d97c..4199ebf667af 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -9,6 +9,7 @@
- #define PM7250B_SID 8
- #define PM7250B_SID1 9
- 
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
-@@ -39,6 +40,24 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&key_vol_up_default>;
-+
-+		key-volume-up {
-+			label = "volume_up";
-+			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+		};
-+	};
-+
- 	reserved-memory {
- 		xbl_mem: xbl@80700000 {
- 			reg = <0x0 0x80700000 0x0 0x100000>;
-@@ -421,6 +440,17 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&pm7325_gpios {
-+	key_vol_up_default: key-vol-up-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+		qcom,drive-strength = <3>;
-+	};
-+};
-+
- &pm8350c_pwm {
- 	status = "okay";
- 
-@@ -448,6 +478,19 @@ led@3 {
- 	};
- };
- 
-+&pmk8350_pon {
-+	status = "okay";
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+ack, will make these changes in the next re-spin.
 
----
-base-commit: 23e11d0318521e8693459b0e4d23aec614b3b68b
-change-id: 20240206-gpio-keys-138bbd850298
+-Sibi
 
-Best regards,
--- 
-Hui Liu <quic_huliu@quicinc.com>
-
+> 
 
