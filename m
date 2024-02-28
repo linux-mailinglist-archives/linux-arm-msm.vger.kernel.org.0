@@ -1,120 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-12839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E743486A6FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 04:01:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 248BE86A753
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 04:47:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32C93B281CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 03:01:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2BF61F2CA8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 03:47:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9042E1F958;
-	Wed, 28 Feb 2024 03:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24DCB208A9;
+	Wed, 28 Feb 2024 03:47:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="exYmKWOP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ACB1F945;
-	Wed, 28 Feb 2024 03:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EE7208C6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 03:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709089266; cv=none; b=oakrje9af5z35a74/0ML18fz03mMHS83Sfnc1CD7XAgGNROTDcUZPFhqMgwLpyG2CX1+TMWvDB95M0scVcIJ2cVTIr3FQpqmX4XpuUMDhmpPU6S8g9yWF1pwQjZz1JzGSFU7sTaAc7E5502tDL8dHZz17wgRTJuuTxvUwcb2Jvs=
+	t=1709092071; cv=none; b=SrpILdwGtXGCfer+L/cZG7Db3OR6nH6ndcYDEyL7OylPYksYn7Bht+9ae/OP6DJcytKI48KXEIHzaSx3ZwxVOFhOPuxMfS708Xo7iW2/DFGcgCLMx+/CEAPQSUTZ5+pOWHym4eUykceADv5KTtae3ZDUpIbUdUZzrpGpe/cpN70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709089266; c=relaxed/simple;
-	bh=LYAx6i2cOnkhf1XESQN7LgtJo9zHj/YnHlJ+pCyQkWU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AcGpeQKRuH8H+uyHUBOeji8NwGgVzt6WsJCPk7HAyHbZV7Gf3YG1foeldnYv8t2MBV4HvVHHrK3dJ3f7PEklTPrA1p6RvTGtat4BruNFj/D4Pfdnceqr/CN38A3c55Euqavg6cVwaQdk8vFNvSr9Uck2YsN1DOTtW19wjGr6BPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 61f36a06ab6c4d4088c73fea239f1afd-20240228
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.37,REQID:2eea6bf1-5c20-4404-b771-0ed2897f1d65,IP:10,
-	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACT
-	ION:release,TS:20
-X-CID-INFO: VERSION:1.1.37,REQID:2eea6bf1-5c20-4404-b771-0ed2897f1d65,IP:10,UR
-	L:0,TC:0,Content:0,EDM:25,RT:0,SF:-15,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:20
-X-CID-META: VersionHash:6f543d0,CLOUDID:3fdae480-4f93-4875-95e7-8c66ea833d57,B
-	ulkID:2402281101007PHTMKEX,BulkQuantity:0,Recheck:0,SF:66|24|17|19|44|102,
-	TC:nil,Content:0,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil
-	,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_FSI,TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-UUID: 61f36a06ab6c4d4088c73fea239f1afd-20240228
-Received: from mail.kylinos.cn [(39.156.73.10)] by mailgw
-	(envelope-from <chentao@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 275689174; Wed, 28 Feb 2024 11:00:59 +0800
-Received: from mail.kylinos.cn (localhost [127.0.0.1])
-	by mail.kylinos.cn (NSMail) with SMTP id 2E6EAE000EBD;
-	Wed, 28 Feb 2024 11:00:59 +0800 (CST)
-X-ns-mid: postfix-65DEA1EA-976147471
-Received: from kernel.. (unknown [172.20.15.254])
-	by mail.kylinos.cn (NSMail) with ESMTPA id 254A8E000EBC;
-	Wed, 28 Feb 2024 11:00:57 +0800 (CST)
-From: Kunwu Chan <chentao@kylinos.cn>
-To: manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kunwu Chan <chentao@kylinos.cn>
-Subject: [PATCH v2] bus: mhi: ep: Simplify the allocation of slab caches in mhi_ep_register_controller
-Date: Wed, 28 Feb 2024 11:00:56 +0800
-Message-Id: <20240228030056.509994-1-chentao@kylinos.cn>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1709092071; c=relaxed/simple;
+	bh=877chHYX5RTm5JyotlsmbVFl7mbnFWQp4f4lHZ0QFtQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mDIZ3ZOtH5GXOX8NHKyVxLca9J2VoreeacnJPlJEgbCynqGlqoKjvXhKEj50W20gtnUl53HnMR7mtWY4Sx6wbDB2BRsCkWar38YBSKCk0iAY8141AtMC8lWFqBtL+bj+0nTBOcn61+VM3SZ85D54A4X7nfAH2XBjcZDFPaozqVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=exYmKWOP; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-608ed07bdc5so31756687b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 19:47:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1709092068; x=1709696868; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g/DHH/2GuNtK9+6RCOfdjmOHhlQolPWcSEw0qt7/GJo=;
+        b=exYmKWOP2GlJFQgERNn7zn8Tow1fbb0ZJPBC/wYHp4/tc9EP5wggZim7Lz2bTZDWWa
+         FP5SggonGHrX8HXwCn63TXifUhKMXMEXQsOvyFr7kYnMOIl8k+1iRn0n80QaGjPeZSSc
+         AbW9CjMA5tSr1tL1hXfbneQqiP0cbc+orLRkU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709092068; x=1709696868;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g/DHH/2GuNtK9+6RCOfdjmOHhlQolPWcSEw0qt7/GJo=;
+        b=VtOHJ7VtI58HAWBjLypNDfyIRSuW/ycfT85Pm8C4RkCq812pq5j2ZLfc6lZINPGuvS
+         Kxqo9qkg0PFRkkWwVMOVVCt205JvhsJ+nD/+MroaFE2E8k0CSE7s3SXnWR3Zu6zimMOy
+         Lu/4G2iKW7cBNKL44HrSpnsVTGt9ZHpxeFXjM71BvgO7Ya5NraknWifXc9Nmi5Kht5Vd
+         keTBwmhAL2q2iAOGxK0MimSuQTHpCUUZ0Y0DqnaP3Y4ahAaMpS4iqqUlLnMPmBGDhM1C
+         pQE6J0jz6nwpjXE3FLZ8yUfrjeBvkDEwzOi40xb8SHNnoasHduDT10K2gbeC2KzzvYjf
+         hTgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7l5Ohq/cFnmDO0ckjyFocBrq5ONmGNvDAgr6Nh/LmtXSiS2w33SzYsxjuDEXY/950Z9en/52GUxbnz/KupPc76lGTOvQpZRgfrDESaQ==
+X-Gm-Message-State: AOJu0YzIMoVsMemfjT0c/qcGZB7SEs14tWKf3xlRmYjXmGjY76HPWKXj
+	NK0kEgJQmPgCOBTWRlRwOPZVqiw+E6DYt9yZB6zaGvy4TdIGueX/+O5JwYwakDnZdnjoshoygyl
+	v5treM/B9QnUClYvddcUAS5ZKZHjCoMBXedp4
+X-Google-Smtp-Source: AGHT+IEuu5G9/EtkiJuIqK5DEsLbHEiSicOLnCwW2E1hTZ+I5ANhBoRZTZztYsh0saLiizBliAy4AujGNkSwBQUlm8o=
+X-Received: by 2002:a05:690c:f8f:b0:5ff:7cca:a434 with SMTP id
+ df15-20020a05690c0f8f00b005ff7ccaa434mr4528537ywb.51.1709092068238; Tue, 27
+ Feb 2024 19:47:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240227113853.8464-1-tzimmermann@suse.de> <20240227113853.8464-9-tzimmermann@suse.de>
+In-Reply-To: <20240227113853.8464-9-tzimmermann@suse.de>
+From: Zack Rusin <zack.rusin@broadcom.com>
+Date: Tue, 27 Feb 2024 22:47:37 -0500
+Message-ID: <CABQX2QP4dCy2nfxXp3tEybtRF1UW_wMAKp1+m=2VA7Lt=C+Vvg@mail.gmail.com>
+Subject: Re: [PATCH 08/13] drm/qxl: Acquire reservation lock in GEM pin/unpin callbacks
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: daniel@ffwll.ch, airlied@gmail.com, mripard@kernel.org, 
+	maarten.lankhorst@linux.intel.com, christian.koenig@amd.com, 
+	sumit.semwal@linaro.org, dmitry.osipenko@collabora.com, robdclark@gmail.com, 
+	quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run, 
+	marijn.suijten@somainline.org, suijingfeng@loongson.cn, kherbst@redhat.com, 
+	lyude@redhat.com, dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com, 
+	alexander.deucher@amd.com, Xinhui.Pan@amd.com, 
+	bcm-kernel-feedback-list@broadcom.com, dri-devel@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	nouveau@lists.freedesktop.org, virtualization@lists.linux.dev, 
+	spice-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Use the new KMEM_CACHE() macro instead of direct kmem_cache_create
-to simplify the creation of SLAB caches.
+On Tue, Feb 27, 2024 at 6:39=E2=80=AFAM Thomas Zimmermann <tzimmermann@suse=
+.de> wrote:
+>
+> Acquire the reservation lock directly in GEM pin callback. Same for
+> unpin. Prepares for further changes.
+>
+> Dma-buf locking semantics require callers to hold the buffer's
+> reservation lock when invoking the pin and unpin callbacks. Prepare
+> qxl accordingly by pushing locking out of the implementation. A
+> follow-up patch will fix locking for all GEM code at once.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/qxl/qxl_prime.c | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/qxl/qxl_prime.c b/drivers/gpu/drm/qxl/qxl_pr=
+ime.c
+> index 9169c26357d36..f2646603e12eb 100644
+> --- a/drivers/gpu/drm/qxl/qxl_prime.c
+> +++ b/drivers/gpu/drm/qxl/qxl_prime.c
+> @@ -31,15 +31,27 @@
+>  int qxl_gem_prime_pin(struct drm_gem_object *obj)
+>  {
+>         struct qxl_bo *bo =3D gem_to_qxl_bo(obj);
+> +       int r;
+>
+> -       return qxl_bo_pin(bo);
+> +       r =3D qxl_bo_reserve(bo);
+> +       if (r)
+> +               return r;
+> +       r =3D qxl_bo_pin_locked(bo);
+> +       qxl_bo_unreserve(bo);
+> +
+> +       return r;
+>  }
+>
+>  void qxl_gem_prime_unpin(struct drm_gem_object *obj)
+>  {
+>         struct qxl_bo *bo =3D gem_to_qxl_bo(obj);
+> +       int r;
+>
+> -       qxl_bo_unpin(bo);
+> +       r =3D qxl_bo_reserve(bo);
+> +       if (r)
+> +               return;
+> +       qxl_bo_unpin_locked(bo);
+> +       qxl_bo_unreserve(bo);
+>  }
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
----
-v2:
-    - Simplify the allocations of mhi_ring_element slab caches
----
- drivers/bus/mhi/ep/main.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+It looks like gem_prime_pin/unpin is largely the same between a lot of
+drivers now. That might be a nice cleanup in the future.
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 65fc1d738bec..795611482f16 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1478,9 +1478,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl =
-*mhi_cntrl,
- 		goto err_free_ch;
- 	}
-=20
--	mhi_cntrl->ev_ring_el_cache =3D kmem_cache_create("mhi_ep_event_ring_el=
-",
--							sizeof(struct mhi_ring_element), 0,
--							SLAB_CACHE_DMA, NULL);
-+	mhi_cntrl->ev_ring_el_cache =3D KMEM_CACHE(mhi_ring_element, SLAB_CACHE=
-_DMA);
- 	if (!mhi_cntrl->ev_ring_el_cache) {
- 		ret =3D -ENOMEM;
- 		goto err_free_cmd;
-@@ -1493,9 +1491,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl =
-*mhi_cntrl,
- 		goto err_destroy_ev_ring_el_cache;
- 	}
-=20
--	mhi_cntrl->ring_item_cache =3D kmem_cache_create("mhi_ep_ring_item",
--							sizeof(struct mhi_ep_ring_item), 0,
--							0, NULL);
-+	mhi_cntrl->ring_item_cache =3D KMEM_CACHE(mhi_ep_ring_item, 0);
- 	if (!mhi_cntrl->ev_ring_el_cache) {
- 		ret =3D -ENOMEM;
- 		goto err_destroy_tre_buf_cache;
---=20
-2.39.2
-
+z
 
