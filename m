@@ -1,212 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-12885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDCDB86B327
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:31:43 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B149586B32E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:33:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56D821F24365
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:31:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C54DF1C235A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:33:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0714615B992;
-	Wed, 28 Feb 2024 15:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20BCA2CCDF;
+	Wed, 28 Feb 2024 15:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WqlwM7FB"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="n58UNRCz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0A74C65;
-	Wed, 28 Feb 2024 15:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0F515CD6E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 15:33:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709134299; cv=none; b=pjcwD/I9o4S2cxcVghCW/hql9d2sGZIUE5IIa8zQivpFqf1F8qkvWP9+1Bhh8gANi7kdEJcEWclOQKSffM4MhIzNJ3+tlGSiL2hfhktPaRvP8ItXcT5r9Sjhb+D1MMeJEmpczbultg2Ssrg7M3NAEjYAnevsYSAVWfCzqshMsHU=
+	t=1709134384; cv=none; b=CGAoUtsfJnfXnwpglNltryA3Yl1YkPXUiitx5bajsqWNJva3wl7A6NfiJEkE0NVTD6oIEX0O/2GMUXwtwlnFXX0A+q6ODw37TYuq3iV9lh0/JzFy4QmfFF+C/5ESX31k1eP1DTM+G2Z6NYymubiDjcCVQzAjIv972BkJ7zpdrAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709134299; c=relaxed/simple;
-	bh=QMimz9gLzaGvecyK308RM7xhA4pWKTf2vO3HZ8IeD84=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=j5jKuD10McgIJhnIJaSYCupYPgg9B2MkdVBgPU6jrSTiQgHgt4ifVkVOxhUCjfDbXltMlEmNnlB/lskdS6lQuonLP7qUsrABaRPX2Cr8txs+QYERyooaDXqDoW6ENeop9KnDb84rnvVlan4yyXNhA28O1yJcfqDONLntGSmh8rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WqlwM7FB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S8L3pR022917;
-	Wed, 28 Feb 2024 15:31:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=0tNc5re6i+mwAZj+uiyiJIhCAnBHBGUPnGZN4DVUiy0=; b=Wq
-	lwM7FBpz0QNY1uh3oR6Bwb47Wq//aPhVRzNfYANoVw6heHHVOXSO949UiEIQeSgY
-	Lh3g4SR7FyMEsAjYEd/N78NzrVqGTzAbINS7RL8FtU4ZIO1OgbRKoZeu/tqiU253
-	S6HHVPMEnXGTn8eC0WnkWi+8LcpiHCF7jZXOpDchmubaohjdKrJPnaZm7s25NiAP
-	8VfvF1gXaZ6iHZJul4Ahe49C8TKpcEQ03eU0/Q9p0RgI3Y4WD3ZAlV17Aqn1BBmX
-	UmkQyOJvWwHdk9wMeutUIE1mZSgj0Jo2WZZ5o6KByKbL5LThxkQXExEQuOQFM/2e
-	I4m9LCy0ZyS//ubkdPOw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whuksspqn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 15:31:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SFVLQF032473
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 15:31:21 GMT
-Received: from [10.110.113.97] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 07:31:20 -0800
-Message-ID: <ae3ec744-2157-4a8c-aa1b-38a22dc18042@quicinc.com>
-Date: Wed, 28 Feb 2024 07:31:20 -0800
+	s=arc-20240116; t=1709134384; c=relaxed/simple;
+	bh=GmUBOZ7DaQm65Qmidd1Lr9LGQMy1htqyTWhoVDx5i2Y=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=ik4xvYQpEJoUVkJr4dKwvyeF4NC3mtv0PcMFKWjlEQmblLloUEsG9Rg4EGJjXuAqiC6SrE7KgSk+EntPDwVuzszZVm78163TCEFHFn8JqUFu6OZyEY9Qd/xHUmDTG981NEhKcxehgK9pejtdg8+ure2W0wBJtuTvfrASQyz3UFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=n58UNRCz; arc=none smtp.client-ip=185.70.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1709134379; x=1709393579;
+	bh=GmUBOZ7DaQm65Qmidd1Lr9LGQMy1htqyTWhoVDx5i2Y=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=n58UNRCzUfkldeOw90ASblGmtY7HhZmUPuB8xwdVeHGW0EA8b3Ggxwhf6Fbc727PF
+	 fV3G9xe3SXNIHOyVKrRcjVC362yzIdh3XaZmJXxYM9qDpOGYJ1yOME+LzKZ/eEKqYq
+	 Zc4FtwuOtgbAQEaVOG6iE0sZTc7b9iTQJOffdcXOunkFXqx97PSqPLVXQRaY7u/+IS
+	 JEN1Hd5wDu6nSqbZutrZ2mPkey4dU2QjZiJDI5U9eavZdKTvhl7VkS3fJ1vCAcgJtN
+	 iVHi3WWEU/FnLkmlZ5HmLMw59b8s2M9kg9b0BZaF/SePIhPlaNJZ03g5hWhMb9x/yr
+	 g7kahYxBGMlgA==
+Date: Wed, 28 Feb 2024 15:32:50 +0000
+To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+From: presearcher <presearcher@protonmail.com>
+Subject: Snapdragon 8cx gen 2 support
+Message-ID: <ivufeZf8ZYR9gmSkao0jylGzZHAETJ849RzBG2IdqjuRPGgnhIf66Ls2mnBJSb5iwcCWowbcR-rrvSxO0OLExXihcs6RtNHACmFv1pjB9ew=@protonmail.com>
+Feedback-ID: 8079224:user:proton
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] wifi: ath11k: support hibernation
-Content-Language: en-US
-To: Baochen Qiang <quic_bqiang@quicinc.com>, <ath11k@lists.infradead.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>, <netdev@vger.kernel.org>
-References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
- <20240228022243.17762-4-quic_bqiang@quicinc.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20240228022243.17762-4-quic_bqiang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: F_vfeW3gW3zYQ68-plABaUfhw9KneFcE
-X-Proofpoint-ORIG-GUID: F_vfeW3gW3zYQ68-plABaUfhw9KneFcE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_07,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0 phishscore=0
- adultscore=0 priorityscore=1501 spamscore=0 bulkscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402280121
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------d3c2dfba8901bcbdd7fa24b783e28827bcfb6f47d893c1e5ac4107f9538dd47b"; charset=utf-8
 
-On 2/27/2024 6:22 PM, Baochen Qiang wrote:
-> Now that all infrastructure is in place and ath11k is fixed to handle all the
-> corner cases, power down the ath11k firmware during suspend and power it back
-> up during resume. This fixes the problem when using hibernation with ath11k PCI
-> devices.
-> 
-> For suspend, two conditions needs to be satisfied:
->         1. since MHI channel unprepare would be done in late suspend stage,
->            ath11k needs to get all QMI-dependent things done before that stage.
->         2. and because unprepare MHI channels requires a working MHI stack,
->            ath11k is not allowed to call mhi_power_down() until that finishes.
-> So the original suspend callback is separated into two parts: the first part
-> handles all QMI-dependent things in suspend callback; while the second part
-> powers down MHI in suspend_late callback. This is valid because kernel calls
-> ath11k's suspend callback before all suspend_late callbacks, making the first
-> condition happy. And because MHI devices are children of ath11k device
-> (ab->dev), kernel guarantees that ath11k's suspend_late callback is called
-> after QRTR's suspend_late callback, this satisfies the second condition.
-> 
-> Above analysis also applies to resume process. so the original resume
-> callback is separated into two parts: the first part powers up MHI stack
-> in resume_early callback, this guarantees MHI stack is working when
-> QRTR tries to prepare MHI channels (kernel calls QRTR's resume_early callback
-> after ath11k's resume_early callback, due to the child-father relationship);
-> the second part waits for the completion of restart, which won't fail now
-> since MHI channels are ready for use by QMI.
-> 
-> Another notable change is in power down path, we tell mhi_power_down() to not
-> to destroy MHI devices, making it possible for QRTR to help unprepare/prepare
-> MHI channels, and finally get us rid of the probe-defer issue when resume.
-> 
-> Also change related code due to interface changes.
-> 
-> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-> 
-> Tested-by: Takashi Iwai <tiwai@suse.de>
-> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-> ---
->  drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
->  drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
->  drivers/net/wireless/ath/ath11k/core.h |   6 +-
->  drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
->  drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
->  drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
->  drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
->  drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
->  8 files changed, 142 insertions(+), 52 deletions(-)
-...snip...
-> +int ath11k_core_resume_early(struct ath11k_base *ab)
-> +{
-> +	int ret;
-> +	struct ath11k_pdev *pdev;
-> +	struct ath11k *ar;
-> +
-> +	if (!ab->hw_params.supports_suspend)
-> +		return -EOPNOTSUPP;
-> +
-> +	/* so far signle_pdev_only chips have supports_suspend as true
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------d3c2dfba8901bcbdd7fa24b783e28827bcfb6f47d893c1e5ac4107f9538dd47b
+Content-Type: multipart/mixed;boundary=---------------------6d09672456761c4d3618ea72a9ab5f39
 
-nit: s/signle/single/
+-----------------------6d09672456761c4d3618ea72a9ab5f39
+Content-Type: multipart/alternative;boundary=---------------------38936e47d09d055d3619230eb684602d
 
-> +	 * and only the first pdev is valid.
-> +	 */
-> +	pdev = ath11k_core_get_single_pdev(ab);
-> +	ar = pdev->ar;
-> +	if (!ar || ar->state != ATH11K_STATE_OFF)
-> +		return 0;
-> +
-> +	reinit_completion(&ab->restart_completed);
-> +	ret = ath11k_hif_power_up(ab);
-> +	if (ret)
-> +		ath11k_warn(ab, "failed to power up hif during resume: %d\n", ret);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(ath11k_core_resume_early);
->  
->  int ath11k_core_resume(struct ath11k_base *ab)
->  {
->  	int ret;
->  	struct ath11k_pdev *pdev;
->  	struct ath11k *ar;
-> +	long time_left;
->  
->  	if (!ab->hw_params.supports_suspend)
->  		return -EOPNOTSUPP;
-> @@ -940,29 +990,19 @@ int ath11k_core_resume(struct ath11k_base *ab)
->  	if (!ar || ar->state != ATH11K_STATE_OFF)
->  		return 0;
->  
-> -	ret = ath11k_hif_resume(ab);
-> -	if (ret) {
-> -		ath11k_warn(ab, "failed to resume hif during resume: %d\n", ret);
-> -		return ret;
-> +	time_left = wait_for_completion_timeout(&ab->restart_completed,
-> +						ATH11K_RESET_TIMEOUT_HZ);
-> +	if (time_left == 0) {
-> +		ath11k_warn(ab, "timeout while waiting for restart complete");
-> +		return -ETIMEDOUT;
->  	}
->  
-> -	ath11k_hif_ce_irq_enable(ab);
-> -	ath11k_hif_irq_enable(ab);
+-----------------------38936e47d09d055d3619230eb684602d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-these are disabled in suspend_late()
-do you need to enable in resume_early()?
-or are they expected to be enabled via ath11k_wow_op_resume()?
+Hi,I am writing here at the suggestion of a developer https://bugzilla.ker=
+nel.org/show_bug.cgi?id=3D218512 and to know if you plan to add support fo=
+r the snapdragon 8cx gen 2 sc8180xp.
+Currently kernel 6.5 supports the snapdragon 8cx gen 1 sc8180x available i=
+n the Lenovo Flex 5G https://cdn.kernel.org/pub/linux/kernel/v6.x/ChangeLo=
+g-6.5. This SoC is only slightly different from the snapdragon 8cx gen 2 s=
+c8180xp available for example in the lenovo IdeaPad 5G 14Q8X05. In fact, t=
+he 8cx gen 1 and gen 2 have the same CPU-GPU with different frequency, whi=
+le the former has BT 5.1 and WiFi 6 instead of BT 5 and WiFi 5.
+In addition, the 6.0 kernel supports the snapdragon 8cx 3 sc8280xp availab=
+le in the Lenovo Thinkpad X13s=C2=A0https://cdn.kernel.org/pub/linux/kerne=
+l/v6.x/ChangeLog-6.0 and the upcoming 6.8 kernel will support the snapdrag=
+on 8cx gen 4/elite x1e80100 a SoC that is expected to go mainstream.
+Thanks
+-----------------------38936e47d09d055d3619230eb684602d
+Content-Type: multipart/related;boundary=---------------------eba022890be340fed50e5e5753be6c66
 
-and if that is the case, why isn't the disable in
-ath11k_wow_op_suspend() sufficient? can the disables in suspend_late()
-be removed?
+-----------------------eba022890be340fed50e5e5753be6c66
+Content-Type: text/html;charset=utf-8
+Content-Transfer-Encoding: base64
 
-just concerned about the lack of symmetry here
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
+cHg7Ij48L2Rpdj48c3Bhbj5IaSw8L3NwYW4+PGRpdj48c3Bhbj5JIGFtIHdyaXRpbmcgaGVyZSBh
+dCB0aGUgc3VnZ2VzdGlvbiBvZiBhIGRldmVsb3BlciA8YSB0YXJnZXQ9Il9ibGFuayIgcmVsPSJu
+b3JlZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJodHRwczovL2J1Z3ppbGxhLmtlcm5l
+bC5vcmcvc2hvd19idWcuY2dpP2lkPTIxODUxMiI+aHR0cHM6Ly9idWd6aWxsYS5rZXJuZWwub3Jn
+L3Nob3dfYnVnLmNnaT9pZD0yMTg1MTI8L2E+IGFuZCB0byBrbm93IGlmIHlvdSBwbGFuIHRvIGFk
+ZCBzdXBwb3J0IGZvciB0aGUgc25hcGRyYWdvbiA4Y3ggZ2VuIDIgc2M4MTgweHAuPC9zcGFuPjwv
+ZGl2PjxkaXY+PHNwYW4+Q3VycmVudGx5IGtlcm5lbCA2LjUgc3VwcG9ydHMgdGhlIHNuYXBkcmFn
+b24gOGN4IGdlbiAxIHNjODE4MHggYXZhaWxhYmxlIGluIHRoZSBMZW5vdm8gRmxleCA1RyA8YSB0
+YXJnZXQ9Il9ibGFuayIgcmVsPSJub3JlZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJo
+dHRwczovL2Nkbi5rZXJuZWwub3JnL3B1Yi9saW51eC9rZXJuZWwvdjYueC9DaGFuZ2VMb2ctNi41
+Ij5odHRwczovL2Nkbi5rZXJuZWwub3JnL3B1Yi9saW51eC9rZXJuZWwvdjYueC9DaGFuZ2VMb2ct
+Ni41PC9hPi4gVGhpcyBTb0MgaXMgb25seSBzbGlnaHRseSBkaWZmZXJlbnQgZnJvbSB0aGUgc25h
+cGRyYWdvbiA4Y3ggZ2VuIDIgc2M4MTgweHAgYXZhaWxhYmxlIGZvciBleGFtcGxlIGluIHRoZSBs
+ZW5vdm8gSWRlYVBhZCA1RyAxNFE4WDA1LiBJbiBmYWN0LCB0aGUgOGN4IGdlbiAxIGFuZCBnZW4g
+MiBoYXZlIHRoZSBzYW1lIENQVS1HUFUgd2l0aCBkaWZmZXJlbnQgZnJlcXVlbmN5LCB3aGlsZSB0
+aGUgZm9ybWVyIGhhcyBCVCA1LjEgYW5kIFdpRmkgNiBpbnN0ZWFkIG9mIEJUIDUgYW5kIFdpRmkg
+NS48L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5JbiBhZGRpdGlvbiwgdGhlIDYuMCBrZXJuZWwgc3Vw
+cG9ydHMgdGhlIHNuYXBkcmFnb24gOGN4IDMgc2M4MjgweHAgYXZhaWxhYmxlIGluIHRoZSBMZW5v
+dm8gVGhpbmtwYWQgWDEzcyZuYnNwOzxhIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIg
+bm9mb2xsb3cgbm9vcGVuZXIiIGhyZWY9Imh0dHBzOi8vY2RuLmtlcm5lbC5vcmcvcHViL2xpbnV4
+L2tlcm5lbC92Ni54L0NoYW5nZUxvZy02LjAiPmh0dHBzOi8vY2RuLmtlcm5lbC5vcmcvcHViL2xp
+bnV4L2tlcm5lbC92Ni54L0NoYW5nZUxvZy02LjA8L2E+IGFuZCB0aGUgdXBjb21pbmcgNi44IGtl
+cm5lbCB3aWxsIHN1cHBvcnQgdGhlIHNuYXBkcmFnb24gOGN4IGdlbiA0L2VsaXRlIHgxZTgwMTAw
+IGEgU29DIHRoYXQgaXMgZXhwZWN0ZWQgdG8gZ28gbWFpbnN0cmVhbS48L3NwYW4+PC9kaXY+PGRp
+dj48c3Bhbj5UaGFua3M8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1
+cmVfYmxvY2siIHN0eWxlPSJmb250LWZhbWlseTogQXJpYWwsIHNhbnMtc2VyaWY7IGZvbnQtc2l6
+ZTogMTRweDsiPgo8L2Rpdj4K
+-----------------------eba022890be340fed50e5e5753be6c66--
+-----------------------38936e47d09d055d3619230eb684602d--
+-----------------------6d09672456761c4d3618ea72a9ab5f39
+Content-Type: application/pgp-keys; filename="publickey - presearcher@protonmail.com - 0x63373D48.asc"; name="publickey - presearcher@protonmail.com - 0x63373D48.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - presearcher@protonmail.com - 0x63373D48.asc"; name="publickey - presearcher@protonmail.com - 0x63373D48.asc"
 
-/jeff
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWlgza0V4WUpLd1lCQkFI
+YVJ3OEJBUWRBTU5GVjNBcE42bVNvQ09COGRGZm9ENHZFRkp3UUlxMHAKenA0ZG5QcERoazdOTjNC
+eVpYTmxZWEpqYUdWeVFIQnliM1J2Ym0xaGFXd3VZMjl0SUR4d2NtVnpaV0Z5ClkyaGxja0J3Y205
+MGIyNXRZV2xzTG1OdmJUN0NqQVFRRmdvQVBnV0NaWDNrRXdRTENRY0lDWkRvQ04zOApjVEhUa3dN
+VkNBb0VGZ0FDQVFJWkFRS2JBd0llQVJZaEJHTTNQVWlZYW11blIxSWhwT2dJM2Z4eE1kT1QKQUFC
+Y253RUFsZFpLRVlhdm5BQ3hOUmdpWjBicnRVSHhPdmVhMWpCV3JPZ2QyZC9TNUlNQS8xbyt6QmU2
+CkZwZTJpSzlCQktVaXF2bWk1WW5rYitkM2JvQmhnNXJ4ditzQXpqZ0VaWDNrRXhJS0t3WUJCQUdY
+VlFFRgpBUUVIUUNLNDVLMWVhT1Q4ams1R3NmcVZNenRQQkNJdVAwZzQxZS9VVVBlazBrNGhBd0VJ
+QjhKNEJCZ1cKQ0FBcUJZSmxmZVFUQ1pEb0NOMzhjVEhUa3dLYkRCWWhCR00zUFVpWWFtdW5SMUlo
+cE9nSTNmeHhNZE9UCkFBRER2QUQvVTh1RW80N281bGE4clpXZ2ZXOFpjZ245cDRkQVRQR0dzZ2dr
+NGpPNFZSSUJBTFExakxGTApBU2JRQjJFV1FldEplZGRaQ0NEUjMxYSsyemsvTW96Sk9HRUYKPXVH
+ME0KLS0tLS1FTkQgUEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+-----------------------6d09672456761c4d3618ea72a9ab5f39--
+
+--------d3c2dfba8901bcbdd7fa24b783e28827bcfb6f47d893c1e5ac4107f9538dd47b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmXfUg0JkOgI3fxxMdOTFiEEYzc9SJhqa6dHUiGk6Ajd/HEx
+05MAAIwiAQDdn47h2qMyRDWLaMUOzmY/lUvfKUc6BwO2dajYuvVzOAD/cviG
+QXBuRUdYsDu1rgy3JFilZHWYRraYXGiOFokMmgU=
+=08yH
+-----END PGP SIGNATURE-----
+
+
+--------d3c2dfba8901bcbdd7fa24b783e28827bcfb6f47d893c1e5ac4107f9538dd47b--
+
 
