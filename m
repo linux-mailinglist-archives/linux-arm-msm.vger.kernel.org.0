@@ -1,141 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-12865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11B0886AFE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 14:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1C4386B03B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 14:24:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C15CE284113
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 13:07:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C9EE2822B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 13:24:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A6F31474B8;
-	Wed, 28 Feb 2024 13:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VBBHyHKJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8218D14A4FB;
+	Wed, 28 Feb 2024 13:24:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FCD145341;
-	Wed, 28 Feb 2024 13:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6F77145351;
+	Wed, 28 Feb 2024 13:24:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709125640; cv=none; b=bfOQj3ZevTDpouFaQyMmMvdRzJKmW2lpdOou1C8vpldHT57rqnCHhnV3ucrsHZzc515Wi4ILg0j18w3duNEINWGSBxSh0p66rYuNvmPkWP6ghrmpAkp2fUIqvrAm/nUOsoTHN3ucHWPDeXh9WvhOO0FHhev3LjZyQUtLCGF6bDE=
+	t=1709126684; cv=none; b=dE06TRSule9g1O6AGg3YtKbMpXzSIWwZ1/OjbyyK9RLIPHY+YbNhJrt2+t67USfXIu41WNP0MoOR6gveUNrb2tV99XvcadVdv3BReq93TEb1/1M1otVB85PGFjNzwAzMWrt3+bm+gKgYcYEwiZloHsUrInJt6UdMhRFeKBr7AV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709125640; c=relaxed/simple;
-	bh=RvzJ4l2yqF8ezySL48DF5MT1sZ9IXKITdWB7P32EZZg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZiBYrj+MgKJBFeTwodFFYX6anLAGxcyZRtMOTeQvA1yAkgLY5k2j/XUAZhTRxbadO0+pPhwFpUTn/PVHlAHZXwTtF75W6oMy5qlrRm4REQ2F9613c/kvrfCC+knunzC6PfvUzxZqvTsCzHqlMfz1ygVN14sbOtOMJh0jUbbM5ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VBBHyHKJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41SAuLrK012787;
-	Wed, 28 Feb 2024 13:07:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=RvzJ4l2yqF8ezySL48DF5MT1sZ9IXKITdWB7P32EZZg=; b=VB
-	BHyHKJi2WVlqSq1uK1IIrm98ZUntr3LfPyoXRSgRe7hd3Aux452/InroG32kFLxm
-	OdcAKdx+8cnTx5jfqv3rUaW1OnloWsHC5bKEH5RX+Hbw/FNzxtxE4mGVr1OVHOel
-	PmS8mT2IUztuUZ1W/2W9xfBQK30Xoif01ueFuUpPSsr7jTI2xk3CIZeEGoUgFn9I
-	Ef/4bUmQrpkGC+O4niibJwP5kTKImRK9808yklUAkjsUFhGqkx8ucU4cz5E8cjBI
-	OtQfFS+Y2FHgj1crKRH4Rk/sUcBIP65WSOpgLR4vjBjhFPiZMNGTctrdUsoD4bIj
-	JW4Jn50wke+N4egMVOjQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whtbw9d2b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 13:07:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SD7B9i026071
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 13:07:11 GMT
-Received: from [10.218.10.86] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 05:07:04 -0800
-Message-ID: <7cd328e2-6847-973f-c38b-93d1e64d3771@quicinc.com>
-Date: Wed, 28 Feb 2024 18:37:01 +0530
+	s=arc-20240116; t=1709126684; c=relaxed/simple;
+	bh=XDFj5ej2ly05jyaCAesq3QNALGY6izh4ir1ndq5BHhg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a2ycsSuJEg9/yTfd2brF9yv8gTI0kJqt1kaFLePourRfa/Fk8kvuc6swFgQ1ts6XT1HpxCgKUdlczD3YqCAxZildh4wtZEMBsG7aiUMuymDdOHSyILkeT+k4smg5Xl4ltaC9yQzHB0pQKKvbTBERyjlCsaVG0toMMXzacGvsEH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78C53C15;
+	Wed, 28 Feb 2024 05:25:19 -0800 (PST)
+Received: from [10.57.11.244] (unknown [10.57.11.244])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 187A53F762;
+	Wed, 28 Feb 2024 05:24:36 -0800 (PST)
+Message-ID: <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
+Date: Wed, 28 Feb 2024 13:24:53 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v5 0/3] arm64: qcom: sa8775p: add cache coherency support
- for SA8775P
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
+ notifications
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <konrad.dybcio@linaro.org>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>
-CC: <quic_shazhuss@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nayiluri@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <quic_krichai@quicinc.com>,
-        <quic_vbadigan@quicinc.com>, <quic_schintav@quicinc.com>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>
-References: <1708697021-16877-1-git-send-email-quic_msarkar@quicinc.com>
- <866ea7ee-54c3-4a89-981e-64d6d3b46497@linaro.org>
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-In-Reply-To: <866ea7ee-54c3-4a89-981e-64d6d3b46497@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
+ dietmar.eggemann@arm.com, morten.rasmussen@arm.com, viresh.kumar@linaro.org,
+ rafael@kernel.org, cristian.marussi@arm.com, sudeep.holla@arm.com,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
+References: <20240227181632.659133-1-quic_sibis@quicinc.com>
+ <20240227181632.659133-3-quic_sibis@quicinc.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20240227181632.659133-3-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HCcCySSSp6hMcYQVt0MSg1qXLvCNmev2
-X-Proofpoint-ORIG-GUID: HCcCySSSp6hMcYQVt0MSg1qXLvCNmev2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_06,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- spamscore=0 mlxlogscore=954 lowpriorityscore=0 mlxscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402280103
 
 
-On 2/24/2024 3:49 PM, Krzysztof Kozlowski wrote:
-> On 23/02/2024 15:03, Mrinmay Sarkar wrote:
->> Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
->> in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
->> the requester is indicating that there no cache coherency issues exit
->> for the addressed memory on the host i.e., memory is not cached. But
->> in reality, requester cannot assume this unless there is a complete
->> control/visibility over the addressed memory on the host.
->>
->> And worst case, if the memory is cached on the host, it may lead to
->> memory corruption issues. It should be noted that the caching of memory
->> on the host is not solely dependent on the NO_SNOOP attribute in TLP.
->>
->> So to avoid the corruption, this patch overrides the NO_SNOOP attribute
->> by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
->> needed for other upstream supported platforms since they do not set
->> NO_SNOOP attribute by default.
->>
->> This series is to enable cache snooping logic in both RC and EP driver
->> and add the "dma-coherent" property in dtsi to support cache coherency
->> in SA8775P platform.
-> Please confirm that your patchset passes 100% dtbs_check.
->
-> Best regards,
-> Krzysztof
 
-I have run dtbs_check and it is passing.
+On 2/27/24 18:16, Sibi Sankar wrote:
+> Register for limit change notifications if supported and use the throttled
+> frequency from the notification to apply HW pressure.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v3:
+> * Sanitize range_max received from the notifier. [Pierre]
+> * Update commit message.
+> 
+>   drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
+>   1 file changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 76a0ddbd9d24..78b87b72962d 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -25,9 +25,13 @@ struct scmi_data {
+>   	int domain_id;
+>   	int nr_opp;
+>   	struct device *cpu_dev;
+> +	struct cpufreq_policy *policy;
+>   	cpumask_var_t opp_shared_cpus;
+> +	struct notifier_block limit_notify_nb;
+>   };
+>   
+> +const struct scmi_handle *handle;
+> +static struct scmi_device *scmi_dev;
+>   static struct scmi_protocol_handle *ph;
+>   static const struct scmi_perf_proto_ops *perf_ops;
+>   static struct cpufreq_driver scmi_cpufreq_driver;
+> @@ -151,6 +155,20 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>   	NULL,
+>   };
+>   
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +	struct scmi_perf_limits_report *limit_notify = data;
+> +	struct cpufreq_policy *policy = priv->policy;
+> +
+> +	policy->max = clamp(limit_notify->range_max_freq/HZ_PER_KHZ, policy->cpuinfo.min_freq,
+> +			    policy->cpuinfo.max_freq);
 
-Thanks
-Mrinmay
+Please take the division operation out of this clamp() call, somewhere
+above. Currently it 'blurs' these stuff, while it's important convertion
+to khz. You can call it e.g.:
 
->
+limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+
+then use in clamp(limit_freq_khz, ...)
+
+> +
+> +	cpufreq_update_pressure(policy);
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   {
+>   	int ret, nr_opp, domain;
+> @@ -269,6 +287,15 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>   		}
+>   	}
+>   
+> +	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +	ret = handle->notify_ops->devm_event_notifier_register(scmi_dev, SCMI_PROTOCOL_PERF,
+> +							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +							&domain,
+> +							&priv->limit_notify_nb);
+> +	if (ret)
+> +		dev_warn(cpu_dev,
+> +			 "failed to register for limits change notifier for domain %d\n", domain);
+> +
+>   	priv->policy = policy;
+>   
+>   	return 0;
+> @@ -342,8 +369,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>   {
+>   	int ret;
+>   	struct device *dev = &sdev->dev;
+> -	const struct scmi_handle *handle;
+
+It should be a compilation error...
+
+>   
+> +	scmi_dev = sdev;
+>   	handle = sdev->handle;
+
+due to usage here, wasn't it?
+
+>   
+>   	if (!handle)
 
