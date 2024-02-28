@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-12889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8918386B373
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:42:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ACB686B379
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 16:43:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1641A1F2B565
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:42:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9FA1BB28152
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 15:42:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DE0B15CD6A;
-	Wed, 28 Feb 2024 15:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFE615DBDD;
+	Wed, 28 Feb 2024 15:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lMP16Zwf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X44IyKpN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7704615CD5D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 15:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7371315DBBA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 15:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709134875; cv=none; b=FJaQ6uE/aaVb9GdvnZZyOxt8FHL1hcEeuDRj+5ENwe7YdaDUEwwmfEOw3MtTqjU0CW2q8wcikPYGJKX9WPB1hnxxiiOHYlv8LSzFtkXF4z6gSwkMEi07utfEqIBkjd2JgQofn0ZSnj3DVwkpJ4wcZfKiC47qDGM8mG2a7LtPzgo=
+	t=1709134899; cv=none; b=CfD34A6BVJJAu2K3Dqpe1RH/EHrnt8VceussWrI5mnuQNWasNnUv6K4fhYIKEgJ3gHUx/UziNQQTRHnwgFVQOvCj8XO65fClZeTrvEA8VUPEsIDWo3Oyng04qCGIJ40Sy7ZFdFNmMIiM4qgJ8vpen62t833uo9oInOlnhUC6tFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709134875; c=relaxed/simple;
-	bh=QHQxcBODUYiQb1yYM36IqEt4dgIYDC9UqJta385YNF4=;
+	s=arc-20240116; t=1709134899; c=relaxed/simple;
+	bh=Y3CqL3ZtH8qv+iuGi9/RE7DcS3/Oa1WDQHkXAOzWuWM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a3Lxo3Tkb/s+89PPnwCFRintQRoP20t0tZggvtNnKa4E7xQF5YkdjuIa5x6JtAXc4NBzNgV+Set6hux+fX9Em8SFyczH87q/ECFqtNBndCF4mRdhHIQZVh6c/7/d4NZBcxWhm81Sdod9RsVA3vhPdCfRwDd5Ybofhad+u+kIsuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lMP16Zwf; arc=none smtp.client-ip=209.85.208.50
+	 To:Cc:Content-Type; b=jDVt031R/rq1sIgDvQzvKf+UWXE0/NAqPXJ//nuFiq8se6JTyRTJIaNeviAwDjyylxlUjnJm8r88eMQGImqFnPGc/y8K326QxGj2yADQQaELMU82c61RVZtlMERJYgze0NMAd0xYQO/2S0HIYTcNLnXAZ4SmTiOxBRiRcgfr/Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X44IyKpN; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-565a3910f86so6580549a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 07:41:13 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5661b7b1f51so4364766a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 07:41:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709134872; x=1709739672; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709134896; x=1709739696; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2tRApMKF3yJM+F82njXYmgcbTLvVNudocV6GcXTSm5g=;
-        b=lMP16ZwfkwxT8itu7zCia8qjCyHhISvyKHBg9WrhqJmhgSFGCgE5eivwNA9R1vyV07
-         ls0pgeMgSWkgXHFx1Cri+FdVFG9FYGruhs3JhUqHMVNmp8D4QvBgIGsFbksU8y4qW9+z
-         zTBLSbdyzuh7Kfjluf4VS2eAc/hh44W8M5LGCN1iy3MbuW1tfCbIcFB8/FJdQ9QafNrY
-         SYE7gTUcRBjM3qaJo+ICdsfPRU6rSqwSY/T0mtPJZlm2qnNktDGDGakEJXC0tXnI6Kzp
-         qWhYNviSP2+wtn6i03sgY6c+/8B+5fm8hZwLoK1hBO8NauQrvm4mfIxEEqbGyWDi30Mq
-         4KkQ==
+        bh=BUg2H32plNGlq0vHABZiW3cHIK6mnZ+TaVaS2PgJthI=;
+        b=X44IyKpN0Jq1Oy/R7g+eEGcAj+NhfzZPl7T4kDdMZUrmnZ9B1rJb32z4g0XrLsZmZr
+         ApupvEm0tYxPfqjAhjmJehr5lI/u3whZWNwdUSWJP55BuGxA6VHyUONIjphNeBAPOBmO
+         GcAeOlR8yaXlLq2s5dQ6oZ7PjYR8oUyObDFl8jcwCeMDr0Nt2nO2aYTbq9c+OY8SNfAh
+         NdqDs8XQMMOSUOYd30gT3hJuatcB6oYaErgizeeD7NX31dzXFWh0Gg/D5XQRzW2W9Qpb
+         wBuTwJOJwrbkkDK0bBJV6DulGhoqPLIlwWkgwkK9GFbGkP0JItjRhVz8zfF6U5PHPaJU
+         7rew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709134872; x=1709739672;
+        d=1e100.net; s=20230601; t=1709134896; x=1709739696;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2tRApMKF3yJM+F82njXYmgcbTLvVNudocV6GcXTSm5g=;
-        b=Og+4WPLW37XsmaSaX+7kKuiHJRzJNrYU+X4pephET25OxL4czagdwAefJ+ljeWud/K
-         1CL70B6MFR3DvFKFGCO7BGFtTM1nBLTImVZg/w1hWMo+ABStW1XxzFPuvgu4DLEV9T+o
-         WTKO5RVvIvnkKiXcILDnoEeHbJ6DgTfk7h4auPb4OJ5FjeILX2YjQQyVPiuqGGvzit+6
-         bcwkm3gG3XRgarptL53bZKnaA5WMW0bRqNy8I7TomjvYift1vnDdmJotXZMqrj7gC9YS
-         SRgM7VzkgJlZ4I2fqTDgWdVp04l3cmqwfKuPTEM7/XSOanF5KaSwJeMUV4NxL2qJJzvo
-         08Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCVAOnLR/Pc1DXd/j2g5ephNIxyl3kcpUREJ4rAa97MguPIZp7ugra36kLRwKvdhxWB+aYfvbAOrrzneYhuPrufyreknJtozk/BqCml8dQ==
-X-Gm-Message-State: AOJu0YztBC/0/tHr5lcrQwxuUMRyDOEZUNp74BOLHAv7y/1m5ZyWcWYD
-	q5KFRrZvqYs+8Y5GqirZUyiCIEs/t9vmtgfwKX7su5FFISvneKfM1FPt/RW5PnSKkrXdYhbtOZQ
-	Ywo6Q4ghyRYicwy9TeypFoH1EiiBvOrCIdBLZowsR51bEnXNY
-X-Google-Smtp-Source: AGHT+IG365oga5w7zDBtHPazj2hxzm3EgUC8YA/EU30cur5ZUa1DEDy6fvESfJjz4iWUOKjXuivekncmBzXJyaua22s=
-X-Received: by 2002:a05:6402:3456:b0:564:3b2e:2a2e with SMTP id
- l22-20020a056402345600b005643b2e2a2emr8870854edc.9.1709134871902; Wed, 28 Feb
- 2024 07:41:11 -0800 (PST)
+        bh=BUg2H32plNGlq0vHABZiW3cHIK6mnZ+TaVaS2PgJthI=;
+        b=icghP5+LtdUiNL1FGLzP6ugrldV3w8ZdDVCXPllprfZzue4VFcnTicOjl4wItSn2Ta
+         EbaLm6sXTTA44E47POSbedDJitv+ehfQAymF6Yxd45Cx4nA2zoqNcEiye+g1PJxr3ull
+         7HRpJ3PLuJgIhYCoRfdSfySp8bc3NeAC9M0m0/SIie4AapfxjZIG4h+/6uBDqRzm8xgL
+         KNY0jop3E8Ir+A+TpijyUcEomTkaPvrYfzLUa9/5BZQTCMObkGX1UOEh2Xmhhhz3fR0E
+         vflmP0jL6694GtBN9hH+SEDveMGz1TmugL3eDgluXanvtB78v2SB7aSqeFxqL/w31wa0
+         w1TA==
+X-Forwarded-Encrypted: i=1; AJvYcCVI/zzqCskdikKlCzTDFJ0IqtMc3N9BJq+vzSCNauaPDFO6GsOdml3WV/uNzxW8gVGDMcQWrxtWv56tQjp5AQahUKlKspJd0o4RDvycCw==
+X-Gm-Message-State: AOJu0YxkopQlQJqyE7ZcLa7JfobyJQJfdXP4HMc5VMIv/YCBk0X0gwtG
+	R97ondhJZ6xQ3NLbifzmsL+aLb7Dh9mrFgEKwS4UtpCL1Z1DF4+j9ozFKblVw9vXM401YsdSi+P
+	Bp1KcBPQen9Hf7ZoTuYdsUVLEL8sZ5TUYYbZiBQ==
+X-Google-Smtp-Source: AGHT+IEdoGphs4qV9yXffW2xSbebK1gxJ1XCt7GmQTsCwVCc1R6Uk48iHbYCDQmdSAdkDcUcqwe5iX6aNn0qqtrYjDA=
+X-Received: by 2002:a05:6402:556:b0:565:cbba:b79a with SMTP id
+ i22-20020a056402055600b00565cbbab79amr7175525edx.13.1709134895902; Wed, 28
+ Feb 2024 07:41:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240217-init_level-v1-0-bde9e11f8317@quicinc.com> <20240217-init_level-v1-1-bde9e11f8317@quicinc.com>
-In-Reply-To: <20240217-init_level-v1-1-bde9e11f8317@quicinc.com>
+References: <20240217-init_level-v1-0-bde9e11f8317@quicinc.com> <20240217-init_level-v1-2-bde9e11f8317@quicinc.com>
+In-Reply-To: <20240217-init_level-v1-2-bde9e11f8317@quicinc.com>
 From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 28 Feb 2024 16:40:35 +0100
-Message-ID: <CAPDyKFogCeyMKU4iPeAHcx1J6nWrO-43yb9_2xYmXm202V-p3g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] soc: qcom: Update init level to core_initcall() for
- cmd-db and rpmh-rsc
+Date: Wed, 28 Feb 2024 16:40:59 +0100
+Message-ID: <CAPDyKFoBmZ1CW1OrT5WW64jKHnRMw2P7DCc8bRxR18PJhmUMig@mail.gmail.com>
+Subject: Re: [PATCH 2/2] cpuidle: psci: Update init level to core_initcall()
 To: Maulik Shah <quic_mkshah@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
 	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
@@ -87,11 +86,12 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 17 Feb 2024 at 14:57, Maulik Shah <quic_mkshah@quicinc.com> wrote:
 >
-> cmd-db and rpmh-rsc are used by clients like regulators, interconnects and
-> clocks for resource voting. These clients are in core_initcall() while
-> cmd-db and rpmh-rsc are in arch_initcall(). Update init level for these
-> drivers also to core_initcall() to avoid unnecessary probe defer during
-> boot up.
+> Clients like regulators, interconnects and clocks depend on rpmh-rsc to
+> vote on resources and rpmh-rsc depends on psci power-domains to complete
+> probe. All of them are in core_initcall().
+>
+> Change psci domain init level to core_initcall() to avoid probe defer from
+> all of the above.
 >
 > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 
@@ -101,36 +101,19 @@ Kind regards
 Uffe
 
 > ---
->  drivers/soc/qcom/cmd-db.c   | 2 +-
->  drivers/soc/qcom/rpmh-rsc.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  drivers/cpuidle/cpuidle-psci-domain.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index a5fd68411bed..c344107bc36c 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -362,7 +362,7 @@ static int __init cmd_db_device_init(void)
+> diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+> index b88af1262f1a..3e5b1150f75b 100644
+> --- a/drivers/cpuidle/cpuidle-psci-domain.c
+> +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+> @@ -200,4 +200,4 @@ static int __init psci_idle_init_domains(void)
 >  {
->         return platform_driver_register(&cmd_db_dev_driver);
+>         return platform_driver_register(&psci_cpuidle_domain_driver);
 >  }
-> -arch_initcall(cmd_db_device_init);
-> +core_initcall(cmd_db_device_init);
->
->  MODULE_DESCRIPTION("Qualcomm Technologies, Inc. Command DB Driver");
->  MODULE_LICENSE("GPL v2");
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index a021dc71807b..c4c7aad957e6 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -1154,7 +1154,7 @@ static int __init rpmh_driver_init(void)
->  {
->         return platform_driver_register(&rpmh_driver);
->  }
-> -arch_initcall(rpmh_driver_init);
-> +core_initcall(rpmh_driver_init);
->
->  MODULE_DESCRIPTION("Qualcomm Technologies, Inc. RPMh Driver");
->  MODULE_LICENSE("GPL v2");
+> -subsys_initcall(psci_idle_init_domains);
+> +core_initcall(psci_idle_init_domains);
 >
 > --
 > 2.22.0
