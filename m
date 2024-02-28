@@ -1,137 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-12905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF5A586B67F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 18:55:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1BAE86B6AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 19:04:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 83EED1F2652F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 17:55:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0437B1C20D9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 18:04:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F11415DBC4;
-	Wed, 28 Feb 2024 17:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B465979B8A;
+	Wed, 28 Feb 2024 18:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d8Mo8pbh"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="N5jYBfzS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5817422F1E;
-	Wed, 28 Feb 2024 17:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAD279B83;
+	Wed, 28 Feb 2024 18:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709142908; cv=none; b=lESpJkEMnM+GOM3cpnqarumg5RpAcYervG1KrRzLH6hXLbgYFJV+GCgZkntEvwtPdNsiaepBRXPwZ+e07wv4J4hij1lyEayhwrXRODMJXzlM4Rtzd6KrYPSgDXtzvAo8o9LvTjkTl7Wug/O96z5ts9ZuckqO74vnIGr+eh5ZQMA=
+	t=1709143485; cv=none; b=WF7vzJRbaFjGvDgR4OKRtMetAV7cG6rOIFa7BQbm7tXxJVhKFzKE2Hhk5yd8GdZt1VajpK5AHe3ojTHRPMtlGS8ImtLnrpZ90JwyJG5am/PWlsRv0oVS2WkMlKZEgwg1N80oIIMz/229LPl5ry5mteEWRk2VdLXtRjEnoVvJapg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709142908; c=relaxed/simple;
-	bh=D2mdh06x71kvdd/IuVGC06Jqb09qp6TGuvYg0KhqyCs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rJ+U/1Pu0UnAdWq9B9U+0Fc/F45LbcKgaRnwvqSIVCgCHdZYIifZoIiDeqT9tBGPmyxQpSHovOCEFDsqMWAw9QYpTZ8ZZE8CGsKkAPbRcPDzBGOJW0ZedXm5SKCJrDzyK/DGP5+y1GCktuMMNaorhiDUu1GhskvdUEFUJ54sGDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d8Mo8pbh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41SBeNZi028064;
-	Wed, 28 Feb 2024 17:55:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=KZKU8VPZmtWhrDwvgSSiI+7GXe3XJ3zqdVi0P+KcTb4=; b=d8
-	Mo8pbh4MKHJom36oprs1uW9tc0IfOk59Y7JnxaiOp6bQ6s0SGlzTYXwdZ87WNVqn
-	BiJ82Jng06wPdFQjRK5Gw6oNDdBRozwMr//xq0bX6HGG7dKIwQYtEwh05fqQ+1Mu
-	q1PsVIupmudsSj4D6xdSHa1xnpPZehNKWxcclW4nl9hzWxD3D9WtOqeliKbucqGt
-	7hv8iz+ISvhr/UruoRr7IxM4fobPNc298nBDtKya+n7L6LQqbUH2EzY/xht045Pm
-	4omq3E8W9EU8m/EhK5GR3um6e4mYm1yRJw1KSHouLcU+VZRfcmZwgIifhGLBumJr
-	NoeEW+ImAy4KIMW0Ks0w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wj458h3r0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 17:55:01 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SHt0O0008005
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 17:55:00 GMT
-Received: from [10.71.111.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 09:54:57 -0800
-Message-ID: <0a49c117-90d7-472d-987a-f26f099b6198@quicinc.com>
-Date: Wed, 28 Feb 2024 09:54:57 -0800
+	s=arc-20240116; t=1709143485; c=relaxed/simple;
+	bh=2uZdEhXlLk6+Kihsqf5ShsnH4PpiXM/DSq0L4fxdcpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mirRT9crycp9g/VrY0pTPjBPsfJTEzdJ6L5S1x99vAWq5PjZwg2IJWz7zmikayzw3lzx/e0WyYlgZx2oa3y16IS/U08621rzsXpBkYK7nakVYplilwRvwNkjdsICVjGV2SDzIzP2iwSz61huzScxujMayjOJ/iTKcOba+4JvGTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=N5jYBfzS; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=4+3pSytnWQjK2YQrwpnYoErWsk0+5Bb2EK+jBbCnDEY=; b=N5jYBfzSgjDXobOuvQqxkmYWXk
+	QImWXO4epRecr8Hcj7XH3FLIrGE9iMM5iGF1FoQtTTQLFwSeZCqZXQeTjo4mKQddHn5esiTlTg3rd
+	DK1la7jWyH3cZYkfBITOKjSGJ7mJGHrDVQSZCn7kpsJqrjtj5Gwb+3Y52zRIZDHLMPSxqnT/BtbXo
+	Luq6yWLSD1MoRZWOd+174E5Nt7zmTmBinvHjZZ92sYUc6xCPIepBYkcztiBhZAZJJM05JCMZKJf3I
+	XNL1YJ1yzNbZkuIHozFSWERD3azo29pn98mFdU86Vh1+F/EScaRDJvfkoVZaORqtBEVAZkMT1BnwI
+	YMVhPAsQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:33306)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rfOI6-0005QG-33;
+	Wed, 28 Feb 2024 18:04:27 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rfOI4-0008Ul-6h; Wed, 28 Feb 2024 18:04:24 +0000
+Date: Wed, 28 Feb 2024 18:04:24 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Robert Marko <robimarko@gmail.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch,
+	hkallweit1@gmail.com, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v2 2/2] net: phy: qcom: qca808x: fill in
+ possible_interfaces
+Message-ID: <Zd91qM1W/srGL/Jw@shell.armlinux.org.uk>
+References: <20240228172452.2456842-1-robimarko@gmail.com>
+ <20240228172452.2456842-3-robimarko@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] dt-bindings: arm: msm: Add llcc Broadcast_AND
- register
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <cover.1708551850.git.quic_uchalich@quicinc.com>
- <93143410af20807c8451539db7fca7cddf31e7b4.1708551850.git.quic_uchalich@quicinc.com>
- <26feb928-55e8-4f6e-8727-44ef8e045b4c@linaro.org>
- <68a81c2e-8398-441f-b33d-374c37f39e06@quicinc.com>
- <b9ed4403-bf3a-4ff4-a92b-22badb845527@linaro.org>
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-In-Reply-To: <b9ed4403-bf3a-4ff4-a92b-22badb845527@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kHZ-QDpbR6s8qCT0Bt9ku5yMdV8xsPlj
-X-Proofpoint-ORIG-GUID: kHZ-QDpbR6s8qCT0Bt9ku5yMdV8xsPlj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_08,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- phishscore=0 mlxlogscore=374 mlxscore=0 spamscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402280141
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240228172452.2456842-3-robimarko@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On 2/27/2024 11:14 PM, Krzysztof Kozlowski wrote:
-> On 28/02/2024 02:04, Unnathi Chalicheemala wrote:
->> On 2/27/2024 7:47 AM, Krzysztof Kozlowski wrote:
->>> On 23/02/2024 00:07, Unnathi Chalicheemala wrote:
->>>> The LLCC block in SM8450, SM8550 and SM8650 have a new register
->>>> space for Broadcast_AND region. This is used to check that all
->>>> channels have bit set to "1", mainly in SCID activation/deactivation.
->>>>
->>>> Previously we were mapping only the Broadcast_OR region assuming
->>>> there was only one broadcast register region. Now we also map
->>>> Broadcast_AND region.
->>>>
->>>> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
->>>
->>> Why did you ignore the tags? Qualcomm upstreaming guide covers this
->>> case, so please read it before sending patches.
->>>
->>
->> I was asked to remove the Reviewed-by tag as the previous version of the
->> patch gave errors on running 'make DT_CHECKER_FLAGS=-m dt_binding_check',
->> that's why I dropped it.
->> It was sometime ago, https://lore.kernel.org/all/d78b4bce-7bcd-4ab0-a76b-135cee3ec9b0@linaro.org/
+On Wed, Feb 28, 2024 at 06:24:10PM +0100, Robert Marko wrote:
+> Currently QCA808x driver does not fill the possible_interfaces.
+> 2.5G QCA808x support SGMII and 2500Base-X while 1G model only supports
+> SGMII, so fill the possible_interfaces accordingly.
 > 
-> And where is it explained/mentioned? Every tag drop should be documented.
-> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-I understand, thanks for pointing out. I will record such tag drops in the change log.
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-> Best regards,
-> Krzysztof
-> 
+Thanks!
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
