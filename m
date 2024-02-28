@@ -1,103 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-12856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A16E486AB9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 10:50:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75B5186ABBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 10:57:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C6E8282E1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 09:50:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A453F1C23562
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 09:57:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA2DC339A8;
-	Wed, 28 Feb 2024 09:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5727F364AC;
+	Wed, 28 Feb 2024 09:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xyf1gmzH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nq6H48DA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D2932C8E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 09:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28590364A1;
+	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709113828; cv=none; b=kZaz+r/oKHrGXawfzL3ZMzTt0b9yz09DmPEdCPd5S+SYS7yyr40eJqGkO707zqnjMhkUZBo5CatBoPQnSkn/s9op5ri/54pNr0/FdcuPkcrHS9v3mOEamdQxAQbAhK5WoE2cPYQ451TeVeU8kyhFhtUHPrPkN/My1jmuISCwi0w=
+	t=1709114243; cv=none; b=sTPYva+Ux7VYIZ+Vzf4MZa0BvGBH/rqGyIJyAZYLGihvSGkaidupe0FrTFYlElytp0LerScjtinFqFQx19puX3fpr7Ihjtbgb2CrvDduTz1GwwEvDrwAyOYlCRKHEVs6rFqHvSY4wcwapVFRxJz0JXJr1n0FFs9XjUbwrpt8qQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709113828; c=relaxed/simple;
-	bh=YPzigKlKEeZTK5SZuWn7FXoh9j/+b77zjB/GAGIPYL4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qL7EATA6p9/tvFL9UdcTQaKSA9UF6WeZLBtDfuAYWUXyTbvy+i9r+hOXvE6hS6ag5fm1KhaHykrBl/78y88KJTiJBukoPmb6CIMUvc076Y1W9ew0HmASlDPWhGnJrwBTYG5n6kDnzQJS2/vLNQ2kGwzzIHYr7FqgKr4xaw3lybw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xyf1gmzH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A01C433F1;
-	Wed, 28 Feb 2024 09:50:28 +0000 (UTC)
+	s=arc-20240116; t=1709114243; c=relaxed/simple;
+	bh=WqWwgEoSuM/1pfV16dEakkeAH3YcAqhmmNupq9ppA1Y=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lOAqWDKX/AulS9ojI43sCXvBHxZI9k9adQrs93B7w0h8nLgYg78Jk0/pHP8Ixqr5OWzQhNEQDYlf+fwCX14vx0mEmsRESjnSVZO9lVU2JjZUKQhpBdS0OC7oVBJKxxOEcPgunju7LV+cA2Q8/GRxCNRFuGeBlD1joeGQ9tt5Ij8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nq6H48DA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8431AC43601;
+	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709113828;
-	bh=YPzigKlKEeZTK5SZuWn7FXoh9j/+b77zjB/GAGIPYL4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Xyf1gmzHdTWuJaJaPpmff6GOqWUjC7eSA2RZkczsfZ6rxIKfhDGIYUsHqsDv6045K
-	 6s1t2hKs55Efrr6G/fzO0rBG+WK3AUgKCXkQUsrr/vlUmBUBs7iIbeYJNTxwrT/Me8
-	 om5JTtUsE9snVg6Am5ctDYRQ57bn0NbYb4rWrj5yGliyq3NpUKqxaduOB+tinwRHyL
-	 x3htVB4Qgxn215wy50twxGXxbm6LOFSEzYQS1yo6cW8Bo7ivfgGRzwfynqL1XjVY4m
-	 ior0aTiePMn8/41M8pX+FjCaSEEEY6OntTTGBP98D8F5NJp0Og2xZmxP4Fm4Pp+hWz
-	 JpCcSBwyHAL+A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rfGa9-000000004V9-27Bz;
-	Wed, 28 Feb 2024 10:50:33 +0100
-Date: Wed, 28 Feb 2024 10:50:33 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] Revert "drm/msm/dp: use drm_bridge_hpd_notify() to
- report HPD status changes"
-Message-ID: <Zd8B6T6ROHFCqEyB@hovoldconsulting.com>
-References: <20240227220808.50146-1-dmitry.baryshkov@linaro.org>
- <46fa8e0a-0af2-2a44-f5f9-70fd49649aa4@quicinc.com>
+	s=k20201202; t=1709114242;
+	bh=WqWwgEoSuM/1pfV16dEakkeAH3YcAqhmmNupq9ppA1Y=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=nq6H48DAVrY/8pkNU5QxJrcv1K3r+3ksrL4PMifDSq+lBu7dReIToJ+O81d0mBho/
+	 uJiTik7wFCTrgkS0ApAd0viVsj99JrEpyv309vpGS0iEqob2Yx+OSg3JEfAtaWeqlV
+	 kz1jiteAXzVwjY7JN/zZ/ZSmCln8VNTRFMv2LjUm0yB/4RHCQ7pVdzW2rW6M1oUlN8
+	 i01xWO9u8sluyVrUo+CQn9IDoKy0lu1UCyO+RCBhW7lO9SsTc0wkngcQX3qoFWzDMv
+	 4YesggC4eyEHKWFs2auF6Kuwk+bmlRrRcy2tFglRdF8I69vECLc6BTdoi1LugJ6S5Z
+	 +OsnKGo1r4mxg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C317C54E41;
+	Wed, 28 Feb 2024 09:57:22 +0000 (UTC)
+From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date: Wed, 28 Feb 2024 17:56:42 +0800
+Subject: [PATCH RESEND v2] arm64: dts: qcom: qcm6490-idp: enable pwrkey and
+ volume-up/down function
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <46fa8e0a-0af2-2a44-f5f9-70fd49649aa4@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240228-gpio-keys-v2-1-3beb60225abe@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1709114240; l=2151;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=uxn7urf55wldvs+MTDmzxYHE9lWSCWgorQZPNSBSB4Q=;
+ b=7Da8as+oy3m1yGMGfVVIbVkvXvAEUqwESMBAZ8FKdwg/rPLTR/zEubfFlBhbBEQzVD9qyJOG/
+ iXN3z9sCd3pCNpSg8xSlHYEKKIDKWxw+nfeL1I6MbryL/HosjE0gpGp
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received:
+ by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
 
-On Tue, Feb 27, 2024 at 02:11:56PM -0800, Abhinav Kumar wrote:
-> On 2/27/2024 2:08 PM, Dmitry Baryshkov wrote:
-> > This reverts commit e467e0bde881 ("drm/msm/dp: use
-> > drm_bridge_hpd_notify() to report HPD status changes").
-> > 
-> > The commit changed the way how the MSM DP driver communicates
-> > HPD-related events to the userspace. The mentioned commit made some of
-> > the HPD events being reported earlier. This way userspace starts poking
-> > around. It interacts in a bad way with the dp_bridge_detect and the
-> > driver's state machine, ending up either with the very long delays
-> > during hotplug detection or even inability of the DP driver to report
-> > the display as connected.
-> > 
-> > A proper fix will involve redesigning of the HPD handling in the MSM DP
-> > driver. It is underway, but it will be intrusive and can not be thought
-> > about as a simple fix for the issue. Thus, revert the offending commit.
-> 
-> Yes, for fixing this on 6.9 I am fine with this.
+From: Hui Liu <quic_huliu@quicinc.com>
 
-Since this is a regression in 6.8-rc1, I hope you meant to say 6.8 here?
+Add configurations to enable pwrkey, volume-up and volume-down function.
 
-> I hope there were not other changes which were built on top of this. So 
-> it will be better if we retest internal HPD case as well with this.
-> 
-> We will do that in a day or two and give Tested-by.
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+Changes in v2:
+- Update the commit description.
+- Link to v1: https://lore.kernel.org/r/20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 43 ++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-Johan
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index acf145d1d97c..4199ebf667af 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -9,6 +9,7 @@
+ #define PM7250B_SID 8
+ #define PM7250B_SID1 9
+ 
++#include <dt-bindings/input/linux-event-codes.h>
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
+@@ -39,6 +40,24 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	gpio-keys {
++		compatible = "gpio-keys";
++		label = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&key_vol_up_default>;
++
++		key-volume-up {
++			label = "volume_up";
++			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
++			linux,input-type = <1>;
++			linux,code = <KEY_VOLUMEUP>;
++			wakeup-source;
++			debounce-interval = <15>;
++			linux,can-disable;
++		};
++	};
++
+ 	reserved-memory {
+ 		xbl_mem: xbl@80700000 {
+ 			reg = <0x0 0x80700000 0x0 0x100000>;
+@@ -421,6 +440,17 @@ vreg_bob_3p296: bob {
+ 	};
+ };
+ 
++&pm7325_gpios {
++	key_vol_up_default: key-vol-up-state {
++		pins = "gpio6";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		power-source = <0>;
++		qcom,drive-strength = <3>;
++	};
++};
++
+ &pm8350c_pwm {
+ 	status = "okay";
+ 
+@@ -448,6 +478,19 @@ led@3 {
+ 	};
+ };
+ 
++&pmk8350_pon {
++	status = "okay";
++};
++
++&pon_pwrkey {
++	status = "okay";
++};
++
++&pon_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+
+---
+base-commit: 23e11d0318521e8693459b0e4d23aec614b3b68b
+change-id: 20240206-gpio-keys-138bbd850298
+
+Best regards,
+-- 
+Hui Liu <quic_huliu@quicinc.com>
+
 
