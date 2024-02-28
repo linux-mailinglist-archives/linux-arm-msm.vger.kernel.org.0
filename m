@@ -1,105 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-12832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12E9E86A652
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 03:08:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB48D86A664
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 03:13:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC4C7B2364A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 02:06:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B43F2B21FE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 02:09:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BF426AC0;
-	Wed, 28 Feb 2024 02:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54E9D442C;
+	Wed, 28 Feb 2024 02:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j7uV7rUw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A364A1A;
-	Wed, 28 Feb 2024 02:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878C43217;
+	Wed, 28 Feb 2024 02:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709085986; cv=none; b=ixqP3XYWZVrdWzkBkGONwJRTHccSmh2Rtctf9NuzTm+qVQqATgosf/8JJDxUUS1VwhWRp5F1KEtVLk7Ahz18p+DE/AcSHTRH4Jipg3tmRsA5uiHVhgFHGEAj8IHE2avc8uxI6DAgmE3f9HG8NLGv2eR/YOSj4bASLFvIsupwUos=
+	t=1709086140; cv=none; b=VnXPJG1LwYL2DVHFAb3mJ2k7TrXBr8VrKCmjpWXH9/dnFOPzVNdvnReRPEke80SdQWgstW28bTYc+roncLSRiy9taDYhab0guzJJqbtXyoctTyAC8I3C1tyytS0xaLPNok6jze2irRxNvQn/8xvqfqqgVbbvw69wvJjw7u1d4Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709085986; c=relaxed/simple;
-	bh=tU4y3J8zVMd5QfhtV8M5FVK9IAtu0tz/78Ppn6PVxNQ=;
+	s=arc-20240116; t=1709086140; c=relaxed/simple;
+	bh=L57cOBXopWwIX9zuQIZBcvW1Q+tlXF76gCxChCMWHHw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LnT5FnB+FabrdbAFaHAjvr33CrGTJu1u/yqsu3ldh5rlWQ65xfYhQxyH1f2qDbLfSq5y2ZaYu00Y4QFjgq7A4U48IQ/7zEcz/998a5C0pcJmYkCHPMIIrUlmxF1GwHjt4GtOTGMIK1a21wzlBmLcCfqEuV0qz0Fver5kzkvmSA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=45.249.212.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
-Received: from mail.maildlp.com (unknown [172.19.163.174])
-	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4TkyNJ0r5HzNls1;
-	Wed, 28 Feb 2024 10:04:48 +0800 (CST)
-Received: from dggpeml500019.china.huawei.com (unknown [7.185.36.137])
-	by mail.maildlp.com (Postfix) with ESMTPS id 513F3140499;
-	Wed, 28 Feb 2024 10:06:18 +0800 (CST)
-Received: from [10.67.121.58] (10.67.121.58) by dggpeml500019.china.huawei.com
- (7.185.36.137) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 28 Feb
- 2024 10:06:17 +0800
-Message-ID: <91118802-eb8c-6225-3610-05e16270b3c4@hisilicon.com>
-Date: Wed, 28 Feb 2024 10:06:17 +0800
+	 In-Reply-To:Content-Type; b=EGcww8YsDdhsJTERH2zoRSY7lpvlEh2XzLxCSnWOmva7LhBZusMMXObNaQ0Q6x/8tqvo3CrAmUhAilap3DNsqHa+Mlb2s6xqAQUnoMpibkKyIBLfeID35aejf1QQ21Q47MV1mU4F7ECy8xJE5GGuYQk1twspL00pIDggyPqHxnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j7uV7rUw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41RLv3D8025039;
+	Wed, 28 Feb 2024 02:08:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=pZYGHFKUM9rzaHQ4aXknAtv1pfMLnYJeIrsE7pM77xI=; b=j7
+	uV7rUw5c2Z1tW72+RelEjaVFRSXID7T7ZRKzfApE4GrSoyPbk1bNZCkcifiroQSY
+	Fy6FatFqqrTkAmxlZs0V7IsCEkydOQsCS33/Dm+ABhDWcqemlyUpkd0gZfT2P+J/
+	Cb+NovUKsM/ZLtc/ckG+LYDK35TLRCJJ3wBbSnoFm/QlR/aOnYqZ3JtsTLMVinN8
+	el1vk8/FvFnlPlEAbyMp6s5m1PDLerhaxqSi1PM90aHHjOAjxhMMVPKeFAtfqd1j
+	pA0oUXDY/ga1yAr4/Aa/HKjfjrSono8x8k7/cnRKE1T6lk19VFf0StEvlSc6vfs5
+	kxdiUN+Y78SIhM83OE+g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whccwa8cs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 02:08:50 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41S28nAu031123
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 02:08:49 GMT
+Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 18:08:48 -0800
+Message-ID: <17b2041d-7c9b-4cb4-bf39-7d0f5d60c04b@quicinc.com>
+Date: Wed, 28 Feb 2024 10:08:45 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH 0/2] Fix per-policy boost behavior
-To: Sibi Sankar <quic_sibis@quicinc.com>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<quic_rgottimu@quicinc.com>, <linux-arm-kernel@lists.infradead.org>,
-	<asahi@lists.linux.dev>, <linux-pm@vger.kernel.org>,
-	<dietmar.eggemann@arm.com>, <marcan@marcan.st>, <sven@svenpeter.dev>,
-	<alyssa@rosenzweig.io>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-	<xuwei5@hisilicon.com>
-References: <20240227165309.620422-1-quic_sibis@quicinc.com>
-From: Jie Zhan <zhanjie9@hisilicon.com>
-In-Reply-To: <20240227165309.620422-1-quic_sibis@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] net: qrtr: support suspend/hibernation
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>
+References: <20240227104427.7505-1-quic_bqiang@quicinc.com>
+ <20240227104427.7505-3-quic_bqiang@quicinc.com>
+ <20240227121602.GM2587@thinkpad>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <20240227121602.GM2587@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggpeml500019.china.huawei.com (7.185.36.137)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Mucq4qeKIj9MChr9ozOcHndDP28ykHAR
+X-Proofpoint-ORIG-GUID: Mucq4qeKIj9MChr9ozOcHndDP28ykHAR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-28_01,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ spamscore=0 mlxlogscore=881 mlxscore=0 phishscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402280015
 
-Hi Sibi,
 
-Thanks for pointing this issue out.
 
-However, I can't clearly see how the existing code fails.
+On 2/27/2024 8:16 PM, Manivannan Sadhasivam wrote:
+> On Tue, Feb 27, 2024 at 06:44:26PM +0800, Baochen Qiang wrote:
+>> MHI devices may not be destroyed during suspend/hibernation, so need
+>> to unprepare/prepare MHI channels throughout the transition, this is
+>> done by adding suspend/resume callbacks.
+>>
+>> The suspend callback is called in the late suspend stage, this means
+>> MHI channels are still alive at suspend stage, and that makes it
+>> possible for an MHI controller driver to communicate with others over
+>> those channels at suspend stage. While the resume callback is called
+>> in the early resume stage, for a similar reason.
+>>
+>> Also note that we won't do unprepare/prepare when MHI device is in
+>> suspend state because it's pointless if MHI is only meant to go through
+>> a suspend/resume transition, instead of a complete power cycle.
+>>
+>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+>>
+>> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+> 
+> Btw, you forgot to CC netdev folks. Here is the list that get_maintainer.pl
+> returns:
+> 
+> "David S. Miller" <davem@davemloft.net> (maintainer:NETWORKING [GENERAL])
+> Eric Dumazet <edumazet@google.com> (maintainer:NETWORKING [GENERAL])
+> Jakub Kicinski <kuba@kernel.org> (maintainer:NETWORKING [GENERAL])
+> Paolo Abeni <pabeni@redhat.com> (maintainer:NETWORKING [GENERAL])
+> netdev@vger.kernel.org (open list:NETWORKING [GENERAL])
+> 
+Sure Mani, will send a v4 with above folks CC'ed.
 
-cpufreq_frequency_table_cpuinfo() checks cpufreq_boost_enabled(),
-and that should be already set in cpufreq_boost_trigger_state() before
-calling cpufreq_boost_set_sw(), so presumably cpufreq_boost_set_sw()
-is supposed to work as expected.
-
-Can you explain this a bit further?
-
-Cheers,
-Jie
-
-On 28/02/2024 00:53, Sibi Sankar wrote:
-> Fix per-policy boost behavior by incorporating per-policy boost flag
-> in the policy->max calculation and setting the correct per-policy
-> boost_enabled value on devices that use cpufreq_enable_boost_support().
->
-> Logs reported-by Dietmar Eggemann [1]:
->
-> [1] https://lore.kernel.org/lkml/265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com/
->
-> Sibi Sankar (2):
->    cpufreq: Fix per-policy boost behavior on SoCs using
->      cpufreq_boost_set_sw
->    cpufreq: apple-soc: Align per-policy and global boost flags
->
->   drivers/cpufreq/apple-soc-cpufreq.c |  1 +
->   drivers/cpufreq/cpufreq.c           | 15 +++++++++------
->   drivers/cpufreq/freq_table.c        |  2 +-
->   3 files changed, 11 insertions(+), 7 deletions(-)
->
-
+> - Mani
+> 
+>> ---
+>>   net/qrtr/mhi.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 46 insertions(+)
+>>
+>> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+>> index 9ced13c0627a..69f53625a049 100644
+>> --- a/net/qrtr/mhi.c
+>> +++ b/net/qrtr/mhi.c
+>> @@ -118,6 +118,51 @@ static const struct mhi_device_id qcom_mhi_qrtr_id_table[] = {
+>>   };
+>>   MODULE_DEVICE_TABLE(mhi, qcom_mhi_qrtr_id_table);
+>>   
+>> +static int __maybe_unused qcom_mhi_qrtr_pm_suspend_late(struct device *dev)
+>> +{
+>> +	struct mhi_device *mhi_dev = container_of(dev, struct mhi_device, dev);
+>> +	enum mhi_state state;
+>> +
+>> +	state = mhi_get_mhi_state(mhi_dev->mhi_cntrl);
+>> +	/*
+>> +	 * If the device is in suspend state, then no need for the
+>> +	 * client driver to unprepare the channels.
+>> +	 */
+>> +	if (state == MHI_STATE_M3)
+>> +		return 0;
+>> +
+>> +	mhi_unprepare_from_transfer(mhi_dev);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int __maybe_unused qcom_mhi_qrtr_pm_resume_early(struct device *dev)
+>> +{
+>> +	struct mhi_device *mhi_dev = container_of(dev, struct mhi_device, dev);
+>> +	enum mhi_state state;
+>> +	int rc;
+>> +
+>> +	state = mhi_get_mhi_state(mhi_dev->mhi_cntrl);
+>> +	/*
+>> +	 * If the device is in suspend state, we won't unprepare channels
+>> +	 * in suspend callback, therefore no need to prepare channels when
+>> +	 * resume.
+>> +	 */
+>> +	if (state == MHI_STATE_M3)
+>> +		return 0;
+>> +
+>> +	rc = mhi_prepare_for_transfer_autoqueue(mhi_dev);
+>> +	if (rc)
+>> +		dev_err(dev, "failed to prepare for autoqueue transfer %d\n", rc);
+>> +
+>> +	return rc;
+>> +}
+>> +
+>> +static const struct dev_pm_ops qcom_mhi_qrtr_pm_ops = {
+>> +	SET_LATE_SYSTEM_SLEEP_PM_OPS(qcom_mhi_qrtr_pm_suspend_late,
+>> +				     qcom_mhi_qrtr_pm_resume_early)
+>> +};
+>> +
+>>   static struct mhi_driver qcom_mhi_qrtr_driver = {
+>>   	.probe = qcom_mhi_qrtr_probe,
+>>   	.remove = qcom_mhi_qrtr_remove,
+>> @@ -126,6 +171,7 @@ static struct mhi_driver qcom_mhi_qrtr_driver = {
+>>   	.id_table = qcom_mhi_qrtr_id_table,
+>>   	.driver = {
+>>   		.name = "qcom_mhi_qrtr",
+>> +		.pm = &qcom_mhi_qrtr_pm_ops,
+>>   	},
+>>   };
+>>   
+>> -- 
+>> 2.25.1
+>>
+> 
 
