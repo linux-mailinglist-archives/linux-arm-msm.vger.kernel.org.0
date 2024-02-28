@@ -1,135 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-12858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2561686ABE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 11:10:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C451286ACAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 12:09:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B75FF1F27646
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 10:10:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01AD21C20D7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 11:09:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C05F7364AE;
-	Wed, 28 Feb 2024 10:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BEE212D77B;
+	Wed, 28 Feb 2024 11:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A/Yt6XK8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g7+vzzhG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A27E3613E;
-	Wed, 28 Feb 2024 10:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FDF36B09
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 11:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709115016; cv=none; b=fsQ1apoOtLZnc17sMXeQ+D7bEnZV1yMVbjM6aOz73MkPURJJ26aDbviHoyAWY5lbi+B2jCj/B9wWqDuancLCbSlt6lUhVKK8be0ZbL7n5xZ60h9XjPw43sLF6Wih2D7BOb17aai+G/xDw9aHSq04V/5eXPXPE6YGgDCcrvBQJ8I=
+	t=1709118499; cv=none; b=WPBsImUpqzRBxkYmVBi3TU6cVrJNG4IwiLxP++cz70xQLqfOXV6XHxWwhoU3Ra4zuH2JTv0eonC6/UEdhuATxZtuAdItaKMZ5V1dlriSe2PvFzAGTeNWe+LIvKiY55QLwIF/9SuZR+gqpGdAMGL7yLfJW21j12pr+wHM7BtEJKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709115016; c=relaxed/simple;
-	bh=gDrqe1TCdETutZDRLxWC3iPRvaMUjmZdXz4Pg6I6EyA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VEonGOu6lz38hqwrokmXSiABa7Yvm8desQymJdzlfPawnT4Tju4u5s614EwkNCusoy35m06CdxbTWuvJTrkS1sWgEhD59vJ3mE7jZG2uLW/TyBjJlXpEm8B7RtU9jAf0MVc5V9KUsMeoy21oTB4VVJOUjRRsCTEAsra2XdiLxdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A/Yt6XK8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S6VSf8009700;
-	Wed, 28 Feb 2024 10:09:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=F/s+thCeoDRDTCkLO/eC1Mvzb84PqPQpXoHEQ1eWBiA=; b=A/
-	Yt6XK8AhRgCQbjBtMjCSZqzDYrSnINWozkr0vnVTGqqJSVGHymK9ivj/k0x0o1uN
-	WYGtIoILPxfjc78PTJA2OvnoML0+UUsGUo585Mz1fSiPpVKaYw2klS+rrwXdCLCT
-	NOLUfZMGA963L5jPhQhT5QgIjm4N2uS2kmjpxTrQj63Y06y3+BDuTehFIK2+3y4O
-	5pb84JAY8o+RLBsmvEr/e2GS2g+5g4FFXlOGTMNsVqffYyYS0Fj8/f0QOlXMkGTH
-	zAjFwwNcdU00wbbm8hT+H/ChkIni/GoHbS5kvBpqw3VrFXSkj4+lGzbX84rg/B7y
-	zwz8ukycaCKE09OmzmFw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whp65sgwe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 10:09:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SA9gv8015023
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 10:09:42 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 02:09:37 -0800
-Message-ID: <9cc4e465-9979-e4cc-3d2d-84cca307f19e@quicinc.com>
-Date: Wed, 28 Feb 2024 15:39:34 +0530
+	s=arc-20240116; t=1709118499; c=relaxed/simple;
+	bh=ynD4ep8b15eQ6ZvXLbHCGrVZFrycm6mlEPDvlkyespw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bnm99rB7iKHrnBZKKKiH4JiBYtfKQ0ug7XiY0/8gaAhfsg9VMNXOdQQmeZ8jEOCbGiZCdcxqp/IncxrpsY7DD17eRO+8piJGBhI/Vw1o6yJyH06JvSZnQ0Xj7r/JcbzQl7vurptIsD7kHIELvvhKkxRYxzVAB9JppVMuLq3q7Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g7+vzzhG; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dcbf82cdf05so5452506276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 03:08:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709118496; x=1709723296; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pJmCHtzXEM7iHGUAof2e0JKiHgjZvY6I5vD12R0EcB0=;
+        b=g7+vzzhGajPLekY4XVKok9VB+wSPyVLn96ZVW5g2D8Gu6WkwI77XXhbsPeQxo0+04Y
+         1XyIePM9bxqLb/3+YkGTce8UcVjmXmfdSMuXOF/RyJSUPp9ve446+NRYwFirF1HcOCNz
+         lGhU8uSk+Mv9ZInAkPARfwKXvKTaH5AZuSNGl8E/U7Wkfnjo/wJxSQt/TCImJ5404Rgw
+         d+FFbgWTYg5/EltMk16FYD+9/yQ1NTUHG+hL69SGF9BMpwvUzZ+NYvw1yLviIZEjAVSo
+         gLkfnKyw942dmaTd/Ct2ww7OTVOw0v+ubaF5zO37xHNmyLceaXDFkH10eKv0YL6x93qp
+         jbiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709118496; x=1709723296;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pJmCHtzXEM7iHGUAof2e0JKiHgjZvY6I5vD12R0EcB0=;
+        b=FNSXv5bvm8KElYFG0VUUqZccbHOB39i6r2/Mgrb7w0jUMV3FQu9sovhX41ZPlsY9Y+
+         iCm1V0yoYI0slkv1SAXRe3boJaJquMLsLz5eSr+PlHaVbiHnrjzeCdOHgdvkD9pwElu4
+         vXumLQcBt52ITsU107Mk6jxrsANMWTaLCI/XZsvg53+kit7FtKHbd6fQevX3BC1bkXaO
+         qOclKEzNJuZAhk0I6wZ212td783erzRp50pyrxIzWtsHhL2364RmqhdbE915ZUTXqapP
+         LizaozNKds148Yw5NIuPykEAo626FjoAnaMMIXjIKdtF4KiBNbG/5DmEDR2i+esHVTZV
+         AgPw==
+X-Forwarded-Encrypted: i=1; AJvYcCVpHB56+taqg0SZeVjhxthUCe+Thgbd0sL5Y8svUkTrimboBilAMUV+259Xc+93z7BepyA8HNYmaDe37Uub//sQW2JV28Xq9QeDi7hSlQ==
+X-Gm-Message-State: AOJu0YxBz1jVVxnM3cx3Ngh74qDIBDzNFHX05AHdlZIeUbq+0R6VCfFF
+	m5l+iJLsboOxv94T8i0/Fp+bPbPqrlHQmYg42P4fMw0a429UXalpzFnNAiAd8k+uO8gRtJvG8cy
+	QVZwsjTbT/uprPyAL1vC/6eozD0/sbBbZAqYQkQ==
+X-Google-Smtp-Source: AGHT+IE7FGesh2EjL5jyHeDznjzn/ZbnUFCAT6CsdLQR0L++/z1KEBV5qW9/rZM2L2bRBaXEmeKKtOqYWbh1cGbCgjg=
+X-Received: by 2002:a05:6902:2192:b0:dcc:5aa1:7ac3 with SMTP id
+ dl18-20020a056902219200b00dcc5aa17ac3mr2290311ybb.2.1709118496390; Wed, 28
+ Feb 2024 03:08:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 0/2] Fix per-policy boost behavior
-Content-Language: en-US
-To: Viresh Kumar <viresh.kumar@linaro.org>
-CC: <dietmar.eggemann@arm.com>, <marcan@marcan.st>, <sven@svenpeter.dev>,
-        <alyssa@rosenzweig.io>, <rafael@kernel.org>, <xuwei5@hisilicon.com>,
-        <zhanjie9@hisilicon.com>, <sudeep.holla@arm.com>,
-        <cristian.marussi@arm.com>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>, <asahi@lists.linux.dev>,
-        <linux-pm@vger.kernel.org>
-References: <20240227165309.620422-1-quic_sibis@quicinc.com>
- <20240228050703.lixqywrtxravegc6@vireshk-i7>
- <c165dd32-1e51-2fac-38ae-dd7300d36372@quicinc.com>
- <20240228063511.rcntpb3dhbbhf7fb@vireshk-i7>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20240228063511.rcntpb3dhbbhf7fb@vireshk-i7>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 56b7fyYeCFjEwNtiQNInKEoxnAAVmICM
-X-Proofpoint-ORIG-GUID: 56b7fyYeCFjEwNtiQNInKEoxnAAVmICM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_04,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 mlxscore=0
- adultscore=0 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402280080
+References: <20240227220808.50146-1-dmitry.baryshkov@linaro.org>
+ <46fa8e0a-0af2-2a44-f5f9-70fd49649aa4@quicinc.com> <Zd8B6T6ROHFCqEyB@hovoldconsulting.com>
+In-Reply-To: <Zd8B6T6ROHFCqEyB@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 28 Feb 2024 13:08:04 +0200
+Message-ID: <CAA8EJppvansib9NxqPcuuAVe+qc1i8HmDqNh6+kaDZn6zFijpw@mail.gmail.com>
+Subject: Re: [PATCH] Revert "drm/msm/dp: use drm_bridge_hpd_notify() to report
+ HPD status changes"
+To: Johan Hovold <johan@kernel.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Sankeerth Billakanti <quic_sbillaka@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Stephen Boyd <swboyd@chromium.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Wed, 28 Feb 2024 at 11:50, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Tue, Feb 27, 2024 at 02:11:56PM -0800, Abhinav Kumar wrote:
+> > On 2/27/2024 2:08 PM, Dmitry Baryshkov wrote:
+> > > This reverts commit e467e0bde881 ("drm/msm/dp: use
+> > > drm_bridge_hpd_notify() to report HPD status changes").
+> > >
+> > > The commit changed the way how the MSM DP driver communicates
+> > > HPD-related events to the userspace. The mentioned commit made some of
+> > > the HPD events being reported earlier. This way userspace starts poking
+> > > around. It interacts in a bad way with the dp_bridge_detect and the
+> > > driver's state machine, ending up either with the very long delays
+> > > during hotplug detection or even inability of the DP driver to report
+> > > the display as connected.
+> > >
+> > > A proper fix will involve redesigning of the HPD handling in the MSM DP
+> > > driver. It is underway, but it will be intrusive and can not be thought
+> > > about as a simple fix for the issue. Thus, revert the offending commit.
+> >
+> > Yes, for fixing this on 6.9 I am fine with this.
+>
+> Since this is a regression in 6.8-rc1, I hope you meant to say 6.8 here?
+
+In the worst case it will land to 6.8.x via the stable tree process.
+
+>
+> > I hope there were not other changes which were built on top of this. So
+> > it will be better if we retest internal HPD case as well with this.
+> >
+> > We will do that in a day or two and give Tested-by.
+>
+> Johan
 
 
 
-On 2/28/24 12:05, Viresh Kumar wrote:
-> On 28-02-24, 10:44, Sibi Sankar wrote:
->> In the existing code, per-policy flags doesn't have any impact i.e.
->> if cpufreq_driver boost is enabled and one or more of the per-policy
->> boost is disabled, the cpufreq driver will behave as if boost is
->> enabled.
-> 
-> I see. Good catch. The first patch is fine, just explain the problem
-> properly and mention that no one is checking the policy->boost_enabled
-> field. It is never read.
-> 
->> I had to update the policy->boost_enabled value because we seem
->> to allow enabling cpufreq_driver.boost_enabled from the driver, but I
->> can drop that because it was just for book keeping.
-> 
-> So with cpufreq_driver->boost_enabled at init time, policy's
-> boost_enabled must be set too. Do that in the core during
-> initialization of the policy instead.
-> 
->> I didn't want
->> to include redundant info from another mail thread that I referenced in
->> the cover letter, but will add more info in the re-spin.
-> 
-> You don't have to, but you need to explain the exact problem in a bit
-> more detail since it wasn't obvious here.
-
-ack, will make these changes in the next re-spin.
-
--Sibi
-
-> 
+-- 
+With best wishes
+Dmitry
 
