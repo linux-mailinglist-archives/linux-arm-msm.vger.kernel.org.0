@@ -1,157 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-12917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93B2886B888
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 20:48:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62C8286BA70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 23:03:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17C30B224A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 19:48:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18B751F22D34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 22:03:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A41D5E089;
-	Wed, 28 Feb 2024 19:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B06C876EE7;
+	Wed, 28 Feb 2024 22:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dnr0I0WC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mSjD+Abf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC945E078;
-	Wed, 28 Feb 2024 19:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5C97443C;
+	Wed, 28 Feb 2024 22:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709149679; cv=none; b=CyPCwxr0C2OL2UfVaFF/AcyYg4n4Gy8BR0kTRl4KvhRpNSe6PJpoQy//V+2YIBTSZ3VQhSuitx8nSxoxfHb6DvJlSH3ysMWBw+1UidSut3aVzDcchQKMazw7LoOgKbRmwoL+xdIRe2lwcpXcVnVkkUFhPkNqTwYZbJuI2WX8wg8=
+	t=1709157737; cv=none; b=iMQTqX0ledwy51TUvWow4iHwitZSt1cj8Nj5zPJWDhRTLZxYe7/9m2jEy534/GiA3tbrBbgHEmVGsZtGWOSzg67etAx/7PTjCuI47HR2ctrHytWCrqEdF+LzEZykamV+PG5hwIwwqkGHcktzMcom3Q+28336QPieYHufmO2ueCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709149679; c=relaxed/simple;
-	bh=VQbyziJAP7JAIcKEKd9Vn9Y5B1NnuYr6pANlsjIOyc4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DtZgn0AvUSvlZOUMkDk1NhwVvBq+mVB50jjdI9Aj4+fCvHUQhkF0JNZJXsjGl6pDKf0VVlysoS5Go0T9xhGuCF8et6DlErLC+0vQrWcI2Ja94+4zpXdr1lQqx+pjnXgnsSBQxEE1m89LxoV5mVSH+XOVJ3Om6MGbtI3lpq2SYCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dnr0I0WC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41SIhofu018782;
-	Wed, 28 Feb 2024 19:47:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=/GMSX6sWWOsoo4/guSjduizGVhX6C3jE3qMT/B6BT0I=; b=dn
-	r0I0WCLmpJ7yRgeUxarmRSqJbqgKA0DIbaxz5n531Wdam9NfI+pHS6Ka3Q8xDpD8
-	NUmJEYWo1+tKl+cNLcC0NDuPW8AujlvYJYNMsS+Bdw0+G9l9bOad8pRDVDJbZUsW
-	lHc2nNT2kJaEDIdPGz+IuFfMIZBj8it4bRRVTnLXgkSgL926y0uGRdtW4q+z/W0j
-	m6JsfrohLIxuISjXCwsGXjpC4uTF+6TzDduDS5OVkkECoF8GgoEELV/uG4G66hS2
-	RK6udHpvSuvfmtb8lJxnp1xZucj2uc9uKqOkYxDpKaVYw/TLxsfTjNxv0G0eCLCQ
-	2BfUmSLUkzfFPv5FvjUw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wj1d9sqhq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 19:47:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SJlmjc022155
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 19:47:48 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 28 Feb 2024 11:47:48 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <quic_parellan@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/2] drm/msm/dpu: drop dpu_kms from _dpu_kms_initialize_writeback
-Date: Wed, 28 Feb 2024 11:47:30 -0800
-Message-ID: <20240228194730.619204-2-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
-References: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
+	s=arc-20240116; t=1709157737; c=relaxed/simple;
+	bh=gPOdghli+9QBbrWalwVFo9yVmHQwrDvufi1/D3sjuJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=dwHUWGupJSIrr9j6MdQD7UpnUMBSSoc1xn1fGwQtN3cWIjxY7Yxi6wgO0/1H4NY3TvZAlILDCGkpg//KgWe2NvklJqdRSJ9mO2yFov+L9wLZgxSS8zcYes+1yYHJxL5Fd4o+Co+moqk5FMN6N7VvgYcziCUYdphxYhDziwtn/8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mSjD+Abf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7408C433F1;
+	Wed, 28 Feb 2024 22:02:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709157737;
+	bh=gPOdghli+9QBbrWalwVFo9yVmHQwrDvufi1/D3sjuJU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=mSjD+AbfYXIBYbQ4bhnujqShmhMYIuSgeohNkRNuEha5uRrMMtmh9NSmoiBkanSSH
+	 pzx8U1uk4eCfRXmGj1u0D82Vr61lA7o1701VRvmrp5NAH7K15iRBqu2rPYVQnqKTKt
+	 OF0S37fJftNMBe0q+Rbv6zdrP1F7B9TMwICmtuwKp0c3uhNactpNOtSwB0QRI17zTR
+	 4083jOeCzOzVgFyWsK9i124ivPvp5QbClQ6grbp3rAyQXGLg9Z+oveKbkEnZNaiIzp
+	 dS47NLmnygDe4Ue9p+AyQGTBEJtDVbdHv9G9TJ18ghN679o6bUt0+L6ugQWdZEvT0w
+	 QTTfj64E6EjbA==
+Date: Wed, 28 Feb 2024 16:02:15 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2 04/12] PCI: qcom: Add support for disabling ASPM L0s
+ in devicetree
+Message-ID: <20240228220215.GA308296@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: E7B4iOBq6kJLWRIraPW-OwGfl0u8BEd1
-X-Proofpoint-ORIG-GUID: E7B4iOBq6kJLWRIraPW-OwGfl0u8BEd1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_08,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- mlxscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402280156
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zd3_y_jbY8Ic2F0Y@hovoldconsulting.com>
 
-Following the pattern of other interfaces, lets align writeback
-as well by dropping the dpu_kms parameter in its _dpu_kms_initialize_*
-function.
+On Tue, Feb 27, 2024 at 04:29:15PM +0100, Johan Hovold wrote:
+> On Fri, Feb 23, 2024 at 04:10:00PM -0600, Bjorn Helgaas wrote:
+> > On Fri, Feb 23, 2024 at 04:21:16PM +0100, Johan Hovold wrote:
+> > > Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting
+> > > 1.9.0 ops") started enabling ASPM unconditionally when the hardware
+> > > claims to support it. This triggers Correctable Errors for some PCIe
+> > > devices on machines like the Lenovo ThinkPad X13s, which could indicate
+> > > an incomplete driver ASPM implementation or that the hardware does in
+> > > fact not support L0s.
+> > 
+> > Are there any more details about this?  Do the errors occur around
+> > suspend/resume, a power state transition, or some other event?  Might
+> > other DWC-based devices be susceptible?  Is there a specific driver
+> > you suspect might be incomplete?
+> 
+> I see these errors when the devices in question are active as well as
+> idle (not during suspend/resume). For example, when running iperf3 or
+> fio to test the wifi and nvme, but I also see this occasionally for a
+> wifi device which is (supposedly) not active (e.g. a handful errors over
+> night).
+> 
+> I skimmed Qualcomm's driver and noted that there are some registers
+> related to ASPM which that driver updates, while the mainline driver
+> leaves them at their default settings, but I essentially only mentioned
+> that the ASPM implementation may be incomplete as a theoretical
+> possibility. The somewhat erratic ASPM behaviour for one of the modems
+> also suggests that some further tweak/quirk may be needed, and I was
+> hoping to catch Mani's interest by reporting it.
+> 
+> But based on what I've since heard from Qualcomm, it seems like these
+> correctable error may be a known issue with the hardware (e.g. seen
+> also with Windows), which is also why we decided to disable it for all
+> controllers on these two platforms where I've seen this in v2.
+>  
+> > Do you want the DT approach because the problem is believed to be
+> > platform-specific?  Otherwise, maybe we should consider reverting
+> > 9f4f3dfad8cf until the problem is understood?
+> 
+> Enabling ASPM gave a very significant improvement in battery life on the
+> Lenovo ThinkPad X13s, from 10.5 h to 15 h, so reverting is not really an
+> option there.
 
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Ah, I missed that you're only disabling L0s, but leaving L1 enabled,
+thanks!
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index ab924ac78c9b..382ef4c8e8eb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -620,13 +620,12 @@ static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
- }
- 
- static int _dpu_kms_initialize_writeback(struct drm_device *dev,
--		struct msm_drm_private *priv, struct dpu_kms *dpu_kms,
-+		struct msm_drm_private *priv, u32 maxlinewidth,
- 		const u32 *wb_formats, int n_formats)
- {
- 	struct drm_encoder *encoder = NULL;
- 	struct msm_display_info info;
- 	const enum dpu_wb wb_idx = WB_2;
--	u32 maxlinewidth;
- 	int rc;
- 
- 	memset(&info, 0, sizeof(info));
-@@ -636,8 +635,6 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
- 	info.h_tile_instance[0] = wb_idx;
- 	info.intf_type = INTF_WB;
- 
--	maxlinewidth = dpu_rm_get_wb(&dpu_kms->rm, info.h_tile_instance[0])->caps->maxlinewidth;
--
- 	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL, &info);
- 	if (IS_ERR(encoder)) {
- 		DPU_ERROR("encoder init failed for dsi display\n");
-@@ -690,9 +687,12 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
- 	if (dpu_kms->catalog->wb_count) {
- 		for (i = 0; i < dpu_kms->catalog->wb_count; i++) {
- 			if (dpu_kms->catalog->wb[i].id == WB_2) {
--				rc = _dpu_kms_initialize_writeback(dev, priv, dpu_kms,
--						dpu_kms->catalog->wb[i].format_list,
--						dpu_kms->catalog->wb[i].num_formats);
-+				u32 wb_maxlinewidth = dpu_kms->catalog->wb[i].maxlinewidth;
-+				const u32 *wb_formats = dpu_kms->catalog->wb[i].format_list;
-+				u32 n_formats = dpu_kms->catalog->wb[i].num_formats;
-+
-+				rc = _dpu_kms_initialize_writeback(dev, priv, wb_maxlinewidth,
-+								   wb_formats, n_formats);
- 				if (rc) {
- 					DPU_ERROR("initialize_WB failed, rc = %d\n", rc);
- 					return rc;
--- 
-2.34.1
+And given that the v1.9.0 ops that enable ASPM are used on a bunch of
+platforms, and L0s seems to work fine on most of them, we wouldn't
+want to disable L0s for everybody, so this seems like the right
+solution.
 
+Bjorn
 
