@@ -1,112 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-12922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A69C86BA8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 23:08:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0C4286BAC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 23:32:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 578991C2197E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 22:08:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60F061F27171
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 22:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7161B1361B7;
-	Wed, 28 Feb 2024 22:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53E3224C9;
+	Wed, 28 Feb 2024 22:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JX3RE+mK"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RUTlwA0I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E001361A4;
-	Wed, 28 Feb 2024 22:08:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A1A1361D0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 22:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709158127; cv=none; b=cDZfvCUumjVJnNCsv+jRWGpH4JGdZPIbIO8MbQ2Zjtr6FwSXhUU/mE2bPu0i9P6kd0zRhGTbZs1tv0JTos8s5K8/X74O7JcK0EaUeS1SnmX3VqkgpDcDQyzj6WuYzwBuhhZnDPhGbG9Z89UFmu4CZFxuWEx8Sm+PaDvNyYFjHg0=
+	t=1709159561; cv=none; b=mvKZdhTHtTq8aWQAW4OW8T/IgwTne1SGxtVdlWpq1Gwl0pAwVMYrhhdR6A17ykFn6OE2rLlEdodrBlOoylvvjQjTh7KstH7JeQ6/DSqKsso9IU3LDfrHNKKxk1TJMgIovgC4q8QqxEWVpw0LHtZ8cOsz4BaW9i7gSNyNTRmKw4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709158127; c=relaxed/simple;
-	bh=cDIB7eI+qfgraTst6qw8uLCsKY/61Gvo/qIhEP5EUZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=qv8Xq/kzhA1JflSfCBreCfTN+niV6vzgOrP2pGk2SyiYumbMbxaIHRLamofa4j6eWnus7fAMtS6x+YQI5TgKKHQJ2perLZlkv3SAk2sLNLOZaoxkZUzcGqEV1lMNic/NTViogk8uWmZoVQmXFGvtum9uPjXskXgcW8HoPgaMX8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JX3RE+mK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD49C433C7;
-	Wed, 28 Feb 2024 22:08:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709158125;
-	bh=cDIB7eI+qfgraTst6qw8uLCsKY/61Gvo/qIhEP5EUZc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=JX3RE+mKdKR3cvs2/r6iCFu+RJTvicZ9D4D1E2qwq5kEnO0q5ozRlFgi6RPZbSD+n
-	 Kz4JTeGOFFE+8Ox6q084bxDjKJW4oPxfZ8wulEKEe8AV70+XjzAGUUasrk7PMcGkMz
-	 /aa9ExC4RfKqEYouEuTIsCvdNLApe6NIUDhWwzfMHYy0o6RLioqLF2/n3FYxluK5dy
-	 1oEStdLGgcp4lNjFeAeiP7RL8w0FHuHX30YRNgOMCN7VenEGcbN5yDv3/A1oBIlv8T
-	 bpgfItgqgi/zRR0UTHiu3c5RVlCErz9/KijTaVaAkX8bLkRMs9iBLd431PSMnA/GZO
-	 /gWj+V8w2a8hQ==
-Date: Wed, 28 Feb 2024 16:08:43 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <20240228220843.GA309344@bhelgaas>
+	s=arc-20240116; t=1709159561; c=relaxed/simple;
+	bh=4heZpp/8xaL9FF64v4iIiRVohxYlLTlgxw9EvqHEm0U=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jLdAorv7XWJ/VoPNEAgO/QWaOEeIntLg2S0eaP+AUrk3zrPP2MP/tw0jgqGolVuiunklsArNUF40Q5Ag+gxjkwjQgXgLYarOWcLx5RB1Zwc3yRV/0jSemO1+PScjYzimnkBAZGH52ehagqi/aNXWBR5zQ5lRhHe31PT6sUAcerI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=RUTlwA0I; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-513235b5975so224597e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 14:32:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1709159558; x=1709764358; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4heZpp/8xaL9FF64v4iIiRVohxYlLTlgxw9EvqHEm0U=;
+        b=RUTlwA0IfW78KD00US+ORH6BXLt7WBfSfAZD1XMlHm4BUkiLdcmATDYJy9WH+dwmYY
+         0RXUSVZ4HlWqbUUGCtpMTY3uuCqRLHV3qvdy88nbtqVilSl5pCT/X73T+MxyRUypc0cC
+         KuYzfEdbII0SOft4FjrtTmyV6sGVsqtmmA+u4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709159558; x=1709764358;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4heZpp/8xaL9FF64v4iIiRVohxYlLTlgxw9EvqHEm0U=;
+        b=h51+TZGC95IWq/V4A/pS+Ue7gWgzYWOvyRduzZjf4cmv+XtuJgEdGC8TX3D3qEYTDz
+         3xsTrxxob3Tc+wg0W2CiAk8b+vN8bHOh1VaQNgOjJcOIcPdWq4jbhcmOe2Ujz49H6zRy
+         IddEE5e6gmKxz7xA06asFYoDU90r+Wvh3crCS2NjfLGvdUrB4S5efe6gydik2rB3KXg7
+         U6oXk7ba56kcev9muhx4r6diOz1OM7wbw606UGCgGKrI+GGX27Gt5aMEoAAnMzLiUmj2
+         mWHelS35lWWALAFLUO7ZWUQZ59RrpAn16N91k1snlaWTpO9MLYEDcU1yfbincEAaWnzE
+         XvsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXddW16Eo8bcgiyfFEAMkdL6L8Mxq9POFA6Eo0gTG6fmUVofytzcauX+nfrqMxbCeSdZSxQ+liDaGECyMxUQD5Oj1iASfoT83o3g9kwAQ==
+X-Gm-Message-State: AOJu0YzD5RojuTPj+sgn1PASeqk8j2tUWNGcA7+C37UZGpEjD9o9hAvD
+	e7OXqlRMaAnmCB7aEKtNRrrJSmZc+OglMsnuZoqPhio0G9SdbKWh5dzINQSJKDkaDpWhCXu2wOX
+	83oj4e8b+PF3EIWJBGGjFciPMy744A0tdn1tO
+X-Google-Smtp-Source: AGHT+IF8m5eUpgTa0zbHHmuuse1uPPlb5cH3BKyK6w6U3t5iw9hTZuDz5U5AYc4RAvuOLPpkAFPsDX9RoXeg8idDs9k=
+X-Received: by 2002:ac2:544f:0:b0:512:b3ef:350f with SMTP id
+ d15-20020ac2544f000000b00512b3ef350fmr151977lfn.49.1709159558498; Wed, 28 Feb
+ 2024 14:32:38 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 28 Feb 2024 14:32:37 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240223152124.20042-1-johan+linaro@kernel.org>
+In-Reply-To: <20240226223446.4194079-1-dmitry.baryshkov@linaro.org>
+References: <20240226223446.4194079-1-dmitry.baryshkov@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 28 Feb 2024 14:32:37 -0800
+Message-ID: <CAE-0n522_pS0ructcKgbNY6gNpfn=s+83ha94N7A16adq0OoRg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: fix runtime_pm handling in dp_wait_hpd_asserted
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sankeerth Billakanti <quic_sbillaka@quicinc.com>, 
+	Sean Paul <sean@poorly.run>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-[+to Mani]
+Quoting Dmitry Baryshkov (2024-02-26 14:34:45)
+> The function dp_wait_hpd_asserted() uses pm_runtime_get_sync() and
+> doesn't care about the return value. Potentially this can lead to
+> unclocked access if for some reason resuming of the DP controller fails.
+>
+> Change the function to use pm_runtime_resume_and_get() and return an
+> error if resume fails.
+>
+> Fixes: e2969ee30252 ("drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-On Fri, Feb 23, 2024 at 04:21:12PM +0100, Johan Hovold wrote:
-> This series addresses a few problems with the sc8280xp PCIe
-> implementation.
-> ...
-
-> A recent commit enabling ASPM on certain Qualcomm platforms introduced
-> further errors when using the Wi-Fi on the X13s as well as when
-> accessing the NVMe on the CRD. The exact reason for this has not yet
-> been identified, but disabling ASPM L0s makes the errors go away. This
-> could suggest that either the current ASPM implementation is incomplete
-> or that L0s is not supported with these devices.
-> ...
-
-> As this series fixes a regression in 6.7 (which enabled ASPM) and fixes
-> a user-reported problem with the Wi-Fi often not starting at boot, I
-> think we should merge this series for the 6.8 cycle. The final patch
-> enabling the GIC ITS should wait for 6.9.
-> 
-> The DT bindings and PCI patch are expected to go through the PCI tree,
-> while Bjorn A takes the devicetree updates through the Qualcomm tree.
-> ...
-
-> Johan Hovold (12):
->   dt-bindings: PCI: qcom: Allow 'required-opps'
->   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
->   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
->   PCI: qcom: Add support for disabling ASPM L0s in devicetree
-
-The ASPM patches fix a v6.7 regression, so it would be good to fix
-that in v6.8.
-
-Mani, if you are OK with them, I can add them to for-linus for v6.8.  
-
-What about the 'required-opps' and 'msi-map-mask' patches?  If they're
-important, I can merge them for v6.8, too, but it's late in the cycle
-and it's not clear from the commit logs why they shouldn't wait for
-v6.9.
-
-Bjorn
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
