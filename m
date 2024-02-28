@@ -1,203 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-12842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5672886A764
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 04:54:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CD286A7A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 05:42:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0C50B240EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 03:54:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D381B1C23D7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 04:42:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA608208A8;
-	Wed, 28 Feb 2024 03:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ADEE2232B;
+	Wed, 28 Feb 2024 04:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="VQ7006dk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="apj+aWKY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E30C208A9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 03:54:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8392231F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 04:42:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709092485; cv=none; b=ZvX3DqzH3MBeUs0P+s2BcWo1bV0vOUPrq6MICZxwJwPImv1EVdIwAruXBBAup/IaK6Rlj3h8QsbxI1h4dTlQmvMvaWh+DNALmq90tvcpLhuQpcf2Dy5LFErzdg/thgdpEsy2kj71VK5r0W8qfMu+tX1gLC/Tooyf2GtxAIcEKAE=
+	t=1709095362; cv=none; b=Qir4xi948KeZJmHj4QAFJUBidsqx6T/vKIgszYN5DR5rYBaDFXQRMpdXVmars1r+HWM4imDdNQ2Fkka1gHnDtayDZotaN/1eNHjkTn3EJOpUT8jEvugAicPPlcUWUXshlSeNzi+30tSCsqOmqQ6rW613Vm91MMvQAOyr1n/FHSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709092485; c=relaxed/simple;
-	bh=HxMCc185JbnlZOerW9mcBUnO3THhFu5GOeR2QqzXtoM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eZPFY5Ay5jFa8tmarX6KbfOrsZ8ncKxjwCTC8SZ9c55rjuX6T6W7i9lN9EcItOZQxMDcNoFSbx5EIUeHuVGq92Vn52BPmoD1FEObZISOmWoxoUFvhCyqGdeWWsu1CBHpnpX2IeD/HXR96Q2F1gQ28kddX6zcNVV0o+QsU9J2jr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=VQ7006dk; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6093f73b373so877007b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Feb 2024 19:54:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1709092482; x=1709697282; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YW4SWbLimQ0VFXlHaJDeVx867JJFVSwL6sDK9ku7RFk=;
-        b=VQ7006dk1SmOeNKI0HOOBimhFx0M+0RrxJNIqHta0HjjflcyrYAxguvzKpgLxSbkkV
-         ErRYCTEod81oPS1/sVrzOneMnyKzfhuSwEFNRYG+2ZgjBZI0T2xErcl2NG4BLiaUH1wX
-         8IKfDXK4BmKlGJHALnmO8pVy4B1A9n+ZtGaPQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709092482; x=1709697282;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YW4SWbLimQ0VFXlHaJDeVx867JJFVSwL6sDK9ku7RFk=;
-        b=ieZetDYR1NVwq+YVLqkW7Y2mjsPdXmwbUYPHzKhpv3R1mFyifeSPX+dIx1QqD1Zey5
-         aZ2JirdoB5rQfTnrhkbqCiOjiLNPKiqru8qbNDJuZlRPtvf6tRHeaCBI54DjzOgMQ103
-         SnB2I5vP86oZA8nJWVCjFASz/9Pm9jPl/0pryAHl2Fi8CA+PdC0RuICOXXW9NMJxa6RW
-         Z/Lrf7nGiXF2GvnjqMjqMLZq8ue+63F2eyT3W+pcmfSgkl2TzCoOCOPqZJm6NFGuEUYi
-         RCg/d/MU2FfhmDS+6QHDkHEkSBI7e4FFeYpsKpc29u4Fi6Pp7wzwRuF5PvNjRKVOpW70
-         O/gA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIPfrJAZWnuzgoVygU8KGoAlkOIEeRlnRA6xutJ+qfFIEj5GLMAOOU6MmxYozWbwHBccg7RAwCplMrDbtqGbuTEl+S6jnIuVQnKkteog==
-X-Gm-Message-State: AOJu0Yym5GL2/C/33SKvPoSNswJLhbVigQl4nZCd0xrUDglYhUBazMp1
-	44Sr4DZAfP3eiFMGXfMn67cIQxSYJZmlOREFvKwj1e7+6hd24brO8n1FhEB8qWW5wluthKVe5El
-	ykwg5KONJrhSf2J5qlYLRQZY9mwl3qPM6hN7B
-X-Google-Smtp-Source: AGHT+IHEv7+c/ePWhOgKmqYsJ5d3zIAxFqZvYWkNQbw6XfXCc1hvqrNWPlY3OogOg7lOY3gWJjWCq9lA6f1828rRluU=
-X-Received: by 2002:a81:b107:0:b0:607:850e:7583 with SMTP id
- p7-20020a81b107000000b00607850e7583mr3821071ywh.38.1709092482039; Tue, 27 Feb
- 2024 19:54:42 -0800 (PST)
+	s=arc-20240116; t=1709095362; c=relaxed/simple;
+	bh=stLauuj/vZlTbZIYkGiOWuraG7RR1rr2k/jpHLSYpUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:CC:
+	 In-Reply-To:Content-Type; b=oSzoZ4VcVxYlJHwxAR1AXcl8+irhOrTBWqwcb8Az2EoffAJE2HA44pjNtQFGeXkcxK2bEcHFuVpA3jRLjNeCR/fXK2TGbqsRwlz9ruxwo2B4FCR2JIvqEu0GYowT8j/hW3191jhwCNdQ3uSleI5N7mgZG0r7GrNPhpAm8aRCb0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=apj+aWKY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S4gVCW014151;
+	Wed, 28 Feb 2024 04:42:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:references:from:cc
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=n0/g4DvoLU6HEkaxtN7IN1xshse8tftckaah7cVNQ0Q=; b=ap
+	j+aWKYex612886FH1+51TnK/kOzotx8IUdCjAlZq2xg30QOmHZPPcRS7itCnM8c/
+	MpNWoqOfFQ4oDiOfG3lsk4NUWE+F1u2AhQ5vAdbow9K/Ck81/e8cT9Ch2ZeTl4ff
+	HzKEehoqbdWytbVipCPmgp+9UqcgHRAUvQYMRqO8xzKy1toas4xI1t9h6PrnNC69
+	lH2jneFuRrPJybK4T9jt2HpPuYsJn5l5ioW7YOj/6+Te1r40SCONNgPNj7G/hsT7
+	PpXLuBv5nu/QFMBD70/VF9sxQ4NpmmbL20MbUcQtjlSLHshLSIxlCM8+ZHNr6o0v
+	dy9eiZ8qiK4eIdaQUiFg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whrqagj9r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 04:42:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41S4gbof029931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Feb 2024 04:42:37 GMT
+Received: from [10.216.37.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 27 Feb
+ 2024 20:42:36 -0800
+Message-ID: <04859c35-c09c-4c08-a136-6d5c0b37fd29@quicinc.com>
+Date: Wed, 28 Feb 2024 10:12:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240227113853.8464-1-tzimmermann@suse.de>
-In-Reply-To: <20240227113853.8464-1-tzimmermann@suse.de>
-From: Zack Rusin <zack.rusin@broadcom.com>
-Date: Tue, 27 Feb 2024 22:54:31 -0500
-Message-ID: <CABQX2QMrjqShv0fgYCBzGkVc53DB9NLmh-d2aJMSWg2BfctYXw@mail.gmail.com>
-Subject: Re: [PATCH 00/13] drm: Fix reservation locking for pin/unpin and console
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: daniel@ffwll.ch, airlied@gmail.com, mripard@kernel.org, 
-	maarten.lankhorst@linux.intel.com, christian.koenig@amd.com, 
-	sumit.semwal@linaro.org, dmitry.osipenko@collabora.com, robdclark@gmail.com, 
-	quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run, 
-	marijn.suijten@somainline.org, suijingfeng@loongson.cn, kherbst@redhat.com, 
-	lyude@redhat.com, dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com, 
-	alexander.deucher@amd.com, Xinhui.Pan@amd.com, 
-	bcm-kernel-feedback-list@broadcom.com, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	nouveau@lists.freedesktop.org, virtualization@lists.linux.dev, 
-	spice-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: UVC Configuration Issue on RB5
+To: Robert Arndt <robertarndt201@gmail.com>
+References: <CAEg6Gx6JqG1-OQyq=jBwKYy+J5TRCq68RXj8OLMo0+1W+uAh-A@mail.gmail.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>
+In-Reply-To: <CAEg6Gx6JqG1-OQyq=jBwKYy+J5TRCq68RXj8OLMo0+1W+uAh-A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: td3UeB4IOicBSRvmno_FLeMrawnYcUva
+X-Proofpoint-ORIG-GUID: td3UeB4IOicBSRvmno_FLeMrawnYcUva
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-28_04,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ impostorscore=0 bulkscore=0 phishscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2402280034
 
-On Tue, Feb 27, 2024 at 6:38=E2=80=AFAM Thomas Zimmermann <tzimmermann@suse=
-.de> wrote:
->
-> Dma-buf locking semantics require the caller of pin and unpin to hold
-> the buffer's reservation lock. Fix DRM to adhere to the specs. This
-> enables to fix the locking in DRM's console emulation. Similar changes
-> for vmap and mmap have been posted at [1][2]
->
-> Most DRM drivers and memory managers acquire the buffer object's
-> reservation lock within their GEM pin and unpin callbacks. This
-> violates dma-buf locking semantics. We get away with it because PRIME
-> does not provide pin/unpin, but attach/detach, for which the locking
-> semantics is correct.
->
-> Patches 1 to 8 rework DRM GEM code in various implementations to
-> acquire the reservation lock when entering the pin and unpin callbacks.
-> This prepares them for the next patch. Drivers that are not affected
-> by these patches either don't acquire the reservation lock (amdgpu)
-> or don't need preparation (loongson).
->
-> Patch 9 moves reservation locking from the GEM pin/unpin callbacks
-> into drm_gem_pin() and drm_gem_unpin(). As PRIME uses these functions
-> internally it still gets the reservation lock.
->
-> With the updated GEM callbacks, the rest of the patchset fixes the
-> fbdev emulation's buffer locking. Fbdev emulation needs to keep its
-> GEM buffer object inplace while updating its content. This required
-> a implicit pinning and apparently amdgpu didn't do this at all.
->
-> Patch 10 introduces drm_client_buffer_vmap_local() and _vunmap_local().
-> The former function map a GEM buffer into the kernel's address space
-> with regular vmap operations, but keeps holding the reservation lock.
-> The _vunmap_local() helper undoes the vmap and releases the lock. The
-> updated GEM callbacks make this possible. Between the two calls, the
-> fbdev emulation can update the buffer content without have the buffer
-> moved or evicted. Update fbdev-generic to use vmap_local helpers,
-> which fix amdgpu. The idea of adding a "local vmap" has previously been
-> attempted at [3] in a different form.
->
-> Patch 11 adds implicit pinning to the DRM client's regular vmap
-> helper so that long-term vmap'ed buffers won't be evicted. This only
-> affects fbdev-dma, but GEM DMA helpers don't require pinning. So
-> there are no practical changes.
->
-> Patches 12 and 13 remove implicit pinning from the vmap and vunmap
-> operations in gem-vram and qxl. These pin operations are not supposed
-> to be part of vmap code, but were required to keep the buffers in place
-> for fbdev emulation. With the conversion o ffbdev-generic to to
-> vmap_local helpers, that code can finally be removed.
->
-> Tested with amdgpu, nouveau, radeon, simpledrm and vc4.
->
-> [1] https://patchwork.freedesktop.org/series/106371/
-> [2] https://patchwork.freedesktop.org/series/116001/
-> [3] https://patchwork.freedesktop.org/series/84732/
->
-> Thomas Zimmermann (13):
->   drm/gem-shmem: Acquire reservation lock in GEM pin/unpin callbacks
->   drm/gem-vram: Acquire reservation lock in GEM pin/unpin callbacks
->   drm/msm: Provide msm_gem_get_pages_locked()
->   drm/msm: Acquire reservation lock in GEM pin/unpin callback
->   drm/nouveau: Provide nouveau_bo_{pin,unpin}_locked()
->   drm/nouveau: Acquire reservation lock in GEM pin/unpin callbacks
->   drm/qxl: Provide qxl_bo_{pin,unpin}_locked()
->   drm/qxl: Acquire reservation lock in GEM pin/unpin callbacks
->   drm/gem: Acquire reservation lock in drm_gem_{pin/unpin}()
->   drm/fbdev-generic: Fix locking with drm_client_buffer_vmap_local()
->   drm/client: Pin vmap'ed GEM buffers
->   drm/gem-vram: Do not pin buffer objects for vmap
->   drm/qxl: Do not pin buffer objects for vmap
->
->  drivers/gpu/drm/drm_client.c            |  92 ++++++++++++++++++---
->  drivers/gpu/drm/drm_fbdev_generic.c     |   4 +-
->  drivers/gpu/drm/drm_gem.c               |  34 +++++++-
->  drivers/gpu/drm/drm_gem_shmem_helper.c  |   6 +-
->  drivers/gpu/drm/drm_gem_vram_helper.c   | 101 ++++++++++--------------
->  drivers/gpu/drm/drm_internal.h          |   2 +
->  drivers/gpu/drm/loongson/lsdc_gem.c     |  13 +--
->  drivers/gpu/drm/msm/msm_gem.c           |  20 ++---
->  drivers/gpu/drm/msm/msm_gem.h           |   4 +-
->  drivers/gpu/drm/msm/msm_gem_prime.c     |  20 +++--
->  drivers/gpu/drm/nouveau/nouveau_bo.c    |  43 +++++++---
->  drivers/gpu/drm/nouveau/nouveau_bo.h    |   2 +
->  drivers/gpu/drm/nouveau/nouveau_prime.c |   8 +-
->  drivers/gpu/drm/qxl/qxl_object.c        |  26 +++---
->  drivers/gpu/drm/qxl/qxl_object.h        |   2 +
->  drivers/gpu/drm/qxl/qxl_prime.c         |   4 +-
->  drivers/gpu/drm/radeon/radeon_prime.c   |  11 ---
->  drivers/gpu/drm/vmwgfx/vmwgfx_gem.c     |  25 ++----
->  include/drm/drm_client.h                |  10 +++
->  include/drm/drm_gem.h                   |   3 +
->  include/drm/drm_gem_shmem_helper.h      |   7 +-
->  21 files changed, 265 insertions(+), 172 deletions(-)
->
->
-> base-commit: 7291e2e67dff0ff573900266382c9c9248a7dea5
-> prerequisite-patch-id: bdfa0e6341b30cc9d7647172760b3473007c1216
-> prerequisite-patch-id: bc27ac702099f481890ae2c7c4a9c531f4a62d64
-> prerequisite-patch-id: f5d4bf16dc45334254527c2e31ee21ba4582761c
-> prerequisite-patch-id: 734c87e610747779aa41be12eb9e4c984bdfa743
-> prerequisite-patch-id: 0aa359f6144c4015c140c8a6750be19099c676fb
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: cbc453ee02fae02af22fbfdce56ab732c7a88c36
-> --
-> 2.43.2
->
 
-That's a really nice cleanup! I already gave a r-b for 9/13. For the rest:
-Acked-by: Zack Rusin <zack.rusin@broadcom.com>
+On 2/28/2024 8:17 AM, Robert Arndt wrote:
+> Hi Folks, I was wondering if anyone has gotten UVC working on the RB5?  
+> I'm having trouble with the UDC probe and not sure if it's a problem 
+> with kernel configuration, configFS script (haven't made into a service 
+> yet), or some UDC problem.
+> 
+> I'm getting a ENODEV error 19 when I try to bind my UVC configuration to 
+> the UDC according to dmesg, and stdin output says "Device or resource 
+> busy".  I put printk statements into driver/usb/udc/core.c's 
+> usb_gadget_probe_driver() which is producing the error line:
+>  >>
+>          mutex_lock(&udc_lock);
+>          if (driver->udc_name) {
+>                  list_for_each_entry(udc, &udc_list, list) {
+>                          ret = strcmp(driver->udc_name, 
+> dev_name(&udc->dev));
+> 
+>                          printk("****DEBUG: Driver->udc_name: %s\n", 
+> driver->udc_name);
+>                          printk("****DEBUG: udc->dev name: %s\n", 
+> &udc->dev);
+> 
+>                          if (!ret)
+>                                  break;
+>                  }
+>                  if (ret)
+>                          ret = -ENODEV;
+>                  else if (udc->driver)
+>                          ret = -EBUSY;
+>                  else
+>                          goto found;
+> <<
+> 
+> ...and while udc_name came up with the string a600000.usb, &udc->dev was 
+> an empty string.  So it seems like the device is not in the master UDC 
+> list?  I don't know why...maybe my ConfigFS script is wrong?
+> 
+> I've attached my kernel config, ConfigFS script, and dmesg output as a 
+> single file.  Would appreciate if someone could tell me if I'm looking 
+> in the right direction or completely off.
+> 
 
-z
+Hi Robert,
+
+  Can you check if dwc3 driver probe was successful or if it was 
+deferred for the a600000.usb controller. And seems like you are printing 
+&udc->dev instead of dev_name(&udc->dev).
+
+  Also the symlink being created must be the following:
+  ln -s functions/uvc.usb0 configs/c.1/f1
+
+  You are directly linking it to c.1 in your script like the following 
+which is wrong:
+  ln -s functions/uvc.usb0 configs/c.1
+
+  Can you check if fixing the symlink is helping with successful 
+enumeration.
+
+Regards,
+Krishna,
 
