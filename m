@@ -1,218 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-12893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E7E486B56A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 18:01:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FC4386B583
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 18:06:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E02F52862A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 17:01:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 905841C21CE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 17:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB7573FB80;
-	Wed, 28 Feb 2024 17:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61D73FB85;
+	Wed, 28 Feb 2024 17:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lpwxnPBr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qO8zF7Dy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACFD208D7;
-	Wed, 28 Feb 2024 17:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DF9208D7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 17:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709139673; cv=none; b=UcpFLYGKL2CR8q7duBgdCiJF695k1uLxxEXGJowgCoFEz0kir6oNpaJQHt76eYbH2Y4cf9RpX5qQBA8HWjda/Xqpjpdp8IWmQ9fkewpKjP1PyahYv/2lEy/PTQ7fU5iiBfn7KuY5GI9GTpSMfgDtOtt4GNSPAA+l19TWv0tejKc=
+	t=1709139918; cv=none; b=WP+y/dEUJ+kNAT/ebzqSvHhYhRhUWbndPt2Var0cwgG/aZtOr8FiuIqZG6VsvF5+vvGx99QG3uCfzHKQvupVM0unx7ylGSEofzkTLbB+6+ezDAK/EzktlpJnNRFUOf7Aah7+NRi6+XBoEWbFfYQtc+2vu/a2ylnCOBwkhAm+UWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709139673; c=relaxed/simple;
-	bh=byrBJK1PNV5TLon9imE4YeO9CVPH8UfV/Eu8yZXb18g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=o1jEYIlyUkRMZkBYsbpxH5xX+AddPJ070sbaWDAn/fhBP4yi7a7xX41LUbk5oPIl1Nj2NQCOX8DyKpJYF8g0stiHlPLRd7T2ZFwkQiYoTHW6W7hlZHMNWT8Vkp++HLyYmgNh4D5kyvLm1jC6aFtRMh2K/UaQnFTcYcH371WWGos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lpwxnPBr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41S97P1b023466;
-	Wed, 28 Feb 2024 17:00:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=kDrZQYUzq9AttFHiMFzCFe22kthPai9X0iD964whZFM=; b=lp
-	wxnPBrR2WWOP0b3A25+YALReYorWG1W4XOxo+rG0R9yoa3Fy+l+JCYqMXdq9HXX5
-	qJaPWjGYram+Q6LpshVAN125fP3sbfAXpG1WviUiWIl3dLii3gJiKA7v4Os45j8q
-	VQDeM7tVMkZ+3J7Y4P0GpPI5xyxFV6MiEe08uvh5J9cQ4T5kR/PvB/akohQcDeSl
-	VdJKrPaJlKAHtGG1r+ZwEIZ3bbl0Bpb2hVzNGgqKJx10MnOqFbEZCLbKqzEj2dLZ
-	t+/IbnRpXhDQOiIHJ7S8ODWPrIkvQpNiTyeztZ/eYLjFylPBp+ejoD8zzsjhlIsP
-	ae+r2KXEeqtfsQl0H8mQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3whw3f1tvu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 17:00:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41SH0vaf030707
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Feb 2024 17:00:57 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 09:00:53 -0800
-Message-ID: <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
-Date: Wed, 28 Feb 2024 22:30:50 +0530
+	s=arc-20240116; t=1709139918; c=relaxed/simple;
+	bh=FVcXaV24hqf+O26y29mEYjF1sOtwwqLMlU2ptNFM73w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=G00Az6ZePCP4d/5yQVN/llmBcd695vrXYC+9kPBMFLoMMpHg+eB3gr6cnbAY90HVZiR+Q4E7n0EE/WGsdlXIuH3AUV344gLhUtKsv2OKilMcFXoZicvWn1QlfKqP5X53FTV2QuT3jTFwBy7YY47t00n2x4JfA7z1o9xtKM99TF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qO8zF7Dy; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-412b83cfac4so2000105e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 09:05:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709139915; x=1709744715; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=raKlYsxX1CoUA1rEC+HT6CFp25O9+mSwte0XpksV7ko=;
+        b=qO8zF7DyTgCMXD7wG0DKdxOu71OQGKrY2AxOVYzWXrVxJunkMJti3dOukL3TBEZlOz
+         SltLAN+7Vut+D+VZc0SDR7hIclprTo1qfif4JHGO8n+zXXFh2ZgTPDwi28iyJJuPG51q
+         VEHVYkHcb9fhJm6NrXVtddPWD6NufK8NKB9qkgpk7y/fbIg1VwJg1BZaKx9+jCDWTGpT
+         gd7K6jFMV4Ak61BrJ9Fqdha5y+uKrepMkLxylenRiEPsBI/udR31ZpDskHYnrxcvR9i5
+         qtpZXmc/cMKhWhf2ESncMVWloc8PbxUL0kqNFbvXJmFIhdU342tpeORlNSDjXSK8NIjy
+         p7YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709139915; x=1709744715;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=raKlYsxX1CoUA1rEC+HT6CFp25O9+mSwte0XpksV7ko=;
+        b=QUkI/JiCxL9zzDyaD7RUwK2fSxd5WyTgP7aHuQtF8eUTrhOxmHnk0h3sEAKBrRSR3y
+         laf7epoTb9IItXOc7YTjOcr3HF6yWACaGMboN8flis6kVS61tmqajaCOksy8k8PJ49p8
+         HFH46IUK4hFRMum2zxGFxY6pcQ9VdqKD3J/YIj4a9GhHZIhUXBt/13L6rHWM6cBwkhXa
+         mlcnAw78NlhQiJX9LYkuHy57fUj1vY2RiUr6sL+Eom6q94/+LInOIpYUzeYW11AGilYE
+         5ZovmJ+mqPF7beOB4J2qb2AdqirShVfrcp8AQe5d/W7ff6stEspQNwEU7oAdoovb6Czi
+         9l8Q==
+X-Gm-Message-State: AOJu0YyozoVipgy/IOOsBDQcZ0+4RZ0QyZntOj/UD3WtFbSRRU65ItXu
+	Lf9TLViBEcbKSxZgCgZ8BCEfhvQIxrjPcV9HZoMXN+y38S8o/JIBHpg209akvVg=
+X-Google-Smtp-Source: AGHT+IH29p2SuKBey7ncm8GpoVCcz7N2S4ULQ+Fp+iOZOvQYBRUfhgtHj2imzhZ7YEPLUJ932Wrw9g==
+X-Received: by 2002:a05:600c:4f92:b0:412:b7cf:9189 with SMTP id n18-20020a05600c4f9200b00412b7cf9189mr62889wmq.36.1709139915134;
+        Wed, 28 Feb 2024 09:05:15 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id m21-20020a05600c4f5500b00412b0ef22basm2659365wmq.10.2024.02.28.09.05.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Feb 2024 09:05:14 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Wed, 28 Feb 2024 18:05:13 +0100
+Subject: [PATCH] phy: qcom: qmp-combo: fix duplicate return in
+ qmp_v4_configure_dp_phy
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
- notifications
-Content-Language: en-US
-To: Lukasz Luba <lukasz.luba@arm.com>
-CC: <linux-arm-kernel@lists.infradead.org>, <pierre.gondois@arm.com>,
-        <dietmar.eggemann@arm.com>, <morten.rasmussen@arm.com>,
-        <viresh.kumar@linaro.org>, <rafael@kernel.org>,
-        <cristian.marussi@arm.com>, <sudeep.holla@arm.com>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_mdtipton@quicinc.com>, <linux-arm-msm@vger.kernel.org>
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
- <20240227181632.659133-3-quic_sibis@quicinc.com>
- <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Agk_FTkjIhwQNOGXeoMtaveUuzBaBums
-X-Proofpoint-GUID: Agk_FTkjIhwQNOGXeoMtaveUuzBaBums
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_08,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- suspectscore=0 adultscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- mlxscore=0 clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2402280133
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240228-topic-sm8x50-upstream-phy-combo-fix-duplicate-return-v1-1-60027a37cab1@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMhn32UC/x2NywrCMBAAf6Xs2YU0mlj8FfGQpqtdMA82iVRK/
+ 93gcWCY2aGQMBW4DTsIfbhwih3G0wB+dfFFyEtn0EpflNYT1pTZYwnTZhS2XKqQC5jXL/oU5oR
+ P3nBp+c3eVUKh2iSinc14NldjlbLQ01moe//t/XEcP/jXYUOGAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=951;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=FVcXaV24hqf+O26y29mEYjF1sOtwwqLMlU2ptNFM73w=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl32fJaprd3yno2KQHTuZClgxf8NyyfMXSP+P3A5oe
+ F2jmTQ+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZd9nyQAKCRB33NvayMhJ0QWoEA
+ CkBL9dLTftxjIWRvnVqNsN90tY0MZj4bBejTiE/CMyzVjzNXn4YiMqSeEjnTZFohFMbGhnZpeCWJHi
+ WzUM6e9tqdh3P+SUljyU8X/2nl2v8M3w6Knt/lQ0qri0SQSWg9H5PhIrXwFMNvP+8AZBMBFFzlY7MW
+ hVrl5xaT3IZrfswDxrj0VPEVlOsUGPuzVmLyf1eXO8XFOOUFthXsDfpYFFjmBry8Zkqe6sDxjUcWQ8
+ 0iO1S6vb9lwIcnv5iaQYtQOsz7hyy8rUqLuDSzYvybuLhi8YfOZBQObKD2YLddyJcK0AeLYWlAogdT
+ S4bMkWwjl6eZMdfX5OzqZCY35onEZr4/GkqtwhzEyqkP+iOl3Jfu+s9kQfTmZFvfRHzNgzEnMDebLU
+ PRjD5BdwG5r32Xpn+4XC2tbOVS3A2hLBuKunjBRFJIz4VUOcV47CCst2MxqiWd4veeCFhv+TVD12wg
+ K+nIRJNLb3KE+vEHeQd4foJOXAZGlH4LtuEnsxx7SqoP6SakW03RKwypmarjFBOKsVzNb9pbzHkvde
+ 8wOE5eLUG1/8eR1YI7JDOpNuceDmul9c2ek/jXNQjzgFxP+mdmjWdMt8JEleKrA+hIcngFNhGo+soW
+ 0PjZmR/JDVNDO7igA1yMEzrd/kiSK87cdPUN5Rco9xL4X/iTK2U4ZfcvWPwg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+Remove duplicate "return 0" in qmp_v4_configure_dp_phy()
 
+Fixes: 186ad90aa49f ("phy: qcom: qmp-combo: reuse register layouts for even more registers")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-On 2/28/24 18:54, Lukasz Luba wrote:
-> 
-> 
-> On 2/27/24 18:16, Sibi Sankar wrote:
->> Register for limit change notifications if supported and use the 
->> throttled
->> frequency from the notification to apply HW pressure.
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 546d3c6bee32..2f341613fd31 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2431,8 +2431,6 @@ static int qmp_v4_configure_dp_phy(struct qmp_combo *qmp)
+ 	writel(0x20, qmp->dp_tx2 + cfg->regs[QPHY_TX_TX_EMP_POST1_LVL]);
+ 
+ 	return 0;
+-
+-	return 0;
+ }
+ 
+ /*
 
-Lukasz,
+---
+base-commit: 20af1ca418d2c0b11bc2a1fe8c0c88f67bcc2a7e
+change-id: 20240228-topic-sm8x50-upstream-phy-combo-fix-duplicate-return-6b5135756006
 
-Thanks for taking time to review the series!
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> v3:
->> * Sanitize range_max received from the notifier. [Pierre]
->> * Update commit message.
->>
->>   drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
->>   1 file changed, 28 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/cpufreq/scmi-cpufreq.c 
->> b/drivers/cpufreq/scmi-cpufreq.c
->> index 76a0ddbd9d24..78b87b72962d 100644
->> --- a/drivers/cpufreq/scmi-cpufreq.c
->> +++ b/drivers/cpufreq/scmi-cpufreq.c
->> @@ -25,9 +25,13 @@ struct scmi_data {
->>       int domain_id;
->>       int nr_opp;
->>       struct device *cpu_dev;
->> +    struct cpufreq_policy *policy;
->>       cpumask_var_t opp_shared_cpus;
->> +    struct notifier_block limit_notify_nb;
->>   };
->> +const struct scmi_handle *handle;
->> +static struct scmi_device *scmi_dev;
->>   static struct scmi_protocol_handle *ph;
->>   static const struct scmi_perf_proto_ops *perf_ops;
->>   static struct cpufreq_driver scmi_cpufreq_driver;
->> @@ -151,6 +155,20 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
->>       NULL,
->>   };
->> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned 
->> long event, void *data)
->> +{
->> +    struct scmi_data *priv = container_of(nb, struct scmi_data, 
->> limit_notify_nb);
->> +    struct scmi_perf_limits_report *limit_notify = data;
->> +    struct cpufreq_policy *policy = priv->policy;
->> +
->> +    policy->max = clamp(limit_notify->range_max_freq/HZ_PER_KHZ, 
->> policy->cpuinfo.min_freq,
->> +                policy->cpuinfo.max_freq);
-> 
-> Please take the division operation out of this clamp() call, somewhere
-> above. Currently it 'blurs' these stuff, while it's important convertion
-> to khz. You can call it e.g.:
-> 
-> limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
-> 
-> then use in clamp(limit_freq_khz, ...)
-
-ack
-
-> 
->> +
->> +    cpufreq_update_pressure(policy);
->> +
->> +    return NOTIFY_OK;
->> +}
->> +
->>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>   {
->>       int ret, nr_opp, domain;
->> @@ -269,6 +287,15 @@ static int scmi_cpufreq_init(struct 
->> cpufreq_policy *policy)
->>           }
->>       }
->> +    priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
->> +    ret = handle->notify_ops->devm_event_notifier_register(scmi_dev, 
->> SCMI_PROTOCOL_PERF,
->> +                            SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
->> +                            &domain,
->> +                            &priv->limit_notify_nb);
->> +    if (ret)
->> +        dev_warn(cpu_dev,
->> +             "failed to register for limits change notifier for 
->> domain %d\n", domain);
->> +
->>       priv->policy = policy;
->>       return 0;
->> @@ -342,8 +369,8 @@ static int scmi_cpufreq_probe(struct scmi_device 
->> *sdev)
->>   {
->>       int ret;
->>       struct device *dev = &sdev->dev;
->> -    const struct scmi_handle *handle;
-> 
-> It should be a compilation error...
-> 
->> +    scmi_dev = sdev;
->>       handle = sdev->handle;
-> 
-> due to usage here, wasn't it?
-
-Not really, isn't it getting the first initialization here?
-Are there any compiler options that I need to turn on to
-catch these?
-
--Sibi
-
-> 
->>       if (!handle)
 
