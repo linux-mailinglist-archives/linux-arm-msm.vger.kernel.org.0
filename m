@@ -1,70 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-12867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2492A86B054
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 14:28:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC2FB86B096
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 14:41:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D344D28A8AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 13:28:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 455FFB279F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Feb 2024 13:41:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4927C14AD2D;
-	Wed, 28 Feb 2024 13:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5858A159574;
+	Wed, 28 Feb 2024 13:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bErwqjf5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sHfXIKnO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255D114AD28
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 13:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FE714F988;
+	Wed, 28 Feb 2024 13:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709126914; cv=none; b=PdNWC+kgi/er1b3d9A9GdF04xmWw3157IGGa/yOCC9xMpQJxUyIANGGwpgf+ggXsE9hlOAdsNFwzmwc97kfrWeyYfbn+PyZnmfNF0oX9enN+3G3DdB07uFlSiE0kY7rt0bqhMUscqbQ0rZt1ZWCC6mZMm+V8wYzfX48BJPxDvaU=
+	t=1709127595; cv=none; b=KtRrHDTivrYoxBvSazeO/PKyWNEac34MLIEtcY1WKBxLOAyXkpPc6ZDHzDQePL+v9M+yQr3GiFXe/gN63NW9OvfMc+L5zdkwJDNzRLR3vF0w1BD4oaHr9IxXwO/Yohzk3fANzRJaLGsg29heKo6B6jc2voC+TZXzSbhIwZneJrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709126914; c=relaxed/simple;
-	bh=Xa1SqKUN0z8eqErG0+/n6X0+kEVDNZ1yNpqN8ToX29o=;
+	s=arc-20240116; t=1709127595; c=relaxed/simple;
+	bh=yVJgiH4URrVSgwgUhOALQH1HGI8ZyvbMI3wAH4HuhIo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HexruFv6jE0bOkIyT1ZKaaDM71xbncVE3aKCmNiAMGToVFlVK/pOZxb1i6B4+7IP8bIBZpmVhUv6t/6/Bq05vXj2qtW2zPD5B/Un69ZP7PPM4WzfHUiSTDf6ACNOFGi1y0cSMzVI0PyhhizAmwq6d7MrsopZtQ/7RSsPAfR1rVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bErwqjf5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D5BC433C7;
-	Wed, 28 Feb 2024 13:28:32 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=AJ+PS1OeLWZVd6+24Qgy70WJrsW4xRpAvMaZaLgY+LEvbeayoCzttKrwYEHM15sXogPlJbvcgnuZypGw2K+9b4wRMOWm88D4TBa71uz7ivoWts/OxCiKl1pQEEJoUyufd0x1m6NI2hsTpupWrn6MjGyufRyF/1tTQPi85d+4RIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sHfXIKnO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC0CC43390;
+	Wed, 28 Feb 2024 13:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709126913;
-	bh=Xa1SqKUN0z8eqErG0+/n6X0+kEVDNZ1yNpqN8ToX29o=;
+	s=k20201202; t=1709127594;
+	bh=yVJgiH4URrVSgwgUhOALQH1HGI8ZyvbMI3wAH4HuhIo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bErwqjf5LohU0vJ6fW2sm9DttoZMTGmFS+QzI4lXY7zcPvMyoHtfR9FaDnd+zcBiq
-	 fbcc3lZmsbS1xiGLbZzOH5BVBC2YO8w555nQ+H9EVSFwA8ZH8zpAeWYE+B1oKkH+Wn
-	 JbJ+nwhzuZGTlfhJg42XpoEyZ5XjRbmQpVSb989xFEV8x6bq+AHqyRB1akK47Vgrqc
-	 hL+ke/sqpZJZ26mlR37+3B0D4gCX2Fr/lOMcdppkJIgXIRjrBK+4dJhFnqMkPZxDNf
-	 ssQgKwCrc+iv6AVv0iUsvt6PfUCSAGPOMVrkC/TSoK4CRdWI5Hi9xQ+Or3vCugzaur
-	 r+JFj9JE1G0og==
+	b=sHfXIKnOmSLqg/h+uOp23D8AkDPpjMNabVA2ZKdIX6Ex2UucsST5Sk3npqKCSQWki
+	 SfwjtzeBYu0+EOXs5EJuQqFijbmrnsbhj5xo0QHtnMvpjTWSjj85YWmJ16ay3Mb6Zz
+	 jybr293D1ydm+A/QTLB2/sGmUYb7pmxEt9LukD3sINjFe3yFv+BJqXE2RYz2Q2SqF4
+	 IRdzQSD/V2Nm9c8zNXubpfLQFqsJeGU+ENFYvMqiU14GltTp1hr05umAIpv5ddLxty
+	 /Omh6ZyozWrdF8a584bVxFz8jO+Vzv7rF1FddTbHC7i6wrTVd2a09Xu1GU+vcSGAi6
+	 xCTWQQkw8AY6A==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rfJzB-000000006VL-3vBo;
-	Wed, 28 Feb 2024 14:28:38 +0100
-Date: Wed, 28 Feb 2024 14:28:37 +0100
+	id 1rfKAB-000000006cu-31Aa;
+	Wed, 28 Feb 2024 14:40:00 +0100
+Date: Wed, 28 Feb 2024 14:39:59 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] Revert "drm/msm/dp: use drm_bridge_hpd_notify() to
- report HPD status changes"
-Message-ID: <Zd81BWaj5zJeDA2Q@hovoldconsulting.com>
-References: <20240227220808.50146-1-dmitry.baryshkov@linaro.org>
- <46fa8e0a-0af2-2a44-f5f9-70fd49649aa4@quicinc.com>
- <Zd8B6T6ROHFCqEyB@hovoldconsulting.com>
- <CAA8EJppvansib9NxqPcuuAVe+qc1i8HmDqNh6+kaDZn6zFijpw@mail.gmail.com>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, vireshk@kernel.org,
+	quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_parass@quicinc.com,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v7 3/7] PCI: qcom: Add ICC bandwidth vote for CPU to PCIe
+ path
+Message-ID: <Zd83r8Kg8aJJRBDu@hovoldconsulting.com>
+References: <20240227232235.GA251235@bhelgaas>
+ <b2e136ba-a7fd-ee8d-e71a-dce1442ada03@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,39 +79,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJppvansib9NxqPcuuAVe+qc1i8HmDqNh6+kaDZn6zFijpw@mail.gmail.com>
+In-Reply-To: <b2e136ba-a7fd-ee8d-e71a-dce1442ada03@quicinc.com>
 
-On Wed, Feb 28, 2024 at 01:08:04PM +0200, Dmitry Baryshkov wrote:
-> On Wed, 28 Feb 2024 at 11:50, Johan Hovold <johan@kernel.org> wrote:
-> >
-> > On Tue, Feb 27, 2024 at 02:11:56PM -0800, Abhinav Kumar wrote:
-> > > On 2/27/2024 2:08 PM, Dmitry Baryshkov wrote:
-> > > > This reverts commit e467e0bde881 ("drm/msm/dp: use
-> > > > drm_bridge_hpd_notify() to report HPD status changes").
-> > > >
-> > > > The commit changed the way how the MSM DP driver communicates
-> > > > HPD-related events to the userspace. The mentioned commit made some of
-> > > > the HPD events being reported earlier. This way userspace starts poking
-> > > > around. It interacts in a bad way with the dp_bridge_detect and the
-> > > > driver's state machine, ending up either with the very long delays
-> > > > during hotplug detection or even inability of the DP driver to report
-> > > > the display as connected.
-> > > >
-> > > > A proper fix will involve redesigning of the HPD handling in the MSM DP
-> > > > driver. It is underway, but it will be intrusive and can not be thought
-> > > > about as a simple fix for the issue. Thus, revert the offending commit.
-> > >
-> > > Yes, for fixing this on 6.9 I am fine with this.
-> >
-> > Since this is a regression in 6.8-rc1, I hope you meant to say 6.8 here?
-> 
-> In the worst case it will land to 6.8.x via the stable tree process.
+On Wed, Feb 28, 2024 at 12:08:37PM +0530, Krishna Chaitanya Chundru wrote:
 
-This is a fix for a user-visible regression that was reported formally
-two weeks ago and informally (e.g. to you) soon after rc1 came out, and
-which now also has an identified cause and an analysis of the problem.
-And we're at rc6 so there should be no reason to delay fixing this (e.g.
-even if you want to run some more tests for a couple of days).
+> We have limit up to 100 columns in the driver right, I am ok to change 
+> to 80 but just checking if I misunderstood something.
+
+Please take a look at Documentation/process/coding-style.rst, which
+clearly states:
+
+	The preferred limit on the length of a single line is 80
+	columns.
+
+	Statements longer than 80 columns should be broken into sensible
+	chunks, unless exceeding 80 columns significantly increases
+	readability and does not hide information.
+
+So generally you should stay within 80 columns, unless not doing so
+*significantly* increases readability. (And note that making such
+decisions requires human judgement, which is why checkpatch now only
+warns about lines longer than 100 chars.)
 
 Johan
 
