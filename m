@@ -1,111 +1,344 @@
-Return-Path: <linux-arm-msm+bounces-12985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D31C86CD35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:37:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80EDA86CD60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:47:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AD3F282055
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:37:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D82E5B21166
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:47:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D2031474A8;
-	Thu, 29 Feb 2024 15:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0954F14A4C8;
+	Thu, 29 Feb 2024 15:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RKChcQAV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jqFmXvJw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2E7143C48;
-	Thu, 29 Feb 2024 15:37:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D975614A4CE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 15:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709221040; cv=none; b=De0P/89cm9dSzN39sLVesky6AAytynUA2i4jxv2nAi4CStXEiPUv42iZzYEHS7kgXhjutZsBmzQqggdAFTqnz/ac+gUC+xoB7/l2AqsnN0DIb5sXQbaqGJKA74mrzPof89wGmUd6CrA58ojLAE+MxOUVGLHm1l1Ian0Vi5frFLI=
+	t=1709221671; cv=none; b=JlGTmqjWWDLDIjZM7sFOyZLyqW632lOxoGxZjB53etbdpouNebNwlVJkBB6LN2X5ViUDXHZu/F0j9hqcOKItM2Ks1uY7/cU0SRagt+xCEX7lUps9Rk+ORovapmeWbyxBMSJC3ZdVHfP7ixvu+w9HhN7aAtYIs6jow/gFCHv7mKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709221040; c=relaxed/simple;
-	bh=HlIBD1zLTo7ZQxtZ8wJ3+tqWu+7r6pbG1280u8gdayQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IxYS7j8RyWT0ngCd8pbf6tTTxyWFeK7l1n0o04UKS/xNybFs2fzOVxlvaJeXOhOscP8SHRmU0g5KSUH46VqqqCjMMLVF3owsRvi3UP/UkMbY7rDWsdHHSrYAX1dDeLpxWDV3v+67SWzoqJEak7bNVdwqG4v0/hU8grLk3aL/b9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RKChcQAV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D35C433C7;
-	Thu, 29 Feb 2024 15:37:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709221039;
-	bh=HlIBD1zLTo7ZQxtZ8wJ3+tqWu+7r6pbG1280u8gdayQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RKChcQAVq4o7lwW456tEZ/9cxyRDYRjc6Xb/+ncbFU+rXQql+gqtq9K8uWANIB2LH
-	 pzaJmlNXfRVurmknqnKyi6R3BHlGVz1JUc45jeExpCRRJIv/DtDMdF7lFtsY+5dGwO
-	 PRt1MZFVWxwAPiZ8HtrQ5mA6g2UZps7ReU1YoJ97sVFHtTWmlS8A50Gr9ij0/EM7Kt
-	 KVUjINJ9ZZsiMqOAw5SrJBaG0bze7fzyt+C6RgRlkIOLgBW60z33gEvMS3EKN6FUu0
-	 HpTR84j4fykKEk3YqqPkQGN6Avj+m42tolX1pKRf7CNWhO1e+cthmZUIvhhjsT+47o
-	 CFBNXz+tguR6w==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rfiTP-0000000046Q-1OPR;
-	Thu, 29 Feb 2024 16:37:28 +0100
-Date: Thu, 29 Feb 2024 16:37:27 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <ZeCktwcEFAfCEVkV@hovoldconsulting.com>
-References: <20240223152124.20042-1-johan+linaro@kernel.org>
- <20240228220843.GA309344@bhelgaas>
- <20240229100853.GA2999@thinkpad>
- <ZeBbrJhks46XByMD@hovoldconsulting.com>
- <20240229122416.GD2999@thinkpad>
- <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
- <20240229135407.GE2999@thinkpad>
+	s=arc-20240116; t=1709221671; c=relaxed/simple;
+	bh=JIPDHG7XdPCXGEvZpQagQbfuu8E+A7FViAMmAuu5ebY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Rxiz61hUjZkGaUWCJgjHFUeYAuwgwPeZsMQ8ByDDxCFyeJ+wPI0Bis543z6fDqRuWCXwtKZT+eWb/tR8CCYFoYIlfmboUaaRfBnLZP7RIRHMb9UksypU3q0kcXISw1zHJXPTjYFRrRAew90F5gKaOeaW0BNcpAf/gxXtnJsBBbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jqFmXvJw; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5131c0691feso1299043e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 07:47:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709221668; x=1709826468; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=saHn9pvhbH8rMCUl9f/14VWu5XXe9OxpuyKx4DoT+Y8=;
+        b=jqFmXvJw7+HkJCWDaO73GYpMmRJ6xooBPtllNsL03Qu7J73rbMYacXmK6Zb6TcHacA
+         7VIJxmlI08EtU1s3TLCGwFsyVHxt070duFA509/jYRQtpy4dUrMJLcXHnfzQTQBll6zD
+         0Ih1tqjQ3/+MHilgeeoqz5NzN9xoQspnCzr3aap84eK/weoX8vEjVwviduA6syUrR7/G
+         x9n3X1kAKpZhwXfqWdO1Udblv/eAwGlwuCo/iMSo23cF3TaBFnsocLD43LgqJckEF97d
+         PacXnPlZSCooN2pyqbR6VAIf8tPH/wibL4vTdFg/LKtGr/3fpTysPobLJzuOi4uslzlw
+         GRBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709221668; x=1709826468;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=saHn9pvhbH8rMCUl9f/14VWu5XXe9OxpuyKx4DoT+Y8=;
+        b=QqtaXhO9lCPQaheQDHEXDog3fefy6kGFTrZTEGhiBQCFJpQ4ey6esD0GgWGJkmyHhE
+         T1dH5FgReEPEPQWZdLCsqD5HIy3SKwsY2DkVtAQhDvdzNLxS6sZnzgOwKbdbaZ3DzXVV
+         gnyYreVbuYDYe8WkdTEoHvL/DYeTJEt1tycNzMpj7hg98QTiMgZa13ZULQqmpAv++t6L
+         eXc40zS/oizL+z1ukuBQyGA43rBTsWOA+1aJNxgu0V+q7GnKVxtFniCrN0iCM2R5L6tE
+         XOqKlEHl9uH0S5ln2rkZTVwGBSFYeS4E7z2A4FQWmVgO6ZDwH+pk5fX0gff9+V6tqfwR
+         bnfg==
+X-Forwarded-Encrypted: i=1; AJvYcCXyUpTLc0ygYtX0cr8MhVP77847FT1hjpbBTGHCDGwHIF/ChhT1WX9H1O16CR4bGoMBFC7XRj2ydFJa4tQeB1a+aKYA/aInYLFIjwz5Eg==
+X-Gm-Message-State: AOJu0YwA3+c//rpiim6xUqJIItcyqgGcZcOEZDdABRSkCBMwmg0t9of1
+	Ao94is2ejf7a3TH0He8nn5yJyV3W9TaFevdox48pk3Ns1oldCUJlNIqim3oQ3ko=
+X-Google-Smtp-Source: AGHT+IEp6msI2/fLofQup9R5+qpigm6NmjqyWNBc8aduy45iExVf4UZOwZnhxmjozHhKa3zlKEeAbg==
+X-Received: by 2002:ac2:5bc8:0:b0:513:1573:2dd4 with SMTP id u8-20020ac25bc8000000b0051315732dd4mr1876292lfn.45.1709221667799;
+        Thu, 29 Feb 2024 07:47:47 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:651:5318:b12c:be82? ([2a01:e0a:982:cbb0:651:5318:b12c:be82])
+        by smtp.gmail.com with ESMTPSA id j3-20020adff003000000b0033e01e397d6sm2075118wro.54.2024.02.29.07.47.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Feb 2024 07:47:47 -0800 (PST)
+Message-ID: <d50ca4c0-8954-4e4c-9ce9-2c40ebacf8b0@linaro.org>
+Date: Thu, 29 Feb 2024 16:47:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240229135407.GE2999@thinkpad>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFT 4/7] phy: qcom: qmp-combo: register a typec mux to
+ change the QPHY_MODE
+Content-Language: en-US, fr
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-4-07e24a231840@linaro.org>
+ <CAA8EJpoZn5V8N3=4x4AfYM91XBuCZx47vSS8tB-nCP=LvVsD6g@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CAA8EJpoZn5V8N3=4x4AfYM91XBuCZx47vSS8tB-nCP=LvVsD6g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 29, 2024 at 07:24:07PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
-
-> > I think that based on the available data it's reasonable to go ahead and
-> > merge these patches. In the event that this turns out to be a
-> > configuration issue, we can just drop the 'aspm-no-l0s' properties
-> > again.
+On 29/02/2024 16:25, Dmitry Baryshkov wrote:
+> On Thu, 29 Feb 2024 at 15:08, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>
+>> Register a typec mux in order to change the PHY mode on the Type-C
+>> mux events depending on the mode and the svid when in Altmode setup.
+>>
+>> The DisplayPort phy should be left enabled if is still powered on
+>> by the DRM DisplayPort controller, so bail out until the DisplayPort
+>> PHY is not powered off.
+>>
+>> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
+>> will be set in between of USB-Only, Combo and DisplayPort Only so
+>> this will leave enough time to the DRM DisplayPort controller to
+>> turn of the DisplayPort PHY.
 > 
-> Well the problem is, if you are not sure, then adding the DT properties is
-> certainly not correct. As that implies a hardware defect, but it may not be.
-> So let's wait for some time to find out the actual issue.
+> I think this is not fully correct. Please correct me if I'm wrong, but
+> it is possible to switch between USB / USB+DP / DP-only at runtime.
+> See the Status Update and Configure commands.
 
-Our devicetrees are always going to be a tentative description of the
-hardware, and this especially true for Qualcomm that don't publish any
-documentation so that people are forced to rely on informed guesses
-based on downstream devicetrees and drivers and reverse engineering.
+Yes, but the current implementation is still valid because we need to
+have the DP powered-off before changing the PHY mode.
 
-As far as I can tell, after having spent a lot of time on this and
-checking with sources inside Qualcomm, the hardware is to blame here. If
-this turns out not to be true, we can always revise later. We do this
-all the time, as you know.
+I never encountered such setup and I have no idea how to test this.
 
-I'm all for digging further into this issue with the help of Qualcomm,
-but I don't think that should block this series as that would leave the
-link errors that we hit since 6.7 in place and effectively prevent us
-from enabling the ITS in 6.9.
+> 
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 122 ++++++++++++++++++++++++++++--
+>>   1 file changed, 117 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> index ac5d528fd7a1..b5fb6cbcf867 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+>> @@ -19,6 +19,7 @@
+>>   #include <linux/reset.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/usb/typec.h>
+>> +#include <linux/usb/typec_dp.h>
+>>   #include <linux/usb/typec_mux.h>
+>>
+>>   #include <drm/bridge/aux-bridge.h>
+>> @@ -1515,6 +1516,10 @@ struct qmp_combo {
+>>
+>>          struct typec_switch_dev *sw;
+>>          enum typec_orientation orientation;
+>> +
+>> +       struct typec_mux_dev *mux;
+>> +       unsigned long mux_mode;
+>> +       unsigned int svid;
+>>   };
+>>
+>>   static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
+>> @@ -3295,17 +3300,111 @@ static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
+>>          return 0;
+>>   }
+>>
+>> -static void qmp_combo_typec_unregister(void *data)
+>> +static int qmp_combo_typec_mux_set(struct typec_mux_dev *mux, struct typec_mux_state *state)
+>> +{
+>> +       struct qmp_combo *qmp = typec_mux_get_drvdata(mux);
+>> +       const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> +       enum qphy_mode new_mode;
+>> +       unsigned int svid;
+>> +
+>> +       if (state->mode == qmp->mode)
+>> +               return 0;
+>> +
+>> +       mutex_lock(&qmp->phy_mutex);
+>> +
+>> +       if (state->alt)
+>> +               svid = state->alt->svid;
+>> +       else
+>> +               svid = 0; // No SVID
+>> +
+>> +       if (svid) {
+> 
+> We should check svid against USB_TYPEC_DP_SID. Otherwise the driver
+> will mishandle the USB_SID_PD states.
 
-Johan
+Ack will do
+
+> 
+>> +               switch (state->mode) {
+>> +                       /* DP Only */
+>> +                       case TYPEC_DP_STATE_C:
+>> +                       case TYPEC_DP_STATE_E:
+>> +                               new_mode = QPHY_MODE_DP_ONLY;
+>> +                               break;
+>> +
+>> +                               /* DP + USB */
+>> +                       case TYPEC_DP_STATE_D:
+>> +                       case TYPEC_DP_STATE_F:
+>> +                               /* Safe fallback...*/
+>> +                       default:
+>> +                               new_mode = QPHY_MODE_COMBO;
+>> +                               break;
+>> +               }
+>> +       } else {
+>> +               /* Only switch to USB_ONLY when we know we only have USB3 */
+>> +               if (qmp->mux_mode == TYPEC_MODE_USB3)
+>> +                       new_mode = QPHY_MODE_USB_ONLY;
+>> +               else
+>> +                       new_mode = QPHY_MODE_COMBO;
+>> +       }
+>> +
+>> +       if (new_mode == qmp->init_mode) {
+>> +               dev_dbg(qmp->dev, "typec_mux_set: same phy mode, bail out\n");
+>> +               qmp->mode = state->mode;
+>> +               goto out;
+>> +       }
+>> +
+>> +       if (qmp->init_mode != QPHY_MODE_USB_ONLY && qmp->dp_powered_on) {
+>> +               dev_dbg(qmp->dev, "typec_mux_set: DP is still powered on, delaying switch\n");
+>> +               goto out;
+>> +       }
+>> +
+>> +       dev_dbg(qmp->dev, "typec_mux_set: switching from phy mode %d to %d\n",
+>> +               qmp->init_mode, new_mode);
+>> +
+>> +       qmp->mux_mode = state->mode;
+>> +       qmp->init_mode = new_mode;
+>> +
+>> +       if (qmp->init_count) {
+>> +               if (qmp->usb_init_count)
+>> +                       qmp_combo_usb_power_off(qmp->usb_phy);
+>> +               if (qmp->dp_init_count)
+>> +                       writel(DP_PHY_PD_CTL_PSR_PWRDN, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
+>> +               qmp_combo_com_exit(qmp, true);
+>> +
+>> +               /* Now everything's powered down, power up the right PHYs */
+>> +
+>> +               qmp_combo_com_init(qmp, true);
+>> +               if (qmp->init_mode == QPHY_MODE_DP_ONLY && qmp->usb_init_count) {
+>> +                       qmp->usb_init_count--;
+>> +               } else if (qmp->init_mode != QPHY_MODE_DP_ONLY) {
+>> +                       qmp_combo_usb_power_on(qmp->usb_phy);
+>> +                       if (!qmp->usb_init_count)
+>> +                               qmp->usb_init_count++;
+>> +               }
+>> +               if (qmp->init_mode != QPHY_MODE_USB_ONLY && qmp->dp_init_count)
+>> +                       cfg->dp_aux_init(qmp);
+>> +       }
+>> +
+>> +out:
+>> +       mutex_unlock(&qmp->phy_mutex);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static void qmp_combo_typec_switch_unregister(void *data)
+>>   {
+>>          struct qmp_combo *qmp = data;
+>>
+>>          typec_switch_unregister(qmp->sw);
+>>   }
+>>
+>> -static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
+>> +static void qmp_combo_typec_mux_unregister(void *data)
+>> +{
+>> +       struct qmp_combo *qmp = data;
+>> +
+>> +       typec_mux_unregister(qmp->mux);
+>> +}
+>> +
+>> +static int qmp_combo_typec_register(struct qmp_combo *qmp)
+>>   {
+>>          struct typec_switch_desc sw_desc = {};
+>> +       struct typec_mux_desc mux_desc = { };
+>>          struct device *dev = qmp->dev;
+>> +       int ret;
+>>
+>>          sw_desc.drvdata = qmp;
+>>          sw_desc.fwnode = dev->fwnode;
+>> @@ -3316,10 +3415,23 @@ static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
+>>                  return PTR_ERR(qmp->sw);
+>>          }
+>>
+>> -       return devm_add_action_or_reset(dev, qmp_combo_typec_unregister, qmp);
+>> +       ret = devm_add_action_or_reset(dev, qmp_combo_typec_switch_unregister, qmp);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       mux_desc.drvdata = qmp;
+>> +       mux_desc.fwnode = dev->fwnode;
+>> +       mux_desc.set = qmp_combo_typec_mux_set;
+>> +       qmp->mux = typec_mux_register(dev, &mux_desc);
+>> +       if (IS_ERR(qmp->mux)) {
+>> +               dev_err(dev, "Unable to register typec mux: %pe\n", qmp->mux);
+>> +               return PTR_ERR(qmp->mux);
+>> +       }
+>> +
+>> +       return devm_add_action_or_reset(dev, qmp_combo_typec_mux_unregister, qmp);
+>>   }
+>>   #else
+>> -static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
+>> +static int qmp_combo_typec_register(struct qmp_combo *qmp)
+>>   {
+>>          return 0;
+>>   }
+>> @@ -3532,7 +3644,7 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>>          if (ret)
+>>                  return ret;
+>>
+>> -       ret = qmp_combo_typec_switch_register(qmp);
+>> +       ret = qmp_combo_typec_register(qmp);
+>>          if (ret)
+>>                  return ret;
+>>
+>>
+>> --
+>> 2.34.1
+>>
+>>
+> 
+> 
+
 
