@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-12996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A743D86D111
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 18:45:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CEF886D12C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 18:53:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36D681F2648E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 17:45:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 66DA81F226D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 17:53:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3918D757EF;
-	Thu, 29 Feb 2024 17:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBD2D70AF7;
+	Thu, 29 Feb 2024 17:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ct44SgIR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n20hxP9m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DEB70AF4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 17:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DB0757E9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 17:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709228744; cv=none; b=VWWSq5NBMeJrx/yUapoLY5WK4fDcDVgC10pugoxuSV1iwgmQYNTUOMdDCDg3ME7/Vu3wCAZvpOfRmEBhhxJprmM+O3Kq/19CBPRYvBJhPJaRGM21qbUHjuH9toNtT7xR7LujbtEQ7R0mqznxpUcamcnpYGuqHgECHPaUGM7riqk=
+	t=1709229233; cv=none; b=ECRPQEOwBacB27RCBogGJtdueZ3/6hJ0PeVw/Cyj53EIcFCUrtBTzPz/8YjETPReTXsBoeTV8MvK/dsBuAetj4CFs6urFR0pnUqRZkY4vYW+b+cblPvkX1Og/iSpLa3/54wEeZ+r/oacvJz1wz+7E6uxTCKuaYikOh1788rDqd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709228744; c=relaxed/simple;
-	bh=niN2DkoUr9aar/ATcFru9UrJctQIzAQev8RXjVsXFj4=;
+	s=arc-20240116; t=1709229233; c=relaxed/simple;
+	bh=zBqfNMYVF5/JiYjN86izYLCeDLHWsfJLi15L0WBi6Nw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KrgBVuaNgNQneMh3gFhlGtHvO4U/3JkyueJ3J+dOPXU8dnKLmtwHom0r4dL4AZHTMo7Oif2+HHw77fTmtTmov07L660eVolIkReBykIEAtDwSgT9MZU1O4NOOgXsfnK2qHTMSEBeXi8PFOvQwdIh99DjeFQst+JCFLraeMaWgKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ct44SgIR; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=L4EEkENt+HQutJ9mlJHLv30WFOIsV8U1ATOhE+vR9rwvTdYzURfpGhY/iQBHAWRGzx3P5FcGWZUFITRU36LmEt1z6mLlTpgPloPI81vjUAi5Q2ZRogaOoKkMmoSAkvpBlejllij04LusLQr289vy+hu5RenwcrAqhnm4wWbWtYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n20hxP9m; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a3ee69976c9so219398166b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 09:45:42 -0800 (PST)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-55a179f5fa1so2066473a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 09:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709228741; x=1709833541; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709229230; x=1709834030; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wmljqfmy54a6NNLOCOYx8UypncQfGQwtX9U6nuaptoI=;
-        b=ct44SgIRtFI9eEAXRpprzQa+Wd32x+teRTa6CTkvNGbFdhTXf08Zozl4T97adoykzZ
-         2dLgjGShDM7xp8pJ3jtpJKcFSRCtwNRkLJ94EsuyHrxx39WoZt03e1zSXzevszvYi1S9
-         oAFGg/WeFOA8AAVm6nGaQtPPnmncXCCBofjb6kH5ApaPUp8IAMLco3Apo/PZRp8PBQ6R
-         +cp2iZvyqx8i0YOW7zSNCXSzJlSv6KxalRL1noPVIAN23A9NyaQpOhiZWTBKQ0hvmdFo
-         7Fi+UNz4JwqegCSa9m5Y9hHWtxo2eL835dB9ddMMTPJ74mjAECGSsqCPGIU4y7vXnrSd
-         LRDg==
+        bh=RfoGmIA3EXLESsnrc37tloaAWUC/7gWzQvgxYQosHz8=;
+        b=n20hxP9mtR0yAvDtIAzWv4rAuq9LNlnSWJbUZGhpXGxoxpNkBSrIdQixkm/9optNQB
+         TNnhkRmfYbM7A2FR0WvzpjEIu/KG4Jw3e8Yesi/Jzlgcrx+MquZE/LTBNj+6z+VNRZyk
+         S/cQutI8uZMhXvUNs3N/4r5tN4cLZj48XyuB1kAUrr8a82DsgGmwu6CO883032/sUdHT
+         DbWz2KmizVWl2ddVY+ZQsxzjW2E1PEBWrNU7cl/aCx8SZFx7sXDJiJsnWwG9eQIDeAi7
+         PKzwcN5OPtlRomQoUNAEr297nAjYb5UuTG/RLuWr3ZpfxwknAY58O5Wkw5DlySRd0alW
+         +QdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709228741; x=1709833541;
+        d=1e100.net; s=20230601; t=1709229230; x=1709834030;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wmljqfmy54a6NNLOCOYx8UypncQfGQwtX9U6nuaptoI=;
-        b=YTqCfF+BcXdMIAOdyTjjckw1wWWQ+0st8V35RfsAjXVNsDtmgJ3DuOtF8Ry5gEuycA
-         pY+FD91cY5ZB1zdjgd70+MhGJsm9NMLAcORfi/a3CMWfCcs9md3koZFI/AgD+f0LcvVD
-         L3u2Le7IaR1dlySiChWyyjCyvrex9azqtxAgRRga9+56ScWZ7DNtK51trA/FvXzLczVi
-         kbMKppZCwno9xte9+3SEdCBdYmYQkYzAqLJq1A/JykRTY65qPV+rjjbTnhoQxuUzZdJC
-         AzZIoNZePN0n85nVV1PYTH4p3iSONHIkOYL0ha2Rs5eRAiEyirc3Icea/UeGi3lfVUW3
-         Zy1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV/4osjMeLPmoA1texDdKxrR2YB7d/7tuoK3ZZHUFY/rDiFmt9++pZ6ioYMBAu6IqoSMlHXwIyROXGZ8iYLBnUxexF7OtJUNF3fhIzh3Q==
-X-Gm-Message-State: AOJu0YwKAMP84FvdwR1UJ68YIMijzALoi5Rkry/CW7VUmVNxcVQ0vz0d
-	FebOJHkCMb8V+F/5VIKTtp+vaeq/4Iieqy5et0Ek+bWpQELRBqr+ibRNsRJm0QA=
-X-Google-Smtp-Source: AGHT+IHbz8jTPJnNM8a7f2FJzPKBXJTbKBo6EnwXbW+O0KOCE1+VLf83KPRxycKV6JIKnAKtXe7XjA==
-X-Received: by 2002:a17:906:f198:b0:a3f:9629:d305 with SMTP id gs24-20020a170906f19800b00a3f9629d305mr2179272ejb.28.1709228740770;
-        Thu, 29 Feb 2024 09:45:40 -0800 (PST)
+        bh=RfoGmIA3EXLESsnrc37tloaAWUC/7gWzQvgxYQosHz8=;
+        b=AhNzPdj7esgBeZHsfSHr/6U1f9eem4/J/zVPD+2rwLM+7mukGAvIF3ZZv7NTvjtS/C
+         Q4To5JIP5yUtXUtalvATyWWOCtMlRxiQuZ2I++8rwIX9ZVaC22mImykBQ2InKWt/rT1Y
+         BEudMdopKcUF7LWoNp+jGLVSlNKcvgvrMy5G3el+pQVxnzOjk+J3OVykMik+arJOOiSO
+         8MBOdQlvuoZ/GvT9vKCkDTbDO/qwmbWVxS3W8aTXjcVeOe/O8vWRtAFuLUEd+yI0ZTOQ
+         Td+1bVhu2AphWCWVq3r5ZviO0+gWOpuhQ5bKDtRl0c3zaggyqgjL4zHcNKoTg1InA3Cm
+         HaEw==
+X-Forwarded-Encrypted: i=1; AJvYcCXLigPWGPN6HoV00M5RN7bphcvDyEKG+0HQTbZBIA3r0ROzSKGI84pBxqQ5efllX5RYloo1yWvs9ugW46dXw7bhDMQo+7MgKdGzy8zoow==
+X-Gm-Message-State: AOJu0YwnSQ2GjYvuIFmolHpB4xx6JOOkhf22apWzpq7HChOw+tQgYDnw
+	D0i3/dJZJBCPp/QeyUWNox2SAX/9H6WOATYJceIkO1WdqiO8EiOreBaDH2UhMOc=
+X-Google-Smtp-Source: AGHT+IGVLMaC14/+PftipvYzEtNgHcVPIokxbS5gRXWbo8S3+5pXOTZGSppDpuWEK/paubEq7vg70A==
+X-Received: by 2002:a05:6402:4494:b0:565:7bca:eebf with SMTP id er20-20020a056402449400b005657bcaeebfmr2313985edb.14.1709229230199;
+        Thu, 29 Feb 2024 09:53:50 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id d12-20020a170906344c00b00a446c74c699sm159777ejb.225.2024.02.29.09.45.38
+        by smtp.gmail.com with ESMTPSA id r15-20020a056402034f00b0056686744752sm809679edw.37.2024.02.29.09.53.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 09:45:40 -0800 (PST)
-Message-ID: <864d3027-188f-4612-9770-d617244aad17@linaro.org>
-Date: Thu, 29 Feb 2024 18:45:37 +0100
+        Thu, 29 Feb 2024 09:53:49 -0800 (PST)
+Message-ID: <b6215fcd-29fc-4495-999f-b7b03b36c087@linaro.org>
+Date: Thu, 29 Feb 2024 18:53:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,21 +76,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] reset: add GPIO-based reset controller
+Subject: Re: [PATCH v5 1/7] dt-bindings: iommu: Add Qualcomm TBU bindings
 Content-Language: en-US
-To: Tim Harvey <tharvey@gateworks.com>, Sean Anderson <sean.anderson@seco.com>
-Cc: Linux-ALSA <alsa-devel@alsa-project.org>, andersson@kernel.org,
- bgoswami@quicinc.com, brgl@bgdev.pl, Mark Brown <broonie@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Device Tree Mailing List <devicetree@vger.kernel.org>,
- konrad.dybcio@linaro.org,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Liam Girdwood <lgirdwood@gmail.com>, linux-arm-msm@vger.kernel.org,
- open list <linux-kernel@vger.kernel.org>, linux-sound@vger.kernel.org,
- Philipp Zabel <p.zabel@pengutronix.de>, perex@perex.cz,
- Rob Herring <robh+dt@kernel.org>, srinivas.kandagatla@linaro.org,
- tiwai@suse.com
-References: <CAJ+vNU3y5pzqeBnr8LHDtJtU7zajfRvP=_WmAhP=cAp_3iGFQQ@mail.gmail.com>
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org,
+ robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev
+Cc: devicetree@vger.kernel.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robdclark@gmail.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
+ quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com,
+ djakov@kernel.org
+References: <20240226172218.69486-1-quic_c_gdjako@quicinc.com>
+ <20240226172218.69486-2-quic_c_gdjako@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -136,35 +134,92 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAJ+vNU3y5pzqeBnr8LHDtJtU7zajfRvP=_WmAhP=cAp_3iGFQQ@mail.gmail.com>
+In-Reply-To: <20240226172218.69486-2-quic_c_gdjako@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/02/2024 18:26, Tim Harvey wrote:
->> On 1/9/24 04:41, Krzysztof Kozlowski wrote:
->>
->> I think a separate pseudo-device is necessary a generic solution. So I
->> guess I will revive my patchset.
->>
+On 26/02/2024 18:22, Georgi Djakov wrote:
+> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
+> of the SMMU-500, that consists of a single TCU (Translation Control
+> Unit) and multiple TBUs (Translation Buffer Units). These TBUs have
+> hardware debugging features that are specific and only present on
+> Qualcomm hardware. Represent them as independent DT nodes. List all
+> the resources that are needed to operate them (such as registers,
+> clocks, power domains and interconnects).
 > 
-> Sean and Krzysztof,
+> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+> ---
+>  .../devicetree/bindings/iommu/qcom,tbu.yaml   | 65 +++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
 > 
-> I see a lot of value in a generic reset-gpio driver that you have both
-> tried to get accepted in the past. I support boards that have a number
-> of SPI and I2C devices that often have GPIO resets wired to them that
-> are pulled in hardware to the in-reset state and find no support in
-> the various drivers for reset handling. I've often wondered why a
-> generic gpio reset wasn't supported in the SPI/I2C cores like it is
-> for some other subsystems.
-> 
-> The approach of a gpios-reset solution makes sense to me.
-> 
-> Will you be submitting a follow-on series to your previous attempts?
+> diff --git a/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml b/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
+> new file mode 100644
+> index 000000000000..6841ca9af21f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
+> @@ -0,0 +1,65 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/iommu/qcom,tbu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm TBU (Translation Buffer Unit)
+> +
+> +maintainers:
+> +  - Georgi Djakov <quic_c_gdjako@quicinc.com>
+> +
+> +description:
+> +  The Qualcomm SMMU500 implementation consists of TCU and TBU. The TBU contains
+> +  a Translation Lookaside Buffer (TLB) that caches page tables. TBUs provides
+> +  debug features to trace and trigger debug transactions. There are multiple TBU
+> +  instances with each client core.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,qsmmuv500-tbu
 
-Sorry, don't get. Why do you revive this old thread after code was
-merged? If my patchset which was finally merged a week ago or so does
-not work for you, please comment there or send follow-up work extending it.
+Why we don't have SoC specific compatibles? If that's for SDM845, then
+it should be qcom,sdm845-tbu or qcom,sdm845-qsmmuv500-tbu
 
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  qcom,stream-id-range:
+> +    description: Phandle of a SMMU device and Stream ID range (address and size) that is assigned by the TBU
+
+Please wrap it according to coding style, so 80.
+
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      - items:
+> +          - description: phandle of a smmu node
+> +          - description: stream id base address
+> +          - description: stream id size
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - qcom,stream-id-range
+> +
+> +unevaluatedProperties: false
+
+This should be additionalProperties: false
+
+> +
+> +examples:
 Best regards,
 Krzysztof
 
