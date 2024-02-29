@@ -1,182 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-12973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B3ED86CABA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 14:54:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7E3986CAC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 14:57:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE83B1C20D07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 13:54:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52AD3285685
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 13:57:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2C3A12A17A;
-	Thu, 29 Feb 2024 13:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14BD912C524;
+	Thu, 29 Feb 2024 13:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Owc2hXTe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f+lwSG5j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B982651A1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 13:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6768D12AACE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 13:56:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709214856; cv=none; b=l8Uqh8WnfZAiE/5O3uLs+c5nFLoisyDnJzuxrv3Z0z+cCCDXAtyGqvM5JmmqBZgFqppSxhWAIjZxITog/WqPHI0n1mEjehnSzbI8oIG965N8T1i5H8EJebS29JMG5yfBN9mrzp4cP632bQpfNYtrGgTVWwS2eS38loK6zIiJxx0=
+	t=1709215018; cv=none; b=g5msSi6s/LmY7J9JNC8M+oG9jBrirPRs9npcKFOFDEyUt697EHDb+VaMXf/1jkZm2jdrb1Jus6L07yeVFjkmRJCmeIo9QduWFyeCqawh21vrSZgQWuO0DE1kfka7ITF4foQOZtY1VRxSn83DqrNLZMNO4rTGzyPUDkTb9tKrJG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709214856; c=relaxed/simple;
-	bh=v7AgUbrbTmOdYPgovbts9D0RiAJ9tLCiiQRNel8KPYs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wbuj+pbdOv8SOT8nzFhFfFNRUrNNK/vBT9o/ZaFT3jNwb879g8A/JsRnLyL/XFRiy3hokrYv5y0WlR6Gu3XR7N1lKhRAtu8zxWwNZVQ0D/NMUCQXPSNanFGSQL75ZDzpPaLx9N5s/SY29Nlmb7oi9BfAK2bB8eXvWPnDE+SOnFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Owc2hXTe; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1709215018; c=relaxed/simple;
+	bh=Wws5urlY/pHKb5nO9L6+YF0fIvf4wojKA9CEm5jbQIw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mD9b/ThBA88BDdmqqFpXRtlGpusKFqznnIpeBqMF0P1B+Rd+KGGqNj29VPUeFX4QSZDHTGKk8ErBu9zoQJylD3GEqoAEpM7tFCZP03DNX4zWVylVEJLOHZH0bIeyROpe39ulD8EM0TmSHH0WfrPU7YB4pTOMEEhyM9Y1WJGawZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f+lwSG5j; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1dcb3e6ff3fso7644935ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 05:54:15 -0800 (PST)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcbf82cdf05so980503276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 05:56:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709214855; x=1709819655; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KFi6owlquWpJybLOnBr0GE/gVglg7A135XAv9MGMZ48=;
-        b=Owc2hXTe60+izH55CjRTO9K5aSUe3JuxD9OZJ8NjdfVgwMV45B1Oz0/+qXqqDxZ2Z+
-         lEZklQlNx0rmhyUZ9RV/rWIdZu650LThYHt8hlvLIq5Lm+TlMinxoQHnI9NnoH0uoTbf
-         UKkPPsFSerWzwWmuw34xCccLCeh5GS4Fvezjsk5SciTYI2i7ikmGWce5Np6xVRp8ROKb
-         TpGZuTyyo0xOGvDWkt9ac+OEHIV90irQFUbG1jlEXvuH/UM5rPV3XefJeLo8x0MxIKU1
-         g7k5a+4Qx2ZcKYgc3q9HSpzN2Hed1qbebTUfkz8Tl+r5FMmoaZX9oSb5VD50tKL7xAYh
-         tzwA==
+        d=linaro.org; s=google; t=1709215015; x=1709819815; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wws5urlY/pHKb5nO9L6+YF0fIvf4wojKA9CEm5jbQIw=;
+        b=f+lwSG5jcLV6Jvh2VptIWbckKIq4g3bVLGsCTxwAmoB4r9wOm0qjHxsBW5YQHXD5Fq
+         8MeswxbOLPdHna7vbcMjOQRo6PSium9RcWJbQp/Y0M9FKZE92sK5AzeAwUrxsh+vWq5C
+         ejHf99vyHKL2EbnEfZoZnwyS3Jr9mbDFW0Fol20KdUfO6DXeN8sKENFGPsAq+JQsJV3e
+         D1QfAL2pGW0tQSzTvnuHeTNs9CzRo6+I937nDNiizWP1bXE0Jp2uGNwa1X+z2T0yQDtF
+         CwjAIJTFYiEgrQV+W2IV3DGoBqyBkxYMDkCollRyzlpuS744issI97QqwK64PAaagcqX
+         7U5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709214855; x=1709819655;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KFi6owlquWpJybLOnBr0GE/gVglg7A135XAv9MGMZ48=;
-        b=TQlADKyl3WHOcMHo0Sk4Y/JHOhDXwuD9YDcT159fH6PIOlJkoyEBPy/AobPq90nkU6
-         0wAVoOFJqeJQH+9Mwwb0I6TvEw++rO+ah/Ol0gFyWem/6SMZYwUrEff3lkB6eaSQ32j2
-         0jfLsui/d8qG9IDGgFnxx3GGiQ8Fao0BXmTWWc463OIjiNm259VDANmRoe45wo94suvd
-         FAPE2QO9GZtHPbxOVYBINAttk52t9wIQ6vopedtlWRvX0uPcU5Zgo2rgxTuul6W81HR6
-         HyhBR+ZYIe5UfLUknUvVXA4LudeVfKBeSvBkiPwoaRSur0GMr0kOQ0u9U1Q9gkpemCis
-         K4hA==
-X-Forwarded-Encrypted: i=1; AJvYcCVfJ83Gd6pv+OS0i9s3pk21ErN5/iXTl7bC3oNa9EWgSFvlArXVqmgNzZ1iHx+8jbThtzy23Wc5FmG9ETyjokXIUuY3kqaH8kxSWyQpzQ==
-X-Gm-Message-State: AOJu0YxEanwKIBxpzO62s8378pp8KKW9OMSzeewzu6/5w8zHoj1SlYFD
-	vswWO5ywP8XOVPo6jYYIDVFQc0tclQPYCv/Lto//zQ7lsEwMvu0heHwrbEz22w==
-X-Google-Smtp-Source: AGHT+IHXl1bXWdS83nD1wqmxu04C1/sqKau8el88o5dRrtYuWLXqrfk+s6o/thw3Tq79HKdbJHBzhg==
-X-Received: by 2002:a17:902:c406:b0:1d8:ab27:d76c with SMTP id k6-20020a170902c40600b001d8ab27d76cmr2414876plk.51.1709214854696;
-        Thu, 29 Feb 2024 05:54:14 -0800 (PST)
-Received: from thinkpad ([120.138.12.68])
-        by smtp.gmail.com with ESMTPSA id j12-20020a170902c3cc00b001dca9a6fdf1sm1484066plj.183.2024.02.29.05.54.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 05:54:14 -0800 (PST)
-Date: Thu, 29 Feb 2024 19:24:07 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <20240229135407.GE2999@thinkpad>
-References: <20240223152124.20042-1-johan+linaro@kernel.org>
- <20240228220843.GA309344@bhelgaas>
- <20240229100853.GA2999@thinkpad>
- <ZeBbrJhks46XByMD@hovoldconsulting.com>
- <20240229122416.GD2999@thinkpad>
- <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1709215015; x=1709819815;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Wws5urlY/pHKb5nO9L6+YF0fIvf4wojKA9CEm5jbQIw=;
+        b=XDTnwa4D6lsDke802P53TImhl6EAoQN7LivvNG0TvrrGgzWXydhqlLzrKIpeHXv81C
+         GY8eb3do9XnaV8xhDT3ZCbrebjdM+gS4AQZA7naY9ZYh082abrjCl27O+Q7o9/tfniXz
+         FGZIltm8OqntSLxe3TewXUCr9UHq6CQvefDhGZXzhK1TSp4zIRdepZ0P2agS4RxEJK/X
+         76elg2G2JHdaXm1EbGLJpsXofOSjc5yrYfsRKwvo0eSBc2AXpxlUeLJ6o+2iQjmRD/NC
+         mdqy5sLp22duaBURkkKDuvKhYnofuNAt2Ft8oEcKJBg93VdMaavivv05M9XPm7os8bZ9
+         jaRA==
+X-Forwarded-Encrypted: i=1; AJvYcCVEzh+fHWx3fdmodAXUsHnP4CsVV/PNEvhDDIN+l+1FpOiErGvd6rwmL1ArZ6IVP7t/237FB/hdP8rmHqFer69iw61Q+ojoioIK7cwK1g==
+X-Gm-Message-State: AOJu0Yy2tzvLDd5VHEJNbZEHFI/8JQJA+mmf51cYl7f9/T1hXqbEJNuf
+	Yehz/JU6zsogYRapZMwYqtoQeemj6OfpR7oHkGs57hhlVD5rj9Hcn7Vqd8ZELdGb4baiC4EFHKn
+	2DW3Qo2Lix0OX/9T9BcZ6pQtGAD3D9xufL2W70g==
+X-Google-Smtp-Source: AGHT+IGyYyjopk2S0BDW1Ghoa/7hBgl0rLX3ecHmVYFRGAMgeBOBqeibeDjXXuQsuPB0jGCrausTn0ucexpYoda4cP0=
+X-Received: by 2002:a25:8249:0:b0:dc6:bcb3:5d8e with SMTP id
+ d9-20020a258249000000b00dc6bcb35d8emr2335878ybn.20.1709215015418; Thu, 29 Feb
+ 2024 05:56:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
+References: <20240227155308.18395-1-quic_mojha@quicinc.com> <20240227155308.18395-6-quic_mojha@quicinc.com>
+In-Reply-To: <20240227155308.18395-6-quic_mojha@quicinc.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 29 Feb 2024 14:56:44 +0100
+Message-ID: <CACRpkdaqf8niLVfT7i-x6gVda2nwy1A6akEEq+rYz+cEpg0DzQ@mail.gmail.com>
+Subject: Re: [PATCH v12 5/9] pinctrl: qcom: Use qcom_scm_io_rmw() function
+To: Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
-> On Thu, Feb 29, 2024 at 05:54:16PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Feb 29, 2024 at 11:25:48AM +0100, Johan Hovold wrote:
-> 
-> > > As I mentioned, the 'required-opps' binding update is needed to fix the
-> > > missing OPP vote so blocking the binding patch would block merging the
-> > > DT fix which could otherwise go into 6.8.
-> 
-> > I agree that the fix gets the priority. But some maintainers perfer to merge fix
-> > patches _only_ if they are fixing the issue introduced in the ongoing release.
-> > But if Bjorn has no issues in merging these for 6.8, then it is fine.
-> 
-> It also depends on the severity of the issue and to some extent the
-> complexity of the fix. These binding fixes are certainly low risk. :)
-> 
+On Tue, Feb 27, 2024 at 4:53=E2=80=AFPM Mukesh Ojha <quic_mojha@quicinc.com=
+> wrote:
 
-Right.
+> Use qcom_scm_io_rmw() exported function in pinctrl-msm
+> driver.
+>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+> @Linus.Walleij,
+>
+> I have removed your Ack on this patch after your comment
+> on https://lore.kernel.org/lkml/CACRpkdbnj3W3k=3DsnTx3iadHWU+RNv9GY4B3O4K=
+0hu8TY+DrK=3DQ@mail.gmail.com/
+>
+> If you agree on the current solution, please ack this again.
 
-> > > The 'msi-map-mask' is arguably a fix of the binding which should never
-> > > have had that property, but sure, it's strictly only needed for 6.9.
-> > > 
-> > > And Bjorn A has already checked with the Qualcomm PCI team regarding
-> > > ASPM. It's also been two weeks since you said you were going to check
-> > > with your contacts. Is it really worth waiting more for an answer from
-> > > that part of the team? We can always amend the ASPM fixes later when/if
-> > > we learn more.
-> > > 
-> > > Note that this is also a blocker for merging ITS support for 6.9.
-> 
-> > I got it, but we cannot just merge the patches without finding the rootcause. I
-> > heard from Qcom that this AER error could also be due to PHY init sequence as
-> > spotted on some other platforms, so if that is the case then the DT property is
-> > not correct.
-> 
-> I've verified the PHY sequences both against what the UEFI firmware (and
-> hence Windows) uses as well as against the internal Qualcomm
-> documentation (with the help of Bjorn A). And Qualcomm did say that such
-> errors are also seen under Windows on these platforms.
-> 
+It's fine, I trust you guys mostly :)
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-Well, sometimes the init sequence published by qualcomm could turn out to be
-faulty. That's why they publish v2 sequence and such. And I want to rule out
-that possibility in this case.
-
-> But the fact that the symptoms differ between the CRD and X13s, which
-> use the same Atheros Wi-Fi controller (and the same PHY initialisation)
-> also suggests that this may to some extent be due to some property of
-> the machine.
-> 
-> Notably, on the X13s there are lot of errors when pushing data
-> (e.g. using iperf3), whereas on the CRD the are no errors when running
-> such tests.
-> 
-> When leaving the CRD on for long periods of time with the Wi-Fi
-> disconnected, I do however see occasional correctable errors.
-> 
-
-This may be due to hardware design that I agree (possibly influenced by driver
-defect).
-
-> > Since this is not the hot target now (for Qcom), it takes time to
-> > check things.
-> 
-> I think that based on the available data it's reasonable to go ahead and
-> merge these patches. In the event that this turns out to be a
-> configuration issue, we can just drop the 'aspm-no-l0s' properties
-> again.
-> 
-
-Well the problem is, if you are not sure, then adding the DT properties is
-certainly not correct. As that implies a hardware defect, but it may not be.
-So let's wait for some time to find out the actual issue.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Yours,
+Linus Walleij
 
