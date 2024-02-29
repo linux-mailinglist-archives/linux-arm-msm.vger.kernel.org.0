@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-13040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7339D86D742
+	by mail.lfdr.de (Postfix) with ESMTPS id 7356C86D743
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 00:03:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 081DAB21A3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 23:00:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B7F5B22771
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 23:00:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD040134427;
-	Thu, 29 Feb 2024 23:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809D85B1E4;
+	Thu, 29 Feb 2024 23:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sBg5RXHy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h7M4okG0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762157D062
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 23:00:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707456D52F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 23:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709247638; cv=none; b=H5w9I3oWxiRZ0/nKfTIO2JLoyNCIX3+cEGOzISrkFL1lu4yAONfk21eN/3JzQdgsdHfJbXtFoJf65N29ZeC5nlPcVRw7weuXuzVxnmL0tB8ojcHM+g8IABD0Uoj+J+43IZ6FC9zIQY0zvE42Llja3cXxjBNpbGGbTsyy/GgJaak=
+	t=1709247639; cv=none; b=iitcBc0RvtjmfWc4thKA0hVJrcEBrSzaqSS3MhrspWCPJkZKNTLUSesQglo6LUGMNN+HBPZLI99ywX+Lppo9GX7YzrBf0zg4f8mLqM96Dlp/RY1xGYFw8Se2yVRVRgGxIJbxFeWMQMFDpkj1V4Prv1erp5h3bEj5+tBQkOsmViw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709247638; c=relaxed/simple;
-	bh=VnOQriAw1Coa17S6UV6rmzyCaY+V1h+WcK+1P24ob6M=;
+	s=arc-20240116; t=1709247639; c=relaxed/simple;
+	bh=VeLpJ9RrhWEftUKiV6RI08P0z1Tg8bxvxEPvqRhZQyY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=W4QZy0+Y/XxgSncge/tgf5xIdKiIUbMXSwZHg4Dr98ZvKL376lE3NoK8BmmaX3MNIf66K1qgG2yFWbeFuPgAudMZflb5PMPCzbxjcBJPc79HYXCzdoK0Vo9lwqQR6pgF2QAfw5wTGmIwW6p6is+UK4nL6Lj5HpKNCxMaj0OYKxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sBg5RXHy; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:To:Cc; b=t/CNkKzwAJc3gEoYCHZBw7CD+JXkzUjsxVIIkyV9m7p4sLyXbR/4tfVxIjyeqTgeldJnk8cIHWXEIQ6Pz1oTXJhY2YFi44i4ji0aPn+RgwT/DAZPlcBhjAOSsTH42WTRmtl9Hc+ap9AyWU8lt7gFVHiI8VcuN5CzMskF3OThmXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h7M4okG0; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51320ca689aso1709353e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 15:00:36 -0800 (PST)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so17125591fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 15:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709247634; x=1709852434; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709247636; x=1709852436; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yPcglPDpZKXCiMnjfqODdkc+dlLyv+wBuIOF4S4IqvQ=;
-        b=sBg5RXHy8tw6sIBxFy6Gx11gnvdRGhhW/UY9zp61RWchjLi5TM5zUxTAeC6BndfA6n
-         gOSAh5M0sc0xAofPZBl5IAT9jK7fhVyDkwT+5jXD9QjvB4cBU+SZ0xGbfZgivontXw0S
-         w9qRK/+bTpql4Pc9YBt5U2TQM2JEqPW2ibKGGXQatcgZNaYy4m8Tark+tb9WPFCAs/Or
-         1hJc6TQ4JFj1gQcJsxWum+LZKuESLVjyUIt5RwQ6pzxomN5JW5a9jdNTOOFKgUdqd/Kt
-         V+Z8vsgppgDBlKdBGCgT4Rj2rMv4O/gUKoxUSj/TWDbCvRRBViteJbDYGmkVnWN9otbW
-         pyJA==
+        bh=fKqBIp/MWEwYzRv6P9pfPz/DehwPilnWQZXqYwd2+DQ=;
+        b=h7M4okG0612JZSCMmAMJIGRGXtbRbMTUETgJyNi9oDzAA6A5dpR3rYu2XSAPS9LHl6
+         FOGjfIgeHCN3dNkGh7lP1qxiG688/17cc6YPRgmwCDDxKSuidSK9Oxl3BOvJ2ek5jJjz
+         cybkSP3c2n4dqqMO/6oqcLKYDj/vOePmNDrzuS8hPS0LMat9uHvZyyhRBT2sonM1sFc1
+         c+0xQky0Rqni+bDayjPQKAOhBf9Ra6Yx90WBD3AS4i486rMJCVqQNeBkZgFdD36cBeNb
+         RUlt3mskgymhWYB4IXnvrAomvXhWBrW3npCDQnydkGqM/IyGo6R9tZoXS8qL4N/yi4MT
+         Bxog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709247634; x=1709852434;
+        d=1e100.net; s=20230601; t=1709247636; x=1709852436;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yPcglPDpZKXCiMnjfqODdkc+dlLyv+wBuIOF4S4IqvQ=;
-        b=NmSenIJVLJEc8eJvb4CuY6FHZbOOe4/Z/qc54G1lZ6Rly2DG+QyoywVu4cJU0Vi5Jr
-         oaPzOlesU4SAA4ytlLQafvF4vkGarvN3KO1RIll0nejXu4RvWqD2OPmortv/QgR9HB/L
-         WGXR69zInEkK6agbIKAxITOAGKYgGB2KjKuqNgpWsq3CgqHjxI1HvxLoLmuCNNFwVASj
-         Uu7xrAcRczCA9iOpO28xS7MTNL9/U3mZ4BXnRj2OErTGqWH7eIHRLEx24HnabfXGH4/U
-         BD6uovx+6XAg4MSqPxELCsYqPTWivymYyQeIqaA470CG4+RtFx/o30BggEZhz9spG7Ru
-         3Z2g==
-X-Gm-Message-State: AOJu0YwJL95jGTZSVYNujdizgGSxIHDMGc3T/sqI9S0F3J5lI8LmTMXJ
-	mAM2PRFozUuiavoeMyvE4u16hVb6kJfYxw3nc4PR2G5skrk1Yr4GMd/cnPCt9oLK0kDvI6zpS2w
-	NsO8=
-X-Google-Smtp-Source: AGHT+IGfPE3/Fweuarn55mKHjbvWF3M8lWjKqoI2isLfB5oU4ZXd1f3xR4iuLvkijI2P4eQEqAF+xw==
-X-Received: by 2002:a19:e016:0:b0:513:17ea:e490 with SMTP id x22-20020a19e016000000b0051317eae490mr2456450lfg.61.1709247634708;
-        Thu, 29 Feb 2024 15:00:34 -0800 (PST)
+        bh=fKqBIp/MWEwYzRv6P9pfPz/DehwPilnWQZXqYwd2+DQ=;
+        b=csTN3RIQGqq3BfnhzIvKtMPiMHVnq0sX0u/6x/jWW9vZ8JTa5Ju2f51pQAUmCsn1gb
+         74bOytai7y5HxsZa5DR7cUVe7uzzb7pifcrAbUBAsjDfa3rBMsItx2E80PXdR8TlKsg6
+         kseptOIaisZqpq1yng9jp7w39Y8bwxyu5HKGwTkml1vPCbuUblafY+py+PRwqqqRuluc
+         spDSgdnAeH3hKmcGZjHD8wPwGPd83vPURj0AEzgOzav9DRW2yr9nVP8gkmZhecbK2cFH
+         2uBCMDQLmLerVOAmsvDBQ2f8rfOXRY1JYdO2BTJLXRSfiKjpGdX+jZDJBpYFwau9Caly
+         QzSw==
+X-Gm-Message-State: AOJu0YxiOA1rUz/x3uKApLpRwBnnngNIO/zHmirRFeRZSGPDZiZ77dC0
+	w0tVoZmUY3X7d6fmg5vQ0KwFWnMopBgUaIhW7mKOOogxSXc8QdFRp08hpL+D74Q=
+X-Google-Smtp-Source: AGHT+IFzzj6cyJ0hZ/om5SsSGumfj69130Y5fXKwW4vA9Wsy/VHT9XvaTKP52bEXDRDdFDJdlO70vQ==
+X-Received: by 2002:a05:6512:1255:b0:513:2c6c:4cc8 with SMTP id fb21-20020a056512125500b005132c6c4cc8mr1184366lfb.63.1709247635656;
+        Thu, 29 Feb 2024 15:00:35 -0800 (PST)
 Received: from umbar.lan (dzyjmhybhls-s--zn36gy-3.rev.dnainternet.fi. [2001:14ba:a00e:a300:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id s26-20020a19771a000000b00512ed2cf297sm408455lfc.151.2024.02.29.15.00.33
+        by smtp.gmail.com with ESMTPSA id s26-20020a19771a000000b00512ed2cf297sm408455lfc.151.2024.02.29.15.00.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 29 Feb 2024 15:00:34 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 01 Mar 2024 01:00:29 +0200
-Subject: [PATCH RFC v2 3/5] remoteproc: qcom: adsp: add configuration for
+Date: Fri, 01 Mar 2024 01:00:30 +0200
+Subject: [PATCH RFC v2 4/5] remoteproc: qcom: mss: add configuration for
  in-kernel pdm
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240301-qcom-pd-mapper-v2-3-5d12a081d9d1@linaro.org>
+Message-Id: <20240301-qcom-pd-mapper-v2-4-5d12a081d9d1@linaro.org>
 References: <20240301-qcom-pd-mapper-v2-0-5d12a081d9d1@linaro.org>
 In-Reply-To: <20240301-qcom-pd-mapper-v2-0-5d12a081d9d1@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -87,16 +86,16 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Mathieu Poirier <mathieu.poirier@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6236;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6069;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=VnOQriAw1Coa17S6UV6rmzyCaY+V1h+WcK+1P24ob6M=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl4QyOSMUnoXjUTlQdp7XK8lQoK7qX2APAGW7o+
- dW37Ra3W7iJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZeEMjgAKCRCLPIo+Aiko
- 1YecCACwxfTwPg58SmDNo9AXjzhY7cv6NnspwkBhGKBLKCUepA8Qk1eeOcQECcTN20Arkq0UDYN
- PVUIvy/3U90Z5G8QX8UGwnBUVoV4I3I8t0TL26RFbBVPhmjBjaJ3U5fndcayD+wo/dMCNiuaFQW
- 8T0VMx2XZ6ikEvBniyUobSH8rvX9ovxB75W4GoRwIqkvCU00hpeMU939dfRWd/E+DPx40EG9E+t
- wGe2ywYbhQNSiPsFSjqJR8t1dJiK0O4ZODT5N9NDuxTFNXPQBvrtbWm8SWdnHFnvTMmb3YjIeUP
- nMlutAbZlNBIcx4j+UxzkeiCS030lrEGVRxG7rFoKouPZMWY
+ bh=VeLpJ9RrhWEftUKiV6RI08P0z1Tg8bxvxEPvqRhZQyY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl4QyOBdFeTuNE2+P/IID4dkT/MAylCEaFhHolk
+ Tn1vYJWl4qJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZeEMjgAKCRCLPIo+Aiko
+ 1eBUB/9U2hLVam1lTtMZXqZETnfQEBr36SruItBKiLhqAs5fH5c9fHATQAUpxw7XvGc4Fwn+OpH
+ cRtvJl2lFDg3Kb9KSsZi9JAPoJLBzRAI62LgtBIVJBufgQmzkbqEOhNzLLXRD0tUfHh+9smzjOe
+ z6jHn72EhAU65PXi0mqJoDXhLZxoW5kB/etVzh8E6DENieSQiX69fh+EREvYD4Mxwd+IHh7/DoG
+ A0sU2Wf3nL4OUetoDS4tuXj+RWubN6/4Fd7DlYBgI+RGwaPD4HfZ9N+/MNscrenK6APG7Shh+BK
+ PUXiZGPad+NGhndlw8Woqcp6Y5Y/wCLQ/qvO6aYPJZkfsUav
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
@@ -105,68 +104,68 @@ mapper service.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/remoteproc/Kconfig          |  1 +
- drivers/remoteproc/qcom_q6v5_adsp.c | 87 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 84 insertions(+), 4 deletions(-)
+ drivers/remoteproc/Kconfig         |  1 +
+ drivers/remoteproc/qcom_q6v5_mss.c | 84 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 85 insertions(+)
 
 diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index 48845dc8fa85..f1698d4c302e 100644
+index f1698d4c302e..8152e845f7a3 100644
 --- a/drivers/remoteproc/Kconfig
 +++ b/drivers/remoteproc/Kconfig
-@@ -181,6 +181,7 @@ config QCOM_Q6V5_ADSP
+@@ -202,6 +202,7 @@ config QCOM_Q6V5_MSS
  	depends on QCOM_SYSMON || QCOM_SYSMON=n
  	depends on RPMSG_QCOM_GLINK || RPMSG_QCOM_GLINK=n
  	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
 +	depends on QCOM_PD_MAPPER || QCOM_PD_MAPPER=n
  	select MFD_SYSCON
- 	select QCOM_PIL_INFO
  	select QCOM_MDT_LOADER
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 93f9a1537ec6..5751bcb0c285 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -23,6 +23,7 @@
+ 	select QCOM_PIL_INFO
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 394b2c1cb5e2..8a7fca1e0b9a 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -26,6 +26,7 @@
  #include <linux/remoteproc.h>
  #include <linux/reset.h>
  #include <linux/soc/qcom/mdt_loader.h>
 +#include <linux/soc/qcom/pd_mapper.h>
- #include <linux/soc/qcom/smem.h>
- #include <linux/soc/qcom/smem_state.h>
+ #include <linux/iopoll.h>
+ #include <linux/slab.h>
  
-@@ -75,6 +76,9 @@ struct adsp_pil_data {
- 	const char **pd_names;
- 	unsigned int num_pds;
- 	const char *load_state;
+@@ -163,6 +164,9 @@ struct rproc_hexagon_res {
+ 	bool has_qaccept_regs;
+ 	bool has_ext_cntl_regs;
+ 	bool has_vq6;
 +
 +	const struct qcom_pdm_domain_data * const *domains;
 +	size_t num_domains;
  };
  
- struct qcom_adsp {
-@@ -116,6 +120,9 @@ struct qcom_adsp {
- 	struct qcom_sysmon *sysmon;
- 
- 	int (*shutdown)(struct qcom_adsp *adsp);
+ struct q6v5 {
+@@ -242,6 +246,9 @@ struct q6v5 {
+ 	u64 mba_perm;
+ 	const char *hexagon_mdt_image;
+ 	int version;
 +
 +	const struct qcom_pdm_domain_data * const *domains;
 +	size_t num_domains;
  };
  
- static int qcom_rproc_pds_attach(struct qcom_adsp *adsp, const char **pd_names,
-@@ -374,6 +381,7 @@ static int adsp_start(struct rproc *rproc)
- 	struct qcom_adsp *adsp = rproc->priv;
+ enum {
+@@ -1580,6 +1587,7 @@ static int q6v5_start(struct rproc *rproc)
+ 	struct q6v5 *qproc = rproc->priv;
+ 	int xfermemop_ret;
  	int ret;
- 	unsigned int val;
 +	int i;
  
- 	ret = qcom_q6v5_prepare(&adsp->q6v5);
+ 	ret = q6v5_mba_load(qproc);
  	if (ret)
-@@ -434,8 +442,18 @@ static int adsp_start(struct rproc *rproc)
- 		goto disable_adsp_clks;
- 	}
+@@ -1608,8 +1616,18 @@ static int q6v5_start(struct rproc *rproc)
+ 	/* Reset Dump Segment Mask */
+ 	qproc->current_dump_size = 0;
  
-+	for (i = 0; i < adsp->num_domains; i++) {
-+		ret = qcom_pdm_add_domain(adsp->domains[i]);
++	for (i = 0; i < qproc->num_domains; i++) {
++		ret = qcom_pdm_add_domain(qproc->domains[i]);
 +		if (ret)
 +			goto err_domains;
 +	}
@@ -175,133 +174,140 @@ index 93f9a1537ec6..5751bcb0c285 100644
  
 +err_domains:
 +	while (--i >= 0)
-+		qcom_pdm_del_domain(adsp->domains[i]);
++		qcom_pdm_del_domain(qproc->domains[i]);
 +
- disable_adsp_clks:
- 	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
- disable_power_domain:
-@@ -463,6 +481,10 @@ static int adsp_stop(struct rproc *rproc)
- 	struct qcom_adsp *adsp = rproc->priv;
- 	int handover;
+ reclaim_mpss:
+ 	q6v5_mba_reclaim(qproc);
+ 	q6v5_dump_mba_logs(qproc);
+@@ -1621,6 +1639,10 @@ static int q6v5_stop(struct rproc *rproc)
+ {
+ 	struct q6v5 *qproc = rproc->priv;
  	int ret;
 +	int i;
 +
-+	for (i = 0; i < adsp->num_domains; i++)
-+		qcom_pdm_del_domain(adsp->domains[i]);
++	for (i = 0; i < qproc->num_domains; i++)
++		qcom_pdm_del_domain(qproc->domains[i]);
  
- 	ret = qcom_q6v5_request_stop(&adsp->q6v5, adsp->sysmon);
+ 	ret = qcom_q6v5_request_stop(&qproc->q6v5, qproc->sysmon);
  	if (ret == -ETIMEDOUT)
-@@ -690,6 +712,8 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->rproc = rproc;
- 	adsp->info_name = desc->sysmon_name;
- 	adsp->has_iommu = desc->has_iommu;
-+	adsp->domains = desc->domains;
-+	adsp->num_domains = desc->num_domains;
+@@ -2013,6 +2035,9 @@ static int q6v5_probe(struct platform_device *pdev)
  
- 	platform_set_drvdata(pdev, adsp);
+ 	platform_set_drvdata(pdev, qproc);
  
-@@ -764,7 +788,56 @@ static void adsp_remove(struct platform_device *pdev)
- 	rproc_free(adsp->rproc);
++	qproc->domains = desc->domains;
++	qproc->num_domains = desc->num_domains;
++
+ 	qproc->has_qaccept_regs = desc->has_qaccept_regs;
+ 	qproc->has_ext_cntl_regs = desc->has_ext_cntl_regs;
+ 	qproc->has_vq6 = desc->has_vq6;
+@@ -2153,6 +2178,54 @@ static void q6v5_remove(struct platform_device *pdev)
+ 	rproc_free(rproc);
  }
  
--static const struct adsp_pil_data adsp_resource_init = {
-+static const struct qcom_pdm_domain_data adsp_audio_pd = {
-+	.domain = "msm/adsp/audio_pd",
-+	.instance_id = 74,
++static const struct qcom_pdm_domain_data mpss_root_pd = {
++	.domain = "msm/modem/root_pd",
++	.instance_id = 180,
++	.services = { NULL },
++};
++
++static const struct qcom_pdm_domain_data msm8996_mpss_root_pd = {
++	.domain = "msm/modem/root_pd",
++	.instance_id = 100,
++	.services = { NULL },
++};
++
++static const struct qcom_pdm_domain_data sm8150_mpss_root_pd = {
++	.domain = "msm/modem/root_pd",
++	.instance_id = 180,
 +	.services = {
-+		"avs/audio",
++		"gps/gps_service",
 +		NULL,
 +	},
 +};
 +
-+static const struct qcom_pdm_domain_data adsp_charger_pd = {
-+	.domain = "msm/adsp/charger_pd",
-+	.instance_id = 74,
-+	.services = { NULL },
++static const struct qcom_pdm_domain_data mpss_wlan_pd = {
++	.domain = "msm/modem/wlan_pd",
++	.instance_id = 180,
++	.services = {
++		"kernel/elf_loader",
++		"wlan/fw",
++		NULL,
++	},
 +};
 +
-+static const struct qcom_pdm_domain_data adsp_root_pd = {
-+	.domain = "msm/adsp/root_pd",
-+	.instance_id = 74,
-+	.services = { NULL },
++static const struct qcom_pdm_domain_data *msm8996_mpss_domains[] = {
++	&msm8996_mpss_root_pd,
 +};
 +
-+static const struct qcom_pdm_domain_data adsp_sensor_pd = {
-+	.domain = "msm/adsp/sensor_pd",
-+	.instance_id = 74,
-+	.services = { NULL },
++static const struct qcom_pdm_domain_data *sdm660_mpss_domains[] = {
++	&mpss_wlan_pd,
 +};
 +
-+static const struct qcom_pdm_domain_data *sc7280_adsp_domains[] = {
-+	&adsp_audio_pd,
-+	&adsp_root_pd,
-+	&adsp_charger_pd,
-+	&adsp_sensor_pd
++static const struct qcom_pdm_domain_data *sdm845_mpss_domains[] = {
++	&mpss_root_pd,
++	&mpss_wlan_pd,
 +};
 +
-+static const struct qcom_pdm_domain_data cdsp_root_pd = {
-+	.domain = "msm/cdsp/root_pd",
-+	.instance_id = 76,
-+	.services = { NULL },
++static const struct qcom_pdm_domain_data *sm8350_mpss_domains[] = {
++	&sm8150_mpss_root_pd,
 +};
 +
-+static const struct qcom_pdm_domain_data *qcs404_cdsp_domains[] = {
-+	&cdsp_root_pd,
-+};
-+
-+static const struct qcom_pdm_domain_data *sdm845_adsp_domains[] = {
-+	&adsp_audio_pd,
-+	&adsp_root_pd,
-+};
-+
-+static const struct adsp_pil_data adsp_sdm845_resource_init = {
- 	.crash_reason_smem = 423,
- 	.firmware_name = "adsp.mdt",
- 	.ssr_name = "lpass",
-@@ -779,6 +852,8 @@ static const struct adsp_pil_data adsp_resource_init = {
- 	.num_clks = 7,
- 	.pd_names = (const char*[]) { "cx" },
- 	.num_pds = 1,
-+	.domains = sdm845_adsp_domains,
-+	.num_domains = ARRAY_SIZE(sdm845_adsp_domains),
+ static const struct rproc_hexagon_res sc7180_mss = {
+ 	.hexagon_mba_image = "mba.mbn",
+ 	.proxy_clk_names = (char*[]){
+@@ -2184,6 +2257,7 @@ static const struct rproc_hexagon_res sc7180_mss = {
+ 	.has_ext_cntl_regs = false,
+ 	.has_vq6 = false,
+ 	.version = MSS_SC7180,
++	// FIXME: domains?
  };
  
- static const struct adsp_pil_data adsp_sc7280_resource_init = {
-@@ -794,9 +869,11 @@ static const struct adsp_pil_data adsp_sc7280_resource_init = {
- 		"gcc_cfg_noc_lpass", NULL
- 	},
- 	.num_clks = 1,
-+	.domains = sc7280_adsp_domains,
-+	.num_domains = ARRAY_SIZE(sc7280_adsp_domains),
+ static const struct rproc_hexagon_res sc7280_mss = {
+@@ -2212,6 +2286,8 @@ static const struct rproc_hexagon_res sc7280_mss = {
+ 	.has_ext_cntl_regs = true,
+ 	.has_vq6 = true,
+ 	.version = MSS_SC7280,
++	.domains = sm8350_mpss_domains,
++	.num_domains = ARRAY_SIZE(sm8350_mpss_domains),
  };
  
--static const struct adsp_pil_data cdsp_resource_init = {
-+static const struct adsp_pil_data cdsp_qcs404_resource_init = {
- 	.crash_reason_smem = 601,
- 	.firmware_name = "cdsp.mdt",
- 	.ssr_name = "cdsp",
-@@ -831,10 +908,10 @@ static const struct adsp_pil_data wpss_resource_init = {
+ static const struct rproc_hexagon_res sdm660_mss = {
+@@ -2243,6 +2319,8 @@ static const struct rproc_hexagon_res sdm660_mss = {
+ 	.has_ext_cntl_regs = false,
+ 	.has_vq6 = false,
+ 	.version = MSS_SDM660,
++	.domains = sdm660_mpss_domains,
++	.num_domains = ARRAY_SIZE(sdm660_mpss_domains),
  };
  
- static const struct of_device_id adsp_of_match[] = {
--	{ .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_resource_init },
-+	{ .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_qcs404_resource_init },
- 	{ .compatible = "qcom,sc7280-adsp-pil", .data = &adsp_sc7280_resource_init },
- 	{ .compatible = "qcom,sc7280-wpss-pil", .data = &wpss_resource_init },
--	{ .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_resource_init },
-+	{ .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_sdm845_resource_init },
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, adsp_of_match);
-@@ -846,6 +923,8 @@ static struct platform_driver adsp_pil_driver = {
- 		.name = "qcom_q6v5_adsp",
- 		.of_match_table = adsp_of_match,
- 	},
-+	.domains = qcs404_cdsp_domains,
-+	.num_domains = ARRAY_SIZE(qcs404_cdsp_domains),
+ static const struct rproc_hexagon_res sdm845_mss = {
+@@ -2278,6 +2356,8 @@ static const struct rproc_hexagon_res sdm845_mss = {
+ 	.has_ext_cntl_regs = false,
+ 	.has_vq6 = false,
+ 	.version = MSS_SDM845,
++	.domains = sdm845_mpss_domains,
++	.num_domains = ARRAY_SIZE(sdm845_mpss_domains),
  };
  
- module_platform_driver(adsp_pil_driver);
+ static const struct rproc_hexagon_res msm8998_mss = {
+@@ -2309,6 +2389,8 @@ static const struct rproc_hexagon_res msm8998_mss = {
+ 	.has_ext_cntl_regs = false,
+ 	.has_vq6 = false,
+ 	.version = MSS_MSM8998,
++	.domains = sdm845_mpss_domains,
++	.num_domains = ARRAY_SIZE(sdm845_mpss_domains),
+ };
+ 
+ static const struct rproc_hexagon_res msm8996_mss = {
+@@ -2347,6 +2429,8 @@ static const struct rproc_hexagon_res msm8996_mss = {
+ 	.has_ext_cntl_regs = false,
+ 	.has_vq6 = false,
+ 	.version = MSS_MSM8996,
++	.domains = msm8996_mpss_domains,
++	.num_domains = ARRAY_SIZE(msm8996_mpss_domains),
+ };
+ 
+ static const struct rproc_hexagon_res msm8909_mss = {
 
 -- 
 2.39.2
