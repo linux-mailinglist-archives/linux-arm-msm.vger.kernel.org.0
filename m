@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-12991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BC6286CE99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 17:18:15 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C39F286CEFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 17:27:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6CA8CB21F86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:18:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33EC21F21F09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:27:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 907B17828F;
-	Thu, 29 Feb 2024 15:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 724F4134416;
+	Thu, 29 Feb 2024 16:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="boProXf5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MWEWHopi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674FF70AD9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 15:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8CD16062E;
+	Thu, 29 Feb 2024 16:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709222270; cv=none; b=Lpu5UXkYZeSwV1LUiQRM/z8LzTql0/4dpvNYGnmA4YOWw46QV6cwQ+yb1rLq/kRBP+38zBfoiWctKMfMGxxscRBGxcQcglaJta5HVDISQbqFIZWWeIeVXNbh6iz8d7Gt0g0n66VUMMJrQGW+V8Aewwsxi6d7N71ZDlmQ/h1YnZ4=
+	t=1709223789; cv=none; b=jgK2QVxIVoGAu8c4KrlP7aSmt0OYSBJp4ZoO6geTvQ6R03tMkIxPZ+24IALKKVvvqebJ0mA40hNUCSsrE0wON98n8Et6ExkYDDramR5wZwo7pDKLn+c+x2vUHVb1TklPfwIxZoTgC87lqVBxq3mg6FSdGMs7UyQ3YSzoz3L6nl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709222270; c=relaxed/simple;
-	bh=uy0F29C4AlGHMMm5EsQdc/gpki7i7E0BmXMpi6d1R3M=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Ibn45MBbxVKVCE8TSYiUasfzFhViin7q3Y4GsAjf6hQZwzcB2t58Q82VQ873MG9ukMPYkSTvdZ/1NXiM918trT5ZBkUK9g5vZ1RusnrqA3CqaNZ/7JzB3XhCa7pRUWrVxu8HMHBbHbzRc654Mudj/LNNpg2TeI64TLEbkt6zup8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=boProXf5; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d228a132acso13539561fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 07:57:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709222265; x=1709827065; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E+rwDvBHwaTiXgJTFlspTAy/0AO9GOtYg0t1vv+rPRo=;
-        b=boProXf5FrS9waFSmZtRO6ghFd/zYqiihZdnG9lVFouE9Y7o5QUt7lKQWsVsJ4dfaT
-         5qkHQtJGXb5jF6hvxJtSadw52+yGV+tfZhdlci1N1RY22250mGM32gKzli69aKe1OF5n
-         JKf42ZXBRcVfAL7PUvWsMhXVuy10FifGFLmvIbaiFXdJgqiUMZWPaq492I26U2DrP6UQ
-         +R7EN0cwY//EtmAvAfvh38nTl00LZIM6b+obGxaBnmyENF8pqTsr+VWwGKAGjyzOflvC
-         Jf/GTpk3rPA+NzJP5zOHdbgL6lNzgqeE2gw5DxQcxnCN2P+HhOwqIgPPNzMMGdls+7tu
-         7wrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709222265; x=1709827065;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=E+rwDvBHwaTiXgJTFlspTAy/0AO9GOtYg0t1vv+rPRo=;
-        b=wTUmnQ3XDjdXX/Amwsteo7INc+c4hV6LLds8jPNbb9h9uQU2nttfGthZJHePZxmnBy
-         C4/gIplLiHyxt9+Y+w8yCznEmXdS/wbwzHWeHZyZIuwDaLuuqPQ/GqR9Mk817jEHHAUn
-         GrAmoXfKR2kyM90OVDL+VtRJ1pvgxdawmSTjKBgntppkuxbZNqcgdOyPvMw0zILJiHUS
-         v918Ii/XM5rTb3IFwJ5iB2HBWBY2hXHNRVj1Xdeb79JaENpedfeAmlhg0rylS7RNEpOx
-         y0uv+0zlwMNWnaLDfacHS+WpEXkAEHzh61aTBWTNeXbW72qnUvGYth3mRIbudrQdCwbp
-         D8nQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8lMwS176FgFs9FumxnTpm0oXE0ZxeeOlTqsoyfHZ4HvKHEPjfpAtd17lUz8OAoiLfe4aA+gY0YW+XwceXhMuX+liCoLMTYTg5SXcukg==
-X-Gm-Message-State: AOJu0YzN5Vzw8qksCWDyMRyIbtBBpFnCmE9h+RR7D1qTiPW809fP5OVD
-	6+Uynfh36GYeaTHJM+indpjeeIdNamp1ebgJGvS5lMxGLDvae/LMTLtBwO+wxdo=
-X-Google-Smtp-Source: AGHT+IGI2JH+zfnqb3Mv9icKAn7vZ+xHOoCRLh8m+XQgLc0NwrnMh2W2RRFh0niWjbPFKKVRZnJapw==
-X-Received: by 2002:a05:651c:8c:b0:2d2:954e:aceb with SMTP id 12-20020a05651c008c00b002d2954eacebmr1627300ljq.53.1709222265542;
-        Thu, 29 Feb 2024 07:57:45 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:651:5318:b12c:be82? ([2a01:e0a:982:cbb0:651:5318:b12c:be82])
-        by smtp.gmail.com with ESMTPSA id u10-20020a05600c210a00b00410df4bf22esm5534462wml.38.2024.02.29.07.57.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 07:57:45 -0800 (PST)
-Message-ID: <a0a082b6-7647-4fd9-b0da-db973ae09f27@linaro.org>
-Date: Thu, 29 Feb 2024 16:57:43 +0100
+	s=arc-20240116; t=1709223789; c=relaxed/simple;
+	bh=GF1s7Q8vKeSknVTRTuJ/BYUn33sLoamb5Smgo6MtprM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Mi07XhFB1dbbnHL/UYZZDTExZtRyWrMKMWNdyHjA6983F1Jhq2iLlzPEAhsQOta2361lw5IPJcjHkkwrQ2kPA42xCiruFY9gP/WC9b/5aW8OqAUXU72MqAmjg9hHC804P3usTspeHa9dgoium7Cak9mrnGoqQS3MQDdxlHb1b4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MWEWHopi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41TBOiWM002741;
+	Thu, 29 Feb 2024 16:22:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=ZN5gdEWigi3Ga6SN9PMQwfoCGrcxYSlAymOOVKjJd54=; b=MW
+	EWHopiObuUOqeu7dwpQj9PTulX8h6FVQ2ns2rLhIYvqQ/enbdJj6tJ6De+qC13CM
+	0HDzNlD9LXtRuC3L1Er9KRCJ/JTxjjzKmgyxBl3QgW1+KRK9k8IG6Y56ZVCSgLtw
+	6KM4+pWD79WfF6+69r3Pg5Kb76v9byxhqDY2ygHmi8JB3LvtjogorLwEnUqhv4K4
+	aDnkkmSR3sxXnzEjMpCy4okeept5DikSV63AmU3Mpj3YRLU2jjrRa7J2KBIJw8Fj
+	pTFvYZGrOvz+msYeezW20ovlFetjZAWAO/HJzvbY2ybn/RsVdGMtWktVYXnFW7JC
+	/I+qy9q2Pq4UZpBXp06A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wjmwn9kr6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Feb 2024 16:22:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41TGMvnI030285
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Feb 2024 16:22:57 GMT
+Received: from [10.50.20.62] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 29 Feb
+ 2024 08:22:53 -0800
+Message-ID: <f1ac744d-092b-4a19-a22a-810e25bacddb@quicinc.com>
+Date: Thu, 29 Feb 2024 21:52:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,101 +65,119 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFT 4/7] phy: qcom: qmp-combo: register a typec mux to
- change the QPHY_MODE
-Content-Language: en-US, fr
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
- <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-4-07e24a231840@linaro.org>
- <CAA8EJpoZn5V8N3=4x4AfYM91XBuCZx47vSS8tB-nCP=LvVsD6g@mail.gmail.com>
- <d50ca4c0-8954-4e4c-9ce9-2c40ebacf8b0@linaro.org>
- <CAA8EJpq0E_t6bi4TymtpxdX0ZHHNJgBU2gFEEZDWSUZg27pEvw@mail.gmail.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CAA8EJpq0E_t6bi4TymtpxdX0ZHHNJgBU2gFEEZDWSUZg27pEvw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [1/4] interconnect: qcom: icc-rpmh: Add QoS config support
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <georgi.djakov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: Alex Elder <elder@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+References: <20240122143030.11904-1-quic_okukatla@quicinc.com>
+ <20240122143030.11904-2-quic_okukatla@quicinc.com>
+ <9224341f-e0d8-427b-9064-4a51bf5c547e@linaro.org>
+ <DM8PR02MB8261BA6A8870193265380991F0472@DM8PR02MB8261.namprd02.prod.outlook.com>
+ <16a776d9-8303-4033-a694-8ed83bc7b66d@linaro.org>
+ <34099e94-2439-45a2-8020-13c8c145397b@quicinc.com>
+ <eef3d3f6-b905-4f12-8f56-ffab13e585e9@linaro.org>
+From: Odelu Kukatla <quic_okukatla@quicinc.com>
+In-Reply-To: <eef3d3f6-b905-4f12-8f56-ffab13e585e9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _VJSaW-fN0RHOsFmbeWWaJ3Bq56t6dwh
+X-Proofpoint-ORIG-GUID: _VJSaW-fN0RHOsFmbeWWaJ3Bq56t6dwh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-29_02,2024-02-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 clxscore=1011 bulkscore=0 adultscore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402290126
 
-On 29/02/2024 16:54, Dmitry Baryshkov wrote:
-> On Thu, 29 Feb 2024 at 17:47, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+
+
+On 2/22/2024 6:00 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 2/21/24 18:57, Odelu Kukatla wrote:
 >>
->> On 29/02/2024 16:25, Dmitry Baryshkov wrote:
->>> On Thu, 29 Feb 2024 at 15:08, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>>>
->>>> Register a typec mux in order to change the PHY mode on the Type-C
->>>> mux events depending on the mode and the svid when in Altmode setup.
->>>>
->>>> The DisplayPort phy should be left enabled if is still powered on
->>>> by the DRM DisplayPort controller, so bail out until the DisplayPort
->>>> PHY is not powered off.
->>>>
->>>> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
->>>> will be set in between of USB-Only, Combo and DisplayPort Only so
->>>> this will leave enough time to the DRM DisplayPort controller to
->>>> turn of the DisplayPort PHY.
+>>
+>> On 2/5/2024 5:51 PM, Konrad Dybcio wrote:
+>>> On 5.02.2024 12:57, Odelu Kukatla (QUIC) wrote:
+>>>> -----Original Message-----
+>>>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> Sent: Monday, January 22, 2024 8:55 PM
+>>>> To: Odelu Kukatla (QUIC) <quic_okukatla@quicinc.com>; georgi.djakov@linaro.org; Bjorn Andersson <andersson@kernel.org>; Georgi Djakov <djakov@kernel.org>; linux-arm-msm@vger.kernel.org; linux-pm@vger.kernel.org; linux-kernel@vger.kernel.org
+>>>> Subject: Re: [1/4] interconnect: qcom: icc-rpmh: Add QoS config support
+> 
+> Why is this email taken private?
+> 
+> [...]
+> 
+I am adding previous list back for now, will add "to list" from "./scripts/get_maintainer.pl" in V3.
 >>>
->>> I think this is not fully correct. Please correct me if I'm wrong, but
->>> it is possible to switch between USB / USB+DP / DP-only at runtime.
->>> See the Status Update and Configure commands.
 >>
->> Yes, but the current implementation is still valid because we need to
->> have the DP powered-off before changing the PHY mode.
+>> Yeah, you are right. !synced_state holds all BCMs enabled. But clock voting is still required.
+>> But qcom_icc_rpmh_configure_qos() can be invoked from out side of qcom_icc_rpmh_probe() in QuickBoot mode where *_probe does not happen.
+>> so irrespective of !synced_state votes, better to keep it separate from sync_state() and place votes on required BCMs during QoS time and remove them after that.
 > 
-> Even for switching between 2 lane and 4 lane modes?
-
-So the Altmode pin assignment says how much lanes you can get (2 or 4),
-and AUX data will say how much the adapter/display supports.
-
-My native DP monitor uses the 4 lanes, while my USB-C->HDMI dongles
-declares the 4lanes pin assigment but DP controller only ever tries 2 lanes.
-
-I don't have USB-C->HDMI with 4lanes DP, but it should work fine.
-
-Neil
-
+> What on earth is quickboot mode?
+> Grepping for it on linux-next, there's precisely 0 results.
 > 
-> I'll check how my USB-A+DP dongles work with respect to the altmode
-> configuration.
+> If it's some downstream sw invention, it has no right to affect
+> the code submitted upstream - "if it's not on the list, it doesn't
+> exist".
 > 
+
+Quickboot is not there yet in upstream. I will clean the code related to BCM voting and move the required clock voting to qcom_icc_rpmh_configure_qos().
+
 >>
->> I never encountered such setup and I have no idea how to test this.
->>
->>>
+>>>>> + * @prio: priority value assigned to requests on the node
+>>>>> + * @urg_fwd: if set, master priority is used for requests.
 >>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> "master priority" meaning "this req goes before anyone else", or "use the icc provider [master]'s priority value"?
+>>>>
+>>>>> + * @prio_fwd_disable: if set, master priority is ignored and NOCs default priority is used.
+>>>>
+>>>> NoC's
+>>>>
+>>>> This sounds like !(prio || urg_fwd)? Surely it must do something more useful?
+>>>
+>>> This remains unanswered
+>>>
+>>> Konrad
+>>
+>> @prio_fwd_disable:
+>> 1 -> FIXED MODE; upstream tnx-inband-priority is ignored; value @pio is used for transaction.
+>> 0 -> BYPASS MODE; max of (tnx-inband-priority, @prio).
 > 
+> So, this could be basically called "force_priority_val"
+> 
+> 
+>> @urg_fwd:
+>> 1 -> Urgency promotion messages issued by the connected master IP remain unchanged as they transit the NIU and the QNoC QoS generator.
+>> 0 -> IP-generated messages are discarded, and messages generated by QoS generators are used instead.
+> 
+> So the interconnect endpoints can effectively modify the priority if
+> urg_fwd is enabled.. Interesting.. "ignore_ep_urgency_req"?
 > 
 
+Names were chosen closer to bit fields in QoS registers. I will keep the names same and update the documentation with clear explanation.
+
+> Both of these should also be better documented, the kerneldoc you
+> submitted explains nothing unless this what I believe to be excerpt
+> from the documentation is present to support it.
+> 
+> Konrad
+
+Thanks,
+Odelu
 
