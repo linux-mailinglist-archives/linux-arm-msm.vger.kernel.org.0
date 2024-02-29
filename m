@@ -1,149 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-13013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E6A086D32B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 20:29:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A859E86D33C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 20:34:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94981F2504B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 19:29:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56E451F2287C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 19:34:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47C9614403E;
-	Thu, 29 Feb 2024 19:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ykjDAxa4"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C2DD13C9DB;
+	Thu, 29 Feb 2024 19:34:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4108B13F431
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 19:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1557A13C9CC;
+	Thu, 29 Feb 2024 19:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709234853; cv=none; b=LQFoSeZ+NNIKLUUX3lsl25MkdFwenBQmWM7ErizEpkMyzNaM1qwmcykQc+e3ntscyfY/IuAXapuH2TepO4BmnForUJvCcUfJnPw7vXanu5YZO+DmNbugFllOepb+S5rPMa1Z+oF26hQmI9AhJ/1plvJYxi85FZnszVtWCisAnsI=
+	t=1709235267; cv=none; b=lzL1g44yzB6leFcne7HceYnQ6saGZwswvoDXLoOpuWdomUhsRRtO5//VfbvMiGBuAItXT7AoxwFaKmukfGusX1VbNMWfhYU9MD0vpq4cWRWDMq8aruQD2MhS4t9tHOuS26ZRb/cZUlcB+vXWXznQxuIRPHXlQ4sJweSjqqyfJD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709234853; c=relaxed/simple;
-	bh=hOcD0Q8J4O6wInMOgi9Si1woMdBSCk09ZsxIVn4u/aU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D15N2iIItAzRnNEAZNNVCRw7JA12D9uR0il2MNiVOtUBvYZrR7aBYYssZBL+2CcD8Cy+XjIACFU7BWocmve9SdPK6qYiCA0G08VjVT7XFbAn6myptFpAoXbzOHNVTvYj01sa0SkcXIDsT2C1Ptg9URJV+P2BvYZ2hUYIxhNYa3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ykjDAxa4; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a446b5a08f0so54134266b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 11:27:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709234848; x=1709839648; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Fvnfj72X5wncWNyMmos2XdBlSg34ykxktAW7UbkC3Yw=;
-        b=ykjDAxa4/2QhbazxyHkGs03ts+BxSHFmlfDtOlXrjK6ZBWDseivbe8qTJWzYPFJ3Xw
-         5poHUyBOsjdMWREJlfQjr3+aN+IHgMnNK71phkmXwIamLijPPtUqn9vgXnLJgqKE7l41
-         bvRwRfYPWaIdLK87xILs7CuS9bgMVEGZrgnRXFsTLCkneH0f9ZfeC8ywnao1r8JmgYf6
-         b/8VpmsHHIR/Ufm830TNM0pPvTkN1gtyx+Njy/meOC2yixUbdx8pZYqxv2DbtWT5RUPv
-         gH/6vr3VL/6MnLm7NnxtUsyyZwBtlSXJj3ht3F4Yhs4lu34+/CJJHxH3rkRPEnCQ02Z9
-         yDrg==
+	s=arc-20240116; t=1709235267; c=relaxed/simple;
+	bh=BayzEVfXNPRBxrY3TA8t49QRKHW7tGfeWTgiPEh7jo8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pbWsDuqZ3fs+8wtHGLKkEpFP2M9+g1PE/SPEIGFFTEJkfV2OgPH5pL9BxhUoJ1RaJVrAp/b7XvFv/toRsVdiowjUwfi/vFxnQh7a/gKk/x+k9meu/nGkp6Uq8l4YCc7JZZ/si7qFahGoUt1v9Vdd7zxqHJIbDJHyYH2a3O9erBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6e4aa4877a9so118569a34.0;
+        Thu, 29 Feb 2024 11:34:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709234848; x=1709839648;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fvnfj72X5wncWNyMmos2XdBlSg34ykxktAW7UbkC3Yw=;
-        b=auufOm6a9pVYEK0h9huxOTIZXlp4+AuCRc1zOJRhHeiZitUvL0nkexpLmEjfP0N1uS
-         aVEYcAuXndJIBOcY29eu6OpctgnTS/Z4JHtxOrG1eqKVNBUF36k9njnFDiPuPSCLiDW2
-         DJAkeL7bm6BOG/r+a52jMt5R7aypDi7pX3TGnj/eUDZbg849fHn05zcJ2wO2R4DaMh62
-         RnUwZ/Lzzk7MJKrt+fZupH7rBoiPOd6QGcrNovWEKmr04KG+fexNm6hGX6jAoRTEn84q
-         3rCzQe3XGxgQjAS0VgoD7sqkU8gQWPKylDinfvcPvZ7pJs/+fHgAsdr6I0ASm8iZPvHf
-         WwMg==
-X-Gm-Message-State: AOJu0YxCsoIfnRqJj0tjeCquTsBq20N13AAdVPBSnTRCJFGTIkmfL/qi
-	4IW4qmJjg4yyT7djGko8v2ZsCd29J2n/URkByPaN+RbT8gXFzdVoSR+3m/PC/DE=
-X-Google-Smtp-Source: AGHT+IHfTo9n1QbGET/Haupdjrh48c25zzfscxRIovhV41mGnLdAdSUQuicUaGpT/7ZqNjbz165ACg==
-X-Received: by 2002:a17:906:7190:b0:a43:67fe:d484 with SMTP id h16-20020a170906719000b00a4367fed484mr2139068ejk.22.1709234848627;
-        Thu, 29 Feb 2024 11:27:28 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id h20-20020a170906591400b00a3d5efc65e0sm964589ejq.91.2024.02.29.11.27.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 11:27:28 -0800 (PST)
-Message-ID: <fa396749-c6c4-4610-b9a5-d94713153b86@linaro.org>
-Date: Thu, 29 Feb 2024 20:27:26 +0100
+        d=1e100.net; s=20230601; t=1709235265; x=1709840065;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GIAd28SmAv9IBBwlBfkFg/XlwEHMj2K+MeQKKpCbJyM=;
+        b=OgCvvcJXoahVPlJrpoGMI6SRfmxXwS2hUi8GRGTfuGe7W4ej2+j2myxfA1Ckw01GiZ
+         jRqjDQ67oBGG7EisahIyZqHY2htB1UoWcxGFaI3vtnIln5l1BxE52mM5JJAMQvnNc42/
+         pg4oCvIMzG0y+nMGLmkdmzyv4PyOSaDPNjO2AFZqz1j7VNHdKZWtlAZzCms57B8a0U+i
+         Gmer+mTY+AoUDV2w9LZ0CnIu8dIFVo0hSAcTss/YocAv4jL88bcNnZYZwi4DN2bscJe8
+         N1o0BKArVW2JBHI3ihBRscWk6UBBevRKgr6bj5FKqA0oOp6uX2sJEZSFW2TGaoobxd5N
+         Yw5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWZIAyq9z9sKV2sBA/aJIb/Urr9650HLsX6981azbRdvK+pwiMiJgi8Xjw8XCYOFoWOkFgpNbf4aPV5rosMgvIrQQ6zLD2Tn7A4DIjUWEJ5pySTNrk5Al8OuRDExyUL3PezIZFGWBl+6+eB16KY+gedJr/TWodNxKC39wt3h7knu+3n7qCpRySIvjMMLD+t591g5D8qDcr0kl37Hqhp
+X-Gm-Message-State: AOJu0YxIFALlujgb767oUWAc2E4nOEN8zWLWoNPw0M/Q3ytKZfSmUstW
+	qZ5FJlOrgl2dzH4kzWghToTWLyT3u6Jm6Q8bKSG9XQA+uJTFn7HLF0Z0mOMgTFaNboILuW89mWF
+	qZGMH2/+XntSI1oav31XlcA9Yqfk=
+X-Google-Smtp-Source: AGHT+IFrwvgAc0ISoztnG436NPqz4iJfmmtZTg/ZbF0R2tLMfqoYvGtemVRgaqjKCK/uTdzV46XgjyMdtCfWOLOX1hk=
+X-Received: by 2002:a4a:a543:0:b0:5a0:ec66:b56b with SMTP id
+ s3-20020a4aa543000000b005a0ec66b56bmr2225901oom.0.1709235265041; Thu, 29 Feb
+ 2024 11:34:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Document the HDK8650 board
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org>
- <20240223-topic-sm8650-upstream-hdk-v1-1-ccca645cd901@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240223-topic-sm8650-upstream-hdk-v1-1-ccca645cd901@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240229-suspend_ops_late_init-v2-1-34852c61a5fa@quicinc.com>
+In-Reply-To: <20240229-suspend_ops_late_init-v2-1-34852c61a5fa@quicinc.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 29 Feb 2024 20:34:13 +0100
+Message-ID: <CAJZ5v0g_Cb-zPDD6z_C_HEewvsZJA_4FRiOnmhzX=KsRAL8daA@mail.gmail.com>
+Subject: Re: [PATCH v2] PM: suspend: Set mem_sleep_current during kernel
+ command line setup
+To: Maulik Shah <quic_mkshah@quicinc.com>
+Cc: Mark Rutland <mark.rutland@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, andersson@kernel.org, 
+	ulf.hansson@linaro.org, "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <len.brown@intel.com>, 
+	Pavel Machek <pavel@ucw.cz>, Sudeep Holla <Sudeep.Holla@arm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-pm@vger.kernel.org, quic_lsrao@quicinc.com, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 23/02/2024 09:52, Neil Armstrong wrote:
-> Document the Qualcomm SM8650 based HDK (Hardware Development Kit).
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+On Thu, Feb 29, 2024 at 7:45=E2=80=AFAM Maulik Shah <quic_mkshah@quicinc.co=
+m> wrote:
+>
+> psci_init_system_suspend() invokes suspend_set_ops() very early during
+> bootup even before kernel command line for mem_sleep_default is setup.
+> This leads to kernel command line mem_sleep_default=3Ds2idle not working
+> as mem_sleep_current gets changed to deep via suspend_set_ops() and never
+> changes back to s2idle.
+>
+> Set mem_sleep_current along with mem_sleep_default during kernel command
+> line setup as default suspend mode.
+>
+> Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support=
+")
+> CC: stable@vger.kernel.org # 5.4+
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> ---
+> Changes in v2:
+> - Set mem_sleep_current during mem_sleep_default kernel command line setu=
+p
+> - Update commit message accordingly
+> - Retain Fixes: tag
+> - Link to v1: https://lore.kernel.org/r/20240219-suspend_ops_late_init-v1=
+-1-6330ca9597fa@quicinc.com
+> ---
+>  kernel/power/suspend.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
+> index 742eb26618cc..e3ae93bbcb9b 100644
+> --- a/kernel/power/suspend.c
+> +++ b/kernel/power/suspend.c
+> @@ -192,6 +192,7 @@ static int __init mem_sleep_default_setup(char *str)
+>                 if (mem_sleep_labels[state] &&
+>                     !strcmp(str, mem_sleep_labels[state])) {
+>                         mem_sleep_default =3D state;
+> +                       mem_sleep_current =3D state;
+>                         break;
+>                 }
+>
+>
 > ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Applied as 6.9 material, thanks!
 
