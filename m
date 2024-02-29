@@ -1,102 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-12941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98A0C86C28C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 08:31:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 731F686C2BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 08:46:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00AB3B29313
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 07:31:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A4D981C20CD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 07:46:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54F7A44C89;
-	Thu, 29 Feb 2024 07:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07E2A4CE17;
+	Thu, 29 Feb 2024 07:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OiGBpDUe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AsNxAJty"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A10544C97
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 07:31:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C318C481AC;
+	Thu, 29 Feb 2024 07:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709191888; cv=none; b=ixs9ZlDQUIpdg7bOQxJQvyc1zDOeSVlLz7PLPjbpcfTeAZ1dKx333TpP9nAkAElJk+wLA2acZn0pqrz4g6TyQ5cCg6p860+qMnQjAAgeNqalJ9fsumGs7cDlxGJ6lEG95n2ANDq+dWxqwWb9UxxDI1lJ+XHR9NNRewOewPf2Krg=
+	t=1709192749; cv=none; b=hg+ZrQDSI3jwImj0uKoD+eCHLP0UsfrwRBVH3qAQvGLDCVUJEhGDeQ7wKdwmS4THdb2dl2GG28XceCGFMkmg7D16QGhRZov7+FcKhirdvjE/8YumjFekvJGsVStfIo6c+Au2XZm56rgrMX9s+rPDmidD9HnQtyZopfmvgP7mFAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709191888; c=relaxed/simple;
-	bh=3uSBsX/h4xXlrUva8XPFdy9iWJ+hnl3udviF8wSyM9A=;
+	s=arc-20240116; t=1709192749; c=relaxed/simple;
+	bh=tGUb8YeZCicyaOmqG4cHZt1wx0OYpFDkswI/paIY66o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UCtZKIhaT/GO2Q73wKU5U2qkjz/s/yavcX9qqMkyhYYsGErGnJf1ZtNk3Um+XWLEkZWxOP+q3b/Dy164UgJO0WdVlR+p6IO3fssclkSoA2Y4zFEwy4y7cnGhG96Q3uWVti6lq/cCWWgApQ70HONzVp4EaIlVyY54B0xAwOuMHKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OiGBpDUe; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-412b7baa9c5so4234355e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Feb 2024 23:31:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709191885; x=1709796685; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RiWXS0Lycg9PCC0fyWU9eT4uTxRcxADLMUayXiNfgPY=;
-        b=OiGBpDUe0TWApJDgwCkZfL7pQJeFirP39TWGjnMcb0GrANqnaSBaDu+gmZqb1FETv+
-         w3CoppLAbkxJhJUIA2SutHxhzHROumgphoLCoQ71iYMcN8dXgooUm5EjgVxGJorgotVq
-         cGuX9pWx+FCAbfaM//WDCtzX5NIT/xNiRe/+Qb5eQEa1ce/kH5TIRcm7y26fb6Rdds8Z
-         fGeXVQOdE3ISkPWAMbQsq9tVNQ/PqdI82D0qOu7MWM4BZC7JIxEqunsyyRwx+N9dSFZC
-         hm7ly6kVkOfU1zolzmb54/W4VXzwTgvpSGnRA3EAe5qwVHRaQOb7WCO21JpyTKyfHK6t
-         CzTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709191885; x=1709796685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RiWXS0Lycg9PCC0fyWU9eT4uTxRcxADLMUayXiNfgPY=;
-        b=NFBkygdlkp5XnsNZBb4WNxeycmdiXu6UNxH4Nk5BEcI5v+v9HVhyVyzX5KlQHYJm5Z
-         dnUrhaYLwkRR6yEQBpQXPy9Y/n/yZO0n0qf3a1WxU9EBADpIG9TLCBp5wT4uaPPszuki
-         +fa8/x1IdUvdO8UGoQHmmy5OfQDdq9KMEVubEaC/kgpRHS9pGOmUaa0y4Tfbe64JubD4
-         yRUW/XoNeVX2OjGz/RQsDjQuuIQOSe18/uM2UpjUPG3J2sWcKvVexON6Rf4mcyML8hv4
-         usS/Uxb5C21fyd1VlZFUHuV1oJS9IlBZlm5XhmotPsWCAwokf26ZZXN1aCh91QiZiJaM
-         MpMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXLr80Ky5hJG+dV0DW4B+R4NB6o2iB47JJgNORTTuxovdR7LsfNBakhQK577xqAp7eRsdIGbvocTTUzyaY1+FlyjtGkioIj0QoQqdej5Q==
-X-Gm-Message-State: AOJu0YwC3nIIX/x03KzUXPI6h/XR0I+vUqyKmNhqc92B/os7O26/i47Z
-	CyT9GYXgqqAXmW0SipmnnkkzoqrH1eHZEEbXbuzVuxQaFXddJ+x1Bib+pfJ/Ia4=
-X-Google-Smtp-Source: AGHT+IFm2NXimeRlzG6mxS8tXCGpz0iq1MJcSQj/J2MMs2rGLvivZnF1HI63cA99XXODIDWyyxPCYw==
-X-Received: by 2002:a05:600c:190c:b0:412:b8cf:150b with SMTP id j12-20020a05600c190c00b00412b8cf150bmr973212wmq.10.1709191884805;
-        Wed, 28 Feb 2024 23:31:24 -0800 (PST)
-Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id q16-20020a5d6590000000b0033d56aa4f45sm928856wru.112.2024.02.28.23.31.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 23:31:24 -0800 (PST)
-Date: Thu, 29 Feb 2024 10:31:20 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jonathan Cameron <jic23@kernel.org>
-Cc: Markus Elfring <Markus.Elfring@web.de>, linux-arm-msm@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=oQwRWWnmC9BsU75Nw+Iu9kFmei1A4IUGj1l0DS5bZHfAHqfWD+exzc0TemXQAzEQ0J9ud97+fe8To7UCsajfTii3DZeymVFc19lcqzZ4fjWxcBEEoawATaBZEP9d9zL85Fe0fzYJD6rrzKt37Ef3MSc0MZHvNRRPR8B9lxwvCc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AsNxAJty; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3BAC433C7;
+	Thu, 29 Feb 2024 07:45:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709192749;
+	bh=tGUb8YeZCicyaOmqG4cHZt1wx0OYpFDkswI/paIY66o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AsNxAJtyH3ANwuXRI6Ki6gN5B2eIhKZ6ioHhtSKen9bmsuOyCK+oPtvTkb5Uoc+1Y
+	 hivcJy3J817Egdcx9ZqZjVbStG2fDMvZel2wjK04czWv6BumVZjH9vOVMHocGlno//
+	 /m3ADrT4kvyP8qVGe3NEFiYXGltmgMKyJvls2QXJVebUIBoq1SemtE2fNgAGPeTX56
+	 wJ5ONbaXNKdbRxRXTnNQp0KwAQMHjVD+ONi4W6HJ3rS/dvKD7n70E26lwfSFqlIIwl
+	 Q5aAtPbW+WsoAmEUEKjRIxRdk1XXpkOz+9Y2ztMP7TUSoGuAFZEYNiLSUV287MJQyZ
+	 Im9lTOCuAd3qg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rfb76-000000000Gz-2yaj;
+	Thu, 29 Feb 2024 08:45:56 +0100
+Date: Thu, 29 Feb 2024 08:45:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-phy@lists.infradead.org,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Rob Clark <robdclark@gmail.com>, Robert Foss <rfoss@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [PATCH] soc: qcom: pmic_glink_altmode: Use common error handling
- code in pmic_glink_altmode_probe()
-Message-ID: <fefbec63-df17-4515-8e63-66ba3a3b9cd2@moroto.mountain>
-References: <29b63eb4-2342-4ca8-a313-5de2a6ec6a83@web.de>
- <c25aa425-f350-4ad2-b92e-67de996daed3@linaro.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <ZeA2NPsn3ncgW6KE@hovoldconsulting.com>
+References: <20240223152124.20042-1-johan+linaro@kernel.org>
+ <20240228220843.GA309344@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,38 +73,58 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c25aa425-f350-4ad2-b92e-67de996daed3@linaro.org>
+In-Reply-To: <20240228220843.GA309344@bhelgaas>
 
-On Thu, Feb 29, 2024 at 12:26:49AM +0100, Konrad Dybcio wrote:
+On Wed, Feb 28, 2024 at 04:08:43PM -0600, Bjorn Helgaas wrote:
+> [+to Mani]
 > 
+> On Fri, Feb 23, 2024 at 04:21:12PM +0100, Johan Hovold wrote:
+> > This series addresses a few problems with the sc8280xp PCIe
+> > implementation.
+> > ...
 > 
-> On 2/28/24 19:05, Markus Elfring wrote:
-> > From: Markus Elfring <elfring@users.sourceforge.net>
-> > Date: Wed, 28 Feb 2024 18:45:13 +0100
+> > A recent commit enabling ASPM on certain Qualcomm platforms introduced
+> > further errors when using the Wi-Fi on the X13s as well as when
+> > accessing the NVMe on the CRD. The exact reason for this has not yet
+> > been identified, but disabling ASPM L0s makes the errors go away. This
+> > could suggest that either the current ASPM implementation is incomplete
+> > or that L0s is not supported with these devices.
+> > ...
+> 
+> > As this series fixes a regression in 6.7 (which enabled ASPM) and fixes
+> > a user-reported problem with the Wi-Fi often not starting at boot, I
+> > think we should merge this series for the 6.8 cycle. The final patch
+> > enabling the GIC ITS should wait for 6.9.
 > > 
-> > Add a jump target so that a bit of exception handling can be better reused
-> > at the end of this function implementation.
-> > 
-> > This issue was transformed by using the Coccinelle software.
-> > 
-> > Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-> > ---
+> > The DT bindings and PCI patch are expected to go through the PCI tree,
+> > while Bjorn A takes the devicetree updates through the Qualcomm tree.
+> > ...
 > 
-> (+CC Peter)
+> > Johan Hovold (12):
+> >   dt-bindings: PCI: qcom: Allow 'required-opps'
+> >   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+> >   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+> >   PCI: qcom: Add support for disabling ASPM L0s in devicetree
 > 
-> Hmm.. this looks very similar to the problem that __free solves
-> with <linux/cleanup.h>..
+> The ASPM patches fix a v6.7 regression, so it would be good to fix
+> that in v6.8.
 > 
-> I know no better, but wouldn't the same mechanism, down to the
-> usage of DEFINE_FREE work fine for _put-like functions?
+> Mani, if you are OK with them, I can add them to for-linus for v6.8.  
+> 
+> What about the 'required-opps' and 'msi-map-mask' patches?  If they're
+> important, I can merge them for v6.8, too, but it's late in the cycle
+> and it's not clear from the commit logs why they shouldn't wait for
+> v6.9.
 
-Jonathan Cameron has created something like this:
-https://lore.kernel.org/all/20240225142714.286440-1-jic23@kernel.org/
+The 'required-opps' binding patch is a prerequisite for the
+corresponding DT fix, which is tagged for stable and that should go in
+6.8.
 
-It hasn't been merged yet and it would need a bit of adjusting for this
-use case but it's basically what you want.
+The 'msi-map-mask' binding update is strictly only needed for enabling
+the ITS, which is 6.9 material, even if it's arguably also a fix for the
+current binding. So this one could possibly wait for 6.9 even if it may
+make sense to just take all three now for 6.8 to only have to deal with
+the mentioned binding conflict once.
 
-regards,
-dan carpenter
-
+Johan
 
