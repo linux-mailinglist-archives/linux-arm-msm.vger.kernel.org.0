@@ -1,230 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-12975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8699B86CB28
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:15:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8720386CB46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:18:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31DE92872EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 14:15:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15B8EB22F27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 14:18:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0872913342A;
-	Thu, 29 Feb 2024 14:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37FCB12FB1F;
+	Thu, 29 Feb 2024 14:16:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E111D12FB0B;
-	Thu, 29 Feb 2024 14:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5127612E1E3;
+	Thu, 29 Feb 2024 14:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709216105; cv=none; b=aLJ0vpDLSAXOQNZ3jJJbE8595OKPuENxN+D/XPDw+UsWU/KJNJDsLwEEGLVTWJUqja8WDVdqtBWZIr97OoHH0HKi4dSyfwZNYpb6KHubklYEjdQkdF4QNaJvDi8euEf4vBssaZ9Nhr/q3g5OIEiSNDaBD6DPCTaGtJ0U2tzj4Gc=
+	t=1709216204; cv=none; b=GvBW6cBWRXxsIiB4KLYNyRvQVouF/kOLNUAgrzicdEZfGKTXIzK9bgTa80/0tgujLx+DlSjTSjdwck6TcWumqD2p0B4O8EW4bPloWiS90bRwOikyYksy6NdluxfbaK+71FIabhBmevgkXThJv7J1T5+uDqjUnJrvQD1no6LiLmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709216105; c=relaxed/simple;
-	bh=SOJeGxTl0P3bQbsHku67aZnJjprqw3J887nhw1Gl0x4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C/s+QDiZwoAEBTL4gefs/k+7twNLLbL/yIS8ZwHl0N1u3+UlPugTo73zJkQ1Q2zYKitHEue8mOY89tKoFiJXmyZEHU+qrFX2/2FJo1M0+xL4E+woCaEWe+BfoCanS+DcQQta9fbQB4tldNwLZVgXeXBVdQIzTZC0P4+8m0GkJWA=
+	s=arc-20240116; t=1709216204; c=relaxed/simple;
+	bh=CwPbKWNjMP0nh0cY2U+B8n7NhSWz1CSP0wEAb4gTmx8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=plodutLIskgTGHgdErpDvHmcVQ8+UC5Vvqixwo2EkIj7zUGqcV5Sv2fwPMxTg6/X3GV2Cf19u/wLWj7RYxHnUyPZY3H5lpAljArvOug/h04Oz3BDT+FD+ju7DIUSpEKpj8C2gRxuUJtocEYWMf0FoiyavKfO+ublKMjmm9gJkKM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F36AA1FB;
-	Thu, 29 Feb 2024 06:15:41 -0800 (PST)
-Received: from [10.57.13.21] (unknown [10.57.13.21])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CF16A3F6C4;
-	Thu, 29 Feb 2024 06:15:00 -0800 (PST)
-Message-ID: <66ca73cc-8bdd-453a-951c-5e0166340edd@arm.com>
-Date: Thu, 29 Feb 2024 14:15:17 +0000
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 584511FB;
+	Thu, 29 Feb 2024 06:17:20 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 610B23F6C4;
+	Thu, 29 Feb 2024 06:16:39 -0800 (PST)
+Date: Thu, 29 Feb 2024 14:16:36 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Cristian Marussi <cristian.marussi@arm.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+	Sudeep Holla <sudeep.holla@arm.com>, konrad.dybcio@linaro.org,
+	jassisinghbrar@gmail.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
+	conor+dt@kernel.org, Amir Vajid <avajid@quicinc.com>
+Subject: Re: [RFC 3/7] firmware: arm_scmi: Add QCOM vendor protocol
+Message-ID: <ZeCRxP9PnHK_UFK7@bogus>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-4-quic_sibis@quicinc.com>
+ <ZcpXx8NkVImwRqX-@pluto>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
- notifications
-Content-Language: en-US
-To: Cristian Marussi <cristian.marussi@arm.com>,
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, linux-arm-kernel@lists.infradead.org,
- pierre.gondois@arm.com, dietmar.eggemann@arm.com, morten.rasmussen@arm.com,
- viresh.kumar@linaro.org, rafael@kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
- linux-arm-msm@vger.kernel.org
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
- <20240227181632.659133-3-quic_sibis@quicinc.com>
- <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
- <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
- <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
- <18c249b2-ce8c-435b-8d65-a1770a1f294e@arm.com> <ZeBqW04f8V4dHphn@pluto>
- <7c82b316-89d9-470d-b46d-f86e81e2add3@arm.com> <ZeB0iCr9GpfUiOEg@pluto>
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <ZeB0iCr9GpfUiOEg@pluto>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZcpXx8NkVImwRqX-@pluto>
 
-
-
-On 2/29/24 12:11, Cristian Marussi wrote:
-> On Thu, Feb 29, 2024 at 11:45:41AM +0000, Lukasz Luba wrote:
->>
->>
->> On 2/29/24 11:28, Cristian Marussi wrote:
->>> On Thu, Feb 29, 2024 at 10:22:39AM +0000, Lukasz Luba wrote:
->>>>
->>>>
->>>> On 2/29/24 09:59, Lukasz Luba wrote:
->>>>>
->>>>>
->>>>> On 2/28/24 17:00, Sibi Sankar wrote:
->>>>>>
->>>>>>
->>>>>> On 2/28/24 18:54, Lukasz Luba wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 2/27/24 18:16, Sibi Sankar wrote:
->>>>>>>> Register for limit change notifications if supported and use
->>>>>>>> the throttled
->>>>>>>> frequency from the notification to apply HW pressure.
->>>>>>
->>>>>> Lukasz,
->>>>>>
->>>>>> Thanks for taking time to review the series!
->>>>>>
->>>>>>>>
->>>>>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>>>>> ---
->>>>>>>>
->>>>>>>> v3:
->>>>>>>> * Sanitize range_max received from the notifier. [Pierre]
->>>>>>>> * Update commit message.
->>>>>>>>
->>>>>>>> ï¿½ drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
->>>>>>>> ï¿½ 1 file changed, 28 insertions(+), 1 deletion(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/cpufreq/scmi-cpufreq.c
->>>>>>>> b/drivers/cpufreq/scmi-cpufreq.c
->>>>>>>> index 76a0ddbd9d24..78b87b72962d 100644
->>>>>>>> --- a/drivers/cpufreq/scmi-cpufreq.c
->>>>>>>> +++ b/drivers/cpufreq/scmi-cpufreq.c
->>>>>>>> @@ -25,9 +25,13 @@ struct scmi_data {
->>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ int domain_id;
->>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ int nr_opp;
->>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ struct device *cpu_dev;
->>>>>>>> +ï¿½ï¿½ï¿½ struct cpufreq_policy *policy;
->>>>>>>> ï¿½ï¿½ï¿½ï¿½ï¿½ cpumask_var_t opp_shared_cpus;
->>>>>>>> +ï¿½ï¿½ï¿½ struct notifier_block limit_notify_nb;
->>>>>>>> ï¿½ };
->>>>>>>> +const struct scmi_handle *handle;
->>>>>
->>>>> I've missed this bit here.
->>>>
->>>> So for this change we actually have to ask Cristian or Sudeep
->>>> because I'm not sure if we have only one 'handle' instance
->>>> for all cpufreq devices.
->>>>
->>>> If we have different 'handle' we cannot move it to the
->>>> global single pointer.
->>>>
->>>> Sudeep, Cristian what do you think?
->>>
->>> I was just replying noticing this :D .... since SCMI drivers can be
->>> probed multiple times IF you defined multiple scmi top nodes in your DT
->>> containing the same protocol nodes, they receive a distinct sdev/handle/ph
->>> for each probe...so any attempt to globalize these wont work...BUT...
->>>
->>> ...this is a bit of a weird setup BUT it is not against the spec and it can
->>> be used to parallelize more the SCMI accesses to disjont set of resources
->>> within the same protocol (a long story here...) AND this type of setup is
->>> something that it is already used by some other colleagues of Sibi working
->>> on a different line of products (AFAIK)...
->>>
->>> So, for these reasons, usually, all the other SCMI drivers have per-instance
->>> non-global references to handle/sdev/ph....
->>>
->>> ...having said that, thought, looking at the structure of CPUFReq
->>> drivers, I am not sure that they can stand such a similar setup
->>> where multiple instances of this same driver are probed
->>>
->>> .... indeed the existent *ph refs above is already global....so it wont already
->>> work anyway in case of multiple instances now...
->>>
->>> ...and if I look at how CPUFreq expects the signature of scmi_cpufreq_get_rate()
->>> to be annd how it is implemented now using the global *ph reference, it is
->>> clearly already not working cleanly on a multi-instance setup...
->>>
->>> ...now...I can imagine how to (maybe) fix the above removing the globals and
->>> fixing this, BUT the question, more generally, is CPUFreq supposed to work at all in
->>> this multi-probed mode of operation ?
->>> Does it even make sense to be able to support this in CPUFREQ ?
->>>
->>> (as an example in cpufreq,c there is static global cpufreq_driver
->>>    pointing to the arch-specific configured driver BUT that also holds
->>>    some .driver_data AND that cleraly wont be instance specific if you
->>>    probe multiple times and register with CPUFreq multiple times...)
->>>
->>>    More questions than answers here :D
->>>
->>
->> Thanks Cristian for instant response. Yes, indeed now we have more
->> questions :) (which is good). But that's good description of the
->> situation.
->>
->> So lets consider a few option what we could do now:
->> 1. Let Sibi add another global state the 'handle' but add
->>     a BUG_ON() or WARN_ON() in the probe path if the next
->>     'handle' instance is different than already set in global.
->>     This would simply mean that we don't support (yet)
->>     such configuration in a platform. As you said, we
->>     already have the *ph global, so maybe such platforms
->>     with multiple instances for this particular cpufreq and
->>     performance protocol don't exist yet.
+On Mon, Feb 12, 2024 at 05:39:19PM +0000, Cristian Marussi wrote:
+> > diff --git a/drivers/firmware/arm_scmi/Makefile b/drivers/firmware/arm_scmi/Makefile
+> > index a7bc4796519c..eaeb788b93c6 100644
+> > --- a/drivers/firmware/arm_scmi/Makefile
+> > +++ b/drivers/firmware/arm_scmi/Makefile
+> > @@ -17,6 +17,7 @@ obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-core.o
+> >  obj-$(CONFIG_ARM_SCMI_PROTOCOL) += scmi-module.o
+> >  
+> >  obj-$(CONFIG_ARM_SCMI_POWER_CONTROL) += scmi_power_control.o
+> > +obj-$(CONFIG_QCOM_SCMI_VENDOR_PROTOCOL) += qcom_scmi_vendor.o
+> >  
 > 
-> Yes this is the quickst way (and a WARN_ON() is better I'd say) but there
-> are similar issues of "unicity" currently already with another vendor SCMI
-> drivers and custom protocol currently under review, so I was thinking to
-> add a new common mechanism in SCMI to handle this ... not thought about
-> this really in depth and I want to chat with Sudeep about this...
-> 
->> 2. Ask Sibi to wait with this change, till we refactor the
->>     exiting driver such that it could support easily those
->>     multiple instances. Then pick up this patch set.
->>     Although, we would also like to have those notifications from our
->>     Juno SCP reference FW, so the feature is useful.
->> 3. Ask Sibi to refactor his patch to somehow get the 'handle'
->>     in different way, using exiting code and not introduce this global.
->>
-> 
->> IHMO we could do this in steps: 1. and then 2. When
->> we create some mock platform to test this refactoring we can
->> start cleaning it.
->>
-> 
-> Both of these options really beg an answer to my original previous q
-> question...if we somehow enable this multi-probe support in the
-> scmi-cpufreq.c driver by avoiding glbals refs, does this work at all in
-> the context of CPUFreq ?
-
-I don't know yet.
-
-> 
-> ...or it is just that CPUFreq cannot handle such a configuration (and
-> maybe dont want to) and so the only solution here is just 1. at first and
-> then a common refined mechanism (as mentioned above) to ensure this "unicity"
-> of the probes for some drivers ?
-
-This sounds reasonable.
-
-> 
-> I'm not familiar enough to grasp if this "multi-probed" mode of operation is
-> allowed/supported by CPUFreq and, more important, if it makes any sense
-> at all to be a supported mode...
+> I am starting to think to put vendor protocols in their own dedicated
+> subdir given that a bunch of those appeared recently :D
 > 
 
-OK, let me check some stuff in the code and think for a while on that.
-Thanks Cristian!
+Yes I tend to agree with different subdir for each vendor. Not sure if we
+need new Kconfig entry or just use ARCH_<vendor/group of SoC> to build all
+subdir used by that vendor.
 
-Sibi, please give me a few days. In the meantime you can continue
-on the 'boost' patch set probably.
+> ....have to discuss with Sudeep...anyway not really an issue...
+> 
+> any thoughts about this ?
+
+In general, I see lot of discussions on this thread when I was away for
+past 3 weeks. I will wait for newer version as that seems simpler for me
+than getting lost to follow the discussions so far.
+
+-- 
+Regards,
+Sudeep
 
