@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-13019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B96986D3F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:09:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BE3086D3FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:14:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D5381C2187E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 20:09:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 172AF28799B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 20:14:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6872413F437;
-	Thu, 29 Feb 2024 20:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E4213F45D;
+	Thu, 29 Feb 2024 20:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LnBGpwl3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cnLha4aA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3868713F42C;
-	Thu, 29 Feb 2024 20:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33A513C9FE;
+	Thu, 29 Feb 2024 20:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709237382; cv=none; b=bjRDSsx49FwufU+OWmIOEY5j8m8a1UV53pED87J6B2HR79+1zMpK8LsW9MrFNwo/P4ZA+Zpv8IHgwTkJ8i7k/xoDy1yhInmvaK/hj4+UODSyLGgKM6HYQv27IJap+RxoHpZNIHU+y+Xg14p7v0lJd38ojkyHbsG9KI8RlazlZZY=
+	t=1709237658; cv=none; b=uppaZpDF6KM3PmCBrqfkFE0HermanbVUzCeqUD/eXqtslcRUpiWn8bZqQpTc8Res6E9cYrG/3dQGf/D6cBW1/Zd6M1vYref0Gr30KwhKErV4uli3YrbHN6JKn1ICAvZrW5YpMrFTmo9Gr3kFgMm6rL+Az7zATQTk9AvdhsVQpM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709237382; c=relaxed/simple;
-	bh=JDZQAlHv20O1j1Z2SnkX+3voyyWezZa9uKTLnWAP2gc=;
+	s=arc-20240116; t=1709237658; c=relaxed/simple;
+	bh=AC6JkL6Q3RfazJY9jLwBl0iSvQYlKRfNSvpZ3ZQFQXE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tqDgkyDmwdaCAtrbChakoIbGLSakGwU4soOBsQ+mCbjXYf+cLpepe2Dm4pynuBisvlbObnJ02BQhOEnJD88DPlT6KbdlTPb6biPdO/8+1EyzwM4ANpk2jdmc6yeOzfzM4E7axMxQClIqBpYbPOf8YvFviPA2PRNlbF8INSz9k80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LnBGpwl3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B3BC433C7;
-	Thu, 29 Feb 2024 20:09:37 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YIay2jq/TJKbi3/A7kjGM7OofoABtwORzCMRoeoDElmti91JSO/pUynE4gPSS5Bl0tCaW01PGt0py7M/F1uq2ddC2Fk+9huoLluzBaBUyqitO5x4bi607RKVdYmfR/AmzJhjcgSxrtgLeubECuMQ7uPTqrvQdqIqlZ6ooi5eOj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cnLha4aA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B42C433F1;
+	Thu, 29 Feb 2024 20:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709237381;
-	bh=JDZQAlHv20O1j1Z2SnkX+3voyyWezZa9uKTLnWAP2gc=;
+	s=k20201202; t=1709237658;
+	bh=AC6JkL6Q3RfazJY9jLwBl0iSvQYlKRfNSvpZ3ZQFQXE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LnBGpwl3pA6qb42DQGMKa6ANgnycvmiut6Sz4sc3/SUbSN+o7zpvbGr6gDv3IU/cO
-	 ucPMMAfbkxzMKPwFD5m+cg7jEhywAkIKdDWPHGsjGHK8p7RmbUfJZiRKf6qBYQY6cC
-	 uUs/wK4VAlKrJIbd3DJdPtQnBIF2aUoLxcbB9PniJ3WOp8/v/JBwcHFh6MdUzUMd8D
-	 81k1WGMKUMREO7Zz39LpZWLMas8GW6iVZI1SutFbkamd5Z8msbACMbzzMryT+RgeIK
-	 fXufboa8usOyDcrkX1qgQvSMtiYDLnRgsF/Oe8SB599yMsU3M29RTgVAnfq8ofxBwZ
-	 bKR9XJynv79mg==
-Message-ID: <70095e04-eaec-4323-b2ac-2d4d366763d5@kernel.org>
-Date: Thu, 29 Feb 2024 22:09:34 +0200
+	b=cnLha4aAslvhNHCRCYM9UXosEbo3T1rVat/CpcVKTxcpiZ+77N4I2sbNZ/Avswoy3
+	 FtiGA9KpmDDA4mAZubxqwHkTKVohFUE9A4fe1OB25VG9KpjguS0sdBs3S51Bct8lLI
+	 8aaz/Jkl8qK9LmC4Z4vRLJOjvvQOxpUOH60asal0TYbeOnZVlijOByvGQgnxdXm0gt
+	 jpdBcuLsKnkc6RilJ0Tf0+lg+GEfM19UoS1Zlv/Iqxewd3uMknnRFFdF5ebwmy5urp
+	 PTwGfBErrj6kEbl5Zt8wXyNFvQjE2VdYrMuJFPfe9oVzYcz6ZF9lGzsjIdDgWGYnuB
+	 BaYHF0lLJt4RQ==
+Message-ID: <4fc15eda-07e1-4e8d-b5d7-bcc66c69f310@kernel.org>
+Date: Thu, 29 Feb 2024 22:14:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] dt-bindings: iommu: Add Qualcomm TBU bindings
+Subject: Re: [PATCH v5 7/7] arm64: dts: qcom: sc7280: Add DT nodes for the
+ TBUs
 Content-Language: en-US
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Georgi Djakov <quic_c_gdjako@quicinc.com>, robh+dt@kernel.org,
@@ -62,106 +63,49 @@ Cc: devicetree@vger.kernel.org, andersson@kernel.org,
  linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
  quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com
 References: <20240226172218.69486-1-quic_c_gdjako@quicinc.com>
- <20240226172218.69486-2-quic_c_gdjako@quicinc.com>
- <b6215fcd-29fc-4495-999f-b7b03b36c087@linaro.org>
+ <20240226172218.69486-8-quic_c_gdjako@quicinc.com>
+ <926bde97-64ac-4cb4-8821-9dc828052e8d@linaro.org>
 From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <b6215fcd-29fc-4495-999f-b7b03b36c087@linaro.org>
+In-Reply-To: <926bde97-64ac-4cb4-8821-9dc828052e8d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Krzysztof,
 
-On 29.02.24 19:53, Krzysztof Kozlowski wrote:
+On 29.02.24 19:55, Krzysztof Kozlowski wrote:
 > On 26/02/2024 18:22, Georgi Djakov wrote:
->> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
->> of the SMMU-500, that consists of a single TCU (Translation Control
->> Unit) and multiple TBUs (Translation Buffer Units). These TBUs have
->> hardware debugging features that are specific and only present on
->> Qualcomm hardware. Represent them as independent DT nodes. List all
->> the resources that are needed to operate them (such as registers,
->> clocks, power domains and interconnects).
+>> Add the device-tree nodes for the TBUs (translation buffer units) that
+>> are present on the sc7280 platforms. The TBUs can be used debug the
+>> kernel and provide additional information when a context faults occur.
+>>
+>> Describe the all registers, clocks, interconnects and power-domain
+>> resources that are needed for each of the TBUs.
 >>
 >> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
 >> ---
->>   .../devicetree/bindings/iommu/qcom,tbu.yaml   | 65 +++++++++++++++++++
->>   1 file changed, 65 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 89 ++++++++++++++++++++++++++++
+>>   1 file changed, 89 insertions(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml b/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
->> new file mode 100644
->> index 000000000000..6841ca9af21f
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/iommu/qcom,tbu.yaml
->> @@ -0,0 +1,65 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/iommu/qcom,tbu.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm TBU (Translation Buffer Unit)
->> +
->> +maintainers:
->> +  - Georgi Djakov <quic_c_gdjako@quicinc.com>
->> +
->> +description:
->> +  The Qualcomm SMMU500 implementation consists of TCU and TBU. The TBU contains
->> +  a Translation Lookaside Buffer (TLB) that caches page tables. TBUs provides
->> +  debug features to trace and trigger debug transactions. There are multiple TBU
->> +  instances with each client core.
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,qsmmuv500-tbu
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 83b5b76ba179..cc42560f63ad 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -2905,6 +2905,18 @@ adreno_smmu: iommu@3da0000 {
+>>   			dma-coherent;
+>>   		};
+>>   
+>> +		gfx_0_tbu: tbu@3dd9000 {
+>> +			compatible = "qcom,qsmmuv500-tbu";
+>> +			reg = <0x0 0x3dd9000 0x0 0x1000>;
+>> +			qcom,stream-id-range = <&adreno_smmu 0x0 0x400>;
 > 
-> Why we don't have SoC specific compatibles? If that's for SDM845, then
-> it should be qcom,sdm845-tbu or qcom,sdm845-qsmmuv500-tbu
-> 
+> Where are the clocks/interconnects/power-domains? Your binding said it
+> is exactly (100%) the same as SDM845, so either binding is missing
+> compatibles or this is incomplete.
 
-Because they should be all compatible (as registers). Adding a SoC compatible
-might get overly-specific, but i can also see the benefits in that, so ok will
-do it!
-
-> 
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    maxItems: 1
->> +
->> +  interconnects:
->> +    maxItems: 1
->> +
->> +  power-domains:
->> +    maxItems: 1
->> +
->> +  qcom,stream-id-range:
->> +    description: Phandle of a SMMU device and Stream ID range (address and size) that is assigned by the TBU
-> 
-> Please wrap it according to coding style, so 80.
-> 
-
-Sure, thanks!
-
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    items:
->> +      - items:
->> +          - description: phandle of a smmu node
->> +          - description: stream id base address
->> +          - description: stream id size
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - qcom,stream-id-range
->> +
->> +unevaluatedProperties: false
-> 
-> This should be additionalProperties: false
-> 
-
-Ok right, thanks for taking a look!
+The clocks/interconnects/power-domains are optional and each of them could
+be present or not. And that's why none of these properties are listed as
+"required".
 
 BR,
 Georgi
