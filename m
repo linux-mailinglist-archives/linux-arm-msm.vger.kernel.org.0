@@ -1,155 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-13025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7ED886D4EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:51:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C316986D58C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 22:05:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E6941C2238A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 20:51:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F81428B6CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:05:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B7CA74BE8;
-	Thu, 29 Feb 2024 20:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0CB6D521;
+	Thu, 29 Feb 2024 20:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pD3QnQMD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TANW0ozA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEB714F9C4;
-	Thu, 29 Feb 2024 20:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C36D51A;
+	Thu, 29 Feb 2024 20:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709239230; cv=none; b=ISzw0Hl3iuH4KvWmWN+IKhkt7pTd6HVkwRY4UNAAdxG0gTGO34sTDCLgrb3HPl37aykfdzz+8bElUlOgXPAl6GO6vsBDNR3PSmTpg8G1U76rfvEHnK8KjTrO+48yjsdxnT8UHumON5ciTZmSWUrDptQH/zimGB0TwADUWg9Gwqg=
+	t=1709239962; cv=none; b=N7eduPI8NTeoARbt9KeqzDIZ6lU2e+Uvc1t91DzkOZ+cG4iYm/TzFtCnnws/w9Sb+rOxaENwPS4rItGOtFmnJ5gl/KiIk2CXaBGlI4DtU7xMfVU6d9GJl46/eQeBKWp1jYXS6fJypWXC7X9/e8LemwYqCSgJC1J/Ln993A06q6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709239230; c=relaxed/simple;
-	bh=+VkSfxLjq9zTh2Um2OakZb7sD8Gj8u1Q9eEf/0H2ymo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVq0tmG3aXHyHB+uZRgjcQujDd/P7RiF3xJRqQM9tWyIPQRMj+pE9Es8f4+wbqIRK4mjKK91YyXGCmb5R9vlbCtmjKjE0Q3s82cc8A9xFulrmgYyMjo+Jq3sC0oonF+YBDClQ5xLt32Wrb1w0HguBje/a08oSmK/73qyeL0htf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pD3QnQMD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42630C433A6;
-	Thu, 29 Feb 2024 20:40:28 +0000 (UTC)
+	s=arc-20240116; t=1709239962; c=relaxed/simple;
+	bh=CsLQ4dZCelScfRnYjaZt1AjDEqq01xy8aL6Jr73WL4o=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=h/8NB5beQpeDNKccJVJ6JWMAoiha+sAPI4yTr7mj4cr5m4gUlD6zfQbhZM5VivDPsqmN0O3ghjSKNLOzubZXXelz0McWECQmuje4YNuUEz1qj7cIjzBww7/w4eb6Xy7nn/JbIQ62Xb+pVYwfLwVpNVS0UCS8Z1JAFqplny1hinY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TANW0ozA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C486CC43399;
+	Thu, 29 Feb 2024 20:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709239229;
-	bh=+VkSfxLjq9zTh2Um2OakZb7sD8Gj8u1Q9eEf/0H2ymo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD3QnQMDiNE1ntCPRoEDWm4mjBzCD+H+lfgVx9Whw5w2PSEVFb0rUtek4JuyKRClM
-	 tSaGmcIcqNWa/VRc/BRAR/TNRfK8pcWJstbRzeZg6Q7AwvRcKlTo4Xb6HR7kD3ApPb
-	 LGKvMaoYOUbqoynXZXnYqdRVe5pmwB/iTW/SiGaaBHM7nU/jfjXfeZRyBISHcObawR
-	 AFmbkIILBK+7w88FwtZtZrVw/73vhPTc52+liLLpjpgYxX4RxuttvQ4YdDKwzOwCqd
-	 bMCtiOqzpaJfG99CMK41UEwN8OMnohg7LFfOVVnOgwpfOLyUknf5RCyrqlHtFRqthu
-	 GNnx/ZxCxHfTw==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Rob Herring <robh@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 21/22] arm64: dts: qcom: Fix interrupt-map cell sizes
-Date: Thu, 29 Feb 2024 15:39:14 -0500
-Message-ID: <20240229203933.2861006-21-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240229203933.2861006-1-sashal@kernel.org>
-References: <20240229203933.2861006-1-sashal@kernel.org>
+	s=k20201202; t=1709239962;
+	bh=CsLQ4dZCelScfRnYjaZt1AjDEqq01xy8aL6Jr73WL4o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=TANW0ozA+czmFr2lgmCX3j/bexTlqKQ7kPo2STpBGcIJXvUdw/Z4tWGYRYJA4cW9/
+	 aven+jrS355EfGVlG7vuEr6Rt0rCAfHx8eGxFip3hs2QloM2bbuUSyIgwJ/j5JHt5P
+	 NByiAqo5BPIEXxi+AuXc58/VcnddQp6hahfKDNGjv08Wz7+gBivoNjscHXhAL1ZcCg
+	 g/MrHhTfXHDBShRiGub2Vn6Nrz6uN2qyJuREBlLf8iDqGEXOyyKIYZ1LZZjN52hUwu
+	 fXxBSI4StIzH9WGZ0Up+DPdjB4U5P7tu3mHkoVG60YJuhpja7DlCUIaN9pu9JP9aS0
+	 t+ET8NnuH+EpA==
+Date: Thu, 29 Feb 2024 14:52:40 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <20240229205240.GA361626@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.18
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
 
-From: Rob Herring <robh@kernel.org>
+On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
+> On Thu, Feb 29, 2024 at 05:54:16PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Feb 29, 2024 at 11:25:48AM +0100, Johan Hovold wrote:
+> 
+> > > As I mentioned, the 'required-opps' binding update is needed to
+> > > fix the missing OPP vote so blocking the binding patch would
+> > > block merging the DT fix which could otherwise go into 6.8.
+> 
+> > I agree that the fix gets the priority. But some maintainers
+> > perfer to merge fix patches _only_ if they are fixing the issue
+> > introduced in the ongoing release.  But if Bjorn has no issues in
+> > merging these for 6.8, then it is fine.
 
-[ Upstream commit 704dccec0d490f2ad06f3f16ebed254d81906c3a ]
+I do prefer to merge only regression and important fixes after the
+merge window, so I want to be able to provide justification.
 
-The PCI node interrupt-map properties have the wrong size as #address-cells
-in the interrupt parent are not accounted for.
+> It also depends on the severity of the issue and to some extent the
+> complexity of the fix. These binding fixes are certainly low risk.
+> :)
 
-The dtc interrupt_map check catches this, but the warning is off because
-its dependency, interrupt_provider, is off by default.
+IIUC we're talking about:
 
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20240213-arm-dt-cleanups-v1-5-f2dee1292525@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi |  8 ++++----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+  arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+  dt-bindings: PCI: qcom: Allow 'required-opps'
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index fc907afe5174c..4294a5405c012 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -767,10 +767,10 @@ pcie0: pci@20000000 {
- 
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map = <0 0 0 1 &intc 0 75 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--					<0 0 0 2 &intc 0 78 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
--					<0 0 0 3 &intc 0 79 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
--					<0 0 0 4 &intc 0 83 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+			interrupt-map = <0 0 0 1 &intc 0 0 0 75 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 0 0 78 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 0 0 79 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 0 0 83 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
- 
- 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
- 				 <&gcc GCC_PCIE0_AXI_M_CLK>,
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 92fd924bbdbe5..5effd8180cc41 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -817,13 +817,13 @@ pcie1: pci@10000000 {
- 			interrupt-names = "msi";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map = <0 0 0 1 &intc 0 142
-+			interrupt-map = <0 0 0 1 &intc 0 0 142
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--					<0 0 0 2 &intc 0 143
-+					<0 0 0 2 &intc 0 0 143
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
--					<0 0 0 3 &intc 0 144
-+					<0 0 0 3 &intc 0 0 144
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
--					<0 0 0 4 &intc 0 145
-+					<0 0 0 4 &intc 0 0 145
- 					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
- 
- 			clocks = <&gcc GCC_SYS_NOC_PCIE1_AXI_CLK>,
-@@ -879,13 +879,13 @@ pcie0: pci@20000000 {
- 			interrupt-names = "msi";
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map = <0 0 0 1 &intc 0 75
-+			interrupt-map = <0 0 0 1 &intc 0 0 75
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--					<0 0 0 2 &intc 0 78
-+					<0 0 0 2 &intc 0 0 78
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
--					<0 0 0 3 &intc 0 79
-+					<0 0 0 3 &intc 0 0 79
- 					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
--					<0 0 0 4 &intc 0 83
-+					<0 0 0 4 &intc 0 0 83
- 					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
- 
- 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
--- 
-2.43.0
+These don't look like a regression fix (correct me if I'm wrong), and
+I can't tell whether they fix a user-visible problem, since
+sc8280xp.dtsi does already contain 'required-opps' for ufs_mem_hc,
+usb_0, and usb_1, which are mentioned in the commit log as covering up
+the issue.
 
+If these patches wait until v6.9, what badness ensues?
+
+Bjorn
 
