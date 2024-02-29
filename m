@@ -1,152 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-12939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3497986C134
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 07:46:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71CBA86C278
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 08:28:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E531F285F7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 06:46:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B9111F21EBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 07:28:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FF5E45C0B;
-	Thu, 29 Feb 2024 06:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 255F437163;
+	Thu, 29 Feb 2024 07:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="elo/ByeJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UU7Tl3d+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94C3446B3;
-	Thu, 29 Feb 2024 06:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0186D2231F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 07:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709189125; cv=none; b=c1yWNiV7OAAlUl6vlTqTN/22ie0wVdr2zQFEA9YCIikcIxMcT+HRQ/Q937WwBpr/sLhnrBem5WbE39sPnrVzeuVT2vDFgkbUT3/drRNrO8me4JE7rOBi5aGnmX38aferWIFgJXKYMhIXDiT1d+wWm529IaKSjBjNuDlan0hoJTk=
+	t=1709191610; cv=none; b=IMuQdW+uPfEGxxV0gUQJZJ7TfN+2/boo/Fj9GE8OlgADVs4vMv/qY3ZGpZIbkB08vqXg3PwN/7WMGbkEKjHklaEzUjdNYTBUHWWx1M8wn7WsL7nFkTVtkBF5l5s/AZz0A3Bz3WPGmEGIDAuA7isA5pUh7T0FdcYg9vXyAVi/rLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709189125; c=relaxed/simple;
-	bh=0buapzlXS8Ejb7a/3Ux3/lyjLsR/FLcFCfrhtlks/tU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=sxEvfG2Vqmy0BhEfbZ0oH5jvT3MXYxr2MMwaNqM8LsGPaJYfjanAWCDNiKzLUEm9QjbT8bfXX3oJEXa7MS4dIcXryGQzLmkOy2xi3IV8QN2Phf0MlRj1ysZtlTKWWA8ial/3mDfwWAgO0HIHinJMpk04FO0Rw3w0S8dlz1omGr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=elo/ByeJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41T62Plr015559;
-	Thu, 29 Feb 2024 06:45:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=emc
-	n0d2LH07w89hcfQ+HA5r9ZWQUNqouPMcNxEHPBB8=; b=elo/ByeJupaMlKELTh4
-	t6f2i8E30mKBpVoKUEZA62qXVvPl0LVp9KUZ+1Q09r96h+DBGje3+318b1npk0Mt
-	xcLBrmKMAiza6d6A5azgh7SlQxE6A1uZhzyt2HuafSHcyUXN/c0bV2cBA1LrGSJS
-	Fbwe7OpIjBXWwopk57Buy47FjsUM/PLCJfsmV8CdXYgSYgs7ZnYwjvBbDCed00z4
-	o3umJ7JVqw8hwPX7cbyiEnT4+GWP+baZJr6rRUGZ9u9l4lHX+Gmd5hKmhK9IUmKq
-	OCNFyw4PktM0WC99rFD6Z4QJ3jZ7LAHotuJmqyP+MR1Pmpsg5e2PZIO5ktTVMrgm
-	O5g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wjm9mg2xx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Feb 2024 06:45:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41T6j6gU005435
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Feb 2024 06:45:06 GMT
-Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 28 Feb 2024 22:45:02 -0800
-From: Maulik Shah <quic_mkshah@quicinc.com>
-Date: Thu, 29 Feb 2024 12:14:59 +0530
-Subject: [PATCH v2] PM: suspend: Set mem_sleep_current during kernel
- command line setup
+	s=arc-20240116; t=1709191610; c=relaxed/simple;
+	bh=rMk9Mq5uSwnCF4Vo6oHey/a58txk1WO/19yQeIrkNSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A9j+0iAtxmc8IPza22vDHw+Kn8Cc7ue5y1MwzvCbKZq5ZnyRQ/pt8w1BoHuY+6up3qz79gmk+4RD5WFqZrsDFG9bx3CqjCR3elasadS7A5m1IavW8emAt+TgpcKPU/qGfYm6tPWyaCxS4RaYu0xzA2doRK++T+PS+QUNY4WUasI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UU7Tl3d+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8CBC433C7;
+	Thu, 29 Feb 2024 07:26:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709191609;
+	bh=rMk9Mq5uSwnCF4Vo6oHey/a58txk1WO/19yQeIrkNSs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UU7Tl3d+FHVbZACDNCYqUysPv0VOScznnblvu9KlrKpKNctZzBoF5OTmD/8ZBeUCY
+	 cLubMJxr5Xn++8AjAskuej1W1RbIsRXTJDBVvkGv8KH8wl98YQQ3B+QCTUWXs39Etq
+	 NHBOd1u9tc0W7up5CfrTfkp8a47Wk0N8gCY88fAeQ/qtZ7sqXuNnesaBq1FAV5YSO9
+	 c8JYbJp3FfjKR/Zd1Mc5H8or7YfIqR9a228MXJi3hvN+GL+OVlSH95MuXLIbVq32ry
+	 Kkkdb17vs7rdH6BVlK+uAM2vcJj7rmiOjOs/ZQlxXle/m2qneLUemKWKHOoB1dWMvu
+	 7YuU18DR0iNIw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rfaoj-0000000009i-0mvc;
+	Thu, 29 Feb 2024 08:26:57 +0100
+Date: Thu, 29 Feb 2024 08:26:57 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] Revert "drm/msm/dp: use drm_bridge_hpd_notify() to
+ report HPD status changes"
+Message-ID: <ZeAxwVa3aGlstfdr@hovoldconsulting.com>
+References: <20240227220808.50146-1-dmitry.baryshkov@linaro.org>
+ <46fa8e0a-0af2-2a44-f5f9-70fd49649aa4@quicinc.com>
+ <Zd8B6T6ROHFCqEyB@hovoldconsulting.com>
+ <CAA8EJppvansib9NxqPcuuAVe+qc1i8HmDqNh6+kaDZn6zFijpw@mail.gmail.com>
+ <Zd81BWaj5zJeDA2Q@hovoldconsulting.com>
+ <a8b68a42-f41d-5ce1-0d14-7fc158dff673@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240229-suspend_ops_late_init-v2-1-34852c61a5fa@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAOon4GUC/4WNQQ6CMBBFr0JmbU1bRIIr72EIKWUqk2iLHSAa0
- rtbuYDL95L//gaMkZDhUmwQcSWm4DPoQwF2NP6OgobMoKU+Sa0awQtP6IcuTNw9zIwdeZqFrl0
- ve1X1BhHydoro6L13b23mkXgO8bPfrOpn/xVXJZQ4l6W0pqma2pnrayFL3h5teEKbUvoCbD7iE
- LwAAAA=
-To: Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, <andersson@kernel.org>,
-        <ulf.hansson@linaro.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Sudeep Holla <Sudeep.Holla@arm.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <quic_lsrao@quicinc.com>, <stable@vger.kernel.org>,
-        Maulik Shah
-	<quic_mkshah@quicinc.com>
-X-Mailer: b4 0.12.5-dev-2aabd
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709189102; l=1510;
- i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
- bh=0buapzlXS8Ejb7a/3Ux3/lyjLsR/FLcFCfrhtlks/tU=;
- b=WWcHkAudwd4SllibZe3KiNF+5OlTg+CorqCafl88Xb10qD5gu73SIPuDLX/G7i4dzhCejW1rl
- gCqKo4QakZGBYg1eDJbm4ci+XfsDEWoMYGzmqnH4tOGkOl5+5fgAtex
-X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
- pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MCNXFFn5pYu6e0fJ6Ok17OiI1CT3bNnd
-X-Proofpoint-ORIG-GUID: MCNXFFn5pYu6e0fJ6Ok17OiI1CT3bNnd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-28_08,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 clxscore=1011
- adultscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402290051
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a8b68a42-f41d-5ce1-0d14-7fc158dff673@quicinc.com>
 
-psci_init_system_suspend() invokes suspend_set_ops() very early during
-bootup even before kernel command line for mem_sleep_default is setup.
-This leads to kernel command line mem_sleep_default=s2idle not working
-as mem_sleep_current gets changed to deep via suspend_set_ops() and never
-changes back to s2idle.
+On Wed, Feb 28, 2024 at 10:10:10AM -0800, Abhinav Kumar wrote:
+> On 2/28/2024 5:28 AM, Johan Hovold wrote:
 
-Set mem_sleep_current along with mem_sleep_default during kernel command
-line setup as default suspend mode.
+> > This is a fix for a user-visible regression that was reported formally
+> > two weeks ago and informally (e.g. to you) soon after rc1 came out, and
+> > which now also has an identified cause and an analysis of the problem.
+> > And we're at rc6 so there should be no reason to delay fixing this (e.g.
+> > even if you want to run some more tests for a couple of days).
+> 
+> Yup, we landed it in msm-fixes now, so this will go as a late -fixes PR 
+> for 6.8.
 
-Fixes: faf7ec4a92c0 ("drivers: firmware: psci: add system suspend support")
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
----
-Changes in v2:
-- Set mem_sleep_current during mem_sleep_default kernel command line setup
-- Update commit message accordingly
-- Retain Fixes: tag
-- Link to v1: https://lore.kernel.org/r/20240219-suspend_ops_late_init-v1-1-6330ca9597fa@quicinc.com
----
- kernel/power/suspend.c | 1 +
- 1 file changed, 1 insertion(+)
+Perfect, thanks!
 
-diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
-index 742eb26618cc..e3ae93bbcb9b 100644
---- a/kernel/power/suspend.c
-+++ b/kernel/power/suspend.c
-@@ -192,6 +192,7 @@ static int __init mem_sleep_default_setup(char *str)
- 		if (mem_sleep_labels[state] &&
- 		    !strcmp(str, mem_sleep_labels[state])) {
- 			mem_sleep_default = state;
-+			mem_sleep_current = state;
- 			break;
- 		}
- 
-
----
-base-commit: d37e1e4c52bc60578969f391fb81f947c3e83118
-change-id: 20240219-suspend_ops_late_init-27fb0b15baee
-
-Best regards,
--- 
-Maulik Shah <quic_mkshah@quicinc.com>
-
+Johan
 
