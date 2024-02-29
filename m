@@ -1,187 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-12947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE04086C639
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 10:59:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F6586C66A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 11:09:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8EE80B23498
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 09:59:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 583BC1F22451
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 10:09:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E93F6281D;
-	Thu, 29 Feb 2024 09:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81B6263504;
+	Thu, 29 Feb 2024 10:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kr0FBfpg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEA3C4778B;
-	Thu, 29 Feb 2024 09:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81F3634F4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 10:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709200767; cv=none; b=t7eaQsQwOJdMFUvC1ij+FyLDKvLbvvEGmkAmt6Pdz0XA3Y1Sc/DPjvG1HHwZfN0tIM4rV5OJTmtd0uTFU8s5zgbfyh3AkPJIIqn44TLIAiL2Lptn8yaDflS7EfeAhH/31Ih2oSIRrvcKmZyty83o3nn4lgD8lZButus236wVMCI=
+	t=1709201344; cv=none; b=PllHgy+yVVdngtwI6lQFdilZ1uINNMIDKqgeWHHoQCvfaPg1/MLsdzL7XldD0eQIzeA6w4VCVLIGGmi7kwKFzf8j56yR+q+XS9G4ZTnI9wt1ABsjwYFJdahj9TgUK2otSSXKz/vWFxQFeOcFF4NMPq388FiKxOVPHRNgY6bdkvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709200767; c=relaxed/simple;
-	bh=LomPs8yZabTBRuijVP1x/mNDGcz7vRh2TwpwQn7qTaE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SalbO/JLdOAzHU+JIKN36oxhYOyoNfHYf7ZOesAtM8eytNoJ+WgUFIu0E/MYqrpXGxun6u+2A7uyMIBTjjfENTvivltZGGvkMa/8fNsiH501KS8q/dixT0XCz4b9UE7PIUWysvCjHwFCcAWOyTcc9ZMInamBFWW1hB0E7mPkg4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 578EA1FB;
-	Thu, 29 Feb 2024 02:00:02 -0800 (PST)
-Received: from [10.57.12.184] (unknown [10.57.12.184])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3B1633F762;
-	Thu, 29 Feb 2024 01:59:21 -0800 (PST)
-Message-ID: <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
-Date: Thu, 29 Feb 2024 09:59:38 +0000
+	s=arc-20240116; t=1709201344; c=relaxed/simple;
+	bh=TaJ1vIO6c48ourx3qLmNDyG/UNK2kz8FQnWudKrG3+U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YTq3f4rPiLgBIVQY7NxzE0TnAKbRV7rVLuOHw4jwb0dHbZs9KZTtH8IjQad9p+T21Gp29AerI7hCu74Q4svxfAiZg8bMPOt2uhiNQxfYygPrPvQsL4ModYdoteLnNqQHArYOkBAnKRYXuV21HMMGWLlUtByMu5GIt6kgVfhDNys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Kr0FBfpg; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6da4a923b1bso571789b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 02:09:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709201342; x=1709806142; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=D/kwhfPvnRW9V0TZ9Zxmbl7MMjclgSBvckKEZL8M5Jw=;
+        b=Kr0FBfpgQFwAksr4glLYr1po7XztJ4d3WiN/XQKeiKy7ZI7vrH7PRXpNvwV1sUm78F
+         5QRdKcc83wqfs2PEa9T/T/B5aVr0bJnjgTt3KNEgWjibzVuoLd9K4VQUFSbVKQflUOo8
+         7U77G18fDLs7SiNfL/5QR5WRPNF2mlSC4UF9ZmfQPex93E+MAxGQOCg/kB811VGkbki9
+         HyGjnixmJ4u5spe42djvFy1Qi11txaZjyoY61dln3fVlpsAnZuSq6BhIbJSLU6rOGoix
+         eQjRMXAXJdQrCq5FlruVE+KvkUAt0lGtyL9PsGv1LG3pDb71kpT88DCHa0FNLILKNZ8K
+         5bTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709201342; x=1709806142;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D/kwhfPvnRW9V0TZ9Zxmbl7MMjclgSBvckKEZL8M5Jw=;
+        b=xSV1IU452i7e0G3x3e/r5nx6zEHikoeZNwiBR5CXZJXbGz0vPQTJNu/ZuWPkLY1OCh
+         5DvUS40y20K8Xrql2H0mJQNye41ZnO0BaEbSf1ZJ0tPW8rSL+Kno1QGgeQYPLOFZruSP
+         5S4hXSJ99JK+zKG76Cnu+OAprEgsCXYYqrHnVqcwUKzXeAhkEuYEXNqjbr6I5yXvGp/G
+         Cr7GtBwnFb6RjR322YSL7UKUw350YKjWEL08iiJNadE0If6zLzHeDhr4Wx5EmKuDja4q
+         +CPjFt/E4plE1DPvoBMOlmqmbp2/Eyl5GE/Kr9ZPj/YS9VAjeOxVltuBt9s35CvYej6+
+         Kerg==
+X-Forwarded-Encrypted: i=1; AJvYcCVs0mq82U4lP9x6awTYZZit6yU0u0BZO6JkRDZ4xA7AzZLRWeH0irRiqssgeAfuG/VfmU6oR6VVCO+rb/S/zldaeS+0VPqph6CMuWsGhA==
+X-Gm-Message-State: AOJu0YzSQcgrT9lJmxDy5sQaJS5+xZSNGcseMeDX3uco9CtX7Srx6rVJ
+	zcYclGzEP1OGACP8WMz9sgB9k1MSvYqCNwxQtW8bEGTHL+Lmz3RYx7vjEMZj9Q==
+X-Google-Smtp-Source: AGHT+IEoKjra9mFZzOPhAe+Au9fB+EVWfIlT9YQfWmQ8+50P2HzB/vOroWKiVTnfxOxLKr9CWwQkPw==
+X-Received: by 2002:a05:6a20:d907:b0:1a0:e944:15b7 with SMTP id jd7-20020a056a20d90700b001a0e94415b7mr2728509pzb.5.1709201342188;
+        Thu, 29 Feb 2024 02:09:02 -0800 (PST)
+Received: from thinkpad ([120.138.12.68])
+        by smtp.gmail.com with ESMTPSA id lc11-20020a170902fa8b00b001dc668e145asm1052267plb.200.2024.02.29.02.08.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Feb 2024 02:09:01 -0800 (PST)
+Date: Thu, 29 Feb 2024 15:38:53 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <20240229100853.GA2999@thinkpad>
+References: <20240223152124.20042-1-johan+linaro@kernel.org>
+ <20240228220843.GA309344@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
- notifications
-Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
- dietmar.eggemann@arm.com, morten.rasmussen@arm.com, viresh.kumar@linaro.org,
- rafael@kernel.org, cristian.marussi@arm.com, sudeep.holla@arm.com,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
- <20240227181632.659133-3-quic_sibis@quicinc.com>
- <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
- <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240228220843.GA309344@bhelgaas>
 
+On Wed, Feb 28, 2024 at 04:08:43PM -0600, Bjorn Helgaas wrote:
+> [+to Mani]
+> 
+> On Fri, Feb 23, 2024 at 04:21:12PM +0100, Johan Hovold wrote:
+> > This series addresses a few problems with the sc8280xp PCIe
+> > implementation.
+> > ...
+> 
+> > A recent commit enabling ASPM on certain Qualcomm platforms introduced
+> > further errors when using the Wi-Fi on the X13s as well as when
+> > accessing the NVMe on the CRD. The exact reason for this has not yet
+> > been identified, but disabling ASPM L0s makes the errors go away. This
+> > could suggest that either the current ASPM implementation is incomplete
+> > or that L0s is not supported with these devices.
+> > ...
+> 
+> > As this series fixes a regression in 6.7 (which enabled ASPM) and fixes
+> > a user-reported problem with the Wi-Fi often not starting at boot, I
+> > think we should merge this series for the 6.8 cycle. The final patch
+> > enabling the GIC ITS should wait for 6.9.
+> > 
+> > The DT bindings and PCI patch are expected to go through the PCI tree,
+> > while Bjorn A takes the devicetree updates through the Qualcomm tree.
+> > ...
+> 
+> > Johan Hovold (12):
+> >   dt-bindings: PCI: qcom: Allow 'required-opps'
+> >   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+> >   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+> >   PCI: qcom: Add support for disabling ASPM L0s in devicetree
+> 
+> The ASPM patches fix a v6.7 regression, so it would be good to fix
+> that in v6.8.
+> 
+> Mani, if you are OK with them, I can add them to for-linus for v6.8.  
+> 
+> What about the 'required-opps' and 'msi-map-mask' patches?  If they're
+> important, I can merge them for v6.8, too, but it's late in the cycle
+> and it's not clear from the commit logs why they shouldn't wait for
+> v6.9.
+> 
 
+I'm checking with Qcom HW team on the ASPM behavior. So please hold off the ASPM
+related patches until I get an answer. But 'required-opps' and 'msi-map-mask'
+patches can be applied for 6.9 (not strictly fixing anything in 6.8).
 
-On 2/28/24 17:00, Sibi Sankar wrote:
-> 
-> 
-> On 2/28/24 18:54, Lukasz Luba wrote:
->>
->>
->> On 2/27/24 18:16, Sibi Sankar wrote:
->>> Register for limit change notifications if supported and use the 
->>> throttled
->>> frequency from the notification to apply HW pressure.
-> 
-> Lukasz,
-> 
-> Thanks for taking time to review the series!
-> 
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>> ---
->>>
->>> v3:
->>> * Sanitize range_max received from the notifier. [Pierre]
->>> * Update commit message.
->>>
->>>   drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
->>>   1 file changed, 28 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/cpufreq/scmi-cpufreq.c 
->>> b/drivers/cpufreq/scmi-cpufreq.c
->>> index 76a0ddbd9d24..78b87b72962d 100644
->>> --- a/drivers/cpufreq/scmi-cpufreq.c
->>> +++ b/drivers/cpufreq/scmi-cpufreq.c
->>> @@ -25,9 +25,13 @@ struct scmi_data {
->>>       int domain_id;
->>>       int nr_opp;
->>>       struct device *cpu_dev;
->>> +    struct cpufreq_policy *policy;
->>>       cpumask_var_t opp_shared_cpus;
->>> +    struct notifier_block limit_notify_nb;
->>>   };
->>> +const struct scmi_handle *handle;
+- Mani
 
-I've missed this bit here.
-
->>> +static struct scmi_device *scmi_dev;
->>>   static struct scmi_protocol_handle *ph;
->>>   static const struct scmi_perf_proto_ops *perf_ops;
->>>   static struct cpufreq_driver scmi_cpufreq_driver;
->>> @@ -151,6 +155,20 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
->>>       NULL,
->>>   };
->>> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned 
->>> long event, void *data)
->>> +{
->>> +    struct scmi_data *priv = container_of(nb, struct scmi_data, 
->>> limit_notify_nb);
->>> +    struct scmi_perf_limits_report *limit_notify = data;
->>> +    struct cpufreq_policy *policy = priv->policy;
->>> +
->>> +    policy->max = clamp(limit_notify->range_max_freq/HZ_PER_KHZ, 
->>> policy->cpuinfo.min_freq,
->>> +                policy->cpuinfo.max_freq);
->>
->> Please take the division operation out of this clamp() call, somewhere
->> above. Currently it 'blurs' these stuff, while it's important convertion
->> to khz. You can call it e.g.:
->>
->> limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
->>
->> then use in clamp(limit_freq_khz, ...)
-> 
-> ack
-> 
->>
->>> +
->>> +    cpufreq_update_pressure(policy);
->>> +
->>> +    return NOTIFY_OK;
->>> +}
->>> +
->>>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>>   {
->>>       int ret, nr_opp, domain;
->>> @@ -269,6 +287,15 @@ static int scmi_cpufreq_init(struct 
->>> cpufreq_policy *policy)
->>>           }
->>>       }
->>> +    priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
->>> +    ret = handle->notify_ops->devm_event_notifier_register(scmi_dev, 
->>> SCMI_PROTOCOL_PERF,
->>> +                            SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
->>> +                            &domain,
->>> +                            &priv->limit_notify_nb);
->>> +    if (ret)
->>> +        dev_warn(cpu_dev,
->>> +             "failed to register for limits change notifier for 
->>> domain %d\n", domain);
->>> +
->>>       priv->policy = policy;
->>>       return 0;
->>> @@ -342,8 +369,8 @@ static int scmi_cpufreq_probe(struct scmi_device 
->>> *sdev)
->>>   {
->>>       int ret;
->>>       struct device *dev = &sdev->dev;
->>> -    const struct scmi_handle *handle;
->>
->> It should be a compilation error...
->>
->>> +    scmi_dev = sdev;
->>>       handle = sdev->handle;
->>
->> due to usage here, wasn't it?
-> 
-> Not really, isn't it getting the first initialization here?
-> Are there any compiler options that I need to turn on to
-> catch these?
-
-Yes, you're right, my apologies for confusion.
-I couldn't apply the series due issues in two patch sets
-in your dependency list.
-
-Now when I have been manually applying the changes I spotted it.
+-- 
+மணிவண்ணன் சதாசிவம்
 
