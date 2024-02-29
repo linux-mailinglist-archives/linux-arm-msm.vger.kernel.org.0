@@ -1,140 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-13035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B27B186D5D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 22:11:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 509B186D59E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 22:06:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0CB51C23946
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:11:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 516C81C23243
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 21:06:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F751151CFB;
-	Thu, 29 Feb 2024 21:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D12FD14566B;
+	Thu, 29 Feb 2024 20:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5aMrLWb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="floC//zT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692EB1504FB;
-	Thu, 29 Feb 2024 21:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D100613E7F4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 20:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709240456; cv=none; b=AdcIr2c8MPjAD4rR8H95zBQzvXuT3Q+YK12D36e4Wzu7cjr8yeHrBFnseA/DhsC574CNEZzQiRZR8Y8Btz29+GhyeAHwki4IsnboHkvgQ7A69PE1Z1/J48jLeQwo4caT2qA+NJeSwBuKFOgVwf3CnW1KkOLK7T5FZLRjlBsI4nE=
+	t=1709240163; cv=none; b=TXp1WigaYG9B+DhdJte9d7vNSlW7XVL8SYl+oZ8zF0DM8u0hlB9vh+z0idw5Q2CFjLuviGZcpIYmC87PKqMW3ztRUMIKxMWpOupz5vYxdTJe4AcBU2JJYpWdHARmkaTeS33NEdOqxXif0xyWqROsLhN+veM+o1NHeUtOT7XdPSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709240456; c=relaxed/simple;
-	bh=fh2szyAddSibibefZ4gfKtIWhGAidJRjH8vpo2f+lGM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Y4xoP/QD544/P9avvAoKdZrre2WqZ8IxfDeKtuazjvOCzCBCVOsxOrPLAMZvhNb4B1FJkZBuWuc2w2pvqYLorVLkYPqjXRYUQq2TTd0EXyd/zVlbagUZEmdUgda1wfeXHQ6OBeFTPTJnBkXLoaFHRNOC8YRDAovo5YCSSOuZo10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5aMrLWb; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-512e568607aso1285127e87.1;
-        Thu, 29 Feb 2024 13:00:54 -0800 (PST)
+	s=arc-20240116; t=1709240163; c=relaxed/simple;
+	bh=CkoPh+10iHxKZkJwRU1etR8ewLdQSrZpBt//3BLiDzg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=K/hGDJt7woLFTcsZzfWynB4dfD5zSPEPTQ9SYTdqhe68Ja3qVt4P0+qvIawpyYUIVj4Lgvp86IZPhTD0I+XTz8TcsQDoN3ed8yPmiEfVfrQsU+yEeQGMSmUQBuIaSC+PW/ght9bqRUyC6rfLaGbzQepL5c1fHBHEcD15Dina7fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=floC//zT; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-36576b35951so8446315ab.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 12:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709240452; x=1709845252; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709240160; x=1709844960; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=61xcQbBuP+qncwTpWvCEA8LwY1FmumIMLzlUbcrboIM=;
-        b=C5aMrLWbhXkbJbdLdKKEGliwXc21/11Rg+B39YikmhTfr887SbsnR+8/PR0H6jeUOb
-         3wfc3kIzgc0QRT0+nhUwFL+q67WCOjcVNqJKEY47QR9cJtZs8L/RPDr0OADE1yHm5I+h
-         6ECYOqyQXa0xzsxjdcbehQ8OkFncUWpk5aUY1L2lkugQnNkrR3kgOw/uYHdUz70ghQF2
-         gbn2LTexT3utwciTWic2I4vk84gZNenkIf4RAfkX5Q+F0k78kXAwyAZLxX39XES4BLTX
-         46WbDQ8HIu6n+pNJjMDPSaosgejaAHTbOMIKqUCeOsJeQhBDY8nm4wLhZWPCw54OkYpw
-         y74Q==
+        bh=oXClQocKFU332MGv51HiVp3gBqp0PjGOnlHuqmYRRz8=;
+        b=floC//zTAZLTBCKflTu7/hlDyrLS+d7K9VP895M9QkjkQ4OS+7uBKi+sn9o2+Fgs2c
+         03TMN6Z65gm7ctHosI9mChf6Mdlu7syY55eeNH6SQoQkcHeR85mng387f+ZqxSoKdt/G
+         6YrOapPRwrEs15LacMGxO7Njh/DHekDvA5GTY2P3PJHhw4Fd0wZEKL3OBTMirY1+i4Y5
+         FRC865nqEnZhwA1yVlnFAhfr6qOu+QA5kfEe9C3GCjKPpoH3qoOgbCsPMsNRkIjuTect
+         C1z4cRpgPv1jokZyvmhYR63jvOtU/kDrMGSOBnOT88fT1utfvbooloySjwrdIVqNooni
+         NapQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709240452; x=1709845252;
+        d=1e100.net; s=20230601; t=1709240160; x=1709844960;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=61xcQbBuP+qncwTpWvCEA8LwY1FmumIMLzlUbcrboIM=;
-        b=F5XP8Erjlfz7SJnDuWWTc5OLpAIf34FqVwvKJBex1ortOrBrbqmZsRp9UXaYX+sfz3
-         Q2H23Smytc1ubyvTID5Yj4cAfSnpVIpB5RqnOIySds6MnIDt6+nY0o9y+MuBRK38BN4i
-         p0MdInI8aykzsZW5+izt7Tr5Ut4ugVXNTP5OiYqszlP1XGde8TLUFNmo9/Cr340yxjjz
-         XwLY2vRRAEKs4v2xoP82fqeQU7Ms+gw/CpGJyi2aevJTwfql992AW9MsyHqCIRt6czwz
-         fsjlQ/Bvvet4ZFDzmWX/SGFZ2hTIU4fAvF+PX1ctpF6vbqRO7KCFxHCFs3gI2/aBS5Mc
-         0Mqw==
-X-Forwarded-Encrypted: i=1; AJvYcCU9VxF5KsR+Ur2N9bLxJKD2LM9tex43yUgiyT111e5NMQb0NdxdXyPaQ+RwUsSQoVqxfcu9jpnBKOcf5XFygmE4FNcZoF1uoMLl7BotBxf55xt8pt/tF7rBl6yITH2AQgVu//fUSAvMN1bKdLQqPFi+MlNx16a97xgchR4REDVHrvvNtA+0H8Q=
-X-Gm-Message-State: AOJu0YwzcReN6DfutS4rXw7/+Tz78cKxyLouZrJ9Nhmel+gg82wlzizB
-	C+FNVSj03t/qgYh7tYDQ7aQLnNM6S4nlsVmmrSdG16/GX9CO55n2Rl7ukKA=
-X-Google-Smtp-Source: AGHT+IEKqTCkhKKM6RwcBjFa6DbKMNkuDKrqO09KCzkMybD56sC10cCnTprgXg+m+P8tOsff2vkVIw==
-X-Received: by 2002:a05:6512:3c9e:b0:513:2c91:7960 with SMTP id h30-20020a0565123c9e00b005132c917960mr851874lfv.44.1709240452063;
-        Thu, 29 Feb 2024 13:00:52 -0800 (PST)
-Received: from frutis-latitude7490.lan (public-gprs367196.centertel.pl. [37.47.65.157])
-        by smtp.googlemail.com with ESMTPSA id tj10-20020a170907c24a00b00a444526962asm943446ejc.128.2024.02.29.13.00.50
+        bh=oXClQocKFU332MGv51HiVp3gBqp0PjGOnlHuqmYRRz8=;
+        b=lV17yhQsyaaVN1c8/s6+dUWxTYjW+Tm+sxqzo290MvRSYazTY1Vo8gR3SROMf6Sjjd
+         VCIhLz108x5Gda0W3DtE1whqAxqkyKQ+CUnU5KwPVe9PhP8WxkbeQPddr1GTJhVNE2GC
+         vLi2jMzST1GPCmwRz90BNX7icO3ykNQAXiIKJWUlLsxTIaiGSVXDySea2A0I6+0ovITM
+         0pSzrUtXQo73P/JfNvR82c2J4JhWVbHkMpK17TgkKLzKb8HYZthX0mfkSrPkB9f7qmi6
+         KFr71CCPoxfo475aQr3Tzyp7iCGfbC1X6T5vo6giCvzA+aWckcNN2O0LOeBWaJY+SWZa
+         ya5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVFKuanE8tb5Y1SUHGcVKjSSMtDuL9vNU6BWKy52xeHScK85feKFkAM+i2i90ZHeQbf2Twcbp1iHAiEagrY8oEBhL8pXQfUeCnh/8/yZQ==
+X-Gm-Message-State: AOJu0YzSBGu9H+c5caBYnZg6BwXbnkQrP0a6osTyPIeN/Closq19EIAr
+	wpa7KuVHL5edPg8pPxnWU7NjcEPFeJl2Mns7GxrDavIgsadui6q0zaSyRyZkv6A=
+X-Google-Smtp-Source: AGHT+IGr8j7A4eJzdeDg1YbAuq05IYAeaK4iw27H6JuOSJwWBdiiJusM0wiRHF/FGAh/MsrObspcww==
+X-Received: by 2002:a05:6e02:b43:b0:365:23fe:12fb with SMTP id f3-20020a056e020b4300b0036523fe12fbmr258132ilu.11.1709240160006;
+        Thu, 29 Feb 2024 12:56:00 -0800 (PST)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id h14-20020a056e020d4e00b003658fbcf55dsm521551ilj.72.2024.02.29.12.55.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 13:00:51 -0800 (PST)
-From: =?UTF-8?q?Pawe=C5=82=20Owoc?= <frut3k7@gmail.com>
-To: 
-Cc: =?UTF-8?q?Pawe=C5=82=20Owoc?= <frut3k7@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+        Thu, 29 Feb 2024 12:55:59 -0800 (PST)
+From: Alex Elder <elder@linaro.org>
+To: davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com
+Cc: mka@chromium.org,
+	andersson@kernel.org,
+	quic_cpratapa@quicinc.com,
+	quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com,
+	quic_subashab@quicinc.com,
+	elder@kernel.org,
+	netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: ipq8074: Add QUP UART6 node
-Date: Thu, 29 Feb 2024 21:54:16 +0100
-Message-ID: <20240229205426.232205-1-frut3k7@gmail.com>
-X-Mailer: git-send-email 2.43.2
+Subject: [PATCH net-next 0/7] net: ipa: simplify device pointer access
+Date: Thu, 29 Feb 2024 14:55:47 -0600
+Message-Id: <20240229205554.86762-1-elder@linaro.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add node to support the QUP UART6 controller inside of IPQ8074.
-Used by some routers to communicate with a Bluetooth controller.
+Outside of initialization, all uses of the platform device pointer
+stored in the IPA structure determine the address of device
+structure embedded within the platform device structure.
 
-Signed-off-by: Paweł Owoc <frut3k7@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+By changing some of the initialization functions to take a platform
+device as argument we can simplify getting at the device structure
+address by storing it (instead of the platform device pointer) in
+the IPA structure.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 26441447c866..9c259257adb0 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -321,6 +321,13 @@ serial_4_pins: serial4-state {
- 				bias-disable;
- 			};
- 
-+			serial_5_pins: serial5-state {
-+				pins = "gpio9", "gpio16";
-+				function = "blsp5_uart";
-+				drive-strength = <8>;
-+				bias-disable;
-+			};
-+
- 			i2c_0_pins: i2c-0-state {
- 				pins = "gpio42", "gpio43";
- 				function = "blsp1_i2c";
-@@ -469,6 +476,18 @@ blsp1_uart5: serial@78b3000 {
- 			status = "disabled";
- 		};
- 
-+		blsp1_uart6: serial@78b4000 {
-+			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
-+			reg = <0x078b4000 0x200>;
-+			interrupts = <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_UART6_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			pinctrl-0 = <&serial_5_pins>;
-+			pinctrl-names = "default";
-+			status = "disabled";
-+		};
-+
- 		blsp1_spi1: spi@78b5000 {
- 			compatible = "qcom,spi-qup-v2.2.1";
- 			#address-cells = <1>;
+The first two patches split the interrupt initialization code into
+two parts--one done earlier than before.  The next four patches
+update some initialization functions to take a platform device
+pointer as argument.  And the last patch replaces the platform
+device pointer with a device pointer, and converts all remaining
+references to the &ipa->pdev->dev to use ipa->dev.
+
+					-Alex
+
+Alex Elder (7):
+  net: ipa: change ipa_interrupt_config() prototype
+  net: ipa: introduce ipa_interrupt_init()
+  net: ipa: pass a platform device to ipa_reg_init()
+  net: ipa: pass a platform device to ipa_mem_init()
+  net: ipa: pass a platform device to ipa_smp2p_irq_init()
+  net: ipa: pass a platform device to ipa_smp2p_init()
+  net: ipa: don't save the platform device
+
+ drivers/net/ipa/ipa.h           |  5 ++-
+ drivers/net/ipa/ipa_cmd.c       |  6 ++--
+ drivers/net/ipa/ipa_endpoint.c  | 29 ++++++++-------
+ drivers/net/ipa/ipa_interrupt.c | 64 +++++++++++++++++++++------------
+ drivers/net/ipa/ipa_interrupt.h | 22 +++++++++---
+ drivers/net/ipa/ipa_main.c      | 60 +++++++++++++++++++------------
+ drivers/net/ipa/ipa_mem.c       | 37 ++++++++++---------
+ drivers/net/ipa/ipa_mem.h       |  5 ++-
+ drivers/net/ipa/ipa_modem.c     | 14 ++++----
+ drivers/net/ipa/ipa_power.c     |  4 +--
+ drivers/net/ipa/ipa_qmi.c       | 10 +++---
+ drivers/net/ipa/ipa_reg.c       |  8 ++---
+ drivers/net/ipa/ipa_reg.h       |  4 ++-
+ drivers/net/ipa/ipa_smp2p.c     | 33 ++++++++---------
+ drivers/net/ipa/ipa_smp2p.h     |  7 ++--
+ drivers/net/ipa/ipa_table.c     | 18 +++++-----
+ drivers/net/ipa/ipa_uc.c        |  9 +++--
+ 17 files changed, 193 insertions(+), 142 deletions(-)
+
 -- 
-2.43.2
+2.40.1
 
 
