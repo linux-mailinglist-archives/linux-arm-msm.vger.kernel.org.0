@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-12987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB43C86CD6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:49:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DCE486CDC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 16:57:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 204D71F22792
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:49:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15AFC28471D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 15:57:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C6814E2E6;
-	Thu, 29 Feb 2024 15:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B28A75810;
+	Thu, 29 Feb 2024 15:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m3E1Be57"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHEAFsis"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB59014E2D5;
-	Thu, 29 Feb 2024 15:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A47580D;
+	Thu, 29 Feb 2024 15:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709221737; cv=none; b=Xee2+uQb712IF9sddQ8k2Rz6ntFur0+6TP5GQ3o+AdZmyNUO9CaRLwSu26W0fLgnnwxJmXf1ARmmIPwpMQuyDZdDzbBnIxy/mu12f58VLHdzIvWCi32ks/dmKCx/VrU/UK7XORKiPSPNbp1ke08z9i1UCjtD2FWPYrFAyRX+XzY=
+	t=1709221792; cv=none; b=f7hccZsG1TdWD8aC1jaRf8Pp1W8S9XAzBJOc3VJN/uvfVTKmf5BZ3uRl4zuhCr9ieqdPjaa1HilrQ/0e1fojRdlOG+/938KtHAtbkvUUG68Cmw1gR2Aa/Iz/eWg4o+5Z0wFJFT0r/OcjcI6L38lmk5s4mvmhz+3gFJLBmNyYRe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709221737; c=relaxed/simple;
-	bh=+fv1LPuaO3JTr5Lszuh69m3jbmo7lu1K9f9DlffKTl0=;
+	s=arc-20240116; t=1709221792; c=relaxed/simple;
+	bh=9rAub/AT11/jIi5X3yn6EW32jwa3A2xARBjtsu2qsUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRVBbGl9FyvV5+LLzZrBwWbiEI7wYovreIYh76cdKiGhurA78q/Tj005Bky/4wfhWvABh6lVz/R4PoYokLLKUZMIncggpASW50UgHvXC8uYdHeqXr/VtBzCMUMgG3Y1fyvjgx+QadyR0piAj4eOURg1tTukNOE5tBU8euTT2t7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m3E1Be57; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8368C433C7;
-	Thu, 29 Feb 2024 15:48:55 +0000 (UTC)
+	 MIME-Version; b=oiEW+kVl8zPpv9GkmnbfmtjCeEcVt1E6ReGdiVeFTBdvvk0LQDBmNM9zqIaZNlAmb6WahzF49dsze2arvCnvWc9WlJEwFdBI2ol84M031zNEepPeJeeHEw0tgj1UldN/Wm/cc5PmrInF4DWC665kxw3Lbr532Dh1lSIearKvGe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHEAFsis; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9FBC43394;
+	Thu, 29 Feb 2024 15:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709221737;
-	bh=+fv1LPuaO3JTr5Lszuh69m3jbmo7lu1K9f9DlffKTl0=;
+	s=k20201202; t=1709221792;
+	bh=9rAub/AT11/jIi5X3yn6EW32jwa3A2xARBjtsu2qsUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3E1Be57eLLRArCxNRg61A/O//oceVyBUTHRtMBl63v4OnH/U3v8HO0duTaaOyofh
-	 rWyoombPTuixp8pYtLgk0WFvYBCNkX5oPDCl7UdCXzLwpBItvNg2ejg66lPwlcoFhE
-	 N56rs45yWd+E5RJ57GRoYkl4ny534R928bggwV+eIefzq4MUegzuGsyHHxBDpkQJnb
-	 8qXKcd60pQDTen0cVhvWdRI2LnkwpbsX3c8IypEUCk88U0bkEkvytpfLJ7kvXH1x1f
-	 bj/58TugtMOV2kAflpybcQx5cIES8Gfed9+zXKt2yrEqk3/XIoK7zrkjGoOzb7p+4F
-	 18A02WvHIa6hQ==
+	b=QHEAFsisVibUfjxzKDXGs1NsZk81ZiLc5xhJcUeUQSYm8NuVUmoyYQ6WRYvwWwF+t
+	 s4SVpmdl4L9gZiW6I804HHbOTrYhAul1mp4B4RExPldZ4nBgASmn9rXY5rdwD7kps0
+	 J0qrUimwKxPAn+lfk0ftkzbteJ6yhq/nMhGZmeakx2uBPlO1tO24BZJYexEomGayRQ
+	 QQPAh/4JFvkcSHoiQkSDr6bsvmBZB3Qjl+bXpRXruQ9lSCuG8VkGW1A4Rg2jrqi1Xg
+	 E+K4gvHTOAplYpu1JorXnR8RR5Byx4z4ujwhCj8j5JVd1+Qxyo8uF6TShO8L2OedLP
+	 FXhluh5165Lvg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -54,12 +54,12 @@ Cc: Rob Clark <robdclark@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.7 03/26] Revert "drm/msm/gpu: Push gpu lock down past runpm"
-Date: Thu, 29 Feb 2024 10:48:22 -0500
-Message-ID: <20240229154851.2849367-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 03/21] Revert "drm/msm/gpu: Push gpu lock down past runpm"
+Date: Thu, 29 Feb 2024 10:49:23 -0500
+Message-ID: <20240229154946.2850012-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240229154851.2849367-1-sashal@kernel.org>
-References: <20240229154851.2849367-1-sashal@kernel.org>
+In-Reply-To: <20240229154946.2850012-1-sashal@kernel.org>
+References: <20240229154946.2850012-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.7.6
+X-stable-base: Linux 6.6.18
 Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
@@ -127,7 +127,7 @@ index 7f64c66673002..5c10b559a5957 100644
  
  /*
 diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 95257ab0185dc..a7e152f659a2c 100644
+index 40c0bc35a44ce..7f5e0a961bba7 100644
 --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
 +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
 @@ -21,8 +21,6 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
