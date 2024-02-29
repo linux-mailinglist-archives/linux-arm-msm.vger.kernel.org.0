@@ -1,237 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-12932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B61D586BEEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 03:30:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A791086C044
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 06:39:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 350851F223EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 02:30:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E259E1C21271
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 05:39:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE64712E5B;
-	Thu, 29 Feb 2024 02:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A9ED3A28D;
+	Thu, 29 Feb 2024 05:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iQfdAyOZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n5bv9s8A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0148BA5F;
-	Thu, 29 Feb 2024 02:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74873A1BF;
+	Thu, 29 Feb 2024 05:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709173829; cv=none; b=UHl8VbE25BEZTEfL+9wldeEArPbrIQxxLMKuocKGdmknSHSISF7q+6yka8ZDvB6qFExDgOZqNsDm512aFR1kn+p2PA987teEpOwpVioj27myCmJNHQWGNPu1AB2S9mL5podYMpB+ZvGef/BBqMPn9ODI+9GajE+7+xqSSSvMow8=
+	t=1709185181; cv=none; b=DNZom48TieXWl5vTus+Ms3y6N1gBcGv8pfbG4Ldf+wwXeqfiG/XSzGC4rLziThCfMIH1K1rdGwn/Hc0k/1A9zEsvW6eslAqlDtwHZds6I1b0wsM85z/1Vks/4rXAh4edFQdhDtgM4J2b+m+k2teu5t/KFRnXaU5nON+hbDjVwT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709173829; c=relaxed/simple;
-	bh=KhLL1Qqe/ranCX4jPUDTrZJCslOyFCtVGuTGjX2JrsU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sLjnLJW9V1UUoQx3WqCovi0CEgwqHVeep/BPqpvhg2Padq/ntQrG7YTIlviMR5sYtg38qPGi2e2ou5pdayN7cupYJCMbQux/0uISsjemAhiXa1Wsfr/SS7cIzm8Dm+Bl6U+XMiuLLUGclbmXx+m9/f3jBTbNnCco5x7mLe8NCjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iQfdAyOZ; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1709185181; c=relaxed/simple;
+	bh=DB6LgLjnrJ7phIYd9/PpD0EwgxadninTd4QwfLnvfig=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=YayhynwOsMrKzyyrZRNVQj1oq2pNO/E3ixsj3NuZl48HKMm/Wi+wB4t6uihcnxUsMZC2iHDp9tuUc59FJS4tq8LxeDG20E3xgwGnaCmJxeSJpKlI3OfqAdMXr/VxFuVE7vWA75U+JIGrqNIlZ0wKDEEh95KKlZdKOx0bdU0fNrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n5bv9s8A; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41T1mfQd007940;
-	Thu, 29 Feb 2024 02:30:12 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41T484eB018478;
+	Thu, 29 Feb 2024 05:39:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=0/+C9tGIWpwPDFX0nUJBfhs5juresADDoCaZ7B+HQJM=; b=iQ
-	fdAyOZy4J3CmN9WqWJmFLtxKex91dvUNix40Bu5eWdto7YFP6Rvdr80VMX/uQxqQ
-	VQ6ZO05jwWZMsmX2BkOgW9D7d/BDSP8Yl+tLyy3k7ejQEZqVjq/eSvLQN7MEmQvq
-	8cXfy6gfz6k5/xtT1JS92Fs2HTi3WIOTM+MIoSZ/odeyHetsvLgw14kZRn7vr+6K
-	NR3dNfOSSJjrutEdoBj1qY5CBgY6O+cnHqm9vUselJhvGAkhhLInx3DvRsgp32Th
-	ShNja+SZzuEcfTe5Hfs7okzEBYyi30PbaRYStGYfdMqdhFh4UdZ+FkyaSdTiBJ/z
-	zzmas5Ib3xfymCkdMhUA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wj6en9mf1-1
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=5A8Rs87XUubM0I
+	4u7oQxcWAIxYITrEgsH9L4xfy44Sk=; b=n5bv9s8AaIBTYD7DExhxMTnsI7UADf
+	Q8gOZJDZpyDmYcHIjOqVKSyk2lEONSS//moICG66770Op56MxRFdHhChDay4yAjx
+	XStdM1v7mz7qsJh4VgAdfGtkYlJ9BlzCrMUt/0quBtp14RqdBCeKNJwBdQmIa94A
+	/R8Zk1PQjo5h063aQ7Rk1EwssL5sxtU8A1JDQf3h2Bpr7hRf9ftTZTsqzxAKDfAE
+	V4kfa1cKpiLm/NwJBZBGjhIFGOEa3IDGOweammoFXqJBceUgcCgz0uQtGTrq4CmI
+	uHDi6xBURlCh6jH8rsTutNWTRxpiiufXsveT2XRNbXDfMMEaiw8wxSwA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wj1r1tq2n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Feb 2024 02:30:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41T2U9gv007702
+	Thu, 29 Feb 2024 05:39:07 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41T5d6Xx024175
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Feb 2024 02:30:09 GMT
-Received: from [10.253.39.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 28 Feb
- 2024 18:30:06 -0800
-Message-ID: <60d9970b-b397-4c3d-b3cb-9d90866acebf@quicinc.com>
-Date: Thu, 29 Feb 2024 10:30:04 +0800
+	Thu, 29 Feb 2024 05:39:06 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 28 Feb 2024 21:39:01 -0800
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH 0/5] clk: qcom: sm8150: Add camera clock controller support
+ for SM8150
+Date: Thu, 29 Feb 2024 11:08:53 +0530
+Message-ID: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] wifi: ath11k: support hibernation
-Content-Language: en-US
-To: Jeff Johnson <quic_jjohnson@quicinc.com>, <ath11k@lists.infradead.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>, <netdev@vger.kernel.org>
-References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
- <20240228022243.17762-4-quic_bqiang@quicinc.com>
- <ae3ec744-2157-4a8c-aa1b-38a22dc18042@quicinc.com>
-From: Baochen Qiang <quic_bqiang@quicinc.com>
-In-Reply-To: <ae3ec744-2157-4a8c-aa1b-38a22dc18042@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-B4-Tracking: v=1; b=H4sIAG0Y4GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDIyNL3eTE3ORk3eLSgoL8ohLd4lwLQ1MD3RTjNHOjRJNEw0SjJCWg1oK
+ i1LTMCrCx0bG1tQBEP6h7ZgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B3EbC9YNp5quH_dD_zn2pm_Byq4raZCR
-X-Proofpoint-ORIG-GUID: B3EbC9YNp5quH_dD_zn2pm_Byq4raZCR
+X-Proofpoint-ORIG-GUID: ZgaToXXud25X70w4dqqTjzKVey0wxvpe
+X-Proofpoint-GUID: ZgaToXXud25X70w4dqqTjzKVey0wxvpe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-28_08,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0
- suspectscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402290018
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxscore=0 malwarescore=0 clxscore=1011 spamscore=0 adultscore=0
+ mlxlogscore=862 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2402290042
 
+Add camcc support and Regera PLL ops. Also, fix the pll post div mask.
 
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+Satya Priya Kakitapalli (4):
+      clk: qcom: alpha-pll: Fix the pll post div mask
+      dt-bindings: clock: qcom: Add SM8150 camera clock controller
+      clk: qcom: Add camera clock controller driver for SM8150
+      arm64: dts: qcom: Add camera clock controller for sm8150
 
-On 2/28/2024 11:31 PM, Jeff Johnson wrote:
-> On 2/27/2024 6:22 PM, Baochen Qiang wrote:
->> Now that all infrastructure is in place and ath11k is fixed to handle all the
->> corner cases, power down the ath11k firmware during suspend and power it back
->> up during resume. This fixes the problem when using hibernation with ath11k PCI
->> devices.
->>
->> For suspend, two conditions needs to be satisfied:
->>          1. since MHI channel unprepare would be done in late suspend stage,
->>             ath11k needs to get all QMI-dependent things done before that stage.
->>          2. and because unprepare MHI channels requires a working MHI stack,
->>             ath11k is not allowed to call mhi_power_down() until that finishes.
->> So the original suspend callback is separated into two parts: the first part
->> handles all QMI-dependent things in suspend callback; while the second part
->> powers down MHI in suspend_late callback. This is valid because kernel calls
->> ath11k's suspend callback before all suspend_late callbacks, making the first
->> condition happy. And because MHI devices are children of ath11k device
->> (ab->dev), kernel guarantees that ath11k's suspend_late callback is called
->> after QRTR's suspend_late callback, this satisfies the second condition.
->>
->> Above analysis also applies to resume process. so the original resume
->> callback is separated into two parts: the first part powers up MHI stack
->> in resume_early callback, this guarantees MHI stack is working when
->> QRTR tries to prepare MHI channels (kernel calls QRTR's resume_early callback
->> after ath11k's resume_early callback, due to the child-father relationship);
->> the second part waits for the completion of restart, which won't fail now
->> since MHI channels are ready for use by QMI.
->>
->> Another notable change is in power down path, we tell mhi_power_down() to not
->> to destroy MHI devices, making it possible for QRTR to help unprepare/prepare
->> MHI channels, and finally get us rid of the probe-defer issue when resume.
->>
->> Also change related code due to interface changes.
->>
->> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
->>
->> Tested-by: Takashi Iwai <tiwai@suse.de>
->> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
->> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
->> ---
->>   drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
->>   drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
->>   drivers/net/wireless/ath/ath11k/core.h |   6 +-
->>   drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
->>   drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
->>   drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
->>   drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
->>   drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
->>   8 files changed, 142 insertions(+), 52 deletions(-)
-> ...snip...
->> +int ath11k_core_resume_early(struct ath11k_base *ab)
->> +{
->> +	int ret;
->> +	struct ath11k_pdev *pdev;
->> +	struct ath11k *ar;
->> +
->> +	if (!ab->hw_params.supports_suspend)
->> +		return -EOPNOTSUPP;
->> +
->> +	/* so far signle_pdev_only chips have supports_suspend as true
-> 
-> nit: s/signle/single/
-> 
->> +	 * and only the first pdev is valid.
->> +	 */
->> +	pdev = ath11k_core_get_single_pdev(ab);
->> +	ar = pdev->ar;
->> +	if (!ar || ar->state != ATH11K_STATE_OFF)
->> +		return 0;
->> +
->> +	reinit_completion(&ab->restart_completed);
->> +	ret = ath11k_hif_power_up(ab);
->> +	if (ret)
->> +		ath11k_warn(ab, "failed to power up hif during resume: %d\n", ret);
->> +
->> +	return ret;
->> +}
->> +EXPORT_SYMBOL(ath11k_core_resume_early);
->>   
->>   int ath11k_core_resume(struct ath11k_base *ab)
->>   {
->>   	int ret;
->>   	struct ath11k_pdev *pdev;
->>   	struct ath11k *ar;
->> +	long time_left;
->>   
->>   	if (!ab->hw_params.supports_suspend)
->>   		return -EOPNOTSUPP;
->> @@ -940,29 +990,19 @@ int ath11k_core_resume(struct ath11k_base *ab)
->>   	if (!ar || ar->state != ATH11K_STATE_OFF)
->>   		return 0;
->>   
->> -	ret = ath11k_hif_resume(ab);
->> -	if (ret) {
->> -		ath11k_warn(ab, "failed to resume hif during resume: %d\n", ret);
->> -		return ret;
->> +	time_left = wait_for_completion_timeout(&ab->restart_completed,
->> +						ATH11K_RESET_TIMEOUT_HZ);
->> +	if (time_left == 0) {
->> +		ath11k_warn(ab, "timeout while waiting for restart complete");
->> +		return -ETIMEDOUT;
->>   	}
->>   
->> -	ath11k_hif_ce_irq_enable(ab);
->> -	ath11k_hif_irq_enable(ab);
-> 
-> these are disabled in suspend_late()
-> do you need to enable in resume_early()?
-> or are they expected to be enabled via ath11k_wow_op_resume()?
-> 
-> and if that is the case, why isn't the disable in
-> ath11k_wow_op_suspend() sufficient? can the disables in suspend_late()
-> be removed?
-There are two user cases here:
-1. if WoWLAN is enabled, IRQ enable/disable only happens in 
-ath11k_wow_op_suspend()/resume(), ath11k_core_suspend()/late_suspend() 
-and ath11k_core_resume()/early_resume() do nothing but return directly 
-due to below check:
-		if (!ar || ar->state != ATH11K_STATE_OFF)
-			return 0;
-so this is symmetric and no issues here.
+Taniya Das (1):
+      clk: qcom: clk-alpha-pll: Add support for Regera PLL ops
 
-2. if WoWLAN is disabled, ath11k_wow_op_suspend()/resume() won't get 
-called, see the check on 'local->wowlan' in __ieee80211_suspend(). Then 
-IRQ is disabled in ath11k_core_suspend_late(). The reason why IRQ is not 
-enabled in ath11k_core_resume()/early_resume() is because in this case 
-we power down/up firmware, and during power up we go the reset path 
-where IRQ would be enabled back in below calls:
-	CE irqs: ath11k_core_qmi_firmware_ready() -> ath11k_core_start() -> 
-ath11k_hif_start() -> ath11k_pci_start() -> ath11k_pcic_start() -> 
-ath11k_pcic_ce_irqs_enable()
-	DP irqs: ath11k_core_qmi_firmware_ready() -> ath11k_hif_irq_enable()
-> 
-> just concerned about the lack of symmetry here
-Yes, also noticed it but didn't figure out a better way.
+ .../bindings/clock/qcom,sm8150-camcc.yaml          |   77 +
+ arch/arm64/boot/dts/qcom/sa8155p.dtsi              |    4 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |   12 +
+ drivers/clk/qcom/Kconfig                           |    9 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/camcc-sm8150.c                    | 2159 ++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c                   |  154 +-
+ drivers/clk/qcom/clk-alpha-pll.h                   |    5 +
+ include/dt-bindings/clock/qcom,sm8150-camcc.h      |  135 ++
+ 9 files changed, 2554 insertions(+), 2 deletions(-)
+---
+base-commit: 20af1ca418d2c0b11bc2a1fe8c0c88f67bcc2a7e
+change-id: 20240229-camcc-support-sm8150-d3f72a4a1a2b
 
-> 
-> /jeff
+Best regards,
+-- 
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+
 
