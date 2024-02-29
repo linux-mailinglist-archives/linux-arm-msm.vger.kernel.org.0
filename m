@@ -1,217 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-12959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CD7586C8E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 13:12:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C5DA86C924
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 13:24:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13D941F221D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 12:12:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D9A928CB3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 12:24:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5496F7CF10;
-	Thu, 29 Feb 2024 12:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C92667D07B;
+	Thu, 29 Feb 2024 12:24:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vUeuY6m5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61677AE4E;
-	Thu, 29 Feb 2024 12:11:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A687D060
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 12:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709208720; cv=none; b=FdXQxEsvpn1ieGocXzOLuRhxwDyJtRapGaSi3K6Gy2YbFzUTyt8ih2t70SG7d4mI3a2lDhK7egrqofsZirczehISjuq3Whf4QFS7LjWZbGvA7hylnkSQ2gcyU8I3FcvlhBPXut4q/vete3axnCuVfJmOnL6aOzpnVwXDpcsFbOU=
+	t=1709209465; cv=none; b=LktXfndPe3R2sJ2wZuA4VcAcLtmRh3CnpHFIK4eaKD4PWxpEQQfOnJGLn9X5TAUtphZz2f0J+3SS9a+smLi4nmbNxZvkbkvMOHFoSASfsXX+/xYsgMR1LR0vELhrlkKNnwU85zcW4Ub3VdlfYuNtnH/XsilyIk3UyaUGuHoU+Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709208720; c=relaxed/simple;
-	bh=SInHJs1oLqIxihFlj7TL1nnFgNCjwVbuSEWy4/KTSGY=;
+	s=arc-20240116; t=1709209465; c=relaxed/simple;
+	bh=UVFj3luf/OuM91FWElqtuQGNABlen1dm7mEO60GN/Ck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GztZKleEPmFCAS3Jyfb/KNViX1zZspoi5rLm+yPQA40pfX3ONuBdymVbHJOriywtziCZoM98324RZIhigNWx8XWeVknZ7T9POxCYtTLFB+WQA0bK3SZwReafvJVcN4iZ05Qv9bYs3SG4E6UujIHfN7YvwfUk3Sm8TOeWIQOFUjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 89E0C1FB;
-	Thu, 29 Feb 2024 04:12:35 -0800 (PST)
-Received: from pluto (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 18BBC3F762;
-	Thu, 29 Feb 2024 04:11:54 -0800 (PST)
-Date: Thu, 29 Feb 2024 12:11:52 +0000
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Lukasz Luba <lukasz.luba@arm.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
-	linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
-	dietmar.eggemann@arm.com, morten.rasmussen@arm.com,
-	viresh.kumar@linaro.org, rafael@kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
- notifications
-Message-ID: <ZeB0iCr9GpfUiOEg@pluto>
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
- <20240227181632.659133-3-quic_sibis@quicinc.com>
- <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
- <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
- <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
- <18c249b2-ce8c-435b-8d65-a1770a1f294e@arm.com>
- <ZeBqW04f8V4dHphn@pluto>
- <7c82b316-89d9-470d-b46d-f86e81e2add3@arm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=dv40LJKbU8ttyoYYfieJDYei0orngDra6nM/JI1QNSgBHnh9ohkdQdaYeqKxLW7PHCfGbenNdInDbYmsiGC+FMNSXot66UlkGjW+JdSG2EVw5iFp2Swtvf4eVliIGqwIUJh6WNTu8R8GRl+Riq/atdhX4Cbkv0zlOMOrM8BOnxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vUeuY6m5; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1dc1ff697f9so7735645ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Feb 2024 04:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709209463; x=1709814263; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=z/nBppKZ3Dwmy8fY3Oq9whnruT6TOvjmy9666RwwKe0=;
+        b=vUeuY6m54i2RXwqNUpa3DRH9yf2SGJ1QsgZGKwt901bYIxqhDFvWajcxzzl9BaiCOp
+         N5r1lq4dZPQkO8e5QbgYfEePBy07meISMpPwkTz56WXaMCrvJ2Ndl5C17ttQmRJwB0HT
+         wt4gXP7zyIEW7u5gprwBJmAz+/Y1Y1nqxDKQVx9opqGrg9xK1cxTE/LGcxPIpuQBOwfW
+         iNzyhxYZo5+rb91/ridfsXOdGZeQ2XJ0MmGZUSZprcq/xJnO9l0TvaZ1QWtQhZ5tDa1R
+         iyzah07ay0IR0MeKSWNYoecN8yYvjBvVVKg9McvZT1StV016D5/B2dCnFx+gxDqq5eob
+         FLRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709209463; x=1709814263;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z/nBppKZ3Dwmy8fY3Oq9whnruT6TOvjmy9666RwwKe0=;
+        b=lhbLXMuJAqca7v6Dmapn0ZM6r2fQ9gZh6ybl0VP8jT6dONLmoZ56HPAm/gfoUFzvEa
+         N67uBtf5YceRmOhjPH1mVPxRjxrZuDn4c2AbkhqRy5bXk7DYgvkHdmMaRe+X+G4XzHBz
+         s2BTLWAdkyoKu8bcI7a/GfKsybU4Bwq4s4SDTITN7b99pPBOAEMSiafhU1ln+NUrq+vI
+         rGcdLKQgk0s1ochHUqSpmMIVWvGaGezMNe/a14PIznlJLJ5aDCUxUuZ4O6/a7tkwUw8/
+         b8jRej9otsMuNzN9OuHe64MSxKxvDYx7xmPSvBefBXoflAaEmg76txjQykPqe2smBR2T
+         LYGg==
+X-Forwarded-Encrypted: i=1; AJvYcCWauQ7uELxEb/7E29FbKp+k5tOdl1vya00nQPaG/7/vs3parOW3hBuakVVmX2gKP966x7Di/rp4T75gkoda9UwVxZTgx3Ee06mOYs8F9Q==
+X-Gm-Message-State: AOJu0Yymbocf+wOjE7tXd7+1U06H/lRdOrBSiKBoE7Rd7yi3HLilbkhv
+	tbfMZ/GjN+rWLcvhkDGo1sFKG1SIi9ab0Ju31rEnhrtWH+yMS5AmQulI006oHQ==
+X-Google-Smtp-Source: AGHT+IFEVW7Kzc/Sh0a1jwwbAk+Ml43zuYzKP023Jb88MYhJZ9kS3njjyEQ94jUlpEOmUZuJeABesQ==
+X-Received: by 2002:a17:902:db0e:b0:1dc:c9a8:f164 with SMTP id m14-20020a170902db0e00b001dcc9a8f164mr2074075plx.2.1709209463511;
+        Thu, 29 Feb 2024 04:24:23 -0800 (PST)
+Received: from thinkpad ([120.138.12.68])
+        by smtp.gmail.com with ESMTPSA id u16-20020a170902e81000b001dcc1a4631bsm1331627plg.2.2024.02.29.04.24.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Feb 2024 04:24:23 -0800 (PST)
+Date: Thu, 29 Feb 2024 17:54:16 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <20240229122416.GD2999@thinkpad>
+References: <20240223152124.20042-1-johan+linaro@kernel.org>
+ <20240228220843.GA309344@bhelgaas>
+ <20240229100853.GA2999@thinkpad>
+ <ZeBbrJhks46XByMD@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7c82b316-89d9-470d-b46d-f86e81e2add3@arm.com>
+In-Reply-To: <ZeBbrJhks46XByMD@hovoldconsulting.com>
 
-On Thu, Feb 29, 2024 at 11:45:41AM +0000, Lukasz Luba wrote:
+On Thu, Feb 29, 2024 at 11:25:48AM +0100, Johan Hovold wrote:
+> On Thu, Feb 29, 2024 at 03:38:53PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Feb 28, 2024 at 04:08:43PM -0600, Bjorn Helgaas wrote:
+> > > On Fri, Feb 23, 2024 at 04:21:12PM +0100, Johan Hovold wrote:
 > 
-> 
-> On 2/29/24 11:28, Cristian Marussi wrote:
-> > On Thu, Feb 29, 2024 at 10:22:39AM +0000, Lukasz Luba wrote:
+> > > > Johan Hovold (12):
+> > > >   dt-bindings: PCI: qcom: Allow 'required-opps'
+> > > >   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+> > > >   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+> > > >   PCI: qcom: Add support for disabling ASPM L0s in devicetree
 > > > 
+> > > The ASPM patches fix a v6.7 regression, so it would be good to fix
+> > > that in v6.8.
 > > > 
-> > > On 2/29/24 09:59, Lukasz Luba wrote:
-> > > > 
-> > > > 
-> > > > On 2/28/24 17:00, Sibi Sankar wrote:
-> > > > > 
-> > > > > 
-> > > > > On 2/28/24 18:54, Lukasz Luba wrote:
-> > > > > > 
-> > > > > > 
-> > > > > > On 2/27/24 18:16, Sibi Sankar wrote:
-> > > > > > > Register for limit change notifications if supported and use
-> > > > > > > the throttled
-> > > > > > > frequency from the notification to apply HW pressure.
-> > > > > 
-> > > > > Lukasz,
-> > > > > 
-> > > > > Thanks for taking time to review the series!
-> > > > > 
-> > > > > > > 
-> > > > > > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > > > > > > ---
-> > > > > > > 
-> > > > > > > v3:
-> > > > > > > * Sanitize range_max received from the notifier. [Pierre]
-> > > > > > > * Update commit message.
-> > > > > > > 
-> > > > > > > � drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
-> > > > > > > � 1 file changed, 28 insertions(+), 1 deletion(-)
-> > > > > > > 
-> > > > > > > diff --git a/drivers/cpufreq/scmi-cpufreq.c
-> > > > > > > b/drivers/cpufreq/scmi-cpufreq.c
-> > > > > > > index 76a0ddbd9d24..78b87b72962d 100644
-> > > > > > > --- a/drivers/cpufreq/scmi-cpufreq.c
-> > > > > > > +++ b/drivers/cpufreq/scmi-cpufreq.c
-> > > > > > > @@ -25,9 +25,13 @@ struct scmi_data {
-> > > > > > > ����� int domain_id;
-> > > > > > > ����� int nr_opp;
-> > > > > > > ����� struct device *cpu_dev;
-> > > > > > > +��� struct cpufreq_policy *policy;
-> > > > > > > ����� cpumask_var_t opp_shared_cpus;
-> > > > > > > +��� struct notifier_block limit_notify_nb;
-> > > > > > > � };
-> > > > > > > +const struct scmi_handle *handle;
-> > > > 
-> > > > I've missed this bit here.
+> > > Mani, if you are OK with them, I can add them to for-linus for v6.8.  
 > > > 
-> > > So for this change we actually have to ask Cristian or Sudeep
-> > > because I'm not sure if we have only one 'handle' instance
-> > > for all cpufreq devices.
+> > > What about the 'required-opps' and 'msi-map-mask' patches?  If they're
+> > > important, I can merge them for v6.8, too, but it's late in the cycle
+> > > and it's not clear from the commit logs why they shouldn't wait for
+> > > v6.9.
 > > > 
-> > > If we have different 'handle' we cannot move it to the
-> > > global single pointer.
-> > > 
-> > > Sudeep, Cristian what do you think?
 > > 
-> > I was just replying noticing this :D .... since SCMI drivers can be
-> > probed multiple times IF you defined multiple scmi top nodes in your DT
-> > containing the same protocol nodes, they receive a distinct sdev/handle/ph
-> > for each probe...so any attempt to globalize these wont work...BUT...
-> > 
-> > ...this is a bit of a weird setup BUT it is not against the spec and it can
-> > be used to parallelize more the SCMI accesses to disjont set of resources
-> > within the same protocol (a long story here...) AND this type of setup is
-> > something that it is already used by some other colleagues of Sibi working
-> > on a different line of products (AFAIK)...
-> > 
-> > So, for these reasons, usually, all the other SCMI drivers have per-instance
-> > non-global references to handle/sdev/ph....
-> > 
-> > ...having said that, thought, looking at the structure of CPUFReq
-> > drivers, I am not sure that they can stand such a similar setup
-> > where multiple instances of this same driver are probed
-> > 
-> > .... indeed the existent *ph refs above is already global....so it wont already
-> > work anyway in case of multiple instances now...
-> > 
-> > ...and if I look at how CPUFreq expects the signature of scmi_cpufreq_get_rate()
-> > to be annd how it is implemented now using the global *ph reference, it is
-> > clearly already not working cleanly on a multi-instance setup...
-> > 
-> > ...now...I can imagine how to (maybe) fix the above removing the globals and
-> > fixing this, BUT the question, more generally, is CPUFreq supposed to work at all in
-> > this multi-probed mode of operation ?
-> > Does it even make sense to be able to support this in CPUFREQ ?
-> > 
-> > (as an example in cpufreq,c there is static global cpufreq_driver
-> >   pointing to the arch-specific configured driver BUT that also holds
-> >   some .driver_data AND that cleraly wont be instance specific if you
-> >   probe multiple times and register with CPUFreq multiple times...)
-> > 
-> >   More questions than answers here :D
-> > 
+> > I'm checking with Qcom HW team on the ASPM behavior. So please hold off the ASPM
+> > related patches until I get an answer. But 'required-opps' and 'msi-map-mask'
+> > patches can be applied for 6.9 (not strictly fixing anything in 6.8).
 > 
-> Thanks Cristian for instant response. Yes, indeed now we have more
-> questions :) (which is good). But that's good description of the
-> situation.
-> 
-> So lets consider a few option what we could do now:
-> 1. Let Sibi add another global state the 'handle' but add
->    a BUG_ON() or WARN_ON() in the probe path if the next
->    'handle' instance is different than already set in global.
->    This would simply mean that we don't support (yet)
->    such configuration in a platform. As you said, we
->    already have the *ph global, so maybe such platforms
->    with multiple instances for this particular cpufreq and
->    performance protocol don't exist yet.
-
-Yes this is the quickst way (and a WARN_ON() is better I'd say) but there
-are similar issues of "unicity" currently already with another vendor SCMI
-drivers and custom protocol currently under review, so I was thinking to
-add a new common mechanism in SCMI to handle this ... not thought about
-this really in depth and I want to chat with Sudeep about this...
-
-> 2. Ask Sibi to wait with this change, till we refactor the
->    exiting driver such that it could support easily those
->    multiple instances. Then pick up this patch set.
->    Although, we would also like to have those notifications from our
->    Juno SCP reference FW, so the feature is useful.
-> 3. Ask Sibi to refactor his patch to somehow get the 'handle'
->    in different way, using exiting code and not introduce this global.
+> As I mentioned, the 'required-opps' binding update is needed to fix the
+> missing OPP vote so blocking the binding patch would block merging the
+> DT fix which could otherwise go into 6.8.
 > 
 
-> IHMO we could do this in steps: 1. and then 2. When
-> we create some mock platform to test this refactoring we can
-> start cleaning it.
+I agree that the fix gets the priority. But some maintainers perfer to merge fix
+patches _only_ if they are fixing the issue introduced in the ongoing release.
+But if Bjorn has no issues in merging these for 6.8, then it is fine.
+
+> The 'msi-map-mask' is arguably a fix of the binding which should never
+> have had that property, but sure, it's strictly only needed for 6.9.
+> 
+> And Bjorn A has already checked with the Qualcomm PCI team regarding
+> ASPM. It's also been two weeks since you said you were going to check
+> with your contacts. Is it really worth waiting more for an answer from
+> that part of the team? We can always amend the ASPM fixes later when/if
+> we learn more.
+> 
+> Note that this is also a blocker for merging ITS support for 6.9.
 > 
 
-Both of these options really beg an answer to my original previous q
-question...if we somehow enable this multi-probe support in the
-scmi-cpufreq.c driver by avoiding glbals refs, does this work at all in
-the context of CPUFreq ?
+I got it, but we cannot just merge the patches without finding the rootcause. I
+heard from Qcom that this AER error could also be due to PHY init sequence as
+spotted on some other platforms, so if that is the case then the DT property is
+not correct.
 
-...or it is just that CPUFreq cannot handle such a configuration (and
-maybe dont want to) and so the only solution here is just 1. at first and
-then a common refined mechanism (as mentioned above) to ensure this "unicity"
-of the probes for some drivers ?
+Since this is not the hot target now (for Qcom), it takes time to check things.
 
-I'm not familiar enough to grasp if this "multi-probed" mode of operation is
-allowed/supported by CPUFreq and, more important, if it makes any sense
-at all to be a supported mode...
+- Mani
 
-Thanks,
-Cristian
+-- 
+மணிவண்ணன் சதாசிவம்
 
