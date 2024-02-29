@@ -1,120 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-12951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-12952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A5E186C6C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 11:22:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AC1886C6CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 11:25:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8BBB2866A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 10:22:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D564CB2190C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Feb 2024 10:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAE7964CD4;
-	Thu, 29 Feb 2024 10:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E36DC64A92;
+	Thu, 29 Feb 2024 10:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uSZwf0pJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9A4A64CC9;
-	Thu, 29 Feb 2024 10:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B319860BA7;
+	Thu, 29 Feb 2024 10:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709202146; cv=none; b=L/SWL9O1ZCmRH5GHveGuNW2FmzS3nVpN31Zuy2nfDVRsFctdv7r5oMYqP9Ka0DE1kIhkxQqOT05UdL53fFBr7rWGur0Um6jQ0hRWNU1S0IQso0y3U8B1V3BqGwf3fS6xLtWAb4KMdyVup95sqw6hyr3Gw1g59jl5OKUOTVIeRi4=
+	t=1709202341; cv=none; b=gZMdzNojXlpLMi1tuQhuPv5jUYv/Id0dDFKeS6hCTxNtFa0SwnN+5/pkswtf0NfmnlDPGocdxIjK916NhfrGxIbkXEGdUDFh13Hcc3pPphK/U861BuOobBAWFXmCUAgKC97pMvA/hoAEDWj446p7ljIrNhDiMWncS542Pg+xAfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709202146; c=relaxed/simple;
-	bh=zC+rOfgZk0FjySsxZFgupFvl2AUI4LOD52LgDdh6ffk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=gHQzYXJwBPgnFMXl0/qDKoglVckRTasG1+UVYiM3nxhUr5Q2OVVOgQC4+RdifcwZ1hgznLw05JPj4lEO96+00irChYugRmjtKOUlbcFw/MqTUQUum32geTuc3fqawmBk4LPzUEfFSMikuE8kvq+Nq+YV+O/26KFrFxaeu0vaUqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CA8831FB;
-	Thu, 29 Feb 2024 02:23:02 -0800 (PST)
-Received: from [10.57.12.184] (unknown [10.57.12.184])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 99F903F762;
-	Thu, 29 Feb 2024 02:22:21 -0800 (PST)
-Message-ID: <18c249b2-ce8c-435b-8d65-a1770a1f294e@arm.com>
-Date: Thu, 29 Feb 2024 10:22:39 +0000
+	s=arc-20240116; t=1709202341; c=relaxed/simple;
+	bh=Jy/7w7KEnfQklosMbmnBXq3PIa9EaMOSK5qguujWYHU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ojRuVTcRwhfVEMSI6uDi1+M1jsCXEc+DNxtlVngYHZNjPmWY57pMrTpRP0M5C3WxsMrQ7JWYQSHJNUGqtPxRGpqi7Y05QUR0FGvAw4VAWC7x+hpRMFlcdJLsCynI9sCEVF2hH+k1SBEbOsKScdop299q71WweIim5ZtcK6lhStk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uSZwf0pJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38338C433F1;
+	Thu, 29 Feb 2024 10:25:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709202341;
+	bh=Jy/7w7KEnfQklosMbmnBXq3PIa9EaMOSK5qguujWYHU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uSZwf0pJg3JOSpFylltxG0i+NQp5EjBAyeI6hEtkmnqYcmGVzLyLHsf711+x1bigJ
+	 chu1NMkhr+3ZYAmetg+itT3WLsGvd7Fca3qmNyTZLk36TQK0U7Cbqh+jULZ/4yMhna
+	 0LIuZEPrjCtKrE1Syt9or8s9icOfgoVkXmug/Tzzu0jxESoWUxeCisRC2jNpPP+0Wl
+	 Qjs5HKReD93uJ/ZR+d6nHyFF6gP10oVeHYGyKV9DeL9w0leLrr+HHxHGwnnPBNLGZU
+	 dxjcj3ikVdnWI/7AuuOzjqhykU8xV5gJ1HMT8kBOSUpVcRzxbKeo1o7T9eBgbvcfJS
+	 8PnGZhj3ELtrA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rfdbo-000000000xS-3Hnm;
+	Thu, 29 Feb 2024 11:25:49 +0100
+Date: Thu, 29 Feb 2024 11:25:48 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <ZeBbrJhks46XByMD@hovoldconsulting.com>
+References: <20240223152124.20042-1-johan+linaro@kernel.org>
+ <20240228220843.GA309344@bhelgaas>
+ <20240229100853.GA2999@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] cpufreq: scmi: Register for limit change
- notifications
-Content-Language: en-US
-From: Lukasz Luba <lukasz.luba@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com
-Cc: linux-arm-kernel@lists.infradead.org, pierre.gondois@arm.com,
- dietmar.eggemann@arm.com, morten.rasmussen@arm.com, viresh.kumar@linaro.org,
- rafael@kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org
-References: <20240227181632.659133-1-quic_sibis@quicinc.com>
- <20240227181632.659133-3-quic_sibis@quicinc.com>
- <f8bfc666-c216-44d5-a63b-99f04ff3b8ef@arm.com>
- <2608b2d8-f3b0-b4f5-f8e4-1f2242043ded@quicinc.com>
- <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
-In-Reply-To: <64c6a1bc-92f2-4f44-ab10-cbd2473746f3@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240229100853.GA2999@thinkpad>
 
+On Thu, Feb 29, 2024 at 03:38:53PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Feb 28, 2024 at 04:08:43PM -0600, Bjorn Helgaas wrote:
+> > On Fri, Feb 23, 2024 at 04:21:12PM +0100, Johan Hovold wrote:
 
-
-On 2/29/24 09:59, Lukasz Luba wrote:
+> > > Johan Hovold (12):
+> > >   dt-bindings: PCI: qcom: Allow 'required-opps'
+> > >   dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+> > >   dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+> > >   PCI: qcom: Add support for disabling ASPM L0s in devicetree
+> > 
+> > The ASPM patches fix a v6.7 regression, so it would be good to fix
+> > that in v6.8.
+> > 
+> > Mani, if you are OK with them, I can add them to for-linus for v6.8.  
+> > 
+> > What about the 'required-opps' and 'msi-map-mask' patches?  If they're
+> > important, I can merge them for v6.8, too, but it's late in the cycle
+> > and it's not clear from the commit logs why they shouldn't wait for
+> > v6.9.
+> > 
 > 
-> 
-> On 2/28/24 17:00, Sibi Sankar wrote:
->>
->>
->> On 2/28/24 18:54, Lukasz Luba wrote:
->>>
->>>
->>> On 2/27/24 18:16, Sibi Sankar wrote:
->>>> Register for limit change notifications if supported and use the 
->>>> throttled
->>>> frequency from the notification to apply HW pressure.
->>
->> Lukasz,
->>
->> Thanks for taking time to review the series!
->>
->>>>
->>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>> ---
->>>>
->>>> v3:
->>>> * Sanitize range_max received from the notifier. [Pierre]
->>>> * Update commit message.
->>>>
->>>>   drivers/cpufreq/scmi-cpufreq.c | 29 ++++++++++++++++++++++++++++-
->>>>   1 file changed, 28 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/cpufreq/scmi-cpufreq.c 
->>>> b/drivers/cpufreq/scmi-cpufreq.c
->>>> index 76a0ddbd9d24..78b87b72962d 100644
->>>> --- a/drivers/cpufreq/scmi-cpufreq.c
->>>> +++ b/drivers/cpufreq/scmi-cpufreq.c
->>>> @@ -25,9 +25,13 @@ struct scmi_data {
->>>>       int domain_id;
->>>>       int nr_opp;
->>>>       struct device *cpu_dev;
->>>> +    struct cpufreq_policy *policy;
->>>>       cpumask_var_t opp_shared_cpus;
->>>> +    struct notifier_block limit_notify_nb;
->>>>   };
->>>> +const struct scmi_handle *handle;
-> 
-> I've missed this bit here.
+> I'm checking with Qcom HW team on the ASPM behavior. So please hold off the ASPM
+> related patches until I get an answer. But 'required-opps' and 'msi-map-mask'
+> patches can be applied for 6.9 (not strictly fixing anything in 6.8).
 
-So for this change we actually have to ask Cristian or Sudeep
-because I'm not sure if we have only one 'handle' instance
-for all cpufreq devices.
+As I mentioned, the 'required-opps' binding update is needed to fix the
+missing OPP vote so blocking the binding patch would block merging the
+DT fix which could otherwise go into 6.8.
 
-If we have different 'handle' we cannot move it to the
-global single pointer.
+The 'msi-map-mask' is arguably a fix of the binding which should never
+have had that property, but sure, it's strictly only needed for 6.9.
 
-Sudeep, Cristian what do you think?
+And Bjorn A has already checked with the Qualcomm PCI team regarding
+ASPM. It's also been two weeks since you said you were going to check
+with your contacts. Is it really worth waiting more for an answer from
+that part of the team? We can always amend the ASPM fixes later when/if
+we learn more.
+
+Note that this is also a blocker for merging ITS support for 6.9.
+
+Johan
 
