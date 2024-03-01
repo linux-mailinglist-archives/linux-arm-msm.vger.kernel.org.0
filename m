@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-13125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B5E886ECFF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 00:40:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4EBF86ED02
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 00:42:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF5D51F234FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 23:40:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56CB3285E30
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 23:42:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326425F471;
-	Fri,  1 Mar 2024 23:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 817D85EE9F;
+	Fri,  1 Mar 2024 23:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rh1PgTdc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eYleZ5U5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B975916A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 23:40:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA50B5EE64
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 23:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709336420; cv=none; b=X4Fm7tywS18w/9BW2bDOnpDsm+R7xTgckcUyJAqf+cr/73FmLJ4bxIsck/uH6kcmc2I0f/18YrFBI2tjpgtAboDCjfzjnP/AbuO3gYf2L8seL2F36WBc23C7PcuPqf9knYUhhMR2lHgKWcCFmJg0RGL3pGgdMRwT4mLbx44YE8E=
+	t=1709336551; cv=none; b=Mip0hTxDOtR7gCLCskx/84gG33dhJC2CdjY7kRaBGSKNYII2J4VL6TRxdZyTQWsU4/8FB85QxG96prccqhhLDUeZlBZWMoKqGvSjEy0Ydcvvpce42LhYF+zJJH+i1ZFimZFyGLsstAYCjAFJ7ryav+F6Sa1BQmJdd+OLuLGfCuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709336420; c=relaxed/simple;
-	bh=idSvzfAS4ep3/WE+9lUziOUNo3twTGxnZ4JFyu2J8f4=;
+	s=arc-20240116; t=1709336551; c=relaxed/simple;
+	bh=25h2s03QLSdp6bRNpLiP+irXeh+fZcWx//JXhu+B3aE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eP7mORAUvR2J6V6B7aSxnA7ESA7NsiwY8R84PTLA3EbPfc6kJ6UDmEtZZ49kdfBx3QE1sW/+5nAqpc4wpLnusqFrroZhRAH1lAsL0c6aqAdl4bo6UvL0WVAp3uUky5G7PRZpyN+i0eQdSkLw+lBfBjW4IN/rLlD0+2wQnj4Fsp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rh1PgTdc; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:Content-Type; b=W/bJO7C4k6OJFGXMK9GSoptYivjWxYDyf999j7cWUjfw8qonEWGUi9l3MXLpnlcMYKSwrlQK0VUrdqQ4OV8Ub5VjM/p1lxND6Cy9rHNf0nx7OaGwZtzZL9rQDPrTcwAjwLzQXhX8kSs1YNrR9COBymw38/jSAQWvpFwrhv0Kv70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eYleZ5U5; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a449c5411e1so151302666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 15:40:16 -0800 (PST)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-564fd9eea75so4172468a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 15:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709336415; x=1709941215; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709336548; x=1709941348; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=y7ZVdM89+KtkZz6SVTLDCKcLFf8vd3lmFqhwuPTodL0=;
-        b=Rh1PgTdcy5urH/YN81ATlMgCAoEJtdIj38TXRCalo1NRouC84TZlJJ4rPNG3hsaDhN
-         Nl7VFTMtBy25SeoJgcRd23mtSlJ8KJZ95eEufYqk6G3lZn5WmK0XO/p4PbZquNoJXfU2
-         /bbByKmkrIlE7W8AknXWjukW3AQwWml3BR5igiV4w47yqKyRd6mOl3nN+7UzuN1ltLN6
-         fdZ3F/OZk2eeJbxzFziNpXRmIrAB74s+nZklyqj9gNMATUHOn48HDkyO6Me/77VSkDuN
-         RlvmhyYjzAco6cu5GeYQ6DLjRlXF5ca6UaAx6lgk9cigHQnDuj5mG6OonWO6/S21g+7g
-         aA+A==
+        bh=QTpk9ZPQWyNrhHVW/3ykx8bCWFEXW6TZCcUdpJn/0yY=;
+        b=eYleZ5U5uRz4CbzUtw5H0NJ1TRU8JZzL3x39w306wijfF4ZNzoAO9lE5J6Tsbi6zIf
+         W6LdUSET5UTCqscTpETnnVcudqEso2Ox7dSOobgvIrK4nb9BPAlHEbR1gDy8LreGp7pl
+         EwjcDBdmoqFA6SXVx6Q8jalNnUDcm257Lgh09fDmse0Wn+Vur3NeW0r/vDFtm23JetcS
+         1MPbMOBEOXgp1NPmb4EJ5xAkHXxui4sCMW7x+COfd3VDP3g8+B4r2vxjmpkTibTcjN7l
+         2mMcRFEF1dUZ4d3UioqUHWEXFzxOcWXSuuuVwyHvu673uBS6sFdHsAmR5s1yPpzx2VDC
+         kebQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709336415; x=1709941215;
+        d=1e100.net; s=20230601; t=1709336548; x=1709941348;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y7ZVdM89+KtkZz6SVTLDCKcLFf8vd3lmFqhwuPTodL0=;
-        b=El8BfNOPRtBtCblF7lyy3Fmgx34fZuF/BPoGnh2ThPQMqrEUpHtwH3CRioEfc2bJtQ
-         HkVxa9iyvhEtsQhW7IQI4RRqRheDb8+SsBju5u+s1i7d/KnxV492dd18hL6ZanhkHMX7
-         7o/YUOuWb86EsjmRC35n0kKIuBtgBo9VwJtx9SCDGTx3IX6KwQDiO50bYjnvpdxTuKRc
-         izAHCyQUSKc3hC/XBrL/1Bd9yvqc8tFkt6UeKIeyG8iXna4iSRIgCdjZ9/2hzL39fwCa
-         D0FZQzlHLpG9UPU2OLFnhe2MbRZc2SQ2hPBW61dmudtNI4P6cJjjkA3ibPkyF4jdCXP7
-         phrA==
-X-Gm-Message-State: AOJu0Yy5E+3i6Kh+GphqQiBDbfpVi+NWjPb+mP3doIhnb/7FKNhS0EYO
-	86o04siEB8t7K11RsZJnY6eYWcC/R591DTq1c1Bnzt0xKg62wiQl9JcXLdAbnW4=
-X-Google-Smtp-Source: AGHT+IFgo3kAwgbN2l4OD+lpkiPFejUrDFmsu36KW1graCljGsBHhE8Q52BUSYKY20I4WVUJicZAig==
-X-Received: by 2002:a17:906:5f9a:b0:a44:5a3d:7877 with SMTP id a26-20020a1709065f9a00b00a445a3d7877mr2253044eju.56.1709336415205;
-        Fri, 01 Mar 2024 15:40:15 -0800 (PST)
+        bh=QTpk9ZPQWyNrhHVW/3ykx8bCWFEXW6TZCcUdpJn/0yY=;
+        b=RLaDOkm/5q+bR3lp+vGYdXhc28Rm9Cix0HR4AwvLrO9FzXc+HEfZs37nRm2hkEX0VM
+         lV+VJl3ugYQh1Ej3oMb9o9F1rYlKoyydzikPu1zA2q9HgSeveoV7nxyBcnYpBCWexA9i
+         VxWQoM6LM6YyQ/rTBFdjDHAID4F30yS+EAETdPgxVqWYyPUW+yoL9t8E8MQE2utwtmEh
+         Zq6dfIIMFJuocwKgLk+8DSo53B6ZaZhnc1kDQ5jWz8q6991VsSqM43Hski1LsEewvGJx
+         m+VHo/jz4pE4ceEh+e/ZUfyfINgMdSO3RmXqt4eM2GT3HQYF5546SR5QyT/SuWR/h3jQ
+         tXWw==
+X-Gm-Message-State: AOJu0YxlQsNyzVMx7w2u+HVFKQWeLUm8meTz388zhM1BVrLJmwejdyPX
+	oNdZr7ofOAK+LibBzxpegztRUqoW+efGxUb0dVL72e/9Jg1ao//Kg1Uuv8VuXoI=
+X-Google-Smtp-Source: AGHT+IFRQx/BGvRRQHWnehLDkyl5yY9eCMtCmTp08r8NunqurYAeKV/S0PNGCAL3TJ5DxTCTzyOX9A==
+X-Received: by 2002:a50:c8c9:0:b0:566:348:fc4a with SMTP id k9-20020a50c8c9000000b005660348fc4amr2195978edh.32.1709336547817;
+        Fri, 01 Mar 2024 15:42:27 -0800 (PST)
 Received: from [192.168.216.32] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id a13-20020a1709066d4d00b00a44256373afsm2122841ejt.200.2024.03.01.15.40.13
+        by smtp.gmail.com with ESMTPSA id c28-20020a50d65c000000b00565a9c11987sm2077259edj.76.2024.03.01.15.42.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 15:40:14 -0800 (PST)
-Message-ID: <b5635fd2-9a06-49f0-9d4f-1088f52d5af5@linaro.org>
-Date: Sat, 2 Mar 2024 00:40:13 +0100
+        Fri, 01 Mar 2024 15:42:27 -0800 (PST)
+Message-ID: <77485a55-c9da-408f-8dcc-77c6734927da@linaro.org>
+Date: Sat, 2 Mar 2024 00:42:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,15 +75,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add SM7150 driver support
+Subject: Re: [PATCH v12 8/9] firmware: qcom: scm: Add check to prevent Null
+ pointer dereference
 Content-Language: en-US
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- djakov@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240222174250.80493-1-danila@jiaxyga.com>
- <20240222174250.80493-3-danila@jiaxyga.com>
+To: Mukesh Ojha <quic_mojha@quicinc.com>, andersson@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linus.walleij@linaro.org, linux-gpio@vger.kernel.org
+References: <20240227155308.18395-1-quic_mojha@quicinc.com>
+ <20240227155308.18395-9-quic_mojha@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -120,20 +119,27 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240222174250.80493-3-danila@jiaxyga.com>
+In-Reply-To: <20240227155308.18395-9-quic_mojha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22.02.2024 18:42, Danila Tikhonov wrote:
-> Add a driver that handles the different NoCs found on SM7150, based on the
-> downstream dtb.
+On 27.02.2024 16:53, Mukesh Ojha wrote:
+> There are multiple place in SCM driver __scm->dev is being
+> accessed without checking if it is valid or not and all
+> not all of function needs the device but it is needed
+> for some cases when the number of argument passed is more
+> and dma_map_single () api is used.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> Add a NULL check for the cases when it is fine even to pass
+> device as NULL and add qcom_scm_is_available() check for
+> cases when it is needed for DMA api's.
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
 
-Thanks
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Most (all?) drivers calling into SCM already check is_available()
+at probe time. I'm not sure returning -EPROBE_DEFER would be good
+for calls outside .probe.
 
 Konrad
 
