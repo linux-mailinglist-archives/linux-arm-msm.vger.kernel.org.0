@@ -1,143 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-13096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DEC786E689
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:59:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C23286E697
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1340EB22085
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:59:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B665F1C21EE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:02:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72ACC63DD;
-	Fri,  1 Mar 2024 16:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 046B4443F;
+	Fri,  1 Mar 2024 17:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W01qFzYx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DtaHTXd2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBD4468D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 16:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DFD3FE0
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 17:02:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709312358; cv=none; b=eIALnDdBhVc5clPNFsPwwBT8r8KZkvMUYc1234xfwyzmNoKQvFW0qycfneDgGxNvZwd0or639f9DPgCBMktUeMpl6Sz0RrSwzvZyQ5eAZrp059WmpE2s4ssXfv1ddjHPhD2sCboWNOHHelXcfliIcT4E0kicf2Jwipd1RtDB3jo=
+	t=1709312568; cv=none; b=kZDA1PBFl4yUmtCD6bPSWcZFPGGXZxuRe2tmOYORQd+yXwq6XPQos5LnNoIPUcAzivbnLiIiPnxHPwpo8ItzDfjj1h+VP5VJe880wxofyEQ6OlAa6eESxeauEj2s41+cuEmGs3A4VJbgJgUbCn9OksLuK3ZO671XI2CzVzx1MzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709312358; c=relaxed/simple;
-	bh=Sn+hTApo66RXRFFOejZkbYq/NBLDpDqua+YrtbrooGE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=e2FX0b91+1mizqH/oOSsMbAtKZ7aahZTrKNUQu5sBvcRo7A/7spBaU5IJs4YylvnoL0g7WEyw5e/QrnBlUCE+Z57bO7JqTKikJZiyj9VuKQLDmfle7Qf4S4Qm//0A4PW8mbSoDSEIdyt0b0SayBe52Ycg4Ss37e0TnVo8Cv5Tuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W01qFzYx; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1709312568; c=relaxed/simple;
+	bh=Bkj0I0SUh29zp8LIZC5qKKF3Hbd577+hfaSUf1YEdc8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ekGhZSjAYZvRgyKgCIqF0wpwS9vjUBpSPpBgVyuvGzhuesOiKYx7AR5JZeT+9pS9LLrKZcwWPOJ3wmf+NRBzOg0HXMNznToCgR/dC4sLEwexnibADc02A2cKnO11G/dr+c7OGBdnvvSP6iZUh1qLBwfnklsCeNgFaD5hXQcZb30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DtaHTXd2; arc=none smtp.client-ip=209.85.166.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a3e85a76fa8so336001366b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 08:59:16 -0800 (PST)
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-365c8257940so6819175ab.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 09:02:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709312355; x=1709917155; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DhcdvKEbv720I24gdx4dqUT7cWiwM4tuBobtp1tISMw=;
-        b=W01qFzYx9H+hHKMz5F2p8YpREDIXrozrz3puR9Cpt9lkFVH/iMYwzACFyDxXfRZdth
-         M6MCjP8RyDPBuuFzxrRC5LJXlZJ/ml4tmGpJyEctpapBqmJyXW1opjjdhB0I+0gd5WZA
-         zAedLPBmIcbBwFooOUKq4kmfW7I2ajHQR7BPZy3skQlcRRfeWH+goSkfYkg1bxYtlEkw
-         xkKXQcDcQzB25dBddQ/9eN96f9hQ/WTyRReFdmlC+5JX4YcqQz57UuWjTCT7s4PSsGzV
-         DOLw7/qGiPc1K9N/K4BCshNSdOSRr0MMM4twlgeTC/W7ET8fM6f3Xd5UYFyOp5QhDnNn
-         V3Rg==
+        d=linaro.org; s=google; t=1709312566; x=1709917366; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFD7+EeXbLhZQK9aauwPh9/7nmAnd7U/WxWooQh3Jh0=;
+        b=DtaHTXd2GGQrUM2fIBU2Cync4GeeHq8NpEN67Jd0xrEVD0eFFWB5oquPzjMoRDAMF8
+         q3zFbqytcXPq//4/XEGIEChla8MLdL0LDiSxRp4745ExZFtq2o3lM9rSKAjxR0wIPqZH
+         Baet6OabZI7YQVdNCNHUETkMsbabkMPieSlIvBAjPEhtKHMqYqeqy4j9jitl1pJICqgr
+         KFymXH+C1vSj0Qvs8fe+wFa7lorZ2hMhnGp4XNPwL9sCvIdhShkfuJ+n3Mk7/asmi1Vo
+         ZS0PLHWLwoB8s9jbn739DUXOtAjapMZK0V87qCkLB16B0GACXLf6eqG3iWgb59nHQUho
+         ZJBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709312355; x=1709917155;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DhcdvKEbv720I24gdx4dqUT7cWiwM4tuBobtp1tISMw=;
-        b=Xzh0apIcJtJ6WbE35gD+pCAtz/AxmY5MMZ1Vl8CkIVHgPJAFaom7/iaHbyGi/LlZtx
-         fe1jHsQxttjR3W7c2E2SXHjLQLVFInhy4k2c/gIuQZhsVAqbrlE/GgDezezAAdh+IMYh
-         NT9u9N0EcxsYhv1+MVPnj9C6zS8POKIefq41Ab6EI6rx2FW1ikEIPA0E/0nhnIz3YfzO
-         BLwepGaM7jt7Oims6f7C9cji/g6B1xo4YRZK1gObN7TQFDav0Er/sViVh+BSPrR3ISSw
-         9lUxkm0qrncL0+j76QoCk4ZELO816cXf7GV+80QZr6/SFGLcif1jdXCaKFOX+o5+uMm6
-         MSKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUXruf9miHYDqpHnwhULz8MYrE97uF/exaJyIL350o1/D/6/qu/weTOQeqDx6Umow1+87aWKPUbLmqBP2AKBMcZFVOtduTHRfzk96Tfrg==
-X-Gm-Message-State: AOJu0YyZyh5lH8pX34MwhfaB0QtTLRZXWoflCfU5bIJh/qLQmW5tHmAD
-	F1n6V9zkTZXy8YoHU/aw6OHbjdYsyQHVpRQj+ocRnbQXZb6ejTHWD3wDW2h1v2I=
-X-Google-Smtp-Source: AGHT+IFEoZLKgFS35NpEoXQnuUCTt1vPmUtKm4k/hH5K2S4yx+nBZFXpSZmHjheRGA3fowojRKy4aQ==
-X-Received: by 2002:a17:906:1b4a:b0:a44:4170:abce with SMTP id p10-20020a1709061b4a00b00a444170abcemr1693202ejg.59.1709312355292;
-        Fri, 01 Mar 2024 08:59:15 -0800 (PST)
-Received: from [127.0.1.1] ([188.24.162.93])
-        by smtp.gmail.com with ESMTPSA id k11-20020a170906578b00b00a44b405121csm294460ejq.9.2024.03.01.08.59.14
+        d=1e100.net; s=20230601; t=1709312566; x=1709917366;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vFD7+EeXbLhZQK9aauwPh9/7nmAnd7U/WxWooQh3Jh0=;
+        b=ss/igrc2GzF7SrocSHVX+SCwu3vse8ejv/ZNjj+aQJnX8xLnKt7+IjAkl/SpMq5pHf
+         E4d+ININVJRaJu734DiNmcfbT6VwD4ijPaHpS40pHcmR0gzd7Wp37uuH9wfjlPdT9I/a
+         2ZJSACPZg5P/qdqQOMM8x9dGL8Rp92H+SJgWn1hzK964Ia49ENT5MU5dBVurM5d2REhc
+         +UtPy+CYgxDQRTqWGhlnWKeAz+qT74om0zzMZa3wLotBKnVyYZb7Yybf9GhJ9kl60g/K
+         w5PTTecFD+JBDUXa0aqIXpu1BLJ2CMTpgvWTMFp//ZG7qq6c9ledgSnbLFm+SqO5GeWO
+         MfRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWADBdkRWj74vMaG8wNQHpO76rWB3LyBHesuLwyWebgwrh49SR4e334KZd8LtwibTYIbq7+mJExpuXfo2iro9Xzt9um8JX490RVyThqXQ==
+X-Gm-Message-State: AOJu0YwziYRGHFsPS4w/TdXCIMYQqJYapQ4FMt9XqHWSoNoKoWJDefob
+	9XpxytYojK9B+PlBpEg/OH6wKn/Bf2DgrHSFAwLtHN7VVo4nHEkdmZ0w9HttmWo=
+X-Google-Smtp-Source: AGHT+IHeHUzCtWeB4wOCTxMMiaIKCpRduUo3dp5evXrqwq4J05sRXrRhKHYPTJR2WbAJYdAIWnaYWQ==
+X-Received: by 2002:a92:cc11:0:b0:365:1737:d78 with SMTP id s17-20020a92cc11000000b0036517370d78mr2232767ilp.17.1709312566559;
+        Fri, 01 Mar 2024 09:02:46 -0800 (PST)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id o2-20020a92dac2000000b0036581060910sm991430ilq.6.2024.03.01.09.02.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 08:59:14 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 01 Mar 2024 18:59:02 +0200
-Subject: [PATCH v4 2/2] PCI: qcom: Add X1E80100 PCIe support
+        Fri, 01 Mar 2024 09:02:45 -0800 (PST)
+From: Alex Elder <elder@linaro.org>
+To: davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com
+Cc: horms@kernel.org,
+	mka@chromium.org,
+	andersson@kernel.org,
+	quic_cpratapa@quicinc.com,
+	quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com,
+	quic_subashab@quicinc.com,
+	elder@kernel.org,
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v2 0/7] net: ipa: simplify device pointer access
+Date: Fri,  1 Mar 2024 11:02:35 -0600
+Message-Id: <20240301170242.243703-1-elder@linaro.org>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240301-x1e80100-pci-v4-2-7ab7e281d647@linaro.org>
-References: <20240301-x1e80100-pci-v4-0-7ab7e281d647@linaro.org>
-In-Reply-To: <20240301-x1e80100-pci-v4-0-7ab7e281d647@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1238; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Sn+hTApo66RXRFFOejZkbYq/NBLDpDqua+YrtbrooGE=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBl4gleCxvPUklGNpOG874P40u75+I5DNMnfyDjj
- vd/BiQOoaqJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZeIJXgAKCRAbX0TJAJUV
- VlVyD/9lKC7NRaEQJ4m/TJE6paUcAWXB7HWMn7Vmj9Kd+LqI3gNQXcBxMSCIrdZmBjVUPwcjkiO
- dYRAd0nPrb6z5ynRyT4ubmiw0J1c2tURDnftZ/aTOJgmFH/wH/e0KW76IPaPwufAsQWizNludxJ
- injbECTiw29Bhzn3WrH9YCBIQzBbJPRJyXbsvdUKagLBBljcYVA11wjOYkXEJkDciejA5sNo06Z
- W2fBvpvptqqGsRlnjr0YqUy+z4zUVWSOiu8HxqZ09Dr1Bomqrk9A5a0IcpLrai/bhQ0ymRUMeh/
- O9zETwuAwYKKXbqEBE0EWj7gpGXwBsHEaPzKiY5U718DSQ6KYWApKuS66x++y6KqEr5h2jCqp7X
- OzDopLj+dL4Hs048qj9DjwdBv7qhbLIsSQpzXP+XnYhy4XgqhkS5++L9EwgX9Gk92DD+jKwxySA
- Sug3MXnLNZA0b3QgC8mKiUbYhOi6sreks684KRc1seTRowO7QhFcYvdygjL4Sn/C2BjHlNrW+lW
- /wyj8t91MaRKGKv3fmMt5oshRTAUe3dvHbivBn5s3bslO6LA+O6OHPhXo6H0TInlHyfeJknS6Zh
- 6R2pH6xlWmsi1bmeQuoNV6WC/HL7Vrm0xdSuTcwFmqAnRaJtoGKvsHF9rb3mjpQN/V3O7Neq30q
- pdS1hqHkELLi96Q==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Transfer-Encoding: 8bit
 
-Add the compatible and the driver data for X1E80100 PCIe controller.
-There are 5 controller instances found on this platform, out of which
-2 are Gen3 with speeds of up to 8.0GT/s, while the other 3 are Gen4
-with speeds of up to 16GT/s. The version of the controller is
-1.38.0 for all instances, but they are compatible with 1.9.0 config.
-The max link width is x8 for one controller, x4 for two of others and
-x2 for the two left.
+This version of this patch series fixes the bugs in the first patch
+(which were fixed in the second), where ipa_interrupt_config() had
+two remaining spots that returned a pointer rather than an integer.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+Outside of initialization, all uses of the platform device pointer
+stored in the IPA structure determine the address of device
+structure embedded within the platform device structure.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 2ce2a3bd932b..b7467f9dfea9 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1642,6 +1642,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
-+	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_9_0 },
- 	{ }
- };
- 
+By changing some of the initialization functions to take a platform
+device as argument we can simplify getting at the device structure
+address by storing it (instead of the platform device pointer) in
+the IPA structure.
+
+The first two patches split the interrupt initialization code into
+two parts--one done earlier than before.  The next four patches
+update some initialization functions to take a platform device
+pointer as argument.  And the last patch replaces the platform
+device pointer with a device pointer, and converts all remaining
+references to the &ipa->pdev->dev to use ipa->dev.
+
+					-Alex
+
+Alex Elder (7):
+  net: ipa: change ipa_interrupt_config() prototype
+  net: ipa: introduce ipa_interrupt_init()
+  net: ipa: pass a platform device to ipa_reg_init()
+  net: ipa: pass a platform device to ipa_mem_init()
+  net: ipa: pass a platform device to ipa_smp2p_irq_init()
+  net: ipa: pass a platform device to ipa_smp2p_init()
+  net: ipa: don't save the platform device
+
+ drivers/net/ipa/ipa.h           |  5 +--
+ drivers/net/ipa/ipa_cmd.c       |  6 +--
+ drivers/net/ipa/ipa_endpoint.c  | 29 +++++++-------
+ drivers/net/ipa/ipa_interrupt.c | 69 +++++++++++++++++++++------------
+ drivers/net/ipa/ipa_interrupt.h | 22 +++++++++--
+ drivers/net/ipa/ipa_main.c      | 60 +++++++++++++++++-----------
+ drivers/net/ipa/ipa_mem.c       | 37 +++++++++---------
+ drivers/net/ipa/ipa_mem.h       |  5 ++-
+ drivers/net/ipa/ipa_modem.c     | 14 +++----
+ drivers/net/ipa/ipa_power.c     |  4 +-
+ drivers/net/ipa/ipa_qmi.c       | 10 ++---
+ drivers/net/ipa/ipa_reg.c       |  8 ++--
+ drivers/net/ipa/ipa_reg.h       |  4 +-
+ drivers/net/ipa/ipa_smp2p.c     | 33 ++++++++--------
+ drivers/net/ipa/ipa_smp2p.h     |  7 +++-
+ drivers/net/ipa/ipa_table.c     | 18 ++++-----
+ drivers/net/ipa/ipa_uc.c        |  9 ++---
+ 17 files changed, 197 insertions(+), 143 deletions(-)
 
 -- 
-2.34.1
+2.40.1
 
 
