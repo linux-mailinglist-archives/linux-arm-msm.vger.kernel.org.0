@@ -1,65 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-13090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DE1A86E529
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:21:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66C4F86E580
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:27:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2B1128704B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:21:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82E9B1C20D70
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:27:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B492670AE4;
-	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2554170CBE;
+	Fri,  1 Mar 2024 16:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JB/c1HKS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8HHwUey"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD5F6F514;
-	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DD70CB6;
+	Fri,  1 Mar 2024 16:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709310096; cv=none; b=HvmqEeCC5DZzcoPuScmNhIf/1xSzdTahQg5Hi6U+tdV8JS7tbDpkdXfyiOgzN5zVu1Vk+6ASSS/Snr+eazWoK3GYBvEmOOwyctxefSmqP2SJrLffxGb5pKcgv9ziz0Aj2WgILPNbXdW3OHQLwQDV3VfznsQTCVcQ2twNKka9AGg=
+	t=1709310394; cv=none; b=aW0EKNvaikv7hmaEeNFwFDoDY0FTrL5KX8Z3rqh5BO/kOR3FYse6ktfcoSsG9i2jkIAj0x9Dh6D1j3PZF+u+mGFueOH1KSgaXKjQLvfL2fD6n7s4M8JRZeXlry6KwpR+WO39529tMB5dvBLK/7XIfavjcAYuFBD4LH2E7JzbPwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709310096; c=relaxed/simple;
-	bh=avyjyGyF/VeFKLhHlTrCk38bYjiWeXUn6I458pAdN64=;
+	s=arc-20240116; t=1709310394; c=relaxed/simple;
+	bh=TvXH6saXNfgndMe7jdShDcIe/NSIB7gQ2yk9JpkDGn4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=URgevWDybu0VVXiV+PZOEus2i48qLkYO0Ig+WH34GY5DkHdWwPz5qbGphAFx9d7/umfs6/99+Lsqs57oXO1N3MaJ54lqriCF/pLcGnWvtMwWzEwaXHL7usPA4p/tbh+OzcW6goHJOFSkPxJ+vq4B51qm326WU3rkGIxPQznl180=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JB/c1HKS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA49C433C7;
-	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Udo85MAu0kPkUPseCr4Rmv5xqRxy/u/3D9beze16/GYCiALQ8fSdKVKm2EyeOIlT0SneMeMjQ+eYVN/I0jIhnfgkDaZfTP6BD1hV1W2wc7A5qQBEbYD7KkLn655EAdVe/iUJS3/3owT6wceCH2++f1u+kdxwWHVxM3ov1HQpKrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8HHwUey; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDB6C433F1;
+	Fri,  1 Mar 2024 16:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709310096;
-	bh=avyjyGyF/VeFKLhHlTrCk38bYjiWeXUn6I458pAdN64=;
+	s=k20201202; t=1709310393;
+	bh=TvXH6saXNfgndMe7jdShDcIe/NSIB7gQ2yk9JpkDGn4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JB/c1HKSJpQhaCL6td7M5tCKAtrfU9k213yUhsowltVubPh5SDfNbSm12TZVEylC9
-	 FfK/EvWG1ZBCWGDzcadJxn8e/wqxbhpjZSWEcMlKQVmxReYzJlWzSj+r/yupr77wBc
-	 D6qSP8tpHeh2REjLyFM9sHXiU/OEuMBLtZGM+I5ycanqw1eSPW2yJOfTMnsRzE+dGz
-	 AmxynpDelSO3pq7gTYOtudIgHw/CWbLmEi0VyMsMa+XjjpVq+WzODTd4YBqxtpIDNO
-	 axL7RZSL0RP0asrE1wfQudeKh8qoP7VxAxcl4deDrFDGGX43+nEutCHZDADvfAOi7c
-	 fHvYwr8MIsevg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rg5dr-000000002kJ-2SpG;
-	Fri, 01 Mar 2024 17:21:48 +0100
-Date: Fri, 1 Mar 2024 17:21:47 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZeIAm74PplfLVis3@hovoldconsulting.com>
-References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
- <20240213082724.1789096-2-quic_kriskura@quicinc.com>
+	b=g8HHwUeyo9sVtVc/RAO1ayTmbaD3Z23Oo0ITl1vz9T/FMJwRzvbqazR+e2aFvjBeW
+	 wadUfFc0+uTrOVOIYHYn+F4gXQHT4nBKav4nJYrpzOhfJKEXSijHQbrDHe9ruF3rf5
+	 nPZiCQr9p6vpFqmDLwYVp2xdbLmuqyvGNz+jDfMz5O5q/e7DsNk4FJxEJrdX/fa9px
+	 vj7JamfrK1La7K9tCvG2xx6frkXRcItzx9Wwj1dcdIqod9s5hrYAUli+1RPvduLMIN
+	 dJRIwzbCTAkUlOoqqqlD1w/Kmb4wdEEbA8V7/976bGB9iGev7Lahvd5NfCRh16tvxC
+	 3rckRK2qKInYA==
+Date: Fri, 1 Mar 2024 16:26:28 +0000
+From: Simon Horman <horms@kernel.org>
+To: Alex Elder <elder@linaro.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
+	quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+	elder@kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 1/7] net: ipa: change ipa_interrupt_config()
+ prototype
+Message-ID: <20240301162628.GF403078@kernel.org>
+References: <20240229205554.86762-1-elder@linaro.org>
+ <20240229205554.86762-2-elder@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,73 +63,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240213082724.1789096-2-quic_kriskura@quicinc.com>
+In-Reply-To: <20240229205554.86762-2-elder@linaro.org>
 
-On Tue, Feb 13, 2024 at 01:57:23PM +0530, Krishna Kurapati wrote:
-> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
-> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
-
-"interrupts" and "PHYs"
-
-> platforms.
-
-But I suggest you just reword this along the lines of
-
-	Add USB DWC3 multiport controller.
-
-as it's assumed that you'll describe resources like interrupts and PHYs.
-
-Perhaps no need to mention SA8295p either as this change is needed (and
-correct) also for sc8280xp proper.
-
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 82 ++++++++++++++++++++++++++
->  1 file changed, 82 insertions(+)
+On Thu, Feb 29, 2024 at 02:55:48PM -0600, Alex Elder wrote:
+> Change the return type of ipa_interrupt_config() to be an error
+> code rather than an IPA interrupt structure pointer, and assign the
+> the pointer within that function.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index febf28356ff8..29dbf2a9cdba 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3331,6 +3331,88 @@ system-cache-controller@9200000 {
->  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
->  		};
+> Change ipa_interrupt_deconfig() to take the IPA pointer as argument
+> and have it invalidate the ipa->interrupt pointer.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+>  drivers/net/ipa/ipa_interrupt.c | 15 ++++++++++-----
+>  drivers/net/ipa/ipa_interrupt.h | 10 +++++-----
+>  drivers/net/ipa/ipa_main.c      | 13 ++++---------
+>  3 files changed, 19 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
+> index 4d80bf77a5323..a298d922dd871 100644
+> --- a/drivers/net/ipa/ipa_interrupt.c
+> +++ b/drivers/net/ipa/ipa_interrupt.c
+> @@ -236,7 +236,7 @@ void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt)
+>  }
 >  
-> +		usb_2: usb@a4f8800 {
+>  /* Configure the IPA interrupt framework */
+> -struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+> +int ipa_interrupt_config(struct ipa *ipa)
 
-> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 860 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 859 IRQ_TYPE_LEVEL_HIGH>,
+Hi Alex,
 
-> +					      <&pdc 127 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 129 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 128 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 131 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 130 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 133 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 132 IRQ_TYPE_EDGE_RISING>,
+There are two cases where this function still returns a pointer.
 
-These should all be IRQ_TYPE_EDGE_BOTH as DP/DM interrupts may need to
-trigger also on falling edges.
+Around line 250:
 
-> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interrupt-names = "pwr_event_1", "pwr_event_2",
-> +					  "pwr_event_3", "pwr_event_4",
-> +					  "hs_phy_1",	 "hs_phy_2",
-> +					  "hs_phy_3",	 "hs_phy_4",
-> +					  "dp_hs_phy_1", "dm_hs_phy_1",
-> +					  "dp_hs_phy_2", "dm_hs_phy_2",
-> +					  "dp_hs_phy_3", "dm_hs_phy_3",
-> +					  "dp_hs_phy_4", "dm_hs_phy_4",
-> +					  "ss_phy_1",	 "ss_phy_2";
+	ret = platform_get_irq_byname(ipa->pdev, "ipa");
+	if (ret <= 0) {
+		dev_err(dev, "DT error %d getting \"ipa\" IRQ property\n",
+			ret);
+		return ERR_PTR(ret ? : -EINVAL);
+	}
 
-Johan
+And around line 280:
+
+	return interrupt;
+
+This does seem to be resolved in patch 2/7.
+But as it is, this patch breaks bisection.
+
+...
 
