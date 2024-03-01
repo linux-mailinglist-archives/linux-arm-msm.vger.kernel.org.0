@@ -1,77 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-13074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA7E486E13F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:46:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CFD286E149
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:47:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 804B11F21E8E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:46:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A4961C209CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:47:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4CB13FB83;
-	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0814F4F1F8;
+	Fri,  1 Mar 2024 12:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RR5miFg1"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="17zvLga4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CEC7E1;
-	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED15742AB5;
+	Fri,  1 Mar 2024 12:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709297164; cv=none; b=O2gzd9A697cKZIwtcSM1rzOqUlCHw2gFqlGGSlw03sqcJze7a2O8sVqxUwNjQn4NaCDIVrcBQb3FhJBvBiwzkxE//Ofqx/mkM0agEzt7Cm9vGwBbPwxdUY9zNDoNKdXOyFu7uhOHW4NpSWdz71GkJ5s0XFjBWrhCK8JC+nDTpzg=
+	t=1709297249; cv=none; b=H4qK/FX09nyWMjwFWQnJ0AqaETI2yHeNEnowxlIdDsh5OKfcy6RRyAL9zV+95wro069XxbDvHo42dOKnsHC8FnrSHRVJh8wf8VxBJjcQG2WmOqiwuoF5+oe2LpLATawIKOvRQkFPwDweIWF11cfgqrj8JX5BCyY6JkGuvICUp1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709297164; c=relaxed/simple;
-	bh=Zz0zVoGja3cXhFHWcB5UiPfkBIp0SM7xu2HWnAZ05Vk=;
+	s=arc-20240116; t=1709297249; c=relaxed/simple;
+	bh=hA0oxwD27gd74f5RciQ0gAwJyLc3AOc6ENazGRzlsA8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p4KjexykC5RSs+7GPKgZSWefLgR2nfsalC5WUKaNW4nOMzmP02INlIDF4gH/VtE9xxjcDlN++VApEloS//cYshMnFDPYZya5Y7aEq5pNqWcgg0SFY6xc6fFvmziMq5HkpeNdajcddbp/KTx7IPu599v14xqIb/VNyXWnF9RfPP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RR5miFg1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169B9C433C7;
-	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709297164;
-	bh=Zz0zVoGja3cXhFHWcB5UiPfkBIp0SM7xu2HWnAZ05Vk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=cfoZjahUq3l+yScVLWlGSno08DbXOeYGdDERBlcJ3z1pJEVixW6p3YbuDYKQLy9YWBMucRCacQyQUAJUy/jRI8W/SQVQl5yOWe1FIflkZRiPXKhsQCvqz89JFuI7XYxV4XXKP505uG4YnQ42v57/v1yTVSG9pjOwPVvgyV/iy5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=17zvLga4; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
+Received: from 8bytes.org (p4ffe0c3c.dip0.t-ipconnect.de [79.254.12.60])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id B32031C2C89;
+	Fri,  1 Mar 2024 13:47:22 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1709297243;
+	bh=hA0oxwD27gd74f5RciQ0gAwJyLc3AOc6ENazGRzlsA8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RR5miFg1MbKC8vvcwq6NzLC782LATfreZUIRbVKNW2lo+QvieyB2UVH6UD3RlJagO
-	 Wcj3ZTvr4/RVH7eHon1cljpL6j1N0qVpaODmJ4q8bgpwKjm7Oza0ws+RqjQnuL0Fks
-	 tSBW3Ii6eBrjxVqg5jh4KKsk6tjttvTIYvIovTLTeIe9Vhwsg6zvFGVYvicxMCkSil
-	 NDKNA6pWwI8NnUZhIcDcEGM/yz5RUdrHSWqgciGLZgm8cIvryUxkKvf9iMsq81YoHc
-	 nMZxaVmQ74iMSji0quwRNAlhO6CARUduWu4+Lnf2Z45lpGJ+fFT0suABp3KH9qXrpL
-	 nuQaLLZDKBgiQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rg2HH-0000000016H-1tzj;
-	Fri, 01 Mar 2024 13:46:15 +0100
-Date: Fri, 1 Mar 2024 13:46:15 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	b=17zvLga4k0NTgX7vMeySb0BST/85bdOAY7Tbmc6qXLWdcX5iiVdGYAFNMGHwTHhaD
+	 283fe6n+XYrQ/bHfCjsAfEvCK0QPphrx/G0/uJLueU+GPWo0u0fURkWHAClQ45C9uI
+	 uIvO1RmSja0KtwTEwIzL5JJM9GJ/LcAvmkyaz6Qi9DbfkNzr9uSWNtRbOriy+5pRPV
+	 2gQtzJ+O2Br8Ta3rRxwqFFTiug2NvFzLQFRpROnF95KN8tzg5yj5MpDAvgx2Dm/psw
+	 sDfN2jQw/qIHXKrhff0JF5WdLh5syukwy7nwIhemdPGPS4RXoyorYt7ID45BQAFQpD
+	 VrRA+CYGCvnTg==
+Date: Fri, 1 Mar 2024 13:47:21 +0100
+From: Joerg Roedel <joro@8bytes.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Rob Clark <robdclark@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <ZeHOF4p1LlNDiLcy@hovoldconsulting.com>
-References: <20240223152124.20042-1-johan+linaro@kernel.org>
- <20240228220843.GA309344@bhelgaas>
- <20240229100853.GA2999@thinkpad>
- <ZeBbrJhks46XByMD@hovoldconsulting.com>
- <20240229122416.GD2999@thinkpad>
- <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
- <20240229135407.GE2999@thinkpad>
- <ZeCktwcEFAfCEVkV@hovoldconsulting.com>
- <20240301122406.GA2401@thinkpad>
+	Yong Wu <yong.wu@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Krishna Reddy <vdumpa@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev
+Subject: Re: [PATCH 1/4] iommu: constify pointer to bus_type
+Message-ID: <ZeHOWXuNLhQlSrxM@8bytes.org>
+References: <20240216144027.185959-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,36 +85,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240301122406.GA2401@thinkpad>
+In-Reply-To: <20240216144027.185959-1-krzysztof.kozlowski@linaro.org>
 
-On Fri, Mar 01, 2024 at 05:54:06PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Feb 29, 2024 at 04:37:27PM +0100, Johan Hovold wrote:
+On Fri, Feb 16, 2024 at 03:40:24PM +0100, Krzysztof Kozlowski wrote:
 
-> > I'm all for digging further into this issue with the help of Qualcomm,
-> > but I don't think that should block this series as that would leave the
-> > link errors that we hit since 6.7 in place and effectively prevent us
-> > from enabling the ITS in 6.9.
-> 
-> Sounds fair. I will report back, perhaps with a fix based on what I get to know.
-
-Sounds good, thanks.
-
-> But I think it is better to disable L0s in the SoC dtsi itself. That's not only
-> because there are patches to essentially disable L0s in 2 of the available
-> platforms making use of this Soc, but also you are enabling GIC ITS in the SoC
-> dtsi and that may affect sa8540p which is making use of this dtsi.
-
-I did not do so on purpose as I'm only disabling L0s on machines where
-I've confirmed the issue. And the assumption for now is that this is a
-machine-level issue.
-
-> The users of that SoC may have not noticed the errors as you did before, but
-> enabling GIC ITS will certainly make the issue visible to them (more likely).
-
-Sure and that would be good to know as that would give us another data
-point which may help determine where the problem lies. Enabling the ITS
-will (hopefully) be done in 6.9 so we'll have a whole cycle to disable
-L0s where needed. I don't think this should be done before then.
-
-Johan
+Applied all, thanks.
 
