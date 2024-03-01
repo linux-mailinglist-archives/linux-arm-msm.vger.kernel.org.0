@@ -1,138 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-13077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18B0686E252
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 14:37:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 167D886E26F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 14:42:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C27351F22DDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:37:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 80FC4B2286B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:42:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8777269DFC;
-	Fri,  1 Mar 2024 13:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 845AB6E5E6;
+	Fri,  1 Mar 2024 13:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1PEcL76"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G7OwHWaz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B250B4086B;
-	Fri,  1 Mar 2024 13:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBAF7E1;
+	Fri,  1 Mar 2024 13:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709300227; cv=none; b=EdLsED8YB5SBOUt1MKHKhwZgwXrhjufcVhYrEql70K/1crWJM1LxtI/3DeUDuEUQUNUlTuP5QUorCaqPzrIJCnS4y1stNQVlsTmuE3EwEKr4yLhBmhOopAZdkvIGcjxy7LbUUfkB+Jfq+p3YDHLQNLYSv/qSRkgN9IlURbH9V14=
+	t=1709300522; cv=none; b=Yp6jvxaWgwtAICSAMlCAwZOyLkTd6JH7fo+yYph/Eu46RY9I2aV2l0xyyIvEvRzDT+By1O3YoV8yUsJGb6FwJcHQAuEf3WAVudZVF0GFVZ/wXx+sTmQ5TVf1+NyuSia+Odne4WGR2Gie7uUEAI/tqXyBKi4d/J0s45K6rHdAVhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709300227; c=relaxed/simple;
-	bh=BD5t+SGYCOkw0plPMwDOQ7kt+s0BaaClnOZQvqVXnUU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GI3LjpWJwlwTa0WpxgggUQ6yoAJKzS2thJHA8XM6p/kc0LBdkYYS7UGAcPHmpMuqevODqYTocIga14Nrq7YDMAuHn0bzqCaeBCKFNYCnVEXIIW5+Z0seAnPbtHK9GG6aNAgpH5VxeZAqhmwwxENhQH+zYI7Oxf9oIIMrRRq0XWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1PEcL76; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d29aad15a5so24366281fa.3;
-        Fri, 01 Mar 2024 05:37:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709300224; x=1709905024; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hYsIdn7slyGMRDx06FHVOcl6wKc/Fc3obP8a4mN3HAc=;
-        b=A1PEcL76j9W4I3O2nLdHJaUNb4b9ezkTZcSSyxxGht5UYwrlVq0xTpx3tXKZjhvokq
-         5QqgS0V1P2uAjowo3Im3/cg5vnZQZOZRFgisBhaV8mF3rwNNQ8C9SzZpFvqezhb/g3jY
-         YvVgUqsorctQE02ES/z2UaLo0+zl+nuCLwjVJlDSIf6k25rmnNkXtQ6bRq8qQ+su6ah0
-         FSBSP5m61x9XJfkSfJk1y9BeULUB0rVCzHvD7y4OsVWTGYA+30yjWZag8iGny6QGanDv
-         T3/wZeWcrbK+e6z8sxwC9wS3SWIDq9bt0NyOOWXjlJHDmrZi2MKLKzXUknyptejC4vUc
-         BeqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709300224; x=1709905024;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hYsIdn7slyGMRDx06FHVOcl6wKc/Fc3obP8a4mN3HAc=;
-        b=ULrqtGP1d8575paNle/0ykYoIWLIaRGcc0H5Q3fFKjODE/KBybacOysJtOZ1TVyQTj
-         7lXwbjBtUrHIt7aKlKAysePxEbVZrJxyiyRRqDiJk5EpsG7NoQqzP8xfFk6V+6xWTeoQ
-         6uFR9vlsYoaopZOCxnP8+B7vEO5NGVdLvh6LaMRkIso2A8BD4GCaW1phAACCCV1+xH+o
-         D9GW2HBlG4DX113Sz2xM5oTE3xywiKPrA9KctnwWcq2Rj8oXnMDQXfEJTeVq8AU6ZX9k
-         kWy029kyBJzaJ2Iy2dwaS4II5UHkUZSay6Ce/7Sp4CrT6PMnZc2aVp7zQOeia2h1/4HN
-         xmqw==
-X-Forwarded-Encrypted: i=1; AJvYcCWE0gs02pDtqBEV2quawihvyEdD778OPywnbv9A0L6S607XajhgAP83BYWtgAoy3vbwWOTDlodzRawQZoPM9fAWqiz9xiV31k2LPEfEJEg0iAjxBsQs8KXrmfv68gR5yFh/ykHzVslfNAgPZGE8IvX13yctLWusKj9pqsDHWtNy1RLsxzNxug==
-X-Gm-Message-State: AOJu0YyIIe+K/uQbezyTMTwim/aa19IpP0M4LlZBVnaMM+eQsMxCEqK6
-	YOdpe3wzdgurmp3WDUyC4ryI9wIDgismI4TsIiqQBzTFEiYMR25F
-X-Google-Smtp-Source: AGHT+IGUua/IpBGrUHpqPiS6tgGusCvvqcS0npwzCB0lIe8UuNXMyDq5nK1uJo2d0pe3K3btRMw1cg==
-X-Received: by 2002:a05:6512:3a85:b0:513:360d:fe7b with SMTP id q5-20020a0565123a8500b00513360dfe7bmr413678lfu.51.1709300223616;
-        Fri, 01 Mar 2024 05:37:03 -0800 (PST)
-Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.gmail.com with ESMTPSA id k40-20020a05600c1ca800b00412b643b5a3sm5474992wms.11.2024.03.01.05.37.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 05:37:02 -0800 (PST)
-Message-ID: <91b36da5-637d-4156-8be4-5aed55fc3c5d@gmail.com>
-Date: Fri, 1 Mar 2024 14:37:01 +0100
+	s=arc-20240116; t=1709300522; c=relaxed/simple;
+	bh=Y9SwzoxYcapFKA/eWs8SzI3sCgAD67MmxsRX57sigzA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nBJacV+nRShqX64bvtrtmc9jsPgABb25qXG0xhut4aSt9pilvT4FJ71rW0rutEeRRMQ6ozvZukVg4xrG6PdFNvvL7/q9xGPoqgsbwsTjEPIftnMQ1mJd03YSnb1+hr0JM/bq972bDgyg18OCCsHyvDQbIHEB1S057yylrqMm9mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G7OwHWaz; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4215cCjj006462;
+	Fri, 1 Mar 2024 13:41:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=zheshLQXi7uJZs+Iz0byhTVO8VTQDzKpy9DsiQROJ3w=; b=G7
+	OwHWazXgZbwZiceeg3PMVQmgunsFA7M6kLrRYlh4I+ZzlJO9oEsb7ktvmtGCSBK7
+	CuAEWyvmCPp0NtRe5w/a1gMwnuWMwskZRD+WZn/nv8J/sNpo2oJ8WFw2NCuXmwNR
+	DsviLHyewM2q22Xgy4yw5KytV7Ezy8WQktRtZ4XqtbzeFkk3WaP9j396A7M8Ne/j
+	eE+NrFerx0shT0NKbq02+f/jRkgNqZAFwpfSUSqkRgBtL0/PdRmphJVfjJpD+WWU
+	H/x+ABKJ3TvA5HkQXEdKjbyzg6fU0UmJS/obCVZ24xR4RO1KKAQOV70B9RRuVeP6
+	PlBW0UiRYoa8J8GHGx6g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wk91912dd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Mar 2024 13:41:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 421DfrXx007273
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 1 Mar 2024 13:41:53 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 1 Mar 2024 05:41:47 -0800
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.co>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v5 0/4] arm64: qcom: add AIM300 AIoT board suppo
+Date: Fri, 1 Mar 2024 21:41:09 +0800
+Message-ID: <20240301134113.14423-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] clk: qcom: gcc-ipq5018: fix terminating of frequency
- table arrays
-Content-Language: hu
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Varadarajan Narayanan <quic_varada@quicinc.com>,
- Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
- Devi Priya <quic_devipriy@quicinc.com>, Anusha Rao
- <quic_anusha@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Georgi Djakov <gdjakov@mm-sol.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240229-freq-table-terminator-v1-0-074334f0905c@gmail.com>
- <20240229-freq-table-terminator-v1-1-074334f0905c@gmail.com>
- <ZeGic5cG8lneKJXp@hovoldconsulting.com>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <ZeGic5cG8lneKJXp@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Qv0xSGrXaHh21HSYY5s9MjgrF8EGLTzR
+X-Proofpoint-ORIG-GUID: Qv0xSGrXaHh21HSYY5s9MjgrF8EGLTzR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-01_13,2024-03-01_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1011 suspectscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403010114
 
-Hi Johan,
+Add AIM300 AIoT support along with usb, ufs, regulators, serial, PCIe,
+and PMIC functions.
+AIM300 Series is a highly optimized family of modules designed to
+support AIoT applications. It integrates QCS8550 SoC, UFS and PMIC
+chip etc.
+Here is a diagram of AIM300 AIoT Carrie Board and SoM
+ +--------------------------------------------------+
+ |             AIM300 AIOT Carrie Board             |
+ |                                                  |
+ |           +-----------------+                    |
+ |power----->| Fixed regulator |---------+          |
+ |           +-----------------+         |          |
+ |                                       |          |
+ |                                       v VPH_PWR  |
+ | +----------------------------------------------+ |
+ | |                          AIM300 SOM |        | |
+ | |                                     |VPH_PWR | |
+ | |                                     v        | |
+ | |   +-------+       +--------+     +------+    | |
+ | |   | UFS   |       | QCS8550|     |PMIC  |    | |
+ | |   +-------+       +--------+     +------+    | |
+ | |                                              | |
+ | +----------------------------------------------+ |
+ |                                                  |
+ |                    +----+          +------+      |
+ |                    |USB |          | UART |      |
+ |                    +----+          +------+      |
+ +--------------------------------------------------+
+The following functions have been verified:
+  - uart
+  - usb
+  - ufs
+  - PCIe
+  - PMIC
+  - display
+  - adsp
+  - cdsp
+  - tlmm
 
-2024. 03. 01. 10:40 keltezéssel, Johan Hovold írta:
-> On Thu, Feb 29, 2024 at 07:07:46PM +0100, Gabor Juhos wrote:
->> The frequency table arrays are supposed to be terminated with an
->> empty element. Add such entry to the end of the arrays where it
->> is missing in order to avoid possible out-of-bound access when
->> the table is traversed by functions like qcom_find_freq() or
->> qcom_find_freq_floor().
->>
->> Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-> 
-> Good find!
-> 
-> Looks like these should be backported to the stable kernels as well so
-> someone should add:
-> 
-> Cc: stable@vger.kernel.org
-> 
-> to all patches except possibly the sc8280xp one (that camera clock
-> controller was added in 6.8-rc1 so that patch does not need it in case
-> you can these fixes in before 6.8 is released).
+Documentation for qcs8550[1] and sm8550[2]
+[1] https://docs.qualcomm.com/bundle/publicresource/87-61717-1_REV_A_Qualcomm_QCS8550_QCM8550_Processors_Product_Brief.pdf
+[2] https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Snapdragon-8-Gen-2-Product-Brief.pdf
 
-You are right maybe, although I did not find strong enough reasons for adding
-the stable tags.
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
 
-Only the changes of the gcc-ipq5018 driver has been tested on real hardware the
-others are not. So those does not fit into the "It must be obviously correct and
-tested." rule.
+v4 -> v5:
+  - "2023-2024" instead of "2023~2024" for License
+  - update patch commit message to previous comments and with an updated
+    board diagram
+  - use qcs8550.dtsi instead of qcm8550.dtsi
+  - remove the reserved memory regions which will be handled by
+    bootloader
+  - remove pm8550_flash, pm8550_pwm nodes, Type-C USB/DP function node,
+    remoteproc_mpss function node, audio sound DTS node, new patch will
+    be updated after respective team's end to end full verification
+  - address comments to vph_pwr, move vph_pwr node and related
+    references to qcs8550-aim300-aiot.dts
+  - use "regulator-vph-pwr" instead of "vph_pwr_regulator"
+  - add pcie0I AND pcie1 support together
+  - the following patches were applied, so remove these patches from new
+    patch series:
+      - https://lore.kernel.org/linux-arm-msm/20240119100621.11788-3-quic_tengfan@quicinc.com
+      - https://lore.kernel.org/linux-arm-msm/20240119100621.11788-4-quic_tengfan@quicinc.com
+  - verified with dtb check, and result is expected, because those
+    warnings are not introduced by current patch series.
+    DTC_CHK arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb
+    arch/arm64/boot/dts/qcom/sm8550.dtsi:3015.27-3070.6: Warning
+    (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae96000: unnecessary
+    #address-cells/#size-cells without "ranges" or child "reg" property
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-75000000:opp-hz:0: [75000000, 0, 0, 75000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-150000000:opp-hz:0: [150000000, 0, 0, 150000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: opp-300000000:opp-hz:0: [300000000, 0, 0, 300000000, 0, 0, 0, 0] is too long
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
+    arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dtb:
+    opp-table: Unevaluated properties are not allowed ('opp-150000000', 'opp-300000000', 'opp-75000000' were unexpected)
+        from schema $id: http://devicetree.org/schemas/opp/opp-v2.yaml#
 
-Since the support for the IPQ5018 platform is quite incomplete as several
-drivers are missing even in 6.8-rc6, it is quite unlikely that anyone uses a
-stable kernel for something serious on such boards. Hence backporting the
-gcc-ipq5018 changes would not help too much in itself.
+v3 -> v4:
+  - use qcm8550.dtsi instead of qcs8550.dtsi, qcs8550 is a QCS version
+    of qcm8550, another board with qcm8550 will be added later
+  - add AIM300 AIoT board string in qcom.yaml file
+  - add sm8550 and qcm8550 fallback compatible
+  - add qcm8550 SoC id
+  - add reserved memory map codes in qcm8550.dtsi
+  - pm8010 and pmr73d are splited into carrier board DTS file. Because
+    the regulators which in pm8550, pm8550ve and pm8550vs are present
+    on the SoM. The regulators which in pm8010 and pmr73d are present
+    on the carrier board.
+  - stay VPH_PWR at qcs8550-aim300.dtsi file
+      VPH_PWR is obtained by vonverting 12v voltage into 3.7 voltage
+      with a 3.7v buck. VPH_PWR is power supply for regulators in AIM300
+      SOM. VPH_PWR regulator is defined in AIM300 SOM dtsi file.
 
-Regards,
-Gabor
+v2 -> v3:
+  - introduce qcs8550.dtsi
+  - separate fix dtc W=1 warning patch to another patch series
+
+v1 -> v2:
+  - merge the splited dts patches into one patch
+  - update dts file name from qcom8550-aim300.dts to qcs8550-aim300 dts
+  - drop PCIe1 dts node due to it is not enabled
+  - update display node name for drop sde characters
+
+previous discussion here:
+[1] v4: https://lore.kernel.org/linux-arm-msm/20240119100621.11788-1-quic_tengfan@quicinc.com
+[2] v3: https://lore.kernel.org/linux-arm-msm/20231219005007.11644-1-quic_tengfan@quicinc.com
+[3] v2: https://lore.kernel.org/linux-arm-msm/20231207092801.7506-1-quic_tengfan@quicinc.com
+[4] v1: https://lore.kernel.org/linux-arm-msm/20231117101817.4401-1-quic_tengfan@quicinc.com
+
+Tengfei Fan (4):
+  dt-bindings: arm: qcom: Document QCS8550 SoC and the AIM300 AIoT board
+  arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
+  arm64: dts: qcom: add base AIM300 dtsi
+  arm64: dts: qcom: aim300: add AIM300 AIoT
+
+ .../devicetree/bindings/arm/qcom.yaml         |   8 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 384 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi  | 345 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8550.dtsi         | 169 ++++++++
+ 5 files changed, 907 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
+
+
+base-commit: 1870cdc0e8dee32e3c221704a2977898ba4c10e8
+-- 
+2.17.1
+
 
