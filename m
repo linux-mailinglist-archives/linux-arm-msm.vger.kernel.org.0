@@ -1,187 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-13094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A741286E61E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:50:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76CAB86E681
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:59:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D66601C22374
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:50:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 833A21C20A87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8958D3C487;
-	Fri,  1 Mar 2024 16:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20D091FDB;
+	Fri,  1 Mar 2024 16:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="2+MCDChq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZmEmkUWc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EB93C47B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 16:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438BD33C8
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 16:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709311460; cv=none; b=QRpTv1H+J/ObR9/NLGKu7KOYEXbcRaPA6bwvXj2PfFC7KINjKPdDHqwxgOq1AEkwsnM+xSPZYdGIusQdi/JYain7Q+ifz1Q1MrSmCkIikHNJ8amO6PYeJbS9LwJvbfhwa++dKkxoVsXgJyIkNh68AVFCwdnSN+Jp1Rv2Tpg6Dbo=
+	t=1709312356; cv=none; b=Qtq376tRZaEF3MO/C9+OxJhsAER/mQ85TP7AJt/ZdH5tqxRK99vglJtKyNajqNtG5ypofjz/OcYZkmfgO7++do4LuRKuXK9ueT2lhWUCdPmDMZgrPO83Oj0uZkF0itwlqrd76Szoa/RoJdc6Yj3SlQ8aJXdZ+MxeEUNQmAm0kXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709311460; c=relaxed/simple;
-	bh=g8MDAPa9ELVeta78bCU6vupJUIdfsNOxvkK6Oibr55Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kmYGvkENBq9Wo4u+spIj06x5IedXRWotz6iKt6if7hgPKLoGA22pJAihjJuTD0/87561OafBhu1wgC6X/E1pb4TNko9AdWGK8+owJcFN9bmUwHC2iESRv3054UOInUVVR8YHzK8fuuSuIiXM83hsFRKMupxfXIkdjKu++Ts4dzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=2+MCDChq; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1709311456;
-	bh=g8MDAPa9ELVeta78bCU6vupJUIdfsNOxvkK6Oibr55Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=2+MCDChq+ExP6DxPQSfTJIUDZbCwv3b0vuXu4KLe76ogMlJsjF3Pf7dlykMkroSlx
-	 AbzWFFQUqsZM5iWgOCDb7NH6MED5S594I/D88HxrPCrtj/LQyXI5I8edwRG3iMW4TD
-	 kUwXOhQqBznTo/JR0iCccWzlbGt/g5Rm7W80zu/rvUGdwuaWIDI0zANURZWoAWC7Ng
-	 5sdQXPvmGBLR36YOkV6OYEEGjP85ReLsS+EgdwJFSG1oBR3CWnaYsy3qfMTsp2hhLJ
-	 6ljD9wX/Rd7FxUuiFQnkvrzP6sia1wSZm1+zEo53G3VKfnmev8SHDG1EOzbKNeH5KE
-	 y9xxRHtmFddPQ==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dmitry.osipenko)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CA69837813F2;
-	Fri,  1 Mar 2024 16:44:13 +0000 (UTC)
-Message-ID: <07e10e3f-9e48-4b0d-b320-fffdece23a2c@collabora.com>
-Date: Fri, 1 Mar 2024 19:44:13 +0300
+	s=arc-20240116; t=1709312356; c=relaxed/simple;
+	bh=NZB9LRB2QOrRJ3ixKPv2+2PISpkDe3kHMMxpEBwB44Q=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kCtvr3driXCQrbBfwTeVbylyw+NeBGaeDfXrf1AFAnHCX1rZvjfaGa5xWQkfqazcldSMxeWl4KtORDr8oH/8G4hkdbEKhY6+bclm6gt/A+HKXtVa+YCBjtQFuvLO/WLvDy2kP0TfbFs3wxGdsShav+KgkR0d90oHBTGkXD9DIYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZmEmkUWc; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-565c6cf4819so5743934a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 08:59:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709312352; x=1709917152; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jRboemFfgfa1ISiAS1bwq6CDoDUCEYcfuv7d0r7KbFM=;
+        b=ZmEmkUWckxMblWEuXTyy8YkUhPQXmmHs44MPQGJLmunUX1viNrRi+H6PB45iHtxYr2
+         vEHuvXKMalenhSgpXhXEDV6WZL6NiqCO62cD8m7aWq3a8Ni659w1ewsAy6kyQaDKvjTo
+         F6C/clQ2cTQojaY3F/T+gG6WEVZoClw2Ac5u4qq7I1IWJeVmxUk5kB6KlFr3TOkhlFYG
+         sG0qQfznwM15EwRl0wNAmOvsESQl5gNkcVpNW7M7MGReGPKvCxbJ2Ob7nX7+t4dpiAg/
+         DlEkSi2vgoWAQn5i7hKuCFYulJgGDTNtY5nuWEPuMpYoCdXY8XZSBWswr3HePGQlpF4P
+         YW2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709312352; x=1709917152;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jRboemFfgfa1ISiAS1bwq6CDoDUCEYcfuv7d0r7KbFM=;
+        b=i3RuVRmSSay+xs8uC+WfXb/Igw5v0CJfAY57IsG1CphV5K3jo/mSh5yL52L8WsQJnc
+         bBJf94gg5G/q+l5WLxYRnXnUaI/XsO0GRtT2qpEeQf3JJ1Kj8pFTygL0wdZexpsjlgww
+         ZprpkzDRSKgSreGWMdIO73olJIPTnv21N0HNWLkMDp+EhytG7HRPEdsmoi3UzCI+Pkm+
+         kv2DaZi0cIHFc9ou6SexUklTa1wqF9zgPvD3USdM4OoBpw75CmO9LZmz9ORzgYIm8QFd
+         GfGxjxXEWqLsssUwrUuxP0uK4bFFY/LpJ6IaSirOuxtFTEt/4oyYI6vLvFjlDs0mb2cs
+         EHNA==
+X-Forwarded-Encrypted: i=1; AJvYcCX5jAWmgMj8Ex6gargavVIwxV5zuO0T1+9voD9K0UNE+/DzzlOiVYEPLqJD8r7XOsnP7lv9pQ15IeMzcKvBLP8lyF/1FaZquNziF/x93w==
+X-Gm-Message-State: AOJu0YwG4X48qEN/zxvuDFIkOCy/vvR1+rqhV/RQIg4EU4NQpMA7ILMq
+	dSyjds8jSns8denaI7q38NO/OWVtrm3eqeUdsGgtdRsuhhlBs2CcERf9nh1xmLg=
+X-Google-Smtp-Source: AGHT+IFBQNV4AZVdrbr7Tyv1iO/tRxJs+D/cYdtN3eTg0CF1sPeuI6fCoo1ydNx5LNnbQELCBKnutw==
+X-Received: by 2002:a17:906:2c48:b0:a44:2073:39b9 with SMTP id f8-20020a1709062c4800b00a44207339b9mr2043143ejh.10.1709312352580;
+        Fri, 01 Mar 2024 08:59:12 -0800 (PST)
+Received: from [127.0.1.1] ([188.24.162.93])
+        by smtp.gmail.com with ESMTPSA id k11-20020a170906578b00b00a44b405121csm294460ejq.9.2024.03.01.08.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Mar 2024 08:59:12 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v4 0/2] PCI: qcom: Add PCIe support for X1E80100
+Date: Fri, 01 Mar 2024 18:59:00 +0200
+Message-Id: <20240301-x1e80100-pci-v4-0-7ab7e281d647@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] drm: Fix reservation locking for pin/unpin and
- console
-Content-Language: en-US
-To: Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
- airlied@gmail.com, mripard@kernel.org, maarten.lankhorst@linux.intel.com,
- christian.koenig@amd.com, sumit.semwal@linaro.org, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
- marijn.suijten@somainline.org, suijingfeng@loongson.cn, kherbst@redhat.com,
- lyude@redhat.com, dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com,
- alexander.deucher@amd.com, Xinhui.Pan@amd.com, zack.rusin@broadcom.com,
- bcm-kernel-feedback-list@broadcom.com
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
- virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
- amd-gfx@lists.freedesktop.org
-References: <20240227113853.8464-1-tzimmermann@suse.de>
- <d854f70b-1d62-4da7-bfbd-2184456d1d25@collabora.com>
- <cd01e963-dd4d-4554-9feb-1750f72cc260@suse.de>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <cd01e963-dd4d-4554-9feb-1750f72cc260@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFQJ4mUC/32Ny2rDMBBFf8VonSkzelnOqv8RupDscSwwcpAak
+ xL875WzadNCNgP3DueeuyicIxdxbO4i8xpLXFIN+tCIfvLpzBCHmoVEqUgiwY3YISHCpY/Ayg8
+ dGReC1KIiwReGkH3qpwql6zzX8pJ5jLeH4/RR8xTL55K/HsqV9nZf10iye15fCQh4HMbWuK61j
+ O9zTD4vb0s+i31pla9oCQheWzsQWmeC/U0fmleUaQ354NBop/451Y+znj+0qnTrpHHcaVM/T/S
+ 2bd/adsEgcAEAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1328; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=NZB9LRB2QOrRJ3ixKPv2+2PISpkDe3kHMMxpEBwB44Q=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBl4glWk0wx0/5gvpLofEZZAw3EgZUXuInULn5fW
+ ZLwK1W3vmuJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZeIJVgAKCRAbX0TJAJUV
+ VplPD/9m3O0d8uU4quz6MHx2frXg6kVXV/YHIUY02fFUDWeFdoTogxDeznL4+eOG/WOe2/obzSc
+ gX+IAyDPZL1vZ7VW8mY13G5yXEJsg6wUaBOimMcTGEgWBK1OKvu5P3IbYyeWTTrxGM4ta8F7wqB
+ YPepLlV5t5sUGjFfXHrRAC9G8d1kD7lhBqGwP48ENwsNRtozOEMLKoMFwLNaLXFmZfuSAWUy08N
+ 6qD0cUQaNaoHVBp1P7ETvoPIvSD7SxufHOAGRouY0oLJ2mLIwBupo5effYojXwdNk+XpPlNPRmv
+ ZS8hc8D1izrryFkTl45yEQmcnY+SaS+4ICtF2PwMQOnKfoiS3p+YzQ4Ef3t0ZF0cMH2XDrDMXfJ
+ QEGY9TGDU6ihkK+RKrexrhsYaZ/ZpRyZd1R/m2n6L6sznbVSFF1tKKWiWht5cHNaKPYs/ONAWAW
+ iWn8NSOmtXPBHaShaD2N7IlyvGVjB6sP2nqBo+/8SdzElkygYKejSHByjsfBe15YFV9XA1go3yg
+ UTwbhTpOWd5v51KPoOulajIBhuF0dBdWQJnsSqSfILVhxzgu1Z+B7uoqr3eiPkk6W9Q/+AzdP7n
+ Pj9n122ZEkD262FmlvvP/d5c1iaTXas6syg+woPLGCInPWzlTbdIslVuJ66N5SSC6CA3/iUT5Rq
+ W7EM3wkA+hStDTA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 2/28/24 11:19, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 27.02.24 um 19:14 schrieb Dmitry Osipenko:
->> Hello,
->>
->> Thank you for the patches!
->>
->> On 2/27/24 13:14, Thomas Zimmermann wrote:
->>> Dma-buf locking semantics require the caller of pin and unpin to hold
->>> the buffer's reservation lock. Fix DRM to adhere to the specs. This
->>> enables to fix the locking in DRM's console emulation. Similar changes
->>> for vmap and mmap have been posted at [1][2]
->>>
->>> Most DRM drivers and memory managers acquire the buffer object's
->>> reservation lock within their GEM pin and unpin callbacks. This
->>> violates dma-buf locking semantics. We get away with it because PRIME
->>> does not provide pin/unpin, but attach/detach, for which the locking
->>> semantics is correct.
->>>
->>> Patches 1 to 8 rework DRM GEM code in various implementations to
->>> acquire the reservation lock when entering the pin and unpin callbacks.
->>> This prepares them for the next patch. Drivers that are not affected
->>> by these patches either don't acquire the reservation lock (amdgpu)
->>> or don't need preparation (loongson).
->>>
->>> Patch 9 moves reservation locking from the GEM pin/unpin callbacks
->>> into drm_gem_pin() and drm_gem_unpin(). As PRIME uses these functions
->>> internally it still gets the reservation lock.
->>>
->>> With the updated GEM callbacks, the rest of the patchset fixes the
->>> fbdev emulation's buffer locking. Fbdev emulation needs to keep its
->>> GEM buffer object inplace while updating its content. This required
->>> a implicit pinning and apparently amdgpu didn't do this at all.
->>>
->>> Patch 10 introduces drm_client_buffer_vmap_local() and _vunmap_local().
->>> The former function map a GEM buffer into the kernel's address space
->>> with regular vmap operations, but keeps holding the reservation lock.
->>> The _vunmap_local() helper undoes the vmap and releases the lock. The
->>> updated GEM callbacks make this possible. Between the two calls, the
->>> fbdev emulation can update the buffer content without have the buffer
->>> moved or evicted. Update fbdev-generic to use vmap_local helpers,
->>> which fix amdgpu. The idea of adding a "local vmap" has previously been
->>> attempted at [3] in a different form.
->>>
->>> Patch 11 adds implicit pinning to the DRM client's regular vmap
->>> helper so that long-term vmap'ed buffers won't be evicted. This only
->>> affects fbdev-dma, but GEM DMA helpers don't require pinning. So
->>> there are no practical changes.
->>>
->>> Patches 12 and 13 remove implicit pinning from the vmap and vunmap
->>> operations in gem-vram and qxl. These pin operations are not supposed
->>> to be part of vmap code, but were required to keep the buffers in place
->>> for fbdev emulation. With the conversion o ffbdev-generic to to
->>> vmap_local helpers, that code can finally be removed.
->> Isn't it a common behaviour for all DRM drivers to implicitly pin BO
->> while it's vmapped? I was sure it should be common /o\
-> 
-> That's what I originally thought as well, but the intention is for pin
-> and vmap to be distinct operation. So far each driver has been
-> different, as you probably know best from your vmap refactoring. :)
-> 
->>
->> Why would you want to kmap BO that isn't pinned?
-> 
-> Pinning places the buffer object for the GPU. As a side effect, the
-> buffer is then kept in place, which enables vmap. So pinning only makes
-> sense for buffer objects that never move (shmem, dma). That's what patch
-> 11 is for.
-> 
->>
->> Shouldn't TTM's vmap() be changed to do the pinning?
-> 
-> I don't think so. One problem is that pinning needs a memory area (vram,
-> GTT, system ram, etc) specified, which vmap simply doesn't know about.
-> That has been a problem for fbdev emulation at some point. Our fbdev
-> code tried to pin as part of vmap, but chose the wrong area and suddenly
-> the GPU could not see the buffer object any longer.  So the next best
-> thing for vmap was to pin the buffer object where ever it is currently
-> located. That is what gem-vram and qxl did so far. And of course, the
-> fbdev code needs to unpin and vunmap the buffer object quickly, so that
-> it can be relocated if the GPU needs it.  Hence, the vmap_local
-> interface removes such short-term pinning in favor of holding the
-> reservation lock.
-> 
->>
->> I missed that TTM doesn't pin BO on vmap() and now surprised to see it.
->> It should be a rather serious problem requiring backporting of the
->> fixes, but I don't see the fixes tags on the patches (?)
-> 
-> No chance TBH. The old code has worked for years and backporting all
-> this would require your vmap patches at a minimum.
-> 
-> Except maybe for amdgpu. It uses fbdev-generic, which requires pinning,
-> but amdgpu doesn't pin. That looks fishy, but I'm not aware of any bug
-> reports either. I guess, a quick workaround could fix older amdgpu if
-> necessary.
+Add support for PCIe controllers found on X1E80100 platform.
 
-Thanks! I'll make another pass on the patches on Monday
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v4:
+- Added dedicated schema as Krzysztof's work that splits the rest has been merged.
+- Link to v3: https://lore.kernel.org/r/20240202-x1e80100-pci-v3-0-78258e9451e8@linaro.org
 
--- 
+Changes in v3:
+- Added Krzysztof's Reviewed-by tag to the bindings patch
+- Added Mani's Acked-by tag to the bindings patch
+- Added Mani's Reviewed-by tag to the driver patch
+- Re-worded the commit message of the driver patch to include
+  things like the core version, the max link width and speeds.
+- Link to v2: https://lore.kernel.org/r/20240129-x1e80100-pci-v2-0-5751ab805483@linaro.org
+
+Changes in v2:
+- Documented the compatible
+- Link to v1: https://lore.kernel.org/r/20240129-x1e80100-pci-v1-1-efdf758976e0@linaro.org
+
+---
+Abel Vesa (2):
+      dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller
+      PCI: qcom: Add X1E80100 PCIe support
+
+ .../bindings/pci/qcom,pcie-x1e80100.yaml           | 165 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             |   1 +
+ 2 files changed, 166 insertions(+)
+---
+base-commit: 1870cdc0e8dee32e3c221704a2977898ba4c10e8
+change-id: 20231201-x1e80100-pci-e3ad9158bb24
+
 Best regards,
-Dmitry
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
