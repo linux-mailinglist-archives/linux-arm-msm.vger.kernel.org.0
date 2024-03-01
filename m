@@ -1,190 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-13064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48F5F86DC28
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 08:38:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88EE986DCA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 09:01:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D8C721F21BB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 07:37:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C347B233F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 08:01:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 115ED69952;
-	Fri,  1 Mar 2024 07:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71ABD69D0A;
+	Fri,  1 Mar 2024 08:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCBYd8Im"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NYXOROii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5566200C3;
-	Fri,  1 Mar 2024 07:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A367E6C;
+	Fri,  1 Mar 2024 08:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709278675; cv=none; b=GLLaok+uYxraBYCIJ/cP+mwpUZcowBIAeuN56yMna4Wqh21b1P4xtG7CSMDhXw/sHRBKezCnm+EdBVloB25k9rkiPvr2jOQbv4P18waU0t7RmmUFTyYsa6iki9Odggd05EXt82ATSCA3zsSO4wsgFLnKlnG3DcCgEHueg8/eJnw=
+	t=1709280083; cv=none; b=iEU6uWdnG4KLFdlf6q7nOEQV5EBILtazLZTe/SgWv8D+Z5a+M/0msBQV4raoQK1mVdCaS++Xe0wPXdBCVDIllpm7LARlS/jdx22F+lFNj3HLRxtNU5DFHTrO5niak1hiIJ12WYRKbLxUi1vBGQCyrxX56s2Gf/BCm7c6lnd48MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709278675; c=relaxed/simple;
-	bh=S41V4Rg+5A+/H6j5q+KJKdnhp7A+2pV2Ka4RM2AmyGw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=a+powcHdFzhceJunp/K7Zq2sT3nhErgpGLCFB/Eyu+PZ2RcDnxUbGZ2MNrfusGlP8R5LCyX1bdWLk2opMvszYwR6B6SMjyp87xNWhwLXiaRKX4w0WVU1vN7XDado1wzrjyUAwQQJW6la1NAZK62rT7cyh/YuOVcwSNHl4JvK/Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCBYd8Im; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5AA0AC433F1;
-	Fri,  1 Mar 2024 07:37:54 +0000 (UTC)
+	s=arc-20240116; t=1709280083; c=relaxed/simple;
+	bh=jMRWjjBb3WoG96heiGE+SbBHlPWqedM9ZSLpfueiMU8=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=WxwVmu/dG9MKnzTmMBt4fBd+39N6m7SVf1bsD5FBZ2N0RMuLDlEvpNFaBdYHT45gY3PihYDMSx1hKlbIbcR6hPWjo34Xz71rXVv+Lm4aCQEd1oR3xvIU9GweDZc9qaDlljAS7YPRkmcDvRGi7R0UPWNqWGOoBM3v78D8L++06TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NYXOROii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06746C433C7;
+	Fri,  1 Mar 2024 08:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709278674;
-	bh=S41V4Rg+5A+/H6j5q+KJKdnhp7A+2pV2Ka4RM2AmyGw=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=DCBYd8ImUE5PBwPUzAzWb2ntH/DUQHhzZjZaKG/4aKp6UQ8gosU++rcy9oJmxSix+
-	 FHTBZ9+HOzDRJKGidozF5gPkqPcRO0auGm0d0cLFd8EmHlALgV/QPBS7SD7qfdMpuv
-	 ur0XlMMeE5cOKvQJz/Mc0NDhT+rZR0i2rOt9+FAAq1LVKBwcQApE+3crSfU9ozJcLm
-	 eo7mxwOAhdIggs8LPpVw+kRPruTbOv54y5HHb8AFaG6ULU1hwkM2ZYAhr7pvtqXKAU
-	 R9Nd/+yJMc7xm+L8ZWvCtJ0AjLYvUZyL8D9S/UdEnPw8SNRNE4vC4da2zLZoeg6I7R
-	 VQXUbz7DQpuHw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A698C5475B;
-	Fri,  1 Mar 2024 07:37:54 +0000 (UTC)
-From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
-Date: Fri, 01 Mar 2024 15:16:33 +0800
-Subject: [PATCH v3] arm64: dts: qcom: qcm6490-idp: enable PMIC Volume and
- Power buttons
+	s=k20201202; t=1709280082;
+	bh=jMRWjjBb3WoG96heiGE+SbBHlPWqedM9ZSLpfueiMU8=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=NYXOROiiPwwVhYxx1fbNDxcpy1ncuwsxP3IJmfH3QY4e9lqXC5mcmHEFwLekftNje
+	 HdPvpXFl6MuYkRR+Dfj6GtbgTEKlYB9UH3l/RbRuSX/0okn+jTeVDtHyODc8LX/3Gd
+	 AMQelHir1f7Nh0yNghqmyI1UhM6pXRNUEqQPlumhjtthx8wh8D2LDcu0etWNaUhNnc
+	 h/PYPpr43thxVRBRjuPZ0DgbPuDlNfDGqOdclU4s6Ikxm3oOULyAMLohqdtohzALz/
+	 Yjb8O3lflw7vPwKeej6m09O5t2iFHNoHj8yLsi6swrrIwx6xZXLk/NUgtli0Yob3zp
+	 GbGLT+UfGyS7A==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  "David S. Miller"
+ <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
+ <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  ath10k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  netdev@vger.kernel.org,
+  devicetree@vger.kernel.org,  linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH RFC 2/4] wifi: ath10k: support board-specific firmware
+ overrides
+References: <20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org>
+	<20240130-wcn3990-firmware-path-v1-2-826b93202964@linaro.org>
+Date: Fri, 01 Mar 2024 10:01:17 +0200
+In-Reply-To: <20240130-wcn3990-firmware-path-v1-2-826b93202964@linaro.org>
+	(Dmitry Baryshkov's message of "Tue, 30 Jan 2024 18:38:38 +0200")
+Message-ID: <87h6hq8joy.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240301-gpio-keys-v3-1-ca664de8775c@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIANGA4WUC/22M0Q6CIBhGX8VxHQ1+TKGr3qN1oYD6ryUGxXKOd
- w+9sq3L8+07ZyHBerSBnIuFeBsxoBsziENB9NCMvaVoMhNgUDJgFe0ndPRu50C5kG1r5ImBkiT
- /J287/Gyt6y3zgOHl/LylI1/Xf5XIKad1JUWtlGk6aS7PN2oc9VG7B1k7EXYuiL0L2eWqK2Urj
- Kwr+HVTSl8XNyPY4AAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709278672; l=2630;
- i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
- bh=Vp4G+fbSlkb2JMufpBHQUvIun8hxc98pkwDSckQhTpA=;
- b=adwBBQ0ZZt/zCSk4WrpPjo2YcwF+PcjY3Mpz6Xj/DW0QpvmkQ1r+8O5jnrwjrLA1H1KJ/DfgV
- ggFdU7Xh3HZAkx4pQygcYIG/Fl+nJXs77c5ibMkB4z/atJiSiWJz7SC
-X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
- pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
-X-Endpoint-Received:
- by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
-X-Original-From: Hui Liu <quic_huliu@quicinc.com>
-Reply-To: <quic_huliu@quicinc.com>
+Content-Type: text/plain
 
-From: Hui Liu <quic_huliu@quicinc.com>
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-The Volume Down & Power buttons are controlled by the PMIC via
-the PON hardware, and the Volume Up is connected to a PMIC gpio.
+> Different Qualcomm platforms using WCN3990 WiFI chip use SoC-specific
+> firmware versions with different features. For example firmware for
+> SDM845 doesn't use single-chan-info-per-channel feature, while firmware
+> for QRB2210 / QRB4210 requires that feature. Allow board DT files to
+> override the subdir of the fw dir used to lookup the firmware-N.bin file
+> decribing corresponding WiFi firmware.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Enable the necessary hardware and setup the GPIO state for the
-Volume Up gpio key.
+Sorry for the delay, too many drivers... But this looks good to me, few
+small comments.
 
-Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
----
-Changes in v3:
-- Update the commit more concise and explicit.
-- remove "power-source" property and update the numeric value to defined
-name for "qcom,drive-strength".
-- Link to v2: https://lore.kernel.org/r/20240223-gpio-keys-v2-1-19f48b3d8762@quicinc.com
+In the commit message it would it would be good to have an example of
+the new firmware path. And also mention that board file (board-2.bin)
+handling is not affected, at least that's how understood from reading
+the code.
 
-Changes in v2:
-- Update the commit description.
-- Link to v1: https://lore.kernel.org/r/20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 43 ++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+> --- a/drivers/net/wireless/ath/ath10k/core.c
+> +++ b/drivers/net/wireless/ath/ath10k/core.c
+> @@ -942,11 +942,20 @@ static const struct firmware *ath10k_fetch_fw_file(struct ath10k *ar,
+>  	if (dir == NULL)
+>  		dir = ".";
+>  
+> +	if (ar->board_name) {
+> +		snprintf(filename, sizeof(filename), "%s/%s/%s",
+> +			 dir, ar->board_name, file);
+> +		ret = firmware_request_nowarn(&fw, filename, ar->dev);
+> +		ath10k_dbg(ar, ATH10K_DBG_BOOT, "boot fw request '%s': %d\n",
+> +			   filename, ret);
+> +		if (!ret)
+> +			return fw;
+> +	}
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index acf145d1d97c..cf8f6d48bfc2 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -9,7 +9,9 @@
- #define PM7250B_SID 8
- #define PM7250B_SID1 9
- 
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sc7280.dtsi"
- #include "pm7250b.dtsi"
-@@ -39,6 +41,24 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&key_vol_up_default>;
-+
-+		key-volume-up {
-+			label = "volume_up";
-+			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+		};
-+	};
-+
- 	reserved-memory {
- 		xbl_mem: xbl@80700000 {
- 			reg = <0x0 0x80700000 0x0 0x100000>;
-@@ -421,6 +441,16 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&pm7325_gpios {
-+	key_vol_up_default: key-vol-up-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+	};
-+};
-+
- &pm8350c_pwm {
- 	status = "okay";
- 
-@@ -448,6 +478,19 @@ led@3 {
- 	};
- };
- 
-+&pmk8350_pon {
-+	status = "okay";
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
+So here you test if ar->board_name is NULL.
 
----
-base-commit: 23e11d0318521e8693459b0e4d23aec614b3b68b
-change-id: 20240206-gpio-keys-138bbd850298
+> --- a/drivers/net/wireless/ath/ath10k/snoc.c
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+> @@ -1337,6 +1337,9 @@ static void ath10k_snoc_quirks_init(struct ath10k *ar)
+>  	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
+>  	struct device *dev = &ar_snoc->dev->dev;
+>  
+> +	/* ignore errors, default to empty string */
+> +	of_property_read_string(dev->of_node, "firmware-name", &ar->board_name);
 
-Best regards,
+What do you mean with empty string in this case, "\n" (with length of 1)
+or NULL? Should we also test for strlen(0) in ath10k_fetch_fw_file()?
+
 -- 
-Hui Liu <quic_huliu@quicinc.com>
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
