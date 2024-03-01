@@ -1,125 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-13065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88EE986DCA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 09:01:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50A9F86DCB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 09:09:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C347B233F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 08:01:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 827801C23DF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 08:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71ABD69D0A;
-	Fri,  1 Mar 2024 08:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6106A69D1A;
+	Fri,  1 Mar 2024 08:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NYXOROii"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V4ZroOJY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A367E6C;
-	Fri,  1 Mar 2024 08:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E379200C3;
+	Fri,  1 Mar 2024 08:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709280083; cv=none; b=iEU6uWdnG4KLFdlf6q7nOEQV5EBILtazLZTe/SgWv8D+Z5a+M/0msBQV4raoQK1mVdCaS++Xe0wPXdBCVDIllpm7LARlS/jdx22F+lFNj3HLRxtNU5DFHTrO5niak1hiIJ12WYRKbLxUi1vBGQCyrxX56s2Gf/BCm7c6lnd48MA=
+	t=1709280576; cv=none; b=t02ASlfVUqN32RFdT5n7ifKxAu9UsFGfJHDBmw8pSejPJhgjRU6TXfV/8fJ9H023hmzPtRTqXOaMh7DHdw5Y0pej9iDmBE5vh/y9sG0n3I6Ffau0/TLtYTDz62sam3hH+eGdh8RpnTwxmaUmemG4Vtn+LfFlTFztdZwP3mdzAwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709280083; c=relaxed/simple;
-	bh=jMRWjjBb3WoG96heiGE+SbBHlPWqedM9ZSLpfueiMU8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=WxwVmu/dG9MKnzTmMBt4fBd+39N6m7SVf1bsD5FBZ2N0RMuLDlEvpNFaBdYHT45gY3PihYDMSx1hKlbIbcR6hPWjo34Xz71rXVv+Lm4aCQEd1oR3xvIU9GweDZc9qaDlljAS7YPRkmcDvRGi7R0UPWNqWGOoBM3v78D8L++06TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NYXOROii; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06746C433C7;
-	Fri,  1 Mar 2024 08:01:19 +0000 (UTC)
+	s=arc-20240116; t=1709280576; c=relaxed/simple;
+	bh=SDOpostQbxSaHQbVT+H3u8LtntR385azXDotbcIDeEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DWsoCnIJqu4wbCIXcWgxMV7+cqN2EY357NIYfVM8QAL+K/kDzqsSnz2cn1VTVLhWpg9KtDY58NcRWlD1FfVc3wdJxZPJb8Gqwx5VCmES5E4Ugi1xGR/5VrQrQI/Kukbt3OVieawn3iEp3To/6jmiPpyCfMofTKsIl96eDoSMCd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V4ZroOJY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF45C433C7;
+	Fri,  1 Mar 2024 08:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709280082;
-	bh=jMRWjjBb3WoG96heiGE+SbBHlPWqedM9ZSLpfueiMU8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=NYXOROiiPwwVhYxx1fbNDxcpy1ncuwsxP3IJmfH3QY4e9lqXC5mcmHEFwLekftNje
-	 HdPvpXFl6MuYkRR+Dfj6GtbgTEKlYB9UH3l/RbRuSX/0okn+jTeVDtHyODc8LX/3Gd
-	 AMQelHir1f7Nh0yNghqmyI1UhM6pXRNUEqQPlumhjtthx8wh8D2LDcu0etWNaUhNnc
-	 h/PYPpr43thxVRBRjuPZ0DgbPuDlNfDGqOdclU4s6Ikxm3oOULyAMLohqdtohzALz/
-	 Yjb8O3lflw7vPwKeej6m09O5t2iFHNoHj8yLsi6swrrIwx6xZXLk/NUgtli0Yob3zp
-	 GbGLT+UfGyS7A==
-From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  "David S. Miller"
- <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
- <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  ath10k@lists.infradead.org,
-  linux-wireless@vger.kernel.org,  netdev@vger.kernel.org,
-  devicetree@vger.kernel.org,  linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH RFC 2/4] wifi: ath10k: support board-specific firmware
- overrides
-References: <20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org>
-	<20240130-wcn3990-firmware-path-v1-2-826b93202964@linaro.org>
-Date: Fri, 01 Mar 2024 10:01:17 +0200
-In-Reply-To: <20240130-wcn3990-firmware-path-v1-2-826b93202964@linaro.org>
-	(Dmitry Baryshkov's message of "Tue, 30 Jan 2024 18:38:38 +0200")
-Message-ID: <87h6hq8joy.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=k20201202; t=1709280575;
+	bh=SDOpostQbxSaHQbVT+H3u8LtntR385azXDotbcIDeEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V4ZroOJYkhMhHrVl1Ap4ozy2FeV7TA0/Efnc93tTYUHxflBLZOl8k1ljZ70MuD6HI
+	 +KD5jrkApO4SgulrrTz5XoH6+JBz96ZO+j12YNr/jBjAhY1fsZdaZfA7IYMvkqtl0K
+	 5772p83G7hOiJXoTVe+CclZocIbEFK7fI4jGNhBW8q9hBK1A01WUDvHoVdsHUClY7i
+	 iM9aXaWeD7z8XehuHy0JmAn/Nb8JcBjw9Usv22n+UfguUVaECBXPYVg+9/E09tOAAm
+	 qv6YDkjIgVmvSR3cku0DRHQewuOaXxltaz9f7jAYWeeD6xtcgfpmUjeih9lO6Ge2KT
+	 uExrktrOerLuA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rfxxh-000000006eC-2A9v;
+	Fri, 01 Mar 2024 09:09:46 +0100
+Date: Fri, 1 Mar 2024 09:09:45 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <ZeGNSbPjxELBklbx@hovoldconsulting.com>
+References: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
+ <20240229205240.GA361626@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240229205240.GA361626@bhelgaas>
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Thu, Feb 29, 2024 at 02:52:40PM -0600, Bjorn Helgaas wrote:
+> On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
 
-> Different Qualcomm platforms using WCN3990 WiFI chip use SoC-specific
-> firmware versions with different features. For example firmware for
-> SDM845 doesn't use single-chan-info-per-channel feature, while firmware
-> for QRB2210 / QRB4210 requires that feature. Allow board DT files to
-> override the subdir of the fw dir used to lookup the firmware-N.bin file
-> decribing corresponding WiFi firmware.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > It also depends on the severity of the issue and to some extent the
+> > complexity of the fix. These binding fixes are certainly low risk.
+> > :)
+> 
+> IIUC we're talking about:
+> 
+>   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+>   dt-bindings: PCI: qcom: Allow 'required-opps'
 
-Sorry for the delay, too many drivers... But this looks good to me, few
-small comments.
+Right.
 
-In the commit message it would it would be good to have an example of
-the new firmware path. And also mention that board file (board-2.bin)
-handling is not affected, at least that's how understood from reading
-the code.
+> These don't look like a regression fix (correct me if I'm wrong), and
+> I can't tell whether they fix a user-visible problem, since
+> sc8280xp.dtsi does already contain 'required-opps' for ufs_mem_hc,
+> usb_0, and usb_1, which are mentioned in the commit log as covering up
+> the issue.
 
-> --- a/drivers/net/wireless/ath/ath10k/core.c
-> +++ b/drivers/net/wireless/ath/ath10k/core.c
-> @@ -942,11 +942,20 @@ static const struct firmware *ath10k_fetch_fw_file(struct ath10k *ar,
->  	if (dir == NULL)
->  		dir = ".";
->  
-> +	if (ar->board_name) {
-> +		snprintf(filename, sizeof(filename), "%s/%s/%s",
-> +			 dir, ar->board_name, file);
-> +		ret = firmware_request_nowarn(&fw, filename, ar->dev);
-> +		ath10k_dbg(ar, ATH10K_DBG_BOOT, "boot fw request '%s': %d\n",
-> +			   filename, ret);
-> +		if (!ret)
-> +			return fw;
-> +	}
+The issue has been there since PCIe support was added for this platform
+and does not cause any issues until the USB and UFS controllers are
+runtime suspended.
 
-So here you test if ar->board_name is NULL.
+When that happens nothing is currently making sure that we have enough
+power to run PCIe at gen3 speeds, something which can potentially result
+in system instability (e.g. resets).
 
-> --- a/drivers/net/wireless/ath/ath10k/snoc.c
-> +++ b/drivers/net/wireless/ath/ath10k/snoc.c
-> @@ -1337,6 +1337,9 @@ static void ath10k_snoc_quirks_init(struct ath10k *ar)
->  	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
->  	struct device *dev = &ar_snoc->dev->dev;
->  
-> +	/* ignore errors, default to empty string */
-> +	of_property_read_string(dev->of_node, "firmware-name", &ar->board_name);
+> If these patches wait until v6.9, what badness ensues?
 
-What do you mean with empty string in this case, "\n" (with length of 1)
-or NULL? Should we also test for strlen(0) in ath10k_fetch_fw_file()?
+We'd have a few more weeks where users enabling runtime PM for USB on
+the X13s could hit this before we can get the fix backported to stable.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+I could have put some more details in the commit message for the DT
+patch, but I did not think that amending the PCIe binding would be
+controversial. (I guess we can also take the DT fix without waiting for
+the binding update as it has been acked by a DT maintainer even if that
+would result in some DT checker warnings until things are aligned
+again.)
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Let me know what you decide regarding getting the whole series into 6.8,
+and then I can spend some more time on rewording, splitting and rebasing
+this series if needed.
+
+Johan
 
