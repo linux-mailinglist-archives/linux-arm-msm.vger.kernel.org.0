@@ -1,156 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-13053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0C6086D95B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 03:04:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6134086D9E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 04:00:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1E211C22981
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 02:04:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 021FE1F21C31
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 03:00:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA45A3984A;
-	Fri,  1 Mar 2024 02:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79B92405DB;
+	Fri,  1 Mar 2024 03:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pKzjQ+u7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7ZHeWEU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248E238FBC;
-	Fri,  1 Mar 2024 02:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCD63FE5B;
+	Fri,  1 Mar 2024 03:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709258667; cv=none; b=pfPx7dR5E9CkZibBae3SmhcdRfDdCBsAky92knXylzNMBocRdD0iYEcYsyF39LPiEraBzIQvb6qRNI8hFDB0uOvS1iLnL9zDfvunm1EpqGhVc1lkJh8ecWwjDa6CgKkiXeLFj5133ho8MDynASfBexJhUtQzpoDfF5A1x6z+SZ0=
+	t=1709262018; cv=none; b=BC4rkBiwTogLC5LyThHsmFaTBR6p6ow0dQ2ojtedYTWFi2CEmrGON/G/GmKJl5P6k59YKQrNW5G5elvTH0cBsCyXZV22/vmInugqmPJy6dTBoTe5VcjZWPb9pEQ7gxE/lQFqlXO0uR7odjiwRFXDz2L8RSf3t2iStHiDC5p/hWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709258667; c=relaxed/simple;
-	bh=EUE081BGTpKI2jPBm9l1DAZfBilSuxIrE7H7+2z6rZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qNhBQ1zyUBQ36RQH1hHAqteKvzc8AE2r5D5C4OPrMl3cmkG1OC4ndnTY+FKEI1Fj6/S18gSMWZ+KACi8z3j/j6m6VRJhBv1QFnFjONglkaT3Alf/7Lj0qS9v24IHMnddW1VwPh9ibPnjByc6usc19lKlT+upSstvL1q0MxhfJG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pKzjQ+u7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4210oB4O002798;
-	Fri, 1 Mar 2024 02:04:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=qCn2CH+WxcE0RRkPCW/gs9CnYBAjab4ADjZKcKMLPuk=; b=pK
-	zjQ+u7uSv+S+UixgecppGb/dBVrX0b/LUyXbXp0MAe6DfjOKWq3bSBczwTX78cNJ
-	E127Ey6x6a0Cz+tJzGikZayFGo+qN3zOrt+eWIE7rOc/G0WP+oU/zcwAzoFlZTN9
-	3JL44MBn92GUxkEurqGE+PFO+UAuG00AxOEv1v6d8tO9OwWvsAr5OVbISmbVIHlD
-	oq+WCRt9KpVDWpVZLPx1rFgZ2xON6NyyPcg76RSsSDfH+y5R1ObEuT0Bpx0qnIQZ
-	W6XRMCRBqjHOiGdzkEoCGWdjpc9tWB7icPEBD79tvz4x+Zs0F8C3MVbidunNkuDa
-	Qn/QoCv/ODx9/18ul+pw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wjx9y1970-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Mar 2024 02:04:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42124CIq002965
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Mar 2024 02:04:12 GMT
-Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 29 Feb
- 2024 18:04:09 -0800
-Message-ID: <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
-Date: Fri, 1 Mar 2024 10:04:06 +0800
+	s=arc-20240116; t=1709262018; c=relaxed/simple;
+	bh=cy1flkHCEkyjQ+LrDNJLACLTv5jxDK8tRiGxgC/lIvE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W6ud2Q5HjyIT+dmA9gWCBCV1MaJR5CidvSsQSA/iRTK0BSQ2ZZ4bWSFiUDDqYT5hQWLkmyYPMGKBniVCRSrrGOBAK++T7t3tF+MQOy+sbdEf5nqdREI+1HHuPPbCSCYX7YjQK3RfZLo8NEAEFtqOGJiONawIwA5oD3PRvlSAq4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7ZHeWEU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DC3C433C7;
+	Fri,  1 Mar 2024 03:00:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709262017;
+	bh=cy1flkHCEkyjQ+LrDNJLACLTv5jxDK8tRiGxgC/lIvE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q7ZHeWEUc22dhyYG992U2xjzYmMHs507mtCLrQ/U9KDjLkZ+hSV8vl9YGB0ylZfVh
+	 3MSyxrRp8U1sMFVT4jMG4/e2Fk53x0b2T4scH/wjG4r8uSBZRCEJ32Nwajrd91uIQm
+	 qgii5nnOGaI4hg93i/Cu6NkMC180jRHtnkFbvsAoEZCmJJJuzkeWdvsou+3Nv0fhAC
+	 H+MWkpRuk6sweWa818+AsoZXgFYjeUFtG+F1N4c9Lcy7x90VjCXJMeUzC93r1f3xvJ
+	 /H+DUx/7LZ/hEhOphhAZwbXEltL6+Y1t7L7mUMgs0VHuLtFL97h8LTjfIo8TtqH6Nq
+	 adQGRd7KG7SyQ==
+Date: Thu, 29 Feb 2024 21:00:14 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFT 7/7] arm64: dts: qcom-mode-switch: allow 4 lanes for
+ DisplayPort and enable QMP PHY mode-switch
+Message-ID: <jfwskyt3wllpf33ceeibrodorsfmhctfulfkzpkgmjikzbr63n@f4llf7wcmyxi>
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org>
+ <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-7-07e24a231840@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
-Content-Language: en-US
-To: Kalle Valo <kvalo@kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "Kalle Valo
- (QUIC)" <quic_kvalo@quicinc.com>,
-        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <netdev@vger.kernel.org>
-References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
- <20240228022243.17762-2-quic_bqiang@quicinc.com>
- <20240229101202.GB2999@thinkpad>
- <531daaa9-cf14-4812-8908-c617bd25bc08@quicinc.com>
- <87le7383nd.fsf@kernel.org>
-From: Baochen Qiang <quic_bqiang@quicinc.com>
-In-Reply-To: <87le7383nd.fsf@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mO0jaRZNk5ofn2jUbE7-xk37L4P-YGcS
-X-Proofpoint-ORIG-GUID: mO0jaRZNk5ofn2jUbE7-xk37L4P-YGcS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-29_08,2024-02-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- clxscore=1015 impostorscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403010016
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-7-07e24a231840@linaro.org>
 
-
-
-On 3/1/2024 3:35 AM, Kalle Valo wrote:
-> Baochen Qiang <quic_bqiang@quicinc.com> writes:
+On Thu, Feb 29, 2024 at 02:07:07PM +0100, Neil Armstrong wrote:
+> Allow up to 4 lanes for the DisplayPort link from the PHYs to the Controllers
+> and allow mode-switch events to the QMP Combo PHYs.
 > 
->> On 2/29/2024 6:12 PM, Manivannan Sadhasivam wrote:
->>> On Wed, Feb 28, 2024 at 10:22:41AM +0800, Baochen Qiang wrote:
->>>> ath11k fails to resume:
->>>>
->>>> ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
->>>>
->>>> This happens because when calling mhi_sync_power_up() the MHI subsystem
->>>> eventually calls device_add() from mhi_create_devices() but the device
->>>> creation is deferred:
->>>>
->>>> mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
->>>>
->>>> The reason for deferring device creation is explained in dpm_prepare():
->>>>
->>>>           /*
->>>>            * It is unsafe if probing of devices will happen during suspend or
->>>>            * hibernation and system behavior will be unpredictable in this case.
->>>>            * So, let's prohibit device's probing here and defer their probes
->>>>            * instead. The normal behavior will be restored in dpm_complete().
->>>>            */
->>>>
->>>> Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
->>>> called and thus MHI channels are not prepared:
->>>>
->>>> So what this means that QRTR is not delivering messages and the QMI connection
->>>> is not working between ath11k and the firmware, resulting a failure in firmware
->>>> initialization.
->>>>
->>>> To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
->>>> the devices for channels during power down. This way we avoid probe defer issue
->>>> and finally can get ath11k hibernation working with the following patches.
->>>>
->>>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
->>>>
->>>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
->>>
->>> Did Kalle co-author this patch? If so, his Co-developed-by tag should
->>> be added.
->>
->> Hmm, I'm not sure...  I would like Kalle's thoughts on this.
+
+Please adjust $subject and commit message to suite the x13s.dts...
+
+
+With this series I'm reaching 4k@60 on my X13s (with some difficulty due
+to current hotplug issues in the DP driver) - but 4-lane DP works, and
+so does 2-lane combo.
+
+I tested switching between DP-only and a USB device, this worked fine a
+few (3-4) times, after which the USB device stopped showing up. The DP
+display continued to work nicely and the debug prints from the driver
+indicates that we're moving back and forth between the modes...
+
+The problems I had when trying to implement this previously, with the
+device crashing on disconnect have not been seen, across 20+
+attempts.
+
+Regards,
+Bjorn
+
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> IIRC I did only some simple cleanup before submitting the patch so I
-> don't think Co-developed-by is justified. I'm also fine with removing my
-> Signed-off-by.
-Thanks Kalle.
-
-Hi Mani, so according to Kalle's comments, I'd like to keep the patch as is.
-
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index a0fdef55a40a..6c73e0fc001f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -556,7 +556,7 @@ &mdss0_dp0 {
+>  };
+>  
+>  &mdss0_dp0_out {
+> -	data-lanes = <0 1>;
+> +	data-lanes = <0 1 2 3>;
+>  	remote-endpoint = <&usb_0_qmpphy_dp_in>;
+>  };
+>  
+> @@ -565,7 +565,7 @@ &mdss0_dp1 {
+>  };
+>  
+>  &mdss0_dp1_out {
+> -	data-lanes = <0 1>;
+> +	data-lanes = <0 1 2 3>;
+>  	remote-endpoint = <&usb_1_qmpphy_dp_in>;
+>  };
+>  
+> @@ -1112,6 +1112,7 @@ &usb_0_qmpphy {
+>  	vdda-phy-supply = <&vreg_l9d>;
+>  	vdda-pll-supply = <&vreg_l4d>;
+>  
+> +	mode-switch;
+>  	orientation-switch;
+>  
+>  	status = "okay";
+> @@ -1149,6 +1150,7 @@ &usb_1_qmpphy {
+>  	vdda-phy-supply = <&vreg_l4b>;
+>  	vdda-pll-supply = <&vreg_l3b>;
+>  
+> +	mode-switch;
+>  	orientation-switch;
+>  
+>  	status = "okay";
+> 
+> -- 
+> 2.34.1
 > 
 
