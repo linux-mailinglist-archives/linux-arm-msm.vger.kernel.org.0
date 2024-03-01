@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-13106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B0E086E77C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:40:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F7F286E7C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:52:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B9E0B228DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:36:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D8781C22BD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:52:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CCAD277;
-	Fri,  1 Mar 2024 17:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1B782837E;
+	Fri,  1 Mar 2024 17:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNfkltCr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HrVAiMut"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0B2883B;
-	Fri,  1 Mar 2024 17:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876DA282E3;
+	Fri,  1 Mar 2024 17:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709314495; cv=none; b=Gl6qmi20LlPz82Mvbpknwh0XmeiOMXwXC3x/9p/hnybXbGCmOiVWks7naQmFE/YhjSzycf4TkzcSnuoIQljm5X9eWslqoTFQQTyl9uF7WFhdHNKxHNIxyEYyLWkHFXMGG/+nouKqxtl+EBG9+MquEBRdk/7wCfeDlhwqxHM9Ue4=
+	t=1709315528; cv=none; b=qltlEIgUMOW2aOhwpgpXAL35yLHVeEsvqIPMrsbR+A/jDlCNEdOpS+/liXq1wna3d4qzycZ19uOjmSGBgndcn6i6iAseRKdJ72+ps+g4LWeTnOCH4L5Atk10PNRHbkBBIdG/9Aox+3CWMVXFOJ7ecS1xf8RjX7oYW6LgMdGE1rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709314495; c=relaxed/simple;
-	bh=hiJmLSjYgLPzRYhdIqgBms40kwe1TTYlDeb6XDjkXH8=;
+	s=arc-20240116; t=1709315528; c=relaxed/simple;
+	bh=eXoHHqlUv+ocYn2KKFi9ZKx6ERkFZTOcTcwpaPExuVI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CnHBmb+yIDs03jaZ2n5EoPDTPPjsEp4MfyOtvoB2PehXjoJPCp6JLmk+thgU2CX3hYYDntl0X9YoKRQgTUq1y44avaC5v0V/1h9T/tjwiJ6Koz4hzK3M2O2nn/e9wgdvZf/ORhMwuDKt2m2zRhhqAK2lF5imc6qiDhdK5CfU2zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNfkltCr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B36C433F1;
-	Fri,  1 Mar 2024 17:34:54 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mous2Oc8vdsGNGvamGwptYz3dzUtN81iwLBeByoURqGYI3Q+QI0NoCUVIk4zh0o1lEJTaldBrsMFIZZUUqfrkduqszcs9dw6gMSsC/nvYJb+eR+aA+SGRfxu+GgG0/OWbaWq62tiYUiWQbtpXJRfPb/mqzuVccmcZPNIE6Mwa3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HrVAiMut; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F5CC433F1;
+	Fri,  1 Mar 2024 17:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709314495;
-	bh=hiJmLSjYgLPzRYhdIqgBms40kwe1TTYlDeb6XDjkXH8=;
+	s=k20201202; t=1709315528;
+	bh=eXoHHqlUv+ocYn2KKFi9ZKx6ERkFZTOcTcwpaPExuVI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oNfkltCrGIcZDICm8gP9A0SD3vVdubgrx1kxgoGBbM6uQZRMPwj0/1KEt1+GXLCJM
-	 95ZSvcgYxqmib8pv6/UQK+9H1J2L1Qc4wYVd3kbeJIBBC0h+kO3D2GF1TfYOO7OIOj
-	 vrmR0kJonej3RrYRH4pxLNPx1L2Nv3TYTv3d9pRGCzD+rqlM72kmoyKSjYnWvlNxRD
-	 A8WEtC9zgtdmApp/BljY7Atrawk8favrPMdfJnuaoXC91s1eOBq1PtZAPmEngZR+T5
-	 sqM+lYI5CmT0RAPNrBYIPl/8V/OYoRVDhmR3jbyGMW5qC/kOKcaDpTsLoNU1fzSuWd
-	 35YxBF8dxnKkw==
-Date: Fri, 1 Mar 2024 11:34:52 -0600
+	b=HrVAiMutZQezfJbYV3TUqSN6fprFMBM/1O47qXOKKky/Ym8cG43fYrDXnI20zLv9Y
+	 QsmCu/fK9X4wOvuy+4yPp9VluDpMkz7ofkMzL3yOdJ9NcLCcBfEaXC7+4Gv8syNF8c
+	 uum0r18Id0vJu2MzhTVjx61Ae0YDKUkbX9tm2dxc9Ioytz6248wDLtu/J3RTlC8vQ8
+	 lSeYAd/4M0oFNwKaxqt71JBDnJIRw2s7xmgYy+POh4Cqmb4fKkFmYmQ0Y6R4o1Cuzc
+	 nSTBS6113X6qTIdNteQH0POeFH46qJDiCnADQQ/UcWHenY+HUY3I4l9B3L8LmH3/de
+	 vp+YA2GNpHBvA==
+Date: Fri, 1 Mar 2024 11:52:05 -0600
 From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sean Paul <sean@poorly.run>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
 	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -62,10 +63,10 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 1/3] dt-bindings: display: msm: dp-controller:
  document X1E80100 compatible
-Message-ID: <20240301173452.GA2438612-robh@kernel.org>
+Message-ID: <20240301175205.GB2438612-robh@kernel.org>
 References: <20240222-x1e80100-display-refactor-connector-v2-0-bd4197dfceab@linaro.org>
  <20240222-x1e80100-display-refactor-connector-v2-1-bd4197dfceab@linaro.org>
- <CAA8EJppOBHhaZpS_Z34fmFmGr4aRe0-k8w=5ScquNhCrnzRDgw@mail.gmail.com>
+ <a90dcd83-d158-4ec1-9186-0658c108afef@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,25 +75,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJppOBHhaZpS_Z34fmFmGr4aRe0-k8w=5ScquNhCrnzRDgw@mail.gmail.com>
+In-Reply-To: <a90dcd83-d158-4ec1-9186-0658c108afef@linaro.org>
 
-On Sun, Feb 25, 2024 at 12:34:34AM +0200, Dmitry Baryshkov wrote:
-> On Thu, 22 Feb 2024 at 17:55, Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
+On Tue, Feb 27, 2024 at 04:45:25PM +0100, Krzysztof Kozlowski wrote:
+> On 22/02/2024 16:55, Abel Vesa wrote:
 > > Add the X1E80100 to the list of compatibles and document the is-edp
 > > flag. The controllers are expected to operate in DP mode by default,
 > > and this flag can be used to select eDP mode.
-> >
+> > 
 > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > index ae53cbfb2193..ed11852e403d 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > @@ -27,6 +27,7 @@ properties:
+> >            - qcom,sdm845-dp
+> >            - qcom,sm8350-dp
+> >            - qcom,sm8650-dp
+> > +          - qcom,x1e80100-dp
+> >        - items:
+> >            - enum:
+> >                - qcom,sm8150-dp
+> > @@ -73,6 +74,11 @@ properties:
+> >        - description: phy 0 parent
+> >        - description: phy 1 parent
+> >  
+> > +  is-edp:
+> > +    $ref: /schemas/types.yaml#/definitions/flag
+> > +    description:
+> > +      Tells the controller to switch to eDP mode
 > 
-> Rob, Krzysztof, Connor, gracious ping for the review. It would be
-> really nice to merge this patchset during the next cycle. It also
-> unbreaks several other patches.
+> 
+> DP controller cannot be edp, so property "is-edp" is confusing. Probably
+> you want to choose some phy mode, so you should rather use "phy-mode"
+> property. I am sure we've been here...
 
-The only thing that speeds up my review is reviewing whatever is ahead 
-of this patch in the queue[1].
+phy-mode belongs in the phy node though. Not that you couldn't look in 
+the phy node and see, but everyone likes all the properties they need 
+nicely packaged up in their driver's node.
+
+> Anyway, if you define completely new property without vendor prefix,
+> that's a generic property, so you need to put it in some common schema
+> for all Display Controllers, not only Qualcomm.
+
+I'm trying to unsee what the driver is doing... Hard-coding the 
+connector type and some instance indices. Uhhhh! I'm sure I'm to blame 
+for rejecting those in DT.
+
+I've suggested connector nodes in the past. More generally, whatever is 
+attached at the other end (as it could be a bridge rather than a 
+connector) knows what mode is needed. It's simple negotiation. Each end 
+presents what they support. You take the union of the list(s) and get 
+the mode. If there's more than one, then the kernel or user gets to 
+choose.
+
+Qualcomm is not the only one with this problem. Solve it for everyone...
 
 Rob
-
-[1] https://patchwork.ozlabs.org/project/devicetree-bindings/list/
 
