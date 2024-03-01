@@ -1,123 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-13066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50A9F86DCB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 09:09:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B7B886DDC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 10:01:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 827801C23DF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 08:09:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E9B71F21667
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 09:01:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6106A69D1A;
-	Fri,  1 Mar 2024 08:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D2FA6A011;
+	Fri,  1 Mar 2024 09:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V4ZroOJY"
+	dkim=pass (2048-bit key) header.d=geniusmake.com header.i=@geniusmake.com header.b="uCgpz2jj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.geniusmake.com (mail.geniusmake.com [217.61.16.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E379200C3;
-	Fri,  1 Mar 2024 08:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DB069E18
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 09:01:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.61.16.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709280576; cv=none; b=t02ASlfVUqN32RFdT5n7ifKxAu9UsFGfJHDBmw8pSejPJhgjRU6TXfV/8fJ9H023hmzPtRTqXOaMh7DHdw5Y0pej9iDmBE5vh/y9sG0n3I6Ffau0/TLtYTDz62sam3hH+eGdh8RpnTwxmaUmemG4Vtn+LfFlTFztdZwP3mdzAwM=
+	t=1709283698; cv=none; b=FvU3ydrxJo/ve/2F5vqfvcfJfXAXZbdbGL7GLJD+IrEyENfNcu4j+BhD+9fhGRFaPwjHzJaTCJjUz7ALtlXZtGS8SF1DAjMj5bSKeXHmETxJJeszBS0e9T/+JIGPi4gbjVfm7E7X6QTNNgU+QnOdv6NnypF9gWeEDFPKrGZ64eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709280576; c=relaxed/simple;
-	bh=SDOpostQbxSaHQbVT+H3u8LtntR385azXDotbcIDeEs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DWsoCnIJqu4wbCIXcWgxMV7+cqN2EY357NIYfVM8QAL+K/kDzqsSnz2cn1VTVLhWpg9KtDY58NcRWlD1FfVc3wdJxZPJb8Gqwx5VCmES5E4Ugi1xGR/5VrQrQI/Kukbt3OVieawn3iEp3To/6jmiPpyCfMofTKsIl96eDoSMCd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V4ZroOJY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF45C433C7;
-	Fri,  1 Mar 2024 08:09:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709280575;
-	bh=SDOpostQbxSaHQbVT+H3u8LtntR385azXDotbcIDeEs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V4ZroOJYkhMhHrVl1Ap4ozy2FeV7TA0/Efnc93tTYUHxflBLZOl8k1ljZ70MuD6HI
-	 +KD5jrkApO4SgulrrTz5XoH6+JBz96ZO+j12YNr/jBjAhY1fsZdaZfA7IYMvkqtl0K
-	 5772p83G7hOiJXoTVe+CclZocIbEFK7fI4jGNhBW8q9hBK1A01WUDvHoVdsHUClY7i
-	 iM9aXaWeD7z8XehuHy0JmAn/Nb8JcBjw9Usv22n+UfguUVaECBXPYVg+9/E09tOAAm
-	 qv6YDkjIgVmvSR3cku0DRHQewuOaXxltaz9f7jAYWeeD6xtcgfpmUjeih9lO6Ge2KT
-	 uExrktrOerLuA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rfxxh-000000006eC-2A9v;
-	Fri, 01 Mar 2024 09:09:46 +0100
-Date: Fri, 1 Mar 2024 09:09:45 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <ZeGNSbPjxELBklbx@hovoldconsulting.com>
-References: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
- <20240229205240.GA361626@bhelgaas>
+	s=arc-20240116; t=1709283698; c=relaxed/simple;
+	bh=PnZc+rIY6TfTKjOaDWzpfrHUKmRuaNjVokX+KxS+akY=;
+	h=Message-ID:Date:From:To:Subject:MIME-Version:Content-Type; b=NBP2ijUBhrIuLW6kxW0BulSRHsYb8XMN9At08A7Pc4cHEDykCsrkYHzGGCAxm580lW8+MdYhL2SPx2SVgCvTZUNqS6qxlniamfMx2AQHiMmkJ0zSJU4YeDVX3/9TwVpcvJejqJWki9WBk3ZFvnx8Fzasd+636vb9EsVZdhw5fhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=geniusmake.com; spf=pass smtp.mailfrom=geniusmake.com; dkim=pass (2048-bit key) header.d=geniusmake.com header.i=@geniusmake.com header.b=uCgpz2jj; arc=none smtp.client-ip=217.61.16.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=geniusmake.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geniusmake.com
+Received: by mail.geniusmake.com (Postfix, from userid 1002)
+	id EEFC382BF0; Fri,  1 Mar 2024 09:55:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=geniusmake.com;
+	s=mail; t=1709283334;
+	bh=PnZc+rIY6TfTKjOaDWzpfrHUKmRuaNjVokX+KxS+akY=;
+	h=Date:From:To:Subject:From;
+	b=uCgpz2jjKsfoR9kDxP/1NuniKbd1/CsQIFqVya4A5aKSOnlEK2jTrnQYSI+u4WhO3
+	 nQG/LqCkLenFtKYEVMd/vUulOeecI0hghfCydZec17Tm+hGN2heMATlENTBQjSZ9fc
+	 RXB4Eso+qVpNWyPYC/3FFPLl5eUsstPiHsz7ebo9VZ61+OtQv3JEfD2cuspuMN0xhi
+	 dNGnBojJfQvSm+Lp6HieeSV/CAbURtRV9wm/6wI834p7yaxV9a5KazToUFqhc63cSA
+	 TzUQRhExgdVwZAD6klq3NH/Oo2XfkxOttwiRdcTllqjkEiNM8Meg6pb6yEs8VUzUyx
+	 hxQl+f1WT9BVw==
+Received: by mail.geniusmake.com for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 08:55:26 GMT
+Message-ID: <20240301084500-0.1.18.1tyy.0.anxmtv5uq4@geniusmake.com>
+Date: Fri,  1 Mar 2024 08:55:26 GMT
+From: "Gordon Frogge" <gordon.frogge@geniusmake.com>
+To: <linux-arm-msm@vger.kernel.org>
+Subject: New assortment for solariums
+X-Mailer: mail.geniusmake.com
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240229205240.GA361626@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 29, 2024 at 02:52:40PM -0600, Bjorn Helgaas wrote:
-> On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
+Good morning,
 
-> > It also depends on the severity of the issue and to some extent the
-> > complexity of the fix. These binding fixes are certainly low risk.
-> > :)
-> 
-> IIUC we're talking about:
-> 
->   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
->   dt-bindings: PCI: qcom: Allow 'required-opps'
+We are experts in the production of tanning cosmetics in solariums.
 
-Right.
+Our products help you get a faster and longer-lasting tan, while caring f=
+or and moisturizing your skin before and after tanning.
 
-> These don't look like a regression fix (correct me if I'm wrong), and
-> I can't tell whether they fix a user-visible problem, since
-> sc8280xp.dtsi does already contain 'required-opps' for ufs_mem_hc,
-> usb_0, and usb_1, which are mentioned in the commit log as covering up
-> the issue.
+Cosmetics contain the highest quality ingredients from the USA and Poland=
+, thanks to which we provide the market with premium products in tubes an=
+d sachets.
 
-The issue has been there since PCIe support was added for this platform
-and does not cause any issues until the USB and UFS controllers are
-runtime suspended.
+We have prepared attractive terms of cooperation for you, a wide product =
+offer at competitive prices and support materials for selected brands.
 
-When that happens nothing is currently making sure that we have enough
-power to run PCIe at gen3 speeds, something which can potentially result
-in system instability (e.g. resets).
+Would you like to talk about cooperation possibilities?
 
-> If these patches wait until v6.9, what badness ensues?
 
-We'd have a few more weeks where users enabling runtime PM for USB on
-the X13s could hit this before we can get the fix backported to stable.
-
-I could have put some more details in the commit message for the DT
-patch, but I did not think that amending the PCIe binding would be
-controversial. (I guess we can also take the DT fix without waiting for
-the binding update as it has been acked by a DT maintainer even if that
-would result in some DT checker warnings until things are aligned
-again.)
-
-Let me know what you decide regarding getting the whole series into 6.8,
-and then I can spend some more time on rewording, splitting and rebasing
-this series if needed.
-
-Johan
+Best regards
+Gordon Frogge
 
