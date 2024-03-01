@@ -1,160 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-13073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCF8886E105
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:26:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA7E486E13F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:46:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B67771C2204F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:26:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 804B11F21E8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:46:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5AA12AEFF;
-	Fri,  1 Mar 2024 12:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4CB13FB83;
+	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bVhRMiO3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RR5miFg1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDAD6E2AA
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 12:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CEC7E1;
+	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709295967; cv=none; b=Cjtv3FYaeQJRMEL4Brk+UcZ17ftcb2NQVQE1CliGqSK+SLY6CYK8YqmL5W4+gkz6kpNBSABFZhrBBRVfO78LnQFFVEcmqfZIEFvhaw7L/wFmgq6eH+4UBCWAZK0Em+BPhKTTj4MqVjM/X9XpswbA6LqlA7riJal8PVrT8nha0z8=
+	t=1709297164; cv=none; b=O2gzd9A697cKZIwtcSM1rzOqUlCHw2gFqlGGSlw03sqcJze7a2O8sVqxUwNjQn4NaCDIVrcBQb3FhJBvBiwzkxE//Ofqx/mkM0agEzt7Cm9vGwBbPwxdUY9zNDoNKdXOyFu7uhOHW4NpSWdz71GkJ5s0XFjBWrhCK8JC+nDTpzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709295967; c=relaxed/simple;
-	bh=DCxEN7tYRiXh61QyHjoT94wXv3D+5boFGgkhPYQVN4E=;
+	s=arc-20240116; t=1709297164; c=relaxed/simple;
+	bh=Zz0zVoGja3cXhFHWcB5UiPfkBIp0SM7xu2HWnAZ05Vk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fdPKTKLw15BueYSwvuvReLtsuk2Sm1Ha5COt3zRZL8XcgM7w5fgJaDuLvDco+COF38oboVjqp8UuuXeKN1/CEIUqR/7DHZOX0l+t1iTKDFZaCp7+shZnEA2/eY0Fye/5ZU5bR18Cc5UU7Fki8i+XnFhcPrFXyWgjvUKjNML3BW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bVhRMiO3; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e59bbdd8c7so1436028b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 04:26:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709295965; x=1709900765; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n4vy0ssj1y9OKJx6whcKaZP2Wd8dgYFve24tfX8P7n0=;
-        b=bVhRMiO3ZLYW3MYlRoFjRWBCmUKW6VYrOJo4wExARQEm+Zv3eP24h2l/vMVv2ih2jE
-         zr75DkEhQpgQeNKL1WYFBWNkLd9kTiOIMFSP3ngyneKymvMWi/Vgphp4pvjfAe9LoJnc
-         VA9EBDpe+nsbcF/S6biTKvkv+22KKCSAT7GCWqXCCt3XM2H/eEUpcbdKIUx8sjK7ik1h
-         bwT8zt/0q+lnuc5wwK7Vfz5ceY3V+wqSokQ/4T1zcB4Q4eDnonUVOHXR490MF58LYbAT
-         ynmflIMJG8F0oywV5Y+K2bQ44HzuC2ixS1N7rKAOxLCcKihwxGLZyjCp/cW7Qpmn8g7X
-         HoAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709295965; x=1709900765;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n4vy0ssj1y9OKJx6whcKaZP2Wd8dgYFve24tfX8P7n0=;
-        b=LGQSh6IOinUWJwRr4zY/9V3wt3/omlneNjLKcUGbry7zCVBjQLW7UL5gwwmHlGmnUJ
-         VQruJTnCI5bw/kQZVqUytBR5U6QK9yGjteKvyBxFdvDDwW6U3Gt1nFsGvI6moudTKxy3
-         v6c4Y5pH5538w3vZzDzyJFqauxbY/hwVpvkbFK+Pp6DAhfHchry8rJKRTZgxEdG/qwyi
-         Ye6HdFt2Aa+mDqBPLjIFH2Q5nE/8apjme6ZpJYURVxHbhsntDSLAF3oluk5ij0zL535k
-         gtMyo1HwNnxTPmHnB4gdCTVAjTx9+yRIBkRgr5VHoCoOnMQwuIDb8ZsxHaLPRnyXs0fr
-         tyNw==
-X-Forwarded-Encrypted: i=1; AJvYcCXBayylJ+VHGvuZIxgUmlHA717HKuuCLhypOEZ/zNv6PKvo0B6b4T3FG69wLdgiVwDrFE9lOL54Nqsssm4zlolOQVzjaR34BDeRsRwUAg==
-X-Gm-Message-State: AOJu0YxWkkTIy70MoJlmUqeHMWXBs27ARvMvBFJEQw26vhC53kpFAKU3
-	Q3IRZtYxFqP/CHSfDt/3oxFsEt3Sf4F2uKeDpWp5Q387SBanPRaEKkwE9YUooA==
-X-Google-Smtp-Source: AGHT+IHDbZOb0MqU0lNgT6Ylu5XAVO9Rkznovko5WeZRWLmmdsVhJISyuzq0BMbPgmlDmT83+wLDug==
-X-Received: by 2002:a05:6a20:4327:b0:1a0:6856:d12c with SMTP id h39-20020a056a20432700b001a06856d12cmr1584913pzk.18.1709295965331;
-        Fri, 01 Mar 2024 04:26:05 -0800 (PST)
-Received: from thinkpad ([2409:40f4:13:3cbc:2484:3780:dcff:ebcf])
-        by smtp.gmail.com with ESMTPSA id p12-20020aa7860c000000b006e50e79f155sm2834437pfn.60.2024.03.01.04.26.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 04:26:04 -0800 (PST)
-Date: Fri, 1 Mar 2024 17:55:59 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Baochen Qiang <quic_bqiang@quicinc.com>
-Cc: Kalle Valo <kvalo@kernel.org>,
-	"Kalle Valo (QUIC)" <quic_kvalo@quicinc.com>,
-	ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, netdev@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
-Message-ID: <20240301122559.GB2401@thinkpad>
-References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
- <20240228022243.17762-2-quic_bqiang@quicinc.com>
- <20240229101202.GB2999@thinkpad>
- <531daaa9-cf14-4812-8908-c617bd25bc08@quicinc.com>
- <87le7383nd.fsf@kernel.org>
- <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4KjexykC5RSs+7GPKgZSWefLgR2nfsalC5WUKaNW4nOMzmP02INlIDF4gH/VtE9xxjcDlN++VApEloS//cYshMnFDPYZya5Y7aEq5pNqWcgg0SFY6xc6fFvmziMq5HkpeNdajcddbp/KTx7IPu599v14xqIb/VNyXWnF9RfPP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RR5miFg1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169B9C433C7;
+	Fri,  1 Mar 2024 12:46:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709297164;
+	bh=Zz0zVoGja3cXhFHWcB5UiPfkBIp0SM7xu2HWnAZ05Vk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RR5miFg1MbKC8vvcwq6NzLC782LATfreZUIRbVKNW2lo+QvieyB2UVH6UD3RlJagO
+	 Wcj3ZTvr4/RVH7eHon1cljpL6j1N0qVpaODmJ4q8bgpwKjm7Oza0ws+RqjQnuL0Fks
+	 tSBW3Ii6eBrjxVqg5jh4KKsk6tjttvTIYvIovTLTeIe9Vhwsg6zvFGVYvicxMCkSil
+	 NDKNA6pWwI8NnUZhIcDcEGM/yz5RUdrHSWqgciGLZgm8cIvryUxkKvf9iMsq81YoHc
+	 nMZxaVmQ74iMSji0quwRNAlhO6CARUduWu4+Lnf2Z45lpGJ+fFT0suABp3KH9qXrpL
+	 nuQaLLZDKBgiQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rg2HH-0000000016H-1tzj;
+	Fri, 01 Mar 2024 13:46:15 +0100
+Date: Fri, 1 Mar 2024 13:46:15 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <ZeHOF4p1LlNDiLcy@hovoldconsulting.com>
+References: <20240223152124.20042-1-johan+linaro@kernel.org>
+ <20240228220843.GA309344@bhelgaas>
+ <20240229100853.GA2999@thinkpad>
+ <ZeBbrJhks46XByMD@hovoldconsulting.com>
+ <20240229122416.GD2999@thinkpad>
+ <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
+ <20240229135407.GE2999@thinkpad>
+ <ZeCktwcEFAfCEVkV@hovoldconsulting.com>
+ <20240301122406.GA2401@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
+In-Reply-To: <20240301122406.GA2401@thinkpad>
 
-On Fri, Mar 01, 2024 at 10:04:06AM +0800, Baochen Qiang wrote:
-> 
-> 
-> On 3/1/2024 3:35 AM, Kalle Valo wrote:
-> > Baochen Qiang <quic_bqiang@quicinc.com> writes:
-> > 
-> > > On 2/29/2024 6:12 PM, Manivannan Sadhasivam wrote:
-> > > > On Wed, Feb 28, 2024 at 10:22:41AM +0800, Baochen Qiang wrote:
-> > > > > ath11k fails to resume:
-> > > > > 
-> > > > > ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
-> > > > > 
-> > > > > This happens because when calling mhi_sync_power_up() the MHI subsystem
-> > > > > eventually calls device_add() from mhi_create_devices() but the device
-> > > > > creation is deferred:
-> > > > > 
-> > > > > mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
-> > > > > 
-> > > > > The reason for deferring device creation is explained in dpm_prepare():
-> > > > > 
-> > > > >           /*
-> > > > >            * It is unsafe if probing of devices will happen during suspend or
-> > > > >            * hibernation and system behavior will be unpredictable in this case.
-> > > > >            * So, let's prohibit device's probing here and defer their probes
-> > > > >            * instead. The normal behavior will be restored in dpm_complete().
-> > > > >            */
-> > > > > 
-> > > > > Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
-> > > > > called and thus MHI channels are not prepared:
-> > > > > 
-> > > > > So what this means that QRTR is not delivering messages and the QMI connection
-> > > > > is not working between ath11k and the firmware, resulting a failure in firmware
-> > > > > initialization.
-> > > > > 
-> > > > > To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
-> > > > > the devices for channels during power down. This way we avoid probe defer issue
-> > > > > and finally can get ath11k hibernation working with the following patches.
-> > > > > 
-> > > > > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-> > > > > 
-> > > > > Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-> > > > 
-> > > > Did Kalle co-author this patch? If so, his Co-developed-by tag should
-> > > > be added.
-> > > 
-> > > Hmm, I'm not sure...  I would like Kalle's thoughts on this.
-> > 
-> > IIRC I did only some simple cleanup before submitting the patch so I
-> > don't think Co-developed-by is justified. I'm also fine with removing my
-> > Signed-off-by.
-> Thanks Kalle.
-> 
-> Hi Mani, so according to Kalle's comments, I'd like to keep the patch as is.
-> 
+On Fri, Mar 01, 2024 at 05:54:06PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Feb 29, 2024 at 04:37:27PM +0100, Johan Hovold wrote:
 
-No. Either remove his signed off by (as indicated by Kalle) or add a
-co-developed-by tag. Keeping just a signed-off-by tag is wrong.
+> > I'm all for digging further into this issue with the help of Qualcomm,
+> > but I don't think that should block this series as that would leave the
+> > link errors that we hit since 6.7 in place and effectively prevent us
+> > from enabling the ITS in 6.9.
+> 
+> Sounds fair. I will report back, perhaps with a fix based on what I get to know.
 
-- Mani
+Sounds good, thanks.
 
--- 
-மணிவண்ணன் சதாசிவம்
+> But I think it is better to disable L0s in the SoC dtsi itself. That's not only
+> because there are patches to essentially disable L0s in 2 of the available
+> platforms making use of this Soc, but also you are enabling GIC ITS in the SoC
+> dtsi and that may affect sa8540p which is making use of this dtsi.
+
+I did not do so on purpose as I'm only disabling L0s on machines where
+I've confirmed the issue. And the assumption for now is that this is a
+machine-level issue.
+
+> The users of that SoC may have not noticed the errors as you did before, but
+> enabling GIC ITS will certainly make the issue visible to them (more likely).
+
+Sure and that would be good to know as that would give us another data
+point which may help determine where the problem lies. Enabling the ITS
+will (hopefully) be done in 6.9 so we'll have a whole cycle to disable
+L0s where needed. I don't think this should be done before then.
+
+Johan
 
