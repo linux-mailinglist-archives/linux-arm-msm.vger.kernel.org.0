@@ -1,188 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-13113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12ECC86E8C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 19:52:49 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16FCD86E8CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 19:54:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DF111C227A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:52:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97BC11F25435
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:54:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F31823A1BD;
-	Fri,  1 Mar 2024 18:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A81EF38F99;
+	Fri,  1 Mar 2024 18:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dFLQ0zl/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYoSTGjC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192F41E88A;
-	Fri,  1 Mar 2024 18:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171E03A1D7;
+	Fri,  1 Mar 2024 18:53:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709319020; cv=none; b=MS3/xHvgcReGHgz7j9/LOztMh8rQPr111+H832U+rO9mieUxjqRM2BJzbGbX66UUuhDMXLkUzNx6l0PZui7FoxkVOxVpvKFB+KzDnQQpUwRPsQBWwCn7Qn8NWOxww4+P+uSA9qAR1e7zjDOHWxpeLw75DIYovZS0gIfdYOUXZ8U=
+	t=1709319236; cv=none; b=IAvbPCh9a4r6l5Yq/g10lYFmzTfAwoANZKXIDTdbXEL0llslj7u+SJ72BjB2TEuXezH1LHAnezjDO/eBaf0H08q4rrULwoz7h2Evtb2hw80jyMVxSKKCt0BiK4ywvOOAk+lQZ9jlLnVNMnQdJ4VA21MPUD/Ggsdf1a1i4w+C6Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709319020; c=relaxed/simple;
-	bh=xQB4TikMejf8HYKCd2nqTboBbc2W/l5k/UsuZ1nnvBE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IxNjRNKNUkfaTxg9kd2cOnM5nFsW9/ZExjlxkmQWosS/RAhSZ2kk5e6+A8EnBBcnHqXKvX5EMQLivbsGeDQ45TAIjFAqfkuqtTwAlA4X4RewEHTiejdf0I8lkW0Q1IDSrS0xBSwDgvoZEammTuBR0wkycTGSGc69ooi6mMqa8MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dFLQ0zl/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 421GuNc1008586;
-	Fri, 1 Mar 2024 18:50:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=lk1W+lVN+n6/SoaQkVD5BF3cUTG8UJWo7u5+NF+HJwQ=; b=dF
-	LQ0zl/DzGyDy70kkvdA+gNF9yKY4689P8EYCKzK081w53ZnNJk0eTUhs8f3M3jSL
-	xB77Ic5n9ABMgDEuUaE5JwVbaF9iChp5MTlUndYXhQ52snuqi6mbUqaD+CZm2grt
-	ph19Nhl8V9XZ+JfsXjS0K1gM6CThK/E/POQsur6c7p25BtFxH0eoZlV9BCZBvUFz
-	wtAkrXg18xHZ4DNYbEM31utKtsaLTdobYM/a6vSOs6qvCQ35x1RnSCrtv5DcWcdo
-	pCCPDgNRhQO3be8vsUGzCUWqkT3XKCNnnkGCMFtnCLMm3lgr7y7SxUNfUyzPWq6b
-	9/oz130Bmy9q/s3FiPdQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wk7cg9xkx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Mar 2024 18:50:01 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 421Io00L014051
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Mar 2024 18:50:00 GMT
-Received: from [10.110.82.174] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Mar
- 2024 10:49:57 -0800
-Message-ID: <6a3e3071-f8cd-66b4-99a0-427f7e11177a@quicinc.com>
-Date: Fri, 1 Mar 2024 10:49:57 -0800
+	s=arc-20240116; t=1709319236; c=relaxed/simple;
+	bh=/ot686WqIfX6GoXRHFsDogaovQzE7mhfzlRa4JUb7I0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=It5n07fXkdNxjvFHat4IG4FQ58T0tvJ7nRjPDeEvJO7alognGf4Atqxd+a4f+qfApw8mj9ZIIJAjsod1bpE3S6adqwPqD407qX6cNttH5aAlpoxcaagw7Z2EeiMHO2XA9UcRUvsFrhFhGtz0+6NYSjK9VoVhCqZ3oJvJIIAopaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PYoSTGjC; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-29954bb87b4so1826886a91.2;
+        Fri, 01 Mar 2024 10:53:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709319234; x=1709924034; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yIYqiiV52DrCvcmUn0qPP1S4nB6cxKqcd4qPrzkso9I=;
+        b=PYoSTGjCQjEWF92FiQtAa4fE2+ppQQvf2C4QD3p2v8B1z0syw2WkWc8iocGHW2WGGE
+         zVkrVRDOaL9LvpR52P8Z15jfzbL8y7/OFhTYsIf8pdq/CKz09l65EijJPA181zFwBtj6
+         lNazWHYkuDChepjodAP5Jgyo01FVgXjIpSp9hJuEhJstIkmpW+H/OdrEO2olZAl6bz7+
+         5G1YFnP+El+gwlTIvuecir4k7Q+LM66hvI/acABi6G4eUbwxJRThKsUYg0VJeLuUQ/B5
+         /OdF6PmH0B6d4cUMxh8jEITz87lpJQ3EqkGjxT0id8qhSeJi3WWiRO7O3ioNAw9qM1x0
+         ICIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709319234; x=1709924034;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yIYqiiV52DrCvcmUn0qPP1S4nB6cxKqcd4qPrzkso9I=;
+        b=uvnX5Wl5/mUvDr+sqx6qksIxSGfYhKoKj1XYZpT1tyB2txV212r9us87TAPXZuawwW
+         yfnM3Ch8v6xZFRuSIX5o87NDCtpamnMyOn3ngZmJvOhSLQYsIKD17esF/CJxXgaekB5X
+         YnCZVWKEEgbezNwjDnLk4UqExV2GT/KNr2Ce4OvTYYW3ouTpWeyfO7KXRudHf/IQPl1U
+         8a3cz1AH+7phyJWIaapxvfckqYBTdSNndWwe8iqTTLXW9RyLSPJSA9ABlj2BiXDQJJmk
+         EJU+SmTST2/VJhDMSxSRzvutCVmAtwPUZTEfFg5CnzvCgNaEA/JPzlLDR7XQzx7vUCCg
+         hIgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWSqZEO4LgE6UvykqqYS7t/C7pIrwG5skYo5CvKEuToAlO4FPMgDsSTPvQ6PaFZG2kcGB8KkuZQ4Uf/PSGjQAuilCcmujurf4Fmms2G
+X-Gm-Message-State: AOJu0Yz7iNX32iHZtZj8mq1nznh31obKJtoiW1YOECc7vJqy0UTwurKU
+	6lxgiuugtCWcXfCemH/7UPaGJI9z06Xi+Wy5CLQx0DmsietzOIAc
+X-Google-Smtp-Source: AGHT+IFBLkTRqvmopJ44TtJLDd19SqEGIN2btaMvXJlxKW3m/Decir/GU7WF6Ioh8FWOIXcT9G9s9A==
+X-Received: by 2002:a17:90a:bf01:b0:29a:a1c7:fc28 with SMTP id c1-20020a17090abf0100b0029aa1c7fc28mr2436127pjs.10.1709319234277;
+        Fri, 01 Mar 2024 10:53:54 -0800 (PST)
+Received: from localhost ([2601:1c0:5000:d5c:ae1c:de46:682a:206])
+        by smtp.gmail.com with ESMTPSA id sl6-20020a17090b2e0600b0029aaabcb82asm5706114pjb.10.2024.03.01.10.53.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Mar 2024 10:53:53 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [RFC] drm/msm: Add GPU memory traces
+Date: Fri,  1 Mar 2024 10:53:45 -0800
+Message-ID: <20240301185346.10412-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v7 11/12] firmware: qcom: scm: clarify the comment in
- qcom_scm_pas_init_image()
-To: Bjorn Andersson <andersson@kernel.org>,
-        Bartosz Golaszewski
-	<brgl@bgdev.pl>
-CC: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh
-	<quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        "Maximilian
- Luz" <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        "Srini
- Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <kernel@quicinc.com>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>,
-        Deepti Jaggi
-	<quic_djaggi@quicinc.com>
-References: <20240205182810.58382-1-brgl@bgdev.pl>
- <20240205182810.58382-12-brgl@bgdev.pl>
- <ihz4jczbhn3gdcs6nkgnzpyv3577ebd73qbkynw6jz7ciy4fu3@kxqu7olrrely>
-Content-Language: en-US
-From: Prasad Sodagudi <quic_psodagud@quicinc.com>
-In-Reply-To: <ihz4jczbhn3gdcs6nkgnzpyv3577ebd73qbkynw6jz7ciy4fu3@kxqu7olrrely>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zJU114Lht-Ax-EGW8-ctMDqs437U1DQF
-X-Proofpoint-GUID: zJU114Lht-Ax-EGW8-ctMDqs437U1DQF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-01_20,2024-03-01_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- bulkscore=0 priorityscore=1501 spamscore=0 suspectscore=0 mlxscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 phishscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403010153
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 2/17/2024 7:50 PM, Bjorn Andersson wrote:
-> On Mon, Feb 05, 2024 at 07:28:09PM +0100, Bartosz Golaszewski wrote:
->> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> The "memory protection" mechanism mentioned in the comment is the SHM
->> Bridge. This is also the reason why we do not convert this call to using
->> the TZ memory allocator.
->>
-> No, this mechanism predates shmbridge.
-Yes. PIL calls are there for very long time and shm bridge concept is 
-introduced later.
->
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
->> Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
->> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 10 +++++++---
->>   1 file changed, 7 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 839773270a21..7ba5cff6e4e7 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -563,9 +563,13 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->>   	struct qcom_scm_res res;
->>   
->>   	/*
->> -	 * During the scm call memory protection will be enabled for the meta
->> -	 * data blob, so make sure it's physically contiguous, 4K aligned and
->> -	 * non-cachable to avoid XPU violations.
-> What this is saying is that the memory will be made unaccessible to
-> Linux, so it needs to be contiguous and aligned.
+Perfetto can use these traces to track global and per-process GPU memory
+usage.
 
-Based on my understanding,  this buffer has to be  physically 
-contiguous, 4K aligned and non-cachable to avoid XPU violations.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+I realized the tracepoint that perfetto uses to show GPU memory usage
+globally and per-process was already upstream, but with no users.
 
-We should keep this comment
+This overlaps a bit with fdinfo, but ftrace is a lighter weight
+mechanism and fits better with perfetto (plus is already supported in
+trace_processor and perfetto UI, whereas something fdinfo based would
+require new code to be added in perfetto.
 
->
->> +	 * During the SCM call the hypervisor will make the buffer containing
->> +	 * the program data into an SHM Bridge.
-> Are you saying that the hypervisor will convert this memory to a
-> shmbridge, and then pass it to TrustZone?
-Yes.  Specifically for PIL calls hyp is creating shm bridge for 
-buffers/regions on behalf of Linux/NS-EL1.
->
->> This is why we exceptionally
->> +	 * must not use the TrustZone memory allocator here as - depending on
->> +	 * Kconfig - it may already use the SHM Bridge mechanism internally.
->> +	 *
-> "it may already"? You describe above that we shouldn't pass shmbridge
-> memory, and the other case never deals with shmbridges. So, I think you
-> can omit this part.
->
->> +	 * If we pass a buffer that is already part of an SHM Bridge to this
->> +	 * call, it will fail.
-> Could this be because the consumer of this buffer operates in EL2, and
-> not TZ?
-These buffers are consumed by TZ only and not by EL2.  hyp creating the 
-required bridges for pil buffers.
->
-> Regards,
-> Bjorn
->
->>   	 */
->>   	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
->>   				       GFP_KERNEL);
->> -- 
->> 2.40.1
->>
+We could probably do this more globally (ie. drm_gem_get/put_pages() and
+drm_gem_handle_create_tail()/drm_gem_object_release_handle() if folks
+prefer.  Not sure where that leaves the TTM drivers.
+
+ drivers/gpu/drm/msm/Kconfig   |  1 +
+ drivers/gpu/drm/msm/msm_drv.h |  5 +++++
+ drivers/gpu/drm/msm/msm_gem.c | 37 +++++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_gpu.h |  8 ++++++++
+ 4 files changed, 51 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index f202f26adab2..e4c912fcaf22 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -33,6 +33,7 @@ config DRM_MSM
+ 	select PM_OPP
+ 	select NVMEM
+ 	select PM_GENERIC_DOMAINS
++	select TRACE_GPU_MEM
+ 	help
+ 	  DRM/KMS driver for MSM/snapdragon.
+ 
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 16a7cbc0b7dd..cb8f7e804b5b 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -137,6 +137,11 @@ struct msm_drm_private {
+ 	struct msm_rd_state *hangrd;   /* debugfs to dump hanging submits */
+ 	struct msm_perf_state *perf;
+ 
++	/**
++	 * total_mem: Total/global amount of memory backing GEM objects.
++	 */
++	atomic64_t total_mem;
++
+ 	/**
+ 	 * List of all GEM objects (mainly for debugfs, protected by obj_lock
+ 	 * (acquire before per GEM object lock)
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 175ee4ab8a6f..e04c4af5d154 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -12,6 +12,9 @@
+ #include <linux/pfn_t.h>
+ 
+ #include <drm/drm_prime.h>
++#include <drm/drm_file.h>
++
++#include <trace/events/gpu_mem.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_fence.h"
+@@ -33,6 +36,34 @@ static bool use_pages(struct drm_gem_object *obj)
+ 	return !msm_obj->vram_node;
+ }
+ 
++static void update_device_mem(struct msm_drm_private *priv, ssize_t size)
++{
++	uint64_t total_mem = atomic64_add_return(size, &priv->total_mem);
++	trace_gpu_mem_total(0, 0, total_mem);
++}
++
++static void update_ctx_mem(struct drm_file *file, ssize_t size)
++{
++	struct msm_file_private *ctx = file->driver_priv;
++	uint64_t ctx_mem = atomic64_add_return(size, &ctx->ctx_mem);
++
++	rcu_read_lock(); /* Locks file->pid! */
++	trace_gpu_mem_total(0, pid_nr(file->pid), ctx_mem);
++	rcu_read_unlock();
++
++}
++
++static int msm_gem_open(struct drm_gem_object *obj, struct drm_file *file)
++{
++	update_ctx_mem(file, obj->size);
++	return 0;
++}
++
++static void msm_gem_close(struct drm_gem_object *obj, struct drm_file *file)
++{
++	update_ctx_mem(file, -obj->size);
++}
++
+ /*
+  * Cache sync.. this is a bit over-complicated, to fit dma-mapping
+  * API.  Really GPU cache is out of scope here (handled on cmdstream)
+@@ -156,6 +187,8 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 			return p;
+ 		}
+ 
++		update_device_mem(dev->dev_private, obj->size);
++
+ 		msm_obj->pages = p;
+ 
+ 		msm_obj->sgt = drm_prime_pages_to_sg(obj->dev, p, npages);
+@@ -209,6 +242,8 @@ static void put_pages(struct drm_gem_object *obj)
+ 			msm_obj->sgt = NULL;
+ 		}
+ 
++		update_device_mem(obj->dev->dev_private, -obj->size);
++
+ 		if (use_pages(obj))
+ 			drm_gem_put_pages(obj, msm_obj->pages, true, false);
+ 		else
+@@ -1118,6 +1153,8 @@ static const struct vm_operations_struct vm_ops = {
+ 
+ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
+ 	.free = msm_gem_free_object,
++	.open = msm_gem_open,
++	.close = msm_gem_close,
+ 	.pin = msm_gem_prime_pin,
+ 	.unpin = msm_gem_prime_unpin,
+ 	.get_sg_table = msm_gem_prime_get_sg_table,
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 2bfcb222e353..f7d2a7d6f8cc 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -428,6 +428,14 @@ struct msm_file_private {
+ 	 * level.
+ 	 */
+ 	struct drm_sched_entity *entities[NR_SCHED_PRIORITIES * MSM_GPU_MAX_RINGS];
++
++	/**
++	 * ctx_mem:
++	 *
++	 * Total amount of memory of GEM buffers with handles attached for
++	 * this context.
++	 */
++	atomic64_t ctx_mem;
+ };
+ 
+ /**
+-- 
+2.44.0
+
 
