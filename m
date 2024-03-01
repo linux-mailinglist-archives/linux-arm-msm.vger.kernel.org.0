@@ -1,117 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-13086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5555B86E2EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 15:03:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5809F86E3D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:01:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07F9E1F21E45
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 14:03:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F22F282F2B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 15:01:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110286EB73;
-	Fri,  1 Mar 2024 14:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3F33AC0C;
+	Fri,  1 Mar 2024 15:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQHJigX/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ha+sPQ87"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73016E60C;
-	Fri,  1 Mar 2024 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B8E3987C;
+	Fri,  1 Mar 2024 15:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709301784; cv=none; b=FkY8/jxLDYDS60L3/+mF7opqyTC8euBMNhaxVXPB1q0t2ZNdgiaB2Q9E4LbyvvHhLuZeXxYavk+sOHRvuRlFY6TiB6XzHZrqS6Zv/p0tEThpkK8OMt887qUKJd34uddLh8HLJk4oh+6eUp97dD/rAoSrahrZ3rJndYcmf0wyMcM=
+	t=1709305270; cv=none; b=mgfqmNe6nJfgAy4LbduYA6Iq2CnHZr16Ju6R27gyN+86usk8IokprogwgcM4EamTSPa4Hl7VzpEJtpe0csGPaZG2X6yK2ffp4a44y4ZJcG3Ti2qJxh8WKpMl6JboQ1gO0df6vEcIHF9xKWe8eyyJnXFS3zONeWh/egx0i66w4js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709301784; c=relaxed/simple;
-	bh=0zgjWQSZJu5FIVJHU/jQgShZVUpbLN0aAKYRK+7+DyI=;
+	s=arc-20240116; t=1709305270; c=relaxed/simple;
+	bh=tHAFlcvz0AL6ZnBgVLqJf9VI78SZ372MIUyTON7zBw0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pNAH9iDhl8Bx/uZnPiGPn8ztqDLX43PSlLBIJQwz0kqxN1W43jNmK1qXs5jYajk98wr/6rNx7F+HtIbyOzOxJEtk4OVaZlT2A5vPAyDvipHCE6OCIinIwZMe4QOB6c3yfbeytQA1dsUeMYK1NerdrzMrdb14nrJ4nwnhonrgqVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQHJigX/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D61AC433F1;
-	Fri,  1 Mar 2024 14:03:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yh7mvcucr6hkjn2McZJm53We0+pUVzWuObtA1KR+7AhO3XMDXwyS4KpD1ml/MqMH+vfih+gLtswC59yFZTx08x5CTHJrIRDw1XsFQmOobo1+RMmrrw9YuuUYxFCIbh+CnAdXsIa6SJf0EIsM+Ycm75yA54MbwC2Pz73u59jaaG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ha+sPQ87; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3DBC433F1;
+	Fri,  1 Mar 2024 15:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709301783;
-	bh=0zgjWQSZJu5FIVJHU/jQgShZVUpbLN0aAKYRK+7+DyI=;
+	s=k20201202; t=1709305270;
+	bh=tHAFlcvz0AL6ZnBgVLqJf9VI78SZ372MIUyTON7zBw0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XQHJigX/2HJz/xIXEi3vh311K81ea1fNXH82TV47vNBN5vfvLalJkPJwkJ3Oe7doH
-	 xnGMuoNjs98iO3V2VBfhe10MpB6eraCKKII1WeeNoiiJvjHdmgU3HjU3dCwZqJcnAf
-	 Hnbsjh64tErTWssu9pgT3ACEsQc2pQ71rCHWFhqPCAaE+S/mN9sioiAirOPR2PxKqj
-	 PjDP+X2HGeR+5+Rn2dr9oux5eRYvubutmAX0Q3ZbIAPORacEvZuI3j/9OSk05G+EL9
-	 hwlhNLfIKrr2TA0D7q+GomqVNSk+W095TcB2fOqhj4ZqhGJLwjf1zLS7O8ZgI/64yR
-	 3Cuy4au7n2qgQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rg3Tn-000000001Qd-0bmX;
-	Fri, 01 Mar 2024 15:03:15 +0100
-Date: Fri, 1 Mar 2024 15:03:15 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Gabor Juhos <j4g8y7@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
-	Devi Priya <quic_devipriy@quicinc.com>,
-	Anusha Rao <quic_anusha@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Georgi Djakov <gdjakov@mm-sol.com>, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/7] clk: qcom: gcc-ipq5018: fix terminating of frequency
- table arrays
-Message-ID: <ZeHgI2nsADrkecC8@hovoldconsulting.com>
-References: <20240229-freq-table-terminator-v1-0-074334f0905c@gmail.com>
- <20240229-freq-table-terminator-v1-1-074334f0905c@gmail.com>
- <ZeGic5cG8lneKJXp@hovoldconsulting.com>
- <91b36da5-637d-4156-8be4-5aed55fc3c5d@gmail.com>
+	b=Ha+sPQ87jZDLawJKK6IVH5+h9r1NK29RAlN7I555n9m126A5sF1cWQHqnbkktjUnR
+	 RwVM0WaZml4HMsv7bXt5ixl0rNXovx7QTYp6tJ6shboC+nmEYvyw8UIjyDUkPYlaeN
+	 S7fmOPfXNRh5MzW2czOI6iLipuxCQZWFWwc2oAxvkUVdbgOjzLN/1pUI7cUXXP8kfu
+	 M5PC5GH+G5OZD0Z8ietqhocY9eI6P/C64ZSHvxSMx4vtpA4PDEmDJJ9rmvMR9/kcO1
+	 XuBspaD1x9ZIwbOj9w9KrqWFCL1tER3MVydW7z9k+7gAfDiQjAyKMpGSxVYDtL8X3M
+	 RNHg+N+yCdfJQ==
+Date: Fri, 1 Mar 2024 09:01:06 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <e5xhwfvqod6dtrlhftzbno5ktezpfmr32alnd4nvkscaackj7e@vd5c24cbwzuy>
+References: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
+ <20240229205240.GA361626@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <91b36da5-637d-4156-8be4-5aed55fc3c5d@gmail.com>
+In-Reply-To: <20240229205240.GA361626@bhelgaas>
 
-On Fri, Mar 01, 2024 at 02:37:01PM +0100, Gabor Juhos wrote:
-> Hi Johan,
+On Thu, Feb 29, 2024 at 02:52:40PM -0600, Bjorn Helgaas wrote:
+> On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
+> > On Thu, Feb 29, 2024 at 05:54:16PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Feb 29, 2024 at 11:25:48AM +0100, Johan Hovold wrote:
+> > 
+> > > > As I mentioned, the 'required-opps' binding update is needed to
+> > > > fix the missing OPP vote so blocking the binding patch would
+> > > > block merging the DT fix which could otherwise go into 6.8.
+> > 
+> > > I agree that the fix gets the priority. But some maintainers
+> > > perfer to merge fix patches _only_ if they are fixing the issue
+> > > introduced in the ongoing release.  But if Bjorn has no issues in
+> > > merging these for 6.8, then it is fine.
 > 
-> 2024. 03. 01. 10:40 keltezéssel, Johan Hovold írta:
-> > On Thu, Feb 29, 2024 at 07:07:46PM +0100, Gabor Juhos wrote:
-> >> The frequency table arrays are supposed to be terminated with an
-> >> empty element. Add such entry to the end of the arrays where it
-> >> is missing in order to avoid possible out-of-bound access when
-> >> the table is traversed by functions like qcom_find_freq() or
-> >> qcom_find_freq_floor().
-> >>
-> >> Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-> > 
-> > Good find!
-> > 
-> > Looks like these should be backported to the stable kernels as well so
-> > someone should add:
-> > 
-> > Cc: stable@vger.kernel.org
-> > 
-> > to all patches except possibly the sc8280xp one (that camera clock
-> > controller was added in 6.8-rc1 so that patch does not need it in case
-> > you can these fixes in before 6.8 is released).
+> I do prefer to merge only regression and important fixes after the
+> merge window, so I want to be able to provide justification.
 > 
-> You are right maybe, although I did not find strong enough reasons for adding
-> the stable tags.
+> > It also depends on the severity of the issue and to some extent the
+> > complexity of the fix. These binding fixes are certainly low risk.
+> > :)
 > 
-> Only the changes of the gcc-ipq5018 driver has been tested on real hardware the
-> others are not. So those does not fit into the "It must be obviously correct and
-> tested." rule.
+> IIUC we're talking about:
+> 
+>   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
 
-Since this looks like a straight-forward and obviously correct fix for a
-bug which could have bad consequences, not being able to test each patch
-on actual hardware is not a problem.
+I'd prefer to take this one through my tree. I will double check the
+hardware documentation (there are differences in sc8280xp here) and
+decide how to proceed...
 
-Johan
+>   dt-bindings: PCI: qcom: Allow 'required-opps'
+
+Picking this for v6.9 is fine, no practical badness ensues. We would
+temporarily have a few additional DeviceTree validation warnings in the
+v6.8 release...
+
+Regards,
+Bjorn
+
+> 
+> These don't look like a regression fix (correct me if I'm wrong), and
+> I can't tell whether they fix a user-visible problem, since
+> sc8280xp.dtsi does already contain 'required-opps' for ufs_mem_hc,
+> usb_0, and usb_1, which are mentioned in the commit log as covering up
+> the issue.
+> 
+> If these patches wait until v6.9, what badness ensues?
+> 
+> Bjorn
 
