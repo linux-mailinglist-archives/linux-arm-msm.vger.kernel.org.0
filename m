@@ -1,112 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-13112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF62786E8A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 19:45:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12ECC86E8C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 19:52:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8AECF1F2581F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:45:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DF111C227A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 18:52:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A802F38DE0;
-	Fri,  1 Mar 2024 18:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F31823A1BD;
+	Fri,  1 Mar 2024 18:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozKTF75p"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dFLQ0zl/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799348F65;
-	Fri,  1 Mar 2024 18:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192F41E88A;
+	Fri,  1 Mar 2024 18:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709318701; cv=none; b=fUuMqY5MFAa1slNVy8b9sAaiz8atO9aTgGwGZBu3JYtbGCWlHsNbVqcWkKw+VRP9nTfpm9HZ/Q/wvyfHn9TDkExdzYWH94AzlZeChZiIahjY4j0X/J/kBEiKyUddy8VEPShf9cMlXzkqwSjYHu4dk4UjJIL7M4MmFRNZkldqcEU=
+	t=1709319020; cv=none; b=MS3/xHvgcReGHgz7j9/LOztMh8rQPr111+H832U+rO9mieUxjqRM2BJzbGbX66UUuhDMXLkUzNx6l0PZui7FoxkVOxVpvKFB+KzDnQQpUwRPsQBWwCn7Qn8NWOxww4+P+uSA9qAR1e7zjDOHWxpeLw75DIYovZS0gIfdYOUXZ8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709318701; c=relaxed/simple;
-	bh=id1yxnRe4d1iVCCOZ0uMeXqYvdX54AmG8Ltuh9AETi8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BzyEfgVvS/4sV2jVM6p8hj01PC9GXJlZ0Y5vhXDzjLipphk0St7XVSjgQfY1E52/QHpvRY7AhRQDna8E4OkdovKra9MLFzlDqGw2YEKEwHpMyN++5iNA2brPSIk6QnIfNw4zPdIBWbjoVT3rxANo0bbFSLc4SOg/HZEKUAP9/rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozKTF75p; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE67C433F1;
-	Fri,  1 Mar 2024 18:45:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709318701;
-	bh=id1yxnRe4d1iVCCOZ0uMeXqYvdX54AmG8Ltuh9AETi8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ozKTF75pI/DiPLnxnR80D2QsV+tX5cOFWKed+C4cXD81TM13NVUXruKRuVGpPU2Uh
-	 hGIeXpCeRD9ygx6L+BkV8Sut1PFKn4siYbtEjxf5RGPXfWPEmg33jefCP0n379A8ep
-	 9E1/fHPOGWOrDhA/UUVp4qbZx2lQjDMKhYRw3SUjNfixTVZrUkFqNQHJuou5ix/XT4
-	 iQB8biQr/8lHwEmCP9ks5UKfRQaVblbPj1o4RVMVuSBvH5iF3GNjVTEx7bdOXopci+
-	 dOvOs/mSYh1azHsJaYD49QYlunYdSGo10mfOrpoYf1MICGowbXcyvfGa1XDtCI0x4Z
-	 GVjhsO8tU9CYQ==
-Date: Fri, 1 Mar 2024 19:44:57 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: konrad.dybcio@linaro.org, bjorn.andersson@linaro.org, vkoul@kernel.org, 
-	wsa@kernel.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, quic_vdadhani@quicinc.com
-Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
- mode
-Message-ID: <2wala6lz4vanhvfx6jtpdexnpohabuvhzt4i7kt2xvmlfrapq4@tmvl37npj7jy>
-References: <20240301112638.990045-1-quic_msavaliy@quicinc.com>
+	s=arc-20240116; t=1709319020; c=relaxed/simple;
+	bh=xQB4TikMejf8HYKCd2nqTboBbc2W/l5k/UsuZ1nnvBE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IxNjRNKNUkfaTxg9kd2cOnM5nFsW9/ZExjlxkmQWosS/RAhSZ2kk5e6+A8EnBBcnHqXKvX5EMQLivbsGeDQ45TAIjFAqfkuqtTwAlA4X4RewEHTiejdf0I8lkW0Q1IDSrS0xBSwDgvoZEammTuBR0wkycTGSGc69ooi6mMqa8MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dFLQ0zl/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 421GuNc1008586;
+	Fri, 1 Mar 2024 18:50:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=lk1W+lVN+n6/SoaQkVD5BF3cUTG8UJWo7u5+NF+HJwQ=; b=dF
+	LQ0zl/DzGyDy70kkvdA+gNF9yKY4689P8EYCKzK081w53ZnNJk0eTUhs8f3M3jSL
+	xB77Ic5n9ABMgDEuUaE5JwVbaF9iChp5MTlUndYXhQ52snuqi6mbUqaD+CZm2grt
+	ph19Nhl8V9XZ+JfsXjS0K1gM6CThK/E/POQsur6c7p25BtFxH0eoZlV9BCZBvUFz
+	wtAkrXg18xHZ4DNYbEM31utKtsaLTdobYM/a6vSOs6qvCQ35x1RnSCrtv5DcWcdo
+	pCCPDgNRhQO3be8vsUGzCUWqkT3XKCNnnkGCMFtnCLMm3lgr7y7SxUNfUyzPWq6b
+	9/oz130Bmy9q/s3FiPdQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wk7cg9xkx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Mar 2024 18:50:01 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 421Io00L014051
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 1 Mar 2024 18:50:00 GMT
+Received: from [10.110.82.174] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Mar
+ 2024 10:49:57 -0800
+Message-ID: <6a3e3071-f8cd-66b4-99a0-427f7e11177a@quicinc.com>
+Date: Fri, 1 Mar 2024 10:49:57 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240301112638.990045-1-quic_msavaliy@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v7 11/12] firmware: qcom: scm: clarify the comment in
+ qcom_scm_pas_init_image()
+To: Bjorn Andersson <andersson@kernel.org>,
+        Bartosz Golaszewski
+	<brgl@bgdev.pl>
+CC: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Guru Das Srinagesh
+	<quic_gurus@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>,
+        "Maximilian
+ Luz" <luzmaximilian@gmail.com>,
+        Alex Elder <elder@linaro.org>,
+        "Srini
+ Kandagatla" <srinivas.kandagatla@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <kernel@quicinc.com>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        Deepti Jaggi
+	<quic_djaggi@quicinc.com>
+References: <20240205182810.58382-1-brgl@bgdev.pl>
+ <20240205182810.58382-12-brgl@bgdev.pl>
+ <ihz4jczbhn3gdcs6nkgnzpyv3577ebd73qbkynw6jz7ciy4fu3@kxqu7olrrely>
+Content-Language: en-US
+From: Prasad Sodagudi <quic_psodagud@quicinc.com>
+In-Reply-To: <ihz4jczbhn3gdcs6nkgnzpyv3577ebd73qbkynw6jz7ciy4fu3@kxqu7olrrely>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zJU114Lht-Ax-EGW8-ctMDqs437U1DQF
+X-Proofpoint-GUID: zJU114Lht-Ax-EGW8-ctMDqs437U1DQF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-01_20,2024-03-01_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 spamscore=0 suspectscore=0 mlxscore=0
+ mlxlogscore=999 lowpriorityscore=0 malwarescore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403010153
 
-Hi Mukesh,
 
-(I'm sorry for the noise but my mail server has marked this mail
-as spam and put the spam tag in front of the subject. Therefore,
-my reply might have been marked as spam.)
+On 2/17/2024 7:50 PM, Bjorn Andersson wrote:
+> On Mon, Feb 05, 2024 at 07:28:09PM +0100, Bartosz Golaszewski wrote:
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>
+>> The "memory protection" mechanism mentioned in the comment is the SHM
+>> Bridge. This is also the reason why we do not convert this call to using
+>> the TZ memory allocator.
+>>
+> No, this mechanism predates shmbridge.
+Yes. PIL calls are there for very long time and shm bridge concept is 
+introduced later.
+>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
+>> Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
+>> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   drivers/firmware/qcom/qcom_scm.c | 10 +++++++---
+>>   1 file changed, 7 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>> index 839773270a21..7ba5cff6e4e7 100644
+>> --- a/drivers/firmware/qcom/qcom_scm.c
+>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>> @@ -563,9 +563,13 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>>   	struct qcom_scm_res res;
+>>   
+>>   	/*
+>> -	 * During the scm call memory protection will be enabled for the meta
+>> -	 * data blob, so make sure it's physically contiguous, 4K aligned and
+>> -	 * non-cachable to avoid XPU violations.
+> What this is saying is that the memory will be made unaccessible to
+> Linux, so it needs to be contiguous and aligned.
 
-I'm going to send a new e-mail with the old answers.
+Based on my understanding,  this buffer has to be  physically 
+contiguous, 4K aligned and non-cachable to avoid XPU violations.
 
-On Fri, Mar 01, 2024 at 04:56:38PM +0530, Mukesh Kumar Savaliya wrote:
-> we are seeing protocol errors like NACK as transfer failure but
+We should keep this comment
 
-/we/We/
-
-> ideally it should report exact error like NACK, BUS_PROTO or ARB_LOST.
-> 
-> Hence we are adding such error support in GSI mode and reporting it
-> accordingly by adding respective error logs.
-> 
-> geni_i2c_gpi_xfer() needed to allocate heap based memory instead of
-
-Please use the imperative form.
-
-> stack memory to handle and store the geni_i2c_dev handle.
-> 
-> Copy event status from GSI driver to the i2c device status and parse
-> error when callback comes from gsi driver to the i2c driver. In the
-> gpi.c, we need to store callback param into i2c config data structure
-> so that inside the i2c driver, we can check what exactly the error is
-> and parse it accordingly.
-> 
-> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
-
-What bug are you fixing here? The description doesn't talk about
-fixes rather than support added.
-
-...
-
-> -	config.peripheral_config = &peripheral;
-> -	config.peripheral_size = sizeof(peripheral);
-> +	peripheral = devm_kzalloc(gi2c->se.dev, sizeof(*peripheral), GFP_KERNEL);
-> +	if (!peripheral)
-> +		return -ENOMEM;
-
-This is a massive leak. Why are you deciding to make the
-allocation dynamic?
-
-Thanks,
-Andi
+>
+>> +	 * During the SCM call the hypervisor will make the buffer containing
+>> +	 * the program data into an SHM Bridge.
+> Are you saying that the hypervisor will convert this memory to a
+> shmbridge, and then pass it to TrustZone?
+Yes.  Specifically for PIL calls hyp is creating shm bridge for 
+buffers/regions on behalf of Linux/NS-EL1.
+>
+>> This is why we exceptionally
+>> +	 * must not use the TrustZone memory allocator here as - depending on
+>> +	 * Kconfig - it may already use the SHM Bridge mechanism internally.
+>> +	 *
+> "it may already"? You describe above that we shouldn't pass shmbridge
+> memory, and the other case never deals with shmbridges. So, I think you
+> can omit this part.
+>
+>> +	 * If we pass a buffer that is already part of an SHM Bridge to this
+>> +	 * call, it will fail.
+> Could this be because the consumer of this buffer operates in EL2, and
+> not TZ?
+These buffers are consumed by TZ only and not by EL2.  hyp creating the 
+required bridges for pil buffers.
+>
+> Regards,
+> Bjorn
+>
+>>   	 */
+>>   	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
+>>   				       GFP_KERNEL);
+>> -- 
+>> 2.40.1
+>>
 
