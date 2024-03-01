@@ -1,98 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-13072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BD0286E0FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:24:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCF8886E105
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 13:26:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42ABC2887C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:24:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B67771C2204F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 12:26:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FCA96E2AE;
-	Fri,  1 Mar 2024 12:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5AA12AEFF;
+	Fri,  1 Mar 2024 12:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aFZyELV8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bVhRMiO3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01FC6E608
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 12:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDAD6E2AA
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Mar 2024 12:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709295856; cv=none; b=C9Ydmh0bpQiDvr7xmLvF6yBTiJ9ELXQFynuAMLKHMKOe1NE24MkfIAvS14R7borU6RX3d7+uvnhSZd5fnUsQewwVPRuFj5F8AwZB1/xlNQwlE9ygWMoPtMS67cT1DtH4WL1dVgtWdCc8o6sEt+u4yKGQJAbWPR8ii0XugPkeo0M=
+	t=1709295967; cv=none; b=Cjtv3FYaeQJRMEL4Brk+UcZ17ftcb2NQVQE1CliGqSK+SLY6CYK8YqmL5W4+gkz6kpNBSABFZhrBBRVfO78LnQFFVEcmqfZIEFvhaw7L/wFmgq6eH+4UBCWAZK0Em+BPhKTTj4MqVjM/X9XpswbA6LqlA7riJal8PVrT8nha0z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709295856; c=relaxed/simple;
-	bh=GeK7NXU8+bwfBSHzsZlUNBLhTVjfM+PRqah5iO9UP7A=;
+	s=arc-20240116; t=1709295967; c=relaxed/simple;
+	bh=DCxEN7tYRiXh61QyHjoT94wXv3D+5boFGgkhPYQVN4E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CavHTVz4TeBSYae/AqQyZcGKH4wo6sn67r2w9OI9RK/ACONtOjPj7sSTRLV4HOGHHBu+fbPorDWJURwv1eLHBJM3+DkItGrOkSMDOzXEP/40MX1IBj9E299pxVvJLvJ3LW5QLTSCdwIIcC/FMC9jdhxIvEKLWZlXGIezGhYJZ70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aFZyELV8; arc=none smtp.client-ip=209.85.166.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=fdPKTKLw15BueYSwvuvReLtsuk2Sm1Ha5COt3zRZL8XcgM7w5fgJaDuLvDco+COF38oboVjqp8UuuXeKN1/CEIUqR/7DHZOX0l+t1iTKDFZaCp7+shZnEA2/eY0Fye/5ZU5bR18Cc5UU7Fki8i+XnFhcPrFXyWgjvUKjNML3BW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bVhRMiO3; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-36576b35951so12399995ab.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 04:24:14 -0800 (PST)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e59bbdd8c7so1436028b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 04:26:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709295854; x=1709900654; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709295965; x=1709900765; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=/b5kEb7iwEP3csgzWIGJ8JouHXy+H/cUYJXmmRjhdKE=;
-        b=aFZyELV89/ojTEZjsaa6LrmkxmcsyGsIIv4IfcnBC5zUmeTiOTe1EYaHtJGWP+goDe
-         Myy9og1eWl+voL2fSpJDp3FdKtK+Q6UCQJM+1emF9oWo9dEY4bzPkEjzqet65QFHramv
-         yBkfpJtsmcQXtdkkYQNSmpHcNuZiJ1t9EmUXufby7xGTbjxhOzBvfdwJ9wqBByLE1wbU
-         olz4U+GHwJcMwtvmJpTYK2Gc+DOjVCv6w1O/D/F5fmwa9KIXVMZNMVT0sC41C5pnLmV1
-         TTBAfMXM+mpMFxdidYD0X2PNLoOOVJq316pphS2+59mWcAPW6+Z5t2X2ajcoKQPPE9lp
-         ARMA==
+        bh=n4vy0ssj1y9OKJx6whcKaZP2Wd8dgYFve24tfX8P7n0=;
+        b=bVhRMiO3ZLYW3MYlRoFjRWBCmUKW6VYrOJo4wExARQEm+Zv3eP24h2l/vMVv2ih2jE
+         zr75DkEhQpgQeNKL1WYFBWNkLd9kTiOIMFSP3ngyneKymvMWi/Vgphp4pvjfAe9LoJnc
+         VA9EBDpe+nsbcF/S6biTKvkv+22KKCSAT7GCWqXCCt3XM2H/eEUpcbdKIUx8sjK7ik1h
+         bwT8zt/0q+lnuc5wwK7Vfz5ceY3V+wqSokQ/4T1zcB4Q4eDnonUVOHXR490MF58LYbAT
+         ynmflIMJG8F0oywV5Y+K2bQ44HzuC2ixS1N7rKAOxLCcKihwxGLZyjCp/cW7Qpmn8g7X
+         HoAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709295854; x=1709900654;
+        d=1e100.net; s=20230601; t=1709295965; x=1709900765;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/b5kEb7iwEP3csgzWIGJ8JouHXy+H/cUYJXmmRjhdKE=;
-        b=AVh+uFc8UCJAhYdOZWpyS7IrcIEzZXnQh6sE+HQP4O8NMnEwUINS7o2Gs1m9vjWKAJ
-         ABdMnkm4MXTXfTCZ2Vj5MpdyAnIv6e1IDBe2uf7XUeSwd9LFj1u6lfHTwo/XdeLjzgcf
-         TW1LchUw/hUb1hnZ8uZgRMSlQ95KyGYoA2x5FseQ8S6GMm08V/wI9dBEU/V7zxQe8kV5
-         9FjOyPwS16/t1Meqq6B/nuMgx1ePfrMVSbcZf4KPbdVlKbGtf70CMbPZRCBgZNlarv4L
-         L34Gm3177ByWiflVqa7X2QVLlQ2/m100ZcuMkNunZYjyLqXvqt2MhUfPRjjQxESn4CkA
-         y/BQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVn4aqotqFWawVMvoB4/M7oGudSqT3wSdb6bL9RgndXmlecTd/YpSZE2BlMob0nuDdvoU9UOJu6H3mYLqjto2UdR0sqdADP09wUwGhFkQ==
-X-Gm-Message-State: AOJu0Yyp7Ak3oeddPb2k5F6xqjMKHu37vEPhmTNdY+Fny+gLSa9QtZVb
-	kz+ecw0dqpChJb2luiVi8civzd4IgkXb/6AoJ1wsmlXLy2J3lUgkWSc4+yFsBw==
-X-Google-Smtp-Source: AGHT+IGjonEgf53n7CtJrGJKoHCICELzX7ssAuT3mNd1cdbBKw/KgfiA65RmCI0QdqSvYfVXPwiQRg==
-X-Received: by 2002:a6b:ef13:0:b0:7c4:9c09:218c with SMTP id k19-20020a6bef13000000b007c49c09218cmr1513631ioh.7.1709295854030;
-        Fri, 01 Mar 2024 04:24:14 -0800 (PST)
+        bh=n4vy0ssj1y9OKJx6whcKaZP2Wd8dgYFve24tfX8P7n0=;
+        b=LGQSh6IOinUWJwRr4zY/9V3wt3/omlneNjLKcUGbry7zCVBjQLW7UL5gwwmHlGmnUJ
+         VQruJTnCI5bw/kQZVqUytBR5U6QK9yGjteKvyBxFdvDDwW6U3Gt1nFsGvI6moudTKxy3
+         v6c4Y5pH5538w3vZzDzyJFqauxbY/hwVpvkbFK+Pp6DAhfHchry8rJKRTZgxEdG/qwyi
+         Ye6HdFt2Aa+mDqBPLjIFH2Q5nE/8apjme6ZpJYURVxHbhsntDSLAF3oluk5ij0zL535k
+         gtMyo1HwNnxTPmHnB4gdCTVAjTx9+yRIBkRgr5VHoCoOnMQwuIDb8ZsxHaLPRnyXs0fr
+         tyNw==
+X-Forwarded-Encrypted: i=1; AJvYcCXBayylJ+VHGvuZIxgUmlHA717HKuuCLhypOEZ/zNv6PKvo0B6b4T3FG69wLdgiVwDrFE9lOL54Nqsssm4zlolOQVzjaR34BDeRsRwUAg==
+X-Gm-Message-State: AOJu0YxWkkTIy70MoJlmUqeHMWXBs27ARvMvBFJEQw26vhC53kpFAKU3
+	Q3IRZtYxFqP/CHSfDt/3oxFsEt3Sf4F2uKeDpWp5Q387SBanPRaEKkwE9YUooA==
+X-Google-Smtp-Source: AGHT+IHDbZOb0MqU0lNgT6Ylu5XAVO9Rkznovko5WeZRWLmmdsVhJISyuzq0BMbPgmlDmT83+wLDug==
+X-Received: by 2002:a05:6a20:4327:b0:1a0:6856:d12c with SMTP id h39-20020a056a20432700b001a06856d12cmr1584913pzk.18.1709295965331;
+        Fri, 01 Mar 2024 04:26:05 -0800 (PST)
 Received: from thinkpad ([2409:40f4:13:3cbc:2484:3780:dcff:ebcf])
-        by smtp.gmail.com with ESMTPSA id l20-20020a63da54000000b005cd8044c6fesm2934212pgj.23.2024.03.01.04.24.08
+        by smtp.gmail.com with ESMTPSA id p12-20020aa7860c000000b006e50e79f155sm2834437pfn.60.2024.03.01.04.26.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 04:24:13 -0800 (PST)
-Date: Fri, 1 Mar 2024 17:54:06 +0530
+        Fri, 01 Mar 2024 04:26:04 -0800 (PST)
+Date: Fri, 1 Mar 2024 17:55:59 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <20240301122406.GA2401@thinkpad>
-References: <20240223152124.20042-1-johan+linaro@kernel.org>
- <20240228220843.GA309344@bhelgaas>
- <20240229100853.GA2999@thinkpad>
- <ZeBbrJhks46XByMD@hovoldconsulting.com>
- <20240229122416.GD2999@thinkpad>
- <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
- <20240229135407.GE2999@thinkpad>
- <ZeCktwcEFAfCEVkV@hovoldconsulting.com>
+To: Baochen Qiang <quic_bqiang@quicinc.com>
+Cc: Kalle Valo <kvalo@kernel.org>,
+	"Kalle Valo (QUIC)" <quic_kvalo@quicinc.com>,
+	ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, netdev@vger.kernel.org
+Subject: Re: [PATCH v4 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
+Message-ID: <20240301122559.GB2401@thinkpad>
+References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
+ <20240228022243.17762-2-quic_bqiang@quicinc.com>
+ <20240229101202.GB2999@thinkpad>
+ <531daaa9-cf14-4812-8908-c617bd25bc08@quicinc.com>
+ <87le7383nd.fsf@kernel.org>
+ <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,49 +93,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeCktwcEFAfCEVkV@hovoldconsulting.com>
+In-Reply-To: <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
 
-On Thu, Feb 29, 2024 at 04:37:27PM +0100, Johan Hovold wrote:
-> On Thu, Feb 29, 2024 at 07:24:07PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
+On Fri, Mar 01, 2024 at 10:04:06AM +0800, Baochen Qiang wrote:
 > 
-> > > I think that based on the available data it's reasonable to go ahead and
-> > > merge these patches. In the event that this turns out to be a
-> > > configuration issue, we can just drop the 'aspm-no-l0s' properties
-> > > again.
+> 
+> On 3/1/2024 3:35 AM, Kalle Valo wrote:
+> > Baochen Qiang <quic_bqiang@quicinc.com> writes:
 > > 
-> > Well the problem is, if you are not sure, then adding the DT properties is
-> > certainly not correct. As that implies a hardware defect, but it may not be.
-> > So let's wait for some time to find out the actual issue.
+> > > On 2/29/2024 6:12 PM, Manivannan Sadhasivam wrote:
+> > > > On Wed, Feb 28, 2024 at 10:22:41AM +0800, Baochen Qiang wrote:
+> > > > > ath11k fails to resume:
+> > > > > 
+> > > > > ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
+> > > > > 
+> > > > > This happens because when calling mhi_sync_power_up() the MHI subsystem
+> > > > > eventually calls device_add() from mhi_create_devices() but the device
+> > > > > creation is deferred:
+> > > > > 
+> > > > > mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
+> > > > > 
+> > > > > The reason for deferring device creation is explained in dpm_prepare():
+> > > > > 
+> > > > >           /*
+> > > > >            * It is unsafe if probing of devices will happen during suspend or
+> > > > >            * hibernation and system behavior will be unpredictable in this case.
+> > > > >            * So, let's prohibit device's probing here and defer their probes
+> > > > >            * instead. The normal behavior will be restored in dpm_complete().
+> > > > >            */
+> > > > > 
+> > > > > Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
+> > > > > called and thus MHI channels are not prepared:
+> > > > > 
+> > > > > So what this means that QRTR is not delivering messages and the QMI connection
+> > > > > is not working between ath11k and the firmware, resulting a failure in firmware
+> > > > > initialization.
+> > > > > 
+> > > > > To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
+> > > > > the devices for channels during power down. This way we avoid probe defer issue
+> > > > > and finally can get ath11k hibernation working with the following patches.
+> > > > > 
+> > > > > Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+> > > > > 
+> > > > > Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+> > > > 
+> > > > Did Kalle co-author this patch? If so, his Co-developed-by tag should
+> > > > be added.
+> > > 
+> > > Hmm, I'm not sure...  I would like Kalle's thoughts on this.
+> > 
+> > IIRC I did only some simple cleanup before submitting the patch so I
+> > don't think Co-developed-by is justified. I'm also fine with removing my
+> > Signed-off-by.
+> Thanks Kalle.
 > 
-> Our devicetrees are always going to be a tentative description of the
-> hardware, and this especially true for Qualcomm that don't publish any
-> documentation so that people are forced to rely on informed guesses
-> based on downstream devicetrees and drivers and reverse engineering.
-> 
-> As far as I can tell, after having spent a lot of time on this and
-> checking with sources inside Qualcomm, the hardware is to blame here. If
-> this turns out not to be true, we can always revise later. We do this
-> all the time, as you know.
-> 
-> I'm all for digging further into this issue with the help of Qualcomm,
-> but I don't think that should block this series as that would leave the
-> link errors that we hit since 6.7 in place and effectively prevent us
-> from enabling the ITS in 6.9.
+> Hi Mani, so according to Kalle's comments, I'd like to keep the patch as is.
 > 
 
-Sounds fair. I will report back, perhaps with a fix based on what I get to know.
-
-But I think it is better to disable L0s in the SoC dtsi itself. That's not only
-because there are patches to essentially disable L0s in 2 of the available
-platforms making use of this Soc, but also you are enabling GIC ITS in the SoC
-dtsi and that may affect sa8540p which is making use of this dtsi.
-
-The users of that SoC may have not noticed the errors as you did before, but
-enabling GIC ITS will certainly make the issue visible to them (more likely).
-
-Also, if it turns out to be a hardware IP issue, then we can leave the patches
-as it is, otherwise we can revert them easily.
+No. Either remove his signed off by (as indicated by Kalle) or add a
+co-developed-by tag. Keeping just a signed-off-by tag is wrong.
 
 - Mani
 
