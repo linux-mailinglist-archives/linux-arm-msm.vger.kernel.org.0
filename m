@@ -1,63 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-13119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9258E86EAF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 22:12:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98AF186EB01
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 22:17:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48FB628694F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 21:12:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 290E7B22E66
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 21:17:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C75256B96;
-	Fri,  1 Mar 2024 21:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D85E57320;
+	Fri,  1 Mar 2024 21:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsAKURfv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtKXy3Zf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEB656B74;
-	Fri,  1 Mar 2024 21:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28EB3C464;
+	Fri,  1 Mar 2024 21:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709327528; cv=none; b=HmBWxvgQR9KTDiqdSj17joNwSQlryyCFBvnCfBrluaSbcDlBhmCIYyRDkuvvxWx1RhvkB32hhY+hJENNLBCSGyINrKAcdk9LnW4ZwEKVGaX3GkFRf+P1wx+Upj2DDlWOzch7SaC81OSX6TFBc8CnN+6wQ2ahQ3ZHDHvbOg/B8yk=
+	t=1709327867; cv=none; b=RRJ0P4WXk3SrPTknOQiP2l1LX1YqGQYsYbMSiwqYOoyV+KPEUzBk1PAw8jOD0qNzYUV6TfA7ZKfDj6mJ2cN0CEl8f3Q8WnEP7HN311Ib5xA8J0+fNoBYZXa2UmtC5kOVer+QpAEuuG0jopu8Z7ngZCSE+qymVKSa/Re934zZDVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709327528; c=relaxed/simple;
-	bh=6KTnGZojSKiI6qPY5u8jTFRZhiEL7wo7RfslBXaDzuo=;
+	s=arc-20240116; t=1709327867; c=relaxed/simple;
+	bh=ynPmWgUp8GFmhIVQKnFx8IGIML9tTdRJFvuuDRkyDaE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MgbB3u9Qg41pOqfS/o0o4+BxsdA6rhuXd0TIkUzKrDQojdXYsdk5jOB+8KGCF6iWzwfJ78uybU5ZXBq9yyfZdVFm45sMzP4SrgBtA4fMJ3FMTNCndaxCNAs5hOHB4Ntw7YeLwl+PKEvmVi+RiwwGj8D8xvmSZ0dFkdSUVTKa0j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsAKURfv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B4EC43394;
-	Fri,  1 Mar 2024 21:12:07 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rHM/J48pLBYT3InoPTv+cjrSqmL+ApVsi5Z4dzME68Mxy9gaxnX14q3EbnCHJzzkYMbmtLVfVVl4r6vaNCCpNMMPffgpp6g7EhEhYgZfPHphTCqd9OG3kDN4w5Nuh889fR6E/lA81dyZdPv2m20A9Y76NhcjmvFSl4kkAsiUPO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtKXy3Zf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB61C433F1;
+	Fri,  1 Mar 2024 21:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709327527;
-	bh=6KTnGZojSKiI6qPY5u8jTFRZhiEL7wo7RfslBXaDzuo=;
+	s=k20201202; t=1709327866;
+	bh=ynPmWgUp8GFmhIVQKnFx8IGIML9tTdRJFvuuDRkyDaE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SsAKURfv9cvIlz08w5+kegYONoMgsqGvskpVzI/MDbVAZqD4hbfXiMABdzK+uXEVt
-	 thksY8XfZjlm3mWjGFRmkd6+7xNTX8x7F6HcebhPekqa1Qn+ZDn0QkDrzTzlinuKR8
-	 0lV+e8dcoUoVrVBmozyuGfeGzYdz+NaCCdGkxlRb9UxnPgsdbZ6UNTSiSoCjkTlcxI
-	 Na4jRP51jmLLFcQ05OemZsL6avYhTePRK8EQLTHOFzIUpaJhV9fJety2CYUBIH0JJF
-	 ckAw2eMqsyuxcl4GhlZ/r//ZlJJW/JwcbQkAptPyR+5s4ELXg1vwER5v2TwIZyeGSK
-	 yqOzO3QX68qOQ==
-Date: Fri, 1 Mar 2024 15:12:05 -0600
+	b=KtKXy3ZfVWf6FtTOqVuW2Wud1JOJFOnwvz3IowNi20ZNCtcma9UdHQ+0/MOlR1BdZ
+	 RGNkaERN961p0m8tQfxWb75eaYvbzSdCL1kbXKFnGdeyt7AeUtCYkP6j80zre/+reL
+	 08DD8D1ckn6w/wTLU8/MXv1NriChSWjVySAfeAwj62gyy0j6lEvxrkPxslFVtOiWbZ
+	 ti/RLNgFsB2MmgGG8Eke9aJdJH7u+fg1ps7OQc522PD6t216Xq6iU7G9DRlm+9BSyM
+	 pX8YGjCFUezM1VLFK3PEelaFKIyJTxFYG74xqNnht7JPa5u8i6bkfHux1c/Ym1DdyF
+	 fgWAa908nBluA==
+Date: Fri, 1 Mar 2024 15:17:44 -0600
 From: Rob Herring <robh@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: linux-pci@vger.kernel.org, Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	linux-kernel@vger.kernel.org,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: [PATCH v2 03/12] dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
-Message-ID: <170932752351.3045588.9363132406112450263.robh@kernel.org>
-References: <20240223152124.20042-1-johan+linaro@kernel.org>
- <20240223152124.20042-4-johan+linaro@kernel.org>
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+	linux-kernel@vger.kernel.org, quic_rjendra@quicinc.com,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, conor+dt@kernel.org,
+	andersson@kernel.org, linux@roeck-us.net, wim@linux-watchdog.org
+Subject: Re: [PATCH RESEND] dt-bindings: watchdog: qcom-wdt: Update
+ maintainer to Rajendra Nayak
+Message-ID: <170932786350.3053624.11905872350641616788.robh@kernel.org>
+References: <20240223161455.4009469-1-quic_jhugo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,19 +61,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240223152124.20042-4-johan+linaro@kernel.org>
+In-Reply-To: <20240223161455.4009469-1-quic_jhugo@quicinc.com>
 
 
-On Fri, 23 Feb 2024 16:21:15 +0100, Johan Hovold wrote:
-> Add 'aspm-no-l0s', which can be used to indicate that ASPM L0s is not
-> supported, to the binding.
+On Fri, 23 Feb 2024 09:14:55 -0700, Jeffrey Hugo wrote:
+> The servers for the @codeaurora domain are long retired and any messages
+> sent there will bounce. Sai has left the company and appears no longer
+> active in the community which leaves this binding orphaned. Rajendra Nayak
+> has volunteered to take over as maintainer.
 > 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> 
+> Rob, will you take this into your tree for 6.9?
+> 
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Applied, thanks!
 
 
