@@ -1,61 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-13087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5809F86E3D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:01:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA9C586E497
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:43:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F22F282F2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 15:01:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0CA0DB2299B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 15:43:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3F33AC0C;
-	Fri,  1 Mar 2024 15:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2779E70027;
+	Fri,  1 Mar 2024 15:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ha+sPQ87"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4ZRSLhV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B8E3987C;
-	Fri,  1 Mar 2024 15:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED20F3A8DE;
+	Fri,  1 Mar 2024 15:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709305270; cv=none; b=mgfqmNe6nJfgAy4LbduYA6Iq2CnHZr16Ju6R27gyN+86usk8IokprogwgcM4EamTSPa4Hl7VzpEJtpe0csGPaZG2X6yK2ffp4a44y4ZJcG3Ti2qJxh8WKpMl6JboQ1gO0df6vEcIHF9xKWe8eyyJnXFS3zONeWh/egx0i66w4js=
+	t=1709307824; cv=none; b=scet6aqXdlCZlxcdhjZ6berqU15bcdOB1PJb7rSuh/TFzOo82jz5nA4P34UxkVwByCD3JMaH5sfcxuBzw1Wx1igX6oXcHvzVq3jpPJhs88dVOTzCphfkkFz+jWClvWP3r+KJd02XuvDUsjIkemW/1UdYy8tNXkKSLNi/UgKm40s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709305270; c=relaxed/simple;
-	bh=tHAFlcvz0AL6ZnBgVLqJf9VI78SZ372MIUyTON7zBw0=;
+	s=arc-20240116; t=1709307824; c=relaxed/simple;
+	bh=bG9hQ66MYcnqctgrAOl+DucX9thMeIyw3inwy+5KOqk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yh7mvcucr6hkjn2McZJm53We0+pUVzWuObtA1KR+7AhO3XMDXwyS4KpD1ml/MqMH+vfih+gLtswC59yFZTx08x5CTHJrIRDw1XsFQmOobo1+RMmrrw9YuuUYxFCIbh+CnAdXsIa6SJf0EIsM+Ycm75yA54MbwC2Pz73u59jaaG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ha+sPQ87; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3DBC433F1;
-	Fri,  1 Mar 2024 15:01:08 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBxpR5uGYNbuctjKR8UHaiocoGoHskDBaUyVwjBJ+5d+zf2FUse+Z24+P152IIWvfbeeZPqvd2IShqW3wUDgHlGBzINbHslPz4wZMY5RCG04aSGqBj5hwxvlxnCPtbL9ScG2kFOqRNQkAZMhF+O360Eb62HT1gpAirxAdJDSZlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4ZRSLhV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680CEC433F1;
+	Fri,  1 Mar 2024 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709305270;
-	bh=tHAFlcvz0AL6ZnBgVLqJf9VI78SZ372MIUyTON7zBw0=;
+	s=k20201202; t=1709307822;
+	bh=bG9hQ66MYcnqctgrAOl+DucX9thMeIyw3inwy+5KOqk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ha+sPQ87jZDLawJKK6IVH5+h9r1NK29RAlN7I555n9m126A5sF1cWQHqnbkktjUnR
-	 RwVM0WaZml4HMsv7bXt5ixl0rNXovx7QTYp6tJ6shboC+nmEYvyw8UIjyDUkPYlaeN
-	 S7fmOPfXNRh5MzW2czOI6iLipuxCQZWFWwc2oAxvkUVdbgOjzLN/1pUI7cUXXP8kfu
-	 M5PC5GH+G5OZD0Z8ietqhocY9eI6P/C64ZSHvxSMx4vtpA4PDEmDJJ9rmvMR9/kcO1
-	 XuBspaD1x9ZIwbOj9w9KrqWFCL1tER3MVydW7z9k+7gAfDiQjAyKMpGSxVYDtL8X3M
-	 RNHg+N+yCdfJQ==
-Date: Fri, 1 Mar 2024 09:01:06 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] arm64: dts: qcom: sc8280xp: PCIe fixes and
- GICv3 ITS enable
-Message-ID: <e5xhwfvqod6dtrlhftzbno5ktezpfmr32alnd4nvkscaackj7e@vd5c24cbwzuy>
-References: <ZeCCPRVvYCNfMYnd@hovoldconsulting.com>
- <20240229205240.GA361626@bhelgaas>
+	b=F4ZRSLhVZixnb8wRCaw8T7ek/UOS49fnu8jBUY918pHyaSHtkJin4mJyCZG0D4aFE
+	 3MJH7MdLOkSV3iNdYoFMsNe8fHtdPIyc9pxIIveu9ml9fQlsaZQ5F+cO3CQtOHwNXM
+	 Uea2nemNIVtE4aTQWrE7Ug7aiU5whWynJXpzijOA4XM9V/xLT0eSBDbLiZ/OoM3qym
+	 SnDG0Nl7WdIp3QRU8I+wjjtQDFJ28Nj7zFGkQC1dmGwAWYs7KKN2Ji092RS4G/Hi0J
+	 GklanWOALbNCfJKDyUVxKdYHb7PTc44V/RTAoVofbzkX6l7Q1NZFe5WXqWoT/FoKlZ
+	 PRPyunVZ8HPDQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rg53B-000000001io-0yeT;
+	Fri, 01 Mar 2024 16:43:53 +0100
+Date: Fri, 1 Mar 2024 16:43:53 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v15 8/9] usb: dwc3: qcom: Enable wakeup for applicable
+ ports of multiport
+Message-ID: <ZeH3uXyp3YJTU3cL@hovoldconsulting.com>
+References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
+ <20240216005756.762712-9-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,54 +73,130 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240229205240.GA361626@bhelgaas>
+In-Reply-To: <20240216005756.762712-9-quic_kriskura@quicinc.com>
 
-On Thu, Feb 29, 2024 at 02:52:40PM -0600, Bjorn Helgaas wrote:
-> On Thu, Feb 29, 2024 at 02:10:21PM +0100, Johan Hovold wrote:
-> > On Thu, Feb 29, 2024 at 05:54:16PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Feb 29, 2024 at 11:25:48AM +0100, Johan Hovold wrote:
-> > 
-> > > > As I mentioned, the 'required-opps' binding update is needed to
-> > > > fix the missing OPP vote so blocking the binding patch would
-> > > > block merging the DT fix which could otherwise go into 6.8.
-> > 
-> > > I agree that the fix gets the priority. But some maintainers
-> > > perfer to merge fix patches _only_ if they are fixing the issue
-> > > introduced in the ongoing release.  But if Bjorn has no issues in
-> > > merging these for 6.8, then it is fine.
+On Fri, Feb 16, 2024 at 06:27:55AM +0530, Krishna Kurapati wrote:
+> DWC3 Qcom wrapper currently supports only wakeup configuration
+> for single port controllers. Read speed of each port connected
+> to the controller and enable wakeup for each of them accordingly.
 > 
-> I do prefer to merge only regression and important fixes after the
-> merge window, so I want to be able to provide justification.
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 72 ++++++++++++++++++------------------
+>  1 file changed, 37 insertions(+), 35 deletions(-)
 > 
-> > It also depends on the severity of the issue and to some extent the
-> > complexity of the fix. These binding fixes are certainly low risk.
-> > :)
-> 
-> IIUC we're talking about:
-> 
->   arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index a20d63a791bd..572dc3fdae12 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -78,6 +78,7 @@ struct dwc3_qcom_port {
+>  	int			dp_hs_phy_irq;
+>  	int			dm_hs_phy_irq;
+>  	int			ss_phy_irq;
+> +	enum usb_device_speed	usb2_speed;
 
-I'd prefer to take this one through my tree. I will double check the
-hardware documentation (there are differences in sc8280xp here) and
-decide how to proceed...
+You need to remove the corresponding, and now unused, field from struct
+dwc3_qcom as well.
 
->   dt-bindings: PCI: qcom: Allow 'required-opps'
+>  };
+>  
+>  struct dwc3_qcom {
+> @@ -336,7 +337,8 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+>  	return dwc->xhci;
+>  }
+>  
+> -static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+> +static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom,
+> +						       int port_index)
 
-Picking this for v6.9 is fine, no practical badness ensues. We would
-temporarily have a few additional DeviceTree validation warnings in the
-v6.8 release...
+As I mentioned, there's no need for a line break after the first
+parameter as this is a function definition (e.g. Linus as expressed a
+preference for this as it makes functions easier to grep for).
 
-Regards,
-Bjorn
+>  {
+>  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>  	struct usb_device *udev;
+> @@ -347,14 +349,8 @@ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  	 */
+>  	hcd = platform_get_drvdata(dwc->xhci);
+>  
+> -	/*
+> -	 * It is possible to query the speed of all children of
+> -	 * USB2.0 root hub via usb_hub_for_each_child(). DWC3 code
+> -	 * currently supports only 1 port per controller. So
+> -	 * this is sufficient.
+> -	 */
+>  #ifdef CONFIG_USB
+> -	udev = usb_hub_find_child(hcd->self.root_hub, 1);
+> +	udev = usb_hub_find_child(hcd->self.root_hub, port_index + 1);
+>  #else
+>  	udev = NULL;
+>  #endif
+> @@ -387,23 +383,29 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
+>  
+>  static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+>  {
+> +	int i;
+> +
+>  	dwc3_qcom_disable_wakeup_irq(qcom->qusb2_phy_irq);
+>  
+> -	if (qcom->usb2_speed == USB_SPEED_LOW) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->port_info[0].dm_hs_phy_irq);
+> -	} else if ((qcom->usb2_speed == USB_SPEED_HIGH) ||
+> -			(qcom->usb2_speed == USB_SPEED_FULL)) {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->port_info[0].dp_hs_phy_irq);
+> -	} else {
+> -		dwc3_qcom_disable_wakeup_irq(qcom->port_info[0].dp_hs_phy_irq);
+> -		dwc3_qcom_disable_wakeup_irq(qcom->port_info[0].dm_hs_phy_irq);
+> -	}
+> +	for (i = 0; i < qcom->num_ports; i++) {
+> +		if (qcom->port_info[i].usb2_speed == USB_SPEED_LOW) {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->port_info[i].dm_hs_phy_irq);
+> +		} else if ((qcom->port_info[i].usb2_speed == USB_SPEED_HIGH) ||
+> +				(qcom->port_info[i].usb2_speed == USB_SPEED_FULL)) {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->port_info[i].dp_hs_phy_irq);
+> +		} else {
+> +			dwc3_qcom_disable_wakeup_irq(qcom->port_info[i].dp_hs_phy_irq);
+> +			dwc3_qcom_disable_wakeup_irq(qcom->port_info[i].dm_hs_phy_irq);
+> +		}
+>  
+> -	dwc3_qcom_disable_wakeup_irq(qcom->port_info[0].ss_phy_irq);
+> +		dwc3_qcom_disable_wakeup_irq(qcom->port_info[i].ss_phy_irq);
+> +	}
 
-> 
-> These don't look like a regression fix (correct me if I'm wrong), and
-> I can't tell whether they fix a user-visible problem, since
-> sc8280xp.dtsi does already contain 'required-opps' for ufs_mem_hc,
-> usb_0, and usb_1, which are mentioned in the commit log as covering up
-> the issue.
-> 
-> If these patches wait until v6.9, what badness ensues?
-> 
-> Bjorn
+As I already commented on v13, this should be a per-port helper rather
+than special casing qusb2_phy_irq and a for loop for the other
+interrupts:
+
+	A lot of these functions should become port operation where you
+	either pass in a port structure directly or possibly a port
+	index as I've mentioned before.
+
+>  }
+ 
+>  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+> @@ -455,10 +459,8 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+>  	 * The role is stable during suspend as role switching is done from a
+>  	 * freezable workqueue.
+>  	 */
+> -	if (dwc3_qcom_is_host(qcom) && wakeup) {
+> -		qcom->usb2_speed = dwc3_qcom_read_usb2_speed(qcom);
+
+And again, as I said for v13:
+
+	So just let this function update the usb2 speed for all ports
+	unless there are reasons not to.
+
+rather than hide it away in an odd for loop in
+dwc3_qcom_enable_interrupts().
+
+> +	if (dwc3_qcom_is_host(qcom) && wakeup)
+>  		dwc3_qcom_enable_interrupts(qcom);
+> -	}
+>  
+>  	qcom->is_suspended = true;
+
+Johan
 
