@@ -1,70 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-13089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C98586E4C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:56:09 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DE1A86E529
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:21:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 979DB1C20E81
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 15:56:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2B1128704B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C27647174B;
-	Fri,  1 Mar 2024 15:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B492670AE4;
+	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOg7D5lQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JB/c1HKS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7B97173D;
-	Fri,  1 Mar 2024 15:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD5F6F514;
+	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709308541; cv=none; b=so/MYAkpK+UuXqBsVWkCzMrxR8KtLHJoCnZDFba/65qUrw25rpxxjp1/Bzq7k3HMGywbJBTi12GVkfI3/7W/ul8DXMTQWvu4rKEYbCh/yGJQJxvvA6wanD0+gAfoWEBGk5cSoZY69AI11Ju+HbMALpY2vpAuQA8Sq/eprz8ko2s=
+	t=1709310096; cv=none; b=HvmqEeCC5DZzcoPuScmNhIf/1xSzdTahQg5Hi6U+tdV8JS7tbDpkdXfyiOgzN5zVu1Vk+6ASSS/Snr+eazWoK3GYBvEmOOwyctxefSmqP2SJrLffxGb5pKcgv9ziz0Aj2WgILPNbXdW3OHQLwQDV3VfznsQTCVcQ2twNKka9AGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709308541; c=relaxed/simple;
-	bh=+x3DnyLQr0FGuE3K5s58Ij+vb1+Fn/o9c7ysNtVLivo=;
+	s=arc-20240116; t=1709310096; c=relaxed/simple;
+	bh=avyjyGyF/VeFKLhHlTrCk38bYjiWeXUn6I458pAdN64=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kDGmZmc1KaZqNwwP5+sS6V7rdl7edVzwmVi7t2bBGmJ/Jdbl8QMahtSVuLF4XglDUFdiK/enVa4QkzadlQh7akDZSeo2jVFq4wTIsqlTVO3cuuUEjCZuY47pvmZuLwLdCqRpq0/9abPIdVRr6zMOIxNZFHhjR0Al3rVSQuxacOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOg7D5lQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D874C433F1;
-	Fri,  1 Mar 2024 15:55:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=URgevWDybu0VVXiV+PZOEus2i48qLkYO0Ig+WH34GY5DkHdWwPz5qbGphAFx9d7/umfs6/99+Lsqs57oXO1N3MaJ54lqriCF/pLcGnWvtMwWzEwaXHL7usPA4p/tbh+OzcW6goHJOFSkPxJ+vq4B51qm326WU3rkGIxPQznl180=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JB/c1HKS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA49C433C7;
+	Fri,  1 Mar 2024 16:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709308541;
-	bh=+x3DnyLQr0FGuE3K5s58Ij+vb1+Fn/o9c7ysNtVLivo=;
+	s=k20201202; t=1709310096;
+	bh=avyjyGyF/VeFKLhHlTrCk38bYjiWeXUn6I458pAdN64=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HOg7D5lQtK68Db2OuM3YK/C3ykhtKtUFLUe33QAxfMi1eCPf0ZJw4UE+cF9GhsYr/
-	 CSR0U0jJoxSPapzKr5jm5RAQovcbfQZRvY6Rh2d3hvrJjgQ3fTIdPdHLZ4MuazGt5O
-	 IBnx8PrAJWFWoE0NJVDFXHQk3A4n5uRbJmQK+qTWKYhv0UU4r8mvv4AWMZIt10f43i
-	 SGF+JXtpYRj80aJikeWMN2VX0mTnZQ2A7qCJHb11YXKjNFCcr4hG+legnrY4bUVp/p
-	 KWDw30kWpWfFnXdUZHgu1oCstpMnwtSYbXmwo6EfB0VtZTmY/3E35WCjxbtT4BAwdu
-	 yrXRgD0J1Y0CQ==
+	b=JB/c1HKSJpQhaCL6td7M5tCKAtrfU9k213yUhsowltVubPh5SDfNbSm12TZVEylC9
+	 FfK/EvWG1ZBCWGDzcadJxn8e/wqxbhpjZSWEcMlKQVmxReYzJlWzSj+r/yupr77wBc
+	 D6qSP8tpHeh2REjLyFM9sHXiU/OEuMBLtZGM+I5ycanqw1eSPW2yJOfTMnsRzE+dGz
+	 AmxynpDelSO3pq7gTYOtudIgHw/CWbLmEi0VyMsMa+XjjpVq+WzODTd4YBqxtpIDNO
+	 axL7RZSL0RP0asrE1wfQudeKh8qoP7VxAxcl4deDrFDGGX43+nEutCHZDADvfAOi7c
+	 fHvYwr8MIsevg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rg5Em-000000001l7-2rSd;
-	Fri, 01 Mar 2024 16:55:53 +0100
-Date: Fri, 1 Mar 2024 16:55:52 +0100
+	id 1rg5dr-000000002kJ-2SpG;
+	Fri, 01 Mar 2024 17:21:48 +0100
+Date: Fri, 1 Mar 2024 17:21:47 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v15 9/9] usb: dwc3: qcom: Add multiport suspend/resume
- support for wrapper
-Message-ID: <ZeH6iHdOie0_UYwZ@hovoldconsulting.com>
-References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
- <20240216005756.762712-10-quic_kriskura@quicinc.com>
+	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZeIAm74PplfLVis3@hovoldconsulting.com>
+References: <20240213082724.1789096-1-quic_kriskura@quicinc.com>
+ <20240213082724.1789096-2-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,75 +68,73 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240216005756.762712-10-quic_kriskura@quicinc.com>
+In-Reply-To: <20240213082724.1789096-2-quic_kriskura@quicinc.com>
 
-On Fri, Feb 16, 2024 at 06:27:56AM +0530, Krishna Kurapati wrote:
-> Power event IRQ stat registers are present for each port
-> connected to controller. Add support for modifying all power event
-> irq stat registers present in wrapper.
+On Tue, Feb 13, 2024 at 01:57:23PM +0530, Krishna Kurapati wrote:
+> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
 
-Could you please say about what the power-event irqs are used for here
-in the commit message as I asked you before?
- 
+"interrupts" and "PHYs"
+
+> platforms.
+
+But I suggest you just reword this along the lines of
+
+	Add USB DWC3 multiport controller.
+
+as it's assumed that you'll describe resources like interrupts and PHYs.
+
+Perhaps no need to mention SA8295p either as this change is needed (and
+correct) also for sc8280xp proper.
+
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 30 +++++++++++++++++++++++-------
->  1 file changed, 23 insertions(+), 7 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 82 ++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 572dc3fdae12..e789745a9468 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -37,7 +37,11 @@
->  #define PIPE3_PHYSTATUS_SW			BIT(3)
->  #define PIPE_UTMI_CLK_DIS			BIT(8)
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index febf28356ff8..29dbf2a9cdba 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3331,6 +3331,88 @@ system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
 >  
-> -#define PWR_EVNT_IRQ_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
-> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
-> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
-> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
+> +		usb_2: usb@a4f8800 {
 
-Again, not sure it makes any defines too keep these defines when you
-only access them through the array.
+> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 860 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 859 IRQ_TYPE_LEVEL_HIGH>,
 
+> +					      <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 129 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 128 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 131 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 130 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 133 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 132 IRQ_TYPE_EDGE_RISING>,
+
+These should all be IRQ_TYPE_EDGE_BOTH as DP/DM interrupts may need to
+trigger also on falling edges.
+
+> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
 > +
->  #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->  #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->  
-> @@ -109,6 +113,13 @@ struct dwc3_qcom {
->  	u8			num_ports;
->  };
->  
-> +static const u32 pwr_evnt_irq_stat_reg_offset[DWC3_MAX_PORTS] = {
-
-Seems "_offset" is redundant here, 'pwr_evnt_irq_stat_reg' should be
-enough.
-
-> +	PWR_EVNT_IRQ1_STAT_REG,
-> +	PWR_EVNT_IRQ2_STAT_REG,
-> +	PWR_EVNT_IRQ3_STAT_REG,
-> +	PWR_EVNT_IRQ4_STAT_REG,
-> +};
-> +
->  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
->  {
->  	u32 reg;
-> @@ -444,9 +455,11 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->  	if (qcom->is_suspended)
->  		return 0;
->  
-> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
-> +	for (i = 0; i < qcom->num_ports; i++) {
-> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
-> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> +			dev_err(qcom->dev, "Port-%d HS-PHY not in L2\n", i + 1);
-
-Please use lower case "port-%d" for consistency.
+> +			interrupt-names = "pwr_event_1", "pwr_event_2",
+> +					  "pwr_event_3", "pwr_event_4",
+> +					  "hs_phy_1",	 "hs_phy_2",
+> +					  "hs_phy_3",	 "hs_phy_4",
+> +					  "dp_hs_phy_1", "dm_hs_phy_1",
+> +					  "dp_hs_phy_2", "dm_hs_phy_2",
+> +					  "dp_hs_phy_3", "dm_hs_phy_3",
+> +					  "dp_hs_phy_4", "dm_hs_phy_4",
+> +					  "ss_phy_1",	 "ss_phy_2";
 
 Johan
 
