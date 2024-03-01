@@ -1,213 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-13052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D939586D8EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 02:36:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C6086D95B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 03:04:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C37C1F23815
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 01:36:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1E211C22981
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 02:04:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93DE92BAF0;
-	Fri,  1 Mar 2024 01:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA45A3984A;
+	Fri,  1 Mar 2024 02:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c7UFXKtO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pKzjQ+u7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34024A92E;
-	Fri,  1 Mar 2024 01:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248E238FBC;
+	Fri,  1 Mar 2024 02:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709256971; cv=none; b=m7zhoKgNuzGvjOJiz3O8bVlS5HGu4SKxJ+c7funvTe7ISWC7fcfMd8x0X5L791hyp2yh5v2bPrQMYPgaBQ8exialYJJnMzHJ8LP9RfyLK2V5axJj1s158uTyJ4jasxy3vZnd1n9sIjPgoVPJj4rWnrAXqjdaEjMAT0ZO9LEQRA8=
+	t=1709258667; cv=none; b=pfPx7dR5E9CkZibBae3SmhcdRfDdCBsAky92knXylzNMBocRdD0iYEcYsyF39LPiEraBzIQvb6qRNI8hFDB0uOvS1iLnL9zDfvunm1EpqGhVc1lkJh8ecWwjDa6CgKkiXeLFj5133ho8MDynASfBexJhUtQzpoDfF5A1x6z+SZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709256971; c=relaxed/simple;
-	bh=lnWUWgTACekg7SxM68wQvGPTavjyMmJFPT+m1gI3OdU=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a02xOODT9+5U+m7GA2UzzVvh8y2oztkN+M5f8amz1YkMUfOj+hVR8H0BM7omdDIA3xgNxefZmznP2xaLKmDIlqEvWRSMNK8FsLn71uRAtE5cTIK3FGWlICJ/fIQP4G+VDrcrwyqXMwyv5lfQUNxsQ30qDKh21bZxnR4v9tnXx7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c7UFXKtO; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1709258667; c=relaxed/simple;
+	bh=EUE081BGTpKI2jPBm9l1DAZfBilSuxIrE7H7+2z6rZU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qNhBQ1zyUBQ36RQH1hHAqteKvzc8AE2r5D5C4OPrMl3cmkG1OC4ndnTY+FKEI1Fj6/S18gSMWZ+KACi8z3j/j6m6VRJhBv1QFnFjONglkaT3Alf/7Lj0qS9v24IHMnddW1VwPh9ibPnjByc6usc19lKlT+upSstvL1q0MxhfJG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pKzjQ+u7; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 41TEQpkM006786;
-	Fri, 1 Mar 2024 01:35:47 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4210oB4O002798;
+	Fri, 1 Mar 2024 02:04:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=TtHNnTfGoMKg5efEVBnGq
-	6NLMyaY4z6AKIS0EWb8b0s=; b=c7UFXKtONcJtN6LV0x+OL5V7yrZXGu59BzQKX
-	LWMwCrvJmYd/hSonLiwG7dDdZ+M0V+TCrJYW3aUJ5qKNXpsTUB6xptdTVglYKVjr
-	Ej2UHzevU5p0RNcumlKmSujtgrm46wxF518KGPvKCt67SwXuBL9B9LfECWpPwU4j
-	InVfdIT0OzttKH2+fWcXrECDDzwsy+/4kh7qqp8fLy/Jkhv5OHBm7pg4zXnqwr2P
-	QRW9LLuE+3v/QAJubXyk7Qn/KdO/JbHpU1SKRdoEn1nNTc4ae3kyxVzSErRxkxaw
-	PV7dpP/YdiSVP3+a2l8RVY4IZZNP4O8I/dT34XmEYQTlNPomQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wjupp1sgu-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=qCn2CH+WxcE0RRkPCW/gs9CnYBAjab4ADjZKcKMLPuk=; b=pK
+	zjQ+u7uSv+S+UixgecppGb/dBVrX0b/LUyXbXp0MAe6DfjOKWq3bSBczwTX78cNJ
+	E127Ey6x6a0Cz+tJzGikZayFGo+qN3zOrt+eWIE7rOc/G0WP+oU/zcwAzoFlZTN9
+	3JL44MBn92GUxkEurqGE+PFO+UAuG00AxOEv1v6d8tO9OwWvsAr5OVbISmbVIHlD
+	oq+WCRt9KpVDWpVZLPx1rFgZ2xON6NyyPcg76RSsSDfH+y5R1ObEuT0Bpx0qnIQZ
+	W6XRMCRBqjHOiGdzkEoCGWdjpc9tWB7icPEBD79tvz4x+Zs0F8C3MVbidunNkuDa
+	Qn/QoCv/ODx9/18ul+pw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wjx9y1970-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Mar 2024 01:35:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4211ZkLN012568
+	Fri, 01 Mar 2024 02:04:13 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42124CIq002965
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Mar 2024 01:35:46 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 29 Feb 2024 17:35:45 -0800
-Date: Thu, 29 Feb 2024 17:35:45 -0800
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: David Hildenbrand <david@redhat.com>
-CC: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
-        Quentin Perret <qperret@google.com>,
-        Chris Goldsworthy
-	<quic_cgoldswo@quicinc.com>,
-        Android KVM <android-kvm@google.com>,
-        "Patrick
- Daly" <quic_pdaly@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        "Srinivas
- Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Murali Nalajal
-	<quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Srivatsa
- Vaddagiri" <quic_svaddagi@quicinc.com>,
-        Carl van Schaik
-	<quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Fuad Tabba <tabba@google.com>,
-        "Sean Christopherson" <seanjc@google.com>,
-        Andrew Morton
-	<akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map functions
-Message-ID: <20240229170329275-0800.eberman@hu-eberman-lv.qualcomm.com>
-Mail-Followup-To: David Hildenbrand <david@redhat.com>, 
-	Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>, 
-	Quentin Perret <qperret@google.com>, Chris Goldsworthy <quic_cgoldswo@quicinc.com>, 
-	Android KVM <android-kvm@google.com>, Patrick Daly <quic_pdaly@quicinc.com>, 
-	Alex Elder <elder@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Murali Nalajal <quic_mnalajal@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, Carl van Schaik <quic_cvanscha@quicinc.com>, 
-	Philip Derrin <quic_pderrin@quicinc.com>, Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Fuad Tabba <tabba@google.com>, Sean Christopherson <seanjc@google.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mm@kvack.org
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
- <ZdhEtH7xzbzdhS2j@infradead.org>
- <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
- <Zdxwo0abvklfam-Z@infradead.org>
- <2f4c44ad-b309-4baa-ac21-2ae19efd31fb@redhat.com>
- <20240226092020370-0800.eberman@hu-eberman-lv.qualcomm.com>
- <49d14780-56f4-478d-9f5f-0857e788c667@redhat.com>
+	Fri, 1 Mar 2024 02:04:12 GMT
+Received: from [10.231.195.68] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 29 Feb
+ 2024 18:04:09 -0800
+Message-ID: <b5b3f46d-ad98-44e5-84e0-7b00fe29ec5a@quicinc.com>
+Date: Fri, 1 Mar 2024 10:04:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <49d14780-56f4-478d-9f5f-0857e788c667@redhat.com>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/3] bus: mhi: host: add mhi_power_down_keep_dev()
+Content-Language: en-US
+To: Kalle Valo <kvalo@kernel.org>
+CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Kalle Valo
+ (QUIC)" <quic_kvalo@quicinc.com>,
+        <ath11k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <netdev@vger.kernel.org>
+References: <20240228022243.17762-1-quic_bqiang@quicinc.com>
+ <20240228022243.17762-2-quic_bqiang@quicinc.com>
+ <20240229101202.GB2999@thinkpad>
+ <531daaa9-cf14-4812-8908-c617bd25bc08@quicinc.com>
+ <87le7383nd.fsf@kernel.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+In-Reply-To: <87le7383nd.fsf@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OYxMkhK68XESzq23hFsSJIpyHes2RpDe
-X-Proofpoint-GUID: OYxMkhK68XESzq23hFsSJIpyHes2RpDe
+X-Proofpoint-GUID: mO0jaRZNk5ofn2jUbE7-xk37L4P-YGcS
+X-Proofpoint-ORIG-GUID: mO0jaRZNk5ofn2jUbE7-xk37L4P-YGcS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-29_08,2024-02-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- mlxlogscore=999 mlxscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403010011
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403010016
 
-On Tue, Feb 27, 2024 at 10:49:32AM +0100, David Hildenbrand wrote:
-> On 26.02.24 18:27, Elliot Berman wrote:
-> > On Mon, Feb 26, 2024 at 12:53:48PM +0100, David Hildenbrand wrote:
-> > > On 26.02.24 12:06, Christoph Hellwig wrote:
-> > > > The point is that we can't we just allow modules to unmap data from
-> > > > the kernel mapping, no matter how noble your intentions are.
-> > > 
-> > > I absolutely agree.
-> > > 
-> > 
-> > Hi David and Chirstoph,
-> > 
-> > Are your preferences that we should make Gunyah builtin only or should add
-> > fixing up S2 PTW errors (or something else)?
-> 
-> Having that built into the kernel certainly does sound better than exposing
-> that functionality to arbitrary OOT modules. But still, this feels like it
-> is using a "too-low-level" interface.
-> 
 
-What are your thoughts about fixing up the stage-2 fault instead? I
-think this gives mmu-based isolation a slight speed boost because we
-avoid modifying kernel mapping. The hypervisor driver (KVM or Gunyah)
-knows that the page isn't mapped. Whether we get S2 or S1 fault, the
-kernel is likely going to crash, except in the rare case where we want
-to fix the exception. In that case, we can modify the S2 fault handler
-to call fixup_exception() when appropriate.
 
-> > 
-> > Also, do you extend that preference to modifying S2 mappings? This would
-> > require any hypervisor driver that supports confidential compute
-> > usecases to only ever be builtin.
-> > 
-> > Is your concern about unmapping data from kernel mapping, then module
-> > being unloaded, and then having no way to recover the mapping? Would a
-> > permanent module be better? The primary reason we were wanting to have
-> > it as module was to avoid having driver in memory if you're not a Gunyah
-> > guest.
+On 3/1/2024 3:35 AM, Kalle Valo wrote:
+> Baochen Qiang <quic_bqiang@quicinc.com> writes:
 > 
-> What I didn't grasp from this patch description: is the area where a driver
-> would unmap/remap that memory somehow known ahead of time and limited?
+>> On 2/29/2024 6:12 PM, Manivannan Sadhasivam wrote:
+>>> On Wed, Feb 28, 2024 at 10:22:41AM +0800, Baochen Qiang wrote:
+>>>> ath11k fails to resume:
+>>>>
+>>>> ath11k_pci 0000:06:00.0: timeout while waiting for restart complete
+>>>>
+>>>> This happens because when calling mhi_sync_power_up() the MHI subsystem
+>>>> eventually calls device_add() from mhi_create_devices() but the device
+>>>> creation is deferred:
+>>>>
+>>>> mhi mhi0_IPCR: Driver qcom_mhi_qrtr force probe deferral
+>>>>
+>>>> The reason for deferring device creation is explained in dpm_prepare():
+>>>>
+>>>>           /*
+>>>>            * It is unsafe if probing of devices will happen during suspend or
+>>>>            * hibernation and system behavior will be unpredictable in this case.
+>>>>            * So, let's prohibit device's probing here and defer their probes
+>>>>            * instead. The normal behavior will be restored in dpm_complete().
+>>>>            */
+>>>>
+>>>> Because the device probe is deferred, the qcom_mhi_qrtr_probe() is not
+>>>> called and thus MHI channels are not prepared:
+>>>>
+>>>> So what this means that QRTR is not delivering messages and the QMI connection
+>>>> is not working between ath11k and the firmware, resulting a failure in firmware
+>>>> initialization.
+>>>>
+>>>> To fix this add new function mhi_power_down_keep_dev() which doesn't destroy
+>>>> the devices for channels during power down. This way we avoid probe defer issue
+>>>> and finally can get ath11k hibernation working with the following patches.
+>>>>
+>>>> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+>>>>
+>>>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+>>>
+>>> Did Kalle co-author this patch? If so, his Co-developed-by tag should
+>>> be added.
+>>
+>> Hmm, I'm not sure...  I would like Kalle's thoughts on this.
 > 
-> How would the driver obtain that memory it would try to unmap/remap the
-> direct map of? Simply allocate some pages and then unmap the direct map?
+> IIRC I did only some simple cleanup before submitting the patch so I
+> don't think Co-developed-by is justified. I'm also fine with removing my
+> Signed-off-by.
+Thanks Kalle.
 
-That's correct.
+Hi Mani, so according to Kalle's comments, I'd like to keep the patch as is.
 
 > 
-> For example, we do have mm/secretmem.c, where we unmap the directmap on
-> allocation and remap when freeing a page. A nice abstraction on alloc/free,
-> so one cannot really do a lot of harm.
-> 
-> Further, we enlightened the remainder of the system about secretmem, such
-> that we can detect that the directmap is no longer there. As one example,
-> see the secretmem_active() check in kernel/power/hibernate.c.
-> 
-
-I'll take a look at this. guest_memfd might be able to use PM notifiers here
-instead, but I'll dig in the archives to see why secretmem isn't using that.
-
-> A similar abstraction would make sense (I remember a discussion about having
-> secretmem functionality in guest_memfd, would that help?), but the question
-> is "which" memory you want to unmap the direct map of, and how the driver
-> became "owner" of that memory such that it would really be allowed to mess
-> with the directmap.
 
