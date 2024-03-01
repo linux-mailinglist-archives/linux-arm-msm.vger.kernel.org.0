@@ -1,60 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-13091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66C4F86E580
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:27:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAC7686E5B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 17:37:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82E9B1C20D70
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:27:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 50BF1B24230
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Mar 2024 16:37:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2554170CBE;
-	Fri,  1 Mar 2024 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E31316FF35;
+	Fri,  1 Mar 2024 16:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8HHwUey"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZJdJE3Fs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DD70CB6;
-	Fri,  1 Mar 2024 16:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA707EB;
+	Fri,  1 Mar 2024 16:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709310394; cv=none; b=aW0EKNvaikv7hmaEeNFwFDoDY0FTrL5KX8Z3rqh5BO/kOR3FYse6ktfcoSsG9i2jkIAj0x9Dh6D1j3PZF+u+mGFueOH1KSgaXKjQLvfL2fD6n7s4M8JRZeXlry6KwpR+WO39529tMB5dvBLK/7XIfavjcAYuFBD4LH2E7JzbPwo=
+	t=1709311026; cv=none; b=kB3UIAdj8YcHIoPgoGNgNYhlXijp/36RVg1pr5xnC9GP8ckUysYOm96L5GJnOMAnj3v/bMpPKNYItepdai2tTvwf1nCg5WV3KxsafmAam+84P1+3wkUfaRhkCPwqh47AkT7DrRseFItP3HLED4PJeQL0WosiWbFwBR/l0sSMlEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709310394; c=relaxed/simple;
-	bh=TvXH6saXNfgndMe7jdShDcIe/NSIB7gQ2yk9JpkDGn4=;
+	s=arc-20240116; t=1709311026; c=relaxed/simple;
+	bh=YlB/1TADMHsJkjzqG5nG4eUPWUlBvjkZYPN5z1m3rC0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Udo85MAu0kPkUPseCr4Rmv5xqRxy/u/3D9beze16/GYCiALQ8fSdKVKm2EyeOIlT0SneMeMjQ+eYVN/I0jIhnfgkDaZfTP6BD1hV1W2wc7A5qQBEbYD7KkLn655EAdVe/iUJS3/3owT6wceCH2++f1u+kdxwWHVxM3ov1HQpKrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8HHwUey; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDB6C433F1;
-	Fri,  1 Mar 2024 16:26:30 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=CR3GoF7U8OTF5RmoYQBBc/pVUEHfTVBFRHxpHWPXXw4Ohhzo1xLCDaC5Alu1z6CNmeQQVFBACbuHQ0QH41d3BvUeoESNAbKkebeDqz/M3vaOqT0Va4+8CRbaQ25AnlfTKcCGrXTQjVOyZ7GMZNG1+WwMCrYugh54igoa98TvVM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZJdJE3Fs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59273C433C7;
+	Fri,  1 Mar 2024 16:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709310393;
-	bh=TvXH6saXNfgndMe7jdShDcIe/NSIB7gQ2yk9JpkDGn4=;
+	s=k20201202; t=1709311025;
+	bh=YlB/1TADMHsJkjzqG5nG4eUPWUlBvjkZYPN5z1m3rC0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g8HHwUeyo9sVtVc/RAO1ayTmbaD3Z23Oo0ITl1vz9T/FMJwRzvbqazR+e2aFvjBeW
-	 wadUfFc0+uTrOVOIYHYn+F4gXQHT4nBKav4nJYrpzOhfJKEXSijHQbrDHe9ruF3rf5
-	 nPZiCQr9p6vpFqmDLwYVp2xdbLmuqyvGNz+jDfMz5O5q/e7DsNk4FJxEJrdX/fa9px
-	 vj7JamfrK1La7K9tCvG2xx6frkXRcItzx9Wwj1dcdIqod9s5hrYAUli+1RPvduLMIN
-	 dJRIwzbCTAkUlOoqqqlD1w/Kmb4wdEEbA8V7/976bGB9iGev7Lahvd5NfCRh16tvxC
-	 3rckRK2qKInYA==
-Date: Fri, 1 Mar 2024 16:26:28 +0000
-From: Simon Horman <horms@kernel.org>
-To: Alex Elder <elder@linaro.org>
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
-	quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-	quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-	elder@kernel.org, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 1/7] net: ipa: change ipa_interrupt_config()
- prototype
-Message-ID: <20240301162628.GF403078@kernel.org>
-References: <20240229205554.86762-1-elder@linaro.org>
- <20240229205554.86762-2-elder@linaro.org>
+	b=ZJdJE3FseOxlaXwcnkmnhcxFhYSmXhh3a4PKkO0x3svQq4ubILuvj6lT9XNQVeXat
+	 VfZdNrvvODRXe/Gq3TlWfZNfQCfmfvqEUB1L9u/Lqo67A8qjpmlX3X0VbIBF+RfQ/I
+	 46DgffTbwm0qmHQjcVXemrqCeQSQXW6jVTypnoapScbGbe3Quo3KmV3mXl05T37qO2
+	 CEYNewTbKVFa0/EOR1Aky+W/pijx0UybedgaHR3+XEL9fBRY0cJC0Vaw0ZGCKd17LA
+	 D7scz4dYJZVwlk6n25sR5jsc9xjhor/XE009h4LQnn7pP2HbxEFd4Wi6uBTVvLgwdi
+	 A5QKhSRMtZH4A==
+Date: Fri, 1 Mar 2024 10:37:02 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: konrad.dybcio@linaro.org, bjorn.andersson@linaro.org, vkoul@kernel.org, 
+	andi.shyti@kernel.org, wsa@kernel.org, linux-arm-msm@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	quic_vdadhani@quicinc.com
+Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <fuggv2kghhxijcljavzsus5uagjiknj5mrzwmqbxbhkyov5t75@smpxbhpdz7cv>
+References: <20240301112638.990045-1-quic_msavaliy@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,53 +60,203 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240229205554.86762-2-elder@linaro.org>
+In-Reply-To: <20240301112638.990045-1-quic_msavaliy@quicinc.com>
 
-On Thu, Feb 29, 2024 at 02:55:48PM -0600, Alex Elder wrote:
-> Change the return type of ipa_interrupt_config() to be an error
-> code rather than an IPA interrupt structure pointer, and assign the
-> the pointer within that function.
+On Fri, Mar 01, 2024 at 04:56:38PM +0530, Mukesh Kumar Savaliya wrote:
+> we are seeing protocol errors like NACK as transfer failure but
+> ideally it should report exact error like NACK, BUS_PROTO or ARB_LOST.
 > 
-> Change ipa_interrupt_deconfig() to take the IPA pointer as argument
-> and have it invalidate the ipa->interrupt pointer.
+> Hence we are adding such error support in GSI mode and reporting it
+> accordingly by adding respective error logs.
 > 
-> Signed-off-by: Alex Elder <elder@linaro.org>
+> geni_i2c_gpi_xfer() needed to allocate heap based memory instead of
+> stack memory to handle and store the geni_i2c_dev handle.
+> 
+> Copy event status from GSI driver to the i2c device status and parse
+> error when callback comes from gsi driver to the i2c driver. In the
+> gpi.c, we need to store callback param into i2c config data structure
+> so that inside the i2c driver, we can check what exactly the error is
+> and parse it accordingly.
+> 
+> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 > ---
->  drivers/net/ipa/ipa_interrupt.c | 15 ++++++++++-----
->  drivers/net/ipa/ipa_interrupt.h | 10 +++++-----
->  drivers/net/ipa/ipa_main.c      | 13 ++++---------
->  3 files changed, 19 insertions(+), 19 deletions(-)
+>  drivers/dma/qcom/gpi.c             | 12 +++++++-
+>  drivers/i2c/busses/i2c-qcom-geni.c | 46 +++++++++++++++++++-----------
+>  include/linux/dma/qcom-gpi-dma.h   |  4 +++
+>  3 files changed, 44 insertions(+), 18 deletions(-)
 > 
-> diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-> index 4d80bf77a5323..a298d922dd871 100644
-> --- a/drivers/net/ipa/ipa_interrupt.c
-> +++ b/drivers/net/ipa/ipa_interrupt.c
-> @@ -236,7 +236,7 @@ void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt)
->  }
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 1c93864e0e4d..6d718916fba4 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1076,7 +1076,17 @@ static void gpi_process_xfer_compl_event(struct gchan *gchan,
+>  	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
 >  
->  /* Configure the IPA interrupt framework */
-> -struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
-> +int ipa_interrupt_config(struct ipa *ipa)
+>  	dma_cookie_complete(&vd->tx);
+> -	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
+> +	if (gchan->protocol == QCOM_GPI_I2C) {
+> +		struct dmaengine_desc_callback cb;
+> +		struct gpi_i2c_config *i2c;
+> +
+> +		dmaengine_desc_get_callback(&vd->tx, &cb);
+> +		i2c = cb.callback_param;
+> +		i2c->status = compl_event->status;
 
-Hi Alex,
+What would the DMA maintainer say about extending struct
+dmaengine_tx_result with some protocol-specific status field?
 
-There are two cases where this function still returns a pointer.
+> +		dmaengine_desc_callback_invoke(&cb, &result);
+> +	} else {
+> +		dmaengine_desc_get_callback_invoke(&vd->tx, &result);
+> +	}
+>  
+>  gpi_free_desc:
+>  	spin_lock_irqsave(&gchan->vc.lock, flags);
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index da94df466e83..5092d10e8f47 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -484,9 +484,16 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  
+>  static void i2c_gpi_cb_result(void *cb, const struct dmaengine_result *result)
+>  {
+> -	struct geni_i2c_dev *gi2c = cb;
+> -
+> -	if (result->result != DMA_TRANS_NOERROR) {
+> +	struct gpi_i2c_config *i2c = cb;
+> +	struct geni_i2c_dev *gi2c = i2c->gi2c;
+> +
+> +	if (i2c->status & (BIT(NACK) << 5)) {
 
-Around line 250:
+Wouldn't it be cleaner to:
 
-	ret = platform_get_irq_byname(ipa->pdev, "ipa");
-	if (ret <= 0) {
-		dev_err(dev, "DT error %d getting \"ipa\" IRQ property\n",
-			ret);
-		return ERR_PTR(ret ? : -EINVAL);
-	}
-
-And around line 280:
-
-	return interrupt;
-
-This does seem to be resolved in patch 2/7.
-But as it is, this patch breaks bisection.
-
+status = FIELD_GET(SOME_MASK, i2c->status);
+if (status == BIT(NACK)) {
 ...
+
+Or can multiple of these be set? Still would like to see you extract the
+field instead of having the shift in every single conditional.
+
+> +		geni_i2c_err(gi2c, NACK);
+> +	} else if (i2c->status & (BIT(BUS_PROTO) << 5)) {
+> +		geni_i2c_err(gi2c, BUS_PROTO);
+> +	} else if (i2c->status & (BIT(ARB_LOST) << 5)) {
+> +		geni_i2c_err(gi2c, ARB_LOST);
+> +	} else if (result->result != DMA_TRANS_NOERROR) {
+>  		dev_err(gi2c->se.dev, "DMA txn failed:%d\n", result->result);
+>  		gi2c->err = -EIO;
+>  	} else if (result->residue) {
+> @@ -568,7 +575,7 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  	}
+>  
+>  	desc->callback_result = i2c_gpi_cb_result;
+> -	desc->callback_param = gi2c;
+> +	desc->callback_param = peripheral;
+>  
+>  	dmaengine_submit(desc);
+>  	*buf = dma_buf;
+> @@ -585,33 +592,38 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>  static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], int num)
+>  {
+>  	struct dma_slave_config config = {};
+> -	struct gpi_i2c_config peripheral = {};
+> +	struct gpi_i2c_config *peripheral;
+>  	int i, ret = 0, timeout;
+>  	dma_addr_t tx_addr, rx_addr;
+>  	void *tx_buf = NULL, *rx_buf = NULL;
+>  	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+>  
+> -	config.peripheral_config = &peripheral;
+> -	config.peripheral_size = sizeof(peripheral);
+> +	peripheral = devm_kzalloc(gi2c->se.dev, sizeof(*peripheral), GFP_KERNEL);
+
+This will be allocated for every transfer, and only freed when you
+remove the geni bus driver, i.e. this is in practice a memory leak.
+
+
+But do you really need to move this to the heap? If I understand the DMA
+api, the callback will not be invoked after you exit this function, so
+it should be fine to have it on the stack.
+
+> +	if (!peripheral)
+> +		return -ENOMEM;
+> +
+> +	config.peripheral_config = peripheral;
+> +	config.peripheral_size = sizeof(struct gpi_i2c_config);
+>  
+> -	peripheral.pack_enable = I2C_PACK_TX | I2C_PACK_RX;
+> -	peripheral.cycle_count = itr->t_cycle_cnt;
+> -	peripheral.high_count = itr->t_high_cnt;
+> -	peripheral.low_count = itr->t_low_cnt;
+> -	peripheral.clk_div = itr->clk_div;
+> -	peripheral.set_config = 1;
+> -	peripheral.multi_msg = false;
+> +	peripheral->gi2c = gi2c;
+> +	peripheral->pack_enable = I2C_PACK_TX | I2C_PACK_RX;
+> +	peripheral->cycle_count = itr->t_cycle_cnt;
+> +	peripheral->high_count = itr->t_high_cnt;
+> +	peripheral->low_count = itr->t_low_cnt;
+> +	peripheral->clk_div = itr->clk_div;
+> +	peripheral->set_config = 1;
+> +	peripheral->multi_msg = false;
+>  
+>  	for (i = 0; i < num; i++) {
+>  		gi2c->cur = &msgs[i];
+>  		gi2c->err = 0;
+>  		dev_dbg(gi2c->se.dev, "msg[%d].len:%d\n", i, gi2c->cur->len);
+>  
+> -		peripheral.stretch = 0;
+> +		peripheral->stretch = 0;
+>  		if (i < num - 1)
+> -			peripheral.stretch = 1;
+> +			peripheral->stretch = 1;
+>  
+> -		peripheral.addr = msgs[i].addr;
+> +		peripheral->addr = msgs[i].addr;
+>  
+>  		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+>  				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
+> diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+> index 6680dd1a43c6..af264f769344 100644
+> --- a/include/linux/dma/qcom-gpi-dma.h
+> +++ b/include/linux/dma/qcom-gpi-dma.h
+> @@ -64,6 +64,8 @@ enum i2c_op {
+>   * @set_config: set peripheral config
+>   * @rx_len: receive length for buffer
+>   * @op: i2c cmd
+> + * @status: stores gpi event status based on interrupt
+> + * @gi2c: pointer to i2c device handle
+
+The order doesn't match the struct below.
+
+>   * @muli-msg: is part of multi i2c r-w msgs
+>   */
+>  struct gpi_i2c_config {
+> @@ -78,6 +80,8 @@ struct gpi_i2c_config {
+>  	u32 rx_len;
+>  	enum i2c_op op;
+>  	bool multi_msg;
+> +	u32 status;
+> +	struct geni_i2c_dev *gi2c;
+
+These two entries doesn't have anything to do with the "gpi i2c config",
+just as the remainder of the properties has nothing to do with the "dma
+callback".
+
+Please split them off into their own structure.
+
+Regards,
+Bjorn
+
+>  };
+>  
+>  #endif /* QCOM_GPI_DMA_H */
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
+> 
 
