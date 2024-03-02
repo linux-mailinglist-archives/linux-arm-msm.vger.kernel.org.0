@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-13164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C08F986F31D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 00:26:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D501C86F323
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 00:32:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 00C801C20C86
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 23:26:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0531B21865
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 23:32:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8FB5381B;
-	Sat,  2 Mar 2024 23:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580FC54735;
+	Sat,  2 Mar 2024 23:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fKHMAs/u"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YlUMlZvr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B352259C
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 23:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13D44AED4
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 23:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709421987; cv=none; b=m+k2MS38m2+Duk/XrP2KPHCMZG4OwdQvNkQX2rtC4LKQfoa0N1RwHXhjnEjaX41XRdV8AwJiHgGT2eydsRGUgK7HTcWZ7vCPemlqc3Mbi2EaonSaGoaXgul1hTwwND2+yif8RKFcWvJujjMFxShGMj57pd9vC9/MRzxLej1ldPg=
+	t=1709422358; cv=none; b=PCEFeMvfI+ygVntcLaMfMMFEivpfqGWzVvOC/ehEc4QKzg0OYbp//q7GIkUAuUDOywqhJWQ1mny5jHE80MH0kZTxwoZFqfcvDyW45c1YnyKMgOys66ySLOrpbFD2UQ16oEZwA6xFWOpDsAjT4DPxUso0kDuS4+oyy2qPdp2MP2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709421987; c=relaxed/simple;
-	bh=WWoPXoEikJ+qkTL7RUU2//A1oFwcmolq2w8LR5Xiczs=;
+	s=arc-20240116; t=1709422358; c=relaxed/simple;
+	bh=ilr6PnvyjkOM4v70Hd+kVvbi7WJfxMXJh+DgYm1FJkE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Zrx4+CaTH/UFrD7Bj1zApChs6qEfE7szj2tJ66yZZPPm5zC6e16X7OmJlMsfSvJtwJorsA9jg192onCgpzSI4Yd7yXCeZcADZUcHaORsRESv1/hMnU7mAQRvatqUjfsykyr8D8DtheoskYeFFcN5iquvECuXGCz5bmeNRX/HoI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fKHMAs/u; arc=none smtp.client-ip=209.85.167.54
+	 In-Reply-To:Content-Type; b=YZsb7r0elLBzIt6B2QqmUZZE7/ckll6TEqoorv6YpkzeWcSeaLlF/evS7euddM9j/GQztUPDF/VNejde4DHKgtq7mtTlUYMHE6tw+awAdVnpBPpMvbdIqk5/sgkcllC7PPFutDISuK6/YX6A7C/d1PjsXfBrGAzxASB4ilz1KYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YlUMlZvr; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5132bd70e7dso718139e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Mar 2024 15:26:24 -0800 (PST)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-513056fe2b0so1104718e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Mar 2024 15:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709421983; x=1710026783; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709422354; x=1710027154; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=91l1ZuFqeuBqMaEr1yfV8RMJG1YWc8ygTqpkAMdBgko=;
-        b=fKHMAs/utfMMhneONRmXOG+r6SaDqyqkQGeprcXNP2SPh9WHM1J3d46rUHJJuPWWpI
-         a+tanMOQwRytinlqj22wOAen9TAQCFshEe8OXlqte8KlJJOMIKoZCW2ypyDdSXwQL0nc
-         RcP3T6YqxsaFw0NOBQJucPWsVwFz2615POpEIY7ftEDJdW7qGrqimeC43ab0VSV+66Uv
-         mvH6+GnnAG44q2GWRfOVXbwnHD3VhxzsW/uszNdjeB2Hzv0T/twlCD8inzgkhhGXkpsV
-         4mmKcBJWE7uoM3y5KIlxCr0sk9nxdwkCL/Fu+/zYh6COLlKDbskrMltYvP32pUZ2hjIT
-         ivZw==
+        bh=4mPvliG0dt9rHz01RD3Gj/gHYtffBEQ9/E8ecI4CxY0=;
+        b=YlUMlZvrD4i57ph9snk0fBpiJL9btUMPrBB1/UjWy3MN+VWLV3BYMpX3jXXZj8pJPe
+         a0T1lxcqS7ZY2sf7M3Iu4WlKNta6/ZqfMjnCL7yc9N4EqwZYU+vWMzMWY0+FGXnG01Fi
+         DCpzzATeT8bx93xAsaOeLQIEk+YR9FnVZZQt45WKfWw/w3b9Sfb8YafYcRQ/mgS67Mbk
+         Yz4YXjyarBswCqzin/h9CZXFBhDDU4DZl+/TU04bvI3kDXEICjcwQGNRxFQbGTlJ5XOF
+         gCV/ARw4uagRMOfDprA3aKm0RjbJHhp5QXH6lo9K1+JD6PQlf4+1Ek1T2Dd/TvUY7y+i
+         DkQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709421983; x=1710026783;
+        d=1e100.net; s=20230601; t=1709422354; x=1710027154;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=91l1ZuFqeuBqMaEr1yfV8RMJG1YWc8ygTqpkAMdBgko=;
-        b=DcEXlAHdkvrmt2As5qvKiRldgc39Xhacn73eYFr/C3T3nHmoGZ8TipyLezBeSJZO1o
-         cfh6Zabkb6HLZUwbUESHQeul6QIxG7xN1/k49xnudE9pGFzr/a5umJypyh3d89xLW+Bp
-         K8mXaj8bImvWxI0JL7+Xr15Xlr2ESyzNS1b79nJ9QxxZMywpQ4sXdLp6SWRXM3WqD+UP
-         9dH857pzt7ZCCpeARr5oFcqiipO/SJoeeUAsk7oxe9smmtH0kxbQ4pWllcW7QP+G1ZIS
-         3S8GgA2ZBX2qKhYAXt7YQar4FcR/LI7VN9VtUeazdFBBSlz4IHSVvG/OENsrv9JIAbAO
-         udaQ==
-X-Gm-Message-State: AOJu0YwbbOO8YRWrLkC6kYRZ6i1NkqnAIKjhG4lUsYPpUAyL7eti/chP
-	OO7tPb8aUJWQUD6pF5d2DdETSyOXgPhe8cz4mf6nnV/Wfc8pVSy8Mfw89J/FdBY=
-X-Google-Smtp-Source: AGHT+IHHAtDUwd18LuJhpkgrUuyhU878/OBTmnIxde0MbgC2ZcjssOvGV8rZBA7OW28m9OEHFpPF9Q==
-X-Received: by 2002:a05:6512:3e1b:b0:512:a026:1f13 with SMTP id i27-20020a0565123e1b00b00512a0261f13mr3705669lfv.3.1709421983115;
-        Sat, 02 Mar 2024 15:26:23 -0800 (PST)
+        bh=4mPvliG0dt9rHz01RD3Gj/gHYtffBEQ9/E8ecI4CxY0=;
+        b=BH6yukWNYE28UWISTs4LAUtnAiXpmKEEmrHNIdDxNCQqXe49+aiBfK6d4eq/MvMqLu
+         Txfo+7Cn4PSS63fCjeQDWvcHT25wR8OjHQc4zmuCDyFK7zewHydfb0ayoIa2bQc4H69O
+         x6+jPK/28jIpCX0YabIFuX07uWd3M18pOj3DHX9GFaVyqYn8/vhJHONa/rBLtsrkBFcU
+         hvXdUCA2I8tzAm7FNxZn5NhGt28QN01w993z3ftxdulbRfI3/zn3Jca5MNsrGK6z9tpX
+         zvGACAbBwtR0YI7GTkui/j+gLkKdsSJDRnQURB58l3I2dtPzG5nnbkKHQn2Um4Eb5v8f
+         dgzw==
+X-Gm-Message-State: AOJu0YzTBHpcSc6VIVnQaz2yE1XZ6UZic4bD3CzWxsidLLXyzE2L9X4k
+	UvfXU7A9MW6clImUNvkEhlfE0emmoAPStYUCrvIB9U++lKw+EwUDnQFClU3OD+JtiJkaGm+L1nq
+	y
+X-Google-Smtp-Source: AGHT+IGvsd9RXSx2de7PE8W+Uv1OJDjbRwGPktI1j/KtV+TeV3VbABqVT3gysdEY5SbCwwFKkTQ+Mg==
+X-Received: by 2002:a05:6512:3e1b:b0:512:fab6:6df7 with SMTP id i27-20020a0565123e1b00b00512fab66df7mr3471091lfv.3.1709422353740;
+        Sat, 02 Mar 2024 15:32:33 -0800 (PST)
 Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id y26-20020ac2447a000000b005133ca2a28asm352617lfl.110.2024.03.02.15.26.22
+        by smtp.gmail.com with ESMTPSA id i10-20020a056512340a00b00513409c4472sm153119lfr.31.2024.03.02.15.32.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Mar 2024 15:26:22 -0800 (PST)
-Message-ID: <8a1b08df-dc44-6f9f-c819-33491308699e@linaro.org>
-Date: Sun, 3 Mar 2024 01:26:14 +0200
+        Sat, 02 Mar 2024 15:32:33 -0800 (PST)
+Message-ID: <2aa5d81b-c7fe-14e0-40b8-80ef5ba364cb@linaro.org>
+Date: Sun, 3 Mar 2024 01:32:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,8 +78,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.0.2
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8650: add support for the
- SM8650-HDK board
+Subject: Re: [PATCH 3/3] arch: arm64: dts: sm8650-hdk: add support for the
+ Display Card overlay
 To: Neil Armstrong <neil.armstrong@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -87,133 +88,55 @@ To: Neil Armstrong <neil.armstrong@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240223-topic-sm8650-upstream-hdk-v1-0-ccca645cd901@linaro.org>
- <20240223-topic-sm8650-upstream-hdk-v1-2-ccca645cd901@linaro.org>
+ <20240223-topic-sm8650-upstream-hdk-v1-3-ccca645cd901@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20240223-topic-sm8650-upstream-hdk-v1-2-ccca645cd901@linaro.org>
+In-Reply-To: <20240223-topic-sm8650-upstream-hdk-v1-3-ccca645cd901@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Neil,
 
 On 2/23/24 10:52, Neil Armstrong wrote:
-> The SM8650-HDK is an embedded development platforms for the
-> Snapdragon 8 Gen 3 SoC aka SM8650, with the following features:
-> - Qualcomm SM8650 SoC
-> - 16GiB On-board LPDDR5
-> - On-board WiFi 7 + Bluetooth 5.3/BLE
-> - On-board UFS4.0
-> - M.2 Key B+M Gen3x2 PCIe Slot
-> - HDMI Output
-> - USB-C Connector with DP Almode & Audio Accessory mode
-> - Micro-SDCard Slot
-> - Audio Jack with Playback and Microphone
-> - 2 On-board Analog microphones
-> - 2 On-board Speakers
-> - 96Boards Compatible Low-Speed and High-Speed connectors [1]
->    - For Camera, Sensors and external Display cards
->      - Compatible with the Linaro Debug board [2]
-
-what are these [1] and [2] references? Probably there might be some links.
-
->      - SIM Slot for Modem
->      - Debug connectors
->      - 6x On-Board LEDs
+> With the SM8650-HDK, a Display Card kit can be connected to provide
+> a VTDR6130 display with Goodix Berlin Touch controller.
+> 
+> In order to route the DSI lanes to the connector for the Display
+> Card kit, a switch must be changed on the board.
+> 
+> The HDMI nodes are disabled since the DSI lanes are shared with
+> the DSI to HDMI transceiver.
+> 
+> Add support for this card as an overlay and apply it it at
+> build-time to the sm8650-hdk dtb.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/Makefile       |    1 +
->   arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 1259 +++++++++++++++++++++++++++++++
->   2 files changed, 1260 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 7d40ec5e7d21..4f48c98451de 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -241,6 +241,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-> new file mode 100644
-> index 000000000000..cb1e0f569483
 
 <snip>
 
+> +	mdp_vsync_active: mdp-vsync-active-state {
+> +		pins = "gpio86";
+> +		function = "mdp_vsync";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
 > +
-> +&i2c6 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
+> +	mdp_vsync_suspend: mdp-vsync-suspend-state {
+> +		pins = "gpio86";
+> +		function = "mdp_vsync";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
 
-<snip>
-
-> +};
-> +
-> +&i2c3 {
-> +       status = "okay";
-> +
-
-<snip>
-
-> +};
-
-Please change the order of i2c3 and i2c6.
-
-<snip>
-
-> +&pcie_1_phy_aux_clk {
-> +	clock-frequency = <1000>;
-> +};
-> +
-
-May be put the clock above after &pcie1_phy like in the list of gcc
-source clocks?
-
-> +&pcie0 {
-> +	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-> +	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-0 = <&pcie0_default_state>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie0_phy {
-> +	vdda-phy-supply = <&vreg_l1i_0p88>;
-> +	vdda-pll-supply = <&vreg_l3i_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie1 {
-> +	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-> +	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-> +
-> +	pinctrl-0 = <&pcie1_default_state>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie1_phy {
-> +	vdda-phy-supply = <&vreg_l3e_0p9>;
-> +	vdda-pll-supply = <&vreg_l3i_1p2>;
-> +	vdda-qref-supply = <&vreg_l1i_0p88>;
-> +
-> +	status = "okay";
-> +};
-> +
-
-So I've found just these minor things, and I've successfully tested
-the dtb on the SM8650-HDK board.
+If you have a single pin configuration for active and suspend states,
+then likely you may have only one device tree node here.
 
 Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+
+I don't add my Tested-by tag, since I don't get a panel working on 6.8.0-rc6,
+while in runtime MSM and DSI are enabled, the panel driver is not initialized:
+
+   panel-visionox-vtdr6130 ae94000.dsi.0: Failed to initialize panel: -22
 
 --
 Best wishes,
