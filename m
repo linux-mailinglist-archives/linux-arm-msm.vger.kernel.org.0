@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-13138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E125786EDF4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 02:48:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5F6B86EE1E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 03:22:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D2021C21D06
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 01:48:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 49D301F23AE1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 02:22:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D596FC7;
-	Sat,  2 Mar 2024 01:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2420979CB;
+	Sat,  2 Mar 2024 02:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W6Y8/Xdn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yRa9NqxB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBD6D39
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 01:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551797489
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 02:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709344127; cv=none; b=a4pZ9JsxztVTiCNBRo2bubSnuFiPFAS5+07iU18nJyi9Gf3Qp1zszCm59kiE39gUezDvn4g+p5DD+fxRLAtWmBAIEOQkqUYPuNDr+qjjA9U3NTu40Hj7CAyMW9Q9l5B1LFWGrmo72JSJhaPX8HW28vPj3U8OSm83pa9+Eeh12Tw=
+	t=1709346161; cv=none; b=tfxmvSUYzVbVxAAmc5puwFbpsb8dnFZQ/Qq5Bvqzn0SEA7tsVC4/bflm/MhXPy0cz5d2oZKEt+AoTcwhxttglrX7TvtkwnKvFSjByfmsC/kjafMjQ+jqEtHtGbl8fmqOqGGqW10RNCB1drq64/P8Glb44MOdHtGO5wQtjdEws54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709344127; c=relaxed/simple;
-	bh=Sg/6g8ZAlnZflN6/FYpenyWmZ4MpvQH4n5WdWFbjVzc=;
+	s=arc-20240116; t=1709346161; c=relaxed/simple;
+	bh=+vcuOjMgyX3GXLrby3bKMf/a767VWPWJZQ2IjjlKxbQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H+KqXXOGQAPEPfSWKE4X8Q803vP/AmB6VZHY2akWUHU/5fz7LGI3LvaVE9vnGx/V5zzAX5VzxXxKq7lbPy2VK5DYa9KlGRuUph9n0jFjdmUlchx8gTEAav97gtkdJ+s9bg8HvsPXMncEFSxzzdTFYg2L9V/o3m5tCkIIn888eDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W6Y8/Xdn; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=bnDhutIyNf4RFkJHB3NxqTK+fyZ9zsvEcf9/tl+KwbCOHnMsJid0P8cD40k1ecfWfRY2QFoeDS02ZAbj1IyjrpwxpSl7c/0s1tsXcONOh3v3ZIVeHkAmJFjtzDSuROtN8HmsVyR0GEkxPo+YPXOjHnTY6VdVmJ8DQ8x/oXu1m04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yRa9NqxB; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5649c25369aso4061793a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 17:48:45 -0800 (PST)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-55a5e7fa471so4382472a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 18:22:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709344124; x=1709948924; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709346157; x=1709950957; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=d4HPzpSbL1TAC4vIZwN2w2Iqh6PjKkzBN+P8dwyU9WU=;
-        b=W6Y8/Xdnk1tBcbmz4Dpxl+xY+yccCkbEeC7vgKFNrtOmHNCSsXyjONHDnkbqkxwbBC
-         2+41hrm2Uth48fb2VcmyacdqXY2Ju1hml0uozN0tpKIIjL0RkfQCT7yn/2K/UaUnOrRX
-         Rq7gQQ/NbZMxH/xk0fVvT3f4pvkspY4kCqDKnAoJP0zFCwUNO5lAwptEsZW0lGorCPWW
-         X3BOEQHmqNYB8MjerS842YzaKieljAFNVWtGCUYu7IUnS8MzokCuKlfvj4MszUhXi2A7
-         cHmRSFxYNbwxTMkkVbxTETCaBbnfJcg7hco/mVVy6YCxk4wgn59RIHMDDaEOPY4eCjHD
-         IjdQ==
+        bh=kdTUSkVwl2tMINjrlSdiTdWGU31m8cJzam5nmke77Bg=;
+        b=yRa9NqxBRS6Qybyj2MFdaf1f56dIpYPIpG6jAwOLfeo9RXzMW1gwrsaNsZXPyzBVOv
+         e2QW3Hb9Ae18SK0KmQg7jZYGc3MIylC8x2XspCmQ5CTi8REGLpn5lYH3WnVRtj46CXQn
+         USVDISU3LxxfQdGbHNr2G74Eh2bMW9BuWIKxTfZKPd08Hzp+L63shg+DYv/0Y3K0eEeT
+         NnZDFzRUmCZ5W8dinqdqNJNPfJNRBTK8GlDwu3UMp6gXkXxNb5xa0hfGP7fHlJrr1iU0
+         DpsBE1NpHyJ1GgMXJ/7NKPfstBEO9Fr7uwWFwLEj2897x04g9PzJ8KRAUhYaGX6bdveW
+         jV4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709344124; x=1709948924;
+        d=1e100.net; s=20230601; t=1709346157; x=1709950957;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d4HPzpSbL1TAC4vIZwN2w2Iqh6PjKkzBN+P8dwyU9WU=;
-        b=YJuabt9AOEF0t+WixENBBexojA/LNINU5b7yeDX/KKXGnuQbKosXTF1h6nU/hkDXfC
-         whfCkS2unq/3KF/4+Hvjzvg4DuSS71F7e3IeFh6mfL23EpzrmDgh0aqJnJ32wFNuuZfN
-         5WC0V85LJJoqnGmJPpm1MzM2IUEa7WVhaEhFrQfzmCZDK+QRUd6vPSUruQY7j1TRNk7q
-         i7SUo9uFgN3u1Xc+tehbhH3HRQv6PmXhtfDyo6vaBH4QxjGeUoS/CdA4cBqXBV54kPn8
-         z0e24gYimpCts7SvHnDjXQcwO7AQwZMtev2jydIRSTR42EeNR5ww89aONEAcgze0dCVK
-         9dRw==
-X-Forwarded-Encrypted: i=1; AJvYcCVUl6jPSk6LAxGz1crf8w/CplOhz75v99ROMox1uTIzhNh3SsDQ6LxStfWCvEDRXlJThrTOYSP3Y1NhNXt39MeVjrjywfWhEQW2qUSFlg==
-X-Gm-Message-State: AOJu0Yxo8c6YZoKcu57oi27fccT8eCTO64bjUy8vpt9ypc2rxSbsqhH3
-	zC+gBto8v3MKIFAsmXsVOHTY8q72UWFfTkaRRif/jo+aNt98V8eayKwst1wzgiw=
-X-Google-Smtp-Source: AGHT+IHANpmKTjiyEbU6aHUxrYK9elzDltg0UAnc8S1bmYjp/ZJAXpW0mgWCGOJ1tVIPpBrAz9tv/w==
-X-Received: by 2002:a17:906:6bc7:b0:a44:d3b3:5e4d with SMTP id t7-20020a1709066bc700b00a44d3b35e4dmr321220ejs.45.1709344123831;
-        Fri, 01 Mar 2024 17:48:43 -0800 (PST)
+        bh=kdTUSkVwl2tMINjrlSdiTdWGU31m8cJzam5nmke77Bg=;
+        b=a8RCLTuCLfrcoY+i3mghLWK40npYW63SwRMDM2F62OwadVsQKxkM+ji/waG8XHR9gl
+         jrfQj6ELJk03D+7/pXxvoGHjjwJMhuGQOm3KlKMFr9CnLXKfLpiuobBN/4ujVY41q0ax
+         xUo6+aSjN3CqXZLWoCvLB4MjEl4RokbmyOh42gqTlrnMWL2d2AOiLw+pUJn6ylDou3yu
+         EXdMxCOylCgcmhbdUBhijn9C6O9mL0kYR75KRo15+LLAlmbpo65Yq9JVwoKuIBYqeio8
+         GoObHR7KTsBdf7hHqkQwCGuNj3DKMQUqgZGqwdtCodhoO0rlfyQGHWoV6Fjr7SBPEKiC
+         4SYA==
+X-Forwarded-Encrypted: i=1; AJvYcCVP8BBy/4RXJrRYevRbXKlUqbfv7lE/zXrm2Gsgh2lnj6e4enMXy1AkAoADRQRNoY3OsHR/zBqmU/aimzqEgA9DYsPmeriPTNZ0hsRDzQ==
+X-Gm-Message-State: AOJu0YyveWMNxI/D0ijGMjHzrWYgWngHtO9EWH+ocFNI36xWqdFsNh11
+	5+h5sYItD7heefgEsR83otPZs3lR1BYq5SLB5YB0gHvOMVW1JwN+EssvLK1w9ok=
+X-Google-Smtp-Source: AGHT+IFeYLcTkjFHUMJRTsdqrsQ5qiDABIkQoO5ACOCWl8iqixjPyJ4gmXbZ53fgBi+gi9zJ2HGs2Q==
+X-Received: by 2002:a17:906:5fc1:b0:a44:512e:9e42 with SMTP id k1-20020a1709065fc100b00a44512e9e42mr1886274ejv.2.1709346156636;
+        Fri, 01 Mar 2024 18:22:36 -0800 (PST)
 Received: from [192.168.216.32] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id a21-20020a170906245500b00a442299199esm2212510ejb.86.2024.03.01.17.48.42
+        by smtp.gmail.com with ESMTPSA id bq5-20020a170906d0c500b00a43bf243342sm2242197ejb.24.2024.03.01.18.22.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 17:48:43 -0800 (PST)
-Message-ID: <7bb415c2-987a-40d6-9716-cde2144b6cda@linaro.org>
-Date: Sat, 2 Mar 2024 02:48:41 +0100
+        Fri, 01 Mar 2024 18:22:36 -0800 (PST)
+Message-ID: <6f329b93-1bea-4222-bbf2-e08ae7329283@linaro.org>
+Date: Sat, 2 Mar 2024 03:22:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,17 +76,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: camcc-x1e80100: Fix missing DT_IFACE enum
- in x1e80100 camcc
+Subject: Re: [PATCH V5 1/5] dt-bindings: arm: cpus: Add qcom,oryon compatible
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-0-25f348a5982b@linaro.org>
- <20240302-linux-next-24-03-01-simple-clock-fixes-v1-2-25f348a5982b@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ catalin.marinas@arm.com, ulf.hansson@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
+ j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+ m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+ lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231205062403.14848-1-quic_sibis@quicinc.com>
+ <20231205062403.14848-2-quic_sibis@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -123,26 +126,31 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-2-25f348a5982b@linaro.org>
+In-Reply-To: <20231205062403.14848-2-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2.03.2024 01:52, Bryan O'Donoghue wrote:
-> The desired DT pattern for clock indexing is the following:
+On 5.12.2023 07:23, Sibi Sankar wrote:
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
 > 
-> clocks = <&gcc GCC_CAMERA_AHB_CLK>,
->          <&bi_tcxo_div2>,
->          <&bi_tcxo_ao_div2>,
->          <&sleep_clk>;
+> Oryon is the custom ARM CPU core implementation used in Qualcomm's
+> X1E80100 SoC, document it.
 > 
-> In order to facilitate that indexing structure we need to have DT_IFACE
-> enum defined.
-> 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Chiming in on an old thread, please check with those in the know whether
+these cores are Spectre-v3a/4-safe, and if so, add the MIDR to the
+corresponding white/blacklists in arch/arm64/kernel/proton-pack.c
+
+Also, please check for any erratas and supported-but-not-advertized-for-
+-reasons features that may need to be implemented.
+Doing this early will ensure we will all spend less % of our time
+pulling out what remains of our hair when the platform suddenly
+crashes for no reason!
 
 Konrad
+
 
