@@ -1,163 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-13134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3D6A86ED3B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 01:09:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5683986ED9B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 01:52:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5761E285DD6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 00:09:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A6191C212A6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 00:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2111FA35;
-	Sat,  2 Mar 2024 00:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EA561C33;
+	Sat,  2 Mar 2024 00:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r9lDuAMv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="elo9Eaus"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0047E9
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 00:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EF4EBE
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 00:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709338189; cv=none; b=fQ7N0MhHqMv+8a5/GYqPp8iKUYlDF28RjuZLSRpwm8yOjlEcxqbyMiPBDSRlvdIF3vWPURuh0rypjWqvLE+lWDktubAp6GHokxLLi9ZKMB4qWBJZmez+hZL6IeKUIwP2YANOtRg9RC9m9nr7g8v7Kk+LPBZfEVP5SwCWEcqIfx4=
+	t=1709340742; cv=none; b=KvU6zdPcGaTgK8owjmqSrC/aY6qrWEw8XaVtfruUC3aPmCkNKl0ZCtEA7bT9SzJlBcZNZKyn2Y9jijW04KHDMNUnWe9em8Ib7Iv+oXW1MyoFMupcG2pTIGZZQqhm3huDiEkIGusz6tkknT/u5YtdxxldYjMCJ1r4+vofJ6R8o5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709338189; c=relaxed/simple;
-	bh=aaYenj94lYAKmEeNlbWHmqDr9FoZd2BuTOpG3dSb7mY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tu6eP22LK4I09XVGCuVoVJUcBNqir/2asns0gqXgs9lBkO0nFXqX6MsKWzPKrTvlgGjgJMJvdAM8waeUEKJf8ICfGJoMhxT4IZkD919ovzpv0l7rrFzNE7/fLTt8e4rWD//RoKIb29lm3+xxgKyiruN9OtaKaZ3APa41hsYfUGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r9lDuAMv; arc=none smtp.client-ip=209.85.208.41
+	s=arc-20240116; t=1709340742; c=relaxed/simple;
+	bh=0C4Zm8OGD2wfa7rKSsJh/pDqxaTcLeGVRBWYQhY3gq4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cHPag65iMtRCymN0AoR+ZfpeTAbNEXJUuMFx1cVeuK2CRGSEjMcaL7h28oia+nYzergZ2otTjYO6tcMz7sq2L4rNguIxPXyWuWO6ZvQ1HysxMRgAK2UEbJZnEP0qfQZ7RYROMhMRCIbRWE0pf5AgjR7khCoJEO14Lj9fVR/ndcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=elo9Eaus; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-566e6192da8so1460073a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 16:09:46 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412c83a809cso8250095e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 16:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709338185; x=1709942985; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rbR6AbhBZF11elL+xt7U1HhrawAroMggNQxYLOE4mts=;
-        b=r9lDuAMv/g+HAQ5tCQq3DJ6fhpLvdTfjQcMSd6ECJPZQ0WYBFZK4dQcL4THt2SnrYz
-         ULnQ8fs7gdTUsoWW2YRKXHfjPnUPL3ewwZ1LkogtfND1SNqqjDOOhzXVQ62Em29p0q80
-         iS1bsytGbohac/7JTHeZZJFwofFKszI02Q0QIjYiFXA6C851nCO2oTGg6EKP4wlaQhKJ
-         H1IYXH/9M7yb7F37Ri+NHC+EL8v/LqnOEb2CdfcgttZZFgTN2Ut3IghLpDb+S/TkXPQB
-         8IYq/S4zDxeXC0IXbvCt1ZFcdSxDaCN9h8GqyCh0oJgZuQaJyXeXcryHh0cHTrqrQqnU
-         EPjw==
+        d=linaro.org; s=google; t=1709340739; x=1709945539; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9sPafuVPRUfRRjJtneI0u4WaRjeYFBIK+DPgThslvo=;
+        b=elo9EausOnn2W8q0h5yVNuOzbQB8GqUHoUKOyFjfdgl8+aw3JjKHkJYMR/X2FeZG+5
+         PkIe703TcjtRCYQHs+NCk8s8fin2FYZW9X/M3jU5w+v1HMMg29A4pekCymaluWW5dfhU
+         9vLnqKfwInaQnsDmRwloELc6wwbZwxLMPn0IwdBHbC/uigweMctUX0jDmrFcPP8jViPK
+         DWMOEZSjxdKeNLLieyz157o/5B0Y4gbNptcxQLeYR+O7aXd2mrjyztkLwb1nxBMGuokU
+         Arq2E3bBlVmHKbYImGf+7FnmBrYx9nYXae1HzH3ihUjou3/pklKXBtpF2RVuyJrCYxCY
+         vC0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709338185; x=1709942985;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbR6AbhBZF11elL+xt7U1HhrawAroMggNQxYLOE4mts=;
-        b=dx+aMz5DYuUYYDuo1Tm8v6UzkkKifBoul0uSUAZxiXk0Vg2FZQGSQTAeIC0QJNXrva
-         72l7gJeUFMULe5MDbWcd2K7Z9c8ER3U1NcQSHAUDxEynT+2KuRGxAhlH3RfnW4wZbpmZ
-         OfG0dgIfKy0EMcHu585vON6D/7Mc31E7/6iTkvjaF6MAZnLXoIli5HGl07zzoA3lXyDG
-         V/PoESUdVQ+tGex3h+GMHQrx2eJ+knJqVT+x4zMnXjHAEwg5RfCThCU6+Y4rY/3brVF4
-         Ap3CKppX48HYlnJJv63aCroOMI92jZy+5MPH77MQO4Lg4kzypV2UQubQvxP2mebkPVDh
-         lHXg==
-X-Gm-Message-State: AOJu0YyNw2MTJXLqyQEMUtBNJcsRpo27PVIjNhOtODlAEs2ZCrEaJu5Q
-	hlWJze9isaG3ByoZU7M2kk896/X2PsLU3TnBaKoFgrdz8DsIg7d3jyqf7GEWPnM=
-X-Google-Smtp-Source: AGHT+IHxDzakBreRzMnBPgHVrmxjv5vjoTpXYiD6LRVf8n8u+9IBszh8vjLffU1cl1BOKPiO1MZFeg==
-X-Received: by 2002:a05:6402:1e87:b0:565:1460:8447 with SMTP id f7-20020a0564021e8700b0056514608447mr2482709edf.28.1709338185564;
-        Fri, 01 Mar 2024 16:09:45 -0800 (PST)
-Received: from [192.168.216.32] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id u8-20020aa7d988000000b00566736af295sm1984776eds.94.2024.03.01.16.09.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 16:09:45 -0800 (PST)
-Message-ID: <33f40e44-fbfe-42d2-aa23-f77529ee904e@linaro.org>
-Date: Sat, 2 Mar 2024 01:09:43 +0100
+        d=1e100.net; s=20230601; t=1709340739; x=1709945539;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a9sPafuVPRUfRRjJtneI0u4WaRjeYFBIK+DPgThslvo=;
+        b=B2FCs/v2Rnbb022L+SW+FQHaUEnvJCmvmcUpS1lfMnJu3qKATo6TKYC0mTg4aZy6c6
+         74+dBNFe5Nlz+aMwzUIhBhJ980Qncyhw1wABwE+0SHkfogoBr8Y4wgMeBZXF+Ml0EG2h
+         qDSa3eMWSMSIByCnlakx14HDAQtzRy+MkzQseLYeISYGZxO2mOHFXCx36PJxdzETMb90
+         6kqeSJMVvyeDLeIB97NfTAoGk+KfG5JVWPeDfDBc3VWD1+M81MogI0CjVG+XSrtAOuzt
+         nMEy+klSk5QfuQQmSME6BwZHQR76qbE5K1H1PsBSkMwSHKTehZzEPj1zvYpHKg4Cusx0
+         VJHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUZyNxizNl7Xx/hN6LAnJi4DicSGJANh7vmBlgiPnfEO0hANfpgo9MuqwItZj4cJU0NzLTpyIJ47qw+pHHyab6280VFMMRXuFy/oUQUGA==
+X-Gm-Message-State: AOJu0YyJ6dzxwN+NhpWmXL9gr8pzv/NGxl8dhvgjOoGL3/xAELpygUPy
+	K46M38YFZCdkjDlDgCJnZsXZYLkUSFMd/6QfyizaCewHlwWd04TUqpE0wtvH+m4=
+X-Google-Smtp-Source: AGHT+IExhlzd1a3eeQt3bEx+BU8uO2oDv4HUyKfUsSEmcZ5/ICcYgs8bVYtR8fJONOUdojX4VxamaQ==
+X-Received: by 2002:a5d:6252:0:b0:33d:3099:e67b with SMTP id m18-20020a5d6252000000b0033d3099e67bmr2184473wrv.63.1709340738969;
+        Fri, 01 Mar 2024 16:52:18 -0800 (PST)
+Received: from [127.0.1.1] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id f15-20020adffccf000000b0033dedd63382sm5865501wrs.101.2024.03.01.16.52.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Mar 2024 16:52:18 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/2] clk: Fix a core error path and missing qcom
+ camcc-x1e80100 enum
+Date: Sat, 02 Mar 2024 00:52:13 +0000
+Message-Id: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-0-25f348a5982b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] arm64: dts: qcom: sm8550: Add mapping to llcc
- Broadcast_AND region
-Content-Language: en-US
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <cover.1708551850.git.quic_uchalich@quicinc.com>
- <d36f8c70e103bd6f740ebfaa512d246188aadf10.1708551850.git.quic_uchalich@quicinc.com>
- <4e5129de-ce1d-448c-9264-b7470c3feb49@linaro.org>
- <65e9ef21-3406-4632-a607-2c4e9d587131@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <65e9ef21-3406-4632-a607-2c4e9d587131@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD544mUC/x2M0QrCMAwAf2Xk2UCWVkR/RXyQNtNg7UajUhj79
+ wUf7w5uBZOmYnAZVmjyU9O5OoyHAdLzXh+Cmp2BiSMFGrFo/Xas0j/IESmgO9P3UgRTmdMLJ+1
+ imNPpGFk45DOBz5Ym/+Cv623bdgSXYDV4AAAA
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.14-dev
 
-On 28.02.2024 02:17, Unnathi Chalicheemala wrote:
-> On 2/27/2024 7:49 AM, Krzysztof Kozlowski wrote:
->> On 23/02/2024 00:07, Unnathi Chalicheemala wrote:
->>> Mapping Broadcast_AND region for LLCC in SM8550.
+Using x1e80100-camcc on a recent kernel I discovered the following NULL
+pointer dereference.
 
-"Map" would be grammatically connect here
+[    1.347567] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[    1.347569] Mem abort info:
+[    1.347569]   ESR = 0x0000000096000004
+[    1.347570]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    1.347572]   SET = 0, FnV = 0
+[    1.347572]   EA = 0, S1PTW = 0
+[    1.347573]   FSC = 0x04: level 0 translation fault
+[    1.347574] Data abort info:
+[    1.347575]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    1.347576]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    1.347576]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    1.347577] [0000000000000000] user address but active_mm is swapper
+[    1.347579] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    1.347580] Modules linked in:
+[    1.347583] CPU: 1 PID: 80 Comm: kworker/u49:1 Not tainted 6.8.0-rc6-next-20240228-00163-gbe6ae77b72b2 #26
+[    1.347586] Hardware name: Qualcomm CRD, BIOS 6.0.230809.BOOT.MXF.2.4-00174-HAMOA-1 08/ 9/2023
+[    1.347587] Workqueue: events_unbound deferred_probe_work_func
+[    1.347595] pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    1.347597] pc : clk_core_get+0xe0/0x110
+[    1.347601] lr : clk_core_get+0x108/0x110
+[    1.347603] sp : ffff800080353940
+[    1.347604] x29: ffff8000803539a0 x28: 0000000000000000 x27: ffffb0aa57c4e2e0
+[    1.347607] x26: ffffb0aa57c4e240 x25: ffff4cbd0511e4c8 x24: 0000000000000000
+[    1.347609] x23: ffffb0aa583c3440 x22: 0000000000000000 x21: ffff4cc07e1d2ab8
+[    1.347612] x20: 0000000000000000 x19: ffff4cbd00e28ac0 x18: 0000000000000001
+[    1.347614] x17: 0000000000000018 x16: 0000000000000034 x15: 0000000000000002
+[    1.347616] x14: ffffb0aa58fc6498 x13: ffffb0aa58293000 x12: 696669746f6e5f6b
+[    1.347619] x11: 0000000ad6d076a3 x10: ffffb0aa58c600fb x9 : 0000000000000008
+[    1.347621] x8 : 0101010101010101 x7 : 00000000736c6c65 x6 : 0080f0e8e16e646c
+[    1.347624] x5 : ffff800080353958 x4 : 0000000000000000 x3 : ffff4cbd00d09100
+[    1.347626] x2 : 0000000000000000 x1 : ffff4cbd00d09100 x0 : 0000000000000000
+[    1.347628] Call trace:
+[    1.347630]  clk_core_get+0xe0/0x110
+[    1.347631]  clk_core_get_parent_by_index+0xc8/0xe0
+[    1.347634]  __clk_register+0x1f0/0x864
+[    1.347636]  devm_clk_hw_register+0x5c/0xd4
+[    1.347639]  devm_clk_register_regmap+0x44/0x84
+[    1.347642]  qcom_cc_really_probe+0x1b4/0x25c
+[    1.347644]  cam_cc_x1e80100_probe+0x14c/0x1c8
+[    1.347646]  platform_probe+0x68/0xc8
+[    1.347649]  really_probe+0x148/0x2b0
+[    1.347651]  __driver_probe_device+0x78/0x12c
+[    1.347654]  driver_probe_device+0x40/0x118
+[    1.347656]  __device_attach_driver+0xb8/0x134
+[    1.347658]  bus_for_each_drv+0x88/0xe8
+[    1.347661]  __device_attach+0xa0/0x190
+[    1.347664]  device_initial_probe+0x14/0x20
+[    1.347666]  bus_probe_device+0xac/0xb0
+[    1.347668]  deferred_probe_work_func+0x88/0xc0
+[    1.347670]  process_one_work+0x148/0x29c
+[    1.347675]  worker_thread+0x2fc/0x40c
+[    1.347678]  kthread+0x110/0x114
+[    1.347681]  ret_from_fork+0x10/0x20
+[    1.347684] Code: aa1303e0 97fff96f b140041f 54fffd08 (f9400000) 
+[    1.347686] ---[ end trace 0000000000000000 ]---
 
->>
->> I don't understand this sentence and I still do not know why.
->>
-> 
-> The check of whether status bit is 1 in the driver is being done
-> with the wrong register all along (sm8450 onwards). So I am adding
-> the base address of the right register region in the DeviceTree files.
-> 
-> I can add this explanation to the commit message of these
-> patches if you think that would help.
+The first patch fixes the NULL dereference by checking hw before returning
+hw->core.
 
-Yes, the commit message should definitely state the problem, and if
-not obvious, the reason for the solution.
+The second patch addresses the cause of the NULL pointer, which is the DT
+implied indexing is not fully captured in camcc-x1e80100.c.
 
-Paraphrasing Greg KH (I think?), the maintainers are going to assume
-your patch is unnecessary and your job is to convince them that it's
-not the case. You do it through good code and meaningful commit titles&
-messages.
+Obviously the above NULL deref wouldn't occur with the second patch applied
+however reading the description of clk_core_get() it appears to want to
+return NULL but currently cannot do so, so check for hw and return a NULL
+if hw is NULL instead of dereferencing hw.
 
-Please refer to [1].
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      clk: Fix clk_core_get NULL dereference
+      clk: qcom: camcc-x1e80100: Fix missing DT_IFACE enum in x1e80100 camcc
 
-Konrad
+ drivers/clk/clk.c                 | 3 +++
+ drivers/clk/qcom/camcc-x1e80100.c | 1 +
+ 2 files changed, 4 insertions(+)
+---
+base-commit: 1870cdc0e8dee32e3c221704a2977898ba4c10e8
+change-id: 20240301-linux-next-24-03-01-simple-clock-fixes-dc7542e23d90
 
-[1] https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-your-changes
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
