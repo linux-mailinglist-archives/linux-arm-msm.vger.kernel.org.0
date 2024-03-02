@@ -1,189 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-13140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCF8686EE20
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 03:23:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D3D686EE45
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 04:05:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0E171C21A92
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 02:23:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87212B21BC8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Mar 2024 03:05:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 304F28F41;
-	Sat,  2 Mar 2024 02:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBD766AD6;
+	Sat,  2 Mar 2024 03:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OFh612UP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mmIr4pis"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388C479EA
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Mar 2024 02:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB526FC7;
+	Sat,  2 Mar 2024 03:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709346176; cv=none; b=SAJfYQy2q96rJEi0vLQGCQBoO5UlL31BojMbQ8kXjAI1c77Mls7twtQnksPDCcQZcDHuvvtgnBE3R2bhhYkbCbuTV6ZjYg4HG463FPMD4mDPELmXyNymhKUhjW6Nq3dHHnqBQKyxNPYCjtaxCIzfK/yoQXrk/bpChrRF4rVVy9M=
+	t=1709348701; cv=none; b=UPds5TwgQCuwmiE1AY6RNZ0V8eIbtSoTR1h6xQs6hWg+3I8wAsKauJFBj14Ibgz/x2nqUaEiWJjcO6Wfj13Ku31Bo3jvbzRGNEyb3zwGsjQR2L1oOYg+XkM46qa4AK/oTLqlFVbuPGwjOqbgvgQMsulXopXO5Hyx9GxPgPabL1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709346176; c=relaxed/simple;
-	bh=+TPfVjFogzNReOpfUhnNpXtp/FYtnnphNfnHE/uHRDQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dn9sPvnhkTyoxy/Srj6h2XbbxARJJTR1wRRfKuqq6c/HajUNne6LlEfQrTCWobvherE59ymMvpAXUzn5Bnb+gdpWjtm2yfEPTfud3+y8v7F3pxpb7VoXq2kNbSz9onvgmRuViOPZT6o0U9M5IwQQiKShwz/Ueyt+5F5KCrdruTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OFh612UP; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so497258866b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Mar 2024 18:22:53 -0800 (PST)
+	s=arc-20240116; t=1709348701; c=relaxed/simple;
+	bh=LjRdtml+TWkAxLUN2QLF1D+9eq3HZY+GgDjZ4XrSTSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A1KcRmNvL+/aT6QOdVnqiygWIrRX+pjhfskeiEodzxjrdpB+m8HbQI+rY0/cBxH9Eg7lxKYGV9OSXYPMkRkJ9hSulscSm7T1ERfPyLGZFhYNgwHwTLodL1A01A8zFcdgEhttYe1khejOMJ6QOsBdNhQPnrJkpC30qYs3j2rnVgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mmIr4pis; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-29b2f10454aso543362a91.3;
+        Fri, 01 Mar 2024 19:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709346172; x=1709950972; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dZvUgYXHOYOKAIGSRrva5Qq5ru4WipUXtpvetm5o08c=;
-        b=OFh612UPFVbhfc70mA8B4JrgSpPnCqkLmCvHZKsDI22v4/peb+AWYHagr0qVHaYC3N
-         l6/tK/nop0OMBJVc8UeO//rKM1iq3wtpF6WeOAOiQGzbLBgp9rNNgsTyhR3rKtTg+l4i
-         43O0FroKrGPLiT6J+1V6M9xNiOgHhPnxBgjT2UxaCZCHKcPQexS3RmseWTDBbnu4YOZ7
-         w9gfNmtFqPsh6AFQg630y+VdA5KSQeU/CYn+HVdxqMSAjuBwuTdmx1m4bq0IJpECuNUw
-         Wps9Pa2VSKcjWqAVV3HdUGrIb+BLFjczOJLxGNcR/lkEakRhm4zFAoxMHxC6mPFevNZI
-         sdmg==
+        d=gmail.com; s=20230601; t=1709348699; x=1709953499; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Z6p65/mjNFQPH7dw5+cTMNx3ec1jAPgpJTpAMLhs/A=;
+        b=mmIr4pisOMa+SPojjyr5XwjZ0MieduDYku+KzzyYdedC2QxBDnRSiYASU2jegxLGA4
+         7v8vRpOVjSMARpcMe++TEmrwHCD9I2U7IozFn5KqPizIQ+RowXsa9D+5GRkwIZRLXTKM
+         Z2mcPkhO3cb1fzIK+8BMZGmz9mqYAALtQxSeHgvnrlzJ/lJALgFzNOnlGGXjmahPfPUU
+         hQXqdltkDLaLga+vCiM37wSTX24j/4qNcjoIuVWUCnz6UvdLmAyeXwALHsM5JQHFRSyl
+         9EPkXCzufC8o+iSfi0baiyB83xT1adGX8MbjhBx0iuPldmv1n2ii4UEaPEYhaYcp9bWM
+         lbIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709346172; x=1709950972;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dZvUgYXHOYOKAIGSRrva5Qq5ru4WipUXtpvetm5o08c=;
-        b=q8iDTm2tafBu56QBja+FKdYCmt9gcC7g50feglHBljbZNQfwsiruaP/PvhoAdlzupD
-         VooFoA/7P+4eqwk3zkc6zLJ21jP08WC5c+XdpBTGHJf4jI4AWrJBBje5yE7mioVOut7h
-         u9rgVH2peLjM2z80njTI1WVMxeIGfD3T16w3UX7GaKWIoTUZ6L/52k3lpeeK21pR1ZOg
-         ifiPoYPuW6OmBcl95/RZTAMNr4b1EI9VKs6DRwBLQTNMdeqDt4AuL0FvU8BmCnIBJWja
-         ubn+KNQ7mK/r+wWVvLDmPrQDO7F01qmLZgvBWyzZnTyfoqdJjiEvkNPmpLDfxmzvQxM3
-         J4Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCUA7UDZ5fxbcy32Ei5/WhoG1Uw+ZuNDxrP1WXPPLQHPSKLTL1JBvxTOqYaVS8NS42hVffZ4cRqX/p58p3kRu3C1blvGDeMA6MQg4bWbOw==
-X-Gm-Message-State: AOJu0Yw3qNv5LixATtqRoiCyl6fw/yuQxYmebV50kqRbU9i2reu3xdD9
-	9FC1AcQtfQscCPEJegyASf2BEYJ7CbQmsSLUcKKUzxc+Ek2YYftpfjfKllcDKrQ=
-X-Google-Smtp-Source: AGHT+IE8RbV+EyI/CHCqqMAK9d77rj4AJodP1gAIw2tErl1logb+yYZchP2Vjyv75hb2/UtdXJoplw==
-X-Received: by 2002:a17:906:ce29:b0:a44:2218:4817 with SMTP id sd9-20020a170906ce2900b00a4422184817mr2245935ejb.39.1709346172136;
-        Fri, 01 Mar 2024 18:22:52 -0800 (PST)
-Received: from [10.167.154.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id ch14-20020a170906c2ce00b00a42ea946917sm2224924ejb.130.2024.03.01.18.22.50
+        d=1e100.net; s=20230601; t=1709348699; x=1709953499;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+Z6p65/mjNFQPH7dw5+cTMNx3ec1jAPgpJTpAMLhs/A=;
+        b=Efw96Kd4U12VmS0QkO6Z23sLcUwpEWbGxSL4hhw4zwR61DMeZzAUKXdc1PqUOB8g3v
+         /TQVyWLSdn3erWQA2uWLfNiwNq57PuAlVwbnvm92CDor3RfkqeEmP1pqhFe52MbkoLhL
+         Psajh8501OQschBcObSWF8MObw2ym/AERURUKqdLSff2zIo8j5GbeRG0sbsYFvXcbjf8
+         Z2UXBKfvwM7gprbhfIkT1jJsc0CcRl0FLtnIciJ9ks3kohiyKq+GLluUkq0/0fJpERLW
+         8y5sOUXzk+Q2LvS08aApUDdOpFGp/oN0hi5k+wX2V8xXlzZjWR/ZNXmyxEqB8/ds0Jeu
+         lP2A==
+X-Forwarded-Encrypted: i=1; AJvYcCWW8LUFz2WBZXLH3guWqaoUHCMYQyPvBr3vdMZACpI6dEuMYxfjbk0tP/NAb5PB7fbHGLRldZWJE5J4C5UzT/mk8jfVYXx6sE6a1JIydl6xdlxwBXcFOIYbUjR4qsPlOPMhXJxbEyUfKGe4iOaoEPKmdGzpQzeLM2wJOdLnnoB9Wp1qvywD9Fg=
+X-Gm-Message-State: AOJu0YzWZo3hEFzJh3oGG5oDjEQEr5VeCviqoTh5RF9P/KxWCoOEBySe
+	dc6GJkl8TXQq/8GCOM//JHwiFZJPePr9UiWNp3/6PuIzu8w0lar4ozpY0f3WdBtgGQ==
+X-Google-Smtp-Source: AGHT+IGVEmDcDGBZB8FBm1UyVE1F5P3FauUqNd7CNcpFCUyzo1/wS7jz144FjWLtV/HlqgVh8Lw5xA==
+X-Received: by 2002:a17:90a:df92:b0:29a:f9ad:a096 with SMTP id p18-20020a17090adf9200b0029af9ada096mr3092641pjv.35.1709348699363;
+        Fri, 01 Mar 2024 19:04:59 -0800 (PST)
+Received: from HP-Probook ([103.149.249.227])
+        by smtp.gmail.com with ESMTPSA id l5-20020a170902d34500b001d9bd8fa492sm4152232plk.211.2024.03.01.19.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 18:22:51 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Sat, 02 Mar 2024 03:22:49 +0100
-Subject: [PATCH] interconnect: qcom: x1e80100: Remove inexistent ACV_PERF
- BCM
+        Fri, 01 Mar 2024 19:04:58 -0800 (PST)
+Date: Sat, 2 Mar 2024 11:05:05 +0800
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250-xiaomi-elish: add usb pd
+ negotiation support
+Message-ID: <ZeKWc6rCJBLasn-h@HP-Probook>
+References: <20240227124529.12926-1-lujianhua000@gmail.com>
+ <2f6a5c83-69a4-480b-a235-c0d51feac31e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240302-topic-faux_bcm_x1e-v1-1-c40fab7c4bc5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAHiN4mUC/x2N0QqDMAwAf0XyvEBax5j7lTEkbdMZcFVaHQXx3
- 1f2eAfHHVAkqxR4dAdk+WrRJTUwlw78xOktqKExWLJX6snitqzqMfJeR+c/YzWC91s/cIhDIEP
- QQsdF0GVOfmpp2ue5yTVL1Po/PV/n+QNBPlC0eQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Georgi Djakov <djakov@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Mike Tipton <quic_mdtipton@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709346170; l=2702;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=+TPfVjFogzNReOpfUhnNpXtp/FYtnnphNfnHE/uHRDQ=;
- b=zi58sy0kKdm53JaXN9XU5z5Im/i8Hz47TaQYkUIUzQ776WqFvixIrJG/ndQNhJQ+C/iFrLi6k
- dYYIlRSZPCjAv69OnpP8fBJm0f9nOkO1xF77QFxDa7TuY1yjEi1akVJ
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2f6a5c83-69a4-480b-a235-c0d51feac31e@linaro.org>
 
-Booting the kernel on X1E results in a message like:
+On Sat, Mar 02, 2024 at 12:58:57AM +0100, Konrad Dybcio wrote:
+> On 27.02.2024 13:45, Jianhua Lu wrote:
+> > Add usb pd negotiation, but charging is controlled by pm8150b pmic,
+> > so it can only charge battery with 5W,
+> > 
+> > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > index 6f54f50a70b0..ed103b90f4e6 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > @@ -636,7 +636,8 @@ &pm8150b_typec {
+> >  	connector {
+> >  		compatible = "usb-c-connector";
+> >  
+> > -		power-role = "source";
+> > +		op-sink-microwatt = <10000000>;
+> 
+> Is 10W really the minimum value for this tablet to function as a sink?
+> 
+> Is that what the downstream kernel sets?
 
-[    2.561524] qnoc-x1e80100 interconnect-0: ACV_PERF could not find RPMh address
+This value is taken from other device, I will adjust it to minimum
+value in Patch v2.
+> 
+> > +		power-role = "dual";
+> >  		data-role = "dual";
+> >  		self-powered;
+> >  
+> > @@ -645,6 +646,12 @@ PDO_FIXED_DUAL_ROLE |
+> >  					 PDO_FIXED_USB_COMM |
+> >  					 PDO_FIXED_DATA_SWAP)>;
+> >  
+> > +		sink-pdos = <PDO_FIXED(5000, 3000,
+> > +					 PDO_FIXED_DUAL_ROLE |
+> 
+> Please align the PDO_.. against the open brace
 
-And indeed, taking a look at cmd-db, no such BCM exists. Remove it.
-
-Fixes: 9f196772841e ("interconnect: qcom: Add X1E80100 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/x1e80100.c | 26 --------------------------
- 1 file changed, 26 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/x1e80100.c b/drivers/interconnect/qcom/x1e80100.c
-index 99824675ee3f..654abb9ce08e 100644
---- a/drivers/interconnect/qcom/x1e80100.c
-+++ b/drivers/interconnect/qcom/x1e80100.c
-@@ -116,15 +116,6 @@ static struct qcom_icc_node xm_sdc2 = {
- 	.links = { X1E80100_SLAVE_A2NOC_SNOC },
- };
- 
--static struct qcom_icc_node ddr_perf_mode_master = {
--	.name = "ddr_perf_mode_master",
--	.id = X1E80100_MASTER_DDR_PERF_MODE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 1,
--	.links = { X1E80100_SLAVE_DDR_PERF_MODE },
--};
--
- static struct qcom_icc_node qup0_core_master = {
- 	.name = "qup0_core_master",
- 	.id = X1E80100_MASTER_QUP_CORE_0,
-@@ -688,14 +679,6 @@ static struct qcom_icc_node qns_a2noc_snoc = {
- 	.links = { X1E80100_MASTER_A2NOC_SNOC },
- };
- 
--static struct qcom_icc_node ddr_perf_mode_slave = {
--	.name = "ddr_perf_mode_slave",
--	.id = X1E80100_SLAVE_DDR_PERF_MODE,
--	.channels = 1,
--	.buswidth = 4,
--	.num_links = 0,
--};
--
- static struct qcom_icc_node qup0_core_slave = {
- 	.name = "qup0_core_slave",
- 	.id = X1E80100_SLAVE_QUP_CORE_0,
-@@ -1377,12 +1360,6 @@ static struct qcom_icc_bcm bcm_acv = {
- 	.nodes = { &ebi },
- };
- 
--static struct qcom_icc_bcm bcm_acv_perf = {
--	.name = "ACV_PERF",
--	.num_nodes = 1,
--	.nodes = { &ddr_perf_mode_slave },
--};
--
- static struct qcom_icc_bcm bcm_ce0 = {
- 	.name = "CE0",
- 	.num_nodes = 1,
-@@ -1583,18 +1560,15 @@ static const struct qcom_icc_desc x1e80100_aggre2_noc = {
- };
- 
- static struct qcom_icc_bcm * const clk_virt_bcms[] = {
--	&bcm_acv_perf,
- 	&bcm_qup0,
- 	&bcm_qup1,
- 	&bcm_qup2,
- };
- 
- static struct qcom_icc_node * const clk_virt_nodes[] = {
--	[MASTER_DDR_PERF_MODE] = &ddr_perf_mode_master,
- 	[MASTER_QUP_CORE_0] = &qup0_core_master,
- 	[MASTER_QUP_CORE_1] = &qup1_core_master,
- 	[MASTER_QUP_CORE_2] = &qup2_core_master,
--	[SLAVE_DDR_PERF_MODE] = &ddr_perf_mode_slave,
- 	[SLAVE_QUP_CORE_0] = &qup0_core_slave,
- 	[SLAVE_QUP_CORE_1] = &qup1_core_slave,
- 	[SLAVE_QUP_CORE_2] = &qup2_core_slave,
-
----
-base-commit: 1870cdc0e8dee32e3c221704a2977898ba4c10e8
-change-id: 20240302-topic-faux_bcm_x1e-8639adf9d010
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Acked
+> 
+> > +					 PDO_FIXED_USB_COMM |
+> > +					 PDO_FIXED_DATA_SWAP)
+> > +					 PDO_VAR(5000, 12000, 5000)>;
+> 
+> 60W max? This is not unheard of, but I'm just making sure you know..
+downstream kernel's pd adapter allowance is 5v or 9v-12v and vendor
+charger allowance is 5v-20v...6.2A-3.25A (67W max), so I set it to 60W.
+> 
+> Konrad
+> 
 
