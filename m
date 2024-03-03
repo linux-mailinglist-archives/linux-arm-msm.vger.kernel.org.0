@@ -1,204 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-13185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF30D86F65B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 18:18:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2362986F6AF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 20:07:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88931281BB1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 17:18:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B737F1F2141B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 19:07:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F6C76404;
-	Sun,  3 Mar 2024 17:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A973E79DCC;
+	Sun,  3 Mar 2024 19:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH1y7myg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SO7/Pzm9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85CD763FF;
-	Sun,  3 Mar 2024 17:17:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8649279DAB
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Mar 2024 19:07:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709486279; cv=none; b=gTo/oY82lpK0A9z2Z7x7gG3X2NFdVrNH8XrI2P33+aBstuOIz8aWMrglAR/Irsuo8onED3UOA8n4du8rgxjAYM0hI2oB4wsHtZ+n/+xWdtbZyK14mEvamNDljh/dbtFUMjlHU0RLqQMNocXZ1TzP34BAKy0hz8AmN+1CrvQXGJk=
+	t=1709492833; cv=none; b=jN8jsMjnt5dDmUJ+GvnW3qs+tWdD6PuPABdunta/4NL2hEuZig90xO7GKkgm28wAsK2qGHLjhDPqqh6Xlprag1jqjXMINo9VZYPQCWeEZ4P9LtPPaSWTwDfOVlIbguyzQ0WYU2J/7Qr4oWVihnY3MHKrDye39bijdDSp+NOaXdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709486279; c=relaxed/simple;
-	bh=e2vLTaT13n49nCRwisq0j838Udy0Mga3nNilU4HTi5A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PD+nwqmdVr8v4bsNf2hwXNIRHh1xatZyz1MwPOhTs65HycxI3r+OAiRX5u7kNn8QW17ArDBlbeTM9wgc+irOQJuKa+08PE3fTsB1qFmcnkwF9k2MOecEYpXkQh38lJ8ZIYE4r8+B+qrdsEsAahnNV3Jqb1jW9b5Liez4k7pfARA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH1y7myg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82AAC433C7;
-	Sun,  3 Mar 2024 17:17:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709486278;
-	bh=e2vLTaT13n49nCRwisq0j838Udy0Mga3nNilU4HTi5A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iH1y7mygqKShFhfj4UQ+YK55YbGPqMV1gEya3Ft9iqJJ8ZcCRSDP9zp/IXq5ngA/N
-	 zv68BBtYyI5drdYheCk4IHgNZuO5wzHcoJNciouZU//CsO2u0k8uD4cz68LX3XENd3
-	 jFNG3wxAFwtPe/bvotntZhcjsBHxIaOvQxIBsQoY=
-Date: Sun, 3 Mar 2024 18:17:55 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Canfeng Zhuang <quic_czhuang@quicinc.com>
-Cc: Derek Kiernan <derek.kiernan@amd.com>,
-	Dragan Cvetic <dragan.cvetic@amd.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
-Message-ID: <2024030343-protrude-unlocking-31ac@gregkh>
-References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
- <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
+	s=arc-20240116; t=1709492833; c=relaxed/simple;
+	bh=Xq/6EX7Vma5DVArRtVZxDv2nekiTsrf7RQfu18aVsJM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nc8AulRr7NzrW8m6ZtVOVKlfc1Abj/LUzmMbVNvMy3Rrxc4LNhVYnx5gw6HkwvTp97Rl/tQAyeznSOcAw6QaUxzx8UP47Bi1B1QccMgix4+2iHOZDls/UcWEOepz8j3e2dYTa138hYnAM7lAPsevI67tCAieoZsedFIfPvfxuek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SO7/Pzm9; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a3f893ad5f4so569885466b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 11:07:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709492829; x=1710097629; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=t8+5hz1pC1NUruMJAl+eg8w3VSt8O+IZDxY81DWZbIU=;
+        b=SO7/Pzm9XXLWchfdpbRM7BK4v1xSE2gJZO6QvknP/GGWh4HQiYt23TF7R5Mo3SRPJk
+         Tini7fQ1mr2gRlMkpyLEn5XYngrkSfOP/8vHwSLNy0n5E8sn88YfFv/CY2IbzL9LbXwx
+         MrEEX9DRZ8n3qvGEz68ipgB78d9gZsJAwTXXBoGAHYqeEBqzIAjKLKV9Sp8z5e/f2DiW
+         j2UnoJ8EUe1bS/lQAlkq8PHs29hu0aq5LYMWhW5dHFRkm7K1CS4gmA+ArScysfm3Mgra
+         eT4um6nF9vQxWOI3R/6jv7VL5PMEUIxHGAtw7sm60eZUag5GkqTBxokevwQS/AE9UYMt
+         HLWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709492829; x=1710097629;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t8+5hz1pC1NUruMJAl+eg8w3VSt8O+IZDxY81DWZbIU=;
+        b=gU2iVpJfX/+Fn92qHmdMn0OIBkH/2QtmJN/Ejm8dah9vW166NyoQQR9q8oeGXOTlO5
+         K4HNFzLwuIsOi0VVRsknoGwsLLVQ+ZLdvRtoH8Bz3+OAeh+J/Gi63gCgvzKj+R/WaBUp
+         rYAKGSkTPy+jhmVMNszxFtJte8jtxE++nexlO1r65FVq/Gp/7nFcVH6125+NcRoO1WAm
+         /eatsLcrqGzphpYYHT7rBSOIOJMXDg4EQuQMlXEqagr1knyN+HlVa8B+/i3bmUNFDGz3
+         MsjGQ2goMejoeEeltC6SLk0cVIs7WEsluAy89nH5aABtQc4hkDcg5HcFpSZoVlzKeO7y
+         hMjQ==
+X-Gm-Message-State: AOJu0YzLfwwTLUIEhzz+uTBJLRLNl412sY4nLaQ5fSMGegLUMersFysA
+	tElx4iOTMARqzCkiA09LQGEA/hF7TlS4NQ9XOfBikWRSbVYWilFDJrHTIBRUSLk=
+X-Google-Smtp-Source: AGHT+IE0gq/QoToo3IKKgK/wLQhOrWdvlyROKGxYxQmMgG7sJ8DJthEQl1WpJmZwJWFdPBX9DJ+/Sw==
+X-Received: by 2002:a17:906:48c6:b0:a45:2038:4caa with SMTP id d6-20020a17090648c600b00a4520384caamr1109660ejt.76.1709492828895;
+        Sun, 03 Mar 2024 11:07:08 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id ld15-20020a170906f94f00b00a44e7afde87sm1669822ejb.148.2024.03.03.11.07.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 03 Mar 2024 11:07:08 -0800 (PST)
+Message-ID: <e13610f6-6e09-4073-bc26-108b76c2a88f@linaro.org>
+Date: Sun, 3 Mar 2024 20:07:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] dt-bindings: misc: merge qcom,qrc
+To: Canfeng Zhuang <quic_czhuang@quicinc.com>,
+ Derek Kiernan <derek.kiernan@amd.com>, Dragan Cvetic
+ <dragan.cvetic@amd.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
+ <20240304-qcom_qrc-v1-2-2a709f95fd61@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240304-qcom_qrc-v1-2-2a709f95fd61@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 04, 2024 at 12:53:16AM +0800, Canfeng Zhuang wrote:
-> QRC Driver support functions:
+On 03/03/2024 17:53, Canfeng Zhuang wrote:
+> Merge Qualcomm-specific qrc binding
 
-What is "QRC"?
+Merge? No, instead describe the hardware.
 
-> - Read data from serial device port.
-> - Write data to serial device port.
+Similar problem with the sibject.
 
-Shouldn't you be doing that in userspace?  Why is this a kernel driver?
-
-> - Pin control reset robotic controller.
 > 
 > Signed-off-by: Canfeng Zhuang <quic_czhuang@quicinc.com>
 > ---
->  drivers/misc/Kconfig        |   1 +
->  drivers/misc/Makefile       |   1 +
->  drivers/misc/qrc/Kconfig    |  16 ++
->  drivers/misc/qrc/Makefile   |   6 +
->  drivers/misc/qrc/qrc_core.c | 336 ++++++++++++++++++++++++++++++++++++++++++
->  drivers/misc/qrc/qrc_core.h | 143 ++++++++++++++++++
-
-Why do you have a .h file for a single driver?
-
->  drivers/misc/qrc/qrc_uart.c | 345 ++++++++++++++++++++++++++++++++++++++++++++
->  7 files changed, 848 insertions(+)
+>  .../devicetree/bindings/misc/qcom,qrc.yaml         | 32 ++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
 > 
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index 4fb291f0bf7c..a43108af6fde 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -591,4 +591,5 @@ source "drivers/misc/cardreader/Kconfig"
->  source "drivers/misc/uacce/Kconfig"
->  source "drivers/misc/pvpanic/Kconfig"
->  source "drivers/misc/mchp_pci1xxxx/Kconfig"
-> +source "drivers/misc/qrc/Kconfig"
->  endmenu
-> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-> index ea6ea5bbbc9c..ab3b2c4d99fa 100644
-> --- a/drivers/misc/Makefile
-> +++ b/drivers/misc/Makefile
-> @@ -68,3 +68,4 @@ obj-$(CONFIG_TMR_INJECT)	+= xilinx_tmr_inject.o
->  obj-$(CONFIG_TPS6594_ESM)	+= tps6594-esm.o
->  obj-$(CONFIG_TPS6594_PFSM)	+= tps6594-pfsm.o
->  obj-$(CONFIG_NSM)		+= nsm.o
-> +obj-$(CONFIG_QCOM_QRC)		+= qrc/
-> diff --git a/drivers/misc/qrc/Kconfig b/drivers/misc/qrc/Kconfig
+> diff --git a/Documentation/devicetree/bindings/misc/qcom,qrc.yaml b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
 > new file mode 100644
-> index 000000000000..994985d7c320
+> index 000000000000..730efd679ba0
 > --- /dev/null
-> +++ b/drivers/misc/qrc/Kconfig
-> @@ -0,0 +1,16 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# QRC device driver configuration
-> +#
+> +++ b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
+> @@ -0,0 +1,32 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/misc/qcom,qrc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +menu "QCOM QRC device driver"
+> +title: Qualcomm Robotics Communication Driver
+
+Driver? Unfortunately bindings are for hardware, not drivers.
+
 > +
-> +config QCOM_QRC
-> +	tristate "QCOM QRC device driver for Robotic SDK MCU"
-
-What is "QCOM", "QRC", SDK", and "MCU"?
-
-> +	help
-> +	  This kernel configuration is used to enable robotic controller
-> +	  device driver. Say M here if you want to enable robotic
-> +	  controller device driver.
-
-Please write more here, this doesn't really describe what is happening.
-
-> +	  When in doubt, say N.
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > +
-> +endmenu
-> diff --git a/drivers/misc/qrc/Makefile b/drivers/misc/qrc/Makefile
-> new file mode 100644
-> index 000000000000..da2cf81f3c59
-> --- /dev/null
-> +++ b/drivers/misc/qrc/Makefile
-> @@ -0,0 +1,6 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# Makefile for the QRC bus specific drivers.
+> +description: |
+
+Do not need '|' unless you need to preserve formatting.
+
+> +  The QRC (Qualcomm Robotics Communication) driver is used for information interaction
+
+Agaim, driver?
+
+> +  between the robot control board and the main board when using a uart port connection.
+> +  This Driver will support uart read & write and robot control board
+
+No, describe the hardware.
+
+> +  reset function.
 > +
+> +properties:
+> +  compatible:
+> +    const: qcom,qrc-uart
 > +
-> +obj-$(CONFIG_QCOM_QRC)		+= qrc_core.o qrc_uart.o
-
-Why is a single driver 2 different files?
-
-> diff --git a/drivers/misc/qrc/qrc_core.c b/drivers/misc/qrc/qrc_core.c
-> new file mode 100644
-> index 000000000000..5cedb050dac4
-> --- /dev/null
-> +++ b/drivers/misc/qrc/qrc_core.c
-> @@ -0,0 +1,336 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* driver/misc/qrc/qrc_core.c
-
-Why is the filename here?
-
-> + *
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> +required:
+> +  - compatible
 > +
-> +#include <linux/module.h>
-> +#include <linux/types.h>
-> +#include <linux/sched.h>
-> +#include <linux/init.h>
-> +#include <linux/cdev.h>
-> +#include <linux/slab.h>
-> +#include <linux/poll.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +#include <linux/of_gpio.h>
-> +#include <linux/gpio.h>
-> +#include <linux/delay.h>
+> +additionalProperties: false
 > +
-> +#include "qrc_core.h"
+> +examples:
+> +  - |
+> +    qrc: qcom,qrc_uart {
+
+
+How does it remotely look like upstream DTS? Please don't send
+downstream/vendor DTS before cleaning it up. Before posting, please read
+submitting patches and/or quite extensive Qualcomm upstreaming guides.
+
+> +        compatible = "qcom,qrc-uart";
+
+Nope, so this is just to instantiate Linux device? No resources? This
+looks really incomplete.
+
+> +    };
 > +
-> +#define QRC_DEVICE_NAME "qrc"
+> 
 
-KBUILD_MODNAME.
+Best regards,
+Krzysztof
 
-> +static dev_t qrc_devt;
-> +static struct class *qrc_class;
-
-Please use class_register(), not class_create().
-
-I've stopped here, please get someone in your group to review this
-before sending it out again, you have internal experience with kernel
-drivers, please take advantage of it.
-
-thanks,
-
-greg k-h
 
