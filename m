@@ -1,161 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-13184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D99686F645
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 17:54:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF30D86F65B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 18:18:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0250E1F236E9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 16:54:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88931281BB1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 17:18:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98EC46F08B;
-	Sun,  3 Mar 2024 16:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F6C76404;
+	Sun,  3 Mar 2024 17:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Rnmdvkck"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH1y7myg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AF16EB4B;
-	Sun,  3 Mar 2024 16:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85CD763FF;
+	Sun,  3 Mar 2024 17:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709484850; cv=none; b=kwp40cdiPT6wXgRKjA0k0cmJKbALEzpGGZn7PouCR7I9aFjZE1Bz2VAnGDsOPGKDKXTvkhv2cpqI+P/ymRWlL95p049fMDFyXPh2MflZ6F6DeH3Ozp4Ux80BQMJtyjixRtmt1b+JRTedOojogOWuhQY9qgze7tBgrX0JnHMkKNU=
+	t=1709486279; cv=none; b=gTo/oY82lpK0A9z2Z7x7gG3X2NFdVrNH8XrI2P33+aBstuOIz8aWMrglAR/Irsuo8onED3UOA8n4du8rgxjAYM0hI2oB4wsHtZ+n/+xWdtbZyK14mEvamNDljh/dbtFUMjlHU0RLqQMNocXZ1TzP34BAKy0hz8AmN+1CrvQXGJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709484850; c=relaxed/simple;
-	bh=lMwnrLeCvVz6MVMwOx8zbh7VgWcU3y59cceellDGewY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=bpogO4O90HHn5jCKwUHcXIcReECo8+gagB6f9WP76l2KAYIiWL0cTR/VgupYyL9d++GJHlJqbrz+Fyt+jhROJwkKZzuwdrua5pBt74IjEIcbSXN5p41Y5aj3ymBrmyhdCeMpPTisMvZpwWGulNK9+bZnwxT02mQr+98MKY8rvmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Rnmdvkck; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 423Gk8w3021392;
-	Sun, 3 Mar 2024 16:53:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=snaF0gfNSgpz2yUDbhT9E15ErTrvt/AaN/jKFXto6zE
-	=; b=RnmdvkckpvMhkybNiN58WUuN1P6RoA6wcmh6wtjWLCma7MGV08HtHdq1srV
-	XgPoW8L4ITuksSNAssNhMPuavRlw/gic8ZQO3kilL4pgjrvvWuTH7NjC5X0RUQXz
-	/Nh2u8r0DBqjI3i5ivLnOSLN8kkOItS/TLwigZxg0doN0W5hWgDQSWQgptxqpHp9
-	1vwLq6yymi7vyGuOa2aYi1lm4hI/poK2vIQ/hrB/WtU1uEPJKyfMiHqqbeUmqaYy
-	w1Fgd5wsbVVMJzpsKokwugmfDTYSTjqZRgp3CMByKRpyXe8gE/5F83n5jMY9a0VP
-	/9msvXFrby65n0h7aYJyBSJ9dJQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wksfrj4xn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 03 Mar 2024 16:53:48 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 423GrliU025370
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 3 Mar 2024 16:53:47 GMT
-Received: from robotics-lnxbld034.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sun, 3 Mar 2024 08:53:43 -0800
-From: Canfeng Zhuang <quic_czhuang@quicinc.com>
-Date: Mon, 4 Mar 2024 00:53:17 +0800
-Subject: [PATCH 2/2] dt-bindings: misc: merge qcom,qrc
+	s=arc-20240116; t=1709486279; c=relaxed/simple;
+	bh=e2vLTaT13n49nCRwisq0j838Udy0Mga3nNilU4HTi5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PD+nwqmdVr8v4bsNf2hwXNIRHh1xatZyz1MwPOhTs65HycxI3r+OAiRX5u7kNn8QW17ArDBlbeTM9wgc+irOQJuKa+08PE3fTsB1qFmcnkwF9k2MOecEYpXkQh38lJ8ZIYE4r8+B+qrdsEsAahnNV3Jqb1jW9b5Liez4k7pfARA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH1y7myg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82AAC433C7;
+	Sun,  3 Mar 2024 17:17:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1709486278;
+	bh=e2vLTaT13n49nCRwisq0j838Udy0Mga3nNilU4HTi5A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iH1y7mygqKShFhfj4UQ+YK55YbGPqMV1gEya3Ft9iqJJ8ZcCRSDP9zp/IXq5ngA/N
+	 zv68BBtYyI5drdYheCk4IHgNZuO5wzHcoJNciouZU//CsO2u0k8uD4cz68LX3XENd3
+	 jFNG3wxAFwtPe/bvotntZhcjsBHxIaOvQxIBsQoY=
+Date: Sun, 3 Mar 2024 18:17:55 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Canfeng Zhuang <quic_czhuang@quicinc.com>
+Cc: Derek Kiernan <derek.kiernan@amd.com>,
+	Dragan Cvetic <dragan.cvetic@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
+Message-ID: <2024030343-protrude-unlocking-31ac@gregkh>
+References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
+ <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240304-qcom_qrc-v1-2-2a709f95fd61@quicinc.com>
-References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
-In-Reply-To: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
-To: Derek Kiernan <derek.kiernan@amd.com>,
-        Dragan Cvetic
-	<dragan.cvetic@amd.com>, Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Canfeng Zhuang <quic_czhuang@quicinc.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709484815; l=1343;
- i=quic_czhuang@quicinc.com; s=20240304; h=from:subject:message-id;
- bh=lMwnrLeCvVz6MVMwOx8zbh7VgWcU3y59cceellDGewY=;
- b=kcQunjyDHPqMorGPKhFqjSANzV5uQ4TwRuEIdywO4nZvWBpkgVZb7Zp/agwOjkjvoVUr79GSG
- oDZ1N0VWDLOB8yMJyggu/yBwJdD+MV5p6vCgCEBMNS5CIRlh8GPBiJr
-X-Developer-Key: i=quic_czhuang@quicinc.com; a=ed25519;
- pk=uQG1beHWTQyrSp8QCUkEKgprUZM/nlhxKMyUwzilvXQ=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -_S58zLGaULi4NYa-xBCwRGto6RoP_3m
-X-Proofpoint-GUID: -_S58zLGaULi4NYa-xBCwRGto6RoP_3m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-03_07,2024-03-01_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 impostorscore=0
- mlxlogscore=999 bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403030142
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 
-Merge Qualcomm-specific qrc binding
+On Mon, Mar 04, 2024 at 12:53:16AM +0800, Canfeng Zhuang wrote:
+> QRC Driver support functions:
 
-Signed-off-by: Canfeng Zhuang <quic_czhuang@quicinc.com>
----
- .../devicetree/bindings/misc/qcom,qrc.yaml         | 32 ++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+What is "QRC"?
 
-diff --git a/Documentation/devicetree/bindings/misc/qcom,qrc.yaml b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
-new file mode 100644
-index 000000000000..730efd679ba0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
-@@ -0,0 +1,32 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/misc/qcom,qrc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Robotics Communication Driver
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  The QRC (Qualcomm Robotics Communication) driver is used for information interaction
-+  between the robot control board and the main board when using a uart port connection.
-+  This Driver will support uart read & write and robot control board
-+  reset function.
-+
-+properties:
-+  compatible:
-+    const: qcom,qrc-uart
-+
-+required:
-+  - compatible
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    qrc: qcom,qrc_uart {
-+        compatible = "qcom,qrc-uart";
-+    };
-+
+> - Read data from serial device port.
+> - Write data to serial device port.
 
--- 
-2.25.1
+Shouldn't you be doing that in userspace?  Why is this a kernel driver?
 
+> - Pin control reset robotic controller.
+> 
+> Signed-off-by: Canfeng Zhuang <quic_czhuang@quicinc.com>
+> ---
+>  drivers/misc/Kconfig        |   1 +
+>  drivers/misc/Makefile       |   1 +
+>  drivers/misc/qrc/Kconfig    |  16 ++
+>  drivers/misc/qrc/Makefile   |   6 +
+>  drivers/misc/qrc/qrc_core.c | 336 ++++++++++++++++++++++++++++++++++++++++++
+>  drivers/misc/qrc/qrc_core.h | 143 ++++++++++++++++++
+
+Why do you have a .h file for a single driver?
+
+>  drivers/misc/qrc/qrc_uart.c | 345 ++++++++++++++++++++++++++++++++++++++++++++
+>  7 files changed, 848 insertions(+)
+> 
+> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+> index 4fb291f0bf7c..a43108af6fde 100644
+> --- a/drivers/misc/Kconfig
+> +++ b/drivers/misc/Kconfig
+> @@ -591,4 +591,5 @@ source "drivers/misc/cardreader/Kconfig"
+>  source "drivers/misc/uacce/Kconfig"
+>  source "drivers/misc/pvpanic/Kconfig"
+>  source "drivers/misc/mchp_pci1xxxx/Kconfig"
+> +source "drivers/misc/qrc/Kconfig"
+>  endmenu
+> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+> index ea6ea5bbbc9c..ab3b2c4d99fa 100644
+> --- a/drivers/misc/Makefile
+> +++ b/drivers/misc/Makefile
+> @@ -68,3 +68,4 @@ obj-$(CONFIG_TMR_INJECT)	+= xilinx_tmr_inject.o
+>  obj-$(CONFIG_TPS6594_ESM)	+= tps6594-esm.o
+>  obj-$(CONFIG_TPS6594_PFSM)	+= tps6594-pfsm.o
+>  obj-$(CONFIG_NSM)		+= nsm.o
+> +obj-$(CONFIG_QCOM_QRC)		+= qrc/
+> diff --git a/drivers/misc/qrc/Kconfig b/drivers/misc/qrc/Kconfig
+> new file mode 100644
+> index 000000000000..994985d7c320
+> --- /dev/null
+> +++ b/drivers/misc/qrc/Kconfig
+> @@ -0,0 +1,16 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# QRC device driver configuration
+> +#
+> +
+> +menu "QCOM QRC device driver"
+> +
+> +config QCOM_QRC
+> +	tristate "QCOM QRC device driver for Robotic SDK MCU"
+
+What is "QCOM", "QRC", SDK", and "MCU"?
+
+> +	help
+> +	  This kernel configuration is used to enable robotic controller
+> +	  device driver. Say M here if you want to enable robotic
+> +	  controller device driver.
+
+Please write more here, this doesn't really describe what is happening.
+
+> +	  When in doubt, say N.
+> +
+> +endmenu
+> diff --git a/drivers/misc/qrc/Makefile b/drivers/misc/qrc/Makefile
+> new file mode 100644
+> index 000000000000..da2cf81f3c59
+> --- /dev/null
+> +++ b/drivers/misc/qrc/Makefile
+> @@ -0,0 +1,6 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Makefile for the QRC bus specific drivers.
+> +
+> +
+> +obj-$(CONFIG_QCOM_QRC)		+= qrc_core.o qrc_uart.o
+
+Why is a single driver 2 different files?
+
+> diff --git a/drivers/misc/qrc/qrc_core.c b/drivers/misc/qrc/qrc_core.c
+> new file mode 100644
+> index 000000000000..5cedb050dac4
+> --- /dev/null
+> +++ b/drivers/misc/qrc/qrc_core.c
+> @@ -0,0 +1,336 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* driver/misc/qrc/qrc_core.c
+
+Why is the filename here?
+
+> + *
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <linux/types.h>
+> +#include <linux/sched.h>
+> +#include <linux/init.h>
+> +#include <linux/cdev.h>
+> +#include <linux/slab.h>
+> +#include <linux/poll.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of.h>
+> +#include <linux/of_gpio.h>
+> +#include <linux/gpio.h>
+> +#include <linux/delay.h>
+> +
+> +#include "qrc_core.h"
+> +
+> +#define QRC_DEVICE_NAME "qrc"
+
+KBUILD_MODNAME.
+
+> +static dev_t qrc_devt;
+> +static struct class *qrc_class;
+
+Please use class_register(), not class_create().
+
+I've stopped here, please get someone in your group to review this
+before sending it out again, you have internal experience with kernel
+drivers, please take advantage of it.
+
+thanks,
+
+greg k-h
 
