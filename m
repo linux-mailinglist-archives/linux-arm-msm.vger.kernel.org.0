@@ -1,370 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-13187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6459386F6B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 20:11:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E911B86F6E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 20:50:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA07A281391
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 19:11:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 937F31F213E3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 19:50:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FD877995C;
-	Sun,  3 Mar 2024 19:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F53E79B98;
+	Sun,  3 Mar 2024 19:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hsgIgF4N"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bc7e5Ae9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B9076402
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Mar 2024 19:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5785379DA4;
+	Sun,  3 Mar 2024 19:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709493084; cv=none; b=bimhY9C8spNZIEwhajn5EpY3+4QAV3pOGoohhaafJQwPzzile3G8yfQJcwuNgEBPAMKTRmzSyf5NP/UaddIhT8sTxURysg8K4HRD4HXbiBUbyFk9JkTTCj1/9adql+AteQSCaOGGw+0AtdqrIvJjs4oqSCHhGZgzLcSYNwOuSd8=
+	t=1709495424; cv=none; b=O5XHCLujlPOjl+OevetQtOy/hwOzhm6OgHXVEBFieGrPV1ISzzqUU5lBn6QrFn5O86D2BOjwrTIA6g+6eOCVbRr9VxDBex4Mj9m3Gk0bAhXGDSydkxE0nKh8ztIzdm/AVelcXDaqQcJKS/eHSdkKvsPM2ho+VtHGen9iXE0XU64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709493084; c=relaxed/simple;
-	bh=qau0gd7eIdfVjBy+AauJOQ+jCugLVyaR0tipbfWqRX4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jqzvoh+dCK7RN/z2crFjkmhWs43lt8fM4YoyWYv0gz7t+KUnU+fG3oKlFZTK7WF0QVmuRTO49xZYxcuIQHFCsoGZr42PxwdZyATiEg6b2YY/UVGNEZfd0TgpHKHvTPHjdPX41muNsjRohvmeUJ6n8Lgvvb+QqvaiSi9yyZ6RcZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hsgIgF4N; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a441d7c6125so465908866b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 11:11:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709493081; x=1710097881; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bmtmjSIxMrbeqKm/C6v4CZQ0x5QA4b41PodMBX3Iays=;
-        b=hsgIgF4NFzVhM1kzP48HoPnbz//rP+Vdf6chGdleefCVZgSOCwtEAZkmji/DJA0+5E
-         4dbbkO8zPd/sU+9kJcD4qou04YEgn0REoIIAI0Fk9TlvqUQ4R7GIJ1hIs7ZXOyVMThJj
-         SmotxLu3631lp3QzhDSZT5xHQAIOPjSueGpZDCt4tWDK17bZe4IReS4Gs0n7Wm2Eogw/
-         04gPnUCyeXCusjndfi5sxX/S+7qOucRSveJSQIh3piTUvSrnLuujmMZKIw5LTrKFeyWu
-         ETIftAXC1wQBlzIWLF2hg0ZX24tQIfLcuDHfx7iQLsCKhvD52rY0dfxk3pLIxUBLxFyB
-         ujyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709493081; x=1710097881;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bmtmjSIxMrbeqKm/C6v4CZQ0x5QA4b41PodMBX3Iays=;
-        b=Ew/F0+Mf/ZIn4FYE2NZ5PGn/6jznTZj29CU6MsanR7o8Iy4bCfIWq9IRcc54Bg2bSt
-         2OTWP4MLV6mmshqtU/aPjsVzIyy6xhagAymbl8r9gX12872xhpXiSSlJ9pOlri0Y/Emh
-         j81w2IXDDhfud3r5/soI3DFVYkXX3I1UW3ibF68yLJAqn28vW7pYRKoTD8tFb9n9tL51
-         d9ayQHgz1BJJDzsW7yieNBIcIYx2gCpwbLYOf4RzAWl0pRiCMGuyBOWEzE37y4r39R7q
-         Joono4SjbSf/CdkPAqKSCoRfLGkCjrQ/I9wjIkrjrwuiTtmnH1gCekHjdFfLYPiGqwsk
-         BTXw==
-X-Gm-Message-State: AOJu0Yx1/5TEbJ4XoPr9Y881EqEbgQzzguY+qYK/fLpG0pVL01wQpMdN
-	Rl3q7PXh+f1vAOtjC4Aj1Rf8H4Kka0KB9smGXZi4AhD+yBhsNY9zSY9XZYL0uPY=
-X-Google-Smtp-Source: AGHT+IEqR1xbZdpi7AtamsYOnOo13mLNP1UrdXL6QZTD5EC5hdfkTyOQqlWsKywUpBTfjA8G3Mavtw==
-X-Received: by 2002:a17:906:a88d:b0:a44:c573:f56f with SMTP id ha13-20020a170906a88d00b00a44c573f56fmr3232074ejb.9.1709493081098;
-        Sun, 03 Mar 2024 11:11:21 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id t15-20020a1709063e4f00b00a42f6d17123sm3896905eji.46.2024.03.03.11.11.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Mar 2024 11:11:20 -0800 (PST)
-Message-ID: <0c089229-237a-43c3-a1ba-8900101aa849@linaro.org>
-Date: Sun, 3 Mar 2024 20:11:18 +0100
+	s=arc-20240116; t=1709495424; c=relaxed/simple;
+	bh=ognP/Lk8RO+kTR63eX/JZnn/1V4hiuaop88vpZ83+KI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gv6pqQkhbpF9g5ymvR6uQwyiwIWqXDMMV4hQEOPgDtcADLGC/Dge43Bd9ajMcNhRhIfE8jkFVm2lO0yyMCeJepRG1JxFjCEIeSaD+6GnVB1Awkr2TozgLj46vuVPuVYF7TPgNvY8Zr0GJzMnqVz3X3+cGoYcVJvqyANvTRfzzvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bc7e5Ae9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135D9C433F1;
+	Sun,  3 Mar 2024 19:50:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709495423;
+	bh=ognP/Lk8RO+kTR63eX/JZnn/1V4hiuaop88vpZ83+KI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bc7e5Ae9A4pd0gbpXPlek+0sT+0v8eXFsg1gQQGIyxv/LD7K8fYWKya53lyzxE6Da
+	 0kxzKed2VAjIzOpi9q6woRh9S8JtgI+COK/GvD5S4VR4IU5W4Uzj/2ts10dLb2d9kW
+	 /GTy/EwY65In0Qj8W/70hTlv2iVAyecy1BUV7DwmUSWdyCgO8kzh52mXb6qUFTld63
+	 bORnTfkYCO/VZ8ImRUcHC+BCrRjSAfCj5lQiAbX4cSKf/bwj6MCuD74M2UzLaKZ/Nv
+	 NGBvyMQPDVgkW76H5bv449vX4+NZ3wQ3upV2ifrAFML7SeHmnSamZ3p9cXAURS4Xjf
+	 d8IS7YvztJCag==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/2] clk: Fix a core error path and missing qcom camcc-x1e80100 enum
+Date: Sun,  3 Mar 2024 13:50:18 -0600
+Message-ID: <170949540962.78121.17990412445829225751.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-0-25f348a5982b@linaro.org>
+References: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-0-25f348a5982b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
-Content-Language: en-US
-To: Canfeng Zhuang <quic_czhuang@quicinc.com>,
- Derek Kiernan <derek.kiernan@amd.com>, Dragan Cvetic
- <dragan.cvetic@amd.com>, Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
- <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 03/03/2024 17:53, Canfeng Zhuang wrote:
-> QRC Driver support functions:
-> - Read data from serial device port.
-> - Write data to serial device port.
-> - Pin control reset robotic controller.
+
+On Sat, 02 Mar 2024 00:52:13 +0000, Bryan O'Donoghue wrote:
+> Using x1e80100-camcc on a recent kernel I discovered the following NULL
+> pointer dereference.
 > 
-> Signed-off-by: Canfeng Zhuang <quic_czhuang@quicinc.com>
-> ---
->  drivers/misc/Kconfig        |   1 +
->  drivers/misc/Makefile       |   1 +
->  drivers/misc/qrc/Kconfig    |  16 ++
->  drivers/misc/qrc/Makefile   |   6 +
->  drivers/misc/qrc/qrc_core.c | 336 ++++++++++++++++++++++++++++++++++++++++++
->  drivers/misc/qrc/qrc_core.h | 143 ++++++++++++++++++
->  drivers/misc/qrc/qrc_uart.c | 345 ++++++++++++++++++++++++++++++++++++++++++++
->  7 files changed, 848 insertions(+)
+> [    1.347567] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+> [    1.347569] Mem abort info:
+> [    1.347569]   ESR = 0x0000000096000004
+> [    1.347570]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [    1.347572]   SET = 0, FnV = 0
+> [    1.347572]   EA = 0, S1PTW = 0
+> [    1.347573]   FSC = 0x04: level 0 translation fault
+> [    1.347574] Data abort info:
+> [    1.347575]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+> [    1.347576]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [    1.347576]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [    1.347577] [0000000000000000] user address but active_mm is swapper
+> [    1.347579] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+> [    1.347580] Modules linked in:
+> [    1.347583] CPU: 1 PID: 80 Comm: kworker/u49:1 Not tainted 6.8.0-rc6-next-20240228-00163-gbe6ae77b72b2 #26
+> [    1.347586] Hardware name: Qualcomm CRD, BIOS 6.0.230809.BOOT.MXF.2.4-00174-HAMOA-1 08/ 9/2023
+> [    1.347587] Workqueue: events_unbound deferred_probe_work_func
+> [    1.347595] pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+> [    1.347597] pc : clk_core_get+0xe0/0x110
+> [    1.347601] lr : clk_core_get+0x108/0x110
+> [    1.347603] sp : ffff800080353940
+> [    1.347604] x29: ffff8000803539a0 x28: 0000000000000000 x27: ffffb0aa57c4e2e0
+> [    1.347607] x26: ffffb0aa57c4e240 x25: ffff4cbd0511e4c8 x24: 0000000000000000
+> [    1.347609] x23: ffffb0aa583c3440 x22: 0000000000000000 x21: ffff4cc07e1d2ab8
+> [    1.347612] x20: 0000000000000000 x19: ffff4cbd00e28ac0 x18: 0000000000000001
+> [    1.347614] x17: 0000000000000018 x16: 0000000000000034 x15: 0000000000000002
+> [    1.347616] x14: ffffb0aa58fc6498 x13: ffffb0aa58293000 x12: 696669746f6e5f6b
+> [    1.347619] x11: 0000000ad6d076a3 x10: ffffb0aa58c600fb x9 : 0000000000000008
+> [    1.347621] x8 : 0101010101010101 x7 : 00000000736c6c65 x6 : 0080f0e8e16e646c
+> [    1.347624] x5 : ffff800080353958 x4 : 0000000000000000 x3 : ffff4cbd00d09100
+> [    1.347626] x2 : 0000000000000000 x1 : ffff4cbd00d09100 x0 : 0000000000000000
+> [    1.347628] Call trace:
+> [    1.347630]  clk_core_get+0xe0/0x110
+> [    1.347631]  clk_core_get_parent_by_index+0xc8/0xe0
+> [    1.347634]  __clk_register+0x1f0/0x864
+> [    1.347636]  devm_clk_hw_register+0x5c/0xd4
+> [    1.347639]  devm_clk_register_regmap+0x44/0x84
+> [    1.347642]  qcom_cc_really_probe+0x1b4/0x25c
+> [    1.347644]  cam_cc_x1e80100_probe+0x14c/0x1c8
+> [    1.347646]  platform_probe+0x68/0xc8
+> [    1.347649]  really_probe+0x148/0x2b0
+> [    1.347651]  __driver_probe_device+0x78/0x12c
+> [    1.347654]  driver_probe_device+0x40/0x118
+> [    1.347656]  __device_attach_driver+0xb8/0x134
+> [    1.347658]  bus_for_each_drv+0x88/0xe8
+> [    1.347661]  __device_attach+0xa0/0x190
+> [    1.347664]  device_initial_probe+0x14/0x20
+> [    1.347666]  bus_probe_device+0xac/0xb0
+> [    1.347668]  deferred_probe_work_func+0x88/0xc0
+> [    1.347670]  process_one_work+0x148/0x29c
+> [    1.347675]  worker_thread+0x2fc/0x40c
+> [    1.347678]  kthread+0x110/0x114
+> [    1.347681]  ret_from_fork+0x10/0x20
+> [    1.347684] Code: aa1303e0 97fff96f b140041f 54fffd08 (f9400000)
+> [    1.347686] ---[ end trace 0000000000000000 ]---
 > 
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index 4fb291f0bf7c..a43108af6fde 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -591,4 +591,5 @@ source "drivers/misc/cardreader/Kconfig"
->  source "drivers/misc/uacce/Kconfig"
->  source "drivers/misc/pvpanic/Kconfig"
->  source "drivers/misc/mchp_pci1xxxx/Kconfig"
-> +source "drivers/misc/qrc/Kconfig"
->  endmenu
-> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-> index ea6ea5bbbc9c..ab3b2c4d99fa 100644
-> --- a/drivers/misc/Makefile
-> +++ b/drivers/misc/Makefile
-> @@ -68,3 +68,4 @@ obj-$(CONFIG_TMR_INJECT)	+= xilinx_tmr_inject.o
->  obj-$(CONFIG_TPS6594_ESM)	+= tps6594-esm.o
->  obj-$(CONFIG_TPS6594_PFSM)	+= tps6594-pfsm.o
->  obj-$(CONFIG_NSM)		+= nsm.o
-> +obj-$(CONFIG_QCOM_QRC)		+= qrc/
-> diff --git a/drivers/misc/qrc/Kconfig b/drivers/misc/qrc/Kconfig
-> new file mode 100644
-> index 000000000000..994985d7c320
-> --- /dev/null
-> +++ b/drivers/misc/qrc/Kconfig
-> @@ -0,0 +1,16 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# QRC device driver configuration
-> +#
-> +
-> +menu "QCOM QRC device driver"
-> +
-> +config QCOM_QRC
-> +	tristate "QCOM QRC device driver for Robotic SDK MCU"
-> +	help
-> +	  This kernel configuration is used to enable robotic controller
-> +	  device driver. Say M here if you want to enable robotic
-> +	  controller device driver.
-> +	  When in doubt, say N.
-> +
-> +endmenu
-> diff --git a/drivers/misc/qrc/Makefile b/drivers/misc/qrc/Makefile
-> new file mode 100644
-> index 000000000000..da2cf81f3c59
-> --- /dev/null
-> +++ b/drivers/misc/qrc/Makefile
-> @@ -0,0 +1,6 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +#
-> +# Makefile for the QRC bus specific drivers.
+> [...]
 
-QRC bus? Nothing anywhere suggested this is a bus.
+Applied, thanks!
 
-
-Limited review because this really looks like some vendor code, not
-cleaned for upstream submission.
-
-> +
-> +
-> +obj-$(CONFIG_QCOM_QRC)		+= qrc_core.o qrc_uart.o
-
-
-...
-
-> +
-> +static int qrcuart_config(struct qrc_dev *dev)
-> +{
-> +	/*baudrate,wordlength ... config*/
-> +	return 0;
-> +}
-> +
-> +static struct qrc_device_ops qrcuart_qrc_ops = {
-
-What is this and why do you need it? Don't define your ops without need.
-Just call functions directly.
-
-> +	.qrcops_open = qrcuart_open,
-> +	.qrcops_close = qrcuart_close,
-> +	.qrcops_init = qrcuart_init,
-> +	.qrcops_uninit = qrcuart_uninit,
-> +	.qrcops_xmit = qrcuart_xmit,
-> +	.qrcops_receive = qrcuart_receive,
-> +	.qrcops_config = qrcuart_config,
-> +	.qrcops_setup = qrcuart_setup,
-> +	.qrcops_data_status = qrcuart_data_status,
-> +	.qrcops_data_clean = qrcuart_data_clean,
-> +};
-> +
-> +static int qrcuart_setup(struct qrc_dev *dev)
-> +{
-> +	dev->qrc_ops = &qrcuart_qrc_ops;
-> +	return 0;
-> +}
-> +
-> +static int qrc_uart_probe(struct serdev_device *serdev)
-> +{
-> +	struct qrc_dev *qdev;
-> +	struct qrcuart *qrc;
-> +	int ret = 0;
-> +
-> +	qrc = kmalloc(sizeof(*qrc), GFP_KERNEL);
-> +	if (!qrc)
-> +		return -ENOMEM;
-> +	qdev = kmalloc(sizeof(*qdev), GFP_KERNEL);
-
-Just use devm*. What is this code? Ancient vendor, 20 year old stuff?
-
-> +	if (!qdev) {
-> +		kfree(qrc);
-> +		return -ENOMEM;
-> +	}
-> +	qdev->dev = &serdev->dev;
-> +	qrc_set_data(qdev, qrc);
-> +
-> +	qrc->qrc_dev = qdev;
-> +	qrc->serdev = serdev;
-> +	spin_lock_init(&qrc->lock);
-> +	INIT_WORK(&qrc->tx_work, qrcuart_transmit);
-> +	qrcuart_setup(qdev);
-> +	ret = qrcuart_init(qdev);
-> +	if (ret) {
-> +		dev_err(qdev->dev, "qrcuart: Fail to init qrc structure\n");
-> +		kfree(qdev);
-> +		kfree(qrc);
-> +		return ret;
-> +	}
-> +	serdev_device_set_drvdata(serdev, qrc);
-> +	serdev_device_set_client_ops(serdev, &qrc_serdev_ops);
-> +
-> +	ret = serdev_device_open(serdev);
-> +	if (ret) {
-> +		dev_err(qdev->dev, "qrcuart :Unable to open device\n");
-
-Whitespace typos.
-
-> +		goto free;
-> +	}
-> +	serdev_device_close(serdev);
-> +	qrc->is_open = false;
-> +
-> +	ret = qrc_register_device(qdev, &serdev->dev);
-> +
-> +	if (ret) {
-> +		dev_err(qdev->dev, "qrcuart: Unable to register qrc device\n");
-> +		cancel_work_sync(&qrc->tx_work);
-> +		goto free;
-> +	}
-> +
-> +	return 0;
-> +
-> +free:
-
-free or uninint? Your error handling is messy.
-
-> +	qrcuart_uninit(qdev);
-> +	kfree(qdev);
-> +	kfree(qrc);
-> +	return ret;
-> +}
-> +
-> +static void qrc_uart_remove(struct serdev_device *serdev)
-> +{
-> +	struct qrcuart *qrc = serdev_device_get_drvdata(serdev);
-> +
-> +	if (qrc->is_open)
-> +		serdev_device_close(serdev);
-> +
-> +	qrcuart_uninit(qrc->qrc_dev);
-> +	cancel_work_sync(&qrc->tx_work);
-> +	qrc_unregister(qrc->qrc_dev);
-> +	kfree(qrc->qrc_dev);
-> +	kfree(qrc);
-> +	dev_info(&serdev->dev, "qrcuart drv removed\n");
-
-Drop such simple function entry/exit messages. Not needed and not helpful.
-
-> +}
-> +
-> +static const struct of_device_id qrc_uart_of_match[] = {
-> +	{ .compatible = "qcom,qrc-uart", },
-> +	{}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, qrc_uart_of_match);
-> +
-> +static struct serdev_device_driver qrc_uart_driver = {
-> +	.probe = qrc_uart_probe,
-> +	.remove = qrc_uart_remove,
-> +	.driver = {
-> +		.name = QRCUART_DRV_NAME,
-> +		.of_match_table = of_match_ptr(qrc_uart_of_match),
-
-Drop of_match_ptr. You have warnings here.
-
-> +	},
-> +};
-> +
-> +module_serdev_device_driver(qrc_uart_driver);
-> +
-> +/**********************************************/
-
-Drop
-
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. QRC Uart Driver");
-> +MODULE_LICENSE("GPL");
-> 
+[2/2] clk: qcom: camcc-x1e80100: Fix missing DT_IFACE enum in x1e80100 camcc
+      commit: 9dd7b0d351f0c6af9b69d969919a2a8b04bbfd6e
 
 Best regards,
-Krzysztof
-
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
