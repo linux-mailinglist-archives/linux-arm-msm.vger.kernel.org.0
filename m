@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-13186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2362986F6AF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 20:07:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6459386F6B5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 20:11:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B737F1F2141B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 19:07:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA07A281391
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Mar 2024 19:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A973E79DCC;
-	Sun,  3 Mar 2024 19:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FD877995C;
+	Sun,  3 Mar 2024 19:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SO7/Pzm9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hsgIgF4N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8649279DAB
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Mar 2024 19:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B9076402
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Mar 2024 19:11:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709492833; cv=none; b=jN8jsMjnt5dDmUJ+GvnW3qs+tWdD6PuPABdunta/4NL2hEuZig90xO7GKkgm28wAsK2qGHLjhDPqqh6Xlprag1jqjXMINo9VZYPQCWeEZ4P9LtPPaSWTwDfOVlIbguyzQ0WYU2J/7Qr4oWVihnY3MHKrDye39bijdDSp+NOaXdk=
+	t=1709493084; cv=none; b=bimhY9C8spNZIEwhajn5EpY3+4QAV3pOGoohhaafJQwPzzile3G8yfQJcwuNgEBPAMKTRmzSyf5NP/UaddIhT8sTxURysg8K4HRD4HXbiBUbyFk9JkTTCj1/9adql+AteQSCaOGGw+0AtdqrIvJjs4oqSCHhGZgzLcSYNwOuSd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709492833; c=relaxed/simple;
-	bh=Xq/6EX7Vma5DVArRtVZxDv2nekiTsrf7RQfu18aVsJM=;
+	s=arc-20240116; t=1709493084; c=relaxed/simple;
+	bh=qau0gd7eIdfVjBy+AauJOQ+jCugLVyaR0tipbfWqRX4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nc8AulRr7NzrW8m6ZtVOVKlfc1Abj/LUzmMbVNvMy3Rrxc4LNhVYnx5gw6HkwvTp97Rl/tQAyeznSOcAw6QaUxzx8UP47Bi1B1QccMgix4+2iHOZDls/UcWEOepz8j3e2dYTa138hYnAM7lAPsevI67tCAieoZsedFIfPvfxuek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SO7/Pzm9; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=Jqzvoh+dCK7RN/z2crFjkmhWs43lt8fM4YoyWYv0gz7t+KUnU+fG3oKlFZTK7WF0QVmuRTO49xZYxcuIQHFCsoGZr42PxwdZyATiEg6b2YY/UVGNEZfd0TgpHKHvTPHjdPX41muNsjRohvmeUJ6n8Lgvvb+QqvaiSi9yyZ6RcZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hsgIgF4N; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a3f893ad5f4so569885466b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 11:07:10 -0800 (PST)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a441d7c6125so465908866b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 11:11:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709492829; x=1710097629; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=t8+5hz1pC1NUruMJAl+eg8w3VSt8O+IZDxY81DWZbIU=;
-        b=SO7/Pzm9XXLWchfdpbRM7BK4v1xSE2gJZO6QvknP/GGWh4HQiYt23TF7R5Mo3SRPJk
-         Tini7fQ1mr2gRlMkpyLEn5XYngrkSfOP/8vHwSLNy0n5E8sn88YfFv/CY2IbzL9LbXwx
-         MrEEX9DRZ8n3qvGEz68ipgB78d9gZsJAwTXXBoGAHYqeEBqzIAjKLKV9Sp8z5e/f2DiW
-         j2UnoJ8EUe1bS/lQAlkq8PHs29hu0aq5LYMWhW5dHFRkm7K1CS4gmA+ArScysfm3Mgra
-         eT4um6nF9vQxWOI3R/6jv7VL5PMEUIxHGAtw7sm60eZUag5GkqTBxokevwQS/AE9UYMt
-         HLWQ==
+        d=linaro.org; s=google; t=1709493081; x=1710097881; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bmtmjSIxMrbeqKm/C6v4CZQ0x5QA4b41PodMBX3Iays=;
+        b=hsgIgF4NFzVhM1kzP48HoPnbz//rP+Vdf6chGdleefCVZgSOCwtEAZkmji/DJA0+5E
+         4dbbkO8zPd/sU+9kJcD4qou04YEgn0REoIIAI0Fk9TlvqUQ4R7GIJ1hIs7ZXOyVMThJj
+         SmotxLu3631lp3QzhDSZT5xHQAIOPjSueGpZDCt4tWDK17bZe4IReS4Gs0n7Wm2Eogw/
+         04gPnUCyeXCusjndfi5sxX/S+7qOucRSveJSQIh3piTUvSrnLuujmMZKIw5LTrKFeyWu
+         ETIftAXC1wQBlzIWLF2hg0ZX24tQIfLcuDHfx7iQLsCKhvD52rY0dfxk3pLIxUBLxFyB
+         ujyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709492829; x=1710097629;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t8+5hz1pC1NUruMJAl+eg8w3VSt8O+IZDxY81DWZbIU=;
-        b=gU2iVpJfX/+Fn92qHmdMn0OIBkH/2QtmJN/Ejm8dah9vW166NyoQQR9q8oeGXOTlO5
-         K4HNFzLwuIsOi0VVRsknoGwsLLVQ+ZLdvRtoH8Bz3+OAeh+J/Gi63gCgvzKj+R/WaBUp
-         rYAKGSkTPy+jhmVMNszxFtJte8jtxE++nexlO1r65FVq/Gp/7nFcVH6125+NcRoO1WAm
-         /eatsLcrqGzphpYYHT7rBSOIOJMXDg4EQuQMlXEqagr1knyN+HlVa8B+/i3bmUNFDGz3
-         MsjGQ2goMejoeEeltC6SLk0cVIs7WEsluAy89nH5aABtQc4hkDcg5HcFpSZoVlzKeO7y
-         hMjQ==
-X-Gm-Message-State: AOJu0YzLfwwTLUIEhzz+uTBJLRLNl412sY4nLaQ5fSMGegLUMersFysA
-	tElx4iOTMARqzCkiA09LQGEA/hF7TlS4NQ9XOfBikWRSbVYWilFDJrHTIBRUSLk=
-X-Google-Smtp-Source: AGHT+IE0gq/QoToo3IKKgK/wLQhOrWdvlyROKGxYxQmMgG7sJ8DJthEQl1WpJmZwJWFdPBX9DJ+/Sw==
-X-Received: by 2002:a17:906:48c6:b0:a45:2038:4caa with SMTP id d6-20020a17090648c600b00a4520384caamr1109660ejt.76.1709492828895;
-        Sun, 03 Mar 2024 11:07:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709493081; x=1710097881;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bmtmjSIxMrbeqKm/C6v4CZQ0x5QA4b41PodMBX3Iays=;
+        b=Ew/F0+Mf/ZIn4FYE2NZ5PGn/6jznTZj29CU6MsanR7o8Iy4bCfIWq9IRcc54Bg2bSt
+         2OTWP4MLV6mmshqtU/aPjsVzIyy6xhagAymbl8r9gX12872xhpXiSSlJ9pOlri0Y/Emh
+         j81w2IXDDhfud3r5/soI3DFVYkXX3I1UW3ibF68yLJAqn28vW7pYRKoTD8tFb9n9tL51
+         d9ayQHgz1BJJDzsW7yieNBIcIYx2gCpwbLYOf4RzAWl0pRiCMGuyBOWEzE37y4r39R7q
+         Joono4SjbSf/CdkPAqKSCoRfLGkCjrQ/I9wjIkrjrwuiTtmnH1gCekHjdFfLYPiGqwsk
+         BTXw==
+X-Gm-Message-State: AOJu0Yx1/5TEbJ4XoPr9Y881EqEbgQzzguY+qYK/fLpG0pVL01wQpMdN
+	Rl3q7PXh+f1vAOtjC4Aj1Rf8H4Kka0KB9smGXZi4AhD+yBhsNY9zSY9XZYL0uPY=
+X-Google-Smtp-Source: AGHT+IEqR1xbZdpi7AtamsYOnOo13mLNP1UrdXL6QZTD5EC5hdfkTyOQqlWsKywUpBTfjA8G3Mavtw==
+X-Received: by 2002:a17:906:a88d:b0:a44:c573:f56f with SMTP id ha13-20020a170906a88d00b00a44c573f56fmr3232074ejb.9.1709493081098;
+        Sun, 03 Mar 2024 11:11:21 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id ld15-20020a170906f94f00b00a44e7afde87sm1669822ejb.148.2024.03.03.11.07.06
+        by smtp.gmail.com with ESMTPSA id t15-20020a1709063e4f00b00a42f6d17123sm3896905eji.46.2024.03.03.11.11.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Mar 2024 11:07:08 -0800 (PST)
-Message-ID: <e13610f6-6e09-4073-bc26-108b76c2a88f@linaro.org>
-Date: Sun, 3 Mar 2024 20:07:05 +0100
+        Sun, 03 Mar 2024 11:11:20 -0800 (PST)
+Message-ID: <0c089229-237a-43c3-a1ba-8900101aa849@linaro.org>
+Date: Sun, 3 Mar 2024 20:11:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +75,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dt-bindings: misc: merge qcom,qrc
+Subject: Re: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
+Content-Language: en-US
 To: Canfeng Zhuang <quic_czhuang@quicinc.com>,
  Derek Kiernan <derek.kiernan@amd.com>, Dragan Cvetic
  <dragan.cvetic@amd.com>, Arnd Bergmann <arnd@arndb.de>,
@@ -89,8 +89,7 @@ To: Canfeng Zhuang <quic_czhuang@quicinc.com>,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240304-qcom_qrc-v1-0-2a709f95fd61@quicinc.com>
- <20240304-qcom_qrc-v1-2-2a709f95fd61@quicinc.com>
-Content-Language: en-US
+ <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -136,83 +135,233 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240304-qcom_qrc-v1-2-2a709f95fd61@quicinc.com>
+In-Reply-To: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/03/2024 17:53, Canfeng Zhuang wrote:
-> Merge Qualcomm-specific qrc binding
-
-Merge? No, instead describe the hardware.
-
-Similar problem with the sibject.
-
+> QRC Driver support functions:
+> - Read data from serial device port.
+> - Write data to serial device port.
+> - Pin control reset robotic controller.
 > 
 > Signed-off-by: Canfeng Zhuang <quic_czhuang@quicinc.com>
 > ---
->  .../devicetree/bindings/misc/qcom,qrc.yaml         | 32 ++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+>  drivers/misc/Kconfig        |   1 +
+>  drivers/misc/Makefile       |   1 +
+>  drivers/misc/qrc/Kconfig    |  16 ++
+>  drivers/misc/qrc/Makefile   |   6 +
+>  drivers/misc/qrc/qrc_core.c | 336 ++++++++++++++++++++++++++++++++++++++++++
+>  drivers/misc/qrc/qrc_core.h | 143 ++++++++++++++++++
+>  drivers/misc/qrc/qrc_uart.c | 345 ++++++++++++++++++++++++++++++++++++++++++++
+>  7 files changed, 848 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/misc/qcom,qrc.yaml b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
+> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+> index 4fb291f0bf7c..a43108af6fde 100644
+> --- a/drivers/misc/Kconfig
+> +++ b/drivers/misc/Kconfig
+> @@ -591,4 +591,5 @@ source "drivers/misc/cardreader/Kconfig"
+>  source "drivers/misc/uacce/Kconfig"
+>  source "drivers/misc/pvpanic/Kconfig"
+>  source "drivers/misc/mchp_pci1xxxx/Kconfig"
+> +source "drivers/misc/qrc/Kconfig"
+>  endmenu
+> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+> index ea6ea5bbbc9c..ab3b2c4d99fa 100644
+> --- a/drivers/misc/Makefile
+> +++ b/drivers/misc/Makefile
+> @@ -68,3 +68,4 @@ obj-$(CONFIG_TMR_INJECT)	+= xilinx_tmr_inject.o
+>  obj-$(CONFIG_TPS6594_ESM)	+= tps6594-esm.o
+>  obj-$(CONFIG_TPS6594_PFSM)	+= tps6594-pfsm.o
+>  obj-$(CONFIG_NSM)		+= nsm.o
+> +obj-$(CONFIG_QCOM_QRC)		+= qrc/
+> diff --git a/drivers/misc/qrc/Kconfig b/drivers/misc/qrc/Kconfig
 > new file mode 100644
-> index 000000000000..730efd679ba0
+> index 000000000000..994985d7c320
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/misc/qcom,qrc.yaml
-> @@ -0,0 +1,32 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/misc/qcom,qrc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +++ b/drivers/misc/qrc/Kconfig
+> @@ -0,0 +1,16 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# QRC device driver configuration
+> +#
 > +
-> +title: Qualcomm Robotics Communication Driver
+> +menu "QCOM QRC device driver"
+> +
+> +config QCOM_QRC
+> +	tristate "QCOM QRC device driver for Robotic SDK MCU"
+> +	help
+> +	  This kernel configuration is used to enable robotic controller
+> +	  device driver. Say M here if you want to enable robotic
+> +	  controller device driver.
+> +	  When in doubt, say N.
+> +
+> +endmenu
+> diff --git a/drivers/misc/qrc/Makefile b/drivers/misc/qrc/Makefile
+> new file mode 100644
+> index 000000000000..da2cf81f3c59
+> --- /dev/null
+> +++ b/drivers/misc/qrc/Makefile
+> @@ -0,0 +1,6 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +#
+> +# Makefile for the QRC bus specific drivers.
 
-Driver? Unfortunately bindings are for hardware, not drivers.
+QRC bus? Nothing anywhere suggested this is a bus.
+
+
+Limited review because this really looks like some vendor code, not
+cleaned for upstream submission.
 
 > +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > +
-> +description: |
+> +obj-$(CONFIG_QCOM_QRC)		+= qrc_core.o qrc_uart.o
 
-Do not need '|' unless you need to preserve formatting.
 
-> +  The QRC (Qualcomm Robotics Communication) driver is used for information interaction
+...
 
-Agaim, driver?
-
-> +  between the robot control board and the main board when using a uart port connection.
-> +  This Driver will support uart read & write and robot control board
-
-No, describe the hardware.
-
-> +  reset function.
 > +
-> +properties:
-> +  compatible:
-> +    const: qcom,qrc-uart
+> +static int qrcuart_config(struct qrc_dev *dev)
+> +{
+> +	/*baudrate,wordlength ... config*/
+> +	return 0;
+> +}
 > +
-> +required:
-> +  - compatible
+> +static struct qrc_device_ops qrcuart_qrc_ops = {
+
+What is this and why do you need it? Don't define your ops without need.
+Just call functions directly.
+
+> +	.qrcops_open = qrcuart_open,
+> +	.qrcops_close = qrcuart_close,
+> +	.qrcops_init = qrcuart_init,
+> +	.qrcops_uninit = qrcuart_uninit,
+> +	.qrcops_xmit = qrcuart_xmit,
+> +	.qrcops_receive = qrcuart_receive,
+> +	.qrcops_config = qrcuart_config,
+> +	.qrcops_setup = qrcuart_setup,
+> +	.qrcops_data_status = qrcuart_data_status,
+> +	.qrcops_data_clean = qrcuart_data_clean,
+> +};
 > +
-> +additionalProperties: false
+> +static int qrcuart_setup(struct qrc_dev *dev)
+> +{
+> +	dev->qrc_ops = &qrcuart_qrc_ops;
+> +	return 0;
+> +}
 > +
-> +examples:
-> +  - |
-> +    qrc: qcom,qrc_uart {
-
-
-How does it remotely look like upstream DTS? Please don't send
-downstream/vendor DTS before cleaning it up. Before posting, please read
-submitting patches and/or quite extensive Qualcomm upstreaming guides.
-
-> +        compatible = "qcom,qrc-uart";
-
-Nope, so this is just to instantiate Linux device? No resources? This
-looks really incomplete.
-
-> +    };
+> +static int qrc_uart_probe(struct serdev_device *serdev)
+> +{
+> +	struct qrc_dev *qdev;
+> +	struct qrcuart *qrc;
+> +	int ret = 0;
 > +
+> +	qrc = kmalloc(sizeof(*qrc), GFP_KERNEL);
+> +	if (!qrc)
+> +		return -ENOMEM;
+> +	qdev = kmalloc(sizeof(*qdev), GFP_KERNEL);
+
+Just use devm*. What is this code? Ancient vendor, 20 year old stuff?
+
+> +	if (!qdev) {
+> +		kfree(qrc);
+> +		return -ENOMEM;
+> +	}
+> +	qdev->dev = &serdev->dev;
+> +	qrc_set_data(qdev, qrc);
+> +
+> +	qrc->qrc_dev = qdev;
+> +	qrc->serdev = serdev;
+> +	spin_lock_init(&qrc->lock);
+> +	INIT_WORK(&qrc->tx_work, qrcuart_transmit);
+> +	qrcuart_setup(qdev);
+> +	ret = qrcuart_init(qdev);
+> +	if (ret) {
+> +		dev_err(qdev->dev, "qrcuart: Fail to init qrc structure\n");
+> +		kfree(qdev);
+> +		kfree(qrc);
+> +		return ret;
+> +	}
+> +	serdev_device_set_drvdata(serdev, qrc);
+> +	serdev_device_set_client_ops(serdev, &qrc_serdev_ops);
+> +
+> +	ret = serdev_device_open(serdev);
+> +	if (ret) {
+> +		dev_err(qdev->dev, "qrcuart :Unable to open device\n");
+
+Whitespace typos.
+
+> +		goto free;
+> +	}
+> +	serdev_device_close(serdev);
+> +	qrc->is_open = false;
+> +
+> +	ret = qrc_register_device(qdev, &serdev->dev);
+> +
+> +	if (ret) {
+> +		dev_err(qdev->dev, "qrcuart: Unable to register qrc device\n");
+> +		cancel_work_sync(&qrc->tx_work);
+> +		goto free;
+> +	}
+> +
+> +	return 0;
+> +
+> +free:
+
+free or uninint? Your error handling is messy.
+
+> +	qrcuart_uninit(qdev);
+> +	kfree(qdev);
+> +	kfree(qrc);
+> +	return ret;
+> +}
+> +
+> +static void qrc_uart_remove(struct serdev_device *serdev)
+> +{
+> +	struct qrcuart *qrc = serdev_device_get_drvdata(serdev);
+> +
+> +	if (qrc->is_open)
+> +		serdev_device_close(serdev);
+> +
+> +	qrcuart_uninit(qrc->qrc_dev);
+> +	cancel_work_sync(&qrc->tx_work);
+> +	qrc_unregister(qrc->qrc_dev);
+> +	kfree(qrc->qrc_dev);
+> +	kfree(qrc);
+> +	dev_info(&serdev->dev, "qrcuart drv removed\n");
+
+Drop such simple function entry/exit messages. Not needed and not helpful.
+
+> +}
+> +
+> +static const struct of_device_id qrc_uart_of_match[] = {
+> +	{ .compatible = "qcom,qrc-uart", },
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, qrc_uart_of_match);
+> +
+> +static struct serdev_device_driver qrc_uart_driver = {
+> +	.probe = qrc_uart_probe,
+> +	.remove = qrc_uart_remove,
+> +	.driver = {
+> +		.name = QRCUART_DRV_NAME,
+> +		.of_match_table = of_match_ptr(qrc_uart_of_match),
+
+Drop of_match_ptr. You have warnings here.
+
+> +	},
+> +};
+> +
+> +module_serdev_device_driver(qrc_uart_driver);
+> +
+> +/**********************************************/
+
+Drop
+
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. QRC Uart Driver");
+> +MODULE_LICENSE("GPL");
 > 
 
 Best regards,
