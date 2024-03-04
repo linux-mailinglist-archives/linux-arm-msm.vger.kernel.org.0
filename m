@@ -1,178 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-13257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E5B887023B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 14:09:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EC9987025C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 14:12:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9EA1F22A57
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 13:09:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E61FE281D6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 13:12:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C3523D540;
-	Mon,  4 Mar 2024 13:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F3133D54D;
+	Mon,  4 Mar 2024 13:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vTTCinR6"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LJgRO+Hb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406B33F8C7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 13:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476673D3BF
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 13:10:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709557618; cv=none; b=DIPt0tkYKhjhQ/6hfELvVSqzXAQE/PFlkn64BmxklfMVcLCWsaLQXGQEgF5+N5nPDJmHmHznmpp2bQM06cHA0qSEmqoAndFyaTyVC2c6dM2pfpXXHB1GB91BrelPBmOoxY4jP+Vw2zuwZtA9Q3ztwvQDFpwGUYC220RuuYnq2ac=
+	t=1709557856; cv=none; b=LGX6nw4vtOzZy9r/Qzdr6nZpYM98GGmpbJkhXlil+Nhbe7c2uI82XEhVffrBFNFS2R4Uzc8lZPh2sLsYL+HVMY7iP7owLJbSuWzBxoIRBkPKKKH1YQYTpIM3WH37zoZAWGLCatNe//+a8XQZJUyj7GkwsBGFb7gjwaKHMRQkdlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709557618; c=relaxed/simple;
-	bh=YVZkshAZhkcuNqrSOesTmaPiOfvAz8zAKAbFCPcnxsU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MrZsQJH96l3VYy1lwIM2XUDQDrBbagNpo+o6cQccvlJ7In7lj+vSKOlRzb8c10rsAYct3LVdg0B4IVlzHTWn/Q1DLM7v+wlAVUh19QcHqD8SJKq3j46AhtsguRpgYUEdQWzdqUpQdGxJ6dahQCPV4EXI0bGwbqq4MpIRSd1JN8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vTTCinR6; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-dcc4de7d901so4141662276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 05:06:56 -0800 (PST)
+	s=arc-20240116; t=1709557856; c=relaxed/simple;
+	bh=edMqvmg6y2VKb4yfnj4dW1OskK2vzKd7zQJdJKQMyrs=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OCRp6mQoDgRDZn4rWQEPDi9O7XtEf01s5e5FBg4hrB7etpNWitsSdqBh2vfzMnudgnahR5fP49un8Q+rhWsDxMq5PihmUCwOmMMGoveAsv87ogUJyNNWvNctmWvHPfhyzTh7ocZkSwDueLJB0H4y5wZwljd16X+wmn3SN03jDMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LJgRO+Hb; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a44ad785a44so328442866b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 05:10:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709557615; x=1710162415; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZF5EHPeguAlmw8pt+rnW85Aj9ppqfHEoGqFfoa9ov8U=;
-        b=vTTCinR6sMSysMwszdVZy8Undj9su1wcsF/qeq/rdZRXsPceEpao+/dCVJuHmQ4La/
-         O39teMI5RHBU0nNIzyoGFcVBe6MRhYKYo9d58fljvCGnxnzPf2Us1GRhxWX2TIMmZa3U
-         AgTtXFvmn122P65fKcvObIMlKVCtlL5aht/xek7q7yXZJg79RmdVJZ9pXVdYFTW86HJF
-         vne8uNGweGHgTJwybEdSwdwCyKI40jFzMsofI0mYyUDAZVHM708n9p/86AwbZ5Rx3733
-         M1UDEa9/0j8T+OAofOwsjU4CIY2zZCK+xF0k5stj0B1TuZ0ZvvHpRceN2i4Aa7Hw1ldH
-         UzUQ==
+        d=google.com; s=20230601; t=1709557853; x=1710162653; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=z3m7OivOxzJeGdkMzIGOv6kRagQeqCuoThPb8xlNbgo=;
+        b=LJgRO+HbeUy+EAApm7gnwP1G5T1RzxP/43RuN159JitjmB+tqdik+WseMa7ppc0Lsw
+         zFJ/Qi4F2nmvJIcG0J3r6XAbWwoibIB/l1J8L0LBqT9cfVHrFCP2fSuj53GXHlK2MgTN
+         KOf4NIk6XpxoKoJopFvDojC8rQWS3tpNWkF60XOnb7NXm0Lmo8pL0YaDTLyRvX8bLHFx
+         a6kbFFniAVqz0C8/pXNe+MUMsm03pMjJFqyu0ozGtPkTCqoCZER98AHfi/8SUIdOYHEL
+         SvLwOaZvfecGr7W8VQxZHVJqAJUUAuCNp9lon7ghkhiS3+vIlx0DPSIQplF9fjXXF24I
+         Arwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709557615; x=1710162415;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZF5EHPeguAlmw8pt+rnW85Aj9ppqfHEoGqFfoa9ov8U=;
-        b=gqPyieuqI2vlYRm99dsIbVJt+tdnyGqsThQYA25n3yRIZo6vzLLRAn4k6Nh5SBTwEd
-         YAi1dWgqBKc2NQ+OnxWGsjgH1SQWRzwvHkkCIynYht07oODfyJLBD/uER0IL02wlwpz6
-         g58E81ZFZRlNai/40cGvosxHMlD34Ltyxr/n92mG+NBsdN9VmWdTK5ohNtuTtvGu3/Hp
-         1pey8oiWH0rKU35sTOngG9KmEmd3XTOkgOWBmMMtyq6aSNllks/VcposbGxfceuQyIVq
-         1+4r7fJWZBY6/UoxdPV9AWsfisHYAbKCnDBjIxnZ6+QnSBQeLCArwNjrblbibIi7QZYJ
-         ashw==
-X-Forwarded-Encrypted: i=1; AJvYcCXAF3YJ+wJXbIAs+aV6W8yiGfMbHv/f7NQs+9D378hqnysN8rY+ZwQR3tfIwzR5yv+b3a9nzKXiCoVh1U27K5bWpO15XRWYussRcRPRBA==
-X-Gm-Message-State: AOJu0YwA1uDk3kb9iiJj3Wq/Z1DnwVaDgKY30jZQUGiNtE6bc91WTebk
-	aN+KQZd684N3CycN64iAYGL0uLqAjdqktv72Kwj8yK58VAPV9j/examgZB9MfUNgXrO1+n+h6vm
-	OZ2UpULksWbu6o5QEr1kofHayy1yAxunMYDmyUA==
-X-Google-Smtp-Source: AGHT+IHDoyrZSgo3d0pdsvjs58WMMhEuCQvAoO7S/07i8igiKmULNd3ZGDbVm0+XF7UvoNRUriBuP/dHX1xzq05mxT0=
-X-Received: by 2002:a5b:b05:0:b0:dcd:13ba:cdd6 with SMTP id
- z5-20020a5b0b05000000b00dcd13bacdd6mr6132325ybp.47.1709557615168; Mon, 04 Mar
- 2024 05:06:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709557853; x=1710162653;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z3m7OivOxzJeGdkMzIGOv6kRagQeqCuoThPb8xlNbgo=;
+        b=oAuMnsbK/uyBzIuKJdWqc/KGWu9/+DbhF3zwkPGzJ3ZPWv8654FotbBo/7DcY9Zzjs
+         fPnGeDhpFRj1rORv8lvTZ+1vwWwspfRY8QT9NN494CCXo++m9PaO6npuXchMyJU2E1X1
+         8zLoPMa6kct9lsx5PEC8u5yY8WGG29UoIlJoZM5nF9E0Pe4XaMeEvjDyF9OByGa6v2RU
+         wZVT3+JCUapEVMSUx2ol4QwZjTRPkfYY+PYbHlJ4wORt5YDx6aAkLiaSyUKZad8aIDEE
+         g5OOOhcBHyY0rTLFlJdTc98hDIbZ6BsH9l0ETaGGGw3ItQNRoVUj5WSRH8EtwkIM/un9
+         hegw==
+X-Forwarded-Encrypted: i=1; AJvYcCXApziuY/W2BfSLM7bdvgS+Ev7MEXzZdSpW8jMD5VV2wxmAhqEob3EgRSX6aNBbr8HFTtMvyuoM5NlPfoWkO9PtEZTxh1dUOE9jAUWnGw==
+X-Gm-Message-State: AOJu0YwkdksIRkL3j3SaE22dxlJ3zzYyzb1/naxyMxG4hEofqVO8R4vn
+	AGnjtsVDhkq+uzsrPbqnaBcpa9s5LEOVlaL5vNkG8fpntrOxjQCtdyYvcSSn2A==
+X-Google-Smtp-Source: AGHT+IGrvXADFoe0PTlXPw7y7hmD/cJqKu6+s04vNFfdc9+9OA1wUWqNlu47ZlZ+Fh8V1+pbnqa8SA==
+X-Received: by 2002:a17:906:4f09:b0:a45:70b9:252b with SMTP id t9-20020a1709064f0900b00a4570b9252bmr965095eju.57.1709557852486;
+        Mon, 04 Mar 2024 05:10:52 -0800 (PST)
+Received: from google.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
+        by smtp.gmail.com with ESMTPSA id r18-20020a1709067fd200b00a4589f3392esm98523ejs.207.2024.03.04.05.10.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 05:10:51 -0800 (PST)
+Date: Mon, 4 Mar 2024 13:10:48 +0000
+From: Quentin Perret <qperret@google.com>
+To: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
+	Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
+	Android KVM <android-kvm@google.com>,
+	Patrick Daly <quic_pdaly@quicinc.com>,
+	Alex Elder <elder@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Murali Nalajal <quic_mnalajal@quicinc.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+	Carl van Schaik <quic_cvanscha@quicinc.com>,
+	Philip Derrin <quic_pderrin@quicinc.com>,
+	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+	Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Fuad Tabba <tabba@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+Subject: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map functions
+Message-ID: <ZeXIWBLVWzVycm0r@google.com>
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
+ <ZdhEtH7xzbzdhS2j@infradead.org>
+ <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
-In-Reply-To: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 4 Mar 2024 15:06:43 +0200
-Message-ID: <CAA8EJppf0ebg+qnw7Z4P_6W4pgf0E4+KLGLEhU138f4k8+QxOw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dpu: drop unused dpu_kms from interface initialization
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
-	quic_parellan@quicinc.com, quic_jesszhan@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
 
-On Wed, 28 Feb 2024 at 21:47, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
-> dpu_kms seems unused while initializing DSI, HDMI and DP through
-> their respective _dpu_kms_initialize_* functions.
->
-> Hence lets drop the parameter altogether.
->
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ++++++---------
->  1 file changed, 6 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2af62d8fa9a7..ab924ac78c9b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -494,8 +494,7 @@ static void dpu_kms_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
->  }
->
->  static int _dpu_kms_initialize_dsi(struct drm_device *dev,
-> -                                   struct msm_drm_private *priv,
-> -                                   struct dpu_kms *dpu_kms)
-> +                                  struct msm_drm_private *priv)
->  {
->         struct drm_encoder *encoder = NULL;
->         struct msm_display_info info;
-> @@ -558,8 +557,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
->  }
->
->  static int _dpu_kms_initialize_displayport(struct drm_device *dev,
-> -                                           struct msm_drm_private *priv,
-> -                                           struct dpu_kms *dpu_kms)
-> +                                          struct msm_drm_private *priv)
+On Friday 23 Feb 2024 at 16:37:23 (-0800), Elliot Berman wrote:
+> On Thu, Feb 22, 2024 at 11:09:40PM -0800, Christoph Hellwig wrote:
+> > On Thu, Feb 22, 2024 at 03:16:42PM -0800, Elliot Berman wrote:
+> > > Firmware and hypervisor drivers can donate system heap memory to their
+> > > respective firmware/hypervisor entities. Those drivers should unmap the
+> > > pages from the kernel's logical map before doing so.
+> > > 
+> > > Export can_set_direct_map, set_direct_map_invalid_noflush, and
+> > > set_direct_map_default_noflush.
+> > 
+> > Err, not they should not.  And not using such super low-level interfaces
+> > from modular code.
+> 
+> Hi Cristoph,
+>  
+> We've observed a few times that Linux can unintentionally access a page
+> we've unmapped from host's stage 2 page table via an unaligned load from
+> an adjacent page. The stage 2 is managed by Gunyah. There are few
+> scenarios where even though we allocate and own a page from buddy,
+> someone else could try to access the page without going through the
+> hypervisor driver. One such instance we know about is
+> load_unaligned_zeropad() via pathlookup_at() [1].
+>  
+> load_unaligned_zeropad() could be called near the end of a page. If the
+> next page isn't mapped by the kernel in the stage one page tables, then
+> the access from to the unmapped page from load_unaligned_zeropad() will
+> land in __do_kernel_fault(), call fixup_exception(), and fill the
+> remainder of the load with zeroes. If the page in question is mapped in
+> stage 1 but was unmapped from stage 2, then the access lands back in
+> Linux in do_sea(), leading to a panic().
+>  
+> Our preference would be to add fixup_exception() to S2 PTW errors for
+> two reasons:
+> 1. It's cheaper to do performance wise: we've already manipulated S2
+>    page table and prevent intentional access to the page because
+>    pKVM/Gunyah drivers know that access to the page has been lost.
+> 2. Page-granular S1 mappings only happen on arm64 with rodata=full.
+>  
+> In an off-list discussion with the Android pkvm folks, their preference
+> was to have the pages unmapped from stage 1. I've gone with that
+> approach to get started but welcome discussion on the best approach.
+>  
+> The Android (downstream) implementation of arm64 pkvm is currently
+> implementing a hack where s2 ptw faults are given back to the host as s1
+> ptw faults (i.e. __do_kernel_fault() gets called and not do_sea()) --
+> allowing the kernel to fixup the exception.
+>  
+> arm64 pKVM will also face this issue when implementing guest_memfd or
+> when donating more memory to the hyp for s2 page tables, etc. As far as
+> I can tell, this isn't an issue for arm64 pKVM today because memory
+> isn't being dynamically donated to the hypervisor.
 
-This breaks now on top of YUV patchset:
+FWIW pKVM already donates memory dynamically to the hypervisor, to store
+e.g. guest VM metadata and page-tables, and we've never seen that
+problem as far as I can recall.
 
-drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function
-'_dpu_kms_initialize_displayport':
-drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:583:35: error: 'dpu_kms'
-undeclared (first use in this function)
-583 | yuv_supported = !!dpu_kms->catalog->cdm;
+A key difference is that pKVM injects a data abort back into the kernel
+in case of a stage-2 fault, so the whole EXTABLE trick/hack in
+load_unaligned_zeropad() should work fine out of the box.
 
-As this requires adding of the yuv_supported argument, let's consider
-moving it backwards: for  _dpu_kms_initialize_writeback() we can get
-format_list and n_formats from the dpu_kms.
+As discussed offline, Gunyah injecting an SEA into the kernel is
+questionable, but I understand that the architecture is a bit lacking in
+this department, and that's probably the next best thing.
 
+Could the Gunyah driver allocate from a CMA region instead? That would
+surely simplify unmapping from EL1 stage-1 (similar to how drivers
+usually donate memory to TZ).
 
->  {
->         struct drm_encoder *encoder = NULL;
->         struct msm_display_info info;
-> @@ -592,8 +590,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
->  }
->
->  static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
-> -                                   struct msm_drm_private *priv,
-> -                                   struct dpu_kms *dpu_kms)
-> +                                   struct msm_drm_private *priv)
->  {
->         struct drm_encoder *encoder = NULL;
->         struct msm_display_info info;
-> @@ -671,19 +668,19 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
->         int rc = 0;
->         int i;
->
-> -       rc = _dpu_kms_initialize_dsi(dev, priv, dpu_kms);
-> +       rc = _dpu_kms_initialize_dsi(dev, priv);
->         if (rc) {
->                 DPU_ERROR("initialize_dsi failed, rc = %d\n", rc);
->                 return rc;
->         }
->
-> -       rc = _dpu_kms_initialize_displayport(dev, priv, dpu_kms);
-> +       rc = _dpu_kms_initialize_displayport(dev, priv);
->         if (rc) {
->                 DPU_ERROR("initialize_DP failed, rc = %d\n", rc);
->                 return rc;
->         }
->
-> -       rc = _dpu_kms_initialize_hdmi(dev, priv, dpu_kms);
-> +       rc = _dpu_kms_initialize_hdmi(dev, priv);
->         if (rc) {
->                 DPU_ERROR("initialize HDMI failed, rc = %d\n", rc);
->                 return rc;
-> --
-> 2.34.1
->
+Thanks,
+Quentin
 
 
---
-With best wishes
-Dmitry
 
