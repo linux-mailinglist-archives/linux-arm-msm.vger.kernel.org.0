@@ -1,103 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-13255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C439986FFBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 12:03:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5294E8700C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 12:51:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 014CD1C21CDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:03:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8483B1C2101E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:51:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6822376F9;
-	Mon,  4 Mar 2024 11:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D013B18C;
+	Mon,  4 Mar 2024 11:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UVlrbSZ1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jr6uTHQ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46B25764
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 11:03:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67151250E2;
+	Mon,  4 Mar 2024 11:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709550226; cv=none; b=LhSheu4e6m4LPds1AtSNs5NbNDccca2UVNE/yKj3YYBYscOidZLy6ZbWdGXyXjWpEiEjAXg7BxWzvo1L76fbUWECdp3Xq+ZPxkVh66kDZJuhiVBcEeOrqFCk3O5796XIE7MK2mwpdkMU6V11ANhJYdSf0wo6ku6vnsl97y96YAw=
+	t=1709553032; cv=none; b=HX7ntXEWswMkUbLALi9DgIGWIjFX3FLaRAEDZFWhSOcKHOvc4C9LxqWTxYEapO280QskbBd/Fi2inLXsUJL2+VOO58nBhXRIqPXlUhtpuNhGD/A96Zi0nHGkRbgDKoe54zqEiNHVUMV3aU/MN1ZIDsyS09s4kQsyXB6CGiYXhak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709550226; c=relaxed/simple;
-	bh=Cgn+AbUmEAUkw7Gtthr0yt0NYWx7rqcOh+VRv3isIy8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sNDDhcob0b9PxJXJE4AQf9Cf0Bq1FYAhcnatC1WUo+l/O1Oa0rBkZlE2LSA2ZnJ1wJThkMNNKBqggj9S8aRguohzc74BonlprihHok3uD5tyMiySfPR+VfJ6nwPpnxNrTkUCiRTUYKt2C7L4Ds2erDtC3Qvp/egjEhethWXIBys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UVlrbSZ1; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e5a50d91b4so4045404b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 03:03:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709550225; x=1710155025; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uRCimQwiaMy/3k7Ta7kTx3HHC9SAus7Ndnzb5kkMHD0=;
-        b=UVlrbSZ1O3X16VEi1JHckwrjDdm0LX+xFXgz8nGoPIa1DpQH9KaZ1n3LOXwR0APPP0
-         G52Oul5bQr0PYx4Y/6gIe9dTqiHjH12B0FpwgddBVXiwwHhqzBVSMbw0ZPxdhkNQhsa7
-         pAg99heaozZG93DiFfHgTfsg7ntxBrR0Lhaoub/wIiAkoCK4RWKLdkHid+oXdpwv7PIH
-         5GA5XHLJ2y4hKluvN2tDUsL0lsVwNf+TCJpLNXb73sQL/OOGiVM/1zOejJ/xcDhM8vvV
-         lS8sSYSVFVwE/Frpd4Cd7vzpL71MMYMj349parDCc19Wi6Ka0JkglUQar/JlS70nqFXj
-         f1EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709550225; x=1710155025;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uRCimQwiaMy/3k7Ta7kTx3HHC9SAus7Ndnzb5kkMHD0=;
-        b=KkMJQ5unuQGv4VFhDGhCmu/S8YhvGUbeK/Dd96Vwd8iauvypk0/I/yzB+jbY5dFKOg
-         Sryg1FikKOQpNew8EfcXOP8HjsYbeODXs48Ph0D4JVUPWdOGgJ02ZVuJz6F49G1pRT6N
-         b2o1o+DNpvturyHk5c+GnKat7LX2tqc2h46xkNgIzpZVIW5qJuJg+FQRT7yAnKHdXME3
-         ywKMuxoR5a3l6atglKoD6mm91Rpodn3LDYaHW9DqyYnkdD3+pLKMktaPV4VuS0TOrdhY
-         X9QzloBqZAvCSnjwt8P1JA+8zYTwWRt6enUstPGB9eYcZYbfbhm9jUpT1eD8tzH2W63N
-         tLBg==
-X-Forwarded-Encrypted: i=1; AJvYcCX0vNlYBztFsEKXh3MZfMIboQIR4KvzL0fO6nGCJjFQ8De8ZxdJOWHGb7tuW1SvBbh0pDh0L31Hfrf5p9WTgvZ0sDefwLlacXACmpw99A==
-X-Gm-Message-State: AOJu0YxRwqg1+vGGby975ZtCPuW5vRvjiO04ZHRIr1AwLP71zJvaaH8i
-	k+6vi3+LHyVwVX7Zhik47HYO0DsKupXkRerKUb1Z2U/p+63+zxJ4qIVXI8BSwjs=
-X-Google-Smtp-Source: AGHT+IFHnmY9rsYiBuXaQPJyCeTKsOqjxrv1/2WHgvsre2aqcSomXoz0h9mLcg2wzjoF7OHK2UyQ7g==
-X-Received: by 2002:a05:6a00:852:b0:6e6:24d0:a171 with SMTP id q18-20020a056a00085200b006e624d0a171mr2452853pfk.27.1709550224498;
-        Mon, 04 Mar 2024 03:03:44 -0800 (PST)
-Received: from localhost ([122.172.85.206])
-        by smtp.gmail.com with ESMTPSA id w189-20020a6262c6000000b006e629bd793esm923045pfb.108.2024.03.04.03.03.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 03:03:44 -0800 (PST)
-Date: Mon, 4 Mar 2024 16:33:41 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org,
-	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
-	lukasz.luba@arm.com, sboyd@kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
-	linux-arm-msm@vger.kernel.org, nm@ti.com
-Subject: Re: [PATCH V2 3/3] cpufreq: scmi: Enable boost support
-Message-ID: <20240304110341.vd6w4mbcq6uwrpif@vireshk-i7>
-References: <20240227173434.650334-1-quic_sibis@quicinc.com>
- <20240227173434.650334-4-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1709553032; c=relaxed/simple;
+	bh=jT2/furrCydOEBIbad8LySxFMG2kvxtCTG4GzM5ZTvY=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=F+co/YHLplrS6a+E9eIfGONSR4iMk4cdM7zkNaNZXWHUtMlnf8t65+P46ArYHLEV6dkXgYvZizmTOBYZ8Awcg8xXK++rAD1sH4DuZxz59ODtn7SiMGBYLG3P3YQ7tbD7nU5fjKKgP3z0iA/TI/hgOQGyOb+h+Sjb4YsjDXa+CqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jr6uTHQ4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E17C8C433F1;
+	Mon,  4 Mar 2024 11:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709553031;
+	bh=jT2/furrCydOEBIbad8LySxFMG2kvxtCTG4GzM5ZTvY=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Jr6uTHQ4WhXGKIhfZmn0zqSIcPWcykrrWkyNGtDPdCXqXNtiFrrO3o/f3GfP2Y5w6
+	 4UGUGzOhHUeb0DGz2aQZ5bWGxkXNpKy6Q+rbHzlCR2lBfbykr3t8UvH5iM3krRGdp2
+	 4OhxwAcldDo7x3zbRZJnr+cci7TOeJyPKH8reFci1aa65Po55G8VPnepypr1YcCC6s
+	 7Fq68zt037KgbXpwhCG+y8y9xXDP2sbiPbX7qmNK0pPDH2jhKPJVzRh0epshD7qEcy
+	 fUZ82IuraZ2GQeMZomN4gZB95rKQ5KB0uyrhzyICjXG8yKDOISCXKhQ8CLtoBmchqY
+	 7txoosW5E9Leg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C8FF9D9A4BB;
+	Mon,  4 Mar 2024 11:50:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240227173434.650334-4-quic_sibis@quicinc.com>
+Subject: Re: [PATCH net-next v2 0/7] net: ipa: simplify device pointer access
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170955303081.27377.10483078205421623482.git-patchwork-notify@kernel.org>
+Date: Mon, 04 Mar 2024 11:50:30 +0000
+References: <20240301170242.243703-1-elder@linaro.org>
+In-Reply-To: <20240301170242.243703-1-elder@linaro.org>
+To: Alex Elder <elder@linaro.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, horms@kernel.org, mka@chromium.org, andersson@kernel.org,
+ quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+ quic_jponduru@quicinc.com, quic_subashab@quicinc.com, elder@kernel.org,
+ netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 
-On 27-02-24, 23:04, Sibi Sankar wrote:
-> +	priv->policy = policy;
+Hello:
 
-Did I miss applying something ? Dropped the commit now.
+This series was applied to netdev/net-next.git (main)
+by David S. Miller <davem@davemloft.net>:
 
-drivers/cpufreq/scmi-cpufreq.c:272:6: error: ‘struct scmi_data’ has no member named ‘policy’
+On Fri,  1 Mar 2024 11:02:35 -0600 you wrote:
+> This version of this patch series fixes the bugs in the first patch
+> (which were fixed in the second), where ipa_interrupt_config() had
+> two remaining spots that returned a pointer rather than an integer.
+> 
+> Outside of initialization, all uses of the platform device pointer
+> stored in the IPA structure determine the address of device
+> structure embedded within the platform device structure.
+> 
+> [...]
 
+Here is the summary with links:
+  - [net-next,v2,1/7] net: ipa: change ipa_interrupt_config() prototype
+    https://git.kernel.org/netdev/net-next/c/e87e4371edfc
+  - [net-next,v2,2/7] net: ipa: introduce ipa_interrupt_init()
+    https://git.kernel.org/netdev/net-next/c/ad1be80d7582
+  - [net-next,v2,3/7] net: ipa: pass a platform device to ipa_reg_init()
+    https://git.kernel.org/netdev/net-next/c/a47956e72a3e
+  - [net-next,v2,4/7] net: ipa: pass a platform device to ipa_mem_init()
+    https://git.kernel.org/netdev/net-next/c/95c54a963b24
+  - [net-next,v2,5/7] net: ipa: pass a platform device to ipa_smp2p_irq_init()
+    https://git.kernel.org/netdev/net-next/c/59622a8fb453
+  - [net-next,v2,6/7] net: ipa: pass a platform device to ipa_smp2p_init()
+    https://git.kernel.org/netdev/net-next/c/81d65f3413da
+  - [net-next,v2,7/7] net: ipa: don't save the platform device
+    https://git.kernel.org/netdev/net-next/c/5245f4fd28d1
+
+You are awesome, thank you!
 -- 
-viresh
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
