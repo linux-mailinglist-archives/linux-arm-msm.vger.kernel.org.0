@@ -1,152 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-13194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3854486F7F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 01:08:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CFA386F7FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 01:42:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A132B209A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 00:08:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CE191C20A48
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 00:42:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7EC38B;
-	Mon,  4 Mar 2024 00:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BA901378;
+	Mon,  4 Mar 2024 00:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mlhNUmq/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JNaPcdNt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D920383
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 00:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2411E64D;
+	Mon,  4 Mar 2024 00:42:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709510913; cv=none; b=anD1iLVUTvQe0ra+8NadgZUzWXDtQFTvAJxs4y4BSvukXPqp2/Q23kWIliCsNLBSztx3ej6/traPvH2XoHPt1JKhmOxT0QRPiIxLALicf3JCPbdDKqdOtjkXS3INOHGYkDV8QKPCwlZFiprPgFgkcFt5dnI3jwY6BHUO6n4V41A=
+	t=1709512962; cv=none; b=j1As81cA1LwONG75j2Jui3UeVUOumaFJ9X5TCe85qmK8XDXVuvYSxZvVhg5z9H6Iy7H2ahdAXF1ulcFIRoqflskhbvV97ZaMG+Wo5L9L82cong2H55RK+tK8rNTupmHMjx4fUax9Y+y/u+4wBh8O+7MOwa3j1dkdWLddkPASyjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709510913; c=relaxed/simple;
-	bh=rawqDoe/Zc8urdGoPhWWMHRmf31BkuUV6Xqj11OWaBQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YNCir8/cyrCEU3UODglCr3xt4ZqgHCqf4To4GJivZdZybP3O1WWhZbJ5f+UZpNlkcuvocAZgw7KfRLygwUuemQMF0bG19Tu6xq1NxSfjcj4pPuSsU6X8XbhDK13gjsOMDCvVfpwpiBMroqukWCRNAuN44oX00sxUTDAUQd+nQm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mlhNUmq/; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-60974cb1cd7so32242577b3.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 16:08:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709510911; x=1710115711; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zscouhjzoZJflbI2y1vMzZO0ByOgZWZyvByc5tIWOdQ=;
-        b=mlhNUmq/hfFOelS6eWAULk0UnUUHxNX1otuvhOKo56qpeqQUENRW3h/CEV6eLTnBVX
-         XfTWPObm0xaBZSlZfOMC/jb52oaHaQIU1hLYk55+L4tIOCcYS4wTNsotFNCBw8EzUYah
-         1NABLke2J7KrOPYRI+uYkCy+arnkJJYatC3rESwDl4JuIB1AIfiICx4lKzXv6v6QZOg4
-         vdYBgBjFkf9djUBOq35krC57318UICG9IxyZDGBlj/RId1Dm+p3L5j17vTbwqeZFRiDf
-         eNZAYZ3CHTGHMahz9jQmFXmn3gRTSDiA4AyiKii8spxj6XFKqmZ54Y0cyI+1jwD+L4uS
-         phZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709510911; x=1710115711;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zscouhjzoZJflbI2y1vMzZO0ByOgZWZyvByc5tIWOdQ=;
-        b=fWe7NE1L/OI+U8YuB8wFw3av4UzGecwV7o5xQsJKXmKfxqff61oI5Yt9pp9hNoXLYM
-         bYIg3SD3k7s39AMugqnCpPunXgEB0viCteoCaUarKj5YrH/lJXNGZu9zmljhdtjRt5V1
-         aQIlItWXBAH61QmSGFNwU7SuYDUIc7D50ejgegWWJlbIat0w8Rb8VRvkffB+IdMwdIqy
-         F8qPvXb3v5dPCWbl0fdfBwwYETUWZg1yYVDr3BmDB2tnuJKeJLiIImoOx15lSrSb9yh1
-         FQ0jSN74fC0PHdk3oeD3IUCzzODzhdGbN2U/QQ4p+G8qeYcDtAqExUf/KMx2O+yUhC/x
-         FW1Q==
-X-Gm-Message-State: AOJu0Yxm+cgkpZWlUt3ZZWtbhxh5XOOb/8bkGcwWNRmMUWTSBIdDCmYD
-	MZxUf3cf7Y3QdLX5J3BO2SwAkcqmdk+cWS4HtRfrGwX0iGC2ekeHy8rwxbcp9pZP0kgOT4gJ6SN
-	9I7bUx9qXYBwq2ohLd3GSLVdlB5QHTpHZqs9xog==
-X-Google-Smtp-Source: AGHT+IFUAS/cUvCXc4GIKxWXH59+ywTnirWoY7ZW+DW/gx26LtydgU6IAVpn23iYbVKnXLkhh+r3R525o2gCAKbcgUo=
-X-Received: by 2002:a81:e945:0:b0:604:a9c2:2a17 with SMTP id
- e5-20020a81e945000000b00604a9c22a17mr7954801ywm.45.1709510910896; Sun, 03 Mar
- 2024 16:08:30 -0800 (PST)
+	s=arc-20240116; t=1709512962; c=relaxed/simple;
+	bh=EaqFz1aU1LFJy50LAfuxSbt3Xrl9diEj8YEoxK9Kz1c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y/Jka/Lw1EGOeiIr+yBgz4KccN+oEOtsMEDsmxQXC2jCzgIZ1zHKsJUd+rKBA/LBQ4Lz44CQLkL+QCNmrIJ3gGWEzNzmFe2G47/hWDqLIWsSDLJYanqxEpCJ6lJxZ+0FCmbmDYmhFZQfllg8aVfNSthmmbtJxgTUTCZ3FM2GeoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JNaPcdNt; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1709512960; x=1741048960;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EaqFz1aU1LFJy50LAfuxSbt3Xrl9diEj8YEoxK9Kz1c=;
+  b=JNaPcdNtMd2vXpUUnE9CgwdRYz16U/54CQcCogO4VkoEsrsnQ2Rcd4Uo
+   NlGP9ZsKjfPiIOLDowdkD+xqsGgM1/7kGYtCJuNrJk7/gLFf9zFY27CeB
+   bRjSBXKF0IlJcXDNNAo6KReAmW1ct/wXKxtTIs/9A9YmzNOWzUk1He6yh
+   MRe2tP9VDiixV3x3h1Nc0Qpgo+xI/oQtDxd03NEl05FckEw+aOYzlXySg
+   U/JtrLCvOFhSurZWVerj405S7KIUL+g35Ouf0AI6Dc2Wd07OOow86d7/4
+   0V10G/mVt8BP11I6DffEPYbKCI82m/WoGQxaAqsTNs8RavZ9pHNoCUpcN
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11002"; a="6939915"
+X-IronPort-AV: E=Sophos;i="6.06,201,1705392000"; 
+   d="scan'208";a="6939915"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2024 16:42:39 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,201,1705392000"; 
+   d="scan'208";a="9257394"
+Received: from lkp-server01.sh.intel.com (HELO b21307750695) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 03 Mar 2024 16:42:36 -0800
+Received: from kbuild by b21307750695 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rgwPZ-0002E5-1w;
+	Mon, 04 Mar 2024 00:42:33 +0000
+Date: Mon, 4 Mar 2024 08:41:35 +0800
+From: kernel test robot <lkp@intel.com>
+To: Canfeng Zhuang <quic_czhuang@quicinc.com>,
+	Derek Kiernan <derek.kiernan@amd.com>,
+	Dragan Cvetic <dragan.cvetic@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Canfeng Zhuang <quic_czhuang@quicinc.com>
+Subject: Re: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
+Message-ID: <202403040831.fk22ur0f-lkp@intel.com>
+References: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
- <20240221-pm4125-typec-v3-2-fdd0ee0465b8@linaro.org> <CAA8EJpps9EPCgwBF8d8DbVzSZQ5tbEnj3RyGcJ=ua0eigDWQzQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpps9EPCgwBF8d8DbVzSZQ5tbEnj3RyGcJ=ua0eigDWQzQ@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 4 Mar 2024 02:08:19 +0200
-Message-ID: <CAA8EJpq=Js3vtRQrUDWi1mOgL3C1iEsaAQs+dwHg=hLyE0U-rw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: usb: qcom,pmic-typec: add support for
- the PM4125 block
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240304-qcom_qrc-v1-1-2a709f95fd61@quicinc.com>
 
-On Wed, 21 Feb 2024 at 02:00, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 21 Feb 2024 at 01:58, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > The PM4125 PMIC has the same Type-C register block as the PMI632.
-> > Likewise it doesn't support USB Power Delivery. Define the compatible
-> > for the TypeC block found on PM4125, using PMI632 as a compatible.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Making a fool of me, for v2 there was:
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Hi Canfeng,
 
-Greg, as Mark has picked up the vbus regulator patch, is there a
-chance of you picking up this patch?
+kernel test robot noticed the following build errors:
 
->
-> > ---
-> >  Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml | 12 +++++++++---
-> >  1 file changed, 9 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> > index 6c0c6b337693..5527a4bc9388 100644
-> > --- a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
-> > @@ -14,9 +14,15 @@ description:
-> >
-> >  properties:
-> >    compatible:
-> > -    enum:
-> > -      - qcom,pmi632-typec
-> > -      - qcom,pm8150b-typec
-> > +    oneOf:
-> > +      - enum:
-> > +          - qcom,pmi632-typec
-> > +          - qcom,pm8150b-typec
-> > +      - items:
-> > +          - enum:
-> > +              - qcom,pm4125-typec
-> > +          - const: qcom,pmi632-typec
-> > +
-> >
-> >    connector:
-> >      type: object
-> >
-> > --
-> > 2.39.2
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+[auto build test ERROR on 805d849d7c3cc1f38efefd48b2480d62b7b5dcb7]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Canfeng-Zhuang/misc-qualcomm-QRC-driver-for-Robotic-SDK-MCU/20240304-005601
+base:   805d849d7c3cc1f38efefd48b2480d62b7b5dcb7
+patch link:    https://lore.kernel.org/r/20240304-qcom_qrc-v1-1-2a709f95fd61%40quicinc.com
+patch subject: [PATCH 1/2] misc: qualcomm: QRC driver for Robotic SDK MCU
+config: s390-allyesconfig (https://download.01.org/0day-ci/archive/20240304/202403040831.fk22ur0f-lkp@intel.com/config)
+compiler: s390-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240304/202403040831.fk22ur0f-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202403040831.fk22ur0f-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/misc/qrc/qrc_uart.c:83:24: error: initialization of 'ssize_t (*)(struct serdev_device *, const u8 *, size_t)' {aka 'long int (*)(struct serdev_device *, const unsigned char *, long unsigned int)'} from incompatible pointer type 'int (*)(struct serdev_device *, const unsigned char *, size_t)' {aka 'int (*)(struct serdev_device *, const unsigned char *, long unsigned int)'} [-Werror=incompatible-pointer-types]
+      83 |         .receive_buf = qrc_uart_receive,
+         |                        ^~~~~~~~~~~~~~~~
+   drivers/misc/qrc/qrc_uart.c:83:24: note: (near initialization for 'qrc_serdev_ops.receive_buf')
+   cc1: some warnings being treated as errors
 
 
+vim +83 drivers/misc/qrc/qrc_uart.c
+
+    81	
+    82	static struct serdev_device_ops qrc_serdev_ops = {
+  > 83		.receive_buf = qrc_uart_receive,
+    84		.write_wakeup = qrc_uart_wakeup,
+    85	};
+    86	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
