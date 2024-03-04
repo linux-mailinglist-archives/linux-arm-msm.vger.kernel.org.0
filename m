@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-13295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8497C870C5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 22:24:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D5E870C60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 22:24:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D9F1B25B02
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 21:24:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8E852861A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 21:24:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8983F3D0BA;
-	Mon,  4 Mar 2024 21:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C7115B1E9;
+	Mon,  4 Mar 2024 21:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fUNmQLrL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oPCfcJOX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE64200CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B9E4CE04;
 	Mon,  4 Mar 2024 21:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587431; cv=none; b=GT6TRa6AAgEw9WQ2ywueHFsr1ugosmyVBWxZ9CwtAfHqsHb3QdpRSrlBJycFN82e60eIhtuojNSL9NSeOobr5st931OoiESOAXLJECfaiaRxq2YK2C12z2KPx53qpYhkgHpHODmhLNuCBZP2RsCAE48iR8VSgHKSRNuvxBLbDkA=
+	t=1709587432; cv=none; b=q8YwzIOO4QXbCTjQwt1vw4vXSX3J5UNjsG+QSwtN1VxSNEarvLXuzpr2TylBgiCBQ0EVKuawsZwY1osqKux2i3x7QbZtXRf1QeYRZNUdUM/qyw97YaQnStz8wBwo3wiOrfUPBN5SPDDCpWlX6C47SMK67kS8qSc0MtKkvEi5AhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587431; c=relaxed/simple;
-	bh=ABJaKWCXEacOoDgtKpa/n7nVPFnRtFcoMNI5LRacs+E=;
+	s=arc-20240116; t=1709587432; c=relaxed/simple;
+	bh=oHG8INmOw2dZnUZ4IgJMy+5PKtU4MlAGQvFPT7lyBrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZhH/8GsJEuKlphXlOXh7OJ8ZSMsLR96LCXSZUjJhRFkarkaTPDMMSfmXYX2fRsoxPMqcDj3WC4anECg4Gjk09B3FSZ8eDPia2Xxp3NRE2/uBtC/TB7OU8EJRSOjNaPC9q+cbJae5T5TdjjgY7ZtGhWSjDpfmQwEaSd5Zoit4ggk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fUNmQLrL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F9BC43390;
-	Mon,  4 Mar 2024 21:23:50 +0000 (UTC)
+	 MIME-Version:Content-Type; b=YFXDs0HxXJauch6oBHVrdIgTOhbWyP7mInXSGiphsn4AcFCmi1QaYBqO/fCkPLukukG1ic48+zhKjFpQb00OVV0kEfh9kbwBQeOLN9o3SK1iy2kHnQ7TVzZaGVpBrZXIW0n7ZW5gMhQZTvGcardkzkiZezD55q+OT1oeBceD0Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oPCfcJOX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCB1C433F1;
+	Mon,  4 Mar 2024 21:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1709587431;
-	bh=ABJaKWCXEacOoDgtKpa/n7nVPFnRtFcoMNI5LRacs+E=;
+	bh=oHG8INmOw2dZnUZ4IgJMy+5PKtU4MlAGQvFPT7lyBrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUNmQLrLhgkBhJRgmw3I+IlJRlGRmg76l+4FxuQt7LWJToAjfJxNaSjJ1sHR1WlYK
-	 jmyrnZBlCiWX+g0I1t4olZoTpsdHOI26Web3v4dkABhSFTuGY9L25l4UNLZ2NK8BHK
-	 Z8fTwawUKn6WFSMNUPnxTRDH21QrzTi8P308H8+dQYAfAaaaKake5pvsOigPRSAxRG
-	 /YEWiU99O+lzLsCBDElG7T3XqhKQSy9/wRwGslFYjwmmq1u+We6SdyKcxsA6hoOrSu
-	 jIHBX5Wb9Hwh9evK/pGlb5OG14mqxOsiCpgpzdSKRPn/rul+x3GvoI8mb38pnVPRAD
-	 OXp+djjD0dQ2A==
+	b=oPCfcJOXfoiijcd30ibk5W9bR1oYw1sWoydB4wnCmyP87kswUgpvWeMMeKeXmEBRS
+	 8lc1+Ft8Hq7ytQN0ufGhmQbhfHF5GB2gFKKXeR+rUHe9Hnbi1kiRaKIhKPReO97/Wz
+	 cgcrJNE47a6ElRD7XyxKIJ92eBe36Q43JdkLPNc72eyxbGs6QHwgszkxkOAd5VeLy/
+	 ZIjK53zf909VdfVpnHH7MZ+9ISGt88CszMY8k331RFrlxnT7OXT+2x98pM/eVHvchv
+	 rjH/RqnVRy4Bqe08eSz4iZK+9N0s+J9Xs40izwnRsgHephOlGZKDn2FAhvHAh2ASBk
+	 P/f4zndgu08xw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Arnd Bergmann <arnd@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
 	Rob Herring <robh@kernel.org>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: spm: fix building with CONFIG_REGULATOR=n
-Date: Mon,  4 Mar 2024 13:28:39 -0800
-Message-ID: <170958768036.1828118.11265005592143636750.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: msm8996: Hook up MPM"
+Date: Mon,  4 Mar 2024 13:28:40 -0800
+Message-ID: <170958768033.1828118.14643732925847174246.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240221154457.2007420-1-arnd@kernel.org>
-References: <20240221154457.2007420-1-arnd@kernel.org>
+In-Reply-To: <20240221-msm8996-revert-mpm-v1-1-cdca9e30c9b4@linaro.org>
+References: <20240221-msm8996-revert-mpm-v1-1-cdca9e30c9b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +65,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 21 Feb 2024 16:44:51 +0100, Arnd Bergmann wrote:
-> The newly added code causes a build failure when -Werror is set:
+On Wed, 21 Feb 2024 01:07:21 +0200, Dmitry Baryshkov wrote:
+> Commit 09896da07315 ("arm64: dts: qcom: msm8996: Hook up MPM") has
+> hooked up the MPM irq chip on the MSM8996 platform. However this causes
+> my Dragonboard 820c crash during bootup (usually when probing IOMMUs).
+> Revert the offending commit for now. Quick debug shows that making
+> tlmm's wakeup-parent point to the MPM is enough to trigger the crash.
 > 
-> drivers/soc/qcom/spm.c:388:12: error: 'spm_get_cpu' defined but not used [-Werror=unused-function]
-> 
-> Remove the #ifdef and instead use an IS_ENABLED() check that lets the
-> compiler perform dead code elimination instead of the preprocessor.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: spm: fix building with CONFIG_REGULATOR=n
-      commit: 26a526c25606495e7442feeea53061f81eca22be
+[1/1] Revert "arm64: dts: qcom: msm8996: Hook up MPM"
+      commit: 4f423c4cbe26d79d8974936eb01e0d6574c5d2ac
 
 Best regards,
 -- 
