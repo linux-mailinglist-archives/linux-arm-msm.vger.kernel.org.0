@@ -1,204 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-13252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3106B86FEF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:24:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FE386FEFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:25:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C8D01F264AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 10:24:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 389EDB20C44
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 10:25:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E36E1364DB;
-	Mon,  4 Mar 2024 10:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBBED22611;
+	Mon,  4 Mar 2024 10:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mu4pUqfs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aWdKqM0j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AA936AF3;
-	Mon,  4 Mar 2024 10:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B974225A6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 10:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709547717; cv=none; b=dgyeya2PQACxG/TZOFQVK/CIxXUl7rh+NTUQSZVeO8YT65tb2CkuqLd3HETgB+mjheuQ3kNTQZNc18j9igu7rzhnjlqQeUMhkhRBdYpiAIFFwgGp2vgrEQVUphDCAeuSY3vK5vEdfSXvFN2AB+XzXdjGuAql5QLJstpM5lVQsC8=
+	t=1709547898; cv=none; b=mWyoIqfvF4BdJWGYRho9IVto0nVaZsO3Coi+wjCTvJXwTnZkNq3L5CPV0zdTFB/ImYmt+xp6BpSMIepqFp8KCTSxeF9Rz7nhg41sOXey6j2sKL3oNaLmJFBD2syOpGE47DEAkUDpdNlfXpYMDnA4Y5QnKQjdsQ47+oJ9aq/Pe3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709547717; c=relaxed/simple;
-	bh=c/tbGWLUKFP9EhkQEqBxa/3Kj+2klMd4g8/coz+eCdQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S201cNw6J9koTwpLWv+TI3SvpCPNmTXV4kg43SF7+wE9EWQEuF7BwcAS9J///MFCFVMku2N5kVf5mT3zaO3JAp1IIVqP2nM8E9HeXjauVPuyt81x41IjK/3XM3OrsgPde1iTPl1kDKwt8g8KCbrEFIhXcxlO6JUWLSUu2uWr0J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mu4pUqfs; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4248NdXW017245;
-	Mon, 4 Mar 2024 10:21:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=Tklo4Ga1t15WWJ8MxR9Gn
-	kKPj0rEEtSL15SD9X8GLnA=; b=Mu4pUqfs5pP1yU0QbVhCGLSRqVIif7k931g4d
-	Q40zjB/+LwL5CLUXSAUl++z2JRaOY2AEgEqEduj0ziL7gMczkCCXdRywSpjUPCDc
-	jagrtIKMtRSbB7F3Y6Cz5e+aV0Oi2k6ypbjd0AmhD2jT48EGAa9tj1GL2cX+69lM
-	QGAQ116JC+RUcEEopDQUO+2meq01B/jhayQ11MRjxcHneE6RVtf5yPoCOT8VhKDz
-	bk0n6S/acQL7J77/9GG6knjY5hyyKVU6mwDJjQYtnUdXGGimSL/T46/eZzdG/QTw
-	i7x9uyrSYvG77/UR4TU436Q+A2V/6HNKWefkBx5gWzjvHZEyw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnarj0775-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 10:21:42 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424ALf8H000480
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Mar 2024 10:21:41 GMT
-Received: from hu-kuldsing-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 4 Mar 2024 02:21:32 -0800
-Date: Mon, 4 Mar 2024 15:51:28 +0530
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Elliot Berman
-	<quic_eberman@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Guru Das Srinagesh
-	<quic_gurus@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        "Maximilian
- Luz" <luzmaximilian@gmail.com>,
-        Alex Elder <elder@linaro.org>,
-        "Srini
- Kandagatla" <srinivas.kandagatla@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <kernel@quicinc.com>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>,
-        Deepti Jaggi
-	<quic_djaggi@quicinc.com>
-Subject: Re: [PATCH v8 10/12] firmware: qcom: tzmem: enable SHM Bridge support
-Message-ID: <20240304102127.GA27910@hu-kuldsing-hyd.qualcomm.com>
-References: <20240303150115.133633-1-brgl@bgdev.pl>
- <20240303150115.133633-11-brgl@bgdev.pl>
+	s=arc-20240116; t=1709547898; c=relaxed/simple;
+	bh=B/p9C/j+Ad9n8/+/6/pEpIkJ0VSlGvhLs4GQUeDwZIY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VUL/RvTFplw5NSr2b38ygSXMuYJKPz88ShElggQcj/uBm+uPafS7GZ1/0qV/W/86QcM91V4msW6ybNoqOeKfjS1FF6TwG0cStriamMY8PL1l6bMbHhZZGuYcJloA46aFKSp9jqPXIUy/qt0U9l3nrbHKuAYKj4h8NU3q4/SvDDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aWdKqM0j; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-608342633b8so42351587b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 02:24:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709547896; x=1710152696; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5MvLLiHKy+7g4m0EQRZXmKZVCgjWHjYHDhw5XRYe9JM=;
+        b=aWdKqM0jNwgdoz7BQTJbEAMhDwybCb8S3UokcTl0ExyMLWDlh6UVHnCBvy3ouypN0S
+         /RTa/sEpDMLIwLXkUriPpMLT64nASCCvukcUytySRKcJXr1iSiBKwJF8oppsK5EEXRK9
+         sv385nSIvV5kFhhpMRRWIRQD8enJCz9tfnynMseqjA/CyrjGTBhs8ntfsCckACKmwMuj
+         3xZVKEQAuc5eWa0QbNJpzpQLxdObBuA9uyP13psQY3Ev49WWhKK0LqaMoYz7/yj+pl8D
+         FbfnPZpZXic0RASz3/d0e0mtckC4kmUjJuD7sIF7ZOIqKDD9n39ihdqmXNGhL58Lm8zj
+         izEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709547896; x=1710152696;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5MvLLiHKy+7g4m0EQRZXmKZVCgjWHjYHDhw5XRYe9JM=;
+        b=oBeH5aLaIDiFd/BoDidrQAAAsJ4L+fFIBE9l13eQFty+2kHi84Lc/YW/P0W2VsobSi
+         DeJA6Hn1mkqEf5l3uVqiho6uO0ZhohQmmSmJAIYzWfEPk/wfQZiuVx1hphd1xx5eUqci
+         NFv/AZMzL72GIjEQFb16KQZHLBDh+TzPvXWoUaGAe1pQhTh74gA9o2ca2IOlwx6Kh4LX
+         YfDinxGumUfHB0WgVzwBrD3ZTT5OLjGhLrha7eN5i8niFFoal21AlIsaCtm4n9dTFKef
+         +rDtlTKg/yuOtZr98XPgK9s2IzFyi5YLwlIXSYGFJRKkcrXbzXGfALqSgthNfoNDpMeR
+         tYNA==
+X-Forwarded-Encrypted: i=1; AJvYcCWvzRVeUhDdkfjfMeSQY2fVTmngNv4HBYjuZwyBHNmg0xFcNAOgupAeyDFggH7worHHABZMZQVzrfxGo5wkzLD0Q3bpobgrIXsslokgpA==
+X-Gm-Message-State: AOJu0Ywl6PaQ4caRSAuhPGu3OyXieOBLrc5HtsqTq6L1unL4FnzwF32D
+	u8jKiN4Dmw0zQEPFWttvL+8GUv1j6ya2ppzO0f4Cq4/Wi9bYJ45dmmawmnlRN0Da5besMWBjORo
+	deITMmtn36GXgskXq5HTT4UeQcWVjlBjl4ZufUg==
+X-Google-Smtp-Source: AGHT+IHeJ2eLw4BVw7Jt2jcC9lyLDaioLDtXDPZBlMbV/W5XEb0laPQ/T9UXMRYekhs6WmzEEvWDsP2x6CTAI2UYGi4=
+X-Received: by 2002:a05:690c:f90:b0:607:fbb6:8be2 with SMTP id
+ df16-20020a05690c0f9000b00607fbb68be2mr9509835ywb.47.1709547896129; Mon, 04
+ Mar 2024 02:24:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240303150115.133633-11-brgl@bgdev.pl>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g9V6OnY1YhdhvAj22hAJWmwk29_ZtmQ3
-X-Proofpoint-GUID: g9V6OnY1YhdhvAj22hAJWmwk29_ZtmQ3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-04_06,2024-03-01_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0
- suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403040078
+References: <20240304-pm4125-typec-v4-0-f3601a16f9ea@linaro.org>
+ <2024030414-stark-service-ce78@gregkh> <CAA8EJpoCm+jqMsd6=pnpd+cCtqLYnMWLmrNQgjiyhi7ugeUjvA@mail.gmail.com>
+ <2024030456-felt-tip-frequency-f8b9@gregkh>
+In-Reply-To: <2024030456-felt-tip-frequency-f8b9@gregkh>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 4 Mar 2024 12:24:44 +0200
+Message-ID: <CAA8EJpq1VBA25kc1SLzb+R5MZDGzhqUqmG-nxUN9NmMK3RB=3w@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] arm64: dts: qcom: qrb2210-rb1: enable Type-C support
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-usb@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Mar 03, 2024 at 04:01:13PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> SHM Bridge is a safety mechanism allowing to limit the amount of memory
-> shared between the kernel and the TrustZone to regions explicitly marked
-> as such.
-> 
-> Add a variant of the tzmem allocator that configures the memory pools as
-> SHM bridges. It also enables the SHM bridge globally so non-SHM bridge
-> memory will no longer work with SCM calls.
-> 
-> If enabled at build-time, it will still be checked for availability at
-> run-time. If the architecture doesn't support SHM Bridge, the allocator
-> will fall back to the generic mode.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-> Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
-> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  drivers/firmware/qcom/Kconfig      | 10 +++++
->  drivers/firmware/qcom/qcom_tzmem.c | 65 +++++++++++++++++++++++++++++-
->  2 files changed, 74 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> index 4634f8cecc7b..7f6eb4174734 100644
-> --- a/drivers/firmware/qcom/Kconfig
-> +++ b/drivers/firmware/qcom/Kconfig
-> @@ -28,6 +28,16 @@ config QCOM_TZMEM_MODE_GENERIC
->  	  Use the generic allocator mode. The memory is page-aligned, non-cachable
->  	  and physically contiguous.
->  
-> +config QCOM_TZMEM_MODE_SHMBRIDGE
-> +	bool "SHM Bridge"
-> +	help
-> +	  Use Qualcomm Shared Memory Bridge. The memory has the same alignment as
-> +	  in the 'Generic' allocator but is also explicitly marked as an SHM Bridge
-> +	  buffer.
-> +
-> +	  With this selected, all buffers passed to the TrustZone must be allocated
-> +	  using the TZMem allocator or else the TrustZone will refuse to use them.
-> +
->  endchoice
->  
->  config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
-> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-> index 23f364afa6ca..244615e8c505 100644
-> --- a/drivers/firmware/qcom/qcom_tzmem.c
-> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> @@ -67,7 +67,70 @@ static void qcom_tzmem_cleanup_area(struct qcom_tzmem_area *area)
->  
->  }
->  
-> -#endif /* CONFIG_QCOM_TZMEM_MODE_GENERIC */
-> +#elif IS_ENABLED(CONFIG_QCOM_TZMEM_MODE_SHMBRIDGE)
-> +
-> +#include <linux/firmware/qcom/qcom_scm.h>
-> +
-> +#define QCOM_SHM_BRIDGE_NUM_VM_SHIFT 9
-> +
-> +static bool qcom_tzmem_using_shm_bridge;
-> +
-> +static int qcom_tzmem_init(void)
-> +{
-> +	int ret;
-> +
-> +	ret = qcom_scm_shm_bridge_enable();
-> +	if (ret == -EOPNOTSUPP) {
-> +		dev_info(qcom_tzmem_dev, "SHM Bridge not supported\n");
-> +		return 0;
-> +	}
-> +
-> +	if (!ret)
-> +		qcom_tzmem_using_shm_bridge = true;
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_tzmem_init_area(struct qcom_tzmem_area *area)
-> +{
-> +	u64 pfn_and_ns_perm, ipfn_and_s_perm, size_and_flags, ns_perms;
-> +	int ret;
-> +
-> +	if (!qcom_tzmem_using_shm_bridge)
-> +		return 0;
-> +
-> +	ns_perms = (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ);
+On Mon, 4 Mar 2024 at 12:09, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Mon, Mar 04, 2024 at 11:51:27AM +0200, Dmitry Baryshkov wrote:
+> > On Mon, 4 Mar 2024 at 11:49, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Mon, Mar 04, 2024 at 11:26:09AM +0200, Dmitry Baryshkov wrote:
+> > > > Reuse Type-C support implemented for the PMI632 PMIC (found on Qualcomm
+> > > > Robotics RB2 platform) and implement Type-C handling for the Qualcomm
+> > > > Robotics RB1 platform.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >
+> > > Patch 1 added, 2 did not apply to my tree :(
+> >
+> > Thank you!
+> > Yes, patch 2 should go through arm-soc.
+>
+> Having patch series where each one goes to a different tree makes it
+> really hard for maintainers to know what to do, and our tools want to
+> take a whole series, not individual ones.  Next time perhaps split it
+> up?
 
-Above expr can be replaced with QCOM_SCM_PERM_RW.
-https://elixir.bootlin.com/linux/v6.8-rc7/source/include/linux/firmware/qcom/qcom_scm.h#L59
+Ack, I'll keep this in mind when submitting series against usb-next.
+I have always been on the other side, because splitting the series
+makes the life of the reviewers and testers harder. With single series
+I can review, apply and test it as a whole item. With the feature
+being split, I have to collect all the driver changes and also the DT
+changes to be able to evaluate whether the approach is sensible or
+not.
 
-Regards
-Kuldeep
+-- 
+With best wishes
+Dmitry
 
