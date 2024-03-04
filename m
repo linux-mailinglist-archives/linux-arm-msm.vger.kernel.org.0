@@ -1,150 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-13230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25B9D86FC05
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 09:40:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BCC986FD29
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 10:22:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56CCE1C20F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 08:40:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D494A1F26101
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 09:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61CF119473;
-	Mon,  4 Mar 2024 08:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9921820DDB;
+	Mon,  4 Mar 2024 09:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIha+gAR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WDG0c5kS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD519472;
-	Mon,  4 Mar 2024 08:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072801B814
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 09:22:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709541650; cv=none; b=fsTyHO+pMVy9qlZbv8m0/xrhqvT/nGnsOlj05BjjflJWwZinFaYScJr5q4fJvkqlK6guwv6rG7ZKR98iyGFBYOiXLQd127clgYF23Pm9qHibE/01gtIzXGxxEEZ8V0tUUBNVJbwBnGrw+uapMw9askxwqLyXwpd7sEQHuGN98SA=
+	t=1709544167; cv=none; b=FbFlD8yeUir2KGm2ffGybg2CJHJvNrGFoG5mvM4w7iBApVO04NkCqBjL7ojqlxyK/xrdfHDjPDPNJRdLOnnNRDHSsXQoKr93dHB9V5UUK81B5be5d5+4fEn4LTvN+B7t0g8jQAN2Jxe/iubBlB4UTnq7tC3i6sNdIPtZhGP2UvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709541650; c=relaxed/simple;
-	bh=t1T3OPaWjo53wfG6TOrATqy44YsWokKu6HeHAougC1I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Viip6tdYtwNQ+pwkD2Xzue4CVUcEedHdLUxtbKAKYMS/nleisHs7GV6pO5GIF4Rp4RHyCea8k/NPi5/r4z6WD2y14cq+r5/CBXIfYd4he8PUGgEL+r/76lRQTTWH6Q+mbIHzwTJn6VWL2fAlHbTb8EvLvBew2OkbkmkaIfr2jAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIha+gAR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C71C433C7;
-	Mon,  4 Mar 2024 08:40:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709541649;
-	bh=t1T3OPaWjo53wfG6TOrATqy44YsWokKu6HeHAougC1I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AIha+gARcNYuhSwcukKIYg4p45pb6A8Eb1BoGaDioSXtNDt/XHo9+tu0OWSVMTEDA
-	 TCdLZhy/DEYy3mXFG+TLdphs/qsaLNPSRkHtzvVQYJn2flmCpGyYwREyE7oQKo6+3B
-	 ab1V4gnRlHvDLwrqCQ2HaaJ/uW1j7jwnDDI/78dkQiPBsu5gqoaWB8AVtadiHrg7Kw
-	 weBRT0t9pBuAWt/8MA0WpUtAj0ffodEALaUXLIezNXPWFwitJn+nQL6uYga8eqMPRH
-	 9CFfdeOxkoh47pFCQwDEodcKaXFs0+9NHo3NzvtQdxPprBAvT5REFms3RWYuvcrmdY
-	 vOUUDcyUeUSFA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rh3sW-000000006DZ-199L;
-	Mon, 04 Mar 2024 09:40:56 +0100
-Date: Mon, 4 Mar 2024 09:40:56 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v15 2/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <ZeWJGCsUiZFw6ECl@hovoldconsulting.com>
-References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
- <20240216005756.762712-3-quic_kriskura@quicinc.com>
- <ZeBSp0EWnHo8Wbsv@hovoldconsulting.com>
- <c4607aa4-7af7-443f-8ccc-aa4fe3ede3cc@quicinc.com>
+	s=arc-20240116; t=1709544167; c=relaxed/simple;
+	bh=D3YxXRPRe/3m7ipJEy7IuH10sCTvtxb4RmlKqvHI6fk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KiEbPu9NrFU9g4EtHtg1B6+Gex2l2L3LARKllrhaO5xrhFJAI91918bzEKmmai9MHBP9ZNJnroqNz2hTP0IA2npwn+jslYOsHDtnOe1G1rl0axyYjizTBUkoAIUNUEu75gKRLuo5Y7VO2geVe3YEtSPiqlaXrYYU29xqRdGj4mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WDG0c5kS; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1dc49afb495so40679945ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 01:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709544164; x=1710148964; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b5AjmCqAyBy5sBCmGJ+0z6aZbOBdyU67G5MoGkYfj10=;
+        b=WDG0c5kSzWoQebBMJW+M81vv5SY90uU6k3CpR8hU3Q8LIL7eBSKsvIHufHiXZK1TSJ
+         yGOdSUAN+wl88NMOzYSyd7tG9yyjHfk4zKs5dr4rVTPKHEHDlM5b9nW1Wkb7DJR3Ey+n
+         2hZpBcQuVdN8eheZFgUB07j7g2cbyboagQ+NgQSbQ0jF/QeNCWZ8HfyBgewhPgxiPLbL
+         wYJAkeZHB1CDIRogLJ66omaV7fqQthNykSRGo+i/bWQvGVlufqrhaI4rpqdM9Lx4JXLU
+         8HOY8Rtz9rWuQk+HD/P2OFYcgCudZeHf/gqqQD4UhRQmpzp74fnT5F8IQ2iuBHM0nMkc
+         E/HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709544164; x=1710148964;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b5AjmCqAyBy5sBCmGJ+0z6aZbOBdyU67G5MoGkYfj10=;
+        b=Cnak9PuRoLnIoxKySTDU73k2lyEgvbIL/co3KTwijPjjAs/Z2n6WTyrjkx5Qy8K6q/
+         MxKj3kInz9ilyBb+3PLJQzpGFvJki0USh6b4Qz6fm3Rgd7QJ9r0aGLw7jMV6j/VxqQBX
+         1RTWLZz1A+TU73kNsL8R4c0FGFJr9L6LQMsr3JwrZBhwLNsDFsNV0xMJgmG7hUUTQoqE
+         lr3E23nmjSwYAHNGG/tOrMhZvUIJUczjNH4DzXJFfKjifro4/0BG4Z2+WpTcbApBvahh
+         JoMiiCjyw9i+AgOiMPA0V7mLC1GPIqllPbgzVTZjv3X+WnlF4KlEytMW9zNcmGe4KhkG
+         ptmg==
+X-Forwarded-Encrypted: i=1; AJvYcCXGpFWbGp1tkKBFDSP9E87KvciEStW5biV/xOCRKJxlpB9x3YM3XFT504Nx8tkggL6DUWBsCUpoLSm9SA7r5q9W/LQLu54IDff56+hskQ==
+X-Gm-Message-State: AOJu0YyKBjuhOd4PYqQRBpcTHuJVLqdvjV7CB5PuxUBXgC4xJTKwdwqa
+	HkAS+gVq3rGvDR0zKv6LUNp7HAsYdMjPh5U5NYEn7qi3b6hNR0VMjJD0J8gUUg==
+X-Google-Smtp-Source: AGHT+IFEMqv/PNpBYCEoYo/h2XH4t1cKfax+0MKorjDLCgK9bQh90oXT16Gx94SYuPDhwrgchBsFVQ==
+X-Received: by 2002:a17:902:c947:b0:1dc:3e49:677d with SMTP id i7-20020a170902c94700b001dc3e49677dmr12360994pla.26.1709544164262;
+        Mon, 04 Mar 2024 01:22:44 -0800 (PST)
+Received: from [127.0.1.1] ([117.202.187.165])
+        by smtp.gmail.com with ESMTPSA id c5-20020a170902c1c500b001dbb06b6138sm7996648plc.252.2024.03.04.01.22.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 01:22:43 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v9 00/10] PCI: dwc: ep: Fix DBI access failure for drivers
+ requiring refclk from host
+Date: Mon, 04 Mar 2024 14:52:12 +0530
+Message-Id: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c4607aa4-7af7-443f-8ccc-aa4fe3ede3cc@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMSS5WUC/3XMQQrCMBCF4auUWTsSYoiNK+8hXbTJpB2UpkykK
+ iV3N3bv8n/wvg0yCVOGS7OB0MqZ01zDHRrwUz+PhBxqg1baKK0NLp4xDIxCryR3HDQ511vtTsp
+ DPS1Ckd87eOtqT5yfST67v7a/9S+1tqjQGn+OQflI1lwfPPeSjklG6EopX6+X1jOtAAAA
+To: Jingoo Han <jingoohan1@gmail.com>, 
+ Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Marek Vasut <marek.vasut+renesas@gmail.com>, 
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Kishon Vijay Abraham I <kishon@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
+ Vignesh Raghavendra <vigneshr@ti.com>, Richard Zhu <hongxing.zhu@nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
+ Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>, 
+ Roy Zang <roy.zang@nxp.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Jesper Nilsson <jesper.nilsson@axis.com>, 
+ Srikanth Thokala <srikanth.thokala@intel.com>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
+ Niklas Cassel <cassel@kernel.org>, linux-arm-kernel@axis.com, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Frank Li <Frank.Li@nxp.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4945;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=D3YxXRPRe/3m7ipJEy7IuH10sCTvtxb4RmlKqvHI6fk=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl5ZLSO+6vhj5ArwA31w+B+o7UQMvERN5xNXL/0
+ h2DiyttWXGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZeWS0gAKCRBVnxHm/pHO
+ 9Xu0B/492E11+2fPEOd04mokl2I361P6hUg/guPNdBEZ1eaP5WIIZZXghxxFFQXh2pBybkGWve5
+ NGWpyXTm/UUE+ZCLJge/wavfoSVqY3QTZjwk7gwY5uhr0xW+CuHREVnuLW/1urQqbrJ+bwizlg1
+ Js/NCMoC8iYWCZQK4GSSIeZKbduzezX6jqdGvCGZepii4PpknDxs0lXB4I227sEohHIpg3JcyWq
+ yVZCY0SChP7O7w8qztldIqASdi1LXKQZsJa1BZNc4a3Avii2kWwEO/S+t5kXX6f5PzZhjIXzZ0f
+ PgpnOg1/MlDJo1n4e0xCc9lLWFfZR3b+wFO1ip3sARxQDuxG
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On Thu, Feb 29, 2024 at 05:23:08PM +0530, Krishna Kurapati PSSNV wrote:
-> On 2/29/2024 3:17 PM, Johan Hovold wrote:
-> > On Fri, Feb 16, 2024 at 06:27:49AM +0530, Krishna Kurapati wrote:
-> >> Currently Multiport DWC3 controllers are host-only capable.
-> > 
-> > I already asked you to rephrase this so that it becomes clear that you
-> > are describing a property of the current hardware (and similar
-> > throughout the series):
-> > 
-> > 	https://lore.kernel.org/all/ZTI7AtCJWgAnACSh@hovoldconsulting.com/
+Hello,
 
-> IMO, the statement is describing a property unique to current hardware, 
-> that "If it is a multiport controller, it is then host-only capable"
-> 
-> I used the word "Currently" to indicate that "Today, the multiport 
-> devices present...". Let me know if there is any ambiguity in the sentence.
-> 
-> In v13, I wrote:
-> "Currently host-only capable DWC3 controllers support Multiport."
-> You were right. It was ambiguous as it might refer to even single port 
-> controllers.
-> 
-> So I changed it saying all the DWC3 multiport controllers are host only 
-> capable.
-> 
-> How about:
-> 
-> "All the DWC3 Multi Port controllers that exist today only support host 
-> mode"
+This series is the continuation of previous work by Vidya Sagar [1] to fix the
+issues related to accessing DBI register space before completing the core
+initialization in some EP platforms like Tegra194/234 and Qcom EP.
 
-That should be clear enough, thanks.
+Since Vidya is busy, I took over the series based on his consent (off-list
+discussion).
 
-> >> +	/*
-> >> +	 * Currently only DWC3 controllers that are host-only capable
-> >> +	 * support Multiport.
-> >> +	 */
-> > 
-> > So again, also here, rephrase the comment so that it is clear that you
-> > are referring to a property of the current hardware.
-> 
-> I put the comment this way to indicate that we don't want to check for 
-> existence of multiple ports if the controller is not "host-only" 
-> capable. We should only check for multport support only if we are 
-> host-only capable. I think the statement clearly tells that "check for 
-> host-only" configuration before proceeding to check for xhci register reads.
+NOTE
+====
 
-Fair enough, this comment could be considered to apply only to the
-implementation. Perhaps the following would be more clear though:
+Based on the comments received in v7 [2], I've heavily modified the series
+to fix several other issues reported by Bjorn and Niklas. One noticeable
+change is getting rid of the 'core_init_notifer' flag added to differentiate
+between glue drivers requiring refclk from host and drivers getting refclk
+locally.
 
-	Currently only DWC3 controllers that are host-only capable
-	can have more than one port.
+By getting rid of this flag, now both the DWC EP driver and the EPF drivers
+can use a single flow and need not distinguish between the glue drivers.
 
-or simply
+We can also get rid of the 'link_up_notifier' flag in the future by following
+the same convention.
 
-	Host-only capable controllers can have more than one port.
+Testing
+=======
 
-Both of these also gives a hint that this is a property of the hardware.
+I've tested the series on Qcom SM8450 based dev board that depends on refclk
+from host with EPF_MHI driver. It'd be good to test this series on platforms
+that generate refclk locally and also with EPF_TEST driver.
 
-> I replied the same on:
-> https://lore.kernel.org/all/279a54f2-7260-4270-83c7-d6f5c5ba0873@quicinc.com/
-> 
-> And since you didn't mention anything else at this part of code in your 
-> return reply in:
-> https://lore.kernel.org/all/ZTYyXhyZN3jBXEfm@hovoldconsulting.com/
+- Mani
 
-I left in the following quote on purpose in that reply:
+[1] https://lore.kernel.org/linux-pci/20221013175712.7539-1-vidyas@nvidia.com/
+[2] https://lore.kernel.org/linux-pci/20231120084014.108274-1-manivannan.sadhasivam@linaro.org/
 
-	> > Please rephrase accordingly throughout so that this becomes clear.
+Changes in v9:
+- Incorporated changes for missing drivers (Niklas)
+- Reworded the dw_pcie_ep_cleanup() API kdoc (Niklas)
+- Reworded the description of patch 6/10 (Frank)
+- Collected reviews
+- Link to v8: https://lore.kernel.org/r/20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org
 
-Johan
+Changes in v8:
+
+- Rebased on top of v6.8-rc1
+- Removed the deinit callback from struct dw_pcie_ep_ops
+- Renamed dw_pcie_ep_exit() to dw_pcie_ep_deinit()
+- Introduced dw_pcie_ep_cleanup() API for drivers supporting PERST#
+- Renamed dw_pcie_ep_init_complete() to dw_pcie_ep_init_registers()
+- Called dw_pcie_ep_init_registers() API directly from all glue drivers
+- Removed "core_init_notifier" flag
+- Added a generic dw_pcie_ep_linkdown() API to handle LINK_DOWN event and used
+  it in qcom driver
+- Added Kernel-doc comments for DWC EP APIs
+
+Changes in v7:
+
+- Rebased on top of v6.7-rc1
+- Kept the current dw_pcie_ep_init_complete() API instead of renaming it to
+  dw_pcie_ep_init_late(), since changing the name causes a slight ambiguity.
+- Splitted the change that moves pci_epc_init_notify() inside
+  dw_pcie_ep_init_notify() to help bisecting and also to avoid build issue.
+- Added a new patch that moves pci_epc_init_notify() inside
+  dw_pcie_ep_init_notify().
+- Took over the authorship and dropped the previous Ack as the patches are
+  heavily modified.
+
+Changes in v6:
+
+- Rebased on top of pci/next (6e2fca71e187)
+- removed ep_init_late() callback as it is no longer necessary
+
+For previous changelog, please refer [1].
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (10):
+      PCI: dwc: ep: Remove deinit() callback from struct dw_pcie_ep_ops
+      PCI: dwc: ep: Rename dw_pcie_ep_exit() to dw_pcie_ep_deinit()
+      PCI: dwc: ep: Introduce dw_pcie_ep_cleanup() API for drivers supporting PERST#
+      PCI: dwc: ep: Fix DBI access failure for drivers requiring refclk from host
+      PCI: dwc: ep: Rename dw_pcie_ep_init_complete() to dw_pcie_ep_init_registers()
+      PCI: dwc: ep: Call dw_pcie_ep_init_registers() API directly from all glue drivers
+      PCI: dwc: ep: Remove "core_init_notifier" flag
+      PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle LINK_DOWN event
+      PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle LINK_DOWN event
+      PCI: dwc: ep: Add Kernel-doc comments for APIs
+
+ drivers/pci/controller/dwc/pci-dra7xx.c           |   9 +
+ drivers/pci/controller/dwc/pci-imx6.c             |  10 +
+ drivers/pci/controller/dwc/pci-keystone.c         |  11 +
+ drivers/pci/controller/dwc/pci-layerscape-ep.c    |   9 +
+ drivers/pci/controller/dwc/pcie-artpec6.c         |  15 +-
+ drivers/pci/controller/dwc/pcie-designware-ep.c   | 309 +++++++++++++++-------
+ drivers/pci/controller/dwc/pcie-designware-plat.c |  11 +
+ drivers/pci/controller/dwc/pcie-designware.h      |  19 +-
+ drivers/pci/controller/dwc/pcie-keembay.c         |  18 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c         |   6 +-
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c       |  28 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c        |   5 +-
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c     |  15 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c     |  18 +-
+ include/linux/pci-epc.h                           |   3 -
+ 15 files changed, 354 insertions(+), 132 deletions(-)
+---
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+change-id: 20240224-pci-dbi-rework-b2e99a62930c
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
 
