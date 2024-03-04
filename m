@@ -1,97 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-13290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2042C870AA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 20:27:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B1C7870AAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 20:29:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0964286743
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:27:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5786E280E54
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:29:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A632779939;
-	Mon,  4 Mar 2024 19:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77F7379943;
+	Mon,  4 Mar 2024 19:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="jncod8sh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zr6c96yD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCE479DC1;
-	Mon,  4 Mar 2024 19:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CBF61677;
+	Mon,  4 Mar 2024 19:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709580454; cv=none; b=YmZQIyOu3sZ753EbEpOho+SWSds23IvNKSYNwR4IVgC3OoHkIjeinrN7wA+i4bavAQmntduCA9RdZOfTb9oT/FA3uvvrGcOncjLxBLgWocT5g0XB9OESqZcKdcvVnJhDeMfD1eF6FecPsMvb2oSUZMrTIykzGPXGyf8ccr1mlO4=
+	t=1709580575; cv=none; b=fHnyHZ6uMVaDEzoG0+BhxUjxCZLkeCGfiEYZA92ziGnoU8R2ysv7FL7kNtXiJQ45WD4eDPrh3+t5lUTCvWGz9XJeghuweNn2kdp4WIOu6Cma3DP7TX0GYhvXEROQipAxuYURY2nLV8JnGBOj22HhqCiaRsLKWJqyPjIhfnqiHWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709580454; c=relaxed/simple;
-	bh=hANRgoNVGaZU4rZ+XDQgnMgAvRmbrD9MTNHj1xOU1c4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ABTt1oL4VkweFKeYZc7KpX0SMuLOeOa7+RZj7MXgSdP+cMOOevd/6NSsEeJxx/mrjBceFBxlSxK5wOUauqo6K825lEafns3hLaPrtlynYnUaG0ABNdgO3WmqGyRibgPhB/rPjgcBvDTzo3oZhDQJsEtBHZIMY0p/+QJ+6JzKxjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=jncod8sh; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=UFjQCiD5weQa18oNxEgo6gN7ayWqxgCNs3etg8HITds=; b=jncod8shLs0Tc/C6HJKYzYW0FL
-	whcy1kq9S4e4SzhZtcuVjoJi8h3RAeSBt10loUEBobfjZJiv5zsZgO9eiJZ1NFduO3gNnp9axoWzj
-	L2Ve3H4G/UiNhOEnqA/fvtDA08pijJ/ziBxzNoo9s+Fue7z+cumBoPlBzthwfhkIWsaLeSnNaOecE
-	42C5dgx/Ap3QwpnWBUkC5aemWKxa+h/M0LRcw92juQWPHI+ujIvX2KJHHIIf7oZw7jySo6EqB3t3c
-	9VMG0XO0TfY6Md0Zvv1uoflF0L1zzKzSlop8UW2CXm3pGsRCC4K+2fEftfrctASnKHhOd75i79CmP
-	3GxQiZTA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:39752)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rhDy5-00069q-17;
-	Mon, 04 Mar 2024 19:27:21 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rhDy2-0004id-Dg; Mon, 04 Mar 2024 19:27:18 +0000
-Date: Mon, 4 Mar 2024 19:27:18 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Robert Marko <robimarko@gmail.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch,
-	hkallweit1@gmail.com, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, ansuelsmth@gmail.com,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH net] net: phy: qca807x: fix compilation when
- CONFIG_GPIOLIB is not set
-Message-ID: <ZeYglnW6/k0nvmiL@shell.armlinux.org.uk>
-References: <20240304192244.2924407-1-robimarko@gmail.com>
+	s=arc-20240116; t=1709580575; c=relaxed/simple;
+	bh=0Rxdcvf5MJj8GAwVkkY6TLI0UHLNrle0UYwUsx1B5sY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f4IS6Vfy5UXVnM69mD/jTHroM4X5qdWfs/ybtjidJUSPXeoLQTIdM/5GhSLf85r2cmXzxE8mFEWK+8tEmKh+z7wE/3PL5cDXBVeI85dT45UxKQtK1Drlf54TJIsiq9PSKWytc+hNP6OJIzFDo00oGEIWJ7FArOdoG06AwSH1VAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zr6c96yD; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1dca160163dso47163575ad.3;
+        Mon, 04 Mar 2024 11:29:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709580573; x=1710185373; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qjIrkRqRqyTyxYlPtOXrJ1tbSziABTmBAS1R3KCEOG4=;
+        b=Zr6c96yDGP3cSZd0H3Jbqv7+lboeRUirk0iiJEEA/t3T7ETgCImPalQJgnXI8QY2aC
+         Q5FPXX7QGEBsgCSZQ/kxTRg/CVL4q+YZMfWItXps8sTwLiFwLNUftA50HOO6anhWU3aZ
+         77ArTV70sgVQggkJoBfcXaYolV+VECh61VA2/nY6jX8tMuNJzDQh13XgSeRJrNbzcHvg
+         cRiqGjM0brs1L2yEkAaFXd/kh9QBCsToTN2ZmANf59w2cQfKNUPvzMjOlmsfTcHyu86y
+         looclcVcjNTSp6uYr5BQ+ouT/xZZgOPOMgZdnbuvXW5IiFQUJa5jio1EJ7XAEriABYF1
+         zYWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709580573; x=1710185373;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qjIrkRqRqyTyxYlPtOXrJ1tbSziABTmBAS1R3KCEOG4=;
+        b=nhssq70BsV65EyDbecuJsofPTXi2ek9xpTNTQXtttCHu3J6GzyEJqg7ztQo2EtPbJ6
+         npWMPSJjULTheAfTKE8oEJRZH6k8fT0WJe6iSpeadeYEgLcQey0hUZmlU7JyMSGerAzY
+         nJPjYICa5i3UzlbA1XVOKKnhmgnu5mG5J6GwfExP+qeIgjHpALphB8FSCQ35ApvIBMmY
+         ukXMS5GwE1hgcrlZDEhLXeFALx7NLYKw2zCDOx0UDtdwsmZbcvbxmq7s5sLutYCZwAWC
+         XH3yJ367zu8WXEx1nMRwQbehC0Ysg6NbY/Vm5FRirSyJVTPCiGzTXe+UOJKimonaoF/c
+         i42Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWWeS4t213m2yczSP3Iassk5tgjxq4MYBa+13NMgu/PneMx9bVi3T1fLLu6f0zeErxpMea/gvlP4cvTqCrmMNzXQsGpN/DDM6ivlZxEn7X6CQswiDErpi7qmi+sAS+RJzmN4Y8oX1oQOHI5dkFjk/N4UNHGIwGdfoMMdwdNGaGfcimv/Q==
+X-Gm-Message-State: AOJu0Yzzxcw89Mtx2GhXMCIxrOy+ZbrOKGH74IBGj22kGN2scgBwyw2Q
+	E1EOb56Y1t+YMCXIg3jtOYMFM2RHnsWkvcAUPlAeP+UYonuRjIHMOZhyPVuTLMPQfnnyKrus22b
+	+3XU1D1FVFo8Fk3TGd933d4R/fMY=
+X-Google-Smtp-Source: AGHT+IEaWb1+rYOENWHnXIKl8beg74pWUwp3Z+os8HZDvK6GGmiDny+sRArLo4pcVrDDjXwqA6im5Y7UJifhs7U+qUA=
+X-Received: by 2002:a17:90b:68c:b0:29a:ce2b:7611 with SMTP id
+ m12-20020a17090b068c00b0029ace2b7611mr7400561pjz.28.1709580572920; Mon, 04
+ Mar 2024 11:29:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240304192244.2924407-1-robimarko@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+References: <20240304192244.2924407-1-robimarko@gmail.com> <ZeYglnW6/k0nvmiL@shell.armlinux.org.uk>
+In-Reply-To: <ZeYglnW6/k0nvmiL@shell.armlinux.org.uk>
+From: Robert Marko <robimarko@gmail.com>
+Date: Mon, 4 Mar 2024 20:29:21 +0100
+Message-ID: <CAOX2RU77sBWD=N7hQ+7BKQ1DOh8d=JHJBLeN6NEp-4Jv_3M7zw@mail.gmail.com>
+Subject: Re: [PATCH net] net: phy: qca807x: fix compilation when
+ CONFIG_GPIOLIB is not set
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch, 
+	hkallweit1@gmail.com, davem@davemloft.net, edumazet@google.com, 
+	kuba@kernel.org, pabeni@redhat.com, ansuelsmth@gmail.com, 
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Mar 04, 2024 at 08:21:36PM +0100, Robert Marko wrote:
-> -	if (IS_ENABLED(CONFIG_GPIOLIB)) {
-> +#if IS_ENABLED(CONFIG_GPIOLIB)
->  		/* Make sure we don't have mixed leds node and gpio-controller
->  		 * to prevent registering leds and having gpio-controller usage
->  		 * conflicting with them.
-> @@ -749,7 +749,7 @@ static int qca807x_probe(struct phy_device *phydev)
->  			if (ret)
->  				return ret;
->  		}
-> -	}
-> +#endif
+On Mon, 4 Mar 2024 at 20:27, Russell King (Oracle)
+<linux@armlinux.org.uk> wrote:
+>
+> On Mon, Mar 04, 2024 at 08:21:36PM +0100, Robert Marko wrote:
+> > -     if (IS_ENABLED(CONFIG_GPIOLIB)) {
+> > +#if IS_ENABLED(CONFIG_GPIOLIB)
+> >               /* Make sure we don't have mixed leds node and gpio-controller
+> >                * to prevent registering leds and having gpio-controller usage
+> >                * conflicting with them.
+> > @@ -749,7 +749,7 @@ static int qca807x_probe(struct phy_device *phydev)
+> >                       if (ret)
+> >                               return ret;
+> >               }
+> > -     }
+> > +#endif
+>
+> I know it makes for a bigger patch, but #if is not equivalent to if()
+> in terms of indentation, so the indentation also needs to be changed.
 
-I know it makes for a bigger patch, but #if is not equivalent to if()
-in terms of indentation, so the indentation also needs to be changed.
+Oh, sorry for that, it completely slipped my mind.
+I will fix it in v2, and will send it tomorrow afternoon to give
+others time to comment.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Regards,
+Robert
+>
+> --
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
