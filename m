@@ -1,298 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-13285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB2EB87090C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:05:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFD85870916
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:07:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A227287EFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:05:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30EBCB265F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1919062153;
-	Mon,  4 Mar 2024 18:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC8261680;
+	Mon,  4 Mar 2024 18:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBo3kTAa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J+U8NvWH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC18C6214C;
-	Mon,  4 Mar 2024 18:05:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791CD26293;
+	Mon,  4 Mar 2024 18:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709575519; cv=none; b=O0JtZFemzaMzAZlux+WdZRhL6jVjxfVdBU5trxMX4bFsle5jmxOrXtT2Ra286kn0wTqRDA/iv1SjrkcXq4nRhcAefJFYwOVC02F9AyyydHdUMylHAJc/dVSov/L5kQ/DhJ0hO2rYKGxHEyMWVzPwx2W3bVB+JDcWDy/z2NJSyX8=
+	t=1709575643; cv=none; b=KIoJxOTIPhS7KrI+4Q6Q9pfl4LNnqyjc5mPs6ywcbSF6/GbbGyH1XiInQc/dThDci5JZpY6EqQv0gvm6lZ+wTwf0g3eR0FatuWorEEmKof36x4ROOFTQLTYKk1fioKjC8CSJ2PnwlVhCQjRp6+J7RaRAjbH+vcEevQzHRqZX4vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709575519; c=relaxed/simple;
-	bh=ITqX/m4LMI7f8HrdMK/9Khp0LrIi2sxZUpdGbycpoq4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iwzIscmA19lg+7KNssadOMtsgNoO+cVlF6EzFQpJPbQwE9BhKPRQavwmqyvia1spQ4HyxQ4mRPFPZ7Sq5QUvFsMSe7tD7EGymy4EOKVdRZlEkMmWujmi5T3Mbr9XW7oK14IttUnFZoZ8x26NO6AQGRhQ5joAyXCXHtw5b6RarbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBo3kTAa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31450C433F1;
-	Mon,  4 Mar 2024 18:05:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709575518;
-	bh=ITqX/m4LMI7f8HrdMK/9Khp0LrIi2sxZUpdGbycpoq4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KBo3kTAatAZMO7zhDLDphgexXMPY6kMyyAMrZXeBasREtmhsiJ7INJNGU5LZycxkP
-	 PnSLRTis7zfRKpWD8C+upVt8GMgHwgx4SWF53h8xs6/fZ5XyDewiEFWyGPCrAeoHiT
-	 Hegbo+76XaT4Fnok4CEswLxJZ9ac2uJLvxliJh1GzisQTQIByxZfP/NcODa+F5O6Zt
-	 fixzstprzsw1vyx01Qb5qw6kGDndKAe6nS+74FCvLftrqaaeWUftjbTaF7cRoVaDYk
-	 3owDU8NFSPAsCLqT1FTgJzulOINYOjS2LB90VXq2+6Cqi/3bgG+d5FyU6l5naNYwW4
-	 IKKnmKAx6P/rA==
-Date: Mon, 4 Mar 2024 23:35:06 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Georgi Djakov <djakov@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, vireshk@kernel.org,
-	quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_parass@quicinc.com
-Subject: Re: [PATCH v8 7/7] PCI: qcom: Add OPP support to scale performance
- state of power domain
-Message-ID: <20240304180506.GE31079@thinkpad>
-References: <20240302-opp_support-v8-0-158285b86b10@quicinc.com>
- <20240302-opp_support-v8-7-158285b86b10@quicinc.com>
+	s=arc-20240116; t=1709575643; c=relaxed/simple;
+	bh=+kPI4W1KcqjMAyWnSSkBYohj4nbHxaxkRJKPvMeuDzs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VgVaKSAnVxgxbhRoSRdTSPlfY9oaMOFxHnrhpoMAxGEyCB7N17UJbQwb5/sGrfjw9dDY4cflUNOIWLrBKFU8pxIMk7rCz74yT0s2w5TyyFaM9N+8j7JcOsGmbHW0NZSYzuFBL7bnzYgoBqVLPI9+KUlCVpUNTb+93yoXhnC0klg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J+U8NvWH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424HEpom021186;
+	Mon, 4 Mar 2024 18:07:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=wI+mV9FCzojgbVbc75aDMows1874ZeqGHy6X59A75Rs=; b=J+
+	U8NvWHO0/L21e7otqZKiJSNOZYv6DjXliqBeUrDJEpJ3ID4BqD6f6kRdkVfY8pyT
+	Qcoa3/dfN0QS2LLOfzpoxJraminuFDXmETNkFrNINoWU2CNWi8sNXMUPM3e01+n0
+	B1ZVwl6rNd5PMYGXDx4v9qDqj31jJYJKEEpVtuS49bDNYFyOsyLCPWjPARusJd9d
+	E/CUkMhIIcBzJcTtamNjCaEdJyiw0XOpYwEedOd6ng6EGjQ058FKaoIrlDOTfKQv
+	rgUc80Z3Q3rCmvUZw9TzX2FibmLjSNpEE+D7+S96T55YHCJBn8pMZg1p9Kbg8T0U
+	f1Oqmi75WOPoQl2DAUZQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnjh7g3f6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Mar 2024 18:07:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424I76E0010835
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Mar 2024 18:07:06 GMT
+Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Mar
+ 2024 10:07:05 -0800
+Message-ID: <8a079ca6-8476-134d-966a-831348895349@quicinc.com>
+Date: Mon, 4 Mar 2024 10:07:04 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240302-opp_support-v8-7-158285b86b10@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] drm/msm/dpu: drop unused dpu_kms from interface
+ initialization
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <quic_parellan@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
+ <CAA8EJppf0ebg+qnw7Z4P_6W4pgf0E4+KLGLEhU138f4k8+QxOw@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppf0ebg+qnw7Z4P_6W4pgf0E4+KLGLEhU138f4k8+QxOw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _n4rljtjrpDRDWyvbj8qXjA4v2UkLE9A
+X-Proofpoint-ORIG-GUID: _n4rljtjrpDRDWyvbj8qXjA4v2UkLE9A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_13,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
+ malwarescore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 adultscore=0
+ phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2403040138
 
-On Sat, Mar 02, 2024 at 09:30:01AM +0530, Krishna chaitanya chundru wrote:
-> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
-> maintains hardware state of a regulator by performing max aggregation of
-> the requests made by all of the clients.
+
+
+On 3/4/2024 5:06 AM, Dmitry Baryshkov wrote:
+> On Wed, 28 Feb 2024 at 21:47, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> dpu_kms seems unused while initializing DSI, HDMI and DP through
+>> their respective _dpu_kms_initialize_* functions.
+>>
+>> Hence lets drop the parameter altogether.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ++++++---------
+>>   1 file changed, 6 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 2af62d8fa9a7..ab924ac78c9b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -494,8 +494,7 @@ static void dpu_kms_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
+>>   }
+>>
+>>   static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+>> -                                   struct msm_drm_private *priv,
+>> -                                   struct dpu_kms *dpu_kms)
+>> +                                  struct msm_drm_private *priv)
+>>   {
+>>          struct drm_encoder *encoder = NULL;
+>>          struct msm_display_info info;
+>> @@ -558,8 +557,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+>>   }
+>>
+>>   static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+>> -                                           struct msm_drm_private *priv,
+>> -                                           struct dpu_kms *dpu_kms)
+>> +                                          struct msm_drm_private *priv)
 > 
-> PCIe controller can operate on different RPMh performance state of power
-> domain based on the speed of the link. And this performance state varies
-> from target to target, like some controllers support GEN3 in NOM (Nominal)
-> voltage corner, while some other supports GEN3 in low SVS (static voltage
-> scaling).
+> This breaks now on top of YUV patchset:
 > 
-> The SoC can be more power efficient if we scale the performance state
-> based on the aggregate PCIe link bandwidth.
+> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function
+> '_dpu_kms_initialize_displayport':
+> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:583:35: error: 'dpu_kms'
+> undeclared (first use in this function)
+> 583 | yuv_supported = !!dpu_kms->catalog->cdm;
 > 
-> Add Operating Performance Points (OPP) support to vote for RPMh state based
-> on the aggregate link bandwidth.
-> 
-> OPP can handle ICC bw voting also, so move ICC bw voting through OPP
-> framework if OPP entries are present.
-> 
-> Different link configurations may share the same aggregate bandwidth,
-> e.g., a 2.5 GT/s x2 link and a 5.0 GT/s x1 link have the same bandwidth
-> and share the same OPP entry.
-> 
-> As we are moving ICC voting as part of OPP, don't initialize ICC if OPP
-> is supported.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 81 +++++++++++++++++++++++++++-------
->  1 file changed, 66 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index a0266bfe71f1..2ec14bfafcfc 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -22,6 +22,7 @@
->  #include <linux/of.h>
->  #include <linux/of_gpio.h>
->  #include <linux/pci.h>
-> +#include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
->  #include <linux/platform_device.h>
->  #include <linux/phy/pcie.h>
-> @@ -244,6 +245,7 @@ struct qcom_pcie {
->  	const struct qcom_pcie_cfg *cfg;
->  	struct dentry *debugfs;
->  	bool suspended;
-> +	bool opp_supported;
-
-You can just use "pcie->icc_mem" to differentiate between OPP and ICC. No need
-of a new flag. 
-
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1405,15 +1407,13 @@ static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
->  	return 0;
->  }
->  
-> -static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
-> +static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
->  {
->  	struct dw_pcie *pci = pcie->pci;
-> -	u32 offset, status;
-> +	u32 offset, status, freq;
-> +	struct dev_pm_opp *opp;
->  	int speed, width;
-> -	int ret;
-> -
-> -	if (!pcie->icc_mem)
-> -		return;
-> +	int ret, mbps;
->  
->  	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->  	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> @@ -1425,11 +1425,30 @@ static void qcom_pcie_icc_update(struct qcom_pcie *pcie)
->  	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
->  	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
->  
-> -	ret = icc_set_bw(pcie->icc_mem, 0, width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
-> -	if (ret) {
-> -		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> -			ret);
-> +	if (pcie->opp_supported) {
-> +		mbps = pcie_link_speed_to_mbps(pcie_link_speed[speed]);
-> +		if (mbps < 0)
-> +			return;
-> +
-> +		freq = mbps * 1000;
-> +		opp = dev_pm_opp_find_freq_exact(pci->dev, freq * width, true);
-> +		if (!IS_ERR(opp)) {
-> +			ret = dev_pm_opp_set_opp(pci->dev, opp);
-> +			if (ret)
-> +				dev_err(pci->dev, "Failed to set opp: freq %ld ret %d\n",
-> +					dev_pm_opp_get_freq(opp), ret);
-> +			dev_pm_opp_put(opp);
-> +		}
-> +	} else {
-> +		ret = icc_set_bw(pcie->icc_mem, 0,
-> +				 width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
-> +		if (ret) {
-> +			dev_err(pci->dev,
-> +				"failed to set interconnect bandwidth for pcie-mem: %d\n", ret);
-
-"PCIe-MEM"
-
-> +		}
->  	}
-> +
-> +	return;
->  }
->  
->  static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
-> @@ -1472,8 +1491,10 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
->  static int qcom_pcie_probe(struct platform_device *pdev)
->  {
->  	const struct qcom_pcie_cfg *pcie_cfg;
-> +	unsigned long max_freq = INT_MAX;
->  	struct device *dev = &pdev->dev;
->  	struct qcom_pcie *pcie;
-> +	struct dev_pm_opp *opp;
->  	struct dw_pcie_rp *pp;
->  	struct resource *res;
->  	struct dw_pcie *pci;
-> @@ -1540,9 +1561,36 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_pm_runtime_put;
->  	}
->  
-> -	ret = qcom_pcie_icc_init(pcie);
-> -	if (ret)
-> +	 /* OPP table is optional */
-> +	ret = devm_pm_opp_of_add_table(dev);
-> +	if (ret && ret != -ENODEV) {
-> +		dev_err_probe(dev, ret, "Failed to add OPP table\n");
->  		goto err_pm_runtime_put;
-> +	}
-> +
-> +	/*
-> +	 * Use highest OPP here if the OPP table is present. At the end of
-
-Why highest opp? For ICC, we set minimal bandwidth before.
-
-> +	 * the probe(), OPP will be updated using qcom_pcie_icc_opp_update().
-> +	 */
-> +	if (ret != -ENODEV) {
-
-if (!ret)
-
-> +		opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
-> +		if (!IS_ERR(opp)) {
-> +			ret = dev_pm_opp_set_opp(dev, opp);
-> +			if (ret)
-> +				dev_err_probe(pci->dev, ret,
-> +					      "Failed to set opp: freq %ld\n",
-
-	"Failed to set OPP for freq: %ld\n"
-
-> +					      dev_pm_opp_get_freq(opp));
-> +			dev_pm_opp_put(opp);
-> +		}
-> +		pcie->opp_supported = true;
-> +	}
-> +
-> +	/* Skip ICC init if OPP is supported as ICC bw is handled by OPP */
-> +	if (!pcie->opp_supported) {
-> +		ret = qcom_pcie_icc_init(pcie);
-
-First check whether ICC is present or not and then check OPP as a fallback. This
-avoids an extra flag.
-
-- Mani
-
-> +		if (ret)
-> +			goto err_pm_runtime_put;
-> +	}
->  
->  	ret = pcie->cfg->ops->get_resources(pcie);
->  	if (ret)
-> @@ -1562,7 +1610,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  		goto err_phy_exit;
->  	}
->  
-> -	qcom_pcie_icc_update(pcie);
-> +	qcom_pcie_icc_opp_update(pcie);
->  
->  	if (pcie->mhi)
->  		qcom_pcie_init_debugfs(pcie);
-> @@ -1621,10 +1669,13 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->  			qcom_pcie_host_init(&pcie->pci->pp);
->  			pcie->suspended = false;
->  		}
-> -		qcom_pcie_icc_update(pcie);
-> +		qcom_pcie_icc_opp_update(pcie);
->  		return ret;
->  	}
->  
-> +	if (pcie->opp_supported)
-> +		dev_pm_opp_set_opp(pcie->pci->dev, NULL);
-> +
->  	return 0;
->  }
->  
-> @@ -1647,7 +1698,7 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->  		pcie->suspended = false;
->  	}
->  
-> -	qcom_pcie_icc_update(pcie);
-> +	qcom_pcie_icc_opp_update(pcie);
->  
->  	return 0;
->  }
-> 
-> -- 
-> 2.42.0
+> As this requires adding of the yuv_supported argument, let's consider
+> moving it backwards: for  _dpu_kms_initialize_writeback() we can get
+> format_list and n_formats from the dpu_kms.
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Yes, my bad, I realized after sending this that my branch did not have 
+CDM changes yet.
+
+Let me rework and post this on top of the latest tree.
+
+> 
+>>   {
+>>          struct drm_encoder *encoder = NULL;
+>>          struct msm_display_info info;
+>> @@ -592,8 +590,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+>>   }
+>>
+>>   static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
+>> -                                   struct msm_drm_private *priv,
+>> -                                   struct dpu_kms *dpu_kms)
+>> +                                   struct msm_drm_private *priv)
+>>   {
+>>          struct drm_encoder *encoder = NULL;
+>>          struct msm_display_info info;
+>> @@ -671,19 +668,19 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
+>>          int rc = 0;
+>>          int i;
+>>
+>> -       rc = _dpu_kms_initialize_dsi(dev, priv, dpu_kms);
+>> +       rc = _dpu_kms_initialize_dsi(dev, priv);
+>>          if (rc) {
+>>                  DPU_ERROR("initialize_dsi failed, rc = %d\n", rc);
+>>                  return rc;
+>>          }
+>>
+>> -       rc = _dpu_kms_initialize_displayport(dev, priv, dpu_kms);
+>> +       rc = _dpu_kms_initialize_displayport(dev, priv);
+>>          if (rc) {
+>>                  DPU_ERROR("initialize_DP failed, rc = %d\n", rc);
+>>                  return rc;
+>>          }
+>>
+>> -       rc = _dpu_kms_initialize_hdmi(dev, priv, dpu_kms);
+>> +       rc = _dpu_kms_initialize_hdmi(dev, priv);
+>>          if (rc) {
+>>                  DPU_ERROR("initialize HDMI failed, rc = %d\n", rc);
+>>                  return rc;
+>> --
+>> 2.34.1
+>>
+> 
+> 
+> --
+> With best wishes
+> Dmitry
 
