@@ -1,137 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-13302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6EF9871028
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 23:36:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D142D871032
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 23:41:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04A7E1C20EF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 22:36:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D488B22CE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 22:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1618F44;
-	Mon,  4 Mar 2024 22:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C8537BB02;
+	Mon,  4 Mar 2024 22:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UeEgay1a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D2B29CFE
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 22:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA218F44;
+	Mon,  4 Mar 2024 22:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709591793; cv=none; b=CbipRoAuFnmV1GYNiIg/5uVK8A+ee5fcmdpGM/CXth1w5E97qABENE8Sd9gBCpHSaPKfb5qhT+L1MEosHmc83THOEUT//XasKnhA2B6k5Jexnvjiid0iPqj84eX8EPwi/ZfFTQmCqdHtseXsqUO1QtkVml2rk3DzZfRW41/INWI=
+	t=1709592109; cv=none; b=cJo0Lr70liu+uNSrbndjdXc4eOnospkFFAoNC6RQ4hiLEYg6uxsFlMgyXKlS4IlEAb80ngu5dSzjk0vVGpu8jR1FMcUFom5m1M5Jo61PyC2fYOCYWzvDEcQEIab7Qd2IlMO4IYsEnNWylkUaqGoTAeuJEVCk12Q0olI4210S/xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709591793; c=relaxed/simple;
-	bh=5Q5aIComlWuNtnytT+SXnLlXQgTK0lIa/+09DRNUE04=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dMWb8JR4LRRgFRpWiVixIyi82O9wJdPb3+1XdGJWHPvGJdZ8HQsyHgEfYKH7gky3aapmNJP19o+57atf6CykvzpA5W88/Q/exruN860h1wuLorgY/ZXq0KBB9XBhGwbMmoZc10UgSNvJxe9t3W2jsfeAbKeEQhpsJGFPxqFp9Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhGv4-0008Vk-S2; Mon, 04 Mar 2024 23:36:26 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhGv1-004RE3-Kf; Mon, 04 Mar 2024 23:36:23 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhGv1-00H7Yf-1g;
-	Mon, 04 Mar 2024 23:36:23 +0100
-Date: Mon, 4 Mar 2024 23:36:23 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Arnd Bergmann <arnd@arndb.de>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	"derek.kiernan@amd.com" <derek.kiernan@amd.com>, Kees Cook <keescook@chromium.org>, linux-arm-msm@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>, John Stultz <jstultz@google.com>, 
-	Michal Simek <michal.simek@amd.com>, "dragan.cvetic@amd.com" <dragan.cvetic@amd.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Justin Stitt <justinstitt@google.com>, 
-	Frederic Barrat <fbarrat@linux.ibm.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Tomas Winkler <tomas.winkler@intel.com>, Amol Maheshwari <amahesh@qti.qualcomm.com>, 
-	Jiri Slaby <jirislaby@kernel.org>, 
-	Appana Durga Kedareswara rao <appana.durga.kedareswara.rao@amd.com>, linux-arm-kernel@lists.infradead.org, 
-	Andrew Donnellan <ajd@linux.ibm.com>
-Subject: Re: [PATCH 00/11] misc: Convert to platform remove callback
- returning void
-Message-ID: <p2rqzrmgfaqdcwj2hlgt7u2yrgfrf4dwizecicdpdmb3jezoky@zmkxw5vt7qyi>
-References: <cover.1708508896.git.u.kleine-koenig@pengutronix.de>
- <d6c4ff9e-756a-4604-993a-cf14cfdbc53c@app.fastmail.com>
+	s=arc-20240116; t=1709592109; c=relaxed/simple;
+	bh=HWFANnbfyh550S/G6W+HjyeNPbThbmyjuPz5MkKe0IE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=r6HBlYKvX9Gcw4m6oUTGgebMElzIxnrhHVETvZUNZ3syCYuILr/Sx7y8hE5BQhaRJXZ9f2OpzbRNdnhqBMYL7VCmzJ+NIg16aR9IeNmIW/zflGP9twS1uwnqpoxUl9xXzub5S8mAiGJwO49+D0xvfZ0z6wSKXEKquYZptrWhLck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UeEgay1a; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424MP7Zt014327;
+	Mon, 4 Mar 2024 22:41:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=esL
+	Cy/asd2qFbuOcZUlzDM/SjCHIES7hirGA2lXMTyk=; b=UeEgay1a9CGAIv1KRLY
+	Ni2AtnFSFXSLd/94H6LdSMLUDDQb6j9hSBBEIABSR/+TScVvYpOPqeUcF+od00MN
+	OfA6S39MbV4S/EKONr3ssExQmpU99KizElfBACRbW/BR1rgBq6StKr7ePOv/0+5U
+	IDLL2rnenSgAVFdobVKl4ZkTHyZZSWQYjPjuniMSkMAIzpbUCkBYdjD1tHYJBKWt
+	k4E2A38GZTS4O+jVs4mc5oSwbZo4qbl3XOLn8rqltn4L2bFqYb8FGYn1cUPqw5F7
+	sszaghO2qc/CjcUEVIQtw+w4OHugT2NOTMh352EKRLl8SRA084NlgOcnKO9uA71E
+	SsA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wn8fxt355-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Mar 2024 22:41:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424Mfgjb011510
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Mar 2024 22:41:42 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 4 Mar 2024 14:41:42 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Date: Mon, 4 Mar 2024 14:41:15 -0800
+Subject: [PATCH] arm64: dts: qcom: sm8650: Add missing reserved memory for
+ chipinfo
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rqw7vqzv73lfjvx5"
-Content-Disposition: inline
-In-Reply-To: <d6c4ff9e-756a-4604-993a-cf14cfdbc53c@app.fastmail.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240304-sm8650-missing-chipinfo-region-v1-1-8a0b41dd8308@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAApO5mUC/x2NOwqAMBAFryJbuxCD/6uIhcY1vsIoWRBBvLvBc
+ oqZeUglQpT67KEoFxRHSFDkGbltCl4YS2KyxpbG2pZ1b+vK8A5VBM9uw4mwHhzFJ5UXV1fz3E1
+ NWTSUImeUFfc/GMb3/QBQM84PcAAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Patrick Daly <quic_pdaly@quicinc.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rgYwrrmCIzi8zUlWTUUE6oIb8ZJvFvr7
+X-Proofpoint-ORIG-GUID: rgYwrrmCIzi8zUlWTUUE6oIb8ZJvFvr7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_18,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 mlxlogscore=821 clxscore=1015 phishscore=0
+ mlxscore=0 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403040176
 
+Add missing reserved memory for chipinfo region.
 
---rqw7vqzv73lfjvx5
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Cc: Patrick Daly <quic_pdaly@quicinc.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Hello Arnd, hello Greg,
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 12ba839f215e..a8f2bd7fd1ff 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -485,9 +485,9 @@ aop_cmd_db_mem: aop-cmd-db@81c60000 {
+ 			no-map;
+ 		};
+ 
+-		/* Merged aop_config, tme_crash_dump, tme_log and uefi_log regions */
++		/* Merged aop_config, tme_crash_dump, tme_log, uefi_log, and chipinfo regions */
+ 		aop_tme_uefi_merged_mem: aop-tme-uefi-merged@81c80000 {
+-			reg = <0 0x81c80000 0 0x74000>;
++			reg = <0 0x81c80000 0 0x75000>;
+ 			no-map;
+ 		};
+ 
 
-On Wed, Feb 21, 2024 at 02:52:29PM +0100, Arnd Bergmann wrote:
-> On Wed, Feb 21, 2024, at 10:53, Uwe Kleine-K=F6nig wrote:
-> > Hello,
-> >
-> > this series converts all drivers below drivers/misc to struct
-> > platform_driver::remove_new(). See commit 5c5a7680e67b ("platform:
-> > Provide a remove callback that returns no value") for an extended
-> > explanation and the eventual goal.
-> >
-> > All conversations are trivial, because their .remove() callbacks
-> > returned zero unconditionally.
-> >
-> > There are no interdependencies between these patches, so they could be
-> > picked up individually. But I'd hope that Greg or Arnd picks them up all
-> > together.
->=20
-> These all look good to me, whole series
->=20
-> Acked-by: Arnd Bergmann <arnd@arndb.de>
+---
+base-commit: f6265e31fc717283224752dde476128191737d69
+change-id: 20240228-sm8650-missing-chipinfo-region-dc65bb9a7417
 
-Thanks.
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
 
-You (=3D Arnd and Greg) are the listed maintainers for drivers/misc/. How
-is this series supposed to be merged? Would a pull request help?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---rqw7vqzv73lfjvx5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmXmTOYACgkQj4D7WH0S
-/k7/bggAtLWuAbB65yreKqC3+3BQAW+yYHVR0gr5eF3xYgOQz1633vz0SPYZjaUe
-v9bbou74JW3Qsav38qI+/Onjrk60Iov624KdbHUheuPaTwFsKne/+S+rFqZfAQpg
-lrpDDpdBAZPeBWeqBUcy57wThrjH78HuAJyvSqldI4nxv0rjT1vYNlwChQ4IGsv9
-Bu9oZAPJswmwB418yGlGb1SuyPgnbf78KkqHOy7GPwApOavIhjEqU+r5VZFEk/B5
-RZ9smtJ/Rn+DrRUCV1rc0QUCLDkuT/bFFUaPwTI+2kY6NYA6CA7Nk361GfqSLvjx
-Q/WnE2MMUAqxDf/RZIZulv6Jkz+u/A==
-=hJf2
------END PGP SIGNATURE-----
-
---rqw7vqzv73lfjvx5--
 
