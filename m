@@ -1,63 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-13229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98AE086FBEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 09:32:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25B9D86FC05
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 09:40:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4453EB2164E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 08:32:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56CCE1C20F4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 08:40:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2091F18E1E;
-	Mon,  4 Mar 2024 08:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61CF119473;
+	Mon,  4 Mar 2024 08:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/Jj8le7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AIha+gAR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48C718C3B;
-	Mon,  4 Mar 2024 08:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD519472;
+	Mon,  4 Mar 2024 08:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709541135; cv=none; b=p8ntTyHFy5A7Nuv5f1cpcH3uji6HIV9YD+wiyjPWiKiK8L4Fk3/3ifpe7PyM/zLU2BKHbQCK3dQ6Xvoq0PDBSf9i5XcJbk5JBKmp51L5zvH8C8YhKx/KQG/XR31j4eo5MPrFuXwc2idTEWZ4sSplBc4HZMAvDrQkkZgpIACnuAU=
+	t=1709541650; cv=none; b=fsTyHO+pMVy9qlZbv8m0/xrhqvT/nGnsOlj05BjjflJWwZinFaYScJr5q4fJvkqlK6guwv6rG7ZKR98iyGFBYOiXLQd127clgYF23Pm9qHibE/01gtIzXGxxEEZ8V0tUUBNVJbwBnGrw+uapMw9askxwqLyXwpd7sEQHuGN98SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709541135; c=relaxed/simple;
-	bh=fn9kDRhZ3uC3sP4IiPeeESBvBHtP48VNUDNBMZJeC3Y=;
+	s=arc-20240116; t=1709541650; c=relaxed/simple;
+	bh=t1T3OPaWjo53wfG6TOrATqy44YsWokKu6HeHAougC1I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G8BU2e02jCz9HUtH396GZK4/lgsNVay4oMIhOvBJHE6ZH+92kCHuzlWbdoG6xY0C6iE636zyjq06740zRmhZbitEo3Zo7yM78wgfx9NI/V3WXcF9auWzUNeH092zNHscZjfOoCsuQ7yW7Y/PQfLuTdFJ6Jg640f/0B22Y2n2Xzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/Jj8le7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E829C433F1;
-	Mon,  4 Mar 2024 08:32:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709541134;
-	bh=fn9kDRhZ3uC3sP4IiPeeESBvBHtP48VNUDNBMZJeC3Y=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=Viip6tdYtwNQ+pwkD2Xzue4CVUcEedHdLUxtbKAKYMS/nleisHs7GV6pO5GIF4Rp4RHyCea8k/NPi5/r4z6WD2y14cq+r5/CBXIfYd4he8PUGgEL+r/76lRQTTWH6Q+mbIHzwTJn6VWL2fAlHbTb8EvLvBew2OkbkmkaIfr2jAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AIha+gAR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C71C433C7;
+	Mon,  4 Mar 2024 08:40:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709541649;
+	bh=t1T3OPaWjo53wfG6TOrATqy44YsWokKu6HeHAougC1I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y/Jj8le7t8Mf67Bo8yrx17ReQ0T67yEoRnZLMGeGsWFFL0O19KHnefe8E782EpjUW
-	 swecSn4joziaHzpdw3aPoC8X0dqCBA7wuBdjGhaiyp116bgHhexVtnTWn73LL8Q11i
-	 aeuxty/3Xi+ZsVYaR0566NX08/eE9Z7n4jw3kua8=
-Date: Mon, 4 Mar 2024 09:32:12 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	b=AIha+gARcNYuhSwcukKIYg4p45pb6A8Eb1BoGaDioSXtNDt/XHo9+tu0OWSVMTEDA
+	 TCdLZhy/DEYy3mXFG+TLdphs/qsaLNPSRkHtzvVQYJn2flmCpGyYwREyE7oQKo6+3B
+	 ab1V4gnRlHvDLwrqCQ2HaaJ/uW1j7jwnDDI/78dkQiPBsu5gqoaWB8AVtadiHrg7Kw
+	 weBRT0t9pBuAWt/8MA0WpUtAj0ffodEALaUXLIezNXPWFwitJn+nQL6uYga8eqMPRH
+	 9CFfdeOxkoh47pFCQwDEodcKaXFs0+9NHo3NzvtQdxPprBAvT5REFms3RWYuvcrmdY
+	 vOUUDcyUeUSFA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rh3sW-000000006DZ-199L;
+	Mon, 04 Mar 2024 09:40:56 +0100
+Date: Mon, 4 Mar 2024 09:40:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] dt-bindings: usb: qcom,pmic-typec: add support
- for the PM4125 block
-Message-ID: <2024030452-detail-curable-b5a4@gregkh>
-References: <20240221-pm4125-typec-v3-0-fdd0ee0465b8@linaro.org>
- <20240221-pm4125-typec-v3-2-fdd0ee0465b8@linaro.org>
- <CAA8EJpps9EPCgwBF8d8DbVzSZQ5tbEnj3RyGcJ=ua0eigDWQzQ@mail.gmail.com>
- <CAA8EJpq=Js3vtRQrUDWi1mOgL3C1iEsaAQs+dwHg=hLyE0U-rw@mail.gmail.com>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v15 2/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <ZeWJGCsUiZFw6ECl@hovoldconsulting.com>
+References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
+ <20240216005756.762712-3-quic_kriskura@quicinc.com>
+ <ZeBSp0EWnHo8Wbsv@hovoldconsulting.com>
+ <c4607aa4-7af7-443f-8ccc-aa4fe3ede3cc@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,33 +75,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpq=Js3vtRQrUDWi1mOgL3C1iEsaAQs+dwHg=hLyE0U-rw@mail.gmail.com>
+In-Reply-To: <c4607aa4-7af7-443f-8ccc-aa4fe3ede3cc@quicinc.com>
 
-On Mon, Mar 04, 2024 at 02:08:19AM +0200, Dmitry Baryshkov wrote:
-> On Wed, 21 Feb 2024 at 02:00, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, 21 Feb 2024 at 01:58, Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > >
-> > > The PM4125 PMIC has the same Type-C register block as the PMI632.
-> > > Likewise it doesn't support USB Power Delivery. Define the compatible
-> > > for the TypeC block found on PM4125, using PMI632 as a compatible.
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Making a fool of me, for v2 there was:
-> >
-> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Thu, Feb 29, 2024 at 05:23:08PM +0530, Krishna Kurapati PSSNV wrote:
+> On 2/29/2024 3:17 PM, Johan Hovold wrote:
+> > On Fri, Feb 16, 2024 at 06:27:49AM +0530, Krishna Kurapati wrote:
+> >> Currently Multiport DWC3 controllers are host-only capable.
+> > 
+> > I already asked you to rephrase this so that it becomes clear that you
+> > are describing a property of the current hardware (and similar
+> > throughout the series):
+> > 
+> > 	https://lore.kernel.org/all/ZTI7AtCJWgAnACSh@hovoldconsulting.com/
+
+> IMO, the statement is describing a property unique to current hardware, 
+> that "If it is a multiport controller, it is then host-only capable"
 > 
-> Greg, as Mark has picked up the vbus regulator patch, is there a
-> chance of you picking up this patch?
+> I used the word "Currently" to indicate that "Today, the multiport 
+> devices present...". Let me know if there is any ambiguity in the sentence.
+> 
+> In v13, I wrote:
+> "Currently host-only capable DWC3 controllers support Multiport."
+> You were right. It was ambiguous as it might refer to even single port 
+> controllers.
+> 
+> So I changed it saying all the DWC3 multiport controllers are host only 
+> capable.
+> 
+> How about:
+> 
+> "All the DWC3 Multi Port controllers that exist today only support host 
+> mode"
 
-As it doesn't apply to my usb-next branch, it's hard to do so :(
+That should be clear enough, thanks.
 
-Can you rebase it against there and resend?
+> >> +	/*
+> >> +	 * Currently only DWC3 controllers that are host-only capable
+> >> +	 * support Multiport.
+> >> +	 */
+> > 
+> > So again, also here, rephrase the comment so that it is clear that you
+> > are referring to a property of the current hardware.
+> 
+> I put the comment this way to indicate that we don't want to check for 
+> existence of multiple ports if the controller is not "host-only" 
+> capable. We should only check for multport support only if we are 
+> host-only capable. I think the statement clearly tells that "check for 
+> host-only" configuration before proceeding to check for xhci register reads.
 
-thanks,
+Fair enough, this comment could be considered to apply only to the
+implementation. Perhaps the following would be more clear though:
 
-greg k-h
+	Currently only DWC3 controllers that are host-only capable
+	can have more than one port.
+
+or simply
+
+	Host-only capable controllers can have more than one port.
+
+Both of these also gives a hint that this is a property of the hardware.
+
+> I replied the same on:
+> https://lore.kernel.org/all/279a54f2-7260-4270-83c7-d6f5c5ba0873@quicinc.com/
+> 
+> And since you didn't mention anything else at this part of code in your 
+> return reply in:
+> https://lore.kernel.org/all/ZTYyXhyZN3jBXEfm@hovoldconsulting.com/
+
+I left in the following quote on purpose in that reply:
+
+	> > Please rephrase accordingly throughout so that this becomes clear.
+
+Johan
 
