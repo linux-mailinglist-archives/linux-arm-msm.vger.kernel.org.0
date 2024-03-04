@@ -1,172 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-13254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE86F86FF74
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:51:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C439986FFBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 12:03:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D8B71F25BA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 10:51:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 014CD1C21CDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 11:03:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA62F364CF;
-	Mon,  4 Mar 2024 10:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6822376F9;
+	Mon,  4 Mar 2024 11:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IUdmHlqm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UVlrbSZ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAF737179;
-	Mon,  4 Mar 2024 10:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46B25764
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 11:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709549475; cv=none; b=SJeo26ych6EY9cio9pW+GJcXDJCs9FMMCAgdIeQXsC1/FLnKCyrlz7b+M89jVJ1H7uWLP35l0D3kLGRCd1itT3Okw60Brl2ux6qKTv4AoGM1HTPZhBn/R/Z0LqZ9k6tOi5hKDSjQmLXSEo2e4kSAmO553+haNqqSmQFdiPj8FRM=
+	t=1709550226; cv=none; b=LhSheu4e6m4LPds1AtSNs5NbNDccca2UVNE/yKj3YYBYscOidZLy6ZbWdGXyXjWpEiEjAXg7BxWzvo1L76fbUWECdp3Xq+ZPxkVh66kDZJuhiVBcEeOrqFCk3O5796XIE7MK2mwpdkMU6V11ANhJYdSf0wo6ku6vnsl97y96YAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709549475; c=relaxed/simple;
-	bh=1zd3GVu3Rm2C+KWSEoGXpIwLN5A0GfhS1q9Aw+9W7rM=;
+	s=arc-20240116; t=1709550226; c=relaxed/simple;
+	bh=Cgn+AbUmEAUkw7Gtthr0yt0NYWx7rqcOh+VRv3isIy8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qsUQsjq6UZEDVIxOkSKPP0PsimzuKjbz6a8F3nMUWLxxmQIGQCN0qjuQR2a5re6T27Ur6ZcwixLICy8VFFlDHjKiBgvXquP0mkQPH4LB/uB/MG0nvEajr5CVWPE90xZ3DLGySFc0/VE6B+y+8bG93xnw18SsTuyR1m9RaFRDmn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IUdmHlqm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB22C433F1;
-	Mon,  4 Mar 2024 10:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709549475;
-	bh=1zd3GVu3Rm2C+KWSEoGXpIwLN5A0GfhS1q9Aw+9W7rM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IUdmHlqmjdF9sVcEjisGPLRse7lw64LkirsFmw8ShEDmhnEjzp+/xEafNTJlZcV0Y
-	 dZe7GxwvZCcDsFMuNpeI/TBwtkXIQfhyEmx2XSYukzbvJ2wo7p+6JOKdVe9r9toohS
-	 NlTeaFLYq74S/3aEiVdhGrcxHA+8HRd3jOHW7ID/kFX181CUuQt3Af87RQlcW0AV8Y
-	 8kdxJIksuaKE5Ts22TYEpnkd0vBxLtG3xh0tytDO0EoHd+LsQIFDr+ctBOLe3l4hdx
-	 K6a+Q6vuqbd6IvLegVq8GqYu9Apf58BPfO3BJ5lX9OF7SPNebpBmSvqGTFOLTQKZJX
-	 LXYTijmD2A6Xw==
-Date: Mon, 4 Mar 2024 11:51:04 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH v8 03/10] PCI: dwc: ep: Introduce dw_pcie_ep_cleanup()
- API for drivers supporting PERST#
-Message-ID: <ZeWnmLjS0O8CYQYg@fedora>
-References: <20240224-pci-dbi-rework-v8-0-64c7fd0cfe64@linaro.org>
- <20240224-pci-dbi-rework-v8-3-64c7fd0cfe64@linaro.org>
- <ZeB7PQtkDSoCzE1Z@fedora>
- <20240304081713.GH2647@thinkpad>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sNDDhcob0b9PxJXJE4AQf9Cf0Bq1FYAhcnatC1WUo+l/O1Oa0rBkZlE2LSA2ZnJ1wJThkMNNKBqggj9S8aRguohzc74BonlprihHok3uD5tyMiySfPR+VfJ6nwPpnxNrTkUCiRTUYKt2C7L4Ds2erDtC3Qvp/egjEhethWXIBys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UVlrbSZ1; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e5a50d91b4so4045404b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 03:03:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709550225; x=1710155025; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uRCimQwiaMy/3k7Ta7kTx3HHC9SAus7Ndnzb5kkMHD0=;
+        b=UVlrbSZ1O3X16VEi1JHckwrjDdm0LX+xFXgz8nGoPIa1DpQH9KaZ1n3LOXwR0APPP0
+         G52Oul5bQr0PYx4Y/6gIe9dTqiHjH12B0FpwgddBVXiwwHhqzBVSMbw0ZPxdhkNQhsa7
+         pAg99heaozZG93DiFfHgTfsg7ntxBrR0Lhaoub/wIiAkoCK4RWKLdkHid+oXdpwv7PIH
+         5GA5XHLJ2y4hKluvN2tDUsL0lsVwNf+TCJpLNXb73sQL/OOGiVM/1zOejJ/xcDhM8vvV
+         lS8sSYSVFVwE/Frpd4Cd7vzpL71MMYMj349parDCc19Wi6Ka0JkglUQar/JlS70nqFXj
+         f1EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709550225; x=1710155025;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uRCimQwiaMy/3k7Ta7kTx3HHC9SAus7Ndnzb5kkMHD0=;
+        b=KkMJQ5unuQGv4VFhDGhCmu/S8YhvGUbeK/Dd96Vwd8iauvypk0/I/yzB+jbY5dFKOg
+         Sryg1FikKOQpNew8EfcXOP8HjsYbeODXs48Ph0D4JVUPWdOGgJ02ZVuJz6F49G1pRT6N
+         b2o1o+DNpvturyHk5c+GnKat7LX2tqc2h46xkNgIzpZVIW5qJuJg+FQRT7yAnKHdXME3
+         ywKMuxoR5a3l6atglKoD6mm91Rpodn3LDYaHW9DqyYnkdD3+pLKMktaPV4VuS0TOrdhY
+         X9QzloBqZAvCSnjwt8P1JA+8zYTwWRt6enUstPGB9eYcZYbfbhm9jUpT1eD8tzH2W63N
+         tLBg==
+X-Forwarded-Encrypted: i=1; AJvYcCX0vNlYBztFsEKXh3MZfMIboQIR4KvzL0fO6nGCJjFQ8De8ZxdJOWHGb7tuW1SvBbh0pDh0L31Hfrf5p9WTgvZ0sDefwLlacXACmpw99A==
+X-Gm-Message-State: AOJu0YxRwqg1+vGGby975ZtCPuW5vRvjiO04ZHRIr1AwLP71zJvaaH8i
+	k+6vi3+LHyVwVX7Zhik47HYO0DsKupXkRerKUb1Z2U/p+63+zxJ4qIVXI8BSwjs=
+X-Google-Smtp-Source: AGHT+IFHnmY9rsYiBuXaQPJyCeTKsOqjxrv1/2WHgvsre2aqcSomXoz0h9mLcg2wzjoF7OHK2UyQ7g==
+X-Received: by 2002:a05:6a00:852:b0:6e6:24d0:a171 with SMTP id q18-20020a056a00085200b006e624d0a171mr2452853pfk.27.1709550224498;
+        Mon, 04 Mar 2024 03:03:44 -0800 (PST)
+Received: from localhost ([122.172.85.206])
+        by smtp.gmail.com with ESMTPSA id w189-20020a6262c6000000b006e629bd793esm923045pfb.108.2024.03.04.03.03.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 03:03:44 -0800 (PST)
+Date: Mon, 4 Mar 2024 16:33:41 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, rafael@kernel.org,
+	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
+	lukasz.luba@arm.com, sboyd@kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+	linux-arm-msm@vger.kernel.org, nm@ti.com
+Subject: Re: [PATCH V2 3/3] cpufreq: scmi: Enable boost support
+Message-ID: <20240304110341.vd6w4mbcq6uwrpif@vireshk-i7>
+References: <20240227173434.650334-1-quic_sibis@quicinc.com>
+ <20240227173434.650334-4-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240304081713.GH2647@thinkpad>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240227173434.650334-4-quic_sibis@quicinc.com>
 
-On Mon, Mar 04, 2024 at 01:47:13PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Feb 29, 2024 at 01:40:29PM +0100, Niklas Cassel wrote:
-> > On Sat, Feb 24, 2024 at 12:24:09PM +0530, Manivannan Sadhasivam wrote:
-> > 
-> > Since e.g. qcom-ep.c does a reset_control_assert() during perst
-> > assert/deassert, which should clear sticky registers, I think that
-> > you should let dw_pcie_ep_cleanup() clean up the BARs using
-> > dw_pcie_ep_clear_bar().
-> > 
-> 
-> As I mentioned earlier, it is the job of the EPF drivers to clear the BARs since
-> they allocate them. I'm trying to reduce the implicit resetting wherever we
-> could.
-> 
-> The proper fix is to add the LINK_DOWN callback to EPF drivers and do cleanup.
-> I'm planning to submit a series for that after this one.
+On 27-02-24, 23:04, Sibi Sankar wrote:
+> +	priv->policy = policy;
 
-Currently, pci-epf-test allocates memory for the BARs in .bind().
-Likewise it frees the memory for the BARs in .unbind().
+Did I miss applying something ? Dropped the commit now.
 
-AFAICT, most iATU registers, and most BAR registers are sticky registers,
-so they will not get reset on link down.
-(The currently selected BAR size, in case of Resizable BAR is an exception.)
+drivers/cpufreq/scmi-cpufreq.c:272:6: error: ‘struct scmi_data’ has no member named ‘policy’
 
-That means that even on link down, we do not need to free the memory,
-or change the iATU settings. (This applies to all drivers.)
-
-
-
-However, on PERST (for the drivers call dw_pcie_ep_cleanup()), they call
-reset_control_assert(), so they will clear sticky registers, which means
-that they need to at least re-write the iATU and BAR registers.
-(I guess they could free + allocate the memory for the BARs again,
-but I don't think that is strictly necessary.)
-That is why I suggested that you call dw_pcie_ep_clear_bar() from
-dw_pcie_ep_cleanup().
-
-
-
-If you free the memory for the BARs in link_down() (this callback exists
-for many drivers, even drivers without a PERST handler), where are you
-supposted to alloc the memory for the BARs again?
-
-Allocating them at link_up() is too late (because as soon as the link is
-up, the host is allowed to enumerate the EP BARs.) The proper place is to
-allocate them when receiving PERST, but not all drivers have a PERST handler.
-
-(My understanding is that 1) PERST assert 2) PERST deassert 3) link is up.)
-
-
-
-unbind() undos what was done in bind(), so shouldn't link_down() undo what was
-done in link_up()? With that logic, if you move the alloc to .core_init(),
-should we perhaps have a .core_deinit() callback for EPF drivers?
-(I guess only drivers which perform a reset during PERST would call this.)
-
-But considering that free+alloc is not strictly needed, why not just keep
-the allocation + free in .bind()/.unbind() ?
-(To avoid the need to create a .core_deinit()), and let dw_pcie_ep_cleanup()
-call dw_pcie_ep_clear_bar() ?
-
-I guess my point is that it seems a bit pointless for drivers that do not
-clear sticky registers to free+alloc memory on link down, for no good
-reason. (Memory might get fragmented over time, so it might not be possible
-to perform a big allocation after the device has been running for a really
-long time.)
-
-
-
-So I'm thinking that we either
-1) Keep the alloc/free in bind/unbind, and let dw_pcie_ep_cleanup() call
-dw_pcie_ep_clear_bar(),
-or
-2) Introduce a .deinit_core() callback which will free the BARs.
-(Because I don't see how you will (re-)allocate memory for all drivers
-if you free the memory in link_down().)
-
-
-Kind regards,
-Niklas
+-- 
+viresh
 
