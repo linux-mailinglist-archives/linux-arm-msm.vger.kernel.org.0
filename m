@@ -1,134 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-13304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F16387107C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 23:53:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3273D871120
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 00:38:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6960CB24977
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 22:53:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 569F51C20DD8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 23:38:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794BB7C088;
-	Mon,  4 Mar 2024 22:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F4BA7CF1D;
+	Mon,  4 Mar 2024 23:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fSDidsuR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YgBG4vkN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85387C082
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 22:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FF97CF1F;
+	Mon,  4 Mar 2024 23:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709592787; cv=none; b=jhZbRFH3hSA1d2RirXF6rYWN2CLdHg8piZz1+nFIU1/GW8ttXIKkCZ4QjnI14npnoJ0huVkeq8xoNUwo0qL+YsSNAiGTVc4xEHWqKVRgsE+hyrcqUrgX2FvR9HzA1RNJ+vC/GZx5Zt/J97/qDMjlDzO5xBTB2b6EkuMHI4pO5E0=
+	t=1709595501; cv=none; b=Ri8zFkdXQyzjM3GnP5RQFTZPXhirT7DC+w7PNPQGamNeaDRAx3edWNo5SaL2N9IlbSYbCms5fzSBLZWuiesFpQ5E9H6HaoNMvOv3L3s1GguofS8IIs/AWv+emwySa4k4RbYbvEDLQneUPzKsHehR5+Yno5AJE2r6dp0fumwAXpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709592787; c=relaxed/simple;
-	bh=uOmNJyftoQiWMBwtZjjEk5oazk42oiXZB0+69cEngE4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MyQ9pBmVyJ+99BqIh7B7Gn7sZ0yE98+/f4K91z3viboQHmg7ek0ccyDK5NAI4FhWQp1/NZk2bhumxWNErpnKbP7jI3+NtgHFNEJeAl+vkq8acNO3gKT4CZurunpCX3JlACSNU5UA2vUpQs+KoNuG40O/zWAYdyf1T/iodvPFIeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fSDidsuR; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-412ecd24e84so190795e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 14:53:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709592783; x=1710197583; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=btWynTf3xFFc3JW3PLqmWTjuLdoAa7Aj4yAc6WIdAsM=;
-        b=fSDidsuRb/fJIChlTqzSZiqzRASaUAjwx66r8Wtd3lt6Xr4vrhfMtYjzE1XLiQRm5I
-         Juk8U65YTFVeJTmrJ3CIbsUVwJXp75fxp5BSG9cRGHWT4QXoVpWlgUJcCPwk0fdTodnd
-         PyzniKmtxh5ezNjpOU5TmOmM/fTukigihkDz+Oz7WiWXwCzon02CgjLgdm9E+cQ+o+hB
-         v0Gto+5ag/YH7U2vGP8C3T1gkGeBCPwe1XNpDo8unGPXLZJmryfYd8MhOVHPl+S906cC
-         TDJCWZIW5fGWxpCg+3c709bvw+ShpGzrBhL22ALht/DCoVcssYPqz+fjdMVUf3wiiDBk
-         UaYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709592783; x=1710197583;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=btWynTf3xFFc3JW3PLqmWTjuLdoAa7Aj4yAc6WIdAsM=;
-        b=kOQ10mLuh0MJWZmw9ykFVUFZ/G2tij5V/0mVwsOz+9lcoPJhEVI9qJDEszCTvLp0lF
-         1M7CcLl26+5mQMqUQlOosXdtGbJrfJwrBFMxHOmmW9IXmM6er6yxIM58NIhM0hwLifce
-         EkPvknFOkrn77Mi4uxwZy45u3LxlS1hrcTwKFkjh9LgrQrPX2+Kvp35uboIHl5xFSvPP
-         LgEdPVYSj2pLWsPJCvvqlUt7YctisyNrzPwoe8rKj9ccMxR5NVmxW6Eqm5qkgJ7vsj6F
-         AyxS6n2c5l3kx6OrWeVLrb+e/7B997/iAjbEKhvbPD1tlOM6unrKH0OAOwW5rqWjlZX7
-         Sc0w==
-X-Forwarded-Encrypted: i=1; AJvYcCW6ysS+22Yb8NfjyfP9Pm+B7wVpV3R9ufIsFn+5c+clsrByBr5gTowoqc2kHc+h9Qxd58xDuX00WhR0CdZThQH11U02he8Yqa6rg/n3jw==
-X-Gm-Message-State: AOJu0YynB0xqnBR/KJOPNlsKlZDd+nclL+gcbGVLqAknKKOUy1Sxxtob
-	5SqWgdQ0+ae58wkGvL5cEVcjiApbfoTkXk58jsthyjBSnBhmJKq+kHB+qJlrnO8=
-X-Google-Smtp-Source: AGHT+IFuHz8KuYiUldcamRZfnck6yCpPU0D3qbH8MnGNSebMlrRChLNBuPmNutjEvsdtyjLBHd+6Xw==
-X-Received: by 2002:a05:600c:4e8e:b0:412:de1f:dd23 with SMTP id f14-20020a05600c4e8e00b00412de1fdd23mr3813219wmq.7.1709592783279;
-        Mon, 04 Mar 2024 14:53:03 -0800 (PST)
-Received: from [10.66.66.2] (9.ip-51-91-159.eu. [51.91.159.9])
-        by smtp.gmail.com with ESMTPSA id bi7-20020a05600c3d8700b00412e5f876adsm3186236wmb.3.2024.03.04.14.53.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Mar 2024 14:53:02 -0800 (PST)
-Message-ID: <d19bd56c-dc85-46ee-831d-e67768ccf6ed@linaro.org>
-Date: Mon, 4 Mar 2024 23:52:58 +0100
+	s=arc-20240116; t=1709595501; c=relaxed/simple;
+	bh=bjapdOzSpG6/EEi9GeF2HdEhMLKu2TdtZOkHv8LOaro=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Esumc27XnIH2X4MOD/cvrSx4wImrdN0QAscpSa14LkvXgI+LXGkOWbhzTMlAUn6yOE3KIgnwXYifYQe4omj0GEg7uqxL6sEJvpdtDWeJodWCX3YI8oyHhW/4i/TKHxFncYP1uQ0yI422AHQmKuMDlBQC36VTc9O1pX5UU7YapNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YgBG4vkN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424NSdCb005853;
+	Mon, 4 Mar 2024 23:37:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=uKjDd80FGy/SXXVWkcCr2
+	CwjDneS2/5OgR/fSz8cyMA=; b=YgBG4vkN7z+ndBrQN2oDjS0orZ/i3gPbP8Weu
+	nrwmrnVhXZumPT8H7vablWKclm+7KXfO9eIUBhMYjQiUmM1Y/2QOGR0tmz65hFns
+	w5QxnW+Gaz8vSIqjO5r+OsnyHpjecgr3n2CChPrAJPs9zqCqAfU00O1vFkYieTrK
+	A6u+JJ+IjLQc/5RxSGnuAS9MzDpAOlAYklXN/fHj1WqJgCKUGuUiZIywL4OorbnJ
+	/z8dKn416B+iZisK6J/sAcM+MC2ejJrsZiUcjVrewGKciKIrvIIcoLuWn5bZ9Wao
+	tgkxaTlmhR/9U5iLUwt3/CCWmGHuvv41uNwSImj+FGtQnKybw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnjtbgr6q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Mar 2024 23:37:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424NbhGk018095
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Mar 2024 23:37:43 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 4 Mar 2024 15:37:42 -0800
+Date: Mon, 4 Mar 2024 15:37:41 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Quentin Perret <qperret@google.com>
+CC: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
+        Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
+        Android KVM
+	<android-kvm@google.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>, Alex Elder
+	<elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Philip Derrin
+	<quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu
+	<quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Fuad Tabba <tabba@google.com>,
+        "Sean Christopherson" <seanjc@google.com>,
+        Andrew Morton
+	<akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map
+ functions
+Message-ID: <20240304094828133-0800.eberman@hu-eberman-lv.qualcomm.com>
+Mail-Followup-To: Quentin Perret <qperret@google.com>, 
+	Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>, 
+	Chris Goldsworthy <quic_cgoldswo@quicinc.com>, Android KVM <android-kvm@google.com>, 
+	Patrick Daly <quic_pdaly@quicinc.com>, Alex Elder <elder@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Murali Nalajal <quic_mnalajal@quicinc.com>, 
+	Trilok Soni <quic_tsoni@quicinc.com>, Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, 
+	Carl van Schaik <quic_cvanscha@quicinc.com>, Philip Derrin <quic_pderrin@quicinc.com>, 
+	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba <tabba@google.com>, 
+	Sean Christopherson <seanjc@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
+ <ZdhEtH7xzbzdhS2j@infradead.org>
+ <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
+ <ZeXIWBLVWzVycm0r@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/20] media: venus: pm_helpers: Remove
- pm_ops->core_put
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-14-3dac84b88c4b@linaro.org>
- <ec239f69-6ace-c4a4-409c-771f1d24ce81@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ec239f69-6ace-c4a4-409c-771f1d24ce81@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZeXIWBLVWzVycm0r@google.com>
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: sjPu5sIWWRGDh-oe0xUU5hU_E0NcZLdz
+X-Proofpoint-ORIG-GUID: sjPu5sIWWRGDh-oe0xUU5hU_E0NcZLdz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_18,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 mlxlogscore=999
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403040182
 
-
-
-On 3/4/24 07:57, Dikshita Agarwal wrote:
+On Mon, Mar 04, 2024 at 01:10:48PM +0000, Quentin Perret wrote:
+> On Friday 23 Feb 2024 at 16:37:23 (-0800), Elliot Berman wrote:
+> > On Thu, Feb 22, 2024 at 11:09:40PM -0800, Christoph Hellwig wrote:
+> > > On Thu, Feb 22, 2024 at 03:16:42PM -0800, Elliot Berman wrote:
+> > > > Firmware and hypervisor drivers can donate system heap memory to their
+> > > > respective firmware/hypervisor entities. Those drivers should unmap the
+> > > > pages from the kernel's logical map before doing so.
+> > > > 
+> > > > Export can_set_direct_map, set_direct_map_invalid_noflush, and
+> > > > set_direct_map_default_noflush.
+> > > 
+> > > Err, not they should not.  And not using such super low-level interfaces
+> > > from modular code.
+> > 
+> > Hi Cristoph,
+> >  
+> > We've observed a few times that Linux can unintentionally access a page
+> > we've unmapped from host's stage 2 page table via an unaligned load from
+> > an adjacent page. The stage 2 is managed by Gunyah. There are few
+> > scenarios where even though we allocate and own a page from buddy,
+> > someone else could try to access the page without going through the
+> > hypervisor driver. One such instance we know about is
+> > load_unaligned_zeropad() via pathlookup_at() [1].
+> >  
+> > load_unaligned_zeropad() could be called near the end of a page. If the
+> > next page isn't mapped by the kernel in the stage one page tables, then
+> > the access from to the unmapped page from load_unaligned_zeropad() will
+> > land in __do_kernel_fault(), call fixup_exception(), and fill the
+> > remainder of the load with zeroes. If the page in question is mapped in
+> > stage 1 but was unmapped from stage 2, then the access lands back in
+> > Linux in do_sea(), leading to a panic().
+> >  
+> > Our preference would be to add fixup_exception() to S2 PTW errors for
+> > two reasons:
+> > 1. It's cheaper to do performance wise: we've already manipulated S2
+> >    page table and prevent intentional access to the page because
+> >    pKVM/Gunyah drivers know that access to the page has been lost.
+> > 2. Page-granular S1 mappings only happen on arm64 with rodata=full.
+> >  
+> > In an off-list discussion with the Android pkvm folks, their preference
+> > was to have the pages unmapped from stage 1. I've gone with that
+> > approach to get started but welcome discussion on the best approach.
+> >  
+> > The Android (downstream) implementation of arm64 pkvm is currently
+> > implementing a hack where s2 ptw faults are given back to the host as s1
+> > ptw faults (i.e. __do_kernel_fault() gets called and not do_sea()) --
+> > allowing the kernel to fixup the exception.
+> >  
+> > arm64 pKVM will also face this issue when implementing guest_memfd or
+> > when donating more memory to the hyp for s2 page tables, etc. As far as
+> > I can tell, this isn't an issue for arm64 pKVM today because memory
+> > isn't being dynamically donated to the hypervisor.
 > 
+> FWIW pKVM already donates memory dynamically to the hypervisor, to store
+> e.g. guest VM metadata and page-tables, and we've never seen that
+> problem as far as I can recall.
 > 
-> On 2/10/2024 2:39 AM, Konrad Dybcio wrote:
->> Without an OPP table and with vcodec_pmdomains_num (so, v1, v3 and
->> sdm845_legacy targets), core_put_v4 is a NOP, jut like core_put_v1.
->> Unify them!
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
+> A key difference is that pKVM injects a data abort back into the kernel
+> in case of a stage-2 fault, so the whole EXTABLE trick/hack in
+> load_unaligned_zeropad() should work fine out of the box.
+> 
+> As discussed offline, Gunyah injecting an SEA into the kernel is
+> questionable, but I understand that the architecture is a bit lacking in
+> this department, and that's probably the next best thing.
+>
+> Could the Gunyah driver allocate from a CMA region instead? That would
+> surely simplify unmapping from EL1 stage-1 (similar to how drivers
+> usually donate memory to TZ).
 
-[...]
+In my opinion, CMA is overly restrictive because we'd have to define the
+region up front and we don't know how much memory the virtual machines
+the user will want to launch.
 
-
->> -static void vcodec_domains_put(struct venus_core *core)
->> +void vcodec_domains_put(struct venus_core *core)
->>   {
->>   	dev_pm_domain_detach_list(core->pmdomains);
->>   
-> what is the base of this change?
-> I don't see dev_pm_domain_detach_list in mainline code.
-> Am I missing anything here?
-
-The base is specified in the cover letter.
-
-The code in question is indeed here since January, perhaps
-you're looking at something older than -next.
-
-Konrad
+Thanks,
+Elliot
 
 
