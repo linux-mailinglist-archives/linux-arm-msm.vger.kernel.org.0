@@ -1,182 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-13202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A14186F9A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 06:41:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDC9186F9B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 06:45:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CD231C20C26
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 05:41:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 148192812A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 05:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4495BA27;
-	Mon,  4 Mar 2024 05:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9254C14F;
+	Mon,  4 Mar 2024 05:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lMBGTcRo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WGN3Thb5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357D4AD5E;
-	Mon,  4 Mar 2024 05:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33945B67A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 05:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709530883; cv=none; b=JhRjmk4D5luw1+tT7MkGFgblZKHzaveThTLssSi2F+00HsIeRLpJlomjX2IckXb3JLHcL1XtEgmN9bhp9ZI7B4iosX1tDP6Ew1pbxlWIddmdDYjtBc/4bas9SevutVRXN9KYUwZYroNwfS7enk4pHvgH8BY0A/NFmgJHBSgkVW4=
+	t=1709531147; cv=none; b=Nq74aYVxzXQ/Lp6RRbYeOeMwfPb4w/sm1WTTxGUVnZBAPwvDiI1aLfFUJKLnthAqPkt3pgAmweRSBCeRsPHeRkTX8HB1OA+ksIPmWDr4bfToCIEuxGgHUrQBt+NReiOlbjwGeCvgd/YKdf8m1RmBeqJfz1kYehiPwssIy7ugGIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709530883; c=relaxed/simple;
-	bh=r86wOO+DCKm7iBUKQXQCDVfjbm5Vx1zUufgM+XeeASw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=igf3JTYkiERvWZkm6zpxbtpmGp/iJ2qAp4IbJ/scGR3JY39XXm6Wip0bdmMerds8cK7N6uUMgyb6LEFDSSkycPpyIaXG3lna3bvQ7eSaAs5MM9+Qr7l+5O3OjJTCaF1Mj/fBpGz0Pv4dMUZDbrWd1CMJorg9Dn9rNhdPNIfU+JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lMBGTcRo; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4245UWt3020204;
-	Mon, 4 Mar 2024 05:41:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=bC9iBVAChzkURz7MLks8bBE/LC2FqLowzHb6mhD5U0o=; b=lM
-	BGTcRoXHMqdpzQPdX2Io7bk648S4aWe/69Zac7oZIVliB3SpxgmZEUWDdo9NCQL1
-	c56ycjqcpwR72Lv7LMP+lEGN1fBbgsbVZvaX4LW4v8+LX2zqFZE0g+VLiHxx0lUu
-	Hkj6ZwMx0Z3kxEj06sZVS5r/xo6sXZ/iyUX1slZfQNcba/PdTKD7dP6gpoFBp3W2
-	2ypvOaw+ssWuUs6mi31n9oyxq6B76+AhKZIrXFuxbdeAiJCoj10xfpLzLG5Vcyf4
-	ZlfqZVIrXFIMhqPDt/sMpz1RyxAEtXLOKmBqwI+lnFtqtV+oIYGJSEup2xS6nrIv
-	9eVlGE8yAwZN4LwlVXIg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wmsqnrxmg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 05:41:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4245f86v002787
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Mar 2024 05:41:08 GMT
-Received: from [10.50.22.179] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 3 Mar
- 2024 21:41:03 -0800
-Message-ID: <5e0656ac-badf-dd37-b598-8e4a6f23d2c2@quicinc.com>
-Date: Mon, 4 Mar 2024 11:10:52 +0530
+	s=arc-20240116; t=1709531147; c=relaxed/simple;
+	bh=Opih2PZV9gDsPvBwpspCv8TGpZmtmjlOY8SluqDWbFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I6l6QT9fUG8m64VAD6mn8+fYY1fSWaTZNHhU30p0PLsqzlmtA6D8I6oohcRu5TNJ/Mq+Zyp97w6NvjG8X7H+xS1RUjFbRN9W24ux6k8mi3rtVsBRJDf66QbCFKGlqEcH6Wum78rBviGtQdhBjI+C8/gF23+/W9HUSbGYO0GJ9a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WGN3Thb5; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e5675f2ca2so2516927b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Mar 2024 21:45:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709531144; x=1710135944; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nyLi8+SmSre8SLNOigrTqCqxHxWeA+jhwdAxcyOndLM=;
+        b=WGN3Thb5nCuEA604AinhfkMD+bTyPJzuGBLsOXz3YY+Rg6kckJu+iTRpqpU2il7i3P
+         ChUxgagjFlrjxQxOQGysTqSuR5hXR9WuMc4PYa68iWKmqAYSniwzZGUhRfWX95x7e3EG
+         X5ECHiQd7F3rV/AuaK5j+AtLod07cJhDE0ZZuA3EiWCX4ErSsIAS+TI/tSoWUvufdfkE
+         p+OenSJE1ga3+/AIrwnXszTcVQMOC+Iz+IHba6kdNYGStUFdGTE6Q2iE8SCKTjYji4CK
+         M4RSFwdclltEnDCH1LWEFDiLHoGvft/DpwXKux41XzqGqk4O2BA+M0pFqnyIoCWGBMw1
+         mfMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709531144; x=1710135944;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nyLi8+SmSre8SLNOigrTqCqxHxWeA+jhwdAxcyOndLM=;
+        b=vcGisYpvxBvopBeSUaTUrrj6fAC6fRTELVUgmWoF4MpT93M4Y2R4Q2AQr4dIui0t3r
+         0EAyUrde1lwG4gFXWEQ9QMT2sHNeUWvrmkJGMGypVzq8hqLvQ+yfKM2JAEt2hwR3Ct0z
+         u3ra41lZTlPs8EISPqLZYMR+7ytMV7c70/r+UZGOvFoHT47Oit+jVeCvF/fq1+wcZwUZ
+         1Bqnz8m7L0lNZah4EL3/mX2vZkixidLN88jrJ4n17wQPYtV6VozxO4tkex+9VV853zIN
+         cSL+slwDD+m7adghwMA6QS5UFqgoJrb1fsBzsGOA3TQhETKZ5bOobUNoQDXGhHfkeEdl
+         8bJA==
+X-Forwarded-Encrypted: i=1; AJvYcCXomhClExZR4GM9oskBrhbnqQE59i2v4laCeSbAjE1hShUEDkZpoRqJAgvCDwSqG4AGXzPqJFxi5YDzj65HxhKmqyqUF//9VHInGTcIQg==
+X-Gm-Message-State: AOJu0YzLYdO9MSEBsXASV46VZeZtiDS6Ky3vvfCNj5MIj8dLHyA6q2l3
+	MXm+54v1m8WAIk9+bruLtKmxHf2kLbDbBQD5Uy5tFj4lWWViEBAIbutEdXUd2Q==
+X-Google-Smtp-Source: AGHT+IEb05hPzFeBZje+h75WEQQpiRcBp848ihooFqT4tnzoz+8bG6TqQJGYpSZro6DP/2UhVDknig==
+X-Received: by 2002:a05:6a00:2fd1:b0:6e5:d3b9:2d06 with SMTP id fn17-20020a056a002fd100b006e5d3b92d06mr7157632pfb.21.1709531144470;
+        Sun, 03 Mar 2024 21:45:44 -0800 (PST)
+Received: from thinkpad ([117.207.30.163])
+        by smtp.gmail.com with ESMTPSA id q4-20020a63e944000000b005dc1edf7371sm6746085pgj.9.2024.03.03.21.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Mar 2024 21:45:44 -0800 (PST)
+Date: Mon, 4 Mar 2024 11:15:36 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Baochen Qiang <quic_bqiang@quicinc.com>
+Cc: ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, netdev@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] wifi: ath11k: hibernation support
+Message-ID: <20240304054536.GA2647@thinkpad>
+References: <20240304021554.77782-1-quic_bqiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 05/20] media: venus: pm_helpers: Kill dead code
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho
- Chehab" <mchehab@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-5-3dac84b88c4b@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20230911-topic-mars-v2-5-3dac84b88c4b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gk1jUqsTBhi5fYHR-XLQcXI0DNaTXove
-X-Proofpoint-GUID: gk1jUqsTBhi5fYHR-XLQcXI0DNaTXove
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-04_02,2024-03-01_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0
- impostorscore=0 clxscore=1011 mlxlogscore=999 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403040040
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240304021554.77782-1-quic_bqiang@quicinc.com>
 
+On Mon, Mar 04, 2024 at 10:15:51AM +0800, Baochen Qiang wrote:
+> Currently in ath11k we keep the firmware running on the WLAN device when the
+> network interface (wlan0) is down. The problem is that this will break
+> hibernation, obviously the firmware can't be running after the whole system is
+> powered off. To power down the ath11k firmware for suspend/hibernation some
+> changes both in MHI subsystem and ath11k are needed.
+> 
+> This patchset fixes a longstanding bug report about broken hibernation support:
+> 
+> https://bugzilla.kernel.org/show_bug.cgi?id=214649
+> 
+> There already is an RFC version which has been tested by multiple users with
+> positive results:
+> 
+> https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.org/
+> 
+> Basically the RFC version adds two APIs to MHI stack: with the first one ath11k
+> is able to keep MHI devices when going to suspend/hibernation, getting us rid of
+> the probe deferral issue when resume back. while with the second one ath11k could
+> manually prepare/unprepare MHI channels by itself, which is needed because QRTR
+> doesn't probe those channels automatically in this case.
+> 
+> Mani, the MHI maintainer, firstly doesn't like that version and insists that an
+> MHI device should be destroyed when suspend/hibernation, according to his
+> understanding on device driver model. See
+> 
+> https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+> 
+> After a long discussion Mani thought we might need a new PM callback with which
+> ath11k is able to wait until kernel unblocks device probe and thus MHI channels
+> get probed. So we came to the kernel PM list and there Mani realized that his
+> understanding is not correct so he finally agrees to keep MHI device during
+> suspend/hibernation. See
+> 
+> https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+> 
+> Mani also pointed out that an MHI controller driver (ath11k here) should not touch
+> MHI channels directly because those channels are managed by the corresponding MHI
+> client driver (QRTR here). To address this, we come up with this version.
+> 
+> Compared with that RFC version, this version adds PM callbacks in QRTR module:
+> suspend callback unprepares MHI channels during suspend and resume callback
+> prepares those channels during resume. In this way ath11k doesn't need to do
+> unprepare/prepare work by itself so those two APIs added in RFC version are
+> removed now.
+> 
+> The power down/up procedure requires a specific sequence in which PM callbacks
+> of wiphy, ath11k and QRTR are called, this is achieved by exploiting the
+> child-father relationship between their device struct, and also the PM framework
+> which separates whole suspend/resume process into several stages. Details in
+> patch [3/3].
+> 
+> v5:
+>  - remove Kalle's s-o-b tag in patch 1/3 per Mani.
 
+Why are you not carrying review tags? I have reviewed the patches and provided
+my tags for patches 1 and 2 in v3 and v4. Now there is no tag again in v5 :(
 
-On 2/10/2024 2:39 AM, Konrad Dybcio wrote:
-> A situation like:
+You cannot expect maintainers to provide review tags in each revision.
+
+- Mani
+
 > 
-> if (!foo)
-> 	goto bar;
+> v4:
+>  - resend v3 as v4 to CC netdev folks. No changes in patches themselves.
 > 
-> for (i = 0; i < foo; i++)
-> 	...1...
+> v3:
+>  - skip QRTR suspend/resume if MHI device is found to be in suspend state.
 > 
-> bar:
-> 	...2...
+> v2:
+>  - add comment on why destroying the device is optional in
+>    mhi_pm_disable_transition().
+>  - rename mhi_power_down_no_destroy() as mhi_power_down_keep_dev().
+>  - refine API description of mhi_power_down() and
+>    mhi_power_down_keep_dev().
+>  - add/remove __maybe_unused to QRTR PM callbacks.
+>  - remove '#ifdef CONFIG_PM'.
+>  - refine commit log of patch 1/3 and 2/3.
 > 
-> is totally identical to:
+> Baochen Qiang (3):
+>   bus: mhi: host: add mhi_power_down_keep_dev()
+>   net: qrtr: support suspend/hibernation
+>   wifi: ath11k: support hibernation
 > 
-> for (i = 0; i < 0; i++) // === if (0)
-> 	...1...
+>  drivers/bus/mhi/host/internal.h        |   4 +-
+>  drivers/bus/mhi/host/pm.c              |  42 ++++++++--
+>  drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
+>  drivers/net/wireless/ath/ath11k/core.c | 105 +++++++++++++++++--------
+>  drivers/net/wireless/ath/ath11k/core.h |   6 +-
+>  drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
+>  drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
+>  drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
+>  drivers/net/wireless/ath/ath11k/pci.c  |  44 +++++++++--
+>  drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
+>  include/linux/mhi.h                    |  18 ++++-
+>  net/qrtr/mhi.c                         |  46 +++++++++++
+>  12 files changed, 244 insertions(+), 60 deletions(-)
 > 
-> ...2...
 > 
-> Get rid of such boilerplate.
+> base-commit: 48294c8a226d82c687b52b2eb90a075bbfbcb884
+> -- 
+> 2.25.1
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/pm_helpers.c | 10 ----------
->  1 file changed, 10 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-> index 1ba65345a5e2..7193075e8c04 100644
-> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
-> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-> @@ -878,14 +878,10 @@ static int vcodec_domains_get(struct venus_core *core)
->  		.pd_flags = PD_FLAG_NO_DEV_LINK,
->  	};
->  
-> -	if (!res->vcodec_pmdomains_num)
-> -		goto skip_pmdomains;
-> -
-Removing the if check and relying only on for loop is good.
-but I don't see the for loop here.
->  	ret = dev_pm_domain_attach_list(dev, &vcodec_data, &core->pmdomains);
->  	if (ret < 0)
->  		return ret;
->  
-Also, what's the base of this change? I don't see above API in the code
-anywhere.
-> -skip_pmdomains:
->  	if (!core->res->opp_pmdomain)
->  		return 0;
->  
-> @@ -928,9 +924,6 @@ static int core_resets_reset(struct venus_core *core)
->  	unsigned int i;
->  	int ret;
->  
-> -	if (!res->resets_num)
-> -		return 0;
-> -
->  	for (i = 0; i < res->resets_num; i++) {
->  		ret = reset_control_assert(core->resets[i]);
->  		if (ret)
-> @@ -953,9 +946,6 @@ static int core_resets_get(struct venus_core *core)
->  	unsigned int i;
->  	int ret;
->  
-> -	if (!res->resets_num)
-> -		return 0;
-> -
->  	for (i = 0; i < res->resets_num; i++) {
->  		core->resets[i] =
->  			devm_reset_control_get_exclusive(dev, res->resets[i]);
-> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
