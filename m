@@ -1,216 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-13268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F23D87075A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 17:40:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27AED870773
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 17:46:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72DBBB2080A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 16:40:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CA1E1C213A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 16:46:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8457495E0;
-	Mon,  4 Mar 2024 16:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8130C4D9F9;
+	Mon,  4 Mar 2024 16:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E1emAWOa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eYJE78iW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188BD1E48B;
-	Mon,  4 Mar 2024 16:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EB045BF6;
+	Mon,  4 Mar 2024 16:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709570422; cv=none; b=FZiyRdyv54d5zIoXGZxyA6clwnCKaOr/nt6aTL/pQ70N4KW5z9+YtCR0yUI3rXs2aKRslZ2GXlzWFh6KRjZ6E3MJnkwpxwdGAvWHW7eV1yHYWyGT93AWG6gyL/mMmMxAaOuLd/rfLSqjmXUY0vTHeJS/nGo8wUecR1NkbCp7/vM=
+	t=1709570804; cv=none; b=QdIaeQsFhl8WnvMr82YnVSjhTPxEkSzFasRonkfataFdGmCbHOG+OxdE7Lhxs6kqkfZZQEVFupwFwXQqv3byD3yS+RXMY99MGH8/au7KvmsE5xf7HG4k2hm3x/ZMuoj3zb1rLyvtCgsXNAHIj7xWktAIEWl0Hb9ZJTL/SEiQT+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709570422; c=relaxed/simple;
-	bh=ysTz6CoSf/OaCBd/3gnRXFxv2KlvPVHfiM45BdLhUK0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tvTTRUQqmtvbRKf+bCwlyiFRejoiSGjEw/uAZowqksDp9i2XRvzicuhc4IJNqYOY9As8m4y4oSIyiu/ElDMU264WVu8c162J/UTSvaWjtCDhzHdjmVCAQPIBGByHQsqCjKIvIIDF+5wEgDVryWwYK3bYD/f3vJOxl4RF80sHNNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E1emAWOa; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1709570804; c=relaxed/simple;
+	bh=LXYJrT1NywtDEANX9qf+D2JZWc3vJ9Rj61RdSz6b0ds=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=krve5giuR2FxIjuF7iWVbddjYcefL0BcJIMR9c21tmUkQL/QuROxA2aDCTuV8/KTR69gwjiClahxicUmS0s9Dg6froirkqStKi+RWwLg+l6TJE7xiuu4v0vqxkVtw56zUGohMbyKGG/ob+roQVeBDaOxGWmNLANenFY0v1kLeO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eYJE78iW; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424EQgNS018061;
-	Mon, 4 Mar 2024 16:40:12 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424GfV1B008684;
+	Mon, 4 Mar 2024 16:46:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=YQv9TQce1ynh6DdrjSi+5
-	dUsbguvINcdIdJh+2uY/74=; b=E1emAWOaHnzZfRmliwM4v+Y3N9B5QOmaUdqnh
-	YYB6hie/1YGdwERsSFMYx6xsr21bqVA6Gqdpr+m0jPeG8G7UOmRrSPXHjCI7FkLf
-	hfoAnnCFp3bFytnHoj8Pk1g88VOc9io3FAn6FIJM8em+P0XbtkCTeiKUyqGZwIyI
-	JEObrCjhfSkNG7NRP8J4I2EvZ0pO57/OV9dcvkmStn10B25Ca5/lzVXVURODpvKA
-	n6DYMuoZK1LPuFpEn32AUpEv0C9iBS+S30PnnYG0kCudrqqosxmVuSBclJrsDPHT
-	9U3rMKmCDek5ivMibjlOSxtv5BDKUxMvYQRHbXnxx39+sBBkQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wn6qx1e2a-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=DM0j3vZth8wUkFdIp7pDbg9rCL+atUFScO9LcM5/4io=; b=eY
+	JE78iWYar1X4XX4MHFatTACXD1Q2aNeXDIdm7AdoWtbj75pZfifvbijjbYIt9jMH
+	m8jJ+WgBtsFtfi9dJ5RrTYFTLxpmnbbCMFEzk29uQWOyysN3SqSg5LE0oyzxSLsu
+	60admCrQY4n2yZMwkalQUiKf3rLzh9q06mjyGWiK7myO158E6xjOMzcGMoD3YIvi
+	NB7d4OgtiCK30/JY4yiUmmLwPw2NNqGwfwgC08CgyoH6H3ehSkOscM/ZSiZp7v3b
+	pR3hl9/pt+FLZSCasTtuH5rET5QG3VxGIlYeLT1XrhMnG7ABZIPWfDovPSXKD1Fb
+	98gdpRTuWMFdMfhZh+VQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnarj10b3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 16:40:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424GeBPZ019578
+	Mon, 04 Mar 2024 16:46:12 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424GkBlZ004937
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Mar 2024 16:40:11 GMT
-Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 4 Mar 2024 08:40:11 -0800
-Date: Mon, 4 Mar 2024 08:40:09 -0800
-From: Mike Tipton <quic_mdtipton@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] interconnect: qcom: x1e80100: Remove inexistent ACV_PERF
- BCM
-Message-ID: <20240304164009.GB25492@hu-mdtipton-lv.qualcomm.com>
-References: <20240302-topic-faux_bcm_x1e-v1-1-c40fab7c4bc5@linaro.org>
+	Mon, 4 Mar 2024 16:46:11 GMT
+Received: from [10.216.35.58] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Mar
+ 2024 08:45:59 -0800
+Message-ID: <4b0c0b57-7c74-cd17-cd48-03c50409b853@quicinc.com>
+Date: Mon, 4 Mar 2024 22:15:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240302-topic-faux_bcm_x1e-v1-1-c40fab7c4bc5@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v8 00/10] Add Qualcomm APSS Minidump driver related
+ support
+Content-Language: en-US
+To: <corbet@lwn.net>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <mathieu.poirier@linaro.org>, <vigneshr@ti.com>,
+        <nm@ti.com>, <matthias.bgg@gmail.com>, <kgene@kernel.org>,
+        <alim.akhtar@samsung.com>, <bmasney@redhat.com>
+CC: <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240131110837.14218-1-quic_mojha@quicinc.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20240131110837.14218-1-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5_dHSE6Mnh83dLBXjjHb3uQ4VpzK4_jE
-X-Proofpoint-ORIG-GUID: 5_dHSE6Mnh83dLBXjjHb3uQ4VpzK4_jE
+X-Proofpoint-ORIG-GUID: EGPeKdMxZdhVZnXpvCR1wLK5P2ptaGz1
+X-Proofpoint-GUID: EGPeKdMxZdhVZnXpvCR1wLK5P2ptaGz1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-04_12,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- clxscore=1011 adultscore=0 spamscore=0 mlxlogscore=999 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403040127
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403040128
 
-On Sat, Mar 02, 2024 at 03:22:49AM +0100, Konrad Dybcio wrote:
-> Booting the kernel on X1E results in a message like:
+I would really appreciate if i get review on this series..
+Thank you..
+
+-Mukesh
+
+On 1/31/2024 4:38 PM, Mukesh Ojha wrote:
+> Abstract and PDF here:
+> https://lpc.events/event/17/contributions/1468/
 > 
-> [    2.561524] qnoc-x1e80100 interconnect-0: ACV_PERF could not find RPMh address
+> Video:
+> https://www.youtube.com/watch?v=3vL3gtAu84s
 > 
-> And indeed, taking a look at cmd-db, no such BCM exists. Remove it.
+> Patch 1 deals in detail documentation on minidump.
+> Patch 2-4 refactors minidump existing layout and separate it from remoteproc files.
+> Patch 6 is the Qualcomm APSS minidump driver.
+> Patch 7-10 Enable support to reserve dynamic ramoops and the support to
+>    register ramoops region with minidump.
 > 
-> Fixes: 9f196772841e ("interconnect: qcom: Add X1E80100 interconnect provider driver")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Reviewed-by: Mike Tipton <quic_mdtipton@quicinc.com>
-
-For some background, ACV "perf mode" does exist, but not as a separate
-BCM. It's controlled by a separate bit in the ACV mask. By default, the
-ACV node only sets the bit indicating the HLOS voter. It doesn't assert
-the perf mode bit.
-
-Enabling perf mode toggles different trade-offs within the DDR subsystem
-for slightly improved performance at the expense of slightly higher
-power. There are limited use cases of this downstream, where we expose
-control over this bit to clients through icc_set_tag(). It primarily
-improves certain latency sensitive benchmarks, AFAIK. I don't think it
-has much impact on real world use cases.
-
-This is true for many other targets as well, not just x1e80100.
-
-Voting for perf-mode is entirely optional and in most cases also
-entirely unnecessary. So, removing this broken way to control it without
-adding the proper control is totally fine.
-
-I have a local series to add the proper support, but haven't posted it
-yet. There aren't any users for it upstream yet, nor am I aware of any
-near term plans to add them. So, it would be unused for a little while,
-at least. That said, anybody could use it to set that tag on their BW
-votes on the off-chance it improves performance and they don't care
-about the power trade-offs.
-
-I could post the series soon if there's interest.
-
-> ---
->  drivers/interconnect/qcom/x1e80100.c | 26 --------------------------
->  1 file changed, 26 deletions(-)
+> Detail about Minidump is discussed in documentation patch (1/10) and also briefly
+> discussed after below changelog.
 > 
-> diff --git a/drivers/interconnect/qcom/x1e80100.c b/drivers/interconnect/qcom/x1e80100.c
-> index 99824675ee3f..654abb9ce08e 100644
-> --- a/drivers/interconnect/qcom/x1e80100.c
-> +++ b/drivers/interconnect/qcom/x1e80100.c
-> @@ -116,15 +116,6 @@ static struct qcom_icc_node xm_sdc2 = {
->  	.links = { X1E80100_SLAVE_A2NOC_SNOC },
->  };
->  
-> -static struct qcom_icc_node ddr_perf_mode_master = {
-> -	.name = "ddr_perf_mode_master",
-> -	.id = X1E80100_MASTER_DDR_PERF_MODE,
-> -	.channels = 1,
-> -	.buswidth = 4,
-> -	.num_links = 1,
-> -	.links = { X1E80100_SLAVE_DDR_PERF_MODE },
-> -};
-> -
->  static struct qcom_icc_node qup0_core_master = {
->  	.name = "qup0_core_master",
->  	.id = X1E80100_MASTER_QUP_CORE_0,
-> @@ -688,14 +679,6 @@ static struct qcom_icc_node qns_a2noc_snoc = {
->  	.links = { X1E80100_MASTER_A2NOC_SNOC },
->  };
->  
-> -static struct qcom_icc_node ddr_perf_mode_slave = {
-> -	.name = "ddr_perf_mode_slave",
-> -	.id = X1E80100_SLAVE_DDR_PERF_MODE,
-> -	.channels = 1,
-> -	.buswidth = 4,
-> -	.num_links = 0,
-> -};
-> -
->  static struct qcom_icc_node qup0_core_slave = {
->  	.name = "qup0_core_slave",
->  	.id = X1E80100_SLAVE_QUP_CORE_0,
-> @@ -1377,12 +1360,6 @@ static struct qcom_icc_bcm bcm_acv = {
->  	.nodes = { &ebi },
->  };
->  
-> -static struct qcom_icc_bcm bcm_acv_perf = {
-> -	.name = "ACV_PERF",
-> -	.num_nodes = 1,
-> -	.nodes = { &ddr_perf_mode_slave },
-> -};
-> -
->  static struct qcom_icc_bcm bcm_ce0 = {
->  	.name = "CE0",
->  	.num_nodes = 1,
-> @@ -1583,18 +1560,15 @@ static const struct qcom_icc_desc x1e80100_aggre2_noc = {
->  };
->  
->  static struct qcom_icc_bcm * const clk_virt_bcms[] = {
-> -	&bcm_acv_perf,
->  	&bcm_qup0,
->  	&bcm_qup1,
->  	&bcm_qup2,
->  };
->  
->  static struct qcom_icc_node * const clk_virt_nodes[] = {
-> -	[MASTER_DDR_PERF_MODE] = &ddr_perf_mode_master,
->  	[MASTER_QUP_CORE_0] = &qup0_core_master,
->  	[MASTER_QUP_CORE_1] = &qup1_core_master,
->  	[MASTER_QUP_CORE_2] = &qup2_core_master,
-> -	[SLAVE_DDR_PERF_MODE] = &ddr_perf_mode_slave,
->  	[SLAVE_QUP_CORE_0] = &qup0_core_slave,
->  	[SLAVE_QUP_CORE_1] = &qup1_core_slave,
->  	[SLAVE_QUP_CORE_2] = &qup2_core_slave,
+> Changes in v8:
+>   - Addressed documentation comment made by Randy Dunlap.
+>   - Rebased on linux-next tag next-20240130
 > 
-> ---
-> base-commit: 1870cdc0e8dee32e3c221704a2977898ba4c10e8
-> change-id: 20240302-topic-faux_bcm_x1e-8639adf9d010
+> Changes in v7:
+>   - Addressed comment made by [Pavan.K] to use generic notifiers.
+>   - Addresses comment made on Dynamic ramoops about error handling.
+>   - Significant change minidump documentation suggested by [Bryan O'Donoghue]
+>   - Added Reviewed by from [Bagas]
+>   - Renamed ramoops notifiers.
 > 
-> Best regards,
-> -- 
-> Konrad Dybcio <konrad.dybcio@linaro.org>
+> Changes in v6: https://lore.kernel.org/lkml/1700864395-1479-1-git-send-email-quic_mojha@quicinc.com/
+>   - Accumalated the feedback received on v5 and rebase v5 versions in v6.
+>   - Removed the exported function as there is no current users of them.
+>   - Applied [Pavan.K] suggestion on caller/callee placement of dynamic ramoops reserve memory.
+>   - Addressed [krzysztof] comment on sizeof() and to have qcom_apss_md_table_exit().
+>   - Addressed [Bagas.S] comment on minidump doc.
+>   - Tried to implement [Kees] suggestion in slight different way with callback registration
+>     with ramoops instead of pstore core.
 > 
+> Change in rebase v5: https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/
+>   - Rebased it on latest tag available on linux-next
+>   - Added missed Poovendhan sign-off on 15/17 and tested-by tag from
+>     Kathiravan. Thanks to him for testing and reminding me of missing sign-off.
+> 
+> Changes in v5: https://lore.kernel.org/lkml/1694290578-17733-1-git-send-email-quic_mojha@quicinc.com/
+>   - On suggestion from Pavan.k, to have single function call for minidump collection
+>     from remoteproc driver, separated the logic to have separate minidump file called
+>     qcom_rproc_minidump.c and also renamed the function from qcom_minidump() to
+>     qcom_rproc_minidump(); however, dropped his suggestion about rework on lazy deletion
+>     during region unregister in this series, will pursue it in next series.
+> 
+>   - To simplify the minidump driver, removed the complication for frontend and different
+>     backend from Greg suggestion, will pursue this once main driver gets mainlined.
+> 
+>   - Move the dynamic ramoops region allocation from Device tree approach to command line
+>     approch with the introduction command line parsing and memblock reservation during
+>     early boot up; Not added documentation about it yet, will add if it gets positive
+>     response.
+> 
+>   - Exporting linux banner from kernel to make minidump build also as module, however,
+>     minidump is a debug module and should be kernel built to get most debug information
+>     from kernel.
+> 
+>   - Tried to address comments given on dload patch series.
+> 
+> Changes in v4: https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+>   - Redesigned the driver and divided the driver into front end and backend (smem) so
+>     that any new backend can be attached easily to avoid code duplication.
+>   - Patch reordering as per the driver and subsystem to easier review of the code.
+>   - Removed minidump specific code from remoteproc to minidump smem based driver.
+>   - Enabled the all the driver as modules.
+>   - Address comments made on documentation and yaml and Device tree file [Krzysztof/Konrad]
+>   - Address comments made qcom_pstore_minidump driver and given its Device tree
+>     same set of properties as ramoops. [Luca/Kees]
+>   - Added patch for MAINTAINER file.
+>   - Include defconfig change as one patch as per [Krzysztof] suggestion.
+>   - Tried to remove the redundant file scope variables from the module as per [Krzysztof] suggestion.
+>   - Addressed comments made on dload mode patch v6 version
+>     https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> Changes in v3: https://lore.kernel.org/lkml/1683133352-10046-1-git-send-email-quic_mojha@quicinc.com/
+>   - Addressed most of the comments by Srini on v2 and refactored the minidump driver.
+>      - Added platform device support
+>      - Unregister region support.
+>   - Added update region for clients.
+>   - Added pending region support.
+>   - Modified the documentation guide accordingly.
+>   - Added qcom_pstore_ramdump client driver which happen to add ramoops platform
+>     device and also registers ramoops region with minidump.
+>   - Added download mode patch series with this minidump series.
+>      https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> Changes in v2: https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+>   - Addressed review comment made by [quic_tsoni/bmasney] to add documentation.
+>   - Addressed comments made by [srinivas.kandagatla]
+>   - Dropped pstore 6/6 from the last series, till i get conclusion to get pstore
+>     region in minidump.
+>   - Fixed issue reported by kernel test robot.
+> 
+> Changes in v1: https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> Minidump is a best effort mechanism to collect useful and predefined data
+> for first level of debugging on end user devices running on Qualcomm SoCs.
+> It is built on the premise that System on Chip (SoC) or subsystem part of
+> SoC crashes, due to a range of hardware and software bugs.
+> 
+> Qualcomm devices in engineering mode provides a mechanism for generating
+> full system ramdumps for post mortem debugging. But in some cases it's
+> however not feasible to capture the entire content of RAM. The minidump
+> mechanism provides the means for selecting which snippets should be
+> included in the ramdump.
+> 
+> The core of SMEM based minidump feature is part of Qualcomm's boot
+> firmware code. It initializes shared memory (SMEM), which is a part of
+> DDR and allocates a small section of SMEM to minidump table i.e also
+> called global table of content (G-ToC). Each subsystem (APSS, ADSP, ...)
+> has their own table of segments to be included in the minidump and all
+> get their reference from G-ToC. Each segment/region has some details
+> like name, physical address and it's size etc. and it could be anywhere
+> scattered in the DDR.
+> 
+> Existing upstream Qualcomm remoteproc driver[1] already supports SMEM
+> based minidump feature for remoteproc instances like ADSP, MODEM, ...
+> where predefined selective segments of subsystem region can be dumped
+> as part of coredump collection which generates smaller size artifacts
+> compared to complete coredump of subsystem on crash.
+> 
+> [1]
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+> 
+> In addition to managing and querying the APSS minidump description,
+> the Linux driver maintains a ELF header in a segment. This segment
+> gets updated with section/program header whenever a new entry gets
+> registered.
+> 
+> Support for Minidump enablement on Qualcomm SoCs is pursued separately and
+> can be done via below series of changes. For testing, these patches can be
+> applied
+> 
+> https://lore.kernel.org/lkml/1704727654-13999-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> https://lore.kernel.org/lkml/20240109153200.12848-12-quic_mojha@quicinc.com/
+> https://lore.kernel.org/lkml/20240109153200.12848-13-quic_mojha@quicinc.com/
+> 
+> Testing of these patches has been done on sm8450 target after enabling kernel
+> config like CONFIG_PSTORE_RAM/CONFIG_PSTORE_CONSOLE and once the device boots
+> up. Below command can be executed from sysfs to enable minidump in the firmware.
+> 
+>   echo mini > /sys/module/qcom_scm/parameters/download_mode
+> 
+> Try crashing it via devmem2 0xf11c000(this is known command to create xpu violation
+> and put the device crash dump mode) on command prompt.
+> 
+> Default storage type is set to via USB, so Minidump would be downloaded with the
+> help of x86_64 machine (running PCAT tool) attached to Qualcomm product which has
+> backed Minidump boot firmware support.
+> 
+> After that we will see a bunch of predefined registered region as binary blobs files
+> starts with md_* downloaded on the x86 machine at configured/default location in PCAT
+> tool from the product, more about this can be found in qualcomm minidump guide
+> patch.
+> 
+> Mukesh Ojha (10):
+>    docs: qcom: Add qualcomm minidump guide
+>    soc: qcom: Add qcom_rproc_minidump module
+>    remoteproc: qcom_q6v5_pas: Use qcom_rproc_minidump()
+>    remoteproc: qcom: Remove minidump related data from qcom_common.c
+>    init: export linux_banner data variable
+>    soc: qcom: Add Qualcomm APSS minidump kernel driver
+>    MAINTAINERS: Add entry for minidump related files
+>    pstore/ram: Add dynamic ramoops region support through commandline
+>    pstore/ram: Add ramoops information notifier support
+>    soc: qcom: register ramoops region with APSS minidump
+> 
+>   Documentation/admin-guide/index.rst         |   1 +
+>   Documentation/admin-guide/qcom_minidump.rst | 318 +++++++++
+>   Documentation/admin-guide/ramoops.rst       |  23 +-
+>   MAINTAINERS                                 |  10 +
+>   drivers/remoteproc/Kconfig                  |   1 +
+>   drivers/remoteproc/qcom_common.c            | 160 -----
+>   drivers/remoteproc/qcom_q6v5_pas.c          |   3 +-
+>   drivers/soc/qcom/Kconfig                    |  23 +
+>   drivers/soc/qcom/Makefile                   |   2 +
+>   drivers/soc/qcom/qcom_minidump.c            | 690 ++++++++++++++++++++
+>   drivers/soc/qcom/qcom_minidump_internal.h   |  74 +++
+>   drivers/soc/qcom/qcom_rproc_minidump.c      | 111 ++++
+>   drivers/soc/qcom/smem.c                     |  20 +
+>   fs/pstore/Kconfig                           |  15 +
+>   fs/pstore/ram.c                             | 180 ++++-
+>   include/linux/init.h                        |   3 +
+>   include/linux/pstore_ram.h                  |  20 +
+>   include/linux/soc/qcom/smem.h               |   2 +
+>   include/soc/qcom/qcom_minidump.h            |  41 ++
+>   init/main.c                                 |   3 +
+>   init/version-timestamp.c                    |   3 +
+>   21 files changed, 1538 insertions(+), 165 deletions(-)
+>   create mode 100644 Documentation/admin-guide/qcom_minidump.rst
+>   create mode 100644 drivers/soc/qcom/qcom_minidump.c
+>   create mode 100644 drivers/soc/qcom/qcom_minidump_internal.h
+>   create mode 100644 drivers/soc/qcom/qcom_rproc_minidump.c
+>   create mode 100644 include/soc/qcom/qcom_minidump.h
+> 
+> 
+> base-commit: 41d66f96d0f15a0a2ad6fa2208f6bac1a66cbd52
 
