@@ -1,176 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-13278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A01387083F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:28:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 631B6870863
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:37:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3191728296A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 17:28:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9516C1C215C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 17:37:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB8DF612E5;
-	Mon,  4 Mar 2024 17:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5ADF6166D;
+	Mon,  4 Mar 2024 17:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uxjlboZU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F2D1756D;
-	Mon,  4 Mar 2024 17:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E3E61663
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 17:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709573300; cv=none; b=IytnhoQpWLYJh6cOzUlm9MK0+DnsqCsWblv+lKHO5/c1rYiIdjzfL0STnxP5NqJqq7/onKhlt2l/b4elFxoo/NMoJruUMzdPxO4yUNaMIHiq2bbKvHXkqvZsviz4J8sYirgDfzWr10AxwXxXTQbWYF5cxsTlFllMvjWfVaoZ534=
+	t=1709573807; cv=none; b=ROo1nJmHNBddRD2lAcoPgGXFVDAEl4g0P89EQhWdUImwu6eZoGCAcK3s62cVyVxXmNg5YosnNVexJvkUcmxLaA26CgMxzVeJLihXbBA/CxbaEP55wIhf6Sc0ZABktUQIQ8PNBdnEMa0b3IIRxjUL/BsXqeUt0wZmTuOqfcgt1Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709573300; c=relaxed/simple;
-	bh=bgaXc6UbtMvm6q7rNQwEibfcHRDpfZN+XPlFzPFE/74=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YelKcOiIxk5wflJcTJKhzZC+4G2xOOkU3cskOczcoOcCQC7EgpJ8e1xnkFGECu6E0OxmkmRvEb8d6Ph/NEs6QoVPHw0Z6ueZhQsBHRjLALIxJOEyqgxIrh1JorD6qqyHkjUjTGKfJn9saxdCHvn/ySVVdKYa84TvTYK3JcKfg+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873C2C433F1;
-	Mon,  4 Mar 2024 17:28:13 +0000 (UTC)
-Date: Mon, 4 Mar 2024 22:58:09 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
-	agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	mani@kernel.org, quic_msarkar@quicinc.com,
-	quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Josh Triplett <josh@joshtriplett.org>, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 1/3] PCI: dwc: refactor common code
-Message-ID: <20240304172809.GA31079@thinkpad>
-References: <20240301051220.20917-2-quic_schintav@quicinc.com>
- <20240301194456.GA405061@bhelgaas>
+	s=arc-20240116; t=1709573807; c=relaxed/simple;
+	bh=HpONkFOmk9WCDOiqE/57zwq8lJstKwLF4gqAsKfFXQ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lvdq0IjmL2CDkX5gMS6sSAg57VVq9kjFLwOwWjl7UzKR3oeJvNS5GpwnOPhLCLktIoYBbbVnKezn3vjUgyfMl3nOLQvVm0edQJNNP2J5t3+8HSoOwLlU3R5Kqe/Oertq2fJ98lIt2dQh0Rmraza1RtCHso6DDcZj4YP899U//8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uxjlboZU; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d33986dbc0so42045781fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 09:36:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709573804; x=1710178604; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OXEvMA5w5rvjI27ttLhue2/cB4ftFG6hZNeiSaW+NeA=;
+        b=uxjlboZUO+FUxmOv28QVSxusXalT+RU6CoziCqpGr/MO+6fQTu2mMeiwaToxflNFFI
+         7/ihKJgw+S1K6g/v8rsiCOvk41S/iao3iKghg/3G9dOHzJUPpDprlmU6RnnqA2GWZRNm
+         fh/e22c6SeTzokGY+gaUrp6aRjgUpEm6N2ATrApUybWiPxRbcwiCgp1EajWjnxz+1Glq
+         1T3DljyUwpUsw00925wCSRW1tvTsJONPaqsg8gBCB+q3SJCJcA7oi4aC+xTDKrP+AaZI
+         f+EIAwA2gFtDa7qtyPhvPkca+JWvFxu5cS0uecvH8bmd0WvhzpV/dUMFW8A/JzPu/kSr
+         NXOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709573804; x=1710178604;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OXEvMA5w5rvjI27ttLhue2/cB4ftFG6hZNeiSaW+NeA=;
+        b=QIOcZK3D4lHGXQZmerLvleVDLCBIUjrK/vS3VSVZ1ORZn2TWF+hYuK77M5QA3gSL7R
+         Liok9Ooq/pw1zx1G05Yu0Y++RNPMKgjDrVOapL7r9KyZ9unJ6Gyhl9Ccpa72zatXAPY8
+         Eqq3R5HTb+d08rydG5TeMWjAFcQqsaKWbMMBp9IV0Te33JlTYpishDF72mRHdMQYdrfx
+         KfEPge0sjI0YOpdpnSjxSE1+QXUn54YY53siEya8LCLm0NqT6KZlxWBsiY5MMtIGFWyt
+         GjzwPIxtb7ne9mVV3DCX01CG/UiPYfKaIhCRzHg/thCTPRhEeHm9+eNaBofKcTRbdKj4
+         6xJg==
+X-Forwarded-Encrypted: i=1; AJvYcCUjt8/vSShWkr2lHJnpGhiY3tCIYgozxF1zVZdVaP5ekoStS0sgGJmwNzZRIp/Ry3pe8NG1wpMBYnrkdCcAgRzhFWQPUxKrEAAXZ5KGBQ==
+X-Gm-Message-State: AOJu0YxxAauujzh84hXaoy8869TZ1lZV8eRHYVAyVN8M5XzE6KSM+VVH
+	ybJUNxL/gv8ikk4m5Fty8pJV2rx5SZSXXj99H5dQZVHPckirhSWetuXb6iZ/gHc=
+X-Google-Smtp-Source: AGHT+IGFq4RAkfHr79J2Xhsh8YYiYxntXslFUyjgCDcsPphD5lS7JnGn6fRFVDEb9nHHQFLLMI1nWA==
+X-Received: by 2002:a2e:9ac5:0:b0:2d3:93dd:a192 with SMTP id p5-20020a2e9ac5000000b002d393dda192mr3263691ljj.45.1709573803913;
+        Mon, 04 Mar 2024 09:36:43 -0800 (PST)
+Received: from [172.30.204.149] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id w15-20020a2e958f000000b002d277882eb6sm1827909ljh.83.2024.03.04.09.36.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Mar 2024 09:36:43 -0800 (PST)
+Message-ID: <98e154f7-a01d-43d0-bd0b-70122ad880c6@linaro.org>
+Date: Mon, 4 Mar 2024 18:36:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240301194456.GA405061@bhelgaas>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] interconnect: qcom: x1e80100: Remove inexistent ACV_PERF
+ BCM
+To: Mike Tipton <quic_mdtipton@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov
+ <djakov@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240302-topic-faux_bcm_x1e-v1-1-c40fab7c4bc5@linaro.org>
+ <20240304164009.GB25492@hu-mdtipton-lv.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240304164009.GB25492@hu-mdtipton-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 01, 2024 at 01:44:56PM -0600, Bjorn Helgaas wrote:
-> On Thu, Feb 29, 2024 at 09:11:34PM -0800, Shashank Babu Chinta Venkata wrote:
-> > Refactor common code from RC(Root Complex) and EP(End Point)
-> > drivers and move them to a common repository. This acts as placeholder
-> > for common source code for both drivers avoiding duplication.
-> > 
-> > Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-> > ---
-> >  drivers/pci/controller/dwc/Kconfig         |  5 ++
-> >  drivers/pci/controller/dwc/Makefile        |  1 +
-> >  drivers/pci/controller/dwc/pcie-qcom-cmn.c | 85 ++++++++++++++++++++++
-> >  drivers/pci/controller/dwc/pcie-qcom-cmn.h | 30 ++++++++
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c  | 39 +---------
-> >  drivers/pci/controller/dwc/pcie-qcom.c     | 67 ++---------------
-> >  6 files changed, 133 insertions(+), 94 deletions(-)
-> >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-cmn.c
-> >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-cmn.h
-> 
-> Hmm.  I'm a little ambivalent about adding two new files.  Overall I
-> think I prefer the drivers that include both RC and EP mode in a
-> single source file because one file is easier to browse than four and
-> more things can be static.
-> 
-> A single file would also reduce quite a bit more duplication between
-> pcie-qcom.c and pcie-qcom-ep.c, e.g., register names and fields with
-> needlessly different names:
-> 
->   #define AUX_PWR_DET                     BIT(4)  # pcie-qcom.c
->   #define PARF_SYS_CTRL_AUX_PWR_DET       BIT(4)  # pcie-qcom-ep.c
-> 
-> I do see PCIE_QCOM is bool and PCIE_QCOM_EP is tristate, so that and
-> other considerations might make a single source file impractical.
-> 
 
-Yeah, we explored that option while adding the EP driver and it didn't look
-feasible.
 
-- Mani
+On 3/4/24 17:40, Mike Tipton wrote:
+> On Sat, Mar 02, 2024 at 03:22:49AM +0100, Konrad Dybcio wrote:
+>> Booting the kernel on X1E results in a message like:
+>>
+>> [    2.561524] qnoc-x1e80100 interconnect-0: ACV_PERF could not find RPMh address
+>>
+>> And indeed, taking a look at cmd-db, no such BCM exists. Remove it.
+>>
+>> Fixes: 9f196772841e ("interconnect: qcom: Add X1E80100 interconnect provider driver")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Reviewed-by: Mike Tipton <quic_mdtipton@quicinc.com>
+> 
+> For some background, ACV "perf mode" does exist, but not as a separate
+> BCM. It's controlled by a separate bit in the ACV mask. By default, the
+> ACV node only sets the bit indicating the HLOS voter. It doesn't assert
+> the perf mode bit.
+> 
+> Enabling perf mode toggles different trade-offs within the DDR subsystem
+> for slightly improved performance at the expense of slightly higher
+> power. There are limited use cases of this downstream, where we expose
+> control over this bit to clients through icc_set_tag(). It primarily
+> improves certain latency sensitive benchmarks, AFAIK. I don't think it
+> has much impact on real world use cases.
+> 
+> This is true for many other targets as well, not just x1e80100.
+> 
+> Voting for perf-mode is entirely optional and in most cases also
+> entirely unnecessary. So, removing this broken way to control it without
+> adding the proper control is totally fine.
+> 
+> I have a local series to add the proper support, but haven't posted it
+> yet. There aren't any users for it upstream yet, nor am I aware of any
+> near term plans to add them. So, it would be unused for a little while,
+> at least. That said, anybody could use it to set that tag on their BW
+> votes on the off-chance it improves performance and they don't care
+> about the power trade-offs.
+> 
+> I could post the series soon if there's interest.
 
-> > +++ b/drivers/pci/controller/dwc/Makefile
-> > @@ -27,6 +27,7 @@ obj-$(CONFIG_PCIE_UNIPHIER) += pcie-uniphier.o
-> >  obj-$(CONFIG_PCIE_UNIPHIER_EP) += pcie-uniphier-ep.o
-> >  obj-$(CONFIG_PCIE_VISCONTI_HOST) += pcie-visconti.o
-> >  obj-$(CONFIG_PCIE_RCAR_GEN4) += pcie-rcar-gen4.o
-> > +obj-$(CONFIG_PCIE_QCOM_CMN) += pcie-qcom-cmn.o
-> 
-> If we have to have pcie-qcom-cmn.o, at least move this next to the
-> existing lines:
-> 
->   obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o
->   obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
-> 
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.c
-> > @@ -0,0 +1,85 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
-> > + * Copyright 2015, 2021 Linaro Limited.
-> > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> > + *
-> 
-> Spurious blank line.
-> 
-> > +int qcom_pcie_cmn_icc_get_resource(struct dw_pcie *pci, struct icc_path *icc_mem)
-> 
-> I don't see the value of adding "cmn" in the middle of the names.
-> 
-> > +{
-> > +	int ret = 0;
-> > +
-> > +	if (IS_ERR(pci))
-> > +		return PTR_ERR(pci);
-> > +
-> > +	icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
-> > +	if (IS_ERR(icc_mem))
-> > +		return PTR_ERR(icc_mem);
-> > +
-> > +	return ret;
-> 
-> No need for the "ret" variable since it's never assigned.  "return 0"
-> here would be easier to read.
-> 
-> > +int qcom_pcie_cmn_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem)
-> > +{
-> > +	int ret = 0;
-> 
-> Unnecessary initialization.
-> 
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
-> > @@ -0,0 +1,30 @@
-> > +/* SPDX-License-Identifier: GPL-2.0 */
-> > +/*
-> > + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
-> > + * Copyright 2015, 2021 Linaro Limited.
-> > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> > + */
-> > +
-> > +#include <linux/pci.h>
-> > +#include "../../pci.h"
-> > +#include "pcie-designware.h"
-> > +
-> > +#ifdef CONFIG_PCIE_QCOM_CMN
-> 
-> Why the #ifdef wrapper?  And why do we need the stubs when
-> CONFIG_PCIE_QCOM_CMN isn't defined?
-> 
-> > +#else
-> > +static inline int qcom_pcie_cmn_icc_get_resource(struct dw_pcie *pci, struct icc_path *icc_mem)
-> > +{
-> > +	return 0;
-> > +}
+I think adding a sysfs entry for toggling this could be very interesting.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Userspace could toggle this based on "power profile"-style settings.
+
+Konrad
 
