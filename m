@@ -1,202 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-13286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFD85870916
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:07:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1415D87093C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 19:13:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30EBCB265F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:07:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45C8E1C2048A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 18:13:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC8261680;
-	Mon,  4 Mar 2024 18:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29E9660261;
+	Mon,  4 Mar 2024 18:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J+U8NvWH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C6VbNKzw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791CD26293;
-	Mon,  4 Mar 2024 18:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7E261689
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Mar 2024 18:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709575643; cv=none; b=KIoJxOTIPhS7KrI+4Q6Q9pfl4LNnqyjc5mPs6ywcbSF6/GbbGyH1XiInQc/dThDci5JZpY6EqQv0gvm6lZ+wTwf0g3eR0FatuWorEEmKof36x4ROOFTQLTYKk1fioKjC8CSJ2PnwlVhCQjRp6+J7RaRAjbH+vcEevQzHRqZX4vc=
+	t=1709576022; cv=none; b=NzWBv30SqhzmKa5x3nhUsvDg6MBPyTDdSWvGgFPphG7wFTUKciN/dw/lXiBk2Dpt3kA7hSwIBZZa7iLh5vBW6rYbyp3VquYw9IH5KGhJ0b7TUmbPyaoZJpV+su0HaXz6h8iqPtKtLkv338obNTFB3G8UbhByCfk86Cgm5mQEBMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709575643; c=relaxed/simple;
-	bh=+kPI4W1KcqjMAyWnSSkBYohj4nbHxaxkRJKPvMeuDzs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VgVaKSAnVxgxbhRoSRdTSPlfY9oaMOFxHnrhpoMAxGEyCB7N17UJbQwb5/sGrfjw9dDY4cflUNOIWLrBKFU8pxIMk7rCz74yT0s2w5TyyFaM9N+8j7JcOsGmbHW0NZSYzuFBL7bnzYgoBqVLPI9+KUlCVpUNTb+93yoXhnC0klg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J+U8NvWH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424HEpom021186;
-	Mon, 4 Mar 2024 18:07:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=wI+mV9FCzojgbVbc75aDMows1874ZeqGHy6X59A75Rs=; b=J+
-	U8NvWHO0/L21e7otqZKiJSNOZYv6DjXliqBeUrDJEpJ3ID4BqD6f6kRdkVfY8pyT
-	Qcoa3/dfN0QS2LLOfzpoxJraminuFDXmETNkFrNINoWU2CNWi8sNXMUPM3e01+n0
-	B1ZVwl6rNd5PMYGXDx4v9qDqj31jJYJKEEpVtuS49bDNYFyOsyLCPWjPARusJd9d
-	E/CUkMhIIcBzJcTtamNjCaEdJyiw0XOpYwEedOd6ng6EGjQ058FKaoIrlDOTfKQv
-	rgUc80Z3Q3rCmvUZw9TzX2FibmLjSNpEE+D7+S96T55YHCJBn8pMZg1p9Kbg8T0U
-	f1Oqmi75WOPoQl2DAUZQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnjh7g3f6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 18:07:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 424I76E0010835
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Mar 2024 18:07:06 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Mar
- 2024 10:07:05 -0800
-Message-ID: <8a079ca6-8476-134d-966a-831348895349@quicinc.com>
-Date: Mon, 4 Mar 2024 10:07:04 -0800
+	s=arc-20240116; t=1709576022; c=relaxed/simple;
+	bh=3F/A0H6R/22hcoodKfGiPkYHlGjl2g7ELSfDnPaMILg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=doaXG3D5WM3ChD7++ZkGBSdrXSB2W/8MX+ApC/uSypatEjS1nh8dnBjx2Y3mCdosNQt/uKS5sAYGEbwnpEBNHjKfUrLP0/h/aLpsG542uW8l6iVrZN3VMJi21pbpGyHcbqG0vs7nZO8wkHzMfhdn+PvO0QbL8JfdAV3uFkjuaRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C6VbNKzw; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-608342633b8so47663197b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 10:13:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709576019; x=1710180819; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EjE93o2p/BNRD6duwy1hrbCPE/L1Bz04gG2eWZQ12G8=;
+        b=C6VbNKzwYJbVuZSVY7TLXAIrytGs1eabWh7HV4vXAnAgP/RR3SUqGH0IfSD41TaIv+
+         vNx0zQxjNmrbhNVt5rA1Q3369dudOklkb0a9WsyHPsVFffCAf/BZgvJNARlKGIfh822H
+         u/zHI2zn+SMFjLwRCT9wo4o7it+Vrmj1BgpjoMa9DUgOed59YSBq4gnB3zqR+CDrXie4
+         +D2vGWcElDv0k41V7q1Jn4LfGgui3AklIy2U/Ca4rRcRg5IB4xoxO7HIOMW0qjIKq/Qe
+         jQSTep3OZ/gb8Og7zgNP8gMzDkQcrSc6AEMKF/XcuAEtsz1xQDyfI0aIdFX1JlnDcSOD
+         tzIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709576019; x=1710180819;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EjE93o2p/BNRD6duwy1hrbCPE/L1Bz04gG2eWZQ12G8=;
+        b=jNGkDtR1KUCARZ1isX8ZwS65oAs/qbNOjmqJnvMNZzbmhc0KGywqz6y0qkSWa14mWp
+         e4jlyHvKA5+wBXxvhUqP2U7m+OmhBecRGdKBw+BTswXdMLnsKvaqTpVnSTPXidKcx9EU
+         cfxBwU9xuKVHOjPZ2LDQYzHkrJ5trUxIje33sjjCUC2+80uu/vpwvWz9IeQKx2Nc1Cbz
+         KoTCXPgTA4mFvyAVGzwp5WGepHKheQ1v471PyAAD84GKAVqOG5z0JL9hjbv9p5mVUNXO
+         A9ZiewnH/iSda3DB7GD2pxuMX9RhrotOJU+CiSBRfYOg38m9ueovGg591NpOTnYQ14cB
+         PQgg==
+X-Gm-Message-State: AOJu0YxBscYWXK8ANazdxnNLlGc3J/Gf2J8+hkgKPFqlumGCDELG1QAp
+	VW+CWnE8QDwuIhgjW1t6wIRY8mXizJvPtmR+11CKXW9Q83qPfURUXsEjTNiQZ1TGYT/VF5/h7IO
+	rDecH20z3HXXJCQM2L08cUxsv7flQPwe8NDwH8iBfeCcSeH+M98Y=
+X-Google-Smtp-Source: AGHT+IHEsG0xIbxTLt0nqR9d2jAuFPIONsiU/QGgPiLY+SElLJU2fbWTW9Q10bJjRdOjSCCR3L+cVAZZv/zuB053MDw=
+X-Received: by 2002:a0d:d491:0:b0:609:8132:79b3 with SMTP id
+ w139-20020a0dd491000000b00609813279b3mr10243342ywd.10.1709576019520; Mon, 04
+ Mar 2024 10:13:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] drm/msm/dpu: drop unused dpu_kms from interface
- initialization
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        <dri-devel@lists.freedesktop.org>, <quic_parellan@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240228194730.619204-1-quic_abhinavk@quicinc.com>
- <CAA8EJppf0ebg+qnw7Z4P_6W4pgf0E4+KLGLEhU138f4k8+QxOw@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJppf0ebg+qnw7Z4P_6W4pgf0E4+KLGLEhU138f4k8+QxOw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _n4rljtjrpDRDWyvbj8qXjA4v2UkLE9A
-X-Proofpoint-ORIG-GUID: _n4rljtjrpDRDWyvbj8qXjA4v2UkLE9A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-04_13,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
- malwarescore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 adultscore=0
- phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2402120000 definitions=main-2403040138
+References: <20240304175152.1199270-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20240304175152.1199270-1-andriy.shevchenko@linux.intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 4 Mar 2024 20:13:28 +0200
+Message-ID: <CAA8EJpqAzWdntbmg-NyQcbLHtUoh-m=g_u=ZWiMimubsWW22sQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] drm/msm/hdmi: Replace of_gpio.h by proper one
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 4 Mar 2024 at 19:51, Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> of_gpio.h is deprecated and subject to remove.
+> The driver doesn't use it directly, replace it
+> with what is really being used.
+>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 3/4/2024 5:06 AM, Dmitry Baryshkov wrote:
-> On Wed, 28 Feb 2024 at 21:47, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->> dpu_kms seems unused while initializing DSI, HDMI and DP through
->> their respective _dpu_kms_initialize_* functions.
->>
->> Hence lets drop the parameter altogether.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 15 ++++++---------
->>   1 file changed, 6 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index 2af62d8fa9a7..ab924ac78c9b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -494,8 +494,7 @@ static void dpu_kms_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
->>   }
->>
->>   static int _dpu_kms_initialize_dsi(struct drm_device *dev,
->> -                                   struct msm_drm_private *priv,
->> -                                   struct dpu_kms *dpu_kms)
->> +                                  struct msm_drm_private *priv)
->>   {
->>          struct drm_encoder *encoder = NULL;
->>          struct msm_display_info info;
->> @@ -558,8 +557,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
->>   }
->>
->>   static int _dpu_kms_initialize_displayport(struct drm_device *dev,
->> -                                           struct msm_drm_private *priv,
->> -                                           struct dpu_kms *dpu_kms)
->> +                                          struct msm_drm_private *priv)
-> 
-> This breaks now on top of YUV patchset:
-> 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function
-> '_dpu_kms_initialize_displayport':
-> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:583:35: error: 'dpu_kms'
-> undeclared (first use in this function)
-> 583 | yuv_supported = !!dpu_kms->catalog->cdm;
-> 
-> As this requires adding of the yuv_supported argument, let's consider
-> moving it backwards: for  _dpu_kms_initialize_writeback() we can get
-> format_list and n_formats from the dpu_kms.
-> 
-
-Yes, my bad, I realized after sending this that my branch did not have 
-CDM changes yet.
-
-Let me rework and post this on top of the latest tree.
-
-> 
->>   {
->>          struct drm_encoder *encoder = NULL;
->>          struct msm_display_info info;
->> @@ -592,8 +590,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
->>   }
->>
->>   static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
->> -                                   struct msm_drm_private *priv,
->> -                                   struct dpu_kms *dpu_kms)
->> +                                   struct msm_drm_private *priv)
->>   {
->>          struct drm_encoder *encoder = NULL;
->>          struct msm_display_info info;
->> @@ -671,19 +668,19 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
->>          int rc = 0;
->>          int i;
->>
->> -       rc = _dpu_kms_initialize_dsi(dev, priv, dpu_kms);
->> +       rc = _dpu_kms_initialize_dsi(dev, priv);
->>          if (rc) {
->>                  DPU_ERROR("initialize_dsi failed, rc = %d\n", rc);
->>                  return rc;
->>          }
->>
->> -       rc = _dpu_kms_initialize_displayport(dev, priv, dpu_kms);
->> +       rc = _dpu_kms_initialize_displayport(dev, priv);
->>          if (rc) {
->>                  DPU_ERROR("initialize_DP failed, rc = %d\n", rc);
->>                  return rc;
->>          }
->>
->> -       rc = _dpu_kms_initialize_hdmi(dev, priv, dpu_kms);
->> +       rc = _dpu_kms_initialize_hdmi(dev, priv);
->>          if (rc) {
->>                  DPU_ERROR("initialize HDMI failed, rc = %d\n", rc);
->>                  return rc;
->> --
->> 2.34.1
->>
-> 
-> 
+> ---
+>  drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index c8ebd75176bb..24abcb7254cc 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -5,8 +5,8 @@
+>   * Author: Rob Clark <robdclark@gmail.com>
+>   */
+>
+> +#include <linux/gpio/consumer.h>
+>  #include <linux/of_irq.h>
+> -#include <linux/of_gpio.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>
 > --
-> With best wishes
-> Dmitry
+> 2.43.0.rc1.1.gbec44491f096
+>
+
+
+-- 
+With best wishes
+Dmitry
 
