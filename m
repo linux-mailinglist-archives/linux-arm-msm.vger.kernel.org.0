@@ -1,188 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-13259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2902B870267
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 14:15:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA62287030B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 14:43:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D97C02809E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 13:15:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B9F21F21888
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 13:43:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C864F38DEA;
-	Mon,  4 Mar 2024 13:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33BF63E485;
+	Mon,  4 Mar 2024 13:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i+OEh+t4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="irtJW8O0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115643D3B4;
-	Mon,  4 Mar 2024 13:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3E93D963;
+	Mon,  4 Mar 2024 13:42:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709558101; cv=none; b=rZwvNlqaBogXGS+B16dcp2E515uD/BpXW+WQBjTPdxuYm1dnvcV+E/lNSq2ypj8CpzLULhLx2Ni1hFuzv/Uklg8+tTT1nueIS+xeXzGeRyzfEg0Oeye4jgiv3Xa7ZyWXr8BTKqDHmlkqjowG6LPrzUmsvHwsM3V5GZp7fWQ/3Ls=
+	t=1709559766; cv=none; b=JzXGTRMNZpYKZxZphESJub9m9w5yowGALFx2L0wcrMD+PeRrSPz2vS//Mldx9d2jVK3FPlmKonx2UFu4IdTCbkFdfu+7Edqb0rpuQFPfN5NJkb/19KS1xcwra1/vqEiP5pdnzO5QkvWy9JIYMzJ+2rmhiRDglJMqkWF2GF5VkOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709558101; c=relaxed/simple;
-	bh=my4sJhUKSsXBtRhKes0rW4/YTKXdCpClyjKDr1rq0YE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GaBXAXmtbODLCG1Pjwzdn4yHvxLLitwyGd4SIWs0tVqR4EQLZSMXKpw/MLTFiGMmoo8BjdJpNWTcLfKvbCqx3pjuhO20lOCNAbfCiKPpdsfHadJD3CMSvk3ZmMTbzjbAHp/rsH8dvGiAGw7TiIxNv5qeLuyVCmLn5xPAHbDdx/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i+OEh+t4; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-565ef8af2f5so5776632a12.3;
-        Mon, 04 Mar 2024 05:14:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709558098; x=1710162898; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qSY+0FJnRKGhhIo9ghINQ55bg6BnVBP3EupnZ+W3FO8=;
-        b=i+OEh+t4Dv14E31IrPnlpAbVMWnn/5lTuwCojMO9IGAYcA+XbFqpV5CZV/gnWS0L0O
-         IO54jTP+kXhuAMix+UfdwmThXIRdq3bzWDm/YyZfIfDkgjW1a44fUALQdUI1cjFAXA/O
-         Y3aCT2d0KFSBopyfPxFUoKwA+AsCeJE40Y8/DX2WxXSHzydAnYaptD6ehyDY1B38PTnO
-         XNs/twi2WTT89NhoqVXuNLgq03XgJNujE9JGT+xAn+PdK7s3urS1e2r2BFe7ErUfHpIA
-         Acfp/UlG2YLrOYDZEKHa9jPVa7jIXL2rdSiFhfOovUurK5UZUjTDvUS9N8coLjJoQ5RZ
-         s3mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709558098; x=1710162898;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qSY+0FJnRKGhhIo9ghINQ55bg6BnVBP3EupnZ+W3FO8=;
-        b=kdElYyX6zGBEbxjIaKfS830CF3wAk6dD1q+N3duV2dIPcK6eHHqmkfIrLvfXHh/aHo
-         PE9zwitEWucX/Q2GStIj/ryh7sPkQbRHTEKXtkx6PvX/zd5rtEq+TYzN/RWmFixun5hb
-         fGuPF0qevvqWSRg48vNQukVrkVbVkxKAI5NTUVm/bTGV2XJIghN/bUPq62TxYsSeAeZG
-         m/Dg7tNvLowQ0/8TMtnLFiHBUG/xIUZt7atBTy0o5ATrh5aYwe6786OGQUH4BPWpt8QH
-         RyQ42Du++tKlV6LT2663ccYS1v19XWrzP81Va9q8BgOQn7p5YGZ8y236eP2fNFVEGDMU
-         zKTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXf2vXIHWVR0UrVp+NlWeKzwhQEdJucy/0fDSqbjm9huBH0RLCpn044TSbkufqBkOKUVK2poQ3Sk68BEF6fUQg5YIUSwEdnOxRV2O9hAgTMZ15pMEjo5LNwWSZYqHH2wIyJOVwX
-X-Gm-Message-State: AOJu0YyYxQeixB/qnKGAhPyJGFYreHTougq13Vg3YUKLzGqhQlYJ6FpX
-	uOYpdMwSjQHUOVXIF859T8jUQtv+vUpFHIs7K3Hu10rIoKYL1/id
-X-Google-Smtp-Source: AGHT+IG/dHnH6tSConVbuE0bqMVDVg8iYE+f1uNWUntd0gl7R8U1AZk7sAWSJA91AKlGmuEixDIp1g==
-X-Received: by 2002:a05:6402:2152:b0:566:ef8:a81a with SMTP id bq18-20020a056402215200b005660ef8a81amr6732285edb.7.1709558098243;
-        Mon, 04 Mar 2024 05:14:58 -0800 (PST)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id fj10-20020a0564022b8a00b00563f8233ba8sm4595285edb.7.2024.03.04.05.14.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 05:14:57 -0800 (PST)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 04 Mar 2024 14:14:53 +0100
-Subject: [PATCH] firmware: qcom_scm: disable clocks if qcom_scm_bw_enable()
- fails
+	s=arc-20240116; t=1709559766; c=relaxed/simple;
+	bh=uof/ush/MFndl5WiP6r2u0em/l91glIDX9t4FzIKBFg=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=dueV5DguxkohvaAd9Eigp5yFNmm9bBUBRkHjW5GEqlE0MA7BAujrVUQ8mXv3GY4SxYKiGrZPoch7LFP3+YpFodX1DPkxnrmT5vTdI2F0/NNuz66j1qSKk7H5Ru7YwEw7K+Bt8XIsfbJI8I70tunwtb1VBtKjzS1oUf/vin0dj6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=irtJW8O0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 424DgbHs025574;
+	Mon, 4 Mar 2024 13:42:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=J98nZN1Wf+Z8
+	xl5UNZWuCOEvqbu2IIbX5MnokV7ko2c=; b=irtJW8O0ksF+hDxzFcr3PG68Jd0V
+	059TNjC1T8Dj7Ine7fiH7v3j+xbEcj/KH6TaG4TCGfwp4XJlXf4PNw11VHLjV4kc
+	6/KF8MaRWBimKrFpuOLNRLWF0dikLvuyDAbNiiDbB3fpsA9Zp048MUwmRWx9SgAQ
+	2IK/o+E2go7bIbZIBZ835UmaZYVBF82oLmNgn3x1fYAzoOtInQ0fzu+Wh2tDDtK8
+	eLxjraP0YVoky0KahY9AOl/SFTiqjbzOYrRC7phU3ykVBlaThcVs4be5bYhPfo8K
+	DX97vO9XiX8W5hv74ii270Ao+rCgOgm3EL35re1KvEgaq3y3OxmCIG+rJA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wn6qx110f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Mar 2024 13:42:37 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 424DgWof003908;
+	Mon, 4 Mar 2024 13:42:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3wkw6khygt-1;
+	Mon, 04 Mar 2024 13:42:32 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424DgWdU003903;
+	Mon, 4 Mar 2024 13:42:32 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 424DgWAl003901;
+	Mon, 04 Mar 2024 13:42:32 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 725815001CE; Mon,  4 Mar 2024 19:12:31 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_anupkulk@quicinc.com, quic_cchiluve@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v1] slimbus: qcom-ngd-ctrl: Add timeout for wait operation
+Date: Mon,  4 Mar 2024 19:12:28 +0530
+Message-Id: <20240304134228.16627-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: od_AhOf-ZDhZmbY2pp2n9cVpFgowZs0n
+X-Proofpoint-ORIG-GUID: od_AhOf-ZDhZmbY2pp2n9cVpFgowZs0n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_09,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ clxscore=1011 adultscore=0 spamscore=0 mlxlogscore=999 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403040104
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240304-qcom-scm-disable-clk-v1-1-b36e51577ca1@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAEzJ5WUC/x3MSwqAMAwA0atI1gaqVRSvIi5qm2rw34AIxbtbX
- L7FTAShwCTQZREC3Sx87AlFnoGdzT4RskuGUpWV0qrCyx4bit3QsZhxJbTrgqqlxri21t4UkNI
- zkOfn3/bD+344dc1UZgAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
 
-There are several functions which are calling qcom_scm_bw_enable()
-then returns immediately if the call fails and leaves the clocks
-enabled.
+In current driver qcom_slim_ngd_up_worker() indefinitely
+waiting for ctrl->qmi_up completion object. This is
+resulting in workqueue lockup on Kthread.
 
-Change the code of these functions to disable clocks when the
-qcom_scm_bw_enable() call fails. This also fixes a possible dma
-buffer leak in the qcom_scm_pas_init_image() function.
+Added wait_for_completion_interruptible_timeout to
+allow the thread to wait for specific timeout period and
+bail out instead waiting infinitely.
 
-Compile tested only due to lack of hardware with interconnect
-support.
-
-Cc: stable@vger.kernel.org
-Fixes: 65b7ebda5028 ("firmware: qcom_scm: Add bw voting support to the SCM interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
 ---
-Based on v6.8-rc7.
+ drivers/slimbus/qcom-ngd-ctrl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Note: Removing the two empty lines from qcom_scm_pas_init_image()
-and fomr qcom_scm_pas_shutdown() functions is intentional to make
-those consistent with the other two functions.
----
- drivers/firmware/qcom/qcom_scm.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 520de9b5633ab..e8460626fb0c4 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -569,13 +569,14 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index efeba8275a66..c27076d8b7db 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -83,6 +83,7 @@
  
- 	ret = qcom_scm_bw_enable();
- 	if (ret)
--		return ret;
-+		goto disable_clk;
+ #define QCOM_SLIM_NGD_AUTOSUSPEND	MSEC_PER_SEC
+ #define SLIM_RX_MSGQ_TIMEOUT_VAL	0x10000
++#define SLIM_QMI_TIMEOUT_MS		1000
  
- 	desc.args[1] = mdata_phys;
+ #define SLIM_LA_MGR	0xFF
+ #define SLIM_ROOT_FREQ	24576000
+@@ -1451,7 +1452,11 @@ static void qcom_slim_ngd_up_worker(struct work_struct *work)
+ 	ctrl = container_of(work, struct qcom_slim_ngd_ctrl, ngd_up_work);
  
- 	ret = qcom_scm_call(__scm->dev, &desc, &res);
--
- 	qcom_scm_bw_disable();
-+
-+disable_clk:
- 	qcom_scm_clk_disable();
+ 	/* Make sure qmi service is up before continuing */
+-	wait_for_completion_interruptible(&ctrl->qmi_up);
++	if (!wait_for_completion_interruptible_timeout(&ctrl->qmi_up,
++						       msecs_to_jiffies(SLIM_QMI_TIMEOUT_MS))) {
++		dev_err(ctrl->dev, "QMI wait timeout\n");
++		return;
++	}
  
- out:
-@@ -637,10 +638,12 @@ int qcom_scm_pas_mem_setup(u32 peripheral, phys_addr_t addr, phys_addr_t size)
- 
- 	ret = qcom_scm_bw_enable();
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = qcom_scm_call(__scm->dev, &desc, &res);
- 	qcom_scm_bw_disable();
-+
-+disable_clk:
- 	qcom_scm_clk_disable();
- 
- 	return ret ? : res.result[0];
-@@ -672,10 +675,12 @@ int qcom_scm_pas_auth_and_reset(u32 peripheral)
- 
- 	ret = qcom_scm_bw_enable();
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = qcom_scm_call(__scm->dev, &desc, &res);
- 	qcom_scm_bw_disable();
-+
-+disable_clk:
- 	qcom_scm_clk_disable();
- 
- 	return ret ? : res.result[0];
-@@ -706,11 +711,12 @@ int qcom_scm_pas_shutdown(u32 peripheral)
- 
- 	ret = qcom_scm_bw_enable();
- 	if (ret)
--		return ret;
-+		goto disable_clk;
- 
- 	ret = qcom_scm_call(__scm->dev, &desc, &res);
--
- 	qcom_scm_bw_disable();
-+
-+disable_clk:
- 	qcom_scm_clk_disable();
- 
- 	return ret ? : res.result[0];
-
----
-base-commit: 90d35da658da8cff0d4ecbb5113f5fac9d00eb72
-change-id: 20240304-qcom-scm-disable-clk-08e7ad853fa1
-
-Best regards,
+ 	mutex_lock(&ctrl->ssr_lock);
+ 	qcom_slim_ngd_enable(ctrl, true);
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
 
