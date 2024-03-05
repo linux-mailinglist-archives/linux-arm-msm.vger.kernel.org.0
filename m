@@ -1,169 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-13344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECCB2871C75
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 11:59:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F4D9871C95
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 12:01:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82D5D1F25F20
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 10:59:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3537D2853AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 11:01:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BE0F5D489;
-	Tue,  5 Mar 2024 10:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ED9D5A78E;
+	Tue,  5 Mar 2024 10:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KOtvR2uk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Rmm6d+2K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1AB5D470;
-	Tue,  5 Mar 2024 10:54:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8B65A787;
+	Tue,  5 Mar 2024 10:58:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709636084; cv=none; b=SFs/thFEmTuMHF2MD26qFmcxoOOvMrNpGSIN2Bj10anmKtsBlalPU4wBrPmf0Fao1byYC6ya/2QAZHHzXIknYXvc//oCxdZ3rpTSkRr+xRyVXS/jf1BS+X8b1jF3e/8GEArQ+b1AkibGhCKCZDBg4cYeEAvakGR8mQRZnsWqr+k=
+	t=1709636303; cv=none; b=eI5dwN9Nb9o2LP82W48MHCgVfbDu5/Av4ILws3yrJXQr8D5LYR5/XzRse39M2KQE4fVVirZl2fFdwjMdCgQdaIi4Gif1Vv/vZ3KJp/TVCCTzd9xKGaIS8FhqcHNvtG6IbLy2hOT36eWBgMZcYz1pmqJi0w2tDrheJGJRNzDY7vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709636084; c=relaxed/simple;
-	bh=oxRVpdLJF2FGYqRu9QIMQZ4jI/4N8Pa67tYhC3kRTdM=;
+	s=arc-20240116; t=1709636303; c=relaxed/simple;
+	bh=J5Baa+RIs5c1/+F+2dLX0DQE2pCW8Qxha1uK7wrtN/Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nyNFBrJZaiwOvVTGrdyZjnMThX8WPYkvYubdx5JyUe/EWSWMZyLsup4JuXaZIwhZOnf2HTjl6zye4ylZoMRiAWNSBI0LiagB2YvlPByMOvt44kqdqCHrwXt1QJBgL7WVtVNo2/nny84UgVYpTctSA/1IZdKIB+EkO0/5z/m6SB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KOtvR2uk; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=lYVbeb9hY6psezRZhz1I+sMHIird9TTjuwqZ3qD+6D+Rg99GtrsHWp9u++4D6WCeb0zsCWf8EEytk/hEzVkO9Codk/ygWo7sI2DtKaqTFM2v6s21OgbE/PykkVJ4g37wisXocqT7RALPiS7bx7LCZ2AhwQg2cc2TK4D+bvVNC94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Rmm6d+2K; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4258n2KA031464;
-	Tue, 5 Mar 2024 10:54:39 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4258XZMm008515;
+	Tue, 5 Mar 2024 10:58:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Q+2JuocJ0ml2lss8W2wnTp8l9G02UA/Lm3HYCXFFg/4=; b=KO
-	tvR2ukBl4/73NTRxjwEJaadCUuNEP6diZpCajfBcIxGrnGZ3owvxZfP5FKE8htUq
-	p2h0rV7mN1Tg8NGd6/fBjzYSUPremVDyxpAcJz1M+ilytYj+GLNs1o8/0pMvvppD
-	f+fZ2m37NwbYhn941p8uqBAXb4vFOQSiXleAhFODKpXnNHdfx5YY9PlrunW+D8wL
-	vEwZkBCyd8lmQ01A2CwyVwbDSyE6N/Rh57DD4PR+76HOBMUCuKSPeH5u+JBbLTai
-	PurKKwBj1qEXACUq5IkenSQnSzNFKN/AAhY3DKL4qRWdF27MlDIWUCWAWVOZSBjh
-	ZJ6Cxw/SB+LQiDBsvzcA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnqwhs69s-1
+	qcppdkim1; bh=V0i8aVBJZSZ2LMZ0idyX+tr3gaOtJGswEKZkTKjXW+A=; b=Rm
+	m6d+2KB5V0LpD2AgvkiIMmad5vg1rlN+shDpOMBqhUqyYIPg/a5pszF7j+RELL34
+	PuoNNuZPUw0x+TJf9yVRwGxwdPw+o6Bu7Ul2rNPLbUTTT3Lsy9fjbueMQ2nzH3wO
+	0lf6tQ+Mv3FMQWeERZa/li1JvFv5DP+vtFZ5aMd+BlZuxyOV/fywi/H3eTUSNV4W
+	3KccSMMHw9WQfKiZa0M0x8v7OeRLGFg8AQ7ikTMzoXLTgo6xtkk62iHNy5CSqGJV
+	7hNsLooxQh799t9f0PHpgwNOOU6aJW+32qdowYxRz7p5+G435cNTN7xztUB1kjHW
+	BQjd/QdtdyiVO6uUZBSw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnyyb89sw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Mar 2024 10:54:38 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 425AsbpL025647
+	Tue, 05 Mar 2024 10:58:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 425Aw9kd019230
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Mar 2024 10:54:37 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 5 Mar 2024 10:58:09 GMT
+Received: from [10.216.9.163] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Mar
- 2024 02:54:35 -0800
-Message-ID: <6670e21a-46d7-db1f-3830-73e97786cde8@quicinc.com>
-Date: Tue, 5 Mar 2024 16:24:32 +0530
+ 2024 02:58:01 -0800
+Message-ID: <86ce6b70-1c84-6e0d-528c-40fff7bf8326@quicinc.com>
+Date: Tue, 5 Mar 2024 16:27:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v12 4/9] firmware: qcom: scm: Rework dload mode
- availability check
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v8 5/7] arm64: dts: qcom: sm8450: Add opp table support to
+ PCIe
 Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>, Elliot Berman <quic_eberman@quicinc.com>
-References: <20240227155308.18395-1-quic_mojha@quicinc.com>
- <20240227155308.18395-5-quic_mojha@quicinc.com>
- <bmwswdvzqldse4dgbcev7hcyktkzffur3pcs6ogwnekxrklgiu@hridh2l2hhgk>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <bmwswdvzqldse4dgbcev7hcyktkzffur3pcs6ogwnekxrklgiu@hridh2l2hhgk>
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Brian Masney
+	<bmasney@redhat.com>, Georgi Djakov <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <vireshk@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_parass@quicinc.com>
+References: <20240302-opp_support-v8-0-158285b86b10@quicinc.com>
+ <20240302-opp_support-v8-5-158285b86b10@quicinc.com>
+ <20240304174917.GC31079@thinkpad>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240304174917.GC31079@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NNLZd221BDqmqAjvKT-TjdBnd5JPvuFh
-X-Proofpoint-ORIG-GUID: NNLZd221BDqmqAjvKT-TjdBnd5JPvuFh
+X-Proofpoint-ORIG-GUID: sOaJXAaEzVyYVOrt4zirOe5rBfthHK9D
+X-Proofpoint-GUID: sOaJXAaEzVyYVOrt4zirOe5rBfthHK9D
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-05_08,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=999
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403050087
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 phishscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0
+ suspectscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403050088
 
 
 
-On 3/3/2024 12:46 AM, Bjorn Andersson wrote:
-> On Tue, Feb 27, 2024 at 09:23:03PM +0530, Mukesh Ojha wrote:
->> QCOM_SCM_BOOT_SET_DLOAD_MODE was only valid for very older
->> target and firmware and for recent targets there is dload
->> mode tcsr registers available to set the download mode.
+On 3/4/2024 11:19 PM, Manivannan Sadhasivam wrote:
+> On Sat, Mar 02, 2024 at 09:29:59AM +0530, Krishna chaitanya chundru wrote:
+>> PCIe needs to choose the appropriate performance state of RPMH power
+>> domain and interconnect bandwidth based up on the PCIe gen speed.
 >>
-> 
-> I presume this implies that it will always return false, so what's the
-> actual problem with that? Presumably you want this because it takes
-> unnecessary time to make that call, if so please say so.
-
-Correct, will add in commit description.
-
-Also, __qcom_scm_is_call_available() usage legacy mode of setting DLOAD 
-mode setting via command which is deprecated long back from Trust zone 
-firmware also it takes or wait statically global mutex lock at the lower 
-level which unnecessary adds time which is of no use.
-> 
-> 
-> Content of the patch looks good.
-
-Thanks.
-
--Mukesh
-
-> 
-> Regards,
-> Bjorn
-> 
->> So, it is better to keep it as fallback check instead of
->> checking its availability and failing it always.
+>> Add the OPP table support to specify RPMH performance states and
+>> interconnect peak bandwidth.
 >>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 >> ---
->>   drivers/firmware/qcom/qcom_scm.c | 12 +++++-------
->>   1 file changed, 5 insertions(+), 7 deletions(-)
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 74 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 74 insertions(+)
 >>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index bd6bfdf2d828..3fd89cddba3b 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -540,18 +540,16 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->>   static void qcom_scm_set_download_mode(bool enable)
->>   {
->>   	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
->> -	bool avail;
->>   	int ret = 0;
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 6b1d2e0d9d14..662f2129f20d 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -1827,7 +1827,32 @@ pcie0: pcie@1c00000 {
+>>   			pinctrl-names = "default";
+>>   			pinctrl-0 = <&pcie0_default_state>;
 >>   
->> -	avail = __qcom_scm_is_call_available(__scm->dev,
->> -					     QCOM_SCM_SVC_BOOT,
->> -					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
->> -	if (avail) {
->> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->> -	} else if (__scm->dload_mode_addr) {
->> +	if (__scm->dload_mode_addr) {
->>   		ret = qcom_scm_io_rmw(__scm->dload_mode_addr,
->>   				      QCOM_DLOAD_MASK,
->>   				      FIELD_PREP(QCOM_DLOAD_MASK, val));
->> +	} else if (__qcom_scm_is_call_available(__scm->dev,
->> +						QCOM_SCM_SVC_BOOT,
->> +						QCOM_SCM_BOOT_SET_DLOAD_MODE)) {
->> +		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->>   	} else {
->>   		dev_err(__scm->dev,
->>   			"No available mechanism for setting download mode\n");
->> -- 
->> 2.43.0.254.ga26002b62827
+>> +			operating-points-v2 = <&pcie0_opp_table>;
+>> +
+>>   			status = "disabled";
+>> +
+>> +			pcie0_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				opp-2500000 {
+> 
+> Add the comments that you added below.
+ACK.
+> 
+>> +					opp-hz = /bits/ 64 <2500000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <250000 1>;
+> 
+> Isn't the peak bw should be greater that the avg bw? Atleast in upstream we
+> follow that pattern.
+> 
+> - Mani
+The two values which are defined are for peak BW only one value 
+corresponds to PCI-MEM path and other to CPU to PCIe path.
+- Krishna Chaitanya.
+> 
+>> +				};
+>> +
+>> +				opp-5000000 {
+>> +					opp-hz = /bits/ 64 <5000000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <500000 1>;
+>> +				};
+>> +
+>> +				opp-8000000 {
+>> +					opp-hz = /bits/ 64 <8000000>;
+>> +					required-opps = <&rpmhpd_opp_nom>;
+>> +					opp-peak-kBps = <984500 1>;
+>> +				};
+>> +			};
+>> +
+>>   		};
+>>   
+>>   		pcie0_phy: phy@1c06000 {
+>> @@ -1938,7 +1963,56 @@ pcie1: pcie@1c08000 {
+>>   			pinctrl-names = "default";
+>>   			pinctrl-0 = <&pcie1_default_state>;
+>>   
+>> +			operating-points-v2 = <&pcie1_opp_table>;
+>> +
+>>   			status = "disabled";
+>> +
+>> +			pcie1_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				/* GEN 1x1 */
+>> +				opp-2500000 {
+>> +					opp-hz = /bits/ 64 <2500000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <250000 1>;
+>> +				};
+>> +
+>> +				/* GEN 1x2 GEN 2x1 */
+>> +				opp-5000000 {
+>> +					opp-hz = /bits/ 64 <5000000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <500000 1>;
+>> +				};
+>> +
+>> +				/* GEN 2x2 */
+>> +				opp-10000000 {
+>> +					opp-hz = /bits/ 64 <10000000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <1000000 1>;
+>> +				};
+>> +
+>> +				/* GEN 3x1 */
+>> +				opp-8000000 {
+>> +					opp-hz = /bits/ 64 <8000000>;
+>> +					required-opps = <&rpmhpd_opp_nom>;
+>> +					opp-peak-kBps = <984500 1>;
+>> +				};
+>> +
+>> +				/* GEN 3x2 GEN 4x1 */
+>> +				opp-16000000 {
+>> +					opp-hz = /bits/ 64 <16000000>;
+>> +					required-opps = <&rpmhpd_opp_nom>;
+>> +					opp-peak-kBps = <1969000 1>;
+>> +				};
+>> +
+>> +				/* GEN 4x2 */
+>> +				opp-32000000 {
+>> +					opp-hz = /bits/ 64 <32000000>;
+>> +					required-opps = <&rpmhpd_opp_nom>;
+>> +					opp-peak-kBps = <3938000 1>;
+>> +				};
+>> +			};
+>> +
+>>   		};
+>>   
+>>   		pcie1_phy: phy@1c0e000 {
 >>
+>> -- 
+>> 2.42.0
+>>
+> 
 
