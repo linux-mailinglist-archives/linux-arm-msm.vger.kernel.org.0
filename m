@@ -1,152 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-13341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BF9F871C33
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 11:52:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE2C871C6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 11:58:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB535284892
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 10:52:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BD8DFB252DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 10:58:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92BA05FB82;
-	Tue,  5 Mar 2024 10:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 153845C91A;
+	Tue,  5 Mar 2024 10:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MkR7jZLm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KvjwfHYP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8F85F548;
-	Tue,  5 Mar 2024 10:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8740B548E0;
+	Tue,  5 Mar 2024 10:53:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709635405; cv=none; b=oRtJnV2tJz6/NYrKvLpfJqa2GhjY2RPJfd0Z36B1b9aOTh5r7USt7ihF23+gXdqh9yjxO38rBtP6sjBP1HyYjwI5LuC+kb2crNfI8+rQWU0lMgPZth8Co8G8HvQSFNmDlMuuUWVkyd5a6FXDqONXzZQSShDSVcB1ZKiNzuWxxxQ=
+	t=1709636022; cv=none; b=eCW8tTv6lmk5QekYsLTSNKtU8rQFqgdLyyRFXK5P+2rYIjvVPhgqdEZdqjpD+uMNm741+LIzennOLRbK6i7NdMxAopxi0KYe4N6Rw8jQnPZBJM59tfmrWZsCkDQIEGlXm4c39QwmD1NasqpXZ2HejDwsNhme+r/9po85/96WORE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709635405; c=relaxed/simple;
-	bh=hDbY2NQ9polGrv9HSJqo9UNEanixoEg4qzdkooTajxA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=E7XxzNotQ1MFwqa7qailBrPWKcqM1X7kSFbnTHwOekGZD6SThnDiGoqndQssDaCUCSBxOmHHu6+le0YObYzmTgTWl6iEwKB7WC7d+eHmX8T5k7HF0WAw1KnYxuje10miJotAfjgPKRu2Z4nlWpAdqGSFmehLbVcE2Z52tYoaQw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MkR7jZLm; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1709636022; c=relaxed/simple;
+	bh=+EDeY2yT2n/cIzmd+Fwdxy+Nb2MpMS4znvqdlwWBR9E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vBdJ56HZ8BvsBfWJxDaXIP1dgczhpmLtC8Y0BdHKwres1lT+Sp8Ct0ZEKq7iQ9qucgh0yYLx09mV5PJ7/30ohcxRBXY6AuddXEnxGIeJx6bnLPxQ49zndK8e1KljPmOPDDtjbXYYn3mK7zWsteuN0jPc1o3wcsICSUFq7UXvhyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KvjwfHYP; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4258dt9C021261;
-	Tue, 5 Mar 2024 10:43:20 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4258cUul014068;
+	Tue, 5 Mar 2024 10:53:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=8PGf5hdv0hOQx9O36PwsQAiUUTJREg1bm9I7Nb6wUFA=; b=Mk
-	R7jZLmhOym9Dbs1hn584vPzFkBZJ6S5hyfvrlZagN4YnKQiVhJBZOCD+nAAY5dsV
-	Pw5mHpiNutYo5L5yL4k26bx28WzLLNlzMIW8KXfgKDANKbnX0IIrTlVibHl4kWCk
-	vw5w8/gKDB3cAhxS1xtr4bsfPzUZukne+NJB602VwIwsZUg3nnp8Yke+oVbs+J8I
-	u2GFEGGWQEk8OTYkFPmzl6EnL/7n2W1FXh6z7Z0Izsgex1/BM9eQI4042KtG44mw
-	89j1Xu4mOduGL35URilZm7rXsdV3ohe21lsQ1bJqN7nHK8gmSgYfY+AJghYG/wpz
-	gObpNIlsu0mAGCpD1hSA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnucrrsf6-1
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=xiVexQtak33mp1KuoCuep
+	OlA2edRPR1tpbMxzI9BHVY=; b=KvjwfHYPrmlHqli1tRWm2GhLJEdakPWXjivsE
+	s427SYHZQ34BHDEjEZm5mCGI8GlvQvzkEb1C+srNBsR71fioWZylU1ve03x91M9h
+	Rq/gt0XeQB8UK9nlevn5SsVBd093VJT2OJK7k5lzNXZNoHoMEaonPb6+j6fRQgYZ
+	ki41oI46rgUTv2yYrrvAXm/Mecof47hWXSpEp0PP2NTeT58GvRqo2XaRKcWB1Vhi
+	ZFP2CeiiX88a60XZQ5tKkO7hjHVg4f17dKUaAGqt33SxKtmaFIbD6Yn0uh9IFKzA
+	AMsZKKRiy49Ua6wilU6IWKLHb+RTs9wQu1e0fliAPtmw1Z5gw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wp028892c-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Mar 2024 10:43:20 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 425AhJns001655
+	Tue, 05 Mar 2024 10:53:23 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 425ArMGH012399
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Mar 2024 10:43:19 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Mar
- 2024 02:43:15 -0800
-Message-ID: <fb419b4b-62b2-8316-201e-e11430e32d8f@quicinc.com>
-Date: Tue, 5 Mar 2024 16:13:12 +0530
+	Tue, 5 Mar 2024 10:53:22 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 5 Mar 2024 02:53:14 -0800
+Date: Tue, 5 Mar 2024 16:23:12 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+CC: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri
+	<quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu
+	<quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: [PATCH v17 01/35] docs: gunyah: Introduce Gunyah Hypervisor
+Message-ID: <6f98238d-25d9-4120-810a-4b8b19c1ef5d@quicinc.com>
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-1-1e9da6763d38@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v12 3/9] firmware: qcom: scm: Modify only the download
- bits in TCSR register
-Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>,
-        Poovendhan Selvaraj
-	<quic_poovendh@quicinc.com>,
-        Kathiravan Thirumoorthy
-	<quic_kathirav@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-References: <20240227155308.18395-1-quic_mojha@quicinc.com>
- <20240227155308.18395-4-quic_mojha@quicinc.com>
- <ncyanjtxtqyx236d5tfm46nepvy6ncxikonc6g6hlddhx2joee@jqjhfxtu3sr6>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <ncyanjtxtqyx236d5tfm46nepvy6ncxikonc6g6hlddhx2joee@jqjhfxtu3sr6>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240222-gunyah-v17-1-1e9da6763d38@quicinc.com>
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: owAQoPT0hUqYLOay4X0cQRPRi_y6TqrM
-X-Proofpoint-ORIG-GUID: owAQoPT0hUqYLOay4X0cQRPRi_y6TqrM
+X-Proofpoint-GUID: WVHQJJ_TVjtAPqZKVZkx35bx7TCdrEtx
+X-Proofpoint-ORIG-GUID: WVHQJJ_TVjtAPqZKVZkx35bx7TCdrEtx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-05_08,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- spamscore=0 adultscore=0 mlxscore=0 phishscore=0 priorityscore=1501
- malwarescore=0 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403050085
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=248 suspectscore=0 phishscore=0 spamscore=0
+ malwarescore=0 mlxscore=0 clxscore=1011 bulkscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403050087
 
+On Thu, Feb 22, 2024 at 03:16:24PM -0800, Elliot Berman wrote:
+> Gunyah is an open-source Type-1 hypervisor developed by Qualcomm. It
+> does not depend on any lower-privileged OS/kernel code for its core
+> functionality. This increases its security and can support a smaller
+> trusted computing based when compared to Type-2 hypervisors.
 
+%s/based/base
 
-On 3/3/2024 12:43 AM, Bjorn Andersson wrote:
-> On Tue, Feb 27, 2024 at 09:23:02PM +0530, Mukesh Ojha wrote:
->> Crashdump collection is done based on DLOAD bits of TCSR register.
->> To retain other bits, scm driver need to read the register and
->> modify only the DLOAD bits, as other bits in TCSR may have their
->> own significance.
->>
->> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 14 ++++++++++++--
->>   1 file changed, 12 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 8f766fce5f7c..bd6bfdf2d828 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -4,6 +4,8 @@
->>    */
->>   
->>   #include <linux/arm-smccc.h>
->> +#include <linux/bitfield.h>
->> +#include <linux/bits.h>
->>   #include <linux/clk.h>
->>   #include <linux/completion.h>
->>   #include <linux/cpumask.h>
->> @@ -114,6 +116,12 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
->>   #define QCOM_SMC_WAITQ_FLAG_WAKE_ONE	BIT(0)
->>   #define QCOM_SMC_WAITQ_FLAG_WAKE_ALL	BIT(1)
->>   
->> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
->> +enum qcom_dload_mode {
->> +	QCOM_DLOAD_NODUMP	= 0,
->> +	QCOM_DLOAD_FULLDUMP	= 1,
 > 
-> These values are not enumerations, they represent fixed/defined values
-> in the interface. As such it's appropriate to use #define.
+> Add documentation describing the Gunyah hypervisor and the main
+> components of the Gunyah hypervisor which are of interest to Linux
+> virtualization development.
 > 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> +- Virtual platform:
+> +
+> +  Architectural devices such as interrupt controllers and CPU timers are
+> +  directly provided by the hypervisor as well as core virtual platform devices
+> +  and system APIs such as ARM PSCI.
+> +
+> +- Device Virtualization:
+> +
+> +  Para-virtualization of devices is supported using inter-VM communication and
+> +  virtio transport support. Select stage 2 faults by virtual machines that use
 
-Thanks for giving reasoning on why it should be #define and not enum.
+%s/Select/Selected
 
--Mukesh
+> +  proxy-scheduled vCPUs can be handled directly by Linux to provide Type-2
+> +  hypervisor style on-demand paging and/or device emulation.
+> +
+
+
+The doc patch looks good to me.
+
+Thanks,
+Pavan
 
