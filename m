@@ -1,138 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-13372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE7EC872753
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 20:11:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8291872774
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 20:22:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFDF31C221D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 19:11:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E80D2826D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 19:22:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8432322EF2;
-	Tue,  5 Mar 2024 19:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F408D36B16;
+	Tue,  5 Mar 2024 19:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Bgz3QteW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aX8Y8+Zd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192BE17997
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 19:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A01250FE;
+	Tue,  5 Mar 2024 19:22:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709665890; cv=none; b=iWlPSLoq248DGmY02sC00JTpS+aR8PE/9aDtyFabJLtxUBzKFmx1GgukY3a4vCACQzhPSbh+qictuIEZWmdA/yzEbVPSbr94BwZG4K/e88n8rVmM2LILJNiJL9fms5H/2Bvnf8bvzHm+KDpKNfGapE32fkW5wsY9GMLzdFlrCoY=
+	t=1709666533; cv=none; b=HxJu1y8ReJ75ph0ra31vHdeWQ2/zmHaMspaXf5LTAJltcILgWunegNnqaZakl2YabBEyqIEpB9J5HiEtgJZnFtY4pFPNedFYQrscSL+/fGxm5ifHm+9ipzC6uvyoGALMJ5s3IGRTM0lAZwGk0IIVpbVXixFbQZHQa38Es72w8SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709665890; c=relaxed/simple;
-	bh=EmazSDYJNF/9+QGKc0N0wE9a8wCKrzuioeOJExzJZiE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k2VbC5sz7RGMrikPBtPA6VnTKKwO+9LGNSu9AAlIMrOMteZT7LHz4tpzpZWPEn1f4/3Oa3jsyY795rbrQ3o7krainh/iHvf3fwKO+gE+gpF+C/EyLem/NAoSeqk/n1t2VxrsqXzsSYfENz2R2hKsVJcgRQ5duhbmsC0KRYe40DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Bgz3QteW; arc=none smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7ce3c7566e0so51601241.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Mar 2024 11:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1709665888; x=1710270688; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QWII9KL0aIa47qOshj6cnyrnk4IdQFQfKpUZL8v8Yz0=;
-        b=Bgz3QteWITe0FMHwt4rXl34mdez8c5wynCZdBMNiVd1X9O1IGvvHYI9I1g1pOo1LrT
-         aajD0w+lNpo/U073GZN3/UCuqEWAo7YdolTZqkwNU/P82WmWaD9TU71w+KwcZYdujLnj
-         5slbDTKE8P0XR2GjthSmT8nXZG+Ni7K09I3QQW4hf2nwwBypqBAAkAlE70fiZwUSVDyz
-         6Gh9VWU6yko5etBIcngA/8xn8EdFuA/NyeNbuMw6HeGbaUyGUcL86ZwXaX2bt5ZKzdy+
-         s+V6ieoI9A1d0wsi/OYLHy3uhmYZDEjWylR0qDNnLETuEUUxXCm/Jx9o5sEp7SXBSks1
-         CUDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709665888; x=1710270688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QWII9KL0aIa47qOshj6cnyrnk4IdQFQfKpUZL8v8Yz0=;
-        b=KepceOfRPJXaWXAXo3vU0VfLebja09WGA6uL/Dbz2X8wJW29110cA4j6/Powneng7D
-         5IjMa3MoBLBp4IHhaSlkr9WDBNfTH9vd03kBdxwROGRBTJNWfb8QutkN4JvI/RMPyEny
-         7MqPUFPiyxtkIIST3nAVtMpef+I76JXiUWUWqMZ5kigNl/oeRH+JVXCKMC0c7W7XaeaB
-         exjtcv7+csvtwY7uU0gpLxRBSzBhjJj7rOedq3Si5mKsJ9DL2e8EqjzOf2xxUPrVmTad
-         pzLRwYcWq6y7fok53g9xeukLbZIZU9PXue8iezSuWnghU1TIyBs6rYhwQiD/7T7GYJtl
-         cKbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVvvpYZgullusvGU3H2PLcjlbCSeI8eOL1W/6C8EdonDbpe764rA4x1xfW9FxjjfTU0VlFDBhCpqvE5D0FszmSA9brQIRnYpDfexzmi4g==
-X-Gm-Message-State: AOJu0YyAjOChmAv0M72aTIwWfzFFX3HIf+VhYqsc//zYkAgnWucVYoIT
-	NULs3TQ9jSgl3SKsOp+jyKeiK0NmZALUmKx54Ale8+dZQLsqf5XwnLkzji2zXm/WBH0hEwanbtD
-	PkjRIKUdiy8RYQ6r4kabSF9YAdaL5JhBiuC/5xQ==
-X-Google-Smtp-Source: AGHT+IH8rdsznZi8Kx7lSx7e9c+/zJt25fYd74gaX/zf7NZQhXeC6fq+bOz5mcO4LnimWrk7SNgva16p6F5Wz+UnIig=
-X-Received: by 2002:a05:6122:e46:b0:4c0:7756:547c with SMTP id
- bj6-20020a0561220e4600b004c07756547cmr2101976vkb.6.1709665887732; Tue, 05 Mar
- 2024 11:11:27 -0800 (PST)
+	s=arc-20240116; t=1709666533; c=relaxed/simple;
+	bh=WK1G/NaCYvxTxQ/E6MRFLMHXXETCzVWrlTphyKmWH/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q2fFRpoDMQ/NKkqOvkEh/UB0/LcS9m4jCsUuOTIomrlACWzG/qooyiIGbJEzMftsRIctsoQ70N90U68C0iabCBK/Lkq6+CZV8mxCBIVGKb82pAohwh7XTjaqvDqG341j6/pDMcdOAP4SQHuNIAMCmdIQfn9L6c495bchnzn4Jvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aX8Y8+Zd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B45EC433C7;
+	Tue,  5 Mar 2024 19:22:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709666533;
+	bh=WK1G/NaCYvxTxQ/E6MRFLMHXXETCzVWrlTphyKmWH/s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aX8Y8+Zdk66foHU/vgrLhRefbVfoikrZmF/gHYbKS8iwxqGuKMao8AKX2dUTTPLZE
+	 PPxBFJmD30zUO1nCZDHPHHT+OZaih4sHfTFhtPUHQ5w9WRu6MK+nx1GImp19ggsEcQ
+	 Nh5nbkHh6rAUaJsRiOuulf/KSZsrYE+czREyXeiEGhGDTnzzwssBu6lIidtAZNxaxI
+	 ezPNglsH/T3IB1JRycxGEq996pd55valJ8I+djh8U9C4lbdLXAxMgYX9tR9OdQAWv2
+	 opbvye3lD/s9F+4xQ5sSjKXB9aHxIzsWtkrplp+GdYMd32CvC6PHWOZM0m9C0ZjXXj
+	 fxGHEoE90EXJQ==
+Date: Tue, 5 Mar 2024 13:22:09 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Sriram Dash <quic_sriramd@quicinc.com>
+Cc: konrad.dybcio@linaro.org, vkoul@kernel.org, kishon@kernel.org, 
+	robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	gregkh@linuxfoundation.org, quic_wcheng@quicinc.com, Thinh.Nguyen@synopsys.com, 
+	p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+	quic_psodagud@quicinc.com, quic_nkela@quicinc.com, manivannan.sadhasivam@linaro.org, 
+	ulf.hansson@linaro.org, sudeep.holla@arm.com, quic_shazhuss@quicinc.com
+Subject: Re: [RFC 2/3] USB: dwc3: qcom: Add support for firmware managed
+ resources
+Message-ID: <ltjrdqxvupzjdqa22fvpzndeh7pc7zfmi5ybqxu2izjnnxjon7@jojqkltzukvv>
+References: <1709657858-8563-1-git-send-email-quic_sriramd@quicinc.com>
+ <1709657858-8563-3-git-send-email-quic_sriramd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240228-multi_waitq-v1-0-ccb096419af0@quicinc.com> <20240228-multi_waitq-v1-1-ccb096419af0@quicinc.com>
-In-Reply-To: <20240228-multi_waitq-v1-1-ccb096419af0@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 5 Mar 2024 20:11:17 +0100
-Message-ID: <CAMRc=McSbTmActdZ_JR+sFuW65TT=mfM+xgBFFs_31dMAO+4kA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] firmware: qcom-scm: Initialize waitq before setting
- global __scm
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com, 
-	Prasad Sodagudi <quic_psdoagud@quicinc.com>, Murali Nalajala <quic_mnalajal@quicinc.com>, 
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1709657858-8563-3-git-send-email-quic_sriramd@quicinc.com>
 
-On Wed, Feb 28, 2024 at 7:50=E2=80=AFPM Unnathi Chalicheemala
-<quic_uchalich@quicinc.com> wrote:
->
-> Suppose there's another device probing at the same time as SCM driver.
-> It calls into SCM and triggers WAITQ sleep but waitq completion
-> structure may not be initialized yet.
-> Fix this by moving initialization of waitq before setting global __scm.
->
-> Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic"=
-)
-> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+On Tue, Mar 05, 2024 at 10:27:37PM +0530, Sriram Dash wrote:
+> Some target systems allow multiple resources to be managed by firmware.
+> On these targets, tasks related to clocks, regulators, resets, and
+> interconnects can be delegated to the firmware, while the remaining
+> responsibilities are handled by Linux.
+> 
+> The driver is responsible for managing multiple power domains and
+> linking them to consumers as needed. Incase there is only single
+> power domain, it is considered to be a standard GDSC hooked on to
+> the qcom dt node which is read and assigned to device structure
+> (by genpd framework) before the driver probe even begins.
+> 
+> This differentiation logic allows the driver to determine whether
+> device resources are managed by Linux or firmware, ensuring
+> backward compatibility.
+> 
+> Furthermore, minor cleanup is performed for the private data of
+
+No "futhermore"s please, separate matters should be proposed as separate
+patches. Perhaps these can be sent separately and merged immediately?
+
+> the SNPS Femto PHY. However, ACPI handling is omitted due to the
+> absence of clients on the ACPI side.
+> 
+> Signed-off-by: Sriram Dash <quic_sriramd@quicinc.com>
 > ---
->  drivers/firmware/qcom/qcom_scm.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qco=
-m_scm.c
-> index 520de9b5633a..c1be8270ead1 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1854,11 +1854,11 @@ static int qcom_scm_probe(struct platform_device =
-*pdev)
->         if (ret)
->                 return ret;
->
-> +       init_completion(&scm->waitq_comp);
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 290 ++++++++++++++++++++------
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 213 +++++++++++++++----
+>  drivers/usb/dwc3/dwc3-qcom.c                  | 259 +++++++++++++++++------
+
+You're making independent changes across three different drivers across
+two different subsystems, with different maintainers, this is not
+acceptable as a single patch.
+
+>  3 files changed, 594 insertions(+), 168 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> index 8525393..1ac1b50 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> @@ -21,6 +21,9 @@
+>  
+>  #include "phy-qcom-qmp-common.h"
+>  
+> +#include <linux/pm_opp.h>
+> +#include <linux/pm_domain.h>
+
+Why are these includes alone here? Integrate your changes with the
+driver properly.
+
 > +
->         __scm =3D scm;
->         __scm->dev =3D &pdev->dev;
+>  #include "phy-qcom-qmp.h"
+>  #include "phy-qcom-qmp-pcs-misc-v3.h"
+>  #include "phy-qcom-qmp-pcs-misc-v4.h"
+> @@ -1212,6 +1215,9 @@ struct qmp_phy_cfg {
+>  	unsigned int pcs_usb_offset;
+>  };
+>  
+> +#define DOMAIN_GENPD_TRANSFER			0
+> +#define DOMAIN_GENPD_CORE			1
 
-If another driver can actually probe at the same time then this needs
-to be moved to the end of this function, the `__scm->dev` assignment
-must be done before the `__scm =3D scm` one and it must use
-WRITE_ONCE().
+Does this really represent the hardware? What hardware constructs does
+"transfer" and "core" maps to?
 
-Bart
+> +
+>  struct qmp_usb {
+>  	struct device *dev;
+>  
+> @@ -1236,6 +1242,19 @@ struct qmp_usb {
+>  	struct phy *phy;
+>  
+>  	struct clk_fixed_rate pipe_clk_fixed;
+> +
+> +	struct dev_pm_domain_list *pd_list;
+> +	struct device *genpd_core;
+> +	struct device *genpd_transfer;
+> +
+> +	bool fw_managed;
+> +	/* separate resource management for fw_managed vs locally managed devices */
+> +	struct qmp_usb_device_ops {
+> +		int (*bus_resume_resource)(struct qmp_usb *qmp);
 
->
-> -       init_completion(&__scm->waitq_comp);
-> -
->         irq =3D platform_get_irq_optional(pdev, 0);
->         if (irq < 0) {
->                 if (irq !=3D -ENXIO)
->
-> --
-> 2.25.1
->
->
+Not only does these function pointers make the drivers much harder to
+follow, your naming of these seems chosen to maximize the confusion.
+
+In your managed case this doesn't seem to relate to any "bus", in the
+"local" case, this doesn't relate to a "bus", and these callbacks are
+decoupled from the actual runtime resume and suspend cycle of the QMP
+device itself...
+
+> +		int (*runtime_resume_resource)(struct qmp_usb *qmp);
+> +		int (*bus_suspend_resource)(struct qmp_usb *qmp);
+> +		int (*runtime_suspend_resource)(struct qmp_usb *qmp);
+> +	} qmp_usb_device_ops;
+>  };
+>  
+>  static inline void qphy_setbits(void __iomem *base, u32 offset, u32 val)
+> @@ -1598,6 +1617,41 @@ static const struct qmp_phy_cfg x1e80100_usb3_uniphy_cfg = {
+>  	.regs			= qmp_v7_usb3phy_regs_layout,
+>  };
+>  
+> +static void qmp_fw_managed_domain_remove(struct qmp_usb *qmp)
+> +{
+> +	dev_pm_domain_detach_list(qmp->pd_list);
+> +}
+> +
+> +static int qmp_fw_managed_domain_init(struct qmp_usb *qmp)
+> +{
+> +	struct device *dev = qmp->dev;
+> +	struct dev_pm_domain_attach_data pd_data = {
+> +		.pd_flags	= PD_FLAG_NO_DEV_LINK,
+
+Iiuc, you attach the two power-domains with NO_DEV_LINK, such that the
+pm runtime state of the device itself won't reflect on the power
+domains, and then you hand-code all the involved logic yourself?
+
+Why can't you integrate with the device and use its runtime state?
+Please clearly explain why you're doing it like this in your commit
+messages.
+
+Regards,
+Bjorn
 
