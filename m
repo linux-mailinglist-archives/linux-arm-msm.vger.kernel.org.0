@@ -1,164 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-13348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4289872100
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 14:59:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD95087212C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 15:11:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 218501C21C65
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 13:59:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57309B22996
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 14:11:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99B786131;
-	Tue,  5 Mar 2024 13:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1823386630;
+	Tue,  5 Mar 2024 14:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CXzJyOlS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="THeV5zfz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26CA86ACD;
-	Tue,  5 Mar 2024 13:59:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCE88615F;
+	Tue,  5 Mar 2024 14:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709647150; cv=none; b=ZzwMkbBwqcv/tQ+LUZ7ThAd3jzKbyBhgsp/FcW7eUZiujPzO6bes0tRy2NE/dRY2xMES6xCbq4P5oqA6Wg2Pyyrs4IlN+FW3Boeo4lCv1uFGXip5COBruJcjmh66gE/ebd947dSar51J/KT1pivdTfA7asDoIgVA879L7GGApco=
+	t=1709647908; cv=none; b=oJPTyxbXknyKpfEBuNSGzZaCCQd5ZQscXSmiePKOy0DYZwBqrnV7EDZJStIE4q1EKrtUf1S/zRaPp1Y5LgIFNjuwTU9Nu0NbeM+aB8uKxuwAl7VefciVrj7LmEKAC82/fsliSRURlDQYqq5brkHXNLx4tUZpR+1BljhQiqK8mz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709647150; c=relaxed/simple;
-	bh=wET7lxWL5+a6cOW+e8Hm2QP+6ArrR8fvDaiOmdw834Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uHMSbQVMREOFcP1e7JbPNU/s7KygR20vo/d4hRxqC5mY/170ZffiKUkKLTgVUHH26TuRhVOjWISNbAY06rKdhivAfrAaj2lDVUP3w127e/jzdNcG6+5Q3zgfpYzl5m4XjsqXMpQij11B65lLCHxEVUfU26jwISTtIge8TLJpZXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CXzJyOlS; arc=none smtp.client-ip=209.85.218.45
+	s=arc-20240116; t=1709647908; c=relaxed/simple;
+	bh=l87FN/S7hYBgOYZ849x4u4XP0S9wnn3Ph0dNs7/oyLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BDnVjPpZfv+brcL+l39o5faEt8kEsPNj8JmrJmqaaPdXvQAKhCfpYRMaiAJirppxmi3j+uIxsQv8NBPXrrGX2znslHjyqjt/muVqLB5rs+ZMgNTwVKEAx3jTJxPjOxIk3j/PrKki8EByqk2ve2wgF1tAZ2C7AYjogqB0lyg8n+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=THeV5zfz; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a45606c8444so249609066b.3;
-        Tue, 05 Mar 2024 05:59:08 -0800 (PST)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6e5b1c6daa3so4103666b3a.1;
+        Tue, 05 Mar 2024 06:11:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709647147; x=1710251947; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ezrez5zBjAnZtqpMJIhkt3FNVFaisJDMP2rkEI9ICVk=;
-        b=CXzJyOlSDrfQH7q0ZinhZN8W0Ccagp0O/fEPMQv2hnoxcrB0Y6NesPRTS0Samq/uDp
-         +3Ml6f98obkiAg6szccsLxw3/MpZwFsyUMgyhhm8CKu2uqORbMelB4wKebObQyMFigaK
-         +Bxn0pirB5pSRxDeNZxVmeZxqNxfF+KWmTekxIpGGAcWF4PPoDFAdRKDPVWrP6Y85+8G
-         S+/wOtXxicHJrJzkntpuJh1mcYbqlu7R98ceK+628IMz86yr7Emgu9MydaXHO2z+KSsP
-         4a1HiqnIhB8iCfedAoy+ScY3ZYXxVK2KwZ0w1npEeJMiM5yTtOCYIInudCaN6Yf1CmSp
-         fc8g==
+        d=gmail.com; s=20230601; t=1709647906; x=1710252706; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0ptWYKwK26XO+pPKZk7491w2CRd3K9UN34Kmlw2Ucys=;
+        b=THeV5zfzEnAhhzjTM9rHS0epw6LX3nadeJI2cDySQzv4somQjRGPVOSg0QUy33XKBF
+         JabVZHVRI028wfrOWtkhDHk51ZfN5uPEOyw52m9MpyyxWZcCuMZOdePlPPzawBQiQR0G
+         5u3DEWhtyGR5HdNqhtJjkYFjqZKFpIHr4ZUaqOpzoIUahRz0JBXrvBBlYS7VikAUtwQ6
+         I/6bBp6Q+8GK7fM689eGGgCxGdPcSZJkKUcm3XSj/BPT7xTp/eswX/lzVJ+4nzJxZG8h
+         lVUGVVRLT1lsEycRyucaLW9i/bJIYDoN29duSdZoKslKS0BoadEvWY2reX5s0pfwNckR
+         0Cog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709647147; x=1710251947;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1709647906; x=1710252706;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ezrez5zBjAnZtqpMJIhkt3FNVFaisJDMP2rkEI9ICVk=;
-        b=KpZ27rwAdC18xldxb5ywsMQGzjJNXCnaBG+J6EOS6y2kGJJG6v7myrZURxInQmGRHf
-         cgvZPDHGW1sxvzjMglpOD/5ijnFuntGkt6n4VvQp5so+1Jqy6C+VgNFRaYrLg2ZMMiNs
-         4ntfNfK/9/yIKPfXRbs0YMI46MmSTok/Yhw/SmQKMmz/yMeJ7wUFShiw0OdmInxTE8ZP
-         H47BsMeV9Hu95mcUJDtAAT6R3k1gls1WNz+Sdmfa5Tu7MfcpnXJWLhvEm+giIcQFyY2i
-         yaNlL2u0/VXFa7DCOSWtiTVYQ4LKpKLBfH69fMMnXj5iCVW9gZkJWQhx67WC9vBdabgd
-         t9QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWv5P3AYERmbBI9ZJLKSP3qIrSDv79v7tBpBMSfJzApELgiMYfofi+ZwMSZAhrTJQyBl0GLQopoLE1RQrK/okrHnXRG2goo7ddNT42P7i5SAj4mRzlqNGnD6nQJX7oFZweEHW9ii3jPuKlCqMYeReUvEArSYPs3cO0+jSlGRPyqyAkThA==
-X-Gm-Message-State: AOJu0YwTyAPcRScv9c1soNT+f8DsiXk90vmEedzJj3bOrNx1mbKQuPHw
-	gYe9Fty8WO3ypJMvFhBFSRKKzJPmv3hnI2E+7BtXiEjFWsP8UVxL
-X-Google-Smtp-Source: AGHT+IHrhZPJko2SywuNbpTAwYF28eOpJ53IJ0IeI8AGRN6zAa5BkcIVAS6wVzoso2hAPNesVP+Caw==
-X-Received: by 2002:a17:906:e2cc:b0:a44:dadc:654e with SMTP id gr12-20020a170906e2cc00b00a44dadc654emr6470785ejb.39.1709647147061;
-        Tue, 05 Mar 2024 05:59:07 -0800 (PST)
-Received: from fedora.. (d-zg1-234.globalnet.hr. [213.149.36.248])
-        by smtp.googlemail.com with ESMTPSA id z20-20020a170906271400b00a441cb52bfcsm6093783ejc.165.2024.03.05.05.59.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Mar 2024 05:59:06 -0800 (PST)
-From: Robert Marko <robimarko@gmail.com>
-To: andrew@lunn.ch,
-	hkallweit1@gmail.com,
-	linux@armlinux.org.uk,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	ansuelsmth@gmail.com,
-	netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Robert Marko <robimarko@gmail.com>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH net v2] net: phy: qca807x: fix compilation when CONFIG_GPIOLIB is not set
-Date: Tue,  5 Mar 2024 14:58:18 +0100
-Message-ID: <20240305135903.3752568-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.44.0
+        bh=0ptWYKwK26XO+pPKZk7491w2CRd3K9UN34Kmlw2Ucys=;
+        b=tuK3NAwy0M/KE3RwKp5Fzh/zdtN+mITnVKqslAgLi8nTD4kybIgngI1li2lBuH+Enu
+         A7Dza5N2Ox4PkmdTW2hYgVl1QNbbC4ymJ4wNMMCACRI0YrSrMbEyCPDm7S8leqbBmotH
+         D5GvcZwKBepW197Rndz6iut7m/W9PK1jdd1eZqMno4dvGzU7J2nkbP2IvfFurkE7+/th
+         w9tultnKSps6V4jxIk3df5bZ5qBuA9EDjdB0g5qXXvxq+E1EOCGBF4nB1gDsdi7xEALn
+         /e0LdzacfnaTTCoLX1Cuyr/oAHDwXmP96khjZsJgmE638/tLJSooAd/F7ZbxbnccJlmp
+         Ju6g==
+X-Forwarded-Encrypted: i=1; AJvYcCWGu0aamlzxcQr2NLsHZp8sa99QY4SeYP3DMh0sL42Wt+IE7fhubsXMBvKZ81lMm8Z0QcmGhBSzgJCEyd1ER1tjrb81y/NUGuUbu1TDHdEvtlX1thVmr2FA20oYxbCd70elSAAJukMcZa35jqg4mfBrh4htBnIGyLj2JYcbfa7+ZWCcvA==
+X-Gm-Message-State: AOJu0YxiN2z0jA83blyIhJ/0f+YBcN2FAHNPJsmcYo//GeO+eSC94Fxy
+	5k4j9H7mSNwfgkvdztekhDI9EDdjNaeZC6MJalqJOAoq9nBQI4V2GEVOnHxYGFpt6M7WViUvnbn
+	B24wii6vYrDQC3Oqq8ib9gq9ed3w=
+X-Google-Smtp-Source: AGHT+IF2u1CS/qzzW2dSsR05vsnKkZIimUbzC3oZpDvZ2seDKjLb26oGv8Iks7gNcsCttodsxUxVKire2jLC4A0eqp4=
+X-Received: by 2002:a17:90a:ac12:b0:29b:36a8:4742 with SMTP id
+ o18-20020a17090aac1200b0029b36a84742mr6761437pjq.13.1709647905647; Tue, 05
+ Mar 2024 06:11:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240305135903.3752568-1-robimarko@gmail.com>
+In-Reply-To: <20240305135903.3752568-1-robimarko@gmail.com>
+From: Robert Marko <robimarko@gmail.com>
+Date: Tue, 5 Mar 2024 15:11:33 +0100
+Message-ID: <CAOX2RU6ciO1dTPTxA2E2v3FVH7y=BLM1tR05XN2rj9tKMEvZLw@mail.gmail.com>
+Subject: Re: [PATCH net v2] net: phy: qca807x: fix compilation when
+ CONFIG_GPIOLIB is not set
+To: andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net, 
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, ansuelsmth@gmail.com, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Cc: kernel test robot <lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Kernel bot has discovered that if CONFIG_GPIOLIB is not set compilation
-will fail.
+On Tue, 5 Mar 2024 at 14:59, Robert Marko <robimarko@gmail.com> wrote:
+>
+> Kernel bot has discovered that if CONFIG_GPIOLIB is not set compilation
+> will fail.
+>
+> Upon investigation the issue is that qca807x_gpio() is guarded by a
+> preprocessor check but then it is called under
+> if (IS_ENABLED(CONFIG_GPIOLIB)) in the probe call so the compiler will
+> error out since qca807x_gpio() has not been declared if CONFIG_GPIOLIB has
+> not been set.
+>
+> Fixes: d1cb613efbd3 ("net: phy: qcom: add support for QCA807x PHY Family")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202403031332.IGAbZzwq-lkp@intel.com/
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-Upon investigation the issue is that qca807x_gpio() is guarded by a
-preprocessor check but then it is called under
-if (IS_ENABLED(CONFIG_GPIOLIB)) in the probe call so the compiler will
-error out since qca807x_gpio() has not been declared if CONFIG_GPIOLIB has
-not been set.
+I will resend this as I sent it targeting net instead of net-next.
 
-Fixes: d1cb613efbd3 ("net: phy: qcom: add support for QCA807x PHY Family")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202403031332.IGAbZzwq-lkp@intel.com/
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v2:
-* Reduce the code indent level
-
- drivers/net/phy/qcom/qca807x.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
-index 780c28e2e4aa..672c6929119a 100644
---- a/drivers/net/phy/qcom/qca807x.c
-+++ b/drivers/net/phy/qcom/qca807x.c
-@@ -732,24 +732,24 @@ static int qca807x_probe(struct phy_device *phydev)
- 	priv->dac_disable_bias_current_tweak = of_property_read_bool(node,
- 								     "qcom,dac-disable-bias-current-tweak");
- 
--	if (IS_ENABLED(CONFIG_GPIOLIB)) {
--		/* Make sure we don't have mixed leds node and gpio-controller
--		 * to prevent registering leds and having gpio-controller usage
--		 * conflicting with them.
--		 */
--		if (of_find_property(node, "leds", NULL) &&
--		    of_find_property(node, "gpio-controller", NULL)) {
--			phydev_err(phydev, "Invalid property detected. LEDs and gpio-controller are mutually exclusive.");
--			return -EINVAL;
--		}
-+#if IS_ENABLED(CONFIG_GPIOLIB)
-+	/* Make sure we don't have mixed leds node and gpio-controller
-+	 * to prevent registering leds and having gpio-controller usage
-+	 * conflicting with them.
-+	 */
-+	if (of_find_property(node, "leds", NULL) &&
-+	    of_find_property(node, "gpio-controller", NULL)) {
-+		phydev_err(phydev, "Invalid property detected. LEDs and gpio-controller are mutually exclusive.");
-+		return -EINVAL;
-+	}
- 
--		/* Do not register a GPIO controller unless flagged for it */
--		if (of_property_read_bool(node, "gpio-controller")) {
--			ret = qca807x_gpio(phydev);
--			if (ret)
--				return ret;
--		}
-+	/* Do not register a GPIO controller unless flagged for it */
-+	if (of_property_read_bool(node, "gpio-controller")) {
-+		ret = qca807x_gpio(phydev);
-+		if (ret)
-+			return ret;
- 	}
-+#endif
- 
- 	/* Attach SFP bus on combo port*/
- 	if (phy_read(phydev, QCA807X_CHIP_CONFIGURATION)) {
--- 
-2.44.0
-
+Regards,
+Robert
+> ---
+> Changes in v2:
+> * Reduce the code indent level
+>
+>  drivers/net/phy/qcom/qca807x.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+>
+> diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
+> index 780c28e2e4aa..672c6929119a 100644
+> --- a/drivers/net/phy/qcom/qca807x.c
+> +++ b/drivers/net/phy/qcom/qca807x.c
+> @@ -732,24 +732,24 @@ static int qca807x_probe(struct phy_device *phydev)
+>         priv->dac_disable_bias_current_tweak = of_property_read_bool(node,
+>                                                                      "qcom,dac-disable-bias-current-tweak");
+>
+> -       if (IS_ENABLED(CONFIG_GPIOLIB)) {
+> -               /* Make sure we don't have mixed leds node and gpio-controller
+> -                * to prevent registering leds and having gpio-controller usage
+> -                * conflicting with them.
+> -                */
+> -               if (of_find_property(node, "leds", NULL) &&
+> -                   of_find_property(node, "gpio-controller", NULL)) {
+> -                       phydev_err(phydev, "Invalid property detected. LEDs and gpio-controller are mutually exclusive.");
+> -                       return -EINVAL;
+> -               }
+> +#if IS_ENABLED(CONFIG_GPIOLIB)
+> +       /* Make sure we don't have mixed leds node and gpio-controller
+> +        * to prevent registering leds and having gpio-controller usage
+> +        * conflicting with them.
+> +        */
+> +       if (of_find_property(node, "leds", NULL) &&
+> +           of_find_property(node, "gpio-controller", NULL)) {
+> +               phydev_err(phydev, "Invalid property detected. LEDs and gpio-controller are mutually exclusive.");
+> +               return -EINVAL;
+> +       }
+>
+> -               /* Do not register a GPIO controller unless flagged for it */
+> -               if (of_property_read_bool(node, "gpio-controller")) {
+> -                       ret = qca807x_gpio(phydev);
+> -                       if (ret)
+> -                               return ret;
+> -               }
+> +       /* Do not register a GPIO controller unless flagged for it */
+> +       if (of_property_read_bool(node, "gpio-controller")) {
+> +               ret = qca807x_gpio(phydev);
+> +               if (ret)
+> +                       return ret;
+>         }
+> +#endif
+>
+>         /* Attach SFP bus on combo port*/
+>         if (phy_read(phydev, QCA807X_CHIP_CONFIGURATION)) {
+> --
+> 2.44.0
+>
 
