@@ -1,201 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-13351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB3DA8722D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 16:31:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91F74872303
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 16:41:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B3B21C229E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 15:31:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E99DAB248F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 15:41:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1651272D4;
-	Tue,  5 Mar 2024 15:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3945012838B;
+	Tue,  5 Mar 2024 15:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xLwI3aAA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l7B3LSMF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D401272BD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 15:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA0C1272DE;
+	Tue,  5 Mar 2024 15:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709652666; cv=none; b=jZ3PGlaF8hvGJ9WKaO3x7C3doyqNllAEh2NU7kMJGoZSMCvsUt8lMppw8sqG7kfVP5UZp8JItw0nop/yju4D6cPS3cxrnXh6h7gYwloIbpF7jqZXaXASiLHrpKLDfhHsUqax45rkljhH8on2ZusUyfEf6CWROKDLEnqRsVuB0dE=
+	t=1709653215; cv=none; b=qPHYZoe58JMxLh52Trnv3FsRr0mmd0WpVVWJLTUODmSQZT/99HvBESNnAXc9UTrtIx47YFmqDImQUVVEJ2iek1FEH2vtaqmBcz35M4BbwZTwsULhwuIbIeOMccJB+w3UmimrfRuHESAtlvwI/EeFnUnwWin3kTpS7uvKuBOKQOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709652666; c=relaxed/simple;
-	bh=MWZtdpDzT5uBPJyCi2jictePKr8MSUwQEsy7awmiRSk=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gikwTriGdpKS9TrFi8PDIt6QK1F2OJeFnV+p+7hDP8p/Mzg6pvOa05ttCzXL8vGsB4leZkBgdHTpm03tMXLnACNqqe2Wtcu+8MJa7GZtAAWVrAUraipVYaXFr5GDXOJmm+yAmlphbXNrMiKHuwSsg+rTz6idvayeVOjwrOrmysI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xLwI3aAA; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a4429c556efso785696866b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Mar 2024 07:31:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709652663; x=1710257463; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jFBfmrcURu1fWMu57pWuFBzvegWbvE+xd+YhP2c5sxY=;
-        b=xLwI3aAASQ/kN2EtnsfQLg2xlGzdpC5Uc70sST2xDkI7u+SAr/txIwyCaRifaZoWIP
-         k+C1ChlT0PYX9yz5eImu2g4FIH22Ko6mbUFBPtrkUXXTwDw7ibNJuPZrnr+bU/YjcLQk
-         vPlIH6tW6Hiyx10fBWwU5wleUVHT0mRAwYaIbnwfE61WkE2XenKUwxloU/S4Gp1AP7B/
-         UxOFpiKPi2Qdfg3/C5ZAMmyDJ7O5ylKPpqMetNFvC6Ja2ZhAmJ8x2MvmDnjtauPIhRdh
-         DZt2/7QPQP3Kz0PfH0Xlcr2LEZ2bgEJUZfcjPHOdU/yerwyJbw4ctpTKF1DzJWcoHEMT
-         ziCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709652663; x=1710257463;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jFBfmrcURu1fWMu57pWuFBzvegWbvE+xd+YhP2c5sxY=;
-        b=L5dVnuQx4FPXLSAabGjek41/XQuGvdiCEEiR32GEgDAPAY/LQslYuhZ4RyJOvvACbg
-         /CHzVNODL4DwRJrwMJStZjwUTNwhlHEwH3UUOdxilo6JMFvm4iXEGSjRSrYR6mhcVLV7
-         SYKMYXKBbpWFYbl88CcynsPv9xZ9M5rYGNO993BYzL8VtnuCuBrFxvQ6+VE95+zqK6jn
-         CPUOhzEpe6iL90BFBicmOuVHsIZAe8TodRnx/RePYON19jINQNnhYiXfzZe+bcIcQ9h/
-         sUmmcRxlYcx3gXM8MDqhSoe0Va+uaQ59c4QVQBHvtHiDtKEOGk7MZDgvpdApujnSaSbt
-         bDfg==
-X-Forwarded-Encrypted: i=1; AJvYcCVR43/6dDOhRCIDJSzJOlF4bqB4fyAFsWIJLOF+2+qgPtkq5IQiSAFuWCk6TvmQSQy3NzosQMG+M4u214Hq1Imnv7kOFlMNCcu8EvScvA==
-X-Gm-Message-State: AOJu0YzqjhbVAiELem96xh+yER1Nk5p56Zm8zWHs0NB87wGTQeUym6RV
-	//5w4TgbdI/i7uVGfxQJA8f4KUNgJl7UZnJ2MTbPGLZ9+Bdp9TUnE8CmTZ5F6Q==
-X-Google-Smtp-Source: AGHT+IG865qowYD6hypu+joiq3mkfJptCDN2wk6XWC4gZD4eKgj4/V+czQN2m8CgWrMksvV0eTX+4A==
-X-Received: by 2002:a17:906:4148:b0:a44:f89:a04e with SMTP id l8-20020a170906414800b00a440f89a04emr9475926ejk.35.1709652663164;
-        Tue, 05 Mar 2024 07:31:03 -0800 (PST)
-Received: from google.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
-        by smtp.gmail.com with ESMTPSA id bw16-20020a170906c1d000b00a3fb9f1f10csm6146724ejb.161.2024.03.05.07.31.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Mar 2024 07:31:02 -0800 (PST)
-Date: Tue, 5 Mar 2024 15:30:58 +0000
-From: Quentin Perret <qperret@google.com>
-To: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
-	Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
-	Android KVM <android-kvm@google.com>,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Alex Elder <elder@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Murali Nalajal <quic_mnalajal@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-	Carl van Schaik <quic_cvanscha@quicinc.com>,
-	Philip Derrin <quic_pderrin@quicinc.com>,
-	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-	Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Fuad Tabba <tabba@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-Subject: Re: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map
- functions
-Message-ID: <Zec6shyjblcZvTG0@google.com>
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
- <ZdhEtH7xzbzdhS2j@infradead.org>
- <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
- <ZeXIWBLVWzVycm0r@google.com>
- <20240304094828133-0800.eberman@hu-eberman-lv.qualcomm.com>
+	s=arc-20240116; t=1709653215; c=relaxed/simple;
+	bh=HQ8LElIrX/sLoGmlzmqY66LOagmGK5gMS7TguVW+4Jc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ABpJ+bqunBTmoVZPU2BrABXIoMgPPhacQoSGD+hl/oXNI176zXjQvK7qklWHDrKrt25Pr2j2c01uKtKPymGAFofY0XAlLJE28Pl+vTvnGevmu2BCiEBSrbbfPXt3TpePXOZldOBRlxeGoY2URa7jyisy/W6NX8B0hh3B3k9uPCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l7B3LSMF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 425EgpvG030820;
+	Tue, 5 Mar 2024 15:40:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=mUhQ9NC4uDpSL805AO4NNumQdKUkJS0ItnGbPImrg5k=; b=l7
+	B3LSMF//ly4WIKMhNJlpVYVWjJCFdWZ3MWMZzr1nLU1sJU0sp8BKvodvuOapnbqS
+	leZx/o03alqJDu4mcMg1TyAbSrL+CrEEluo/nJSGxh5ECtBtshaeo7CgxJw2m/Yp
+	N1dLQT6rb2Tmtiv1WvkecbTmLvs2XB90/oz84Qu8MeG3gGxYbC3JYRcWp+jzH2f7
+	OSbjQTK3WqsGpEi+TcEOleqyD70Ne9FITmpYv329fguT57LyVm73FvRPFsB88851
+	mWEgpnjH5kC7XRGQQ19mhi3kKQwIJr48/cJNjqVPXLhBt4B7Jf2VVb6ByiDTK9eG
+	rqjeQm+pNWlDk1U8ua3Q==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnucrsd3m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Mar 2024 15:40:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 425Fe57Y028651
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Mar 2024 15:40:05 GMT
+Received: from [10.216.49.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Mar
+ 2024 07:40:00 -0800
+Message-ID: <f329cf0c-6fce-43ae-bff8-ceb02a246068@quicinc.com>
+Date: Tue, 5 Mar 2024 21:09:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240304094828133-0800.eberman@hu-eberman-lv.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 7/9] usb: dwc3: qcom: Refactor IRQ handling in glue
+ driver
+To: Johan Hovold <johan@kernel.org>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Felipe Balbi
+	<balbi@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>
+References: <20240216005756.762712-1-quic_kriskura@quicinc.com>
+ <20240216005756.762712-8-quic_kriskura@quicinc.com>
+ <ZeHd5Hh3-cDByLd-@hovoldconsulting.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZeHd5Hh3-cDByLd-@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NkQBllxYU4f3h0JeqWq_DvvFR9T3N06G
+X-Proofpoint-ORIG-GUID: NkQBllxYU4f3h0JeqWq_DvvFR9T3N06G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-05_12,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ spamscore=0 adultscore=0 mlxscore=0 phishscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403050125
 
-On Monday 04 Mar 2024 at 15:37:41 (-0800), Elliot Berman wrote:
-> On Mon, Mar 04, 2024 at 01:10:48PM +0000, Quentin Perret wrote:
-> > On Friday 23 Feb 2024 at 16:37:23 (-0800), Elliot Berman wrote:
-> > > On Thu, Feb 22, 2024 at 11:09:40PM -0800, Christoph Hellwig wrote:
-> > > > On Thu, Feb 22, 2024 at 03:16:42PM -0800, Elliot Berman wrote:
-> > > > > Firmware and hypervisor drivers can donate system heap memory to their
-> > > > > respective firmware/hypervisor entities. Those drivers should unmap the
-> > > > > pages from the kernel's logical map before doing so.
-> > > > > 
-> > > > > Export can_set_direct_map, set_direct_map_invalid_noflush, and
-> > > > > set_direct_map_default_noflush.
-> > > > 
-> > > > Err, not they should not.  And not using such super low-level interfaces
-> > > > from modular code.
-> > > 
-> > > Hi Cristoph,
-> > >  
-> > > We've observed a few times that Linux can unintentionally access a page
-> > > we've unmapped from host's stage 2 page table via an unaligned load from
-> > > an adjacent page. The stage 2 is managed by Gunyah. There are few
-> > > scenarios where even though we allocate and own a page from buddy,
-> > > someone else could try to access the page without going through the
-> > > hypervisor driver. One such instance we know about is
-> > > load_unaligned_zeropad() via pathlookup_at() [1].
-> > >  
-> > > load_unaligned_zeropad() could be called near the end of a page. If the
-> > > next page isn't mapped by the kernel in the stage one page tables, then
-> > > the access from to the unmapped page from load_unaligned_zeropad() will
-> > > land in __do_kernel_fault(), call fixup_exception(), and fill the
-> > > remainder of the load with zeroes. If the page in question is mapped in
-> > > stage 1 but was unmapped from stage 2, then the access lands back in
-> > > Linux in do_sea(), leading to a panic().
-> > >  
-> > > Our preference would be to add fixup_exception() to S2 PTW errors for
-> > > two reasons:
-> > > 1. It's cheaper to do performance wise: we've already manipulated S2
-> > >    page table and prevent intentional access to the page because
-> > >    pKVM/Gunyah drivers know that access to the page has been lost.
-> > > 2. Page-granular S1 mappings only happen on arm64 with rodata=full.
-> > >  
-> > > In an off-list discussion with the Android pkvm folks, their preference
-> > > was to have the pages unmapped from stage 1. I've gone with that
-> > > approach to get started but welcome discussion on the best approach.
-> > >  
-> > > The Android (downstream) implementation of arm64 pkvm is currently
-> > > implementing a hack where s2 ptw faults are given back to the host as s1
-> > > ptw faults (i.e. __do_kernel_fault() gets called and not do_sea()) --
-> > > allowing the kernel to fixup the exception.
-> > >  
-> > > arm64 pKVM will also face this issue when implementing guest_memfd or
-> > > when donating more memory to the hyp for s2 page tables, etc. As far as
-> > > I can tell, this isn't an issue for arm64 pKVM today because memory
-> > > isn't being dynamically donated to the hypervisor.
-> > 
-> > FWIW pKVM already donates memory dynamically to the hypervisor, to store
-> > e.g. guest VM metadata and page-tables, and we've never seen that
-> > problem as far as I can recall.
-> > 
-> > A key difference is that pKVM injects a data abort back into the kernel
-> > in case of a stage-2 fault, so the whole EXTABLE trick/hack in
-> > load_unaligned_zeropad() should work fine out of the box.
-> > 
-> > As discussed offline, Gunyah injecting an SEA into the kernel is
-> > questionable, but I understand that the architecture is a bit lacking in
-> > this department, and that's probably the next best thing.
-> >
-> > Could the Gunyah driver allocate from a CMA region instead? That would
-> > surely simplify unmapping from EL1 stage-1 (similar to how drivers
-> > usually donate memory to TZ).
+
+
+On 3/1/2024 7:23 PM, Johan Hovold wrote:
+
+[...]
+
+>> +
+>>   struct dwc3_acpi_pdata {
+>>   	u32			qscratch_base_offset;
+>>   	u32			qscratch_base_size;
+>>   	u32			dwc3_core_base_size;
+>> -	int			qusb2_phy_irq_index;
+>> -	int			dp_hs_phy_irq_index;
+>> -	int			dm_hs_phy_irq_index;
+>> -	int			ss_phy_irq_index;
+>> +	/*
+>> +	 * The phy_irq_index corresponds to ACPI indexes of (in order)
+>> +	 * DP/DM/SS/QUSB2 IRQ's respectively.
+>> +	 */
+>> +	int			phy_irq_index[NUM_PHY_IRQ];
+>>   	bool			is_urs;
+>>   };
 > 
-> In my opinion, CMA is overly restrictive because we'd have to define the
-> region up front and we don't know how much memory the virtual machines
-> the user will want to launch.
+> I asked you to add a port structure and get rid of the PHY indexes in
+> v13, and so you did for the diver data below, but you still have an
+> array of indexes here for the ACPI data.
+> 
+> I don't think ever got around to actually reviewing the ACPI hack (and
+> maybe I was hoping that we'd be able to drop ACPI support before merging
+> multi-port support), but removing these fields and replacing them with
+> an array is a step in the wrong direction (e.g. making the code harder
+> to read).
+> 
+> Why can't you just add a helper function which returns one of these
+> fields based on the interrupt name string?
 
-I was thinking of using CMA to allocate pages needed to store guest
-metadata and such at EL2, but not to back the actual guest pages
-themselves. That still means overallocating somehow, but that should
-hopefully be much smaller and be less of a problem?
+I think since [1] has been accepted, this comment has been taken care of.
 
-For the actual guest pages, the gunyah variant of guestmem will have to
-unmap the pages from the direct map itself, but I'd be personally happy
-with making that part non-modular to avoid the issue Christoph and
-others have raised.
+> 
+>> +struct dwc3_qcom_port {
+>> +	int			dp_hs_phy_irq;
+>> +	int			dm_hs_phy_irq;
+>> +	int			ss_phy_irq;
+>> +};
+> 
+> And as I've explicitly said before, you should include hs_phy_irq here.
+> 
+> It's a port interrupt and special casing just this one make no sense at
+> all even if there are no multi-port controller that use it.
+> 
 
-Thanks,
-Quentin
+Okay. Will add it to port structure.
+I only kept it outside because there are no real devices which has 
+multiple ports and qusb2_phy_irq in them.
+
+>> +
+>>   struct dwc3_qcom {
+>>   	struct device		*dev;
+>>   	void __iomem		*qscratch_base;
+>> @@ -74,9 +90,7 @@ struct dwc3_qcom {
+>>   	struct reset_control	*resets;
+>>   
+>>   	int			qusb2_phy_irq;
+>> -	int			dp_hs_phy_irq;
+>> -	int			dm_hs_phy_irq;
+>> -	int			ss_phy_irq;
+>> +	struct dwc3_qcom_port	port_info[DWC3_MAX_PORTS];
+> 
+> Just name the array 'ports' as I already suggested. It's more succinct
+> and makes the code that uses it easier to read.
+> 
+>>   	enum usb_device_speed	usb2_speed;
+>>   
+>>   	struct extcon_dev	*edev;
+>> @@ -91,6 +105,7 @@ struct dwc3_qcom {
+>>   	bool			pm_suspended;
+>>   	struct icc_path		*icc_path_ddr;
+>>   	struct icc_path		*icc_path_apps;
+>> +	u8			num_ports;
+> 
+> Any reason not to keep this one closer to the ports array?
+> 
+>>   };
+>   
+
+[...]
+
+>> -	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
+>> -				pdata ? pdata->ss_phy_irq_index : -1);
+>> -	if (irq > 0) {
+>> -		ret = dwc3_qcom_request_irq(qcom, irq, "ss_phy_irq");
+>> -		if (ret)
+>> -			return ret;
+>> -		qcom->ss_phy_irq = irq;
+>> +	for (i = 0; i < irq_count; i++) {
+>> +		irq_index = dwc3_qcom_get_irq_index(irq_names[i]);
+>> +		if (irq_index == -1) {
+>> +			dev_err(&pdev->dev, "Unknown interrupt-name \"%s\" found\n", irq_names[i]);
+> 
+> This is now spamming the logs with errors like
+> 
+> 	dwc3-qcom a6f8800.usb: Unknown interrupt-name "pwr_event" found
+> 
+> which is clearly just broken.
+> 
+>> +			continue;
+>> +		}
+>> +		port_index = dwc3_qcom_get_port_index(irq_names[i], irq_index);
+>> +		if (port_index == -1) {
+>> +			dev_err(&pdev->dev, "Invalid interrupt-name suffix \"%s\"\n", irq_names[i]);
+>> +			continue;
+>> +		}
+>> +
+>> +		acpi_index = dwc3_qcom_get_acpi_index(qcom, irq_index, port_index);
+>> +
+>> +		irq = dwc3_qcom_get_irq(pdev, irq_names[i], acpi_index);
+>> +		if (irq > 0) {
+>> +			ret = dwc3_qcom_request_irq(qcom, irq, irq_names[i]);
+>> +			if (ret)
+>> +				return ret;
+>> +
+>> +			switch (irq_index) {
+>> +			case DP_HS_PHY_IRQ_INDEX:
+>> +				qcom->port_info[port_index - 1].dp_hs_phy_irq = irq;
+>> +				break;
+>> +			case DM_HS_PHY_IRQ_INDEX:
+>> +				qcom->port_info[port_index - 1].dm_hs_phy_irq = irq;
+>> +				break;
+>> +			case SS_PHY_IRQ_INDEX:
+>> +				qcom->port_info[port_index - 1].ss_phy_irq = irq;
+>> +				break;
+>> +			case QUSB2_PHY_IRQ_INDEX:
+>> +				qcom->qusb2_phy_irq = irq;
+>> +				break;
+>> +			}
+>> +
+>> +			if (qcom->num_ports < port_index)
+>> +				qcom->num_ports = port_index;
+>> +		}
+>>   	}
+> 
+> Why don't you add a port helper for fetching the interrupts instead?
+> 
+> There are multiple ways that you can use to determine if this is a
+> multiport controller or not; you can use OF match data, or simply look
+> at one of the interrupts that would always be there for a multiport
+> (or single port) controller (e.g. "dp_hs_phy_1").
+> 
+> You can even determine the number of ports first by parsing the
+> interrupts names and looking for the highest port number.
+> 
+> Then you can iterate over the ports and parse the interrupts for each
+> port in turn, which should allow for a much cleaner and less
+> error-prone implementation.
+> 
+
+With [1] merged, I think I can use your suggestion of going through and 
+checking if dp_hs_phy_X is present or not and if present, it is 
+multiport and go through dp_hs_phy_{1/2/3/4} to see the num of ports 
+present.
+
+That must simplify the code and make it clean as well.
+
+[1]: 
+https://lore.kernel.org/all/20240305093216.3814787-1-quic_kriskura@quicinc.com/
+
+Regards,
+Krishna,
 
