@@ -1,174 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-13309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B079871277
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:50:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 504A4871356
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 03:10:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 778E71F233A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 01:50:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8E21F225FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:10:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE29817C79;
-	Tue,  5 Mar 2024 01:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7A718032;
+	Tue,  5 Mar 2024 02:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="aZ4lXG5D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cne/KgbO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EA617C6F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 01:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCE917C95;
+	Tue,  5 Mar 2024 02:04:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709603401; cv=none; b=osK7BNB5NLDxEZsvKGbRCL0paMpskk6s+133/WntCdwJtXImG8oHlZ7kiFcE/IxiQFTuLpYw4YBU9uKMuUMnWT7JZrYwe5gm+nRkbN87MsKpdAZhBDeM56TM+0azA8k2crkgGuVNwFxNFThLCxiy8xu7L9o5fHEhE0U/wTyc+IQ=
+	t=1709604248; cv=none; b=enMhdP+y/xbYkLFwCWle8s710xy+uYMsLMma2QeChKdS9oPWasS3Cnk2EWA1i36U+gxhFs0be6rKW69nof3kCycc+5L1atLe+CcHsjZ+UipFpsXYyni9CmN56QOZlx9KJV/2uzs3A1oXHkZiKV6ibdXbA16bos+fr/zFKhgfrHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709603401; c=relaxed/simple;
-	bh=yyW5I+Reax9tvwEf8AlEoNpwkjdPnt8mWZ23KJMTI6g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B94ZzdvMxPYE8lobBoIKF+uBct6Nm+MQ5fsdnMsSXGrogKXaWt1K7cBJGydH0M2YsIxXWsmiAYmolJQtFtteAxwZsSMrF8cDmTmLaF30nNR2+AC0f3+r6zE9QcBuLmiLYohMu6CgiOzTspqrlwHdY6iTPqYuETjGzCkuDJtW8lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=aZ4lXG5D; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1dc9222b337so51123315ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 17:50:00 -0800 (PST)
+	s=arc-20240116; t=1709604248; c=relaxed/simple;
+	bh=nYYKfNUOFhQgvcfKIGiZ9HKYCmINslELdbcTPSTt8u0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QE/TMcswkvvkN9o40blPEEgsECPsJmySPgeLZWHPehHRrjtYZ/BebVNlZpdLIgFSbG0WkYRprQ7MAu6VEzlxFLvHtWMXNhuvJKUhSv4w/AeDbA7jH56jm4IZYB4f04SzoF3htOu9wq/3b3ml7eOCfk1pVb/gNI3bfz2lnWm/f10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cne/KgbO; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d228a132acso67817761fa.0;
+        Mon, 04 Mar 2024 18:04:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709603399; x=1710208199; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=h13kFiOG83l2eut0x8wl6gIo0vAvu5MS7zN4PwJZB2w=;
-        b=aZ4lXG5D8BAuThlzP1OO1ZjA6u7qP24QFm8uS4PSB9x1RF7btALo9IFR6EIIxZ7sWz
-         AML1BDOqZr0u4EopH69TmUc7Ss4Tiib4rxDJZtdBB7ya0pMVC1llzhSkCwMeoVxl/dUH
-         jChGGLsm2lRo5XDiy4igI3i0yOetj3He/jYWY=
+        d=gmail.com; s=20230601; t=1709604245; x=1710209045; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tNlCYCD3A5X7opMa78QyTbPYgKpu//YZT0Q5xl7o9vw=;
+        b=Cne/KgbOBltYPR1DFCSwB8+6B2oV8ZUOtpNn+rXOsa/WZbbnHOzHKBv8B5G05UNoM/
+         zIGlDnsBBfwmLsNka+9tT0bmI2pIrSmU9GVglnwYDrHDkArWkUCVfKjreBECUioM6iCg
+         8NqpTdBe4OTk9hjEc75wP/j+71Iw2rxpuK2s1VpSQVP+xIajr2qlTVuFFWlS1o1AKLME
+         RgewEI0gBXw1oFr0J2BO3Nzz43ZCVKkksg4O/X90KUqCF36M1a4C8jBVkeSL0itvvuZ1
+         JLCLk14ylxWQYsQX9BdvgxDmRe2xyBm//mXVRazgeZHcXeyxJDHEjCvV8xMRgB4/c0z1
+         qY5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709603399; x=1710208199;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h13kFiOG83l2eut0x8wl6gIo0vAvu5MS7zN4PwJZB2w=;
-        b=bWBWM+R8e2bt9bF4gSivKuP506L5OvxmD+OiKFZsOavOpLy8VEXTwLYlCNuZCzDDb+
-         upgOY0DrCWTcg3fZr4re7BfM6I48NQXtPzv35wr0rhyEOxFt3JQFsNncJZspaZa+NlFu
-         rAY4zFXn/JAwK5bnjyVnDnIuCFWPvXP3T/0jWYYJgXVjFji1YWQA5D4H6QXU1cYKEo+z
-         l9FyRQEhLBYgUUpB/jFLcoNXtELGn8XJ1PAg0mLJoexS8f89kh3/sbKBwtvpTEl+3hL5
-         u56pxUZSoj2+cTWqwDb4SshWs/DOXJKVXoFA0BmJ7Rf539VHBkUe0szuSHS77zUHbiKW
-         Qd6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVyGZvltAU1cj+vl+/mqUtssd0WlI8/TBt/c9AhNmqg4qhwso7mrbWrwDCAZ4ek9JJcaHSwiWKZSTgVCj5xd7H2Edct1jd356P6z9qM+w==
-X-Gm-Message-State: AOJu0Yx2kJMfLpOy/OF2lsjG64dwUd4JqHrpsgbHsxG351Kx0bXsJDxi
-	GEdhB+OlU0uXLTLaiLSFIVvskyHBgPpiObYiW7+wlWDp40NrIHNC/1BCLHm8JQ==
-X-Google-Smtp-Source: AGHT+IEY2MyLk4Pt5JuQWaChUMdnDCImSXnsfKZzDSoADAlNhDR4tmnQTOUcjCgHTCc00JnzSTSknw==
-X-Received: by 2002:a17:903:2342:b0:1d9:b099:6f9 with SMTP id c2-20020a170903234200b001d9b09906f9mr697581plh.45.1709603399526;
-        Mon, 04 Mar 2024 17:49:59 -0800 (PST)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:aaf8:36b6:cbbc:88ff])
-        by smtp.gmail.com with ESMTPSA id e8-20020a170902784800b001dcc7795524sm9370813pln.24.2024.03.04.17.49.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 17:49:58 -0800 (PST)
-From: Douglas Anderson <dianders@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: [PATCH] Revert "tty: serial: simplify qcom_geni_serial_send_chunk_fifo()"
-Date: Mon,  4 Mar 2024 17:49:53 -0800
-Message-ID: <20240304174952.1.I920a314049b345efd1f69d708e7f74d2213d0b49@changeid>
-X-Mailer: git-send-email 2.44.0.rc1.240.g4c46232300-goog
+        d=1e100.net; s=20230601; t=1709604245; x=1710209045;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tNlCYCD3A5X7opMa78QyTbPYgKpu//YZT0Q5xl7o9vw=;
+        b=VdjZqHLFixIkV64/vKGTkjFFmDOeCxqclfpEyANiTsOXo2Wo8bReRXV3bUpno/Zczv
+         Sm359vjL4C1yeKhi/PtNVWnYMADyQmMKnLvohi4kAWFBtQKjooajhf/0bB68EmP96zj8
+         yi+yJwAOAjJHzrCWZDFn24MI45/xttzzJlqN0BUFoIE+esyh0bek3aahTnnV0t1nUdDs
+         IkMbcvxrpOknCPCx2/d7b3cjE7HWqkXQA6WrUkGfp27QUlLAL+d3z8CiaBA/GjtAFYun
+         EbzKNNqFzjUB0hO6U0a6el8kYb2OztqtLzm5lEOzKCnintqKIfbP87Ri+ehzjJ0XK2Az
+         NlCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWst5BbnWckQLVZkUhcc3xButeZ0//8eZuWj40jaldS39J4YkvEmyXyiWza0/9ptQ/iGD8FBQa8pyNx9P2jiT9NPiTA1ZvBAjH+NPd8gMpZVTlX2WoKKTNaqCJ+8FQoOS9cfNcd/Zvpe9N+aw==
+X-Gm-Message-State: AOJu0Yyhb9JLz90LkMHXFmaXLLy8IbMws6+6SbNT892ppdS99EdoLQGl
+	zTO/gfcFedoqhkXMWqUo63orbcssEuPV5DENeA8Qkbug1KyqGpw95Dr7hLc1+MvoTAbJAOLCBug
+	2gkKYC28o3sedVS3ZZ5HWfa/K5aw=
+X-Google-Smtp-Source: AGHT+IGRZQ/BGfXr4JyRSnaEMtBihRHwRoaenXLEwD0fFOB7V17Y1jXXWBjl3v+IqZFEixVDxybirYpjYDfuPmdJPZg=
+X-Received: by 2002:ac2:428a:0:b0:513:3309:cc62 with SMTP id
+ m10-20020ac2428a000000b005133309cc62mr303303lfh.47.1709604244339; Mon, 04 Mar
+ 2024 18:04:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240301185346.10412-1-robdclark@gmail.com> <CAAfnVBnXCqCQjamnSC0SArrNykiSgjwNpMvrkmb7kTuufW-opg@mail.gmail.com>
+In-Reply-To: <CAAfnVBnXCqCQjamnSC0SArrNykiSgjwNpMvrkmb7kTuufW-opg@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 4 Mar 2024 18:03:52 -0800
+Message-ID: <CAF6AEGuvXAXgtDgVTL0Z80pbR4d-oUnwBf0uB1GRJkZHd=2ftQ@mail.gmail.com>
+Subject: Re: [RFC] drm/msm: Add GPU memory traces
+To: Gurchetan Singh <gurchetansingh@chromium.org>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Tvrtko Ursulin <tursulin@ursulin.net>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@chromium.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This reverts commit 5c7e105cd156fc9adf5294a83623d7a40c15f9b9.
+On Mon, Mar 4, 2024 at 5:38=E2=80=AFPM Gurchetan Singh
+<gurchetansingh@chromium.org> wrote:
+>
+>
+>
+>
+> On Fri, Mar 1, 2024 at 10:54=E2=80=AFAM Rob Clark <robdclark@gmail.com> w=
+rote:
+>>
+>> From: Rob Clark <robdclark@chromium.org>
+>>
+>> Perfetto can use these traces to track global and per-process GPU memory
+>> usage.
+>>
+>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>> ---
+>> I realized the tracepoint that perfetto uses to show GPU memory usage
+>> globally and per-process was already upstream, but with no users.
+>>
+>> This overlaps a bit with fdinfo, but ftrace is a lighter weight
+>> mechanism and fits better with perfetto (plus is already supported in
+>> trace_processor and perfetto UI, whereas something fdinfo based would
+>> require new code to be added in perfetto.
+>>
+>> We could probably do this more globally (ie. drm_gem_get/put_pages() and
+>> drm_gem_handle_create_tail()/drm_gem_object_release_handle() if folks
+>> prefer.  Not sure where that leaves the TTM drivers.
+>>
+>>  drivers/gpu/drm/msm/Kconfig   |  1 +
+>>  drivers/gpu/drm/msm/msm_drv.h |  5 +++++
+>>  drivers/gpu/drm/msm/msm_gem.c | 37 +++++++++++++++++++++++++++++++++++
+>>  drivers/gpu/drm/msm/msm_gpu.h |  8 ++++++++
+>>  4 files changed, 51 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+>> index f202f26adab2..e4c912fcaf22 100644
+>> --- a/drivers/gpu/drm/msm/Kconfig
+>> +++ b/drivers/gpu/drm/msm/Kconfig
+>> @@ -33,6 +33,7 @@ config DRM_MSM
+>>         select PM_OPP
+>>         select NVMEM
+>>         select PM_GENERIC_DOMAINS
+>> +       select TRACE_GPU_MEM
+>>         help
+>>           DRM/KMS driver for MSM/snapdragon.
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv=
+.h
+>> index 16a7cbc0b7dd..cb8f7e804b5b 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>> @@ -137,6 +137,11 @@ struct msm_drm_private {
+>>         struct msm_rd_state *hangrd;   /* debugfs to dump hanging submit=
+s */
+>>         struct msm_perf_state *perf;
+>>
+>> +       /**
+>> +        * total_mem: Total/global amount of memory backing GEM objects.
+>> +        */
+>> +       atomic64_t total_mem;
+>> +
+>>         /**
+>>          * List of all GEM objects (mainly for debugfs, protected by obj=
+_lock
+>>          * (acquire before per GEM object lock)
+>> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem=
+.c
+>> index 175ee4ab8a6f..e04c4af5d154 100644
+>> --- a/drivers/gpu/drm/msm/msm_gem.c
+>> +++ b/drivers/gpu/drm/msm/msm_gem.c
+>> @@ -12,6 +12,9 @@
+>>  #include <linux/pfn_t.h>
+>>
+>>  #include <drm/drm_prime.h>
+>> +#include <drm/drm_file.h>
+>> +
+>> +#include <trace/events/gpu_mem.h>
+>>
+>>  #include "msm_drv.h"
+>>  #include "msm_fence.h"
+>> @@ -33,6 +36,34 @@ static bool use_pages(struct drm_gem_object *obj)
+>>         return !msm_obj->vram_node;
+>>  }
+>>
+>> +static void update_device_mem(struct msm_drm_private *priv, ssize_t siz=
+e)
+>> +{
+>> +       uint64_t total_mem =3D atomic64_add_return(size, &priv->total_me=
+m);
+>> +       trace_gpu_mem_total(0, 0, total_mem);
+>> +}
+>> +
+>> +static void update_ctx_mem(struct drm_file *file, ssize_t size)
+>> +{
+>> +       struct msm_file_private *ctx =3D file->driver_priv;
+>> +       uint64_t ctx_mem =3D atomic64_add_return(size, &ctx->ctx_mem);
+>> +
+>> +       rcu_read_lock(); /* Locks file->pid! */
+>> +       trace_gpu_mem_total(0, pid_nr(file->pid), ctx_mem);
+>> +       rcu_read_unlock();
+>> +
+>> +}
+>> +
+>> +static int msm_gem_open(struct drm_gem_object *obj, struct drm_file *fi=
+le)
+>> +{
+>> +       update_ctx_mem(file, obj->size);
+>> +       return 0;
+>> +}
+>> +
+>> +static void msm_gem_close(struct drm_gem_object *obj, struct drm_file *=
+file)
+>> +{
+>> +       update_ctx_mem(file, -obj->size);
+>> +}
+>> +
+>>  /*
+>>   * Cache sync.. this is a bit over-complicated, to fit dma-mapping
+>>   * API.  Really GPU cache is out of scope here (handled on cmdstream)
+>> @@ -156,6 +187,8 @@ static struct page **get_pages(struct drm_gem_object=
+ *obj)
+>>                         return p;
+>>                 }
+>>
+>> +               update_device_mem(dev->dev_private, obj->size);
+>> +
+>>                 msm_obj->pages =3D p;
+>>
+>>                 msm_obj->sgt =3D drm_prime_pages_to_sg(obj->dev, p, npag=
+es);
+>> @@ -209,6 +242,8 @@ static void put_pages(struct drm_gem_object *obj)
+>>                         msm_obj->sgt =3D NULL;
+>>                 }
+>>
+>> +               update_device_mem(obj->dev->dev_private, -obj->size);
+>> +
+>>                 if (use_pages(obj))
+>>                         drm_gem_put_pages(obj, msm_obj->pages, true, fal=
+se);
+>>                 else
+>> @@ -1118,6 +1153,8 @@ static const struct vm_operations_struct vm_ops =
+=3D {
+>>
+>>  static const struct drm_gem_object_funcs msm_gem_object_funcs =3D {
+>>         .free =3D msm_gem_free_object,
+>> +       .open =3D msm_gem_open,
+>> +       .close =3D msm_gem_close,
+>>         .pin =3D msm_gem_prime_pin,
+>>         .unpin =3D msm_gem_prime_unpin,
+>>         .get_sg_table =3D msm_gem_prime_get_sg_table,
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu=
+.h
+>> index 2bfcb222e353..f7d2a7d6f8cc 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.h
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+>> @@ -428,6 +428,14 @@ struct msm_file_private {
+>>          * level.
+>>          */
+>>         struct drm_sched_entity *entities[NR_SCHED_PRIORITIES * MSM_GPU_=
+MAX_RINGS];
+>> +
+>> +       /**
+>> +        * ctx_mem:
+>> +        *
+>> +        * Total amount of memory of GEM buffers with handles attached f=
+or
+>> +        * this context.
+>> +        */
+>> +       atomic64_t ctx_mem;
+>>  };
+>
+>
+>
+> Just for added context, past discussions on TRACE_GPU_MEM:
+>
+> https://lists.freedesktop.org/archives/dri-devel/2021-October/328260.html
+> https://lists.freedesktop.org/archives/dri-devel/2021-January/295120.html
+>
+> Some have even suggested deleting the tracepoint altogether.
+>
+> Personally, I think we should land an internal user in a non-breaking way=
+, since userspace (Perfetto) already depends on it.  Right now, we're in li=
+mbo for multiple years ...
 
-As identified by KASAN, the simplification done by the cleanup patch
-was not legal.
+For better or for worse, the tracepoint already landed.. and tbh I
+don't see any real problem with it.  And it defn seems like a valid
+option to land support for in-driver and later refactor for more
+shared code.  We already have the uapi and the userspace consuming it,
+so doesn't seem like there is any debate there.  Maybe there is
+something from the original series that could be recycled for
+something less driver specific.
 
-From tracing through the code, it can be seen that we're transmitting
-from a 4096-byte circular buffer. We copy anywhere from 1-4 bytes from
-it each time. The simplification runs into trouble when we get near
-the end of the circular buffer. For instance, we might start out with
-xmit->tail = 4094 and we want to transfer 4 bytes. With the code
-before simplification this was no problem. We'd read buf[4094],
-buf[4095], buf[0], and buf[1]. With the new code we'll do a
-memcpy(&buf[4094], 4) which reads 2 bytes past the end of the buffer
-and then skips transmitting what's at buf[0] and buf[1].
+Re: some of the discussion about cgroups, I think that is a
+non-sequitur because (AFAICT) perfetto wants a global view of pids/etc
+(at least I'm not really sure what the value of system tracing is if
+it isn't, you know, system level.. I deliberately avoided using
+virtual-pid's for that reason)
 
-KASAN isn't 100% consistent at reporting this for me, but to be extra
-confident in the analysis, I added traces of the tail and tx_bytes and
-then wrote a test program:
+BR,
+-R
 
-  while true; do
-    echo -n "abcdefghijklmnopqrstuvwxyz0" > /dev/ttyMSM0
-    sleep .1
-  done
-
-I watched the traces over SSH and saw:
-  qcom_geni_serial_send_chunk_fifo: 4093 4
-  qcom_geni_serial_send_chunk_fifo: 1 3
-
-Which indicated that one byte should be missing. Sure enough the
-output that should have been:
-
-  abcdefghijklmnopqrstuvwxyz0
-
-In one case was actually missing a byte:
-
-  abcdefghijklmnopqrstuvwyz0
-
-Running "ls -al" on large directories also made the missing bytes
-obvious since columns didn't line up.
-
-While the original code may not be the most elegant, we only talking
-about copying up to 4 bytes here. Let's just go back to the code that
-worked.
-
-Fixes: 5c7e105cd156 ("tty: serial: simplify qcom_geni_serial_send_chunk_fifo()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-If folks really want me to, I can adjust the patch to try to detect if
-the circular buffer is going to wrap and still use the memcpy(). Let
-me know.
-
- drivers/tty/serial/qcom_geni_serial.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index e63a8fbe63bd..99e08737f293 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -851,19 +851,21 @@ static void qcom_geni_serial_stop_tx(struct uart_port *uport)
- }
- 
- static void qcom_geni_serial_send_chunk_fifo(struct uart_port *uport,
--					     unsigned int remaining)
-+					     unsigned int chunk)
- {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	struct circ_buf *xmit = &uport->state->xmit;
--	unsigned int tx_bytes;
-+	unsigned int tx_bytes, c, remaining = chunk;
- 	u8 buf[BYTES_PER_FIFO_WORD];
- 
- 	while (remaining) {
- 		memset(buf, 0, sizeof(buf));
- 		tx_bytes = min(remaining, BYTES_PER_FIFO_WORD);
- 
--		memcpy(buf, &xmit->buf[xmit->tail], tx_bytes);
--		uart_xmit_advance(uport, tx_bytes);
-+		for (c = 0; c < tx_bytes ; c++) {
-+			buf[c] = xmit->buf[xmit->tail];
-+			uart_xmit_advance(uport, 1);
-+		}
- 
- 		iowrite32_rep(uport->membase + SE_GENI_TX_FIFOn, buf, 1);
- 
--- 
-2.44.0.rc1.240.g4c46232300-goog
-
+>>
+>>  /**
+>> --
+>> 2.44.0
+>>
 
