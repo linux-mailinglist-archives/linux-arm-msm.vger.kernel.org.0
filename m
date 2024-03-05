@@ -1,109 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-13306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BABAC871142
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 00:42:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13EA28711AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 01:28:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F464281573
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Mar 2024 23:42:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7F0B1F215C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 00:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9BC7CF29;
-	Mon,  4 Mar 2024 23:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48926EDE;
+	Tue,  5 Mar 2024 00:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8+DI2f+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lvyPTQ5Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1A317555;
-	Mon,  4 Mar 2024 23:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9273238F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 00:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709595731; cv=none; b=b+ruZV3qkC5p0a6Obtq85rs1jlObhWC9WISV2jSOos2AxzYkP8a2rZVgYvKKubwpMleGqSGGMdc4jcQ9hI//0BJGjSJ9oJMFCOcPxxenMULHxNZ0AkbmY5tP7Uz2QFK1svslagV8n8LL3v4WJQ5bKJvcIh30WVo8N/ecwULTIkM=
+	t=1709598494; cv=none; b=oETpUUzSastYk1q29DNOyzJwNagLzTOXZBQSkvxe+S9YKDfV8VfQllLgZ73akXVBbQX2UzLYGJLFk3AcCRru3+mpsd/pZcNTVVfdqMbop+9jq8eXDlgaLFXmcJrdNBB0rNziQgLGcVQEoIIST2DDecDq+XTzvqI5T5uiLdQXsek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709595731; c=relaxed/simple;
-	bh=ODwOIJnsoYs+tJJkR4iryVyJ94Y2iXW5AzaX0Y/ymF4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8wqu3vpE7Ov48/KqQPuuZSyZZLG0+GodGSLbSkvNaKNjvr7eWeBqfrEDcwZ7OW/WXzVU/jYSRETtE8Fezro9vLdLSmRMcwhf1Tt8PHtkRkQoX9VUzMeWyrx5ZpA0rZvHvbdCHU4phs3u0PHoIdND09GWmDm0bqnRiXJ1MKNXRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8+DI2f+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54BEC433C7;
-	Mon,  4 Mar 2024 23:42:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709595731;
-	bh=ODwOIJnsoYs+tJJkR4iryVyJ94Y2iXW5AzaX0Y/ymF4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C8+DI2f+U1Q5qSovuUQRTgF394V3BApAvw58oB8pVEJobwGWAxfp8K0NOuRoR2UE1
-	 Mx0E3R1ykV0mDUzu7P8md/Sk1Ew81aLHDbPamtuAzDHAEf6qM4P2ATyID1O+MkQxaV
-	 Mfpfy4PMzQWJLT2qPlNBJXvbInVKcLZ7W6EaynvY=
-Date: Mon, 4 Mar 2024 23:42:08 +0000
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	"derek.kiernan@amd.com" <derek.kiernan@amd.com>,
-	Kees Cook <keescook@chromium.org>, linux-arm-msm@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	John Stultz <jstultz@google.com>,
-	Michal Simek <michal.simek@amd.com>,
-	"dragan.cvetic@amd.com" <dragan.cvetic@amd.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Justin Stitt <justinstitt@google.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Tomas Winkler <tomas.winkler@intel.com>,
-	Amol Maheshwari <amahesh@qti.qualcomm.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Appana Durga Kedareswara rao <appana.durga.kedareswara.rao@amd.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Andrew Donnellan <ajd@linux.ibm.com>
-Subject: Re: [PATCH 00/11] misc: Convert to platform remove callback
- returning void
-Message-ID: <2024030453-charter-villain-8393@gregkh>
-References: <cover.1708508896.git.u.kleine-koenig@pengutronix.de>
- <d6c4ff9e-756a-4604-993a-cf14cfdbc53c@app.fastmail.com>
- <p2rqzrmgfaqdcwj2hlgt7u2yrgfrf4dwizecicdpdmb3jezoky@zmkxw5vt7qyi>
+	s=arc-20240116; t=1709598494; c=relaxed/simple;
+	bh=4AjwDlHx3YycEF4tI7pNTUo4oAM3+zIFAtp1wah21RI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Yil5OPhtwmWs+CULuAqHZaQOTfcE18SBOS0o37C/peqVb0jQ0gTX5XdwdsPYBFuV8yKEBJGBhgsWLrB2X1dyXt7VxB1hGXpyLo/LTl4A8764lSAp6iylykE8Pyql3gVs1PN1qXhhJiXo+Q8QK18gzHJghnq7BAE7gftq7DOljuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lvyPTQ5Z; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso4329282e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 16:28:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709598491; x=1710203291; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UgihA/j9MMe4W3y4lHJTNEdOriPRYiwOGRsjM+J9mKU=;
+        b=lvyPTQ5ZbZXaGZvDLqAFKF0spichesYx7frXozgQSKM88zU+21JFcLVq0zxJhnBlKO
+         d4bCn/kOhn7bKCL/oUm975hzFBf9V3JcxG56HUVl+7vnUUCPtua2aYy7K6g0+Z/x1vst
+         MPPhPclxXnHqxvUkMtHKaz5qZKFxbz3vxeCbGqpLII0E6Zdd7+0/3Nq06XSrMMmPypW5
+         yBrzmRPIS9ZlC0aEvkIrmuBo3o3uzL7TeqiyRSQT8CfUOYjgm+spU2NDH/JPTg6MHk/X
+         xN6ulElgzibyMjNn0kkTSI6FvNLdy8W7CF+w6HnSvm2FxIN4w+m1Hpz07a9p7ysmcIQO
+         L92g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709598491; x=1710203291;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UgihA/j9MMe4W3y4lHJTNEdOriPRYiwOGRsjM+J9mKU=;
+        b=BUV1v/3BIFRksItlTxI13Rsv7p8jlaZuRYwa1poOQ8mE8iQ2twIHII/FdB9USlwWss
+         hJgQeYeNedRqv/jstLQWks5WZnXKhI9wfTwVRHNJS443UJXj6uOQwMM9WXOuOG8xdH6H
+         gj0f2K+eCHZ5wzUqIThGFl7zK9TmvFEifZoZJuzW4ONe9k1ah1soyFt6J8USzdZlSt1K
+         zCYePCBs5DXQrY4jeKRppbDyBi5RzaY1KyhWgs8XmS8/Q49yId5Mfr3xP7IkgH0zuuga
+         OCKbbduW6pq598gbtvHd+Bfm77jxg2TH6kab4yAcUJMzM+6l0lVUINbJz1+2vmPix9qF
+         gbEg==
+X-Forwarded-Encrypted: i=1; AJvYcCWGC9owFFsP2IZSaVcF+t546gx1Zv+97yiyXXS3fabSTvz1UQmRnBw38rFTfj10cN7WQytkVLN/mfDLjlOXqHkiUtzpr0T+X9p8GiSxVQ==
+X-Gm-Message-State: AOJu0YxFuTW+/3i81quCGATbJtNAWunH5vpReQOX+sGBrG6pXM6XHr24
+	v8u33VM+N/lGWepQVtWWdDDiAtKHQLhxWlXx+Pqjpfi2Q1fNl87q7xu+8IqAoSYtrnstQ/Es812
+	9
+X-Google-Smtp-Source: AGHT+IFDZK6sfIEdXRUKSjRI7ZdugsypJRMtPgYmqMfgXbm1nTdG+dB8phMOK0N67CVLvFXHeQOFIw==
+X-Received: by 2002:a05:6512:282c:b0:513:2c50:9644 with SMTP id cf44-20020a056512282c00b005132c509644mr257056lfb.12.1709598490724;
+        Mon, 04 Mar 2024 16:28:10 -0800 (PST)
+Received: from umbar.lan (dzyjmhybhls-s--zn36gy-3.rev.dnainternet.fi. [2001:14ba:a00e:a300:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id s15-20020ac2464f000000b005133d11b261sm1149416lfo.92.2024.03.04.16.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 16:28:10 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Steev Klimaszewski <steev@kali.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 0/3] drm/msm/dpu: debug commit_done timeouts
+Date: Tue,  5 Mar 2024 02:28:08 +0200
+Message-Id: <170959846405.1203069.5519628464509979288.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240226-fd-dpu-debug-timeout-v4-0-51eec83dde23@linaro.org>
+References: <20240226-fd-dpu-debug-timeout-v4-0-51eec83dde23@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <p2rqzrmgfaqdcwj2hlgt7u2yrgfrf4dwizecicdpdmb3jezoky@zmkxw5vt7qyi>
 
-On Mon, Mar 04, 2024 at 11:36:23PM +0100, Uwe Kleine-König wrote:
-> Hello Arnd, hello Greg,
-> 
-> On Wed, Feb 21, 2024 at 02:52:29PM +0100, Arnd Bergmann wrote:
-> > On Wed, Feb 21, 2024, at 10:53, Uwe Kleine-König wrote:
-> > > Hello,
-> > >
-> > > this series converts all drivers below drivers/misc to struct
-> > > platform_driver::remove_new(). See commit 5c5a7680e67b ("platform:
-> > > Provide a remove callback that returns no value") for an extended
-> > > explanation and the eventual goal.
-> > >
-> > > All conversations are trivial, because their .remove() callbacks
-> > > returned zero unconditionally.
-> > >
-> > > There are no interdependencies between these patches, so they could be
-> > > picked up individually. But I'd hope that Greg or Arnd picks them up all
-> > > together.
-> > 
-> > These all look good to me, whole series
-> > 
-> > Acked-by: Arnd Bergmann <arnd@arndb.de>
-> 
-> Thanks.
-> 
-> You (= Arnd and Greg) are the listed maintainers for drivers/misc/. How
-> is this series supposed to be merged? Would a pull request help?
 
-I can take the patchset, let me catch up...
+On Mon, 26 Feb 2024 04:27:58 +0200, Dmitry Baryshkov wrote:
+> In order to debug commit_done timeouts ([1]) display the sticky bits of
+> the CTL_FLUSH register and capture the devcore dump when the first such
+> timeout occurs.
+> 
+> [1] https://gitlab.freedesktop.org/drm/msm/-/issues/33
+> 
+> 
+> [...]
+
+Applied, thanks!
+
+[1/3] drm/msm/dpu: make "vblank timeout" more useful
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/f1d0b196ff2e
+[2/3] drm/msm/dpu: split dpu_encoder_wait_for_event into two functions
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/d72a3d35b7ef
+[3/3] drm/msm/dpu: capture snapshot on the first commit_done timeout
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/4be445f5b6b6
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
