@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-13338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 382888719ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 10:49:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B3D5871A22
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 11:03:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 991BDB20DDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 09:49:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8E65D1C20F64
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 10:03:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BF88535CC;
-	Tue,  5 Mar 2024 09:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75CE5380C;
+	Tue,  5 Mar 2024 10:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z5MJLzYS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3dghNzo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA9E535AB;
-	Tue,  5 Mar 2024 09:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9054D9F9;
+	Tue,  5 Mar 2024 10:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709632177; cv=none; b=pvgLEeUkmpZpt5zess3w1lrhyx0H9RZ+xVxanrQpQkXKKTB5N6rEPAPgZIL4+1odIJZkAypq98fGYtF3eR2sAVUdMz434mk4Uykko/t9t7vxrywnujSfxUMOJ9hNSJAqP47pxbiufsCdilVTZdHomyLb/xxRo6j4f8PxkYtu4BA=
+	t=1709632981; cv=none; b=okn3MITzxwXZjUyOReKnhSxNwAhNj1BaI8A/eCDJ+4hNO0CkSf7U9VHQ6aMewBikeu0hRI7IQDpzBwWCq0dJaWhy09/4elpNrbkZbEeEvjjaEFQYGej0SeNFPNgYA5ezPPBdw5tBG+9S34Imv3HQQiIyKqC7u9FL9F0Up1hbckQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709632177; c=relaxed/simple;
-	bh=N3axigCyL0acGIqYzOY4GKXFswG/IiVRbVPbQw5st9w=;
+	s=arc-20240116; t=1709632981; c=relaxed/simple;
+	bh=CK3hGEkomyEWi++yHT0MA62YvDNmdI7jRyt+cZI+39M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dlUGTO9F7mTVX9GJ76IrDn9NtSw6IZ7l7y7+L/w4g8UY93O2yeFpY3ZoEfBndLQfyPjz1ovqsm3lKueHoG2TaLe6tGCEGazdhFum4KevZ6NwtiGSMmiUpt0Xm9TEYRQ7GKnw1M+BkApF+ffPZD2G9FWLSXAVoOOxDs+IA4N4Lwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z5MJLzYS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F22C433F1;
-	Tue,  5 Mar 2024 09:49:36 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8LUoWJSRkJxZLnL/ueoS+5BXqh9Q+470ocb9798O+EKA983pv2k+hSqS8t6NodPwVEUeDy26VHWajl41Z25M/8CtwyCjOgeaXlGNELOyzBlRie/S2dTdXwumrx4BhDw7eTqd/JZteFptLJZ9Nc3OTFeRQ3GrRU/9brdmR+DXSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3dghNzo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48687C433C7;
+	Tue,  5 Mar 2024 10:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709632176;
-	bh=N3axigCyL0acGIqYzOY4GKXFswG/IiVRbVPbQw5st9w=;
+	s=k20201202; t=1709632980;
+	bh=CK3hGEkomyEWi++yHT0MA62YvDNmdI7jRyt+cZI+39M=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z5MJLzYSS52eGLNJyhrnt0lPG1hy3FkIK3TCwpo1tT7W/B/1dh08FK3XNwYip2wkP
-	 qN04zWZWDr8bNPsGGkAx4ezj95bUhN62vcd3f9zpxYPf74u2GJqRODf394go7JjnJ+
-	 ITpeAZQU/ZteMr07AF6b4c+rcdv5cjaVLlldpJ1QkxvW04LKqNSxvHrtKkGy+AoTGb
-	 teqpdTkiV9qevO/WWeLRfMbmG/2A3J0HCc+NIObkwiZKzVIiaeqUze6D5Ug/Idp8dc
-	 n1hb/ec7Gx9vcnigSu/12A+cCKLFM4ivR5IziVGgjhyDOgi0l9PWp5tVxpu1iPRCOd
-	 DiKJ5KeQGiPzA==
+	b=Q3dghNzo7HlmbEOACI4bncZhwmZXipl+TemetSV+yqFniCeRIAGEv/1goTgQg9DKA
+	 QuDNmDvcvUkBEAxItcYPDEah06kSVtuBKKRpVu50+yiPNIQabzdSkEkvRFMgBaWT0/
+	 HwXzBrNkDSLAPZDmNOCB5dnQAMXvO01gizNb3wldqr9DvHpXzYt2SxggwaBKv1W+M0
+	 2VxYi7BjXCcoWjK9n3WtKDUEuZq/tQsM1B4aH1ZhH4qOQtgerQf/cIX0gGMjPPigu2
+	 IE50Z0Q6VXaxXItvGljUFpi8L4lfoe6383qzPkDl3KLgUoT2aM70YzGNxJS93D6rk2
+	 2seRVT/1pMKrg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rhRQd-000000003Pd-0CkH;
-	Tue, 05 Mar 2024 10:49:43 +0100
-Date: Tue, 5 Mar 2024 10:49:43 +0100
+	id 1rhRdb-000000004md-0LEo;
+	Tue, 05 Mar 2024 11:03:07 +0100
+Date: Tue, 5 Mar 2024 11:03:07 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v2] usb: dwc3: qcom: Remove ACPI support from glue driver
-Message-ID: <Zebqt6ohrAz2eVVs@hovoldconsulting.com>
-References: <20240305093216.3814787-1-quic_kriskura@quicinc.com>
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org
+Subject: Re: [PATCH] Revert "tty: serial: simplify
+ qcom_geni_serial_send_chunk_fifo()"
+Message-ID: <Zebt2_BTiYSlgxtJ@hovoldconsulting.com>
+References: <20240304174952.1.I920a314049b345efd1f69d708e7f74d2213d0b49@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,27 +67,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240305093216.3814787-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20240304174952.1.I920a314049b345efd1f69d708e7f74d2213d0b49@changeid>
 
-On Tue, Mar 05, 2024 at 03:02:16PM +0530, Krishna Kurapati wrote:
-> Minimal ACPI support was added to the Qualcomm DWC3 glue driver in order to
-> enable USB on SDM850 and SC8180X compute platforms. The support is still
-> functional, but unnoticed regressions in other drivers indicates that no
-> one actually booting any of platforms dependent on this implementation.
+On Mon, Mar 04, 2024 at 05:49:53PM -0800, Douglas Anderson wrote:
+> This reverts commit 5c7e105cd156fc9adf5294a83623d7a40c15f9b9.
 > 
-> The functionality provides is the bare minimum and is not expected to aid
-> in the effort of bringing full ACPI support to the driver in the future.
+> As identified by KASAN, the simplification done by the cleanup patch
+> was not legal.
 > 
-> Remove the ACPI code from the Qualcomm DWC3 glue driver to aid in the
-> implementation of improvements that are actually used like multiport and
-> flattening device tree.
-> 
-> Commit message by Bjorn Andersson.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
-> Changes in v2:
-> Removed ACPI dependency in Kconfig.
+> From tracing through the code, it can be seen that we're transmitting
+> from a 4096-byte circular buffer. We copy anywhere from 1-4 bytes from
+> it each time. The simplification runs into trouble when we get near
+> the end of the circular buffer. For instance, we might start out with
+> xmit->tail = 4094 and we want to transfer 4 bytes. With the code
+> before simplification this was no problem. We'd read buf[4094],
+> buf[4095], buf[0], and buf[1]. With the new code we'll do a
+> memcpy(&buf[4094], 4) which reads 2 bytes past the end of the buffer
+> and then skips transmitting what's at buf[0] and buf[1].
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Good catch!
+
+> Running "ls -al" on large directories also made the missing bytes
+> obvious since columns didn't line up.
+
+I had not noticed this in my limited use of the serial console on the
+sc8280xp CRD, but sure enough there are garbage characters and missing
+characters in the output of 'ls -al' before applying this patch.
+
+> While the original code may not be the most elegant, we only talking
+> about copying up to 4 bytes here. Let's just go back to the code that
+> worked.
+> 
+> Fixes: 5c7e105cd156 ("tty: serial: simplify qcom_geni_serial_send_chunk_fifo()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+
+and as Jiri already pointed out:
+
+Cc: stable@vger.kernel.org      # 6.4
+
+Johan
 
