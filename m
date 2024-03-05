@@ -1,135 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-13315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2827A8713D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 03:46:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2798713F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 03:54:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D844B28212D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:46:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 504961C20E56
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:54:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 303BC28684;
-	Tue,  5 Mar 2024 02:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A28A28E23;
+	Tue,  5 Mar 2024 02:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QmLPtcIt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fMfuIuLh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BABFC09;
-	Tue,  5 Mar 2024 02:46:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3F618032;
+	Tue,  5 Mar 2024 02:54:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709606813; cv=none; b=Mc2ODbfHAnfhjW5cAVezju2gkVjIYUplsYAqIlA6tNXtAvaDxZ0uT2biIVxrwh5PHbhx8M2zUhjII8jMCew4cZwprktaA2jkh/Djii8h5bI0BanmMhFt5gBZ5JQljXwINIeJUmIU5c+Y82omhxNBlEOOgfsjHd64yYWl0PWS/wo=
+	t=1709607258; cv=none; b=qVG5ccqlwtpKDjf/apauX5knK5zHcNyoMud0m7owZYvUcdNqloGNzRMmxRhZKcNwxltVXzDiavHNKsDsr6mFUIX8khI4ZQrnA+qi80S+DVFRyx+ASfoyImETExTHbVamqHSP/NtP/XLhB1qupYQnIiyhsZ9KeqNruAXhtbJna7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709606813; c=relaxed/simple;
-	bh=wi1O6vhp6yalvefyIniYQ56KvD98lh/d88XSIE2cHYM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=B7kzdiv6FxszdPnHnMcRLIDfZeRC04hSBd05Wy83BzdX9zF4kkMtYsJiQt824UVWKKA8gn4UNw2DZM6wCXXa5cFaxXohUug2AH9GyCfj1p9Z1+KYiK9rb4L5zh90zynxHHTUW1OIsoeTBlsvQdaj0TLnhMJUWEjB0shtBkiz+PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QmLPtcIt; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4251P9oS020905;
-	Tue, 5 Mar 2024 02:46:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=SPseMgNHICrE3PG4zZrb4tfldUcXoYVBpbVb9JBbf0A=; b=Qm
-	LPtcItY0+pli8PXxm6Ob0vNL5aOTGSe62SNnAo+d20x5cu3RqTj50xAkvm7Bvu1B
-	NYlRoHeRefwP8a9GXiU82+grWF3K3oTgE8BPG3YDLthhG7xJof9V8zfcA/XNrJQe
-	R7oniHUAmkOG0lokCZawIINVqOi8ncYCl/zR8ejE9NDnwNQxK4XaXbOocUUIGusk
-	kq4Jkq/e2Fs1IJNFJoDinljcW0IQyU+a2su73O8z5zaVUY2PS1lhR0r+1vsqvf1U
-	e68atX43MeKgefzXQ85VqaMLJKtIAH7JchdnJ0EiPaOzjTrGC9mOIoeWUwe1n8jr
-	MqC53YI4uRpL87lTpw8Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnarj24xb-1
+	s=arc-20240116; t=1709607258; c=relaxed/simple;
+	bh=0l3i+ZuBx54RtUp/u+8hZA58rzz9NPlBcK/F0+rS7GE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=H2aPUEpgR9RH3J/OdauBROEzdM3JEB+IjiYkFIku4vh7E64iGhfg/QxW3g668vfEzN+DangAK7oTnW9y+vkFoKVqLer+xl2ktqvCXqakWteJb20PpeheoLRx2xbH9iaQMi7a9spdQUWA43U8CeffgasZncZrlY12+O3eoTJ/v+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fMfuIuLh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4251LteJ002196;
+	Tue, 5 Mar 2024 02:54:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=js4Iwy77gk0F5mH6zVca
+	mbeIogD/xjaYBtWsOnDftLM=; b=fMfuIuLhntGLFAZYg4uIuOv9htteY4D2+EB+
+	4dcEa1+JKNiCf3Bg3O6b+/5Z56d9oaBvbhHHM0BMC60buAtiLf0R0F7fg17Pe/KP
+	+9QFNl7IpUb923Dm/z9dngQmtigIjxRG9aFE97Gid4Ri0MPZGTGeKHnTCo4ojVvm
+	VjDetCJgRcmWxS/jI7Qa3VPlpA89qIIzDGi9BowEGH9FfquJ/1KIqP3YdOUd2ykM
+	9N+Qnvmw2+bCrpkPZnUmO+w5UBPU2IdF4MJda0PmA0FduQZ6GsJyNCv6I2AZIElG
+	z6jidGJ/l5nr1+ICdJzG9HMyotR4uP5RVF7Dsd9ApEh5ZSCi7g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnqwhra0p-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Mar 2024 02:46:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4252kadZ018363
+	Tue, 05 Mar 2024 02:54:12 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4252lWqf006692;
+	Tue, 5 Mar 2024 02:54:10 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 3wnmt32c8e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Mar 2024 02:46:37 GMT
-Received: from [10.110.86.150] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Mar
- 2024 18:46:36 -0800
-Message-ID: <2cfaec27-7b7d-4727-b625-2df5b6879da6@quicinc.com>
-Date: Mon, 4 Mar 2024 18:46:35 -0800
+	Tue, 05 Mar 2024 02:54:10 +0000
+Received: from NALASPPMTA05.qualcomm.com (NALASPPMTA05.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4252sAos013875;
+	Tue, 5 Mar 2024 02:54:10 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
+	by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 4252sAGc013874
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Mar 2024 02:54:10 +0000
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
+	id 4E6975CA; Mon,  4 Mar 2024 18:54:10 -0800 (PST)
+From: Qiang Yu <qianyu@qti.qualcomm.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com, quic_qianyu@quicinc.com
+Subject: [PATCH v3] arm64: dts: qcom: sm8550: Increase supported MSI interrupts
+Date: Mon,  4 Mar 2024 18:54:08 -0800
+Message-Id: <20240305025408.3380561-1-qianyu@qti.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/3] wifi: ath11k: support hibernation
-Content-Language: en-US
-To: Baochen Qiang <quic_bqiang@quicinc.com>, <ath11k@lists.infradead.org>,
-        <manivannan.sadhasivam@linaro.org>
-CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>, <netdev@vger.kernel.org>
-References: <20240305021320.3367-1-quic_bqiang@quicinc.com>
- <20240305021320.3367-4-quic_bqiang@quicinc.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20240305021320.3367-4-quic_bqiang@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: As1TGrEn59R--rOTg5BDEyvIMXJUl623
-X-Proofpoint-GUID: As1TGrEn59R--rOTg5BDEyvIMXJUl623
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UGIzq7y562vGyiiy7KTruY7yUMqAi6e8
+X-Proofpoint-ORIG-GUID: UGIzq7y562vGyiiy7KTruY7yUMqAi6e8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-04_20,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=856 adultscore=0
- spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0
- suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403050019
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ clxscore=1011 lowpriorityscore=0 adultscore=1 malwarescore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=553
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403050020
 
-On 3/4/2024 6:13 PM, Baochen Qiang wrote:
-> Now that all infrastructure is in place and ath11k is fixed to handle all the
-> corner cases, power down the ath11k firmware during suspend and power it back
-> up during resume. This fixes the problem when using hibernation with ath11k PCI
-> devices.
-> 
-> For suspend, two conditions needs to be satisfied:
->         1. since MHI channel unprepare would be done in late suspend stage,
->            ath11k needs to get all QMI-dependent things done before that stage.
->         2. and because unprepare MHI channels requires a working MHI stack,
->            ath11k is not allowed to call mhi_power_down() until that finishes.
-> So the original suspend callback is separated into two parts: the first part
-> handles all QMI-dependent things in suspend callback; while the second part
-> powers down MHI in suspend_late callback. This is valid because kernel calls
-> ath11k's suspend callback before all suspend_late callbacks, making the first
-> condition happy. And because MHI devices are children of ath11k device
-> (ab->dev), kernel guarantees that ath11k's suspend_late callback is called
-> after QRTR's suspend_late callback, this satisfies the second condition.
-> 
-> Above analysis also applies to resume process. so the original resume
-> callback is separated into two parts: the first part powers up MHI stack
-> in resume_early callback, this guarantees MHI stack is working when
-> QRTR tries to prepare MHI channels (kernel calls QRTR's resume_early callback
-> after ath11k's resume_early callback, due to the child-father relationship);
-> the second part waits for the completion of restart, which won't fail now
-> since MHI channels are ready for use by QMI.
-> 
-> Another notable change is in power down path, we tell mhi_power_down() to not
-> to destroy MHI devices, making it possible for QRTR to help unprepare/prepare
-> MHI channels, and finally get us rid of the probe-defer issue when resume.
-> 
-> Also change related code due to interface changes.
-> 
-> Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-> 
-> Tested-by: Takashi Iwai <tiwai@suse.de>
-> Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+
+On sm8550, synopsys MSI controller supports 256 MSI interrupts. Hence,
+enable all GIC interrupts required by MSI controller for PCIe0 and PCIe1.
+
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+v1->v2: make interrupt-names one per line
+v2->v3: delete dot in the end of subject
+
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 36 ++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index ee1ba5a8c8fc..3f413cba2428 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1713,8 +1713,22 @@ pcie0: pcie@1c00000 {
+ 			linux,pci-domain = <0>;
+ 			num-lanes = <2>;
+ 
+-			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "msi";
++			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0",
++					  "msi1",
++					  "msi2",
++					  "msi3",
++					  "msi4",
++					  "msi5",
++					  "msi6",
++					  "msi7";
+ 
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+@@ -1804,8 +1818,22 @@ pcie1: pcie@1c08000 {
+ 			linux,pci-domain = <1>;
+ 			num-lanes = <2>;
+ 
+-			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "msi";
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0",
++					  "msi1",
++					  "msi2",
++					  "msi3",
++					  "msi4",
++					  "msi5",
++					  "msi6",
++					  "msi7";
+ 
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-- 
+2.34.1
 
 
