@@ -1,549 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-13317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796C48714AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 05:22:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12A8D8714CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 05:35:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF3BFB23125
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 04:22:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C21E0282C44
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 04:35:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 149D93D396;
-	Tue,  5 Mar 2024 04:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA210405FD;
+	Tue,  5 Mar 2024 04:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oDMFf3Xb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QbzjnGw+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C063C087;
-	Tue,  5 Mar 2024 04:22:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C31929A2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 04:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709612540; cv=none; b=Q1v1DjS/1dv+FHsEYhdgUBenupCG+YVTa+stV2GnlK5c37wTaG7zkblFo38u6ioynIJApKpH3/uN9ae6L4aw87Wma8dEHQ+R+vG/Hso5kpPkZKIxuQFq9hCkpmQoBLyXJdQlIS4o2M+5kNHeWZxIfOi8bme+c2cuDMO0aPDfauo=
+	t=1709613309; cv=none; b=UrQV9UYdJhlGSlWOsqh1c41uzKNSXAl+ZXyS6MFJg3qeSc10XFfK9/RDqbqkr350QphrmAmFI5BaCneOc49XQZlm7vEKiBooX18YeyAAuPvzkYRN77ipX3go1HU3c6hmJY50ls7PXQtZhF3CV2FrhQsNOULFDbqssuKEd2DxAQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709612540; c=relaxed/simple;
-	bh=0xM7NyL1pkdybHyg/1YdZzaZV2WQ7gK69y2nSqCZkKI=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HwZdXQ3SqKaOT5j+NJf7wmofdgdCpybdCOjGJ2MThRh5DjEJDy/LC8WOq1qoY6sji+se9euinZwsCDYcTzDDAhk8GT5/32xlSWMlrV+Qx0vhogz3Ck7L9pBJU6zaWvMDlXUbNhZQsKdaBWcGDsMgVC+XjWT/FB4+m+4GlCNhhfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oDMFf3Xb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4253nSmx015123;
-	Tue, 5 Mar 2024 04:22:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=n9v/xZ+
-	yKjOqjVGGE3FNCkbRvvYOjln8Xvl7+jR9/uE=; b=oDMFf3XbGv+Eg1ZKayepFpj
-	YE7rN2wAPsl7FLXDxZmrnz3DiwuBLHloyZNJmxSkCe8hfWOnJ+a02s2BuGRMJEsd
-	IjYOQey+PJOAPo1m8XMiW5eb9mv7fyfUMk5DWRC6536xyaiuFy1q1CKIEdIoF4Ja
-	Uc4tkLWlWPM6HC7ymDZTO5JlJA3pubLhWomLF9PyRDTUXvBsakX1xj3lGUol8eFP
-	mse4i1Hb8grD+kh9voEtYt9XjvufGPLmqJA7Z7N6HS1BZyoCmAyNCqW+O6ScDXUe
-	UuOHHUqvqeZ5MIGdvv2ljeVyUaYDSkiIJLv7hPJEHNwBkpLo85xmhHN3fTq9SEA=
-	=
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wndaj1xu0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Mar 2024 04:22:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4254Lxk0014117
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Mar 2024 04:21:59 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 4 Mar 2024 20:21:55 -0800
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Thinh Nguyen
-	<Thinh.Nguyen@synopsys.com>,
-        Johan Hovold <johan@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH] usb: dwc3: qcom: Remove ACPI support from glue driver
-Date: Tue, 5 Mar 2024 09:51:43 +0530
-Message-ID: <20240305042143.3455101-1-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1709613309; c=relaxed/simple;
+	bh=SyVpWR0YqhOvs/OxGe0jMoDi7DFJpkAA1b348TIrzyU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UdodJAyUI5uxa6wy75gzJ8OG/79oqEesE7KKExSz9+0XcqvH0zZP5mji8tlNLFNWDazSRmbY6kZLMO3optRN9cH2M4yR0lnBRcHtJibAsU0bttUe3hCc4wnfx/XIg5LH+V4SEWt3FJVsOQcBFhZ2LQlDkOVra2kwv/Uq4ndkQfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QbzjnGw+; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c1a172e46bso4131980b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 20:35:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709613306; x=1710218106; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4vjRQzniHRafe2ZwDDGF6wB4iwR2l8xzXGYmTAavCjw=;
+        b=QbzjnGw+2IQNNqEDwdgZ6gcn47fHe1I1vHUf5l5XfrZqMvpuCmN/AnuTBkMkU+5Ki5
+         fYgQVg1KbAIZSSi7JNg6o5HA9GFKr+NvbHRgKJTdk7Ks7YzJ2/aAVFJ/oIPoXfrqdydM
+         esWpS8KxZjvTCmFOMaJnCPyjOzihVr2840Gz0LNgjGRMzSw+BjDFL0fTjd/WsBIkV14A
+         9l3RK21AfRg5Mw3IITMqmApMoSBIG+D3AXYMZ1vC4XqmgLQkStjVM3XIBfiYsLEFclV/
+         Rmpr4wi2C4X2sd3kPjzms/2dykqlnwdIWiuYDhPICoyTaT1F4KpzyrpuIPU5UHnt5Tyc
+         7FFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709613306; x=1710218106;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4vjRQzniHRafe2ZwDDGF6wB4iwR2l8xzXGYmTAavCjw=;
+        b=tJX/MKZ5IaxOVdgvitmy2LtbP3vYqmmXCgJQDsEsILog2RkJ4zdHL/Kvdhj7YZMaPC
+         wgKTyU6s845aYgclzXdXedRaffyi4CQbXU3IEFE8/85y3+EKHd0a46iYasbd/55rygXh
+         /w3fN9rsN7R906VLVES7WHf+OkvnjlfgbnQDa8bj9FKvC+wEUwHbV6N49Hq+QlxwB/d0
+         yrE/dgiGoiW29S9nZIZCi6Dky+kERtLyws8pDlR+Vi3AJegJvfRXxFQFafxk+On/mAKj
+         3shyu/G9lqL0ZQ1PZuXzWwmH/NkiloZiWY+0fOtQdUgB3BV0PtIScYCZBfw0UQAkHsbx
+         whJw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqwX8mDF7CAB+7qE700wVzdD3ePiXRP5Ld84iUvAhjWxLgz5NjCifHMK8xMpSJU08IFmaNWWy3gMsOYVCPLbC/m1Jz5FCuxmApA5NXEA==
+X-Gm-Message-State: AOJu0Yz+IZSHyo0RpwSojCrePEoFPxI6kYcSOesKBzLFRA/IFWFAsRC+
+	8PbhDzZM2/B3RQ8UlrJmTsvzmUxSmeLmdqMNsVER6D5UsKKxfrv6mHn83AJrSIY=
+X-Google-Smtp-Source: AGHT+IH1YAIyReoRbQYzHs76JwvjyUSpZA7Q97zMfBJJnoNqb6U2Bvgox8NitSny3i+OrmCHQknUpg==
+X-Received: by 2002:a05:6808:f8e:b0:3c1:ef91:c8e6 with SMTP id o14-20020a0568080f8e00b003c1ef91c8e6mr890197oiw.11.1709613306564;
+        Mon, 04 Mar 2024 20:35:06 -0800 (PST)
+Received: from localhost ([122.172.85.206])
+        by smtp.gmail.com with ESMTPSA id ei30-20020a056a0080de00b006e5359e621csm8029647pfb.182.2024.03.04.20.35.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 20:35:06 -0800 (PST)
+Date: Tue, 5 Mar 2024 10:05:03 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 3/3] cpufreq: qcom-nvmem: add support for IPQ5321
+Message-ID: <20240305043503.tgy5ahl243or7lm5@vireshk-i7>
+References: <20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com>
+ <20240228-ipq5321-sku-support-v1-3-14e4d4715f4b@quicinc.com>
+ <20240304071222.cx3s37mphddk23bv@vireshk-i7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SjmvAjr0TfjVOwCri3R7ZTgQdRanphCJ
-X-Proofpoint-GUID: SjmvAjr0TfjVOwCri3R7ZTgQdRanphCJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-05_01,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 mlxlogscore=682 mlxscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403050031
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240304071222.cx3s37mphddk23bv@vireshk-i7>
 
-Minimal ACPI support was added to the Qualcomm DWC3 glue driver in order to
-enable USB on SDM850 and SC8180X compute platforms. The support is still
-functional, but unnoticed regressions in other drivers indicates that no
-one actually booting any of platforms dependent on this implementation.
+On 04-03-24, 12:42, Viresh Kumar wrote:
+> On 28-02-24, 20:21, Kathiravan Thirumoorthy wrote:
+> > Like all other SoCs in IPQ5332 family, cpufreq for IPQ5321 is also
+> > determined by the eFuse, with the maximum limit of 1.1GHz. Add support
+> > for the same.
+> > 
+> > Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> > ---
+> >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > index ea05d9d67490..0a46b5d49d32 100644
+> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> > @@ -191,6 +191,7 @@ static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
+> >  	case QCOM_ID_IPQ5312:
+> >  	case QCOM_ID_IPQ5302:
+> >  	case QCOM_ID_IPQ5300:
+> > +	case QCOM_ID_IPQ5321:
+> >  	case QCOM_ID_IPQ9514:
+> >  	case QCOM_ID_IPQ9550:
+> >  	case QCOM_ID_IPQ9554:
+> 
+> Applied. Thanks.
 
-The functionality provides is the bare minimum and is not expected to aid
-in the effort of bringing full ACPI support to the driver in the future.
+Dropped since the previous commit it required too. Can we get the
+necessary acks for me to pick those ?
 
-Remove the ACPI code from the Qualcomm DWC3 glue driver to aid in the
-implementation of improvements that are actually used like multiport and
-flattening device tree.
-
-Commit message by Bjorn Andersson.
-
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- drivers/usb/dwc3/dwc3-qcom.c | 273 ++---------------------------------
- 1 file changed, 11 insertions(+), 262 deletions(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index dbd6a5b2b289..a0879f224d96 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -4,7 +4,6 @@
-  * Inspired by dwc3-of-simple.c
-  */
- 
--#include <linux/acpi.h>
- #include <linux/io.h>
- #include <linux/of.h>
- #include <linux/clk.h>
-@@ -53,22 +52,10 @@
- #define APPS_USB_AVG_BW 0
- #define APPS_USB_PEAK_BW MBps_to_icc(40)
- 
--struct dwc3_acpi_pdata {
--	u32			qscratch_base_offset;
--	u32			qscratch_base_size;
--	u32			dwc3_core_base_size;
--	int			qusb2_phy_irq_index;
--	int			dp_hs_phy_irq_index;
--	int			dm_hs_phy_irq_index;
--	int			ss_phy_irq_index;
--	bool			is_urs;
--};
--
- struct dwc3_qcom {
- 	struct device		*dev;
- 	void __iomem		*qscratch_base;
- 	struct platform_device	*dwc3;
--	struct platform_device	*urs_usb;
- 	struct clk		**clks;
- 	int			num_clocks;
- 	struct reset_control	*resets;
-@@ -84,8 +71,6 @@ struct dwc3_qcom {
- 	struct notifier_block	vbus_nb;
- 	struct notifier_block	host_nb;
- 
--	const struct dwc3_acpi_pdata *acpi_pdata;
--
- 	enum usb_dr_mode	mode;
- 	bool			is_suspended;
- 	bool			pm_suspended;
-@@ -248,9 +233,6 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
- 	struct device *dev = qcom->dev;
- 	int ret;
- 
--	if (has_acpi_companion(dev))
--		return 0;
--
- 	qcom->icc_path_ddr = of_icc_get(dev, "usb-ddr");
- 	if (IS_ERR(qcom->icc_path_ddr)) {
- 		return dev_err_probe(dev, PTR_ERR(qcom->icc_path_ddr),
-@@ -519,31 +501,13 @@ static void dwc3_qcom_select_utmi_clk(struct dwc3_qcom *qcom)
- 			  PIPE_UTMI_CLK_DIS);
- }
- 
--static int dwc3_qcom_get_irq(struct platform_device *pdev,
--			     const char *name, int num)
--{
--	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
--	struct platform_device *pdev_irq = qcom->urs_usb ? qcom->urs_usb : pdev;
--	struct device_node *np = pdev->dev.of_node;
--	int ret;
--
--	if (np)
--		ret = platform_get_irq_byname_optional(pdev_irq, name);
--	else
--		ret = platform_get_irq_optional(pdev_irq, num);
--
--	return ret;
--}
--
- static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- {
- 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
--	const struct dwc3_acpi_pdata *pdata = qcom->acpi_pdata;
- 	int irq;
- 	int ret;
- 
--	irq = dwc3_qcom_get_irq(pdev, "qusb2_phy",
--				pdata ? pdata->qusb2_phy_irq_index : -1);
-+	irq = platform_get_irq_byname_optional(pdev, "qusb2_phy");
- 	if (irq > 0) {
- 		/* Keep wakeup interrupts disabled until suspend */
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
-@@ -557,8 +521,7 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 		qcom->qusb2_phy_irq = irq;
- 	}
- 
--	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
--				pdata ? pdata->dp_hs_phy_irq_index : -1);
-+	irq = platform_get_irq_byname_optional(pdev, "dp_hs_phy_irq");
- 	if (irq > 0) {
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
-@@ -571,8 +534,7 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 		qcom->dp_hs_phy_irq = irq;
- 	}
- 
--	irq = dwc3_qcom_get_irq(pdev, "dm_hs_phy_irq",
--				pdata ? pdata->dm_hs_phy_irq_index : -1);
-+	irq = platform_get_irq_byname_optional(pdev, "dm_hs_phy_irq");
- 	if (irq > 0) {
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
-@@ -585,8 +547,7 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 		qcom->dm_hs_phy_irq = irq;
- 	}
- 
--	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
--				pdata ? pdata->ss_phy_irq_index : -1);
-+	irq = platform_get_irq_byname_optional(pdev, "ss_phy_irq");
- 	if (irq > 0) {
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
-@@ -649,88 +610,6 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom, int count)
- 	return 0;
- }
- 
--static const struct property_entry dwc3_qcom_acpi_properties[] = {
--	PROPERTY_ENTRY_STRING("dr_mode", "host"),
--	{}
--};
--
--static const struct software_node dwc3_qcom_swnode = {
--	.properties = dwc3_qcom_acpi_properties,
--};
--
--static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
--{
--	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
--	struct device		*dev = &pdev->dev;
--	struct resource		*res, *child_res = NULL;
--	struct platform_device	*pdev_irq = qcom->urs_usb ? qcom->urs_usb :
--							    pdev;
--	int			irq;
--	int			ret;
--
--	qcom->dwc3 = platform_device_alloc("dwc3", PLATFORM_DEVID_AUTO);
--	if (!qcom->dwc3)
--		return -ENOMEM;
--
--	qcom->dwc3->dev.parent = dev;
--	qcom->dwc3->dev.type = dev->type;
--	qcom->dwc3->dev.dma_mask = dev->dma_mask;
--	qcom->dwc3->dev.dma_parms = dev->dma_parms;
--	qcom->dwc3->dev.coherent_dma_mask = dev->coherent_dma_mask;
--
--	child_res = kcalloc(2, sizeof(*child_res), GFP_KERNEL);
--	if (!child_res) {
--		platform_device_put(qcom->dwc3);
--		return -ENOMEM;
--	}
--
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (!res) {
--		dev_err(&pdev->dev, "failed to get memory resource\n");
--		ret = -ENODEV;
--		goto out;
--	}
--
--	child_res[0].flags = res->flags;
--	child_res[0].start = res->start;
--	child_res[0].end = child_res[0].start +
--		qcom->acpi_pdata->dwc3_core_base_size;
--
--	irq = platform_get_irq(pdev_irq, 0);
--	if (irq < 0) {
--		ret = irq;
--		goto out;
--	}
--	child_res[1].flags = IORESOURCE_IRQ;
--	child_res[1].start = child_res[1].end = irq;
--
--	ret = platform_device_add_resources(qcom->dwc3, child_res, 2);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to add resources\n");
--		goto out;
--	}
--
--	ret = device_add_software_node(&qcom->dwc3->dev, &dwc3_qcom_swnode);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to add properties\n");
--		goto out;
--	}
--
--	ret = platform_device_add(qcom->dwc3);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to add device\n");
--		device_remove_software_node(&qcom->dwc3->dev);
--		goto out;
--	}
--	kfree(child_res);
--	return 0;
--
--out:
--	platform_device_put(qcom->dwc3);
--	kfree(child_res);
--	return ret;
--}
--
- static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- {
- 	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
-@@ -763,57 +642,12 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 	return ret;
- }
- 
--static struct platform_device *dwc3_qcom_create_urs_usb_platdev(struct device *dev)
--{
--	struct platform_device *urs_usb = NULL;
--	struct fwnode_handle *fwh;
--	struct acpi_device *adev;
--	char name[8];
--	int ret;
--	int id;
--
--	/* Figure out device id */
--	ret = sscanf(fwnode_get_name(dev->fwnode), "URS%d", &id);
--	if (!ret)
--		return NULL;
--
--	/* Find the child using name */
--	snprintf(name, sizeof(name), "USB%d", id);
--	fwh = fwnode_get_named_child_node(dev->fwnode, name);
--	if (!fwh)
--		return NULL;
--
--	adev = to_acpi_device_node(fwh);
--	if (!adev)
--		goto err_put_handle;
--
--	urs_usb = acpi_create_platform_device(adev, NULL);
--	if (IS_ERR_OR_NULL(urs_usb))
--		goto err_put_handle;
--
--	return urs_usb;
--
--err_put_handle:
--	fwnode_handle_put(fwh);
--
--	return urs_usb;
--}
--
--static void dwc3_qcom_destroy_urs_usb_platdev(struct platform_device *urs_usb)
--{
--	struct fwnode_handle *fwh = urs_usb->dev.fwnode;
--
--	platform_device_unregister(urs_usb);
--	fwnode_handle_put(fwh);
--}
--
- static int dwc3_qcom_probe(struct platform_device *pdev)
- {
- 	struct device_node	*np = pdev->dev.of_node;
- 	struct device		*dev = &pdev->dev;
- 	struct dwc3_qcom	*qcom;
- 	struct resource		*res, *parent_res = NULL;
--	struct resource		local_res;
- 	int			ret, i;
- 	bool			ignore_pipe_clk;
- 	bool			wakeup_source;
-@@ -825,14 +659,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, qcom);
- 	qcom->dev = &pdev->dev;
- 
--	if (has_acpi_companion(dev)) {
--		qcom->acpi_pdata = acpi_device_get_match_data(dev);
--		if (!qcom->acpi_pdata) {
--			dev_err(&pdev->dev, "no supporting ACPI device data\n");
--			return -EINVAL;
--		}
--	}
--
- 	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
- 	if (IS_ERR(qcom->resets)) {
- 		return dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
-@@ -860,41 +686,18 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	}
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--
--	if (np) {
--		parent_res = res;
--	} else {
--		memcpy(&local_res, res, sizeof(struct resource));
--		parent_res = &local_res;
--
--		parent_res->start = res->start +
--			qcom->acpi_pdata->qscratch_base_offset;
--		parent_res->end = parent_res->start +
--			qcom->acpi_pdata->qscratch_base_size;
--
--		if (qcom->acpi_pdata->is_urs) {
--			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
--			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
--				dev_err(dev, "failed to create URS USB platdev\n");
--				if (!qcom->urs_usb)
--					ret = -ENODEV;
--				else
--					ret = PTR_ERR(qcom->urs_usb);
--				goto clk_disable;
--			}
--		}
--	}
-+	parent_res = res;
- 
- 	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
- 	if (IS_ERR(qcom->qscratch_base)) {
- 		ret = PTR_ERR(qcom->qscratch_base);
--		goto free_urs;
-+		goto clk_disable;
- 	}
- 
- 	ret = dwc3_qcom_setup_irq(pdev);
- 	if (ret) {
- 		dev_err(dev, "failed to setup IRQs, err=%d\n", ret);
--		goto free_urs;
-+		goto clk_disable;
- 	}
- 
- 	/*
-@@ -906,14 +709,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (ignore_pipe_clk)
- 		dwc3_qcom_select_utmi_clk(qcom);
- 
--	if (np)
--		ret = dwc3_qcom_of_register_core(pdev);
--	else
--		ret = dwc3_qcom_acpi_register_core(pdev);
--
-+	ret = dwc3_qcom_of_register_core(pdev);
- 	if (ret) {
- 		dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
--		goto free_urs;
-+		goto clk_disable;
- 	}
- 
- 	ret = dwc3_qcom_interconnect_init(qcom);
-@@ -945,16 +744,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- interconnect_exit:
- 	dwc3_qcom_interconnect_exit(qcom);
- depopulate:
--	if (np) {
--		of_platform_depopulate(&pdev->dev);
--	} else {
--		device_remove_software_node(&qcom->dwc3->dev);
--		platform_device_del(qcom->dwc3);
--	}
-+	of_platform_depopulate(&pdev->dev);
- 	platform_device_put(qcom->dwc3);
--free_urs:
--	if (qcom->urs_usb)
--		dwc3_qcom_destroy_urs_usb_platdev(qcom->urs_usb);
- clk_disable:
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -969,21 +760,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- static void dwc3_qcom_remove(struct platform_device *pdev)
- {
- 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
--	struct device_node *np = pdev->dev.of_node;
- 	struct device *dev = &pdev->dev;
- 	int i;
- 
--	if (np) {
--		of_platform_depopulate(&pdev->dev);
--	} else {
--		device_remove_software_node(&qcom->dwc3->dev);
--		platform_device_del(qcom->dwc3);
--	}
-+	of_platform_depopulate(&pdev->dev);
- 	platform_device_put(qcom->dwc3);
- 
--	if (qcom->urs_usb)
--		dwc3_qcom_destroy_urs_usb_platdev(qcom->urs_usb);
--
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
- 		clk_put(qcom->clks[i]);
-@@ -1053,38 +835,6 @@ static const struct of_device_id dwc3_qcom_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
- 
--#ifdef CONFIG_ACPI
--static const struct dwc3_acpi_pdata sdm845_acpi_pdata = {
--	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
--	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
--	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
--	.qusb2_phy_irq_index = 1,
--	.dp_hs_phy_irq_index = 4,
--	.dm_hs_phy_irq_index = 3,
--	.ss_phy_irq_index = 2
--};
--
--static const struct dwc3_acpi_pdata sdm845_acpi_urs_pdata = {
--	.qscratch_base_offset = SDM845_QSCRATCH_BASE_OFFSET,
--	.qscratch_base_size = SDM845_QSCRATCH_SIZE,
--	.dwc3_core_base_size = SDM845_DWC3_CORE_SIZE,
--	.qusb2_phy_irq_index = 1,
--	.dp_hs_phy_irq_index = 4,
--	.dm_hs_phy_irq_index = 3,
--	.ss_phy_irq_index = 2,
--	.is_urs = true,
--};
--
--static const struct acpi_device_id dwc3_qcom_acpi_match[] = {
--	{ "QCOM2430", (unsigned long)&sdm845_acpi_pdata },
--	{ "QCOM0304", (unsigned long)&sdm845_acpi_urs_pdata },
--	{ "QCOM0497", (unsigned long)&sdm845_acpi_urs_pdata },
--	{ "QCOM04A6", (unsigned long)&sdm845_acpi_pdata },
--	{ },
--};
--MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
--#endif
--
- static struct platform_driver dwc3_qcom_driver = {
- 	.probe		= dwc3_qcom_probe,
- 	.remove_new	= dwc3_qcom_remove,
-@@ -1092,7 +842,6 @@ static struct platform_driver dwc3_qcom_driver = {
- 		.name	= "dwc3-qcom",
- 		.pm	= &dwc3_qcom_dev_pm_ops,
- 		.of_match_table	= dwc3_qcom_of_match,
--		.acpi_match_table = ACPI_PTR(dwc3_qcom_acpi_match),
- 	},
- };
- 
 -- 
-2.34.1
-
+viresh
 
