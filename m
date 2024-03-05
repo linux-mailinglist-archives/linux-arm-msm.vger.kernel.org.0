@@ -1,296 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-13310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 504A4871356
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 03:10:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CF37871363
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 03:13:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD8E21F225FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:10:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F2271C20E6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 02:13:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7A718032;
-	Tue,  5 Mar 2024 02:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E644918026;
+	Tue,  5 Mar 2024 02:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cne/KgbO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SyAId4ZD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCE917C95;
-	Tue,  5 Mar 2024 02:04:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FED17C96;
+	Tue,  5 Mar 2024 02:13:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709604248; cv=none; b=enMhdP+y/xbYkLFwCWle8s710xy+uYMsLMma2QeChKdS9oPWasS3Cnk2EWA1i36U+gxhFs0be6rKW69nof3kCycc+5L1atLe+CcHsjZ+UipFpsXYyni9CmN56QOZlx9KJV/2uzs3A1oXHkZiKV6ibdXbA16bos+fr/zFKhgfrHw=
+	t=1709604829; cv=none; b=Zampj/QNFw0LsARKZ5Arrgw6rMTM+XeDUNaHD9iFXfeX6NG1hE3E/Ue226U+ID6ISr0G6aGEy3LveLQpEyJmTMJfMXsaB5XU6KNrlGd82HYElinuTU1GMXubvPbiUpyyrS60w+xxpebqh1iady9b8FsMouS0TC7k0Yb/fGxYb/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709604248; c=relaxed/simple;
-	bh=nYYKfNUOFhQgvcfKIGiZ9HKYCmINslELdbcTPSTt8u0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QE/TMcswkvvkN9o40blPEEgsECPsJmySPgeLZWHPehHRrjtYZ/BebVNlZpdLIgFSbG0WkYRprQ7MAu6VEzlxFLvHtWMXNhuvJKUhSv4w/AeDbA7jH56jm4IZYB4f04SzoF3htOu9wq/3b3ml7eOCfk1pVb/gNI3bfz2lnWm/f10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cne/KgbO; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d228a132acso67817761fa.0;
-        Mon, 04 Mar 2024 18:04:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709604245; x=1710209045; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tNlCYCD3A5X7opMa78QyTbPYgKpu//YZT0Q5xl7o9vw=;
-        b=Cne/KgbOBltYPR1DFCSwB8+6B2oV8ZUOtpNn+rXOsa/WZbbnHOzHKBv8B5G05UNoM/
-         zIGlDnsBBfwmLsNka+9tT0bmI2pIrSmU9GVglnwYDrHDkArWkUCVfKjreBECUioM6iCg
-         8NqpTdBe4OTk9hjEc75wP/j+71Iw2rxpuK2s1VpSQVP+xIajr2qlTVuFFWlS1o1AKLME
-         RgewEI0gBXw1oFr0J2BO3Nzz43ZCVKkksg4O/X90KUqCF36M1a4C8jBVkeSL0itvvuZ1
-         JLCLk14ylxWQYsQX9BdvgxDmRe2xyBm//mXVRazgeZHcXeyxJDHEjCvV8xMRgB4/c0z1
-         qY5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709604245; x=1710209045;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tNlCYCD3A5X7opMa78QyTbPYgKpu//YZT0Q5xl7o9vw=;
-        b=VdjZqHLFixIkV64/vKGTkjFFmDOeCxqclfpEyANiTsOXo2Wo8bReRXV3bUpno/Zczv
-         Sm359vjL4C1yeKhi/PtNVWnYMADyQmMKnLvohi4kAWFBtQKjooajhf/0bB68EmP96zj8
-         yi+yJwAOAjJHzrCWZDFn24MI45/xttzzJlqN0BUFoIE+esyh0bek3aahTnnV0t1nUdDs
-         IkMbcvxrpOknCPCx2/d7b3cjE7HWqkXQA6WrUkGfp27QUlLAL+d3z8CiaBA/GjtAFYun
-         EbzKNNqFzjUB0hO6U0a6el8kYb2OztqtLzm5lEOzKCnintqKIfbP87Ri+ehzjJ0XK2Az
-         NlCA==
-X-Forwarded-Encrypted: i=1; AJvYcCWst5BbnWckQLVZkUhcc3xButeZ0//8eZuWj40jaldS39J4YkvEmyXyiWza0/9ptQ/iGD8FBQa8pyNx9P2jiT9NPiTA1ZvBAjH+NPd8gMpZVTlX2WoKKTNaqCJ+8FQoOS9cfNcd/Zvpe9N+aw==
-X-Gm-Message-State: AOJu0Yyhb9JLz90LkMHXFmaXLLy8IbMws6+6SbNT892ppdS99EdoLQGl
-	zTO/gfcFedoqhkXMWqUo63orbcssEuPV5DENeA8Qkbug1KyqGpw95Dr7hLc1+MvoTAbJAOLCBug
-	2gkKYC28o3sedVS3ZZ5HWfa/K5aw=
-X-Google-Smtp-Source: AGHT+IGRZQ/BGfXr4JyRSnaEMtBihRHwRoaenXLEwD0fFOB7V17Y1jXXWBjl3v+IqZFEixVDxybirYpjYDfuPmdJPZg=
-X-Received: by 2002:ac2:428a:0:b0:513:3309:cc62 with SMTP id
- m10-20020ac2428a000000b005133309cc62mr303303lfh.47.1709604244339; Mon, 04 Mar
- 2024 18:04:04 -0800 (PST)
+	s=arc-20240116; t=1709604829; c=relaxed/simple;
+	bh=OrYY+Eaij4FzqX8Qt8P2dZMwqpLRTs4feaamqhhUVQ8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=h0a0aO3Z8DCQeIzDhrKl4qHjP2E6GP97ZBM+KLyWHpmNWvTY7jl5m7boTO57ieJV3gPGatNw040nlTOlIlrZIw77hgnVLP2jUNpwSnw8S/FoUo8ni5TO2o1F2N7zdE+1ZA273Q6vFuqKY/lHamp9xqszVwEABrYl8f0pLCQDS8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SyAId4ZD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42510D6A002006;
+	Tue, 5 Mar 2024 02:13:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=dCzFLTU
+	TEiYo4M/JEgFhJfKqhgtEMAvYsFn2UQ1ru7c=; b=SyAId4ZDIaclVwqaQc/rvp6
+	AwxQOid2YCrCw1lhP4Salqn/eGzscA0Zql05AHURJG46ry+U/oFCLn3+EQYx1dpZ
+	Snc6RY74JksTer5R5S9hboinzUfLTLYngaK9dXqAERj6Wns27d7ei0krmKSKR8gw
+	cL60LxfYtsKLM5neQFTY2GYwgX5zJnTemy6QVsU3iqnPelNNrNDPRJdESEivrn94
+	gOiff9pbmdO7VKlyXAeRJPTFlr2XXXzQVRt2UU9dnGqQ5JmESUPRjUp8jEqvt1r3
+	sOYZpjeMwa+rlMu4ZDZPkLWpq+BB1v4KKmMPb56urPWsgTX5igdo2ZhUbjfByGw=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnarj23et-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Mar 2024 02:13:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4252DWdf023741
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Mar 2024 02:13:32 GMT
+Received: from bqiang-SFF.qca.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 4 Mar 2024 18:13:30 -0800
+From: Baochen Qiang <quic_bqiang@quicinc.com>
+To: <ath11k@lists.infradead.org>, <manivannan.sadhasivam@linaro.org>
+CC: <linux-wireless@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <quic_bqiang@quicinc.com>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <netdev@vger.kernel.org>
+Subject: [PATCH v7 0/3] wifi: ath11k: hibernation support
+Date: Tue, 5 Mar 2024 10:13:17 +0800
+Message-ID: <20240305021320.3367-1-quic_bqiang@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240301185346.10412-1-robdclark@gmail.com> <CAAfnVBnXCqCQjamnSC0SArrNykiSgjwNpMvrkmb7kTuufW-opg@mail.gmail.com>
-In-Reply-To: <CAAfnVBnXCqCQjamnSC0SArrNykiSgjwNpMvrkmb7kTuufW-opg@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 4 Mar 2024 18:03:52 -0800
-Message-ID: <CAF6AEGuvXAXgtDgVTL0Z80pbR4d-oUnwBf0uB1GRJkZHd=2ftQ@mail.gmail.com>
-Subject: Re: [RFC] drm/msm: Add GPU memory traces
-To: Gurchetan Singh <gurchetansingh@chromium.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Tvrtko Ursulin <tursulin@ursulin.net>, 
-	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: D_zV4LcTcGJOhPtel2aaVglDu0pPevEG
+X-Proofpoint-GUID: D_zV4LcTcGJOhPtel2aaVglDu0pPevEG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_20,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=995 adultscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 phishscore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403050015
 
-On Mon, Mar 4, 2024 at 5:38=E2=80=AFPM Gurchetan Singh
-<gurchetansingh@chromium.org> wrote:
->
->
->
->
-> On Fri, Mar 1, 2024 at 10:54=E2=80=AFAM Rob Clark <robdclark@gmail.com> w=
-rote:
->>
->> From: Rob Clark <robdclark@chromium.org>
->>
->> Perfetto can use these traces to track global and per-process GPU memory
->> usage.
->>
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->> ---
->> I realized the tracepoint that perfetto uses to show GPU memory usage
->> globally and per-process was already upstream, but with no users.
->>
->> This overlaps a bit with fdinfo, but ftrace is a lighter weight
->> mechanism and fits better with perfetto (plus is already supported in
->> trace_processor and perfetto UI, whereas something fdinfo based would
->> require new code to be added in perfetto.
->>
->> We could probably do this more globally (ie. drm_gem_get/put_pages() and
->> drm_gem_handle_create_tail()/drm_gem_object_release_handle() if folks
->> prefer.  Not sure where that leaves the TTM drivers.
->>
->>  drivers/gpu/drm/msm/Kconfig   |  1 +
->>  drivers/gpu/drm/msm/msm_drv.h |  5 +++++
->>  drivers/gpu/drm/msm/msm_gem.c | 37 +++++++++++++++++++++++++++++++++++
->>  drivers/gpu/drm/msm/msm_gpu.h |  8 ++++++++
->>  4 files changed, 51 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
->> index f202f26adab2..e4c912fcaf22 100644
->> --- a/drivers/gpu/drm/msm/Kconfig
->> +++ b/drivers/gpu/drm/msm/Kconfig
->> @@ -33,6 +33,7 @@ config DRM_MSM
->>         select PM_OPP
->>         select NVMEM
->>         select PM_GENERIC_DOMAINS
->> +       select TRACE_GPU_MEM
->>         help
->>           DRM/KMS driver for MSM/snapdragon.
->>
->> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv=
-.h
->> index 16a7cbc0b7dd..cb8f7e804b5b 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.h
->> +++ b/drivers/gpu/drm/msm/msm_drv.h
->> @@ -137,6 +137,11 @@ struct msm_drm_private {
->>         struct msm_rd_state *hangrd;   /* debugfs to dump hanging submit=
-s */
->>         struct msm_perf_state *perf;
->>
->> +       /**
->> +        * total_mem: Total/global amount of memory backing GEM objects.
->> +        */
->> +       atomic64_t total_mem;
->> +
->>         /**
->>          * List of all GEM objects (mainly for debugfs, protected by obj=
-_lock
->>          * (acquire before per GEM object lock)
->> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem=
-.c
->> index 175ee4ab8a6f..e04c4af5d154 100644
->> --- a/drivers/gpu/drm/msm/msm_gem.c
->> +++ b/drivers/gpu/drm/msm/msm_gem.c
->> @@ -12,6 +12,9 @@
->>  #include <linux/pfn_t.h>
->>
->>  #include <drm/drm_prime.h>
->> +#include <drm/drm_file.h>
->> +
->> +#include <trace/events/gpu_mem.h>
->>
->>  #include "msm_drv.h"
->>  #include "msm_fence.h"
->> @@ -33,6 +36,34 @@ static bool use_pages(struct drm_gem_object *obj)
->>         return !msm_obj->vram_node;
->>  }
->>
->> +static void update_device_mem(struct msm_drm_private *priv, ssize_t siz=
-e)
->> +{
->> +       uint64_t total_mem =3D atomic64_add_return(size, &priv->total_me=
-m);
->> +       trace_gpu_mem_total(0, 0, total_mem);
->> +}
->> +
->> +static void update_ctx_mem(struct drm_file *file, ssize_t size)
->> +{
->> +       struct msm_file_private *ctx =3D file->driver_priv;
->> +       uint64_t ctx_mem =3D atomic64_add_return(size, &ctx->ctx_mem);
->> +
->> +       rcu_read_lock(); /* Locks file->pid! */
->> +       trace_gpu_mem_total(0, pid_nr(file->pid), ctx_mem);
->> +       rcu_read_unlock();
->> +
->> +}
->> +
->> +static int msm_gem_open(struct drm_gem_object *obj, struct drm_file *fi=
-le)
->> +{
->> +       update_ctx_mem(file, obj->size);
->> +       return 0;
->> +}
->> +
->> +static void msm_gem_close(struct drm_gem_object *obj, struct drm_file *=
-file)
->> +{
->> +       update_ctx_mem(file, -obj->size);
->> +}
->> +
->>  /*
->>   * Cache sync.. this is a bit over-complicated, to fit dma-mapping
->>   * API.  Really GPU cache is out of scope here (handled on cmdstream)
->> @@ -156,6 +187,8 @@ static struct page **get_pages(struct drm_gem_object=
- *obj)
->>                         return p;
->>                 }
->>
->> +               update_device_mem(dev->dev_private, obj->size);
->> +
->>                 msm_obj->pages =3D p;
->>
->>                 msm_obj->sgt =3D drm_prime_pages_to_sg(obj->dev, p, npag=
-es);
->> @@ -209,6 +242,8 @@ static void put_pages(struct drm_gem_object *obj)
->>                         msm_obj->sgt =3D NULL;
->>                 }
->>
->> +               update_device_mem(obj->dev->dev_private, -obj->size);
->> +
->>                 if (use_pages(obj))
->>                         drm_gem_put_pages(obj, msm_obj->pages, true, fal=
-se);
->>                 else
->> @@ -1118,6 +1153,8 @@ static const struct vm_operations_struct vm_ops =
-=3D {
->>
->>  static const struct drm_gem_object_funcs msm_gem_object_funcs =3D {
->>         .free =3D msm_gem_free_object,
->> +       .open =3D msm_gem_open,
->> +       .close =3D msm_gem_close,
->>         .pin =3D msm_gem_prime_pin,
->>         .unpin =3D msm_gem_prime_unpin,
->>         .get_sg_table =3D msm_gem_prime_get_sg_table,
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu=
-.h
->> index 2bfcb222e353..f7d2a7d6f8cc 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.h
->> +++ b/drivers/gpu/drm/msm/msm_gpu.h
->> @@ -428,6 +428,14 @@ struct msm_file_private {
->>          * level.
->>          */
->>         struct drm_sched_entity *entities[NR_SCHED_PRIORITIES * MSM_GPU_=
-MAX_RINGS];
->> +
->> +       /**
->> +        * ctx_mem:
->> +        *
->> +        * Total amount of memory of GEM buffers with handles attached f=
-or
->> +        * this context.
->> +        */
->> +       atomic64_t ctx_mem;
->>  };
->
->
->
-> Just for added context, past discussions on TRACE_GPU_MEM:
->
-> https://lists.freedesktop.org/archives/dri-devel/2021-October/328260.html
-> https://lists.freedesktop.org/archives/dri-devel/2021-January/295120.html
->
-> Some have even suggested deleting the tracepoint altogether.
->
-> Personally, I think we should land an internal user in a non-breaking way=
-, since userspace (Perfetto) already depends on it.  Right now, we're in li=
-mbo for multiple years ...
+Currently in ath11k we keep the firmware running on the WLAN device when the
+network interface (wlan0) is down. The problem is that this will break
+hibernation, obviously the firmware can't be running after the whole system is
+powered off. To power down the ath11k firmware for suspend/hibernation some
+changes both in MHI subsystem and ath11k are needed.
 
-For better or for worse, the tracepoint already landed.. and tbh I
-don't see any real problem with it.  And it defn seems like a valid
-option to land support for in-driver and later refactor for more
-shared code.  We already have the uapi and the userspace consuming it,
-so doesn't seem like there is any debate there.  Maybe there is
-something from the original series that could be recycled for
-something less driver specific.
+This patchset fixes a longstanding bug report about broken hibernation support:
 
-Re: some of the discussion about cgroups, I think that is a
-non-sequitur because (AFAICT) perfetto wants a global view of pids/etc
-(at least I'm not really sure what the value of system tracing is if
-it isn't, you know, system level.. I deliberately avoided using
-virtual-pid's for that reason)
+https://bugzilla.kernel.org/show_bug.cgi?id=214649
 
-BR,
--R
+There already is an RFC version which has been tested by multiple users with
+positive results:
 
->>
->>  /**
->> --
->> 2.44.0
->>
+https://patchwork.kernel.org/project/linux-wireless/cover/20231127162022.518834-1-kvalo@kernel.or
+
+Basically the RFC version adds two APIs to MHI stack: with the first one ath11k
+is able to keep MHI devices when going to suspend/hibernation, getting us rid of
+the probe deferral issue when resume back. while with the second one ath11k could
+manually prepare/unprepare MHI channels by itself, which is needed because QRTR
+doesn't probe those channels automatically in this case.
+
+Mani, the MHI maintainer, firstly doesn't like that version and insists that an
+MHI device should be destroyed when suspend/hibernation, according to his
+understanding on device driver model. See
+
+https://lore.kernel.org/mhi/20231127162022.518834-1-kvalo@kernel.org/
+
+After a long discussion Mani thought we might need a new PM callback with which
+ath11k is able to wait until kernel unblocks device probe and thus MHI channels
+get probed. So we came to the kernel PM list and there Mani realized that his
+understanding is not correct so he finally agrees to keep MHI device during
+suspend/hibernation. See
+
+https://lore.kernel.org/all/21cd2098-97e1-4947-a5bb-a97582902ead@quicinc.com/
+
+Mani also pointed out that an MHI controller driver (ath11k here) should not touch
+MHI channels directly because those channels are managed by the corresponding MHI
+client driver (QRTR here). To address this, we come up with this version.
+
+Compared with that RFC version, this version adds PM callbacks in QRTR module:
+suspend callback unprepares MHI channels during suspend and resume callback
+prepares those channels during resume. In this way ath11k doesn't need to do
+unprepare/prepare work by itself so those two APIs added in RFC version are
+removed now.
+
+The power down/up procedure requires a specific sequence in which PM callbacks
+of wiphy, ath11k and QRTR are called, this is achieved by exploiting the
+child-father relationship between their device struct, and also the PM framework
+which separates whole suspend/resume process into several stages. Details in
+patch [3/3].
+
+v7:
+ - remove Kalle's s-o-b tag in patch 3/3.
+
+v6:
+ - add 'Reviewed-by' tags.
+ - s/signle/single/
+
+v5:
+ - remove Kalle's s-o-b tag in patch 1/3 per Mani.
+
+v4:
+ - resend v3 as v4 to CC netdev folks. No changes in patches themselves.
+
+v3:
+ - skip QRTR suspend/resume if MHI device is found to be in suspend state.
+
+v2:
+ - add comment on why destroying the device is optional in
+   mhi_pm_disable_transition().
+ - rename mhi_power_down_no_destroy() as mhi_power_down_keep_dev().
+ - refine API description of mhi_power_down() and
+   mhi_power_down_keep_dev().
+ - add/remove __maybe_unused to QRTR PM callbacks.
+ - remove '#ifdef CONFIG_PM'.
+ - refine commit log of patch 1/3 and 2/3.
+
+Baochen Qiang (3):
+  bus: mhi: host: add mhi_power_down_keep_dev()
+  net: qrtr: support suspend/hibernation
+  wifi: ath11k: support hibernation
+
+ drivers/bus/mhi/host/internal.h        |   4 +-
+ drivers/bus/mhi/host/pm.c              |  42 ++++++++--
+ drivers/net/wireless/ath/ath11k/ahb.c  |   6 +-
+ drivers/net/wireless/ath/ath11k/core.c | 107 +++++++++++++++++--------
+ drivers/net/wireless/ath/ath11k/core.h |   6 +-
+ drivers/net/wireless/ath/ath11k/hif.h  |  14 +++-
+ drivers/net/wireless/ath/ath11k/mhi.c  |  12 ++-
+ drivers/net/wireless/ath/ath11k/mhi.h  |   5 +-
+ drivers/net/wireless/ath/ath11k/pci.c  |  44 ++++++++--
+ drivers/net/wireless/ath/ath11k/qmi.c  |   2 +-
+ include/linux/mhi.h                    |  18 ++++-
+ net/qrtr/mhi.c                         |  46 +++++++++++
+ 12 files changed, 245 insertions(+), 61 deletions(-)
+
+
+base-commit: 48294c8a226d82c687b52b2eb90a075bbfbcb884
+-- 
+2.25.1
+
 
