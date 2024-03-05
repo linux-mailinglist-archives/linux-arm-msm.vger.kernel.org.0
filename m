@@ -1,126 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-13318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12A8D8714CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 05:35:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A97738715F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 07:41:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C21E0282C44
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 04:35:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBF021C21278
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 06:41:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA210405FD;
-	Tue,  5 Mar 2024 04:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 008113CF6B;
+	Tue,  5 Mar 2024 06:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QbzjnGw+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cmTAEMHn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C31929A2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 04:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3872626AC8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Mar 2024 06:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709613309; cv=none; b=UrQV9UYdJhlGSlWOsqh1c41uzKNSXAl+ZXyS6MFJg3qeSc10XFfK9/RDqbqkr350QphrmAmFI5BaCneOc49XQZlm7vEKiBooX18YeyAAuPvzkYRN77ipX3go1HU3c6hmJY50ls7PXQtZhF3CV2FrhQsNOULFDbqssuKEd2DxAQE=
+	t=1709620893; cv=none; b=udl4tSJF+6GW7xKpvWFK2oN/r6vEp+h2TgAdE1LqQ8azJk4lHx8DC98Sj6QEzGu8jhmf8wZsIEfUZAtkQocnoxb1OrJDGiqayrgqvC6urgLrsYabx57KPi/4O5tfebE/IQ9nn31GOBVXZbR66AyCGMK2930Sw9KqlTKGfmY/hJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709613309; c=relaxed/simple;
-	bh=SyVpWR0YqhOvs/OxGe0jMoDi7DFJpkAA1b348TIrzyU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UdodJAyUI5uxa6wy75gzJ8OG/79oqEesE7KKExSz9+0XcqvH0zZP5mji8tlNLFNWDazSRmbY6kZLMO3optRN9cH2M4yR0lnBRcHtJibAsU0bttUe3hCc4wnfx/XIg5LH+V4SEWt3FJVsOQcBFhZ2LQlDkOVra2kwv/Uq4ndkQfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QbzjnGw+; arc=none smtp.client-ip=209.85.167.180
+	s=arc-20240116; t=1709620893; c=relaxed/simple;
+	bh=Ps/VJqEyp7guXeJPu2FrOwduSl73CHpkzvjzkVsVtTU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tzW1/3j2gqOBz9yy9tz5Wudl7/cvcHUyGdrS+1fdXt5YvT+YYYwcDcbCUBjKkI60O8AMuoAeOI8U7NcbDRZAbsBNjT0NP/5vLK620KOcPI8sZgnT1zrsYpWRXAPCLUHk3dj1OrVR6dQ/dsQvTcAlj2LyVfN6ndZMzvD37MasttQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cmTAEMHn; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c1a172e46bso4131980b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 20:35:07 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-608cf2e08f9so57744107b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Mar 2024 22:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709613306; x=1710218106; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4vjRQzniHRafe2ZwDDGF6wB4iwR2l8xzXGYmTAavCjw=;
-        b=QbzjnGw+2IQNNqEDwdgZ6gcn47fHe1I1vHUf5l5XfrZqMvpuCmN/AnuTBkMkU+5Ki5
-         fYgQVg1KbAIZSSi7JNg6o5HA9GFKr+NvbHRgKJTdk7Ks7YzJ2/aAVFJ/oIPoXfrqdydM
-         esWpS8KxZjvTCmFOMaJnCPyjOzihVr2840Gz0LNgjGRMzSw+BjDFL0fTjd/WsBIkV14A
-         9l3RK21AfRg5Mw3IITMqmApMoSBIG+D3AXYMZ1vC4XqmgLQkStjVM3XIBfiYsLEFclV/
-         Rmpr4wi2C4X2sd3kPjzms/2dykqlnwdIWiuYDhPICoyTaT1F4KpzyrpuIPU5UHnt5Tyc
-         7FFg==
+        d=linaro.org; s=google; t=1709620891; x=1710225691; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ccg/Lc70kvp90dYd+ZbmISgOfdv3HBJZ65KNlm+3N78=;
+        b=cmTAEMHnM+IvXsUZliiWRWExCL3kxOKkN5wLTtToV09GgSRz2VwJnHzzkpVzgNW/h8
+         hWJ5qvyeir3KPc9B9jtkbqfjxtvqHk1noXwdg9HV0M+Orld8w3bSE89IsQyot1AHQ1Un
+         d9GOHfzoowjdsis8t1L5ROH+xQ5bUAziO93pMUziLnuKTJ6uU5KeVoIDnYVzWykEzYtN
+         FFQsrGNLkNtX9VGYdigky1g/5mv/nDBDTP0WGq0HQBdj2NlwlRNCkEwrRFtqQK2cEW8M
+         28saLrbaWtv0goWzopKOp/9lN78g/HWU2GJWbJ7VLApQwtotb0+J0X3nTquWatMHewGo
+         6sYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709613306; x=1710218106;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4vjRQzniHRafe2ZwDDGF6wB4iwR2l8xzXGYmTAavCjw=;
-        b=tJX/MKZ5IaxOVdgvitmy2LtbP3vYqmmXCgJQDsEsILog2RkJ4zdHL/Kvdhj7YZMaPC
-         wgKTyU6s845aYgclzXdXedRaffyi4CQbXU3IEFE8/85y3+EKHd0a46iYasbd/55rygXh
-         /w3fN9rsN7R906VLVES7WHf+OkvnjlfgbnQDa8bj9FKvC+wEUwHbV6N49Hq+QlxwB/d0
-         yrE/dgiGoiW29S9nZIZCi6Dky+kERtLyws8pDlR+Vi3AJegJvfRXxFQFafxk+On/mAKj
-         3shyu/G9lqL0ZQ1PZuXzWwmH/NkiloZiWY+0fOtQdUgB3BV0PtIScYCZBfw0UQAkHsbx
-         whJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqwX8mDF7CAB+7qE700wVzdD3ePiXRP5Ld84iUvAhjWxLgz5NjCifHMK8xMpSJU08IFmaNWWy3gMsOYVCPLbC/m1Jz5FCuxmApA5NXEA==
-X-Gm-Message-State: AOJu0Yz+IZSHyo0RpwSojCrePEoFPxI6kYcSOesKBzLFRA/IFWFAsRC+
-	8PbhDzZM2/B3RQ8UlrJmTsvzmUxSmeLmdqMNsVER6D5UsKKxfrv6mHn83AJrSIY=
-X-Google-Smtp-Source: AGHT+IH1YAIyReoRbQYzHs76JwvjyUSpZA7Q97zMfBJJnoNqb6U2Bvgox8NitSny3i+OrmCHQknUpg==
-X-Received: by 2002:a05:6808:f8e:b0:3c1:ef91:c8e6 with SMTP id o14-20020a0568080f8e00b003c1ef91c8e6mr890197oiw.11.1709613306564;
-        Mon, 04 Mar 2024 20:35:06 -0800 (PST)
-Received: from localhost ([122.172.85.206])
-        by smtp.gmail.com with ESMTPSA id ei30-20020a056a0080de00b006e5359e621csm8029647pfb.182.2024.03.04.20.35.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 20:35:06 -0800 (PST)
-Date: Tue, 5 Mar 2024 10:05:03 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/3] cpufreq: qcom-nvmem: add support for IPQ5321
-Message-ID: <20240305043503.tgy5ahl243or7lm5@vireshk-i7>
-References: <20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com>
- <20240228-ipq5321-sku-support-v1-3-14e4d4715f4b@quicinc.com>
- <20240304071222.cx3s37mphddk23bv@vireshk-i7>
+        d=1e100.net; s=20230601; t=1709620891; x=1710225691;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ccg/Lc70kvp90dYd+ZbmISgOfdv3HBJZ65KNlm+3N78=;
+        b=ZxYlNZwNwCNxaVz6zX0hcwdiNdnsaCWFjPu2NNaC4CS+mvT6T8w1w/V/sumDIzUTmm
+         ZngaVvmQ7/dxzLKxMsWOzlVimyCe2nPSvvEnFS9laMYHo1IKA90O0Z2iGPe/xpKxgqsT
+         DvlBbFmZcSLDyRoAWncRT8mxAD2HT7PPsiG4Hfz+DVd5La5WCu4zYcNK8yfDoRRgjWjm
+         GnRqzKddtMIfHGu4JPOZubiQ4GsD42wdYMisEJY1K+7TDJSuQTZ2NTOJuuSxHpnVx6T7
+         nXksUUDiZh/2LrM0ib5BgjKaqdMAOv/+r5wskVeGTwsMfn0MLv3RMGQpaDmUiAu0h3bP
+         CfnA==
+X-Forwarded-Encrypted: i=1; AJvYcCWqcVJdkE05CSaXP+WZUDEwi1q4gvbWWx5q2/SY8u+6+lOH0pdyDTSZSwptKFXzdzgi5fxKVAagxCOOweeIt6XvAlTryQLcbvUmSTxnBw==
+X-Gm-Message-State: AOJu0YxOWA25FoqYPyY6KCzJnIB2n2rD5YPrebBwrJEzWIqrOFa/Zxv+
+	rIlDMTP4jfMLWRdsM0F6gyRdnFKcAT87Qm9jYSM9Wc3EFtXcbmfD2ZWo5jsEyj6duxZgNxOtwTP
+	5AKnHu2RQHuHyrulhJCMkjjLauSrdPG+x4MBAzw==
+X-Google-Smtp-Source: AGHT+IGRNcWGc+ovIvoeKHsS2bsRGRrdE1GgYvwR+P/OeZcykFPfCL7rKLURH+3X2nQAEd3t1oe4qRWeuBF8ZkkOBug=
+X-Received: by 2002:a05:6902:305:b0:dcf:bc57:cd61 with SMTP id
+ b5-20020a056902030500b00dcfbc57cd61mr8363686ybs.50.1709620891239; Mon, 04 Mar
+ 2024 22:41:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240304071222.cx3s37mphddk23bv@vireshk-i7>
+References: <20240122-ipq5332-nsscc-v4-0-19fa30019770@quicinc.com>
+ <20240122-ipq5332-nsscc-v4-2-19fa30019770@quicinc.com> <7a69a68d-44c2-4589-b286-466d2f2a0809@lunn.ch>
+ <11fda059-3d8d-4030-922a-8fef16349a65@quicinc.com> <17e2400e-6881-4e9e-90c2-9c4f77a0d41d@lunn.ch>
+ <8c9ee34c-a97b-4acf-a093-9ac2afc28d0e@quicinc.com> <CAA8EJppe6aNf2WJ5BvaX8SPTbuaEwzRm74F8QKyFtbmnGQt=1w@mail.gmail.com>
+ <74f585c2-d220-4324-96eb-1a945fef9608@quicinc.com> <CAA8EJppuNRB9fhjimg4SUR2PydX7-KLWSb9H-nC-oSMYVOME-Q@mail.gmail.com>
+ <d518dbc1-41aa-46f9-b549-c95a33b06ee0@quicinc.com> <CAA8EJppP_bAPRH7Upnq8dO7__xQPOJ6F_Lc-fpRAcutKKzk0eA@mail.gmail.com>
+ <3a6d301d-16f6-4a11-8be5-6bbb6eb501f4@quicinc.com>
+In-Reply-To: <3a6d301d-16f6-4a11-8be5-6bbb6eb501f4@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 5 Mar 2024 08:41:19 +0200
+Message-ID: <CAA8EJpq2x-1mbBApGH5CiGZqCVhdP97pveZupdJyGQGo3MT8-Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/8] clk: qcom: ipq5332: enable few nssnoc clocks in
+ driver probe
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 04-03-24, 12:42, Viresh Kumar wrote:
-> On 28-02-24, 20:21, Kathiravan Thirumoorthy wrote:
-> > Like all other SoCs in IPQ5332 family, cpufreq for IPQ5321 is also
-> > determined by the eFuse, with the maximum limit of 1.1GHz. Add support
-> > for the same.
-> > 
-> > Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> > ---
-> >  drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > index ea05d9d67490..0a46b5d49d32 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > @@ -191,6 +191,7 @@ static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
-> >  	case QCOM_ID_IPQ5312:
-> >  	case QCOM_ID_IPQ5302:
-> >  	case QCOM_ID_IPQ5300:
-> > +	case QCOM_ID_IPQ5321:
-> >  	case QCOM_ID_IPQ9514:
-> >  	case QCOM_ID_IPQ9550:
-> >  	case QCOM_ID_IPQ9554:
-> 
-> Applied. Thanks.
+On Fri, 23 Feb 2024 at 12:18, Kathiravan Thirumoorthy
+<quic_kathirav@quicinc.com> wrote:
+>
+>
+>
+> On 2/19/2024 3:53 PM, Dmitry Baryshkov wrote:
+> > On Sun, 18 Feb 2024 at 06:29, Kathiravan Thirumoorthy
+> > <quic_kathirav@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 2/17/2024 10:15 PM, Dmitry Baryshkov wrote:
+> >>> On Sat, 17 Feb 2024 at 17:45, Kathiravan Thirumoorthy
+> >>> <quic_kathirav@quicinc.com> wrote:
+> >>>>
+> >>>>
+> >>>> <snip>
+> >>>>
+> >>>>>> Reason being, to access the NSSCC clocks, these GCC clocks
+> >>>>>> (gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk, gcc_nssnoc_nsscc_clk)
+> >>>>>> should be turned ON. But CCF disables these clocks as well due to the
+> >>>>>> lack of consumer.
+> >>>>>
+> >>>>> This means that NSSCC is also a consumer of those clocks. Please fix
+> >>>>> both DT and nsscc driver to handle NSSNOC clocks.
+> >>>>
+> >>>>
+> >>>> Thanks Dmitry. I shall include these clocks in the NSSCC DT node and
+> >>>> enable the same in the NSSCC driver probe.
+> >>>
+> >>> Or use them through pm_clk. This might be better, as the system
+> >>> doesn't need these clocks if NSSCC is suspended.
+> >>
+> >>
+> >> IPQ53XX SoC doesn't support the PM(suspend / resume) functionality, so
+> >> that, can I enable these clocks in NSSCC driver probe itself?
+> >
+> > There is a difference between PM (suspend/resume) and runtime PM.
+> >
+> >
+>
+> Thanks Dmitry. IIUC your question correctly, runtime PM for the
+> peripherals are not supported (except CPU cores which supports DVFS).
+> Since these are router based products, once system is powered on, all
+> the peripherals are configured to the required frequency and it will be
+> never go into low power modes.
+>
+> Please let me know if this answers your questions.
 
-Dropped since the previous commit it required too. Can we get the
-necessary acks for me to pick those ?
+It seems there is a misunderstanding somewhere. Runtime PM allows the
+Linux kernel to disable temporary unused devices at runtime. E.g. if
+the NSS is switched off, the kernel can switch NSSCC off too, cutting
+the power. It has nothing to do with the frequency of the device /
+clock or with the product being a router or a mobile device.
+
 
 -- 
-viresh
+With best wishes
+Dmitry
 
