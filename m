@@ -1,171 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-13323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FE77871642
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 08:09:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 982DE8717D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 09:16:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34C8F281140
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 07:09:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 215551F222C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 08:16:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CC257C6C0;
-	Tue,  5 Mar 2024 07:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EEC18062E;
+	Tue,  5 Mar 2024 08:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VZZKx7aq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J6771nRi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37D845005;
-	Tue,  5 Mar 2024 07:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFF980620;
+	Tue,  5 Mar 2024 08:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709622565; cv=none; b=gOzRmBZ7raIUvDMsBPGRspOmtZMeaISA6F8CWsaHj++liyY0nmAjKbnT2Kcdznz3LKV32UMTVG4+/rg7/SVAzDQczMRLwVY/YwFQvPKOtHdf94QH5HjDr3Uj/G7aSqJh57CE98zlXrwR50VzS9DUnx7hke7wB6C6qaERastk/YU=
+	t=1709626486; cv=none; b=oseavRNZC+w9U6xfT73qMvLFuI41GIo9pZZOjiUXWcZvuiTLT5ntw2v+xSumn0M+9jdN80tUzGgqrk+6eiABdYcOBC+W4gXYa9UtjzhO/LUXFQkXZhwWo1ILTytoC+OaPaPdb0KYNnMF7m1SLZZseEq0C9chBm7Vce232rVQcXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709622565; c=relaxed/simple;
-	bh=iLJtfJRG3AykwJvs44aX4uKsd63Qlq1YiC9OCMcC31U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fOsAmeABDx/TZ9DfbtNODYS0Un2SuLv+rOvc80l/b696z3jk+HiI+HxtcVOQNHlO8/AOjb7p56Lmhu8bgX9FcQwrZabBaqxEbxRMx/6GtpC7ZBEMLRk94GPeJYh1IWRU2gfl8qsyjDy51B1E5TGaC3x1cA14JtmZSA1BcB9GIYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VZZKx7aq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FF9C433F1;
-	Tue,  5 Mar 2024 07:09:24 +0000 (UTC)
+	s=arc-20240116; t=1709626486; c=relaxed/simple;
+	bh=bz1gXOES0RIAkOKF6ua3EaiEwnFlMnYADUJVvZk8C9U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Rsxi5G7wYTeRfwcvS3FmChgYhuzqVvwSAHqEuaIUOCnanGria4FMoCMpQE/IvIzloDIL8KMwIhPC8kS9hOGsyhD7sepbSlGnFOfUMMOq1zxFC+RCmsUY/cWqteDEpQodzd4BZ4V4mWco6NC7kZUp/wVBCAh1B5630UlsVzLOGvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J6771nRi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAE9C43399;
+	Tue,  5 Mar 2024 08:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709622564;
-	bh=iLJtfJRG3AykwJvs44aX4uKsd63Qlq1YiC9OCMcC31U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VZZKx7aqHcP6Ly6lUphCoXqjWxAvksTF4ak3Y8fCg05LhRVZROMttCjmSkrJcPcnJ
-	 okAGM0RW/vHxwON1IvSMvVooywP0aEW/hsroPF4j6lU3rps8BnLdky865zVkUtzR5t
-	 QrVzxGgVK9ZQotLuqbUiFf69AvuQBaFj4NmeQdfLi8nEZkOH7UQS9EFNia1cA2FCpK
-	 uZca0/iiOLhTvkxsdGHf5B7BA1UAE6Vu5YEemVMlLa72Lb1U959dPH1lpuRdX6i2Ta
-	 JPKXxsTxF9ua9qzQ5Mb4qhJrJ2TEH9H5uEC5JHX/BRYvIYz7klwHNcIggsxcLO78y9
-	 afRcy0E/4hghA==
+	s=k20201202; t=1709626485;
+	bh=bz1gXOES0RIAkOKF6ua3EaiEwnFlMnYADUJVvZk8C9U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=J6771nRi2xyn/nMZnbhEGrcDZ+Pfem9XccK0J/zEtO2BSB0UcUJNsuIUD+Axxf7v/
+	 npLbvPU1nlKvrpu1hN5spe7umykP8zFKNo4C1mWxbr+OLZtdRaL2gD6+zU7agRvYdd
+	 gYu3GwykVpynAB2sxnBk+i0ToHIaqhJSVFutXAjWsQb9+LHLC1L4K1IdmKez5kM49D
+	 aWMN1mJ9E61vwmaTJnOXgDvlNa6+3YxU5+f78rBol6DUKrG7YWh8ynjOK7iKrVV+oW
+	 ztqHQwZaBHKdCR1NNNV+gPQDyO92wRriuUMygK9p9g1tdt+vuAKCpIUeJ/sf4UrrWu
+	 gPnGaGna/CDOQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rhOva-000000002G7-0EMj;
-	Tue, 05 Mar 2024 08:09:30 +0100
-Date: Tue, 5 Mar 2024 08:09:30 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH] usb: dwc3: qcom: Remove ACPI support from glue driver
-Message-ID: <ZebFKlae0a-deBKl@hovoldconsulting.com>
-References: <20240305042143.3455101-1-quic_kriskura@quicinc.com>
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1rhPwo-0000000037n-4AX1;
+	Tue, 05 Mar 2024 09:14:51 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v3 00/10] arm64: dts: qcom: sc8280xp: PCIe fixes and GICv3 ITS enable
+Date: Tue,  5 Mar 2024 09:10:55 +0100
+Message-ID: <20240305081105.11912-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240305042143.3455101-1-quic_kriskura@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 05, 2024 at 09:51:43AM +0530, Krishna Kurapati wrote:
-> Minimal ACPI support was added to the Qualcomm DWC3 glue driver in order to
-> enable USB on SDM850 and SC8180X compute platforms. The support is still
-> functional, but unnoticed regressions in other drivers indicates that no
-> one actually booting any of platforms dependent on this implementation.
-> 
-> The functionality provides is the bare minimum and is not expected to aid
-> in the effort of bringing full ACPI support to the driver in the future.
-> 
-> Remove the ACPI code from the Qualcomm DWC3 glue driver to aid in the
-> implementation of improvements that are actually used like multiport and
-> flattening device tree.
+This series addresses a few problems with the sc8280xp PCIe
+implementation.
 
-With a simple lookup function that returns the ACPI index based on name
-this shouldn't be required to add multiport support even if it may
-simplify it slightly. But IIRC it would help more with the devicetree
-binding rework.
- 
-> Commit message by Bjorn Andersson.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 273 ++---------------------------------
->  1 file changed, 11 insertions(+), 262 deletions(-)
+The DWC PCIe controller can either use its internal MSI controller or an
+external one such as the GICv3 ITS. Enabling the latter allows for
+assigning affinity to individual interrupts, but results in a large
+amount of Correctable Errors being logged on both the Lenovo ThinkPad
+X13s and the sc8280xp-crd reference design.
 
-You should update the Kconfig entry for USB_DWC3_QCOM as well and drop
-the ACPI dependency.
+It turns out that these errors are always generated, but for some yet to
+be determined reason, the AER interrupts are never received when using
+the internal MSI controller, which makes the link errors harder to
+notice.
 
->  static int dwc3_qcom_probe(struct platform_device *pdev)
->  {
->  	struct device_node	*np = pdev->dev.of_node;
->  	struct device		*dev = &pdev->dev;
->  	struct dwc3_qcom	*qcom;
->  	struct resource		*res, *parent_res = NULL;
+On the X13s, there is a large number of errors generated when bringing
+up the link on boot. This is related to the fact that UEFI firmware has
+already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
+link at Gen3 generates a massive amount of errors until the Wi-Fi
+firmware is restarted. This has now also been shown to cause the Wi-Fi
+to sometimes not start at all on boot for some users.
 
-You should drop parent_res as well.
+A recent commit enabling ASPM on certain Qualcomm platforms introduced
+further errors when using the Wi-Fi on the X13s as well as when
+accessing the NVMe on the CRD. The exact reason for this has not yet
+been identified, but disabling ASPM L0s makes the errors go away. This
+could suggest that either the current ASPM implementation is incomplete
+or that L0s is not supported with these devices.
 
-> -	struct resource		local_res;
->  	int			ret, i;
->  	bool			ignore_pipe_clk;
->  	bool			wakeup_source;
-> @@ -825,14 +659,6 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	platform_set_drvdata(pdev, qcom);
->  	qcom->dev = &pdev->dev;
->  
-> -	if (has_acpi_companion(dev)) {
-> -		qcom->acpi_pdata = acpi_device_get_match_data(dev);
-> -		if (!qcom->acpi_pdata) {
-> -			dev_err(&pdev->dev, "no supporting ACPI device data\n");
-> -			return -EINVAL;
-> -		}
-> -	}
-> -
->  	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
->  	if (IS_ERR(qcom->resets)) {
->  		return dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
-> @@ -860,41 +686,18 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->  	}
->  
->  	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -
-> -	if (np) {
-> -		parent_res = res;
-> -	} else {
-> -		memcpy(&local_res, res, sizeof(struct resource));
-> -		parent_res = &local_res;
-> -
-> -		parent_res->start = res->start +
-> -			qcom->acpi_pdata->qscratch_base_offset;
-> -		parent_res->end = parent_res->start +
-> -			qcom->acpi_pdata->qscratch_base_size;
-> -
-> -		if (qcom->acpi_pdata->is_urs) {
-> -			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
-> -			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
-> -				dev_err(dev, "failed to create URS USB platdev\n");
-> -				if (!qcom->urs_usb)
-> -					ret = -ENODEV;
-> -				else
-> -					ret = PTR_ERR(qcom->urs_usb);
-> -				goto clk_disable;
-> -			}
-> -		}
-> -	}
-> +	parent_res = res;
->  
->  	qcom->qscratch_base = devm_ioremap_resource(dev, parent_res);
+Note that the X13s and CRD use the same Wi-Fi controller, but the errors
+are only generated on the X13s. The NVMe controller on my X13s does not
+support L0s so there are no issues there, unlike on the CRD which uses a
+different controller. The modem on the CRD does not generate any errors,
+but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
+when not used, which could indicate that there are bigger problems with
+the ASPM implementation. I don't have a modem on my X13s so I have not
+been able to test whether L0s causes any trouble there.
 
-And just use res here.
+Enabling AER error reporting on sc8280xp could similarly also reveal
+existing problems with the related sa8295p and sa8540p platforms as they
+share the base dtsi.
 
->  	if (IS_ERR(qcom->qscratch_base)) {
->  		ret = PTR_ERR(qcom->qscratch_base);
-> -		goto free_urs;
-> +		goto clk_disable;
-> }
+After discussing this with Bjorn Andersson at Qualcomm we have decided
+to go ahead and disable L0s for all controllers on the CRD and the
+X13s.
 
-Looks good to me otherwise.
+Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
+significant impact on the power consumption (and there are indications
+that this applies generally for L0s on these platforms).
+
+***
+
+As we are now at 6.8-rc7, I've rebased this series on the Qualcomm PCIe
+binding rework in linux-next so that the whole series can be merged for
+6.9 (the 'aspm-no-l0s' support and devicetree fixes are all marked for
+stable backport anyway).
+
+The DT bindings and PCI patch are expected to go through the PCI tree,
+while Bjorn A takes the devicetree updates through the Qualcomm tree.
 
 Johan
+
+
+Changes in v3
+ - drop the two wifi link speed patches which have been picked up for
+   6.8
+ - rebase on binding rework in linux-next and add the properties also to
+   the new qcom,pcie-common.yaml
+   - https://lore.kernel.org/linux-pci/20240126-dt-bindings-pci-qcom-split-v3-0-f23cda4d74c0@linaro.org/
+ - fix an 'L0s' typo in one commit message
+
+Changes in v2
+ - drop RFC from ASPM patches and add stable tags
+ - reorder patches and move ITS patch last
+ - fix s/GB/MB/ typo in Gen2 speed commit messages
+ - fix an incorrect Fixes tag
+ - amend commit message X13 wifi link speed patch after user
+   confirmation that this fixes the wifi startup issue
+ - disable L0s also for modem and wifi on CRD
+ - disable L0s also for nvme and modem on X13s
+
+
+Johan Hovold (10):
+  dt-bindings: PCI: qcom: Allow 'required-opps'
+  dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+  dt-bindings: PCI: qcom: Allow 'aspm-no-l0s'
+  PCI: qcom: Add support for disabling ASPM L0s in devicetree
+  arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+  arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for NVMe
+  arm64: dts: qcom: sc8280xp-crd: disable ASPM L0s for modem and Wi-Fi
+  arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for Wi-Fi
+  arm64: dts: qcom: sc8280xp-x13s: disable ASPM L0s for NVMe and modem
+  arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
+
+ .../bindings/pci/qcom,pcie-common.yaml        |  6 +++++-
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  6 +++++-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  5 +++++
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  5 +++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 17 +++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 20 +++++++++++++++++++
+ 6 files changed, 56 insertions(+), 3 deletions(-)
+
+-- 
+2.43.0
+
 
