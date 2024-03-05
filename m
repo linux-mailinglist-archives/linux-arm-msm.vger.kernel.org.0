@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-13321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53E3F87162E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 08:05:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 574C687163B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 08:07:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77CEF1C21BC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 07:05:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DADAD1F235FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Mar 2024 07:07:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08877B3CA;
-	Tue,  5 Mar 2024 07:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C68E67C0A1;
+	Tue,  5 Mar 2024 07:07:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1962D7B3E7;
-	Tue,  5 Mar 2024 07:05:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAB97BAE1;
+	Tue,  5 Mar 2024 07:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709622326; cv=none; b=rTpK0igrLcYn4vxFusuiXlqTq9sHe+6KmVff4PAlkbb285D0ZNQNs7ZAfD1rvpRCIe0soEf7VSBn//LWRB/oLy5zYQqu7zBd7jqSUfmIhBvI0Sz58fVW0K44Phl9W0/BTcyP8g30u/26Q51dccW2ZtZT7QPB29Mwtq5JEhBm+x4=
+	t=1709622450; cv=none; b=rGEO3LIFzqEVJMRf5Y78RUifJ5/lBF2LTCObbdEfr9PtB95Ln50JZgtq/5XQ0x+3c2Ntm8fWm4D8XAQBvqtSu0D/VDrajJnEIdJklbYIlLfA+H2fEb5Ak8ndUBnopUSxCxtoj0lllpDr5Qwi/Jj0tzic2hAo2bPIQFwvT/SAdVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709622326; c=relaxed/simple;
-	bh=FMKQCtbNGVtmsTvkEQw19ZwAZ7lkSkTVEPqApBceiHQ=;
+	s=arc-20240116; t=1709622450; c=relaxed/simple;
+	bh=vZby/m3LRrGWFrpBXo7IV5PjrBAVr4ouopmPCoaEJGM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kjuilZ0qEUVzVTsi8LEhZBvg0smmED8ow2cuSC/Gq1kuiWYVp1s/LLoh0ZrzBTeXp32nBzHKbpMaELt4YySOoNRZUmEmSaI/I7mN4p5SmrZWMV9U6RoNBE+dG9nAwHrN+CdFdTmCpPvUSyg1iD+cWxa6g7fICAGRLvqjFB+hclk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.175
+	 In-Reply-To:Content-Type; b=p1t2ubNBcb2cidi7bnWaB5hduQYp1vv94ldDGW3TGd1I8KFP0pU4if+EPzOby1xVm5fjTu2uvxNjaqdK0oZblO0AI7y73J1/T2pSb5VGARSSMpAnZaGoC7K7KFDbycir8vXAKOjPxUpXQMH931p9ThzZbvcz6/DjbY1DvKXIEBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d24a727f78so64857381fa.0;
-        Mon, 04 Mar 2024 23:05:24 -0800 (PST)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so45086366b.0;
+        Mon, 04 Mar 2024 23:07:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709622323; x=1710227123;
+        d=1e100.net; s=20230601; t=1709622447; x=1710227247;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3O0jv6LhDjyzJdxtct/C+ioUyyKG0iGxWB1l46k8xmk=;
-        b=PtEPnQkfn4Fj40ENsRF7xIwZzYDq6Gd3qnskWm9ZYNdKy8XrfveIZ6+ndCqa8Rqa3r
-         nAg8+5sove3wyDSsuyiwm7moI5zjGZT1/xctuOMNMe7KPoDHvRXL0j7ucII/PDv1eSLM
-         uJX2v1VQ007ZoKWRd/RuTIZdst2Pfw1dHa/XwWONea9Hfr2zhim1AmSO6vubKfKsowkQ
-         lglslLRCc/+m4int/sUX4y9L0fM3YRZAO/JtkUT74ijtUrlQ06Ap5Wy6D4pvq1Ssyho1
-         yT5uZ9RRCFGBDSkBWT3GQhxVVpD+wORCkwpzeb3NnjvDRROdPWTaqU7E077OsipaWpr6
-         xKQw==
-X-Forwarded-Encrypted: i=1; AJvYcCVlzc9/BoOaO45PaRGW264Un5yG6YqYyiv+UVw/H3q6qmqR/KOwWFKnb46WOVUm2q2H7Q7JFm/wZPw7GdRzm+m+sW1jQLNNYLtm046gRyAvfbDrW/3v+XDHO10NPdiVNoix7duayY5RKB/dqW5eK3wEpQapXepMI4WYvGNQ4SSOetI9/EesL/4z7g==
-X-Gm-Message-State: AOJu0YxqKzfKQ3nmBZ/u4IkQjRH/uVh/jV1aQgoyR6ZaGCqGPgNhRJSG
-	vWnUCQtWQEDqQh6F5Gb5fW36qgVWnILZLqyw0fsJhWSLOrerHvrEEQlKRVLj
-X-Google-Smtp-Source: AGHT+IGTg7AbvjHshYOWYEP/7coOaeVQPu+NnLoCzlx2ajIpsU9WluR+fkfnhymug8+vc0+2eWbxBw==
-X-Received: by 2002:a2e:3512:0:b0:2d3:f64d:516 with SMTP id z18-20020a2e3512000000b002d3f64d0516mr309531ljz.46.1709622322854;
-        Mon, 04 Mar 2024 23:05:22 -0800 (PST)
+        bh=kjx627cUwp+KMTeHjxsuWfhBmUKybK6GADPnBK7i+J4=;
+        b=MF8946ghEJmcAJbOk4gccOq+FxO9m+W4udszvotoOh11On8Z31F7yxTN+oCPQYVC2f
+         8MeHi5GDN3CT1NI9w2KBtEBoTgi9vEeXO0fHOV5SMoc0wJ+11aeqi9pD/ys7gR4vYJ3+
+         qlBDjAJP2jnP+A3GkhqO+e9a+bjM3GIS3+dHP5sOViAt7tV85r6c04GIc4Rr8czwUpnK
+         uN/VfPOu/Ym3dtVGV7zAivjZq193naAFsiEAwib6FnInfMRhm1O+2OC3pOnXeyRU3/zd
+         zOwL0+GczrkSzikdF+thnzO2ZFkjFVAgNA8UqTdFBpRDbyBinCE1I0UetLixdlejhyrk
+         xwTw==
+X-Forwarded-Encrypted: i=1; AJvYcCXbnNrBiCz2HgR7ukQ6zQzu2dbM6jUpJ6bmD6VFmr5Q1p2s0NRbvibLPBBVDl4SS8R0UFEJqrBAh6yD8O5Ho+LdabLiRg9sqhSYx+GdQe2VzsU+4Xoz/fdIR8Inc3RH7IvcsqUzl+8I16OhZkpeBQ5eEg8ogNypv4GFdh7WaQIpxb1Bwyl6nWqcmQ==
+X-Gm-Message-State: AOJu0YyDrdfMb+3+OyTR85f3VK+rdNRzXKbP13Pr8R1HBMnXYPIactpw
+	AbroJKoF0VLj8bs5BKB7hx7ah6zdq6fVLDWWiQx5bPZNx7vyD3To
+X-Google-Smtp-Source: AGHT+IEmUQjZF3qDWgsAV5rmWrb/OPyvl4RESCNzlIicqkw2l9FI5v9oHKCqRFKrsnOJYeHQL+M+bQ==
+X-Received: by 2002:a17:906:c7d0:b0:a44:8caf:a2e0 with SMTP id dc16-20020a170906c7d000b00a448cafa2e0mr8823508ejb.74.1709622447072;
+        Mon, 04 Mar 2024 23:07:27 -0800 (PST)
 Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:59? ([2a0b:e7c0:0:107::aaaa:59])
-        by smtp.gmail.com with ESMTPSA id f12-20020a056402194c00b0056777517887sm924935edz.85.2024.03.04.23.05.22
+        by smtp.gmail.com with ESMTPSA id o7-20020a170906288700b00a42ed7421b8sm5762158ejd.93.2024.03.04.23.07.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Mar 2024 23:05:22 -0800 (PST)
-Message-ID: <f196ffc9-1341-438b-abe4-0761b5901716@kernel.org>
-Date: Tue, 5 Mar 2024 08:05:21 +0100
+        Mon, 04 Mar 2024 23:07:26 -0800 (PST)
+Message-ID: <734841ee-836f-4397-88cb-9405e5a2b439@kernel.org>
+Date: Tue, 5 Mar 2024 08:07:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -124,65 +124,13 @@ On 05. 03. 24, 2:49, Douglas Anderson wrote:
 > 
 > As identified by KASAN, the simplification done by the cleanup patch
 > was not legal.
-
-Ugh, indeed. uart_xmit_advance() is nice but completely hid the detail 
-you describe below.
-
-My bad, so for now definitely:
-Acked-by: Jiri Slaby <jirislaby@kernel.org>
-
->  From tracing through the code, it can be seen that we're transmitting
-> from a 4096-byte circular buffer. We copy anywhere from 1-4 bytes from
-> it each time. The simplification runs into trouble when we get near
-> the end of the circular buffer. For instance, we might start out with
-> xmit->tail = 4094 and we want to transfer 4 bytes. With the code
-> before simplification this was no problem. We'd read buf[4094],
-> buf[4095], buf[0], and buf[1]. With the new code we'll do a
-> memcpy(&buf[4094], 4) which reads 2 bytes past the end of the buffer
-> and then skips transmitting what's at buf[0] and buf[1].
-> 
-> KASAN isn't 100% consistent at reporting this for me, but to be extra
-> confident in the analysis, I added traces of the tail and tx_bytes and
-> then wrote a test program:
-> 
->    while true; do
->      echo -n "abcdefghijklmnopqrstuvwxyz0" > /dev/ttyMSM0
->      sleep .1
->    done
-> 
-> I watched the traces over SSH and saw:
->    qcom_geni_serial_send_chunk_fifo: 4093 4
->    qcom_geni_serial_send_chunk_fifo: 1 3
-> 
-> Which indicated that one byte should be missing. Sure enough the
-> output that should have been:
-> 
->    abcdefghijklmnopqrstuvwxyz0
-> 
-> In one case was actually missing a byte:
-> 
->    abcdefghijklmnopqrstuvwyz0
-> 
-> Running "ls -al" on large directories also made the missing bytes
-> obvious since columns didn't line up.
-> 
-> While the original code may not be the most elegant, we only talking
-> about copying up to 4 bytes here. Let's just go back to the code that
-> worked.
-> 
+...
 > Fixes: 5c7e105cd156 ("tty: serial: simplify qcom_geni_serial_send_chunk_fifo()")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> If folks really want me to, I can adjust the patch to try to detect if
-> the circular buffer is going to wrap and still use the memcpy(). Let
-> me know.
 
-I will remove the for loop anyway (this was sort of preparation), once I 
-switch serial to kfifo (soon). No need to think about this more. Just 
-revert and be done with it for now. kfifo takes care of all this 
-internally (and correctly).
+BTW this is in 6.4. You should have "Cc-ed: stable"
 
-thanks,
+
+-- 
 -- 
 js
 suse labs
