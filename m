@@ -1,143 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-13467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 277CF873408
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:23:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1E07873523
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:57:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A85681F2B1C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:23:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 518C01F25E16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:57:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F5B3605AE;
-	Wed,  6 Mar 2024 10:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB8D74BF9;
+	Wed,  6 Mar 2024 10:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MxDnGw1r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ouDETjdH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15FE604DD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 10:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC3174E3F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 10:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709720566; cv=none; b=OUWBnmXBG58gvoFjiJqG3fYw9Vt+FTAN7q5VTwWT3bxLTFnC5x5Y2jEJh+3R/aQOhw5R8xtjouFq00FIcUR111T9M6drQbnNeyMMv/eF9QxMjlx+YcwIc7zGUPS67iGVXFUA8rT4jZ2mD8QWvmtKksFdrg5E/18HS8U7AQVrA3A=
+	t=1709722636; cv=none; b=b/9oeaU4CSLmedypqMj1TMD9hZUG9Nn/v/PJne1mBhmyrD5ikBA0a0p0+slfooDhjz6BLu/fmszxStJTX4CtCr4h1yBLEVIhE4KqW8PCAl4F18Ftbllq3oACiNhUe734QjgAdnEwIdWZxrxVfKNbuzM/ZJMR0fpkLuPfZm6tJb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709720566; c=relaxed/simple;
-	bh=U8+MilrlyQLMqCKs6OSXrDnQL6lG3tUvuqNkFusZTRE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n3ohnlZwD6ZqAc1zEoAFq9mdE/bdqviwNpe250mvYzC0CdLe7IuCSO5iQrEbA39wgPyCMlYxcbQH2ST1zEQZqThRLWCRZiXZkfcskSYqpvrVpGhsAVy0//iV68M1yfCkb2e5MsheEQlrNR5RG4+SF6M6ppJe7mN4/I9V5ryOY30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MxDnGw1r; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1709722636; c=relaxed/simple;
+	bh=PxQkKrOPnjUbGpSomDRnlUhmSSi0mYecg9zRaMFuJAc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gagmhO6OHxmO7gcIekCW8VRy0iG7Yj/Z0UXdsYYi0d/bDG+XqLhkIiVtKeCWziF7y1D2vDC8iY9ptZfVBrRdEoe8IcTFOrxofuVIGomptgOkio9ptNR8IggelfIzBkBzbbbb9kX2HZkrzwxaeUC5gPK3r83dY09OYsDV6r5m9/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ouDETjdH; arc=none smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2997a92e23bso4364014a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 02:22:44 -0800 (PST)
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4d334c4b163so1466567e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 02:57:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709720564; x=1710325364; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mHEwlZG3mvwmMDQMT2HCEzxvwXSOeNme8F0oQ3C5z7U=;
-        b=MxDnGw1r567ema+QyIwGgU6Cync+wxC2bQ8GraTGrqEWW2JJWNdJ0jwM+5RRwX9ulD
-         bnGUBd05tEw7RY6RE/K8YGNGJmUBdQat5E5mPACGfVHTMaU7I+Q7vX+ZIJBDDel1lGGQ
-         SBNmdU+gJ1h3M5l3ZBkJfmjbJP9V4fQoUiDrTiptTyYPSWn8V6MNUHLyynk9MG4vevH2
-         6vwenZ+NbPzCEsIY/AdZitenNdym9ObqlynHNbkJpZBQPHFsDYkKeORiATaDl3LoYQHo
-         fWOMr4+BpsZEx+bxb9kBNpIEVIMSSGs565KAdwr/MsKca/DGe/RAZ9R3L56h4Oi5iYY2
-         B6uw==
+        d=linaro.org; s=google; t=1709722633; x=1710327433; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gxUxwGg2SWOaJy7LQ4z09jEYeKP2bAj05h4IqVt59sk=;
+        b=ouDETjdHBqtnsTJCqtwv8E6vrh8r6IeTDMEduzVTtzH+dZplGsXQZuNGPXrMRkagwW
+         66dqY4Z2D8GDGpoYPeYL985Ingvk2Olp8K1+J46kRc0f3iTe5RV45WtgUI8YuwvFh487
+         FSWP1PLwaOkHb4pIb5O3irJDeKVBNJcH8wuV6umyNOFBnhTdme6JnK8N/mNOOD3siiUq
+         OEd2nsT4cwGyeZ01Fg15n+wCW1hXxVCOLP5/QXDnrL/ochDBnVqA+6kNBk7Ig+mfGmUu
+         +jZZuXxv91bNC7/wYCM6mS7QH88BTV+ydtpMdOE/WYQAfyA/Pikd/YCVJ4Zg+50s2N6Z
+         NWZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709720564; x=1710325364;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mHEwlZG3mvwmMDQMT2HCEzxvwXSOeNme8F0oQ3C5z7U=;
-        b=RExF0M31sY337niU4SrnP6D7duDdBoYuetaRSyCQSL1dCebbb5gBiN11+BlXhrdlJC
-         S+M3FKdnmRbW49XfwOb/nQ0eK+W2idqeT434v2QAcf4jacX1VWzLPsvDfU9upBpfNX6y
-         8Har6HYuatVTkFH1paX/wcdpNNii2eZuqxaD680nnTnb99penj+mY3wX/w/xRS4fRQJA
-         a8GhRw/woDynwVVpT2c9Qc2J6A3aoXWH/Yx87C+phiSyDicz3iT5F78g3UXpp8MlfN4i
-         nGxBud1nSUPNiETDCzV4XkZi804qLF8mnRvwFInJgMxYbk6W6I+0/xlHQeuIPUVDsuLx
-         owPA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2m2mZI9AtIsWu8OAgD/YlEpXgqauMH4Jpg+oqp0siuDUiwZykC+JOHlZiXH3w85/i48rjHRLyyn+sE5DtXLpcYf69YqS+CRdKwxhYvA==
-X-Gm-Message-State: AOJu0Ywof1MrBHd+uxZ6gW5laGCT1SNKhIBkX6dgokBZLUuKH8/mUNUn
-	3aD5piR8egIwQoq4TTOt7qjhusJnJ1gmjt7vTGRi5YWN7oAfa6xKsAF49sFR4Q==
-X-Google-Smtp-Source: AGHT+IF8rDfZJIt86MXmm3NNVX3iMYcEEBEQhVqxtxh7WlEtk0uSWa+lKYrHKR61rYf8lI2654xteQ==
-X-Received: by 2002:a17:90a:d392:b0:29a:a37f:22c6 with SMTP id q18-20020a17090ad39200b0029aa37f22c6mr11069558pju.28.1709720564128;
-        Wed, 06 Mar 2024 02:22:44 -0800 (PST)
-Received: from [127.0.1.1] ([117.248.1.194])
-        by smtp.gmail.com with ESMTPSA id li17-20020a17090b48d100b0029ab96b13ebsm13339320pjb.40.2024.03.06.02.22.37
+        d=1e100.net; s=20230601; t=1709722633; x=1710327433;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gxUxwGg2SWOaJy7LQ4z09jEYeKP2bAj05h4IqVt59sk=;
+        b=hLuj9W3I3kx5MWnma+smVd4+ZulyN3tNDoM7MewtR0zp1bXD8vVkz0n+CGb3vC9906
+         q6NOoCIraAStgMZKMJcoy1P+t9J6Hi5rn6CIBLpqyMyFSdQzQedC8ufdsA4n+n7/9CK2
+         vuNOt/MUarBs0Y64XkSpsEgeiYSqoKDs/NNYevBPutl/Wwy5zqY4KZyctydBCkGOoA5W
+         UFKhJwobCnIWfRu42S2mUBcrNosjLrHhlIDf2GsNASfuvcb5qR4ahvFlcajvEnvzWSaZ
+         OyQyu6RNHAzOjP16U1mvx6No7Lohr5q5Y7PVPgX5Gr4mA9jWQ38wJXlHLGIXaYze34IZ
+         uVyw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHbrLAqPSEJJvkjsUb6R+jLdVZ7406bMJaBhWhtpI0M5kj1nLVE/Jl/97njC/lByZuR8f1rQ+lnJoryixeNdd70BCe9xmm55/5hJq/IQ==
+X-Gm-Message-State: AOJu0YzLxA8WLpmdM0Xid9eCNA428Oeg7FmW5pybOW+Oh/KdC1skAkjk
+	J5pFcKKSQf6L95LyZvYBO8yJvEn2dIZ1nawwota8uBpAaS2ZJCca9wwW/M1J6w92Yqv3IKdbPhE
+	=
+X-Google-Smtp-Source: AGHT+IFG00jwW6iyWhCp8D8dFbgwPMCEu6TNuD/BYBbQrLh5jn3bbhGke775gAlxZI9UdiYP+c0xnw==
+X-Received: by 2002:a05:6122:d90:b0:4d3:34b1:7211 with SMTP id bc16-20020a0561220d9000b004d334b17211mr4780807vkb.3.1709722632787;
+        Wed, 06 Mar 2024 02:57:12 -0800 (PST)
+Received: from thinkpad ([117.248.1.194])
+        by smtp.gmail.com with ESMTPSA id l4-20020ac84a84000000b0042ee49dd434sm3619050qtq.29.2024.03.06.02.57.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 02:22:43 -0800 (PST)
+        Wed, 06 Mar 2024 02:57:12 -0800 (PST)
+Date: Wed, 6 Mar 2024 16:27:04 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Date: Wed, 06 Mar 2024 15:52:01 +0530
-Subject: [PATCH v4 5/5] PCI: epf-mhi: Enable HDMA for SA8775P SoC
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v4 3/5] PCI: qcom: Disable ASPM L0s for sc8280xp, sa8540p
+ and sa8295p
+Message-ID: <20240306105704.GE4129@thinkpad>
+References: <20240306095651.4551-1-johan+linaro@kernel.org>
+ <20240306095651.4551-4-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240306-dw-hdma-v4-5-9fed506e95be@linaro.org>
-References: <20240306-dw-hdma-v4-0-9fed506e95be@linaro.org>
-In-Reply-To: <20240306-dw-hdma-v4-0-9fed506e95be@linaro.org>
-To: Jingoo Han <jingoohan1@gmail.com>, 
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Marek Vasut <marek.vasut+renesas@gmail.com>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Serge Semin <fancer.lancer@gmail.com>, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Mrinmay Sarkar <quic_msarkar@quicinc.com>, 
- Siddharth Vadapalli <s-vadapalli@ti.com>, Frank Li <Frank.Li@nxp.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1016;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=HBFaoOrEPY28OgpXbosd8HC8b9IU9rla4yFX01mozG0=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl6EPR3LjKVzSqhLSTX52Xj52sP8auulr1YRKUA
- e7kAGWdmt+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZehD0QAKCRBVnxHm/pHO
- 9ZXBB/4x+EAhH/4vRq8jl6l9OTtS8TpJ1OWU+CL5k04aHCII7oiapzr6jT0TU56ExlM0Fp+KVwx
- MvcGTaBu1oPvRhvxxi8Ya0sxBNxjDrGkJujhLtueKz1fJRKpfweL17BtDkn2t8qksxOBrRA9TUA
- UwBHwB6/HKXAKsCjctTYcuxmeAgj21s/GzhVoxR+HCrOSgR2C91gaGtINfsqZ6lz8Uf8ZBKZ3Sk
- lAMxv9bKabKiDJX8XvNAv30QxGagZ88OT1LtImQiQn2+0+PE1LDFdtvmUN6Pw901+KTTqA6vYOS
- iJ+AOF/p/jv6dYsAsJKaL5QiupeN0cZHqOwtJWFR0hDmtXQh
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240306095651.4551-4-johan+linaro@kernel.org>
 
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+On Wed, Mar 06, 2024 at 10:56:49AM +0100, Johan Hovold wrote:
+> Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting
+> 1.9.0 ops") started enabling ASPM unconditionally when the hardware
+> claims to support it. This triggers Correctable Errors for some PCIe
+> devices on machines like the Lenovo ThinkPad X13s when L0s is enabled,
+> which could indicate an incomplete driver ASPM implementation or that
+> the hardware does in fact not support L0s.
+> 
+> This has now been confirmed by Qualcomm to be the case for sc8280xp and
+> its derivate platforms (e.g. sa8540p and sa8295p). Specifically, the PHY
+> configuration used on these platforms is not correctly tuned for L0s and
+> there is currently no updated configuration available.
+> 
+> Add a new flag to the driver configuration data and use it to disable
+> ASPM L0s on sc8280xp, sa8540p and sa8295p for now.
+> 
+> Note that only the 1.9.0 ops enable ASPM currently.
+> 
+> Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
+> Cc: stable@vger.kernel.org      # 6.7
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-SA8775P SoC supports Hyper DMA (HDMA) DMA Engine present in the DWC IP. So,
-let's enable it in the EPF driver so that the DMA Engine APIs can be used
-for data transfer.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-[mani: reworded commit message]
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 1 +
- 1 file changed, 1 insertion(+)
+- Mani
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 2c54d80107cf..570c1d1fb12e 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -137,6 +137,7 @@ static const struct pci_epf_mhi_ep_info sa8775p_info = {
- 	.epf_flags = PCI_BASE_ADDRESS_MEM_TYPE_32,
- 	.msi_count = 32,
- 	.mru = 0x8000,
-+	.flags = MHI_EPF_USE_DMA,
- };
- 
- struct pci_epf_mhi {
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 31 ++++++++++++++++++++++++--
+>  1 file changed, 29 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2ce2a3bd932b..9f83a1611a20 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -229,6 +229,7 @@ struct qcom_pcie_ops {
+>  
+>  struct qcom_pcie_cfg {
+>  	const struct qcom_pcie_ops *ops;
+> +	bool no_l0s;
+>  };
+>  
+>  struct qcom_pcie {
+> @@ -272,6 +273,26 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  	return 0;
+>  }
+>  
+> +static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
+> +{
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u16 offset;
+> +	u32 val;
+> +
+> +	if (!pcie->cfg->no_l0s)
+> +		return;
+> +
+> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +
+> +	dw_pcie_dbi_ro_wr_en(pci);
+> +
+> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +	val &= ~PCI_EXP_LNKCAP_ASPM_L0S;
+> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +
+> +	dw_pcie_dbi_ro_wr_dis(pci);
+> +}
+> +
+>  static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+>  {
+>  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> @@ -961,6 +982,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  
+>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+> +	qcom_pcie_clear_aspm_l0s(pcie->pci);
+>  	qcom_pcie_clear_hpc(pcie->pci);
+>  
+>  	return 0;
+> @@ -1358,6 +1380,11 @@ static const struct qcom_pcie_cfg cfg_2_9_0 = {
+>  	.ops = &ops_2_9_0,
+>  };
+>  
+> +static const struct qcom_pcie_cfg cfg_sc8280xp = {
+> +	.ops = &ops_1_9_0,
+> +	.no_l0s = true,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.link_up = qcom_pcie_link_up,
+>  	.start_link = qcom_pcie_start_link,
+> @@ -1629,11 +1656,11 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+> -	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
+> +	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
+> -	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_1_9_0 },
+> +	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sdm845", .data = &cfg_2_7_0 },
+>  	{ .compatible = "qcom,pcie-sdx55", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sm8150", .data = &cfg_1_9_0 },
+> -- 
+> 2.43.0
+> 
 
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
 
