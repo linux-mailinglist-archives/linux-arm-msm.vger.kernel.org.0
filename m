@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-13507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF64D873B37
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 16:52:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 632CC873B40
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 16:54:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C9EF1F24E41
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 15:52:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9516E1C21483
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 15:54:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00BF5135A4A;
-	Wed,  6 Mar 2024 15:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C897E135416;
+	Wed,  6 Mar 2024 15:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UugdDh7A"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x2baU5L+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249F51350D2;
-	Wed,  6 Mar 2024 15:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC79B1353EC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 15:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709740348; cv=none; b=AEb5q1CW9CqFvA1z4AsjRme5mkSe5T6zl53t1OjNEO0TZZyA+vj9yDUc1jl5D3uvD3QJuxi8KVkSAJ3hzCt/LltITeOUPm9HeMT2NpSgp9NgbFqxFegPbrxhfj9L/TrjuD/T8Ptgz0kFGvMs2Ln1j+9POrHTLZuUqcv3BzDTrtM=
+	t=1709740474; cv=none; b=bkKjvW1Ppdn2ICdvRlbv1DmoXpJDuHqBK3luWsTHorAwzB0a72IQs0w1jQ7IHrcV7s2IvWi2ZP5cHeIMIA+5Cg7sPJpkQwGSD8kRE7QKJj6X006MAJh3X8YIcThc0naL40v3hFB1ejyfoTxumIaE+uEqkOWkknhoAKNrkjg7zC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709740348; c=relaxed/simple;
-	bh=UO5eY6VSEOx0TkkcTXVgv+f4/DcEWgpKkiqEjY2qag0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EdSG8BP/mVlWw/+aOBtPg3/7ICFAW5hGk6vWRISYsqeFjE4695l00hh15nOQ8t2+jYSBSjfd8rTXKSJvOKIrbY3MvQF7OprlAOHx572vrYpAGyt6+107meptQNjtcsNllAS5E4pP/4rJyI9d9WcdTrhqBSkGkdPm4Maleq4oqZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UugdDh7A; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 426BdF6C001288;
-	Wed, 6 Mar 2024 15:52:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=EEwUSDqGUrVxWiY4NKo3AYm8KZb8/Jtn+tHN0/on6Q4=; b=Uu
-	gdDh7AiMMTB3KHQ4Wmbd1Yfvqu/Os65QE2G6KYPqpszFOyoebr0raaAcZYievj8P
-	Rv0gTLLYo54pj7D/W51B5ixeONm0XR5GuxpMYQIZcR/Ptk5BjrpqDWRxcCUxwV+E
-	/Jb60Oj56RY9f5Gc/pQO8uTqE7/fpxNfvQy7vEuwbpaWeFwss4IOfya7xTDQ30G+
-	zWD73lF+I1goggtWc7MaYQ1Rb3oeR0pEVbbCDPRrTTVaDA/nJFSXRBXr2JuUWWCX
-	j23P9SqowZfASnRrtP+Gp07XbWky8cRopSVtFJR4kl2OM9ndcWD2pz9bg4/iDUvR
-	e8Q/3HYjLIle3Xp80+dQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpnfvgu5q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Mar 2024 15:52:11 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 426FpmZT017506
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Mar 2024 15:51:48 GMT
-Received: from [10.216.51.173] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Mar
- 2024 07:51:41 -0800
-Message-ID: <4f1e4e66-e728-472e-92f4-17c295548a14@quicinc.com>
-Date: Wed, 6 Mar 2024 21:21:37 +0530
+	s=arc-20240116; t=1709740474; c=relaxed/simple;
+	bh=OS4UIwv4AL3sypbFaD0xokWuXPgBJI3QxCTyuY5K3Iw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oKASd/kfS8gFZYyBb9IqaG6X0ivvfjtgJZoBYTXrxdS8aGE83NP107W8o3VarVtcoEH3VlSrXQ3PcEYoNc/KZ7m/UCeB+hVN2jYQul/0oxmVVeGBDlPAFzO8nPdMsbU9n51y7yhoiyq8XKw49UyPoN5uB5bGYVjBHf6xgcUFjxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x2baU5L+; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-512e39226efso7117723e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 07:54:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709740471; x=1710345271; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9linAkATm+FdXXzIu/Ohj8OonJxlZ75KvqbpWO2tghk=;
+        b=x2baU5L+Gwo0EGToMF8EaEl862My1ciND5H7ROuhzdAsdGU5jcJbBoHPxEvz5B6a9D
+         k8IjYTUVFOd0XeEi+vxxqpolmT6bZRcWq6YdPvqXlqMEEtp+mr7dY2lIKSyPFUTznX/8
+         ET9PIFDzy+DLZh6ZstjjFeqaMT4siWlJwzWC60sUSVTmj7RAJRzHIYL3KNSOhUElq8sK
+         5LMDNqR5aDwDMgJpVzQfIf17XvgRP2/op7E7VSRtIATi+RrUOJe1yPXygzLebdL6iIO1
+         h7yboIAQwwPpo5/BwzdvqpP5IkydMRwBM5aNbaecFVuBuhtjZecgxektZOwCnIBhqqu0
+         OueA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709740471; x=1710345271;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9linAkATm+FdXXzIu/Ohj8OonJxlZ75KvqbpWO2tghk=;
+        b=D/XbRJFdtzegOUaiU1tMJMq1rLsdD5uZq54AgqQia9INEra/fX/1xgWFbUu9B4jeKp
+         MzbVup9Vyy4+Bm4Pbek9loVHVfFUmYXHRED/0AcS2IWZ0tpPiCVtxQKD2eo2Q1IOKb1F
+         2wgSaZ5lUU/TExHFzS1GehPlfReM3qioxi4p4CIHOU3VsTsRpQhXMdRs9yEhinwNSXt8
+         a5IV47cSSxd6D+nqC5rBYlqbw9wkmxCSjMJVjja9kKgSxx6FiXqTZNh/uAE6Z5lv7atM
+         HR1pe65NQXyIv2HrDrtZeOPUhtmgaXUR8p/JXpU4EXNgikQA5V1SpBN0jYCuxVC/+tnX
+         Q+Gg==
+X-Gm-Message-State: AOJu0Yy00rncQL9+G4gDlPJqn/RZiTdm82UF44xey84igCh9kcDhIom1
+	oCFIJkl9I5MFQzXZi8wfqAq93AWT7VTVZsyXos3vU7WyUGmN6gxeF15FRtl3SZI=
+X-Google-Smtp-Source: AGHT+IGjqv8MP18VepWF6CGkD7N8gFHHZ1sLfgowPepDZ+cRvkPjnTPPwAZ1S7cPVN+C634ZqkCqWA==
+X-Received: by 2002:a19:5e51:0:b0:513:4b49:e1d2 with SMTP id z17-20020a195e51000000b005134b49e1d2mr3124056lfi.52.1709740470844;
+        Wed, 06 Mar 2024 07:54:30 -0800 (PST)
+Received: from [87.246.221.128] ([87.246.221.128])
+        by smtp.gmail.com with ESMTPSA id u12-20020ac258cc000000b005131941f7e9sm2661074lfo.5.2024.03.06.07.54.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Mar 2024 07:54:30 -0800 (PST)
+Message-ID: <45fcf8fb-9d9b-4e6a-a7c5-9bfb96875e64@linaro.org>
+Date: Wed, 6 Mar 2024 16:54:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,318 +75,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/3] dt-bindings: usb: qcom,dwc3: Add support for multiple
- power-domains
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8450: Add qfprom node
+To: Mukesh Ojha <quic_mojha@quicinc.com>, andersson@kernel.org,
+ robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <1709727995-19821-1-git-send-email-quic_mojha@quicinc.com>
+ <1709727995-19821-2-git-send-email-quic_mojha@quicinc.com>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_wcheng@quicinc.com>,
-        <Thinh.Nguyen@synopsys.com>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_psodagud@quicinc.com>,
-        <quic_nkela@quicinc.com>, <manivannan.sadhasivam@linaro.org>,
-        <ulf.hansson@linaro.org>, <sudeep.holla@arm.com>,
-        <quic_shazhuss@quicinc.com>
-References: <1709657858-8563-1-git-send-email-quic_sriramd@quicinc.com>
- <1709657858-8563-2-git-send-email-quic_sriramd@quicinc.com>
- <CAA8EJpph+R2oJjABvNQYwp=pZLxQPzzs41Hhw4feOdQ3eU-6UA@mail.gmail.com>
-From: Sriram Dash <quic_sriramd@quicinc.com>
-In-Reply-To: <CAA8EJpph+R2oJjABvNQYwp=pZLxQPzzs41Hhw4feOdQ3eU-6UA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1709727995-19821-2-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FvTvdKBxiujpedrdN_pduk8dBw_u9XN1
-X-Proofpoint-GUID: FvTvdKBxiujpedrdN_pduk8dBw_u9XN1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_10,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 mlxscore=0 impostorscore=0
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403060128
 
-On 3/6/2024 12:33 AM, Dmitry Baryshkov wrote:
-> On Tue, 5 Mar 2024 at 18:58, Sriram Dash <quic_sriramd@quicinc.com> wrote:
->>
->> Some target systems allow multiple resources to be managed by firmware.
->> On these targets, tasks related to clocks, regulators, resets, and
->> interconnects can be delegated to the firmware, while the remaining
->> responsibilities are handled by Linux.
->>
->> To support the management of partial resources in Linux and leave the rest
->> to firmware, multiple power domains are introduced. Each power domain can
->> manage one or more resources, depending on the specific use case.
->>
->> These power domains handle SCMI calls to the firmware, enabling the
->> activation and deactivation of firmware-managed resources.
->>
->> Signed-off-by: Sriram Dash <quic_sriramd@quicinc.com>
->> ---
->>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 74 ++++++++++++++++------
->>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 49 ++++++++++++--
->>   .../devicetree/bindings/usb/qcom,dwc3.yaml         | 37 ++++++++++-
->>   3 files changed, 130 insertions(+), 30 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->> index 1e2d4dd..53b9ba9 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->> @@ -44,7 +44,32 @@ properties:
->>       maxItems: 5
->>
->>     power-domains:
->> -    maxItems: 1
->> +    description: specifies a phandle to PM domain provider node
->> +    minItems: 1
->> +    maxItems: 2
->> +
->> +  power-domain-names:
->> +    description:
->> +      A list of power domain name strings sorted in the same order as the
->> +      power-domains property.
->> +
->> +      For platforms where some resource are firmware managed, the name
->> +      corresponding to the index of an SCMI domain provider can be
->> +      "usb_core" or "usb_transfer".
->> +    items:
->> +      - const: usb_core
->> +      - const: usb_transfer
->> +
->> +  qmp,fw-managed:
->> +    description:
->> +      Some targets allow multiple resources to be managed by firmware.
->> +      On these targets, tasks related to clocks, regulators, resets, and
->> +      interconnects can be delegated to the firmware, while the remaining
->> +      responsibilities are handled by Linux.
->> +
->> +      Decide if the target resources will be managed by firmware or High level
->> +      OS.
->> +    type: boolean
->>
->>     resets:
->>       maxItems: 2
->> @@ -70,14 +95,6 @@ properties:
->>   required:
->>     - compatible
->>     - reg
->> -  - clocks
->> -  - clock-names
->> -  - resets
->> -  - reset-names
->> -  - vdda-phy-supply
->> -  - vdda-pll-supply
->> -  - "#clock-cells"
->> -  - clock-output-names
->>     - "#phy-cells"
->>
->>   allOf:
->> @@ -86,6 +103,33 @@ allOf:
->>           compatible:
->>             contains:
->>               enum:
->> +              - qcom,sa8775p-qmp-usb3-uni-phy
->> +              - qcom,sc8280xp-qmp-usb3-uni-phy
->> +              - qcom,x1e80100-qmp-usb3-uni-phy
->> +    then:
->> +      required:
->> +        - power-domains
->> +
->> +  - if:
->> +      not:
->> +        required:
->> +          - qmp,fw-managed
->> +    then:
->> +      required:
->> +        - clocks
->> +        - clock-names
->> +        - resets
->> +        - reset-names
->> +        - vdda-phy-supply
->> +        - vdda-pll-supply
->> +        - clock-output-names
->> +        - "#clock-cells"
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->>                 - qcom,ipq6018-qmp-usb3-phy
->>                 - qcom,ipq8074-qmp-usb3-phy
->>                 - qcom,ipq9574-qmp-usb3-phy
->> @@ -144,18 +188,6 @@ allOf:
->>               - const: com_aux
->>               - const: pipe
->>
->> -  - if:
->> -      properties:
->> -        compatible:
->> -          contains:
->> -            enum:
->> -              - qcom,sa8775p-qmp-usb3-uni-phy
->> -              - qcom,sc8280xp-qmp-usb3-uni-phy
->> -              - qcom,x1e80100-qmp-usb3-uni-phy
->> -    then:
->> -      required:
->> -        - power-domains
->> -
->>   additionalProperties: false
->>
->>   examples:
->> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> index 0f200e3..ad2f08f 100644
->> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
->> @@ -49,6 +49,34 @@ properties:
->>       items:
->>         - const: ref
->>
->> +  power-domains:
->> +    description: specifies a phandle to PM domain provider node
->> +    minItems: 1
->> +    maxItems: 2
->> +
->> +  power-domain-names:
->> +    description:
->> +      A list of power domain name strings sorted in the same order as the
->> +      power-domains property.
->> +
->> +      For platforms where some resource are firmware managed, the name
->> +      corresponding to the index of an SCMI domain provider can be
->> +      "usb_core" or "usb_transfer".
->> +    items:
->> +      - const: usb_core
->> +      - const: usb_transfer
->> +
->> +  hsphy,fw-managed:
->> +    description:
->> +      Some targets allow multiple resources to be managed by firmware.
->> +      On these targets, tasks related to clocks, regulators, resets, and
->> +      interconnects can be delegated to the firmware, while the remaining
->> +      responsibilities are handled by Linux.
->> +
->> +      Decide if the target resources will be managed by firmware or High level
->> +      OS.
->> +    type: boolean
->> +
->>     resets:
->>       items:
->>         - description: PHY core reset
->> @@ -154,12 +182,21 @@ required:
->>     - compatible
->>     - reg
->>     - "#phy-cells"
->> -  - clocks
->> -  - clock-names
->> -  - resets
->> -  - vdda-pll-supply
->> -  - vdda18-supply
->> -  - vdda33-supply
->> +
->> +
->> +allOf:
->> +  - if:
->> +      not:
->> +        required:
->> +          - hsphy,fw-managed
->> +    then:
->> +      required:
->> +        - clocks
->> +        - clock-names
->> +        - resets
->> +        - vdda-pll-supply
->> +        - vdda18-supply
->> +        - vdda33-supply
->>
->>   additionalProperties: false
->>
->> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> index 63d150b..5bf3a29 100644
->> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> @@ -64,7 +64,31 @@ properties:
->>
->>     power-domains:
->>       description: specifies a phandle to PM domain provider node
->> -    maxItems: 1
->> +    minItems: 1
->> +    maxItems: 2
->> +
->> +  power-domain-names:
->> +    description:
->> +      A list of power domain name strings sorted in the same order as the
->> +      power-domains property.
->> +
->> +      For platforms where some resource are firmware managed, the name
->> +      corresponding to the index of an SCMI domain provider can be
->> +      "usb_core" or "usb_transfer".
->> +    items:
->> +      - const: usb_core
->> +      - const: usb_transfer
->> +
->> +  qcom,fw-managed:
->> +    description:
->> +      Some targets allow multiple resources to be managed by firmware.
->> +      On these targets, tasks related to clocks, regulators, resets, and
->> +      interconnects can be delegated to the firmware, while the remaining
->> +      responsibilities are handled by Linux.
->> +
->> +      Decide if the target resources will be managed by firmware or High level
->> +      OS.
->> +    type: boolean
-> 
-> I think this is an overkill. You know that SA8775 is going to use
-> SCMI-based clocks / PD management. Thus I'd suggest adding new
-> bindings file targeting qcom,sa8775-dwc3. Also you can drop the
-> qcom,fw-managed property at all, let the driver decide basing on the
-> compat string.
-> 
-> 
 
-Thank you for the suggestion Dmitry. I will include
-new compat string for SA8775 which will decide whether
-to use scmi based clock/ PD.
 
->>
->>     required-opps:
->>       maxItems: 1
->> @@ -148,13 +172,20 @@ required:
->>     - "#address-cells"
->>     - "#size-cells"
->>     - ranges
->> -  - clocks
->> -  - clock-names
->>     - interrupts
->>     - interrupt-names
->>
->>   allOf:
->>     - if:
->> +      not:
->> +        required:
->> +          - qcom,fw-managed
->> +    then:
->> +      required:
->> +        - clocks
->> +        - clock-names
->> +
->> +  - if:
->>         properties:
->>           compatible:
->>             contains:
->> --
->> 2.7.4
->>
->>
+On 3/6/24 13:26, Mukesh Ojha wrote:
+> Add the qfprom node for sm8450 SoC.
 > 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 7 +++++++
+>   1 file changed, 7 insertions(+)
 > 
-> --
-> With best wishes
-> Dmitry
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index b86be34a912b..02089a388d03 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -4575,6 +4575,13 @@
+>   			};
+>   		};
+>   
+> +		qfprom: efuse@221c8000 {
+> +			compatible = "qcom,sm8450-qfprom", "qcom,qfprom";
+> +			reg = <0 0x221c8000 0 0x1000>;
+
+Is is really only 0x1000-long? Also, is the base you put
+here the ECC-corrected part (if that still exists)?
+
+Konrad
 
