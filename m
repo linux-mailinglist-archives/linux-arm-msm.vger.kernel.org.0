@@ -1,226 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-13439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73DDA8730C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:32:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 541D78730BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:31:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B50D2B266C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:32:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 055A9281018
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:31:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EE745C8F9;
-	Wed,  6 Mar 2024 08:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 394192375A;
+	Wed,  6 Mar 2024 08:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dPhwLhU0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i+GrPBUi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E802374A;
-	Wed,  6 Mar 2024 08:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB435D8E3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 08:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709713919; cv=none; b=p0WqknyWE438g3yzBuFiNu3ytK2rdcbTNHHSye5VwKbOhEM4WfjIb/nSb/ZkG6P5hINk7ZGtCIo12C2fk4qu+A0EJ0eLeTIt8qR+xHRLNNdi013Ex/Iy0SucyHraDuqxi/C4eHNuvb01NrEK/rlted3kf9os4H7d7qnFjCaZ7QQ=
+	t=1709713887; cv=none; b=M6WqT1Lk53RU+IqfWx+lz7t1R5d7A+M6q4/REG/J2XOuE1JPZDtUF3F/Gusz1GPOuI2a2SlvJe3NVyqBnjTr7yxhM22Ng2tj8kYxrT2gG33/hwtSxAmtCjX0D7BRUtQmrwjJ2cN80jb5ddzjAzAdg1pYagppQfDI2p0yqxQRxaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709713919; c=relaxed/simple;
-	bh=vTXlzKfVuR7thkMypOhy/ZsOpYaW4JBviEC5G7CKrTw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JqyzJvJXfJHFmQxIDkUo+Qw+23FmJW1GsMUsmefw2+lRWbmByKW3DY5ENV5PcuMBsU6/05N55niPwf+hpzcWQ8PhxvNwUNR+nlX6vS+5t7XJnieoN7b9q9CiVYcASFP/ROwnlT5KIUl9t1KW6mZArXliGMG2nvdI8x3cD+g+154=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dPhwLhU0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4265xoNr020249;
-	Wed, 6 Mar 2024 08:31:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=q86A9onL0rmqEe1iKRvRqZ3S28SROOVGnLJLR6S1sK8=; b=dP
-	hwLhU0DBVyiGKqk04VPPE3RpjYgMykQp1nBuELT+S39/R73q0nIH/igEsvThZiSO
-	75C4Mxr3MajWXQ/bmUYgAGTHkN+esMTKFLrzEp3w0ym+7y72zwkSM65fm6hchiSg
-	e2pOVMioIX1Ak+XlEEPIareL1RyLu8py6MoQ01AbalBFVF6IereriEUcUU583Bmo
-	wNc4o4sBM0R2gYi1NF9eelPoi0QmvuOy3YXOnemh9crMlyJVp0t+U3a4V8nG2Qiv
-	/5W3KyoPcxgx6XOREDD4eLbqS4GpAH9H9KlA0m/Bk9VjggbhZe2MtY00YpXpXb/Q
-	Rnjud3N7N3H7J9xb3yEQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpgdsrhht-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Mar 2024 08:31:20 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4268VJIl012146
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Mar 2024 08:31:19 GMT
-Received: from [10.218.19.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Mar
- 2024 00:31:13 -0800
-Message-ID: <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
-Date: Wed, 6 Mar 2024 14:00:56 +0530
+	s=arc-20240116; t=1709713887; c=relaxed/simple;
+	bh=KXp1t8lcI6Rolpam/MVl5z5Wbhly/pEhcZdfFhwVXFc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OXgnwLwUi31AnGwVd5loV3iAmxzjqqvSgcq23kYeH8dctUonBOe0YGkCovTfDhWJE0VTNsRwi8EG0K4Zs0XDtms0CJd/9v+ceHpy2QD3cnek+zsYz2yssvBL+GGT31xP28D/6zjfp3tiKr07rH1vd8I7HosG+p0z9qIPnhYJWEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i+GrPBUi; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-56759dc7ea6so4038231a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 00:31:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709713883; x=1710318683; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wBclJ2321GquWpSv8u+UQ+5whGNSTBzwaiCmOO6tGzk=;
+        b=i+GrPBUijLYBoaF9sEtBAFdM8iNzVXlF21Eg5f4zJLa8T/uaid8p+mLsTMljW81M/5
+         ORDxjlu15wfF7iTAO+Z087PenxnfWljbm9qXwZ185HnH5CyauxZq8bLnZhsXkiJ+o+kT
+         iEqSboipOZqne4oKF+/3mNSgGCWulKj622/lIMgNx2BqReAssQPcPOnvw7bLos10eY6A
+         AQeqWDu0aMWd4cSlF08vhpzrA1mEEkuPucMhkky+9pUdS7UUX+GXi0yAW7+EWUfCEYTx
+         +uWJJE6KsTFW7A6fyaJudTH2eVQIfKcfC9QYoOIOV0okhGJFzCteyKlUkru4kV7UgPCM
+         Ml/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709713883; x=1710318683;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wBclJ2321GquWpSv8u+UQ+5whGNSTBzwaiCmOO6tGzk=;
+        b=t6Fw6J40xq8fDz7jVLdUAqSQjHfgqPNvCPRePFU+32Ryo0sYh/sGSBQ9WJvznOwGXq
+         9eW73X4cqNQSBp5myPsN0pSKxzKnGgmt8mvj/ZDQM3r3vxn0ie7KH/8Zw3WaFqHfD3hK
+         LGK5XT/LAKwqR1oBskcQxUwEhmX1I8hfhc81+vwHgmBfu80BjzWiZWNtCVuhQgUsk4IP
+         ZJnE5Fqwg4He5QT+Wj3qvzqzQ6WkeJlttXt6pDKpuIpBzN6KHHSAqas4Dve+kGLJrv3n
+         Vp5dCkj9u84h9VNvnoEB1/fNriu2EF61PxcIL7LOu5ZTGOXMgJH7Sg/A871Sg2nl09yO
+         tyig==
+X-Forwarded-Encrypted: i=1; AJvYcCWLK6LGW8E0iknKLQ2PiUNYAHvmx1SLytNRgNgh4RWrSORsAkfqH/SPjlq71F7zgXovCpSvhSpVM+LdMbQm7W9TNordZZjsvj3yrCaHCg==
+X-Gm-Message-State: AOJu0YwNBM6gT4Jx4QK3d0nh+BcO7vvApIPPKlpe8sMt/GW6Uld3ocpZ
+	4lU+wx56+eL8xT2rfUG/aN0kfPIGXC/lBVQ0f9cIEyn6qbfW7zge4izZJ/ZaZAs=
+X-Google-Smtp-Source: AGHT+IFXLHG2d3eNsyfX8iT7sDFkCoHDODjhVy+/H/nJ7HEyeKvGvO4QwcZJ1wamHysxGcI9VMcvjQ==
+X-Received: by 2002:a05:6402:5c2:b0:567:6a66:d103 with SMTP id n2-20020a05640205c200b005676a66d103mr4903117edx.0.1709713883631;
+        Wed, 06 Mar 2024 00:31:23 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id q12-20020a056402518c00b00563ec73bbafsm6640290edd.46.2024.03.06.00.31.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Mar 2024 00:31:23 -0800 (PST)
+Message-ID: <e7105dd7-68ff-4af6-b91e-56b6e50ff949@linaro.org>
+Date: Wed, 6 Mar 2024 09:31:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
- SM8150
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] interconnect: qcom: icc-rpmh: Add QoS
+ configuration support
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Michael
- Turquette" <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
-        "Imran
- Shaik" <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
- <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
- <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 488fqkA63x5DW3xa_wvVr61O3_z7-kd_
-X-Proofpoint-GUID: 488fqkA63x5DW3xa_wvVr61O3_z7-kd_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_04,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 spamscore=0
- adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403060067
+To: Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org,
+ "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240306073016.2163-1-quic_okukatla@quicinc.com>
+ <20240306073016.2163-2-quic_okukatla@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240306073016.2163-2-quic_okukatla@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On 3/2/2024 9:43 PM, Bryan O'Donoghue wrote:
-> On 29/02/2024 5:38 a.m., Satya Priya Kakitapalli wrote:
->> Add support for the camera clock controller for camera clients
->> to be able to request for camcc clocks on SM8150 platform.
->>
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
->
->> +static int cam_cc_sm8150_probe(struct platform_device *pdev)
->> +{
->> +    struct regmap *regmap;
->> +    int ret;
->> +
->> +    ret = devm_pm_runtime_enable(&pdev->dev);
->> +    if (ret)
->> +        return ret;
->> +
->> +    ret = pm_runtime_resume_and_get(&pdev->dev);
->> +    if (ret)
->> +        return ret;
->> +
->> +    regmap = qcom_cc_map(pdev, &cam_cc_sm8150_desc);
->> +    if (IS_ERR(regmap)) {
->> +        pm_runtime_put(&pdev->dev);
->> +        return PTR_ERR(regmap);
->> +    }
->> +
->> +    clk_trion_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
->> +    clk_trion_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
->> +    clk_regera_pll_configure(&cam_cc_pll2, regmap, 
->> &cam_cc_pll2_config);
->> +    clk_trion_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
->> +    clk_trion_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
->> +
->> +    /* Keep the critical clock always-on */
->> +    qcom_branch_set_clk_en(regmap, 0xc1e4); /* cam_cc_gdsc_clk */
->
-> Does this clock need to be specified this way ?
->
-
-Yes, we need this clock to be always on.
-
-
-> drivers/clk/qcom/camcc-sc8280xp.c::camcc_gdsc_clk specifies the gdsc 
-> clock as a shared op clock.
->
-> Actually it looks to be register compatible, please try defining 
-> titan_top_gdsc as per the example in 8280xp.
->> +
->> +    ret = qcom_cc_really_probe(pdev, &cam_cc_sm8150_desc, regmap);
->> +
->> +    pm_runtime_put(&pdev->dev);
->> +
->> +    return ret;
->> +}
->
-> So this is a pattern we keep repeating in the clock probe() functions 
-> which I am writing a series to address. There's no need to continue to 
-> replicate the bug in new code though.
->
-> Only switch on always-on clocks if probe succeeds.
->
->     ret = qcom_cc_really_probe(pdev, &cam_cc_sm8150_desc, regmap);
->     if (ret)
->         goto probe_err;
->
->     qcom_branch_set_clk_en(regmap, 0xc1e4); /* cam_cc_gdsc_clk */
->
->     pm_runtime_put(&pdev->dev);
->
->     return 0;
->
-> probe_err:
->     pm_runtime_put_sync(&pdev->dev);
->
-> Alternatively switch on the always-on clocks before the really_probe() 
-> but then roll back in a probe_err: goto
->
-> probe_err:
->     remap_bits_update(regmap, 0xc1e4, BIT(0), 0);
->     pm_runtime_put_sync(&pdev->dev);
->
-> There may be corner cases where always-on has to happen before 
-> really_probe() I suppose but as a general pattern the above should be 
-> how we go.
->
-> Anyway I suspect the right thing to do is to define a 
-> titan_top_gdsc_clk with shared ops to "park" the GDSC clock to 19.2 
-> MHz instead of turning it off.
->
-> You can get rid of the hard-coded always-on and indeed represent the 
-> clock in /sysfs - which is preferable IMO to just whacking registers 
-> to keep clocks always-on in probe anyway.
->
-> Please try to define the titan_top_gdsc_clk as a shared_ops clock 
-> instead of hard coding to always on.
->
-
-Defining the gdsc clk allows consumers to control it, we do not want 
-this clock to be disabled/controlled from consumers. Hence it is better 
-to not model this clock and just keep it always on from probe.
-
-
-> If that doesn't work for some reason, then please fix your always-on 
-> logic in probe() to only make the clock fixed on, if really_probe() 
-> succeeds.
->
-
-Sure I'll do this.
-
-
+On 06/03/2024 08:30, Odelu Kukatla wrote:
+> It adds QoS support for QNOC device and includes support for
+> configuring priority, priority forward disable, urgency forwarding.
+> This helps in priortizing the traffic originating from different
+> interconnect masters at NoC(Network On Chip).
+> 
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
 > ---
-> bod
+>  drivers/interconnect/qcom/icc-rpmh.c | 105 +++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/icc-rpmh.h |  32 ++++++++
+>  2 files changed, 137 insertions(+)
+
+>  
+> +	if (desc->config) {
+> +		struct resource *res;
+> +		void __iomem *base;
+> +
+> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +		if (!res) {
+> +			dev_warn(dev, "Skipping QoS, failed to get resource\n");
+
+Why is this a warning? If the MMIO is not required, your driver should
+not spawn warnings.
+
+
+> +			goto skip_qos_config;
+> +		}
+> +
+> +		base = devm_ioremap(dev, res->start, resource_size(res));
+
+Combine these two (there's a helper for that).
+
+> +		if (IS_ERR(base)) {
+> +			dev_warn(dev, "Skipping QoS, ioremap failed: %ld\n", PTR_ERR(base));
+> +			goto skip_qos_config;
+> +		};
+> +
+> +		qp->regmap = devm_regmap_init_mmio(dev, base, desc->config);
+> +
+
+Drop blank line.
+
+> +		if (IS_ERR(qp->regmap)) {
+> +			dev_warn(dev, "Skipping QoS, regmap failed; %ld\n", PTR_ERR(qp->regmap));
+> +			goto skip_qos_config;
+> +		}
+> +
+> +		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+> +		if (qp->num_clks < 0) {
+> +			dev_warn(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
+
+dev_info(), because current binding sais clocks are not required and you
+are not allowed to affect ABI. While ABI here does not look broken,
+spawning new warnings to proper users is not welcomed.
+
+Best regards,
+Krzysztof
+
 
