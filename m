@@ -1,80 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-13548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 586F3874262
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 23:06:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 036378742B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 23:25:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 89B901C20CA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 22:06:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 961B01F2595E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 22:25:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A82A71B94F;
-	Wed,  6 Mar 2024 22:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F51E1B968;
+	Wed,  6 Mar 2024 22:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XPUVzL6W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jay5a9Rf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D631BC22;
-	Wed,  6 Mar 2024 22:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741CC1BF40;
+	Wed,  6 Mar 2024 22:25:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709762785; cv=none; b=BAfMoaRp4Uk/aqlPzgPLjv9QfAmouLM9iNAmcLhcmAKMpQXZNrlqWUjxL00TTcbnBNRONUzedMdbj6rt97AM59olM4GVhFI5BZhCTAdVpKQgphRjb0tlyZT3JkU5JpZCOTtT7eb8zDICyVzVh1xef7Vr1ZzARwlj6lNL1yLeBIc=
+	t=1709763927; cv=none; b=BODybQnNJT/NT2uhrOkn2whuoIrwofoEYJoTiw1vnOv6bGUHjyweE8358/zF2YPgxbm5DMEFv0kDXKs22wd5w6XskOMhLvf74Vb5jr2smB9WTA8aO1+l0hEIHGbaRLVNpAFFpaJf9WhuzKdLb26a40Yse77hfuipSMn+K7s+JtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709762785; c=relaxed/simple;
-	bh=n6HHDuFVnHzuhMnSsH+SBsi4lxo63K+jG/3laYwIoWs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gedhI+mYi3C15NUeHcZDzD8CHtnF55IWPXnEGmDLMSk7mtWcmX6mUfBkIF+Q6jlP9Xl5QxOJVWB+41eqDIQeotngSa3uPqSHmfIEG/vP+kg5IbmFXuh4kqgNv1Xe0o6ZCg2DZzbgU4D0rAc97/LtgoKWw67XQfPVoxrBhrDw4G4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XPUVzL6W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE16C433C7;
-	Wed,  6 Mar 2024 22:06:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709762784;
-	bh=n6HHDuFVnHzuhMnSsH+SBsi4lxo63K+jG/3laYwIoWs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XPUVzL6W33OtUm70EYpMiO29J9dwBH+D8dYMxcVrXsgBhoIf4NfZBY95wqG/53z99
-	 N32Ayb0uvRu442s5DMTAh/pJreYiyR6VzOVHXB8oOrNDszRQJkNesY8YMghu23rnN0
-	 mlFLxQmVooPX6LcMKbpswX8CePMs+cxSO0H68o8WfhAEnfrHqAI5Li8ta5iE8rGWMq
-	 hxxfQ/B2HyFhUMuFqMQyIRT65gupOJH3Rt9vv7SLnwB03j4uLkkWVTX2kjTyEmDic3
-	 Xr2lrzql66vEaoe/+66x8lKwdfncyaGyCZUaI5tpjBmQ3Isj0qWvFyJful8uOhtqp5
-	 WN+6NLKRlfxDw==
-Date: Wed, 6 Mar 2024 16:06:21 -0600
-From: Rob Herring <robh@kernel.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: pavel@ucw.cz, devicetree@vger.kernel.org, conor+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, lee@kernel.org,
-	linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-	konrad.dybcio@linaro.org, linux-leds@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: leds: qcom-lpg: Document PM6150L
- compatible
-Message-ID: <170976278118.750398.5338079498670448079.robh@kernel.org>
-References: <20240306172710.59780-1-danila@jiaxyga.com>
- <20240306172710.59780-2-danila@jiaxyga.com>
+	s=arc-20240116; t=1709763927; c=relaxed/simple;
+	bh=q8tNCPbzCWi+B6Z5twqI6NjUPM2+8unGp6l5/zPPxh0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lMEPy1F0qQaxFC58cJsiIZsjcn6gWST2bEZJVX15uUQIzEcxMAao8U8Rb1kkc2hpUiUE9A/GoR0sM+TtRWPVKiA5OWla2AAUt8sWNS2BY4C+pjSpAF5oTMrpZhZgfwXz+0K72aIoVw6I+66bUPzfZ9RYoahH2SCFu/48jue5Sew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jay5a9Rf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 426LxtHT031815;
+	Wed, 6 Mar 2024 22:25:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=q8tNCPbzCWi+B6Z5twqI6NjUPM2+8unGp6l5/zPPxh0=; b=ja
+	y5a9RfeRivotbNGX9yUq3AbZW/pYWZ8UI8enkQif/FyCT5SBP2zNwTAV/i4bp1zF
+	CjxUnjnB8Je5LiGqgK1DvpmB+XBrjan0ZNy7EMQeHaYu/WN/zARW9+ih2iHdko8L
+	yC07eVFAa++UIdxt5fcBKpo+/IJ7VpJCxhgEsv3FBaI4lZvbMkU6bj8av6gZxPQW
+	KUZYLE61TpL5sx58vbkXtAxIrI5DtDR1KIeHLV9pNkKmLjb2kOaQe1wDe3DUHDrZ
+	o3bgHfX6t7s/bF6Zmsv0FsieeimcCqpsFGqYxormZ3HeFdY+aYP4IRgUVwYIiOxH
+	wX5Wam2RehUM4hwoBbcw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpjqf23vj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Mar 2024 22:25:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 426MPDaU021468
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Mar 2024 22:25:13 GMT
+Received: from [10.110.86.150] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Mar
+ 2024 14:25:11 -0800
+Message-ID: <baa7a017-ee4b-4e8f-9bb8-1e3857e18855@quicinc.com>
+Date: Wed, 6 Mar 2024 14:25:11 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240306172710.59780-2-danila@jiaxyga.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific firmware
+ overrides
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalle Valo
+	<kvalo@kernel.org>
+CC: "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni
+	<pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        <ath10k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Krzysztof
+ Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
+ <87plw7hgt4.fsf@kernel.org>
+ <CAA8EJpr6fRfY5pNz6cXVTaNashqffy5_qLv9c35nkgjaDuSgyQ@mail.gmail.com>
+ <87cys7hard.fsf@kernel.org>
+ <CAA8EJpowyEEbXQ4YK-GQ63wZSkJDy04qJsC2uuYCXt+aJ1HSOQ@mail.gmail.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <CAA8EJpowyEEbXQ4YK-GQ63wZSkJDy04qJsC2uuYCXt+aJ1HSOQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _QXoaAqIf_VKqQDKLy0jgYj5bG4nTmdp
+X-Proofpoint-ORIG-GUID: _QXoaAqIf_VKqQDKLy0jgYj5bG4nTmdp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-06_12,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403060181
 
+On 3/6/2024 6:23 AM, Dmitry Baryshkov wrote:
+> After some thought, I'd suggest to follow approach taken by the rest
+> of qcom firmware:
+> put a default (accepted by non-secured hardware) firmware to SoC dir
+> and then put a vendor-specific firmware into subdir. If any of such
+> vendors appear, we might even implement structural fallback: first
+> look into sdm845/Google/blueline, then in sdm845/Google, sdm845/ and
+> finally just under hw1.0.
 
-On Wed, 06 Mar 2024 20:27:09 +0300, Danila Tikhonov wrote:
-> The PM6150L LPG modules are compatible with the PM8150L LPG modules,
-> document the PM6150L LPG compatible as fallback for the PM8150L LPG.
-> 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
->  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+are there existing examples in linux-firmware?
 
-Acked-by: Rob Herring <robh@kernel.org>
+or is the whole point being only the default firmware is in
+linux-firmware and vendors would follow this pattern if they add their
+own firmware?
 
 
