@@ -1,103 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-13445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCB8A87322A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:13:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6768387323A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:14:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B6611F213C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:13:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 236F928B59D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDEEF60BA9;
-	Wed,  6 Mar 2024 09:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E124A5D919;
+	Wed,  6 Mar 2024 09:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dOQzvOQJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CrOgL34i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D16460889;
-	Wed,  6 Mar 2024 09:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE30B5D8FA;
+	Wed,  6 Mar 2024 09:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709715885; cv=none; b=ib04ZYq1Ma+89kAlFGgcxbL5YwgAQ2lS3nmMdCoaGJ/MPLnMTLSnl1Is1j52Kua48hlO+Fj1mP68tNRuSxC+bMFaG4nptLVSM6pUc2p/fdKhZseyCVVUHwsBXBis5JH4ApPHOlUM7eebYShxE7E4eb76Zg098dMCGkGwmBDPb8Q=
+	t=1709716345; cv=none; b=FS1+wbbFBYL3hzM5AE3SNEd8ALD/OMOssEjMMuYaJfVckQx6tmvwVhY6aU/6TYF4TX6SWEBEQAP85qEo4HCeaXIegmHXoa0quVM70av7SK9YYYiLPG30ImuwiOOflDhCiALU+I1fujIDA2GHp+dCrr0rOw0G/3W4aj+tuClT+kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709715885; c=relaxed/simple;
-	bh=lT33D1r8s/bp6Ix6+DW7nrWJQkFQLEVIK0tbhV5W6to=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=TUA4gTwtWE6kzetau+E0KswV7Zs2LQKbGPLVdJLl7LvOMItqrFRCdvoKLqlsrruHmwT/OdLDugxRA19LShVuTcIC5XwOJldRNbh6D7J72uccvGHxp7sXbmTmLdlyLRAAl21twdTlJeQiqhh4d9l7d8R3WVKpaNYUIDUZyZRGUCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dOQzvOQJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B44C433F1;
-	Wed,  6 Mar 2024 09:04:41 +0000 (UTC)
+	s=arc-20240116; t=1709716345; c=relaxed/simple;
+	bh=e/HA3/Wu6r00AM+Hcn0703vmIttHljfM3nHEyflR5DY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H49t1wCyDZrwHy8qZjCwN3Ah4eB820KHA2LFC2Q0VQaZlDPMI8qLony6GetoXVQUhs666CtoyW/UHB7atEp4IJvOIuryM96Ek7n97MykEJ3n4x92JF7ol801aPObHhu0itjP/OV1gS3v+OGcmA6jN2AWNTBnEGtfSw2k/+c0HJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CrOgL34i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19225C433C7;
+	Wed,  6 Mar 2024 09:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709715885;
-	bh=lT33D1r8s/bp6Ix6+DW7nrWJQkFQLEVIK0tbhV5W6to=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=dOQzvOQJcuEDCF6tN2LV7H9G3ueiQJusbfWn68WYM5n1djQNg52Y/R/+N7keo8rWr
-	 dIrTZo8a3+NEaCpaeNwpsJhC3WmWcFc/HR7XtOEKC4B7M+CoyTfjhgpZSNuOVRpexz
-	 DWDMI8Dw2lXV3u/RnIm29NibdLsQ1Ym8nodHA4gLGW7DFDtGjJV2zGGftagY/d+PNN
-	 h5jxqBWVgq9XUVUJ6DfjIVVeFcImFBRQ5+Xuzi2yCddr+LG84wgiAbszA8eFF9xdKP
-	 xNxCE8LXSt/+DGDMXlT0MCcfLGs8ZrQx5/RiLOL5spnBj/5DHxUQzzf3qucbYcM/UE
-	 GVMRl6szltttg==
-From: Kalle Valo <kvalo@kernel.org>
+	s=k20201202; t=1709716345;
+	bh=e/HA3/Wu6r00AM+Hcn0703vmIttHljfM3nHEyflR5DY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CrOgL34i8C9TMoIflZBCmnMRQNCK7UwMEqK8eS7KWQRgfDrlYUZ3ZHnkLyxeLxSZ8
+	 hcvhIvdFxhiY+wOjKtO7GkIv/+iF1a/Y68Ek9DIbj2gfpaekgeRFmKg1WsQx4Ro3se
+	 Y2Dty1mvJm7+Tc2gk7yTfHJ+4qOUKE8+XoMjN8PYywVkM6wu30RKvKhv4UrXmxJ8WV
+	 8oMu52r2nEjjhCb4fcNAzqdDTDkGHJ/0OBFwDfVZNV8IsHD433pGC+XcfOSWH7bAcR
+	 oYtbkTVfnlUhMB49f58Cbz1RhvTat7xgm0mdlOThUdlhiR4k7Xy7c7f79+upTdD1EP
+	 sz7CG4PEerjmw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rhnKB-000000008RC-0EJv;
+	Wed, 06 Mar 2024 10:12:31 +0100
+Date: Wed, 6 Mar 2024 10:12:31 +0100
+From: Johan Hovold <johan@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  "David S. Miller"
- <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
- <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  ath10k@lists.infradead.org,
-  linux-wireless@vger.kernel.org,  netdev@vger.kernel.org,
-  devicetree@vger.kernel.org,  linux-arm-msm@vger.kernel.org,  Krzysztof
- Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific
- firmware overrides
-References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
-Date: Wed, 06 Mar 2024 11:04:39 +0200
-In-Reply-To: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
-	(Dmitry Baryshkov's message of "Wed, 06 Mar 2024 10:16:44 +0200")
-Message-ID: <87plw7hgt4.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/10] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <Zegzf_QKbr8yA6Vw@hovoldconsulting.com>
+References: <20240305081105.11912-1-johan+linaro@kernel.org>
+ <20240306063302.GA4129@thinkpad>
+ <ZegZMNWxCnLbHDxP@hovoldconsulting.com>
+ <20240306083925.GB4129@thinkpad>
+ <CAA8EJppsbX=YXf1Z6Ud+YMnp2XnutN1hcb1T0KdAAWXFREVxXg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppsbX=YXf1Z6Ud+YMnp2XnutN1hcb1T0KdAAWXFREVxXg@mail.gmail.com>
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Wed, Mar 06, 2024 at 10:48:30AM +0200, Dmitry Baryshkov wrote:
+> On Wed, 6 Mar 2024 at 10:39, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> > On Wed, Mar 06, 2024 at 08:20:16AM +0100, Johan Hovold wrote:
+> > > On Wed, Mar 06, 2024 at 12:03:02PM +0530, Manivannan Sadhasivam wrote:
 
-> On WCN3990 platforms actual firmware, wlanmdsp.mbn, is sideloaded to the
-> modem DSP via the TQFTPserv. These MBN files are signed by the device
-> vendor, can only be used with the particular SoC or device.
->
-> Unfortunately different firmware versions come with different features.
-> For example firmware for SDM845 doesn't use single-chan-info-per-channel
-> feature, while firmware for QRB2210 / QRB4210 requires that feature.
->
-> Allow board DT files to override the subdir of the fw dir used to lookup
-> the firmware-N.bin file decribing corresponding WiFi firmware.
-> For example, adding firmware-name = "qrb4210" property will make the
-> driver look for the firmware-N.bin first in ath10k/WCN3990/hw1.0/qrb4210
-> directory and then fallback to the default ath10k/WCN3990/hw1.0 dir.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Fixed the comment about the default board name being NULL (Kalle)
-> - Expanded commit message to provide examples for firmware paths (Kalle)
-> - Added a note regarding board-2.bin to the commit message (Kalle)
-> - Link to v1: https://lore.kernel.org/r/20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org
+> > > > Just received confirmation from Qcom that L0s is not supported for any of the
+> > > > PCIe instances in sc8280xp (and its derivatives). Please move the property to
+> > > > SoC dtsi.
 
-From my point of view this looks good now but let's see what others say.
-Is there a specific reason why you marked this as RFC still?
+> > > Ok, thanks for confirming. But then the devicetree property is not the
+> > > right way to handle this, and we should disable L0s based on the
+> > > compatible string instead.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+> > Hmm. I checked further and got the info that there is no change in the IP, but
+> > the PHY sequence is not tuned correctly for L0s (as I suspected earlier). So
+> > there will be AERs when L0s is enabled on any controller instance. And there
+> > will be no updated PHY sequence in the future also for this chipset.
+> 
+> Why? If it is a bug in the PHY driver, it should be fixed there
+> instead of adding workarounds.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+ASPM L0s is currently broken on these platforms and, as far as I
+understand, both under Windows and Linux. Since Qualcomm hasn't been
+able to come up with the necessary PHY init sequences for these
+platforms yet, I doubt they will suddenly appear in the near future.
+
+So we need to disable L0s for now. If an updated PHY init sequence later
+appears, we can always enable it again.
+
+> > So yeah, let's disable it in the driver instead.
+
+Johan
 
