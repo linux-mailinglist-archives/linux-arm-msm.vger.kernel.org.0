@@ -1,209 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-13468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1E07873523
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:57:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEDC2873573
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 12:15:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 518C01F25E16
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:57:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF7A41C207BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:15:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB8D74BF9;
-	Wed,  6 Mar 2024 10:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCEAD6089B;
+	Wed,  6 Mar 2024 11:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ouDETjdH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vMmObzNl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC3174E3F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 10:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3A3605B4;
+	Wed,  6 Mar 2024 11:15:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709722636; cv=none; b=b/9oeaU4CSLmedypqMj1TMD9hZUG9Nn/v/PJne1mBhmyrD5ikBA0a0p0+slfooDhjz6BLu/fmszxStJTX4CtCr4h1yBLEVIhE4KqW8PCAl4F18Ftbllq3oACiNhUe734QjgAdnEwIdWZxrxVfKNbuzM/ZJMR0fpkLuPfZm6tJb4=
+	t=1709723724; cv=none; b=hCtQ6QBl1FdgmYxD+XC/iE0smx1264tkWH/6WIRT8XSqixW5T2mZZm2jU6L8yQJrTRlHJ+Qs8Mv2kCa7mmZRIUWDUXYkQhFu9IHq5CRe+IWABKA6qhw0+rdaEGXK+C58rolARWsvaO9B+KVF/BiJdxDxqktEhzAsoPTwiqRU9UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709722636; c=relaxed/simple;
-	bh=PxQkKrOPnjUbGpSomDRnlUhmSSi0mYecg9zRaMFuJAc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gagmhO6OHxmO7gcIekCW8VRy0iG7Yj/Z0UXdsYYi0d/bDG+XqLhkIiVtKeCWziF7y1D2vDC8iY9ptZfVBrRdEoe8IcTFOrxofuVIGomptgOkio9ptNR8IggelfIzBkBzbbbb9kX2HZkrzwxaeUC5gPK3r83dY09OYsDV6r5m9/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ouDETjdH; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4d334c4b163so1466567e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 02:57:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709722633; x=1710327433; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gxUxwGg2SWOaJy7LQ4z09jEYeKP2bAj05h4IqVt59sk=;
-        b=ouDETjdHBqtnsTJCqtwv8E6vrh8r6IeTDMEduzVTtzH+dZplGsXQZuNGPXrMRkagwW
-         66dqY4Z2D8GDGpoYPeYL985Ingvk2Olp8K1+J46kRc0f3iTe5RV45WtgUI8YuwvFh487
-         FSWP1PLwaOkHb4pIb5O3irJDeKVBNJcH8wuV6umyNOFBnhTdme6JnK8N/mNOOD3siiUq
-         OEd2nsT4cwGyeZ01Fg15n+wCW1hXxVCOLP5/QXDnrL/ochDBnVqA+6kNBk7Ig+mfGmUu
-         +jZZuXxv91bNC7/wYCM6mS7QH88BTV+ydtpMdOE/WYQAfyA/Pikd/YCVJ4Zg+50s2N6Z
-         NWZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709722633; x=1710327433;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gxUxwGg2SWOaJy7LQ4z09jEYeKP2bAj05h4IqVt59sk=;
-        b=hLuj9W3I3kx5MWnma+smVd4+ZulyN3tNDoM7MewtR0zp1bXD8vVkz0n+CGb3vC9906
-         q6NOoCIraAStgMZKMJcoy1P+t9J6Hi5rn6CIBLpqyMyFSdQzQedC8ufdsA4n+n7/9CK2
-         vuNOt/MUarBs0Y64XkSpsEgeiYSqoKDs/NNYevBPutl/Wwy5zqY4KZyctydBCkGOoA5W
-         UFKhJwobCnIWfRu42S2mUBcrNosjLrHhlIDf2GsNASfuvcb5qR4ahvFlcajvEnvzWSaZ
-         OyQyu6RNHAzOjP16U1mvx6No7Lohr5q5Y7PVPgX5Gr4mA9jWQ38wJXlHLGIXaYze34IZ
-         uVyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVHbrLAqPSEJJvkjsUb6R+jLdVZ7406bMJaBhWhtpI0M5kj1nLVE/Jl/97njC/lByZuR8f1rQ+lnJoryixeNdd70BCe9xmm55/5hJq/IQ==
-X-Gm-Message-State: AOJu0YzLxA8WLpmdM0Xid9eCNA428Oeg7FmW5pybOW+Oh/KdC1skAkjk
-	J5pFcKKSQf6L95LyZvYBO8yJvEn2dIZ1nawwota8uBpAaS2ZJCca9wwW/M1J6w92Yqv3IKdbPhE
-	=
-X-Google-Smtp-Source: AGHT+IFG00jwW6iyWhCp8D8dFbgwPMCEu6TNuD/BYBbQrLh5jn3bbhGke775gAlxZI9UdiYP+c0xnw==
-X-Received: by 2002:a05:6122:d90:b0:4d3:34b1:7211 with SMTP id bc16-20020a0561220d9000b004d334b17211mr4780807vkb.3.1709722632787;
-        Wed, 06 Mar 2024 02:57:12 -0800 (PST)
-Received: from thinkpad ([117.248.1.194])
-        by smtp.gmail.com with ESMTPSA id l4-20020ac84a84000000b0042ee49dd434sm3619050qtq.29.2024.03.06.02.57.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 02:57:12 -0800 (PST)
-Date: Wed, 6 Mar 2024 16:27:04 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] PCI: qcom: Disable ASPM L0s for sc8280xp, sa8540p
- and sa8295p
-Message-ID: <20240306105704.GE4129@thinkpad>
-References: <20240306095651.4551-1-johan+linaro@kernel.org>
- <20240306095651.4551-4-johan+linaro@kernel.org>
+	s=arc-20240116; t=1709723724; c=relaxed/simple;
+	bh=YC1JZzUSGm90LAa8typocXvGi3dcuKhnwtfIEXMfegA=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=d/wZwqSry1aorr4MqKBU/boJ6BtOrGaowugjDpXeUNSLtNi744pjDv59RloXJkGrG+HKD9+Je/Xp3URdaiNCzIp2wwMSV9DhotxHKjT6S1QAdrthOJX56tY+KGoQQKwbfDnYoBvHwhv4h2/R/iIOZfHAX2ZnH2OMdSMoR2yKYIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vMmObzNl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C5FC433C7;
+	Wed,  6 Mar 2024 11:15:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709723724;
+	bh=YC1JZzUSGm90LAa8typocXvGi3dcuKhnwtfIEXMfegA=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=vMmObzNlM9Tbn7pDK2KR94nuzJA+dkX/WTBV9JAHY7Zq6pgtm9EWAr8uauJqUg2Fw
+	 PQ2GNr12JQkL2VIlIu1gaL6rQsr1KJkhS/0Wau+AeicDKCWf8B4cpfRHDWaYzRdz9/
+	 jQWAkUJO+clPilmjGVk/JO8AKzdjmdVS1tQJb1DrLIyfr9VJgamMaI9kGkb/BcQWUC
+	 DNeXHgiEEikyZZBU1BOPHyjpN5gVdP2eeLh97OQyDR+CC/G3gJVqFIxNWjPgGpEEGq
+	 c8yYEAOZCz1kNUNwB7pD3+QUES9AnH4qu1uUyQoMAW7hhBHBkirC6CRXsFDinpVcKG
+	 S/KcJa5KFduBg==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  "David S. Miller"
+ <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
+ <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  ath10k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  netdev@vger.kernel.org,
+  devicetree@vger.kernel.org,  linux-arm-msm@vger.kernel.org,  Krzysztof
+ Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific
+ firmware overrides
+References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
+	<87plw7hgt4.fsf@kernel.org>
+	<CAA8EJpr6fRfY5pNz6cXVTaNashqffy5_qLv9c35nkgjaDuSgyQ@mail.gmail.com>
+Date: Wed, 06 Mar 2024 13:15:18 +0200
+In-Reply-To: <CAA8EJpr6fRfY5pNz6cXVTaNashqffy5_qLv9c35nkgjaDuSgyQ@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Wed, 6 Mar 2024 11:23:21 +0200")
+Message-ID: <87cys7hard.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240306095651.4551-4-johan+linaro@kernel.org>
+Content-Type: text/plain
 
-On Wed, Mar 06, 2024 at 10:56:49AM +0100, Johan Hovold wrote:
-> Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting
-> 1.9.0 ops") started enabling ASPM unconditionally when the hardware
-> claims to support it. This triggers Correctable Errors for some PCIe
-> devices on machines like the Lenovo ThinkPad X13s when L0s is enabled,
-> which could indicate an incomplete driver ASPM implementation or that
-> the hardware does in fact not support L0s.
-> 
-> This has now been confirmed by Qualcomm to be the case for sc8280xp and
-> its derivate platforms (e.g. sa8540p and sa8295p). Specifically, the PHY
-> configuration used on these platforms is not correctly tuned for L0s and
-> there is currently no updated configuration available.
-> 
-> Add a new flag to the driver configuration data and use it to disable
-> ASPM L0s on sc8280xp, sa8540p and sa8295p for now.
-> 
-> Note that only the 1.9.0 ops enable ASPM currently.
-> 
-> Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
-> Cc: stable@vger.kernel.org      # 6.7
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> On Wed, 6 Mar 2024 at 11:04, Kalle Valo <kvalo@kernel.org> wrote:
+>
+>>
+>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>>
+>> > On WCN3990 platforms actual firmware, wlanmdsp.mbn, is sideloaded to the
+>> > modem DSP via the TQFTPserv. These MBN files are signed by the device
+>> > vendor, can only be used with the particular SoC or device.
+>> >
+>> > Unfortunately different firmware versions come with different features.
+>> > For example firmware for SDM845 doesn't use single-chan-info-per-channel
+>> > feature, while firmware for QRB2210 / QRB4210 requires that feature.
+>> >
+>> > Allow board DT files to override the subdir of the fw dir used to lookup
+>> > the firmware-N.bin file decribing corresponding WiFi firmware.
+>> > For example, adding firmware-name = "qrb4210" property will make the
+>> > driver look for the firmware-N.bin first in ath10k/WCN3990/hw1.0/qrb4210
+>> > directory and then fallback to the default ath10k/WCN3990/hw1.0 dir.
+>> >
+>> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> > ---
+>> > Changes in v2:
+>> > - Fixed the comment about the default board name being NULL (Kalle)
+>> > - Expanded commit message to provide examples for firmware paths (Kalle)
+>> > - Added a note regarding board-2.bin to the commit message (Kalle)
+>> > - Link to v1:
+>> > https://lore.kernel.org/r/20240130-wcn3990-firmware-path-v1-0-826b93202964@linaro.org
+>>
+>> From my point of view this looks good now but let's see what others say.
+>> Is there a specific reason why you marked this as RFC still?
+>
+> No, I just forgot to remove it from the series settings, so you can
+> consider it as final.
 
-- Mani
+Good, so let's ignore the RFC label for this v2.
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 31 ++++++++++++++++++++++++--
->  1 file changed, 29 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 2ce2a3bd932b..9f83a1611a20 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -229,6 +229,7 @@ struct qcom_pcie_ops {
->  
->  struct qcom_pcie_cfg {
->  	const struct qcom_pcie_ops *ops;
-> +	bool no_l0s;
->  };
->  
->  struct qcom_pcie {
-> @@ -272,6 +273,26 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->  	return 0;
->  }
->  
-> +static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
-> +{
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +	u16 offset;
-> +	u32 val;
-> +
-> +	if (!pcie->cfg->no_l0s)
-> +		return;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +
-> +	dw_pcie_dbi_ro_wr_en(pci);
-> +
-> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> +	val &= ~PCI_EXP_LNKCAP_ASPM_L0S;
-> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> +
-> +	dw_pcie_dbi_ro_wr_dis(pci);
-> +}
-> +
->  static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
->  {
->  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> @@ -961,6 +982,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  
->  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  {
-> +	qcom_pcie_clear_aspm_l0s(pcie->pci);
->  	qcom_pcie_clear_hpc(pcie->pci);
->  
->  	return 0;
-> @@ -1358,6 +1380,11 @@ static const struct qcom_pcie_cfg cfg_2_9_0 = {
->  	.ops = &ops_2_9_0,
->  };
->  
-> +static const struct qcom_pcie_cfg cfg_sc8280xp = {
-> +	.ops = &ops_1_9_0,
-> +	.no_l0s = true,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> @@ -1629,11 +1656,11 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
-> -	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
-> +	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
->  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
->  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
-> -	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_1_9_0 },
-> +	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_sc8280xp },
->  	{ .compatible = "qcom,pcie-sdm845", .data = &cfg_2_7_0 },
->  	{ .compatible = "qcom,pcie-sdx55", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sm8150", .data = &cfg_1_9_0 },
-> -- 
-> 2.43.0
-> 
+> I had one minor question in my head (but that's mostly for patches 3
+> and 4): in linux-firmware we will have ath10k/WCN3990/hw1.0/qcm2290
+> and make qrb4210 as a symlink to it. Is that fine from your POV? 
+
+Yes, I think using a symlink is a good idea.
+
+> Or should we use sensible device names (e.g. qcom-rb1)?
+
+I guess 'qcom-rb1' refers to 'Qualcomm Robotics RB1' board? In other
+words, the question is that should we use chipset specific names like
+'qcm2290' or product based names like 'qcom-rb1'?
+
+That's a good question for which I don't have a good answer :) I'm not
+very familiar with WCN3990 hardware and SoCs to have a full picture of
+all this, especially how the firmware images are signed or what
+different firmware branches there are etc.
+
+To be on the safe side using 'qcom-rb1' makes sense but on the other
+hand that means we need to update linux-firmware (basically add a new
+symlink) everytime a new product is added. But are there going to be
+that many new ath10k based products?
+
+Using 'qcm2290' is easier because for a new product then there only
+needs to be a change in DTS and no need to change anything
+linux-firmware. But here the risk is that if there's actually two
+different ath10k firmware branches for 'qcm2290'. If that ever happens
+(I hope not) I guess we could solve that by adding new 'qcm2290-foo'
+directory?
+
+But I don't really know, thoughts?
 
 -- 
-மணிவண்ணன் சதாசிவம்
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
