@@ -1,103 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-13525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7B91873DB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 18:47:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE109873E3F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 19:13:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6861AB23BBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 17:47:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F05001C20B55
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 18:13:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E1413BAE9;
-	Wed,  6 Mar 2024 17:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D89C13E7FF;
+	Wed,  6 Mar 2024 18:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GjdImPow"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WNkgUXTS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A730D13BADD;
-	Wed,  6 Mar 2024 17:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AC313BAE9;
+	Wed,  6 Mar 2024 18:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709747239; cv=none; b=UE+2i5nc47soEdLKa3p3DO+Fr8nkOmvSCP2IBSN/fS7/i8Z4Uk5ARfSma+AChqkUeK4imG6M/fEQEU9apOk8qiSC/J84Qcxt9tGPrN6YVZoxQA3l9lsNMy09i5WqSR+5gd29eQzh/K3CwZooBJwc2uMRTTucYHbcbvtfTXrq7yE=
+	t=1709748115; cv=none; b=UkCTUWBvdM7sdWNZ8kVNswf1p9/V0xWJZ8n6EUuHkpJhrasFGlpgHamgx5lvm+3jlDcOySQLpyhiM2FRPedxg9rkxGN7LGv+uBv0sYR2JtPiUioq1+l5ewoOMQvPMGkDumoDitFl21SJFVCRQWao2mq382eLmHbtVYNsRmTpDzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709747239; c=relaxed/simple;
-	bh=M3Qnc0kB0MnG72TbxAy6mHm1CxTe6WFO/XsmSNzWFVw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Dt+CzhIBJOdmvomL4kneLl2qNG4vDSuqc5vSrdoX2VF1EeOCfSmn/sxeprYvDm0CWInXNB3Y1rUnVXpsykEIMLZvWYtuvnBz5UCdczjFRz3nW/M574K+ahVsadtHR3g5+B25SloE1BtaIJCyZCgHNa1pN991SnqLoB4+SGvThSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GjdImPow; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58894C433C7;
-	Wed,  6 Mar 2024 17:47:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709747239;
-	bh=M3Qnc0kB0MnG72TbxAy6mHm1CxTe6WFO/XsmSNzWFVw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=GjdImPowRYEm7/pn8xhSYm8k0V/sHqvsew0j9xUc57MReIzjVdqeWmCsWzYmlMySF
-	 CfBySFrHga5H2Qf6vt/zyUDw8zd8d0Ohh5YXjI8GhdHCMIQ3nvLP4W937LbOdHqNPG
-	 Z14JCvmc7QSTew/N6rNuK+331Zh62FjZoJBbqaFj6yExTn2Umgykb57TjpErB2h/x7
-	 0kUTvb0Yk4tZ1IN2ZWJNOLBO1oIlUfGBLwbJutYSPZDKX5cpp7bD54VlSzDZard27D
-	 EbABchSyftcWpB2WAWozeCp7rVKXdTktq08MkNwYfrRuvWMGYRK93YDuBboviG3f2c
-	 zWvA0oEYqASXw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Johan Hovold <johan+linaro@kernel.org>
-Cc: Jonas Karlman <jonas@kwiboo.se>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Kuogee Hsieh <quic_khsieh@quicinc.com>, freedreno@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-In-Reply-To: <20240217150228.5788-1-johan+linaro@kernel.org>
-References: <20240217150228.5788-1-johan+linaro@kernel.org>
-Subject: Re: (subset) [PATCH 0/6] soc: qcom: pmic_glink_altmode: fix drm
- bridge use-after-free
-Message-Id: <170974723198.898356.8197875205136329255.b4-ty@kernel.org>
-Date: Wed, 06 Mar 2024 23:17:11 +0530
+	s=arc-20240116; t=1709748115; c=relaxed/simple;
+	bh=WUJzhGYyB2Ri6kPDJweaS0R/kNRbw+oc+bRFKM4vtKM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OCQVK0r8PmQc+1h9Ilcjijxu40dx5o3/aUHPHEd2+k2Gt5qemrCO9e1oOlmwl0q82TrEcv15pHBM6VcMP3EdpyOAqSQOxvidSufh3pfp3VoEKY/yfjUNR6iQzjVQGydQftbCl3nFC5qoaJhRKgB7Fumz5OVJPsDluF5kUw2bxgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WNkgUXTS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 426Ae3dM004280;
+	Wed, 6 Mar 2024 18:01:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=WEAfSEkkHQ3/425640Pby
+	4gzYSJi7TXLgGMkYugkpt4=; b=WNkgUXTSnNljmIxyZcBG8bny1QsGt8jkTCdIu
+	n4tMmjlRlN9DObX4WDXPMLzydCXG5QUIOdjSs9a+RPpTGac3QLfgcuBR3UZRb+ll
+	FssjSi4hFQM2S4alN92PXCpdoqwdX3zOLXBUf87DoKbP6JnzUXqLzMbI3BrcZ4E2
+	WhlMpmhd2SlQkKg4EpQCBLHWnSxZlAogea+eP3vq9f9JBBhhLvtI1TgMMgQROevh
+	rdPluureRrQOEQ1BPmvV/6nDEN83UJUG1nSTWIb6AhcJylo74EdCIassQoMPUDvj
+	zIL6i7D1DKbj8xCG5L96sJHEXHRvYaz3pf7lX7xjh7N03BteA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpepca2km-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Mar 2024 18:01:35 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 426I1ZPI016198
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Mar 2024 18:01:35 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Wed, 6 Mar 2024 10:01:34 -0800
+Date: Wed, 6 Mar 2024 10:01:34 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: Re: [PATCH] firmware: qcom_scm: disable clocks if
+ qcom_scm_bw_enable() fails
+Message-ID: <20240306095357736-0800.eberman@hu-eberman-lv.qualcomm.com>
+Mail-Followup-To: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+References: <20240304-qcom-scm-disable-clk-v1-1-b36e51577ca1@gmail.com>
+ <d655a4db-89a8-4b03-86b1-55258d37aa19@linaro.org>
+ <20240305200306921-0800.eberman@hu-eberman-lv.qualcomm.com>
+ <2fdb87f5-3702-44d9-9ebe-974c4a53a77d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <2fdb87f5-3702-44d9-9ebe-974c4a53a77d@linaro.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5DJeZAb2NtAabu9ImMNMEGT8SNvW_AF2
+X-Proofpoint-ORIG-GUID: 5DJeZAb2NtAabu9ImMNMEGT8SNvW_AF2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-06_11,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ mlxlogscore=732 adultscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2403060146
 
-
-On Sat, 17 Feb 2024 16:02:22 +0100, Johan Hovold wrote:
-> Starting with 6.8-rc1 the internal display sometimes fails to come up on
-> machines like the Lenovo ThinkPad X13s and the logs indicate that this
-> is due to a regression in the DRM subsystem [1].
+On Wed, Mar 06, 2024 at 05:02:37PM +0100, Konrad Dybcio wrote:
+> On 3/6/24 05:10, Elliot Berman wrote:
+> > On Tue, Mar 05, 2024 at 10:15:19PM +0100, Konrad Dybcio wrote:
+> > > On 3/4/24 14:14, Gabor Juhos wrote:
+> > > > There are several functions which are calling qcom_scm_bw_enable()
+> > > > then returns immediately if the call fails and leaves the clocks
+> > > > enabled.
+> > > > 
+> > > > Change the code of these functions to disable clocks when the
+> > > > qcom_scm_bw_enable() call fails. This also fixes a possible dma
+> > > > buffer leak in the qcom_scm_pas_init_image() function.
+> > > > 
+> > > > Compile tested only due to lack of hardware with interconnect
+> > > > support.
+> > > > 
+> > > > Cc: stable@vger.kernel.org
+> > > > Fixes: 65b7ebda5028 ("firmware: qcom_scm: Add bw voting support to the SCM interface")
+> > > > Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> > > > ---
+> > > 
+> > > Taking a closer look, is there any argument against simply
+> > > putting the clk/bw en/dis calls in qcom_scm_call()?
+> > 
+> > We shouldn't do this because the clk/bw en/dis calls are only needed in
+> > few SCM calls.
 > 
-> This series fixes a race in the pmic_glink_altmode driver which was
-> exposed / triggered by the transparent DRM bridges rework that went into
-> 6.8-rc1 and that manifested itself as a bridge failing to attach and
-> sometimes triggering a NULL-pointer dereference.
-> 
-> [...]
+> Then the argument list could be expanded with `bool require_resources`,
+> or so still saving us a lot of boilerplate
 
-Applied, thanks!
-
-[5/6] phy: qcom-qmp-combo: fix drm bridge registration
-      commit: d2d7b8e88023b75320662c2305d61779ff060950
-[6/6] phy: qcom-qmp-combo: fix type-c switch registration
-      commit: 47b412c1ea77112f1148b4edd71700a388c7c80f
-
-Best regards,
--- 
-~Vinod
-
+If we want to go that route, I'd vote to add it to qcom_scm_desc in a
+new field.
 
 
