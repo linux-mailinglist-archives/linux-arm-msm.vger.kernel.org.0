@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-13471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 017BD8735AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 12:40:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B93638735DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 12:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6120AB22483
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:40:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB10F1C21C23
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:48:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC9507F488;
-	Wed,  6 Mar 2024 11:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87B887FBD5;
+	Wed,  6 Mar 2024 11:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QJAmKDuE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V5bjZv2J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7157F7D3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 11:40:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBA77FBA1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 11:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709725224; cv=none; b=f3Ku9q4SNpuCNIcmsxyCqgW082NL9qxg8V87NQlCCsMJPyC+pPn+nDee65B9a35PUiS5CHVRrwxwCM2RwJM5me01nERTkmYD7wNy+WckCz6Q5MIPlUQFiB1Z9aPaTV65B5nQjrwKHEQl0dLSwI4gecEMGn/W7Z/ur9xXsVZsMhA=
+	t=1709725697; cv=none; b=MUn/nWfdohNkVj5dDR5pttiD5VcHwt9e6CYUiz4Cx9vrnlH3+lJL2v3A0UO4CAHm39EHxn6NlXukcsPni3hz3h5VjtmcJWeTpiktMJq+P+uTfWKLsrikE5RZB4H2PE3RbdDdfMV2ORoTgq3WhfuTo4QhcO2JfzclwursjjimKLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709725224; c=relaxed/simple;
-	bh=MyDgk4afHvneJK/AGrdFnLoUjc8Ck2lGA49YcoT+rSc=;
+	s=arc-20240116; t=1709725697; c=relaxed/simple;
+	bh=/NaooI6MCdbyOlXlO6KxhqtDj6Xc9BLxT2lYpNpuyTA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jl8jWKvD0OvjuGRBNhnMNrNENF+K9eccLj5fexpieSWXzEtfFELvv2kzZ3+Az3JjqJAV03PS63Aw0jiFaMQjL6UsS9o4p+NsJf8zLXDncdXTw1zF0gASb4hi1QSBAzrH7Yv4vjw5ECegwFkPZG3K/g3FRcEFTYyq6DfVmM+myLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QJAmKDuE; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:Content-Type; b=GXDzGnxaDYddLS+pgP3wFinMEt+IKCt+B4M9MJhaauOP5FBdJZ74GIaaUkTHbPEPHXJci7IQg8FakHgyQeOMn5BJPQbJodtDDL78+kSOIPXeZCNm6pQQeu6M2XdT2Jborj5R4A/fXytwlMoCjIV/UQdZMJ9VqNwhgy+dHfDkSwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V5bjZv2J; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33e2774bdc5so3709244f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 03:40:22 -0800 (PST)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d146737e6so5232933f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 03:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709725221; x=1710330021; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1709725693; x=1710330493; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bHsDLu11BhsOOu7vOLh5O5SoeXOiXHoKRCejG9ZhGdU=;
-        b=QJAmKDuERm1ib9JzNKOyPSUapuNp3s9GUwU9YQCqHSOXDu7EZHAUu+sckFQsE4dhfQ
-         uvkoM0pQG9YHwMHeroF8pLutTQw4At3bHv/RRoas2NwEMIQzYhE1IWnvKB9asMA4BxML
-         O3JLGql1Zs1riHUhK79LcfrMHbDs0/ryL1xMTUk1lLCW+GaBOkbyNEYJuK8ek36/y5fA
-         LcQN5nRj731LQssULqeN0qHzFFvar2NKz9xTMkkn+lO7JAewe332+3BgSo3zpTU8WFff
-         juvqxPigTkcuNEYCbOefSuKsS8lENM5N4cGcxyslkTSdt6wz2+OtktqXoEPxXq7mqMJo
-         79yA==
+        bh=hdjqKhX03PzSI2pyjOvW3uxLZQ+MIlVgUNLnoaZ5QpY=;
+        b=V5bjZv2J3imnvnThGkTlo+FkH4FH3cxv/3MgIkgQZodEKj7v5zGxaSHTlayFI/PdBv
+         mD1dOS6VXD3jl9L9rtF7wYpaeomReM7nISz+C2WF34p6mST0JJ/pLS3/pOXn2iQLxNJl
+         45Cv+qNTl0zEzKC9WBiBwM8Qj1zA6qlyaCNls+c8gonKwSyTIvW4l5pn+t873BIE9X76
+         sd3amm2NVA3TZZdvx0CZT8IOsn2RGT2l9dzEI6JRj531TocrJtujPbWHQxbKMpIlyQJC
+         69N/zfJD1hXwXY9vGZvBuhChYDBSWYPEphmGy75ajBcSBNqpjZz7P/IPzMWoPrSaGGRV
+         5UeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709725221; x=1710330021;
+        d=1e100.net; s=20230601; t=1709725693; x=1710330493;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bHsDLu11BhsOOu7vOLh5O5SoeXOiXHoKRCejG9ZhGdU=;
-        b=bQkdHeVWnDhSoeBuVSXo93n46ysOG0h4SEvbEB26k+r/5Tz3h5xfTvwVeyH0aSfOy4
-         XoFmDtRpPwriN8eTX5kaqTbX3DLg6uzfIOtWnJu9zeICBi2jcGlSI3NAuj/wfP0+y21d
-         iaD0u+Eff40w4JWolNDM0++T/etaAwE/aM0x4OaPs5O585+JSN/gFwhRIGbmPYipHdJE
-         fJlE53Fmro0bgfowjOZB3sPGa/IbQckSBTvaKbyIuGMzdfcJ88QwoF0/z28fmDqAm/qt
-         sagj5lm0ILtMM4yBis90AM6yGymNAAvqG3FtNyzUtxhqjwP0CLbxutzEhDTqw6b7sIZh
-         It6w==
-X-Forwarded-Encrypted: i=1; AJvYcCVWD1leN+YkeycGMSUtDXT8Cc+nG5km6D93T7mXqlURA0RiqewTJWxIeBrINxTsZ/72JoOQ5d2JWPwE/DZ9bBZ6cYWFdO4YZhDnEyNUEA==
-X-Gm-Message-State: AOJu0YyV8BF91Mef1BGQz332Q0bdPqoXhYYqbfumWnZ/ZDvlC/F+I48R
-	Mh96e1Z/gyaQZfqIej7F3HYO2V8NrCnpPywzfnEpwqqrDFGiUauD/wDqbAoYqRc=
-X-Google-Smtp-Source: AGHT+IGalMQM+1/5hflu9r2698/GCRP0X8SJOvsj+Y+8YnI4kUwo+Wi3TKvJOHm5HSN/ZO1xW0c84g==
-X-Received: by 2002:adf:fb8c:0:b0:33e:24c7:78ba with SMTP id a12-20020adffb8c000000b0033e24c778bamr10175310wrr.62.1709725221439;
-        Wed, 06 Mar 2024 03:40:21 -0800 (PST)
+        bh=hdjqKhX03PzSI2pyjOvW3uxLZQ+MIlVgUNLnoaZ5QpY=;
+        b=E/o05sl3Oc1dEQ70Z3A29E6Aj3+X74mwA2RPALKEI+BBp0TZQbjMa1+FLCmz4w+dlM
+         HgO9dflMSHfjYtOlP9x1ga2YINIQt0RTbK3N1pdxPcdAzV5wC1XkQzKcBW9yvIDtf0hG
+         qv9b3m3MVWhfT1W/5+RQTRat/kJZZRTk5ZLqDCNsJRzV7EDGGWaU8fG3+SuNW7Vxg+FB
+         tYHT0hb/QUsumImisB3dtUBOsvkK90dARyI7l6D9YC/TiKVAjFb6YDkkSBJj6H8aQqgS
+         5unazVOJbW5ddtzAGQQA7OINdd3NNekYIR6Ad+PsRKB7O++WkX7ucifE34cg/GLfXonT
+         PyvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWndNBK4dKzslOvlk6cpf5lwp7ihbfyN60h/MDXOWo2hGb3XYYcrcz55+ijqx9U9yhEvEtYWwH5wWwNScJzeLMv5KwMp9QKpGfbxrjbdA==
+X-Gm-Message-State: AOJu0Yy0ahrulzo93f4YVpcQXJlBWu1d1ZgDCGT2doWCy392iLz4guK8
+	TrwazP4rpkFI7B4DfHG6FADllan2r+/4sPkkhju+jdzTtjvetgjKGp46Wv1PLZA=
+X-Google-Smtp-Source: AGHT+IFRGKSDU1o5pzZkisag4+rQAq6jSD+XrXtlozIedUnam1oEQFdwWmmInfdxpXcI48SF9F2kQg==
+X-Received: by 2002:adf:fccf:0:b0:33d:3fed:3a18 with SMTP id f15-20020adffccf000000b0033d3fed3a18mr10598070wrs.51.1709725692648;
+        Wed, 06 Mar 2024 03:48:12 -0800 (PST)
 Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id bq26-20020a5d5a1a000000b0033e2777f313sm12519582wrb.72.2024.03.06.03.40.20
+        by smtp.gmail.com with ESMTPSA id da8-20020a056000196800b0033b87c2725csm17275033wrb.104.2024.03.06.03.48.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Mar 2024 03:40:21 -0800 (PST)
-Message-ID: <d63a573f-1ec5-4b4c-b3e0-29c46828381e@linaro.org>
-Date: Wed, 6 Mar 2024 11:40:20 +0000
+        Wed, 06 Mar 2024 03:48:12 -0800 (PST)
+Message-ID: <ebe234db-73e0-46db-b377-6b9f960597c8@linaro.org>
+Date: Wed, 6 Mar 2024 11:48:11 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,36 +76,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: avoid multiple core dumps
+Subject: Re: [PATCH v2 02/20] media: venus: pm_helpers: Rename core_clks_get
+ to venus_clks_get
 Content-Language: en-US
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
  Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <1709704406-22501-1-git-send-email-quic_dikshita@quicinc.com>
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+ <20230911-topic-mars-v2-2-3dac84b88c4b@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1709704406-22501-1-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <20230911-topic-mars-v2-2-3dac84b88c4b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/03/2024 05:53, Dikshita Agarwal wrote:
-> Core dump is generated whenever there is system error reported
-> by firmware. Right now, multiple such dumps are generated if
-> recovery fails in first attempt, since the sys error handler is
-> invoked again for every failed recovery.
-> To avoid it, add conditional check to generate core dump only
-> once during every system error notification from firmware.
+On 09/02/2024 21:09, Konrad Dybcio wrote:
+> "core" is used in multiple contexts when talking about Venus, rename
+> the function to save on confusion.
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
+>   drivers/media/platform/qcom/venus/pm_helpers.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index 8bd0ce4ce69d..ac7c83404c6e 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -23,7 +23,7 @@
+>   
+>   static bool legacy_binding;
+>   
+> -static int core_clks_get(struct venus_core *core)
+> +static int venus_clks_get(struct venus_core *core)
+>   {
+>   	const struct venus_resources *res = core->res;
+>   	struct device *dev = core->dev;
+> @@ -294,7 +294,7 @@ static int core_get_v1(struct venus_core *core)
+>   {
+>   	int ret;
+>   
+> -	ret = core_clks_get(core);
+> +	ret = venus_clks_get(core);
+>   	if (ret)
+>   		return ret;
+>   
+> @@ -961,7 +961,7 @@ static int core_get_v4(struct venus_core *core)
+>   	const struct venus_resources *res = core->res;
+>   	int ret;
+>   
+> -	ret = core_clks_get(core);
+> +	ret = venus_clks_get(core);
+>   	if (ret)
+>   		return ret;
+>   
+> 
 
- From my non-filter mail addr
+We have vcodec_clks_get(). It seems a bit nit-picky but if you are 
+tidying up the namepsace, then I'd suggest venus_core_clks_get() or 
+vcore_clks_get().
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Seems more consistent.
 
+---
+bod
 
