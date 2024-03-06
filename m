@@ -1,133 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-13391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B23C872D24
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 04:02:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9F56872D62
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 04:12:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 094E91F24A83
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 03:02:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FD481F285F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 03:12:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF59D530;
-	Wed,  6 Mar 2024 03:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F13C12E68;
+	Wed,  6 Mar 2024 03:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nKtgTJ+e"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S9l9fHIq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6019433D1;
-	Wed,  6 Mar 2024 03:02:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B10A12E63
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 03:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709694150; cv=none; b=A36fzjMls/Gxp1rIzOcEzNn/9bX8m3Owclm3PqV8sRYLzcYjhPtHV2WHZo72uNvU0RDBLtSA3YGKOs4935S6Le/tOWflQw3aMcUXl2HsJBxMcUAEyb0MaU/V6DMJtKw5V72aDbcyLPUc1KduIdTlk5X3/5C++VRybZM3iLtQBPo=
+	t=1709694731; cv=none; b=XXfF95SYvcDsBD+9suroFBBkzhhBL1rYLls0Wqv6Bzq2BIpO3sra3LNjJ8vQJ+6NoK1cCrs9499Impj1oJrDqdrRLhsKjq+v8jN6hVjSStmaajYO/PVvyfYhHWloyf2X7MPcM73o4RLQfFUT8ai4rzzbS2Vpu+qOsfEd3mME+yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709694150; c=relaxed/simple;
-	bh=4FOJMI7U00Rmio1lHE4tnBVYYgrRlqn+FM0XVx/zZXE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FfK5eSBs3k3h6rC1cHcL/mw3v584KN31BIfYdkaDkrq6OnOI/dEPlTEFCMv2TnenHV1VFh9UJmPV3T4kL5euiicECUSmRaxC7kc4zNcwzgCthyiDnzBuCUPZy3AWrEKFu39/JHzoaUYRKeIzttxxwTKPFXNvqoKnfCVDZiY+rfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nKtgTJ+e; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4261Tw9n021693;
-	Wed, 6 Mar 2024 03:02:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=rRaiK9UWLCp5edjp+w4OT88LCLd0s+QcNhwplwfkB2s=; b=nK
-	tgTJ+ekQlmsyA3H+4QRcA+wJRUCNth8SUUXR1V9aPIO0+FLVsxHstuKThEL7evH5
-	3OJbYuFE7/gv1n/5qcH2vyVXH6VI3muMjqPBorJ/LsJco7lNTppq4rwby2ac74vI
-	iku0HahUFbpKQgfAy0R/xjjnzkYr3+37BZtLKu7mQo2Do80WATZDXX4Wv67zmVXk
-	wArrc4nsqm0hEiQpEwqi2JuVgnJGTe+HoQ3NSBNR+D/eTPgaojc4Dt1KvX+bBkxi
-	Gi48GBX1FojS2F68U6pGBeLpVGOADZtC/0dGRVua8fpxHeIKekqtXfONYfSGMy/2
-	pYSeB0R1iycH4Q6mZ44A==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wp028a8g0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Mar 2024 03:02:25 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42632I81011834
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Mar 2024 03:02:18 GMT
-Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Mar
- 2024 19:02:16 -0800
-Message-ID: <02a2e93b-f0f1-4506-9e17-444cfd1a208f@quicinc.com>
-Date: Wed, 6 Mar 2024 11:02:08 +0800
+	s=arc-20240116; t=1709694731; c=relaxed/simple;
+	bh=02cMmXsDdW1gVgqMD4VAOemGW7i9TpF85kHhYBvLZW8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EzH3wmwIEIKz44c8Ojil+8HN7tPMUDDIylPB36YubFw6m+4AedVpc4cu9+hBdY0cpQjySDN40G6Nln9d0pD49AgfjThachDMA+wB4JznCw0WcfecaXuC8VzcYb8c/FtZOBdM0w4b1oDbMUvklPwzUf0EkU6Ndx3/pVIv6dfwdnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S9l9fHIq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABD3C433C7;
+	Wed,  6 Mar 2024 03:12:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709694730;
+	bh=02cMmXsDdW1gVgqMD4VAOemGW7i9TpF85kHhYBvLZW8=;
+	h=From:List-Id:To:Cc:Subject:Date:From;
+	b=S9l9fHIqRPQBv5DCKMAzqnyF7GGcDC8l8BrvRrsc+oIG2wIaUD5AeMPgKoGgQIJoN
+	 TwWOHb/QoISsD/AISmlFa+HUv3+scUhWXiNTomIuU/cK/NT/lPBFvLbm199WKQ3tTs
+	 YGSWGvI1SEvQ0wXyfDxyKG24Ryaf4LLEyeL+RJh0VHRAumTTU6mq0LAtZnfr07FeKj
+	 O0U2D0xJEa3avwAgSCGwuQTmcNEeC6EosK4+gDOqUgCWW2Dsm27YxnwugQHarxc+59
+	 dg++15qlXIKgPKfF+eA/wJSAgdE0jd4cyvHDhLv3dPzBI29Z4JCNUFTyzb06TnXPN2
+	 4RXa08pxb1+pA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Andy Gross <agross@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Olof Johansson <olof@lixom.net>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [GIT PULL] A few more Qualcomm Arm64 DeviceTree fixes for v6.8
+Date: Tue,  5 Mar 2024 21:12:07 -0600
+Message-ID: <20240306031208.4218-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcm6490-idp: enable PMIC Volume and
- Power buttons
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240304-gpio-keys-v4-1-03604d778c86@quicinc.com>
- <f09dc3a4-ed5e-40b7-ae71-7c6cfd79da1b@linaro.org>
-From: hui liu <quic_huliu@quicinc.com>
-In-Reply-To: <f09dc3a4-ed5e-40b7-ae71-7c6cfd79da1b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VjIWG0VaUBMnGaE32ccq4ADzKwNG99-Y
-X-Proofpoint-ORIG-GUID: VjIWG0VaUBMnGaE32ccq4ADzKwNG99-Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-05_20,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=697 suspectscore=0 phishscore=0 spamscore=0
- malwarescore=0 mlxscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403060024
 
 
+The following changes since commit cb0bbdc4cc327ee91ba21ff744adbe07885db2b8:
 
-On 3/6/2024 5:20 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 3/4/24 08:09, Hui Liu via B4 Relay wrote:
->> From: Hui Liu <quic_huliu@quicinc.com>
->>
->> The Volume Down & Power buttons are controlled by the PMIC via
->> the PON hardware, and the Volume Up is connected to a PMIC gpio.
->>
->> Enable the necessary hardware and setup the GPIO state for the
->> Volume Up gpio key.
->>
->> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
->> ---
-> 
-> [...]
-> 
-> 
->> +&pmk8350_pon {
->> +    status = "okay";
->> +};
-> 
-> This device is already enabled
-Hi Konrad,
+  arm64: dts: qcom: sm6115: Fix missing interconnect-names (2024-02-03 11:37:47 -0600)
 
-The status is not set in pmk8350.dtsi, so I thought we should set it for 
-"okay" manually. Do you think so?
+are available in the Git repository at:
 
-Thanks,
-Hui
-> 
-> Konrad
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-6.8-2
+
+for you to fetch changes up to 4f423c4cbe26d79d8974936eb01e0d6574c5d2ac:
+
+  Revert "arm64: dts: qcom: msm8996: Hook up MPM" (2024-03-03 19:49:51 -0800)
+
+----------------------------------------------------------------
+A few more Qualcomm Arm64 DeviceTree fixes for v6.8
+
+This reduces the link speed of the PCIe bus with WiFi-card connected on the
+Lenovo ThinkPad X13s and the Qualcomm Compute Reference Device, avoid
+link errors and initialization issues reported by users.
+
+It also reverts the enablement of MPM on MSM8996, which is reported to
+prevent boards on this platform from booting for some users.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (1):
+      Revert "arm64: dts: qcom: msm8996: Hook up MPM"
+
+Johan Hovold (2):
+      arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
+      arm64: dts: qcom: sc8280xp-x13s: limit pcie4 link speed
+
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              | 39 ++++------------------
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  2 ++
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  2 ++
+ 3 files changed, 10 insertions(+), 33 deletions(-)
 
