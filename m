@@ -1,156 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-13473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 957FD87360A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 13:05:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8708587362A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 13:20:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17B11B26361
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 12:05:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 112F01F24B15
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 12:20:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8FDF7FBD3;
-	Wed,  6 Mar 2024 12:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B50AB80022;
+	Wed,  6 Mar 2024 12:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fCgebXBY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OObOWBOa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA1F1426B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 12:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50695CDCE
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 12:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709726749; cv=none; b=G4vYMbA7TvVGXYZBnDBq77qyq/mtUeB5ZAYu2ek6bdDCg6Z4clxgy7eUolZj+bsyaw17LO6B0gIWtFJbn2ObAzveaOTx+78i730eTfDeZnKUkpbOJOG1lwO9si0xffGBP4QFyrMuCs24lFaZ4K+xSdYgPeqOEzePgfJeYutWCtk=
+	t=1709727609; cv=none; b=d5rf9pfd+aV9F31yEGlgYyAKz7lrmTFhMbmTA+WBovAlRtzwc4pTq2ngPbWf6Zu2oze6UEdFpbUa2dZUAEU+oztcEpdY/86nvg/zDCifiirrKp1m3b5sNVO1ZXTmncUI38BGMSVGKSqMD18qF4kvMT/M3GYCP9add9tKeFvHHIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709726749; c=relaxed/simple;
-	bh=G2h6GxpF5//h2blrI86hP/+PhlQEWBbGNRiIcqGjf/8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mFuNQ7WRmb5tJmXYSbNchVtcvmwUfrGq1y/vAEPibP+PX0fV0dtsQVtKGdzlCqDmUFULUprD37Al2jIn+nnBYDXfx5mqY2XMqzcp7DonivgrwiXhHGgDP1qAHueIY8fKiMGKscgQdUfB1GDW3MJU4ICrNkc3+5CbBimvEAhjbf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fCgebXBY; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a452877ddcaso449494066b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 04:05:47 -0800 (PST)
+	s=arc-20240116; t=1709727609; c=relaxed/simple;
+	bh=GgywhyYg02oQR+ukulXPdwnpOf+BubR6SiNSRsbeZyA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HMnrP8SVzbWtN4TwnXtY/Ie7449isMF9HjR36YhD6SFQkqRs+QaV6R20qaeKaRYF2oQDIjxVZZ5CAJ34krvfm0NyRfCwGriz1Oko8vZGbo4WCOZYYifoPKFxioxZu425kyEcdxn7QN9XF7kyX1k0X6umQMYApNzq0o96RLrHAUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OObOWBOa; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-412e783c94fso21728315e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 04:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709726746; x=1710331546; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vQBd6ohf0amX1OsSt75FPx0/Dj4ojSvbJw4UdMmdjuQ=;
-        b=fCgebXBYJimHJMxp00O/23sjiuNFitpMjZsaJr+t6q6WsXMP4XPGS4Lz5IjYEjB7kN
-         c2DnCATa1OzElDPifJZjjvufaKVJfGOqdwNRU2CeOaZdYCWzzCMlsIQ8ajx1TuxKI+fQ
-         ev65ybWNwJUFOE3Yh24ECvFK24u4ebuM/duhXeVoKxLSjWXIkRn2cMx6QcMxGV8WEYpj
-         TS/nLoCvrcxajaNtl83q3/2ebk3YVBA3Dlc1+V/QTIr2CZXSkP9y1Rek5NtWM+kp9Au5
-         3qkdO2btEyrw5IdlG6zugk3VnzNKpr2CxlGi1yrL83W6XGhbIGsWdt+FQpdbtvjPhoMY
-         ZJkQ==
+        d=linaro.org; s=google; t=1709727606; x=1710332406; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qWZJN83/bbNzf+Ic7CfQsRyRk+yU0zwq31wQFy4WgWA=;
+        b=OObOWBOakQORb6cUDeZBUbcWQrG+53YGNvNN3YcWGDjXh7csYWRQvAYC9jOIC2EtcZ
+         I4nt2D0JXRbeh0+EbnvQJO9IbaQz6aNNMrZHgEE/1uWo8axQ7s5q1DljiEuP00uEIoUJ
+         3vqwFiTH/xCkY0jVs67L2wt6rgGkW5ip8ma5lGUyn/pU3NBYX8UVTMhlNRAO6FMDtG8K
+         B+WSKx/2xDnREzDKWlL1QniOlEVJ83kRDHAxYUmkflAk28Uwitga/U5VifYUtjUQJMDh
+         wJreYvcFzz6JcF4mFqprP2euf6Elkh5gbR4i+96YHxorKqOCXYBBo79wSsi1A9DlIdqz
+         +MLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709726746; x=1710331546;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vQBd6ohf0amX1OsSt75FPx0/Dj4ojSvbJw4UdMmdjuQ=;
-        b=fkWEmTKZRnV9deZ/Ekar5MoWtSARAOzZDRgYt/YdSDyf3OVIl5ke1V5Ld0oaxsaN0O
-         lllU7YeU4aKWJdx6gUxTaYUfWmc2v7dJ5DzBGluz9t7RPSpp//cd1+8ZuwQFn0/3hgQI
-         BVBNewjzFuMvONO05jzs6JsnCv/ddwZYf7cCDwj34L3kxAG8SGKg61GREStWcC3PYZdZ
-         lYjQqG1JBsBuRXT1B3xGqy78QZB20Xc8mpAqWveeR3VN6ijHNuo+KegNUTpcvaKD3h3o
-         gTRSwwsw9Z5NhhpFvGEDVDBCcuKDQexYsElJzn7HkpojwK49LIe3ULDRCih1xCXVJuzn
-         kOYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWtE8ILA8uKhESHNldeJGXQdQGCF4nWiiJ1uElPMAuPD4vkEjstZuRKmV5wPYDJKJFbp594cqBbgeY2x5kDRlS0Dqd+oCOirGFFOf1yig==
-X-Gm-Message-State: AOJu0Yx6QH0YoU/4LdH8M2Lxvms811rkNm8nJQf8Y4Gl7xQnuwBLAIOy
-	dmg+EcM/1HnROBj8RW3el8T18R/G2ZakDTR9AUTm6lMvw0h1jQl7x7OZx/wKMA==
-X-Google-Smtp-Source: AGHT+IENvyQtE8JoTg5kWVbQtkdALMsWYIyvhW3MrnxD6N4yBhPGZfzqW1SSMI9IG01/r9t2iOYJ8Q==
-X-Received: by 2002:a17:906:b850:b0:a45:ad29:72e7 with SMTP id ga16-20020a170906b85000b00a45ad2972e7mr2827372ejb.36.1709726746372;
-        Wed, 06 Mar 2024 04:05:46 -0800 (PST)
-Received: from google.com (64.227.90.34.bc.googleusercontent.com. [34.90.227.64])
-        by smtp.gmail.com with ESMTPSA id h20-20020a170906591400b00a3d5efc65e0sm7072616ejq.91.2024.03.06.04.05.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 04:05:45 -0800 (PST)
-Date: Wed, 6 Mar 2024 12:05:38 +0000
-From: Quentin Perret <qperret@google.com>
-To: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
-	Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
-	Android KVM <android-kvm@google.com>,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Alex Elder <elder@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Murali Nalajal <quic_mnalajal@quicinc.com>,
-	Trilok Soni <quic_tsoni@quicinc.com>,
-	Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-	Carl van Schaik <quic_cvanscha@quicinc.com>,
-	Philip Derrin <quic_pderrin@quicinc.com>,
-	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-	Jonathan Corbet <corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Fuad Tabba <tabba@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-Subject: Re: Re: Re: Re: [PATCH v17 19/35] arch/mm: Export direct {un,}map
- functions
-Message-ID: <ZehcEqvC3Y9YytNi@google.com>
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
- <ZdhEtH7xzbzdhS2j@infradead.org>
- <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
- <ZeXIWBLVWzVycm0r@google.com>
- <20240304094828133-0800.eberman@hu-eberman-lv.qualcomm.com>
- <Zec6shyjblcZvTG0@google.com>
- <20240305093131473-0800.eberman@hu-eberman-lv.qualcomm.com>
+        d=1e100.net; s=20230601; t=1709727606; x=1710332406;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qWZJN83/bbNzf+Ic7CfQsRyRk+yU0zwq31wQFy4WgWA=;
+        b=bBa68slJuKc/H8QmdCHM+eY86DtoWdYQErUTuzuhYQz//dfZRk0MxD0yhnCrAzp4rw
+         s59SESxDaEP6zk6eEDIg16IMB4PBUQTERP1OynvRSoPkTpfxmskqse5ib1Wk9YqSxC2N
+         St2HC5BxBMhas4tbnBDwstgDGJjNFllABufSb266Qui2yDv9+YTNl8IgFo+xSx34V+oi
+         XWEZuJN/80vc8AdFcFXmjUkQXoHXkfY8PCf/rhyILcBWw3XPYrQAkn+w2qU/gJGTKsp4
+         0vaNFDG9KhdXAJVbMbY/duEoeBObcyFxpyrLENHkag/z2wRZD3O60TjZYpG4+uS5XG16
+         gHEw==
+X-Forwarded-Encrypted: i=1; AJvYcCWM0HEuiFj9Q671pDQ1n6/dW+0CeG4vs73sBxluO4XGGH0z7JbNYSR3/6qGZ2uLGVkIqFyrdrAnLTKp3wioQSsK65VVGxZ9OUMCb7/fBw==
+X-Gm-Message-State: AOJu0YzN+BhT611x4tAm8eyIMLBJ6f9pjoPsFA/BFtViNxfFigiyno+Q
+	ftznsrL3jGf6DcSbc+0YMY9yOhC3g3rJZkIk/fMNXmq8l3+F5qcKOuQvtG4qdYw=
+X-Google-Smtp-Source: AGHT+IHwjIZ0oB/Qdt/cf+7ESr9SOVAk/sZWQCvXlYHeCO0n1IGxqlDqFP6BTAPBfZ/0sXmuWpbgPA==
+X-Received: by 2002:a05:600c:474a:b0:412:7489:c8c0 with SMTP id w10-20020a05600c474a00b004127489c8c0mr10696349wmo.34.1709727606183;
+        Wed, 06 Mar 2024 04:20:06 -0800 (PST)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id b12-20020a05600003cc00b0033e451a9b64sm6112893wrg.61.2024.03.06.04.20.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Mar 2024 04:20:05 -0800 (PST)
+Message-ID: <b6d6beab-39f5-4f00-8427-52b662181864@linaro.org>
+Date: Wed, 6 Mar 2024 12:20:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240305093131473-0800.eberman@hu-eberman-lv.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/20] media: venus: pm_helpers: Add kerneldoc to
+ venus_clks_get()
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
+ <20230911-topic-mars-v2-3-3dac84b88c4b@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230911-topic-mars-v2-3-3dac84b88c4b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tuesday 05 Mar 2024 at 12:26:59 (-0800), Elliot Berman wrote:
-> I still disagree that this is a Gunyah-specific problem. As far as we
-> can tell, Arm doesn't specify how EL2 can tell EL1 its S2 page tables
-> couldn't give a validation translation of the IPA from stage 1. IMO,
-> downstream/Android pKVM is violating spec for ESR_EL1 by using the
-> S1PTW bit (which is res0 for everyone except EL2 [1]) and this means
-> that guests need to be pKVM-enlightened.
+On 09/02/2024 21:09, Konrad Dybcio wrote:
+> To make it easier to understand the various clock requirements within
+> this driver, add kerneldoc to venus_clk_get() explaining the fluff.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/media/platform/qcom/venus/pm_helpers.c | 28 ++++++++++++++++++++++++++
+>   1 file changed, 28 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index ac7c83404c6e..ea0a7d4601e2 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -23,6 +23,34 @@
+>   
+>   static bool legacy_binding;
+>   
+> +/**
+> + * venus_clks_get() - Get Venus clocks that are not bound to a vcodec
 
-Not really, in pKVM we have a very clear distinction between host Linux
-and guests, and only the host needs to be enlightened. But luckily,
-since pKVM is part of Linux, this is pretty much an internal kernel
-thing, so we're very flexible and if the S1PTW trick ever conflicts
-with something else (e.g. NV) we can fairly easily switch to another
-approach. We can tolerate non-architectural tricks like that between
-pKVM and host Linux because that is not ABI, but we certainly can't do
-that for guests.
+Get non-codec Venus clocks.
 
-> If we are adding pKVM
-> enlightment in the exception handlers, can we add Gunyah enlightment to
-> handle the same?
+> + * @core: A pointer to the venus core resource
+> + *
+> + * The Venus block (depending on the generation) can be split into a couple
+> + * of clock domains: one for "main logic" and one for each video core (0-2pcs).
 
-If you mean extending the Linux SEA handler so it does what Gunyah
-wants, then I'm personally not supportive of that idea since the
-'contract' between Linux and Gunyah _is_ the architecture.
+(0-2pcs) is hard for me to decode => zero to two parts?
 
-The only ways I could see Gunyah delegate stage-2 fault handling to
-Linux cleanly is:
+Why are we double quoting "main logic" feels a bit "Dr Evil"
 
- - either talk to Arm to introduce a new ESR specifically for this,
-   which doesn't sound entirely crazy to me;
+Suggest hyphenating which would do the same thing:
 
- - or have Gunyah and Linux negotiate in software the location of the
-   handlers. That probably means SDEI or equivalent which is a can of
-   worm in itself I presume, and I'm not sure how feasible it would be
-   for this handler to live in the Gunyah driver (that too probably
-   requires exporting kernel symbols we don't want to export).
+'one clock for the core-logic||main-logic'
 
-Thanks,
-Quentin
+> + *
+> + * MSM8916 (and possibly other HFIv1 users) only feature the "main logic"
+> + * domain, so this function is the only kind if clk_get necessary there.
+> + *
+> + * MSM8996 (and other HFIv3 users) feature two video cores, with core0 being
+> + * statically proclaimed a decoder and core1 an encoder, with both having
+> + * their own clock domains.
+
+"statically defined" not "statically proclaimed"
+
+> + *
+> + * SDM845 features two video cores, each one of which may or may not be
+> + * subdivided into 2 enc/dec threads.
+
+"into two encoder/decoder threads."
+
+
+> + *
+> + * Other SoCs either feature a single video core (with its own clock domain)
+> + * or 1 video core and 1 CVP (Computer Vision Processor) core. In both cases
+> + * we treat it the same (CVP only happens to live near-by Venus on the SoC).
+
+One not 1
+
+> + *
+> + * Due to unfortunate developments in the past, we have to support bindings
+> + * (MSM8996, SDM660, SDM845) that require specifying the clocks and
+> + * power-domains associated with a video core domain in a bogus subnode,
+> + * which means that additional fluff is necessary..
+
+"We need to support legacy bindings"
+
+"sub-node"
+
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+>   static int venus_clks_get(struct venus_core *core)
+>   {
+>   	const struct venus_resources *res = core->res;
+> 
+
+With that fixed.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
