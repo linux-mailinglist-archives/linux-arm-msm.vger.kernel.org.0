@@ -1,126 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-13426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E6E5873009
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:56:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0745873018
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:58:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27F4B28957F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 07:56:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9C523B263ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 07:58:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAE645CDF5;
-	Wed,  6 Mar 2024 07:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FA895CDDF;
+	Wed,  6 Mar 2024 07:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FWQ/NT1i"
+	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="yH/ZJ/LP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284715CDD1
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 07:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351AA5CDEB;
+	Wed,  6 Mar 2024 07:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709711777; cv=none; b=ArzLDOTEFfv/GOQXi0ULOfcp9PcYS1lcGoIvTKBIgeKkNPSv3lCuje5eCL5lX+bIPNlNwsCRhUVnE2YmFNpxyx7RuB/j8BtYqkEkBTNVh6hoam54c9Wl6bmkIpdJmF+96H78M9pdvc7cFo+FxoeugVodkRPhhxLYAK0mnsdiHCg=
+	t=1709711823; cv=none; b=oKKjWr3oA93Wu9zxg3rdZq22E2woqvYT/9TppPYnLOM/Hu96N4xqiJkm37pnDYMqqPOh83l3ZTWW+Dl5mgYvYkr2bkjOfJXHl0nVKs53BYtdYx6bp88dtd9aSVYXsN/lvP1MciheIoxVgE2s8Vq3/LgI+XN76xwQ5aJoB/6Wml4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709711777; c=relaxed/simple;
-	bh=DAHtD8v2l5vj0Pvrph3wvnBNooXZC0OYJ9kZAnTthmc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BjYfKD85YSy0lnRt6YcG8EluU/DNDSif/YyyzuFFjs+8H/itEnwgG7C1kKN/lfJhnBBVONv/Ud5kTtkekDB7+W3GhkQuz3outpfWnwhUJ8HWhOOeVN3dWyF2XxykqfS9aQOwbMxdBaAM3ltS0VzeDu6j0E3qiZ6ZTNdr4h/pM9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FWQ/NT1i; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-609408d4b31so65583947b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Mar 2024 23:56:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709711775; x=1710316575; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=R2p1lYtbK1lYuq/4XRU4oVO0x0kHeG6Tm2yL9vnyQOc=;
-        b=FWQ/NT1iR4OX4IijhqQmkPD6i+DYnE+gybGE0hQkvPRUoC0ynGStLj5V3X/E3+oX0u
-         8RKYrV4mAbZ3cKkSUh3stHq+cS/bj7JJ6v+eTVaYB06usNaevSemISgeEK3rH56hO5rq
-         yVbwW7zAqMnPRXrxPj/47u8OCDfKG97HWeP/q3v413pbkJhrx4Zq2MsCQz0EWW6csV84
-         DCUNGZ0zY+i6fjjTT3SeSMH1TdK1kNyfJvS+ihulXekeKSWqp/wI2OixOhq4+Z1SASbm
-         l4f8+EV6lZPrYpKZbTP1qQB+JW2fMShAhkm2M6qgk7bW0KR5CxOZWmVOEBRKfGIwD82x
-         LB0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709711775; x=1710316575;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R2p1lYtbK1lYuq/4XRU4oVO0x0kHeG6Tm2yL9vnyQOc=;
-        b=OZNIigk+DDQ5zQlLtHiIFYt5tUf2nv4c9lwDR/j0LcM/8Fo+Bk+HCZ/GtRKZAwoH5Y
-         OxveSIS+3o2z2I+DXvA2MRjGfajc1/pZno6Wefyk2aU7tmaDX4W4B04tlmTX0Wm5JXlM
-         GailmFPB5gqy+JIew/wOSQfXjJIBppsY1CMiDucxgwSUj5R5g0fEvuE8ukmMFMwfKQ33
-         r2KPiCBo2K29Z5sgQrcukBVDxDkpwI7qKSchBn/d2Kia6rhYhcYb/gAUvfTlMqo1r+o6
-         zRmZKIHsnjM8/kcOHQyy7DM7XV0Ip+LBgFhL2oeKs4vGJTy2RDWUCJlneDlp7Muv0JEC
-         LmBA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpo8Pvtsx1wx9KK56sbbGljVIvaYHhXWn3+fwv+37TBSuS6wLI3DUiZg3kIWdIVfJdXtGONED6pfpUf4fxUdBEdJeEQBW1U6vdpmAO0w==
-X-Gm-Message-State: AOJu0Yz8P9/PcFcf/Xh4IW5uvRaUfNtDMEs172V9n3/K1MHxVKV/oCph
-	5qFumt+MYToONoY52eWVV0/1ma0VgpuHasXnTiab4SuPal8oL+cWU0Ok5iTM3hHrFOGJ+Zra7Xl
-	EgZH+IYv8bKsutHPR+sCX1ERUJpzrld/gVX2SZA==
-X-Google-Smtp-Source: AGHT+IGlvcQrkg1QpVFgZ5NlDd9P0g9ctcuCGmag8rQ9D7aPGaoal06qvr96/3iIQknLCEgxJyaHwrsl05+/MGfVdUQ=
-X-Received: by 2002:a05:690c:ed4:b0:607:ca2e:f23e with SMTP id
- cs20-20020a05690c0ed400b00607ca2ef23emr20013019ywb.30.1709711775343; Tue, 05
- Mar 2024 23:56:15 -0800 (PST)
+	s=arc-20240116; t=1709711823; c=relaxed/simple;
+	bh=URL17ztwuUWJWCvFf0Mih9U+lXmtbksLU7rosB/nrU4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=k2Eoo51OlxApqiej5QRTo55o8fE5RJajL9a00zjYprhpICMb/ylygXNu+PGOKIun0tHxXh8MDAKoShSCPuznOUT7o9XEdSYPkxWVN1nTtISrpGGnfIGtCcAdWggIeguc4KN1hWMlZIMTfamCGKmnfCeOH3CzN9sWCZ1n2BWPh08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=yH/ZJ/LP; arc=none smtp.client-ip=80.237.130.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:To:Subject:Reply-To:MIME-Version:Date:Message-ID:
+	From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=v2Qokh0H4nQ8Uerb1M5MYDQB0W979+jRDY/Cb/gZBOc=; t=1709711821;
+	x=1710143821; b=yH/ZJ/LPxwC4gJStq/2weq+QZcg2BGNK7eAH2LCc0j/mk7SJte/PQC+cn+zje
+	pYMSnOeGs2ooV9+4i+gAUxgfURIh8bS3iBaZ2p2jSGVVftfRoKl0j+vqkk7LqTydhLculqOCY6xEy
+	5Ghtd/XzDDrsy1d1EOFOu1q9ziXJAPQWPZYRNNhbaG7iGYAYGhwRs9fI+wdIiR6XwduluiYh7b7ql
+	/hNVhgYVpu3y3GJoeMyTB5HmF2Hop7biOcPZ8FHBs2AcmnRsjhgT/rNY9xQ9UtMbaPyQ2xLaXHB1r
+	XUb3QfDi+c7uZyNBWgAxY5LAPtfqmjG5r3vGUM38WFXfWzTYrA==;
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1rhm94-0004A4-HI; Wed, 06 Mar 2024 08:56:58 +0100
+Message-ID: <4e55f6fd-8875-4a61-9070-f0ecad8082ea@leemhuis.info>
+Date: Wed, 6 Mar 2024 08:56:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240304-gpio-keys-v4-1-03604d778c86@quicinc.com>
- <f09dc3a4-ed5e-40b7-ae71-7c6cfd79da1b@linaro.org> <02a2e93b-f0f1-4506-9e17-444cfd1a208f@quicinc.com>
-In-Reply-To: <02a2e93b-f0f1-4506-9e17-444cfd1a208f@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 6 Mar 2024 09:56:04 +0200
-Message-ID: <CAA8EJpq64dwEi3NrEnvqnFR5YTSDitx9sgZVheho+UL0rz0FsQ@mail.gmail.com>
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcm6490-idp: enable PMIC Volume and
- Power buttons
-To: hui liu <quic_huliu@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+Subject: Re: [pull] drm/msm: drm-msm-next-2024-02-29 for v6.9
+Content-Language: en-US, de-DE
+To: Rob Clark <robdclark@gmail.com>, Dave Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, dri-devel
+ <dri-devel@lists.freedesktop.org>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ freedreno <freedreno@lists.freedesktop.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Linux kernel regressions list <regressions@lists.linux.dev>
+References: <CAF6AEGtCq=CObbqKNOswWZdPw5dL8jq8BxD_hxP7kOCePUwNrg@mail.gmail.com>
+From: "Linux regression tracking (Thorsten Leemhuis)"
+ <regressions@leemhuis.info>
+In-Reply-To: <CAF6AEGtCq=CObbqKNOswWZdPw5dL8jq8BxD_hxP7kOCePUwNrg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1709711821;06b6289e;
+X-HE-SMSGID: 1rhm94-0004A4-HI
 
-On Wed, 6 Mar 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
+On 29.02.24 20:04, Rob Clark wrote:
+> 
+> This is the main pull for v6.9, description below.
+> 
+> [...]
 >
->
->
-> On 3/6/2024 5:20 AM, Konrad Dybcio wrote:
-> >
-> >
-> > On 3/4/24 08:09, Hui Liu via B4 Relay wrote:
-> >> From: Hui Liu <quic_huliu@quicinc.com>
-> >>
-> >> The Volume Down & Power buttons are controlled by the PMIC via
-> >> the PON hardware, and the Volume Up is connected to a PMIC gpio.
-> >>
-> >> Enable the necessary hardware and setup the GPIO state for the
-> >> Volume Up gpio key.
-> >>
-> >> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
-> >> ---
-> >
-> > [...]
-> >
-> >
-> >> +&pmk8350_pon {
-> >> +    status = "okay";
-> >> +};
-> >
-> > This device is already enabled
-> Hi Konrad,
->
-> The status is not set in pmk8350.dtsi, so I thought we should set it for
-> "okay" manually. Do you think so?
+> GPU:
+> - fix sc7180 UBWC config
 
-What is the default device status if there is no status property?
+Why was that queued for 6.9? That is a fix for a 6.8 regression that for
+untrained eyes like mine does not look overly dangerous (but of course I
+might be wrong with that).
 
-
--- 
-With best wishes
-Dmitry
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+If I did something stupid, please tell me, as explained on that page.
 
