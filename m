@@ -1,116 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-13401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C08D2872E65
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 06:32:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D2CB872E80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 06:53:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F9BC28B728
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 05:32:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 234AF1C22425
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 05:53:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDA741A58E;
-	Wed,  6 Mar 2024 05:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3AA31B977;
+	Wed,  6 Mar 2024 05:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QU5plOdO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mw1USBM5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BACE1B7FB
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 05:32:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C98101D5;
+	Wed,  6 Mar 2024 05:53:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709703125; cv=none; b=eXL7J2vDbpgvxedAy7QNkmS++MwBFJE+8bkvHw397tLL6Y3zlNQVUGqKGQoliaJxjeSF6nk4p3p4cxq5iLruZR7ZCM8OI2uXKAaP1FCz7RAQ78Jkzmm4f7nQuvdt2ihBn3OEWGOH+ZENin9kazMXrxAMDIbVyPWRpTUoFCQuf64=
+	t=1709704420; cv=none; b=lWJLlO2XvlJHqYobpQivGPgEkUV0zN1BU15qBN8DbPpOZGGnxzLR3PlNO/XNNKVj6UU7f6gwutAYX69JQgzHasOXYtCHRf99q6RMBv4Nf0JhrSdlBL6HiZ7KhVLOSut+NhYMFTE/5cXGi6MDqZSplNurdhwmkhYBKCn8H/ngQPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709703125; c=relaxed/simple;
-	bh=8ZwdkK1o5nMt3H6MI7q3MsTaBcRoHRpzOrtlXg1QdYg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SHkXcHmCfDOZs7Rqay2FjEq8xoLnWr2yEdpwX02WJEutUKiIhz6zioYQs8po/JJKUTYas+btEPkLRhTaoOyzP+r7z+v48cyISoqk942V4BLKcbPixZGvVVLIIDIoIb6fnKVSSxU+k6TOZNOcvJgwEoCIXUhA91Ft0mMYOc1mdek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QU5plOdO; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-29abd02d0d9so4233048a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Mar 2024 21:32:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709703123; x=1710307923; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vv4Fvjj+hLabaioHe5ZIqLRtWmYmjjafrhYl8vez/84=;
-        b=QU5plOdOMaZ2M3PqJtRnLIvX7WLc2fTDydctUa/PXNSO39tm3np6CyK82JBZf0w2Nj
-         ylMNDKNmmpy9Q7bxcDHRFPt4kk2oOd/BnA0vpup4UF8arNRxytjoLKBqyto7Nx15Tw+b
-         lbLj48IfcHac6vbWshP3KoA2iwcCjtj30Zb9OMWHK630hPo7Hc+uiiHKuTNv1VCrx6HU
-         /nrPHhkaOWZrzoOIWW1VDCmK5DL4E8/01LN5xIITJtQKf2BcGwoiTRN5QvL2tGMM9u+C
-         tq+D05nLCFnnzVNI8UIs4JTPJEfIzzFIGi8QFYGKMj5Oegu6XGGRY5/32Dc2nCIcsHUl
-         IZYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709703123; x=1710307923;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vv4Fvjj+hLabaioHe5ZIqLRtWmYmjjafrhYl8vez/84=;
-        b=liQg1ImLiv6z21E62HbxyeH3DV2X022Tyi4Qd0AHE0Svg/Fe/IpPmQ5d5lJkbaycs4
-         QdmG4zEys1rmQiTg930y0crmWbPq0wn7JyKJ32j6ofKKZuj5q8mo6WOQ/6N1Br93ThDf
-         +xCLT7lo/R/9tcAomMjgUvPZZvKV3CF1WRM8eJwiUFuUbzzzbK9Ci8Cejo8iu+tgYRDV
-         uyojWHBqharAEAAsEbKVkXN3FMt8M4zv9ePcRWFv9/WlAyAXbjn7EqkyOiGdBeb0IrTS
-         Ypqxy4qM843bLQx59NQt2G5xz534BKwOOc3F48en79kjDhm+XVxTtgA2j8r7kOUMJ73Y
-         ylOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVB/ujYqCjxYBDia/rsfolLupvZlZzJalTK9m5e+bBrIYtyOfEBVRB1yS+f9eySPi0YsP8hL3qGsNeCfDpwWk1owWxoS2KKNV0es9BnUQ==
-X-Gm-Message-State: AOJu0YyK80XHhr6UVYKaLsUhVpmXacsK6ywXHKSDZSIjRRIbR2Qo5Pp4
-	Lh+ZOjhc23mRnfZGgFjgybM3ihWcKsb/gGfbM+fVPa52scRWfNoCbJYrf0CZ+hs=
-X-Google-Smtp-Source: AGHT+IF6Dp1NMYhSjLZXpcOkBAA67LHH9kSdq+ASxfFf0Cwmc99nOfJajj256GFSS2pOZvaAOvumWg==
-X-Received: by 2002:a17:90a:bf01:b0:29a:a1c7:fc28 with SMTP id c1-20020a17090abf0100b0029aa1c7fc28mr11103516pjs.10.1709703123176;
-        Tue, 05 Mar 2024 21:32:03 -0800 (PST)
-Received: from localhost ([122.172.85.206])
-        by smtp.gmail.com with ESMTPSA id y6-20020a17090aca8600b0029a78f22bd2sm9658195pjt.33.2024.03.05.21.32.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Mar 2024 21:32:02 -0800 (PST)
-Date: Wed, 6 Mar 2024 11:02:00 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/3] cpufreq: qcom-nvmem: add support for IPQ5321
-Message-ID: <20240306053200.6iwrviltwt3pnfnt@vireshk-i7>
-References: <20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com>
- <20240228-ipq5321-sku-support-v1-3-14e4d4715f4b@quicinc.com>
- <20240304071222.cx3s37mphddk23bv@vireshk-i7>
- <20240305043503.tgy5ahl243or7lm5@vireshk-i7>
- <c82e4053-4cef-4010-a734-4dc537574201@quicinc.com>
- <20240306051809.rk4xhl47zai7um3n@vireshk-i7>
+	s=arc-20240116; t=1709704420; c=relaxed/simple;
+	bh=I5wUOieJD3ZUYjfyok1s6nSZk2B2zjNd8lL+zwYCZUg=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=ZlLNsELVQFpIJi+b70nY0iLzesFWUolnF+jrs/OdJEESoQYIZmXWumbv5NF6VKLpB5YM1YrhuJvVpB26RFABGfpHd8yal24Sv3FZPtIZDer9hCD3n80jwqb6lE5xkIBA/E52LMuBmHWHp/ZG1bmrrSXIZJudjZgHkBCcMsbsJJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mw1USBM5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4265GBAW026912;
+	Wed, 6 Mar 2024 05:53:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=52L1RIbzz0EL
+	fBWcpUM9EaDj74BxCy8tajlmOSjrnJ4=; b=mw1USBM5l+P7VZrsQyBZQpEwkveW
+	zmW/RorXqQL3TBoP+i5sVUFHawfRzL1FJly+yVA7kCXjQzvWOZujyyPg4SBLlFzK
+	/vXOyqriix+GBoos2Kxj+TC2quu8E0a3khssd0CTrjMgJvrbjhXjvrAq/ppMfUNg
+	9bAIpQHmxNJYTPchdTnX1aWeqUaj37j8Ivc+yCAFC8pPc50FxSI+fu0DSJBmOHHX
+	ER4vl1ibIMrdZrl+L5JW99RCJIn6Kp6vm6VB1ueXmnim8UMaTd1BFuqo7MWgN7G2
+	9U9YiN4dlAwLJzfjxsj46BiArdK34F/mnqoJ7TnHsIgZOGkdSQSNrNagyw==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wnx0y2tax-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Mar 2024 05:53:34 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4265rTSv019542;
+	Wed, 6 Mar 2024 05:53:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wp0606a5c-1;
+	Wed, 06 Mar 2024 05:53:29 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4265rTk7019534;
+	Wed, 6 Mar 2024 05:53:29 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 4265rTT1019532;
+	Wed, 06 Mar 2024 05:53:29 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+	id 91E722BC9; Wed,  6 Mar 2024 11:23:28 +0530 (+0530)
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH] media: venus: avoid multiple core dumps
+Date: Wed,  6 Mar 2024 11:23:26 +0530
+Message-Id: <1709704406-22501-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7DQoBiCvnEKWTE16WudirzFuxTPnJIpH
+X-Proofpoint-ORIG-GUID: 7DQoBiCvnEKWTE16WudirzFuxTPnJIpH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-06_02,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ mlxlogscore=999 lowpriorityscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403060044
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240306051809.rk4xhl47zai7um3n@vireshk-i7>
 
-On 06-03-24, 10:48, Viresh Kumar wrote:
-> Bjorn,
-> 
-> On 06-03-24, 10:10, Kathiravan Thirumoorthy wrote:
-> > patch 1/3 and 2/3 are already has the R-b and A-b tags. But typically those
-> > patches will go via qcom tree. Do you want to pick it via your tree? Sorry,
-> > I'm not sure on this...
-> 
-> Should I pick all the patches ?
+Core dump is generated whenever there is system error reported
+by firmware. Right now, multiple such dumps are generated if
+recovery fails in first attempt, since the sys error handler is
+invoked again for every failed recovery.
+To avoid it, add conditional check to generate core dump only
+once during every system error notification from firmware.
 
-Okay, there are conflicts for the first patch itself. Bjorn you can
-apply all the patches.
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+ drivers/media/platform/qcom/venus/core.c | 6 +++++-
+ drivers/media/platform/qcom/venus/core.h | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-For this patch:
-
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index a712dd4..cc77900 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -67,6 +67,7 @@ static void venus_event_notify(struct venus_core *core, u32 event)
+ 
+ 	mutex_lock(&core->lock);
+ 	set_bit(0, &core->sys_error);
++	set_bit(0, &core->dump_core);
+ 	list_for_each_entry(inst, &core->instances, list)
+ 		inst->ops->event_notify(inst, EVT_SESSION_ERROR, NULL);
+ 	mutex_unlock(&core->lock);
+@@ -109,7 +110,10 @@ static void venus_sys_error_handler(struct work_struct *work)
+ 
+ 	venus_shutdown(core);
+ 
+-	venus_coredump(core);
++	if (test_bit(0, &core->dump_core)) {
++		venus_coredump(core);
++		clear_bit(0, &core->dump_core);
++	}
+ 
+ 	pm_runtime_put_sync(core->dev);
+ 
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 4a63326..c04ea62 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -233,6 +233,7 @@ struct venus_core {
+ 		u32 minor;
+ 		u32 rev;
+ 	} venus_ver;
++	unsigned long dump_core;
+ };
+ 
+ struct vdec_controls {
 -- 
-viresh
+2.7.4
+
 
