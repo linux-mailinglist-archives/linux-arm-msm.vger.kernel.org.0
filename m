@@ -1,152 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-13455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EB6587332B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:55:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 437FE873356
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 11:00:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0DAA1C22DCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:55:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F30FB28B428
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:00:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757245FB8F;
-	Wed,  6 Mar 2024 09:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E195F879;
+	Wed,  6 Mar 2024 09:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GZgRO7tK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEWVWWBz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98385F554;
-	Wed,  6 Mar 2024 09:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F5F5F482;
+	Wed,  6 Mar 2024 09:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709718891; cv=none; b=FfOztFctKJ34pXZQvBSpG3YZS7mTJhYthM3UmLUKjg9Z963k5n8ySFq3tkMM1nzFq/4p7ES1gtYLb8Sxl9x5ggxFVJoRWsSvO1ZO07YSAFSVyTI36gPO2H69etjW0dys7boTKdKjPRgSoc1JJSrglFBObxSXYi39SFdBVy18WPI=
+	t=1709719189; cv=none; b=MNtL2RIeX1JRyHAGfbqmoo68rK7VJrLJs4RiM3ZHsU2tmYOUFKfc8TaiK8olycT0fleaaH9vfN18uSCIjOhCL4bq07cUzTckoOJl/wIhMg9XEvUMEcp2Mqbux2KiUjy5sI57I7eyO4sgs8+9tw+6KEqpzbHcVYJVl6S0y97renA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709718891; c=relaxed/simple;
-	bh=QN3XzJAj1R3sWj03mZ3aXIu5s0TqDPotRLyYDLKw+lA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mMTuAEQNCtikDt19418BxEk+/8jA4b188LhHGYyChabxIODM/MKFbwyIjw6gcgGLkeBmuvQWgXYThsvnb/cusTEez4KeCHqsk/F9EO6T7ApfE35FV7km+lagu/p5Vy0LH/ZZ0skjW72hv6dVYxg/bIW3Dp+aVEdgprJ6LdoHTjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GZgRO7tK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4266g62k009792;
-	Wed, 6 Mar 2024 09:54:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Jpg/tAei9KK0CIcihk4hp7iGus5b+h9Ir7FkA6Ntb4A=; b=GZ
-	gRO7tKVmKbiRaCl8o/+xO7mxb4LLOSkPb2r1GKFBN5vijdW6ySPE8uU2likHivNZ
-	5IGsPr4SEpfvGgsMukIzYUTVSgY1euGESWR70S4sEi9g/svwX/VP3u9ZAwmN7HcA
-	6AMJsufucRhIepwoeUCilnoGg8gTq8BR6mpzObsyd2AOUphtI9nvVKRSEKCdb+Tc
-	U12nFTDLOk6S4oAEabfVv94oq/M6SEshxtXZagv8YAXYfzlKf0ETzlPuDqyuZKgI
-	nIVva2KR0KLyacs7KvltnHihDIK4p876m8qUrqfP0uOiW5wvgyHhTVRxSbrB81wW
-	R9j3Yl+xyHk1tXJXDXXA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpke38d58-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Mar 2024 09:54:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4269saeD022499
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Mar 2024 09:54:36 GMT
-Received: from [10.204.65.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Mar
- 2024 01:54:31 -0800
-Message-ID: <84970313-4ca4-4195-6a06-fd7a0d925648@quicinc.com>
-Date: Wed, 6 Mar 2024 15:24:19 +0530
+	s=arc-20240116; t=1709719189; c=relaxed/simple;
+	bh=CkVlOtbBCGKlct96p/xjRge+byzee+ClIJzlL6rvceM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L/dl8Ej5p81nU5QeOuMFSmX76F2ue3Am8fuyJE9wwqPtoH+NTeQfO+/svAAwPw9RfenN6H/qkBESGmGlfkiBZZwCK+QSY51UluUZGuWeqfv8iEMUc7UKJRRUmBkbfFb/Y+0dzakZcBgSNB/RWMP4KHH+73oVl1A4v4XUep/ua8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEWVWWBz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F88C43394;
+	Wed,  6 Mar 2024 09:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709719189;
+	bh=CkVlOtbBCGKlct96p/xjRge+byzee+ClIJzlL6rvceM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gEWVWWBz453XeUJDcMKoHaXBNOECoIQnxxtJ0oIGQiSXYyZi9xWUDIJfEAUVCIGQ4
+	 /8DvSDQKMwWp1T3ov6cNApRVfPxVS68RfpY967lYss8V+I06WVEc05rlv6yxO4NmtA
+	 QEp+MNUZ2NF0eyxF9fa9KJSPMe14ZgnkDU5xYyQLPp7SPT9eFnmBq4DUz4eWqSPz5D
+	 qNGYl6MxmmnOwn6YjQlQDgnG5GUmYjxkqMLYfyp7LFL1jVrdsWmx2JWEM97HcnEYP4
+	 g71NPPgrCT8NQUN9MdkL+6TLpvrmtYacKrbpLzhVL2nI2arXym3LdDp2UkZx4Cg5kH
+	 lCkSTq0u/ahmA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1rho44-000000001ax-21Ue;
+	Wed, 06 Mar 2024 10:59:56 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v4 0/5] arm64: dts: qcom: sc8280xp: PCIe fixes and GICv3 ITS enable
+Date: Wed,  6 Mar 2024 10:56:46 +0100
+Message-ID: <20240306095651.4551-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 14/20] media: venus: pm_helpers: Remove
- pm_ops->core_put
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho
- Chehab" <mchehab@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stanimir Varbanov
-	<stanimir.varbanov@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab+huawei@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>
-References: <20230911-topic-mars-v2-0-3dac84b88c4b@linaro.org>
- <20230911-topic-mars-v2-14-3dac84b88c4b@linaro.org>
- <ec239f69-6ace-c4a4-409c-771f1d24ce81@quicinc.com>
- <d19bd56c-dc85-46ee-831d-e67768ccf6ed@linaro.org>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <d19bd56c-dc85-46ee-831d-e67768ccf6ed@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WoknJ7hswKpRMlBqHGd4GwLD_I1bTXsJ
-X-Proofpoint-GUID: WoknJ7hswKpRMlBqHGd4GwLD_I1bTXsJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_05,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 mlxlogscore=999 phishscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403060078
+
+This series addresses a few problems with the sc8280xp PCIe
+implementation.
+
+The DWC PCIe controller can either use its internal MSI controller or an
+external one such as the GICv3 ITS. Enabling the latter allows for
+assigning affinity to individual interrupts, but results in a large
+amount of Correctable Errors being logged on both the Lenovo ThinkPad
+X13s and the sc8280xp-crd reference design.
+
+It turns out that these errors are always generated, but for some yet to
+be determined reason, the AER interrupts are never received when using
+the internal MSI controller, which makes the link errors harder to
+notice.
+
+On the X13s, there is a large number of errors generated when bringing
+up the link on boot. This is related to the fact that UEFI firmware has
+already enabled the Wi-Fi PCIe link at Gen2 speed and restarting the
+link at Gen3 generates a massive amount of errors until the Wi-Fi
+firmware is restarted. This has now also been shown to cause the Wi-Fi
+to sometimes not start at all on boot for some users.
+
+A recent commit enabling ASPM on certain Qualcomm platforms introduced
+further errors when using the Wi-Fi on the X13s as well as when
+accessing the NVMe on the CRD. The exact reason for this has not yet
+been identified, but disabling ASPM L0s makes the errors go away. This
+could suggest that either the current ASPM implementation is incomplete
+or that L0s is not supported with these devices.
+
+Note that the X13s and CRD use the same Wi-Fi controller, but the errors
+are only generated on the X13s. The NVMe controller on my X13s does not
+support L0s so there are no issues there, unlike on the CRD which uses a
+different controller. The modem on the CRD does not generate any errors,
+but both the NVMe and modem keeps bouncing in and out of L0s/L1 also
+when not used, which could indicate that there are bigger problems with
+the ASPM implementation. I don't have a modem on my X13s so I have not
+been able to test whether L0s causes any trouble there.
+
+Note that disabling ASPM L0s for the X13s Wi-Fi does not seem to have a
+significant impact on the power consumption (and there are indications
+that this applies generally for L0s on these platforms).
+
+***
+
+Qualcomm has now confirmed that this is an issue on sc8280xp and its
+derivate platforms. Specifically, the PHY configuration used on these
+platforms is not correctly tuned for L0s and there is currently no
+updated configuration available.
+
+As we are now at 6.8-rc7, I've rebased this series on the Qualcomm PCIe
+binding rework in linux-next so that the whole series can be merged for
+6.9 (the patch to disable l0s and the devicetree fix are both marked for
+stable backport anyway).
+
+The DT bindings and PCI patch are expected to go through the PCI tree,
+while Bjorn A takes the devicetree updates through the Qualcomm tree.
+
+Johan
 
 
+Changes in v4
+ - drop the 'aspm-no-l0s' DT property and disable L0s for all sc8280xp
+   derivative platforms based on the compatible string for now
 
-On 3/5/2024 4:22 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 3/4/24 07:57, Dikshita Agarwal wrote:
->>
->>
->> On 2/10/2024 2:39 AM, Konrad Dybcio wrote:
->>> Without an OPP table and with vcodec_pmdomains_num (so, v1, v3 and
->>> sdm845_legacy targets), core_put_v4 is a NOP, jut like core_put_v1.
->>> Unify them!
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
-> 
-> [...]
-> 
-> 
->>> -static void vcodec_domains_put(struct venus_core *core)
->>> +void vcodec_domains_put(struct venus_core *core)
->>>   {
->>>       dev_pm_domain_detach_list(core->pmdomains);
->>>   
->> what is the base of this change?
->> I don't see dev_pm_domain_detach_list in mainline code.
->> Am I missing anything here?
-> 
-> The base is specified in the cover letter.
-> 
-> The code in question is indeed here since January, perhaps
-> you're looking at something older than -next.
-> 
-Thanks for the clarification, I was looking at media tree which
-surprisingly doesn't have the base change.
-> Konrad
-> 
+Changes in v3
+ - drop the two wifi link speed patches which have been picked up for
+   6.8
+ - rebase on binding rework in linux-next and add the properties also to
+   the new qcom,pcie-common.yaml
+   - https://lore.kernel.org/linux-pci/20240126-dt-bindings-pci-qcom-split-v3-0-f23cda4d74c0@linaro.org/
+ - fix an 'L0s' typo in one commit message
+
+Changes in v2
+ - drop RFC from ASPM patches and add stable tags
+ - reorder patches and move ITS patch last
+ - fix s/GB/MB/ typo in Gen2 speed commit messages
+ - fix an incorrect Fixes tag
+ - amend commit message X13 wifi link speed patch after user
+   confirmation that this fixes the wifi startup issue
+ - disable L0s also for modem and wifi on CRD
+ - disable L0s also for nvme and modem on X13s
+
+
+Johan Hovold (5):
+  dt-bindings: PCI: qcom: Allow 'required-opps'
+  dt-bindings: PCI: qcom: Do not require 'msi-map-mask'
+  PCI: qcom: Disable ASPM L0s for sc8280xp, sa8540p and sa8295p
+  arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
+  arm64: dts: qcom: sc8280xp: enable GICv3 ITS for PCIe
+
+ .../bindings/pci/qcom,pcie-common.yaml        |  4 ++-
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  4 ++-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 17 +++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        | 31 +++++++++++++++++--
+ 4 files changed, 51 insertions(+), 5 deletions(-)
+
+-- 
+2.43.0
+
 
