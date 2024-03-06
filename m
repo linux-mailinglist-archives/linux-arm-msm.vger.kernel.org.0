@@ -1,202 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-13452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 611A18732FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:47:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 746438732FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 10:47:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEECDB260FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:47:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD9431F258A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 09:47:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 036BC5F85F;
-	Wed,  6 Mar 2024 09:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97C345FBA7;
+	Wed,  6 Mar 2024 09:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TQjayoYA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aD2KGCDk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8AC5C904;
-	Wed,  6 Mar 2024 09:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70475FB95
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 09:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709718326; cv=none; b=q+45dNn3MwxdaIfsT68YCzGdeCX3+2TccWii25xJsbxUU731vj1GetKp1lT9MEbXOqRU5iiUSG8ghsBtvsqAUu2Y1mh6knGsHabkr4KAfpmHpd91695r5eg212nb6fw+RcnktCHpdEjtyTvoqgM2r1moKN9LYRdaTFB9ZjRhgxY=
+	t=1709718354; cv=none; b=UsNlYcbdMXpAHirKlu7WgXw2cOXnc5fWFBMckrIyBhMv98qcuodBhCjmSWNe9X0mRfONylrGMUkkjEunFsFl2V/MOFU5uLnWDXLZzgCNRqwAvDM+RiHaZSqlq5LLrzxhm+l0U1F3RwxCUcTekJ87GTX/B+Ji41KFv7JufUrZLqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709718326; c=relaxed/simple;
-	bh=CdamcnFSoH3i2sWATAhJWeRSwegUDWNNTTpSh2vn7NQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=njNdCLO7vbHmiebkJ5qDPqHc0jA4TnXjQE+H6nGADkjGM/Ty1d/OiS4z/TnBxBG5rVB9HU6e2x2/tOL8tR0IN2UL4u0bdG/zu9zkmYtLPOBFt0a4KHU6gjVYNJnwa9pWPPCMjVOZoNiip84EOmgmTsLHpCcfRVwDTNSu9XJv9ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TQjayoYA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 426988q2002175;
-	Wed, 6 Mar 2024 09:45:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=qcppdkim1; bh=IXQktx4fldRoQpAzDTFi
-	uBOW9vnYnZVPnipcv5l7YhI=; b=TQjayoYAVEUkhfOm5buyZD1hZYFBOlJcecIO
-	HUH8DlLPc2rqv7eSFMDdScyCW4eKNpsCmClmrgXZ99CMXl72rIv93ELBIkA11FgI
-	jUyEFI3jqRHz4EW+cGGu/0GU7+eWXcaDf1+CeiXFtMOAnvefO/MdoHhcItP8ioc5
-	OdrF65Owh3MJXo4g6oVamIpRNkK+w3ogDL9OOpuWAdpBZA5zd4a5eDxAxAoe/mdm
-	Ski0xtUkcErxHG3//DLui2z6LtidcL4bMAfYl5lUVXpWkdK5o4nnFlgpunrOfny8
-	h1dC8BRiyFqQ1iuwkLdbpEUwtTu06qufPQrtFnzegv0pLUcZ6Q==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpkkarcbw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Mar 2024 09:45:17 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4269jDZc016031;
-	Wed, 6 Mar 2024 09:45:13 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3wkw6kt39p-1;
-	Wed, 06 Mar 2024 09:45:13 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4269jDA4016026;
-	Wed, 6 Mar 2024 09:45:13 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4269jDgY016025;
-	Wed, 06 Mar 2024 09:45:13 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
-	id 7A1F55001D9; Wed,  6 Mar 2024 15:15:12 +0530 (+0530)
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_anupkulk@quicinc.com, quic_cchiluve@quicinc.com,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: [PATCH v1] slimbus: stream: Add null pointer check to prevent crash
-Date: Wed,  6 Mar 2024 15:15:07 +0530
-Message-Id: <20240306094507.14270-1-quic_vdadhani@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1709718354; c=relaxed/simple;
+	bh=CMVF7n8dO5vESzb9IowrOlCjHiKoyt3gqfWtMoJTUa8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HerEtVjJpIIMqmOq7cjKv1p85+fo5rQTrSgE1OhN6cARQOhbLluhmt+opeytC4/cE6OJnl/OxKww9SLCgOzxkdL7zGUDm5VlwRJITSvsdCkGgk7VJm/Z8NBrd0GzuFDNg/aJ00hnb+Dk+8aRlu6Ptvm5BIL60GYa15Vjb/vsoXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aD2KGCDk; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1dc49b00bdbso60129155ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 01:45:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709718352; x=1710323152; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=onNOJK5dVb7dHDdyyPmx8REkXT8q/MvLJnZknRgJ6mw=;
+        b=aD2KGCDkwwTN4+n3M2IQxusmQv89GQOnCb2vyldhkkZMMNc9eA92HqO2FGHB7l2V6e
+         zrqHPXcSoaW2Fvdw38zLRQroKE0wwStl+DnDAmff9FWnQFi5OB9anLTz7tmueXUrQbOw
+         7xfz2FsR3Ggnywtk2I5WvW5o0zV5vv1FBEkuRfkbRfH3Xg0uePSAkCZb22R323nRvOgf
+         1yiGU878gTKUhEmzx/jaDjmWuUbjW+z8xXpTMjHc995u+9hwSUNuyMj5+EuvJHNGY0Yf
+         ggTnMUchI7Smx26RRydFqVh4wiF4QZGldJlDA/PJT/0rM7IFCDn89owgP6kPvefCalQj
+         6AhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709718352; x=1710323152;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=onNOJK5dVb7dHDdyyPmx8REkXT8q/MvLJnZknRgJ6mw=;
+        b=pV8lhxqGWMYaqh/xdGQ41cYgyI7LcGwNyGGKYgrYmaULKkeXmu44SxqBnYtA391o/v
+         hjtFuM8OR3hOG6+0Mw2aR+9PbjgX7gun9guoA/7t873QXht/foiuOZmPIg9prTALYlGx
+         xYdBakLvFGfLMKW2b0esy59ZmBi+dXpLwykMC6j0UbmiERnHhEZYqgu/82+2X1TZxQF1
+         WL2K/1sRobA5S3tlix48t0+atxaXCPh0SbVp53BG9FwVHW3SVv6vcs53mv3BTgD3mL8C
+         5FZ9TOu70+wbSRQH29QQsEDUa+CD4yagxR4P0bsREGCtZ9fOtjfB6uyY1hJubQyWGUQ6
+         rrIA==
+X-Forwarded-Encrypted: i=1; AJvYcCUy0yh1a4dmBAaQq8jykL6Az35gPG7Rfv0SqRt5t9YzMyjNwFUI2U6Ns1WKiqsETV4ElM30BWhA/TxjFVX6Bw4x/U8CvI91IXrLaBDW7w==
+X-Gm-Message-State: AOJu0YxFfgXNkdYTYtl8b4PjY1hJ22qdd2f/F5wRrYVvSSFgy4Eq4ngk
+	ca0kdMCFxtWphhBcElYVVXJ70HJmPHV1Z7DVB3CvJGY650YQ9OH4CTlgIg1vXA==
+X-Google-Smtp-Source: AGHT+IF5LhL5XIw+P5F6Ztyfbld27LtakrR/VOK8wMDEg3ocAgkdsTAQ2fMWpd9fCfHvlu9oM0q57A==
+X-Received: by 2002:a17:903:24c:b0:1dc:b531:833 with SMTP id j12-20020a170903024c00b001dcb5310833mr4833692plh.63.1709718352039;
+        Wed, 06 Mar 2024 01:45:52 -0800 (PST)
+Received: from thinkpad ([117.248.1.194])
+        by smtp.gmail.com with ESMTPSA id c1-20020a170903234100b001db594c9d17sm12099477plh.254.2024.03.06.01.45.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Mar 2024 01:45:51 -0800 (PST)
+Date: Wed, 6 Mar 2024 15:15:45 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 00/10] arm64: dts: qcom: sc8280xp: PCIe fixes and
+ GICv3 ITS enable
+Message-ID: <20240306094545.GD4129@thinkpad>
+References: <20240305081105.11912-1-johan+linaro@kernel.org>
+ <20240306063302.GA4129@thinkpad>
+ <ZegZMNWxCnLbHDxP@hovoldconsulting.com>
+ <20240306083925.GB4129@thinkpad>
+ <CAA8EJppsbX=YXf1Z6Ud+YMnp2XnutN1hcb1T0KdAAWXFREVxXg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 7mJj2T4xWfA-Sy2fCjU02MGjinONqC3d
-X-Proofpoint-GUID: 7mJj2T4xWfA-Sy2fCjU02MGjinONqC3d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_05,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- bulkscore=0 spamscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- mlxlogscore=915 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403060076
+In-Reply-To: <CAA8EJppsbX=YXf1Z6Ud+YMnp2XnutN1hcb1T0KdAAWXFREVxXg@mail.gmail.com>
 
-We are facing crash due to null pointer dereference of stream
-in slim_stream_disable(). there is a possible scenario where
-client driver is calling slimbus stream APIs in incorrect
-sequence and it might lead to null pointer access of the stream
-in slimbus enable/disable/prepare/unprepare/free functions.
+On Wed, Mar 06, 2024 at 10:48:30AM +0200, Dmitry Baryshkov wrote:
+> On Wed, 6 Mar 2024 at 10:39, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > On Wed, Mar 06, 2024 at 08:20:16AM +0100, Johan Hovold wrote:
+> > > On Wed, Mar 06, 2024 at 12:03:02PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Tue, Mar 05, 2024 at 09:10:55AM +0100, Johan Hovold wrote:
+> > > > > This series addresses a few problems with the sc8280xp PCIe
+> > > > > implementation.
+> > > > >
+> > > > > The DWC PCIe controller can either use its internal MSI controller or an
+> > > > > external one such as the GICv3 ITS. Enabling the latter allows for
+> > > > > assigning affinity to individual interrupts, but results in a large
+> > > > > amount of Correctable Errors being logged on both the Lenovo ThinkPad
+> > > > > X13s and the sc8280xp-crd reference design.
+> > > > >
+> > > > > It turns out that these errors are always generated, but for some yet to
+> > > > > be determined reason, the AER interrupts are never received when using
+> > > > > the internal MSI controller, which makes the link errors harder to
+> > > > > notice.
+> > >
+> > > > > Enabling AER error reporting on sc8280xp could similarly also reveal
+> > > > > existing problems with the related sa8295p and sa8540p platforms as they
+> > > > > share the base dtsi.
+> > > > >
+> > > > > After discussing this with Bjorn Andersson at Qualcomm we have decided
+> > > > > to go ahead and disable L0s for all controllers on the CRD and the
+> > > > > X13s.
+> > >
+> > > > Just received confirmation from Qcom that L0s is not supported for any of the
+> > > > PCIe instances in sc8280xp (and its derivatives). Please move the property to
+> > > > SoC dtsi.
+> > >
+> > > Ok, thanks for confirming. But then the devicetree property is not the
+> > > right way to handle this, and we should disable L0s based on the
+> > > compatible string instead.
+> > >
+> >
+> > Hmm. I checked further and got the info that there is no change in the IP, but
+> > the PHY sequence is not tuned correctly for L0s (as I suspected earlier). So
+> > there will be AERs when L0s is enabled on any controller instance. And there
+> > will be no updated PHY sequence in the future also for this chipset.
+> 
+> Why? If it is a bug in the PHY driver, it should be fixed there
+> instead of adding workarounds.
+> 
 
-Fix this issue by adding null pointer check of the stream before
-accessing in all stream API’s exposed to client.
+Fixing the L0s support requires the expertise of the PHY team and they will only
+do if there is any real demand (like in the case of mobile chipsets). For
+compute chipsets, they didn't do because most of the NVMe devices out there in
+the market only support L1 and L1ss.
 
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
----
- drivers/slimbus/stream.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+So we have to live with this limitation for now.
 
-diff --git a/drivers/slimbus/stream.c b/drivers/slimbus/stream.c
-index 1d6b38657917..c5a436fd0952 100644
---- a/drivers/slimbus/stream.c
-+++ b/drivers/slimbus/stream.c
-@@ -202,10 +202,16 @@ static int slim_get_prate_code(int rate)
- int slim_stream_prepare(struct slim_stream_runtime *rt,
- 			struct slim_stream_config *cfg)
- {
--	struct slim_controller *ctrl = rt->dev->ctrl;
-+	struct slim_controller *ctrl;
- 	struct slim_port *port;
- 	int num_ports, i, port_id, prrate;
- 
-+	if (!rt || !cfg) {
-+		pr_err("%s: Stream or cfg is NULL, Check from client side\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	ctrl = rt->dev->ctrl;
- 	if (rt->ports) {
- 		dev_err(&rt->dev->dev, "Stream already Prepared\n");
- 		return -EINVAL;
-@@ -358,9 +364,15 @@ int slim_stream_enable(struct slim_stream_runtime *stream)
- {
- 	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
- 				3, SLIM_LA_MANAGER, NULL);
--	struct slim_controller *ctrl = stream->dev->ctrl;
-+	struct slim_controller *ctrl;
- 	int ret, i;
- 
-+	if (!stream) {
-+		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-+		return -EINVAL;
-+	}
-+
-+	ctrl = stream->dev->ctrl;
- 	if (ctrl->enable_stream) {
- 		ret = ctrl->enable_stream(stream);
- 		if (ret)
-@@ -411,12 +423,18 @@ int slim_stream_disable(struct slim_stream_runtime *stream)
- {
- 	DEFINE_SLIM_BCAST_TXN(txn, SLIM_MSG_MC_BEGIN_RECONFIGURATION,
- 				3, SLIM_LA_MANAGER, NULL);
--	struct slim_controller *ctrl = stream->dev->ctrl;
-+	struct slim_controller *ctrl;
- 	int ret, i;
- 
-+	if (!stream) {
-+		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-+		return -EINVAL;
-+	}
-+
- 	if (!stream->ports || !stream->num_ports)
- 		return -EINVAL;
- 
-+	ctrl = stream->dev->ctrl;
- 	if (ctrl->disable_stream)
- 		ctrl->disable_stream(stream);
- 
-@@ -448,6 +466,11 @@ int slim_stream_unprepare(struct slim_stream_runtime *stream)
- {
- 	int i;
- 
-+	if (!stream) {
-+		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-+		return -EINVAL;
-+	}
-+
- 	if (!stream->ports || !stream->num_ports)
- 		return -EINVAL;
- 
-@@ -476,8 +499,14 @@ EXPORT_SYMBOL_GPL(slim_stream_unprepare);
-  */
- int slim_stream_free(struct slim_stream_runtime *stream)
- {
--	struct slim_device *sdev = stream->dev;
-+	struct slim_device *sdev;
-+
-+	if (!stream) {
-+		pr_err("%s: Stream is NULL, Check from client side\n", __func__);
-+		return -EINVAL;
-+	}
- 
-+	sdev = stream->dev;
- 	spin_lock(&sdev->stream_list_lock);
- 	list_del(&stream->node);
- 	spin_unlock(&sdev->stream_list_lock);
+- Mani
+
+> >
+> > So yeah, let's disable it in the driver instead.
+> >
+> > > > > As we are now at 6.8-rc7, I've rebased this series on the Qualcomm PCIe
+> > > > > binding rework in linux-next so that the whole series can be merged for
+> > > > > 6.9 (the 'aspm-no-l0s' support and devicetree fixes are all marked for
+> > > > > stable backport anyway).
+> > >
+> > > I'll respin the series. Looks like we've already missed the chance to
+> > > enable ITS in 6.9 anyway.
+> > >
+> >
+> > Sounds good, thanks!
+> >
+> > - Mani
+> >
+> > --
+> > மணிவண்ணன் சதாசிவம்
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+மணிவண்ணன் சதாசிவம்
 
