@@ -1,73 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-13422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87BB9872FAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:32:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23A82872FBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 08:33:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A93821C24158
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 07:32:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A463D1F21597
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Mar 2024 07:33:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33F155C90A;
-	Wed,  6 Mar 2024 07:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50BAB5C5F8;
+	Wed,  6 Mar 2024 07:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gg/Q2Ktc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AXE9O5u4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585FB5C901
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Mar 2024 07:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A926F171BB;
+	Wed,  6 Mar 2024 07:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709710306; cv=none; b=L1sr39lbl/MozEeNHrD10fP8fvtbgnPHu7Nt8yEqG9tLfy9ElxCmTW4spvxLtSvxCxxznICwYnMS47bs9jhsErRRDDWVBLvNIauUJ0gnZY52UnNN67faCcmrSMNOIPwdUnZA1dGILbJVtU9FQLlRI6CvPYamsGK3XojHEexw+Yk=
+	t=1709710435; cv=none; b=jJfFH0/f1rjtRok+ebxZxINbnNPXFdTCipsHGeNxHUCE2OuD6QbbqndkkvG/8OJX50vGRhfYDeJlhmd6n7aSQJoNOTLA7UoNad4Btfx0H+ZX02l1gU5qucc4hxPom/ru65MzJikk4Cb4BkPw4SPcWLntRDCIxl2hYce3E3ZUDFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709710306; c=relaxed/simple;
-	bh=L61Q3sRBNxEDZqIo5DT4lUlclDQsQBNPG5uWsTOJFL4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YQnpOsWlnNU3jBrKOUlnQKshNd5O9+pjiDwleEvod8Zp/LFsAYoCLlvEYvAZpgyvvZgzugydduOl0HvgrTA0g0zjKjpIwJybApC0+ORm5xh9oYnj3hmFH6P8LsbwDRzXIcRL87eBa/14pIWFpATwj+MFQtTYTvKYXTfwmVJSDzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gg/Q2Ktc; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5654f700705so8935685a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Mar 2024 23:31:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709710302; x=1710315102; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9ZevfP++ZRj3TAKT/w15BjXfm13m6Km2GxP/lKzOk3s=;
-        b=gg/Q2Ktc/TPPwsdnDP9FdDdUdaWY2xvgClgXoaiuoSwL7xeSbfr+NfpnjUy5bhCh8v
-         vWFcvuQmft9g/3C5LMSTUEkBLVhwkuAQyi9ZkNUVohJTQ/w+IizKgR6MoBpiNFJ7hreR
-         39dIIOl42Y0gUERqQbf6dx25qCp3h/dGxZH84kBLPu9EUGiKdkLFrcxgRhMYcJpkD9Vk
-         uPQDFKt5UWfIBx0Nhuu407FwDPjfJJPuLdLOueCpwh0XtYbgTyBV0e97BxywKJHmJsrm
-         Yf4Ycw54iJlg/0zhwCelrlqTCnWsSvsiWe2IM9d9RNS5u2/SO2bh43B2BjFg4U1oJPZg
-         +AtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709710302; x=1710315102;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ZevfP++ZRj3TAKT/w15BjXfm13m6Km2GxP/lKzOk3s=;
-        b=cecuXxi1IvrzF+hY2GDB6kSKMjxA5Nwk52yYDFbuON9e6S4/NfBYpDUZnro7AepKDQ
-         AgGJU+04zKkdj0icLNrj9PwRo0f9D7Gk0YaBNfLzn66D3HaURwAgTmxayVS7ERtj9Sap
-         e7eJsvP9J9wi2sIoZTJdRGZmaabgqb3m/55KRaHGRkaoUCCU8JGa3DNf3tO/W1+ETr3x
-         2R4DPPDlLuDvrOCpFnRYifKpeKPAkXwZuue8G8XHdyzfoh1so8a4dv8With3grhC689B
-         DGU7CEl1V49llPHNC5rCJiDDYZ0hz5YL9w9fnHcqOnIv/VTMtT9QSzxLZY30TTT0v1uc
-         W5Wg==
-X-Gm-Message-State: AOJu0Yxxph0tgQ91kyeXcwGttNTBpoxK1U6S+HZB91cEgDsmIjnmo67+
-	DQ/BmR3Xm/8cbqsqHfYqV18ijsZQ2Y4EvoUYy3arL3ZJv5L29f6PKQ1SE6npTDk=
-X-Google-Smtp-Source: AGHT+IFQdvTvBLJocaWIU7JL1n85QTZ6IgQW7ZIrV1ccd3H2oqqKXJZqCvC3qXek/0Z7ADkUEKTkiw==
-X-Received: by 2002:a17:907:684:b0:a3f:5ad2:1ff0 with SMTP id wn4-20020a170907068400b00a3f5ad21ff0mr10820138ejb.46.1709710302642;
-        Tue, 05 Mar 2024 23:31:42 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id bx16-20020a170906a1d000b00a4588098c5esm2147873ejb.132.2024.03.05.23.31.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Mar 2024 23:31:42 -0800 (PST)
-Message-ID: <f7e54a3e-c678-4414-9a7b-08160d41741a@linaro.org>
-Date: Wed, 6 Mar 2024 08:31:40 +0100
+	s=arc-20240116; t=1709710435; c=relaxed/simple;
+	bh=9LwIcjfSJuhq4EOzgVx3TMaB2oEXbqURWt5hBLxw1fI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:CC:From:
+	 In-Reply-To:Content-Type; b=vBx47541nKoYQaQu+ikSq9v6RViBBt/9Mhr8TGe4sFwv9jOXyTqOaDWgXhiK1gH9p2OqkVlBJKDIb6DhNok3003rC9jw9X7S/K5qtXJH0EyD7oX5hbgUTwuex5cwS8vCnBBQUKYpcZBXoPRL0DyQSIYk0RHtgzlhiUfFELhx+Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AXE9O5u4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4265sDK4008944;
+	Wed, 6 Mar 2024 07:33:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:references:cc:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=xldv1UnPREtmqS9LLWWTF2pSaiIvufnBwmJJW0C3zks=; b=AX
+	E9O5u4Xc7UCCJlicsPDQt2oK7UKo6pVy2UwAW2qftQxG9zcnQ23888yCzQqUAcTb
+	GU9imTEp0QcZUZUK53wah9d4etzAWLRqln2vr0cnCXP/m1AdSmGcrUQw3SrDoCBK
+	b9GWpUC8zaMirbE2DzhHh2ODARx3Gvt/fy8k08yQRBwVKHksqzMxJBlIvmBwgOq+
+	hU+YQcC9bX7CUkbTe7+8cXKYeJSlKE1ws4INVEL+FR9ar5oXmmGwvpaRhPs1urei
+	buStvPpHEtYeLeQvb40BzB7HT/B7QIxIXA7jK6QaPI+2KVYuZGu9ivWYtLRk0uiZ
+	sEesn5UeDmKiqERPNVLg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpbav11xh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Mar 2024 07:33:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4267XbLk018155
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Mar 2024 07:33:37 GMT
+Received: from [10.216.23.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Mar
+ 2024 23:33:29 -0800
+Message-ID: <e441e458-a90b-495f-abf1-448620c14c85@quicinc.com>
+Date: Wed, 6 Mar 2024 13:03:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,73 +65,154 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: nvmem: Add compatible for sm8450, sm8550 and
- sm8650
+Subject: Re: [RFC 1/3] dt-bindings: usb: qcom,dwc3: Add support for multiple
+ power-domains
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Sriram Dash
+	<quic_sriramd@quicinc.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+References: <1709657858-8563-1-git-send-email-quic_sriramd@quicinc.com>
+ <1709657858-8563-2-git-send-email-quic_sriramd@quicinc.com>
+ <86371fc0-ef49-4dc9-b98c-7c5131cd1227@linaro.org>
+ <986b49f5-6a4a-430d-ba6a-2f387f2a262a@quicinc.com>
+ <84618a4a-be20-4c59-badc-15fa65debf4c@linaro.org>
 Content-Language: en-US
-To: Mukesh Ojha <quic_mojha@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, srinivas.kandagatla@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <1709662869-10569-1-git-send-email-quic_mojha@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1709662869-10569-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+CC: <quic_shazhuss@quicinc.com>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <Thinh.Nguyen@synopsys.com>,
+        <kishon@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <sudeep.holla@arm.com>, <p.zabel@pengutronix.de>,
+        <ulf.hansson@linaro.org>, <conor+dt@kernel.org>,
+        <manivannan.sadhasivam@linaro.org>, <quic_psodagud@quicinc.com>,
+        <quic_nkela@quicinc.com>, <gregkh@linuxfoundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_wcheng@quicinc.com>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <vkoul@kernel.org>
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <84618a4a-be20-4c59-badc-15fa65debf4c@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: A9fYxT-kTiART89yEKpTt9SUhqZi-ITM
+X-Proofpoint-ORIG-GUID: A9fYxT-kTiART89yEKpTt9SUhqZi-ITM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-06_04,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=693 impostorscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ phishscore=0 clxscore=1011 priorityscore=1501 spamscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403060059
 
-On 05/03/2024 19:21, Mukesh Ojha wrote:
-> Document QFPROM compatible for sm8450, sm8550 and sm8650 SoCs.
+
+
+On 3/6/2024 12:33 PM, Krzysztof Kozlowski wrote:
+> On 05/03/2024 19:03, Sriram Dash wrote:
+>> On 3/5/2024 10:37 PM, Krzysztof Kozlowski wrote:
+>>> On 05/03/2024 17:57, Sriram Dash wrote:
+>>>> Some target systems allow multiple resources to be managed by firmware.
+>>>> On these targets, tasks related to clocks, regulators, resets, and
+>>>> interconnects can be delegated to the firmware, while the remaining
+>>>> responsibilities are handled by Linux.
+>>>>
+>>>> To support the management of partial resources in Linux and leave the rest
+>>>> to firmware, multiple power domains are introduced. Each power domain can
+>>>> manage one or more resources, depending on the specific use case.
+>>>>
+>>>> These power domains handle SCMI calls to the firmware, enabling the
+>>>> activation and deactivation of firmware-managed resources.
+>>>>
+>>>> Signed-off-by: Sriram Dash <quic_sriramd@quicinc.com>
+>>>> ---
+>>>>    .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 74 ++++++++++++++++------
+>>>>    .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 49 ++++++++++++--
+>>>>    .../devicetree/bindings/usb/qcom,dwc3.yaml         | 37 ++++++++++-
+>>>>    3 files changed, 130 insertions(+), 30 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+>>>> index 1e2d4dd..53b9ba9 100644
+>>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+>>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+>>>> @@ -44,7 +44,32 @@ properties:
+>>>>        maxItems: 5
+>>>>    
+>>>>      power-domains:
+>>>> -    maxItems: 1
+>>>> +    description: specifies a phandle to PM domain provider node
+>>>
+>>> Please drop all redundant descriptions. Adding them is not even related
+>>> to this patch.
+>>>
+>>
+>> Thanks Krzysztof for the super quick response !
+>> Sure. will drop the description for power-domain
+>> and power-doamin-names.
+>>
+>>>> +    minItems: 1
+>>>> +    maxItems: 2
+>>>> +
+>>>> +  power-domain-names:
+>>>> +    description:
+>>>> +      A list of power domain name strings sorted in the same order as the
+>>>> +      power-domains property.
+>>>> +
+>>>> +      For platforms where some resource are firmware managed, the name
+>>>> +      corresponding to the index of an SCMI domain provider can be
+>>>> +      "usb_core" or "usb_transfer".
+>>>> +    items:
+>>>> +      - const: usb_core
+>>>> +      - const: usb_transfer
+>>>
+>>> How is this related to fw-managed? I fail to see it. Don't mix
+>>> independent problems in one patch.
+>>>
+>>
+>> Some of the the resources like clocks, regulators, etc will be
+>> controlled by the firmware instead of OS. However, some resources
+>> still will be controlled by OS (interrupts for example).
+>>
+>> So, to support the management of partial resources in Linux, and
+>> offload the other resource management to firmware, multiple power
+>> domains are introduced. They will be corresponding to different
+>> hw blocks.
+>>
+>> Do you suggest splitting the addition of power-domain-names and
+>> addition of fw-managed property in separate patches for bindings!
+>>
+>>>> +
+>>>> +  qmp,fw-managed:
+>>>
+>>> Please do not upstream vendor code directly, but perform basic
+>>> adjustment to upstream Linux kernel. There is no such company as gmp.
+>>>
+>>> Run this first through your internal review process.
+>>>
+>>
+>> This property is newly introduced for the qmp superspeed phy and
+>> similar dt properties are introduced for hsphy and dwc3 qcom
+>> controller glue layer driver. It will govern the suspend/ resume
+>> of the resources (by firmware or OS) as required.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
+> So that's your answer to "there is no such company as gmp"? It's not
+> relevant at all.
+> 
+> Please run it through internal review first.
+> 
+> 
+Hi Sriram,
 
-Where is any user of this?
+  QMP indicates the driver name "QMP Phy" (for super speed mode of 
+operation), not the company name. If this property is for identification 
+of fw management to be done / (or not to be done) in QMP Phy, then 
+please rename is appropriately. Check how other properties are defined 
+in the QMP bindings and add "qcom" at beginning preferably. For 
+reference as to how properties were added to femto phy driver: [1].
 
-Best regards,
-Krzysztof
+[1]: 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1662480933-12326-2-git-send-email-quic_kriskura@quicinc.com/
 
+Regards,
+Krishna,
 
