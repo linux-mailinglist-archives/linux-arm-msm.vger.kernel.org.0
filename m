@@ -1,224 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-13615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53EBC875459
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 17:41:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA5168755BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 19:04:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0E53B249CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 16:41:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 685DD1F21AC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 18:04:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE58712FB12;
-	Thu,  7 Mar 2024 16:41:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SUnav6ZE"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F39C12FF8C;
+	Thu,  7 Mar 2024 18:04:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBABE1BDDB;
-	Thu,  7 Mar 2024 16:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3E917722
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 18:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709829702; cv=none; b=jpejH92KV4ej8TL3qMdnhtRFEeG2MPYODip4zSncw76yhzmJBirAbrpxCRVh5yajKcBc7bFllisVCYF7a/qUC/lVFVLxUznl+beeHstOuf2IRfepd36rwhsLOCIAg9D+SIbHOJryW5/wwPSL+00w5wM3t9EX0nXbWtZkKebhioM=
+	t=1709834661; cv=none; b=jxKl2x8ApRGHYwLepBbuoBLo1wgZarnZ1N6hrsedwMODmkSCWdh/3n39v5p3riYy/ebQrUYpgwQ/yjGQoEnvNej3GkTTaEtnFeYBeGEdCiQprREim5dXL5/Qp7XdxThG/2E2B9IKuknT0wvj10EWXSp85QLBSKjXSR4J+nmX8wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709829702; c=relaxed/simple;
-	bh=/1yv2voYazdhfYiCba0+H2ZUZDL9rA+8uY9mleYG4cw=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CKUlin+NxqXNM2HrOMwQj7QYI6nagz1VvYcddR1/RkOA21RaIJG31rLAJs0fOvKnGcSt6VztaBKU8mmfYgY1f/qjXyNR5VJZFODduYmt0TRwCOf4mPVXmiBBi3WbNWl0+7aD4swVazwrr4YAY2AtwxelSvmRkMA/7uhmmT2CRE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SUnav6ZE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 427BrCPO009368;
-	Thu, 7 Mar 2024 16:41:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=IhCM9GWGGCh+z/XvnkdtX
-	dFWqYJpK598AUrSkFnXIWc=; b=SUnav6ZEvKO+0hU8fPqiO+h7HIIcnW36ev51o
-	UMXjUxg6jwvYKHiD464eS+HgPtJPuVQ8W4DtyRLPC9VGyA8vSOhOHXgK5eBBndH8
-	aFA4Bs8jC22Biq7i9PRP8uBJ7434r5UcuRfho+dpX0O+j27kpEQfumffg2m3ywTs
-	bFYHWe4j1L+tHsZkqqMAgjzmdz8v4L5XMJPRv13a0DdmQAZkjPkQD0pnHZp+kvVC
-	BFlYVRT4Z9/VNiuIYhAJY7H9rg1nfv6sMvHL3Hwuc0tYFkDX1w2xu4daMLYyP3AY
-	K2c429Gza+Xtj6KaQUqnot0p+tcGfOpoIatqoEl7pkkczIowQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqd3d18vp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Mar 2024 16:41:17 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 427GfGZW010824
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 7 Mar 2024 16:41:16 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 7 Mar 2024 08:41:14 -0800
-Date: Thu, 7 Mar 2024 08:41:14 -0800
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-CC: Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik
-	<quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Fuad
- Tabba" <tabba@google.com>,
-        Sean Christopherson <seanjc@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: Re: [PATCH v17 07/35] gunyah: rsc_mgr: Add resource manager RPC
- core
-Message-ID: <20240307083827092-0800.eberman@hu-eberman-lv.qualcomm.com>
-Mail-Followup-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, 
-	Alex Elder <elder@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Murali Nalajal <quic_mnalajal@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
-	Carl van Schaik <quic_cvanscha@quicinc.com>, Philip Derrin <quic_pderrin@quicinc.com>, 
-	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Fuad Tabba <tabba@google.com>, Sean Christopherson <seanjc@google.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mm@kvack.org
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-7-1e9da6763d38@quicinc.com>
- <20240307153843.GC1695516@quicinc.com>
+	s=arc-20240116; t=1709834661; c=relaxed/simple;
+	bh=yc3g+/Nd0Pmwxjkl5V0c/NkFhMJ9uLA4cRIf408SeNw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GjHW0ii+lGcJZN9UOacTPgBlorpHC6LgeWhR+MaXKoz/k5BrRlCk3pqO/AZBOLubNhAGN+Y2z1unABfdqqBnUMoVhgDFb4UJsJdXXzPdJ5LaQwW+mKIjo6mEWHqRKdMGFcgRNmIOrgBxqNp09NRJ2rowcUf6ty6JAPM5Ev38Zsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riI6D-00083p-Fl; Thu, 07 Mar 2024 19:04:09 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riI6C-004zVU-8k; Thu, 07 Mar 2024 19:04:08 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1riI6C-001Sgr-0Z;
+	Thu, 07 Mar 2024 19:04:08 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>
+Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Sanyog Kale <sanyog.r.kale@intel.com>,
+	linux-arm-msm@vger.kernel.org,
+	alsa-devel@alsa-project.org,
+	kernel@pengutronix.de
+Subject: [PATCH] soundwire: qcom: Convert to platform remove callback returning void
+Date: Thu,  7 Mar 2024 19:03:59 +0100
+Message-ID: <20240307180359.190008-2-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240307153843.GC1695516@quicinc.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0-XBk_3tQgGP4ZavfFBD2TJdDBfBlRCf
-X-Proofpoint-GUID: 0-XBk_3tQgGP4ZavfFBD2TJdDBfBlRCf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-07_13,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- mlxscore=0 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403070114
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1851; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=yc3g+/Nd0Pmwxjkl5V0c/NkFhMJ9uLA4cRIf408SeNw=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl6gGPZNGepLlfgoCna5QMiHA9JERGJwnpgjMym Hlx2ao8oeuJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZeoBjwAKCRCPgPtYfRL+ TjfjB/4zXDBVH77xtXV3ubd9f3ubktiED7cdyL+RSJsZQwDLU9+74pI5FA5WJoGsOQfvt0oNoFb X0q+dMB+83aaAIzA86WU90jisBQKoVbUqlFKHWXPHHpxqxBjezC5oCIwKcpVVR6cPGinU23bRQ3 h3/+gxD9wtuG1+RtBMldZ7oNoLArZmosFc+06ZwaprkPaJucVN+NeXRxhRx8tRe24ihCs3HIzLg AdvMch1REn9kuP2uvDBRk+m1IgxqNN3ZpgTgDn52Oq1eI9n7uO04pqmCDvpM129gLO0NuOPC7TA 14WYQGWpIjCX4biJyrtgjqS5zie5JzcA1SEwb56b/IZPSQr7
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 07, 2024 at 09:08:43PM +0530, Srivatsa Vaddagiri wrote:
-> * Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:30]:
-> 
-> > The resource manager is a special virtual machine which is always
-> > running on a Gunyah system. It provides APIs for creating and destroying
-> > VMs, secure memory management, sharing/lending of memory between VMs,
-> > and setup of inter-VM communication. Calls to the resource manager are
-> > made via message queues.
-> > 
-> > This patch implements the basic probing and RPC mechanism to make those
-> > API calls. Request/response calls can be made with gh_rm_call.
-> > Drivers can also register to notifications pushed by RM via
-> > gh_rm_register_notifier
-> > 
-> > Specific API calls that resource manager supports will be implemented in
-> > subsequent patches.
-> > 
-> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> 
-> Left a minor comment below. LGTM otherwise.
-> 
-> Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-> 
-> > +static irqreturn_t gunyah_rm_rx(int irq, void *data)
-> > +{
-> > +	enum gunyah_error gunyah_error;
-> > +	struct gunyah_rm_rpc_hdr *hdr;
-> > +	struct gunyah_rm *rm = data;
-> > +	void *msg = &rm->recv_msg[0];
-> > +	size_t len;
-> > +	bool ready;
-> > +
-> > +	do {
-> > +		gunyah_error = gunyah_hypercall_msgq_recv(rm->rx_ghrsc.capid,
-> > +							  msg,
-> > +							  sizeof(rm->recv_msg),
-> > +							  &len, &ready);
-> > +		if (gunyah_error != GUNYAH_ERROR_OK) {
-> > +			if (gunyah_error != GUNYAH_ERROR_MSGQUEUE_EMPTY)
-> > +				dev_warn(rm->dev,
-> > +					 "Failed to receive data: %d\n",
-> > +					 gunyah_error);
-> > +			return IRQ_HANDLED;
-> > +		}
-> > +
-> > +		if (len < sizeof(*hdr)) {
-> > +			dev_err_ratelimited(
-> > +				rm->dev,
-> > +				"Too small message received. size=%ld\n", len);
-> > +			continue;
-> 
-> In practice we should never hit this condition, in case we do encounter, do you
-> see a reason why continue is preferred over simply breaking the loop?
-> 
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-There might be more messages to read, which we would not otherwise read.
-Since those messages might be parseable, I'd rather try to recover than
-break communication with RM.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-As you mention, we should never encounter this condition. The guard is
-to avoid reading garbage values.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-> > +		}
-> > +
-> > +		hdr = msg;
-> > +		if (hdr->api != RM_RPC_API) {
-> > +			dev_err(rm->dev, "Unknown RM RPC API version: %x\n",
-> > +				hdr->api);
-> > +			return IRQ_HANDLED;
-> > +		}
-> > +
-> > +		switch (FIELD_GET(RM_RPC_TYPE_MASK, hdr->type)) {
-> > +		case RM_RPC_TYPE_NOTIF:
-> > +			gunyah_rm_process_notif(rm, msg, len);
-> > +			break;
-> > +		case RM_RPC_TYPE_REPLY:
-> > +			gunyah_rm_process_reply(rm, msg, len);
-> > +			break;
-> > +		case RM_RPC_TYPE_CONTINUATION:
-> > +			gunyah_rm_process_cont(rm, rm->active_rx_message, msg,
-> > +					       len);
-> > +			break;
-> > +		default:
-> > +			dev_err(rm->dev,
-> > +				"Invalid message type (%lu) received\n",
-> > +				FIELD_GET(RM_RPC_TYPE_MASK, hdr->type));
-> > +			return IRQ_HANDLED;
-> > +		}
-> > +	} while (ready);
-> > +
-> > +	return IRQ_HANDLED;
-> > +}
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/soundwire/qcom.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 3c4d6debab1f..fb70afe64fcc 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -1636,14 +1636,12 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int qcom_swrm_remove(struct platform_device *pdev)
++static void qcom_swrm_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(&pdev->dev);
+ 
+ 	sdw_bus_master_delete(&ctrl->bus);
+ 	clk_disable_unprepare(ctrl->hclk);
+-
+-	return 0;
+ }
+ 
+ static int __maybe_unused swrm_runtime_resume(struct device *dev)
+@@ -1769,7 +1767,7 @@ MODULE_DEVICE_TABLE(of, qcom_swrm_of_match);
+ 
+ static struct platform_driver qcom_swrm_driver = {
+ 	.probe	= &qcom_swrm_probe,
+-	.remove = &qcom_swrm_remove,
++	.remove_new = qcom_swrm_remove,
+ 	.driver = {
+ 		.name	= "qcom-soundwire",
+ 		.of_match_table = qcom_swrm_of_match,
+
+base-commit: 11afac187274a6177a7ac82997f8691c0f469e41
+-- 
+2.43.0
+
 
