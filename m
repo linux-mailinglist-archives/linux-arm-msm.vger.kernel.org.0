@@ -1,153 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-13598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C515874C3C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 11:21:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BF07874CF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 12:05:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 09FABB2473C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 10:21:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E63B11F2275A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 11:05:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9C385268;
-	Thu,  7 Mar 2024 10:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CCDA85272;
+	Thu,  7 Mar 2024 11:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NOUfxUU0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="exujJyjb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C2584FD3;
-	Thu,  7 Mar 2024 10:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE62F1E4B3
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 11:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709806879; cv=none; b=WJ/eeI38AEmfqbSn0jR8VHb3rgSNuA0cE+Q8v8PUi3YGqlTIo+wONHh3TH2pqC6uBinWC3D+QmKOLdprknQC750dmfEC9Tn5Lh6B4mzDSmvRKaSx4Ts7rzdxYjcpFDMWuHnlpMS8A3pEd4tiJRb5LjL07/uKb6fV4EHAIgVAoeE=
+	t=1709809526; cv=none; b=pf5PSSc2hiW5TsDSZQ3OE/hED7KIHg8RbbiXVEHQHnEwZp2SnTwlG+APRblSqoXHYh4YNZUFLSE+gGNMm88Xzel2U4oc/xg75zfT42JU6HuHfrr1tjLuznBX8kiz9b5IUnuvru0HvO2rCdJv72PKmVpE6pzLs8mKJ7JjzUVy8CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709806879; c=relaxed/simple;
-	bh=ZgPb3L+1hlSswY8R/A1yVrI7s16QDevE/TGhJhroLLQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jK2jJmRf0Tf4g3TqPKFwrjYL6ihpl+P92e7FdegPWl6tJ6MY1dMUEkhBMBx2ux7vbfrRvJgH5kYzbqSZDmU2nzh6apUYU4JdznZWHvo5IgN59aHdjlT/xtc9gCZ4gRUU9pV8tzatzja428FvhZVUb/RuhxeTwlKx+6wDDTJ3e34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NOUfxUU0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13420C433C7;
-	Thu,  7 Mar 2024 10:21:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709806879;
-	bh=ZgPb3L+1hlSswY8R/A1yVrI7s16QDevE/TGhJhroLLQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NOUfxUU0Ld96sEz+PME7cjdo/7cZhvlf6eqCB91h306xqORIYQEMugs6XZMx6V5Pz
-	 XOiTQdKEj/OGJ8vhHmaTKXL7YjXEZQYPuqGQSSRy2U85LebiuB9xeQyrVYR4n4525Z
-	 5k5xnRSP2l9ApS6eZxdXMNrcwy/W09gYUjs5gsWjRgQdzHQ3zSDyA2E2+D1UhY9JXA
-	 Z/cLwfFyMukRfmNmukSxGR6i/zWZH2Skik7iMapNeHvMxpKTiguyYBuh/4TyJ6M6kw
-	 Ze4p8a3yzms/rFoKUXnEDj5GnRUrP/BEmWZxROAG8aUKzS73BEvgsIejnYaYPixw/5
-	 OKIhDnXwMmReA==
-Message-ID: <20332b6f-e0cc-4356-83ec-0c9771481083@kernel.org>
-Date: Thu, 7 Mar 2024 11:21:15 +0100
+	s=arc-20240116; t=1709809526; c=relaxed/simple;
+	bh=6yTSMAfIpYgeW5yNePSWCVfZuNVRRhGsUTb2K2VS/NA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lHagJPTPZcVogrwoTtHFaqwn63SvQ5u2k4tm28H4juBksKMFam2A9l6wBgoHnCLfo3MPJG5eTBOJLsdzJJ47T3Y5rGiELgADN4L+y8FuFU6cxQRLWOyXGXCnJsqyf07//33vG9iWk5gLL6V0IRtBa13hoRvGt0QCHzRMSumOxoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=exujJyjb; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-29a2545a1e7so417083a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 03:05:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709809524; x=1710414324; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eLMXZlB+CaKPKnEBVj6FeQsKz5anAO2cZpP+/8zZPlo=;
+        b=exujJyjbLtA5qkZW9qJScGqzbKT0b71fYzh3+KL8j7NMi4TMtuys6kujd/kKYrZRnR
+         fY0pRvMGSMw7A19Gp6U+l5AsWQKxw4ZRndmwAlKYW5JazItLExUvyyi1y4nv3Ssiz03N
+         GYdkuhh+/7/7zwfpjXfvT1MD3cAEtXmCKArY0+StJc4HUHee8jImHCeLPuhA1jy+lEsU
+         Tf+e6+61se67YyLQiONRNoo81Ec3DH1/dAOJq3xcLvXPe4YJOIZjtx61h6XNZTmxGIC6
+         D6Im9RZOAbWOsEYmHWa2Cw21F60JrP3advNDBAX9Tz8Cwkr8j7uiPk2JegRyZLe25WvC
+         Mwnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709809524; x=1710414324;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eLMXZlB+CaKPKnEBVj6FeQsKz5anAO2cZpP+/8zZPlo=;
+        b=hcTkotNJv4EBiw7z2dQR7KNJW0/487BCAgw6Z2QqdVSP2Gla0AoSVRZB3p970likyw
+         1IDUkaRs0KEvl8ctUlIDAyC4BAIDGZk1GXSUdTNd/MpuP96aus2FTj32T8/c3zNHLTBp
+         u2/1wB+kX9J9z5OC9eCK6mRQaNYpuuUNYatlW64lY2MoQ3joTyX6wjKitKzvshVE75jS
+         mHtdBv+m07AZx0z0z4uX43v0ZeAHY/mnv1s2ga/4ZZ7saOWnzZInLc1ws1dSc7sxMmOS
+         NqXS8P2hHDOH4wB4gMLyVViozUpkq8b17UMdbrfiJr0umrroDNxou7vjElTQnm8bItMF
+         70Tg==
+X-Forwarded-Encrypted: i=1; AJvYcCUrjwnbwBzisC1MqacaydsWcmPhKTXK7a7XWq+VvaxKitRz8rwFDGpFzUmiLgFpX14rl+orVOJMwurkb7cpSDpmJCbBkXIlfgzymobsQQ==
+X-Gm-Message-State: AOJu0YwMIVRwQhkQA/D4mvwDtATZs9Ugc8NjC9M46Ckmf0fJw9wkp5JD
+	wpZaLtP9hMdnEw3saGV1pLodIDQ0fNLQQp0IXXWAkw1Dy9HokPPQdDQVINrAPQ==
+X-Google-Smtp-Source: AGHT+IGU7HJBm48LhGfSPEdeJYWaDuhk3eBYJjxe7bJK2cIqvGwhefT53ZZKZibiE/Fhi1oUoHRhog==
+X-Received: by 2002:a17:90a:8544:b0:29b:200a:9b80 with SMTP id a4-20020a17090a854400b0029b200a9b80mr14926811pjw.2.1709809523767;
+        Thu, 07 Mar 2024 03:05:23 -0800 (PST)
+Received: from [127.0.1.1] ([117.217.178.39])
+        by smtp.gmail.com with ESMTPSA id cp20-20020a17090afb9400b00299e946b9cdsm1305785pjb.20.2024.03.07.03.05.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Mar 2024 03:05:23 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Date: Thu, 07 Mar 2024 16:35:15 +0530
+Subject: [PATCH] PCI: qcom: Enable BDF to SID translation properly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: llcc: Add llcc device availability check
-Content-Language: en-US
-To: Mukesh Ojha <quic_mojha@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240220122805.9084-1-quic_mojha@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240220122805.9084-1-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240307-pci-bdf-sid-fix-v1-1-9423a7e2d63c@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGqf6WUC/x2MSQqAMAwAv1JyNhCr4PIV8aBJqrmotCCC9O8Wj
+ zMw80LSaJpgdC9EvS3ZeRSoKwe8L8emaFIYPPmWGurwYsNVAiYTDPYgDyw9E/lGCEp1RS36P05
+ zzh9RTEGUYQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3426;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=6yTSMAfIpYgeW5yNePSWCVfZuNVRRhGsUTb2K2VS/NA=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl6Z9v1EDKrV69oCW0WMoRHu6XexGldpVsbiJEq
+ qbdTaELRCaJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZemfbwAKCRBVnxHm/pHO
+ 9VE/B/9bynRoqgU8SObMiNt5QbGoGwvceANwJK4eCRIdeBn5Sabs+ywHmOxTlf7DeStkMH/kigp
+ y8ZBgUiuwMJY0JtEZJ8hCJk+Ydh23io5iAjwvzO2gGxPVqAQt32ffS/SeTL33+WuFY0koBCuaQA
+ Y6BRT/aSyKb6s40VnplnEzT4Qd8LZnfUmUhg+FKsUoRreN+ASeKIe65pRZtMbGwGaiojO6q4u6Z
+ aduet1+/PPtCmIHKH+Xjw4DK3AedUPohGzwM3md94v5zfiHlKJpebzclJJZug7aHEPKeEm7gRP5
+ /Bom9ygj87U2rDjrzSBAXIUbYcHwj3HXt3vfywdpwDoUbaKO
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-On 20/02/2024 13:28, Mukesh Ojha wrote:
-> When llcc driver is enabled  and llcc device is not
-> physically there on the SoC, client can get
-> -EPROBE_DEFER on calling llcc_slice_getd() and it
-> is possible they defer forever.
+Qcom SoCs making use of ARM SMMU require BDF to SID translation table in
+the driver to properly map the SID for the PCIe devices based on their BDF
+identifier. This is currently achieved with the help of
+qcom_pcie_config_sid_1_9_0() function for SoCs supporting the 1_9_0 config.
 
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+But With newer Qcom SoCs starting from SM8450, BDF to SID translation is
+set to bypass mode by default in hardware. Due to this, the translation
+table that is set in the qcom_pcie_config_sid_1_9_0() is essentially
+unused and the default SID is used for all endpoints in SoCs starting from
+SM8450.
 
-> 
-> Let's add a check device availabilty and set the
-> appropriate applicable error in drv_data.
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->  drivers/soc/qcom/llcc-qcom.c | 23 ++++++++++++++++++++++-
->  1 file changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 4ca88eaebf06..cb336b183bba 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -769,6 +769,27 @@ static const struct qcom_sct_config x1e80100_cfgs = {
->  };
->  
->  static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
-> +static DEFINE_MUTEX(dev_avail);
-> +
-> +static bool is_llcc_device_available(void)
-> +{
-> +	static struct llcc_drv_data *ptr;
-> +
-> +	mutex_lock(&dev_avail);
-> +	if (!ptr) {
-> +		struct device_node *node;
-> +
-> +		node = of_find_node_by_name(NULL, "system-cache-controller");
+This is a security concern and also warrants swapping the DeviceID in DT
+while using the GIC ITS to handle MSIs from endpoints. The swapping is
+currently done like below in DT when using GIC ITS:
 
-Why do you look names by name? This create undocumented ABI.
+			/*
+			 * MSIs for BDF (1:0.0) only works with Device ID 0x5980.
+			 * Hence, the IDs are swapped.
+			 */
+			msi-map = <0x0 &gic_its 0x5981 0x1>,
+				  <0x100 &gic_its 0x5980 0x1>;
 
-NAK (also for any future uses of such of_find_node_by_name()).
+Here, swapping of the DeviceIDs ensure that the endpoint with BDF (1:0.0)
+gets the DeviceID 0x5980 which is associated with the default SID as per
+the iommu mapping in DT. So MSIs were delivered with IDs swapped so far.
+But this also means the Root Port (0:0.0) won't receive any MSIs (for PME,
+AER etc...)
+
+So let's fix these issues by clearing the BDF to SID bypass mode for all
+SoCs making use of the 1_9_0 config. This allows the PCIe devices to use
+the correct SID, thus avoiding the DeviceID swapping hack in DT and also
+achieving the isolation between devices.
+
+Cc:  <stable@vger.kernel.org> # 5.11
+Fixes: 4c9398822106 ("PCI: qcom: Add support for configuring BDF to SID mapping for SM8250")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+I will send the DT patches to fix the msi-map entries once this patch gets
+merged.
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 10f2d0bb86be..84e47c6f95fe 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -53,6 +53,7 @@
+ #define PARF_SLV_ADDR_SPACE_SIZE		0x358
+ #define PARF_DEVICE_TYPE			0x1000
+ #define PARF_BDF_TO_SID_TABLE_N			0x2000
++#define PARF_BDF_TO_SID_CFG			0x2c00
+ 
+ /* ELBI registers */
+ #define ELBI_SYS_CTRL				0x04
+@@ -120,6 +121,9 @@
+ /* PARF_DEVICE_TYPE register fields */
+ #define DEVICE_TYPE_RC				0x4
+ 
++/* PARF_BDF_TO_SID_CFG fields */
++#define BDF_TO_SID_BYPASS			BIT(0)
++
+ /* ELBI_SYS_CTRL register fields */
+ #define ELBI_SYS_CTRL_LT_ENABLE			BIT(0)
+ 
+@@ -1008,11 +1012,17 @@ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
+ 	u8 qcom_pcie_crc8_table[CRC8_TABLE_SIZE];
+ 	int i, nr_map, size = 0;
+ 	u32 smmu_sid_base;
++	u32 val;
+ 
+ 	of_get_property(dev->of_node, "iommu-map", &size);
+ 	if (!size)
+ 		return 0;
+ 
++	/* Enable BDF to SID translation by disabling bypass mode (default) */
++	val = readl(pcie->parf + PARF_BDF_TO_SID_CFG);
++	val &= ~BDF_TO_SID_BYPASS;
++	writel(val, pcie->parf + PARF_BDF_TO_SID_CFG);
++
+ 	map = kzalloc(size, GFP_KERNEL);
+ 	if (!map)
+ 		return -ENOMEM;
+
+---
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+change-id: 20240307-pci-bdf-sid-fix-c9cd8c0023d0
 
 Best regards,
-Krzysztof
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 
