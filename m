@@ -1,140 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-13600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10EB4874D44
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 12:20:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46DAB874D62
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 12:28:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AD681F24609
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 11:20:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6525E1C20953
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 11:28:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174531292C0;
-	Thu,  7 Mar 2024 11:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92B0A128366;
+	Thu,  7 Mar 2024 11:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qp0rPK08"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gSmcDYO1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC4F128366
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 11:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1669DDC9;
+	Thu,  7 Mar 2024 11:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709810405; cv=none; b=clEnX7h3beBnwib94lmzz3t5m1xTOnbBFbb1Teb0MJrP5Pkn0AYB+AVESUoG3KGX7nib+X4arkWD6AgdLGVhDJQ4eVSQEcTHTJZDN25qKYP4vaKxqrxlj8jHJDdJAF79QXTSd5AmWFo9ZFLeVBp+2BkXfl6CfekN6RpbS4qQoG8=
+	t=1709810884; cv=none; b=ZfBk7UxQdltbcjkUwAUiDu9CHs5BeWzhlChz+6MODiAuBdWUNKP0KOkpgV1/5bN9pheRHzTkknNF4MisRKRtnnsbrMAmiA+Z0vbnYcj84JDVQoqWaKy6LFzClyRg8E+RcaZ3K/FdMIaoOR/4ompUNcXgemPnBq+oBubjEMyeZdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709810405; c=relaxed/simple;
-	bh=DfswE7HJLLqy77GWnPiVArfI05VtoLAEZZ8wtl2bLVQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jhrTto3FxPrBrPrC2+USs4KbRoSVO8+HlK8nAICxIjteCw4apdwwYlGIIACf79zCtnahP64uh6HKKK07ELj69o9qKqeXExcNVUNSdscbuez7+nIdyIxtbVAmfk8eRj4nozVSEqXQUEqv8AxcxBppVllbulMGQn9MRZ/p+MAPkq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qp0rPK08; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d22b8801b9so10748941fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 03:20:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709810400; x=1710415200; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XTSBVVVJ5YriwXW83Xu49WC7Hj5VHh4fFgiqujVWr9o=;
-        b=Qp0rPK08swaXH27iS0DcRBQgAvckoR8HEpAoYS75USBCO417zqthTf/8gr09pzXI4p
-         uAxVuczpD7demMAmO9HaWD0yfB8mJ4HqDtDv3vGdDFZSTlJ3OzpH7EzAQR95wlpbM9oR
-         d4fLEFmDr1WWv7KDbD8S9gjCAQhFG6nrhA3ekE/8txkEPblhd8mY/SphVCwirZ1kgBXi
-         s03TsrU4L9ByfepDDzgQb0Eq/E4PZZ1kZF0SNcVRvuKBRN8UalR8kKLC/hYGsZlOmgSe
-         RfeF9Nm3vNdxPoT+IwZj1WiO9N+cAp75bsgodOTOvBEWSjmDky+HmXMJcFo7LoKO2XrR
-         4irA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709810400; x=1710415200;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XTSBVVVJ5YriwXW83Xu49WC7Hj5VHh4fFgiqujVWr9o=;
-        b=RPfMqNPQeJVeDiofxt8AWJLHU4Gkw7mvmclakUwMYlRNtw3EWbfh4c9ppWo7z6gDTs
-         J7Mt5JYg3/6PcPf7Lz9L10xfLGiyQNxSnAKG7gcaVIKwBadP6VKE78j5gskDJLweC1a7
-         CzAWycZAVkeAsNzW4bWFqeEF5hqAC2HmjK7jokljAs9fwi96nILwOZVnjD2VwjLHwdJ9
-         bEOMZhXOG3PLGGL+0SSLLwRqZhMVstL6fOHiQ2tAh5Nwzz//0EsYlJcz61ILG6V1X+yx
-         SEGh4gEvD70Jv/QeqDGXrHNImavYlJG1zLw/V47leg5FH6tuYIGm1YnjMLKseMe2OLBS
-         o5rg==
-X-Forwarded-Encrypted: i=1; AJvYcCUtXY/qsfHWCkzixUANZX5glRgunssKUbFuU+XD4NcWYjNtw+/Is6vmcIzwvwPbHLqU9ac333gsfbeY9HecvVhig2Sx5ft2zBePhk7egA==
-X-Gm-Message-State: AOJu0Yznjs4jyQvGBiepJ9aASafDyrn4IJyWAIirgTqKHBLrpTeetCwI
-	Wr9XuBXyOjmXISuPiXBlVOFXfy5JAZbZvqtixr6GmA7I3SDqnFCwVivwLQzuPsc=
-X-Google-Smtp-Source: AGHT+IEJFP45iEkqRIJfjQVGnd9vf8NSboPCjm6h35YrqWvxgwSyal1JJf1HtYzDNDxj06EzP2Td4A==
-X-Received: by 2002:a2e:6804:0:b0:2d4:5f4:dee with SMTP id c4-20020a2e6804000000b002d405f40deemr1190422lja.18.1709810400006;
-        Thu, 07 Mar 2024 03:20:00 -0800 (PST)
-Received: from [172.30.204.36] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id s6-20020a2e9c06000000b002d38f36f3a4sm2003570lji.117.2024.03.07.03.19.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Mar 2024 03:19:59 -0800 (PST)
-Message-ID: <afc709b5-4e4e-4308-a399-e0b521592250@linaro.org>
-Date: Thu, 7 Mar 2024 12:19:56 +0100
+	s=arc-20240116; t=1709810884; c=relaxed/simple;
+	bh=Ldee1A/BcwvgsotCIrd1Xa0TCMAzaq2asXNtE0+sqqY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EPPGhoJCCfuY/QaxoNzquCqr54b846kMv/r/ZoTkh1BZiaGcE0Q0fmYNOgEm7dBz9BPudi6+B5frtT6vxylpnQzN6EylEFtzmCET+zXvp0oVm/o/LfhvD6NNxgDlTRLPipAL61lDh6uSR9b1BQQwMldmSN5s33FVkYyDNF8RAGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gSmcDYO1; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4279Q3r0001475;
+	Thu, 7 Mar 2024 11:27:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=IONUL4mEoZ7Z1Sf9VsHmDh80IkV804uMjF1VYdSA8sY=; b=gS
+	mcDYO1wmE2nyv8xEGtsuXLPTdk9gONAKjWVnaRG0lIBfZnbFQREID+kPB3VllAdU
+	F39nPDNFQ1kToMWtiwqjHwSWwdOjc2lAZWb/Y9P53nTSDwzSln7RL4i6ebbvFc8X
+	/cZ/PH95NY3qY8sT3GkihNR6OSrE3bn+dA0QJ+aR+OdRvAZt2jzXKo7jMiXPws4X
+	o/deIvLU8Ee7OIlHO5A9C+4YqdI0ighEb7qwJOmtZ8V5F6WsGEKNNrjS2+DnYxqZ
+	iqXYP97FACuNl2ZhbPmo9pmnfwtVjKx2d7qQW9RWq+QFbiL96oVoOqSetkk3Gg83
+	pUHPAFEoC64zAlOitj/w==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqaxd0da4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Mar 2024 11:27:42 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 427BRgA3003248
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Mar 2024 11:27:42 GMT
+Received: from [10.201.3.124] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Mar
+ 2024 03:27:36 -0800
+Message-ID: <2c0e928e-e68c-e859-0e7f-c5a457f58175@quicinc.com>
+Date: Thu, 7 Mar 2024 16:57:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] PCI: qcom: Enable BDF to SID translation properly
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20240307-pci-bdf-sid-fix-v1-1-9423a7e2d63c@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v3 1/5] spi: dt-bindings: add binding doc for
+ spi-qpic-snand
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240307-pci-bdf-sid-fix-v1-1-9423a7e2d63c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <broonie@kernel.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+CC: <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
+References: <20240307041726.1648829-1-quic_mdalam@quicinc.com>
+ <20240307041726.1648829-2-quic_mdalam@quicinc.com>
+ <19d3c024-38aa-4526-b6c1-d9543b41fa2b@linaro.org>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <19d3c024-38aa-4526-b6c1-d9543b41fa2b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZUUeepn3sA288e4BF4c-IPv7pKV6tn9J
+X-Proofpoint-ORIG-GUID: ZUUeepn3sA288e4BF4c-IPv7pKV6tn9J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-07_07,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 spamscore=0 mlxlogscore=999
+ mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403070085
 
 
 
-On 3/7/24 12:05, Manivannan Sadhasivam wrote:
-> Qcom SoCs making use of ARM SMMU require BDF to SID translation table in
-> the driver to properly map the SID for the PCIe devices based on their BDF
-> identifier. This is currently achieved with the help of
-> qcom_pcie_config_sid_1_9_0() function for SoCs supporting the 1_9_0 config.
+On 3/7/2024 1:16 PM, Krzysztof Kozlowski wrote:
+> On 07/03/2024 05:17, Md Sadre Alam wrote:
 > 
-> But With newer Qcom SoCs starting from SM8450, BDF to SID translation is
-> set to bypass mode by default in hardware. Due to this, the translation
-> table that is set in the qcom_pcie_config_sid_1_9_0() is essentially
-> unused and the default SID is used for all endpoints in SoCs starting from
-> SM8450.
+> There is no commit msg.
+Sorry missed it. Will add in next patch
 > 
-> This is a security concern and also warrants swapping the DeviceID in DT
-> while using the GIC ITS to handle MSIs from endpoints. The swapping is
-> currently done like below in DT when using GIC ITS:
+> Subject did not improve. This is a friendly reminder during the review
+> process.
+Ok
 > 
-> 			/*
-> 			 * MSIs for BDF (1:0.0) only works with Device ID 0x5980.
-> 			 * Hence, the IDs are swapped.
-> 			 */
-> 			msi-map = <0x0 &gic_its 0x5981 0x1>,
-> 				  <0x100 &gic_its 0x5980 0x1>;
+> It seems my or other reviewer's previous comments were not fully
+> addressed. Maybe the feedback got lost between the quotes, maybe you
+> just forgot to apply it. Please go back to the previous discussion and
+> either implement all requested changes or keep discussing them.
 > 
-> Here, swapping of the DeviceIDs ensure that the endpoint with BDF (1:0.0)
-> gets the DeviceID 0x5980 which is associated with the default SID as per
-> the iommu mapping in DT. So MSIs were delivered with IDs swapped so far.
-> But this also means the Root Port (0:0.0) won't receive any MSIs (for PME,
-> AER etc...)
-> 
-> So let's fix these issues by clearing the BDF to SID bypass mode for all
-> SoCs making use of the 1_9_0 config. This allows the PCIe devices to use
-> the correct SID, thus avoiding the DeviceID swapping hack in DT and also
-> achieving the isolation between devices.
-> 
-> Cc:  <stable@vger.kernel.org> # 5.11
-> Fixes: 4c9398822106 ("PCI: qcom: Add support for configuring BDF to SID mapping for SM8250")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
+> Thank you.
 
-Looks sensible..
-
-Does switching away from bypass show any performance degradation?
-
-Konrad
+  Sorry, Will re-check all the previous comment and try to fix in
+  next patch.
+> 
+> 
+>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>> Change in [v3]
+>>
+>> * Updated commit message, removed "dt-bindings" from commit
+>>    message
+>>
+>> * Updated compatible name as file name
+>>
+>> * Added hardware description
+>>
+>> * Documented clock-name
+>>
+>> * Moved dma-names property to top
+>>
+>> * Droped unused label "qpic_nand"
+>>
+>> * Fixed indentation in example dt node
+>>
+>> Change in [v2]
+>>
+>> * Added initial support for dt-bindings
+>>
+>> Change in [v1]
+>>
+>> * This patch was not included in [v1]
+>>   
+>>   .../bindings/spi/qcom,spi-qpic-snand.yaml     | 83 +++++++++++++++++++
+>>   1 file changed, 83 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>> new file mode 100644
+>> index 000000000000..3d20a4bc567f
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+>> @@ -0,0 +1,83 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spi/qcom,spi-qpic-snand.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm QPIC NAND controller
+>> +
+>> +maintainers:
+>> +  - Md sadre Alam <quic_mdalam@quicinc.com>
+>> +
+>> +description: |
+> 
+> Do not need '|' unless you need to preserve formatting.
+Ok will do in next patch.
+> 
+>> +  The QCOM QPI-SPI-NAND flash controller is an extended version of
+>> +  the QCOM QPIC NAND flash controller. It can work both in serial
+>> +  and parallel mode. It supports typical SPI-NAND page cache
+>> +  operations in single, dual or quad IO mode with pipelined ECC
+>> +  encoding/decoding using the QPIC ECC HW engine.
+>> +
+>> +allOf:
+>> +  - $ref: /schemas/spi/spi-controller.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,spi-qpic-snand
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    minItems: 3
+> 
+> Drop
+Ok will do in next patch.
+> 
+>> +    maxItems: 3
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: core
+>> +      - const: aon
+>> +      - const: iom
+> 
+> Missing blank line
+Ok will do in next patch.
+> 
+>> +  dmas:
+>> +    items:
+>> +      - description: tx DMA channel
+>> +      - description: rx DMA channel
+>> +      - description: cmd DMA channel
+>> +
+>> +  dma-names:
+>> +    items:
+>> +      - const: tx
+>> +      - const: rx
+>> +      - const: cmd
+>> +
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
