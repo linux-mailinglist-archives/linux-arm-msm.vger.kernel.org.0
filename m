@@ -1,39 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-13551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 468B187468C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 04:08:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECAAE8746C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 04:26:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED09628652D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 03:08:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DACEBB229F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 03:26:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 443CFCA78;
-	Thu,  7 Mar 2024 03:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C8B2D53E;
+	Thu,  7 Mar 2024 03:26:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m6010.netease.com (mail-m6010.netease.com [210.79.60.10])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA73963C7;
-	Thu,  7 Mar 2024 03:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.79.60.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812C82F28;
+	Thu,  7 Mar 2024 03:26:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709780902; cv=none; b=M32Toe6ZTRXW4E6bLgwuMa7/3FsTupfePxvPcwjGRep8oEjGE3PFlAYSCs0VtWxKTQ5onGDbr95rCnyAa9hfktwAJzvd5kAbslunEjeX2JO28joTX8hweMIznqTIGO9CiJizPTL2IydWZ9TBjiK+r8G/Fc0vVHRudAyKweJ2Mm8=
+	t=1709782001; cv=none; b=PzMWr2Tzf2SXiTetHnq/clzO2zdmpfkYeprSyuIRZBW19p7RbkDTr2T6oTwpPCwU4HR5dELvC05PYhN5sULUjhLspOaGd2u+pH5C0HqcqWIBZjw05mVcumSkoL7hLZJq5K5tGNO22u7ChP5ZFSb6JZQgE8aM/Ixq5bzS7QxIVt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709780902; c=relaxed/simple;
-	bh=kvj3ANri2yPy3uMgzwhpUyEVGlN5bp99aSZhUob99TU=;
+	s=arc-20240116; t=1709782001; c=relaxed/simple;
+	bh=xcYQQ0PtAhbpq+vnjverHxFQkCiFpC+1cT63vMExgvM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y48rrO4sixgi98nTi8eVLgZrPFQXHaZ4/aKKTJS1/zsAg2tlXnXXElS1eqCcZeH0tGTUC71JU2y8cleeKmkAtjjqDOnUZNxzo7+/hzVobOucgDV2gC+L/OhSob06lQRZJ2PDa+Xjlv+fMzGYoRI9vD56JNqzRjj4iK1tr2oFO1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=210.79.60.10
+	 MIME-Version; b=q9nPOXioXJpwgST+P4eLY3MBgDrZO1jbGi++a1A+mRrakLzQADxESvHi/vnzvt+V7PmQ3HZ6VL5nja+fhOrrZPivtDrZp3CY/ouCH/tBejAiW4OuMIoLDG3gPv/q0o89Lm6sjAjF/l+Jb7/WOUffdZ3ZG2G3uurx7lKIF+F+pGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
 Received: from amadeus-Vostro-3710.lan (unknown [IPV6:240e:3b3:2c01:4970:b7c4:f23e:200b:4ae6])
-	by smtp.qiye.163.com (Hmail) with ESMTPA id 2533E7E012D;
-	Thu,  7 Mar 2024 11:08:04 +0800 (CST)
+	by smtp.qiye.163.com (Hmail) with ESMTPA id B98E57E013F;
+	Thu,  7 Mar 2024 11:26:23 +0800 (CST)
 From: Chukun Pan <amadeus@jmu.edu.cn>
-To: dmitry.baryshkov@linaro.org
+To: robimarko@gmail.com
 Cc: amadeus@jmu.edu.cn,
 	andersson@kernel.org,
 	conor+dt@kernel.org,
@@ -44,11 +44,11 @@ Cc: amadeus@jmu.edu.cn,
 	linux-kernel@vger.kernel.org,
 	robh@kernel.org
 Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
-Date: Thu,  7 Mar 2024 11:08:01 +0800
-Message-Id: <20240307030801.93061-1-amadeus@jmu.edu.cn>
+Date: Thu,  7 Mar 2024 11:26:20 +0800
+Message-Id: <20240307032620.94310-1-amadeus@jmu.edu.cn>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <CAA8EJpojj=3dv+FDm1GwXQ4+DPLncaZ6_6LwWQV2T8JCFpR16g@mail.gmail.com>
-References: <CAA8EJpojj=3dv+FDm1GwXQ4+DPLncaZ6_6LwWQV2T8JCFpR16g@mail.gmail.com>
+In-Reply-To: <0b032929-f525-4b2e-a176-1a447cf0fa7f@gmail.com>
+References: <0b032929-f525-4b2e-a176-1a447cf0fa7f@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,22 +57,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDGUxLVksYSE9JSxoeGBlMSlUTARMWGhIXJBQOD1
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCS05LVhlJTBkYHUMfTh4eGFUTARMWGhIXJBQOD1
 	lXWRgSC1lBWUlPSx5BSBlIQUkYS0pBT0JMS0EZTBhPQR1JSB5BSUtLGUFPGh5NWVdZFhoPEhUdFF
-	lBWU9LSFVKSktDSEhVSktLVUtZBg++
-X-HM-Tid: 0a8e16e1dbaa03a2kunm2533e7e012d
+	lBWU9LSFVKTEpPTENVSktLVUpCS0tZBg++
+X-HM-Tid: 0a8e16f2a2f803a2kunmb98e57e013f
 X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OiI6Qyo*PzMJIUJOD0hRKRMv
-	EkhPC0hVSlVKTEtCTENLQ0NPQkpKVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUlP
-	Sx5BSBlIQUkYS0pBT0JMS0EZTBhPQR1JSB5BSUtLGUFPGh5NWVdZCAFZQUpNTUI3Bg++
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Phg6PTo5NTMLKUIqDQ8xEg8s
+	NDUaChZVSlVKTEtCTENKQkNPSEtCVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUlP
+	Sx5BSBlIQUkYS0pBT0JMS0EZTBhPQR1JSB5BSUtLGUFPGh5NWVdZCAFZQUpOTEw3Bg++
 
-Hi, Dmitry
-> Then the commit message should be changed, because you are enabling
-> 1.5 GHz only for non-IPQ6000 SoCs. This patch has no effect on
-> IPQ6000.
+Hi, Robert
+> Can I ask the source of this voltage level?
+> Because, its not present in the downstream QCA tree at all.
 
-As I said in another reply, there are some ipq6000 SoCs that will be
-recognized by the driver as ipq6018 and fused 1.5GHz.
+This voltage level is what I guessed through the mhz tool.
+The downstream QCA tree uses 0.8625v voltage corresponding
+to 1.32GHz, which does not need to be so high.
 
 Thanks,
 Chukun
