@@ -1,59 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-13645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADF63875A3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 23:26:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D583D875A7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 23:58:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E7FD1F2256A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 22:26:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8446A283F09
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 22:58:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6DF314037E;
-	Thu,  7 Mar 2024 22:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA2793D0BD;
+	Thu,  7 Mar 2024 22:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GqQ3acLK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z4HYD/c/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986BD13F45B;
-	Thu,  7 Mar 2024 22:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F02E648;
+	Thu,  7 Mar 2024 22:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709850349; cv=none; b=pIptcz49oyCwLMXNMyxEvYeGIm/Xfyp+it1AUycOcmQKbZh0iaMIrhqVoj6ApXaSZmNtatlzEJZu7xQKt5zZocOnDjSpE9xush3A/v/jMPqq+nxADzqpGti3OBU553rUV1VkNGbxMWB18MD/jJcyvlEyLzxRNR8OynEL/HULMl0=
+	t=1709852294; cv=none; b=dcN4b/1mNhhLCNeUjJ1j2YoxPb5vyskJ8bQckAAB3SV0XWQqafIiBMIdhmEiAFxLQvrqEU/pJytSKt+fhpR0h9HASq7ADdoy47ALoW0HfyEu4gDHiRXgeSy0wQhdhi7B2uxX9XenaTJfuulIFlwoNpijzLwxKk/3VVfJ0M912P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709850349; c=relaxed/simple;
-	bh=dSgHDY1mQRS5iEB2K6FDPBYRM8N29qnYSxvjweoJFBU=;
+	s=arc-20240116; t=1709852294; c=relaxed/simple;
+	bh=ZWeH/MoPiO8obvi1BBRa2tCTsg0i4/M7P33Jb8aeLXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iRMUd0BEt3wbjJcq01C06HM6zFJ5U/8YaYu2JjfeO+WVhiv35FaLxw4/s8dCoqp+eXeywk9+hQ50kJ/i//96n4gozeXe9J1DZpnkocJ3nAEIqVE2nXQbB82C5or2+ycZ9IOVrDaj4z8xeqwKMqVnBD2kx0UXJtAA3zNS0lSBhnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GqQ3acLK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F3C43609;
-	Thu,  7 Mar 2024 22:25:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nv6ZdBDdcI806K8HnlIA1vGoc9TnjO6drJN5hUkulY+lja8bYY7hWrcdyOTx0pxoZSnApaKaiTpX4FNWA2o2sqdPeb1QOFF2GInZolqM6pbo2Af4c+moX2bnWe7wsLBVi67IqkunM07Ty3nhmXO+DvcfknRsmH8CvdpbVJba+To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z4HYD/c/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74014C433F1;
+	Thu,  7 Mar 2024 22:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709850349;
-	bh=dSgHDY1mQRS5iEB2K6FDPBYRM8N29qnYSxvjweoJFBU=;
+	s=k20201202; t=1709852294;
+	bh=ZWeH/MoPiO8obvi1BBRa2tCTsg0i4/M7P33Jb8aeLXM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GqQ3acLKuuwV178JSKE3yoTRLPdKoHN2k3b5kvkOGrfDazt4FhNSCglNUv+9X8cyM
-	 bP77qFySsA+Wrf/dgDSjoEeo8nCafiABMPGPbCO+3/7uHdCHhTfVqdovNeXZi7Q4ok
-	 Sr5GU71NNQd4AxPvndP204IVEDqrO/X/k9ukuWsUn5n8Cj+HczQLR/NR30G5A1wGns
-	 IH6S9/3kXyUgttrd/utZFVTXKJ9raNQ36at2E2j2UKBR9H8pTSAC+znvhyh05JJKt/
-	 4PwFMFCSnhDUnUkgxISEF0vmd/vBwr/HuNqyM49NZxumETrM+mnqONzdjs6esb57cO
-	 2j8g8Ue2I8Gag==
-Date: Thu, 7 Mar 2024 16:25:41 -0600
-From: Rob Herring <robh@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: nvmem: Add compatible for SC8280XP
-Message-ID: <20240307222541.GA3268932-robh@kernel.org>
-References: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
- <20240307-topic-8280_nodes-v1-1-4eba20e08902@linaro.org>
+	b=Z4HYD/c/wJycrlePvu+p5HaG8/6rcihDqcdPd7E3tNvltxk7hSUI9IaUs+70DZl6S
+	 r5a97MVhOZULFYMXRtzs+4IoltexYw44FfT7+B8WSeDaIxDPgQZAvIOKC8Z3/mS643
+	 UbP1vocXPV5Vgx4iaumJrx4DQ3wuULt0bFGPGR+rClVC/2bU8+zdMZHRsvkTmyY+MT
+	 fSMJZhxidC2R4j0VCQAHOXugUY3Hk9r2300Amcv9duOtG4jQkjVEyXuDizat53SWzA
+	 ZCkrRMBd/T7OdyOml6SgULzRxQjf4CKmRdo6AL686rc1a4xVjMUX0hdjrOwsCLj/dt
+	 LfFwwFNeyIhbQ==
+Date: Thu, 7 Mar 2024 23:58:09 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org, 
+	wsa@kernel.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, quic_vdadhani@quicinc.com
+Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <cmtru4nvoab6g5emp2yrxnvfpvtrcsuna6dqsyewpagg3qmkau@r2zoj6vgslet>
+References: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,15 +59,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240307-topic-8280_nodes-v1-1-4eba20e08902@linaro.org>
+In-Reply-To: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
 
-On Thu, Mar 07, 2024 at 09:25:54PM +0100, Konrad Dybcio wrote:
-> Document the QFPROM block found on SC8280XP.
+Hi Mukesh,
+
+On Fri, Mar 08, 2024 at 02:25:39AM +0530, Mukesh Kumar Savaliya wrote:
+> I2C driver currently reports "DMA txn failed" error even though it's
+> NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+> on the bus instead of generic transfer failure which doesn't give any
+> specific clue.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Make Changes inside i2c driver callback handler function
+> i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+> stores the error status during error interrupt.
 
-Acked-by: Rob Herring <robh@kernel.org>
+funny note: this is half "imperative mood" :-)
+
+A real imperative would be "Pares the error inside
+i2c_gpi_cb_result()... blah blah blah". No need to resend.
+
+> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+
+I still don't understand what's the fix here. You are making a
+generic DMA error to be more specific... where is the bug? What
+exactly is broken now?
+
+Besides, keep in mind, that commits with fixes tags get
+backported to older kernels (this one dates back to 5.18) and you
+should also Cc the stable mailing list:
+
+Cc: <stable@vger.kernel.org> # v5.18+
+
+Thanks,
+Andi
 
