@@ -1,261 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-13581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B690874902
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 08:46:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3CDF874911
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 08:50:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B26D0B22C9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 07:46:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77F1928633F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 07:50:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C025C633F5;
-	Thu,  7 Mar 2024 07:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E73F26311B;
+	Thu,  7 Mar 2024 07:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YdZN+/Sg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aPXUc351"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C204E633E3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 07:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C032629F9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 07:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709797578; cv=none; b=Mt44nXhezQ4UpmM0BXOz9jFB/yvLWrvuzicqv0GKbsD9306QU0LnTIzEcIw+N76dRO3JP7PjUbmp3rGXbqsxzWlfJhxGRazBC1UiVscdfRjGqXaSWMV807cixmRcOOtehOVhC2maKdbK4DrUimEggAW45DQhu9RsC6Sg8cZsqO0=
+	t=1709797830; cv=none; b=PknM0wh0ymEAEFt8U3f8UbYkBjok8vPn5hiewsx9E8Ob6StnjxHVFgue/UwN66PLCaqDeHN6nOLcx3BFHwVRBCGtKR96pvlnPgxE0iUhq4VoqaCUXvEZxKaiJxrXVyPwd4Y4rYIf14SfSxwRCTVUHhHRgA81iIB1jVsJJ8t+WZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709797578; c=relaxed/simple;
-	bh=K4UuCTqbtVUs+hCPRMX+6oAiv0iEWBzeHyg7GI4cknA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NVFedOl9F/WUjPBK4VjL4OPlOhEGs43/xIJct6JtzBRWOB2hILRVlyeKrgIYSX4Sb0yQmwqtiiYSXAJZrEcwEhb4fmw1HvDWso0vnsvBnLS8mL3lJWUVXHW7CW3HjbClDYcM2mZfSHB7AracIR+olHP2Krhdt8a51qsZJp06wsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YdZN+/Sg; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1709797830; c=relaxed/simple;
+	bh=obiCLTXc9AtSTZAokHiOqHN8TgdotsLfNQ198pkoL7I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VZIlOSgMsdvMQ391oFIGIvrBUTVtc0/WaPL2+emG8P7UN5E4w497KTWxjPTK98dZhUUrtdvjPXPyCIC9q9Kyvvohlbo4f9qs3xUodVM8VA6s0eUupvCQN9LxOVmDv+WvDa3Qd/5f438coCd4lNd10O7GTTgQz9131gNwpgZ/EyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aPXUc351; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-567f7bba941so661097a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 23:46:16 -0800 (PST)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-dbed179f0faso1322517276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Mar 2024 23:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709797575; x=1710402375; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2vEFocjxe/C7G6zRYMMM39IplkNHkFI1xgU3DzRRjSU=;
-        b=YdZN+/SgNH/Vdlq8IlKEOIXy09qQZVsa4c7yADuu/Ygj+cy2Pm+EG9iKX5AXBDatfG
-         9Xdbhw/z+Xo/ExUwLuOXzTSyz5TDTTU1sBGVWIoDaTTweZh5lToM53AERDIoFZUA3gAM
-         RKWJuuScGJj9B/mpgFZYZZCdz4ZyMhXDQBSoMWh6c05urNCjzzU1CFKbe0U1wnhbymFt
-         pBuumrRousQOixwWHY38oV+Ha4sZDURrPfe09ohfvHURFLF7x5UE9rjrUKw3jdHSYGpx
-         LORROZO5rJ2VEEL0KHof4MFT970iQrAiykDMvZ1JHwJuB9Rd4EunkJOrtNEwGxdeujjT
-         Hd2g==
+        d=linaro.org; s=google; t=1709797828; x=1710402628; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ah0ukiTsKA1pY9lznY+1jzvEeB+m6H6B1R6XwmhrPB0=;
+        b=aPXUc351/Aoy6e4tGorPE8vtqwU1567VlOfS4cK7aoPyV7Pk8ief4q7LrR9kS01mtg
+         XgnUz7LVT87nVbGZfUWPhlh528KJuQSD0ZLhRMIGvLb4efBqjWg2Bu90sMXtrqLPDTQo
+         e4OX4eqcZXclRsDLJ5rx9FsOAYKrFnUKRo1/EliMTCR+gIOUt2RIHA+yHfrM64AuiiJm
+         Uuh+eAjKkDAENcpnf1aLpIINwC6Q/pKfs9suSXAHWLSzZw5wZn+gL6glNqBehNyJ5y61
+         4yShUAJmLkpI+U62ZFkzYBGKjdRgjh6h05w44SosJ1Wp5gsZANkeo7WbbiVxYLhfPGbx
+         w+KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709797575; x=1710402375;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2vEFocjxe/C7G6zRYMMM39IplkNHkFI1xgU3DzRRjSU=;
-        b=YJKIPk3WjkZpFWzOJZMNVyeBFGEOmNi0XL4p6mDN6pxMwez9uEb/zHUQpyiXS6nmUm
-         S+1PAQHWzjDOqxoqR6ecmQlRhSsDNNsw6MVO76PJN0+dF7X/fpyB/zhZw3ZYpV9h/ant
-         FpzpN9iJ1dSpPS4Leq70LEnmBjOx52dubseP3rv/2+snlKhLoW6eEt9By3RpglkMZgkn
-         xfSTo0pLLZpUPZnzIdAMEuQdyytHl6emL3slCybwWDALv+ulQ9Fgc12sP+Lidt5jzVxa
-         Ulk1EsY8LGRklLuUz30mSnqg/q/L7XO3VnK72qeuAN/6lBDEiLNoq65qHWSPPFFo6Smd
-         1Cug==
-X-Forwarded-Encrypted: i=1; AJvYcCVPLh64eYzqmfEj3jzsFtvLKS/TzBwjYQ+7E60o3gBg3F9EhN9JY5j7Zflo35Ziofarj7kl2QQMnUyPRjAHmrjhVdHeHdQpSYeILhT9oQ==
-X-Gm-Message-State: AOJu0YzSSAvjWs09JW+lKaYTf+RYBcBuxqr2LVIay8i9uRR9nIh2hj4N
-	yD1o+b+49V+os+gEnA4udb2j3riN5PL0P4hMJWpHRJOjGVHcvRtjkOBxteHl1sM=
-X-Google-Smtp-Source: AGHT+IFpl4af52prw6dvxD6VpZHr8XiDzYEFEVnS7NoLGOSu1hUyybkH3c+zyzSjt/Clbzqqa8vELA==
-X-Received: by 2002:a17:906:f6d1:b0:a45:d712:7b3e with SMTP id jo17-20020a170906f6d100b00a45d7127b3emr372989ejb.52.1709797575088;
-        Wed, 06 Mar 2024 23:46:15 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id tj7-20020a170907c24700b00a413d1eda4bsm7959287ejc.87.2024.03.06.23.46.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Mar 2024 23:46:14 -0800 (PST)
-Message-ID: <19d3c024-38aa-4526-b6c1-d9543b41fa2b@linaro.org>
-Date: Thu, 7 Mar 2024 08:46:12 +0100
+        d=1e100.net; s=20230601; t=1709797828; x=1710402628;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ah0ukiTsKA1pY9lznY+1jzvEeB+m6H6B1R6XwmhrPB0=;
+        b=uoKqMy+xbfPX4gz87CObpGDcYGO2JfMlmP2Sb3W/L3a0L+NPc/+YWmzV1DYzXYbhIB
+         K09J3BlQ70KjVvkp6sG2nlJ70uHli15E1mOsm85y9BVavtZg+KcXwD1wCFOgbM4Xs4Wr
+         wsGHPK4C34a20q1kaM17YM69tsYd+5w2jZ9iR4lYxmcjtBKUvu5k7yPxHwIF2vLApJdN
+         IzRYzjTtD9h/0wRMOVgvqjpPQAWu7eJIWvTZAUfUfjN50sfC2xrV3Gbp0Zz4nQI3M/tk
+         Rw9DixkrVGfJ5JpkbvMjJQUcZZ7Voy2GPB2WJEq3z7PAeSdzPSOeabcM1fXRfv98zMz5
+         QSWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUXonCHiG2zx5Oyh0pIb0Y76a1jeh7+fpMHFh7uCOsIy4diUgJwIs9slYOBlnKKYhQv+Oh4QGG7kNFBhOLfb2VIDY+s7hhUuyB+xyGHEg==
+X-Gm-Message-State: AOJu0YyOivcsIYqLOEB1j5pNEdeB7i3JoQvqifUrv6JP/6O/HFx5zXjO
+	+U4k3Y/NScjmBtKJPkj3jZNjjHJ9Q5KGWZZBkgVPm3lNcNKW5QcMLSEt/6TVDDhtl2iLGsk2n4o
+	lRdOBnP4MuPm9OeuZ2w9Vfn/BJ2eqCmDuVE/KLg==
+X-Google-Smtp-Source: AGHT+IFa/n55GR6mweEkfWDnqnH5Zm3qCZemeRU4pQouRAgZQOwh4xDQqFnwc99qBUSN19+gM9VcCOj7gor0L/AOjZI=
+X-Received: by 2002:a25:1ed5:0:b0:dcd:9a9b:8d7e with SMTP id
+ e204-20020a251ed5000000b00dcd9a9b8d7emr377200ybe.9.1709797828227; Wed, 06 Mar
+ 2024 23:50:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] spi: dt-bindings: add binding doc for
- spi-qpic-snand
-Content-Language: en-US
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, broonie@kernel.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
- manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
-Cc: quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20240307041726.1648829-1-quic_mdalam@quicinc.com>
- <20240307041726.1648829-2-quic_mdalam@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240307041726.1648829-2-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240306123006.724934-1-amadeus@jmu.edu.cn> <20240306123006.724934-2-amadeus@jmu.edu.cn>
+ <CAA8EJpqYjutM1Kh6QxysB6XNAmXywtOtRJ7KP0LbY5E36kCPvA@mail.gmail.com>
+ <78b1a1a2-a9fa-4b28-9d96-d65bb5517199@gmail.com> <CAA8EJppJBOQh19r4A-igsh5znDE_R6mDNy+ao5ximx7vtsZZvA@mail.gmail.com>
+ <CAOX2RU4W-zV3A8eW0A+1V838Fm=tUkXY=Bs3j4VJ8Jo9mxrOAw@mail.gmail.com>
+In-Reply-To: <CAOX2RU4W-zV3A8eW0A+1V838Fm=tUkXY=Bs3j4VJ8Jo9mxrOAw@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 7 Mar 2024 09:50:16 +0200
+Message-ID: <CAA8EJpq=-r4XhnFJset0=X=YO5QNUpuw+e1r6DTsPvzNAZCyNw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/1] arm64: dts: qcom: ipq6018: add sdhci node
+To: Robert Marko <robimarko@gmail.com>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 07/03/2024 05:17, Md Sadre Alam wrote:
+On Thu, 7 Mar 2024 at 09:38, Robert Marko <robimarko@gmail.com> wrote:
+>
+> On Thu, 7 Mar 2024 at 08:28, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Wed, 6 Mar 2024 at 22:35, Robert Marko <robimarko@gmail.com> wrote:
+> > >
+> > >
+> > > On 06. 03. 2024. 20:43, Dmitry Baryshkov wrote:
+> > > > On Wed, 6 Mar 2024 at 14:31, Chukun Pan <amadeus@jmu.edu.cn> wrote:
+> > > >> Add node to support mmc controller inside of IPQ6018.
+> > > >> This controller supports both eMMC and SD cards.
+> > > >>
+> > > >> Tested with:
+> > > >>    eMMC (HS200)
+> > > >>    SD Card (SDR50/SDR104)
+> > > >>
+> > > >> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> > > >> ---
+> > > >>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 19 +++++++++++++++++++
+> > > >>   1 file changed, 19 insertions(+)
+> > > >>
+> > > >> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > > >> index 322eced0b876..420c192bccd9 100644
+> > > >> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > > >> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > > >> @@ -441,6 +441,25 @@ dwc_1: usb@7000000 {
+> > > >>                          };
+> > > >>                  };
+> > > >>
+> > > >> +               sdhc: mmc@7804000 {
+> > > >> +                       compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
+> > > >> +                       reg = <0x0 0x07804000 0x0 0x1000>,
+> > > >> +                             <0x0 0x07805000 0x0 0x1000>;
+> > > >> +                       reg-names = "hc", "cqhci";
+> > > >> +
+> > > >> +                       interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+> > > >> +                                    <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> > > >> +                       interrupt-names = "hc_irq", "pwr_irq";
+> > > >> +
+> > > >> +                       clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> > > >> +                                <&gcc GCC_SDCC1_APPS_CLK>,
+> > > >> +                                <&xo>;
+> > > >> +                       clock-names = "iface", "core", "xo";
+> > > >> +                       resets = <&gcc GCC_SDCC1_BCR>;
+> > > >> +                       max-frequency = <192000000>;
+> > > > If I understand correctly, GCC_SDCC1_APPS_CLK support frequencies up
+> > > > to 384 MHz, but here you are limiting it to 192 MHz. Why is it so?
+> > > >
+> > > > I am not sure that 384MHz is actually supported as IPQ6018 datasheet
+> > > > clearly indicates that HS400 mode is not supported.
+> >
+> > I didn't check the datasheet, I opened the gcc-ipq6018.c
+>
+> I understand that, I just pointed it out, it wouldn't surprise me if
+> the frequency table
+> was just copy/pasted from IPQ8074.
 
-There is no commit msg.
+Then it might be fixed instead, making the max-frequency property unnecessary.
 
-Subject did not improve. This is a friendly reminder during the review
-process.
-
-It seems my or other reviewer's previous comments were not fully
-addressed. Maybe the feedback got lost between the quotes, maybe you
-just forgot to apply it. Please go back to the previous discussion and
-either implement all requested changes or keep discussing them.
-
-Thank you.
-
-
-> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
-> Change in [v3]
-> 
-> * Updated commit message, removed "dt-bindings" from commit
->   message
-> 
-> * Updated compatible name as file name
-> 
-> * Added hardware description
-> 
-> * Documented clock-name
-> 
-> * Moved dma-names property to top
-> 
-> * Droped unused label "qpic_nand"
-> 
-> * Fixed indentation in example dt node
-> 
-> Change in [v2]
-> 
-> * Added initial support for dt-bindings
-> 
-> Change in [v1]
-> 
-> * This patch was not included in [v1]
->  
->  .../bindings/spi/qcom,spi-qpic-snand.yaml     | 83 +++++++++++++++++++
->  1 file changed, 83 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
-> new file mode 100644
-> index 000000000000..3d20a4bc567f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
-> @@ -0,0 +1,83 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/spi/qcom,spi-qpic-snand.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QPIC NAND controller
-> +
-> +maintainers:
-> +  - Md sadre Alam <quic_mdalam@quicinc.com>
-> +
-> +description: |
-
-Do not need '|' unless you need to preserve formatting.
-
-> +  The QCOM QPI-SPI-NAND flash controller is an extended version of
-> +  the QCOM QPIC NAND flash controller. It can work both in serial
-> +  and parallel mode. It supports typical SPI-NAND page cache
-> +  operations in single, dual or quad IO mode with pipelined ECC
-> +  encoding/decoding using the QPIC ECC HW engine.
-> +
-> +allOf:
-> +  - $ref: /schemas/spi/spi-controller.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,spi-qpic-snand
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 3
-
-Drop
-
-> +    maxItems: 3
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +      - const: aon
-> +      - const: iom
-
-Missing blank line
-
-> +  dmas:
-> +    items:
-> +      - description: tx DMA channel
-> +      - description: rx DMA channel
-> +      - description: cmd DMA channel
-> +
-> +  dma-names:
-> +    items:
-> +      - const: tx
-> +      - const: rx
-> +      - const: cmd
-> +
+>
+> Regards,
+> Robert
+> >
+> > > >
+> > > > Regards,
+> > > > Robert
+> > > >
+> > > >> +                       status = "disabled";
+> > > >> +               };
+> > > >> +
+> > > >>                  blsp_dma: dma-controller@7884000 {
+> > > >>                          compatible = "qcom,bam-v1.7.0";
+> > > >>                          reg = <0x0 0x07884000 0x0 0x2b000>;
+> > > >> --
+> > > >> 2.25.1
+> > > >>
+> > > >>
+> > > >
+> >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
 
-Best regards,
-Krzysztof
 
+-- 
+With best wishes
+Dmitry
 
