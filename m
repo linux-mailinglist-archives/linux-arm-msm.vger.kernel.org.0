@@ -1,118 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-13632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C38C1875852
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 21:27:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E7EA875864
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 21:31:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 148E9B27AFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 20:27:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08EB5280D98
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 20:31:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E50A13A888;
-	Thu,  7 Mar 2024 20:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16D664A87;
+	Thu,  7 Mar 2024 20:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="isoJdhp/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dq1Ij5cb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED4B13A241
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 20:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936DF633EB;
+	Thu,  7 Mar 2024 20:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709843202; cv=none; b=C/o15Zw8ug7QIrVLeK4UmYAIwhAPWNvDo5H6Fx75dK71El7vH7HdxEWkuV8aAZr/40I/AEa3pSeVsluq7oCQLb1AUpHePktSeHpATniSW9GFDc2VTIBtFpjVgqxlblOgVMGOtOb5a1rquD2pJ36vP3umbvhN7nbxuCXucxn197Y=
+	t=1709843483; cv=none; b=mDsZG34JUvftC//7TTbyewgqeR4Kbc9Fuv2ps+9qXORPqixqRTg9+8udhBROwFHf7EwauW3Iqlkq+vjG4g9HizN4hEa0tvXAWh8Qa5zvMCjSnDxf+IppdEICYxX5+ZEE138ZmshplK2zlA3EoX4Ulb1WRPt4YKlG9tRmTbYBBSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709843202; c=relaxed/simple;
-	bh=R8dlxZ1dL3OvX88UWru4D0wpduTJJJAyqR4VxSwIyG8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eK9T9s4RojlSJjsFucaPYUeSOX6jumEhjii/RO+Ay2E86tAauj/I1ooHJSFomyRI9rK+rLrQa96ksdiE7MGPBfmHElibGSkjDhrnQB+TqUOJEYetVc/WfoEnR8LphjMoLieNv968WsZKDQc/IQvyt+HenAasUY/+cEbLhE9AGpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=isoJdhp/; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-51320ca689aso162675e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 12:26:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709843199; x=1710447999; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KCBc9I/4oSGOdNN/iaVU4s4pU6JlIs3DbcJQb4sXpL0=;
-        b=isoJdhp/0Z2NeZOiugz+n+9TsmEL/ef8dZLOXHUk/grrJ/uyFI5wjrdG/kGOz4AVfu
-         x0uYUbOzmdTqAm28EihSM5xUEGdU9JY/x1RZZriOgd2YQNJ0PDuVBea4+7HHRm5UudGS
-         e5M8dp6hDJoMAjMaNafgb+vfxeHYNBCxa6ofrpkeUUPXJd2EvnzuwcaHLkquetd0+uCe
-         arcTZCI7PyBYExAs+mJP+MF/O6SnFTCExVJZYrgnclCBed3eI8JLDUo9lP5JGT4F+zkH
-         PCJ409NWq5nWSy3dbp/c8sACeGB0bewnwzrhHSTdC2ZNe48U1aOtUTMlUTw9x4jUr4Zp
-         kSBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709843199; x=1710447999;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KCBc9I/4oSGOdNN/iaVU4s4pU6JlIs3DbcJQb4sXpL0=;
-        b=G9LAhR4o1WBjCra5JeGCjJ1MrL1bzKr4dfoGG3bmTRp8dCgfuVoqD3yZHCLNlG1TTy
-         zb419jgyadbdN7M9zcM6aADCiXLzwcA2iaTmQAGu6WfKgOgdIebuHvNC2N8NyyBNSmdj
-         ghcIoTvdOk0HNNkgrIznUfn1E3APTvHybvgIRT50Wr25FtzmVOWJedPUh5PLlw2nzISb
-         sMWFGLzxDrQzuiMMpPE3eg2Dr6gmSfQlUVrOS/+DlkJqwtNtG/hlGvByNOrBt9c5Q9w7
-         3ZRanpdtOd5aprMa96n1x06mpiaRH92IYBtQmStS4+c7VGVXHD3nFpWV2HnyKVh/g9xA
-         MOHw==
-X-Gm-Message-State: AOJu0YysgIj2QToDJZtKp6V/zHJgBnFole1cifNU613zX13kEiYyAEDk
-	/zdEkG/aaMqHAwC9hh3BkZMMj4JCpPltYw7asOcKqWz3Ps8uTGT3HNhIsLIeG6o=
-X-Google-Smtp-Source: AGHT+IF0QtTfnjNxc7RaucC2xKlJ8lzE42wr693p1q+ZVNMxs/Coym5IIOj+4d2YDPz/4k6JNRK4yg==
-X-Received: by 2002:a05:6512:3b9f:b0:512:a4ce:abaa with SMTP id g31-20020a0565123b9f00b00512a4ceabaamr3014389lfv.48.1709843199561;
-        Thu, 07 Mar 2024 12:26:39 -0800 (PST)
-Received: from [127.0.1.1] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id dw20-20020a0565122c9400b005132bf9f8dcsm2957606lfb.303.2024.03.07.12.26.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Mar 2024 12:26:39 -0800 (PST)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Thu, 07 Mar 2024 21:25:57 +0100
-Subject: [PATCH 4/4] arm64: dts: qcom: sc8280xp: Describe TCSR download
- mode register
+	s=arc-20240116; t=1709843483; c=relaxed/simple;
+	bh=SpBFTgDYCZL5HMSP744NvFE2koQBVmNM5L2jWkZki7w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oiFAQp6FQ4Y/ujplG3Glb7YwiXmjzef5Dm62T8uhQF8Q6q4xrw2A0Cq+wcmvHkt6Wq1Co0qKYs/x6Jl/ohQPXJlIWfjBhnabCjk9YRGWJENSO6wEIb7s0p37qKocNBK8QT1MZwlh43p27DSS6uazkLxDSBQ0K9K+KunooeL65Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dq1Ij5cb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF1DC433F1;
+	Thu,  7 Mar 2024 20:31:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709843483;
+	bh=SpBFTgDYCZL5HMSP744NvFE2koQBVmNM5L2jWkZki7w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Dq1Ij5cbXC/azz2ARqvH18GU6nblsiWGJekKh8qOtyucIW4GqCRnXVbQlQjtTDrOw
+	 /QkuiKcsiHgteS5KrBFnY8QBf7g5BlAInJ5lA75KzFf02hYqh+iJTlYBkAhbD8wmcN
+	 MlcgMIrkMt5PPDeFFLmBWkrNhXZOwrWOTp3JIHIa1DcLWTyDHzHrbHVGosjmEtufOK
+	 o0H+MQGjAzJWkFcK+6eKhq8Yamb1XolFCnSNIjPhVH+lM9CvmbuF3VOGSHWZyqJXCW
+	 Oxl2l5XBcGLAfAFnlpjupMrL2nAN7mCz8/RL4c9k3rUaviU69PmCBCh0FHzrbA6NLs
+	 tlWLEc5gqsSpA==
+Date: Thu, 7 Mar 2024 21:31:12 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v9 04/10] PCI: dwc: ep: Fix DBI access failure for
+ drivers requiring refclk from host
+Message-ID: <ZeokEJstpRSUPDTL@ryzen>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-4-29d433d99cda@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240307-topic-8280_nodes-v1-4-4eba20e08902@linaro.org>
-References: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
-In-Reply-To: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13-dev-0438c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240304-pci-dbi-rework-v9-4-29d433d99cda@linaro.org>
 
-To allow for swift EDL reboots, describe the respective register under
-the scm node.
+On Mon, Mar 04, 2024 at 02:52:16PM +0530, Manivannan Sadhasivam wrote:
+> The DWC glue drivers requiring an active reference clock from the PCIe host
+> for initializing their PCIe EP core, set a flag called 'core_init_notifier'
+> to let DWC driver know that these drivers need a special attention during
+> initialization. In these drivers, access to the hw registers (like DBI)
+> before receiving the active refclk from host will result in access failure
+> and also could cause a whole system hang.
+> 
+> But the current DWC EP driver doesn't honor the requirements of the drivers
+> setting 'core_init_notifier' flag and tries to access the DBI registers
+> during dw_pcie_ep_init(). This causes the system hang for glue drivers such
+> as Tegra194 and Qcom EP as they depend on refclk from host and have set the
+> above mentioned flag.
+> 
+> To workaround this issue, users of the affected platforms have to maintain
+> the dependency with the PCIe host by booting the PCIe EP after host boot.
+> But this won't provide a good user experience, since PCIe EP is _one_ of
+> the features of those platforms and it doesn't make sense to delay the
+> whole platform booting due to PCIe requiring active refclk.
+> 
+> So to fix this issue, let's move all the DBI access from
+> dw_pcie_ep_init() in the DWC EP driver to the dw_pcie_ep_init_complete()
+> API. This API will only be called by the drivers setting
+> 'core_init_notifier' flag once refclk is received from host. For the rest
+> of the drivers that gets the refclk locally, this API will be called
+> within dw_pcie_ep_init().
+> 
+> Fixes: e966f7390da9 ("PCI: dwc: Refactor core initialization code for EP mode")
+> Co-developed-by: Vidya Sagar <vidyas@nvidia.com>
+> Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+I'm not sure if the Fixes tag is stictly correct, since there is
+nothing wrong with the commit that the Fixes-tag is referencing.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 44c8d543eb67..505cae44f828 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -300,6 +300,7 @@ firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sc8280xp", "qcom,scm";
- 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
-+			qcom,dload-mode = <&tcsr 0x13000>;
- 		};
- 	};
- 
+What this patch addresses is an additional use-case/feature,
+which allows you to start the EP-side before the RC-side.
 
--- 
-2.40.1
+However, I'm guessing that you kept the Fixes-tag such that this
+patch will get backported. However, this patch is number 4/10 in
+the patch series. If this is a strict fix that you want backported,
+and it does not depend on any of the previous patches (it doesn't
+seem that way), then I think that you should have put it as patch
+1/10 in the series.
 
+Patch ordering aside:
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 
