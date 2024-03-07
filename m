@@ -1,131 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-13591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 222D9874B06
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 10:37:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BCDFA874B24
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 10:43:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7880B23C96
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 09:37:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2289FB20E77
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 09:43:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B401F83CA5;
-	Thu,  7 Mar 2024 09:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CACC83CA4;
+	Thu,  7 Mar 2024 09:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYXndIMM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qea1YXZM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA57839FB;
-	Thu,  7 Mar 2024 09:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6844204B;
+	Thu,  7 Mar 2024 09:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709804251; cv=none; b=q3AFp5/3dq0oDlQyd0LPufIBmQUPWi3POnB+WsMEUzaFhpBi25SobT7wOnehjLrPJdA4gjXQ9P5W7MSXzq9lAhRbMSKrmJq/5BezVVlqI/sDc2JiYD4J3mOrZ/RP8lVWr93FRykn2/aybzmmLOi6LgFKgq0/CeOS64g3uRNK52k=
+	t=1709804627; cv=none; b=JIfFzP0gQGR13C5fMR0TnPrEM3sdBq+sYhNn9SJe1/fWB1JWmcXagS/WYqChO2HnyqNXZiH2rXOT2uWqueOuKinoa13IDTVY0jmw7/pm+bRfPkR+BlVdmw/ZImK0wyAL/H7gZQ3MoRFCHwGfvbjH/+p69BxHlsFJRAOZC9xgjpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709804251; c=relaxed/simple;
-	bh=KbA38Ez7VtxM30+T3uVG3G9pGCGRaypiLEGvKLOb124=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=OWoLB2I/Wc/+oQ0qn+F55U/DOZRFjDU0+SlPKWTXcII9v3hEAkH4BqkjSUvRwUKrTbAbEFv40h983l2ZaZUQ8CPFG7PEeuuXPdcLjaleyg0NKkOusZPgPh7BaM3dMH6Z3pPhigqhADDEfWjaCUyEoq6G7IqgfUKg+OBx00h15h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IYXndIMM; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-413007fe6a3so5963505e9.3;
-        Thu, 07 Mar 2024 01:37:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709804248; x=1710409048; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fCGSUBoz7hkTWog5vBebF9UgG8HPCPhDFefPQRO1q34=;
-        b=IYXndIMMHwsd3eeo3iUCyoOAMA9ChALUPtZePj9yEnZWOQumGIpTNxGNCbhNNQEmYY
-         aQeFtnr6LYk0bMmSnuPs5q2+M2joystMQr4+lGIf2kjbuQolvN06jr2ar6bVvNraMHmh
-         HJiVGG6f9p7XaFq4mxvEG1xTyuXvanCDQFUW+EFry+nXNEansy0BZQOxZTgiuHR8HFRe
-         UkqUwJMtKcDsB/WpnPg/byUBra/A3aTPS/X47d3/hzZ1v4xSFRefs7icrTIox+txGFkx
-         9PzJLxKQYXsAHg936/OoARl58XnZsUqA/K78Z27s45Y18pccoEi0yHqmNLOke1DcA09n
-         UxMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709804248; x=1710409048;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fCGSUBoz7hkTWog5vBebF9UgG8HPCPhDFefPQRO1q34=;
-        b=iDZBmofjbCAh1wvhMx1FwloEIR1WrlSZfRLKnXEzT7iuvFjJ28/Aa42Zt37Z9heQ0+
-         vd5KWM5oFWxiccWXzDTu9AwlT+M69Vr6FXYfFbJ/dD4mvrAoKqJ691JaTMxvv2vu1hce
-         o/RADqkZu0zl/Vp6kLBYfW/m9BNY5Y/Ckhe0m3dpvC9p47Vuy5wt1mAb0wTqSNQL8zbQ
-         CP3p/7ZLQADtkX6AWDiAJnrfl3rahdjTITasCZwvk5cTXQDtQkAiBryWrBBWNI3fUW77
-         +OV92tj1BuS4eL3zWJ1tFFXtMzlJj5pOfEZF0Fy5LEE2lAUgAR8GM8PmjGVquuMbpqfn
-         y8HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWB0Y1U1dntjjwhdDrQ9J6YEK0e7W4eDS2n/bbcuxQ7m3n0IQIwKAUnDfjpDX8oO36s4oNeEMzIecJqVHXZZOl7bexaphKOQMiPAP896kTeJmK+Z3YaJb1eSPVRv9UG2uhxsPhiDwtMJCmZhg==
-X-Gm-Message-State: AOJu0YwSVZbq40ivxSQY0Wilf60Mx+GRcma+IMaVuGyRFmJiCKkEL3Rl
-	0Y39bj7R4t1vtnrhOCle3T/HEq7Fg6k5XpBRrHP3upybCGvOV0E1
-X-Google-Smtp-Source: AGHT+IE8RizOzmSDjEf4PsBNhWryLujYdRAkPfhGtCn7+tuTX8NXpG2EQMCqSC/G4cmzXNtq0f6k3g==
-X-Received: by 2002:a05:600c:3b26:b0:412:e3aa:8f69 with SMTP id m38-20020a05600c3b2600b00412e3aa8f69mr8126669wms.30.1709804248388;
-        Thu, 07 Mar 2024 01:37:28 -0800 (PST)
-Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
-        by smtp.gmail.com with ESMTPSA id j6-20020a05600c190600b00413074ea471sm2073513wmq.31.2024.03.07.01.37.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Mar 2024 01:37:27 -0800 (PST)
-From: Colin Ian King <colin.i.king@gmail.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Cc: kernel-janitors@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH][next] drm/msm: remove unused variable 'out'
-Date: Thu,  7 Mar 2024 09:37:27 +0000
-Message-Id: <20240307093727.1978126-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1709804627; c=relaxed/simple;
+	bh=/TrJVRw3ayPHoXNVlJwTBx7vwegis84pIWo25EDIv5k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fB2bHMK4zThsj3tXc0cM06+APMoGilRXx/bTK245TMDJi9mZ4Xr1t3P1VLpPkz7/p4HjJg9vqafNj0fwVBYX0gh2+YD2k505brgvkfHqjkzK0Ne5Elyxl/AH0baQtLcdE8iG1uSXWzjP112YIRwM0c4+QyalzS3DBmsVLLeuCog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qea1YXZM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4279ddSb006850;
+	Thu, 7 Mar 2024 09:43:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=rdM6VkzA6wVNMp+ivDpo5llGb4u1XiWJpG/AdMiKJY4=; b=Qe
+	a1YXZMJ4IsIP7S6agMl3wjrxVKkiDf4V9KaTXg36pW4CRTPq0UylLhwY7koQQ4b6
+	eVN2FTe84ej1U248vTZ0xq/dzkCHL3YWnldb10FAalGpYKEzTEjlDcX0It/KSyfn
+	WEbDKuHEblGl89SUzGsSy4IdALHCP1sgT1FgpgOZC7sc36ei10XynFelZsJ3JLW0
+	1cYGeerlYugw+CoHDBd9pONoDhOwMH2YL+OTk1NeEGTdowdrBnXH4V92KMsi9Puk
+	VL/BL7tBTsD6GxfLGzpMxIbqwER2fYY7vR3DMhQDOl368almPxE5zQi0pITCuH7v
+	scT7tMYjmSAzbaBJFhHA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wpts7t7b2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Mar 2024 09:43:42 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4279hfFj031294
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Mar 2024 09:43:41 GMT
+Received: from [10.216.46.193] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Mar
+ 2024 01:43:36 -0800
+Message-ID: <8e288c24-72a9-4f9a-8aa1-ecd4c9b1652b@quicinc.com>
+Date: Thu, 7 Mar 2024 15:13:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Content-Language: en-US
+To: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <bjorn.andersson@linaro.org>,
+        <andi.shyti@kernel.org>, <wsa@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <quic_vdadhani@quicinc.com>
+References: <20240301112638.990045-1-quic_msavaliy@quicinc.com>
+ <fuggv2kghhxijcljavzsus5uagjiknj5mrzwmqbxbhkyov5t75@smpxbhpdz7cv>
+ <ZeSFVEcA9g2WTyJz@matsya>
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <ZeSFVEcA9g2WTyJz@matsya>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -l2jebVs9tjIYjLSD7CV4BH-iE7fjZev
+X-Proofpoint-GUID: -l2jebVs9tjIYjLSD7CV4BH-iE7fjZev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-07_06,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ mlxscore=0 spamscore=0 phishscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403070070
 
-The variable out is being initialized and incremented but it is never
-actually referenced in any other way. The variable is redundant and can
-be removed.
 
-Cleans up clang scan build warning:
-drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: warning: variable
-'out' set but not used [-Wunused-but-set-variable]
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ---
- 1 file changed, 3 deletions(-)
+On 3/3/2024 7:42 PM, Vinod Koul wrote:
+> On 01-03-24, 10:37, Bjorn Andersson wrote:
+>> On Fri, Mar 01, 2024 at 04:56:38PM +0530, Mukesh Kumar Savaliya wrote:
+>>> we are seeing protocol errors like NACK as transfer failure but
+>>> ideally it should report exact error like NACK, BUS_PROTO or ARB_LOST.
+>>>
+>>> Hence we are adding such error support in GSI mode and reporting it
+>>> accordingly by adding respective error logs.
+>>>
+>>> geni_i2c_gpi_xfer() needed to allocate heap based memory instead of
+>>> stack memory to handle and store the geni_i2c_dev handle.
+>>>
+>>> Copy event status from GSI driver to the i2c device status and parse
+>>> error when callback comes from gsi driver to the i2c driver. In the
+>>> gpi.c, we need to store callback param into i2c config data structure
+>>> so that inside the i2c driver, we can check what exactly the error is
+>>> and parse it accordingly.
+>>>
+>>> Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
+>>> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>   drivers/dma/qcom/gpi.c             | 12 +++++++-
+>>>   drivers/i2c/busses/i2c-qcom-geni.c | 46 +++++++++++++++++++-----------
+>>>   include/linux/dma/qcom-gpi-dma.h   |  4 +++
+>>>   3 files changed, 44 insertions(+), 18 deletions(-)
+>>>
+>>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+>>> index 1c93864e0e4d..6d718916fba4 100644
+>>> --- a/drivers/dma/qcom/gpi.c
+>>> +++ b/drivers/dma/qcom/gpi.c
+>>> @@ -1076,7 +1076,17 @@ static void gpi_process_xfer_compl_event(struct gchan *gchan,
+>>>   	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
+>>>   
+>>>   	dma_cookie_complete(&vd->tx);
+>>> -	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
+>>> +	if (gchan->protocol == QCOM_GPI_I2C) {
+>>> +		struct dmaengine_desc_callback cb;
+>>> +		struct gpi_i2c_config *i2c;
+>>> +
+>>> +		dmaengine_desc_get_callback(&vd->tx, &cb);
+>>> +		i2c = cb.callback_param;
+>>> +		i2c->status = compl_event->status;
+>>
+>> What would the DMA maintainer say about extending struct
+>> dmaengine_tx_result with some protocol-specific status field?
+> 
+> That would be sane thing to do if we can get protocol status. Most of
+> the times DMA txn would tell you success or fail, here we have firmware
+> which tells us this and I see no reason why this can't be propagated.
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 1f5245fc2cdc..d4e1ebfcb021 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -840,7 +840,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
- 		struct a6xx_crashdumper *dumper)
- {
- 	u64 *in = dumper->ptr;
--	u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
- 	size_t datasize = block->size * A6XX_NUM_SHADER_BANKS * sizeof(u32);
- 	int i;
- 
-@@ -853,8 +852,6 @@ static void a6xx_get_shader_block(struct msm_gpu *gpu,
- 
- 		in += CRASHDUMP_READ(in, REG_A6XX_HLSQ_DBG_AHB_READ_APERTURE,
- 			block->size, dumper->iova + A6XX_CD_DATA_OFFSET);
--
--		out += block->size * sizeof(u32);
- 	}
- 
- 	CRASHDUMP_FINI(in);
--- 
-2.39.2
-
+Thanks Vinod for reviewing the change. I have uploaded latest patch 
+considering other review comments.
+> 
 
