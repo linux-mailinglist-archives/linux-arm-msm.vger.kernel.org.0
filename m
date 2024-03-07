@@ -1,85 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-13558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C0E1874729
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 05:18:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14107874778
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 05:50:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4232028637C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 04:18:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 457DD1C225E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 04:50:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFB951BF2F;
-	Thu,  7 Mar 2024 04:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF9A1B299;
+	Thu,  7 Mar 2024 04:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E2xlxmhx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNDPk3CN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBAC17BB3;
-	Thu,  7 Mar 2024 04:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E809125D5;
+	Thu,  7 Mar 2024 04:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709785071; cv=none; b=dJQ+Qw9haYb15eqHJkon6mLJZJK1IdEHhMTsAgO5nXg4PL8bZAE7N9Oh2V+ACvmVouM+SnScJYBPFh4ucaXPY+ZunGH6BQNn7b8iPkmtAezUp6bZH6v6aqxeu98JPn60mbvGGDUVF/W1WM3I54x3qDctgG9ODGCfuWDZ9Z2x1xU=
+	t=1709787028; cv=none; b=G5by6/2F05LUo9nPW6ECZNTQJA9wGcGDb0OYyM57SzYWoHpv0ndLAeo5cruAZQ5Yvii5wueeku6gPttnL+rofnIair2UxwdaY8l6DHt6qiz/bYazvu6AUWf/zzDLLCJmRImyxEVivgmTBC8VJBVUTHzzgSeclXtOlvOLovFSdq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709785071; c=relaxed/simple;
-	bh=2s7GsjGu62nJvW790T7SfAsA30sZh4LQX74GY6K0iLk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BvLIwuWAFEjYUCuY4ade3Gf2tdP3CADXor/dATT6792GQ0A3zvcjZxbCIAhs/5kVqHGVss+GrCI/uWD7rsRFqljGjqABwd+co5bf9f9Ocwua1p1llO8GX52jRxr+4t7gu8AACG3HqmJhpyZrZVo4BPvLhaVNUP2rmE2HlKrv3qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E2xlxmhx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 427425H7019773;
-	Thu, 7 Mar 2024 04:17:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=reh0rLS
-	A+SGYleShxgMlDj8R+YJ0WdCYCClT6BO7FwM=; b=E2xlxmhxl5u0gNwih8TKn3N
-	ytAfy8NVsQFZ6SaCS3ppB4pmB4MFPbiBecNY7OsYKzn/BOZ3rSwKIkB9eL7gSOys
-	1A3HK4MSVrm/OsXGGantzrnOPI5OPXIjWzTXj62NehDZzejZzXpV+Kpga2TAB6lL
-	UBhmpgGZVgdefMrPChbC0EWFKQbe1Wu0ioMypQO6b4dfT/Pw4yXSUiSfh2PrImNT
-	bys1ptG5BOoZZnbpDvkC3aW/wT/n0ptGOHVlsmFQgok89+mGiebdOEwYkZf9mHtH
-	pq0Zq6m9CsOBHHtnuIzfQiOlnzP/nuQ/dEn0zM67wb+hn457CDAn3G1g5G1HjwQ=
-	=
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wq01urna5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Mar 2024 04:17:34 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4274HU8e009281;
-	Thu, 7 Mar 2024 04:17:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3wp060d47k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Mar 2024 04:17:30 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4274HUND009276;
-	Thu, 7 Mar 2024 04:17:30 GMT
-Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4274HUuu009275
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Mar 2024 04:17:30 +0000
-Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
-	id E63A341612; Thu,  7 Mar 2024 09:47:28 +0530 (+0530)
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
-        robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mtd@lists.infradead.org
-Cc: quic_mdalam@quicinc.com, quic_varada@quicinc.com,
-        quic_srichara@quicinc.com
-Subject: [PATCH v3 5/5] arm64: dts: qcom: ipq9574: Disable eMMC node
-Date: Thu,  7 Mar 2024 09:47:26 +0530
-Message-Id: <20240307041726.1648829-6-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240307041726.1648829-1-quic_mdalam@quicinc.com>
-References: <20240307041726.1648829-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1709787028; c=relaxed/simple;
+	bh=728qXOa0GYyTnUAIWAElvi6CSw0RIuoe8mh+TMh/UCY=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=qvKjs3/Qk0NjK27wY9C+nDbE3YMrUJ9JN5El8VQwOxUHSJZjHO6iVe24Vv+zuZTs6XgIZ7RWrHAjqbh5R8h58RTszLyZIWCIP5Zy7frq0jFIiyHqCPvq04GbEvU7THzTqOQM/tqkmj99MlAHJ4ta+y87oWvs3GXOZccjXBO9ldA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNDPk3CN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F22E2C43394;
+	Thu,  7 Mar 2024 04:50:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709787028;
+	bh=728qXOa0GYyTnUAIWAElvi6CSw0RIuoe8mh+TMh/UCY=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=lNDPk3CN8ykpil4lCxbnCkeYZGmkpL3zNads34pSOAmSDCJZWATS+itZ5m6f3Qtij
+	 dhX6oRBQORW/moFW9eXldoZFhPB3t/I+j3dsa4h0vPbNkIq7etATkD1AVuB81Xvh9H
+	 VP9Ypy/a82gi/Fdfwkn4+u2d/jfpEv+LH2J/F6DMz+eCKvfRWvhT/y2KAUu4XGO1cT
+	 euRlSRGh+TbaLWwdWuqPC+APXV2tSYJcksOc9AKCS0Aq4Yhn/JjqyNqwXKmUTFs3u6
+	 B0rCJ9u/iqQzuVrrBZcf29t9HWnvFZltMftLU6is/3Sm/bg0+ROMoEN5ACXAeFu/ab
+	 lLVdzRHc9tXWg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D352DD9A4B5;
+	Thu,  7 Mar 2024 04:50:27 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,54 +52,46 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yeOabl_kpnJBTQaBjwUYwmh-qViKHiE6
-X-Proofpoint-ORIG-GUID: yeOabl_kpnJBTQaBjwUYwmh-qViKHiE6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_14,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0 malwarescore=0
- phishscore=0 adultscore=0 mlxlogscore=827 priorityscore=1501 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403070027
+Subject: Re: [PATCH net-next v3] net: phy: qca807x: fix compilation when
+ CONFIG_GPIOLIB is not set
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170978702785.12804.17752027810406406175.git-patchwork-notify@kernel.org>
+Date: Thu, 07 Mar 2024 04:50:27 +0000
+References: <20240305142113.795005-1-robimarko@gmail.com>
+In-Reply-To: <20240305142113.795005-1-robimarko@gmail.com>
+To: Robert Marko <robimarko@gmail.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, andrew@lunn.ch,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ ansuelsmth@gmail.com, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, lkp@intel.com
 
-Disable eMMC node
+Hello:
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
-Change in [v3]
+This patch was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-* Removed co-developed by 
+On Tue,  5 Mar 2024 15:20:33 +0100 you wrote:
+> Kernel bot has discovered that if CONFIG_GPIOLIB is not set compilation
+> will fail.
+> 
+> Upon investigation the issue is that qca807x_gpio() is guarded by a
+> preprocessor check but then it is called under
+> if (IS_ENABLED(CONFIG_GPIOLIB)) in the probe call so the compiler will
+> error out since qca807x_gpio() has not been declared if CONFIG_GPIOLIB has
+> not been set.
+> 
+> [...]
 
-Change in [v2]
+Here is the summary with links:
+  - [net-next,v3] net: phy: qca807x: fix compilation when CONFIG_GPIOLIB is not set
+    https://git.kernel.org/netdev/net-next/c/1677293ed891
 
-* Posted as initial eMMC disable patch
-
-Change in [v1]
-
-* This patch was not included in v1
-
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 1bb8d96c9a82..e33e7fafd695 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -24,7 +24,7 @@ &sdhc_1 {
- 	mmc-hs400-enhanced-strobe;
- 	max-frequency = <384000000>;
- 	bus-width = <8>;
--	status = "okay";
-+	status = "disabled";
- };
- 
- &tlmm {
+You are awesome, thank you!
 -- 
-2.34.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
