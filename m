@@ -1,130 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-13613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D70387538A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 16:42:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98D33875391
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 16:43:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB2A32841F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 15:42:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 076611F2939C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 15:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CF2812FB25;
-	Thu,  7 Mar 2024 15:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 288B4129A77;
+	Thu,  7 Mar 2024 15:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RiMQ0OlE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTW/DAr7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD7412F36F;
-	Thu,  7 Mar 2024 15:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B721EEEA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 15:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709826038; cv=none; b=psFORPL5/8bZNN4k/juwmBwJ5KFmf+4+PZt7Bm3TxZbmENDMdEMZCBLGwBpG18u5jZX/4PDAYKo2FdvhxVDVYAQ4BwSLhMzP2t+ds0K5NKGy798KM1AwhKyXjlWf03BOVfNsCMNhqxZCigVNK0Tzn9TjksJuoFDcrOwkwtYpUXU=
+	t=1709826186; cv=none; b=upWH3aqz7n3w+2fpxotOHoEdwoayYBzuiL4XJ+kafCpE30xOT4hYcV5pqCloKBoVFZGTdO4InYFeG/K2543mMLdA+9V1tFtk7lDl5HyJQx8Bq8f+I9j6fWR3yULKT8rFi6dwfUew3trhwi/gTRiTFBW1x4wicwg1bCyARLTkIlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709826038; c=relaxed/simple;
-	bh=fh0n5w9BpVHFCfMA3Um/TOAMScuRvA2TPQcLoKcwmuc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MGZcsoYwcQxFs2EUUTRK2Oedq4rs04MSZsabwoFfiHj9rG7STN4/YXlkgjC6vXbI0yFeqvC/s7ehqG27DoDhAtiQ9bzQzhW25QeqPSO02wkG3eU1ffezqA5YbLP3bDZLAjy7YxLtbRaN5VHdtYceIeea+ozedA7sKVnA2GK9W7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RiMQ0OlE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 427EBpmu019389;
-	Thu, 7 Mar 2024 15:40:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:reply-to:references
-	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=x9mSKt+D
-	jroHiBhsJgaO1YAzStTlyxwFwrm/zxwZK+Q=; b=RiMQ0OlEAfMlt4L0tlo0fRjU
-	SO6T952gb2ZEJjPH4sJXhfyw2VRkAndG0pmT06UrNnWB84wwz8iW7RFH5jNfXEak
-	wNmK0pASi31rHtFvh9RIochTlHkIQdo0XaeIx0ZY6dEyUSRsqrjJoSh3ZLPkYF+9
-	yDYR+sIz50H2PKf0AmJD8DQMvx+Gw1oQcMU3daHY/o4rsPstsfIe+jtNvvSFmjBd
-	JC53IvSnKM+sxPyZtGCvg5Rx74qxgxlz5pCTUFM6PgTOMzWc6OkgUlUMYvMRXxeC
-	k8nosLzj0auisXPMWIMfdKGJGjcwtp1+LqgutxxyZ/3C6C7SkYXgNhs+ddxWrA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqf4r0ekv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 07 Mar 2024 15:40:03 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 427Fe1GE010812
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 7 Mar 2024 15:40:01 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Mar
- 2024 07:39:54 -0800
-Date: Thu, 7 Mar 2024 21:09:50 +0530
-From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-CC: Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik
-	<quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Fuad
- Tabba" <tabba@google.com>,
-        Sean Christopherson <seanjc@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: [PATCH v17 09/35] gunyah: rsc_mgr: Add VM lifecycle RPC
-Message-ID: <20240307153950.GB1696249@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-9-1e9da6763d38@quicinc.com>
+	s=arc-20240116; t=1709826186; c=relaxed/simple;
+	bh=TUvO5JoFUlTVyKGRWFc7SdUbYHs4fXJEJenhMnh0sN8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=GFkPaUsRPfIlqKYk/UZ++bb+/bdCw40I6aHJyu+7/+SeoEPQrRsItlBjDgKbY6sRmhOnv/z9oBs8woH7jjrpPBRMcezK6UAjjd9ffqCIl6jcN1NywCeWHk5ewcsjyGMoDSYFCdSwmLAUfDW/b9gvrN29a54h84LoDtqnZFZ9Hy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTW/DAr7; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55a5e7fa471so1576410a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 07:43:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709826182; x=1710430982; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=QbfY0jQ/d1E5iuzWIwYW6yuawL+XChB5sPZ7SPtuav0=;
+        b=dTW/DAr71Qxt5AUnKPBUq39s7GhIfDMe1Pp4rsZ3MAucprLOAOleGBJzKQ8Do5WVqZ
+         k3ZUY0FMrCngQhfjxU3uPA4Ius6OOYaGSNz//Ql7lmnN847i8xa3dK9eZXpq7F6VLSkP
+         +jG88ZCr9mk3P/IxQdKK2Mry7qMZmCHiGoRcVm7qZOktlmaBVoazG2PFte3XkMc8W7kd
+         h6jGoeZtqdDczsHR42MnDm6d/iQCiawQGh3xYFTS+/OGor+3tisJxLwr9+bjvAiraSkp
+         DDpggMRUVb7WKvSGJFrghz8BCNyfm/MA4nf+tj+83Is1FRiYecoIqZQqvTbfs5AdQOHb
+         bC/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709826182; x=1710430982;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QbfY0jQ/d1E5iuzWIwYW6yuawL+XChB5sPZ7SPtuav0=;
+        b=rfNL0WhvoiVIH5UHIcPdDn1bXGrfNaPCmoXAlkxFHvWfF1Bw6NBXje4yFLJw+9iSJQ
+         c51oVuRXmwNdmHH/+jbXgcIqvXhjyeSf7sL56lAHa/hypIEUkCICGWRZDh7+aopXhuxp
+         5cPqR9coaZxwbmCdxHWqlUl5UecQQp53iv6W6AAroFrZXbRvAGj8wBd3YkBZCDeQSfYD
+         uVflFsXe2wHYDP0KjkaIGsJGQHX9v+j5OabdVaKqk03stopmQf48ZFYu1BqwSJS45sOD
+         YANXrRN7az4jGkxgHIlvK8nwidUf+xVJkIDgEnTv0Ch5g+b7ix4iZy1joH+T/NyLtM9I
+         OgIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVADMrT23h4b9i93El9Z3wVaw/vC3s5sGLYTBqP36a8ZoacVCK50y4Q8x962zC9Xdc4ycl1Q8WPP/SakAI6n8UHVT7U+nLptAzOQuKWLA==
+X-Gm-Message-State: AOJu0YxvyKvxLgs9V6PO+WDVfhfKeAUraX/6lclVCGn6sje3HMnIyh+n
+	f7JFukcwcK3pcSKrL/f57/wXypiUeMSe02woaVWCUo4zBApWkOwgIPe7wBTOIIfUSS5tUPEIjG2
+	/wUzHFhV08aHq8imiEKGMsFA42pmgkGWg7yc=
+X-Google-Smtp-Source: AGHT+IEr9qo/sl8eNI6sxdX5u4sxd7sET4jEQ3xcDqXBSae2OwHSkckftNM2xzoDZp6UHAKqUfZlQZkVq2caijUeJo4=
+X-Received: by 2002:a50:cd5d:0:b0:565:e060:5567 with SMTP id
+ d29-20020a50cd5d000000b00565e0605567mr102617edj.31.1709826182359; Thu, 07 Mar
+ 2024 07:43:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20240222-gunyah-v17-9-1e9da6763d38@quicinc.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _uZlOP-jl2koKQHOhQe9grwGA8_vX3Ph
-X-Proofpoint-ORIG-GUID: _uZlOP-jl2koKQHOhQe9grwGA8_vX3Ph
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-07_07,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- malwarescore=0 phishscore=0 spamscore=0 mlxlogscore=508 suspectscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403070086
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 7 Mar 2024 07:42:50 -0800
+Message-ID: <CAF6AEGvedk6OCOZ-NNtGf_pNiGuK9uvWj1MCDZLX9Jo2nHS=Zg@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2024-03-07 for v6.9
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-* Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:32]:
+Hi Dave,
 
-> Add Gunyah Resource Manager RPC interfaces to launch an unauthenticated
-> virtual machine.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+This is the last bit for v6.9, which was waiting on
+drm-misc-next-2024-02-29.  Description below.
 
-LGTM
+The following changes since commit 177bce60cd10a4ffdc9881bf6f2dff7880408c1d:
 
-Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+  Merge tag 'drm-misc-next-2024-02-29' into msm-next (2024-03-03 18:32:11 -0800)
 
-- vatsa
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2024-03-07
+
+for you to fetch changes up to 4be445f5b6b6810baf397b2d159bd07c3573fd75:
+
+  drm/msm/dpu: capture snapshot on the first commit_done timeout
+(2024-03-04 11:44:03 +0200)
+
+----------------------------------------------------------------
+Late updates for v6.9, the main part is CDM (YUV over DP) which was
+waiting for drm-misc-next-2024-02-29.
+
+DPU:
+- Add support for YUV420 over DP
+- Patchset to ease debugging of vblank timeouts
+- Small cleanup
+
+----------------------------------------------------------------
+Dmitry Baryshkov (3):
+      drm/msm/dpu: make "vblank timeout" more useful
+      drm/msm/dpu: split dpu_encoder_wait_for_event into two functions
+      drm/msm/dpu: capture snapshot on the first commit_done timeout
+
+Kuogee Hsieh (1):
+      drm/msm/dpu: add support of new peripheral flush mechanism
+
+Paloma Arellano (18):
+      drm/msm/dpu: allow certain formats for CDM for DP
+      drm/msm/dpu: add division of drm_display_mode's hskew parameter
+      drm/msm/dpu: pass mode dimensions instead of fb size in CDM setup
+      drm/msm/dpu: allow dpu_encoder_helper_phys_setup_cdm to work for DP
+      drm/msm/dpu: move dpu_encoder_helper_phys_setup_cdm to dpu_encoder
+      drm/msm/dp: rename wide_bus_en to wide_bus_supported
+      drm/msm/dp: store mode YUV420 information to be used by rest of DP
+      drm/msm/dp: check if VSC SDP is supported in DP programming
+      drm/msm/dpu: move widebus logic to its own API
+      drm/msm/dp: program config ctrl for YUV420 over DP
+      drm/msm/dp: change clock related programming for YUV420 over DP
+      drm/msm/dp: move parity calculation to dp_utils
+      drm/msm/dp: add VSC SDP support for YUV420 over DP
+      drm/msm/dp: enable SDP and SDE periph flush update
+      drm/msm/dpu: modify encoder programming for CDM over DP
+      drm/msm/dpu: modify timing engine programming for YUV420 over DP
+      drm/msm/dpu: reserve CDM blocks for DP if mode is YUV420
+      drm/msm/dp: allow YUV420 mode for DP connector when CDM available
+
+ drivers/gpu/drm/msm/Makefile                       |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 244 +++++++++++++++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  26 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  26 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  32 ++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 100 +--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_cdm.c         |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  17 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   6 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c                  | 101 ++-------
+ drivers/gpu/drm/msm/dp/dp_catalog.c                | 115 +++++++++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |   9 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  17 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |  82 +++++--
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |   6 +-
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |   3 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  53 +++++
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |   2 +
+ drivers/gpu/drm/msm/dp/dp_reg.h                    |   9 +
+ drivers/gpu/drm/msm/dp/dp_utils.c                  |  96 ++++++++
+ drivers/gpu/drm/msm/dp/dp_utils.h                  |  36 +++
+ drivers/gpu/drm/msm/msm_drv.h                      |  32 +--
+ 23 files changed, 736 insertions(+), 291 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_utils.c
+ create mode 100644 drivers/gpu/drm/msm/dp/dp_utils.h
 
