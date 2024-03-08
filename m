@@ -1,172 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-13671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96C0D87609A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:05:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7779887609F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:05:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65B2BB20DC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:05:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E558C1F20ACB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:05:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3229352F79;
-	Fri,  8 Mar 2024 09:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA52D535B2;
+	Fri,  8 Mar 2024 09:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duRn1SRP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWkI4xtH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A494E1DC;
-	Fri,  8 Mar 2024 09:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DDC52F73;
+	Fri,  8 Mar 2024 09:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709888715; cv=none; b=lwFkuJ+iuLnjGnqfTcf+0y7forpKBmyc6TxZGb8GL5DwTbq9o6Tm9Vanf73G8ZBo3rhvAkkBssqubzM5QVJ2nG2gkwqjKJdHFdPmo0qa0qtl783Rj7TVJA048TdYe/CPNLlKu2kFBAAhC9g7xvRi4gED8KZ1wBDBa0xEQdcrvn4=
+	t=1709888722; cv=none; b=KxXBXuB7RiBc4G0zoCHZkeG56zGIfO9Zaa860Rbf7O4irCJ9nWfD2zOlkLgrXS6XvCaillEPulLAQ6VMBymNUWVNImbQFuGRD2e3o28dS8dQlRx381lMcFzJWRrpOEOezWxUtsKPC022uy+w/0iYCmN4ucLqhKOAvDDFAEJrk1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709888715; c=relaxed/simple;
-	bh=Wa1CCeGm7aGsyJ70EYwRjL0CHz7Mbn5iEzYxL4NaEK4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Gu3EpkW2uCO7utHDa/mx8WKb9EXY6cc8WZWYIhbsIUg0/TkEqZIqHxd0WGNJzJTD/4U8XV/TXx+UJUcrAG7tT2SayW7z89/IbOtLF47F5wB8ZSPr6kncYpJzfu2MxOYXs79a9fTqcP3QIgQvDFzYHGBUe6vf+PTe2y4ZZrnz71I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duRn1SRP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A2DC43390;
+	s=arc-20240116; t=1709888722; c=relaxed/simple;
+	bh=bZE3lLlkuJ7PvYUKEQqczGXk3MirQvfYGrIhBNhV2+0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XUFCxXQO43SrTBEbxbYv52/D6XiRKIXvWJcNjDyvDLQey9kw3hP83L2mh1sGmxja2V4jVv/XHDtL5s91D6djtauA/XmzgJ6i9470AoHSBdKY/ANEtqkpbVuMceSPuzrUW9n92Z/emU2IkftCVOTVU7h7Fi53tqJZuh7Odu7I6TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWkI4xtH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6806C433B1;
 	Fri,  8 Mar 2024 09:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709888714;
-	bh=Wa1CCeGm7aGsyJ70EYwRjL0CHz7Mbn5iEzYxL4NaEK4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=duRn1SRPSaLGXolrWDQvKS+HoVctSh7jbAYlJ8DvxG8Cvy9rpBsXPhDWU6tbvBNDm
-	 jDisxatsNjaGtq0h+FLGFRHhYcoTuQ3pmINxwNbAECqIKRJzA8QZrmkIABCkJCMdIH
-	 u4iyFN8rbS5E0xGnuT9ldN6cYr/FwqcE+XgWUPcJWgQ6Z6oV3KGPLv77ip1WAToVTr
-	 075s3rOt+2M2mBUVVTiKd49ThhbIUmjaz/PKW6MQ8X3kYuIy0Bh8qPYLrJIJ8gwmfG
-	 kPRufdRlvFmqR8LSoKyum+mWgyZsliICJvV8oMGnRMpF/TXQiLIE4dVtGGISRKDdJE
-	 dXwJv7CT+9dbQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1riWAL-000000002I0-0dHq;
-	Fri, 08 Mar 2024 10:05:21 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: stable@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH stable-6.7] soc: qcom: pmic_glink_altmode: fix drm bridge use-after-free
-Date: Fri,  8 Mar 2024 10:03:57 +0100
-Message-ID: <20240308090357.8758-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	s=k20201202; t=1709888722;
+	bh=bZE3lLlkuJ7PvYUKEQqczGXk3MirQvfYGrIhBNhV2+0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MWkI4xtHh0q/rku6OXru8Y5F0uyRm3OagmGFpmUyIc2rYcZiMSPOiATfm4KcSiUkW
+	 IA/wiVN/IG7POxQlNaaz79LCo+ocHGUmXgYP6x6UEr/8a5tlpJo5msNuAtAERLfowz
+	 OydyRBOmxFQHHf4+urZfZqiXS8SHOFOoGxXqRrutLHKA76PqWRFuhnOKTTspI+kuci
+	 BQ28JitosqrxLAk3FoKKSH0YNWL74SOgWXdv6mXlpxLAHHLBY1yr79+O6wbAgLS4s4
+	 B4A1F/m+kSB0tUh7hiHLnsNWlFj4wbjuW+NQlJBLF+NrcRpNktQGGd61YzrHsCJ5xm
+	 y+8eyn0zKZ4sA==
+Date: Fri, 8 Mar 2024 10:05:11 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com
+Subject: Re: [PATCH v9 06/10] PCI: dwc: ep: Call dw_pcie_ep_init_registers()
+ API directly from all glue drivers
+Message-ID: <ZerUx9Vw_W997LZk@ryzen>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-6-29d433d99cda@linaro.org>
+ <ZeolaEIRYmKZjnvT@ryzen>
+ <20240308053624.GB3789@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240308053624.GB3789@thinkpad>
 
-commit b979f2d50a099f3402418d7ff5f26c3952fb08bb upstream.
+On Fri, Mar 08, 2024 at 11:06:24AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Mar 07, 2024 at 09:36:56PM +0100, Niklas Cassel wrote:
+> > On Mon, Mar 04, 2024 at 02:52:18PM +0530, Manivannan Sadhasivam wrote:
+> > > Currently, dw_pcie_ep_init_registers() API is directly called by the glue
+> > > drivers requiring active refclk from host. But for the other drivers, it is
+> > > getting called implicitly by dw_pcie_ep_init(). This is due to the fact
+> > > that this API initializes DWC EP specific registers and that requires an
+> > > active refclk (either from host or generated locally by endpoint itsef).
+> > > 
+> > > But, this causes a discrepancy among the glue drivers. So to avoid this
+> > > confusion, let's call this API directly from all glue drivers irrespective
+> > > of refclk dependency. Only difference here is that the drivers requiring
+> > > refclk from host will call this API only after the refclk is received and
+> > > other drivers without refclk dependency will call this API right after
+> > > dw_pcie_ep_init().
+> > > 
+> > > With this change, the check for 'core_init_notifier' flag can now be
+> > > dropped from dw_pcie_ep_init() API. This will also allow us to remove the
+> > > 'core_init_notifier' flag completely in the later commits.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/controller/dwc/pci-dra7xx.c           |  7 +++++++
+> > >  drivers/pci/controller/dwc/pci-imx6.c             |  8 ++++++++
+> > >  drivers/pci/controller/dwc/pci-keystone.c         |  9 +++++++++
+> > >  drivers/pci/controller/dwc/pci-layerscape-ep.c    |  7 +++++++
+> > >  drivers/pci/controller/dwc/pcie-artpec6.c         | 13 ++++++++++++-
+> > >  drivers/pci/controller/dwc/pcie-designware-ep.c   | 22 ----------------------
+> > >  drivers/pci/controller/dwc/pcie-designware-plat.c |  9 +++++++++
+> > >  drivers/pci/controller/dwc/pcie-keembay.c         | 16 +++++++++++++++-
+> > >  drivers/pci/controller/dwc/pcie-rcar-gen4.c       | 12 +++++++++++-
+> > >  drivers/pci/controller/dwc/pcie-uniphier-ep.c     | 13 ++++++++++++-
+> > >  10 files changed, 90 insertions(+), 26 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > index 0e406677060d..395042b29ffc 100644
+> > > --- a/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
+> > > @@ -467,6 +467,13 @@ static int dra7xx_add_pcie_ep(struct dra7xx_pcie *dra7xx,
+> > >  		return ret;
+> > >  	}
+> > >  
+> > > +	ret = dw_pcie_ep_init_registers(ep);
+> > > +	if (ret) {
+> > 
+> > Here you are using if (ret) to error check the return from
+> > dw_pcie_ep_init_registers().
+> > 
+> > 
+> > > index c0c62533a3f1..8392894ed286 100644
+> > > --- a/drivers/pci/controller/dwc/pci-keystone.c
+> > > +++ b/drivers/pci/controller/dwc/pci-keystone.c
+> > > @@ -1286,6 +1286,13 @@ static int ks_pcie_probe(struct platform_device *pdev)
+> > >  		ret = dw_pcie_ep_init(&pci->ep);
+> > >  		if (ret < 0)
+> > >  			goto err_get_sync;
+> > > +
+> > > +		ret = dw_pcie_ep_init_registers(&pci->ep);
+> > > +		if (ret < 0) {
+> > 
+> > Here you are using if (ret < 0) to error check the return from
+> > dw_pcie_ep_init_registers(). Please be consistent.
+> > 
+> 
+> I maintained the consistency w.r.t individual drivers. Please check them
+> individually.
+> 
+> If I maintain consistency w.r.t this patch, then the style will change within
+> the drivers.
 
-A recent DRM series purporting to simplify support for "transparent
-bridges" and handling of probe deferrals ironically exposed a
-use-after-free issue on pmic_glink_altmode probe deferral.
+Personally, I disagree with that.
 
-This has manifested itself as the display subsystem occasionally failing
-to initialise and NULL-pointer dereferences during boot of machines like
-the Lenovo ThinkPad X13s.
+All glue drivers should use the same way of checking dw_pcie_ep_init(),
+depending on the kdoc of dw_pcie_ep_init().
 
-Specifically, the dp-hpd bridge is currently registered before all
-resources have been acquired which means that it can also be
-deregistered on probe deferrals.
+If the kdoc for dw_pcie_ep_init() says returns 0 on success,
+then I think that it is strictly more correct to do:
 
-In the meantime there is a race window where the new aux bridge driver
-(or PHY driver previously) may have looked up the dp-hpd bridge and
-stored a (non-reference-counted) pointer to the bridge which is about to
-be deallocated.
+ret = dw_pcie_ep_init()
+if (ret) {
+	<error handling>
+}
 
-When the display controller is later initialised, this triggers a
-use-after-free when attaching the bridges:
+And if a glue driver doesn't look like that, then I think we should change
+them. (Same reasoning for dw_pcie_ep_init_registers().)
 
-	dp -> aux -> dp-hpd (freed)
 
-which may, for example, result in the freed bridge failing to attach:
+If you read code that looks like:
+ret = dw_pcie_ep_init()
+if (ret < 0) {
+	<error handling>
+}
 
-	[drm:drm_bridge_attach [drm]] *ERROR* failed to attach bridge /soc@0/phy@88eb000 to encoder TMDS-31: -16
+then you assume that is is a function with a kdoc that says it can return 0
+or a positive value on success, e.g. a function that returns an index in an
+array.
 
-or a NULL-pointer dereference:
 
-	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-	...
-	Call trace:
-	  drm_bridge_attach+0x70/0x1a8 [drm]
-	  drm_aux_bridge_attach+0x24/0x38 [aux_bridge]
-	  drm_bridge_attach+0x80/0x1a8 [drm]
-	  dp_bridge_init+0xa8/0x15c [msm]
-	  msm_dp_modeset_init+0x28/0xc4 [msm]
-
-The DRM bridge implementation is clearly fragile and implicitly built on
-the assumption that bridges may never go away. In this case, the fix is
-to move the bridge registration in the pmic_glink_altmode driver to
-after all resources have been looked up.
-
-Incidentally, with the new dp-hpd bridge implementation, which registers
-child devices, this is also a requirement due to a long-standing issue
-in driver core that can otherwise lead to a probe deferral loop (see
-commit fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER")).
-
-[DB: slightly fixed commit message by adding the word 'commit']
-Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
-Fixes: 2bcca96abfbf ("soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE")
-Cc: <stable@vger.kernel.org>      # 6.3
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240217150228.5788-4-johan+linaro@kernel.org
-[ johan: backport to 6.7 which does not have DRM aux bridge ]
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/soc/qcom/pmic_glink_altmode.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index ad922f0dca6b..a890fafdafb8 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -469,12 +469,6 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- 		alt_port->bridge.ops = DRM_BRIDGE_OP_HPD;
- 		alt_port->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
- 
--		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
--		if (ret) {
--			fwnode_handle_put(fwnode);
--			return ret;
--		}
--
- 		alt_port->dp_alt.svid = USB_TYPEC_DP_SID;
- 		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
- 		alt_port->dp_alt.active = 1;
-@@ -525,6 +519,16 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- 		}
- 	}
- 
-+	for (port = 0; port < ARRAY_SIZE(altmode->ports); port++) {
-+		alt_port = &altmode->ports[port];
-+		if (!alt_port->altmode)
-+			continue;
-+
-+		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	altmode->client = devm_pmic_glink_register_client(dev,
- 							  altmode->owner_id,
- 							  pmic_glink_altmode_callback,
--- 
-2.43.0
-
+Kind regards,
+Niklas
 
