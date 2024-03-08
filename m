@@ -1,164 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-13691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1699E876260
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 11:45:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5176D876264
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 11:47:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB0B0B219B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:45:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73D721C21B6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:47:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53D1A55C32;
-	Fri,  8 Mar 2024 10:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD5865576D;
+	Fri,  8 Mar 2024 10:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DGV2WEJx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L3dNZ1t4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76FE55C18;
-	Fri,  8 Mar 2024 10:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AD352F78;
+	Fri,  8 Mar 2024 10:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709894692; cv=none; b=F300FwnywXKsSqbRG6bl2d7OCQgStcoxLjfG865w7KYDbIhgKMRu7bpsgH37kS5DWyoMhMB/08Ia7NCOXsrX8cQjiI/Zos51X//y6Hx7IzIocvotBnQZ0AExMoZ7eeskHuUA+SLrdVskvU0gS6oRSLSxaS8muRRULJ6Ueh+BDt8=
+	t=1709894823; cv=none; b=R4uJTxke7nDnXeX5JtwydLtBjsP7KL904G8v9x6xB6cTWdnPqT7BamOytLqWsZyaAaHIJ4M80TNcZYanQoBc5lUdckg4UPTWpooDkTkOFfuliXzwTrtNXa1aI4GDliuLjdElUCxs3Q5V1eOC5jLhZyOnGRfU0v21YMrUCb/4u5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709894692; c=relaxed/simple;
-	bh=PwBP36oa/1ya7DgHCgl3s8pna248l/mNWtOjYUzA5Mo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pdkUzeiTiEqu7k2hnwoN3evz0djYUqzhCZHTtuutvqrZa1ajv4igP8z/IxZj5L5P/YnbK8CK3GaF9oXAWWkfrVsnlZEMruoPEjcjdLhw5vnLDQJdKlqLMGnPlt1xWnW/9BmznrDKlt9ChfxRFqeoZyZQXZ911QEnqLjtNptXmXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DGV2WEJx; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1709894823; c=relaxed/simple;
+	bh=qGuNmFIrWtA9X3fyhwALvI8fPjVC7Ln9CYT40Amik7M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kkhUYOBjE0RJSdzaFrMRMGhI2vr33nfeQ65ajax82mTRr9hF4YZSRH9FP2L7GIs0VtFLICY1bsu+GbdW/CEuxhop5WiosxyUJ7zmktMToe3n+6aElaQNmKXdUJ81H//mANqWMYl4XhgY7J4g55Hwa82R9+zQu/MSNy1u2a2RNj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L3dNZ1t4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428A5jtr027172;
-	Fri, 8 Mar 2024 10:44:39 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4281c37p021785;
+	Fri, 8 Mar 2024 10:46:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=XbzGmI/H+M7jrcCmm5O2fs2KrZylOonYBZ9JNoiny3s=; b=DG
-	V2WEJxsPWMNs5aCf53D6RIlCFveXMD2Me/1Dg5bi6YeBZjNNpVL3zcaIpE3r6yZv
-	1QH1hem0bZS3RcNIoc0KLMlmy5loesI8Sd++DxDQ4TTFk67ncl5oznCUIS93dS8k
-	AQcsDbyYXock4ECmKY/m9Qb/np/j8aCf2eNYdkjf4vZ81wBtCU5AgPwjVRK4adGT
-	GbeEeN01mCRo9dv4+LwHzoVEo2WFLH7tqmL1TpPJ9I1Fpztffj9yNP6fsQeCmgz6
-	UvQUibRDiKTsZL3zi4kQSMCePW+uV7YPcYUHlyp/EWvOOyO47Ru75CW9GZTjmVG5
-	gqIfnotd6Jna7JFRhycw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqyfsr79r-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TxLG4r38U4Rqr7eWXm57lb0YnIZAjlRbQoaRcINMcyg=; b=L3
+	dNZ1t4Fmf2oLy5IvbPxlNtF1v1fClf+2asThy47dVQU853+yNm3z33N3L1GOWItz
+	sA2yvwUKdJYrncaJvfQW/Zwb9hdY5DyTItkXUuVdl+AeiXnHxNb7/+64xoMsBewD
+	Xzvobrw6yFbfWs1Lyn5d3gIg/sGZkyv1/8lDCAXliLW7voX/VbAhx1ImnFlTSwlY
+	0SUt16zwWwNqCt8G7FDdQErxH7nIa2MGncWyZg2ZpVqJJ+Z7Hr/vPaM+ldJ0Dyy7
+	p0arcF5jUmQ9FCC/tOujnAuLUdPVKUDnlTwfXiWmRuEtFtwmkE9tRB25cjT19src
+	Hvzdrb7zTzqCTXsOJHQw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqn8m1gv0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 10:44:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428AicmT016118
+	Fri, 08 Mar 2024 10:46:24 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428AkOUF015567
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 10:44:38 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 8 Mar 2024 02:44:33 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
-        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>, <sboyd@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <nm@ti.com>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>
-Subject: [PATCH V3 2/2] cpufreq: scmi: Enable boost support
-Date: Fri, 8 Mar 2024 16:14:10 +0530
-Message-ID: <20240308104410.385631-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240308104410.385631-1-quic_sibis@quicinc.com>
-References: <20240308104410.385631-1-quic_sibis@quicinc.com>
+	Fri, 8 Mar 2024 10:46:24 GMT
+Received: from [10.216.7.18] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Mar
+ 2024 02:46:18 -0800
+Message-ID: <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
+Date: Fri, 8 Mar 2024 16:16:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
+ SM8150
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
+ <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
+ <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+ <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
+ <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: z5IqSlU8GBXzu3i9Asa1x7JbYnmalQTy
-X-Proofpoint-ORIG-GUID: z5IqSlU8GBXzu3i9Asa1x7JbYnmalQTy
+X-Proofpoint-GUID: Vs23r503-2j_3oJbNZklU5g0YtVaVSnp
+X-Proofpoint-ORIG-GUID: Vs23r503-2j_3oJbNZklU5g0YtVaVSnp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- malwarescore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=999 impostorscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2402120000 definitions=main-2403080085
 
-The X1E80100 SoC hosts a number of cpu boost frequencies, so let's enable
-boost support if the freq_table has any opps marked as turbo in it.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+On 3/6/2024 7:25 PM, Bryan O'Donoghue wrote:
+> On 06/03/2024 08:30, Satya Priya Kakitapalli (Temp) wrote:
+>>>
+>>> Anyway I suspect the right thing to do is to define a 
+>>> titan_top_gdsc_clk with shared ops to "park" the GDSC clock to 19.2 
+>>> MHz instead of turning it off.
+>>>
+>>> You can get rid of the hard-coded always-on and indeed represent the 
+>>> clock in /sysfs - which is preferable IMO to just whacking registers 
+>>> to keep clocks always-on in probe anyway.
+>>>
+>>> Please try to define the titan_top_gdsc_clk as a shared_ops clock 
+>>> instead of hard coding to always on.
+>>>
+>>
+>> Defining the gdsc clk allows consumers to control it, we do not want 
+>> this clock to be disabled/controlled from consumers. Hence it is 
+>> better to not model this clock and just keep it always on from probe.
+>
+> Not if you mark it critical
+>
 
-v3:
-* Don't set per-policy boost flags from the cpufreq driver. [Viresh]
+Marking the clock as critical keeps the associated power domain 
+always-on which impacts power. For this reason we are not using 
+CLK_IS_CRITICAL and instead making them always on from probe.
 
- drivers/cpufreq/scmi-cpufreq.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 0b483bd0d3ca..3b4f6bfb2f4c 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -30,6 +30,7 @@ struct scmi_data {
- 
- static struct scmi_protocol_handle *ph;
- static const struct scmi_perf_proto_ops *perf_ops;
-+static struct cpufreq_driver scmi_cpufreq_driver;
- 
- static unsigned int scmi_cpufreq_get_rate(unsigned int cpu)
- {
-@@ -167,6 +168,12 @@ scmi_get_rate_limit(u32 domain, bool has_fast_switch)
- 	return rate_limit;
- }
- 
-+static struct freq_attr *scmi_cpufreq_hw_attr[] = {
-+	&cpufreq_freq_attr_scaling_available_freqs,
-+	NULL,
-+	NULL,
-+};
-+
- static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- {
- 	int ret, nr_opp, domain;
-@@ -276,6 +283,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	policy->transition_delay_us =
- 		scmi_get_rate_limit(domain, policy->fast_switch_possible);
- 
-+	if (policy_has_boost_freq(policy)) {
-+		ret = cpufreq_enable_boost_support();
-+		if (ret) {
-+			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
-+			goto out_free_opp;
-+		} else {
-+			scmi_cpufreq_hw_attr[1] = &cpufreq_freq_attr_scaling_boost_freqs;
-+			scmi_cpufreq_driver.boost_enabled = true;
-+		}
-+	}
-+
- 	return 0;
- 
- out_free_opp:
-@@ -334,7 +352,7 @@ static struct cpufreq_driver scmi_cpufreq_driver = {
- 		  CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		  CPUFREQ_IS_COOLING_DEV,
- 	.verify	= cpufreq_generic_frequency_table_verify,
--	.attr	= cpufreq_generic_attr,
-+	.attr	= scmi_cpufreq_hw_attr,
- 	.target_index	= scmi_cpufreq_set_target,
- 	.fast_switch	= scmi_cpufreq_fast_switch,
- 	.get	= scmi_cpufreq_get_rate,
--- 
-2.34.1
-
+> static struct clk_branch cam_cc_gdsc_clk = {
+>         .halt_reg = 0xc1e4,
+>         .halt_check = BRANCH_HALT,
+>         .clkr = {
+>                 .enable_reg = 0xc1e4,
+>                 .enable_mask = BIT(0),
+>                 .hw.init = &(struct clk_init_data){
+>                         .name = "cam_cc_gdsc_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &cam_cc_xo_clk_src.clkr.hw
+>                         },
+>                         .num_parents = 1,
+>                         .flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
+>                         .ops = &clk_branch2_ops,
+>                 },
+>         },
+> };
+>
+> and then add this to your camss clocks
+>
+> <&clock_camcc CAM_CC_GDSC_CLK>;
+>
+> The practice we have of just whacking clocks always-on in the probe() 
+> of the clock driver feels lazy to me, leaving the broken cleanups we 
+> have aside.
+>
+> As a user of the system I'd rather see correct/complete data in 
+> /sys/kernel/debug/clk/clk_summary
+>
+> Anyway I'm fine with setting the clock always on, I can always send 
+> out a series to address this bug-bear myself.
+>
+> So yeah just fix the cleanup and then please feel free to add my
+>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
