@@ -1,159 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-13715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFCA087668A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 15:45:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CE8A876731
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 16:19:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6529F2810D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 14:45:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 265A52812B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 15:19:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7D50442F;
-	Fri,  8 Mar 2024 14:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1821A1DDF1;
+	Fri,  8 Mar 2024 15:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qKCHTOIi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e1a/ZMv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34799EBB
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 14:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A8E4400;
+	Fri,  8 Mar 2024 15:19:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709909145; cv=none; b=phXQ4mw92phSCV7Fhg+vqAgxpSf/win8fXWb9XqRYCEgSEckSlajGuhPzgkeWywn3slsD3itBrVd2KAkGFbiR6S+q/1D3gbJDo7vDHDntdF3yuNF3N5dOMP0/W65OFE+Gf7pVtK8sxSe16ZykVJ7XNNzLz/QmTWr5xjPYMK7ufY=
+	t=1709911151; cv=none; b=QoM5EcXd5+204dKuoiNdFp5S6SdtNEKSKEVc1ol0Ui75SJ0IXirUqzDdeMHSs2zyockH/S+eqcWAfEZwGuWYRb7b7GK69dgreFQ69zSDhzfUQvSo0HaAKti3I4dWUU1NOvF6E49GRE0vdI3f1S8T7rXil0jSruRS+7i3TDv7LWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709909145; c=relaxed/simple;
-	bh=Em1F929Mn1mPrn47t685mqMI8vaGLknlocnaygZx4Hs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OVf/btrkfotUOzvkIDSDYS7OF7IzKKu8KVPiEWpGSidqzNpdBr8ZSRnv7WEoc0rK95JeTwTV7PmsNFhVRjtszs4oQ4IhJfjqrgDc1LZADPkrK6uWU3sKM4yYgnz/SsP4ywmU6jPxSM2xZSF6vEO+RfJdRM1Z9rrq0zpw6O8jqYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qKCHTOIi; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5683093ffbbso941500a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Mar 2024 06:45:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709909141; x=1710513941; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zP41Zi/mvVoGN7hu7NP8sEaRzDXJMEZcIHHfHI2Tt3E=;
-        b=qKCHTOIi20QQc7RHat9XMt8Njeo4p0xsM+oKsVQ8FmGpPtV24jLZXqpDyMvfyQOxyy
-         HJQR36rvZYQWSDJeRLql8XQ3ZmslOptcf17uC3XMhC/2hmkc/vdVPhizHhX0v2XdmLzI
-         Wm/ML31Y23EMU7xOyxxJ5fOpff5u3hksCDPjnqd5ZmOIJVZ0IsOd6r1pM/EOgBiBBEzS
-         i4ObaMnaykFrSV6KdV76cokD1aasz+HAg3/BwdvyT0yKRvLG3fkLlb367v0677HbL4ry
-         a6FCiF+Mw2MXHCS9uA3JF76gF6huM8e59kaGKTBag1S9k7MzOZSS3KoLaq4zMFKFipMt
-         2G3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709909141; x=1710513941;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zP41Zi/mvVoGN7hu7NP8sEaRzDXJMEZcIHHfHI2Tt3E=;
-        b=UDtXw4wacnGG9nBzpNgGLJkpaHRhlHgdECQB7V7Xh6JRzM2PpkDUvE1nxE1aKOqQA3
-         rihIKUWODukyK2YofEh3S93Gl/eC7ID9fEKGoRaZQr/aGgDQ5Q3NZuYmo/Lyc2oFQtgL
-         qnZeIE27JknIUbyR8tAIhS+uHNvQAHUUfHPsQaIDo1vajjgd/QFE8j0dHXWxkPG8sRig
-         FI0kGQruyhrF7tnhDlPxduMywTppjrqVUj0Y5G9eah8oczIlrrbnevsuV78RfWsn7vId
-         w/tShoT95rXbWuf8Ft0R5e6Qp5mAhWb5HfIZzHckD0Yy2rJ3/EXKhDSHGUi0lvDE1p9v
-         HwKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUHlBuDVf9WRFC0tw8xpa5McjsTWnlLwphs4kzhJrJUTq8zHymukChl1/fsnx7cjysk4nI4scGx1UDoAXLik3hgmUB+hLJU/PMkJVSypA==
-X-Gm-Message-State: AOJu0YzM3EtdW0KQZ5f3ARM5KvVlY1Nr+mRXDkKFaXzDMG1qRmH2i8o0
-	nPTVUChsiy5Z56Q/2tKLgxZtIiszsquTjpus3ThPeNXMmbZEtWEJzucM4dI7kZE=
-X-Google-Smtp-Source: AGHT+IFzr7uIBzprrII6sDcFB9zm6dRvFyrKG7ykYhwxdSAW3eP/ZuRLedW0GrFDNK30PIfI2/mYVQ==
-X-Received: by 2002:a17:906:1cc2:b0:a44:4578:c79d with SMTP id i2-20020a1709061cc200b00a444578c79dmr13044343ejh.4.1709909141616;
-        Fri, 08 Mar 2024 06:45:41 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id me14-20020a170906aece00b00a45c9474442sm2096353ejb.18.2024.03.08.06.45.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Mar 2024 06:45:41 -0800 (PST)
-Message-ID: <72f29fd6-9d83-4a69-957e-bf3630878784@linaro.org>
-Date: Fri, 8 Mar 2024 15:45:39 +0100
+	s=arc-20240116; t=1709911151; c=relaxed/simple;
+	bh=2aEWrJvvukoPuyYJLD9Zn0ge1MPAdinGfbWVtaTvHp4=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=GlDAJt6AW+/jNWisHYnwiOJ21qpi/H5MvbAllD1mw2tIRQnvT+ZFKOyWX9BcXT7yb0ECgGDTx9RWHfKRZLeLjtMAUu8/GQxUG/IjF4eygkOcgzTLl3yieMKtGS4ec/v9masDrw3j/LfUqKGw1NfrW0QkonhH6DFi2kya+CDrAkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e1a/ZMv9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DDDC433C7;
+	Fri,  8 Mar 2024 15:19:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709911150;
+	bh=2aEWrJvvukoPuyYJLD9Zn0ge1MPAdinGfbWVtaTvHp4=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=e1a/ZMv9W69wCrDHRgkvlZIa4zoUJ8J8Q3ymIbKisGFKt85jmdi8rfigpLWuxyFVV
+	 0NMyFXtGSPpANaWp4n+9q7gax4lJv6/l/ymG2gcd8wjKVcn2OYjQ1nlW0pHBvhwvlu
+	 1WSi0bGr3izdfGytW1OtnQXfBWA/rRrzf3KgYRsKCyT9k2R1DLweSj4xcahwGjiTPS
+	 LCNlE5MKl+CpM8Enh+hZWwiAnV0G67ryNjl5C8rOiWaT6dXdIidkWXKtNY5hduirgp
+	 y/3xoHrWixGF2LDAur5awj7cBiaNBTUXF9V3bqbfjuerY2BtKIJku2z3U6hBDIDv92
+	 lL4q8dkNZ2MbA==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,  "David S. Miller"
+ <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Rob Herring
+ <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konrad.dybcio@linaro.org>,  ath10k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  netdev@vger.kernel.org,
+  devicetree@vger.kernel.org,  linux-arm-msm@vger.kernel.org,  Krzysztof
+ Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RFC v2 0/4] wifi: ath10k: support board-specific
+ firmware overrides
+References: <20240306-wcn3990-firmware-path-v2-0-f89e98e71a57@linaro.org>
+	<87plw7hgt4.fsf@kernel.org>
+	<CAA8EJpr6fRfY5pNz6cXVTaNashqffy5_qLv9c35nkgjaDuSgyQ@mail.gmail.com>
+	<87cys7hard.fsf@kernel.org>
+	<CAA8EJpowyEEbXQ4YK-GQ63wZSkJDy04qJsC2uuYCXt+aJ1HSOQ@mail.gmail.com>
+Date: Fri, 08 Mar 2024 17:19:05 +0200
+In-Reply-To: <CAA8EJpowyEEbXQ4YK-GQ63wZSkJDy04qJsC2uuYCXt+aJ1HSOQ@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Wed, 6 Mar 2024 16:23:55 +0200")
+Message-ID: <87v85wg39y.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/4] dt-bindings: arm: qcom: Document QCS8550 SoC and
- the AIM300 AIoT board
-Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org
-Cc: keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
- kernel@quicinc.com
-References: <20240308070432.28195-1-quic_tengfan@quicinc.com>
- <20240308070432.28195-2-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
- m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
- XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
- mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
- v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
- cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
- rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
- qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
- aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
- gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
- dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
- NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
- hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
- oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
- H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
- yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
- 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
- 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
- +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
- FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
- 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
- DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
- oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
- 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
- Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
- qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
- /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
- qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
- EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
- KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
- fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240308070432.28195-2-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 08/03/2024 08:04, Tengfei Fan wrote:
-> Document QCS8550 SoC and the AIM300 AIoT board bindings.
-> QCS8550 is derived from SM8550. The difference between SM8550 and
-> QCS8550 is QCS8550 doesn't have modem RF system. QCS8550 is mainly used
-> in IoT scenarios.
-> AIM300 Series is a highly optimized family of modules designed to
-> support AIoT applications. It integrates QCS8550 SoC, UFS and PMIC chip
-> etc.
-> AIM stands for Artificial Intelligence Module. AIoT stands for AI IoT.
-> 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
+>> To be on the safe side using 'qcom-rb1' makes sense but on the other
+>> hand that means we need to update linux-firmware (basically add a new
+>> symlink) everytime a new product is added. But are there going to be
+>> that many new ath10k based products?
+>>
+>> Using 'qcm2290' is easier because for a new product then there only
+>> needs to be a change in DTS and no need to change anything
+>> linux-firmware. But here the risk is that if there's actually two
+>> different ath10k firmware branches for 'qcm2290'. If that ever happens
+>> (I hope not) I guess we could solve that by adding new 'qcm2290-foo'
+>> directory?
+>>
+>> But I don't really know, thoughts?
+>
+> After some thought, I'd suggest to follow approach taken by the rest
+> of qcom firmware:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Can you provide pointers to those cases?
 
-Best regards,
-Krzysztof
+> put a default (accepted by non-secured hardware) firmware to SoC dir
+> and then put a vendor-specific firmware into subdir. If any of such
+> vendors appear, we might even implement structural fallback: first
+> look into sdm845/Google/blueline, then in sdm845/Google, sdm845/ and
+> finally just under hw1.0.
 
+Honestly that looks quite compilicated compared to having just one
+sub-directory. How will ath10k find the directory names (or I vendor and
+model names) like 'Google' or 'blueline' in this example?
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
