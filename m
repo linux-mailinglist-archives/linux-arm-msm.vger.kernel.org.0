@@ -1,350 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-13720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49285876A32
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 18:50:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94C91876B10
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 20:13:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 003512843A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 17:50:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 169601F21C32
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 19:13:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAC61364B8;
-	Fri,  8 Mar 2024 17:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4980359140;
+	Fri,  8 Mar 2024 19:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AAu4KxEG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nHaE0xSO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E794779F;
-	Fri,  8 Mar 2024 17:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3A75646E;
+	Fri,  8 Mar 2024 19:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709920240; cv=none; b=u9J7ndTCyF9CUA9m8AkiQuj9dHsaSRfcdzltanC3f1m9BcC/nBYvL/fk0YhK6qsiwWRvIFX3+1G21p/WoTQYOXEeFnhxW8PVhou25y8vG4sD4A7HB0MXmGKgjatQyHWdTg3C/z750QvMCIlIst7bTNSuOHLeZgn4MR+xqLaZl20=
+	t=1709925214; cv=none; b=cF3xvSKvA8WmleBollQyMhuhMh5wEy0cyqyANnkEhsDetsQbkfvRU4py8erKGQ+GvfRtQ6kK3ywXKz1/Alleo0jlbypPo3NgqbB80uSwnI8euUYKmnDrqlsfmK72BpE3pG8asnTEFAiPVZgZ+3Xbjrear7mmZ8lNrpOKmMpByXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709920240; c=relaxed/simple;
-	bh=iWO0GqjleID85X3Dx+elcJbRsRcqLTkt1pg76OMtDLY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bgcD0aDu0ocQncH56+esmOplreHUpOsPlEnZsN7/oWPw+QDQWOQQy7r0Qh9GRRtViXcUWRqHbM/0DatA55QhGMXzbgFPu6v/BeAyS6psoh6AI70MUH9b64ggaq6lNSndD8wc+JGjag8ajIx+62ceHGeKXsgBBFOaILkl7c7brtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AAu4KxEG; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1709925214; c=relaxed/simple;
+	bh=kwgPPbpvouyuDS8Eo3OIniBCtnmeLQU5eUCY8b6JMAk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=P8U5KQIZZ44f9jFFfDB2fi4eXcea6s6ppm8W9eoxqoB++JMYlWtN3VZXFc2sHbf5y7LcuC+UoJhoHjwvVFjj1xPTiPwTS6l165GECbEKO1J8n03VbIgtgRN8uMWFDyZj5M5QpBTsjbkrwctHcq8xTfhCbzFLzX+YdBFZ41taZQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nHaE0xSO; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428AqJLu008375;
-	Fri, 8 Mar 2024 17:50:24 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428EaM2C025654;
+	Fri, 8 Mar 2024 19:12:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=p21R8fG/zDwLD9ex80A7W0Xh5x+SPOx5G/U883UBTPQ=; b=AA
-	u4KxEGEeO96H5mMbvkxPal8rHyxuWCSnoW8t1jqyridgIAhmP9BE75ZkdTcU6cw3
-	vhdpaXza/Dgi02sWzxhzpM+JNJw75qzonRSomlQVVICuj/A930ZkQhRoTYsi49Yz
-	YeoFLZ2pG17qAPD1LsPPzqgdmmsy9uGiFTzM85D8ZXJcJGIokfLLjNPRBNeIfMzm
-	bSIL2NAFNdOzOKN22eCl8vgnu7/0DfZsisRxDItZ73QspbWOcduIwdkZCC10k6hq
-	PYy/IWeWdDBf7BQZc+WYoLqY40q8UGQHFJ1p+r9uSsS/Nbcyun0VaffMDJrrb9wg
-	h8F8mZjKprQpLLbKmaqQ==
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ug01h1H
+	XOZQ1AbxiHTbfVZmebe8pNNeRyUicWT59fLQ=; b=nHaE0xSOR9nJ89bmx7uJh0a
+	awlOwJTQANO2cjqHeKN7iEgUDgIMPruow/MPAerr4fRiNmlSeIE5FVmcx7/eB/32
+	Rgp8FPxmOZwHimdi5XbSF5e964JDoRunio0IZ/hJLUT58JzL3Ze6UGrdXCOz8Ok4
+	rncHhk71Vuep7FD04JKkbg4pMB7VO21ibxJDUk2VnxJx3clc2CJGdVgSzIW033Jy
+	x6xivxWq92wwAJqjM95foGb3crdd0hKpyR2srFv0c0SsGIUwIh6bhICHJSYj81Bj
+	qRpjWu0bzvrq3kRuRCn9Gflw2bwGw7hTnEW+vsgPGl7kPNpZRz6vyhTiMe+whxg=
+	=
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqyfss4cn-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr1wj0yfa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 17:50:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428HoMqO026626
+	Fri, 08 Mar 2024 19:12:30 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428JCSGA030010
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 17:50:22 GMT
-Received: from [10.110.79.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Mar
- 2024 09:50:19 -0800
-Message-ID: <56de6cfb-fe0f-de30-d4d0-03c0fbb0afbb@quicinc.com>
-Date: Fri, 8 Mar 2024 09:50:17 -0800
+	Fri, 8 Mar 2024 19:12:28 GMT
+Received: from hu-obabatun-lv.qualcomm.com (10.49.16.6) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 8 Mar 2024 11:12:25 -0800
+From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+To: <catalin.marinas@arm.com>, <will@kernel.org>, <robh+dt@kernel.org>,
+        <frowand.list@gmail.com>, <vgupta@kernel.org>, <arnd@arndb.de>,
+        <olof@lixom.net>, <soc@kernel.org>, <guoren@kernel.org>,
+        <monstr@monstr.eu>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
+        <dinguyen@kernel.org>, <chenhuacai@kernel.org>,
+        <tsbogend@alpha.franken.de>, <jonas@southpole.se>,
+        <stefan.kristiansson@saunalahti.fi>, <shorne@gmail.com>,
+        <mpe@ellerman.id.au>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
+        <glaubitz@physik.fu-berlin.de>, <richard@nod.at>,
+        <anton.ivanov@cambridgegreys.com>, <johannes@sipsolutions.net>,
+        <chris@zankel.net>, <jcmvbkbc@gmail.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <kernel@quicinc.com>, Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Subject: [PATCH v4 0/4] Dynamic Allocation of the reserved_mem array
+Date: Fri, 8 Mar 2024 11:12:00 -0800
+Message-ID: <20240308191204.819487-1-quic_obabatun@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: drm/msm: DisplayPort hard-reset on hotplug regression in 6.8-rc1
-Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>
-CC: Daniel Thompson <daniel.thompson@linaro.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson
-	<quic_bjorande@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <regressions@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>
-References: <Zd3kvD02Qvsh2Sid@hovoldconsulting.com>
- <ZesH21DcfOldRD9g@hovoldconsulting.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <ZesH21DcfOldRD9g@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5hJw2ARPycLdgUkFdJGf6tuqV1Tm26qT
-X-Proofpoint-ORIG-GUID: 5hJw2ARPycLdgUkFdJGf6tuqV1Tm26qT
+X-Proofpoint-ORIG-GUID: -Lw1lQ0KqaOLCZx-Qhuu3U0EjzpKzBvd
+X-Proofpoint-GUID: -Lw1lQ0KqaOLCZx-Qhuu3U0EjzpKzBvd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- malwarescore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1011
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ mlxscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 bulkscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403080142
+ engine=8.19.0-2402120000 definitions=main-2403080152
 
-Hi Johan
+The reserved_mem array is used to store data for the different
+reserved memory regions defined in the DT of a device.  The array
+stores information such as region name, node reference, start-address,
+and size of the different reserved memory regions.
 
-On 3/8/2024 4:43 AM, Johan Hovold wrote:
-> Hi Abhinav, Rob, Dmitry and Kuogee,
-> 
-> On Tue, Feb 27, 2024 at 02:33:48PM +0100, Johan Hovold wrote:
-> 
->> Since 6.8-rc1 I have seen (and received reports) of hard resets of the
->> Lenovo ThinkPad X13s after connecting and disconnecting an external
->> display.
->>
->> I have triggered this on a simple disconnect while in a VT console, but
->> also when stopping Xorg after having repeatedly connected and
->> disconnected an external display and tried to enable it using xrandr.
->>
->> In the former case, the last (custom debug) messages printed over an SSH
->> session were once:
->>
->>      [  948.416358] usb 5-1: USB disconnect, device number 3
->>      [  948.443496] msm_dpu ae01000.display-controller: msm_fbdev_client_hotplug
->>      [  948.443723] msm-dp-display ae98000.displayport-controller: dp_power_clk_enable - type = 1, enable = 0
->>      [  948.443872] msm-dp-display ae98000.displayport-controller: dp_ctrl_phy_exit
->>      [  948.445117] msm-dp-display ae98000.displayport-controller: dp_ctrl_phy_exit - done
->>      
->> and then the hypervisor resets the machine.
-> 
-> Has there been any progress on tracking down the reset on disconnect
-> issue? I was expecting you to share your findings here so that we can
-> determine if the rest of the runtime PM series needs to be reverted or
-> not before 6.8 is released (possibly on Sunday).
-> 
-> I really did not want to spend more on this driver than I already have
-> this cycle, but the lack of (visible) progress has again forced me to do
-> so.
-> 
-> It's quite likely that the resets are indeed a regression caused by the
-> runtime PM series as the bus clocks were not disabled on disconnect
-> before that one was merged in 6.8-rc1.
-> 
+The array is currently statically allocated with a size of
+MAX_RESERVED_REGIONS(64). This means that any system that specifies a
+number of reserved memory regions greater than MAX_RESERVED_REGIONS(64)
+will not have enough space to store the information for all the regions.
 
-For this last remaining reset with the stacktrace you have mentioned 
-below, I do not think this was introduced due to PM runtime series. We 
-have had this report earlier with the same stacktrace as well in earlier 
-kernels which didnt have PM runtime support:
+This can be fixed by making the reserved_mem array a dynamically sized
+array which is allocated using memblock_alloc() based on the exact
+number of reserved memory regions defined in the DT.
 
-https://gitlab.freedesktop.org/drm/msm/-/issues/17
+On architectures such as arm64, memblock allocated memory is not
+writable until after the page tables have been setup.
+This is an issue because the current implementation initializes the
+reserved memory regions and stores their information in the array before
+the page tables are setup. Hence, dynamically allocating the
+reserved_mem array and attempting to write information to it at this
+point will fail.
 
-We had fixed the issue reported by the user that time with below patch 
-which was confirmed by the user as fixed:
+Therefore, the allocation of the reserved_mem array will need to be done
+after the page tables have been setup, which means that the reserved
+memory regions will also need to wait until after the page tables have
+been setup to be stored in the array.
 
-https://lore.kernel.org/all/1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com/
+When processing the reserved memory regions defined in the DT, these
+regions are marked as reserved by calling memblock_reserve(base, size).
+Where:  base = base address of the reserved region.
+	size = the size of the reserved memory region.
 
-But, it seems like there is another race condition in this code 
-resulting in this issue again.
+Depending on if that region is defined using the "no-map" property,
+memblock_mark_nomap(base, size) is also called.
 
-I have posted my analysis with the patch here as a RFC y'day:
+The "no-map" property is used to indicate to the operating system that a
+mapping of the specified region must NOT be created. This also means
+that no access (including speculative accesses) is allowed on this
+region of memory except when it is coming from the device driver that
+this region of memory is being reserved for.[1]
 
-https://patchwork.freedesktop.org/patch/581758/
+Therefore, it is important to call memblock_reserve() and
+memblock_mark_nomap() on all the reserved memory regions before the
+system sets up the page tables so that the system does not unknowingly
+include any of the no-map reserved memory regions in the memory map.
 
-I missed CCing you and Bjorn on the RFC but when I post it as a patch 
-either today/tomm, will CC you both.
+There are two ways to define how/where a reserved memory region is
+placed in memory:
+i) Statically-placed reserved memory regions
+i.e. regions defined with a set start address and size using the
+     "reg" property in the DT.
+ii) Dynamically-placed reserved memory regions.
+i.e. regions defined by specifying a range of addresses where they can
+     be placed in memory using the "alloc_ranges" and "size" properties
+     in the DT.
 
-Sorry, much of the discussion of this issue was happening on #freedreno 
-last few days.
+The dynamically-placed reserved memory regions get assigned a start
+address only at runtime. And this needs to  be done before the page
+tables are setup so that memblock_reserve() and memblock_mark_nomap()
+can be called on the allocated region as explained above.
+Since the dynamically allocated reserved_mem array can only available
+after the page tables have been setup, the information for the
+dynamically-placed reserved memory regions needs to be stored somewhere
+temporarily until the reserved_mem array is available.
 
-> In a VT console, the device is now runtime suspended immediately on
-> disconnect, while in X, it currently remains active until X is killed,
-> which is consistent with what I reported above.
-> 
-> We now also have Bjorn's call trace from a different Qualcomm platform
-> triggering an unclocked access on disconnect, something which would
-> trigger a reset by the hypervisor on sc8280xp platforms like the X13s:
-> 
-> [ 2030.379417] SError Interrupt on CPU0, code 0x00000000be000000 -- SError
-> [ 2030.379425] CPU: 0 PID: 239 Comm: kworker/0:2 Not tainted 6.8.0-rc4-next-20240216-00015-gc937d3c43ffe-dirty #219
-> [ 2030.379430] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-> [ 2030.379435] Workqueue: events output_poll_execute [drm_kms_helper]
-> [ 2030.379495] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [ 2030.379501] pc : el1_interrupt+0x28/0xc0
-> [ 2030.379514] lr : el1h_64_irq_handler+0x18/0x24
-> [ 2030.379520] sp : ffff80008129b700
-> [ 2030.379523] x29: ffff80008129b700 x28: ffff7a0a031aa200 x27: ffff7a0af768c3c0
-> [ 2030.379530] x26: 0000000000000000 x25: ffff7a0a024bb568 x24: ffff7a0a031aa200
-> [ 2030.379537] x23: 0000000060400005 x22: ffffd2a4a10c871c x21: ffff80008129b8a0
-> [ 2030.379544] x20: ffffd2a4a00002f0 x19: ffff80008129b750 x18: 0000000000000000
-> [ 2030.379549] x17: 0000000000000000 x16: ffffd2a4a10c21d4 x15: 0000000000000000
-> [ 2030.379555] x14: 0000000000000000 x13: 000000000001acf6 x12: 0000000000000000
-> [ 2030.379560] x11: 0000000000000001 x10: ffff7a0af623f680 x9 : 0000000100000001
-> [ 2030.379565] x8 : 00000000000000c0 x7 : 0000000000000000 x6 : 000000000000003f
-> [ 2030.379570] x5 : ffff7a0a003c6a70 x4 : 000000000000001f x3 : ffffd2a48d6722dc
-> [ 2030.379576] x2 : 0000000000000002 x1 : ffffd2a4a00002f0 x0 : ffff80008129b750
-> [ 2030.379583] Kernel panic - not syncing: Asynchronous SError Interrupt
-> [ 2030.379586] CPU: 0 PID: 239 Comm: kworker/0:2 Not tainted 6.8.0-rc4-next-20240216-00015-gc937d3c43ffe-dirty #219
-> [ 2030.379590] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-> [ 2030.379592] Workqueue: events output_poll_execute [drm_kms_helper]
-> [ 2030.379642] Call trace:
-> [ 2030.379644]  dump_backtrace+0xec/0x108
-> [ 2030.379654]  show_stack+0x18/0x24
-> [ 2030.379659]  dump_stack_lvl+0x40/0x84
-> [ 2030.379664]  dump_stack+0x18/0x24
-> [ 2030.379668]  panic+0x130/0x34c
-> [ 2030.379673]  nmi_panic+0x44/0x90
-> [ 2030.379679]  arm64_serror_panic+0x68/0x74
-> [ 2030.379683]  do_serror+0xc4/0xcc
-> [ 2030.379686]  el1h_64_error_handler+0x34/0x4c
-> [ 2030.379692]  el1h_64_error+0x64/0x68
-> [ 2030.379696]  el1_interrupt+0x28/0xc0
-> [ 2030.379700]  el1h_64_irq_handler+0x18/0x24
-> [ 2030.379706]  el1h_64_irq+0x64/0x68
-> [ 2030.379710]  _raw_spin_unlock_irq+0x20/0x48
-> [ 2030.379718]  wait_for_common+0xb4/0x16c
-> [ 2030.379722]  wait_for_completion_timeout+0x14/0x20
-> [ 2030.379727]  dp_ctrl_push_idle+0x34/0x8c [msm]
-> [ 2030.379844]  dp_bridge_atomic_disable+0x18/0x24 [msm]
-> [ 2030.379959]  drm_atomic_bridge_chain_disable+0x6c/0xb4 [drm]
-> [ 2030.380150]  drm_atomic_helper_commit_modeset_disables+0x174/0x57c [drm_kms_helper]
-> [ 2030.380200]  msm_atomic_commit_tail+0x1b4/0x474 [msm]
-> [ 2030.380316]  commit_tail+0xa4/0x158 [drm_kms_helper]
-> [ 2030.380369]  drm_atomic_helper_commit+0x24c/0x26c [drm_kms_helper]
-> [ 2030.380418]  drm_atomic_commit+0xa8/0xd4 [drm]
-> [ 2030.380529]  drm_client_modeset_commit_atomic+0x16c/0x244 [drm]
-> [ 2030.380641]  drm_client_modeset_commit_locked+0x50/0x168 [drm]
-> [ 2030.380753]  drm_client_modeset_commit+0x2c/0x54 [drm]
-> [ 2030.380865]  __drm_fb_helper_restore_fbdev_mode_unlocked+0x60/0xa4 [drm_kms_helper]
-> [ 2030.380915]  drm_fb_helper_hotplug_event+0xe0/0xf4 [drm_kms_helper]
-> [ 2030.380965]  msm_fbdev_client_hotplug+0x28/0xc8 [msm]
-> [ 2030.381081]  drm_client_dev_hotplug+0x94/0x118 [drm]
-> [ 2030.381192]  output_poll_execute+0x214/0x26c [drm_kms_helper]
-> [ 2030.381241]  process_scheduled_works+0x19c/0x2cc
-> [ 2030.381249]  worker_thread+0x290/0x3cc
-> [ 2030.381255]  kthread+0xfc/0x184
-> [ 2030.381260]  ret_from_fork+0x10/0x20
-> 
-> The above could happen if the convoluted hotplug state machine breaks
-> down so that the device is runtime suspended before
-> dp_bridge_atomic_disable() is called.
-> 
+Therefore, this series makes use of a temporary static array to store
+the information of the dynamically-placed reserved memory regions until
+the reserved_mem array is allocated.
+Once the reserved_mem array is available, the information is copied over
+from the temporary array into the reserved_mem array, and the memory for
+the temporary array is freed back to the system.
 
-Yes, state machine got broken and I have explained how in the commit 
-text of the RFC. But its not necessarily due to PM runtime but a 
-sequence of events happening from userspace exposing this breakage.
+The information for the statically-placed reserved memory regions does
+not need to be stored in a temporary array because their starting
+address is already stored in the devicetree.
+Hence, the only thing that needs to be done for these regions before the
+page tables are setup is to call memblock_reserve() and
+memblock_mark_nomap().
+Once the reserved_mem array is allocated, the information for the
+statically-placed reserved memory regions is added to the array.
 
-> For some reason, possibly due to unrelated changes in timing, possibly
-> after the hotplug revert, I am no longer able to reproduce the reset
-> with 6.8-rc7 on the X13s.
-> 
+Note:
+Because of the use of a temporary array to store the information of the
+dynamically-placed reserved memory regions, there still exists a
+limitation of 64 for this particular kind of reserved memory regions.
+From my observation, these regions are typically small in number and
+hence I expect this to not be an issue for now.
 
-I do not know how the hotplug revert fixed this stack because I think 
-this can still happen.
+Dependency:
+This series is dependent on the acceptance of the below patchset for
+proper behavior on openrisc and sh architecture. The patchset has
+already been sent out and is pending review from the openrisc and sh
+maintainters.
+https://lore.kernel.org/all/1707524971-146908-1-git-send-email-quic_obabatun@quicinc.com/
 
-> I am however able to get the hotplug state machine to leak
-> runtime PM reference counts which prevents it from ever being suspended
-> (e.g. by disconnecting slowly so that we get multiple connect and
-> disconnect events). This can manifest itself as a hotplug event which is
-> processed after disconnecting the display:
-> 
-> 	[drm:dp_panel_read_sink_caps [msm]] *ERROR* read dpcd failed -110
-> 
+Patch Versions:
+v4 (Current Patchset):
+- Move fdt_init_reserved_mem() back into the unflatten_device_tree()
+  function.
+- Fix warnings found by Kernel test robot:
+  https://lore.kernel.org/all/202401281219.iIhqs1Si-lkp@intel.com/
+  https://lore.kernel.org/all/202401281304.tsu89Kcm-lkp@intel.com/
+  https://lore.kernel.org/all/202401291128.e7tdNh5x-lkp@intel.com/
 
-hmm ... this is another new report. I was not aware of this till this 
-instance. We would like to debug this issue too as we have also not seen 
-this one before.
+v3:
+https://lore.kernel.org/all/20240126235425.12233-1-quic_obabatun@quicinc.com/
+- Make use of __initdata to delete the temporary static array after
+  dynamically allocating memory for reserved_mem array using memblock.
+- Move call to fdt_init_reserved_mem() out of the
+  unflatten_device_tree() function and into architecture specific setup
+  code.
+- Breaking up the changes for the individual architectures into separate
+  patches.
 
-But, I am suspicious about how or why a refcount leak leads to a DPCD 
-read failure.
+v2:
+https://lore.kernel.org/all/20231204041339.9902-1-quic_obabatun@quicinc.com/
+- Extend changes to all other relevant architectures by moving
+  fdt_init_reserved_mem() into the unflatten_device_tree() function.
+- Add code to use unflatten devicetree APIs to process the reserved
+  memory regions.
 
-> I would not be surprised at all if there's a sequence of events that
-> leads to an unbalanced put instead (and the stack trace and observations
-> above make this appear likely).
-> 
+v1:
+https://lore.kernel.org/all/20231019184825.9712-1-quic_obabatun@quicinc.com/
 
-Stacktrace has a different analysis.
 
-> Were you able to determine what events lead to the premature disabling
-> of the bus clocks on the RB3?
-> 
+References:
+[1]
+https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/reserved-memory/reserved-memory.yaml#L79
 
-Yes, please check my RFC . I am waiting for Kuogee to review it too and 
-I shall post it formally as a patch.
+Oreoluwa Babatunde (4):
+  of: reserved_mem: Restruture how the reserved memory regions are
+    processed
+  of: reserved_mem: Add code to dynamically allocate reserved_mem array
+  of: reserved_mem: Use the unflatten_devicetree APIs to scan reserved
+    mem. nodes
+  of: reserved_mem: Rename fdt_* functions to refelct use of
+    unflatten_devicetree APIs
 
-> Have you got any reason to believe that the revert of the hotplug
-> notification patch may in anyway prevent that? Or is it just papering
-> over the issue?
-> 
+ drivers/of/fdt.c                |  39 +++++--
+ drivers/of/of_private.h         |   5 +-
+ drivers/of/of_reserved_mem.c    | 186 +++++++++++++++++++++++---------
+ include/linux/of_reserved_mem.h |  11 +-
+ kernel/dma/coherent.c           |   8 +-
+ kernel/dma/contiguous.c         |   8 +-
+ kernel/dma/swiotlb.c            |  10 +-
+ 7 files changed, 193 insertions(+), 74 deletions(-)
 
-No, I do not think reverting the hotplug notification patch can fix that 
-reset.
+-- 
+2.34.1
 
->> Hotplug in Xorg seems to work worse than it did with 6.7, which also had
->> some issues. Connecting a display once seems to work fine, but trying to
->> re-enable a reconnected display using xrandr sometimes does not work at
->> all, while with 6.7 it usually worked on the second xrandr execution.
->>
->> xrandr reports the reconnected display as disconnected:
-> 
->> Running 'xrandr --output DP-2 --auto' 2-3 times makes xrandr report the
->> display as connected, but the display is still blank (unlike with 6.7).
-> 
-> As I mentioned elsewhere, the revert of e467e0bde881 ("drm/msm/dp: use
-> drm_bridge_hpd_notify() to report HPD status changes") in rc7 does seem
-> to help with the hotplug detect issues that I could reproduce (in VT
-> console, X and wayland).
-> 
-
-Yes revert of e467e0bde881 ("drm/msm/dp: use
- > drm_bridge_hpd_notify() to report HPD status changes") affecting 
-hotplug status and associated connection issues makes sense. But I think 
-the reset with the above mentioned stacktrace can still happen.
-
-> The question is whether we should revert the whole runtime PM series so
-> that the bus clock is left on, which should prevent any resets on
-> disconnect.
-> 
-
-At this point, I would say if the RFC resolves the reset for you and 
-Bjorn with the above stack, that should be the way to go and not full 
-revert.
-
-Unless you are facing other issues other than this last reset crash.
-
-> Without any analysis from you or reason to be believe the issue to have
-> been resolved, I'm inclined to just go ahead and revert it. It clearly
-> had not been tested enough before being merged and I'm quite frustrated
-> with how this has been handled.
-> 
-
-I must admit that the number of issues reported on sc8280xp was 
-surprising for us as well because the series was tested on both 
-sc7180/sc7280 by us and other users but not on sc8280xp as we did not 
-have access to this device that time.
-
-sc7280 is the only other device we supported upstream which supported 
-eDP natively before Qualcomm X1E80100 landed this cycle. Surprisingly 
-enough, perhaps because it uses a chrome defconfig or chrome userspace, 
-no issues were seen that time or even now for that matter.
-
-To avoid the breakages on sc8280xp moving forward as it has more 
-visibility, our team here has decided to setup sc8280xp devices to test 
-out all msm display related changes especially eDP/DP as it shares the 
-eDP/DP driver. We can also CC you on these, in case you want to test it 
-out as well and give your Tested-by.
-
-> Johan
 
