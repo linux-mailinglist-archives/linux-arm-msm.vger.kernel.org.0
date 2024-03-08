@@ -1,97 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-13735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 226E1876D5D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 23:56:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E041876DE3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Mar 2024 00:43:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B71B91F21C8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 22:56:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1311282674
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 23:43:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 681DE36AF8;
-	Fri,  8 Mar 2024 22:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D583BBCB;
+	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUcJjUnw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 3.mo560.mail-out.ovh.net (3.mo560.mail-out.ovh.net [46.105.58.226])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB4036139
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 22:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.58.226
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC3F1E4BE;
+	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709938604; cv=none; b=uQdm/gd2stdxGnhxzcQ1lXNVKU7ef5QxuWD8Vj+oJ6HtFB81F7VcE6fK955RZ/WdBh/MORcWTdWKs47t/lEyPHkQZQ/o6960r7iu7Ob5H+pm5EJsgtXq7gfFG2Tzuvpqerw39YwAHM7BvT3ryBcfnp3waqTJufq0Fms1sJGpBsk=
+	t=1709941407; cv=none; b=MH/uqGnkX2Rq9L7fMVVQS/YNvr6wnILkuIkyB0dSGsWgnUmI5q9E3pClu6z/JxyDGfDEJtKpi0FEC/d96Mb1r83+e7I9RJHHR2bMvzsLVJNzkJp05xJtSJfjIIAHz7uTUY8e6r1GdiyfFZ7y7tmOJm8riNCkU7N8q93wccnDSDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709938604; c=relaxed/simple;
-	bh=ea/FMOT+LuvBUIf6Z9oNmYg5v6oX6zLSUSAj65JmdWo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ZdiiB35CVrkZxeHq2PHvYnRKvz0c+rFGWVR7i5TYv9lGREQNWVuHWoUX1JmZyKGsxvDl+XdHZPCOjlycUP5lF4FMkk6s2HcIow7BTg/9fFCunu+Ng0o8pkSOzCH9gnXw5eoz3jOmoHe9U1K5Y0Zyo505wdgicQZFLLUF3D2Ka+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=etezian.org; arc=none smtp.client-ip=46.105.58.226
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etezian.org
-Received: from director7.ghost.mail-out.ovh.net (unknown [10.108.17.219])
-	by mo560.mail-out.ovh.net (Postfix) with ESMTP id 4Ts1kV4S4Fz1Mlg
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 22:56:34 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-7mrq4 (unknown [10.110.178.91])
-	by director7.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 0BF541FD79;
-	Fri,  8 Mar 2024 22:56:34 +0000 (UTC)
-Received: from etezian.org ([37.59.142.98])
-	by ghost-submission-6684bf9d7b-7mrq4 with ESMTPSA
-	id 53omAKKX62XQVgUAplAmPw
-	(envelope-from <andi@etezian.org>); Fri, 08 Mar 2024 22:56:33 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-98R0028d618e52-d2b1-40c7-9d69-95ea762b9783,
-                    2D11F706EFA52336831762ECFB2C8F5C1953C755) smtp.auth=andi@etezian.org
-X-OVh-ClientIp:89.217.109.169
-From: Andi Shyti <andi.shyti@kernel.org>
-To: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org, 
- wsa@kernel.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
- Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: quic_vdadhani@quicinc.com
-In-Reply-To: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
-References: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
-Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Parse Error correctly in i2c
- GSI mode
-Message-Id: <170993858923.2618408.4667207790973009000.b4-ty@kernel.org>
-Date: Fri, 08 Mar 2024 23:56:29 +0100
+	s=arc-20240116; t=1709941407; c=relaxed/simple;
+	bh=lf9bXXOg8t/e1+SYxRNGOQP7tXnAg59Eb5F2iUMFkwA=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=QJz9wEXO/UE830hjB/HYna29zPadetYY/d24FBWS+uzB1iCEkXYxwDPeePr3VCcHm8M2hnTXmbqPfvitQl91ZFwhERu2uOCOGbgfDm3e8kdvQ20KmOAwQEKxVsSoDum0ozrtZCNOQ9os4ovKSv5WNFPzBc4qRx4FB2Uakwa28lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hUcJjUnw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A6DC433C7;
+	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709941407;
+	bh=lf9bXXOg8t/e1+SYxRNGOQP7tXnAg59Eb5F2iUMFkwA=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=hUcJjUnwMeuRjwRSm68+02Vq45FRLo8pGccoSSSE1bBcmPObY8QCLbKXQ9LkJjrVO
+	 mjGyJ/61pCEPGRqKytLyc8vFFgqCj2EsDeJm5IxF++CyOtpR1zlWGBPQ+7E3ksIgQQ
+	 4nZPYepfOSzx3skGZNuG310mj9jYVKVEkZYOxnnl2vTQuvP3W47vpavtyRtrIsXfkP
+	 6bnzJvnoljIQ411X5mAlYcYH0lLPzxA0XjOjcyl99XE5Fbbh+P2I7KmokkKsPzBq+2
+	 vmBfvvE2FkTLzPXlCTzQZAFqoVNcBRSyNKmGClhLJx2NoI8ljUpGEyGgKPjP7uQbNe
+	 DPoGfcDbijW0g==
+Message-ID: <47ef5ab18ed8e995fe1bb0c2fdf20c05.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
-X-Ovh-Tracer-Id: 10926295649741245147
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrieeigddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvegjfhfukfffgggtgffosehtjeertdertdejnecuhfhrohhmpeetnhguihcuufhhhihtihcuoegrnhguihdrshhhhihtiheskhgvrhhnvghlrdhorhhgqeenucggtffrrghtthgvrhhnpeffteehudffvdfhudfgffdugfejjeduheehgeefgeeuhfeiuefghffgueffvdfgfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecukfhppeduvdejrddtrddtrddupdekledrvddujedruddtledrudeiledpfeejrdehledrudegvddrleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpegrnhguihesvghtvgiiihgrnhdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehiedtpdhmohguvgepshhmthhpohhuth
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240306034326.2358489-1-andersson@kernel.org>
+References: <20240306034326.2358489-1-andersson@kernel.org>
+Subject: Re: [GIT PULL] Qualcomm clock updates for v6.9
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Gabor Juhos <j4g8y7@gmail.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Vladimir Lypak <vladimir.lypak@gmail.com>, Amit Pundir <amit.pundir@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, Mantas Pucka <mantas@8devices.com>
+To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
+Date: Fri, 08 Mar 2024 15:43:25 -0800
+User-Agent: alot/0.10
 
-Hi
+Quoting Bjorn Andersson (2024-03-05 19:43:25)
+>=20
+> The following changes since commit 6613476e225e090cc9aad49be7fa504e290dd3=
+3d:
+>=20
+>   Linux 6.8-rc1 (2024-01-21 14:11:32 -0800)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
+m-clk-for-6.9
+>=20
+> for you to fetch changes up to 7d474b43087aa356d714d39870c90d77fc6f1186:
+>=20
+>   clk: qcom: gcc-ipq5018: fix register offset for GCC_UBI0_AXI_ARES reset=
+ (2024-03-03 20:00:49 -0800)
+>=20
+> ----------------------------------------------------------------
 
-On Fri, 08 Mar 2024 02:25:39 +0530, Mukesh Kumar Savaliya wrote:
-> I2C driver currently reports "DMA txn failed" error even though it's
-> NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
-> on the bus instead of generic transfer failure which doesn't give any
-> specific clue.
-> 
-> Make Changes inside i2c driver callback handler function
-> i2c_gpi_cb_result() to parse these errors and make sure GSI driver
-> stores the error status during error interrupt.
-> 
-> [...]
-
-Applied to i2c/i2c-host on
-
-git://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git
-
-Thank you,
-Andi
-
-Patches applied
-===============
-[1/1] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI mode
-      commit: 313d6aa4c64875ed8a10339a2db8766f49108efb
-
+Thanks. Pulled into clk-next
 
