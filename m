@@ -1,154 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-13668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D04C7876012
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:48:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CA9587602C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:51:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DD251C22772
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 08:48:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB9C62855A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 08:51:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6855E2575A;
-	Fri,  8 Mar 2024 08:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CD244E1D3;
+	Fri,  8 Mar 2024 08:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="acgWSAny"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clPG7A85"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276941CA9A;
-	Fri,  8 Mar 2024 08:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408BE52F8D;
+	Fri,  8 Mar 2024 08:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709887699; cv=none; b=ARHgPKiciQ6bX2lb+QeHfHiaaHCtntYHsfcEYBvqLTnwc2lQyUr+AS1CXpRWXUmIl4gk2wjgTWsLX6aB3cSetpSNfVf3uk7Iw5UVoSimOFZE/gMWiatYSBVdbxp1L3CEjgspgTxGFbN3MTowklKJWZ8peR01FeiQRgPZ6Hz9RMY=
+	t=1709887887; cv=none; b=fwOhUPbBgkJqsTrSqDjrlYUN5koO9/BfGS7QbyUPIoxP+ENcjEYWy0c/VUprmIgxhme5BzukR1sxqC3bdmZlr5bVr1Uw5Adl7/M8XKcLU251BScPkouF88+UU8yjALyZ2+PA1ey3oEQSlbXwp+pPse92OXhgldqaJAfyu+ELq9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709887699; c=relaxed/simple;
-	bh=Os46CKddDWTirtB0sWeRcEab98vw5dx34ifSSInDtrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rEFKzwgbMkc//7WGlb5mBWWAnACs6kNvmh75CIv7itvOgNPk0F4sZfwbIE/rrXxU6Jy3UJ/T6S4HhmnD55jAi2k6AGfOzg3B/U8bqDFywZXkwZWbDpkHxaYzKcLtJG4HN9JXJjsekPSrPGAScWzmDhQQbp2fulUtpqjHAlYC5WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=acgWSAny; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED92CC433C7;
-	Fri,  8 Mar 2024 08:48:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709887698;
-	bh=Os46CKddDWTirtB0sWeRcEab98vw5dx34ifSSInDtrE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=acgWSAnyntQI7YWkNBHe6teZXBzI+ut6mvemDrUzDs+pe3VOXto4DGWOz0dJDP3nh
-	 B7lKYknLYn1z0fr85u+hCeBSHgq3TG7m8UwP77ZSlBu3bdlmkCUnnAlPGE45GjZ1A/
-	 NqOlGZuJjarMerfBcmzyaGjCs/uZVvG1Uutrd7OjM/LgxcZIWlJ3PJRk/Uu4sCTTpV
-	 IC3myDAxuOvPxCMsQItoG6hQETn3bK2mvnxHhylRJ32inW3B3NPoEycGeFn6bi7v+m
-	 17e1XVd06boVRH7eL5z5lL0F1wAq5XsPqFzxlJi5wXVe/WDpZ97W8GgU4DCIzZs69N
-	 A/tDo9imbZViQ==
-Date: Fri, 8 Mar 2024 09:48:07 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v9 07/10] PCI: dwc: ep: Remove "core_init_notifier" flag
-Message-ID: <ZerQxxfUvFm2MjqV@ryzen>
-References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
- <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
- <Zeos8kVxgchH9veF@ryzen>
- <20240308053829.GC3789@thinkpad>
+	s=arc-20240116; t=1709887887; c=relaxed/simple;
+	bh=30gKOMQXRISTS9Rz6SFTXrMur3HE/QvKivjdfrp3tZs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=igW533SzuQ2tdyCY4OxkrFjmpE33n4Ed5jUVMMV2spGkyBN9BQBFjBmq12r6gsZSoHtKk6yovMY1Aw4AtTLX4+QarNBjvY8D8Dn6cI+cH53dA6Xx7tz22OjQr/RpsGCOu7VvW23VWz0GLpgDunwV/++kXDheutD1Qr8JsH2LvhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clPG7A85; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5dca1efad59so1473085a12.2;
+        Fri, 08 Mar 2024 00:51:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709887884; x=1710492684; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=30gKOMQXRISTS9Rz6SFTXrMur3HE/QvKivjdfrp3tZs=;
+        b=clPG7A85eJcy4y5cXrrx43sRMyjC0At5IsKSfs4ne8+QAmnnl+QhmnOsRRxisVY0Dz
+         MWNyJoepMPmSoFUenUIy/JEaTqIfrYHdLNTqoAo8ta688Nj0W8C1JomOVIxHnk4CScOv
+         6mLeC1oJYEBjrGXHqfhO3lZ3Vam44yAaG+bz4sKxHo2auhd5A+kA7yoiBrbwCjuOPR+p
+         nFTtz7W12HIYJ92nEc72CvFbIfGvn0kpUiZ8w7qfaT2QxOhJcas8YdS/a2N81pUj/14H
+         Eg+PparQYh+G5eFdrqFfc/G8JxO+fjm5V5AE35KhomdkYDiAhI4WdkISszS7G8D0bzH6
+         vdxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709887884; x=1710492684;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=30gKOMQXRISTS9Rz6SFTXrMur3HE/QvKivjdfrp3tZs=;
+        b=S/lWAasRPlNq4Wu97mQvaLLG9kBe46k0hCU/41WnHaIkZt5+jkbF+i7Ol7s2/QiBL+
+         /6sIc5TMgYWrZW3cun+UIUeDnNP7A22AM+jSALEv1WAuHgPe2kpwMKWN2xetq+OCZk3I
+         /vrsX8CeXqIYWOl7dGaS1ditcOxgUDGpfd0f2LAWYubXHor03KDB7nIDCL51Yfs9CZpl
+         0muf+7lqzRkovyDgjWiX0toyra1WxvzGF2RsqGcaYWL1qN2SVocJmb0DekWcL5n56azY
+         UtvvaDpe+h+XrL9Ix03RyUlBqtkB1GHUieKB/0So51pSmISPjfbFisdEvwoZAxraSS/g
+         R9og==
+X-Forwarded-Encrypted: i=1; AJvYcCVHXZbZF00C4wNYY867yiIf7wsJO2F/2E4k6swfJz7AXEkoCj5CPBpPoFnfrgqugKUW7eMPkiEIEKhtnovSlkrznIgTQ2ZkWiWYxXYog34oXp+a0FXA52uDDA0Fs5JLaE+rNCM77X0OGq9FIv96fw4ipWdQNd+BGXgiDpvmWEIKbsVz0bG6dwg=
+X-Gm-Message-State: AOJu0YwbqJb/+HMt5CI38Fr8xavcYnmrxuD5/3Fp3mFGtseiVthPOeMF
+	lbf/BBzuO+xa1ckvYWh14jF0soW6/zJvLD4+y2LG3y2siNS9F5INz72DONB7hrimf34e9KvU5q3
+	yetEywZiXx/3mpc8PKFN1zuPjhFY=
+X-Google-Smtp-Source: AGHT+IEbARtx7ZIcsyIJ9GwCELFfzLvsfznSWPCzaP85nB1NZ4VYYGj0yTJcS4PixiAQ0aktDfOesvmWocP3owj/Ubk=
+X-Received: by 2002:a05:6a20:160a:b0:1a1:4fce:8eeb with SMTP id
+ l10-20020a056a20160a00b001a14fce8eebmr10518036pzj.8.1709887884501; Fri, 08
+ Mar 2024 00:51:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240308053829.GC3789@thinkpad>
+References: <0b032929-f525-4b2e-a176-1a447cf0fa7f@gmail.com> <20240307032620.94310-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20240307032620.94310-1-amadeus@jmu.edu.cn>
+From: Robert Marko <robimarko@gmail.com>
+Date: Fri, 8 Mar 2024 09:51:12 +0100
+Message-ID: <CAOX2RU4BOc6SPbYygq=iMR5EmCvHFtkiBjxXGm7pLDgPY_-7UA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Mar 08, 2024 at 11:08:29AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Mar 07, 2024 at 10:09:06PM +0100, Niklas Cassel wrote:
-> > On Mon, Mar 04, 2024 at 02:52:19PM +0530, Manivannan Sadhasivam wrote:
-> > > "core_init_notifier" flag is set by the glue drivers requiring refclk from
-> > > the host to complete the DWC core initialization. Also, those drivers will
-> > > send a notification to the EPF drivers once the initialization is fully
-> > > completed using the pci_epc_init_notify() API. Only then, the EPF drivers
-> > > will start functioning.
-> > > 
-> > > For the rest of the drivers generating refclk locally, EPF drivers will
-> > > start functioning post binding with them. EPF drivers rely on the
-> > > 'core_init_notifier' flag to differentiate between the drivers.
-> > > Unfortunately, this creates two different flows for the EPF drivers.
-> > > 
-> > > So to avoid that, let's get rid of the "core_init_notifier" flag and follow
-> > > a single initialization flow for the EPF drivers. This is done by calling
-> > > the dw_pcie_ep_init_notify() from all glue drivers after the completion of
-> > > dw_pcie_ep_init_registers() API. This will allow all the glue drivers to
-> > > send the notification to the EPF drivers once the initialization is fully
-> > > completed.
-> > > 
-> > > Only difference here is that, the drivers requiring refclk from host will
-> > > send the notification once refclk is received, while others will send it
-> > > during probe time itself.
-> > > 
-> > > Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > 
-> > You have removed the .core_init_notifier from EPC drivers,
-> > but the callback in EPF drivers is still called .core_init.
-> > 
-> > Yes, this was a confusing name even before this patch, but
-> > after this patch, it is probably even worse :)
-> > 
-> > The callback should be named from the perspective of EPF drivers IMO.
-> > .core_init sounds like a EPF driver should initialize the core.
-> > (But that is of course done by the EPC driver.)
-> > 
-> > The .link_up() callback name is better, the EPF driver is informed
-> > that the link is up.
-> > 
-> > Perhaps we could rename .core_init to .core_up ?
-> > 
-> > It tells the EPF drivers that the core is now up.
-> > (And the EPF driver can configure the BARs.)
-> > 
-> 
-> I don't disagree :) I thought about it but then decided to not extend the scope
-> of this series further. So saved that for next series.
-> 
-> But yeah, it is good to clean it up here itself.
+On Thu, 7 Mar 2024 at 04:26, Chukun Pan <amadeus@jmu.edu.cn> wrote:
+>
+> Hi, Robert
+> > Can I ask the source of this voltage level?
+> > Because, its not present in the downstream QCA tree at all.
+>
+> This voltage level is what I guessed through the mhz tool.
+> The downstream QCA tree uses 0.8625v voltage corresponding
+> to 1.32GHz, which does not need to be so high.
 
-If you intend to create a .core_deinit or .core_down (or whatever name
-you decide on), perhaps it is better to leave this cleanup to be part
-of that same series?
+Well, I am not so sure that it will work for every piece of silicon out there.
+In OpenWrt we got bit by fixed voltages on IPQ8074 and had to move to the
+downstream CPR driver as the variations between the same family are quite big.
 
-
-Kind regards,
-Niklas
+Regards,
+Robert
+>
+> Thanks,
+> Chukun
+>
+> --
+> 2.25.1
+>
 
