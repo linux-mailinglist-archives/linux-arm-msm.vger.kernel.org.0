@@ -1,189 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-13726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35051876B73
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 20:55:51 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D9BC876B96
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 21:10:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B82091F219FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 19:55:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DCED1F21D53
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 20:10:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89B3D5B03A;
-	Fri,  8 Mar 2024 19:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93F895B5DC;
+	Fri,  8 Mar 2024 20:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d2dVYaLP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sD8g9OJb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BCD2C191;
-	Fri,  8 Mar 2024 19:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6379B5A4C0;
+	Fri,  8 Mar 2024 20:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709927746; cv=none; b=cdxc72L7nsTymoqEO/SiRQz9+8DDBlPt+t2/FtBCB/a6KG6B+56s5A/k0MDlCmarSkjMfISlPCOJP47OxQzKLTKWE16DVMI8I9fF96kRiZqK8urbvcEyS9C9eWB0rjLQk9KsmCCDbNUbxAEMJrwzFY7IN6JFmRs8RXI4phPQibs=
+	t=1709928650; cv=none; b=uS/5reTb6WUQPlnT94ylxxZX+/VDGfyrT+fdu06pTgBTK7Aik6XdUqKlg9k4erEnlHrBbnHhfNaVy6LC4RVYpD/G9ssDSU+scA5U1YD65wVfdtKdFKF0eCQwQWsG1HlKpihErJ7/ix9wTIL6br+HH44J9YoYR3fwybQbe5XQOk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709927746; c=relaxed/simple;
-	bh=tnPTILfzWMATgYslzfwpu4T+3aF7xtrJICkZUDR6nu0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LngjkKAXmLGsjGDys95sOx0ZNVh4loLVQzxVHB37YiacLpZk0I6Iahkw2PUzj1HlqszJ4nmQskdPk+NG6OHIr0RVhhsKm4AW+6BVbXr61Z/NdStZ4mad5AtqZqsvctyS6Tl/f9DB6loJhh3i9q3HSVG/Wz2EJHlOGdoT2QwhBfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d2dVYaLP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428EaM3a025654;
-	Fri, 8 Mar 2024 19:55:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=HYm7SjumDtT6XU7tM/etg
-	wnCfvR/pgbIRZpy4sQN8C0=; b=d2dVYaLPD8z2QEmEyrny5gf8A91PN+Mvwwi5w
-	ga3YnrmT9a0jjaWOxKC8pT2B27aMlBOg2E9QpAswY5YkRy1jtV1SYQhBRzGUYUSO
-	q2MoQISzH4+5trJUqMbg2tkwQgCRu2dVdem+3Zyzaunqbd8ZqyttEwx30UWxiaYd
-	Y0YZJXwp3nPeUsMEq0jMwrY3H0Addx338SsmsOyf7JVGyj9wLYCBGrU4VrcsFZao
-	AHZppHq1hTGixVbKkr65sNo677UqGnMMUFbdQwMHeI7033JkBkpCN9rokyEezzh0
-	BcubJRrBrPPH2WwrmDTe6qyb+15T5ox8NPMOZcPFkLZP2Ya2w==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr1wj138e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 19:55:25 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428JtOEZ001763
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 19:55:24 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 8 Mar 2024 11:55:23 -0800
-Date: Fri, 8 Mar 2024 11:55:23 -0800
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Quentin Perret <qperret@google.com>
-CC: Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>,
-        Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
-        Android KVM
-	<android-kvm@google.com>,
-        Patrick Daly <quic_pdaly@quicinc.com>, Alex Elder
-	<elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Philip Derrin
-	<quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu
-	<quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Fuad Tabba <tabba@google.com>,
-        "Sean Christopherson" <seanjc@google.com>,
-        Andrew Morton
-	<akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: Re: Re: Re: Re: [PATCH v17 19/35] arch/mm: Export direct
- {un,}map functions
-Message-ID: <20240308113215616-0800.eberman@hu-eberman-lv.qualcomm.com>
-Mail-Followup-To: Quentin Perret <qperret@google.com>, 
-	Christoph Hellwig <hch@infradead.org>, Will Deacon <will@kernel.org>, 
-	Chris Goldsworthy <quic_cgoldswo@quicinc.com>, Android KVM <android-kvm@google.com>, 
-	Patrick Daly <quic_pdaly@quicinc.com>, Alex Elder <elder@linaro.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Murali Nalajal <quic_mnalajal@quicinc.com>, 
-	Trilok Soni <quic_tsoni@quicinc.com>, Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, 
-	Carl van Schaik <quic_cvanscha@quicinc.com>, Philip Derrin <quic_pderrin@quicinc.com>, 
-	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Fuad Tabba <tabba@google.com>, 
-	Sean Christopherson <seanjc@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-19-1e9da6763d38@quicinc.com>
- <ZdhEtH7xzbzdhS2j@infradead.org>
- <20240223071006483-0800.eberman@hu-eberman-lv.qualcomm.com>
- <ZeXIWBLVWzVycm0r@google.com>
- <20240304094828133-0800.eberman@hu-eberman-lv.qualcomm.com>
- <Zec6shyjblcZvTG0@google.com>
- <20240305093131473-0800.eberman@hu-eberman-lv.qualcomm.com>
- <ZehcEqvC3Y9YytNi@google.com>
+	s=arc-20240116; t=1709928650; c=relaxed/simple;
+	bh=PZVgPEVnPibB3udRRQb2fiWedaeAN/jFnvY74waSR2Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E/Xf/2vsYjfL8P/hrEcH64m8BgYijd4U4WZ461L8a6TBv5ANSRhjdBbxq1m5hYOPbDq4OskjySqn551pbuBE9PgduqIgYTeBmv7Rtv4UsDB/ipvO1JEHqKBDI8l9xYg5By0ffso+0FaU8kPAfVwZgBfcRBej4XUKp/euhyccMJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sD8g9OJb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3B0C43390;
+	Fri,  8 Mar 2024 20:10:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709928650;
+	bh=PZVgPEVnPibB3udRRQb2fiWedaeAN/jFnvY74waSR2Y=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=sD8g9OJb0uduVzJrCg1WxxYd6iC04lPsfL5u/XzSN/JKjsNkzHo/G+S216e+tPAhW
+	 1PLj1CYPyL0vp1ypTEM7CVmbbwSvTd6jgoW1XVHuovXcU4gUdvrQ5qSqtW2Ebavrfu
+	 F9YFB4SJIbukMj0nffZbQ3GYwy2y+6h6rem32GEEAdw/n/EzHrda51vTfSHvGjybUT
+	 +xHdfMtHBwNd3QZ0LenFd7LaMPyddoEbvcxCaRW7rtM5QHYJJ8Bawn//KVBW57KZ+s
+	 MH3j815yziTuQMLdQj3QIDR90LrJ3U744K+aByvJLVD65M2JmOecU20TRoYCEgLh+i
+	 pf5yB9J13usEQ==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5132181d54bso3429002e87.3;
+        Fri, 08 Mar 2024 12:10:49 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUhvUW2kHWpuk/NIWzLI/quvQdbmxtC6fXyPkqVxCi88Jp4sTRY3aSmq/g6ytj1aEJAAl2kLche1FSEAzRySv1PfbOMf4BC+KpIVXSnliRbauay0GRkYCEDFNDtvAq5ZosZwLvOObGaJeByVXXoPFsLjiPH34ey/PzGWA9zYnhhw7dCWKbrziH8gQQYUVBad3fL4MmZjF1exPcP7KceFUnlwR03
+X-Gm-Message-State: AOJu0YxlNtqLsOvVzTZi9qWwIrvO3HXmvw1yiMfz9THVzUDZf05YRLKh
+	OyVcux/CnrYxaMDEfzsDbeNcVYYxbjDbOlXe94ZTa075k8QsOeyDr5wiPMu4KOYT9Kd+PRMI+a3
+	tN5MJo2yWFQK2/SaQOhUvyvYUdw==
+X-Google-Smtp-Source: AGHT+IHAlLu/YgXf9fgnCBXu/eXkitN0v2K3z4NJB2t5YlJpkUAop+Nej7MeSM40gzvNH6KIBfT4WJXOaeBNELitY6o=
+X-Received: by 2002:a05:6512:ba3:b0:513:2114:b70c with SMTP id
+ b35-20020a0565120ba300b005132114b70cmr82452lfv.69.1709928648132; Fri, 08 Mar
+ 2024 12:10:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZehcEqvC3Y9YytNi@google.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CBoYWssXhH8RPoK4yG0CRdOyh2SPhfnf
-X-Proofpoint-GUID: CBoYWssXhH8RPoK4yG0CRdOyh2SPhfnf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- mlxscore=0 priorityscore=1501 mlxlogscore=588 malwarescore=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403080156
+References: <20240129092512.23602-1-quic_tengfan@quicinc.com>
+ <20240129092512.23602-2-quic_tengfan@quicinc.com> <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
+In-Reply-To: <CAL_JsqJfsWaj9OPkvc34rBvx7W_3v9+1kZqNu6QKDsA=iWAA4w@mail.gmail.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Fri, 8 Mar 2024 14:10:34 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLbbRFijBXS5CyRm0P4FMY7bR3UUdgXA7xP4Z1oRevnzQ@mail.gmail.com>
+Message-ID: <CAL_JsqLbbRFijBXS5CyRm0P4FMY7bR3UUdgXA7xP4Z1oRevnzQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: update compatible name
+ for match with driver
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, linus.walleij@linaro.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 06, 2024 at 12:05:38PM +0000, Quentin Perret wrote:
-> On Tuesday 05 Mar 2024 at 12:26:59 (-0800), Elliot Berman wrote:
-> > I still disagree that this is a Gunyah-specific problem. As far as we
-> > can tell, Arm doesn't specify how EL2 can tell EL1 its S2 page tables
-> > couldn't give a validation translation of the IPA from stage 1. IMO,
-> > downstream/Android pKVM is violating spec for ESR_EL1 by using the
-> > S1PTW bit (which is res0 for everyone except EL2 [1]) and this means
-> > that guests need to be pKVM-enlightened.
-> 
-> Not really, in pKVM we have a very clear distinction between host Linux
-> and guests, and only the host needs to be enlightened. But luckily,
-> since pKVM is part of Linux, this is pretty much an internal kernel
-> thing, so we're very flexible and if the S1PTW trick ever conflicts
-> with something else (e.g. NV) we can fairly easily switch to another
-> approach. We can tolerate non-architectural tricks like that between
-> pKVM and host Linux because that is not ABI, but we certainly can't do
-> that for guests.
-> 
-> > If we are adding pKVM
-> > enlightment in the exception handlers, can we add Gunyah enlightment to
-> > handle the same?
-> 
-> If you mean extending the Linux SEA handler so it does what Gunyah
-> wants, then I'm personally not supportive of that idea since the
-> 'contract' between Linux and Gunyah _is_ the architecture.
+On Tue, Feb 27, 2024 at 7:37=E2=80=AFAM Rob Herring <robh+dt@kernel.org> wr=
+ote:
+>
+> On Mon, Jan 29, 2024 at 3:25=E2=80=AFAM Tengfei Fan <quic_tengfan@quicinc=
+.com> wrote:
+> >
+> > Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
+> > to match the compatible name in sm4450 pinctrl driver.
+> >
+> > Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm=
+.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> > index bb08ca5a1509..bb675c8ec220 100644
+> > --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> > @@ -17,7 +17,7 @@ allOf:
+> >
+> >  properties:
+> >    compatible:
+> > -    const: qcom,sm4450-pinctrl
+> > +    const: qcom,sm4450-tlmm
+>
+> I think you forgot to update the example:
+>
+> Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.example.dtb:
+> /example-0/pinctrl@f100000: failed to match any schema with
+> compatible: ['qcom,sm4450-tlmm']
 
-Fair enough. We're building out more use cases where we want to allocate
-memory from buddy and donate it to some entity which unmaps it from
-Linux (some entity = Gunyah or Qualcomm firmware). Video DRM is an
-example we're working on. I imagine OP-TEE might eventually have
-use-cases as well since pKVM is doing same. David expressed concerns
-about exporting the direct unmap functions. What kind of
-framework/restrictions do we want to have instead? I don't think making
-drivers like Gunyah a builtin-only module [1] (even a refactored/small
-portion) is the best approach, but maybe that is what we want to do.
+Still a warning in linux-next. Please send a fix.
 
-Thanks,
-Elliot
-
-[1]: qcom_scm_assign_mem (d/firmware/qcom/qcom_scm.ko) is an example of
-a module that would have to become builtin as we upstream use cases that
-lend buddy-allocated memory to firmware
-
+Rob
 
