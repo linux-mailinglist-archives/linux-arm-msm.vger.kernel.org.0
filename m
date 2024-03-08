@@ -1,134 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-13679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43AFF8760DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:25:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA70C876126
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 10:44:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7C6F1F23444
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:25:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 600B3282217
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 09:44:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8321053388;
-	Fri,  8 Mar 2024 09:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DBA8537ED;
+	Fri,  8 Mar 2024 09:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UVlZ3s4o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="scNnxe+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D093D524C3;
-	Fri,  8 Mar 2024 09:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DBA3BBDE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 09:44:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709889924; cv=none; b=RTQZin7JYY0AVK7sIawez6vtt02kra8o1Ik4vQib5BuKv/ao0R0LYXgMIAnE5rIpLABKYEimTehjHJ49C+VShA9hClFHGT1IzwjSnjvoAHlXXqpndFO+5+EKt2v14bkJzH3tHZZxxSkymQ8c4eLt0lRMBR6sd4lKhu8Ejwnf0TA=
+	t=1709891063; cv=none; b=qRz7Kpwh7FCh3iX4L4KMJl32S9UEsx5nuNDFCH7zLPU0Yl+DUnktedtuqXiB6f7eokei7T9Uj62+oYDlCBY/Oqwx01I/NEYG3CA3tJ//hYNZexfaScwoybXT1LEeitpnvj4/kXp9vH+3DTyBxAiQBHFnUwMFoBi2eaR/8KThRpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709889924; c=relaxed/simple;
-	bh=zfl+XX0JMuoIscs2sao+0SvrAb4my8UOhKqfP7P+2OQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=CHmcAv2Svvmt7nBJy6HgTp4eqjq6ndBXuRK2esvQo34djgucTFW4FXDT5it9Z0oo/KlcZ/rNzYfL3K3vqlmHmfAR0sSTv4eM8ovIhiSpaLJtHoAe1vLmVwVXyO1GuJF/TFfU30GMW5d5jMujzhYpCqnZAjkBAo61XvvLs6QxFLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UVlZ3s4o; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33e2268ed96so620316f8f.3;
-        Fri, 08 Mar 2024 01:25:22 -0800 (PST)
+	s=arc-20240116; t=1709891063; c=relaxed/simple;
+	bh=0HEUZNyW463A0kgIICyd/mFsEgweSIiAp5zW9wvwQAQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=orJRfOUiomxU3qx2ZUaF7ka8Le5QQoxM7HSwoYpvPLfTJOWHoBGWpg4bKswOCYP8FwkgOq6KwVWu6ARTqLeWTPwB6r/55ZDQLsTWe2x8TE36UmDlFY3Z1GUmQLL6BX5jRNEzUrH9gh54fFZ3IS4Vdm5cFKuoJpdCFaXproeZ/k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=scNnxe+e; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6e4d48a5823so499644b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Mar 2024 01:44:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709889921; x=1710494721; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8g6G9JRlegwlqqFcwBhmFenh5XZ0r96ecCCneui4Q3M=;
-        b=UVlZ3s4obZrr/NtGPFeIc8tngC08x9+PaSMVcQ86o7P44qQqpT01Aq7hyNCrn6h54q
-         Zft9t0YYnBeg2TLgAYxxqEpX/3O4wyTiOCHKt50sFkAY97YDpVwG8Zb0N+5oQL5zKO6A
-         SGsPfJeinwYUVEOfHiSdOfyeqFx20L3d3FUK9nWF4pU2HY/vyoTkjgr2zQ21WPBKjeAb
-         BQRgsU5agM2l280xuqwo876fPyhJCCQ57n2dRhw06yBZhTUwBPadu42xQKwJqU5HCaGH
-         r0inRo8vl2CeQcOecRjVMSOXj1OmTpKuu5LnpJ3TObJRAdivYcPIa9xB0n2C+rJSjm13
-         i43Q==
+        d=linaro.org; s=google; t=1709891060; x=1710495860; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cdMdoK0AVaUo9V+wul4fyguoktaqDabkYBWscL2ezsE=;
+        b=scNnxe+eH0gJxpLD0BEvB7iGN2bbDV3x3kfx59zaTZPi8My/LQzAyQCdqZI3PhYc1J
+         6lQEh9CPLTemfcQpPYXAqYpSOnV42pha+24/QSs8Rv5XyvF1Jl7Xy58mXLEN0lspq8mw
+         nzB9N5d7NoGM92r2JY6lMAMKdXznKYIRMjkZZ9l5cWzw5ZiqRbp1awaJ+9FdScEP/MvU
+         1x28YZpIxM8HZvGeyF42lUoRbJ2ZQUJrWQgYE8FvywAEZ3cSUuhhBo7oqziYapoD1FW3
+         FSb0ut2COKfFVrLeAzgf2kuJAj0PWN0jL8IPwMagx/fET4usxx4CBS+LbPkoTFM9sJYJ
+         FHsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709889921; x=1710494721;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8g6G9JRlegwlqqFcwBhmFenh5XZ0r96ecCCneui4Q3M=;
-        b=py+10eMyTiVShJC62hiP9ruyyXVI7CFJCOj3OUUkvMET5o2RBTBd3FqIiX1WysLjqS
-         lBtFpBu8Kw/+OehRr6X/cZOt+w7JJGQ1OVWyrLf+JCo1EY1/lWI14gTfHpCXWj/vDkMl
-         HudW1MOyRkgrjIk3zsPsl8hlPJ9wNx3sTZuYBsGvVJniLbTor55Gskr0MTAlYqvuRVEj
-         Dmtfb4h2N/qihQvRKsKm3FF4QBT5iKdIPl2KU/lXXQD6b3dcjsjZxUpZ2jLfPk73Ydhf
-         MzlY2JH1HYMqR/4hByX6x1C5dHQ0VEI6fzXq5mwjRntT1nGhfXoLSiX3iTEZUmb4h2xx
-         q9iw==
-X-Forwarded-Encrypted: i=1; AJvYcCWgJQa4JJ5I9u+opEBSV1RzN0A7arCUxsml5Djfr7Iwx+/QyI+nJOgHvG7WSvbCI5FAkxvRG+ijnhThxs3BjjmA2v9ZSpG19zs84oIU
-X-Gm-Message-State: AOJu0YwRqYQyN20GcgxPXcbchggR6hQ+qW49cXemzttf/ER0legWZ1Cv
-	JG00R/HRxHEuCjk9yo+44CZwD+IgIsq7yx2vpSitSPuLBmGFQqoP
-X-Google-Smtp-Source: AGHT+IGzzCKBqOSSu4nOvx/fDIREpSaEVriBC64RefWyqEsozWw9jeoXVANQYdtWJfYT/W/Qu+7shw==
-X-Received: by 2002:a5d:6906:0:b0:33e:793b:a2aa with SMTP id t6-20020a5d6906000000b0033e793ba2aamr407319wru.47.1709889920853;
-        Fri, 08 Mar 2024 01:25:20 -0800 (PST)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id ce9-20020a5d5e09000000b0033e786abf84sm801289wrb.54.2024.03.08.01.25.19
+        d=1e100.net; s=20230601; t=1709891060; x=1710495860;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdMdoK0AVaUo9V+wul4fyguoktaqDabkYBWscL2ezsE=;
+        b=afklZ9+rJQitI9u15oOvbEF8+Jk5tCV3VJmMJaVdemTerS/hoGCDcUzqe5QQ+7zlRe
+         eEXJQ5a0tZjDtzJbYc9UAldu5+FCFScHUS3S3+ZvxpMPyoxX5dLL+g47yOVnHvFCGLNU
+         b7ZNQZi6sYPPufNWPELmS6BWd8IRFSLCXz/GNirZBmV5HZRjFPsnWkOh0MKubCxQyLut
+         7P/gcwsWJkh6HMAD6gfTr9nH4BTcM5l6cRmUK/Vd5w/mZSZD5gdE9ilI+9iATqYj4fU1
+         hSQgD9jB7Hg5msDBv3Lw0zLcjFNa//xPToGOhC10Lf1iq6UibEGqV3Fb5wV0661Krw2z
+         fdVA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlDDxz3978V0F/HsGXELYFSo6I7fc2CsNOVUln0obkFhrF7iUe+C2fCj9uEyXCOSSkUxOYasvkRFJpl76sMGRnXMrLA0S8QYXiXpgEIA==
+X-Gm-Message-State: AOJu0YydobtMqAjw1Sz3EZk3K0DcAeIFVgR3gr2U/AikfoY0/z4MX2Gq
+	8D5DOgV0WUL+9I8VDO9TQ8DnD0+n3QdOV/xIdYimxusbLKyGLZ8eGltvA01kKQ==
+X-Google-Smtp-Source: AGHT+IFPbL54AXHQXB9MkS0qJtzg8o8q9yBGg3I5qPe5e95N0vMgv1+cPBqKR5EsKnzhBrhB5Hgmww==
+X-Received: by 2002:a05:6a20:4284:b0:1a1:6b04:9f2e with SMTP id o4-20020a056a20428400b001a16b049f2emr7419660pzj.9.1709891060050;
+        Fri, 08 Mar 2024 01:44:20 -0800 (PST)
+Received: from thinkpad ([117.217.183.232])
+        by smtp.gmail.com with ESMTPSA id b1-20020aa78101000000b006e6350986a8sm6625169pfi.215.2024.03.08.01.44.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Mar 2024 01:25:20 -0800 (PST)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Fri, 08 Mar 2024 10:25:07 +0100
-Subject: [PATCH] firmware: qcom_scm: remove IS_ERR() checks from
- qcom_scm_bw_{en,dis}able()
+        Fri, 08 Mar 2024 01:44:19 -0800 (PST)
+Date: Fri, 8 Mar 2024 15:14:04 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v9 07/10] PCI: dwc: ep: Remove "core_init_notifier" flag
+Message-ID: <20240308094404.GF3789@thinkpad>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
+ <Zeos8kVxgchH9veF@ryzen>
+ <20240308053829.GC3789@thinkpad>
+ <ZerQxxfUvFm2MjqV@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240308-qcom_scm-is_err-check-v1-1-9c3e1ceefafe@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAHLZ6mUC/x3MTQqDQAxA4atI1gbG37ZepcggMdMJRa0JFGHw7
- g4uv8V7CYxV2GAoEij/xWRbM6qyAIrT+mGUORtqV7eucU/caVu80YJinlWRItMXX/3UEfWhelC
- A3P6Ugxz39z2e5wV9+r3iZwAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZerQxxfUvFm2MjqV@ryzen>
 
-Since the qcom_scm_probe() function returns with an error if
-__scm->path contains an error pointer, it is not needed to
-verify that again in the qcom_scm_bw_{en,dis}able() functions
-so remove the superfluous IS_ERR() checks.
+On Fri, Mar 08, 2024 at 09:48:07AM +0100, Niklas Cassel wrote:
+> On Fri, Mar 08, 2024 at 11:08:29AM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Mar 07, 2024 at 10:09:06PM +0100, Niklas Cassel wrote:
+> > > On Mon, Mar 04, 2024 at 02:52:19PM +0530, Manivannan Sadhasivam wrote:
+> > > > "core_init_notifier" flag is set by the glue drivers requiring refclk from
+> > > > the host to complete the DWC core initialization. Also, those drivers will
+> > > > send a notification to the EPF drivers once the initialization is fully
+> > > > completed using the pci_epc_init_notify() API. Only then, the EPF drivers
+> > > > will start functioning.
+> > > > 
+> > > > For the rest of the drivers generating refclk locally, EPF drivers will
+> > > > start functioning post binding with them. EPF drivers rely on the
+> > > > 'core_init_notifier' flag to differentiate between the drivers.
+> > > > Unfortunately, this creates two different flows for the EPF drivers.
+> > > > 
+> > > > So to avoid that, let's get rid of the "core_init_notifier" flag and follow
+> > > > a single initialization flow for the EPF drivers. This is done by calling
+> > > > the dw_pcie_ep_init_notify() from all glue drivers after the completion of
+> > > > dw_pcie_ep_init_registers() API. This will allow all the glue drivers to
+> > > > send the notification to the EPF drivers once the initialization is fully
+> > > > completed.
+> > > > 
+> > > > Only difference here is that, the drivers requiring refclk from host will
+> > > > send the notification once refclk is received, while others will send it
+> > > > during probe time itself.
+> > > > 
+> > > > Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > 
+> > > You have removed the .core_init_notifier from EPC drivers,
+> > > but the callback in EPF drivers is still called .core_init.
+> > > 
+> > > Yes, this was a confusing name even before this patch, but
+> > > after this patch, it is probably even worse :)
+> > > 
+> > > The callback should be named from the perspective of EPF drivers IMO.
+> > > .core_init sounds like a EPF driver should initialize the core.
+> > > (But that is of course done by the EPC driver.)
+> > > 
+> > > The .link_up() callback name is better, the EPF driver is informed
+> > > that the link is up.
+> > > 
+> > > Perhaps we could rename .core_init to .core_up ?
+> > > 
+> > > It tells the EPF drivers that the core is now up.
+> > > (And the EPF driver can configure the BARs.)
+> > > 
+> > 
+> > I don't disagree :) I thought about it but then decided to not extend the scope
+> > of this series further. So saved that for next series.
+> > 
+> > But yeah, it is good to clean it up here itself.
+> 
+> If you intend to create a .core_deinit or .core_down (or whatever name
+> you decide on), perhaps it is better to leave this cleanup to be part
+> of that same series?
+> 
 
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Based on v6.8-rc7.
----
- drivers/firmware/qcom/qcom_scm.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+I already added a patch. So let's do it here itself :)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 520de9b5633ab..a3bfe7de0bfd7 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -163,9 +163,6 @@ static int qcom_scm_bw_enable(void)
- 	if (!__scm->path)
- 		return 0;
- 
--	if (IS_ERR(__scm->path))
--		return -EINVAL;
--
- 	mutex_lock(&__scm->scm_bw_lock);
- 	if (!__scm->scm_vote_count) {
- 		ret = icc_set_bw(__scm->path, 0, UINT_MAX);
-@@ -183,7 +180,7 @@ static int qcom_scm_bw_enable(void)
- 
- static void qcom_scm_bw_disable(void)
- {
--	if (IS_ERR_OR_NULL(__scm->path))
-+	if (!__scm->path)
- 		return;
- 
- 	mutex_lock(&__scm->scm_bw_lock);
+- Mani
 
----
-base-commit: 90d35da658da8cff0d4ecbb5113f5fac9d00eb72
-change-id: 20240308-qcom_scm-is_err-check-96a5cc6f17cf
-
-Best regards,
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+மணிவண்ணன் சதாசிவம்
 
