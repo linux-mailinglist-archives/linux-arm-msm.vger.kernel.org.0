@@ -1,157 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-13659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16BD0875DCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 06:44:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 765D7875E18
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 08:02:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 83F6F1F21A4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 05:44:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18ED41F22AED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 07:02:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C642E32C96;
-	Fri,  8 Mar 2024 05:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF76B4E1DC;
+	Fri,  8 Mar 2024 07:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zd+u7b/x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5r/nxFN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBA52E859
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 05:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8928F1CFB2;
+	Fri,  8 Mar 2024 07:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709876643; cv=none; b=KyaYoXFn6ih5T7Xn0AtxbqI0R0UejW4OEIBkl1PRENi+vDbdx6FTFlhQx+va6aZBbgXUjaay7WLMTLmwX6s4vWBSQExuyBg4t9H3x9zUg66A9RPU14kpOaAiqdBwTBQZrawKYbeOqUvZvw4+RfOhun0CzpNTX3C6xkMVRJtHEWM=
+	t=1709881335; cv=none; b=I5sRy2WcfkEHIGjlJEWu6bdyQg1ubOMpbYZVbwQSqbcP9lMFvB0b1xOV3csTdAoMG1TcOB1k4Y25osLphIIK908/V/DxdRJqawvIu1ionXUsOAepKoGVPSmFjXCAHVPS1WElI5i42RguZoMGoBXp+MQ7efIVbUA6gJqWwCIQvsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709876643; c=relaxed/simple;
-	bh=l8mRvqhe3rCJcL5EfXN0mb564Hh0Pb6/VhQn5bYxOzY=;
+	s=arc-20240116; t=1709881335; c=relaxed/simple;
+	bh=iTLENVg3/Y3YtimadfoWFR5x7fj4yBYLoTVs3XljBhI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HVHa5oYMwV+PFfRuqmCcVzUir8RnabP5Lj+T1pl11HEwRfDMkjgVTXYDasJiY9qxbFYjogM6CziEhJjJkLn41lsPRSRUl3Fe0jpT2Uyar2s1HjZgrMFogs3gmVVHem9S7lp7eXHpsFxnaF3pRRVSBo/Ywkdc+cvye2O/fRMhE8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zd+u7b/x; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6e64cdf08e3so373852b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 21:44:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709876642; x=1710481442; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pP3WC4SyW/Vzti9hv7dYhKLJSQ5hGnrzQR/QY37QH6U=;
-        b=zd+u7b/xgUU80tS+jXojilCTJsZNAWM0d/l1V2BF7G3oMIX/oHjrnKgWd2Y5dPETnX
-         CmipROa7r+nU+Fdg1Uap2Jk6f44e/qPEA0R63CrgAKhltZMrOk0TR+adtl/8hl9t98K5
-         35BOmSiUcEN61VdQAxeczgEZjLHCOhxH6Ccu6EPqDfm3VGfhnFetaA3kZxaquwgh3RG5
-         oRVJLoynmllmSaMbUmqjusGc2fsoja+oa4/hwz7soyBV61zju8MaIGwePXOnI2G3AS/W
-         G2qF3pYugdabM8Os35OITh5uSuGb9mC5zvO4BqdxiVUbi4VWE3RdA4hbQV1wa/yr6sHW
-         Yicg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709876642; x=1710481442;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pP3WC4SyW/Vzti9hv7dYhKLJSQ5hGnrzQR/QY37QH6U=;
-        b=TLXb/YAHxbjdNEZBIBmdOuRxjwJLHUYU4Dsy2UHl6QDRx1WQ1/qFT4d4TsfKxW3su+
-         ADPT8bIccCNWnm1CLxLVS9LEGyZAyWLPtfFFPenLeoumkqYj2of1okGlcQrfkNd8pe1A
-         9A6pHcFwb95nyvSuxrUuohCXzNDwlFgePoON+SazLc4r6pcQkDjz7rV+e4044Rf5KdII
-         1SS/ftuYtjdOh4AnexxMM+oVjY6hpwowJ5+UYjfd+gR0WHbs8iUiJVaTUG1/WLRDnO9x
-         2Obul8r1jtagmyPdqsl7CTZswpk/x1ML7ptyUTyhDDs8/dKFetZ+M2Z7bCJKuroN2fOR
-         pStA==
-X-Forwarded-Encrypted: i=1; AJvYcCWa5F0QCeicP02J/DQ1lmz0S9wgXo9y1JCdTZNYzuF8xoSnNyT2WGKgQ7lw3XMhnd3lnRWsmGtix6nTZTzPowg9wC3f7GvrP3XAMKBEgA==
-X-Gm-Message-State: AOJu0YxT3ZhGqYtETqZ+q+yTjC5dsxOI1mq8SjW7NBE6PoM31+x33N9Y
-	ruSC0jeZMouZPZuihHPwP1XC9FvNofmsZHMAMPFEeCn5KkrS3zXVopsPFkyLtA==
-X-Google-Smtp-Source: AGHT+IF4OBcYmj84dqXR/j7tUWistQOyDNgAnoteok0JgpLNMa/4XKXGz0eVlhJR+Ieyw9pe6cuoUw==
-X-Received: by 2002:a05:6a00:815:b0:6e5:9a92:f99b with SMTP id m21-20020a056a00081500b006e59a92f99bmr19446806pfk.16.1709876641435;
-        Thu, 07 Mar 2024 21:44:01 -0800 (PST)
-Received: from thinkpad ([117.217.178.39])
-        by smtp.gmail.com with ESMTPSA id e3-20020aa79803000000b006e5667793d4sm13354830pfl.66.2024.03.07.21.43.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Mar 2024 21:44:01 -0800 (PST)
-Date: Fri, 8 Mar 2024 11:13:47 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v9 10/10] PCI: dwc: ep: Add Kernel-doc comments for APIs
-Message-ID: <20240308054347.GE3789@thinkpad>
-References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
- <20240304-pci-dbi-rework-v9-10-29d433d99cda@linaro.org>
- <Zeo4dJGZYLnLfzjm@ryzen>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ALoE/Iw8pytXOg+HXR7W44NPzlij5U2O1bhVSm7cf+5OvJLDEk7d4sp2rkAyxIiMSJGbPXZfWnSMnXiT8F00yOZtF6cCD/g4O7aWnBlMoqZ64PO6aIosrUQRT6g2+kQrlA7VqNID2DSVsBoje6SK6VuvqM7ISI7dnkkwOg+voHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5r/nxFN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277D1C433C7;
+	Fri,  8 Mar 2024 07:02:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709881335;
+	bh=iTLENVg3/Y3YtimadfoWFR5x7fj4yBYLoTVs3XljBhI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a5r/nxFNoA9OaeVntqzq6Bwqr+WsxPU8YQ5VdWAWOqe+ho4kZqxjAJ8MjNg3RKi/R
+	 1Rmm9U+vJ/3t4Brwv6zdRu7qB4A7KcMX1Lm+cW6MQ8uK9fsyrH3aS6fFcQJOGE5+4Y
+	 6T6thBj7FXIUv15Iz3Et6XaMyvdUz+VLldnA0rbtNtloK3iPI9iEmiqcBmdO0NV2wa
+	 0z+zGkwEqtUK/wXIgK9LLqPnQ3RhPyqJriRnj+fRsgGx9pJUgOkQJdnH/6jy5XnXiN
+	 CD/x5p7mwLsUqatUBIGfAngpRuZWTgQUSarpPl7K5WFeL9EgHA/pfQLkvxbKNEe8Pg
+	 KYqjQz5zM/aHg==
+Date: Fri, 8 Mar 2024 08:02:10 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org, 
+	wsa@kernel.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, quic_vdadhani@quicinc.com
+Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <yocn3rjxn37c7qniv2kkawgg2k7ghdwvrxcf77tdlpujnul3du@6oqvt5v4ykno>
+References: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
+ <cmtru4nvoab6g5emp2yrxnvfpvtrcsuna6dqsyewpagg3qmkau@r2zoj6vgslet>
+ <9dbe987a-fdd1-4bec-b350-5936abf69b1b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zeo4dJGZYLnLfzjm@ryzen>
+In-Reply-To: <9dbe987a-fdd1-4bec-b350-5936abf69b1b@quicinc.com>
 
-On Thu, Mar 07, 2024 at 10:58:12PM +0100, Niklas Cassel wrote:
-> On Mon, Mar 04, 2024 at 02:52:22PM +0530, Manivannan Sadhasivam wrote:
-> > All of the APIs are missing the Kernel-doc comments. Hence, add them.
+Hi Mukesh,
+
+...
+
+> > > Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
 > > 
-> > Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> 
-> For the functions that you added in this series, e.g.
-> dw_pcie_ep_cleanup(), dw_pcie_ep_init_non_sticky_registers(),
-> and dw_pcie_ep_linkdown(), I think that it would have been
-> better if you actually added the kdoc in the same commit that
-> added the respective function.
-> 
-> 
-> For the existing functions that did not have a kdoc, I think
-> it would have been better if you fixed this as patch 1/10 in
-> this series. (Or 2/10, in case you keep the Fixes tag for the
-> "PCI: dwc: ep: Fix DBI access failure for drivers requiring
-> refclk from host" patch.)
-> 
-> Yes, I know that you rename some of these functions that
-> lacked kdoc later in the series, but the whole kdoc description
-> would be the same, the kdoc parameters would be the same, and the
-> kdoc return value would be the same.
-> 
-> If you later rename a function, you would only need to change
-> the kdoc function name (in addition to the function declaration
-> itself).
-> 
+> > I still don't understand what's the fix here. You are making a
+> > generic DMA error to be more specific... where is the bug? What
+> > exactly is broken now?
+> > 
+> This is about being particular while reporting specific error.
+> Like i mentioned, instead of generic DMA transfer error, it should be
+> particular error 1) NACK 2) BUT_PROTO 3)ARB_LOST.
+> Ofcourse when data transfer via DMA fails, it can be considered as
+> DMA Txfer fail.
+> In summary so far driver was considering all failure as txfer failure,
+> but i2c has errors which are kind of response/condition on the bus.
 
-Makes sense! Will change it.
+I understand that, but what I need to know is: does the system
+crash? does the system act in unexpected way?
 
-- Mani
+Moving from "you received an error" to "you received a nack" is
+not a fix, it's an improvement and it should not have the Fixes
+tag.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Having the Fixes tag decides which path this patch will take to
+to reach upstream. It's important because after it gets to
+upstream other people will take your patch and backport it older
+kernels.
+
+I want to avoid this extra work when not necessary.
+
+> Sorry if it confusing still, but please let me know if anything required to
+> be updated in  commit log which can bring clarity.
+> 
+> > Besides, keep in mind, that commits with fixes tags get
+> > backported to older kernels (this one dates back to 5.18) and you
+> > should also Cc the stable mailing list:
+> > 
+> > Cc: <stable@vger.kernel.org> # v5.18+
+> 
+> Sure, will add into CC. was waiting for reviewed-by tag.
+
+No need to resend.
+
+Thanks,
+Andi
 
