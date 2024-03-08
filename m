@@ -1,125 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-13711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AC2F8764B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 14:04:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 672C9876536
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 14:25:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AB2B1F2264F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:04:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E295B239EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:25:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 195881CA8A;
-	Fri,  8 Mar 2024 13:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E67233FBAD;
+	Fri,  8 Mar 2024 13:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Web9H/sb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kCQZriwB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C51CD21
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 13:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E5B3BBF9;
+	Fri,  8 Mar 2024 13:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709903071; cv=none; b=NH0Vaxh+KntgFkQROzODtbvWN9CfLyB4g93WtTjbsmqvH6yPpgyrx/pb2exhyM81oaJZcef8KJ+0Qv89xF0GUFEb7doKUiDhfadpFCSwQZ+B8+5AwCXgGY0ZFJJYvtr0X7nSiIh0Vjt4lLVOqkuWvohtPyPDKZImpFA/EbQB/3k=
+	t=1709904288; cv=none; b=X/Lu017eGdC9XYBpKsGMI9YzpMvhjmawd0erC4SMDuiqhr6G5jXK/fPd7X+0qRKipDEgGMA55qhYeYQejlQYtwN5PO7v0nURQ0ivaOT3sUp85KGRRZ8MY/BS126wtzGnDSk0t5f4ApVcT8mxrVE3eKnpAR6hPH8rC800kw3hTps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709903071; c=relaxed/simple;
-	bh=yRWdVfpQxqHtySeHiXZsB0Tjfqjdc3FOYFaeh5FUKVI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ml/EnEfyVGejnl9Ch3/ZGDTolX0/qpVs3IPtfAtDNkHGq39NLR0zAz2WImdNkZl4y9AUp6/qG/0KC9Yvk9krork+NET/wFzJpH1GJ8IRkkOioMGnEvpt85EXGcTwdjnBR8u4yZ1jijZPPSRpsVyQseAYfTo/hbBfyjBe1ZhrHAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Web9H/sb; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33e6f9ce76aso596204f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Mar 2024 05:04:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709903067; x=1710507867; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QQ57E0ArmK/bVUfP0mzi0MhsZFrvk857kv7W7dfFr2Y=;
-        b=Web9H/sbGFVzPeK2q4KjbOJ3YpE5RP1lRrxdMX1V5YQSrhYZpypHYccoZ/5PwoTacg
-         o2kHRszVATHZckNnJLMPCRMvK+9xhIWOh0BYaSzAH/gibpKbNYzsmQTaYM9kFvPW8yVn
-         zjtNOqKb5uv+ynLTEuJJHZ+4C02qAq1GTFQ2QIt5JryBRQAP6yXMp3eXrVcv5FMIZyy4
-         b1SS7+uKp1A79SPzC7V6Kpthy3nWyOI8qy5J8onb/HXS8/D1kb8SG1X2gwJbA0rTrhvI
-         xpI2KpK6FhYosMP5Yx1NW8Ou34Bkp8G3yEpquKoIkiQE1JCSIP7sR4yY1yWVBvFIjKsN
-         cFuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709903067; x=1710507867;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QQ57E0ArmK/bVUfP0mzi0MhsZFrvk857kv7W7dfFr2Y=;
-        b=ef19yJyUoRZVJGoTcaaChWSrLLE9qwYC0p62vYQyIadvRS0hPLUMGt5v9yvTAnJpZ+
-         pImLs/LvZxBQG1kKIz50K/+UCLIyJ4Zt20Ni6ePyGvLVrx0rOdNMgokNH8jQIQYN+RzL
-         y4tv2A8QdB0XTJHi84DwXW7wrXB7itl5CoTOaZusfJXtgnnqZ6are8voEp3U9OmMFyJT
-         xZdQllglYAp96tPDwH2/EqMhtZfshy2O45ZdZZZvDgWPeueqEUAz18+JGnteQBokgl11
-         sxt8MaFS8X2a3Nh/tOBe3SUFY359/VhxCQcP9fj5N0SXpPT2rQn6X92XksrwUVtxIokx
-         5Alw==
-X-Forwarded-Encrypted: i=1; AJvYcCUoCerlGgeIHBxVQt5+EZ/9HYu4dGb9wofHHhnRlEs5x8PVOWHoRvR6azzxvxKUIv/bQEjqJ3KjR2BYn8K9KXkkvgZR0eijti4MGjrVeg==
-X-Gm-Message-State: AOJu0Yz09U/YIxAYRmV6U8Dga4QlEEuxgzwS4zU5z/HTIOVC7V5HoSSy
-	FFs6IPUZURRsvwId4Sx4+X/O4ta4ROTu2JaR7CYhFUveUhIsO334fQWS+LG7ELw=
-X-Google-Smtp-Source: AGHT+IHCkwidEwgVLTE4ZqN7hKFvS6AkaL79HDNSUljGLcAHE0kLzs+LBju0bJVMOYhQqVw7bXiGkA==
-X-Received: by 2002:a05:6000:180c:b0:33d:be6f:7dcf with SMTP id m12-20020a056000180c00b0033dbe6f7dcfmr14295647wrh.24.1709903067129;
-        Fri, 08 Mar 2024 05:04:27 -0800 (PST)
-Received: from [192.168.0.102] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id f10-20020a5d58ea000000b0033d4cf751b2sm22772090wrd.33.2024.03.08.05.04.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Mar 2024 05:04:26 -0800 (PST)
-Message-ID: <291279e1-7abb-4614-91f3-af9ede349817@linaro.org>
-Date: Fri, 8 Mar 2024 13:04:25 +0000
+	s=arc-20240116; t=1709904288; c=relaxed/simple;
+	bh=LAdBrFiiqpPIYb+1fEVGEmGjUltxM7IwFgH3jq/rJDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sWs1gBpQrDmPZFRvQmcKlXTRtphwNVhkUZmWn1VEmANWLVfMIEGYCkDCyShiJ9BibxBhDQuTGsHmzFP2VaJrhprP0zZ8TO61cf4OhzllvWSdefDb7GseAO1nfLFpWSiu5X0GeeAylulGMUl8tQnQMyfGIidhIe4Cf+PibHFFf64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kCQZriwB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CB0C433F1;
+	Fri,  8 Mar 2024 13:24:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709904288;
+	bh=LAdBrFiiqpPIYb+1fEVGEmGjUltxM7IwFgH3jq/rJDo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kCQZriwBir8HdF7tMJnCbXC/StQ5ZubtkrurJ/hNH5ABeLm3oUkbkLT4RFyY2E8eO
+	 WhEOBptb0FP//rwCm3NEOkHagnEj5gf5qMnmPMe/qNH0seeYsh4AqBQsrYd+RbrnH6
+	 pDRLKSmQdbkECwUTmu2Qx8EiSpSPwjGi1C/wfhV39qWSt9mOUDcyucPUwdWxl7RKKL
+	 r8to3P6b356iIL9jCR8K8bfo8pwwI6jmqw7KiebRFq4G0i2mjya0l5XV7KTfiYE85w
+	 umqtSbSKWbmwfLY0nu5JqX3tCAiDkKwWTsmoxH+sE6t5e8phFPQm6vRX5Q9girR6xc
+	 MZOTZB3+scaNQ==
+Date: Fri, 8 Mar 2024 14:24:35 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v9 07/10] PCI: dwc: ep: Remove "core_init_notifier" flag
+Message-ID: <ZesRk5Dg4KEASD3U@ryzen>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
- SM8150
-Content-Language: en-US
-To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Stephen Boyd <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
- <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
- <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
- <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
- <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
- <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
- <d893e8f8-66a7-4460-9468-0f3a359cece7@linaro.org>
- <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
- <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
 
-On 08/03/2024 12:40, Satya Priya Kakitapalli (Temp) wrote:
+On Mon, Mar 04, 2024 at 02:52:19PM +0530, Manivannan Sadhasivam wrote:
+> "core_init_notifier" flag is set by the glue drivers requiring refclk from
+> the host to complete the DWC core initialization. Also, those drivers will
+> send a notification to the EPF drivers once the initialization is fully
+> completed using the pci_epc_init_notify() API. Only then, the EPF drivers
+> will start functioning.
 > 
-> If BIT(0) is set from probe, during any active usecase, the clock gets 
-> turned ON automatically when the power domain is turned ON.
+> For the rest of the drivers generating refclk locally, EPF drivers will
+> start functioning post binding with them. EPF drivers rely on the
+> 'core_init_notifier' flag to differentiate between the drivers.
+> Unfortunately, this creates two different flows for the EPF drivers.
+> 
+> So to avoid that, let's get rid of the "core_init_notifier" flag and follow
+> a single initialization flow for the EPF drivers. This is done by calling
+> the dw_pcie_ep_init_notify() from all glue drivers after the completion of
+> dw_pcie_ep_init_registers() API. This will allow all the glue drivers to
+> send the notification to the EPF drivers once the initialization is fully
+> completed.
+> 
+> Only difference here is that, the drivers requiring refclk from host will
+> send the notification once refclk is received, while others will send it
+> during probe time itself.
+> 
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index 18c80002d3bd..fc0282b0d626 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -927,21 +928,12 @@ static int pci_epf_test_bind(struct pci_epf *epf)
+>  	if (ret)
+>  		return ret;
+>
 
-Sounds like a very dirty hack really doesn't it.
+Hello Mani,
 
-Can you point out where ?
+Since you asked for testing, I gave your series a spin
+(with a driver without .core_init_notifier).
 
 
-> But when we use CLK_IS_CRITICAL flag, the framework keeps the power 
-> domain ON and doesn't let the power domain to turn off even when there 
-> is no active usecase.
+There seems to be a problem that pci_epc_write_header() is never called.
 
----
-bod
+Debugging this, it seems that .core_init in pci-epf-test is never called.
+
+If I add debug prints in pci_epc_init_notify(), I see that it does not
+notify a single EPF driver.
+
+It appears that the patch in $subject will call pci_epc_init_notify()
+at EPC driver .probe() time, and at that point in time, there are no
+EPF drivers registered.
+
+They get registered later, when doing the configfs write.
+
+
+I would say that it is the following change that breaks things:
+
+> -	if (!core_init_notifier) {
+> -		ret = pci_epf_test_core_init(epf);
+> -		if (ret)
+> -			return ret;
+> -	}
+> -
+
+Since without this code, pci_epf_test_core_init() will no longer be called,
+as there is currently no one that calls epf->core_init() for a EPF driver
+after it has been bound. (For drivers that call dw_pcie_ep_init_notify() in
+.probe())
+
+I guess one way to solve this would be for the EPC core to keep track of
+the current EPC "core state" (up/down). If the core is "up" at EPF .bind()
+time, notify the EPF driver directly after .bind()?
+
+
+Kind regards,
+Niklas
 
