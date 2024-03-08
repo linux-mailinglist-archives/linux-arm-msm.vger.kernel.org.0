@@ -1,296 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-13653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1504F875B4E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 00:57:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72B3F875D97
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 06:34:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 38D7A1C20E40
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Mar 2024 23:57:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F24D1F227D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 05:34:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3763D1D698;
-	Thu,  7 Mar 2024 23:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 197941E536;
+	Fri,  8 Mar 2024 05:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iboTbB2Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q3GX42bP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3635A4879B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Mar 2024 23:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D78036122
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 05:34:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709855833; cv=none; b=SGBNQ68uvnuO3EC95zPGD66g61njLWv++XNQpA7ZeVJFLaCVgHDBHbqjF4tWwACLBMspcaLYQGaqvrRViTEK9WBhgRURwE5ZSUaJfAB/xO56YUuPP29mppn5if6hcemPWH/ISF+06ovS4YW1QHtU1zR6XwQkvriphyZeoX/7M+4=
+	t=1709876076; cv=none; b=iWKL/4T4iBLq/r0xRKDZ1mQ3YOFR/7W8dN8Cl99NHjboRse7/AROj2lXOnGCKpqToP/i2eiwL3fOX9noxu/FHquhEOpJvuDkidPG+g2N8TL5n6jrXqeph6/e3CBM05y/r+I2HKo3JabA6M69Not2hMnljcBMsSt+ThrlLZ/PUNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709855833; c=relaxed/simple;
-	bh=TXYWz2o+G56/mfXWFApDQcaAJZo0tKkXqhChihztQJA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aPJNsMhD6VGky8wfzDZDCNhwZikPQyrJpWeyW3xrqSIX0B6QfjcCsweX9vUNrQ/mcKypUlghzRdx+3XLSKzhCH/F9+sbbiCbNBVrQC4dv6SsMPy6dju61slvWF6tdUwcSWU6EqIuai20BvOM+rHwznDCO7pAOEtoOeh01KrNjNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iboTbB2Y; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1709876076; c=relaxed/simple;
+	bh=gGtIE1GlzpRb/hpJLgPmmPxL9CGVUSEwETlUVk1FdHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l70iUH1a6ixLSS43xomQsZVeiRx3egY1GKUt6rSxc2kT8XEGIZucNAPYAtVvjVsEx+npSX0mbv0Jw/Snar4Mv25puUsXOsgG8GGkW363/fLR5hxpm/LatGNzRYNeXj7S4cRc0/m/qlRp5aImA5hvU9+PtADb+XtexIKPLi+U7tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q3GX42bP; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51321e71673so1625835e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 15:57:10 -0800 (PST)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1dca3951ad9so13503805ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Mar 2024 21:34:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1709855829; x=1710460629; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GK5XNOVT37zheDhBlvzH4xXIpFb1sao65Rig8QVMcBw=;
-        b=iboTbB2YrCiv9gt0SP/UKch65H1uana2vJGNLTuAXuPpF+p468BjsoOB7yv785FTe/
-         //MYxq0AJcfYVgBVPUsTh2R8L2tVSoFQB7MyQkZzeH8LRcnX+2iNfTej1S3ksrXH3E22
-         jMPpyHWnvwHU8k0MMvhwIEDbBOogjfYSnHSBGoFvE6QQuVMW2Tmn34rhRP8sLoumIzZg
-         YDEdqwaS6uHEJsI5QldzfmupKSywMOHh/rGGcJRTAPxQLt4vY0684FngaLT673psBuv1
-         ELTTLltX2dV7b+g4WwliJMUyjAvqnU5ALG1UJ0pWAn5NExi5nCKbmQfYXsPh9JHoDYp5
-         OWKQ==
+        d=linaro.org; s=google; t=1709876073; x=1710480873; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qLlyiqWF0upHn9Y3ngiUh0k7hhFX2gsYsEhwvlh6VfE=;
+        b=q3GX42bPh6RLUmwtyUxh8JzjX3TdwCOrAXsz2C2JBw974pRaXievziREUbTgkql+cQ
+         1M/aQ9IYpz93t7nZRW7FKZgt+itJN6kkfZ773prMPlBe/aNUNahDATv2hW5gdh9L7sbp
+         O95LBw8N45duLtED5MMBQKRK0YD14HXB6goUOD3IiCzQaNzpzSQIh/O3+oPE/OOjX2+K
+         EfhS08fZWNwXsbgnnDwHkz5FBah8N3rQRkUw1PgqN1s8e7xTBVRDvq/utvpgxqT/oB1V
+         T+NSfuMupm2+pzYq7TWeXBVAUeXg4aL15nVWqVh/Qp0o9D4GAYMOHGAsp/mOpH6E5zQ/
+         23tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709855829; x=1710460629;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GK5XNOVT37zheDhBlvzH4xXIpFb1sao65Rig8QVMcBw=;
-        b=figeSwbUDU4figPL2PGCEY+V4zLS2x7P+Mq/V5PPvIGUnhyCuWU0XeR0m0y5tXABil
-         QmEzjEZn1h8D2ZfUPbyJrJ3RhZa52DnQ3B2UGXOAVD5zJuYt6Qlg3GN7Iq0LJ98Yjwkr
-         VRNaOGism5aFWFfRKLvRAGKvq817ddGI6emWHzur8lB0Chz8uvxDQG16Ssns8nkI2Hyf
-         YGLbHCExfY7ZenN6ha030f/uYxbH9l0Oxx/BeyVwtcckzr3jF07T9rwUMSdDHvXK2mUv
-         q/FuPjTwMQ8i4BvVmAY8ebEhDxbp5i69cjICNUVrMYYbUzIGlBL8tl6nXqaJdmi+XstW
-         YlGw==
-X-Forwarded-Encrypted: i=1; AJvYcCWkX7X7+h/nxfzO82NYk0ULhBlQBYWdcADliWIDtth4Y6j18tq/eDtbRRx5ggPv/O/ux54mLpsdWcHrVGaut0JMPiOuvHweoQHIYj5VoQ==
-X-Gm-Message-State: AOJu0YzJy4gK9pM9n3ILUYugUJF2Rxo+/cocWnqNAIps0jlsh+z8m9uU
-	xqMPHYBPI1r+kYla1IPRUrCqnjYDBWOudWmQnrFCfNwYHP5akt4BRnmN3FPXruA=
-X-Google-Smtp-Source: AGHT+IHzMD7PYqcuhD/abvrL6OPdgwt61AHHLj9TptIR9Ky1X4VlQud7DglQwVyw/LxB+27EURXdhg==
-X-Received: by 2002:a05:6512:2118:b0:513:7e6a:ecfb with SMTP id q24-20020a056512211800b005137e6aecfbmr2127866lfr.65.1709855829217;
-        Thu, 07 Mar 2024 15:57:09 -0800 (PST)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac25f79000000b005133277eb29sm2796475lfc.270.2024.03.07.15.57.08
+        d=1e100.net; s=20230601; t=1709876073; x=1710480873;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qLlyiqWF0upHn9Y3ngiUh0k7hhFX2gsYsEhwvlh6VfE=;
+        b=mUcex4B6kAUmmXp4sZi9E9is/LpB/RTYvuoWJ6VgmfXf9EM3eDI/20He754A2QCFc5
+         bnoIwyXClhhw37l2yqYvhEGGseumYDak1IlHaeNPg+LCVfrCe7NubjL4rfccwT9OWqrz
+         meKS+Nf8zfmwTaNBMuhuU6kXg3jLHo0B/QPQ7DNdbmrD6fovYtj1KSLd7V/1QZ9lgr9y
+         dSPAe2YStkH5H+TnYmcBdq78izcgbgrYB8F60O/6OBX9JsHrv0fhU/+XfyfHIyUy3yex
+         LXs+SjrSwExriH22Hzf7Ehq2EPAP5xt/x3OJwN6V8joN3eb3ieJnAVABQasqYuDQOmvJ
+         sQ0g==
+X-Forwarded-Encrypted: i=1; AJvYcCWbYQASefrfrA3TGRF3/xQ3Fbpn0u5W4Awr5zx2omI+LVBKNYQMYLeihfYdSm4BluARgGATC3QhkzorNwh5cfqgMHXi4cevux1FR5tdcQ==
+X-Gm-Message-State: AOJu0YzXGhEMQSTw3bq1TO7ABcTYNNs0Nd1tottkroPFfMBV4gJntvyl
+	AgbVQKjy1EQ8PL8sae3qmTdXY35eG2tYeAYRwgS/MHtRZpWxTmXgj+Nu5TCjhg==
+X-Google-Smtp-Source: AGHT+IG89iAmJ8LV9BCChv81LryPxWwamgWvwEd6QxuWM+joRnlgHY+wIW3y+qsIhhLN4Fb6hLrFWg==
+X-Received: by 2002:a17:903:2d1:b0:1dd:65bc:c056 with SMTP id s17-20020a17090302d100b001dd65bcc056mr1956887plk.40.1709876073327;
+        Thu, 07 Mar 2024 21:34:33 -0800 (PST)
+Received: from thinkpad ([117.217.178.39])
+        by smtp.gmail.com with ESMTPSA id z4-20020a170903018400b001dd66e6ec91sm578427plg.140.2024.03.07.21.34.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Mar 2024 15:57:08 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 08 Mar 2024 01:57:05 +0200
-Subject: [PATCH RFC 6/6] drm/msm/hdmi: make use of the drm_connector_hdmi
- framework
+        Thu, 07 Mar 2024 21:34:32 -0800 (PST)
+Date: Fri, 8 Mar 2024 11:04:17 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v9 04/10] PCI: dwc: ep: Fix DBI access failure for
+ drivers requiring refclk from host
+Message-ID: <20240308053417.GA3789@thinkpad>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-4-29d433d99cda@linaro.org>
+ <ZeokEJstpRSUPDTL@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240308-bridge-hdmi-connector-v1-6-90b693550260@linaro.org>
-References: <20240308-bridge-hdmi-connector-v1-0-90b693550260@linaro.org>
-In-Reply-To: <20240308-bridge-hdmi-connector-v1-0-90b693550260@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6259;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=TXYWz2o+G56/mfXWFApDQcaAJZo0tKkXqhChihztQJA=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl6lRODQf/UkaVtuTdFcqJY0cBtJwnVmB4bQh4p
- bjEk3SI2iyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZepUTgAKCRCLPIo+Aiko
- 1Yv/CAChblAPRULvIJO+Y0ZNMTE5sXE5ycGqq/4aWMWVvZ+Yw+ffNtkFyDQIbZVf8cG0RE5eQUU
- Z9H5bP7/c5wKF+d/s6e5IH5+/2I7SLcNrTkLVKpXvWs7ksyPcOR4R81p3ML2FmlazzUGeiXbpik
- byji7EYEF/7dXuQR7eySpVMi5GjnpD8XN1QfqMGdy/6FKgpiCstrP2Raw1Pfq+QDiT5eDt3ebvh
- QYpe1ex2bbEgTAXtQkI7l4bgYJGoJ8RJYm8MgSi/q6wjFRNG3kBmwrx41qWy5Gw+sxcDZ5GU/C6
- VSUYjwvRb/HQzloPko0tOxTIYEpaA6LL+OdsjrIw/Slq7tJL
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZeokEJstpRSUPDTL@ryzen>
 
-Setup the HDMI connector on the MSM HDMI outputs. Make use of
-atomic_check hook and of the provided Infoframe infrastructure.
+On Thu, Mar 07, 2024 at 09:31:12PM +0100, Niklas Cassel wrote:
+> On Mon, Mar 04, 2024 at 02:52:16PM +0530, Manivannan Sadhasivam wrote:
+> > The DWC glue drivers requiring an active reference clock from the PCIe host
+> > for initializing their PCIe EP core, set a flag called 'core_init_notifier'
+> > to let DWC driver know that these drivers need a special attention during
+> > initialization. In these drivers, access to the hw registers (like DBI)
+> > before receiving the active refclk from host will result in access failure
+> > and also could cause a whole system hang.
+> > 
+> > But the current DWC EP driver doesn't honor the requirements of the drivers
+> > setting 'core_init_notifier' flag and tries to access the DBI registers
+> > during dw_pcie_ep_init(). This causes the system hang for glue drivers such
+> > as Tegra194 and Qcom EP as they depend on refclk from host and have set the
+> > above mentioned flag.
+> > 
+> > To workaround this issue, users of the affected platforms have to maintain
+> > the dependency with the PCIe host by booting the PCIe EP after host boot.
+> > But this won't provide a good user experience, since PCIe EP is _one_ of
+> > the features of those platforms and it doesn't make sense to delay the
+> > whole platform booting due to PCIe requiring active refclk.
+> > 
+> > So to fix this issue, let's move all the DBI access from
+> > dw_pcie_ep_init() in the DWC EP driver to the dw_pcie_ep_init_complete()
+> > API. This API will only be called by the drivers setting
+> > 'core_init_notifier' flag once refclk is received from host. For the rest
+> > of the drivers that gets the refclk locally, this API will be called
+> > within dw_pcie_ep_init().
+> > 
+> > Fixes: e966f7390da9 ("PCI: dwc: Refactor core initialization code for EP mode")
+> > Co-developed-by: Vidya Sagar <vidyas@nvidia.com>
+> > Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+> > Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> 
+> I'm not sure if the Fixes tag is stictly correct, since there is
+> nothing wrong with the commit that the Fixes-tag is referencing.
+> 
 
-Note: for now only AVI Infoframes are enabled. Audio Infoframes are
-currenly handled separately. This will be fixed for the final version.
+No. The commit was intented to move all the DBI accesses to
+dw_pcie_ep_init_complete(), but it left few things like ep_init() callback that
+could access the DBI registers. One may argue that the none of the drivers at
+that time were accessing DBI registers in that callback etc... but I used that
+commit as a fixes tag for the sake of backporting. Otherwise, I don't see how we
+can easily backport this patch.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 107 ++++++++++++++++++++++++++++-----
- 1 file changed, 91 insertions(+), 16 deletions(-)
+> What this patch addresses is an additional use-case/feature,
+> which allows you to start the EP-side before the RC-side.
+> 
+> However, I'm guessing that you kept the Fixes-tag such that this
+> patch will get backported. However, this patch is number 4/10 in
+> the patch series. If this is a strict fix that you want backported,
+> and it does not depend on any of the previous patches (it doesn't
+> seem that way), then I think that you should have put it as patch
+> 1/10 in the series.
+> 
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index d839c71091dc..ac42574db8f7 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -68,23 +68,15 @@ static void power_off(struct drm_bridge *bridge)
- 
- #define AVI_IFRAME_LINE_NUMBER 1
- 
--static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
-+static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
-+					  const u8 *buffer, size_t len)
- {
--	struct drm_crtc *crtc = hdmi->encoder->crtc;
--	const struct drm_display_mode *mode = &crtc->state->adjusted_mode;
--	union hdmi_infoframe frame;
--	u8 buffer[HDMI_INFOFRAME_SIZE(AVI)];
- 	u32 val;
--	int len;
- 
--	drm_hdmi_avi_infoframe_from_display_mode(&frame.avi,
--						 hdmi->connector, mode);
--
--	len = hdmi_infoframe_pack(&frame, buffer, sizeof(buffer));
--	if (len < 0) {
-+	if (len != HDMI_INFOFRAME_SIZE(AVI)) {
- 		DRM_DEV_ERROR(&hdmi->pdev->dev,
- 			"failed to configure avi infoframe\n");
--		return;
-+		return -EINVAL;
- 	}
- 
- 	/*
-@@ -124,6 +116,55 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
- 	val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
- 	val |= HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE(AVI_IFRAME_LINE_NUMBER);
- 	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_bridge_clear_infoframe(struct drm_connector *connector,
-+					   enum hdmi_infoframe_type type)
-+{
-+	struct hdmi_bridge *hdmi_bridge = connector->hdmi.data;
-+	struct hdmi *hdmi = hdmi_bridge->hdmi;
-+	u32 val;
-+
-+	val = hdmi_read(REG_HDMI_INFOFRAME_CTRL0);
-+
-+	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AVI:
-+		val &= ~(HDMI_INFOFRAME_CTRL0_AVI_SEND |
-+			 HDMI_INFOFRAME_CTRL0_AVI_CONT);
-+		break;
-+	case HDMI_INFOFRAME_TYPE_AUDIO:
-+		val &= ~(HDMI_INFOFRAME_CTRL0_AUDIO_SEND |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_CONT |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
-+			 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE);
-+		break;
-+	default:
-+		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
-+	}
-+
-+	hdmi_write(REG_HDMI_INFOFRAME_CTRL0, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_bridge_write_infoframe(struct drm_connector *connector,
-+					   enum hdmi_infoframe_type type,
-+					   const u8 *buffer, size_t len)
-+{
-+	struct hdmi_bridge *hdmi_bridge = connector->hdmi.data;
-+	struct hdmi *hdmi = hdmi_bridge->hdmi;
-+
-+	msm_hdmi_bridge_clear_infoframe(connector, type);
-+
-+	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AVI:
-+		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
-+	default:
-+		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
-+		return 0;
-+	}
- }
- 
- static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
-@@ -132,6 +173,10 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
- 	struct hdmi *hdmi = hdmi_bridge->hdmi;
- 	struct hdmi_phy *phy = hdmi->phy;
-+	struct drm_encoder *encoder = bridge->encoder;
-+	struct drm_atomic_state *state = old_bridge_state->base.state;
-+	struct drm_connector *connector =
-+		drm_atomic_get_new_connector_for_encoder(state, encoder);
- 
- 	DBG("power up");
- 
-@@ -139,12 +184,13 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 		msm_hdmi_phy_resource_enable(phy);
- 		msm_hdmi_power_on(bridge);
- 		hdmi->power_on = true;
--		if (hdmi->hdmi_mode) {
--			msm_hdmi_config_avi_infoframe(hdmi);
--			msm_hdmi_audio_update(hdmi);
--		}
- 	}
- 
-+	drm_atomic_helper_connector_hdmi_update_infoframes(connector, state);
-+
-+	if (hdmi->hdmi_mode)
-+		msm_hdmi_audio_update(hdmi);
-+
- 	msm_hdmi_phy_powerup(phy, hdmi->pixclock);
- 
- 	msm_hdmi_set_mode(hdmi, true);
-@@ -177,6 +223,15 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
- 	}
- }
- 
-+static int msm_hdmi_bridge_atomic_check(struct drm_bridge *bridge,
-+					struct drm_bridge_state *bridge_state,
-+					struct drm_crtc_state *crtc_state,
-+					struct drm_connector_state *conn_state)
-+{
-+	return drm_atomic_helper_connector_hdmi_check(conn_state->connector,
-+						      conn_state->state);
-+}
-+
- static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
- 		 const struct drm_display_mode *mode,
- 		 const struct drm_display_mode *adjusted_mode)
-@@ -300,16 +355,36 @@ static enum drm_mode_status msm_hdmi_bridge_mode_valid(struct drm_bridge *bridge
- 	return 0;
- }
- 
-+static const struct drm_connector_hdmi_funcs msm_hdmi_bridge_hdmi_funcs = {
-+	.clear_infoframe = msm_hdmi_bridge_clear_infoframe,
-+	.write_infoframe = msm_hdmi_bridge_write_infoframe,
-+};
-+
-+static int msm_hdmi_bridge_setup_connector(struct drm_bridge *bridge,
-+					   struct drm_connector *connector)
-+{
-+	if (connector->hdmi.data)
-+		return -EBUSY;
-+
-+	connector->hdmi.data = to_hdmi_bridge(bridge);
-+
-+	return drm_connector_hdmi_setup(connector, "Qualcomm", "Snapdragon",
-+					&msm_hdmi_bridge_hdmi_funcs,
-+					BIT(HDMI_COLORSPACE_RGB), 8);
-+}
-+
- static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
- 	.atomic_reset = drm_atomic_helper_bridge_reset,
-+	.atomic_check = msm_hdmi_bridge_atomic_check,
- 	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
- 	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
- 	.mode_set = msm_hdmi_bridge_mode_set,
- 	.mode_valid = msm_hdmi_bridge_mode_valid,
- 	.edid_read = msm_hdmi_bridge_edid_read,
- 	.detect = msm_hdmi_bridge_detect,
-+	.setup_connector = msm_hdmi_bridge_setup_connector,
- };
- 
- static void
+Not strictly required. Usually the fixes are added first for the ease of merging
+as you said, but here I intend to merge this series as it is and it is not
+fixing anything in the ongoing release. But, if I happen to respin, I may
+reorder so that this can get merged early in next release cycle (this series is
+going to miss 6.9 anyway).
+
+> Patch ordering aside:
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
+
+Thanks!
+
+- Mani
 
 -- 
-2.39.2
-
+மணிவண்ணன் சதாசிவம்
 
