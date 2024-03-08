@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-13710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50B4587647C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:43:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AC2F8764B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 14:04:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 81EC41C215F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 12:43:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AB2B1F2264F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C45B81401F;
-	Fri,  8 Mar 2024 12:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 195881CA8A;
+	Fri,  8 Mar 2024 13:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JeABPd+f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Web9H/sb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFE414F98;
-	Fri,  8 Mar 2024 12:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C51CD21
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 13:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709901828; cv=none; b=a8JImugjxU7ZPXEufrtQz6J7sQZ3uGgBjG/AfVbW/narqxAKsi9uvA0/VcE0B1UBiB51VSwga7V2+YInHZrq3KF89qnurvlalqD9arjBGgaUcN7C1aLf7fzndeR33XxHOia8rv7TN4NZsttg6/c30rkmSw/x7ipu8FTibJaR45o=
+	t=1709903071; cv=none; b=NH0Vaxh+KntgFkQROzODtbvWN9CfLyB4g93WtTjbsmqvH6yPpgyrx/pb2exhyM81oaJZcef8KJ+0Qv89xF0GUFEb7doKUiDhfadpFCSwQZ+B8+5AwCXgGY0ZFJJYvtr0X7nSiIh0Vjt4lLVOqkuWvohtPyPDKZImpFA/EbQB/3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709901828; c=relaxed/simple;
-	bh=pGPyxY4xey0LpvE+RP3d8bxeSrlEhfkiAYH7RTLqgcA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RbSxbyquDAsNBOyYrCwFAuWflNAr1KWaQ2+89WNCiFsJCS9eK4i144vow47xhaeUo7hyt38WXbqYD0GbDobd6k5q9YRdb+J8SWxiFT+bz+kF9qzZRN0S//AwJTBEprlXGj9UjjvIyEaywgX3J8gbwYFWg4OgeMmkjFLC9XLx5NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JeABPd+f; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428AjMLW026896;
-	Fri, 8 Mar 2024 12:43:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=nY2VG82b+ivJfZOzlfIERrNz50L7KSM3nXuL3F//TZ4=; b=Je
-	ABPd+fplo5kRF4DK0cCV90chBmoasIm28/y3Dy1vvkWFjpGWsnPgiMWxz7et4P5d
-	jyshTiDvTKO1qnS0Sh+uQm1OUXYwsNcZp2ioEieKxR7qqbMEy1iWvnZHMdRmwt31
-	6fIAtUCbmKlaIb0Uv8RoW+48RehbHbRt9Vj1/rMa4n89cyEB2i07WlPiV/jluauR
-	9yEw12d5bLzsqY8PfWpBLWUKjMAirCKYSWkG1QOcM1rgdjKKcA6yTP9xI1app0aD
-	3nPLgM9jKNKzsOzZaHZDJNCMNgxi+H/IpreGuIFQ1z8u2Ka2ZEdg06Q9IFbTrMMO
-	0n83cFUzbBJvTuvo5WeQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr16y08dp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 12:43:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428Chc5b003833
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 12:43:38 GMT
-Received: from [10.216.59.105] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Mar
- 2024 04:43:35 -0800
-Message-ID: <0fe1374b-318b-4dea-94fc-596c665eab53@quicinc.com>
-Date: Fri, 8 Mar 2024 18:13:30 +0530
+	s=arc-20240116; t=1709903071; c=relaxed/simple;
+	bh=yRWdVfpQxqHtySeHiXZsB0Tjfqjdc3FOYFaeh5FUKVI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ml/EnEfyVGejnl9Ch3/ZGDTolX0/qpVs3IPtfAtDNkHGq39NLR0zAz2WImdNkZl4y9AUp6/qG/0KC9Yvk9krork+NET/wFzJpH1GJ8IRkkOioMGnEvpt85EXGcTwdjnBR8u4yZ1jijZPPSRpsVyQseAYfTo/hbBfyjBe1ZhrHAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Web9H/sb; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33e6f9ce76aso596204f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Mar 2024 05:04:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709903067; x=1710507867; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QQ57E0ArmK/bVUfP0mzi0MhsZFrvk857kv7W7dfFr2Y=;
+        b=Web9H/sbGFVzPeK2q4KjbOJ3YpE5RP1lRrxdMX1V5YQSrhYZpypHYccoZ/5PwoTacg
+         o2kHRszVATHZckNnJLMPCRMvK+9xhIWOh0BYaSzAH/gibpKbNYzsmQTaYM9kFvPW8yVn
+         zjtNOqKb5uv+ynLTEuJJHZ+4C02qAq1GTFQ2QIt5JryBRQAP6yXMp3eXrVcv5FMIZyy4
+         b1SS7+uKp1A79SPzC7V6Kpthy3nWyOI8qy5J8onb/HXS8/D1kb8SG1X2gwJbA0rTrhvI
+         xpI2KpK6FhYosMP5Yx1NW8Ou34Bkp8G3yEpquKoIkiQE1JCSIP7sR4yY1yWVBvFIjKsN
+         cFuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709903067; x=1710507867;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QQ57E0ArmK/bVUfP0mzi0MhsZFrvk857kv7W7dfFr2Y=;
+        b=ef19yJyUoRZVJGoTcaaChWSrLLE9qwYC0p62vYQyIadvRS0hPLUMGt5v9yvTAnJpZ+
+         pImLs/LvZxBQG1kKIz50K/+UCLIyJ4Zt20Ni6ePyGvLVrx0rOdNMgokNH8jQIQYN+RzL
+         y4tv2A8QdB0XTJHi84DwXW7wrXB7itl5CoTOaZusfJXtgnnqZ6are8voEp3U9OmMFyJT
+         xZdQllglYAp96tPDwH2/EqMhtZfshy2O45ZdZZZvDgWPeueqEUAz18+JGnteQBokgl11
+         sxt8MaFS8X2a3Nh/tOBe3SUFY359/VhxCQcP9fj5N0SXpPT2rQn6X92XksrwUVtxIokx
+         5Alw==
+X-Forwarded-Encrypted: i=1; AJvYcCUoCerlGgeIHBxVQt5+EZ/9HYu4dGb9wofHHhnRlEs5x8PVOWHoRvR6azzxvxKUIv/bQEjqJ3KjR2BYn8K9KXkkvgZR0eijti4MGjrVeg==
+X-Gm-Message-State: AOJu0Yz09U/YIxAYRmV6U8Dga4QlEEuxgzwS4zU5z/HTIOVC7V5HoSSy
+	FFs6IPUZURRsvwId4Sx4+X/O4ta4ROTu2JaR7CYhFUveUhIsO334fQWS+LG7ELw=
+X-Google-Smtp-Source: AGHT+IHCkwidEwgVLTE4ZqN7hKFvS6AkaL79HDNSUljGLcAHE0kLzs+LBju0bJVMOYhQqVw7bXiGkA==
+X-Received: by 2002:a05:6000:180c:b0:33d:be6f:7dcf with SMTP id m12-20020a056000180c00b0033dbe6f7dcfmr14295647wrh.24.1709903067129;
+        Fri, 08 Mar 2024 05:04:27 -0800 (PST)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id f10-20020a5d58ea000000b0033d4cf751b2sm22772090wrd.33.2024.03.08.05.04.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Mar 2024 05:04:26 -0800 (PST)
+Message-ID: <291279e1-7abb-4614-91f3-af9ede349817@linaro.org>
+Date: Fri, 8 Mar 2024 13:04:25 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,77 +76,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] slimbus: qcom-ngd-ctrl: Reduce auto suspend delay
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_anupkulk@quicinc.com>, <quic_cchiluve@quicinc.com>
-References: <20240304135000.21432-1-quic_vdadhani@quicinc.com>
- <d784e46d-974d-4bf3-a2d3-491e7ad19701@linaro.org>
+Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
+ SM8150
 Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <d784e46d-974d-4bf3-a2d3-491e7ad19701@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UTP_M8OGb3LdCuB_7DUa4e32perp86ZZ
-X-Proofpoint-GUID: UTP_M8OGb3LdCuB_7DUa4e32perp86ZZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015
- bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403080102
+To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Stephen Boyd <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
+ <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
+ <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+ <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
+ <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
+ <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
+ <d893e8f8-66a7-4460-9468-0f3a359cece7@linaro.org>
+ <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
+ <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-On 3/6/2024 2:46 AM, Konrad Dybcio wrote:
+On 08/03/2024 12:40, Satya Priya Kakitapalli (Temp) wrote:
 > 
-> 
-> On 3/4/24 14:50, Viken Dadhaniya wrote:
->> Currently we have auto suspend delay of 1s which is
->> very high and it takes long time to driver for runtime
->> suspend after use case is done.
->>
->> Hence to optimize runtime PM ops, reduce auto suspend
->> delay to 100ms.
->>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> ---
-> 
-> What determines 1s to be high and 100ms to be low enough? Could
-> you share some more reasoning?
+> If BIT(0) is set from probe, during any active usecase, the clock gets 
+> turned ON automatically when the power domain is turned ON.
 
-Right now we don't have exact number which can quantify either power or 
-performance. But we are following small window so as to not keep timer 
-running longer while having resources like Clock ON. Theoretically and 
-testing wise, this is not creating any side effect too.
+Sounds like a very dirty hack really doesn't it.
 
-> 
->>   drivers/slimbus/qcom-ngd-ctrl.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c 
->> b/drivers/slimbus/qcom-ngd-ctrl.c
->> index efeba8275a66..5de45a0e3da5 100644
->> --- a/drivers/slimbus/qcom-ngd-ctrl.c
->> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
->> @@ -81,7 +81,7 @@
->>   #define SLIM_USR_MC_DISCONNECT_PORT    0x2E
->>   #define SLIM_USR_MC_REPEAT_CHANGE_VALUE    0x0
->> -#define QCOM_SLIM_NGD_AUTOSUSPEND    MSEC_PER_SEC
->> +#define QCOM_SLIM_NGD_AUTOSUSPEND    (MSEC_PER_SEC / 10)
-> 
-> This could be a good opportunity to inline this value..
+Can you point out where ?
 
-Updated in v2.
 
-> 
-> Konrad
+> But when we use CLK_IS_CRITICAL flag, the framework keeps the power 
+> domain ON and doesn't let the power domain to turn off even when there 
+> is no active usecase.
+
+---
+bod
 
