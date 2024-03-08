@@ -1,146 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-13707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 756B8876470
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:41:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3204876474
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:41:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 161D71F229CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 12:41:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F8E8B22D94
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 12:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BAD017551;
-	Fri,  8 Mar 2024 12:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 506BC14F98;
+	Fri,  8 Mar 2024 12:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BsOhAUd8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MmeNv1j2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED11401F;
-	Fri,  8 Mar 2024 12:40:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B789310A34;
+	Fri,  8 Mar 2024 12:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709901657; cv=none; b=F119plIxYpgOXgYGHBEx12vzl6aZcjOj8EMZkX5NlFDdArn5VwD1bxrXLpS98X1zKcqixBYlkK+XMGrqeCZBTsDVanbOq86/Wj6wGcMvrLXAytj7LJIqP62OHHAGWEpEG4ReHi2ZmhO5IQM963RMNM+G5uAZk3n0TGw9kguu1eo=
+	t=1709901705; cv=none; b=UrPbVswEQriRO1ZIckluO3AtMwtUIvTEcKXowjr1/scWk5Nzpg0peF66xkGyAWDJBxbMVJhuiUkGjI1EnAqZZV6gApuM2tb3SfEvIXMRRhCsW/8UElHFlxhO1umYR5kuqPtn7+waHzi1KbWSfmorInDMSdpUbRirD5OgPU988Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709901657; c=relaxed/simple;
-	bh=TXQf43677jxUXlB4nvGLV0dNq6iBGC44IlQLToNFB3E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WE5g4/uP9Bb4qp8KIh/qSlRdCFl28XXZCZiHkZT3oQervv4jHTt50bfl2ZBY4GnYPDq6ShdeHRXPhTcL2ynygCEHu7qs7leSMXNcMh8Rx1fGNWUZ3ZY60tQL2Zd2TqGKUUClVhKtDYYWAsaOzXL+vBU0UXLC6HLLOP6ZaykR7i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BsOhAUd8; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1709901705; c=relaxed/simple;
+	bh=pICe2GlJL7NcXxK2+pFuQf8AqphEs57jHM44QIo2Vcc=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=J3pCyNWzpI94oS8GlxtcgK3REbWKTk+yDPjlARGocyyqxvoInmJTA+Xn31tJof7Mzu9lqxkAKSWbG0l0u9RcHsCTXfupxjKPh5Hm+CuTDuIbxbEXfShW63bCN0PYsPsEQxrTyu3/nwn8WmO+w8OIsip2h4SfWVnuHTjP9QeEVss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MmeNv1j2; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428CcZ1F014971;
-	Fri, 8 Mar 2024 12:40:23 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 4283tO98012824;
+	Fri, 8 Mar 2024 12:41:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Sq/Zwrv+WazCGKEBJzRevR1V5zj7d0L8M5WVZMEXUkc=; b=Bs
-	OhAUd8tAczaLhHnCnsNKjPHPfPvmN39vbv2CCVie2Vqd4qHTOjsQcJ+MLUIraCMR
-	jx9DvWzkLp9pavQVVn9XMEytclP6ciWZouSSExTN5pYCUsWhLbr8rLP7fTMBsZaO
-	qdBVWECkm6vwnDXcgVaNWdSq45DdL8/jymbHjA1ocCbqJUVsc9RD+DrpXFt8AF9/
-	dwF5bHB0AAbx8q8tSPVGzkPhAlPI87z4/cjWoNwDVltmzzej6ICqOz/CnF9Aybai
-	pEb8BtnEFrl+pMgul49uY5cE+JI1ZrEIKJWFUx8gg6/EscDT+niPwqNrjJLzfo2E
-	s1VgLt+opQhYYG70WVqQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr2v28035-1
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=xWK+KGxSm6EY
+	uf9aKqHSC0xJscIex/nm/iyXNhqPd/o=; b=MmeNv1j2bvvUXSnA9lMPzNInCs/K
+	wv0HfF1gBYsEFdUHq4RDY0KHmb9TxXNNyNxjsSfyVBeONBn+x+GzjNk7ZTsBivFJ
+	/Bx9SoOYNAg2JDCbMnccKGxtKiqiPrGYVFFwVg1d0VkBj18vE0dLB7g+W9XcNj+Y
+	IBPHY2tHq2COVv6H6q+EbCTgq2xeHvienHbbf6nCvUC1vOW0ELP2CmP3eQObiXjP
+	o92iJsDXWiJjrmbchqs34MCbRipMSgX08kxWldwSoUl/1DMDCBnsRDUTZOFeAW4T
+	bV7wUZCP/tucJTtLvmz1exd9MMO7skNjR809bhFJfXBYU6QTNs1OAl/vRw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wqn8m1rsg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 12:40:23 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428CeMgG005063
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 12:40:22 GMT
-Received: from [10.216.7.18] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Mar
- 2024 04:40:17 -0800
-Message-ID: <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
-Date: Fri, 8 Mar 2024 18:10:13 +0530
+	Fri, 08 Mar 2024 12:41:36 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 428CfW9u024479;
+	Fri, 8 Mar 2024 12:41:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3wkw6m415d-1;
+	Fri, 08 Mar 2024 12:41:32 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 428CfWWW024474;
+	Fri, 8 Mar 2024 12:41:32 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 428CfW5o024472;
+	Fri, 08 Mar 2024 12:41:32 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 68FA95001D9; Fri,  8 Mar 2024 18:11:31 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_anupkulk@quicinc.com, quic_cchiluve@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v2] slimbus: qcom-ngd-ctrl: Reduce auto suspend delay
+Date: Fri,  8 Mar 2024 18:11:29 +0530
+Message-Id: <20240308124129.7833-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: N7kfrcuy2M1ezXttnyc7DxW46hEm_5JO
+X-Proofpoint-ORIG-GUID: N7kfrcuy2M1ezXttnyc7DxW46hEm_5JO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=658 clxscore=1015 adultscore=0 phishscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403080101
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
- SM8150
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Michael
- Turquette" <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
-        "Imran
- Shaik" <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
- <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
- <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
- <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
- <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
- <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
- <d893e8f8-66a7-4460-9468-0f3a359cece7@linaro.org>
- <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gj0eWI-wLGhCwWHvz_uph5XFsLxreoND
-X-Proofpoint-ORIG-GUID: gj0eWI-wLGhCwWHvz_uph5XFsLxreoND
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
- mlxlogscore=856 priorityscore=1501 impostorscore=0 bulkscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403080101
 
+Currently we have auto suspend delay of 1s which is
+very high and it takes long time to driver for runtime
+suspend after use case is done.
 
-On 3/8/2024 4:29 PM, Bryan O'Donoghue wrote:
-> On 08/03/2024 10:58, Bryan O'Donoghue wrote:
->> On 08/03/2024 10:46, Satya Priya Kakitapalli (Temp) wrote:
->>>>
->>>> Not if you mark it critical
->>>>
->>>
->>> Marking the clock as critical keeps the associated power domain 
->>> always-on which impacts power. For this reason we are not using 
->>> CLK_IS_CRITICAL and instead making them always on from probe.
->>
->> How does the clock do anything _useful_ if the power-domain gets 
->> switched off ?
->>
->> ---
->> bod
->
-> i.e. the clock can't be running "always-on" if it has no power..
->
+Hence to optimize runtime PM ops, reduce auto suspend
+delay to 100ms.
 
-If BIT(0) is set from probe, during any active usecase, the clock gets 
-turned ON automatically when the power domain is turned ON.
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+v1 -> v2:
+- Remove macro and add value inline.
+- Link to v1: https://lore.kernel.org/linux-arm-msm/d784e46d-974d-4bf3-a2d3-491e7ad19701@linaro.org/T/
+---
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-But when we use CLK_IS_CRITICAL flag, the framework keeps the power 
-domain ON and doesn't let the power domain to turn off even when there 
-is no active usecase.
-
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index efeba8275a66..5e132273c6c4 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -81,7 +81,6 @@
+ #define SLIM_USR_MC_DISCONNECT_PORT	0x2E
+ #define SLIM_USR_MC_REPEAT_CHANGE_VALUE	0x0
+ 
+-#define QCOM_SLIM_NGD_AUTOSUSPEND	MSEC_PER_SEC
+ #define SLIM_RX_MSGQ_TIMEOUT_VAL	0x10000
+ 
+ #define SLIM_LA_MGR	0xFF
+@@ -1571,7 +1570,7 @@ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, ctrl);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_set_autosuspend_delay(dev, QCOM_SLIM_NGD_AUTOSUSPEND);
++	pm_runtime_set_autosuspend_delay(dev, 100);
+ 	pm_runtime_set_suspended(dev);
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_get_noresume(dev);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
 
