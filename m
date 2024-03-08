@@ -1,169 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-13728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 839D5876C7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 22:46:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7A9C876C95
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 23:00:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C61A28274E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 21:46:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B81021C20BB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 22:00:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C578E5E06C;
-	Fri,  8 Mar 2024 21:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 163D05EE96;
+	Fri,  8 Mar 2024 22:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kh40VIxG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bMTDWgCS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0766454BC8;
-	Fri,  8 Mar 2024 21:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3524524B2A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Mar 2024 22:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709934360; cv=none; b=fOxx9erfNz8fX7KPEHZI/Qwwxh5kd44liguf6xGtG6Oyn5/d0op90CzJjifpgmSiu60qz0pX7HzTYq/bY0kYcD9J49phB/Fmk5H/V6hGG7RMwMQ/yRZG+PXfbQ8Chy4aRBimBrM0q8MwTaJrDvP7abhd+rs5eLSDsIzfphc7x5k=
+	t=1709935246; cv=none; b=VZZl/CAhYs8nbmjUChw6+HfksfRjCZNmX2vk18kl6oVKHxVBUWlAqLLPTThBNh26tI3zgsf/rZIO6PK9oZXl41p+TWlFbStZ+7sJs44nU9o7J5XABgzeRB1IG00K34XNjzZ6fMtRU/7B8UmN/qUH+FVENwaL1I67hgiOFfIkyTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709934360; c=relaxed/simple;
-	bh=zeaMyt8Z9//SRcrmUMuqCFWVUlPic2v3/bj3jT2ngTA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HOgwDoqd41cEzIPp/gYbwXrV3k5Z3jXe/xejyGtTjzjJOHo5LJntpavbsyNjSaHUJcDgsqgRsgrif5Ngc1++xdAnujSIsqzBB8ck+q0UGwAqcXAaPrfOisWAKsulBI741OFFPYbCHblGUg0rk0nyo/UAjvp5ftB6JR92E/2JgK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kh40VIxG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428LhYQR022570;
-	Fri, 8 Mar 2024 21:45:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ElXz0zL
-	FBfK+NFE/x2AB4YD/fo4TcWOv2w2crSWLIPA=; b=kh40VIxG+wfkj+Pnzgfs5rm
-	1LkvtFb/Z6X1K/h+D86e1sdx/IzHQDSUT+1HLvWdwB85SKifrIarA9bLl9tjX1Ta
-	l94QwlqCkfZb0PbhEgWtILuTunCEIXqwf8Mi1wmHSd/inRWwaZ0dybeiej+Oxwu/
-	vPeeQAfItj5wQWNNpbIsRRAGoeN3JM2sLVqcwQJIixrimo1bDMMSQc0kULEJMlVh
-	Fq2dEfDBPGcp3fbGUIEXTLX9P8g/iJPFH4wYfcZUkyR9n+lGKX8NBMiD3I/uSg75
-	1wUBOU6ceWSLDD/9xz/+L39uUQv8pJ/d5N1un6Z72EEcWZqVDvpj23t/9467Jvg=
-	=
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr7dp0h3q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Mar 2024 21:45:42 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428LjfNB012025
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Mar 2024 21:45:41 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 8 Mar 2024 13:45:40 -0800
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-CC: <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_parellan@quicinc.com>,
-        <johan@kernel.org>, <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Date: Fri, 8 Mar 2024 13:45:32 -0800
-Message-ID: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1709935246; c=relaxed/simple;
+	bh=sLyCnNsNT2eyI3Bon3bnXfxLB5jOz7soycx0lB68P8Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nN8RlcRfvkaE6XMZNP5CKfp+cGLTgofeBdHq2eglD7RA20cB8wzH/NkotIXbrIEXdVU1gkWUXTaWYIHktAMn3WwhiGZgM18AeXPBfHCcyseNsPcJHDnbRw/fqP3WQrCDl/RMdM5s9Va3M/+Kgs+yVM8G41p0WmMthzKtT/YhYQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bMTDWgCS; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d41d1bedc9so14704411fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Mar 2024 14:00:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1709935242; x=1710540042; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=JZm++aDLJ0XwMXEzw9POFukHlDkOsStLmO8u8UA76+I=;
+        b=bMTDWgCS/tUahzOARuIlMmma+bVp0bpylX13xaER6YdhDRe1sHVALmqiEhVhMhUy/D
+         AP5Pbv7DOd6jH8UudMXiRoDeS1OOeWrr7cDUHF5aCzVvPScW5uTvyJYnKYnK9u1RhpmX
+         Ub9bSXmAPrV9sD9G6b5XJt7hPBuTMyThjBVfEWdLgS6LBM/QvzzndNtub11XcD/zK0Ux
+         aYn3UnreXw+OsX+jlSjV9pABMi+r23BtoB4Mgukfq8mgETAVrKvWfNqCdcGYUAVcZ/sU
+         +hyd98g5Eg1lt4OemClN4P+k4efTM4RXMllwKU9mA6x7lvSjXoh0MnRyKoMO/CHHsvi8
+         9Lrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709935242; x=1710540042;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JZm++aDLJ0XwMXEzw9POFukHlDkOsStLmO8u8UA76+I=;
+        b=rhnXkUM/WbB3YAgKh8gcHacsijeMbQjBvj04JVb9zRyT2f3mG0fvuMIApbfPSPD77o
+         fZr+Zd2TQ6X24offRSc+tXSsC5UY+d95Ya8ee0Tiw/0HsKzaJYRtWXL7bBAtFoOOqgrQ
+         UqKDKFXndBHjmbwmpu8bJ8YcI/AsmOMhjXiBQ8g7YKNvOa4dmsofLRHDj/AqDSfwRW5X
+         20tgZRkin8YPHkq2oVYcmbqB22phG5LNhyWYVSNdv6GW+oHzZS6Jw0Y6Horx8D5T6eiW
+         4aKgK3WpujoxgfWfVDgR3lP6+r505RhL+f/tD+jRBVsAViic9YAzhIrkNik+YGehbanG
+         LaVg==
+X-Gm-Message-State: AOJu0YxAwUDD9EP0tT9WDlbIt1wj+Hhsh99bvMiZc/ENy1Y9AVGl5jFy
+	39xxrCPL+iDkZmwpdtHIFRabB6HVBB+kygTAsz+4gyxZBVgFSjQDZCMTyLfveu4=
+X-Google-Smtp-Source: AGHT+IH0IqAGaG90+vGY+Hz6Pw86eDpkRmsO6T1VXhM+s79uwJaLfO0ImbRNyJ29ya1n664plyKitg==
+X-Received: by 2002:a2e:b0f3:0:b0:2d3:7aaa:b340 with SMTP id h19-20020a2eb0f3000000b002d37aaab340mr284963ljl.26.1709935242277;
+        Fri, 08 Mar 2024 14:00:42 -0800 (PST)
+Received: from [192.168.16.246] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id b26-20020a05651c033a00b002d0b231dce7sm70474ljp.77.2024.03.08.14.00.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Mar 2024 14:00:33 -0800 (PST)
+Message-ID: <b8b1064b-a3d5-4b33-918a-2cef60b5c59d@linaro.org>
+Date: Fri, 8 Mar 2024 23:00:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HIDzW2aHwYrro6-NY9LdusAP-dJvRFX0
-X-Proofpoint-ORIG-GUID: HIDzW2aHwYrro6-NY9LdusAP-dJvRFX0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 adultscore=0 spamscore=0 impostorscore=0 phishscore=0
- malwarescore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403080172
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] firmware: qcom_scm: remove IS_ERR() checks from
+ qcom_scm_bw_{en,dis}able()
+To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240308-qcom_scm-is_err-check-v1-1-9c3e1ceefafe@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240308-qcom_scm-is_err-check-v1-1-9c3e1ceefafe@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-There are cases where the userspace might still send another
-frame after the HPD disconnect causing a modeset cycle after
-a disconnect. This messes the internal state machine of MSM DP driver
-and can lead to a crash as there can be an imbalance between
-bridge_disable() and bridge_enable().
+On 8.03.2024 10:25, Gabor Juhos wrote:
+> Since the qcom_scm_probe() function returns with an error if
+> __scm->path contains an error pointer, it is not needed to
+> verify that again in the qcom_scm_bw_{en,dis}able() functions
+> so remove the superfluous IS_ERR() checks.
+> 
+> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+> ---
+> Based on v6.8-rc7.
+> ---
 
-This was also previously reported on [1] for which [2] was posted
-and helped resolve the issue by rejecting commits if the DP is not
-in connected state.
+LGTM
 
-The change resolved the bug but there can also be another race condition.
-If hpd_event_thread does not pick up the EV_USER_NOTIFICATION and process it
-link_ready will also not be set to false allowing the frame to sneak in.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Lets move setting link_ready outside of hpd_event_thread() processing to
-eliminate a window of race condition.
-
-[1] : https://gitlab.freedesktop.org/drm/msm/-/issues/17
-[2] : https://lore.kernel.org/all/1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com/
-
-Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 068d44eeaa07..e00092904ccc 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -345,8 +345,6 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
- 							 dp->panel->downstream_ports);
- 	}
- 
--	dp->dp_display.link_ready = hpd;
--
- 	drm_dbg_dp(dp->drm_dev, "type=%d hpd=%d\n",
- 			dp->dp_display.connector_type, hpd);
- 	drm_bridge_hpd_notify(bridge, dp->dp_display.link_ready);
-@@ -399,6 +397,8 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 		goto end;
- 	}
- 
-+	dp->dp_display.link_ready = true;
-+
- 	dp_add_event(dp, EV_USER_NOTIFICATION, true, 0);
- 
- end:
-@@ -466,6 +466,8 @@ static int dp_display_notify_disconnect(struct device *dev)
- {
- 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
- 
-+	dp->dp_display.link_ready = false;
-+
- 	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
- 
- 	return 0;
-@@ -487,6 +489,7 @@ static int dp_display_handle_port_status_changed(struct dp_display_private *dp)
- 		drm_dbg_dp(dp->drm_dev, "sink count is zero, nothing to do\n");
- 		if (dp->hpd_state != ST_DISCONNECTED) {
- 			dp->hpd_state = ST_DISCONNECT_PENDING;
-+			dp->dp_display.link_ready = false;
- 			dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
- 		}
- 	} else {
--- 
-2.34.1
-
+Konrad
 
