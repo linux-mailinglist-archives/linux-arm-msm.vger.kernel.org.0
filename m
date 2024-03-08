@@ -1,129 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-13706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1D1876402
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:09:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 756B8876470
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 13:41:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DF39B2188D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 12:09:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 161D71F229CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 12:41:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E44F15674F;
-	Fri,  8 Mar 2024 12:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BAD017551;
+	Fri,  8 Mar 2024 12:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MIqkmyMZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BsOhAUd8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD61535CA;
-	Fri,  8 Mar 2024 12:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED11401F;
+	Fri,  8 Mar 2024 12:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709899776; cv=none; b=JfGVB+GrFbwIeuE3DQrYonaRc1pZTfTCpDq/0EUJdxayvcevvzPNWG+bcKL8rRUF0wnn6D9MS3GW/jy/W7yBelu/M1BHXqBAppYo+hcnsBxg7RQ+pnSBAbv1SYOIygs0Zrawtvl54p3nmNmhUPZXEdX7XvrQvqiImUXxyb/EtXA=
+	t=1709901657; cv=none; b=F119plIxYpgOXgYGHBEx12vzl6aZcjOj8EMZkX5NlFDdArn5VwD1bxrXLpS98X1zKcqixBYlkK+XMGrqeCZBTsDVanbOq86/Wj6wGcMvrLXAytj7LJIqP62OHHAGWEpEG4ReHi2ZmhO5IQM963RMNM+G5uAZk3n0TGw9kguu1eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709899776; c=relaxed/simple;
-	bh=47pcurjwzPpbUDu63TliTFtfRuG+YF86mZd6kUPfo2M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SJ5si2yT9p5/Kz+qpAefaihH+f0HfcPNXfpkMYWzC+vFQdPSdssBSUG3jBC+B6uo7CdYwUNMUYKWffQVp1XF7JAz93aqwMbc+HXHpZtjr9zNcNGqe2gK2oHZACLUJ/Lou2RMVVQZ1Zh3yBMKMRWcQ80eVDO+1Gek8eDrEr4uEBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MIqkmyMZ; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1709899775; x=1741435775;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=47pcurjwzPpbUDu63TliTFtfRuG+YF86mZd6kUPfo2M=;
-  b=MIqkmyMZaWOrBrbYOOkLyPd7VF1MZf9fiYVbfVtpdM98O11ksx1G0FIz
-   boV3fIkVVgzqYOYzS7ZfX1Uh+lbeycijk0eUsTuWdNiXzG21YXrbLHbA+
-   m4JBb5DH1PZSNQ5gxB/XTA5dcEF0PrnEO7PT5DE7hBREsVhy0i62ePzID
-   sKeogHpnEnMs6efw4YFNKr96labs0iJZBvoi+NKAl8QDjX9gSWepPPhCG
-   xapENMc8MHaaFOkVdnL0IbxjG+1QzOIpEl7v0aFxAt9zPMnk5gAFCX1E7
-   HnaKExYCdd6CDwz7YBAU74f3CzV4YtFQwo3pYi1qUsIjueLStVQXhZngZ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="30058154"
-X-IronPort-AV: E=Sophos;i="6.07,109,1708416000"; 
-   d="scan'208";a="30058154"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2024 04:09:33 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="914244912"
-X-IronPort-AV: E=Sophos;i="6.07,109,1708416000"; 
-   d="scan'208";a="914244912"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2024 04:09:28 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1riZ2T-0000000Apo3-2KVa;
-	Fri, 08 Mar 2024 14:09:25 +0200
-Date: Fri, 8 Mar 2024 14:09:25 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>
-Subject: Re: [PATCH v1 1/1] PCI: dwc: Remove unused of_gpio.h
-Message-ID: <Zer_9VTVJqCNoOFG@smile.fi.intel.com>
-References: <20240307122840.3682287-1-andriy.shevchenko@linux.intel.com>
- <20240308095547.GI3789@thinkpad>
+	s=arc-20240116; t=1709901657; c=relaxed/simple;
+	bh=TXQf43677jxUXlB4nvGLV0dNq6iBGC44IlQLToNFB3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WE5g4/uP9Bb4qp8KIh/qSlRdCFl28XXZCZiHkZT3oQervv4jHTt50bfl2ZBY4GnYPDq6ShdeHRXPhTcL2ynygCEHu7qs7leSMXNcMh8Rx1fGNWUZ3ZY60tQL2Zd2TqGKUUClVhKtDYYWAsaOzXL+vBU0UXLC6HLLOP6ZaykR7i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BsOhAUd8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 428CcZ1F014971;
+	Fri, 8 Mar 2024 12:40:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=Sq/Zwrv+WazCGKEBJzRevR1V5zj7d0L8M5WVZMEXUkc=; b=Bs
+	OhAUd8tAczaLhHnCnsNKjPHPfPvmN39vbv2CCVie2Vqd4qHTOjsQcJ+MLUIraCMR
+	jx9DvWzkLp9pavQVVn9XMEytclP6ciWZouSSExTN5pYCUsWhLbr8rLP7fTMBsZaO
+	qdBVWECkm6vwnDXcgVaNWdSq45DdL8/jymbHjA1ocCbqJUVsc9RD+DrpXFt8AF9/
+	dwF5bHB0AAbx8q8tSPVGzkPhAlPI87z4/cjWoNwDVltmzzej6ICqOz/CnF9Aybai
+	pEb8BtnEFrl+pMgul49uY5cE+JI1ZrEIKJWFUx8gg6/EscDT+niPwqNrjJLzfo2E
+	s1VgLt+opQhYYG70WVqQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wr2v28035-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 08 Mar 2024 12:40:23 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 428CeMgG005063
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 8 Mar 2024 12:40:22 GMT
+Received: from [10.216.7.18] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Mar
+ 2024 04:40:17 -0800
+Message-ID: <c892f773-7716-4736-3499-5c8254e3618e@quicinc.com>
+Date: Fri, 8 Mar 2024 18:10:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240308095547.GI3789@thinkpad>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH 4/5] clk: qcom: Add camera clock controller driver for
+ SM8150
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Stephen Boyd <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240229-camcc-support-sm8150-v1-0-8c28c6c87990@quicinc.com>
+ <20240229-camcc-support-sm8150-v1-4-8c28c6c87990@quicinc.com>
+ <18567989-fb60-49ae-92e6-94e1bc2fa1c7@linaro.org>
+ <83fd1995-a06e-b76a-d91b-de1c1a6ab0ea@quicinc.com>
+ <4817a5b0-5407-4437-b94a-fc8a1bfcd25d@linaro.org>
+ <e2627a99-307f-1e10-abfd-ce688cc2ec03@quicinc.com>
+ <d893e8f8-66a7-4460-9468-0f3a359cece7@linaro.org>
+ <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <35a7ad40-aaf4-476e-8582-b83bac284881@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gj0eWI-wLGhCwWHvz_uph5XFsLxreoND
+X-Proofpoint-ORIG-GUID: gj0eWI-wLGhCwWHvz_uph5XFsLxreoND
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ mlxlogscore=856 priorityscore=1501 impostorscore=0 bulkscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403080101
 
-On Fri, Mar 08, 2024 at 03:25:47PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Mar 07, 2024 at 02:28:40PM +0200, Andy Shevchenko wrote:
-> > of_gpio.h is deprecated and subject to remove.
-> > The driver doesn't use it, simply remove the unused header.
 
-> What about the rest?
-> 
-> drivers/pci/controller/dwc/pcie-kirin.c
-> drivers/pci/controller/dwc/pci-imx6.c
+On 3/8/2024 4:29 PM, Bryan O'Donoghue wrote:
+> On 08/03/2024 10:58, Bryan O'Donoghue wrote:
+>> On 08/03/2024 10:46, Satya Priya Kakitapalli (Temp) wrote:
+>>>>
+>>>> Not if you mark it critical
+>>>>
+>>>
+>>> Marking the clock as critical keeps the associated power domain 
+>>> always-on which impacts power. For this reason we are not using 
+>>> CLK_IS_CRITICAL and instead making them always on from probe.
+>>
+>> How does the clock do anything _useful_ if the power-domain gets 
+>> switched off ?
+>>
+>> ---
+>> bod
+>
+> i.e. the clock can't be running "always-on" if it has no power..
+>
 
-Have you chance to look at them?
+If BIT(0) is set from probe, during any active usecase, the clock gets 
+turned ON automatically when the power domain is turned ON.
 
-> There is also one non-dwc driver:
-> 
-> drivers/pci/controller/pci-aardvark.c
-
-Keyword: non-dwc.
-This patch is for DesignWare controllers that confirmed not using the header.
-
-> It is better to remove it from all PCI drivers in a single patch.
-
-I disagree on this. These are different drivers and even inside DesignWare not
-all of them can be converted with a simple change like this one.
-
-That said, please consider applying this one as is.
-
--- 
-With Best Regards,
-Andy Shevchenko
+But when we use CLK_IS_CRITICAL flag, the framework keeps the power 
+domain ON and doesn't let the power domain to turn off even when there 
+is no active usecase.
 
 
 
