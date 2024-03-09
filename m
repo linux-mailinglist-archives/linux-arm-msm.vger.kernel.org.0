@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-13736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E041876DE3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Mar 2024 00:43:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8FED876E2E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Mar 2024 01:36:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1311282674
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Mar 2024 23:43:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51744B2141F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Mar 2024 00:36:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D583BBCB;
-	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 427AA7FA;
+	Sat,  9 Mar 2024 00:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUcJjUnw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVoVrmAE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC3F1E4BE;
-	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DA7627;
+	Sat,  9 Mar 2024 00:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709941407; cv=none; b=MH/uqGnkX2Rq9L7fMVVQS/YNvr6wnILkuIkyB0dSGsWgnUmI5q9E3pClu6z/JxyDGfDEJtKpi0FEC/d96Mb1r83+e7I9RJHHR2bMvzsLVJNzkJp05xJtSJfjIIAHz7uTUY8e6r1GdiyfFZ7y7tmOJm8riNCkU7N8q93wccnDSDE=
+	t=1709944577; cv=none; b=GZtrwdA6N9r0BRCViv8k2tVdvavhZVDHJTMnmXqUTV/waYZWhe0mVvFJBCDaDwe2C+BvLoz/Veu5cXxuddUJ7XAYyJCuiiRwpaHyqtt9CRdAAxgnOWmlMJvmVwH3/M34wQdEJxCZjCwwuR8AmSLUgr7Gyk655DddNyssjjY2qUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709941407; c=relaxed/simple;
-	bh=lf9bXXOg8t/e1+SYxRNGOQP7tXnAg59Eb5F2iUMFkwA=;
+	s=arc-20240116; t=1709944577; c=relaxed/simple;
+	bh=Bng1q+YJswEAXf80mAEaFjx8w+gbJ2x3xqqQcut85fo=;
 	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=QJz9wEXO/UE830hjB/HYna29zPadetYY/d24FBWS+uzB1iCEkXYxwDPeePr3VCcHm8M2hnTXmbqPfvitQl91ZFwhERu2uOCOGbgfDm3e8kdvQ20KmOAwQEKxVsSoDum0ozrtZCNOQ9os4ovKSv5WNFPzBc4qRx4FB2Uakwa28lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hUcJjUnw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A6DC433C7;
-	Fri,  8 Mar 2024 23:43:27 +0000 (UTC)
+	 Subject:From:Cc:To:Date; b=fRtrCRHymnWov7S3GKzZhJOR/QVU/8unzo2XNdgbjvoW8KccQllSa0MTyNLc+R3p0VAxe0BPYB3452Cm4jfjNVNVYkdBlDLdPf3FvhZd9+8V5mmZNBLzMhYAa0n4NHXN1NhT3tx8jVzoX13gPVDIJ4fKxQWap+zDYSDFUjT3TRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVoVrmAE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F13C433F1;
+	Sat,  9 Mar 2024 00:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709941407;
-	bh=lf9bXXOg8t/e1+SYxRNGOQP7tXnAg59Eb5F2iUMFkwA=;
+	s=k20201202; t=1709944576;
+	bh=Bng1q+YJswEAXf80mAEaFjx8w+gbJ2x3xqqQcut85fo=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=hUcJjUnwMeuRjwRSm68+02Vq45FRLo8pGccoSSSE1bBcmPObY8QCLbKXQ9LkJjrVO
-	 mjGyJ/61pCEPGRqKytLyc8vFFgqCj2EsDeJm5IxF++CyOtpR1zlWGBPQ+7E3ksIgQQ
-	 4nZPYepfOSzx3skGZNuG310mj9jYVKVEkZYOxnnl2vTQuvP3W47vpavtyRtrIsXfkP
-	 6bnzJvnoljIQ411X5mAlYcYH0lLPzxA0XjOjcyl99XE5Fbbh+P2I7KmokkKsPzBq+2
-	 vmBfvvE2FkTLzPXlCTzQZAFqoVNcBRSyNKmGClhLJx2NoI8ljUpGEyGgKPjP7uQbNe
-	 DPoGfcDbijW0g==
-Message-ID: <47ef5ab18ed8e995fe1bb0c2fdf20c05.sboyd@kernel.org>
+	b=MVoVrmAEPP7/qY+yUiy5AAWJhzqgmxORvnh1AbY4b81TvTIW9Jf7UChHZAjPgdJFp
+	 Nepch4g0iSfcCGbzM14T4zKl8Qh+DX/ecOyYdfmAl4J2/PHD2AedHKVd6D1kOimSgc
+	 Y1s3WVb3WBqh2n37w/F2S1wBP71BCc+dkqslvWGzaNpx2MUfhY1vwHitRJep00VSJ3
+	 jWYsnn6ruJJpDPr9AYukJt13KgZHFvAUdQ0pUbWGD3OtvpDT0FPDG+Do44y7Kyud0k
+	 EZ+wLCzKyG4YCiEWT6Ad2k7aTh3WplRNuUOResFTQeu30+8VM2MTo2gvBqKb/SJkE8
+	 iAjDfX8EKDMhQ==
+Message-ID: <b809a691de642231b687358eb4bc03aa.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -50,33 +50,52 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240306034326.2358489-1-andersson@kernel.org>
-References: <20240306034326.2358489-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock updates for v6.9
+In-Reply-To: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-1-25f348a5982b@linaro.org>
+References: <20240302-linux-next-24-03-01-simple-clock-fixes-v1-0-25f348a5982b@linaro.org> <20240302-linux-next-24-03-01-simple-clock-fixes-v1-1-25f348a5982b@linaro.org>
+Subject: Re: [PATCH 1/2] clk: Fix clk_core_get NULL dereference
 From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Gabor Juhos <j4g8y7@gmail.com>, Rajendra Nayak <quic_rjendra@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Vladimir Lypak <vladimir.lypak@gmail.com>, Amit Pundir <amit.pundir@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, Mantas Pucka <mantas@8devices.com>
-To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date: Fri, 08 Mar 2024 15:43:25 -0800
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Rajendra Nayak <quic_rjendra@quicinc.com>
+Date: Fri, 08 Mar 2024 16:36:13 -0800
 User-Agent: alot/0.10
 
-Quoting Bjorn Andersson (2024-03-05 19:43:25)
+Quoting Bryan O'Donoghue (2024-03-01 16:52:14)
+> It is possible for clk_core_get to dereference a NULL in the following
+> sequence:
 >=20
-> The following changes since commit 6613476e225e090cc9aad49be7fa504e290dd3=
-3d:
+> clk_core_get()
+>     of_clk_get_hw_from_clkspec()
+>         __of_clk_get_hw_from_provider()
+>             __clk_get_hw()
 >=20
->   Linux 6.8-rc1 (2024-01-21 14:11:32 -0800)
+> __clk_get_hw() can return NULL which is dereferenced by clk_core_get() at
+> hw->core.
 >=20
-> are available in the Git repository at:
+> Prior to commit dde4eff47c82 ("clk: Look for parents with clkdev based
+> clk_lookups") the check IS_ERR_OR_NULL() was performed which would have
+> caught the NULL.
 >=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-6.9
+> Reading the description of this function it talks about returning NULL but
+> that cannot be so at the moment.
 >=20
-> for you to fetch changes up to 7d474b43087aa356d714d39870c90d77fc6f1186:
+> Update the function to check for hw before dereferencing it and return NU=
+LL
+> if hw is NULL.
 >=20
->   clk: qcom: gcc-ipq5018: fix register offset for GCC_UBI0_AXI_ARES reset=
- (2024-03-03 20:00:49 -0800)
->=20
-> ----------------------------------------------------------------
+> Fixes: dde4eff47c82 ("clk: Look for parents with clkdev based clk_lookups=
+")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
 
-Thanks. Pulled into clk-next
+I dug through a bunch of old patches and this looks right. I'm not sure
+why a provider would ever return NULL though. A NULL pointer means that
+the parent is never going to appear so we shouldn't treat this clk as
+orphaned in case the clk needs to be clk_get()able and change parents.
+This was all part of my plan to introduce a clk_parent_hw() clk op that
+returns a pointer and then implement probe defer through clk_get() when
+a clk is orphaned. A NULL clk also means a clk is optional and not
+there.
+
+Anyway, I've applied this to clk-next. I hope to send out the
+clk_parent_hw clk op series soon.
 
