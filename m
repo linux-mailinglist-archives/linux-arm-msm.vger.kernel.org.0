@@ -1,93 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-13785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 439748777E7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 19:13:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7751187787D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 21:33:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACC8A1F21326
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 18:13:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1E8B1F21380
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 20:33:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9BA39AC9;
-	Sun, 10 Mar 2024 18:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAEE03A1DE;
+	Sun, 10 Mar 2024 20:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rNmmRBF8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA49D39863;
-	Sun, 10 Mar 2024 18:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8747E3A8C7
+	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 20:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710094388; cv=none; b=KBhaA5QTQC9BhxeQr5DSqRDyIhpVi2PenEysXbnDj0HC5nNgQpY591pJ2X8vt43QzIaEUEOa1Jm4Eikev+iTWVvEGeFaJzl0LvPbMWS9iZZ7HUbO/HjutfoRurf88mX6BJvgbNMbBboVy6M7VLOPhHknfaaurPOcCntSZB6r6mc=
+	t=1710102827; cv=none; b=fXlc+6ZDPgzBD14KesHDpzsPslqLoyMMUpUnNm8QNrf//VXetQsxj5J0CfeH725Vvb3+IWUgINXaSskNCx3+ZzRBfehE2/1Zqck3FuW5pvcdwAjc8G6yJFxTYYWfmGSK0cT8qJDjc+AlnbVW0464V+N+VOvbXYZFVNn3MC3N80w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710094388; c=relaxed/simple;
-	bh=31NKrnRH5dFaplJw4DbeWRwaNfoKl8qEijx7BroJy5g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i8DJwYPSfRbpS90TY31jQEWR4+MkbYHzQA59vG1XqTjLbLN/mkBKdi5up9tF40s7+mNzO+700uJZDj20s6Ye88vpYXKht54bEPNX3H+Y9jkrm8MDd61lAa8YZoI74YS8s68hKtO+AWQLV9D/vOg7haUPw8FQC3CjNupjKcMCeBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3c1ea5f29a6so1748029b6e.0;
-        Sun, 10 Mar 2024 11:13:06 -0700 (PDT)
+	s=arc-20240116; t=1710102827; c=relaxed/simple;
+	bh=PKUNGq1kum7HKG/LBT568tl0S0Jrhl/TsejyHLw5dCg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q39epvWkjlsKjNj4/YgSR0A2or91zKQgiAEiGkCrR7jaN+VmVLP/ldt0OcxrDWFF5oT51eZxbOwvGW5hv8cafO01cfMwr8dKRd4hrFQK1EXU6/dzswet9reztCorqFERdTrnG2whtycpTUc2kuM8lnCJB1OIg97+hY3Zoxx+BY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rNmmRBF8; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-41325ccf493so3140915e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 13:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710102823; x=1710707623; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xtzDL4U4B0yroVaG/UzgWOeTRfJUDuQRZRn6xaPKM3E=;
+        b=rNmmRBF8bjVMgqVmoj4FxGXLXWn5haCRq391Bb0gqkzTn21P0MkY/NFARu3cw1xBIw
+         ZDDKZpIJuDL60p6Okjds9WDpd7RyQ5ukvLSxT4QNJ7wRXr/oW/brsSJr+aohJqaJvs9y
+         V+oS4Op8eSVi024ZBLYD7Yq2D8vS/QcD57WrwDYTSUSZItoi19jEwGmelNZ+r+yYjQMG
+         DfcEbmvNG+9Qa1MxcB0y3Bhv51wN40vl5wI4NhE8dIh8GYc7krdi8C9R2lr+SWju0tke
+         Kj63R5tgLyx7D6Qa0OdfvHTBCXSCTbDaDjbeGIAPgjGsnpHDRub06nw3Np82MUedJcd+
+         MILQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710094386; x=1710699186;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KBvlVGpVqyqJ+GndspiX4vT90fBq7w+3KkP7LKnDchY=;
-        b=WklrimB6SWA6zTvhh7LlqtmqH8hk84WfTotECaKdg1fNKtooRGKWxdmOhP/FBZiPZ7
-         0HhgvDLWkeGrmvKzgX7mjvAP1WckLVsxbaj7bhT9W4FepoMU1uKbF90kcR98s02oSNrp
-         Vpzf8kZTyRMzjbHlptAsy7zW6EnclMO0eg30TcR+zEE3/deNimKe8psgPyu972ESRVHX
-         ZCb4uHHwU99r0jBPYmoEHG2bycMhd1pQdrfhZLg3ChYTfUGAVC+Ip6IdCBukI2ttnMrD
-         rdzBvyCbCrlBIRelx/RlhasLkYZAPsmtqBnqzAGo5yISGN4918aIcsZXUYDZ2Ys7ikhV
-         NEpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKc4M8xX8Fj1xU6g4qJKSTHmzCfDiA3kXPr3nLnLMC8+dvVZkkT9fKQr13FVwK/hxX7PffuhW22Ro5UhW6yJxiUzEWrZuKtd0UzJzpFkWtMvs8TfMYRpXG+L6yAqGxWciB0Lq6wFazr7k4jQix+c/xmFbJmY1Ixrn8rZNXtoT8jZvTi2Ob93txTHvB3vzUSjeEN71nLgG5RPBCB8orLMKuhdI=
-X-Gm-Message-State: AOJu0YweUDa8PvszS4pNaXzl+WayGRIMUd/eAzECv0XxPFQ1UCKaXCah
-	Q9xAyO1wYfsCBb72+qBhsoP/wR3DIesaGPgQyUCtGV2wAaimEY7nvElv9TkkR7Pn6Q==
-X-Google-Smtp-Source: AGHT+IGVAimsnWCDIkv4L5Ym9UHwsmJpuLZx9Xz5cUuDoUCwpDRHYKB+yoIwoIMMuPrE6+aE+XU/3w==
-X-Received: by 2002:a05:6830:d0:b0:6e4:ddb2:29fd with SMTP id x16-20020a05683000d000b006e4ddb229fdmr5341989oto.4.1710094385930;
-        Sun, 10 Mar 2024 11:13:05 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id p1-20020a63c141000000b005dc389409c1sm2740768pgi.93.2024.03.10.11.13.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 11:13:05 -0700 (PDT)
-Date: Mon, 11 Mar 2024 03:13:03 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/2] PCI: qcom: Add PCIe support for X1E80100
-Message-ID: <20240310181303.GB2765217@rocinante>
-References: <20240301-x1e80100-pci-v4-0-7ab7e281d647@linaro.org>
+        d=1e100.net; s=20230601; t=1710102823; x=1710707623;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xtzDL4U4B0yroVaG/UzgWOeTRfJUDuQRZRn6xaPKM3E=;
+        b=fOBQ3d9/RGs92baQFPtZVVO7mzA++TyOUcx3Ou9xBjojH8OPDtcXevhkpujoHZUNjK
+         Hwa29622MT492g/KNNhADgqfN7exjcd77jfph2/IVmlOV0r4lrM3ZzhYb3dL0uq3G19T
+         KnxV4a5TED2jAvGvcj8gmDLU63LFiFaRqjkQ9gUUCzYC9kf4z32otK1qAj6lIOgOkWsJ
+         IgRVgNV0E1oClMIf3jjuU8poA9AoJZfGaTZc14hiO1djho4q+rUERTv2lrvUJS+suby0
+         3YxNq12y7m7yEaTJRltDgitRcP+7OWwCYoRWZXnPzg32eKmZ7TeHJELmBwpbS5QiFWhw
+         M5Jg==
+X-Gm-Message-State: AOJu0YxPkiMpTxmFbU9MB3Eag8Gf4R9HfhrnMhu5pFpGxD/ns2aLKSgU
+	CZ2fV7xon5xINPYYL8PvWb/8d6TaomXxKGaJTHLiAiVhekpgDFo6DBUmugj5KwE=
+X-Google-Smtp-Source: AGHT+IFWo7Fb7guCP+x0FS8Qnmuli+QEU84qgNQBqVhLH8/noe+Ly+lAYV6epFDESJhsvKRiEbNYHg==
+X-Received: by 2002:a05:600c:4e45:b0:413:1921:8698 with SMTP id e5-20020a05600c4e4500b0041319218698mr4813706wmq.41.1710102823032;
+        Sun, 10 Mar 2024 13:33:43 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id jg8-20020a05600ca00800b004128f41a13fsm6709350wmb.38.2024.03.10.13.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Mar 2024 13:33:42 -0700 (PDT)
+Message-ID: <a387d6d6-e6c9-4fcd-b576-a2cd3348f261@linaro.org>
+Date: Sun, 10 Mar 2024 21:33:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240301-x1e80100-pci-v4-0-7ab7e281d647@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: Add Sony Xperia Z3
+Content-Language: en-US
+To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
+ <20240310-shinano-common-v1-2-d64cd322ebca@z3ntu.xyz>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240310-shinano-common-v1-2-d64cd322ebca@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On 10/03/2024 12:41, Luca Weiss wrote:
+> Add the compatible for this Sony smartphone.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-> Add support for PCIe controllers found on X1E80100 platform.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Applied to controller/qcom, thank you!
+Best regards,
+Krzysztof
 
-[01/02] dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller
-        https://git.kernel.org/pci/pci/c/692eadd51698
-[02/02] PCI: qcom: Add X1E80100 PCIe support
-        https://git.kernel.org/pci/pci/c/6d0c39324c5f
-
-	Krzysztof
 
