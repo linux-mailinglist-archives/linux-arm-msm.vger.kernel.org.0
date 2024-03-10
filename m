@@ -1,150 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-13783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67C748777BC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 18:30:41 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 595658777CC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 18:45:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB29A281477
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 17:30:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82D7F1C2074C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 17:45:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01C4383A1;
-	Sun, 10 Mar 2024 17:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kviyj+nk"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB97137160;
+	Sun, 10 Mar 2024 17:45:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C62381DE
-	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 17:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C71B21115;
+	Sun, 10 Mar 2024 17:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710091836; cv=none; b=Zqqeu5sh0U3IKNQHMsZka5K1JKH3rLmk4SLGNNnQ1es13E4fIlZvMWJ0O96MOt0iJqIZIk2sG7zdoc7jf1Mirm2TKScNuoOfUhprwXAcLS/fud2FoCN2FsJ0734UoAAwFa1QZaUNkITr4wSUyi54+H0UXBDSUES9PF3+DanxSWo=
+	t=1710092746; cv=none; b=e8/I4fv+sjYdR4hx3q0bPAor2djXiIx4cpSO/3ogMHHOSIoDzGitY8ZhSqwilq9fF9nyHTFF3dZSZeyDdlZrpfqF9X8mQ+qDfBsG8RsXZQqjh0xcUrZXepyrgotHUUXeuGoUWjiNxc2oVjLine2OeGHjrBu7OMnCcDQpuUkj9Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710091836; c=relaxed/simple;
-	bh=RE0HQ7CtmqadBFsQ1glvMhfyLBlDeCtTCaMTLd+QJgU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qJ+Mae9CAnukFexYc10u6+39jlAlRfJpcDMkCx3OruV4deVrm9jNwZgY0xMaFtsWH2bGz72a/LHIGq+OYPqDJl7D22wLKKDeQw5Su7ibzmLkfruodah6kmPLQY7G7BK065MzJT3e9K6SzbQ/8pYrrRaVDBArUWGQd2KxPkBEUow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kviyj+nk; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5683089d4bbso2606831a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 10:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710091833; x=1710696633; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1kn9DTFqXGOshwz/9QEZkiC4cVFPs/lTCD37I3syvXY=;
-        b=kviyj+nkiUdrcLxj5nLLiw6fftpOuAGI+Bm0eUrp1Y+SE5Q6bS3VfD2YQRlHfDHjHJ
-         1dk8Oww8Bp7MukTPRDbW8fCBeDVUtV6iZ8JlcMl3YhI3JQQVYkWXECYeAI79BSc0Pnrd
-         VMHraY8mHnQPaS3jPZso5T336s9tPM+ehkLDwE3AtDw5I0APnzbQKrSoevquzOOhljGl
-         kqKujav4ESnl8hqANTgwWzFy/mTwiagX8PcklIgGQEeiOAm0s1FQAE2kjbsLmgwM+2Bh
-         gLTS53ka+PNBYAOCZlRUX1MklCXua0YkqT4Jk6CUPvvahchU/K/btGXT1WjIcECoJcRt
-         JZlw==
+	s=arc-20240116; t=1710092746; c=relaxed/simple;
+	bh=hrQnUxJLirdyrN46Viu7HBOjLYptBIcrVHgHTEz5FvI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LBWaLukqt2onftfdiVIkmb4hiMpV1AJbbdFWtNHFBo7+E8jTBe8dXRwyq9Xf8yGT9oMkGO8mBzqsMVBlG4LW/jlBt5sv7+4cLO1Nn9fEjcMG958iTsHsX59j70118KWeBWefw429hR8vgrBR/wfWaSuxxAI2uM8P2L0+0vE1fCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6ddf26eba3cso2824790a34.0;
+        Sun, 10 Mar 2024 10:45:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710091833; x=1710696633;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1kn9DTFqXGOshwz/9QEZkiC4cVFPs/lTCD37I3syvXY=;
-        b=rZhTJg9mlJcxl40NmtIP9hSwvfq4x1R6bMb9XkJxsGRistJJz/mR0tokR3K/RXY3qe
-         MQoleSq4szrOUALITXQHaj6CJ5264lThzh0GAlA+4P3X1jBTr43m8oTXI1N6ChGrBhwn
-         IVzMQqlkaiXnMiurlpYPXVRuY3rBsQMfx2txJPDd8n32zwAQ+tIdw1vvDJt5FqcSDBRb
-         DcLEkwsDJNgdZgd4ZdYOZpf6GPKLuYiEdoetCoPZaaBa7saA4omS6iTP6NdmVS+QWPYm
-         xfxkew7ESlYfOpjsPqvC+emaUyzZmc9YPC7K8WdutlzwpgmBXekW7zgP9vD3nRf73C+9
-         dt8A==
-X-Gm-Message-State: AOJu0YwxOx6VnJbUB6S2W1xEEFv+S8g0b1LVscb/CZgk3lboa3eJ5jzB
-	ph9/2qkzIJuMU1+zTgOHABzfp1SzLK7OJLf66BvLy/sGOSeOHYbhJvjOYLausA0=
-X-Google-Smtp-Source: AGHT+IE93J58+2xnIuDlQqbZIVjyx6g0X3fKXQjDBNysqM8/YFsV/ivcMDLLSmpXjm5mk2gjK+/uEg==
-X-Received: by 2002:a17:907:a0d6:b0:a45:5a30:a3f2 with SMTP id hw22-20020a170907a0d600b00a455a30a3f2mr2897454ejc.52.1710091833021;
-        Sun, 10 Mar 2024 10:30:33 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id bf13-20020a170907098d00b00a460019b770sm1963188ejc.173.2024.03.10.10.30.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Mar 2024 10:30:32 -0700 (PDT)
-Message-ID: <3f44ff8c-0f09-451a-8557-f9dd3415622f@linaro.org>
-Date: Sun, 10 Mar 2024 18:30:29 +0100
+        d=1e100.net; s=20230601; t=1710092744; x=1710697544;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S7iPTCl8r4EkA4EfZ5hPRJf4v1rg1K2hUgK6qm67XQU=;
+        b=pq65PE40YWaeoc1lsDTD4P9ekbP5WOqEdGE8FYI8IvfCSjHU2wYEXirtpw2tqK+fkl
+         ZPMU2Bu8e3yKBhabnM9/aCtJYsthTk4t0+snwJlASXm8Nwi7a3/tzN6TeH77CoUlENBn
+         ywIrpX9fu+eAo5CbppmCghyGR2r5n+dfqiDXwdazI7+8DEdbGLOGiK7To1u69VixBWMl
+         srR1XGMQiKMWrYs/MEge+AHYtyndUJDobo3eaQQAZ8XDbAsvYwpXMJyBskx/GcRqk36w
+         uRcVh1Lu+1I15X5iT0Fu6FqdCf0rVF/7F+eZJiI8KcDuNCrC+gC17H3vmBfSAlpVxl8R
+         kEog==
+X-Forwarded-Encrypted: i=1; AJvYcCXmSVxQBQAL1uJRKncLR8/nNRJxwUnZEiarhTklSzyWk9x/rdAIpYqpB7Jc25wnrZRek8mwdeQr/nlxyKIEip6LwWcH27xIDoaaRn5OZzXHyEcKeoP0I2xw26OB+yapOxbRg/5vyXsBzGrFLrGqL+9dlJlUp6R+4ZxQ5Lx7DIm7Kg+95F4fhLI2Chq+FATyrfZyztIQq2S7grtWk76znA==
+X-Gm-Message-State: AOJu0Ywvd0OS3NIHgRf+tuYM8Ur7QQ7WZDNx8m9BH1US33Ux7Nu/cvMa
+	NKHb4YNZSkQfeGdNmVVDMD8++f4IArEPLbfYFVe687ipKCdlqyV5I/oC7W+xWLYw+A==
+X-Google-Smtp-Source: AGHT+IEcfNjhsv73rREw3FDt64vqTpH5i74RFUwWehwR6mOMV0r1WNXFeD8Aop5kBWRwiJ04EI+nvg==
+X-Received: by 2002:a9d:69cc:0:b0:6e5:5cd:6b08 with SMTP id v12-20020a9d69cc000000b006e505cd6b08mr6147920oto.32.1710092744079;
+        Sun, 10 Mar 2024 10:45:44 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id c13-20020a63350d000000b0059b2316be86sm2733363pga.46.2024.03.10.10.45.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Mar 2024 10:45:43 -0700 (PDT)
+Date: Mon, 11 Mar 2024 02:45:41 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Enable BDF to SID translation properly
+Message-ID: <20240310174541.GA2765217@rocinante>
+References: <20240307-pci-bdf-sid-fix-v1-1-9423a7e2d63c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Samsung Galaxy Note 3
-Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Adam Honse <calcprogrammer1@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240310-samsung-hlte-v1-0-e9b55bf98a48@z3ntu.xyz>
- <20240310-samsung-hlte-v1-1-e9b55bf98a48@z3ntu.xyz>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240310-samsung-hlte-v1-1-e9b55bf98a48@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240307-pci-bdf-sid-fix-v1-1-9423a7e2d63c@linaro.org>
 
-On 10/03/2024 15:13, Luca Weiss wrote:
-> Add the compatible for this Samsung smartphone ("phablet" as it was
-> named in that era).
+Hello,
+
+> Qcom SoCs making use of ARM SMMU require BDF to SID translation table in
+> the driver to properly map the SID for the PCIe devices based on their BDF
+> identifier. This is currently achieved with the help of
+> qcom_pcie_config_sid_1_9_0() function for SoCs supporting the 1_9_0 config.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+> But With newer Qcom SoCs starting from SM8450, BDF to SID translation is
+> set to bypass mode by default in hardware. Due to this, the translation
+> table that is set in the qcom_pcie_config_sid_1_9_0() is essentially
+> unused and the default SID is used for all endpoints in SoCs starting from
+> SM8450.
+> 
+> This is a security concern and also warrants swapping the DeviceID in DT
+> while using the GIC ITS to handle MSIs from endpoints. The swapping is
+> currently done like below in DT when using GIC ITS:
+> 
+> 			/*
+> 			 * MSIs for BDF (1:0.0) only works with Device ID 0x5980.
+> 			 * Hence, the IDs are swapped.
+> 			 */
+> 			msi-map = <0x0 &gic_its 0x5981 0x1>,
+> 				  <0x100 &gic_its 0x5980 0x1>;
+> 
+> Here, swapping of the DeviceIDs ensure that the endpoint with BDF (1:0.0)
+> gets the DeviceID 0x5980 which is associated with the default SID as per
+> the iommu mapping in DT. So MSIs were delivered with IDs swapped so far.
+> But this also means the Root Port (0:0.0) won't receive any MSIs (for PME,
+> AER etc...)
+> 
+> So let's fix these issues by clearing the BDF to SID bypass mode for all
+> SoCs making use of the 1_9_0 config. This allows the PCIe devices to use
+> the correct SID, thus avoiding the DeviceID swapping hack in DT and also
+> achieving the isolation between devices.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied to controller/qcom, thank you!
 
-Best regards,
-Krzysztof
+[1/1] PCI: qcom: Enable BDF to SID translation properly
+      https://git.kernel.org/pci/pci/c/b9bc750e1193
 
+	Krzysztof
 
