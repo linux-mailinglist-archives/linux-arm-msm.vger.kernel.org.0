@@ -1,142 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-13774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 218C2877666
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 12:42:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91D76877677
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 12:53:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2B49B20C59
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 11:42:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4001F1F21256
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 11:53:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB04E20DC8;
-	Sun, 10 Mar 2024 11:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51B8D200A6;
+	Sun, 10 Mar 2024 11:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="y7GrLhCw"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="UHWFaz3X"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3122E1E481;
-	Sun, 10 Mar 2024 11:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A993B1EB42;
+	Sun, 10 Mar 2024 11:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710070921; cv=none; b=h1OIpaNT/hMJftstjdOYISXLvWUuek7epfL48i1WDYUXrMxtx8EOcxMTkdj942o5OUdwnPCiBrKljaLQNY97Qq9zJjW88HwqL2kwrwYNy83iNFmnft2oismtziSkmYiubJDsTa2iUcKv4fgUYh4LAir2PIfMRuw89Yj9unn32Xo=
+	t=1710071579; cv=none; b=JoWhB9oG9kzh3aI3qi6HcGR6a4KeCrHHjgvzbDKqos4IyCfXflyWF9OHm+r7jKj//3cgAncwx07cKsg9OsvnIVaFQthdUN+UirH2JNRMQ8DDF/xcnq8uAK6jq9+cUFF2TEnPKh7BsCHUdJbhhT6IlaVlungIwKP+8IG0pj0u4EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710070921; c=relaxed/simple;
-	bh=gooI2GvtR0miSzuVWMq/Hf+b17GQwvqJfDaFJtnjsGE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AbStCp7uEch9FSzq+TAT91H07UaJHcUx22YGepqTSlmjLoy/bfXRlqRRbExVWkR7aX52oVRaEaem2pMNylbFxKPgwZoDOBdz43+M4cx4qxlsG/SoYTSDAaKh7WO9R1Dx9g2YRMwj3XLnWDDeeK3E600ZQk0OeiWGaEQXo6BP+Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=y7GrLhCw; arc=none smtp.client-ip=128.199.32.197
+	s=arc-20240116; t=1710071579; c=relaxed/simple;
+	bh=giPghFoQJnhBMzSSFaHrY0+Uapgo7d3tzYcduldTdj0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pEkW0s+Fn5l0yVugtH7hS5M8uGVKG0ejUZsqP8ivzSPNtQqxJsF4Pog6Dum9ArbCJGo98wkLLB1cEbs+F4H/5w3uptRqqgPAJbY7/RojVZ8g3NG+9wS9kH+ZjaOcplGdC5ZAsaRrtER7r+ArN+O7KOAE0hAoeSJWPdqKknYgCNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=UHWFaz3X; arc=none smtp.client-ip=128.199.32.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1710070913; bh=gooI2GvtR0miSzuVWMq/Hf+b17GQwvqJfDaFJtnjsGE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=y7GrLhCwfai35TBJft+BdV3j9pyDDyFh+2F7ZigvV38LHDcDcmE2/JNwjfHeEpmN6
-	 u7z1s+2G0UjNCknCt3GFlqCmkLqUkI9Xhocll5NEKGYTUnKn0uzZQ6FZv0wQCNihzf
-	 Wpe3Mjb/WnQzhaPa8unvjlPOH3RgtLt29AgRLYms=
+	t=1710071576; bh=giPghFoQJnhBMzSSFaHrY0+Uapgo7d3tzYcduldTdj0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=UHWFaz3X69ki7mPyDg3cc7owB6qAGkU5uoz/FO3eES/nfQZWl0OT2yokhx8ptFp4Y
+	 I0oHDmLUbgksmq3PlJkCixI6wVRTQKtdmAkU13pe4yWGkDmM45R9QHviUKeAJejqk+
+	 Jh9Xbdo0v1Y92Y+FoWgEh91Rp6FGP0Bl95KWp2TU=
 From: Luca Weiss <luca@z3ntu.xyz>
-Date: Sun, 10 Mar 2024 12:41:09 +0100
-Subject: [PATCH 3/3] ARM: dts: qcom: Add Sony Xperia Z3 smartphone
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add Sony Xperia Z3 smartphone
+Date: Sun, 10 Mar 2024 12:52:55 +0100
+Message-ID: <6022941.lOV4Wx5bFT@g550jk>
+In-Reply-To: <20240310-shinano-common-v1-3-d64cd322ebca@z3ntu.xyz>
+References:
+ <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
+ <20240310-shinano-common-v1-3-d64cd322ebca@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240310-shinano-common-v1-3-d64cd322ebca@z3ntu.xyz>
-References: <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
-In-Reply-To: <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1804; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=gooI2GvtR0miSzuVWMq/Hf+b17GQwvqJfDaFJtnjsGE=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl7Zx+sseVwBS5nVE27KGQZDzAmAt9iYSHpu53u
- Fc6JUsDMIOJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZe2cfgAKCRBy2EO4nU3X
- Vj8jD/9OD9nCVzyDZExPQq/AO7gfn/fqWoXJq8EHb+QjE9AF/XinHZX2ZbmcV9sHJOlpqpvgzNd
- 7ijEFn7z5wOMBjVeelAj3rLuMe8HQqEiD627wtgtGccop/HPhgW/RFEqC6FaaC0lgyx1IeZEzYX
- ubQkZxBBKKEzeTj8UrYGbAeQ5VgJJ0cO+nJwtEAJ46gKvDKoeWWis7KNlD8KwA8kR6q8I0Y2Tox
- GzbYRW8EoKKbP48MPBXqMmMj1Kfxa0S2WgbL2rLQKtBw+Rd22pTEh2CcWeSfsk2NNR/5BAiPV5F
- aFF0iwkZEs3krweqLSyTqQFzDJmZ33P7MnagVcO+uB1EGOvWhCtbjWRjE+Ly2uCZDe83CGYFxUh
- nI1dylQK5Mr2D5wsQz3488ir09d36NzYOus31+32DcPP1q0/ccaOxHlxWgD1/Tg0zxIpm/DvThz
- ON3xzF/Sl71a0fXbDv22HHNzwcZcOgGG1qMaWly3bZW//jbDrLeLhv7bPFvxSV1u7roREWq/r22
- ZQ6IRIvmhTQTOXJEI7HYonj6AidAftrbHXF8tgQwK08dag4aYL10YB6RvY+uaObQipvXKApc/sp
- OONqw/uokdR+GxxHuhfIeTOwJ/6pUYG6E1lyYxWUkh5JK3ZS20yF61GaO679ZOIz3vmN0To4r44
- 4s5v1bsxC2d5mww==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Add the dts for the Xperia Z3 smartphone which is based on Sony's
-shinano platform, so at the moment there's little device-specific dts to
-add on top of the common parts.
+On Sonntag, 10. M=C3=A4rz 2024 12:41:09 CET Luca Weiss wrote:
+> Add the dts for the Xperia Z3 smartphone which is based on Sony's
+> shinano platform, so at the moment there's little device-specific dts to
+> add on top of the common parts.
+>=20
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  .../qcom-msm8974pro-sony-xperia-shinano-leo.dts    | 44 ++++++++++++++++=
++++
++++
+>  1 file changed, 44 insertions(+)
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- .../qcom-msm8974pro-sony-xperia-shinano-leo.dts    | 44 ++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+Of course I forgot to add the dtb to the Makefile...
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dts
-new file mode 100644
-index 000000000000..1ed6e1cc21d5
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include "qcom-msm8974pro-sony-xperia-shinano-common.dtsi"
-+
-+/ {
-+	model = "Sony Xperia Z3";
-+	compatible = "sony,xperia-leo", "qcom,msm8974pro", "qcom,msm8974";
-+	chassis-type = "handset";
-+
-+	gpio-keys {
-+		key-camera-snapshot {
-+			label = "camera_snapshot";
-+			gpios = <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-camera-focus {
-+			label = "camera_focus";
-+			gpios = <&pm8941_gpios 4 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+};
-+
-+&gpio_keys_pin_a {
-+	pins = "gpio2", "gpio3", "gpio4", "gpio5";
-+};
-+
-+&smbb {
-+	usb-charge-current-limit = <1500000>;
-+	qcom,fast-charge-safe-current = <3000000>;
-+	qcom,fast-charge-current-limit = <2150000>;
-+	qcom,fast-charge-safe-voltage = <4400000>;
-+	qcom,fast-charge-high-threshold-voltage = <4350000>;
-+	qcom,auto-recharge-threshold-voltage = <4280000>;
-+	qcom,minimum-input-voltage = <4200000>;
-+
-+	status = "okay";
-+};
-+
-+&synaptics_touchscreen {
-+	vio-supply = <&pm8941_s3>;
-+};
+Apparently "make qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dtb" doesn't=
+=20
+care about whether the dtb is in the Makefile so I didn't notice.
 
--- 
-2.44.0
+Will fix in v2 but I'm going to wait for any comments on this or the other=
+=20
+patches for at least a day or so.
+
+Regards
+Luca
+
+>=20
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-
+leo.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dts
+> new file mode 100644
+> index 000000000000..1ed6e1cc21d5
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-leo.dts
+> @@ -0,0 +1,44 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +#include "qcom-msm8974pro-sony-xperia-shinano-common.dtsi"
+> +
+> +/ {
+> +	model =3D "Sony Xperia Z3";
+> +	compatible =3D "sony,xperia-leo", "qcom,msm8974pro", "qcom,msm8974";
+> +	chassis-type =3D "handset";
+> +
+> +	gpio-keys {
+> +		key-camera-snapshot {
+> +			label =3D "camera_snapshot";
+> +			gpios =3D <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
+> +			linux,code =3D <KEY_CAMERA>;
+> +			debounce-interval =3D <15>;
+> +		};
+> +
+> +		key-camera-focus {
+> +			label =3D "camera_focus";
+> +			gpios =3D <&pm8941_gpios 4 GPIO_ACTIVE_LOW>;
+> +			linux,code =3D <KEY_CAMERA_FOCUS>;
+> +			debounce-interval =3D <15>;
+> +		};
+> +	};
+> +};
+> +
+> +&gpio_keys_pin_a {
+> +	pins =3D "gpio2", "gpio3", "gpio4", "gpio5";
+> +};
+> +
+> +&smbb {
+> +	usb-charge-current-limit =3D <1500000>;
+> +	qcom,fast-charge-safe-current =3D <3000000>;
+> +	qcom,fast-charge-current-limit =3D <2150000>;
+> +	qcom,fast-charge-safe-voltage =3D <4400000>;
+> +	qcom,fast-charge-high-threshold-voltage =3D <4350000>;
+> +	qcom,auto-recharge-threshold-voltage =3D <4280000>;
+> +	qcom,minimum-input-voltage =3D <4200000>;
+> +
+> +	status =3D "okay";
+> +};
+> +
+> +&synaptics_touchscreen {
+> +	vio-supply =3D <&pm8941_s3>;
+> +};
+>=20
+>=20
+
+
+
 
 
