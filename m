@@ -1,116 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-13779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFE5587770D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 14:29:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 97B84877741
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 15:14:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC0A41C209DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 13:29:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8420C1C20930
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 14:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F60B2C6AE;
-	Sun, 10 Mar 2024 13:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FF0F31A94;
+	Sun, 10 Mar 2024 14:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RqfW/h3S"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="4UJqHlKh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD25F18AE4;
-	Sun, 10 Mar 2024 13:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEE42C6B8;
+	Sun, 10 Mar 2024 14:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710077369; cv=none; b=MfXbvzhPmi9Q9PSmzGjnLZE2x2FeyJmhooPeINanj/exVPlK2eRIrPwUZEs17tNcE5cKSDKyVWDBo5Cp1pKpHTYvp8hOkKMjbvCaKiC1XBdDIEdQsWnK+oPch+FL4TPITrOMGEAACWRcHrFQHKAQM1FeoFqxxTsqc40704C5Pxw=
+	t=1710080055; cv=none; b=fnsTqDskdJwOW5pjU+hxij2kAGYaTQLtZjykicJztlsjXXFQwEagxpLN+41ukfgssrHEOQXizPz2xtjDcxQjQgbv5gzm8ZdJIlCLtjTC3rKFWds+EEFDJdzOkQniXaT+OWAEkSQ1kv7L+hIoDR/9CF+sEoEsZEyIaMDJedxC7zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710077369; c=relaxed/simple;
-	bh=gfkP8LYRyawwp9+kWHGhd2GZEQ3SoFQ4y8eKVamILuY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hjtri1jG5NBc4nMXxw3LscoHxUKg+zjOnGwMHa206Snz6LQFxyORijoqa7Cl0/D8XuD8GzqASHIz0Hq3vOG7rRGUm2C3hgtrLjvCYDS09QbK9yVmqHGYtt1Vn+pzmZve6cm1e6SwMelbbcS28/4UMOETBuNTYIcdYZMGfBhdKaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RqfW/h3S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD694C433F1;
-	Sun, 10 Mar 2024 13:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710077368;
-	bh=gfkP8LYRyawwp9+kWHGhd2GZEQ3SoFQ4y8eKVamILuY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RqfW/h3S87jj7+W0+B9RcHkHeLPMG/GXlWRzgASmC2b8EWoY7lueJu1mlC+YIbp3H
-	 fdtydgo6WXrq37R2CEaQMUhqH/yH2E3zP8RbNWRVgYkybKx5d1ztSLMM6nr6pzYOPT
-	 +eCV80EPFkgM35jQ+KctNZ6YUI6GBHW6Rva3JsOmSaQGx4obn2rtHl4c54iT/b78CA
-	 n+UPO0swXukzZ2bmFJPHQqdDq8bfZyuD/f2v0dtDGFG7l7EKX9Uf+T3ito+2AADnKc
-	 Fx4o6ls2xSbKE6YG3b779HPh+rgb4L9Jl61IIB4VeY9L/D/eLdqUh9y3mtvuAq9Q8a
-	 Vz/xvIwAtBPRA==
-Date: Sun, 10 Mar 2024 18:59:15 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Praveenkumar I <quic_ipkumar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
-	vkoul@kernel.org, kishon@kernel.org, mani@kernel.org,
-	quic_nsekar@quicinc.com, quic_srichara@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	quic_varada@quicinc.com, quic_devipriy@quicinc.com,
-	quic_kathirav@quicinc.com, quic_anusha@quicinc.com
-Subject: Re: [PATCH 00/10] Add PCIe support for Qualcomm IPQ5332
-Message-ID: <20240310132915.GE3390@thinkpad>
-References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
+	s=arc-20240116; t=1710080055; c=relaxed/simple;
+	bh=VT9me4U8T0mG14wxZ1V0il48moXnWd38XMi/P90Ej6g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DNDmeQZr/wEbxszKe8Qy3Kg9y6V6y47Xa58CL3hrwTT0P5VV1qZK8yRBLAPqptqhwwpDdj8w9YDPwZU+KRAzgFY9NYBvD5tL5QyO8t8C2TkU0zvZsW1tAlrzNon0qbautEnhLWKC76Hg8ybwYJi2QVqtULKzWRi9CdU4qQKZ5iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=4UJqHlKh; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1710080051; bh=VT9me4U8T0mG14wxZ1V0il48moXnWd38XMi/P90Ej6g=;
+	h=From:Subject:Date:To:Cc;
+	b=4UJqHlKhr+H80i/JeqDqWVmleiuKO5aqBWrvKxhFv92MO3TEoQRBBWJSQ2nV6ZTZG
+	 Ob/w0JLOVd2Ph8vk+TUpY9WeEepVO7xSOUaUtB49/2q95D62todkJEKn/9+T6Drn1c
+	 iz/vUgKRjVHidUxmfccr8Ob3gtfu2i7DM7fIkYkk=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/2] Add Samsung Galaxy Note 3 support
+Date: Sun, 10 Mar 2024 15:13:35 +0100
+Message-Id: <20240310-samsung-hlte-v1-0-e9b55bf98a48@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA/A7WUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDY0MD3eLE3OLSvHTdjJySVF1zixTDRCML8ySDRAsloJaCotS0zAqwcdG
+ xtbUAZhzRIl4AAAA=
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adam Honse <calcprogrammer1@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=656; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=VT9me4U8T0mG14wxZ1V0il48moXnWd38XMi/P90Ej6g=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl7cAZc+SJOXy9NaYjlz2Zq3gHTMNEp8eslZ7j3
+ Qa2e6VXlTWJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZe3AGQAKCRBy2EO4nU3X
+ VtmWD/9gTPIcCe6KEPgfMKOMooo7oKMhHuy3sEWpf1xKunLLgWxu75yhGCyz6rZGLHrsrk7FmUs
+ IPArj0ObjgqK8XdPXOebI7QMHSJbwXUZb6SWz5pQaJpyeDB5Z35wvWLEwxg130oI4ks/Z4mDwro
+ F0JskvvbbSUs3WtdAAkT0C/QDqqKRP2BKNE1NNx0Hd/F35scyiUMgmO/0/SGYibkhhlMr6niuIr
+ pX/jiObtR3UICt0qPV1RK0eIEG6NJ+2JQw4V+pJxGWV0zpi1dspbipVn9pH5TTj4OUT7EgJvB+J
+ ubbEhQBMnD8nJzRgabIbmolsloIFFVPiFWq9zyQ65CuCpWeaKu52BmTDe+QW8DGrBIoyX5HEtxW
+ raQXD1Pl2Vn71NlCcU3QSHKkTXmKW5wVk/I1k67NCB87DHGbt9jf6KyxV7sLXCJ0fygSu89YLq+
+ FGHdkl2rgvf/GVSwn4f6HrfFTgJEZ3lGfXWT1C7kQN/jFMEDwDUm+2QZmaF/sWEJR/plG1+08p6
+ ragJl+ByiALZGFCqghbw7h8Hhp+VzC4swSLYiKRw0J/Vn5amYr0Tlew1j4Y6uOe4O+3Tk1j6d+t
+ F/lrYXiluamjIN7Pcm1yHIrx4kluUMOuBsqLaUBa4D7uQ/jScYwbUgTw5BYt/nrcJKj9yAPkPys
+ UJo87FdUiRC7YEA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-On Thu, Dec 14, 2023 at 11:58:37AM +0530, Praveenkumar I wrote:
-> Patch series adds support for enabling the PCIe controller and
-> UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
-> PCIe1 is Gen3 X2 are added.
-> 
-> UNIPHY changes depends on
-> https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
-> PCIe driver change depends on
-> https://lore.kernel.org/all/20230519090219.15925-1-quic_devipriy@quicinc.com/
-> 
+Add the dts for "hlte" which is a phablet from 2013.
 
-Any plan on this series and the dependencies?
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Adam Honse (1):
+      ARM: dts: qcom: msm8974: Add Samsung Galaxy Note 3
 
-- Mani
+Luca Weiss (1):
+      dt-bindings: arm: qcom: Add Samsung Galaxy Note 3
 
-> Praveenkumar I (10):
->   dt-bindings: clock: Add separate clocks for PCIe and USB for Combo PHY
->   clk: qcom: ipq5332: Add separate clocks for PCIe and USB for Combo PHY
->   arm64: dts: qcom: ipq5332: Add separate entry for USB pipe clock
->   phy: qcom: Add support for Pipe clock rate from device data
->   dt-bindings: phy: qcom,uniphy-pcie: Add ipq5332 bindings
->   phy: qcom: ipq5332: Add support for g3x1 and g3x2 PCIe PHYs
->   dt-bindings: PCI: qcom: Add IPQ5332 SoC
->   pci: qcom: Add support for IPQ5332
->   arm64: dts: qcom: ipq5332: Add PCIe related nodes
->   arm64: dts: qcom: ipq5332: Enable PCIe phys and controllers
-> 
->  .../bindings/clock/qcom,ipq5332-gcc.yaml      |   6 +-
->  .../devicetree/bindings/pci/qcom,pcie.yaml    |  36 ++++
->  .../bindings/phy/qcom,uniphy-pcie-28lp.yaml   |  65 +++++-
->  arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  74 +++++++
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 188 +++++++++++++++++-
->  drivers/clk/qcom/gcc-ipq5332.c                |   7 +-
->  drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
->  .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  |  49 ++++-
->  8 files changed, 412 insertions(+), 14 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
-> 
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm/boot/dts/qcom/Makefile                    |   1 +
+ .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 403 +++++++++++++++++++++
+ 3 files changed, 405 insertions(+)
+---
+base-commit: 90d35da658da8cff0d4ecbb5113f5fac9d00eb72
+change-id: 20240310-samsung-hlte-78d1a287b0a8
 
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Luca Weiss <luca@z3ntu.xyz>
+
 
