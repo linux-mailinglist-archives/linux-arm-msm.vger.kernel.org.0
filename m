@@ -1,91 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-13778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE5608776E4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 13:57:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFE5587770D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 14:29:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D40C1C2083E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 12:57:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC0A41C209DE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 13:29:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94DE628E09;
-	Sun, 10 Mar 2024 12:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F60B2C6AE;
+	Sun, 10 Mar 2024 13:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ltibB2Nu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RqfW/h3S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F0D25605
-	for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 12:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD25F18AE4;
+	Sun, 10 Mar 2024 13:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710075431; cv=none; b=GoOOXP2boZp557P9/lLBPsdfDt24blczyn/5+BALp3PuHsamR5CTqXjogOSYrXxgWzVBMjGErB670ZqZJeuArl9F2LuO8jHdDGXLmxbtCJOxpED3Cibbz+lQnCRTv5mzCHqu9++kWs2sVPc2WUfHRu9RSoYzUT38kRDlxqgknLw=
+	t=1710077369; cv=none; b=MfXbvzhPmi9Q9PSmzGjnLZE2x2FeyJmhooPeINanj/exVPlK2eRIrPwUZEs17tNcE5cKSDKyVWDBo5Cp1pKpHTYvp8hOkKMjbvCaKiC1XBdDIEdQsWnK+oPch+FL4TPITrOMGEAACWRcHrFQHKAQM1FeoFqxxTsqc40704C5Pxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710075431; c=relaxed/simple;
-	bh=EMHaB7kya4ZC3sb4psj74LR+97AWjwtndWgN3WEQLB0=;
+	s=arc-20240116; t=1710077369; c=relaxed/simple;
+	bh=gfkP8LYRyawwp9+kWHGhd2GZEQ3SoFQ4y8eKVamILuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YxxLrlD8I56kzXDEAGbT+gRV5yoHcPpLlQU9RMETILMTZPXF6VF5rxJVIF2iovavSEAAgZQgQHV7ccJSKob6Vt+e0vkbd/PjTCcDcxFcsVq5MBABq9lBZGSPurQ8Hf9g2wC0r+KmyF2nKW8/dTTruTBEnESrSNW2vRblIv6/ZVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ltibB2Nu; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1dd878da011so2930085ad.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Mar 2024 05:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710075429; x=1710680229; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SDEApdbuJJn3rW0aTX84J2O9wswnhpQO0GgGjO9ubd4=;
-        b=ltibB2NuzYrM5Nn8MLZ9201ojY7SZlQtlTEh8WqHIPFXl4X0Eos05uc8NbgtF7U6Vr
-         s9W82k80DcWW/rZtm3gksLTPGtuxxTXKr/4/vYi3b+Rzkbvdv2WgIWKRHfGOSQZjjkg8
-         hZSZeCvIDOVp4MVLtlA6amKBi41GB+sVF9jpf/wWqV7jJUXj8cj4JoxO6vtxtoSTc8pi
-         I/4WMCUAfJFqETW4M82HPD56GV2A2bar0yWqp1UPTohAQ2KoALzNnI/Toi4GnshiwQ4C
-         13pXWzVTx2XMBhPjVeDzverXexCMhCTiSE/49U9NiDLQ26YErzyaItvHT4zGCJsNdOjp
-         3fyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710075429; x=1710680229;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SDEApdbuJJn3rW0aTX84J2O9wswnhpQO0GgGjO9ubd4=;
-        b=J7TlNQ4Gx3qOUJ7PIGZxlzdNZf+80CC4ZNp8wb3PvKU0qmn75E4h1qEEGajY+32rf/
-         +VxqI80dAi4Ps1+UtlHfaukj//UY3PzLaSbrVdKOP5X8dZPRMY6d2txiQzFdrkyDEs8r
-         rak+TxsezsVaQqMivoS6eEi8Z3HoFiXv7gPgj9tyt3ktxAnxCbc36kPty8KDFEv0QQ6R
-         cyUiYGknSaV9rCzSRJ7UNjyTD9wIpyIvnkDRorY+YoHQpzjwahp01SmTr20GOHQ6IuKF
-         sVvENWT7BRiMk9Euw7fil4jAIW7UKFuN+eSyXeZYggrlYvYYes3ng3jncN/PPcfirxeO
-         QVtg==
-X-Forwarded-Encrypted: i=1; AJvYcCVfdxHwyLWQxVW//wvqJ/2aCfxeTKCvypLhakUl3qR4aJDcxWcxwexF1pGwdwmSpjuWVid412ymiFQ28D/XTkaFQUs4w4g2ISR5625COA==
-X-Gm-Message-State: AOJu0Yy1nAS+dvuoBkD1BRNYwJOq1TLmZPFdtvuspP7dtMQYc53XAnlO
-	Z8dAnP3DavhKxIIuRq3x5/lTcBdhScAJqDAFtYwdJPGjbCbbUkfB237Ml98cPg==
-X-Google-Smtp-Source: AGHT+IE7tbrdR9qGK2v5knmmRKIn3Ohdwz+WB659BTiT5oKrcB4vLeWqkY1AWO4iub4hNB7pKtCqqw==
-X-Received: by 2002:a17:902:e5cd:b0:1dd:88d5:bf17 with SMTP id u13-20020a170902e5cd00b001dd88d5bf17mr2013611plf.54.1710075428913;
-        Sun, 10 Mar 2024 05:57:08 -0700 (PDT)
-Received: from thinkpad ([120.138.12.86])
-        by smtp.gmail.com with ESMTPSA id jd22-20020a170903261600b001db40866e09sm2644799plb.260.2024.03.10.05.57.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Mar 2024 05:57:08 -0700 (PDT)
-Date: Sun, 10 Mar 2024 18:27:00 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org,
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	quic_schintav@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=hjtri1jG5NBc4nMXxw3LscoHxUKg+zjOnGwMHa206Snz6LQFxyORijoqa7Cl0/D8XuD8GzqASHIz0Hq3vOG7rRGUm2C3hgtrLjvCYDS09QbK9yVmqHGYtt1Vn+pzmZve6cm1e6SwMelbbcS28/4UMOETBuNTYIcdYZMGfBhdKaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RqfW/h3S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD694C433F1;
+	Sun, 10 Mar 2024 13:29:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710077368;
+	bh=gfkP8LYRyawwp9+kWHGhd2GZEQ3SoFQ4y8eKVamILuY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RqfW/h3S87jj7+W0+B9RcHkHeLPMG/GXlWRzgASmC2b8EWoY7lueJu1mlC+YIbp3H
+	 fdtydgo6WXrq37R2CEaQMUhqH/yH2E3zP8RbNWRVgYkybKx5d1ztSLMM6nr6pzYOPT
+	 +eCV80EPFkgM35jQ+KctNZ6YUI6GBHW6Rva3JsOmSaQGx4obn2rtHl4c54iT/b78CA
+	 n+UPO0swXukzZ2bmFJPHQqdDq8bfZyuD/f2v0dtDGFG7l7EKX9Uf+T3ito+2AADnKc
+	 Fx4o6ls2xSbKE6YG3b779HPh+rgb4L9Jl61IIB4VeY9L/D/eLdqUh9y3mtvuAq9Q8a
+	 Vz/xvIwAtBPRA==
+Date: Sun, 10 Mar 2024 18:59:15 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Praveenkumar I <quic_ipkumar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+	vkoul@kernel.org, kishon@kernel.org, mani@kernel.org,
+	quic_nsekar@quicinc.com, quic_srichara@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v6 2/3] PCI: qcom-ep: Override NO_SNOOP attribute for
- SA8775P EP
-Message-ID: <20240310125700.GB3390@thinkpad>
-References: <1709730673-6699-1-git-send-email-quic_msarkar@quicinc.com>
- <1709730673-6699-3-git-send-email-quic_msarkar@quicinc.com>
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+	quic_varada@quicinc.com, quic_devipriy@quicinc.com,
+	quic_kathirav@quicinc.com, quic_anusha@quicinc.com
+Subject: Re: [PATCH 00/10] Add PCIe support for Qualcomm IPQ5332
+Message-ID: <20240310132915.GE3390@thinkpad>
+References: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,132 +67,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1709730673-6699-3-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <20231214062847.2215542-1-quic_ipkumar@quicinc.com>
 
-On Wed, Mar 06, 2024 at 06:41:11PM +0530, Mrinmay Sarkar wrote:
-> Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
-> in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
-> the requester is indicating that no cache coherency issues exist for
-> the addressed memory on the host i.e., memory is not cached. But in
-> reality, requester cannot assume this unless there is a complete
-> control/visibility over the addressed memory on the host.
+On Thu, Dec 14, 2023 at 11:58:37AM +0530, Praveenkumar I wrote:
+> Patch series adds support for enabling the PCIe controller and
+> UNIPHY found on Qualcomm IPQ5332 platform. PCIe0 is Gen3 X1 and
+> PCIe1 is Gen3 X2 are added.
 > 
-> And worst case, if the memory is cached on the host, it may lead to
-> memory corruption issues. It should be noted that the caching of memory
-> on the host is not solely dependent on the NO_SNOOP attribute in TLP.
+> UNIPHY changes depends on
+> https://lore.kernel.org/all/20231003120846.28626-1-quic_nsekar@quicinc.com/
+> PCIe driver change depends on
+> https://lore.kernel.org/all/20230519090219.15925-1-quic_devipriy@quicinc.com/
 > 
-> So to avoid the corruption, this patch overrides the NO_SNOOP attribute
-> by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
-> needed for other upstream supported platforms since they do not set
-> NO_SNOOP attribute by default.
-> 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 
-Same nit as previous patch. With that addressed,
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 20 +++++++++++++++++---
->  1 file changed, 17 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 89d06a3..aa8e979 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -47,6 +47,7 @@
->  #define PARF_DBI_BASE_ADDR_HI			0x354
->  #define PARF_SLV_ADDR_SPACE_SIZE		0x358
->  #define PARF_SLV_ADDR_SPACE_SIZE_HI		0x35c
-> +#define PARF_NO_SNOOP_OVERIDE			0x3d4
->  #define PARF_ATU_BASE_ADDR			0x634
->  #define PARF_ATU_BASE_ADDR_HI			0x638
->  #define PARF_SRIS_MODE				0x644
-> @@ -86,6 +87,10 @@
->  #define PARF_DEBUG_INT_CFG_BUS_MASTER_EN	BIT(2)
->  #define PARF_DEBUG_INT_RADM_PM_TURNOFF		BIT(3)
->  
-> +/* PARF_NO_SNOOP_OVERIDE register fields */
-> +#define WR_NO_SNOOP_OVERIDE_EN                 BIT(1)
-> +#define RD_NO_SNOOP_OVERIDE_EN                 BIT(3)
-> +
->  /* PARF_DEVICE_TYPE register fields */
->  #define PARF_DEVICE_TYPE_EP			0x0
->  
-> @@ -152,9 +157,11 @@ enum qcom_pcie_ep_link_status {
->  /**
->   * struct qcom_pcie_ep_cfg - Per SoC config struct
->   * @hdma_support: HDMA support on this SoC
-> + * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache snooping
->   */
->  struct qcom_pcie_ep_cfg {
->  	bool hdma_support;
-> +	bool override_no_snoop;
->  };
->  
->  /**
-> @@ -175,6 +182,7 @@ struct qcom_pcie_ep_cfg {
->   * @num_clks: PCIe clocks count
->   * @perst_en: Flag for PERST enable
->   * @perst_sep_en: Flag for PERST separation enable
-> + * @cfg: PCIe EP config struct
->   * @link_status: PCIe Link status
->   * @global_irq: Qualcomm PCIe specific Global IRQ
->   * @perst_irq: PERST# IRQ
-> @@ -202,6 +210,7 @@ struct qcom_pcie_ep {
->  	u32 perst_en;
->  	u32 perst_sep_en;
->  
-> +	const struct qcom_pcie_ep_cfg *cfg;
->  	enum qcom_pcie_ep_link_status link_status;
->  	int global_irq;
->  	int perst_irq;
-> @@ -497,6 +506,11 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->  	val |= BIT(8);
->  	writel_relaxed(val, pcie_ep->parf + PARF_LTSSM);
->  
-> +	/* Override NO_SNOOP attribute in TLP to enable cache snooping */
-
-Same comment as previous patch.
+Any plan on this series and the dependencies?
 
 - Mani
 
-> +	if (pcie_ep->cfg && pcie_ep->cfg->override_no_snoop)
-> +		writel_relaxed(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
-> +				pcie_ep->parf + PARF_NO_SNOOP_OVERIDE);
-> +
->  	return 0;
->  
->  err_disable_resources:
-> @@ -811,7 +825,6 @@ static const struct dw_pcie_ep_ops pci_ep_ops = {
->  
->  static int qcom_pcie_ep_probe(struct platform_device *pdev)
->  {
-> -	const struct qcom_pcie_ep_cfg *cfg;
->  	struct device *dev = &pdev->dev;
->  	struct qcom_pcie_ep *pcie_ep;
->  	char *name;
-> @@ -826,8 +839,8 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
->  	pcie_ep->pci.ep.ops = &pci_ep_ops;
->  	pcie_ep->pci.edma.nr_irqs = 1;
->  
-> -	cfg = of_device_get_match_data(dev);
-> -	if (cfg && cfg->hdma_support) {
-> +	pcie_ep->cfg = of_device_get_match_data(dev);
-> +	if (pcie_ep->cfg && pcie_ep->cfg->hdma_support) {
->  		pcie_ep->pci.edma.ll_wr_cnt = 8;
->  		pcie_ep->pci.edma.ll_rd_cnt = 8;
->  		pcie_ep->pci.edma.mf = EDMA_MF_HDMA_NATIVE;
-> @@ -893,6 +906,7 @@ static void qcom_pcie_ep_remove(struct platform_device *pdev)
->  
->  static const struct qcom_pcie_ep_cfg cfg_1_34_0 = {
->  	.hdma_support = true,
-> +	.override_no_snoop = true,
->  };
->  
->  static const struct of_device_id qcom_pcie_ep_match[] = {
+> Praveenkumar I (10):
+>   dt-bindings: clock: Add separate clocks for PCIe and USB for Combo PHY
+>   clk: qcom: ipq5332: Add separate clocks for PCIe and USB for Combo PHY
+>   arm64: dts: qcom: ipq5332: Add separate entry for USB pipe clock
+>   phy: qcom: Add support for Pipe clock rate from device data
+>   dt-bindings: phy: qcom,uniphy-pcie: Add ipq5332 bindings
+>   phy: qcom: ipq5332: Add support for g3x1 and g3x2 PCIe PHYs
+>   dt-bindings: PCI: qcom: Add IPQ5332 SoC
+>   pci: qcom: Add support for IPQ5332
+>   arm64: dts: qcom: ipq5332: Add PCIe related nodes
+>   arm64: dts: qcom: ipq5332: Enable PCIe phys and controllers
+> 
+>  .../bindings/clock/qcom,ipq5332-gcc.yaml      |   6 +-
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    |  36 ++++
+>  .../bindings/phy/qcom,uniphy-pcie-28lp.yaml   |  65 +++++-
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts   |  74 +++++++
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 188 +++++++++++++++++-
+>  drivers/clk/qcom/gcc-ipq5332.c                |   7 +-
+>  drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+>  .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  |  49 ++++-
+>  8 files changed, 412 insertions(+), 14 deletions(-)
+> 
 > -- 
-> 2.7.4
+> 2.34.1
+> 
 > 
 
 -- 
