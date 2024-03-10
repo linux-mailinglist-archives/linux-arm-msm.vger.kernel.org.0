@@ -1,89 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-13771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF294877610
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 11:18:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61194877660
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 12:42:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 64524281D29
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 10:18:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B2C51C2091A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Mar 2024 11:42:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B0381EA7D;
-	Sun, 10 Mar 2024 10:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D623E200B7;
+	Sun, 10 Mar 2024 11:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="xLljj0e1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m17239.xmail.ntesmail.com (mail-m17239.xmail.ntesmail.com [45.195.17.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9101E4BF;
-	Sun, 10 Mar 2024 10:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.195.17.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7DB1DDDB;
+	Sun, 10 Mar 2024 11:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710065884; cv=none; b=C9uKjppu42Dh0XRFfxrJFSrvrDBOAL2WEeuqgJ1syMycshIQwnEnQPxe5+rFmjvA/+8ke7bvYdx+/f29roapww7E7MEy+qZzg/3SE7FrYzaKEmrm2kuGmAMEi0fGZ4u9jmxCaGXFsWgvujRrnjXAUrS6IYcvTAl3c9zRhqvPOVw=
+	t=1710070920; cv=none; b=VLO/P3EVatuPp5m1VG61GNVBRfAekveRfzr5RRKYvvJQk1IlLOfAAJqx/DNXhSooTcl+SGTQ0YC7arQkuKA/WT6sNbQ0VX9TWR0boStjRjEKJxEgB4l4vrdQT7c8+vfiSCWD06nFCrhkcHOKJWLah9jjlvhJI1+L9jJZ9maQT3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710065884; c=relaxed/simple;
-	bh=hoSaxIrK/bsoOT//u+O5KkCPMqyUjEDnfRuL7ydKIl4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=I2Ygqxp6Biv+3s6x1sQES/t066/gRY+FEmJ21jDIQPUy3sHY7CUjoQJliwcVkPPLt7KOgxTm/J92X7xVhH6S5l46pN4vg7agKTpQJtelAqSKtNqNv4B7HFPk9GoLyLGIj3ghM99M1ZY/REkGl8t3TfSfLnwXsDlfDm/m9qp+9wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.195.17.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [IPV6:240e:3b3:2c00:9430:407d:a711:d2ee:24f8])
-	by smtp.qiye.163.com (Hmail) with ESMTPA id 3842D7E013B;
-	Sun, 10 Mar 2024 18:10:09 +0800 (CST)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: dmitry.baryshkov@linaro.org
-Cc: amadeus@jmu.edu.cn,
-	andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	konrad.dybcio@linaro.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: ipq6018: move mp5496 regulator outside soc dtsi
-Date: Sun, 10 Mar 2024 18:10:05 +0800
-Message-Id: <20240310101005.13541-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <CAA8EJprc_xjejMANBjDkA2_FnRcYSJYsmM4VOvsKu1FkuMvGeg@mail.gmail.com>
-References: <CAA8EJprc_xjejMANBjDkA2_FnRcYSJYsmM4VOvsKu1FkuMvGeg@mail.gmail.com>
+	s=arc-20240116; t=1710070920; c=relaxed/simple;
+	bh=AgJRUGq8reZPMsQEkwJy5L1RC2vqHFoXplg91ZNU2Z4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L42BW1hAbiqehrhdrAadrHJcon4kp1pwtxLpE+O4R/scwt2ueC2gOxj06xxRnV1L8jIzsWZy3hIDax75SbC6Um39Umag93/9y64Fta57k60elD5iSIpou8hcQFo5rEj3Bm+UxNDkP3gGzEJSnkIaeJ4MfLrETYL/lfH12O13FW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=xLljj0e1; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
+	t=1710070912; bh=AgJRUGq8reZPMsQEkwJy5L1RC2vqHFoXplg91ZNU2Z4=;
+	h=From:Subject:Date:To:Cc;
+	b=xLljj0e1OF20LrLSz8RgYDMqcp0J7Kc4WQu2MWnreF26V/ZHh8Lwk7RhSTGAnZIdi
+	 b5rFuVylVbMYEh39F3MQictrlcvh15JqCfj5aNm/+8tN/g6h9nYpEGEQqCV4bZj6UO
+	 jvAb25DWWCNedSiRe0eIFY4CGqhdIPsQHgGXC/D4=
+From: Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/3] Split sony-castor into shinano-common and add Sony
+ Xperia Z3
+Date: Sun, 10 Mar 2024 12:41:06 +0100
+Message-Id: <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDHUIZVkMdTRlPTElPTh1OH1UTARMWGhIXJBQOD1
-	lXWRgSC1lBWUlPSx5BSBlIQUkYS0tBQk9IS0FPS0wfQRpMSkpBH0keHkFJTx1DWVdZFhoPEhUdFF
-	lBWU9LSFVKSktISkNVSktLVUtZBg++
-X-HM-Tid: 0a8e27d75deb03a2kunm3842d7e013b
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NFE6HRw*GjMLLDNOGSIvFxMZ
-	IzoaChVVSlVKTEpLS01OT0tCQ0tIVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUlP
-	Sx5BSBlIQUkYS0tBQk9IS0FPS0wfQRpMSkpBH0keHkFJTx1DWVdZCAFZQUlKS043Bg++
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFKc7WUC/x3MTQqAIBBA4avIrBP8qUVdJVqIjTkLx1CIQLx70
+ vJbvNegYiGssIkGBR+qlHlATwJ8dHyhpHMYjDKzslrJGokdZ+lzSpmlWm1AswS0TsOI7oKB3n+
+ 4H71/zX+Mj2AAAAA=
+To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=978; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=AgJRUGq8reZPMsQEkwJy5L1RC2vqHFoXplg91ZNU2Z4=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl7ZxnJ8I/hSb+nyOF1cGR2dpGm477ofrx4YSbR
+ 9OQYJbOfPKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZe2cZwAKCRBy2EO4nU3X
+ VgtID/4jJXu27eWPRSTuiMeYeCsOxmsF8Eu+BqP6uWADJTl27/BerWlAdC8d5Nn607ZqUFTmmuc
+ 7F42asa9VD82H5KrpdSwDfE6+mwpnLOjH1VLwDzkhit4VM42zVbVaBvGpewc7iru4AgSBn+PXNS
+ CLd4Ja6Rii99rYRdUioNR2QRfO2Dl9VSaemHwvlnGuDF1+tdFbPKlzLYgebigHNPF5XBQSvFFcE
+ K3eUwpJskRH8xpeIP6R0aSQ+VrZefldd0fiM46tUAUEeM1FoOzSELJzAY3HGyyTNb1WTPnnwE9G
+ TW9Hp9zT1j3tHne0xawbSnfdA+vokn7TPHDoALfipaSaZIRSLDFnqvUk1W+6TYS72yceJMPGYuK
+ w/ot/fuJil+zhgN3YLNQrqELKeUusg4qKgErHKF7y9T2VUJP0mEU0bu2Hq+zFnyp6w9K2lZiyJ7
+ PXvSbJ+9+D9GGn0ih7cmG0McJsSL+b1vcSny+EcyiORoxDfvyxtQsYk4QopmvtPZCTz8MD4zV0m
+ VZ40GKhWIafqyKU6zKFDx9FMmAFGx9kIvCSG0+IkwpjTiMAKSGTeYj66muwmKgwpwohkoQjcoQ6
+ y4U6aF3wLtcY/5ZO3kba8MwrgJjm1Y9IkS5Bw1ffHTzpOOaj5Vf3Y8IltHrg6sT1DbpQqVbtq22
+ VIJSbwRnGKDOaOw==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 
-Hi, Dmitry
-> Please inline this dtsi file into the board file. While it might seem
-> to make life easier, having such includes makes following regulator
-> settings much harder. Especially once a board or two start overriding
-> or expanding those settings.
+Prepare for adding sony-leo dts by splitting common parts into a
+separate dtsi file.
 
-Thanks for your suggestion. But unlike mobile phones or dev boards,
-I don't think any manufacturer will change the voltage settings of
-the mp5496 pmic on the ipq60xx router. The s2 part of mp5496 pmic
-is used to supply the CPU, and its min/max voltage corresponds to
-the CPU frequency of ipq60xx. Although the downstream qsdk kernel
-uses the cpr regulator driver, its min/max voltage is still the
-same as the current setting.
+Then add the dts for Sony Xperia Z3.
 
-Thanks,
-Chukun
+Depends on:
+https://lore.kernel.org/linux-arm-msm/20240306-castor-changes-v1-0-2286eaf85fff@z3ntu.xyz/T/
 
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (3):
+      ARM: dts: qcom: msm8974-sony-castor: Split into shinano-common
+      dt-bindings: arm: qcom: Add Sony Xperia Z3
+      ARM: dts: qcom: Add Sony Xperia Z3 smartphone
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ .../qcom-msm8974pro-sony-xperia-shinano-castor.dts | 541 +--------------------
+ ...qcom-msm8974pro-sony-xperia-shinano-common.dtsi | 535 ++++++++++++++++++++
+ .../qcom-msm8974pro-sony-xperia-shinano-leo.dts    |  44 ++
+ 4 files changed, 591 insertions(+), 530 deletions(-)
+---
+base-commit: bee52eeb37d8124a07711657d1650bf3b467e7dd
+change-id: 20240310-shinano-common-093fe25fe3a1
+
+Best regards,
 -- 
-2.25.1
+Luca Weiss <luca@z3ntu.xyz>
 
 
