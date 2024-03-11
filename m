@@ -1,127 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-13819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD00A87815C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:12:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 778E0878183
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:23:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF9781C2159B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 14:12:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B3FF283CA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 14:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 187783FE2C;
-	Mon, 11 Mar 2024 14:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 816753FBBA;
+	Mon, 11 Mar 2024 14:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c2tBhDa2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QCPrDa1X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712C13FB8A;
-	Mon, 11 Mar 2024 14:11:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A952208B;
+	Mon, 11 Mar 2024 14:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710166320; cv=none; b=D022+Kc66uHs/ShRtFrtL+mE0pxe7dZUzWUzJebpXIQVkzvOIzeatugr14kgFUW6Y5aW21kP/q0iLhwEdYvGKFTm/KA1Eo4GE1GfLUmWBre3lBvfwO9SjEF/Z5iw6AJQgZSuC1eFCcNNiv5qsne770c2IcLLxGUSYV2v++Ax7s4=
+	t=1710167012; cv=none; b=NRiaX7YQnuNh4/HeP9DB2Y6mD1NiRBDzOmMJKC+YuEl0GTbXH+5KVazQLCFBqqkR+9W6X/o2SDrOzoJgMVnYh8oLnJQdTeYgs/xk6D6BYsIC1Hm5ALDEOegXvfpCtDyrCCh1R+HQcD2oHHGNQ9nPbHKT4NKe+Yh9i7+Wj47YjHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710166320; c=relaxed/simple;
-	bh=mATANnERqHl0xxPKG/pi5i3RkGtcnlov/hfS9jJME1k=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=Ju8ThMJRam21NVEvRirh8kx6bz5NYgBN/lZbs9WgaIwQqn9p6317/gtaz8Q/tFDtrwbmJ/JSMp4LGWwkThSudL39zKqEUek3PasqPlKz4y85mkN7yZgNYa23dye9om+jM/tKxgySWUHY9amxbfQAzZMTCLPx9U7+7NqZPQst25I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c2tBhDa2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B8KZnL017161;
-	Mon, 11 Mar 2024 14:11:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=Lgjyjuyxaz0nE//QtnXUM9Z5+GFKEPP4syXHT7IjMu8=; b=c2
-	tBhDa2LqdGI5/ymHsEgctaMB4BcU6uTP9RcF+Ks3xMeWhCpzVFHsTBk07vfOXIoH
-	efOgiMM64U/RhgkQxeQoB5mlgAK+CiLKlEoAgzqjzupFjMs5ThrUA1OrCoK8uglP
-	qNNQXA1J3lkXg1k5uj2AWi/xR0ZkmOwB5u6dcVEwqiH2U53J/Kk4GGS14/ZbjoGn
-	1kJryrp6pe6/9tSJA60Q3+r+y00+GhXpb4o6c5e+qii1lNw6SRunB5I3CfODS4G3
-	tLZCndmJkxB7BU/iKzY+l2YIUY7AJDYNpKkQ1pAaIL8CcBonDMQv0NrzBZb1xLe7
-	PXWgsytOckEGD0HNfGDA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wsxbvgy5c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 14:11:50 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 42BEBlp0009690;
-	Mon, 11 Mar 2024 14:11:47 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wrguks1wd-1;
-	Mon, 11 Mar 2024 14:11:47 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BEBlsw009684;
-	Mon, 11 Mar 2024 14:11:47 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 42BEBkYT009683;
-	Mon, 11 Mar 2024 14:11:47 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
-	id 93D5B3A4E; Mon, 11 Mar 2024 19:41:45 +0530 (+0530)
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org,
-        manivannan.sadhasivam@linaro.org, robh@kernel.org
-Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_schintav@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: [PATCH v7 3/3] arm64: dts: qcom: sa8775p: Mark PCIe EP controller as cache coherent
-Date: Mon, 11 Mar 2024 19:41:37 +0530
-Message-Id: <1710166298-27144-4-git-send-email-quic_msarkar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1710166298-27144-1-git-send-email-quic_msarkar@quicinc.com>
-References: <1710166298-27144-1-git-send-email-quic_msarkar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IfBSMDYy-3LcUer61qGiJ0atTe8XqQbX
-X-Proofpoint-GUID: IfBSMDYy-3LcUer61qGiJ0atTe8XqQbX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_08,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 impostorscore=0 adultscore=0 bulkscore=0 clxscore=1015
- phishscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403110106
+	s=arc-20240116; t=1710167012; c=relaxed/simple;
+	bh=xUQa2duh6dBoxq9pcAdeK/i5MkMLxHJ3k/BzRbYSM7s=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=kE4DIwzW2BD4Nwg8a6nVyhIokUYhHhscqT4iDZ9QyklnfbqfbQ1UpVP1lqqBU6WQqiu1PDcfDeE6zLc7yfvl6l/IKM7mhrdmk++/mG/cCzipglDRA+Z0K9zO/BG5wP6kb3DBtVaKBe3L8JKSJ0UWaQq58K2KqDQGRDZNpFL3Ws4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QCPrDa1X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59F8C433C7;
+	Mon, 11 Mar 2024 14:23:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710167011;
+	bh=xUQa2duh6dBoxq9pcAdeK/i5MkMLxHJ3k/BzRbYSM7s=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=QCPrDa1XY5vvlnXrPmOE7s/c+PBNmGA0e8BeVdhp29u0wlFq289Gvo6E1T6GwIN9j
+	 bKlDgyiezbA6BBLatZ9Igo8IK4bCprIGJJJ5cs8Zg4frRbvF0tqkIPmhaJTHHBzTx1
+	 Ahx+CUrKY1pZoO039RMSCwOAOED11pjWkthHAfjl1kD+6PY8bgx18A7Sv36GbwuJ2X
+	 9jfRBCF21w99RWVvJ53KocALHZf/LrMZHmeHqZcYiYrAGDpWFulBAVct2CZHsuc+6h
+	 61ulHWjyHcoSP15V7Vqnr5nyFIPbejwGnF0rxGNQF2SWwiVUQDerpgI3HGH+Tk4l1h
+	 xfXu1rFtE5jUw==
+Date: Mon, 11 Mar 2024 08:23:30 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+From: Rob Herring <robh@kernel.org>
+To: Luca Weiss <luca@z3ntu.xyz>
+Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ phone-devel@vger.kernel.org, Adam Honse <calcprogrammer1@gmail.com>
+In-Reply-To: <20240310-samsung-hlte-v1-0-e9b55bf98a48@z3ntu.xyz>
+References: <20240310-samsung-hlte-v1-0-e9b55bf98a48@z3ntu.xyz>
+Message-Id: <171016679093.1126634.17115825771533066372.robh@kernel.org>
+Subject: Re: [PATCH 0/2] Add Samsung Galaxy Note 3 support
 
-The PCIe EP controller on SA8775P supports cache coherency, hence add
-the "dma-coherent" property to mark it as such.
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+On Sun, 10 Mar 2024 15:13:35 +0100, Luca Weiss wrote:
+> Add the dts for "hlte" which is a phablet from 2013.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+> Adam Honse (1):
+>       ARM: dts: qcom: msm8974: Add Samsung Galaxy Note 3
+> 
+> Luca Weiss (1):
+>       dt-bindings: arm: qcom: Add Samsung Galaxy Note 3
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+>  arch/arm/boot/dts/qcom/Makefile                    |   1 +
+>  .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 403 +++++++++++++++++++++
+>  3 files changed, 405 insertions(+)
+> ---
+> base-commit: 90d35da658da8cff0d4ecbb5113f5fac9d00eb72
+> change-id: 20240310-samsung-hlte-78d1a287b0a8
+> 
+> Best regards,
+> --
+> Luca Weiss <luca@z3ntu.xyz>
+> 
+> 
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index d9802027..53c31c7 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3713,6 +3713,7 @@
- 				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
- 		interconnect-names = "pcie-mem", "cpu-pcie";
- 
-+		dma-coherent;
- 		iommus = <&pcie_smmu 0x0000 0x7f>;
- 		resets = <&gcc GCC_PCIE_0_BCR>;
- 		reset-names = "core";
--- 
-2.7.4
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/qcom-msm8974-samsung-hlte.dtb' for 20240310-samsung-hlte-v1-0-e9b55bf98a48@z3ntu.xyz:
+
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: /: memory: False schema does not allow {'device_type': ['memory'], 'reg': [[0, 0]]}
+	from schema $id: http://devicetree.org/schemas/root-node.yaml#
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: l2-cache: Unevaluated properties are not allowed ('qcom,saw' was unexpected)
+	from schema $id: http://devicetree.org/schemas/cache.yaml#
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: idle-states: 'spc' does not match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/cpu/idle-states.yaml#
+arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dtb: syscon@f9011000: compatible: 'anyOf' conditional failed, one must be fixed:
+	['syscon'] is too short
+	'syscon' is not one of ['allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'amd,pensando-elba-syscon', 'brcm,cru-clkset', 'freecom,fsg-cs2-system-controller', 'fsl,imx93-aonmix-ns-syscfg', 'fsl,imx93-wakeupmix-syscfg', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctrl', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'hpe,gxp-sysreg', 'intel,lgm-syscon', 'loongson,ls1b-syscon', 'loongson,ls1c-syscon', 'marvell,armada-3700-usb2-host-misc', 'mediatek,mt8135-pctl-a-syscfg', 'mediatek,mt8135-pctl-b-syscfg', 'mediatek,mt8365-syscfg', 'microchip,lan966x-cpu-syscon', 'microchip,sparx5-cpu-syscon', 'mstar,msc313-pmsleep', 'nuvoton,ma35d1-sys', 'nuvoton,wpcm450-shm', 'rockchip,px30-qos', 'rockchip,rk3036-qos', 'rockchip,rk3066-qos', 'rockchip,rk3128-qos', 'rockchip,rk3228-qos', 'rockchip,rk3288-qos', 'rockchip,rk3368-qos', 'rockchip,rk3399-qos', 'rockchip,rk3568-qos', '
+ rockchip,rk3588-qos', 'rockchip,rv1126-qos', 'starfive,jh7100-sysmain', 'ti,am62-usb-phy-ctrl', 'ti,am654-dss-oldi-io-ctrl', 'ti,am654-serdes-ctrl', 'ti,j784s4-pcie-ctrl']
+	from schema $id: http://devicetree.org/schemas/mfd/syscon.yaml#
+
+
+
+
 
 
