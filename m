@@ -1,140 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-13855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FE69878611
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:10:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 69F6387861E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:13:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9F979B21339
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:10:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 166DDB2079B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:13:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F2804EB47;
-	Mon, 11 Mar 2024 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BF64AEED;
+	Mon, 11 Mar 2024 17:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pcv73Vwn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DzbyFf+3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3174F4E1CB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 17:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00751482CF;
+	Mon, 11 Mar 2024 17:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710177009; cv=none; b=DhoE8Nim/mVn8Kg4UfeYgIq2h9Qd3WRAs5jMvNnvwsMSE6LCL++zNd9vS0qnoXWEuBdCRUQhLdXsaaVa7GjFOeOC93f3UvcqeQYjs86VvHWduo3ksAUR5oYZBLsdfcgHEBpc+y8jH3eItYy/7wEa6ZxKdqCvqs4JaHkpTP3LbZY=
+	t=1710177210; cv=none; b=RWZUTuWZK4/s3OvmmwFPIU1cVqdJvpQViq/buVtytu33ATdrz/GTthhtS2FsRJ4GDPVWaDBfkQ+jztnhL2g3lOWZwlKw5bw+aj5E8wfpHJngufPr5kIlg3PiwB3Fl2GIjN8L0Rp9h3RxRMerRLznTSn1/IlmpRvjACwR8EUJmg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710177009; c=relaxed/simple;
-	bh=/8zCjBY2clYlF3DnjHznB8ApAvzPiiVUoAsgHU0U3qw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U4daUhy5dSMN3aTqVC/vZ8iqE7qwAEsgzfwpuWvKNB9x9CI5iEbLaXpbZiwnTXRfQ/o4hZhMQxAPcWaeyEC6p9dh6WCl3oYhL7iN2pS2au1lKKBr2aoB8bkPY2bcvmdu4E1SjsJ2Ij+w2UbQmwhCG+fOG8hT+/KA9xKgH5bl1cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pcv73Vwn; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-60a068e26d8so35137827b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 10:10:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710177006; x=1710781806; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZIOt5ylsa65gbubxlHlA5pNSze10toj9s/4bkxpYxRc=;
-        b=pcv73VwnmtAGSxTN9eXDe8B8avzcLvAjQdxMyrhzf761mQHgUfwPsTMIBzpm3161HZ
-         0KcegIjHDba516EtRRGtEKOJsgzBVqW9oMIp4CMy35UcsGCqgEOuSAhoN+yoE/wRoM18
-         HLpq8CUHvVQ14tdLB3dKCkmZ3tQiFC0Nr1yd9ab8dCtPqP9HwydeDaKWGJKY0n1XsD7Z
-         WqO9y/CW1EHfcRKuFm60PVIpnaG+v2kdCoJrtqfxauDemE6f84fWPqqZCHB7+sGUzgzX
-         PHTgNR0DGY5du2qps00aDQZaaigTAksgNmGEwjJaX4rLBsaV4HXvu4Z5qFDXvZR4oIMF
-         4s2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710177006; x=1710781806;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZIOt5ylsa65gbubxlHlA5pNSze10toj9s/4bkxpYxRc=;
-        b=h2/DMarY4WfRhZwwayaWDopL+8RH4oLIBVieEWyfN/rWgcMtuZD3JXLgEbxtUI1oAQ
-         o1Un9//t3cbuaBYhG1eU2miq0IHnYcoQdO5GWryuMfD8ij6avZhfHw/CdO2JoBDK45L4
-         zWEhm7Vt1VMkcufd+8d39FERzrQxRfCaOGzQ9/9L8P/QwfRJxPivSiyelF47/mTPrU/2
-         GeuZPcDo3qKqYgMTdw6fG886cWFs8R69uEtoOSaNmo8L7ozx1tMc/CzDHDHBCnDjW8oI
-         AZVw/kOKqznqFRw6P0YVRH4zwcRTESoCNPjlnYQfyhxSj6ifK6d9zWB5mTjFGnRRM0XH
-         V2EA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgplJgrjoL0EV1CZIbZGKLD/UvVBuZIvjWCYlqbxMe1dcs4zia5nDm6bjjt6lmHn7P3unb5v0AvSMarMUEn75hXknDF8T2g+suiYPB4g==
-X-Gm-Message-State: AOJu0YzgnlpoTqsn58bw9HLRuv9OHtk8I1t2DvErkXZjR0h+ZVPj1hUl
-	3TeZJn3jE9nsHM5vz418Ze7vuxWpSXyFRmwkWSCOUmy0/Si+G1JpDxBGdNfEs3VMPIL6tkHD88H
-	jGgz7qloiVXXUu0eFat+hrR/julyayH+qSSfxLw==
-X-Google-Smtp-Source: AGHT+IGhYwlGmJoM+ibOnMZbeqRf64uf0hwVNVKwk8rPtXO/AmgfcXTSkmS0XFzBj3JXNTymf52mNnPhvyLn5m4rZAI=
-X-Received: by 2002:a5b:644:0:b0:dc6:a223:bb3b with SMTP id
- o4-20020a5b0644000000b00dc6a223bb3bmr4902864ybq.46.1710177006272; Mon, 11 Mar
- 2024 10:10:06 -0700 (PDT)
+	s=arc-20240116; t=1710177210; c=relaxed/simple;
+	bh=Lio1nhe7fciU4dYP74sWWd9SRcRxtgnQi2v2J158Cns=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NzYRuvHC5+K+4hB29WbnYNt9AB/BZzcwToIqE4k/2beKrGccJWVBZE31lZarO9Vke0IHkrZvnFaBYTeheGVLVL+xVt550PsfyTM1vWEwvUCOYpYPYR2MWlEoA8csOxvrT7xQsWpB+AOnqRfuzape+VmRnzWIozY6tqyJqPBsz2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DzbyFf+3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B843Tq021082;
+	Mon, 11 Mar 2024 17:13:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=7DHzIRWgki5+Z2bMSQr1Z
+	/xOHasR45VMniFM9OQZ32g=; b=DzbyFf+3sade/LZ+DwPXYUP3Wy+6HbL5wzLsa
+	W7SWXeCh0pGkls1m1g5FcoSbg6hJV/4T5D5vzgvdEz8eURmk2K5SmlA+ljbeJQ68
+	lJ6IdxSktqhOngmZTjIJbt9FafBMcHMenJY88ETrlwuxS7NhfQSFn4cz0KvPgMkU
+	2EjBrNiQinZpTk9jAimyNNbbbcHG/dCZeOfaYGFwaw2/5BQub8Hr4ZSNAFMzGqri
+	3aVbK9OwofFhoQ1qg4TEbOtdIaiSW7CJpq3EKtDIY5xT+c2+JfLkiRKq0DK4TPe/
+	BYlPR91IHrbZquAJhetDkvZsg2kFrOoT1u6zfL0edqWOFfIrA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wsx48shaw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 17:13:05 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42BHD4Xt021914
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 17:13:04 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 11 Mar 2024 10:13:03 -0700
+Date: Mon, 11 Mar 2024 10:13:03 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+CC: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik
+	<quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet
+	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: Re: [PATCH v17 12/35] virt: gunyah: Add resource tickets
+Message-ID: <20240311100247856-0700.eberman@hu-eberman-lv.qualcomm.com>
+Mail-Followup-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>, 
+	Alex Elder <elder@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Murali Nalajal <quic_mnalajal@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>, 
+	Carl van Schaik <quic_cvanscha@quicinc.com>, Philip Derrin <quic_pderrin@quicinc.com>, 
+	Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Fuad Tabba <tabba@google.com>, Sean Christopherson <seanjc@google.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mm@kvack.org
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-12-1e9da6763d38@quicinc.com>
+ <20240311053806.GL440762@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240309-bridge-hdmi-connector-v2-0-1380bea3ee70@linaro.org>
- <20240309-bridge-hdmi-connector-v2-5-1380bea3ee70@linaro.org>
- <20240311-divergent-friendly-python-2c7d5d@houat> <CAA8EJpo-+qypK4gLrQGcCYi-AVtVzuCjh4HgJ6kRNsMTtNKKMA@mail.gmail.com>
- <20240311-offbeat-pogona-of-masquerade-3f40b6@houat>
-In-Reply-To: <20240311-offbeat-pogona-of-masquerade-3f40b6@houat>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 11 Mar 2024 19:12:45 +0200
-Message-ID: <CAA8EJpr9NRA5VgyaWmacWjhq0=xYBthzw=FNBsN+byWfYfzdDw@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 5/5] drm/msm/hdmi: make use of the
- drm_connector_hdmi framework
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240311053806.GL440762@quicinc.com>
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 11wI3OtaIF1Dwa5d3RYzieDVyHwG5GVf
+X-Proofpoint-ORIG-GUID: 11wI3OtaIF1Dwa5d3RYzieDVyHwG5GVf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_10,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxlogscore=999
+ spamscore=0 impostorscore=0 adultscore=0 phishscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403110131
 
-On Mon, 11 Mar 2024 at 19:06, Maxime Ripard <mripard@kernel.org> wrote:
->
-> On Mon, Mar 11, 2024 at 05:55:36PM +0200, Dmitry Baryshkov wrote:
-> > On Mon, 11 Mar 2024 at 17:46, Maxime Ripard <mripard@kernel.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Sat, Mar 09, 2024 at 12:31:32PM +0200, Dmitry Baryshkov wrote:
-> > > > Setup the HDMI connector on the MSM HDMI outputs. Make use of
-> > > > atomic_check hook and of the provided Infoframe infrastructure.
-> > > >
-> > > > Note: for now only AVI Infoframes are enabled. Audio Infoframes are
-> > > > currenly handled separately. This will be fixed for the final version.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >
-> > > I had a look at the driver, and it looks like mode_set and mode_valid
-> > > could use the connector_state tmds_char_rate instead of pixclock and
-> > > drm_connector_hdmi_compute_mode_clock respectively instead of
-> > > calculating it by themselves.
-> >
-> > Ack, I'll take a look.b
-> >
-> > >
-> > > We can probably remove hdmi->pixclock entirely if we manage to pass the
-> > > connector state to msm_hdmi_power_on.
-> >
-> > I'd like to defer this for a moment, I have a pending series moving
-> > MSM HDMI PHY drivers to generic PHY subsystem. However that patchset
-> > reworks the way the PHY is setup, so it doesn't make sense to rework
-> > msm_hdmi_power_on().
-> >
-> > >
-> > > And that's unrelated to this series, but we can also remove
-> > > hdmi->hdmi_mode for drm_display_info.is_hdmi.
-> >
-> > Yes, that's the plan, once I rework the audio infoframe handling.
->
-> Sure, if it makes more sense to defer it for now, then let's postpone it
-> :)
+On Mon, Mar 11, 2024 at 11:08:06AM +0530, Srivatsa Vaddagiri wrote:
+> * Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:35]:
+> 
+> > Gunyah doesn't process the label and that makes it
+> > possible for userspace to create multiple resources with the same label.
+> 
+> I think that description conflicts with what is implemented in this patch?
+> 
+> int gunyah_vm_add_resource_ticket(struct gunyah_vm *ghvm,
+> 				  struct gunyah_vm_resource_ticket *ticket)
+> {
+> 	mutex_lock(&ghvm->resources_lock);
+> 	list_for_each_entry(iter, &ghvm->resource_tickets, vm_list) {
+> 		if (iter->resource_type == ticket->resource_type &&
+> 		    iter->label == ticket->label) {
+> 			ret = -EEXIST;
+> 			goto out;
+> 		}
+> 	}
+> 
+> 
+> //
+> 
 
-I hope to fix this one for v3. Audio InfoFrame should be converted too.
+It's a justification for the next sentence in the commit text:
 
--- 
-With best wishes
-Dmitry
+    Resource ticket owners need to be prepared for populate to be called
+    multiple times if userspace created multiple resources with the same
+    label.
+
+
+VM manager can make sure that only one entity is going to receive the
+resources (the check above you highlighted), but I can't make sure that
+it's only going to exactly one resource. We don't currently have a
+scenario where we need/want multiple resources with the same label, we
+might have that in the future and I didn't want to add that restriction
+in common code.
+
+> > @@ -134,6 +246,25 @@ static int gunyah_vm_start(struct gunyah_vm *ghvm)
+> >  	}
+> >  	ghvm->vm_status = GUNYAH_RM_VM_STATUS_READY;
+> >  
+> > +	ret = gunyah_rm_get_hyp_resources(ghvm->rm, ghvm->vmid, &resources);
+> > +	if (ret) {
+> > +		dev_warn(ghvm->parent,
+> > +			 "Failed to get hypervisor resources for VM: %d\n",
+> > +			 ret);
+> > +		goto err;
+> > +	}
+> 
+> Where do we free memory pointed by 'resources' ptr?
+> 
+
+Ah, I meant to add the __free(kfree) annotation. I've added it.
+
+> > +
+> > +	for (i = 0, n = le32_to_cpu(resources->n_entries); i < n; i++) {
+> > +		ghrsc = gunyah_rm_alloc_resource(ghvm->rm,
+> > +						 &resources->entries[i]);
+> > +		if (!ghrsc) {
+> > +			ret = -ENOMEM;
+> > +			goto err;
+> > +		}
+> > +
+> > +		gunyah_vm_add_resource(ghvm, ghrsc);
+> > +	}
 
