@@ -1,144 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-13804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D5AC877D92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 11:03:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60743877DD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 11:13:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0B40B2169A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 10:03:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E35ACB20E67
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 10:13:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3256714275;
-	Mon, 11 Mar 2024 10:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1010A2E40C;
+	Mon, 11 Mar 2024 10:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OoGuMdoF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Se+w522M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909B1224D1;
-	Mon, 11 Mar 2024 10:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA74182A1;
+	Mon, 11 Mar 2024 10:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710151431; cv=none; b=sepYeX8IGbA+t/N5ihc4aAyMzL72kFffrLr0N0P+14r1u8hlg2LoBn6+9zVe4FlapQxNenzvyN7W4wXlEH5aALBLxYqT+lxIYEhJ1AS7M3uyTWw7Z0uDDVwZqlsKEKEIQe4jP8UyomZWMN7s5E4AYDZte4Tc1pD5GE/eFRj+BxU=
+	t=1710151872; cv=none; b=GpYbGSJi2Ynj7sShQjnZalLIjJA7JwpmqX3dABXmAh9uUp6TU0TwpWLolPrirNL9oizGv3PAvc8fqOZlcfSjOboC44PL7K0R9tauMEx1Zn0S0W0ykQIfwpkf0uV5iwBHvziJyCOut/jNMeht9BrqBkep40veTXq4nZGdJt+qVHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710151431; c=relaxed/simple;
-	bh=zHQOoOU/yW4nkFWOe914slr/bNkibALEuT0i6mHCyEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BamHTVhGFKmuiEp3+XjhjF2xHYx7VdB8pucRhax6GtusLMOGpyyNMR4Tl+ZUyprfWKcPIk4Ye0/hO8zetrsTmSdkT3tfdU3q9wx6sH2H+1paVc0PH7pfdr7SLVr001J97mh89u7+j4h4s6HW+4+/bVSH3v958F4+5XyFlBIBjFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OoGuMdoF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B8VVSA019783;
-	Mon, 11 Mar 2024 10:03:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=VGQ8G27IACItbDTlaX3zXxf5EQZD5hLuMIFyfTNmKoo=; b=Oo
-	GuMdoF0IWbprx6bKI0pJJSRKSHe0HQ2sMwLT5gapgNLa54X7XtNUjFX7FMtFQHFz
-	oI1wicRP9VRxKfD7AQ0YBu1vPir9JCUM5evNHw47QI0xrsEGT6FaLWQKPQHV3EVb
-	UgbNG9LMtZ8UuulNFiJFLdmOmC8/ERiGr1Y8cldn3dlnhimsSLjAsaYYfrI/JzHQ
-	hkVRobgPCPpcue65fYrmXWFMlgEDIM6c+4sS8v1b7Vp2sQYAsap58gi7HbuIo0uH
-	seFD/CiPoDZ3nQ97KUp9WHh2Z+5DyGECF8yiQ3MXVmf/bmmBYNJEjezb2zJqmyQq
-	rKaYUJA7RvR6tkx8yb/A==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wsv208ev3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 10:03:45 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42BA3iRp005261
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 10:03:44 GMT
-Received: from [10.238.139.231] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Mar
- 2024 03:03:41 -0700
-Message-ID: <e9f43ba6-dc4a-4f74-90eb-fdcea323bb3a@quicinc.com>
-Date: Mon, 11 Mar 2024 18:03:34 +0800
+	s=arc-20240116; t=1710151872; c=relaxed/simple;
+	bh=I6gW/BhVUudvPkte5swzIwXeljQnXcB+mOb7zYQvmFU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SOEbxeqM/Rc1MobyyWpqZYNcx6FrzAqVFbY9uTXgdOwH+nPTJj0tZU5T6MOR34j7+Ns6/MUSzYu/LZYBzeyt7vUSpgkapxCERs5Usjk6PZWejdWF2KJ15VjKW3nlT6xhB7M0wMvwx5uJi8MJl/ZN1BrAmSch+gg6PDHrjrQqudo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Se+w522M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 30C3BC433C7;
+	Mon, 11 Mar 2024 10:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710151872;
+	bh=I6gW/BhVUudvPkte5swzIwXeljQnXcB+mOb7zYQvmFU=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=Se+w522M2QblUu7GUAiHxGhY54wouba/GQuvUpweNvdlq13UD9VjeCdyUAhgju9nE
+	 5pXkiM/JhO3+cIkY/O4dZ0ZRkiXgUzObblZ1Zi5TgWqKBvrb3N5Zzwr3mwfRiQv/V2
+	 etUXRynOdZSMgO6sR9KvXsf+GVsNFcoBZJ/3dlj7d9j66AOKzWLuvFWr2Orj5SDJ/7
+	 GCTBGJjQtXWhCn+wIBqUNUURjA826UhbeEsx8PFC5SyFz/EDluGrhqGHwTOAGx40Ln
+	 DRog57///x/78w5hHq/OzNOY4noB/i5nxIyr8AogrcKj8VafARO1jfxdWLyWFqlerH
+	 GtxL3GxwbLRAw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D268C54E58;
+	Mon, 11 Mar 2024 10:11:12 +0000 (UTC)
+From: Hui Liu via B4 Relay <devnull+quic_huliu.quicinc.com@kernel.org>
+Date: Mon, 11 Mar 2024 18:09:31 +0800
+Subject: [PATCH v5] arm64: dts: qcom: qcm6490-idp: enable PMIC Volume and
+ Power buttons
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] arm64: dts: qcom: qcm6490-idp: enable PMIC Volume and
- Power buttons
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240304-gpio-keys-v4-1-03604d778c86@quicinc.com>
- <f09dc3a4-ed5e-40b7-ae71-7c6cfd79da1b@linaro.org>
- <02a2e93b-f0f1-4506-9e17-444cfd1a208f@quicinc.com>
- <CAA8EJpq64dwEi3NrEnvqnFR5YTSDitx9sgZVheho+UL0rz0FsQ@mail.gmail.com>
-From: hui liu <quic_huliu@quicinc.com>
-In-Reply-To: <CAA8EJpq64dwEi3NrEnvqnFR5YTSDitx9sgZVheho+UL0rz0FsQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yWD06ixfVMYinJzZx8eIs_-WgJASJnvY
-X-Proofpoint-ORIG-GUID: yWD06ixfVMYinJzZx8eIs_-WgJASJnvY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_07,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=687 spamscore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403110073
+Message-Id: <20240311-gpio-keys-v5-1-08823582f6c9@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAGDY7mUC/23MTQ6CMBCG4auQrq3pH+3gynsYF9AWmRgpUiUaw
+ 90tbKzR5TeZ532R6Ef0keyKFxn9hBFDn0a5KYjt6v7kKbq0iWBCMcE0PQ0Y6Nk/I+USmsZByUQ
+ FJP0Po2/xsbYOx7Q7jLcwPtf0xJfrv8rEKadGgzRV5eoW3P56R4u93dpwIUtnEpkVMrciWV61C
+ hrpwGjxa+XHSsZzK5O1tdbKeTCmtL9W5VblViXLpGbKGQMW9Led5/kNMvYqhVgBAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Hui Liu <quic_huliu@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1710151870; l=2997;
+ i=quic_huliu@quicinc.com; s=20230823; h=from:subject:message-id;
+ bh=P49AauHmA6KJoQvdRRaGDstedPDavIC2nds8wmnutYE=;
+ b=03Wz5EeAwzrpIdHG6XXQbaisCr4nHg3GdAT6B7ypyIHxfudc4Nx9fJWoORpCeNxkq6pe7htPr
+ hjwB5uUJ1b0AuKECDnFsM4EWhMV1VfMQqhv+CE1woGdo4tqj9t2Y91U
+X-Developer-Key: i=quic_huliu@quicinc.com; a=ed25519;
+ pk=1z+A50UnTuKe/FdQv2c0W3ajDsJOYddwIHo2iivhTTA=
+X-Endpoint-Received:
+ by B4 Relay for quic_huliu@quicinc.com/20230823 with auth_id=80
+X-Original-From: Hui Liu <quic_huliu@quicinc.com>
+Reply-To: <quic_huliu@quicinc.com>
 
+From: Hui Liu <quic_huliu@quicinc.com>
 
+The Volume Down & Power buttons are controlled by the PMIC via
+the PON hardware, and the Volume Up is connected to a PMIC gpio.
 
-On 3/6/2024 3:56 PM, Dmitry Baryshkov wrote:
-> On Wed, 6 Mar 2024 at 05:02, hui liu <quic_huliu@quicinc.com> wrote:
->>
->>
->>
->> On 3/6/2024 5:20 AM, Konrad Dybcio wrote:
->>>
->>>
->>> On 3/4/24 08:09, Hui Liu via B4 Relay wrote:
->>>> From: Hui Liu <quic_huliu@quicinc.com>
->>>>
->>>> The Volume Down & Power buttons are controlled by the PMIC via
->>>> the PON hardware, and the Volume Up is connected to a PMIC gpio.
->>>>
->>>> Enable the necessary hardware and setup the GPIO state for the
->>>> Volume Up gpio key.
->>>>
->>>> Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
->>>> ---
->>>
->>> [...]
->>>
->>>
->>>> +&pmk8350_pon {
->>>> +    status = "okay";
->>>> +};
->>>
->>> This device is already enabled
->> Hi Konrad,
->>
->> The status is not set in pmk8350.dtsi, so I thought we should set it for
->> "okay" manually. Do you think so?
-> 
-> What is the default device status if there is no status property?
-The default status is okay.
-OK, I will update it, remove the status configuration.
+Enable the necessary hardware and setup the GPIO state for the
+Volume Up gpio key.
 
-Thanks,
-Hui
-> 
-> 
+Signed-off-by: Hui Liu <quic_huliu@quicinc.com>
+---
+Changes in v5:
+- Removed the status setting for pmk8350_pon, because the default
+status is "okay".
+- Link to v4: https://lore.kernel.org/r/20240304-gpio-keys-v4-1-03604d778c86@quicinc.com
+
+Changes in v4:
+- Switch the order of "pinctrl-0" and "pinctrl-names".
+- Update "volume_up" to "Volume_up".
+- Remove "linux,input-type", because the default value is 1(EV_KEY).
+- Link to v3: https://lore.kernel.org/r/20240301-gpio-keys-v3-1-ca664de8775c@quicinc.com
+
+Changes in v3:
+- Update the commit more concise and explicit.
+- remove "power-source" property and update the numeric value to defined
+name for "qcom,drive-strength".
+- Link to v2: https://lore.kernel.org/r/20240223-gpio-keys-v2-1-19f48b3d8762@quicinc.com
+
+Changes in v2:
+- Update the commit description.
+- Link to v1: https://lore.kernel.org/r/20240206-gpio-keys-v1-1-7683799daf8d@quicinc.com
+---
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 37 ++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index acf145d1d97c..a4a7d55fb45c 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -9,7 +9,9 @@
+ #define PM7250B_SID 8
+ #define PM7250B_SID1 9
+ 
++#include <dt-bindings/input/linux-event-codes.h>
+ #include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sc7280.dtsi"
+ #include "pm7250b.dtsi"
+@@ -39,6 +41,22 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-0 = <&key_vol_up_default>;
++		pinctrl-names = "default";
++
++		key-volume-up {
++			label = "Volume_up";
++			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			wakeup-source;
++			debounce-interval = <15>;
++			linux,can-disable;
++		};
++	};
++
+ 	reserved-memory {
+ 		xbl_mem: xbl@80700000 {
+ 			reg = <0x0 0x80700000 0x0 0x100000>;
+@@ -421,6 +439,16 @@ vreg_bob_3p296: bob {
+ 	};
+ };
+ 
++&pm7325_gpios {
++	key_vol_up_default: key-vol-up-state {
++		pins = "gpio6";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
++	};
++};
++
+ &pm8350c_pwm {
+ 	status = "okay";
+ 
+@@ -448,6 +476,15 @@ led@3 {
+ 	};
+ };
+ 
++&pon_pwrkey {
++	status = "okay";
++};
++
++&pon_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+
+---
+base-commit: 23e11d0318521e8693459b0e4d23aec614b3b68b
+change-id: 20240206-gpio-keys-138bbd850298
+
+Best regards,
+-- 
+Hui Liu <quic_huliu@quicinc.com>
+
 
