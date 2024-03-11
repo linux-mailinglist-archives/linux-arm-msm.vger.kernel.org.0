@@ -1,156 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-13873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A898878A3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 22:54:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83C24878AB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 23:26:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9D521C20C58
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 21:54:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F8D2281CB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 22:26:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 284135731E;
-	Mon, 11 Mar 2024 21:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614015813E;
+	Mon, 11 Mar 2024 22:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eome4s09"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S2wwzx3P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D041057315;
-	Mon, 11 Mar 2024 21:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA8C58100;
+	Mon, 11 Mar 2024 22:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710194080; cv=none; b=G8p1Ocv66i7eHkkYs5+7N4MJ2kZAW9g7j82s0dhVlbhmxKyWQVVWvJcV4xoLmqmhUslJrqjssp+YFlbYQg4zgkV0Qp+EzbqJPZ7r3xBbHY2J/FOJ6fpK2owClAypTXMG/ghsoofL1Y943qChWU23u1y3iJRbsDrwGzK0fg57gQU=
+	t=1710195974; cv=none; b=uiVxAbyCH5PzhAQu4mJG5tBX+IZmwjYFlUiv5kpPdC/a9Sge9zqavzIcOWeIyV5cv8vz8DIavNRa7suQT0OcagML7J/Stkp006WJdJYdKZTHis4cJjmWhM0vJfyl6pq9ON6dB70NKUQP4Eumy0XH1D0vcTcJaR515C1LNd8Gg0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710194080; c=relaxed/simple;
-	bh=RWD53XQN8UsgouYUBF/rTClQBGz527mrHnHW07+LEvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rT/Ols7KRl1QUjpP3IxUjd+K8KwB8BEvoNQJoLttUKWFGVf880ZVfjSqfM6iB1cHF1CdjvDgDthQ8KfRZaAornNLZnHwT9ZLQDQawEhjUHEaqbn+q2aHKlHM+a6Ne/JntKSj4rwTcAk9p1g4ICxvNM8ZWlsBLEdJUh62GbzBFHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eome4s09; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4BBC433C7;
-	Mon, 11 Mar 2024 21:54:31 +0000 (UTC)
+	s=arc-20240116; t=1710195974; c=relaxed/simple;
+	bh=qLDDuJAGNKczHxrsPwfQUDoczAOA4iTCPEFqmie3o0k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DWPW6I9SzVsmw40gqVAnho/KEgEAmBSklHFVKtZ1SJ5MypECdk+58SsTiIzG14FUp59+ToBRfn7/xxk3VislmFIieC30Uy34lftqNNqG+lchqJ30LyaIutvbtCQSvaBw71eYmRXkZ5aFK72D2U09mXPBC3Mj2AcZfKuYzsFJPzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S2wwzx3P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C8AC433C7;
+	Mon, 11 Mar 2024 22:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710194079;
-	bh=RWD53XQN8UsgouYUBF/rTClQBGz527mrHnHW07+LEvk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Eome4s09U0yv2YUiX7PkctOicSMRH/yZOh6gnNHwqz8AI3Od+MdGJEeamS0f7e/Rg
-	 EKv3GFwpTGiOOLiVWTZpMtwJHx1nzexz6euFNxlYZWJ+mz5wMTgZY+s7k5ZCuLXjlU
-	 Q+epQAXw6XXRuSGu4tO+RzCdoobL9znOdQ45I3dz+B6EpKd4zxdEjk7P6Oh4eNWsAc
-	 Lp4NPa4szCmQyVI2rLifPe+RyPkuYYJ5VxV5Y+UMqeicTFacCyxISQMAHTlc0bDHNG
-	 GFLAPM9kqVH055Ixhp4hp6Z+B+3XyEurelGgsFQYR8csLnIKr6fF0qQTyfN2WKjaGL
-	 QI56/3wgaZNXA==
-Date: Mon, 11 Mar 2024 22:54:28 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v9 07/10] PCI: dwc: ep: Remove "core_init_notifier" flag
-Message-ID: <Ze99lLhe2GqIqMgl@ryzen>
-References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
- <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
- <ZesRk5Dg4KEASD3U@ryzen>
- <20240311144559.GA2504@thinkpad>
+	s=k20201202; t=1710195973;
+	bh=qLDDuJAGNKczHxrsPwfQUDoczAOA4iTCPEFqmie3o0k=;
+	h=From:To:Cc:Subject:Date:From;
+	b=S2wwzx3PaCXMRfobfBu6CaqJJnhAVOdFIXsLoML09wVgCa2bWls5gPujEAcSRE6An
+	 yWFUHquwvXrth+XL4nUj2BMvJrTZODczaUm9QWlQ+5IEQ1X5JVTRGe3pqWJFpAWtM2
+	 fVHBAtscCdxDG0yjITn6Q8ldotdWMB42mEt6anR+w2XvYiWretoDGTLQYWHUIiqpYL
+	 nyELurqDwRYCIS+FYcF3yrVTGplYLlb5knzWJ73j8BbHJjwe6tf8r5qx7f363XW5tb
+	 jjIVZXjpd1mjL/caKT0oHmI43ySmaWnmqC+jLWdHxVX9pX4HYQDq9Kro4S0wPpZ1vw
+	 l6/5uz5tVdqqg==
+From: Rob Herring <robh@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-i2c@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] media: dt-bindings: qcom,i2c-cci: Fix OV7251 'data-lanes' entries
+Date: Mon, 11 Mar 2024 16:26:04 -0600
+Message-ID: <20240311222605.1940826-1-robh@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240311144559.GA2504@thinkpad>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 11, 2024 at 08:15:59PM +0530, Manivannan Sadhasivam wrote:
-> > 
-> > I would say that it is the following change that breaks things:
-> > 
-> > > -	if (!core_init_notifier) {
-> > > -		ret = pci_epf_test_core_init(epf);
-> > > -		if (ret)
-> > > -			return ret;
-> > > -	}
-> > > -
-> > 
-> > Since without this code, pci_epf_test_core_init() will no longer be called,
-> > as there is currently no one that calls epf->core_init() for a EPF driver
-> > after it has been bound. (For drivers that call dw_pcie_ep_init_notify() in
-> > .probe())
-> > 
-> 
-> Thanks a lot for testing, Niklas!
-> 
-> > I guess one way to solve this would be for the EPC core to keep track of
-> > the current EPC "core state" (up/down). If the core is "up" at EPF .bind()
-> > time, notify the EPF driver directly after .bind()?
-> > 
-> 
-> Yeah, that's a good solution. But I think it would be better if the EPC caches
-> all events if the EPF drivers are not available and dispatch them once the bind
-> happens for each EPF driver. Even though INIT_COMPLETE is the only event that is
-> getting generated before bind() now, IMO it is better to add provision to catch
-> other events also.
-> 
-> Wdyt?
+The OV7251 sensor only has a single data lane, so 2 entries is not valid.
+Fix this to be 1 entry as the schema specifies.
 
-I'm not sure.
-What if the EPF goes up/down/up, it seems a bit silly to send all those
-events to the EPF driver that will alloc+free+alloc.
+The schema validation doesn't catch this currently due to some limitations
+in handling of arrays vs. matrices, but a fix is being worked on.
 
-Do we know for sure that we will want to store + replay events other than
-INIT_COMPLETE?
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+Of course, with only 1 lane, I'm not sure why we need data-lanes in the
+first place?
+---
+ Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-And how many events should we store?
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+index 8386cfe21532..f0eabff86310 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+@@ -270,7 +270,7 @@ examples:
+ 
+                 port {
+                     ov7251_ep: endpoint {
+-                        data-lanes = <0 1>;
++                        data-lanes = <0>;
+                         link-frequencies = /bits/ 64 <240000000 319200000>;
+                         remote-endpoint = <&csiphy3_ep>;
+                     };
+-- 
+2.43.0
 
-
-Until we can think of a good reason which events other than UP/DOWN we
-can to store, I think that just storing the state as an integer in
-struct pci_epc seems simpler.
-
-
-Or I guess we could continue with a flag in struct pci_epc_features,
-like has_perst_notifier, which would then require the EPC driver to
-call both epc_notify_core_up() and epc_notify_core_down() when receiving
-the PERST deassert/assert.
-For a driver without the flag set, the EPC core would call
-.epc_notify_core_up() after bind. (And .epc_notify_core_down() would never
-be called, or it could call it before unbind().)
-That way an EPF driver itself would not need any different handling
-(all callbacks would always come, either triggered by an EPC driver that
-has PERST GPIO irq, or triggered by the EPC core for a driver that lacks
-a PERST GPIO).
-
-
-Kind regards,
-Niklas
 
