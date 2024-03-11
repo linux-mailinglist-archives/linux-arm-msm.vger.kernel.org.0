@@ -1,332 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-13875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 773A2878AC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 23:31:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1604878AD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 23:37:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9B614B219D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 22:31:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33477B21598
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 22:37:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61FB958236;
-	Mon, 11 Mar 2024 22:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A884058119;
+	Mon, 11 Mar 2024 22:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lcdp8EC+"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HqhuOUUr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51735820C;
-	Mon, 11 Mar 2024 22:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A311E5810E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 22:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710196266; cv=none; b=mEmm3Y/gdVdytPkQB+Ot79FplHSRNsBCwUFVH9nb9VE0+1e1kixif+aMvVKDq4Z03SB3OwTitLlWdoCKU7uebIcBKGSwOdUMSjt3n6c81PmjV6JJBizkop9WlBXv3r1g1yKfAi4F+MH8MAUp+s3PXYFTlV4kWBc1TT89cR+nCwE=
+	t=1710196619; cv=none; b=LvmisuwU3a+QPG/xmshgfDJImN6391VvUPH/NvqMItNgcCUzoNy5nzpdJdtfoc8FVLSCstaUrkXhER4XUcQ+dmoL+CztYT85t+bBsU4g30YVEIoir4HftlE195KgTMWzBgM91ZIFpcLlrcUBfDvswYR1sFZXtcgToD2zOYBVzM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710196266; c=relaxed/simple;
-	bh=cNyE0xBOgy1MIyZVg8eO3tzJr69il+3aWNsLDbvps0M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QBxOxaejRSDX/RPQlY/xTvoQzZL6nlyoNFW4Fvx1gBKNNzGPIJL4Zz7Yf7zD+Hrzku1C+52+bIydTm/oTU0kBeVTsP2LLmuF4MWe5Y9aQGA9psWdHaJOZK/FPi0Ec3LefHHyjmEJdqA3Lmem3DshwB/4O6ZQgvI0hGxxfq6zhPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lcdp8EC+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42BMSfV8024665;
-	Mon, 11 Mar 2024 22:29:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=fvmnzz/c2joT71ozEVcr2aJHByej+MUbZUPVSpHl7mI=; b=lc
-	dp8EC+2N5fj4eAFIz9zPKW38Zwn+XwZAph4Yfa/Zj8ltUHbezwzSZ2fU87eO/sCL
-	4MItpozzY6LiRaDWjYF1mQHKCJxkRtNEVyqn1bwBhJc07Y1pf1lG+Wj6krNb7EY0
-	L03vS2jt1F+yeH/fjeOs1EruObqDZfHSnEs5g1fW3MF2vcq2dPF3n7jIgkI4wK+P
-	E9efQNwItDVYys61f/QvAWjIUr+hbtUXXbAAX+4IAvs3907eaLU3lwWuM40QjNwZ
-	LwohLkR2kT3sFdBzn6L4sCa67/yJehxXZudPo9oaBMqlvJVTPK6INpvtbWwJ9w9J
-	yj4hU27OC3llBru3picg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wt75e8fmt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 22:29:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42BMTshe023840
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 22:29:54 GMT
-Received: from [10.71.110.192] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Mar
- 2024 15:29:51 -0700
-Message-ID: <14d099e2-4668-4707-8f38-c55d3d2292da@quicinc.com>
-Date: Mon, 11 Mar 2024 15:29:51 -0700
+	s=arc-20240116; t=1710196619; c=relaxed/simple;
+	bh=MYqnrnXYYg+q0rN32HhqumbqoF5MOt9ZB61pc4+EsSU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ey9JrjEmTKa3b27P7mqvgcjrq9eBh0fKYyTLNxGz2Ffbh9EHeXziutL+OBtBJCRpi20utFnhJ1h+A2R+8Ga4bwfAFTx5W/2XXh0JRCZl2EbWSpOryU93eNw5EuaJOm+OWEEPh0t3F0KD1X6eKRa7Pa9bSBmnsUEI2VuA//qkoTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HqhuOUUr; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Message-ID: <83e2d77c-d12b-4f4f-a759-8e97fd86eff5@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1710196614;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kUQPkht64sWX7JVV8v7D7kaGK+/xr09KYmGxuaLQzAo=;
+	b=HqhuOUUrijOnMo8iwXnOShESjlO2ucwqsLA1yJ3Ss3rkH6Yd1JmhQ4kEi35gjRlnEl+W5y
+	WbO5+7os9DpccK6BVJft3mXh5wSgShvrwfDcOXvh0m84UdqUgJQjPU/E7xJsQIpKyNC+zm
+	tIAJuScW36ApYLQ4wf4CbL+4aD0kEj4=
+Date: Tue, 12 Mar 2024 06:36:31 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] of: reserved_mem: Add code to dynamically allocate
- reserved_mem array
+Subject: Re: [10/13] drm/fbdev-generic: Fix locking with
+ drm_client_buffer_vmap_local()
 Content-Language: en-US
-To: Rob Herring <robh@kernel.org>
-CC: <catalin.marinas@arm.com>, <will@kernel.org>, <frowand.list@gmail.com>,
-        <vgupta@kernel.org>, <arnd@arndb.de>, <olof@lixom.net>,
-        <soc@kernel.org>, <guoren@kernel.org>, <monstr@monstr.eu>,
-        <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <dinguyen@kernel.org>,
-        <chenhuacai@kernel.org>, <tsbogend@alpha.franken.de>,
-        <jonas@southpole.se>, <stefan.kristiansson@saunalahti.fi>,
-        <shorne@gmail.com>, <mpe@ellerman.id.au>, <ysato@users.sourceforge.jp>,
-        <dalias@libc.org>, <glaubitz@physik.fu-berlin.de>, <richard@nod.at>,
-        <anton.ivanov@cambridgegreys.com>, <johannes@sipsolutions.net>,
-        <chris@zankel.net>, <jcmvbkbc@gmail.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240308191204.819487-1-quic_obabatun@quicinc.com>
- <20240308191204.819487-3-quic_obabatun@quicinc.com>
- <20240311165537.GA1370807-robh@kernel.org>
-From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-In-Reply-To: <20240311165537.GA1370807-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To: Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+ airlied@gmail.com, mripard@kernel.org, maarten.lankhorst@linux.intel.com,
+ christian.koenig@amd.com, sumit.semwal@linaro.org,
+ dmitry.osipenko@collabora.com, robdclark@gmail.com,
+ quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
+ marijn.suijten@somainline.org, kherbst@redhat.com, lyude@redhat.com,
+ dakr@redhat.com, airlied@redhat.com, kraxel@redhat.com,
+ alexander.deucher@amd.com, Xinhui.Pan@amd.com, zack.rusin@broadcom.com,
+ bcm-kernel-feedback-list@broadcom.com
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+ virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
+ amd-gfx@lists.freedesktop.org
+References: <20240227113853.8464-11-tzimmermann@suse.de>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
+In-Reply-To: <20240227113853.8464-11-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3Nif2W7U5fCWkoeYrNE4ab5I2DSLbc4W
-X-Proofpoint-ORIG-GUID: 3Nif2W7U5fCWkoeYrNE4ab5I2DSLbc4W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_11,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 mlxscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 clxscore=1015 mlxlogscore=999 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403110173
+X-Migadu-Flow: FLOW_OUT
+
+Hi,
 
 
-On 3/11/2024 9:55 AM, Rob Herring wrote:
-> On Fri, Mar 08, 2024 at 11:12:02AM -0800, Oreoluwa Babatunde wrote:
->> The reserved_mem array is statically allocated with a size of
->> MAX_RESERVED_REGIONS(64). Therefore, if the number of reserved_mem
->> regions exceeds this size, there will not be enough space to store
->> all the data.
->>
->> Hence, extend the use of the static array by introducing a
->> dynamically allocated array based on the number of reserved memory
->> regions specified in the DT.
->>
->> On architectures such as arm64, memblock allocated memory is not
->> writable until after the page tables have been setup. Hence, the
->> dynamic allocation of the reserved_mem array will need to be done only
->> after the page tables have been setup.
->>
->> As a result, a temporary static array is still needed in the initial
->> stages to store the information of the dynamically-placed reserved memory
->> regions because the start address is selected only at run-time and is not
->> stored anywhere else.
->> It is not possible to wait until the reserved_mem array is allocated
->> because this is done after the page tables are setup and the reserved
->> memory regions need to be initialized before then.
->>
->> After the reserved_mem array is allocated, all entries from the static
->> array is copied over to the new array, and the rest of the information
->> for the statically-placed reserved memory regions are read in from the
->> DT and stored in the new array as well.
->>
->> Once the init process is completed, the temporary static array is
->> released back to the system because it is no longer needed. This is
->> achieved by marking it as __initdata.
->>
->> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
->> ---
->>  drivers/of/fdt.c             | 15 +++++++---
->>  drivers/of/of_private.h      |  1 +
->>  drivers/of/of_reserved_mem.c | 53 ++++++++++++++++++++++++++++++++++--
->>  3 files changed, 62 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
->> index fe6c75c5a8c0..2468360d6053 100644
->> --- a/drivers/of/fdt.c
->> +++ b/drivers/of/fdt.c
->> @@ -614,13 +614,15 @@ void __init fdt_scan_reserved_mem_reg_nodes(void)
->>  	}
->>  }
->>  
->> +int total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
->> +
-> Put this in of_reserved_mem.c.
+On 2024/2/27 18:14, Thomas Zimmermann wrote:
+> Temporarily lock the fbdev buffer object during updates to prevent
+> memory managers from evicting/moving the buffer. Moving a buffer
+> object while update its content results in undefined behaviour.
 >
->>  /*
->>   * fdt_scan_reserved_mem() - scan a single FDT node for reserved memory
->>   */
->>  static int __init fdt_scan_reserved_mem(void)
->>  {
->>  	int node, child;
->> -	int dynamic_nodes_cnt = 0;
->> +	int dynamic_nodes_cnt = 0, count = 0;
->>  	int dynamic_nodes[MAX_RESERVED_REGIONS];
->>  	const void *fdt = initial_boot_params;
->>  
->> @@ -643,6 +645,8 @@ static int __init fdt_scan_reserved_mem(void)
->>  		uname = fdt_get_name(fdt, child, NULL);
->>  
->>  		err = __reserved_mem_reserve_reg(child, uname);
->> +		if (!err)
->> +			count++;
->>  
->>  		/*
->>  		 * Delay allocation of the dynamically-placed regions
->> @@ -657,12 +661,16 @@ static int __init fdt_scan_reserved_mem(void)
->>  
->>  	for (int i = 0; i < dynamic_nodes_cnt; i++) {
->>  		const char *uname;
->> +		int err;
->>  
->>  		child = dynamic_nodes[i];
->>  		uname = fdt_get_name(fdt, child, NULL);
->>  
->> -		__reserved_mem_alloc_size(child, uname);
->> +		err = __reserved_mem_alloc_size(child, uname);
->> +		if (!err)
->> +			count++;
->>  	}
->> +	total_reserved_mem_cnt = count;
->>  	return 0;
->>  }
->>  
->> @@ -715,8 +723,6 @@ void __init early_init_fdt_scan_reserved_mem(void)
->>  			break;
->>  		memblock_reserve(base, size);
->>  	}
->> -
->> -	fdt_init_reserved_mem();
->>  }
->>  
->>  /**
->> @@ -1405,6 +1411,7 @@ void __init unflatten_device_tree(void)
->>  	of_alias_scan(early_init_dt_alloc_memory_arch);
->>  
->>  	unittest_unflatten_overlay_base();
->> +	fdt_init_reserved_mem();
-> This change belongs in patch 1.
+> Fbdev-generic updates its buffer object from a shadow buffer. Gem-shmem
+> and gem-dma helpers do not move buffer objects, so they are safe to be
+> used with fbdev-generic. Gem-vram and qxl are based on TTM, but pin
+> buffer objects are part of the vmap operation. So both are also safe
+> to be used with fbdev-generic.
 >
->>  }
->>  
->>  /**
->> diff --git a/drivers/of/of_private.h b/drivers/of/of_private.h
->> index 542e37a37a24..447b63413b39 100644
->> --- a/drivers/of/of_private.h
->> +++ b/drivers/of/of_private.h
->> @@ -42,6 +42,7 @@ extern struct mutex of_mutex;
->>  extern raw_spinlock_t devtree_lock;
->>  extern struct list_head aliases_lookup;
->>  extern struct kset *of_kset;
->> +extern int total_reserved_mem_cnt;
->>  
->>  #if defined(CONFIG_OF_DYNAMIC)
->>  extern int of_property_notify(int action, struct device_node *np,
->> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
->> index d62f1956024c..3c4373b021be 100644
->> --- a/drivers/of/of_reserved_mem.c
->> +++ b/drivers/of/of_reserved_mem.c
->> @@ -26,7 +26,8 @@
->>  
->>  #include "of_private.h"
->>  
->> -static struct reserved_mem reserved_mem[MAX_RESERVED_REGIONS];
->> +static struct reserved_mem reserved_mem_array[MAX_RESERVED_REGIONS] __initdata;
->> +static struct reserved_mem *reserved_mem __refdata = reserved_mem_array;
->>  static int reserved_mem_count;
->>  
->>  static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
->> @@ -54,6 +55,48 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
->>  	return err;
->>  }
->>  
->> +/**
->> + * alloc_reserved_mem_array() - allocate memory for the reserved_mem
->> + * array using memblock
->> + *
->> + * This function is used to allocate memory for the reserved_mem array
->> + * according to the total number of reserved memory regions defined in
->> + * the DT.
->> + * After the new array is allocated, the information stored in the
->> + * initial static array is copied over to this new array and the
->> + * new array is used from this point on.
->> + */
->> +static int __init alloc_reserved_mem_array(void)
->> +{
->> +	struct reserved_mem *new_array;
->> +	size_t alloc_size, copy_size, memset_size;
->> +
->> +	alloc_size = array_size(total_reserved_mem_cnt, sizeof(*new_array));
->> +	if (alloc_size == SIZE_MAX)
->> +		return -1;
-> Use EOVERFLOW
+> Amdgpu and nouveau do not pin or lock the buffer object during an
+> update. Their TTM-based memory management could move the buffer object
+> while the update is ongoing.
 >
->> +
->> +	new_array = memblock_alloc(alloc_size, SMP_CACHE_BYTES);
->> +	if (!new_array)
->> +		return -ENOMEM;
->> +
->> +	copy_size = array_size(reserved_mem_count, sizeof(*new_array));
->> +	if (copy_size == SIZE_MAX)
->> +		goto overlow_err;
-> This is the only path for goto, so move the cleanup here.
+> The new vmap_local and vunmap_local helpers hold the buffer object's
+> reservation lock during the buffer update. This prevents moving the
+> buffer object on all memory managers.
 >
->> +
->> +	memset_size = alloc_size - copy_size;
->> +
->> +	memcpy(new_array, reserved_mem, copy_size);
->> +	memset(new_array + reserved_mem_count, 0, memset_size);
->> +
->> +	reserved_mem = new_array;
->> +	return 0;
->> +
->> +overlow_err:
->> +	memblock_free(new_array, alloc_size);
->> +	total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
->> +	return -1;
-> Use EOVERFLOW
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>   drivers/gpu/drm/drm_client.c        | 68 +++++++++++++++++++++++++----
+>   drivers/gpu/drm/drm_fbdev_generic.c |  4 +-
+>   drivers/gpu/drm/drm_gem.c           | 12 +++++
+>   include/drm/drm_client.h            | 10 +++++
+>   include/drm/drm_gem.h               |  3 ++
+>   5 files changed, 87 insertions(+), 10 deletions(-)
 >
->> +}
->> +
->>  /*
->>   * fdt_reserved_mem_save_node() - save fdt node for second pass initialization
->>   */
->> @@ -62,7 +105,7 @@ void __init fdt_reserved_mem_save_node(unsigned long node, const char *uname,
->>  {
->>  	struct reserved_mem *rmem = &reserved_mem[reserved_mem_count];
->>  
->> -	if (reserved_mem_count == ARRAY_SIZE(reserved_mem)) {
->> +	if (reserved_mem_count == total_reserved_mem_cnt) {
->>  		pr_err("not enough space for all defined regions.\n");
->>  		return;
->>  	}
->> @@ -303,7 +346,11 @@ static void __init __rmem_check_for_overlap(void)
->>   */
->>  void __init fdt_init_reserved_mem(void)
->>  {
->> -	int i;
->> +	int i, ret;
->> +
->> +	ret = alloc_reserved_mem_array();
->> +	if (ret)
->> +		pr_err("Failed to allocate memory for reserved_mem array with err: %d", ret);
-> As printing a message is the only error handling, better to just print 
-> something in alloc_reserved_mem_array() and return void.
->
->>  
->>  	fdt_scan_reserved_mem_reg_nodes();
->>  
->> -- 
->> 2.34.1
-Hi Rob,
+> diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
+> index 9403b3f576f7b..2cc81831236b5 100644
+> --- a/drivers/gpu/drm/drm_client.c
+> +++ b/drivers/gpu/drm/drm_client.c
+> @@ -304,6 +304,66 @@ drm_client_buffer_create(struct drm_client_dev *client, u32 width, u32 height,
+>   	return ERR_PTR(ret);
+>   }
+>   
+> +/**
+> + * drm_client_buffer_vmap_local - Map DRM client buffer into address space
+> + * @buffer: DRM client buffer
+> + * @map_copy: Returns the mapped memory's address
+> + *
+> + * This function maps a client buffer into kernel address space. If the
+> + * buffer is already mapped, it returns the existing mapping's address.
+> + *
+> + * Client buffer mappings are not ref'counted. Each call to
+> + * drm_client_buffer_vmap_local() should be closely followed by a call to
+> + * drm_client_buffer_vunmap_local(). See drm_client_buffer_vmap() for
+> + * long-term mappings.
+> + *
+> + * The returned address is a copy of the internal value. In contrast to
+> + * other vmap interfaces, you don't need it for the client's vunmap
+> + * function. So you can modify it at will during blit and draw operations.
+> + *
+> + * Returns:
+> + *	0 on success, or a negative errno code otherwise.
+> + */
+> +int drm_client_buffer_vmap_local(struct drm_client_buffer *buffer,
+> +				 struct iosys_map *map_copy)
+> +{
+> +	struct drm_gem_object *gem = buffer->gem;
+> +	struct iosys_map *map = &buffer->map;
+> +	int ret;
+> +
+> +	drm_gem_lock(gem);
+> +
+> +	ret = drm_gem_vmap(gem, map);
+> +	if (ret)
+> +		goto err_drm_gem_vmap_unlocked;
+> +	*map_copy = *map;
+> +
+> +	return 0;
+> +
+> +err_drm_gem_vmap_unlocked:
+> +	drm_gem_unlock(gem);
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(drm_client_buffer_vmap_local);
+> +
+> +/**
+> + * drm_client_buffer_vunmap_local - Unmap DRM client buffer
+> + * @buffer: DRM client buffer
+> + *
+> + * This function removes a client buffer's memory mapping established
+> + * with drm_client_buffer_vunmap_local(). Calling this function is only
+> + * required by clients that manage their buffer mappings by themselves.
+> + */
+> +void drm_client_buffer_vunmap_local(struct drm_client_buffer *buffer)
+> +{
+> +	struct drm_gem_object *gem = buffer->gem;
+> +	struct iosys_map *map = &buffer->map;
+> +
+> +	drm_gem_vunmap(gem, map);
+> +	drm_gem_unlock(gem);
+> +}
+> +EXPORT_SYMBOL(drm_client_buffer_vunmap_local);
+> +
+>   /**
+>    * drm_client_buffer_vmap - Map DRM client buffer into address space
+>    * @buffer: DRM client buffer
+> @@ -331,14 +391,6 @@ drm_client_buffer_vmap(struct drm_client_buffer *buffer,
+>   	struct iosys_map *map = &buffer->map;
+>   	int ret;
+>   
+> -	/*
+> -	 * FIXME: The dependency on GEM here isn't required, we could
+> -	 * convert the driver handle to a dma-buf instead and use the
+> -	 * backend-agnostic dma-buf vmap support instead. This would
+> -	 * require that the handle2fd prime ioctl is reworked to pull the
+> -	 * fd_install step out of the driver backend hooks, to make that
+> -	 * final step optional for internal users.
+> -	 */
+>   	ret = drm_gem_vmap_unlocked(buffer->gem, map);
+>   	if (ret)
+>   		return ret;
+> diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
+> index d647d89764cb9..be357f926faec 100644
+> --- a/drivers/gpu/drm/drm_fbdev_generic.c
+> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
+> @@ -197,14 +197,14 @@ static int drm_fbdev_generic_damage_blit(struct drm_fb_helper *fb_helper,
+>   	 */
+>   	mutex_lock(&fb_helper->lock);
+>   
+> -	ret = drm_client_buffer_vmap(buffer, &map);
+> +	ret = drm_client_buffer_vmap_local(buffer, &map);
+>   	if (ret)
+>   		goto out;
+>   
+>   	dst = map;
 
-Thank you for the feedback. I'll implement all of this in the next
-revision.
+Then, please remove the local variable 'dst' (struct iosys_map) at here.
+As you said, the returned iosys_map is another copy of the original backup,
+we can play with this local variable at will, there no need to duplicate
+another time again.
 
-Regards,
-Oreoluwa
+I have modified and tested with fbdev generic, no problem. With this trivial
+issue resolved. For fbdev-generic:
+
+
+Acked-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+
+
 
