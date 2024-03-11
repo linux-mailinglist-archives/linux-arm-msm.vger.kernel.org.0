@@ -1,241 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-13817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BE008780D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 14:43:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21363878162
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:12:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEDCB1F22089
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 13:43:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8AFEAB2265A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 14:12:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB8E23FB9C;
-	Mon, 11 Mar 2024 13:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7CB33FB94;
+	Mon, 11 Mar 2024 14:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GV/0NXmK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R4CJoUl9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA363FB9A;
-	Mon, 11 Mar 2024 13:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB0A40BF5;
+	Mon, 11 Mar 2024 14:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710164601; cv=none; b=KKwI0s6o8bFSKKd0gs9zGVSmNpMT1ncxikBfLiyPaiPpLspez6aPOSCfAlJc7AqYNw0a8y+9/q7+sqcJdQniDRgimnLllXVPlRbXr+CeWDErF8pDKDGmvLA2lpbsNZ2JVBSKuSf7TytqriAaiYNroIzDliUwshKjhHVU5Cb2Yw8=
+	t=1710166329; cv=none; b=KkYDJSOu9Not3sHypF6dgGVO+GiVYW8B8bwDfoyFwDITZam8TO4PfHqtSL08oewZvCiMs/RD26mjZPxQ+cUOX6wqx+mCGzDdvq2mA8qP0w5JnWRdqgNXxMRocvHF+hWBndgR8aK5edUkk6wLiV2U5agRY26LLbJFY1J3CcJG9lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710164601; c=relaxed/simple;
-	bh=EQLrk4lEo8JQyIRC1uzMsMtwYo6qr93Gpah+oQB54Gc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NriHqes5Mc8KRzi2/lznbhj2vHiOEbGgTzFAsz1mFO/i55cr7AQV5jSeElpXfVBsgz8PuMXQT2BDuwayBKdMoPIJQHub0S44/jTz+vgqB7akq/KbosX71AZNyZkWkeDQccbJyUlAUk/rlAO5ghrRZVFdGoiy1x73HlvJhBJgozk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GV/0NXmK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260F3C433F1;
-	Mon, 11 Mar 2024 13:43:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710164601;
-	bh=EQLrk4lEo8JQyIRC1uzMsMtwYo6qr93Gpah+oQB54Gc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GV/0NXmKMKHV8YsKqvZ+lK8pIUdJzyxA2KrxaL3W1WqST9taiaQwzwIqO1omg1sZ5
-	 PWMdbV67YUfyxv3wwKt0Rzj96o+Us3aiwDyeUFwTOYYODX/NPbV+Gzenj645QjZS0W
-	 rpOYfjNrsi8LQfl+f1jz4k/MJ+ocGec1oe/RUdjrOcYffzOoJ0rUfkECBUFa9gXfQ0
-	 HX0N+H6AvK5YsByEZX3pQWmBxzx7CPfDFXOjrJtCD3R9aTKNdmY3UAbO6wrPR686oi
-	 UlLMIN2IM0JtuCB7El2on1+lK96Z7LcADOn0ss8uX+EFI/qHTl1WUCVq+JMxAbFflW
-	 yGhh0+NIX74cQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rjfw3-000000004f7-2Bbs;
-	Mon, 11 Mar 2024 14:43:24 +0100
-Date: Mon, 11 Mar 2024 14:43:23 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: drm/msm: DisplayPort hard-reset on hotplug regression in 6.8-rc1
-Message-ID: <Ze8Ke_M2xHyPYCu-@hovoldconsulting.com>
-References: <Zd3kvD02Qvsh2Sid@hovoldconsulting.com>
- <ZesH21DcfOldRD9g@hovoldconsulting.com>
- <56de6cfb-fe0f-de30-d4d0-03c0fbb0afbb@quicinc.com>
- <ZeyOmJLlBbwnmaJN@hovoldconsulting.com>
+	s=arc-20240116; t=1710166329; c=relaxed/simple;
+	bh=p17h7cnshXjqOHplB90Y1LjRUCbP/fgVQt4Tof1OndI=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=n57R3zCEbVDrVoUKPyLzBV8ZubEgdH4qm44T+Fl7BjW/faTmJ2ZU8RgHAnQO1+cZh3pgzVurpN9tN1Tidoik25hi/HanNdz4S5bWgJ37BFlIGUnltKk/ZCkrTVPbQPdtt0MQewY4zFNauCMXBtoaslD2vjVUlnFoipl3fXEmpjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R4CJoUl9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B7dXRU028694;
+	Mon, 11 Mar 2024 14:12:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=yvMGZSaaQ1s4
+	15vCsd80iY/qNbhmhoBdJ9MIzP3HoOQ=; b=R4CJoUl9k6CrWf8UsRTQ5hcXBrZw
+	unUPfdaoE8xVq4v1ncJDnYLJTKVMoFdC4YtWtJ40P3OhS0aw15PqjEwSfAilTGip
+	nfilPubsU3AVIOVQQOEHewEuAcitKwzT+AFWX0rLD+tWP23BnlfmExqJgVC00y5M
+	hP6cyF6+i5gdGfvgXK4Bl2OaEPaJGtERAEHCpUrA8/HBYvqMYQ1hUqCpF3RYkCfH
+	31Nu/HrKdqVrsYM9AFzc86vTQ8CNW8zMFPeRQBWOGlimgPEE3o2W/NX4Y3eLMWuv
+	gDN7VjsYMAvTq451fTX3PJYRnZpv7due9pX+KYbaScOSeOgpQTmQEjfTMg==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wswrss283-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 14:12:02 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 42BEBgrr009634;
+	Mon, 11 Mar 2024 14:11:42 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3wrguks1vn-1;
+	Mon, 11 Mar 2024 14:11:42 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BEBgSA009623;
+	Mon, 11 Mar 2024 14:11:42 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 42BEBg04009622;
+	Mon, 11 Mar 2024 14:11:42 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+	id 190B73A4E; Mon, 11 Mar 2024 19:41:41 +0530 (+0530)
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, konrad.dybcio@linaro.org,
+        manivannan.sadhasivam@linaro.org, robh@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_schintav@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org
+Subject: [PATCH v7 0/3] arm64: qcom: sa8775p: add cache coherency support for SA8775P
+Date: Mon, 11 Mar 2024 19:41:34 +0530
+Message-Id: <1710166298-27144-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Oao1XsS82IRibvd8GLZ6imECiztuH_aG
+X-Proofpoint-ORIG-GUID: Oao1XsS82IRibvd8GLZ6imECiztuH_aG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403110107
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZeyOmJLlBbwnmaJN@hovoldconsulting.com>
 
-On Sat, Mar 09, 2024 at 05:30:17PM +0100, Johan Hovold wrote:
-> On Fri, Mar 08, 2024 at 09:50:17AM -0800, Abhinav Kumar wrote:
-> > On 3/8/2024 4:43 AM, Johan Hovold wrote:
-> 
-> > For this last remaining reset with the stacktrace you have mentioned 
-> > below, I do not think this was introduced due to PM runtime series. We 
-> > have had this report earlier with the same stacktrace as well in earlier 
-> > kernels which didnt have PM runtime support:
-> 
-> > But, it seems like there is another race condition in this code 
-> > resulting in this issue again.
-> > 
-> > I have posted my analysis with the patch here as a RFC y'day:
-> > 
-> > https://patchwork.freedesktop.org/patch/581758/
-> > 
-> > I missed CCing you and Bjorn on the RFC but when I post it as a patch 
-> > either today/tomm, will CC you both.
-> 
-> Ok, thanks. I'll take a closer look at that next week. It's not clear to
-> me what that race looks like after reading the commit message. It would
-> be good to have some more details in there (e.g. the sequence of events
-> that breaks the state machine) and some way to reproduce the issue
-> reliably.
+Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
+in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
+the requester is indicating that no cache coherency issues exist for
+the addressed memory on the host i.e., memory is not cached. But in
+reality, requester cannot assume this unless there is a complete
+control/visibility over the addressed memory on the host.
 
-I was able to reproduce the reset with some of my debug printks in place
-after reapplying the reverted hpd notify change so I have an explanation
-for (one of) the ways we can up in this state now.
+And worst case, if the memory is cached on the host, it may lead to
+memory corruption issues. It should be noted that the caching of memory
+on the host is not solely dependent on the NO_SNOOP attribute in TLP.
 
-This does not match description of the problem in the fix linked to
-above and I don't think that patch solves the underlying issue even if
-it may make the race window somewhat smaller. More details below.
- 
-> > > We now also have Bjorn's call trace from a different Qualcomm platform
-> > > triggering an unclocked access on disconnect, something which would
-> > > trigger a reset by the hypervisor on sc8280xp platforms like the X13s:
-> 
-> > > [ 2030.379583] Kernel panic - not syncing: Asynchronous SError Interrupt
-> > > [ 2030.379586] CPU: 0 PID: 239 Comm: kworker/0:2 Not tainted 6.8.0-rc4-next-20240216-00015-gc937d3c43ffe-dirty #219
-> > > [ 2030.379590] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-> > > [ 2030.379592] Workqueue: events output_poll_execute [drm_kms_helper]
-> > > [ 2030.379642] Call trace:
-> 
-> > > [ 2030.379722]  wait_for_completion_timeout+0x14/0x20
-> > > [ 2030.379727]  dp_ctrl_push_idle+0x34/0x8c [msm]
-> > > [ 2030.379844]  dp_bridge_atomic_disable+0x18/0x24 [msm]
-> > > [ 2030.379959]  drm_atomic_bridge_chain_disable+0x6c/0xb4 [drm]
-> > > [ 2030.380150]  drm_atomic_helper_commit_modeset_disables+0x174/0x57c [drm_kms_helper]
-> > > [ 2030.380200]  msm_atomic_commit_tail+0x1b4/0x474 [msm]
-> > > [ 2030.380316]  commit_tail+0xa4/0x158 [drm_kms_helper]
-> > > [ 2030.380369]  drm_atomic_helper_commit+0x24c/0x26c [drm_kms_helper]
-> > > [ 2030.380418]  drm_atomic_commit+0xa8/0xd4 [drm]
-> > > [ 2030.380529]  drm_client_modeset_commit_atomic+0x16c/0x244 [drm]
-> > > [ 2030.380641]  drm_client_modeset_commit_locked+0x50/0x168 [drm]
-> > > [ 2030.380753]  drm_client_modeset_commit+0x2c/0x54 [drm]
-> > > [ 2030.380865]  __drm_fb_helper_restore_fbdev_mode_unlocked+0x60/0xa4 [drm_kms_helper]
-> > > [ 2030.380915]  drm_fb_helper_hotplug_event+0xe0/0xf4 [drm_kms_helper]
-> > > [ 2030.380965]  msm_fbdev_client_hotplug+0x28/0xc8 [msm]
-> > > [ 2030.381081]  drm_client_dev_hotplug+0x94/0x118 [drm]
-> > > [ 2030.381192]  output_poll_execute+0x214/0x26c [drm_kms_helper]
-> > > [ 2030.381241]  process_scheduled_works+0x19c/0x2cc
-> > > [ 2030.381249]  worker_thread+0x290/0x3cc
-> > > [ 2030.381255]  kthread+0xfc/0x184
-> > > [ 2030.381260]  ret_from_fork+0x10/0x20
-> > > 
-> > > The above could happen if the convoluted hotplug state machine breaks
-> > > down so that the device is runtime suspended before
-> > > dp_bridge_atomic_disable() is called.
-> 
-> > Yes, state machine got broken and I have explained how in the commit 
-> > text of the RFC. But its not necessarily due to PM runtime but a 
-> > sequence of events happening from userspace exposing this breakage.
-> 
-> After looking at this some more today, I agree with you. The
-> observations I've reported are consistent with what would happen if the
-> link clock is disabled when dp_bridge_atomic_disable() is called.
-> 
-> That clock is disabled in dp_bridge_atomic_post_disable() before runtime
-> suspending, but perhaps there are some further paths that can end up
-> disabling it.
+So to avoid the corruption, this patch overrides the NO_SNOOP attribute
+by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
+needed for other upstream supported platforms since they do not set
+NO_SNOOP attribute by default.
 
-Turns out there are paths like that and we hit those more often before
-reverting e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify().
+This series is to enable cache snooping logic in both RC and EP driver
+and add the "dma-coherent" property in dtsi to support cache coherency
+in SA8775P platform.
 
-Specifically, when a previous connect attempt did not enable the bridge
-fully so that it is still in the ST_MAINLINK_READY when we receive a
-disconnect event, dp_hpd_unplug_handle() will turn of the link clock.
+Dependency
+----------
 
-[  204.527625] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
-[  204.531553] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
-[  204.533261] msm-dp-display ae98000.displayport-controller: dp_ctrl_off_link
+Depends on:
+https://lore.kernel.org/all/1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com/
+https://lore.kernel.org/all/20240306-dw-hdma-v4-4-9fed506e95be@linaro.org/ [1]
 
-A racing connect event, such as the one I described earlier, can then
-try to enable the bridge again but dp_bridge_atomic_enable() just bails
-out early (and leaks a rpm reference) because we're now in
-ST_DISCONNECTED:
+V6 -> V7:
+- removed redundant comment in both patches 1 & 2
+- added Reviewed-by and Acked-by tag
 
-[  204.535773] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
-[  204.536187] [CONNECTOR:35:DP-2] status updated from disconnected to connected
-[  204.536905] msm-dp-display ae98000.displayport-controller: dp_display_notify_disconnect - would clear link ready (1), state = 0
-[  204.537821] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_check - link_ready = 1
-[  204.538063] msm-dp-display ae98000.displayport-controller: dp_display_send_hpd_notification - hpd = 0, link_ready = 1
-[  204.542778] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable
-[  204.586547] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable - state = 0 (rpm leak?)
+V5 -> V6:
+- updated commit message as per comments
+- added Kdoc comments in patch1
+- change variable name from enable_cache_snoop to
+  override_no_snoop
+- sort reg offset define in patch2
 
-Clearing link_ready already in dp_display_notify_disconnect() would make
-the race window slightly smaller, but it would essentially just paper
-over the bug as the events are still not serialised. Notably, there is
-no user space interaction involved here and it's the spurious connect
-event that triggers the bridge enable.
+V4 -> V5:
+- Updated commit message in both Patch1 and patch2
+- change variable name from no_snoop_override to
+  enable_cache_snoop
+- rebased patch2 on top of [1]
 
-When the fbdev hotplug code later disables the never-enabled bridge,
-things go boom:
+v3 -> v4:
+- added new cfg(cfg_1_34_0) for SA8775P in both RC and EP driver.
+- populated a flag in the data structures instead of doing
+  of_device_is_compatible() in both RC and EP patch.
+- update commit mesaage and added reveiwed-by tag in commit message
+  in dtsi patch.
 
-[  204.649072] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 0, status = 2
-[  204.650378] [CONNECTOR:35:DP-2] status updated from connected to disconnected
-[  204.651111] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_disable
+v2 -> v3:
+- update commit message(8755 -> 8775).
 
-as the link clock has already been disabled when accessing the link
-registers.
+v1 -> v2:
+- update cover letter with explanation.
+- define each of these bits and ORing at usage time rather than
+  directly writing value in register.
 
-The stack trace for the bridge enable above is:
+Mrinmay Sarkar (3):
+  PCI: qcom: Override NO_SNOOP attribute for SA8775P RC
+  PCI: qcom-ep: Override NO_SNOOP attribute for SA8775P EP
+  arm64: dts: qcom: sa8775p: Mark PCIe EP controller as cache coherent
 
-[  204.553922]  dp_bridge_atomic_enable+0x40/0x2f0 [msm]
-[  204.555241]  drm_atomic_bridge_chain_enable+0x54/0xc8 [drm]
-[  204.556557]  drm_atomic_helper_commit_modeset_enables+0x194/0x26c [drm_kms_helper]
-[  204.557853]  msm_atomic_commit_tail+0x204/0x804 [msm]
-[  204.559173]  commit_tail+0xa4/0x18c [drm_kms_helper]
-[  204.560450]  drm_atomic_helper_commit+0x19c/0x1b0 [drm_kms_helper]
-[  204.561743]  drm_atomic_commit+0xa4/0xdc [drm]
-[  204.563065]  drm_client_modeset_commit_atomic+0x22c/0x298 [drm]
-[  204.564402]  drm_client_modeset_commit_locked+0x60/0x1c0 [drm]
-[  204.565733]  drm_client_modeset_commit+0x30/0x58 [drm]
-[  204.567055]  __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xfc [drm_kms_helper]
-[  204.568381]  drm_fb_helper_hotplug_event.part.0+0xd4/0x110 [drm_kms_helper]
-[  204.569708]  drm_fb_helper_hotplug_event+0x38/0x44 [drm_kms_helper]
-[  204.571032]  msm_fbdev_client_hotplug+0x28/0xd4 [msm]
-[  204.572395]  drm_client_dev_hotplug+0xcc/0x130 [drm]
-[  204.573755]  drm_kms_helper_connector_hotplug_event+0x34/0x44 [drm_kms_helper]
-[  204.575114]  drm_bridge_connector_hpd_cb+0x90/0xa4 [drm_kms_helper]
-[  204.576465]  drm_bridge_hpd_notify+0x40/0x5c [drm]
-[  204.577842]  drm_aux_hpd_bridge_notify+0x18/0x28 [aux_hpd_bridge]
-[  204.579184]  pmic_glink_altmode_worker+0xc0/0x23c [pmic_glink_altmode]
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi     |  1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 19 ++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-qcom.c    | 24 +++++++++++++++++++++++-
+ 3 files changed, 40 insertions(+), 4 deletions(-)
 
-> > > For some reason, possibly due to unrelated changes in timing, possibly
-> > > after the hotplug revert, I am no longer able to reproduce the reset
-> > > with 6.8-rc7 on the X13s.
-> 
-> > I do not know how the hotplug revert fixed this stack because I think 
-> > this can still happen.
+-- 
+2.7.4
 
-So, while it may still be theoretically possible to hit the resets after
-the revert, the HPD notify revert effectively "fixed" the regression in
-6.8-rc1 by removing the preconditions that now made us hit it (i.e. the
-half-initialised bridge).
-
-It seems the hotplug state machine needs to be reworked completely, but
-at least we're roughly back where we were with 6.7 (including that the
-bus clocks will never be turned of because of the rpm leaks on
-disconnect).
-
-Johan
 
