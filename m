@@ -1,468 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-13857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEC06878621
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:13:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D230587862E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:18:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73E94282EF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:13:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54F7F1F221E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:18:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D5714D108;
-	Mon, 11 Mar 2024 17:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D21F94AEED;
+	Mon, 11 Mar 2024 17:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Loj0U2l0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ccg7x5u3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D36C4C61C;
-	Mon, 11 Mar 2024 17:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE73D4AEE7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 17:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710177220; cv=none; b=ma9J4CPu9XyttGSFctVUsQQoTmfp0VHZsHpBJXHnUW1iqffGpyOi/7965BezLQcR6X7dR8c+Po1pccFOGbM00mcZcv5S6C+zuaYaA2zLpJ8oNi5fn+p+jho1Jd/6ryZuy5lSTGV7rXZ3+vm2KqK1tOUSlY98KTusd877Px+od+M=
+	t=1710177531; cv=none; b=fg1v3jCfpPqn+c2wbDppTj559id936AXbGCAQub0DitkjlrttWWNlzquHR3OK5IxqGc5xW2ocPPTaOEupeSav7KJwo2Tw/WbTbqT7/r0L/FqKIgcC9LQF4DpHPYVpVe2ev8uF3qDo848uVIetdltfeeLF/ECQ+yLbgHzHvFw3GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710177220; c=relaxed/simple;
-	bh=eviduWcAZzHBoe8f3MV1ClcI4356lgBVZePi0rDZuqM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NNXwrQoMerm2pd+shYeXGpJvFk/7dfR8nxqMXQFSBUxYGjVZdgMmrVpTe8u4kz3vIeezLnm6jQyvUS3zucep7zK1ED+AYoLydAmbNmKj6LXP8/rWt8lf9SRN2pUf3znSK04K8PBg+WHlm9YkMJ6+QCHhLbt3dTpvvibhThSctkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Loj0U2l0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4EBC433F1;
-	Mon, 11 Mar 2024 17:13:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710177219;
-	bh=eviduWcAZzHBoe8f3MV1ClcI4356lgBVZePi0rDZuqM=;
-	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
-	b=Loj0U2l0Xpv3XNqVh+1EJIG6JBkYULCIX2XEnNf9s47AEDkC5jYD/rqS4WbCqi/KN
-	 TknvGyQ8MiDtw2T67xhChYdNy3XhJDGKc1J140j7Y9GRTlO/MUBnf8FZstnMNxNLvM
-	 qAilAq5OsrO3uPvdfcyCHlOISwLELLU379HsBBeC8k6YWu3K3TqyUhYbpq2rghgA5x
-	 w00j39m4dVuuuDZajvw351r8/qw8HjrcPtdI6C9AwxcoyeDIiabqI7veU8q4TrapJQ
-	 lKibjzYBJSJtmoUAWOKKmKevnjWbUIifX9vL/BQEUsmJ18+8jOIQ+gY8Uxj6MNV+J4
-	 BRTQRPAliqUyA==
-Date: Mon, 11 Mar 2024 11:13:37 -0600
-From: Rob Herring <robh@kernel.org>
-To: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, frowand.list@gmail.com,
-	vgupta@kernel.org, arnd@arndb.de, olof@lixom.net, soc@kernel.org,
-	guoren@kernel.org, monstr@monstr.eu, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, dinguyen@kernel.org, chenhuacai@kernel.org,
-	tsbogend@alpha.franken.de, jonas@southpole.se,
-	stefan.kristiansson@saunalahti.fi, shorne@gmail.com,
-	mpe@ellerman.id.au, ysato@users.sourceforge.jp, dalias@libc.org,
-	glaubitz@physik.fu-berlin.de, richard@nod.at,
-	anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-	chris@zankel.net, jcmvbkbc@gmail.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH v4 1/4] of: reserved_mem: Restruture how the reserved
- memory regions are processed
-Message-ID: <20240311171337.GB1370807-robh@kernel.org>
-References: <20240308191204.819487-1-quic_obabatun@quicinc.com>
- <20240308191204.819487-2-quic_obabatun@quicinc.com>
+	s=arc-20240116; t=1710177531; c=relaxed/simple;
+	bh=CQ2x4RKoS/BNf3CA3Ne1CGsZkL9d/2VEYlQvlAkFeGA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=HNO1cb73WcIAbs1pv6PXiYFCVP6GtE6stHZ0VsWzEEQaRSzE/kxw/f9zCPrVIbuId1CYGzf4fCKUj0VzLCcP3Uf0Jn3URCTb81LYn9Fn2/U44+I0sOp5dfuCx/FPuYAei2I1ZfbHxlqy+naRgHzUGaMhMUUZjsx2RZSwF8oOkPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ccg7x5u3; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5133bd7eb47so5451329e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 10:18:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710177528; x=1710782328; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LWC5J/cGM6XCAjFO/J36a6zpk4pWW2LeMDWW16YbVDk=;
+        b=Ccg7x5u3dUp+pvhCnT+RJrW6gP5senj+2rcF4eho7ag3SdV7j+ILuwCaOazSP2Lk4n
+         i6ysZmxtOC2XxslmDRuA2dsF9OkFvQpw7uZAujpnMwBJ7ShYFuaKt39BESs0rCFVakZx
+         BHmO7KBYoa9e6dnbWF2RaHe+njT/QzwKx/Efg8ilVwnF3wIz6nlKPYc1tn9aOrFqiEb+
+         kk+5Bb3CFXWHiUjYYAsBHhZg7YbMUWpZuUc0TmCK4EvCchCiOY3xWfFzfE6WCt6X8y3z
+         ScTfuaXUXSVhJ3k2XEHtnkDh4tpXMqhcQVU9jnCg0641ZPaMrALEoAmFmV7xckZpYcLX
+         A/Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710177528; x=1710782328;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LWC5J/cGM6XCAjFO/J36a6zpk4pWW2LeMDWW16YbVDk=;
+        b=Iw7pmH53YWA78Cv24XUqgUcYSz3kgi5W1qyPh5zODjtvPoFAv9+x/Elk6zLMvbKYoZ
+         IG/ij8ew5R4APmhQtS5UCqfgrJqSJRhD68PwZdjFgL2/O+EbAlwfyS2sF6GZrtRQxAf+
+         az3yzGjcUWL1X5vxB+U2ablMkDyyT+2rRO4JVryczouXaNjqq6qU7EXffpuB+OoTnp0z
+         2LDuW8d8gAIWEfCo7QLKUR28TIZrcw8nEyO89N6Om7hywzi7DmmHauzBpMvVWbPMK0mt
+         n1k1he0R2A+Mvq9yXw+4WWt7e3NdIFB+U2jZQ1TjSDu5xF0edTMuiHYgczAfKOCzyuSp
+         I1Jw==
+X-Gm-Message-State: AOJu0YyTjG6+f53z2ordp4MJy5gF8NZlQRz9c5IvyLUvApySXN4fhOej
+	3pNbTiLg8c9G5x78/+BSfRdvU/rZQslak9urTaPhn/56oDR3jB2HpFfbMTurmnc=
+X-Google-Smtp-Source: AGHT+IHBulF9/MtUC1XCakvXv6EKEIEAq2NXpaF+s/yuZHUUA7/Zf6D4PkK/xSvdNmxFGDbNqVCcyg==
+X-Received: by 2002:ac2:51bb:0:b0:513:a1eb:c084 with SMTP id f27-20020ac251bb000000b00513a1ebc084mr3549174lfk.7.1710177527544;
+        Mon, 11 Mar 2024 10:18:47 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:48be:feb9:192b:f402? ([2a01:e0a:982:cbb0:48be:feb9:192b:f402])
+        by smtp.gmail.com with ESMTPSA id je1-20020a05600c1f8100b00412c1d51a0dsm9656981wmb.45.2024.03.11.10.18.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Mar 2024 10:18:47 -0700 (PDT)
+Message-ID: <e2885cdd-f8d8-4517-9769-0eab23af342c@linaro.org>
+Date: Mon, 11 Mar 2024 18:18:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240308191204.819487-2-quic_obabatun@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v4 0/7] soc: qcom: add in-kernel pd-mapper implementation
+Content-Language: en-US, fr
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 08, 2024 at 11:12:01AM -0800, Oreoluwa Babatunde wrote:
-> The current implementation processes the reserved memory regions in two
-> stages which are done with two separate functions within the
-> early_init_fdt_scan_reserved_mem() function.
+On 11/03/2024 16:34, Dmitry Baryshkov wrote:
+> Protection domain mapper is a QMI service providing mapping between
+> 'protection domains' and services supported / allowed in these domains.
+> For example such mapping is required for loading of the WiFi firmware or
+> for properly starting up the UCSI / altmode / battery manager support.
 > 
-> Within the two stages of processing, the reserved memory regions are
-> broken up into two groups which are processed differently:
-> i) Statically-placed reserved memory regions
-> i.e. regions defined with a static start address and size using the
->      "reg" property in the DT.
-> ii) Dynamically-placed reserved memory regions.
-> i.e. regions defined by specifying a range of addresses where they can
->      be placed in memory using the "alloc_ranges" and "size" properties
->      in the DT.
+> The existing userspace implementation has several issue. It doesn't play
+> well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+> firmware location is changed (or if the firmware was not available at
+> the time pd-mapper was started but the corresponding directory is
+> mounted later), etc.
 > 
-> Stage 1: fdt_scan_reserved_mem()
-> This stage of the reserved memory processing is used to scan through the
-> reserved memory nodes defined in the devicetree and do the following on
-> each of the nodes:
+> However this configuration is largely static and common between
+> different platforms. Provide in-kernel service implementing static
+> per-platform data.
 > 
-> 1) If the node represents a statically-placed reserved memory region,
->    i.e. it is defined using the "reg" property:
->    - Call memblock_reserve() or memblock_mark_nomap() as needed.
->    - Add the information for the reserved region to the reserved_mem array.
->      eg: fdt_reserved_mem_save_node(node, name, base, size);
+> NOTE: this is an RFC / RFT, the domain mapping data might be inaccurate
+> (especially for SM6xxx and SC7xxx platforms), which is reflected by
+> several TODO and FIXME comments in the code.
 > 
-> 2) If the node represents a dynamically-placed reserved memory region,
->    i.e. it is defined using "alloc-ranges" and "size" properties:
->    - Add the information for the region to the reserved_mem array with
->      the starting address and size set to 0.
->      eg: fdt_reserved_mem_save_node(node, name, 0, 0);
+> --
+> 2.39.2
 > 
-> Stage 2: fdt_init_reserved_mem()
-> This stage of the reserved memory processing is used to iterate through
-> the reserved_mem array which was populated in stage 1 and do the
-> following on each of the entries:
-> 
-> 1) If the entry represents a statically-placed reserved memory region:
->    - Call the region specific init function.
-> 2) If the entry represents a dynamically-placed reserved memory region:
->    - Call __reserved_mem_alloc_size() which is used to allocate memory
->      for the region using memblock_phys_alloc_range(), and call
->      memblock_mark_nomap() on the allocated region if the region is
->      specified as a no-map region.
->    - Call the region specific init function.
-> 
-> On architectures such as arm64, the dynamic allocation of the
-> reserved_mem array needs to be done after the page tables have been
-> setup because memblock allocated memory is not writable until then. This
-> means that the reserved_mem array will not be available to store any
-> reserved memory information until after the page tables have been setup.
-> 
-> It is possible to call memblock_reserve() and memblock_mark_nomap() on
-> the statically-placed reserved memory regions and not need to save them
-> to the reserved_mem array until later. This is because all the
-> information we need is present in the devicetree.
-> Dynamically-placed reserved memory regions on the other hand get assigned
-> a start address only at runtime, and since memblock_reserve() and
-> memblock_mark_nomap() need to be called before the memory mappings are
-> created, the allocation needs to happen before the page tables are setup.
-> 
-> To make it easier to handle dynamically-placed reserved memory regions
-> before the page tables are setup, this patch makes changes to the steps
-> above to process the reserved memory regions in the following ways:
-> 
-> Step 1: fdt_scan_reserved_mem()
-> This stage of the reserved memory processing is used to scan through the
-> reserved memory nodes defined in the devicetree and do the following on
-> each of the nodes:
-> 
-> 1) If the node represents a statically-placed reserved memory region,
->    i.e. it is defined using the "reg" property:
->    - Call memblock_reserve() or memblock_mark_nomap() as needed.
-> 
-> 2) If the node represents a dynamically-placed reserved memory region,
->    i.e. it is defined using "alloc-ranges" and "size" properties:
->    - Call __reserved_mem_alloc_size() which will:
->      i) Allocate memory for the reserved memory region.
->      ii) Call memblock_mark_nomap() as needed.
->      Note: There is no need to explicitly call memblock_reserve() here
->      because it is already called by memblock when the memory for the
->      region is being allocated.
->      iii) Save the information for the region in the reserved_mem array.
-> 
-> Step 2: fdt_init_reserved_mem()
-> This stage of the reserved memory processing is used to:
-> 
-> 1) Add the information for the statically-placed reserved memory into
->    the reserved_mem array.
-> 
-> 2) Iterate through all the entries in the array and call the region
->    specific init function for each of them.
-> 
-> Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 > ---
->  drivers/of/fdt.c                | 84 ++++++++++++++++++++++++++++++---
->  drivers/of/of_private.h         |  2 +-
->  drivers/of/of_reserved_mem.c    | 54 +++++++++------------
->  include/linux/of_fdt.h          |  1 +
->  include/linux/of_reserved_mem.h |  9 ++++
->  5 files changed, 111 insertions(+), 39 deletions(-)
+> Changes in v4:
+> - Fixed missing chunk, reenabled kfree in qmi_del_server (Konrad)
+> - Added configuration for sm6350 (Thanks to Luca)
+> - Removed RFC tag (Konrad)
+> - Link to v3: https://lore.kernel.org/r/20240304-qcom-pd-mapper-v3-0-6858fa1ac1c8@linaro.org
 > 
-> diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-> index bf502ba8da95..fe6c75c5a8c0 100644
-> --- a/drivers/of/fdt.c
-> +++ b/drivers/of/fdt.c
-> @@ -504,7 +504,6 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
->  	phys_addr_t base, size;
->  	int len;
->  	const __be32 *prop;
-> -	int first = 1;
->  	bool nomap;
->  
->  	prop = of_get_flat_dt_prop(node, "reg", &len);
-> @@ -532,10 +531,6 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
->  			       uname, &base, (unsigned long)(size / SZ_1M));
->  
->  		len -= t_len;
-> -		if (first) {
-> -			fdt_reserved_mem_save_node(node, uname, base, size);
-> -			first = 0;
-> -		}
->  	}
->  	return 0;
->  }
-> @@ -563,12 +558,70 @@ static int __init __reserved_mem_check_root(unsigned long node)
->  	return 0;
->  }
->  
-> +/**
-> + * fdt_scan_reserved_mem_reg_nodes() - Store info for the "reg" defined
-> + * reserved memory regions.
-> + *
-> + * This function is used to scan through the DT and store the
-> + * information for the reserved memory regions that are defined using
-> + * the "reg" property. The region node number, name, base address, and
-> + * size are all stored in the reserved_mem array by calling the
-> + * fdt_reserved_mem_save_node() function.
-> + */
-> +void __init fdt_scan_reserved_mem_reg_nodes(void)
-> +
-> +{
-> +	int t_len = (dt_root_addr_cells + dt_root_size_cells) * sizeof(__be32);
-> +	const void *fdt = initial_boot_params;
-> +	phys_addr_t base, size;
-> +	const __be32 *prop;
-> +	int node, child;
-> +	int len;
-> +
-> +	node = fdt_path_offset(fdt, "/reserved-memory");
-> +	if (node < 0) {
-> +		pr_err("Reserved memory: Did not find reserved-memory node\n");
-
-No reserved regions is perfectly valid.
-
-> +		return;
-> +	}
-> +
-> +	if (__reserved_mem_check_root(node)) {
-> +		pr_err("Reserved memory: unsupported node format, ignoring\n");
-> +		return;
-> +	}
-> +
-> +	fdt_for_each_subnode(child, fdt, node) {
-> +		const char *uname;
-> +
-> +		prop = of_get_flat_dt_prop(child, "reg", &len);
-> +		if (!prop)
-> +			continue;
-> +
-> +		if (!of_fdt_device_is_available(fdt, child))
-> +			continue;
-> +
-> +		uname = fdt_get_name(fdt, child, NULL);
-> +		if (len && len % t_len != 0) {
-> +			pr_err("Reserved memory: invalid reg property in '%s', skipping node.\n",
-> +			       uname);
-> +			continue;
-> +		}
-> +
-> +		base = dt_mem_next_cell(dt_root_addr_cells, &prop);
-> +		size = dt_mem_next_cell(dt_root_size_cells, &prop);
-> +
-> +		if (size)
-> +			fdt_reserved_mem_save_node(child, uname, base, size);
-> +	}
-> +}
-> +
->  /*
->   * fdt_scan_reserved_mem() - scan a single FDT node for reserved memory
->   */
->  static int __init fdt_scan_reserved_mem(void)
->  {
->  	int node, child;
-> +	int dynamic_nodes_cnt = 0;
-> +	int dynamic_nodes[MAX_RESERVED_REGIONS];
->  	const void *fdt = initial_boot_params;
->  
->  	node = fdt_path_offset(fdt, "/reserved-memory");
-> @@ -590,8 +643,25 @@ static int __init fdt_scan_reserved_mem(void)
->  		uname = fdt_get_name(fdt, child, NULL);
->  
->  		err = __reserved_mem_reserve_reg(child, uname);
-> -		if (err == -ENOENT && of_get_flat_dt_prop(child, "size", NULL))
-> -			fdt_reserved_mem_save_node(child, uname, 0, 0);
-> +
-> +		/*
-> +		 * Delay allocation of the dynamically-placed regions
-> +		 * until after all other statically-placed regions have
-> +		 * been reserved or marked as nomap
-> +		 */
-> +		if (err == -ENOENT && of_get_flat_dt_prop(child, "size", NULL)) {
-> +			dynamic_nodes[dynamic_nodes_cnt] = child;
-> +			dynamic_nodes_cnt++;
-
-Can't you just call __reserved_mem_alloc_size() here instead of looping 
-twice?
-
-> +		}
-> +	}
-> +
-> +	for (int i = 0; i < dynamic_nodes_cnt; i++) {
-> +		const char *uname;
-> +
-> +		child = dynamic_nodes[i];
-> +		uname = fdt_get_name(fdt, child, NULL);
-> +
-> +		__reserved_mem_alloc_size(child, uname);
->  	}
->  	return 0;
->  }
-> diff --git a/drivers/of/of_private.h b/drivers/of/of_private.h
-> index f38397c7b582..542e37a37a24 100644
-> --- a/drivers/of/of_private.h
-> +++ b/drivers/of/of_private.h
-> @@ -36,6 +36,7 @@ struct alias_prop {
->  #endif
->  
->  #define OF_ROOT_NODE_SIZE_CELLS_DEFAULT 1
-> +#define MAX_RESERVED_REGIONS    64
->  
->  extern struct mutex of_mutex;
->  extern raw_spinlock_t devtree_lock;
-> @@ -175,7 +176,6 @@ static inline struct device_node *__of_get_dma_parent(const struct device_node *
->  }
->  #endif
->  
-> -void fdt_init_reserved_mem(void);
-
-I don't see why this is moved.
+> Changes in RFC v3:
+> - Send start / stop notifications when PD-mapper domain list is changed
+> - Reworked the way PD-mapper treats protection domains, register all of
+>    them in a single batch
+> - Added SC7180 domains configuration based on TCL Book 14 GO
+> - Link to v2: https://lore.kernel.org/r/20240301-qcom-pd-mapper-v2-0-5d12a081d9d1@linaro.org
+> 
+> Changes in RFC v2:
+> - Swapped num_domains / domains (Konrad)
+> - Fixed an issue with battery not working on sc8280xp
+> - Added missing configuration for QCS404
+> 
+> ---
+> Dmitry Baryshkov (7):
+>        soc: qcom: pdr: protect locator_addr with the main mutex
+>        soc: qcom: qmi: add a way to remove running service
+>        soc: qcom: add pd-mapper implementation
+>        remoteproc: qcom: pas: correct data indentation
+>        remoteproc: qcom: adsp: add configuration for in-kernel pdm
+>        remoteproc: qcom: mss: add configuration for in-kernel pdm
+>        remoteproc: qcom: pas: add configuration for in-kernel pdm
+> 
+>   drivers/remoteproc/Kconfig          |   3 +
+>   drivers/remoteproc/qcom_q6v5_adsp.c |  82 +++++-
+>   drivers/remoteproc/qcom_q6v5_mss.c  |  80 +++++-
+>   drivers/remoteproc/qcom_q6v5_pas.c  | 502 ++++++++++++++++++++++++++++++------
+>   drivers/soc/qcom/Kconfig            |  10 +
+>   drivers/soc/qcom/Makefile           |   2 +
+>   drivers/soc/qcom/pdr_interface.c    |   6 +-
+>   drivers/soc/qcom/qcom_pdm.c         | 346 +++++++++++++++++++++++++
+>   drivers/soc/qcom/qcom_pdm_msg.c     | 188 ++++++++++++++
+>   drivers/soc/qcom/qcom_pdm_msg.h     |  66 +++++
+>   drivers/soc/qcom/qmi_interface.c    |  67 +++++
+>   include/linux/soc/qcom/pd_mapper.h  |  39 +++
+>   include/linux/soc/qcom/qmi.h        |   2 +
+>   13 files changed, 1302 insertions(+), 91 deletions(-)
+> ---
+> base-commit: 1843e16d2df9d98427ef8045589571749d627cf7
+> change-id: 20240301-qcom-pd-mapper-e12d622d4ad0
+> 
+> Best regards,
 
 
->  void fdt_reserved_mem_save_node(unsigned long node, const char *uname,
->  			       phys_addr_t base, phys_addr_t size);
->  
-> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-> index 7ec94cfcbddb..d62f1956024c 100644
-> --- a/drivers/of/of_reserved_mem.c
-> +++ b/drivers/of/of_reserved_mem.c
-> @@ -26,7 +26,6 @@
->  
->  #include "of_private.h"
->  
-> -#define MAX_RESERVED_REGIONS	64
->  static struct reserved_mem reserved_mem[MAX_RESERVED_REGIONS];
->  static int reserved_mem_count;
->  
-> @@ -132,8 +131,7 @@ static int __init __reserved_mem_alloc_in_range(phys_addr_t size,
->   * __reserved_mem_alloc_size() - allocate reserved memory described by
->   *	'size', 'alignment'  and 'alloc-ranges' properties.
->   */
-> -static int __init __reserved_mem_alloc_size(unsigned long node,
-> -	const char *uname, phys_addr_t *res_base, phys_addr_t *res_size)
-> +int __init __reserved_mem_alloc_size(unsigned long node, const char *uname)
->  {
->  	int t_len = (dt_root_addr_cells + dt_root_size_cells) * sizeof(__be32);
->  	phys_addr_t start = 0, end = 0;
-> @@ -212,10 +210,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
->  		       uname, (unsigned long)(size / SZ_1M));
->  		return -ENOMEM;
->  	}
-> -
-> -	*res_base = base;
-> -	*res_size = size;
-> -
-> +	fdt_reserved_mem_save_node(node, uname, base, size);
->  	return 0;
->  }
->  
-> @@ -310,6 +305,8 @@ void __init fdt_init_reserved_mem(void)
->  {
->  	int i;
->  
-> +	fdt_scan_reserved_mem_reg_nodes();
-> +
->  	/* check for overlapping reserved regions */
->  	__rmem_check_for_overlap();
->  
-> @@ -328,30 +325,25 @@ void __init fdt_init_reserved_mem(void)
->  		if (prop)
->  			rmem->phandle = of_read_number(prop, len/4);
->  
-> -		if (rmem->size == 0)
-> -			err = __reserved_mem_alloc_size(node, rmem->name,
-> -						 &rmem->base, &rmem->size);
-> -		if (err == 0) {
-> -			err = __reserved_mem_init_node(rmem);
-> -			if (err != 0 && err != -ENOENT) {
-> -				pr_info("node %s compatible matching fail\n",
-> -					rmem->name);
-> -				if (nomap)
-> -					memblock_clear_nomap(rmem->base, rmem->size);
-> -				else
-> -					memblock_phys_free(rmem->base,
-> -							   rmem->size);
-> -			} else {
-> -				phys_addr_t end = rmem->base + rmem->size - 1;
-> -				bool reusable =
-> -					(of_get_flat_dt_prop(node, "reusable", NULL)) != NULL;
-> -
-> -				pr_info("%pa..%pa (%lu KiB) %s %s %s\n",
-> -					&rmem->base, &end, (unsigned long)(rmem->size / SZ_1K),
-> -					nomap ? "nomap" : "map",
-> -					reusable ? "reusable" : "non-reusable",
-> -					rmem->name ? rmem->name : "unknown");
-> -			}
-> +		err = __reserved_mem_init_node(rmem);
-> +		if (err != 0 && err != -ENOENT) {
-> +			pr_info("node %s compatible matching fail\n",
-> +				rmem->name);
+With:
+=================><===============================================
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index ba53df7ea30e..1cfc52d5247b 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -909,6 +909,13 @@ static const struct qcom_pdm_domain_data *sm8350_adsp_domains[] = {
+  	&adsp_charger_pd,
+  };
 
-Can be 1 line now.
++static const struct qcom_pdm_domain_data *sm8550_adsp_domains[] = {
++	&adsp_audio_pd,
++	&adsp_sensor_pd,
++	&adsp_root_pd,
++	&adsp_charger_pd,
++};
++
+  static const struct qcom_pdm_domain_data cdsp_root_pd = {
+  	.domain = "msm/cdsp/root_pd",
+  	.instance_id = 76,
+@@ -1477,8 +1484,8 @@ static const struct adsp_data sm8550_adsp_resource = {
+  	.ssr_name = "lpass",
+  	.sysmon_name = "adsp",
+  	.ssctl_id = 0x14,
+-	.domains = sm8350_adsp_domains,
+-	.num_domains = ARRAY_SIZE(sm8350_adsp_domains),
++	.domains = sm8550_adsp_domains,
++	.num_domains = ARRAY_SIZE(sm8550_adsp_domains),
+  };
 
-> +			if (nomap)
-> +				memblock_clear_nomap(rmem->base, rmem->size);
-> +			else
-> +				memblock_phys_free(rmem->base,
-> +						   rmem->size);
+  static const struct adsp_data sm8550_cdsp_resource = {
+=================><===============================================
 
-Can be 1 line now.
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 
-> +		} else {
-> +			phys_addr_t end = rmem->base + rmem->size - 1;
-> +			bool reusable =
-> +				(of_get_flat_dt_prop(node, "reusable", NULL)) != NULL;
-> +
-> +			pr_info("%pa..%pa (%lu KiB) %s %s %s\n",
-> +				&rmem->base, &end, (unsigned long)(rmem->size / SZ_1K),
-> +				nomap ? "nomap" : "map",
-> +				reusable ? "reusable" : "non-reusable",
-> +				rmem->name ? rmem->name : "unknown");
->  		}
->  	}
->  }
-> diff --git a/include/linux/of_fdt.h b/include/linux/of_fdt.h
-> index d69ad5bb1eb1..7b2a5d93d719 100644
-> --- a/include/linux/of_fdt.h
-> +++ b/include/linux/of_fdt.h
-> @@ -73,6 +73,7 @@ extern int early_init_dt_scan_root(void);
->  extern bool early_init_dt_scan(void *params);
->  extern bool early_init_dt_verify(void *params);
->  extern void early_init_dt_scan_nodes(void);
-> +extern void fdt_scan_reserved_mem_reg_nodes(void);
+Thanks,
+Neil
 
-This is internal to drivers/of/, so it goes in of_private.h
-
->  
->  extern const char *of_flat_dt_get_machine_name(void);
->  extern const void *of_flat_dt_match_machine(const void *default_match,
-> diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_mem.h
-> index 4de2a24cadc9..2a3178920bae 100644
-> --- a/include/linux/of_reserved_mem.h
-> +++ b/include/linux/of_reserved_mem.h
-> @@ -32,12 +32,14 @@ typedef int (*reservedmem_of_init_fn)(struct reserved_mem *rmem);
->  #define RESERVEDMEM_OF_DECLARE(name, compat, init)			\
->  	_OF_DECLARE(reservedmem, name, compat, init, reservedmem_of_init_fn)
->  
-> +void fdt_init_reserved_mem(void);
->  int of_reserved_mem_device_init_by_idx(struct device *dev,
->  				       struct device_node *np, int idx);
->  int of_reserved_mem_device_init_by_name(struct device *dev,
->  					struct device_node *np,
->  					const char *name);
->  void of_reserved_mem_device_release(struct device *dev);
-> +int __reserved_mem_alloc_size(unsigned long node, const char *uname);
-
-This is internal to drivers/of/, so it goes in of_private.h
-
-But really, I think fdt_scan_reserved_mem() should move to 
-of_reserved_mem.c first. Then everything you add to fdt.c goes there 
-too.
-
-Rob
 
