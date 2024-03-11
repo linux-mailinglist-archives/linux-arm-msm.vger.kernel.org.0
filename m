@@ -1,109 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-13866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0191B8787C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:42:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EC85878839
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:53:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32CAB1C21106
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:42:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEC5A28352D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:53:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD9055EE64;
-	Mon, 11 Mar 2024 18:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5519456B95;
+	Mon, 11 Mar 2024 18:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZH/G0zQT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YPAf3HK6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8A856B8F;
-	Mon, 11 Mar 2024 18:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09E0200A6;
+	Mon, 11 Mar 2024 18:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710182278; cv=none; b=LG+87U4jUfGnhLBasX8v4mZ6qzWT22YHLn5Zk6BQou5HAFg4zI6abt8JovKawZx8PXpQnY4axvx1yzG2Dwf2q5tKg1REJKfiqo3A9pLgSSWQzQAYixNPuoxVKXqoQjTOK4CWa+LoKSGHRc6mWRNmbtZUChk6DSMf9CRy1KHgdPQ=
+	t=1710182730; cv=none; b=ThCYMqCrMaZgdiLap06Y8TRGA1w919AwlRZJcEisIt0IHGuwhExlh9vDU1mLH0VZJbORp2Q0my6SXTgW8QGrXeuiffDiHdjkLu3vU01DUaylDEfuxRYrlx2JURcwy3LjgPEsT6o8/qCY6dYQb4dYJqhDQ40jFYh1xHn5QBIcTFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710182278; c=relaxed/simple;
-	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqvR58h1c2K9tvbU/tlO8vTmRtuW9clbCl7g7ttgI5lFMAYRlEx403nFsHGY4sUY11qiU5VJYSdctBJi3kfy7UwBtnEaQYg/JKiDkJsvG9mXFFOzpKmC/pn25up2scpjWKavG4ulsNMxlWuf2Ei6jpwaMbelFpKVEq5KM4PXDFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZH/G0zQT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F46C433C7;
-	Mon, 11 Mar 2024 18:37:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710182278;
-	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZH/G0zQT0MsCqaG3lXV49awkEYO0f4UJjV3fZfcnZQ1yERVHTIHqFQpOd/5FVo6He
-	 BDs3QHOC/uX+hM0EJAEb2QmgJdJZeZfrFfhh8se+j4KEAq/gaAdAvwDJSATZ9EdKDZ
-	 +u69lHgmpC8MaVDQs4ahgtAiL++QptwbKUbHpKVt3fAQ1rfomQxODDHYa7ZqnQ9IJP
-	 W7Qh5eMfSI4i9KVsrkVgdXYIk1mCre1HSiP+Dn+zxT+WQOO7lLI0Nxe67C9UzdeyFL
-	 iQwcqk02gWNkBbWVEQPV4lU/rbhdhNEdX454uSH5bVEkS9m1PxVMIH7Ju3+XWXM5c9
-	 9ulyA2dsxZ57Q==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	andy.gross@linaro.org,
-	david.brown@linaro.org,
-	robh+dt@kernel.org,
-	mark.rutland@arm.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-soc@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 05/12] arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
-Date: Mon, 11 Mar 2024 14:37:19 -0400
-Message-ID: <20240311183727.328187-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240311183727.328187-1-sashal@kernel.org>
-References: <20240311183727.328187-1-sashal@kernel.org>
+	s=arc-20240116; t=1710182730; c=relaxed/simple;
+	bh=9xm1lqYozJ2Q4DQNtfZO4FjYrrfBluZ5j0bq80UQI/A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CMEU451z3VNFx+za/ikhwPeooLr/A4dU+14nYyITcbXWqro4xfqtX2g+qmaGaq2BlPAN5M0uVeaM0gJFILAe7Sb/de3ctwJtDXHtZf8R6tntOwQq8sqLvHgpTfUObUqngCQZ1uUq0nsm/Re73eOhO4tBL3D9Ig6S8uan3NTCmBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YPAf3HK6; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33e94c12f33so1574339f8f.3;
+        Mon, 11 Mar 2024 11:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710182727; x=1710787527; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l74WDjBu+9I6yPlAa9MNJUwmc07TrFP9z9L7VLUK9nU=;
+        b=YPAf3HK6DnERas0BMVs0gM/TYzJAr15eR5RLsCWw4UolRXL/rPikZv0h18kEm/6/Gb
+         JKwGEe4t1eX6BuKOMIVzOXTgTiMhSbJKg2UQCUYKVnWnzJzVZM0PttWRxrTRxTioqzte
+         suhToWmgwhjl6Jt63+K+7Cx+K59voE+7arHZzjy5RQiv56BL2l3O2dBVepMqjjVs5kKl
+         TOOolasv9KuXIzFaoEiFkR01sgJXtsDhImJbgFukWq+/CoyUZIomLMo4w1P99sTHaWcR
+         AvaBZZCJU487IeRND4TeCBXPswi7ECEXuIfiD5vvVaBunXZ167OgA73knt1JCJ3T80co
+         eNCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710182727; x=1710787527;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l74WDjBu+9I6yPlAa9MNJUwmc07TrFP9z9L7VLUK9nU=;
+        b=XcxLnQl3PmWIB8R8dd53IUNsxJ+WXCrHyuFM98xiVqoY2VPkrka0TFw2P2UqNVEXIv
+         /0zJ9t9SKqjf+VUn1dfnFSB8i0J1No5wV0kr3LQg/Sxn7VqHxfgMs0tjpICrL8pxTqcX
+         oPY7Pq/5WY1cqzcerFZ5hDsFKRBF5EFpYkVYw/wTZWN77Tb4qvHk/feNOqaioI8n6yj9
+         tR9TzqP5HxpHC2uvIYdGU/hlbt1g02+6OKAFhc1wI0t2MO/F3vAHNT320aUbM8vdhgQg
+         N/+iut+d25zmGoW5VhL1H58SHmEgFxmw1GKKzFvQyadXwa2+P+ydyNULBDzMlK/mJMDU
+         ueiA==
+X-Forwarded-Encrypted: i=1; AJvYcCVJOsuuWXSJlVwz84NN7sd3W3BGfTTpy3Mpzk7YOz0kq+bKY+WnbmQse0yq/Q3CJ8HTVg5gsFJw2SsC5SjAic6Lq/zkl7V9r/XXyAJrx6IQDvAKRyr4FTmaWUSl4qwFFHWV4tsWW1PC
+X-Gm-Message-State: AOJu0YykMKKcvrn1jk3Ce8Z4psIFMXLKcbmD1XWoIJ2weFBeinLXuzlm
+	vHrsP1H/AumBjxKo1KzgMdRXiAqdYoGXlZz+f/woGQ80c1SYUWVV
+X-Google-Smtp-Source: AGHT+IH+numVysLS2NubI1tk/3R4g5ig7yCmWUjxwfZ17CiPmqsqLqsoPGyLe/EW7iG/HtwyLvZh6Q==
+X-Received: by 2002:a05:6000:230:b0:33e:96ba:2d48 with SMTP id l16-20020a056000023000b0033e96ba2d48mr2008411wrz.57.1710182726844;
+        Mon, 11 Mar 2024 11:45:26 -0700 (PDT)
+Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id a11-20020adff7cb000000b0033b48190e5esm7012080wrq.67.2024.03.11.11.45.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Mar 2024 11:45:26 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH 0/2] clk: qcom: clk-alpha-pll: Stromer register cleanup
+Date: Mon, 11 Mar 2024 19:45:18 +0100
+Message-Id: <20240311-alpha-pll-stromer-cleanup-v1-0-f7c0c5607cca@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.6.21
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD5R72UC/x3MQQqDMBBA0avIrDuQRGOgVyldpDptBmIME5VC8
+ O4Gl2/xf4VCwlTg2VUQOrjwmhr0o4Mp+PQj5LkZjDKD6rVGH3PwmGPEssm6kOAUyac9o9If6xw
+ 5a8YBWp+Fvvy/36/3eV57fkT6awAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>, 
+ Sricharan R <quic_srichara@quicinc.com>, 
+ Kathiravan T <quic_kathirav@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.12.3
 
-From: Johan Hovold <johan+linaro@kernel.org>
+This small set contains two patches which are intended to clean
+up the Stromer specific register offsets in 'clk_alpha_pll_regs'
+a bit.
 
-[ Upstream commit db8138845cebcdd0c709570b8217bd052757b8df ]
+Based on v6.8.
 
-Limit the WiFi PCIe link speed to Gen2 speed (500 MB/s), which is the
-speed that Windows uses.
-
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240223152124.20042-7-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 2 ++
- 1 file changed, 2 insertions(+)
+Gabor Juhos (2):
+      clk: qcom: clk-alpha-pll: remove invalid Stromer register offset
+      clk: qcom: clk-alpha-pll: reorder Stromer register offsets
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index ffc4406422ae2..41215567b3aed 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -563,6 +563,8 @@
- };
- 
- &pcie4 {
-+	max-link-speed = <2>;
-+
- 	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
- 
+ drivers/clk/qcom/clk-alpha-pll.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+---
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
+change-id: 20240311-alpha-pll-stromer-cleanup-01b577e75264
+
+Best regards,
 -- 
-2.43.0
+Gabor Juhos <j4g8y7@gmail.com>
 
 
