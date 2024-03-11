@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-13865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86D4A87878A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:38:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0191B8787C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:42:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 424F5285917
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:38:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32CAB1C21106
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:42:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 344BD57871;
-	Mon, 11 Mar 2024 18:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD9055EE64;
+	Mon, 11 Mar 2024 18:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gXdi7d7P"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZH/G0zQT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0180E5788B;
-	Mon, 11 Mar 2024 18:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8A856B8F;
+	Mon, 11 Mar 2024 18:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710182207; cv=none; b=YHPub1tGiTCdRwMbxcFa5s8nmhcd1rzdeHMI6shkEMgse6t99Jyokrqx+J/8jH7nxAfw9hd+U5wl05VdE0xJ3VSqDgCDsQNe5y8PkbGhyzFLLGbW9zeZDsEthrcsvQIUZdNCFYhSyzSLP41Pkk7Jb5BptTJ2dAGeKfOHt3KzaQU=
+	t=1710182278; cv=none; b=LG+87U4jUfGnhLBasX8v4mZ6qzWT22YHLn5Zk6BQou5HAFg4zI6abt8JovKawZx8PXpQnY4axvx1yzG2Dwf2q5tKg1REJKfiqo3A9pLgSSWQzQAYixNPuoxVKXqoQjTOK4CWa+LoKSGHRc6mWRNmbtZUChk6DSMf9CRy1KHgdPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710182207; c=relaxed/simple;
+	s=arc-20240116; t=1710182278; c=relaxed/simple;
 	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQr4DAxIQ4Q9981+z3sXvkF1snGLuDDOVxd/cRYtu0nmwRvTlAWTJp8p2oQc+RGW95J6K75KG8Ih2K72rGqFxq+vjNnYgM4CrhN114ahVSHYBINlmH8eldKizdUSN5yUswbND2fxegASaD20XYgFhajOlSfeQzUMvTm1xgeccH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gXdi7d7P; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAA4C43390;
-	Mon, 11 Mar 2024 18:36:43 +0000 (UTC)
+	 MIME-Version; b=uqvR58h1c2K9tvbU/tlO8vTmRtuW9clbCl7g7ttgI5lFMAYRlEx403nFsHGY4sUY11qiU5VJYSdctBJi3kfy7UwBtnEaQYg/JKiDkJsvG9mXFFOzpKmC/pn25up2scpjWKavG4ulsNMxlWuf2Ei6jpwaMbelFpKVEq5KM4PXDFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZH/G0zQT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F46C433C7;
+	Mon, 11 Mar 2024 18:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710182206;
+	s=k20201202; t=1710182278;
 	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXdi7d7PiL2ZsP8LlxeRWcHq6s//+XiS3dknpwlJ1jjB0XsZ6/8UpzQ7R9ub6LILl
-	 LzlotnxuTETVwPGTHpcn7HvjD3LAx41FftnF9qgvNZT5Px9V528QCI2Lf9Ibx9x7uH
-	 DUHZ2l6gY59WF7ijyjDCB+zVkZrTRHPHRQ3rqTtPlTFN08PrO9/gu3cj6cBKfrL0L8
-	 w4BqyjJP/WiLDm2t+C1HpncQ5S7A0h3SlBDjQhytF523fbn0srbuMRuntVYd0mdU4U
-	 BtkSCD/cqq0fEgMpMsjm+cTGJ3oanQJOJsLR5OS4YXUad4zxVTm/kVqVnG+RcYTzZy
-	 kgchEl9Jdzy9g==
+	b=ZH/G0zQT0MsCqaG3lXV49awkEYO0f4UJjV3fZfcnZQ1yERVHTIHqFQpOd/5FVo6He
+	 BDs3QHOC/uX+hM0EJAEb2QmgJdJZeZfrFfhh8se+j4KEAq/gaAdAvwDJSATZ9EdKDZ
+	 +u69lHgmpC8MaVDQs4ahgtAiL++QptwbKUbHpKVt3fAQ1rfomQxODDHYa7ZqnQ9IJP
+	 W7Qh5eMfSI4i9KVsrkVgdXYIk1mCre1HSiP+Dn+zxT+WQOO7lLI0Nxe67C9UzdeyFL
+	 iQwcqk02gWNkBbWVEQPV4lU/rbhdhNEdX454uSH5bVEkS9m1PxVMIH7Ju3+XWXM5c9
+	 9ulyA2dsxZ57Q==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -56,12 +56,12 @@ Cc: Johan Hovold <johan+linaro@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-soc@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.7 05/14] arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
-Date: Mon, 11 Mar 2024 14:36:08 -0400
-Message-ID: <20240311183618.327694-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 05/12] arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
+Date: Mon, 11 Mar 2024 14:37:19 -0400
+Message-ID: <20240311183727.328187-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240311183618.327694-1-sashal@kernel.org>
-References: <20240311183618.327694-1-sashal@kernel.org>
+In-Reply-To: <20240311183727.328187-1-sashal@kernel.org>
+References: <20240311183727.328187-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.7.9
+X-stable-base: Linux 6.6.21
 Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
