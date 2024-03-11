@@ -1,113 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-13864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D6398786FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:08:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86D4A87878A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 19:38:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A376280F93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:08:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 424F5285917
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:38:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89DC056751;
-	Mon, 11 Mar 2024 18:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 344BD57871;
+	Mon, 11 Mar 2024 18:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uo9vuj8g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gXdi7d7P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A83556759
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 18:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0180E5788B;
+	Mon, 11 Mar 2024 18:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710180494; cv=none; b=tbH/6XE/EKJRrKdMM7hg5ge+Vogld5iQH3Mg2XQmtsvAMAFtqhomxkqTraVx5MP5JMFVAzTk5lcZ6J4KW10wovywxN2uw1NFoWklI7fw5PtW7nKlMY7dsRZyu5mm2uY57aRmJ95gV5s5u+Lj6dvZB5xA71/oGOOHsFkKyid4cF0=
+	t=1710182207; cv=none; b=YHPub1tGiTCdRwMbxcFa5s8nmhcd1rzdeHMI6shkEMgse6t99Jyokrqx+J/8jH7nxAfw9hd+U5wl05VdE0xJ3VSqDgCDsQNe5y8PkbGhyzFLLGbW9zeZDsEthrcsvQIUZdNCFYhSyzSLP41Pkk7Jb5BptTJ2dAGeKfOHt3KzaQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710180494; c=relaxed/simple;
-	bh=Cmko//sBJYEqC6CF+c84J08C8jz6SB2p1fGLA87CQjs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UVOEUoOmWrl5Sf/seNQA+xDjb+rgzFYLYLgua3kMiP6Iv+wPGHIkzomhoF8ZI0bt9RLll/5s49U1sK+nUSvN+oqN5U6hqBqoEC/rSj7sFYdDfJxzl5eNMjGsA5BgLLC/QJpX/47zzFEPd7QrCcxArsLT27KEvGyIt85u6FLlWSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uo9vuj8g; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-51331634948so5150701e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 11:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710180491; x=1710785291; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GdAvpgJ6KgtulG4GgWKU8j8WvSWhLjlXYs9zNUw6VUE=;
-        b=Uo9vuj8gwrHx/bvSppMS/FxpZC+4jLr/WPNPa71Okf6H5teaCrQc1XixnzJgm/LbY9
-         07zyHy14VPNN2zNpgb5m+189VFhfHAgC4zu8n5HFgpnphTGOR9N1LVsnc8acLCPkhSAT
-         LyLY54BBFjMYpvD+eVa3tx6Hah+T38P132/GE5ffg5ZaBNE5OzRFPwdNMpc2PQtQUKrC
-         TkybuDKbDfx3FG8FGImwaniKNUPlBELcrMHY/7eVfAfOWd0LEyGoi0H7sH4cg0hnT1J1
-         i0sBHoAg3uQsACWRCmgmm5s5VmFF/zXsR4AFegH5UZKiNhpChWZAiErW4Ud0CJ3L0QA5
-         8HaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710180491; x=1710785291;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GdAvpgJ6KgtulG4GgWKU8j8WvSWhLjlXYs9zNUw6VUE=;
-        b=P3o8OFHbKOAs7Gox4NA7IrfYjSTu6GBYFLJ9Wxk83eGYRyjh/NySCd8z2SIV04QcVH
-         /I7uhqzaqqh2zhK0VsYTi3ixm+nxLp2jaEJbCO2yeqnjivsjQI6CTpd0EOcNlTiLP22S
-         Wvs50j3mKo53BoRUpwwhIBNF9WMiVSFi7WVoMwLNVdDT4l1zwkB5A1KuFOvDwUfwquk9
-         m6GsZE0S6aSf2n9Ctc5//dC58dRtk9Hl3SJfdx2buFuHXX/BWM3mmopw5WvYH13oKMrJ
-         jWYZMxmeL3AiPpJaRuHzvn+k3MyAA2l/UqflWnoo8M1MkLeas9EIjdx56bY3mQljhEM/
-         NqkA==
-X-Gm-Message-State: AOJu0Yxd5/KlRTpDGBUyoTyBJLbiN6/sAkFD11wbeCbjQ9bTZA/1deJ0
-	fkJtKOQq3m3kf4LcDogKfRdOGoJqo8xWGQOY1uH2THg2zSfcmX2taImB8eRq/5J6x/9JEc2UsOA
-	iYDc=
-X-Google-Smtp-Source: AGHT+IGWxtUfvowwbYHZ81ILlBPneI8LPDnoaGfZGl2zcauoCYrxYCX6xPC0K5XwQynu0RSwe2iq1Q==
-X-Received: by 2002:a05:6512:476:b0:513:9be7:7112 with SMTP id x22-20020a056512047600b005139be77112mr2399808lfd.29.1710180490668;
-        Mon, 11 Mar 2024 11:08:10 -0700 (PDT)
-Received: from [172.30.205.61] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id k22-20020ac24f16000000b00513b61bc392sm11724lfr.2.2024.03.11.11.08.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Mar 2024 11:08:10 -0700 (PDT)
-Message-ID: <e19ca61f-894e-40c8-86b9-dbd42df4aa46@linaro.org>
-Date: Mon, 11 Mar 2024 19:08:06 +0100
+	s=arc-20240116; t=1710182207; c=relaxed/simple;
+	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZQr4DAxIQ4Q9981+z3sXvkF1snGLuDDOVxd/cRYtu0nmwRvTlAWTJp8p2oQc+RGW95J6K75KG8Ih2K72rGqFxq+vjNnYgM4CrhN114ahVSHYBINlmH8eldKizdUSN5yUswbND2fxegASaD20XYgFhajOlSfeQzUMvTm1xgeccH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gXdi7d7P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAA4C43390;
+	Mon, 11 Mar 2024 18:36:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710182206;
+	bh=TrTV18yl4VRw9q2qnX3Xx3k96Du1jyisaNz4ZlqRnRU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=gXdi7d7PiL2ZsP8LlxeRWcHq6s//+XiS3dknpwlJ1jjB0XsZ6/8UpzQ7R9ub6LILl
+	 LzlotnxuTETVwPGTHpcn7HvjD3LAx41FftnF9qgvNZT5Px9V528QCI2Lf9Ibx9x7uH
+	 DUHZ2l6gY59WF7ijyjDCB+zVkZrTRHPHRQ3rqTtPlTFN08PrO9/gu3cj6cBKfrL0L8
+	 w4BqyjJP/WiLDm2t+C1HpncQ5S7A0h3SlBDjQhytF523fbn0srbuMRuntVYd0mdU4U
+	 BtkSCD/cqq0fEgMpMsjm+cTGJ3oanQJOJsLR5OS4YXUad4zxVTm/kVqVnG+RcYTzZy
+	 kgchEl9Jdzy9g==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	andy.gross@linaro.org,
+	david.brown@linaro.org,
+	robh+dt@kernel.org,
+	mark.rutland@arm.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-soc@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.7 05/14] arm64: dts: qcom: sc8280xp-crd: limit pcie4 link speed
+Date: Mon, 11 Mar 2024 14:36:08 -0400
+Message-ID: <20240311183618.327694-5-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240311183618.327694-1-sashal@kernel.org>
+References: <20240311183618.327694-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the
- parent GDSC of subordinate GDSCs
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240311-linux-next-camcc-fixes-v1-0-d126ae0b9350@linaro.org>
- <20240311-linux-next-camcc-fixes-v1-2-d126ae0b9350@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240311-linux-next-camcc-fixes-v1-2-d126ae0b9350@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.7.9
+Content-Transfer-Encoding: 8bit
 
+From: Johan Hovold <johan+linaro@kernel.org>
 
+[ Upstream commit db8138845cebcdd0c709570b8217bd052757b8df ]
 
-On 3/11/24 01:33, Bryan O'Donoghue wrote:
-> The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-> block. None of the subordinate blocks will switch on without the parent
-> GDSC switched on.
-> 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
+Limit the WiFi PCIe link speed to Gen2 speed (500 MB/s), which is the
+speed that Windows uses.
 
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240223152124.20042-7-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Konrad
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index ffc4406422ae2..41215567b3aed 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -563,6 +563,8 @@
+ };
+ 
+ &pcie4 {
++	max-link-speed = <2>;
++
+ 	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
+ 	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
+ 
+-- 
+2.43.0
+
 
