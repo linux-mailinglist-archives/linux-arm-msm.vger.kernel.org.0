@@ -1,172 +1,298 @@
-Return-Path: <linux-arm-msm+bounces-13844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A45EF878585
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:33:12 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 805118785C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:52:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19CA2B20E65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:33:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D0321F21752
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:52:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA9BB39AE3;
-	Mon, 11 Mar 2024 16:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8910481A6;
+	Mon, 11 Mar 2024 16:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MdKPVX7t"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="poNd9bed"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04CE138E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 16:33:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F8F4D110;
+	Mon, 11 Mar 2024 16:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710174783; cv=none; b=gXuSrUXY/fexBQtDfqgmnS2lVg/RJVI5/w+9xGfU9gOI/c/6C6G/f1IXtKF/9b49fAx7eZme33IbLU/Thgz+h/5Im9TeS5x4EimwiZRAYnzQU0NUCRTAVnlEi1wmem7GDXrLFRwu28j4zMYkkniP771xXFGipYPyZ/1b7K0/Cz0=
+	t=1710175948; cv=none; b=Ecbm1WZgq463QuoR1hj+yWU4mJNE5yoKq1WkcHvfCsBxKaxOtCDTsKXdoNSs1zwbkPNICQ9LfaF6RKekd8AY85FjMHXyVg1ClcARQoiKA2kTr3FOeHA7Ujh0gZKZunjSwsDP++tQ/t7bG1dDr/tgrLbk090viwaiCIgqqRPk+60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710174783; c=relaxed/simple;
-	bh=WZLO8M/4WI+CDv5TBdW9BwGlriBycF8dmZtjvyRxhnI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WnlJsfmD0oX+67b7eF0eoI4RX+COKw+m+KylJHGFk4vTus3X/2BsorT1LFIwCim5+lCX+zwWzFjqtfJ9ZzacncBkaUFc05QvWqoWU2oEb1ju+CXGCyHIrSOXhvmpIkrueFQF6/ZtgytU+7mR7Kde/E3VWCaTRI2OxCcLWI9Zakk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MdKPVX7t; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4132a348546so6685455e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 09:33:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710174780; x=1710779580; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mS3DWg/0hLk/7gJjH9QuhKXL8RzD1S7CeytVtDEm8eA=;
-        b=MdKPVX7tl8LHv5C3YdO1FJLQtf3GhSGwkWkQVjnEN0NIQsOUgMTSqwvo9HQkhybGK6
-         JcZhQXPscRlA6hWBStean5FcXwxQlR/KDx/ZP8hmvppLvU3/+NOTbW9rHX/CX9Bze2yt
-         KDzsgKk0egvP1JMh7sN6L8Y2Os2sZlowNZl8V7f1fH/BnfCLCYfcZD7dSengooO5KpO3
-         wSCHs45/P1fdW6t7A4mrxlojyCxIpw7W2W2pb+0zFP5oyqh6TU4Et62iw2iu+6lURvco
-         hjkz633vyuG7Tg87pNdOxqG1GkOoeMtjYyVEucYUZ2TRmaDudSpmpmKsjnXrgucOYK4X
-         CrsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710174780; x=1710779580;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mS3DWg/0hLk/7gJjH9QuhKXL8RzD1S7CeytVtDEm8eA=;
-        b=nDoJ2LCKX9cTEju/cWtpFGpr+9MoexYojYWGJmmoR0sn7QeqW2AIUFUeY1penw/x+w
-         6AhMojCck4Lla769uw71inmUzyklicvHJMRHUq1X29GnO6IVIUwVU8y/+4Nd1NBZ34Sd
-         o2rP4Q2i/lB0rbexgdNUkn37Iy6NvoLiVhY8fRJMKVluxKN+iDpe7O3ahzTqtxvG1pgn
-         8zGkRJ5ebJuNyQxlh+TqvT/LD0x2yOLdpqwv+iffDIJvfVG/cohs/ez5nEbLH+OMaBhx
-         VbnXxappgqXunG+lJImJ+D0czz0XFvw1+P5OjXcuVNv5+ew0ougr2IJPQmsE09AH8vty
-         eBhg==
-X-Gm-Message-State: AOJu0Ywf4lRwQOnJ+AfJIKQ7Gu2QsKgIg2vugQI3MeJq0KUKvdXtxA4m
-	jK1oCvKy9E2kzuz1i1heETl18zrRZRCFdF6PHMO1i5I6ISFoAG4l7TBjLWRjYDA=
-X-Google-Smtp-Source: AGHT+IHEFlsphKFKoKSuE0lV/KDuTdtdXcTnvE5N1afX+GQNT93PwQBxSPDbElFKcBCcoBhSICbaCg==
-X-Received: by 2002:a05:600c:19ca:b0:413:1258:82f with SMTP id u10-20020a05600c19ca00b004131258082fmr6005691wmq.1.1710174780248;
-        Mon, 11 Mar 2024 09:33:00 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b004132f5b44aasm1432236wmr.13.2024.03.11.09.32.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Mar 2024 09:32:59 -0700 (PDT)
-Message-ID: <db09be58-f6e4-40aa-b558-5b2472c94747@linaro.org>
-Date: Mon, 11 Mar 2024 17:32:58 +0100
+	s=arc-20240116; t=1710175948; c=relaxed/simple;
+	bh=kSKxbHU3xiEOgYOp0bCxr/3ERIewJ50ZvLhy6RaOa9c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kXiCpMsSX/VrakuAksJlM0oBi0D/Shmosx9isMVfuxqyauygJanEDKomqWrvtB6/3kQLkmc8hWczLM3HbG1qI9qW1RKQg3jKJo0Fbsz8RYi4HMnLRaONh0A9+3EvEcZLHYhMRy9/FtJgPSHiedxhO6cb4PaE0LWkgCZmRfC1GBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=poNd9bed; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B7t52a004010;
+	Mon, 11 Mar 2024 16:51:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=DJsySqRf7nCURDT9iP0DaCaSIGev0XqvLhdnQhcBmAA=; b=po
+	Nd9bedqRB5wiBWPwb4N3JgfTwG39s6itx+xi1A30yt9dxdTAklyYjhEZLAIY828T
+	8ho/Wz9f1MN5mPPREkmNRauyGq8vq0mNacoHYSOFe8ryMRLHly5kW02Hr/3fW+NJ
+	IRQrinl7FKvUIaJYWy/LW86Ehpi08OYxKYUoj6/HzfXmWy9B3gbUPHjK/F25UUKK
+	FsYtsPWcBGLaNBI5sOTh4ZO0a2rrHcjYwnLCa+BBaoOrVISYZcV+X7ZMY7PDRr12
+	ijSmnoKx8KIf3gzUcTidSzCilU9JFZ/2ZHD2ApV3SSTilxDBzT22jjBCIejkxTrP
+	rW9aB827VWApoH6SRYFw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wswyj9g34-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 16:51:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42BGpY7L018153
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Mar 2024 16:51:34 GMT
+Received: from [10.110.79.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Mar
+ 2024 09:51:30 -0700
+Message-ID: <b1ae6e39-10c3-0ee1-11f4-3436c3e4ec1a@quicinc.com>
+Date: Mon, 11 Mar 2024 09:51:29 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: qdu1000: Add USB3 and PHY support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: drm/msm: DisplayPort hard-reset on hotplug regression in 6.8-rc1
 Content-Language: en-US
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Amrit Anand <quic_amrianan@quicinc.com>
-References: <20240311120859.18489-1-quic_kbajaj@quicinc.com>
- <20240311120859.18489-2-quic_kbajaj@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240311120859.18489-2-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To: Johan Hovold <johan@kernel.org>
+CC: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Daniel Thompson" <daniel.thompson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson
+	<quic_bjorande@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <regressions@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>
+References: <Zd3kvD02Qvsh2Sid@hovoldconsulting.com>
+ <ZesH21DcfOldRD9g@hovoldconsulting.com>
+ <56de6cfb-fe0f-de30-d4d0-03c0fbb0afbb@quicinc.com>
+ <ZeyOmJLlBbwnmaJN@hovoldconsulting.com>
+ <Ze8Ke_M2xHyPYCu-@hovoldconsulting.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <Ze8Ke_M2xHyPYCu-@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BX2bXjfYCQi2RS20pNe9if4sN1kzV9zE
+X-Proofpoint-ORIG-GUID: BX2bXjfYCQi2RS20pNe9if4sN1kzV9zE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_10,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
+ mlxlogscore=999 phishscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403110127
 
-On 11/03/2024 13:08, Komal Bajaj wrote:
-> @@ -6,6 +6,7 @@
->  #include <dt-bindings/clock/qcom,qdu1000-gcc.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
-> +#include <dt-bindings/interconnect/qcom,icc.h>
->  #include <dt-bindings/interconnect/qcom,qdu1000-rpmh.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
-> @@ -913,6 +914,124 @@ opp-384000000 {
->  			};
->  		};
+
+
+On 3/11/2024 6:43 AM, Johan Hovold wrote:
+> On Sat, Mar 09, 2024 at 05:30:17PM +0100, Johan Hovold wrote:
+>> On Fri, Mar 08, 2024 at 09:50:17AM -0800, Abhinav Kumar wrote:
+>>> On 3/8/2024 4:43 AM, Johan Hovold wrote:
+>>
+>>> For this last remaining reset with the stacktrace you have mentioned
+>>> below, I do not think this was introduced due to PM runtime series. We
+>>> have had this report earlier with the same stacktrace as well in earlier
+>>> kernels which didnt have PM runtime support:
+>>
+>>> But, it seems like there is another race condition in this code
+>>> resulting in this issue again.
+>>>
+>>> I have posted my analysis with the patch here as a RFC y'day:
+>>>
+>>> https://patchwork.freedesktop.org/patch/581758/
+>>>
+>>> I missed CCing you and Bjorn on the RFC but when I post it as a patch
+>>> either today/tomm, will CC you both.
+>>
+>> Ok, thanks. I'll take a closer look at that next week. It's not clear to
+>> me what that race looks like after reading the commit message. It would
+>> be good to have some more details in there (e.g. the sequence of events
+>> that breaks the state machine) and some way to reproduce the issue
+>> reliably.
 > 
-> +		usb_1_hsphy: phy@88e3000 {
-> +			compatible = "qcom,qdu1000-usb-hs-phy",
-> +				     "qcom,usb-snps-hs-7nm-phy";
-> +			reg = <0x0 0x088e3000 0x0 0x120>;
-> +			#phy-cells = <0>;
-> +
-> +			clocks =<&gcc GCC_USB2_CLKREF_EN>;
-> +			clock-names = "ref";
-> +
-> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		usb_1_qmpphy: phy-wrapper@88e5000 {
+> I was able to reproduce the reset with some of my debug printks in place
+> after reapplying the reverted hpd notify change so I have an explanation
+> for (one of) the ways we can up in this state now.
+> 
+> This does not match description of the problem in the fix linked to
+> above and I don't think that patch solves the underlying issue even if
+> it may make the race window somewhat smaller. More details below.
+>   
 
-That's a phy, isn't it? So node name "phy".
+Its the same condition you described below that enable does not go 
+through and we bail out as we are in ST_DISCONNECTED.
 
-Best regards,
-Krzysztof
+>>>> We now also have Bjorn's call trace from a different Qualcomm platform
+>>>> triggering an unclocked access on disconnect, something which would
+>>>> trigger a reset by the hypervisor on sc8280xp platforms like the X13s:
+>>
+>>>> [ 2030.379583] Kernel panic - not syncing: Asynchronous SError Interrupt
+>>>> [ 2030.379586] CPU: 0 PID: 239 Comm: kworker/0:2 Not tainted 6.8.0-rc4-next-20240216-00015-gc937d3c43ffe-dirty #219
+>>>> [ 2030.379590] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+>>>> [ 2030.379592] Workqueue: events output_poll_execute [drm_kms_helper]
+>>>> [ 2030.379642] Call trace:
+>>
+>>>> [ 2030.379722]  wait_for_completion_timeout+0x14/0x20
+>>>> [ 2030.379727]  dp_ctrl_push_idle+0x34/0x8c [msm]
+>>>> [ 2030.379844]  dp_bridge_atomic_disable+0x18/0x24 [msm]
+>>>> [ 2030.379959]  drm_atomic_bridge_chain_disable+0x6c/0xb4 [drm]
+>>>> [ 2030.380150]  drm_atomic_helper_commit_modeset_disables+0x174/0x57c [drm_kms_helper]
+>>>> [ 2030.380200]  msm_atomic_commit_tail+0x1b4/0x474 [msm]
+>>>> [ 2030.380316]  commit_tail+0xa4/0x158 [drm_kms_helper]
+>>>> [ 2030.380369]  drm_atomic_helper_commit+0x24c/0x26c [drm_kms_helper]
+>>>> [ 2030.380418]  drm_atomic_commit+0xa8/0xd4 [drm]
+>>>> [ 2030.380529]  drm_client_modeset_commit_atomic+0x16c/0x244 [drm]
+>>>> [ 2030.380641]  drm_client_modeset_commit_locked+0x50/0x168 [drm]
+>>>> [ 2030.380753]  drm_client_modeset_commit+0x2c/0x54 [drm]
+>>>> [ 2030.380865]  __drm_fb_helper_restore_fbdev_mode_unlocked+0x60/0xa4 [drm_kms_helper]
+>>>> [ 2030.380915]  drm_fb_helper_hotplug_event+0xe0/0xf4 [drm_kms_helper]
+>>>> [ 2030.380965]  msm_fbdev_client_hotplug+0x28/0xc8 [msm]
+>>>> [ 2030.381081]  drm_client_dev_hotplug+0x94/0x118 [drm]
+>>>> [ 2030.381192]  output_poll_execute+0x214/0x26c [drm_kms_helper]
+>>>> [ 2030.381241]  process_scheduled_works+0x19c/0x2cc
+>>>> [ 2030.381249]  worker_thread+0x290/0x3cc
+>>>> [ 2030.381255]  kthread+0xfc/0x184
+>>>> [ 2030.381260]  ret_from_fork+0x10/0x20
+>>>>
+>>>> The above could happen if the convoluted hotplug state machine breaks
+>>>> down so that the device is runtime suspended before
+>>>> dp_bridge_atomic_disable() is called.
+>>
+>>> Yes, state machine got broken and I have explained how in the commit
+>>> text of the RFC. But its not necessarily due to PM runtime but a
+>>> sequence of events happening from userspace exposing this breakage.
+>>
+>> After looking at this some more today, I agree with you. The
+>> observations I've reported are consistent with what would happen if the
+>> link clock is disabled when dp_bridge_atomic_disable() is called.
+>>
+>> That clock is disabled in dp_bridge_atomic_post_disable() before runtime
+>> suspending, but perhaps there are some further paths that can end up
+>> disabling it.
+> 
+> Turns out there are paths like that and we hit those more often before
+> reverting e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify().
+> 
+> Specifically, when a previous connect attempt did not enable the bridge
+> fully so that it is still in the ST_MAINLINK_READY when we receive a
+> disconnect event, dp_hpd_unplug_handle() will turn of the link clock.
+> 
+> [  204.527625] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
+> [  204.531553] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
+> [  204.533261] msm-dp-display ae98000.displayport-controller: dp_ctrl_off_link
+> 
+> A racing connect event, such as the one I described earlier, can then
+> try to enable the bridge again but dp_bridge_atomic_enable() just bails
+> out early (and leaks a rpm reference) because we're now in
+> ST_DISCONNECTED:
+> 
+> [  204.535773] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
+> [  204.536187] [CONNECTOR:35:DP-2] status updated from disconnected to connected
+> [  204.536905] msm-dp-display ae98000.displayport-controller: dp_display_notify_disconnect - would clear link ready (1), state = 0
+> [  204.537821] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_check - link_ready = 1
+> [  204.538063] msm-dp-display ae98000.displayport-controller: dp_display_send_hpd_notification - hpd = 0, link_ready = 1
+> [  204.542778] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable
+> [  204.586547] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable - state = 0 (rpm leak?)
+> 
+> Clearing link_ready already in dp_display_notify_disconnect() would make
+> the race window slightly smaller, but it would essentially just paper
+> over the bug as the events are still not serialised. Notably, there is
+> no user space interaction involved here and it's the spurious connect
+> event that triggers the bridge enable.
+> 
 
+Yes, it only narrows down the race condition window. The issue can still 
+happen if the commit / modeset was issued before we marked link_ready as 
+false.
+
+And yes, I was only targetting a short term fix till we rework the HPD. 
+That will happen only incrementally as its a delicate piece of code.
+
+> When the fbdev hotplug code later disables the never-enabled bridge,
+> things go boom:
+> 
+> [  204.649072] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 0, status = 2
+> [  204.650378] [CONNECTOR:35:DP-2] status updated from connected to disconnected
+> [  204.651111] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_disable
+> 
+> as the link clock has already been disabled when accessing the link
+> registers.
+> 
+> The stack trace for the bridge enable above is:
+> 
+> [  204.553922]  dp_bridge_atomic_enable+0x40/0x2f0 [msm]
+> [  204.555241]  drm_atomic_bridge_chain_enable+0x54/0xc8 [drm]
+> [  204.556557]  drm_atomic_helper_commit_modeset_enables+0x194/0x26c [drm_kms_helper]
+> [  204.557853]  msm_atomic_commit_tail+0x204/0x804 [msm]
+> [  204.559173]  commit_tail+0xa4/0x18c [drm_kms_helper]
+> [  204.560450]  drm_atomic_helper_commit+0x19c/0x1b0 [drm_kms_helper]
+> [  204.561743]  drm_atomic_commit+0xa4/0xdc [drm]
+> [  204.563065]  drm_client_modeset_commit_atomic+0x22c/0x298 [drm]
+> [  204.564402]  drm_client_modeset_commit_locked+0x60/0x1c0 [drm]
+> [  204.565733]  drm_client_modeset_commit+0x30/0x58 [drm]
+> [  204.567055]  __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xfc [drm_kms_helper]
+> [  204.568381]  drm_fb_helper_hotplug_event.part.0+0xd4/0x110 [drm_kms_helper]
+> [  204.569708]  drm_fb_helper_hotplug_event+0x38/0x44 [drm_kms_helper]
+> [  204.571032]  msm_fbdev_client_hotplug+0x28/0xd4 [msm]
+> [  204.572395]  drm_client_dev_hotplug+0xcc/0x130 [drm]
+> [  204.573755]  drm_kms_helper_connector_hotplug_event+0x34/0x44 [drm_kms_helper]
+> [  204.575114]  drm_bridge_connector_hpd_cb+0x90/0xa4 [drm_kms_helper]
+> [  204.576465]  drm_bridge_hpd_notify+0x40/0x5c [drm]
+> [  204.577842]  drm_aux_hpd_bridge_notify+0x18/0x28 [aux_hpd_bridge]
+> [  204.579184]  pmic_glink_altmode_worker+0xc0/0x23c [pmic_glink_altmode]
+> 
+>>>> For some reason, possibly due to unrelated changes in timing, possibly
+>>>> after the hotplug revert, I am no longer able to reproduce the reset
+>>>> with 6.8-rc7 on the X13s.
+>>
+>>> I do not know how the hotplug revert fixed this stack because I think
+>>> this can still happen.
+> 
+> So, while it may still be theoretically possible to hit the resets after
+> the revert, the HPD notify revert effectively "fixed" the regression in
+> 6.8-rc1 by removing the preconditions that now made us hit it (i.e. the
+> half-initialised bridge).
+> 
+
+Not entirely. In the bug which was reported before the patch 
+e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify() got landed, its a 
+classic example of how this issue can happen with userspace involvement 
+and not just fbdev client which was your case.
+
+> It seems the hotplug state machine needs to be reworked completely, but
+> at least we're roughly back where we were with 6.7 (including that the
+> bus clocks will never be turned of because of the rpm leaks on
+> disconnect).
+> 
+
+Yes, we already landed that revert but I am also planning to land the 
+patch I had posted till we rework HPD.
+
+> Johan
 
