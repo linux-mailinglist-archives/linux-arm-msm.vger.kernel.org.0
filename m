@@ -1,130 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-13840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD16878442
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:55:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B99B87855D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:28:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D29DB209B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:55:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 022E91F22C30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:28:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E3FF44C6E;
-	Mon, 11 Mar 2024 15:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A57E5645B;
+	Mon, 11 Mar 2024 16:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LuNb+mYX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ExQ5/Xjt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF7A4207B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 15:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BEE524AE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 16:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710172550; cv=none; b=KDupEUuVk/t8DluXnRpKIu09561pBPcjkDq2Y7jUTiscJrvpMN3eYUb11UItzCVp8YHK/TL/0I6KTGYcj3x1/KgAlphH4L9fndbtrqtVjWsUHpCiubeXUlOM7OlOEFFRz/3WjGwMaPvclIFy0+KRsIVJ7WzAvund7ryvFcoN6wM=
+	t=1710174158; cv=none; b=dvhQ0xKaqP1aTUmzwCBxa7dC+eaKOeoY6Kqh4uEaNZIGT2lDiBeG7jzfbzbO6WE1LaTm2vvzBPL5qMeBZqjUBAkOwtmRU2qz9O1/f2iCKT7c3AWOptj9cj0TKUsG+2bOYQj9BTLttDC+vGiD0YFN7oaQX0x4uUo4Gnt3dROeBE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710172550; c=relaxed/simple;
-	bh=zAsRd/e7o/S0lwDHO1zxbIWbR13kViGojdn5+lrShxk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZbtuPBGE7EIKN9HEJiAJTBWEJ54d5gNPtA/wk4UN8ZBJG9JeclgGpenZEPu2VKrQEjBoTNjiwOSSkYc+t8Fi6wd3XlGYnY3QSUEyZG+YKMldc/rxNN7MiQgiqNuWsU3RjAYGS8LR6fcr1Wrk3EOr1o+zvKZsYgpe0EMR0wJLeXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LuNb+mYX; arc=none smtp.client-ip=209.85.219.170
+	s=arc-20240116; t=1710174158; c=relaxed/simple;
+	bh=TGWBHdhRObFJXZsN7lz4Jh4gFRP1ik+fiRvx0Bj7OEw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XM1Gq7hvC/VD30lQjIFs3Mx6+TaUQ5x4fkR+KLLG5umBoZHKcubO2n0sJo90yJunx0RpzE+309WBJHSqvw3PzqbUgnbY3PmVhgsgCZpRs4h6VkQAvlNAKZyfx6TpEOrjXFQXjTQDMG85lWsy7tSZYi6w0ZtCpIp/OE7dYp7nkuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ExQ5/Xjt; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-dcc80d6006aso3003139276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 08:55:48 -0700 (PDT)
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a462a1b7754so135214266b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 09:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710172547; x=1710777347; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IqC9Cou3SqyEXPU8Ag0leL7h0m2p/RlcBNsi4UjO6rU=;
-        b=LuNb+mYXOteZjgCO8zrgBqJpXAOxCiHAGgRJg5GpvvMdNxvKLyhbMd2KxJql+SlWSu
-         V6kYKWf5NsaZ1Fb9XdLZT21zivaDCrDx+RNksD19VBt8k4Xce+NRaGVtJkQm7jgwlAw3
-         cL+D69/QkNsHvT8EEMp0Cv1tCTuUCrDr5pSCRfzlIoLKRvHUOqpHZuxsuePN1jh5ryLm
-         XxCKYLQzOcim/bdcJd4n/uZhVYw9uRpamEKhFq/03mJWBuazakbbwEOB3kK42lMLEP7H
-         Z43yEVFDGOXIgI5zkWUIU7utktidrjNsk21BNmCw0e0592w/uv+rfO2bobqUxui2LEij
-         gJpg==
+        d=linaro.org; s=google; t=1710174155; x=1710778955; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WMW0usQA+/2JDgwiFHaoEUsMDf2P4w3C5kIjpwHZkUc=;
+        b=ExQ5/XjtHmCa1RwzS90NWiAM//fTp5HaQ2RQt0Dwy93ty2OFCM97P8JJC4h7SqXE8a
+         Egg5oxL2fy4hYe3km0oBjuu/nuw1lAqPa+gOLPyw1sPxn0hJ/gaHDv/dHqnpKreS5b7b
+         SnT9sNLpnqTiBcRimXGmp/yvr/rjfDZCxBqvNleSYGfBBirjChBTVoQN0fWOXw/FkSDg
+         A7izvROYEBGyNOG+ofXWIcZuUTNjV0EfG+S4kLo/89EI0TQfc6iQfk64LRweSZrsqZku
+         u7zDj+kFktKyZh15hmc5NRB8svidbvmgPYj2CRaDFdPrGRSpRcn59zx7Va+UQJ6XFyej
+         VMWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710172547; x=1710777347;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IqC9Cou3SqyEXPU8Ag0leL7h0m2p/RlcBNsi4UjO6rU=;
-        b=hKc6Bizw7AZgMAj5jsUSCNemh90kjdJTNHEIdKlwKhTtnafoVzXTZZDhyXanF36HSk
-         /i8YqPTFDLNLuFif0IrASNYif8MTGon+2SRTT8E8bquB+nWwfuYcLO31qTx0hHJOHQpq
-         b8VfH2d27tQWme5jWJ1zVtICj2GTpB4cHqkQXLLXIBoSfHjhLqXuiwLr1H7/vKZ91xho
-         U7iZXYBPUqaMzSJk/SIACqeXL9ch6RZlsFAvzVkq2JUytIWucrp1PfLnh8YY8pVTsRvY
-         /NzJimkEbu1JbhXpxPq3iNhFJux78Tmq7IEecODYXNWOGt1B+1raEQNC563CzUjp809N
-         V2oA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4w2Sf6Eenavyu1bSIpxEqkPizXh4O3C0sSBuUyUHUeLSSy74nWHVfaGBwkQBDYdUQlnYBC6RIW0UgHD5/cQSomUyNHzRID7j6OgFd1w==
-X-Gm-Message-State: AOJu0YzSBLqOIHidiuOeuWfHDEV/qVwQlG13LthDaZZLrnu5dEXSpv1h
-	BKzoOOmvA3CJIUym8se6FOL7aRWRY98l0G0CNjDebxt98vidYvJ403Worxxr3PqL/1GQZFpLH36
-	zZ7yaEgVnhl/eamZikQlQKAmzJFesw+3CDIzmGg==
-X-Google-Smtp-Source: AGHT+IGNX134IbCCsLQRWXyywz13RFYP9bvVZBJlu71sgGeu+KHfyUSOWNSXf/TCnAknceGuIOz3jGsPdLcOJglC0KA=
-X-Received: by 2002:a25:9388:0:b0:dbf:ec4:311f with SMTP id
- a8-20020a259388000000b00dbf0ec4311fmr4334667ybm.58.1710172547331; Mon, 11 Mar
- 2024 08:55:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710174155; x=1710778955;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WMW0usQA+/2JDgwiFHaoEUsMDf2P4w3C5kIjpwHZkUc=;
+        b=pKPQTNmPCKQjRmyn7BAl64Pu+N5QuHoo4S8STuUAp41zuvYq4Y7QiDhpY7bgdIciiq
+         U64Uw2CyL6WjJIZNV3gCaFcLtkNnrybX4eaB6stUpXsWk55UAILr/90UTVR+yYxlHFG1
+         0bX5NQocBhxsYwP7o4XifKaabEZfyUBIYu/lMUUa+m3axXsOfykiB2RA3Lit/XC8Wmf1
+         x4o2weY4TdJdyI/YPd3PiZHkfChhDlokeU29w4w7yxImO5Ib8tOHkQg3IJTB/QzfBb5t
+         OunPMQElhphw9TkodxAyM3VsLfHpOqmzVgE81h3leRhgq4SdZ4bz8dDokvbaVr2/J/hV
+         zAJw==
+X-Forwarded-Encrypted: i=1; AJvYcCUrgGbzL3P2FgicUcUTNGlMD8613SPH4CNY2txr7KhXFZCDEZpKDcU2udW6L5iYsYGlrX11NSPyrBmHRps4KKr1tDxDcxdLOV9r4lEbuw==
+X-Gm-Message-State: AOJu0YyHFyJ0iguBhZ6jlz6/UGPUQgTbmyKzb7w+m5S7XolxantjP1PR
+	baOs29mm8J+aHtyf448XZApPb0ebsoH13h6TwZ9rwGDHNbjdVtC/jruprjL63bQ=
+X-Google-Smtp-Source: AGHT+IENgrDH5fiAmB/1105qTepyqCD7Hz434Z6EiqT/FtseXotKqyuwYDqaF3lUkw+P5xEEJ4kX1g==
+X-Received: by 2002:a17:907:96ab:b0:a44:17da:424 with SMTP id hd43-20020a17090796ab00b00a4417da0424mr4858235ejc.56.1710174155578;
+        Mon, 11 Mar 2024 09:22:35 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.68])
+        by smtp.gmail.com with ESMTPSA id gl8-20020a170906e0c800b00a43e8562566sm2960425ejb.203.2024.03.11.09.22.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Mar 2024 09:22:35 -0700 (PDT)
+Message-ID: <5800231f-633d-44f1-a056-58f87f1d5c67@linaro.org>
+Date: Mon, 11 Mar 2024 16:22:33 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240309-bridge-hdmi-connector-v2-0-1380bea3ee70@linaro.org>
- <20240309-bridge-hdmi-connector-v2-5-1380bea3ee70@linaro.org> <20240311-divergent-friendly-python-2c7d5d@houat>
-In-Reply-To: <20240311-divergent-friendly-python-2c7d5d@houat>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 11 Mar 2024 17:55:36 +0200
-Message-ID: <CAA8EJpo-+qypK4gLrQGcCYi-AVtVzuCjh4HgJ6kRNsMTtNKKMA@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 5/5] drm/msm/hdmi: make use of the
- drm_connector_hdmi framework
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] Move camss version related defs in to resources
+To: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+ mchehab@kernel.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, laurent.pinchart@ideasonboard.com,
+ hverkuil-cisco@xs4all.nl, quic_hariramp@quicinc.com
+References: <20240227122415.491-1-quic_grosikop@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240227122415.491-1-quic_grosikop@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 11 Mar 2024 at 17:46, Maxime Ripard <mripard@kernel.org> wrote:
->
-> Hi,
->
-> On Sat, Mar 09, 2024 at 12:31:32PM +0200, Dmitry Baryshkov wrote:
-> > Setup the HDMI connector on the MSM HDMI outputs. Make use of
-> > atomic_check hook and of the provided Infoframe infrastructure.
-> >
-> > Note: for now only AVI Infoframes are enabled. Audio Infoframes are
-> > currenly handled separately. This will be fixed for the final version.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> I had a look at the driver, and it looks like mode_set and mode_valid
-> could use the connector_state tmds_char_rate instead of pixclock and
-> drm_connector_hdmi_compute_mode_clock respectively instead of
-> calculating it by themselves.
+On 27/02/2024 12:24, Gjorgji Rosikopulos wrote:
+> The different resources required for different camss versions are
+> split in to two groups:
 
-Ack, I'll take a look.b
+Pardon me for not getting back to you on this earlier.
 
->
-> We can probably remove hdmi->pixclock entirely if we manage to pass the
-> connector state to msm_hdmi_power_on.
+Would appreciate if you could post this series rebased on sc8280xp 
+patches which are @ v6 and ready for merge already.
 
-I'd like to defer this for a moment, I have a pending series moving
-MSM HDMI PHY drivers to generic PHY subsystem. However that patchset
-reworks the way the PHY is setup, so it doesn't make sense to rework
-msm_hdmi_power_on().
+I will find time this week to test your patches on rb3, rb5 and x13s 
+with the SoftISP patches on libcamera.
 
->
-> And that's unrelated to this series, but we can also remove
-> hdmi->hdmi_mode for drm_display_info.is_hdmi.
+---
+bod
 
-Yes, that's the plan, once I rework the audio infoframe handling.
-
--- 
-With best wishes
-Dmitry
 
