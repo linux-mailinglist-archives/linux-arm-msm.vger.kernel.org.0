@@ -1,178 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-13828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DC638783B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:32:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 440038783D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 16:35:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF4BC1C211A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:32:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 679E61C21A8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 15:35:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4054745BEC;
-	Mon, 11 Mar 2024 15:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B21346441;
+	Mon, 11 Mar 2024 15:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a4573hfr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cEV1ftR1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723264207F;
-	Mon, 11 Mar 2024 15:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB4845BEC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 15:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710170557; cv=none; b=e/lLUmkWzG08oGtwbEKl+8wA9Diz0YT/xMVo6UJq+rDc7LZk7UxUj5wXpuRTBCiOTSuzs2kHc4Pg0qzcM4FqDkbkOONHSonVq8xMMhXNMgvJzj8JxUjYIJOAs4OBimLIz9R2RBw0vWLpXjYIv46SaWPumX+wi5YsdRF+YPxcLfM=
+	t=1710171250; cv=none; b=u/r6RVzCd5WKAO5m+VdYs10CGdb6Yfx5XAc3gy5xrxFYkhaADLscPzKZmKoFEyzqY2yeM5NnW1uMBjYHcXg4d0frqT1eeegRpqFm5I+A4elDeGdaxO8atY4brDKx07lw1wHcybiMRfQM0NYcUbOL5QXRtx4u6x1GiFQ1yrQ6vBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710170557; c=relaxed/simple;
-	bh=ycNMrWndtfsrVCrUSdZ5ZjfxpPvfoIpngqepxzHv2ZI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VNvejUWVvxBAQLkI8P0gD40Jc0TIoA1VkzcCt/LU2K2gQO2rVHihdVD2V2aS42iPFvBCiXDvrAPXrzOsDv4yIIiKJPohGzHKN5BGiHmLopkL2zRT/Jnzh3RtmvTPI81TKTl6bZH5NXakl1ynoQJeYKNGwDJ7s3TF0gxPNTuwZnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a4573hfr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42B5hO2C019176;
-	Mon, 11 Mar 2024 15:22:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=954ZpQUzthz7b8C7ScGeL2ZgKorjyZOj4WCF0dMw3xw=; b=a4
-	573hfrP6PesZDboj+Bfz+EC1Fjeh3+zCVSxhE4Y6Hov/RWaheF1NewgdeU/jpxA2
-	JjWbM1Sl2JI2Y2l+2LmFtxpF147OaxltfKHxZCDtEmthQoUySpXNdbUFNLv2UguQ
-	FIvuAosTjuHsCE502m/RKoGbZtDRisCJHbpmCkLU8gLt9O1u3tOJWIN62F6fPgGf
-	g67z0H8RnXO06cVIV7qM0NdYNuRky0vfDXB9p1WYQvYG+6167uJHPM4H8QTtW2Ow
-	mpnHA/kRK4NTF/pwe/uk/LsdXS730SaZWpf+FWG3z42C3NsYIQwTAIYQQRSjahx7
-	bFtFE8dEB3uuQUwJIqYQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wssgv9n2f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 15:22:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42BFMTGr016517
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Mar 2024 15:22:29 GMT
-Received: from [10.50.58.231] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Mar
- 2024 08:22:25 -0700
-Message-ID: <8e9601b1-836e-4aaf-b5ef-2f1cf70a00b9@quicinc.com>
-Date: Mon, 11 Mar 2024 20:52:21 +0530
+	s=arc-20240116; t=1710171250; c=relaxed/simple;
+	bh=7kqBNtfx6lIwF60EpRwXt+XaKDawOaf8TAqcx1ZW3XU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IiLmoCwy0VnFV+xgx8BgQ6ly2sV6K7oo1rQAPOJ8DK+EtonoCkkAQ5JzPQm/pSDa5Xrt9vR6jtaE/yeN8Anp1IHsvBXXqxP5bYXhncPQ5MunGIRQ1+BqErqLvfaqwiNDwFmBm9CRYoDPeQKCtosASSxYDvP6XXOmw4KtT6NIjQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cEV1ftR1; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d4141c4438so69457351fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Mar 2024 08:34:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710171245; x=1710776045; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EuvVhSqYQtbd+x2pvlKBbX9KuWQ3HlQnOsqYU3ihujw=;
+        b=cEV1ftR1HjULiInQIa8GsOTGQ3KlEppaKuGHcwZaKEoS5DtxBQzRQEJL5xmdi/1CnA
+         MuZxYHUvheUTEZkCgojoZ3OzY6lUVdryT9NwSZy2HQRDz6f3zvU1HL5v8P7MehygDjyT
+         Z6H/czb2cXv1/hc2beQuiKI7lLRpZH8+j0BJbhzPV7fuTyo3G4ol2yHrAadrNnIh7/rs
+         HSwom7YMlo4pSBtSnUxFv2yn9QF7BbW70riDmrHqAP0JStKeRpheFOGh4ZcoWdkpzsno
+         wUEWFc0y0/tTxA4vLSM2hiH4W9IPfbhYaO3MEO0FRUE1o0wsARrvhOZURBNFE9zaLDLz
+         q3eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710171245; x=1710776045;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EuvVhSqYQtbd+x2pvlKBbX9KuWQ3HlQnOsqYU3ihujw=;
+        b=Tw4yRCcuNUbPeDHorEXsKkvMf81QtMF9GkCOZ6UTZ05L0nkDTf/HaN1TOrnHkcspOR
+         Ev5XzeZx1FySBxNhl+7NCSp3lQqHhDdxBONpU/8KkY1cxuhHRn8Jn9f0JYg8WTKoyfQU
+         XyEY0IlpDAM9KO4gy21VlUpBlxBK7IWtOYHoECD8r2MfbMhhP4nKpSX/+VGRKbj6ZesP
+         02sBuoPfGfqbEbXVdEUJYeG2jnyH7ex3B1pCaqKTUAlZ/Be3z5Y5bSfrFX/C+k/J/IS+
+         fbM/bKSJ2Luc7A2GyDLquDG/388xYuwfpf8KyzQqSto0NfcsoPV1cZbaLxq+I19uBwFT
+         oLZQ==
+X-Gm-Message-State: AOJu0Ywo6v9a1QNvDTB7F8oNZe43Tvrve5QA7SrScFdEdvbEDxcvmuWo
+	AaaTTCVuhHCVoPTKj9HetKqgcgNy4UjKddPmmzy74FN9We5sEa3urgo+dFnAeYg=
+X-Google-Smtp-Source: AGHT+IHJpWIhc3w3AYdaaAYbNDPo7Ls4gi18lO7Hq1clNu/2BaRFnUw+gcx17T5pu6qTSiWgURkbVw==
+X-Received: by 2002:a2e:9946:0:b0:2d3:17e6:3b3f with SMTP id r6-20020a2e9946000000b002d317e63b3fmr4683480ljj.39.1710171245024;
+        Mon, 11 Mar 2024 08:34:05 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id q19-20020a2e9153000000b002d449f736ddsm119294ljg.0.2024.03.11.08.34.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Mar 2024 08:34:04 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 0/7] soc: qcom: add in-kernel pd-mapper implementation
+Date: Mon, 11 Mar 2024 17:34:00 +0200
+Message-Id: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the
- parent GDSC of subordinate GDSCs
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael
- Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Abel Vesa
-	<abel.vesa@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240311-linux-next-camcc-fixes-v1-0-d126ae0b9350@linaro.org>
- <20240311-linux-next-camcc-fixes-v1-2-d126ae0b9350@linaro.org>
-Content-Language: en-US
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
-In-Reply-To: <20240311-linux-next-camcc-fixes-v1-2-d126ae0b9350@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: l0KJQKAR3t0RJglP2F6sINkSJ-gNw2Rv
-X-Proofpoint-ORIG-GUID: l0KJQKAR3t0RJglP2F6sINkSJ-gNw2Rv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_10,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- clxscore=1011 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
- impostorscore=0 mlxscore=0 spamscore=0 priorityscore=1501 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403110116
+X-B4-Tracking: v=1; b=H4sIAGkk72UC/3WOQWrDMBBFrxK07pjRSHbdrHKP0sXUkmPR2nJGR
+ tQE3z1yIJBSunzw3+NfVfISfFLHw1WJzyGFOBWwLwfVDTydPQRXWBGSRYMaLl0cYXYw8jx7Aa/
+ JNUTOskNVpFl8H37uwfePwr2U+TKI50fGaKIG0Vj7Whm01jQ1aHBjWGStPlnWNHzFfPoOE0uso
+ pz37BDSEmW938y0x/99lAkQaqeJsdXuzenn1H4pm2ff/vFN8Zu2bnvW3Omu/eVv23YDBWreUjQ
+ BAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ Johan Hovold <johan+linaro@kernel.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3113;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=7kqBNtfx6lIwF60EpRwXt+XaKDawOaf8TAqcx1ZW3XU=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+p7leyjbkWPLk/Ujzc7+10xVDT4QNCElLllHzOLBC7vm
+ qU4+e+JTkZjFgZGLgZZMUUWn4KWqTGbksM+7JhaDzOIlQlkCgMXpwBM5PwP9r/yRzx2u1Xcd7ZX
+ 5TsbVmh5wFLj+uuLPRun3A6VbXr96PNyt4eWehPTF9R8+//pIOeNbGdTPpaXbF+leNO7Ztpt3vM
+ nINnJT5BfMqVw82SZaiN3lbNR4alHj56wc/ft4HVqjO6yjUwSbU2xXfWAy+Jp6kTRd2YyzMs50u
+ YpGC54tSLx0MPjwRMe752U3Wz9Lrw65OY6O+8S8dyrua19q48f1Eu/P435YcJWTRe1Lr1ki2vn4
+ gOOrtnX5la9JHaKiz2f5uqTquuDFr/7rX3NXSs+4mR4Bm+lJFOf1C2NvzYJ0VI3wk7GnbRXK5dT
+ UphUUcji4ik7QeFu5CdRrTUPVzMzbFaYndua5Hfe+Od9AA==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
+Protection domain mapper is a QMI service providing mapping between
+'protection domains' and services supported / allowed in these domains.
+For example such mapping is required for loading of the WiFi firmware or
+for properly starting up the UCSI / altmode / battery manager support.
 
+The existing userspace implementation has several issue. It doesn't play
+well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+firmware location is changed (or if the firmware was not available at
+the time pd-mapper was started but the corresponding directory is
+mounted later), etc.
 
-On 3/11/2024 6:03 AM, Bryan O'Donoghue wrote:
-> The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-> block. None of the subordinate blocks will switch on without the parent
-> GDSC switched on.
-> 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+However this configuration is largely static and common between
+different platforms. Provide in-kernel service implementing static
+per-platform data.
 
-Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+NOTE: this is an RFC / RFT, the domain mapping data might be inaccurate
+(especially for SM6xxx and SC7xxx platforms), which is reflected by
+several TODO and FIXME comments in the code.
 
-> ---
->   drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-> index 46bb225906bff..d421da57697a2 100644
-> --- a/drivers/clk/qcom/camcc-x1e80100.c
-> +++ b/drivers/clk/qcom/camcc-x1e80100.c
-> @@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
->   	},
->   };
->   
-> +static struct gdsc cam_cc_titan_top_gdsc;
-> +
->   static struct gdsc cam_cc_bps_gdsc = {
->   	.gdscr = 0x10004,
->   	.en_rest_wait_val = 0x2,
-> @@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
->   		.name = "cam_cc_bps_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
->   		.name = "cam_cc_ife_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
->   		.name = "cam_cc_ife_1_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
->   		.name = "cam_cc_ipe_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> @@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
->   		.name = "cam_cc_sfe_0_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> +	.parent = &cam_cc_titan_top_gdsc.pd,
->   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
->   };
->   
-> 
+--
+2.39.2
+
+---
+Changes in v4:
+- Fixed missing chunk, reenabled kfree in qmi_del_server (Konrad)
+- Added configuration for sm6350 (Thanks to Luca)
+- Removed RFC tag (Konrad)
+- Link to v3: https://lore.kernel.org/r/20240304-qcom-pd-mapper-v3-0-6858fa1ac1c8@linaro.org
+
+Changes in RFC v3:
+- Send start / stop notifications when PD-mapper domain list is changed
+- Reworked the way PD-mapper treats protection domains, register all of
+  them in a single batch
+- Added SC7180 domains configuration based on TCL Book 14 GO
+- Link to v2: https://lore.kernel.org/r/20240301-qcom-pd-mapper-v2-0-5d12a081d9d1@linaro.org
+
+Changes in RFC v2:
+- Swapped num_domains / domains (Konrad)
+- Fixed an issue with battery not working on sc8280xp
+- Added missing configuration for QCS404
+
+---
+Dmitry Baryshkov (7):
+      soc: qcom: pdr: protect locator_addr with the main mutex
+      soc: qcom: qmi: add a way to remove running service
+      soc: qcom: add pd-mapper implementation
+      remoteproc: qcom: pas: correct data indentation
+      remoteproc: qcom: adsp: add configuration for in-kernel pdm
+      remoteproc: qcom: mss: add configuration for in-kernel pdm
+      remoteproc: qcom: pas: add configuration for in-kernel pdm
+
+ drivers/remoteproc/Kconfig          |   3 +
+ drivers/remoteproc/qcom_q6v5_adsp.c |  82 +++++-
+ drivers/remoteproc/qcom_q6v5_mss.c  |  80 +++++-
+ drivers/remoteproc/qcom_q6v5_pas.c  | 502 ++++++++++++++++++++++++++++++------
+ drivers/soc/qcom/Kconfig            |  10 +
+ drivers/soc/qcom/Makefile           |   2 +
+ drivers/soc/qcom/pdr_interface.c    |   6 +-
+ drivers/soc/qcom/qcom_pdm.c         | 346 +++++++++++++++++++++++++
+ drivers/soc/qcom/qcom_pdm_msg.c     | 188 ++++++++++++++
+ drivers/soc/qcom/qcom_pdm_msg.h     |  66 +++++
+ drivers/soc/qcom/qmi_interface.c    |  67 +++++
+ include/linux/soc/qcom/pd_mapper.h  |  39 +++
+ include/linux/soc/qcom/qmi.h        |   2 +
+ 13 files changed, 1302 insertions(+), 91 deletions(-)
+---
+base-commit: 1843e16d2df9d98427ef8045589571749d627cf7
+change-id: 20240301-qcom-pd-mapper-e12d622d4ad0
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
