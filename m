@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-13861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDDDD87867E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:43:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68E19878682
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 18:43:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7E94AB21222
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:43:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F47B1F21308
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Mar 2024 17:43:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5CDA4E1BE;
-	Mon, 11 Mar 2024 17:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 692995026D;
+	Mon, 11 Mar 2024 17:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="daCI+he2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+cimJKq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DEE4D9E7;
-	Mon, 11 Mar 2024 17:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394D64CE05;
+	Mon, 11 Mar 2024 17:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710179007; cv=none; b=ovZHW4AAAmBCVinJG6q9TR8zM1QWt6xDU2gOgYFHAc2r9HS6tkrDRfTVUR0I5vusuBvTTsfEiEC40KJz3L4GIIgW3RcQ1IpSK4Ef/QNN4TZedDwnViAI8fhs3ga8vArcZopPGs2iWZPfLepFplWXUSv6vPVZStKOc34F4BJkRdk=
+	t=1710179019; cv=none; b=UYPN1eyKULcMVpvXNxjEBY9dzl1sNiaAKq+LqE+m1PrUhqx2ZorutPKVS/IHnXxMXu+rtjNZLesv32zNHixvgnesAsU99TmbwfaToJ5dkOvDQpVSZsT9KUjikhXZr7v6kazbtUEoluKdKVB8J/mA2ObckYxJUrj5TTJY1yOCb0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710179007; c=relaxed/simple;
-	bh=buzO+sFEpQ/5zCrBZhxY5AnpQSXE49oy4edP8NiDR8w=;
+	s=arc-20240116; t=1710179019; c=relaxed/simple;
+	bh=1O6KqSX/9qgFYIjlCHevAQ4XV7SOdYdHdydqzRGVpsI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DYF1bzaIjK72TLPHB7frD0cr26LlbLdO0siorT7AupK87IQ3XBuSOwbNrwiupBEVzC8rjFxzhNhgsMfC+24QCNh8KHJO2nY2ppRcCBvLW2b8ZCwJDQTwxPohmu1swKbih2V2ikzyeOjJq4BaONyAZ0FCbEkjx8N30iOlR2edSNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=daCI+he2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666E7C433F1;
-	Mon, 11 Mar 2024 17:43:27 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VANcKTw8ydCEtxCZr8PfWaq/dG+9x9OmeOYvgBQsljyHuB9V4ZAZ6Totc4NTm32gceWV+4HcAzVywK1jQDVmdrwZrlv8QSrXjFc51LyjwWqKqhbnBGHonSqXi0N3z4y0YtsFPYumYGeTc1R0205yTgesb0HGysJ8hfZSiKNO3Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+cimJKq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58B0C433C7;
+	Mon, 11 Mar 2024 17:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710179007;
-	bh=buzO+sFEpQ/5zCrBZhxY5AnpQSXE49oy4edP8NiDR8w=;
+	s=k20201202; t=1710179019;
+	bh=1O6KqSX/9qgFYIjlCHevAQ4XV7SOdYdHdydqzRGVpsI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=daCI+he29AgFiKQspdIJ0+mjpXSeGL7E3xZn2hPLdKbhmzHXUBFE4u3+m1TmlTji0
-	 DKQru63fHNsDqFlqSkzxnU5OwwATX43GdJ6S4nay7fnHoakIr59fKB3yFh8nvcuvWt
-	 rESiTLw0kmJBdLvR1/AhntKlAaPztaUGhvtlsvWWoEo7OkLp/mRCn1Xd4VIntnIVrH
-	 FnfnmiFlxLS4aWjciaidA0kpUH14AXfUzZEjRZ3YeivXFzpnNQaUhA+ZJShqftAyr8
-	 Ryk7wN5fQz0EIGnZpjhiXqNBlMAdZMCtD3LHduMs9A2A/YNIpmfWvzEC4qAeNn1x1Y
-	 a9UD6Wu+ngJNw==
-Date: Mon, 11 Mar 2024 11:43:25 -0600
+	b=c+cimJKqatMYQCrt0xa9WeHsSzhSs1Sgq7H1On+IwjglcbkbeyxkjkLRTbIiqOM5z
+	 VoQpn6zg44YJ3qBx0gkveX7E2gnz01cFUtXK1Pf14eAkmpIcKFTKcypwpkrOvCAijP
+	 YpWA93aY3YLurG3rLwBOzd8ohJyGburpWFmx87pZktw9YkDZf/jnG0MBliGAiUwq/2
+	 AEvZtVQKbpKaDDkBG+Be/X0H0fUVVYWj2f4wx/VCzUyY7UUTIdGXi114ruvn4k/jhr
+	 Ry8xc1UuWk3NfN5usf9ijl6Bn9Q6c4mmwLETJQu2i3oX2vCBERSIq0nJoP5bhsIVk0
+	 mUTWEYTY/hPFg==
+Date: Mon, 11 Mar 2024 11:43:36 -0600
 From: Rob Herring <robh@kernel.org>
 To: Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-usb@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-phy@lists.infradead.org,
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: phy: qcom,qmp-usb: Add QDU1000 USB3 PHY
-Message-ID: <171017900463.1476132.2926850011741467415.robh@kernel.org>
+	linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH 3/4] dt-bindings: usb: dwc3: Add QDU1000 compatible
+Message-ID: <171017901624.1476439.10740898419588500267.robh@kernel.org>
 References: <20240311120215.16845-1-quic_kbajaj@quicinc.com>
- <20240311120215.16845-3-quic_kbajaj@quicinc.com>
+ <20240311120215.16845-4-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,16 +67,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240311120215.16845-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240311120215.16845-4-quic_kbajaj@quicinc.com>
 
 
-On Mon, 11 Mar 2024 17:32:13 +0530, Komal Bajaj wrote:
-> Add dt-bindings for USB3 PHY found on Qualcomm QDU/QRU1000 SoC.
+On Mon, 11 Mar 2024 17:32:14 +0530, Komal Bajaj wrote:
+> Document the QDU1000 dwc3 compatible.
 > 
 > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
