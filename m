@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-13909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CD09879110
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:36:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1329A879142
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:47:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EFBE1C2118E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:36:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6DD8B222BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:47:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5910077F32;
-	Tue, 12 Mar 2024 09:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D13E78294;
+	Tue, 12 Mar 2024 09:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HevcjAFE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuhLckdC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5B3AD53;
-	Tue, 12 Mar 2024 09:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E836078292;
+	Tue, 12 Mar 2024 09:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710236211; cv=none; b=p89k4xVbE14bI9CaoMjG+BklX3Uxqa8QR6zq3gRyGEzNvXj/Tos0hNsZgl+vdoWZslE3MGJa6Ji+V4beX0k9TlqXcYqi88r0grliizo2Gz9bWi3c2VAFgidJ83HxmRVpdYIUQGSGVX1kVAEHHKHxvkjdV36pW0hydCuR5UsmWGw=
+	t=1710236584; cv=none; b=Xt3zohoUESbyu/5sEEx9jizK2GeQA8zBtIexV+oR3q5Le0OriT2gLIffzJM5MdVoU50tktcG14pHvYk9/fcEC4Gf3Lk8Gkz4uN3eUeTOpPCQPvnNKALrWB/G6Ki5zj545xIoObb7+KJ0B9dSkwVcfwodt8t0vqM+p6fgefD4Hco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710236211; c=relaxed/simple;
-	bh=YM0BcplBKkMmSr5nfS5GO00ZNnZ1NNfv8isr9+AmYIs=;
+	s=arc-20240116; t=1710236584; c=relaxed/simple;
+	bh=IT54KeeXwxFe5g/P+mO9wWqmdj8TAwCefx/2xL+66Z0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cmnlDRVda8l9zQOfw7cgCr4aG3wAiC6+fqTuSWIAufY4L2ED6Um/4kXtisG2IUArRC3yc6pWHk/TvUD/5K45Jxq/e84ecfOfFDzBwIo/kUdRvcYyo4Zi2LORct15ZqtB2pD9nSGs3Ousb5aIbXStLKw7A0KCRGCGlJJUCdyEt+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HevcjAFE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6216C433C7;
-	Tue, 12 Mar 2024 09:36:50 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=LPRRWSyLVxUVSiWBBePJ6OH+Xc/Xhi1hOs9S++3S8CYZybd4ereGgqG8nYNVGsa+xWuF34VoJigrSvZ0iQj3el8I4qQYfNwGmIpbsQBrJok0cOJpgMCeoN7OFukfzJJRH4oQhnzki14TRGEZSm2PghnQnb/VEjS1O4hdngFhKrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuhLckdC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F18AC43390;
+	Tue, 12 Mar 2024 09:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710236210;
-	bh=YM0BcplBKkMmSr5nfS5GO00ZNnZ1NNfv8isr9+AmYIs=;
+	s=k20201202; t=1710236583;
+	bh=IT54KeeXwxFe5g/P+mO9wWqmdj8TAwCefx/2xL+66Z0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HevcjAFERAPwvhFlVaA3Fr1JYySnk0yE6YHwGG2ZIo8Upx/+miOCgOp+BTt8Z90Ez
-	 4aq78l9O88H6cJUX5N/kuI4l4syxwO4Ab1Q9RBO0gFXj46dvvUGzezmf8PvSYgTiBK
-	 4gn0RVBxc7Zh0ozYoCaZOhghB2W/UivOmSIu+r0wjXFnQV0eSNcQHx1S6ZzjIxhlXj
-	 I0a5JbJcqSVr0vVvUYnjIfxSpijhEr1thdCNgg5VlUF8bVrIL49HU6HbFfLOY+1Yaz
-	 sh6UTs2Q5BmZVEWhdsX8GAtxaMep4XEQsKsroBNOOASWRr0asNPhPguNx1iOR0n4RI
-	 Al1en0Y014QlQ==
+	b=tuhLckdCMSCEAEtMTgy0kuBJUVE+VTprjc8nPZ7SxdWUFOyhSHgSgLBmHwjmdzJ6C
+	 uVNh+8gr9SuIeQoVbmH1ji4T/D6DOp/7ToPkSWcPezsgxFM5m8fbLoxUPPp/4j60xw
+	 E4SI55LLFg99IWhGePC+iBi6s/w3Y9goo+80KVUhZ2n40dhgvTlX2genDHLYCij+Hy
+	 DRksS7OGesSRJTAEKhZxX3n/w5YpepFMvkouFKhVfyBvRssx6imoTb/xwhBoFKQdWT
+	 CcWdqN3fZ1I95Jogc+KbjgoS6q77cx+CX/2fJH+XrXk5ahlqDnPlzTN5kj2RDur+eF
+	 wepom7RPPUlJA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1rjyZ6-000000007Qv-0KEZ;
-	Tue, 12 Mar 2024 10:36:56 +0100
-Date: Tue, 12 Mar 2024 10:36:56 +0100
+	id 1rjyf6-000000007Rz-3kb1;
+	Tue, 12 Mar 2024 10:43:09 +0100
+Date: Tue, 12 Mar 2024 10:43:08 +0100
 From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
 Subject: Re: [PATCH v4 3/7] soc: qcom: add pd-mapper implementation
-Message-ID: <ZfAiOFccdV4SdytQ@hovoldconsulting.com>
+Message-ID: <ZfAjrFz9ST1L64pJ@hovoldconsulting.com>
 References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
  <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org>
+ <5219fa82-125c-4b8e-a6fa-e0960181a62f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,145 +66,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org>
+In-Reply-To: <5219fa82-125c-4b8e-a6fa-e0960181a62f@linaro.org>
 
-On Mon, Mar 11, 2024 at 05:34:03PM +0200, Dmitry Baryshkov wrote:
-> Existing userspace protection domain mapper implementation has several
-> issue. It doesn't play well with CONFIG_EXTRA_FIRMWARE, it doesn't
-> reread JSON files if firmware location is changed (or if firmware was
-> not available at the time pd-mapper was started but the corresponding
-> directory is mounted later), etc.
-> 
-> Provide in-kernel service implementing protection domain mapping
-> required to work with several services, which are provided by the DSP
-> firmware.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Tue, Mar 12, 2024 at 01:55:27AM +0100, Konrad Dybcio wrote:
 
-Just a couple of drive-by comments below.
+> One suggestion I have is to use cleanup.h and scoped guards to
+> save on some LoC
 
-> +int qcom_pdm_add_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
-> +{
-> +	int ret;
-> +	int i;
-> +
-> +	mutex_lock(&qcom_pdm_mutex);
-> +
-> +	if (qcom_pdm_server_added) {
-> +		ret = qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
-> +				     SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
-> +		if (ret)
-> +			goto err_out;
+LoC is not the best metric for code quality, it really depends on if it
+makes the code more readable or not. Often being explicit, so that it's
+obvious what is going on, is preferred even if it adds a few more lines
+(c.f. all the ways that people manage to use devres wrong).
 
-Name error labels after what they do, that is, 'err_unlock' in this
-case.
-
-> +	}
-> +
-> +	for (i = 0; i < num_data; i++) {
-> +		ret = qcom_pdm_add_domain_locked(data[i]);
-> +		if (ret)
-> +			goto err;
-
-And err_del_domains here.
-
-> +	}
-> +
-> +	ret = qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
-> +			     SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
-> +	if (ret) {
-> +		pr_err("PDM: error adding server %d\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	qcom_pdm_server_added = true;
-> +
-> +	mutex_unlock(&qcom_pdm_mutex);
-> +
-> +	return 0;
-> +
-> +err:
-> +	while (--i >= 0)
-> +		qcom_pdm_del_domain_locked(data[i]);
-> +
-> +	qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
-> +		       SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
-
-Should the server really be added unconditionally here? And if so,
-shouldn't you update that flag?
-
-> +
-> +err_out:
-> +	mutex_unlock(&qcom_pdm_mutex);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pdm_add_domains);
-
-> +static void qcom_pdm_get_domain_list(struct qmi_handle *qmi,
-> +				     struct sockaddr_qrtr *sq,
-> +				     struct qmi_txn *txn,
-> +				     const void *decoded)
-> +{
-> +	const struct servreg_loc_get_domain_list_req *req = decoded;
-> +	struct servreg_loc_get_domain_list_resp *rsp = kzalloc(sizeof(*rsp), GFP_KERNEL);
-> +	struct qcom_pdm_service *service;
-> +	u32 offset;
-> +	int ret;
-> +
-> +	offset = req->offset_valid ? req->offset : 0;
-> +
-> +	rsp->rsp.result = QMI_RESULT_SUCCESS_V01;
-> +	rsp->rsp.error = QMI_ERR_NONE_V01;
-> +
-> +	rsp->db_revision_valid = true;
-> +	rsp->db_revision = 1;
-> +
-> +	rsp->total_domains_valid = true;
-> +	rsp->total_domains = 0;
-> +
-> +	mutex_lock(&qcom_pdm_mutex);
-> +
-> +	service = qcom_pdm_find_locked(req->name);
-> +	if (service) {
-> +		struct qcom_pdm_domain *domain;
-> +
-> +		rsp->domain_list_valid = true;
-> +		rsp->domain_list_len = 0;
-> +
-> +		list_for_each_entry(domain, &service->domains, list) {
-> +			u32 i = rsp->total_domains++;
-> +
-> +			if (i >= offset && i < SERVREG_LOC_MAX_DOMAINS) {
-> +				u32 j = rsp->domain_list_len++;
-> +
-> +				strscpy(rsp->domain_list[j].name, domain->name,
-> +					sizeof(rsp->domain_list[i].name));
-> +				rsp->domain_list[j].instance_id = domain->instance_id;
-> +
-> +				pr_debug("PDM: found %s / %d\n", domain->name,
-> +					 domain->instance_id);
-> +			}
-> +		}
-> +
-
-Stray newline.
-
-> +	}
-> +
-> +	mutex_unlock(&qcom_pdm_mutex);
-> +
-> +	pr_debug("PDM: service '%s' offset %d returning %d domains (of %d)\n", req->name,
-> +		 req->offset_valid ? req->offset : -1, rsp->domain_list_len, rsp->total_domains);
-> +
-> +	ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_GET_DOMAIN_LIST,
-> +				2658,
-> +				servreg_loc_get_domain_list_resp_ei, rsp);
-> +	if (ret)
-> +		pr_err("Error sending servreg response: %d\n", ret);
-> +
-> +	kfree(rsp);
-> +}
+After just skimming this patch, I don't see that there would be any
+benefit from using scoped guards.
 
 Johan
 
