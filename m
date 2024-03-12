@@ -1,189 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-13899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A5B6878FBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:31:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D72587900B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:52:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CC4C1C20F6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:31:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E4401C20751
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:52:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AB4471B40;
-	Tue, 12 Mar 2024 08:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 140FD77F1B;
+	Tue, 12 Mar 2024 08:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArsYcGPK"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="FapqdML2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9DF71B42;
-	Tue, 12 Mar 2024 08:31:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCFD77F07;
+	Tue, 12 Mar 2024 08:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710232283; cv=none; b=EXwEMxjeMK+Qy7JKJdm5H6j6XBrUMQM1K8IrVWqXeYB+7zBlxu1pOTx3woQJc40L3mO4RygU/dZ0BkrVyl5rxdeWfmWDEx87EgUV1I04RDP3QheMjV95Yuajr9cfxAH26220k9RbpIB13ereFHZ63uLwyQteJy0PUdwisOmD2bI=
+	t=1710233549; cv=none; b=DVIf2wldrCvCmdQqjBRFBmQdLWeCfCV9GVG1ae6VBr06od7OJy7NXurBOOLnO5zoTQh/GMGFE7cnAKol5E+qU835IuuS3FJhmqPJLE5XDEZFlUlVyw9UjWhKroBNPjC6+EZ6vTuQgDjouJFq24vWaC0At0JYAKRKRPa57e6dHeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710232283; c=relaxed/simple;
-	bh=ncyot6GZVlpy2LYZy0ZH/PUatwzNeQz1tW9YE81ui3c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i2M/xypdRlztkhCqy8CsJmdXDv4+2LdHqqHofXQOlssNTt5J8Be+5cZm4y6WIYS7AdpsDxMoI9HzAsXrEpKhgKY0xq4306yXqZ92C9UpYtry0EFPKMZ301su0TrtdOJhmAQh5+Ic+nzcyR9XhHOAR3kz58qCRQyIByzUPDwvnFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArsYcGPK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969D2C433C7;
-	Tue, 12 Mar 2024 08:31:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710232282;
-	bh=ncyot6GZVlpy2LYZy0ZH/PUatwzNeQz1tW9YE81ui3c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ArsYcGPK1Nefx4rCHDQ5BLI3uYbqXqHkK96AybpsjZT7FAKKxhDT5Z4mUffTfMlWl
-	 Fxzphszn3bX/RXuJCge442ZflprWulEV1qLtYVbEPRhYefNHp+XNT9xHWWlwEFJaFG
-	 iJXdp7rBBmI5NFQDh8t925ZE4jpQ79M1rSeuCpL2ErLl7iQb1xHiGyf/Vxmtx7Y6AZ
-	 hMqm/DWW+CUhqMrW//3EX1oEBBWHIcBqedYtrWwH8OpP+zp4wIJfwlWS8FLUkMC3Ax
-	 IUZt3iMScNzb2t4hH/ddHY2xZUEXdVlh+vBEtayNtjGV5k5c7kGRDKDWK1VKHAdB6e
-	 BnZn2hH4i+OoA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rjxXk-000000007Ib-21Kk;
-	Tue, 12 Mar 2024 09:31:28 +0100
-Date: Tue, 12 Mar 2024 09:31:28 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, regressions@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: drm/msm: DisplayPort hard-reset on hotplug regression in 6.8-rc1
-Message-ID: <ZfAS4MOXn_3Nk2OR@hovoldconsulting.com>
-References: <Zd3kvD02Qvsh2Sid@hovoldconsulting.com>
- <ZesH21DcfOldRD9g@hovoldconsulting.com>
- <56de6cfb-fe0f-de30-d4d0-03c0fbb0afbb@quicinc.com>
- <ZeyOmJLlBbwnmaJN@hovoldconsulting.com>
- <Ze8Ke_M2xHyPYCu-@hovoldconsulting.com>
- <b1ae6e39-10c3-0ee1-11f4-3436c3e4ec1a@quicinc.com>
+	s=arc-20240116; t=1710233549; c=relaxed/simple;
+	bh=slL5bRycpHhI2+Y7J6KNxlIBy/lluYrU3g56qphs/Tw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=swL55mjBfOG5wFPtbSgu5yv6Fr3Y1IJtJnu7Nabb1nvnkQSnfqrGLybFXVL7IunFH7BQ/fIKU77bfHSM50gBc9IESBQ9jjP8EibqX28nRcv35iHTL/lN+rbdXzg9ecrijmeOyaaVNzD2zkewuJ/AGAEmXJ9WtlDNjlwjb7PzY7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=FapqdML2; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id E6630400F9;
+	Tue, 12 Mar 2024 13:42:19 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1710232941; bh=slL5bRycpHhI2+Y7J6KNxlIBy/lluYrU3g56qphs/Tw=;
+	h=From:Subject:Date:To:Cc:From;
+	b=FapqdML2C4/6AC9fAy5pBSc7KVObiY7aABWf24FdWul2S9QlDKemBiErH4YP0VjEM
+	 VfN/8mnBsqSyPWw7csIC3PJcEbVvAKoNv6XgOJbNmAPHPvv+t4msbAl37ggeG5LMSz
+	 GTIoRsSb6xrzKPxhI1ruMkGDJIF2hEFtOjEyWfovFbzMaoHyMmtIwpyfZc1HdipCOr
+	 XjCY8Mbm5keZQOTVM4LCWU+yGKBvBllmMzIfC/DL/kWlk6ueV/FZrRJNRvpSFJy78m
+	 u/3mulPJ5QFEVRi4AhKQtQqGvMcrn9CZSQeoJ/iUJkNkO0rU93vKsAus43fzo4iJ6M
+	 hlBZLc3uo2gFw==
+From: Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v4 0/4] platform: arm64: Acer Aspire 1 embedded controller
+Date: Tue, 12 Mar 2024 13:42:06 +0500
+Message-Id: <20240312-aspire1-ec-v4-0-bd8e3eea212f@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b1ae6e39-10c3-0ee1-11f4-3436c3e4ec1a@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAF4V8GUC/1XMQQ6CMBCF4auQrq2ZmSINrryHcTGUUbtB0mKjI
+ dzdQkKE5XvJ948qSvAS1bkYVZDko391eZSHQrkndw/Rvs1bEZBBgkpz7H0Q1OJ01ZiWHDtkSyq
+ DPsjdf5bY9Zb308fhFb5LO+H8rhm7zSTUoBuuBR2RBbCXIaTuGN5qjiTaQKQdpAwdl/VJGNiy2
+ 0OzwhKIYAdNhkCuQVNnbvAPp2n6AUpcigsUAQAA
+To: Hans de Goede <hdegoede@redhat.com>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+ Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2665; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=slL5bRycpHhI2+Y7J6KNxlIBy/lluYrU3g56qphs/Tw=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBl8BVoNtD/XcPJO4FKbwDVc2v3P0F8OnfolTAbY
+ Vi5SvGn5lyJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZfAVaAAKCRBDHOzuKBm/
+ dTXqD/9mLhyNTyI0MH6CWQDuTVLVYqpnYMOOCYwoWd2zSovWgp6HSI67FmmCHt/neu48iFk9o1f
+ 5xNcN+KSj7Y8X16eZFfWf1bAtO3ZmJdJa5qctNftmh3xN7fQ4Tiiz+/gMSfQYhB9dnXDKZgQT28
+ /16c528q0nnFqV57FrOsq0aQjG4SamUJwzRKtsFJkLEGmnO7+9Xp7b393XCbwMZwpAUkWp4I5Pc
+ 0p91Or8ds9B0cXDaMcJJwoJmKz7/kq9V7H7kTRURBw7bqtSoFF3xQb8sHFXWphWdnaSUNd6dLvz
+ UHi4jlonmJWXRSWn3j77I5q+A1y1vbiGidYz60lXyZ6ptb2LVVBT+aEPq9vr67dB0aVhn/+T7mS
+ 2GDrD0l1Ws7B46Vztz+46EgncHgHwA0kobex6WwYtktBsxgHJJ3LF/mR97kfw7ckoOUsbLuX1xK
+ aREfsfDZLMfOz46um2V/B4WzvgQdauiukbZN3BmFFOQBVkFOE79n/O9+KsAMJQtVqn4zNo0xCr1
+ D0uJUulbAp3gT/vKlVtuYWKZxNT0CIHEzworVdJ/OqmCUK/fFtFsby6ahluFWsIXXNh+z3z/uVf
+ Ce2QTFOuUxkRpWx8RY8xFgg5vILwq653Evf2R8QkmOHIJFwsdX43xwA+aOF2c0F/vgmuf+Dv0II
+ jTY8p8xLc0BRFBg==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-On Mon, Mar 11, 2024 at 09:51:29AM -0700, Abhinav Kumar wrote:
-> On 3/11/2024 6:43 AM, Johan Hovold wrote:
-> > On Sat, Mar 09, 2024 at 05:30:17PM +0100, Johan Hovold wrote:
-> >> On Fri, Mar 08, 2024 at 09:50:17AM -0800, Abhinav Kumar wrote:
+The laptop contains an embedded controller that provides a set of
+features:
 
-> >>> I have posted my analysis with the patch here as a RFC y'day:
-> >>>
-> >>> https://patchwork.freedesktop.org/patch/581758/
+- Battery and charger monitoring
+- USB Type-C DP alt mode HPD monitoring
+- Lid status detection
+- Small amount of keyboard configuration*
 
-> > I was able to reproduce the reset with some of my debug printks in place
-> > after reapplying the reverted hpd notify change so I have an explanation
-> > for (one of) the ways we can up in this state now.
-> > 
-> > This does not match description of the problem in the fix linked to
-> > above and I don't think that patch solves the underlying issue even if
-> > it may make the race window somewhat smaller. More details below.
+[*] The keyboard is handled by the same EC but it has a dedicated i2c
+bus and is already enabled. This port only provides fn key behavior
+configuration.
 
-> Its the same condition you described below that enable does not go 
-> through and we bail out as we are in ST_DISCONNECTED.
+Unfortunately, while all this functionality is implemented in ACPI, it's
+currently not possible to use ACPI to boot Linux on such Qualcomm
+devices. Thus this series implements and enables a new driver that
+provides support for the EC features.
 
-It's closely related but clearly not the same as user space is not
-involved in the reset I see.
- 
-> > Turns out there are paths like that and we hit those more often before
-> > reverting e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify().
-> > 
-> > Specifically, when a previous connect attempt did not enable the bridge
-> > fully so that it is still in the ST_MAINLINK_READY when we receive a
-> > disconnect event, dp_hpd_unplug_handle() will turn of the link clock.
-> > 
-> > [  204.527625] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
-> > [  204.531553] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
-> > [  204.533261] msm-dp-display ae98000.displayport-controller: dp_ctrl_off_link
-> > 
-> > A racing connect event, such as the one I described earlier, can then
-> > try to enable the bridge again but dp_bridge_atomic_enable() just bails
-> > out early (and leaks a rpm reference) because we're now in
-> > ST_DISCONNECTED:
-> > 
-> > [  204.535773] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
-> > [  204.536187] [CONNECTOR:35:DP-2] status updated from disconnected to connected
-> > [  204.536905] msm-dp-display ae98000.displayport-controller: dp_display_notify_disconnect - would clear link ready (1), state = 0
-> > [  204.537821] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_check - link_ready = 1
-> > [  204.538063] msm-dp-display ae98000.displayport-controller: dp_display_send_hpd_notification - hpd = 0, link_ready = 1
-> > [  204.542778] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable
-> > [  204.586547] msm-dp-display ae98000.displayport-controller: dp_bridge_atomic_enable - state = 0 (rpm leak?)
-> > 
-> > Clearing link_ready already in dp_display_notify_disconnect() would make
-> > the race window slightly smaller, but it would essentially just paper
-> > over the bug as the events are still not serialised. Notably, there is
-> > no user space interaction involved here and it's the spurious connect
-> > event that triggers the bridge enable.
+The EC would be one of the last pieces to get almost full support for the
+Acer Aspire 1 laptop in the upstream Linux kernel.
 
-> Yes, it only narrows down the race condition window. The issue can still 
-> happen if the commit / modeset was issued before we marked link_ready as 
-> false.
-> 
-> And yes, I was only targetting a short term fix till we rework the HPD. 
-> That will happen only incrementally as its a delicate piece of code.
+This series is similar to the EC driver for Lenovo Yoga C630, proposed
+in [1] but seemingly never followed up...
 
-Ok, thanks for confirming. Please also make that clear in the commit
-message of any patch.
+[1] https://lore.kernel.org/all/20230205152809.2233436-1-dmitry.baryshkov@linaro.org/
 
-I am however not sure that your patch (RFC) is needed at this point as
-the HPD revert fixes the 6.8-rc1 regression, and moving the clearing of
-link_ready can actually make things worse as it makes any spurious
-hotplug event always be processed (not just if they happen after
-dp_display_send_hpd_notification()).
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Changes in v4:
+- Move to platform/arm64 (Sebastian, Hans)
+- Drop fn mode dt property (Rob)
+- Add fn_lock attribute in sysfs (Rob)
+- Report psy present correctly (Sebastian)
+- Link to v3: https://lore.kernel.org/r/20240220-aspire1-ec-v3-0-02cb139a4931@trvn.ru
 
-I'll reply to you patch as well.
- 
-> > So, while it may still be theoretically possible to hit the resets after
-> > the revert, the HPD notify revert effectively "fixed" the regression in
-> > 6.8-rc1 by removing the preconditions that now made us hit it (i.e. the
-> > half-initialised bridge).
+Changes in v3:
+- Supress warning on few no-op events.
+- Invert the fn key behavior (Rob, Conor)
+- Link to v2: https://lore.kernel.org/r/20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru
 
-> Not entirely. In the bug which was reported before the patch 
-> e467e0bde881 ("drm/msm/dp: use drm_bridge_hpd_notify() got landed, its a 
-> classic example of how this issue can happen with userspace involvement 
-> and not just fbdev client which was your case.
+Changes in v2:
+- Drop incorrectly allowed reg in the ec connector binding (Krzysztof)
+- Minor style changes (Konrad)
+- Link to v1: https://lore.kernel.org/r/20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru
 
-Sure, but you already added some kind of band-aid for that issue, right?
+---
+Nikita Travkin (4):
+      dt-bindings: platform: Add Acer Aspire 1 EC
+      platform: Add ARM64 platform directory
+      platform: arm64: Add Acer Aspire 1 embedded controller driver
+      arm64: dts: qcom: acer-aspire1: Add embedded controller
 
-	https://lore.kernel.org/all/1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com/
+ .../bindings/platform/acer,aspire1-ec.yaml         |  60 +++
+ MAINTAINERS                                        |   9 +
+ arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts   |  40 +-
+ drivers/platform/Kconfig                           |   2 +
+ drivers/platform/Makefile                          |   1 +
+ drivers/platform/arm64/Kconfig                     |  35 ++
+ drivers/platform/arm64/Makefile                    |   8 +
+ drivers/platform/arm64/acer-aspire1-ec.c           | 555 +++++++++++++++++++++
+ 8 files changed, 709 insertions(+), 1 deletion(-)
+---
+base-commit: a1184cae56bcb96b86df3ee0377cec507a3f56e0
+change-id: 20231206-aspire1-ec-6b3d2cac1a72
 
-How likely is it that you'd still hit that? Have you had an reports of
-anyone actually hitting that issue since the above workaround was
-merged?
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
 
-Note that I, and other users of the X13s, only started hitting the
-resets with 6.8-rc1, which broke hotplug notification and resulted in
-the half-initialised bridges.
-
-I'm not saying it's impossible to hit the unclocked access still, just
-that that does not seem to be relevant for the regression.
- 
-> > It seems the hotplug state machine needs to be reworked completely, but
-> > at least we're roughly back where we were with 6.7 (including that the
-> > bus clocks will never be turned of because of the rpm leaks on
-> > disconnect).
-
-> Yes, we already landed that revert but I am also planning to land the 
-> patch I had posted till we rework HPD.
-
-Ok, but please consider the implications that would have for any
-spurious connect events first.
-
-Johan
 
