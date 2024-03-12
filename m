@@ -1,170 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-13913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4CA587915B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:50:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66CC78791B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 11:09:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D68C61C2201D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:50:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07BD91F22011
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:09:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC69E79B7B;
-	Tue, 12 Mar 2024 09:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E66078293;
+	Tue, 12 Mar 2024 10:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iKfx6oRJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwpDKae3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5307995D;
-	Tue, 12 Mar 2024 09:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BB33D3A7;
+	Tue, 12 Mar 2024 10:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710236890; cv=none; b=rXYxzRkaX5z8T9a38eo5j24exYiJ3Qv0jbLjJfW+GNk+cAjwKPizglGpEvfqx4BbQkbJw1ikSb6bqP460nLkmyLVIYIYg9PlRBtnIH7AF2yi2U2rt29bXUvhwji6wwDgkOQrfOLEwb0pll2EYd3O2E29pj3HKh8uyb0m70cghCg=
+	t=1710238146; cv=none; b=BeZYDQSkxeRT446SvfmiZkhnpKCuAr4+xjpuakJHZFoMU4FuY1Yr9dp/0Rx8tITYG2Cgi5Anb7QTnUnLwgdcwurqg2KQK1Keo/5GwudOj0ZhYAxake7L16E4PN09zpeXls5idgex16ZsHsc7NpbDSUFW+xRpAC02Ugm0uDK6IAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710236890; c=relaxed/simple;
-	bh=YdRXJjyZ9k5cIKLFSHJ6Sei3r5fysIoK1tCBvszB80U=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BjoJ0fPX5m3oCEDixmKv7qhsfnfkV3kq+9S4cs/WMc9Cl1Xw+UItztQC3QyiIF/PveiyXth4GqDvFrTbI6KQbKjw9KBuUaPiVL37mjqQQETtoFJcznBoKFmkzI20CFsohOL3Tsbdg7FmiteaI7AFk1iCK5u/2ZQxv8FT85Ss5vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iKfx6oRJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42C4nY5R014889;
-	Tue, 12 Mar 2024 09:47:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=Of6M/DttNgTJsgPbbwWeINBKqSd2zyB6v3IzZwLrlwU=; b=iK
-	fx6oRJYOV4Ggz2yu7CN57to48qsx3MmmpHbsD57t0OGtO7bdMO0ySlRycbQdpHd0
-	+Ruq5yehl1AeVZlPMBwZqbAIMvPlFu+fNYhgt/kx6HH3KFNLQxZ5eYsdituVXwYe
-	c+2mvR8R4pfE/m6lVlSSH4wuNLU5+HVc4GrS3CwXHptvxhmexhTcaSxSzv9TxRi6
-	PL3gdevI+JPg+wOecfyFjdfd4N9kecOBzO4lVqlWolVdiJNggQaV6p03fdQHkqFq
-	ao3s2rmPqMqPimsC69zhxqdmRIZEZewndaKY26pmsqaeCVlcnbgca9zN2nLzLIc0
-	d/pkmsbjAhYqgHFQFehw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wtgc3ghfq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 09:47:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42C9lvbn008747
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 09:47:57 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 12 Mar 2024 02:47:51 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
-        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>, <sboyd@kernel.org>,
-        <d-gole@ti.com>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <nm@ti.com>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>
-Subject: [PATCH V4 2/2] cpufreq: scmi: Enable boost support
-Date: Tue, 12 Mar 2024 15:17:26 +0530
-Message-ID: <20240312094726.3438322-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240312094726.3438322-1-quic_sibis@quicinc.com>
-References: <20240312094726.3438322-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1710238146; c=relaxed/simple;
+	bh=AbfRb7Kg3IljFjwdymBcsCC9K7rYKzeKaZKP5Wl6L6w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FBI3FKk1+F+oP6FZskuQFUga1UDvuV6rRAhtqXYw6j63vGp2TiSlyBQ+QUX0py/Xf/d6kzIsgxnAER6IrhrLMPIjDh0M2TBcX1pJ8XPK18D0F5T5BLLrI6ad1Ieech3FagFI0r+Nb2vHFB4skoM6566n/Tbyht4XPNnjV7eN6ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwpDKae3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAFEC433F1;
+	Tue, 12 Mar 2024 10:09:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710238145;
+	bh=AbfRb7Kg3IljFjwdymBcsCC9K7rYKzeKaZKP5Wl6L6w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bwpDKae3eYTmJz4L6IDtofbiuUok6opahnBlZq94FCd30Y3GIjgNw5ETcXZQ0R+cL
+	 HaVf2wBHGruoBOsRZVGRviZ1ELu8yX06EEA21vuhSVigxG4hDCAzW7P8DOFxHhWJKd
+	 z8bcmOa/UpsQNkrTnjbroOkwelh2nknMidzWfeDIW/o23UvQW4xWEg2fhyxzpgGpLW
+	 9QBWdpPN5bn7kaDc2jQpgX+8oGSdx+NOgY1SAmr/VYd1fHJb/Uti/hOAfVDbNppxkX
+	 4ef4Nrwf20XwYhy7qlq0EX2CV1Yf6hq0v+Z06RdToUb3X/WzEfa2H4GZZE/BG6NWRH
+	 px3uHIF7tsqkw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rjz4J-000000007YQ-0ATZ;
+	Tue, 12 Mar 2024 11:09:11 +0100
+Date: Tue, 12 Mar 2024 11:09:11 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
+	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
+Message-ID: <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
+References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AqvFYyXUI1qEcLyfYnz2XhnS7ELzXnvF
-X-Proofpoint-GUID: AqvFYyXUI1qEcLyfYnz2XhnS7ELzXnvF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_08,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
- spamscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403120075
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
 
-Certain platforms host a number of higher OPPs that are exclusive to
-CPUs within specific CPUfreq policies and not all CPUs within that
-CPUfreq policy are able to achieve those higher OPPs due to power
-constraints. These OPPs are marked as turbo in the freq_table and in
-the presence of such OPPs, let's enable boost by default.
+On Fri, Mar 08, 2024 at 01:45:32PM -0800, Abhinav Kumar wrote:
+> There are cases where the userspace might still send another
+> frame after the HPD disconnect causing a modeset cycle after
+> a disconnect. This messes the internal state machine of MSM DP driver
+> and can lead to a crash as there can be an imbalance between
+> bridge_disable() and bridge_enable().
 
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+Can you be more specific here? What steps would lead to this issue and
+how exactly does is mess with the state machine? Is there an easy way
+to reproduce it (e.g. by instrumenting the code with some sleep)?
 
-v4:
-* Pickup Rbs
-* Update commit message of patch with more info. [Sudeep]
+The hotplug code is really convoluted and having a clear description of
+the problem is needed to evaluate the patch (including when revisiting
+it some time from now when I've forgotten about how this state machine
+works).
 
- drivers/cpufreq/scmi-cpufreq.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+As you know, we ran into a related issue on sc8280xp (X13s) since
+6.8-rc1, but that did not involve any user space interaction at all.
 
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 0b483bd0d3ca..3b4f6bfb2f4c 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -30,6 +30,7 @@ struct scmi_data {
+For reference, there are some more details in this thread:
+
+	https://lore.kernel.org/all/Ze8Ke_M2xHyPYCu-@hovoldconsulting.com/
  
- static struct scmi_protocol_handle *ph;
- static const struct scmi_perf_proto_ops *perf_ops;
-+static struct cpufreq_driver scmi_cpufreq_driver;
- 
- static unsigned int scmi_cpufreq_get_rate(unsigned int cpu)
- {
-@@ -167,6 +168,12 @@ scmi_get_rate_limit(u32 domain, bool has_fast_switch)
- 	return rate_limit;
- }
- 
-+static struct freq_attr *scmi_cpufreq_hw_attr[] = {
-+	&cpufreq_freq_attr_scaling_available_freqs,
-+	NULL,
-+	NULL,
-+};
-+
- static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- {
- 	int ret, nr_opp, domain;
-@@ -276,6 +283,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	policy->transition_delay_us =
- 		scmi_get_rate_limit(domain, policy->fast_switch_possible);
- 
-+	if (policy_has_boost_freq(policy)) {
-+		ret = cpufreq_enable_boost_support();
-+		if (ret) {
-+			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
-+			goto out_free_opp;
-+		} else {
-+			scmi_cpufreq_hw_attr[1] = &cpufreq_freq_attr_scaling_boost_freqs;
-+			scmi_cpufreq_driver.boost_enabled = true;
-+		}
-+	}
-+
- 	return 0;
- 
- out_free_opp:
-@@ -334,7 +352,7 @@ static struct cpufreq_driver scmi_cpufreq_driver = {
- 		  CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 		  CPUFREQ_IS_COOLING_DEV,
- 	.verify	= cpufreq_generic_frequency_table_verify,
--	.attr	= cpufreq_generic_attr,
-+	.attr	= scmi_cpufreq_hw_attr,
- 	.target_index	= scmi_cpufreq_set_target,
- 	.fast_switch	= scmi_cpufreq_fast_switch,
- 	.get	= scmi_cpufreq_get_rate,
--- 
-2.34.1
+> This was also previously reported on [1] for which [2] was posted
+> and helped resolve the issue by rejecting commits if the DP is not
+> in connected state.
+> 
+> The change resolved the bug but there can also be another race condition.
+> If hpd_event_thread does not pick up the EV_USER_NOTIFICATION and process it
+> link_ready will also not be set to false allowing the frame to sneak in.
 
+How could the event thread fail to pick up the notification event? Or do
+you mean there's a race window before it has been processed?
+
+> Lets move setting link_ready outside of hpd_event_thread() processing to
+> eliminate a window of race condition.
+
+As we discussed in thread above, this patch does not eliminate the race,
+even if it may reduce the race window.
+ 
+> [1] : https://gitlab.freedesktop.org/drm/msm/-/issues/17
+> [2] : https://lore.kernel.org/all/1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com/
+> 
+> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> @@ -466,6 +466,8 @@ static int dp_display_notify_disconnect(struct device *dev)
+>  {
+>  	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>  
+> +	dp->dp_display.link_ready = false;
+
+As I also pointed out in the other thread, setting link_ready to false
+here means that any spurious connect event (during physical disconnect)
+will always be processed, something which can currently lead to a leaked
+runtime pm reference.
+
+Wasting some power is of course preferred over crashing the machine, but
+please take it into consideration anyway.
+
+Especially if your intention with this patch was to address the resets
+we saw with sc8280xp which are gone since the HPD notify revert (which
+fixed the hotplug detect issue that left the bridge in a
+half-initialised state).
+
+> +
+>  	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+>  
+>  	return 0;
+
+Johan
 
