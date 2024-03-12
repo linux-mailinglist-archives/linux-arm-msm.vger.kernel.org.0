@@ -1,155 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-13893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 345F2878F21
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:41:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E229878F2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:46:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5828C1C21043
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:41:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39C1F282C37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:46:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95CCD69960;
-	Tue, 12 Mar 2024 07:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCDCF6995F;
+	Tue, 12 Mar 2024 07:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pyy+ZTA+"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Lb56FpPP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50D36995B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 07:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577816995B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 07:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710229287; cv=none; b=kC4VKEZ83n5n9TMQVm9OKDW723iqK+H6SIjZYksJ4gf7Wmc+2exTbeesU9xcgSt7vj4Aef0iijdnShXGROITYYZOrPzpXKZSG7GouevLJnnkNYDE8evWyFcm/QABao6Pri6hSFl5R5+8EAfEe2Dguod2SNqtqMpIzkrUl+1t20I=
+	t=1710229567; cv=none; b=iME7ywMIjtNLVABx/TKdRMmrpjgpwkxUbNcgnLtkyAIrSKj5JTZQzGeXJ+USCyFq4haqtt1sLU+ExjNk7o8o5GVPOn9l0L82741lOkqarJAzCuCcCu3x6PvbIirqQGMlR45fmsBQNHDG4haARxTH2l1DLjv/SiHNuDebzFMpPXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710229287; c=relaxed/simple;
-	bh=RvSPT6Bv6vtEsmD42vrmzXn81zZVIEsyfqALmNQg48I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jcqEEX7aPNKeCjfGtxpxP1KwjNZ+VoJrrWxlE2zUpdQpJjsl05tvLQCMNsk9Yt9ci+1NYyX2pujSW025ic1sNYEXQjxZwnHBLz9Z8cf57QieuPgJrLtS/ZpqBcIlgfZHW/IKFg/XkezvOD7Mo7uYNayFiIh6tOoLbLM3jSa0TWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Pyy+ZTA+; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33e1878e357so2988979f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 00:41:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710229284; x=1710834084; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TgYDdxFq67p/WOX1eeP/vTP5ro009CFfqUvEFFUtHGA=;
-        b=Pyy+ZTA+HbpkQ6rX5LAtbSGSqxoL658nNGqGuMYDvEJCAEeHH1KhpNv+4BoSye/PVT
-         qYnoPdXzOj4iD9gO9N//C9boz7rLrzlRbUXkLsJKEOGsMqNwjZrDYTBSCBagajOVlt8k
-         mCLM18xLPTyMkU+FJwuj9nhBeFOM6EPFz5MOhiLBjOPtiu4UouTYotRxV2hm6HialleH
-         mxN0A1QhORvwzYYpZ/ShiaSVewqGsfPZNyhrS/IHdzomhxKP2rYPjCMYRfzM/Xv8XgGc
-         lkvK7rX1B8iokORIfqsSYakkd+lA1l6NN8tYUfRNRYCKswk8SJm3KY9a94re01Uejyq/
-         vBNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710229284; x=1710834084;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TgYDdxFq67p/WOX1eeP/vTP5ro009CFfqUvEFFUtHGA=;
-        b=dP+bNN1PtWlzDOJN63h2UsMfetfpA/Xcwb4O25mfMrPHIWOnn08jKBT8cqGAAZ/FBB
-         Kge+pbHZtZI2w7+TUrk9qZwunvjE63drCg9c8CqmV5x/VyYdIxUly2YWLzZpM7eSu2cr
-         SwKdtIttvuI5QBcZJh2SEeaWfky7Ma0FuNhsv9musz3t0jn0bp7YrVQQEjsQzZVLs3dX
-         66PFkzd/4PLcFAknUZr/JJpH7Anx28ZWiIVvy5MFMt3FOHviQ9Cx/TACbMGxIqy7Y4kN
-         sTpflribV6yTwd6Po8+d2f7ZQTf3Nh/tldGPz5GxwIyyyv1kraMyTY1MjbBsKY7H+O5O
-         F16w==
-X-Gm-Message-State: AOJu0Yxn/YMT37UyJd9Z7TEzEJ8fgryAuQ/xYVLM8uhb93d2i2GZdzlf
-	Rcn9u7/esAYMdK9kXMHnV91k41U/9GEZ5ULp0+4hwKEObiPeC+l29pCtHzQD2mw=
-X-Google-Smtp-Source: AGHT+IESMVwiJpASkWfvM7UEJkVOkQJsL9skqKFEAKnIjaDtVoluPz4uvz7gf1Ez+dKNy3FaRgBroQ==
-X-Received: by 2002:adf:fdca:0:b0:33e:7938:9e65 with SMTP id i10-20020adffdca000000b0033e79389e65mr5313783wrs.18.1710229284106;
-        Tue, 12 Mar 2024 00:41:24 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id a11-20020adff7cb000000b0033b48190e5esm8266360wrq.67.2024.03.12.00.41.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Mar 2024 00:41:23 -0700 (PDT)
-Message-ID: <0d768f17-22d9-448e-9253-8498b61bf71e@linaro.org>
-Date: Tue, 12 Mar 2024 08:41:21 +0100
+	s=arc-20240116; t=1710229567; c=relaxed/simple;
+	bh=nAKaAzfxM+TFh5Qpz2J4wCa6Dr9859dg3apghxnoja0=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=a8H4dj3LsmXl0/NAQUg8a1vcer5Hi7PvPLijhlY3QyQU+riCpPpY9HS9YJiAY6+eNfvn4aNGVmWIBwvGRiYUQLGFcEWIFsSydGpNPusZTmHjBw7NwxEN5E6CRScj2N+JOCq0xqMdBlusvgBdOJmZqTdhkrgY9EopGPxKKdwVOng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Lb56FpPP; arc=none smtp.client-ip=185.70.43.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1710229555; x=1710488755;
+	bh=DaPBnbbEkmUycyEZJwv4LHBaiqagj1bYs7NPHk20HRs=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Lb56FpPPyy6Z6YqvkokT76iv1PogGPvWLj86UZds8I5ywqZhda9mfdNpzv2w46CML
+	 43JceMkwEzhuQVdPqobuJtQJvodzZkUDiYnfRIiEdXpKARWScYC/2I8jP/3Dg37zFF
+	 zaEOcARVidVp+TEx4tnDDIK0BlkvNGr9ul8nPquxMUvRv4voEVnY13GdWvEVVTz2Sf
+	 Hc+l8P+cGyTwQMz+w1DOYfbnMnRUIIFgSUi16JPUVKCGtCestT74RH4kCwCCkJZQal
+	 aCd9aP7mOFBgQa4Zrr0oGWF3/NPsoeWgsdqUK0x8loBxU0xe1U+fJm977ZJNh//YV2
+	 IggAdobIYJ1GQ==
+Date: Tue, 12 Mar 2024 07:45:42 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Joe Mason <buddyjojo06@outlook.com>
+Subject: [PATCH v2] arm64: dts: qcom: msm8916-samsung-fortuna: Add touchscreen
+Message-ID: <20240312074536.62964-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: update compatible name
- for match with driver
-Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
- <20240312025807.26075-2-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240312025807.26075-2-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 12/03/2024 03:58, Tengfei Fan wrote:
-> Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
-> to match the compatible name in sm4450 pinctrl driver.
-> 
-> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+From: Joe Mason <buddyjojo06@outlook.com>
 
-Wasn't this applied?
+Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
+touchscreen. Add it together with the necessary fixed-regulator to the
+device tree.
 
-Best regards,
-Krzysztof
+Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
+[Raymond: Move to fortuna-common. Use interrupts-extended]
+Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+---
+v2: Add &touchscreen. Keep i2c5 enabled
+---
+ .../qcom/msm8916-samsung-fortuna-common.dtsi  | 49 +++++++++++++++++++
+ .../qcom/msm8916-samsung-rossa-common.dtsi    |  3 ++
+ 2 files changed, 52 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b=
+/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
+index c2800ad2dd5b..d16647e687ef 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
+@@ -66,6 +66,19 @@ reg_motor_vdd: regulator-motor-vdd {
+ =09=09pinctrl-0 =3D <&motor_en_default>;
+ =09=09pinctrl-names =3D "default";
+ =09};
++
++=09reg_vdd_tsp_a: regulator-vdd-tsp-a {
++=09=09compatible =3D "regulator-fixed";
++=09=09regulator-name =3D "vdd_tsp_a";
++=09=09regulator-min-microvolt =3D <3000000>;
++=09=09regulator-max-microvolt =3D <3000000>;
++
++=09=09gpio =3D <&tlmm 73 GPIO_ACTIVE_HIGH>;
++=09=09enable-active-high;
++
++=09=09pinctrl-0 =3D <&tsp_en_default>;
++=09=09pinctrl-names =3D "default";
++=09};
+ };
+=20
+ &blsp_i2c1 {
+@@ -94,6 +107,28 @@ fuel-gauge@35 {
+ =09};
+ };
+=20
++&blsp_i2c5 {
++=09status =3D "okay";
++
++=09touchscreen: touchscreen@20 {
++=09=09compatible =3D "zinitix,bt541";
++=09=09reg =3D <0x20>;
++
++=09=09interrupts-extended =3D <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
++
++=09=09touchscreen-size-x =3D <540>;
++=09=09touchscreen-size-y =3D <960>;
++
++=09=09vcca-supply =3D <&reg_vdd_tsp_a>;
++=09=09vdd-supply =3D <&pm8916_l6>;
++
++=09=09pinctrl-0 =3D <&tsp_int_default>;
++=09=09pinctrl-names =3D "default";
++
++=09=09linux,keycodes =3D <KEY_APPSELECT KEY_BACK>;
++=09};
++};
++
+ &blsp_uart2 {
+ =09status =3D "okay";
+ };
+@@ -200,4 +235,18 @@ sdc2_cd_default: sdc2-cd-default-state {
+ =09=09drive-strength =3D <2>;
+ =09=09bias-disable;
+ =09};
++
++=09tsp_en_default: tsp-en-default-state {
++=09=09pins =3D "gpio73";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
++
++=09tsp_int_default: tsp-int-default-state {
++=09=09pins =3D "gpio13";
++=09=09function =3D "gpio";
++=09=09drive-strength =3D <2>;
++=09=09bias-disable;
++=09};
+ };
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi b/a=
+rch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
+index 42843771ae2a..4048b72efcdc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
+@@ -5,6 +5,9 @@
+ /* SM5504 MUIC instead of SM5502 */
+ /delete-node/ &muic;
+=20
++/* Touchscreen varies depending on model variant */
++/delete-node/ &touchscreen;
++
+ &blsp_i2c1 {
+ =09muic: extcon@14 {
+ =09=09compatible =3D "siliconmitus,sm5504-muic";
+--=20
+2.39.2
+
 
 
