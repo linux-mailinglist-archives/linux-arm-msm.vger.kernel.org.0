@@ -1,73 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-13940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E83E8796EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 15:54:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66205879708
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 16:02:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2ECD1F25A80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 14:54:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 158A7281C56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 15:02:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E26D7BAE7;
-	Tue, 12 Mar 2024 14:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 057E87BAE7;
+	Tue, 12 Mar 2024 15:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vmebt6rN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nLiwURvL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0307B3E8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 14:53:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3282A6FB9;
+	Tue, 12 Mar 2024 15:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710255235; cv=none; b=asSu9SXlgYhAQd2ET9u5bIZTLQLgEPPY/F3Pcz3jgQuXBBOy0dWLetbH9YR+IS8mlZI1TAjnKAZr0NRIyh/6yUNGIvLqJjLVexiB+KgixT6jw8kmdSRD3Djg2mPdbVSbh/sdn5yxSNR4vQTUaFo9L/y1fY0cH98v1aFOaEC4x3U=
+	t=1710255727; cv=none; b=MToSoO4KrYWmcaUjOzQWWyGZ7iPEQVDvlx3Qg1u4Oj0IsrH21MJHc6pPoR0xIjSQnGW9Un7MKAr0yd+cSePStDF+RhArqyXOlzObtDjvEljtLFlaCK03DaWMVPFqJaj5ZrGIPY8Vb58Iyr/EfU1TFUqm2ceUpuA0PG0gsMhIXJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710255235; c=relaxed/simple;
-	bh=bGGHbUurf8z2aahIEBEQAO22P5jFwd8to0iY7TOjxHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hrwzr6ErFzdD1JJpcPD7/slDd68d5xm6b8FW+DoXI9YOV12XxqOFcGy64oFpGRf+3k2BZgc2CI4kcWHt0cCjdpVU7VM+MVMzXeMUvpkc1ZVAcy4lI5OFk79DxdfhLFJA8aBalS1hc+QRvgSRpa1LGEryRo2FLB4RBn3euLFdVYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vmebt6rN; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5131a9b3d5bso5419734e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 07:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710255232; x=1710860032; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=keCLG9SnPqnp4c4TkDEyJxwdSrYn/phlS9CwfE8jy2w=;
-        b=vmebt6rNs76/YHosCZ/9QU/lg0PfyTRk0cYnyAcI2ZvRBqdEtslHdvlpQH8dh3syQD
-         2QqO87DsPD2AEJBLvGp/f4W3Kpl0eJCD+rk2eOGtJkc5nMzJ/pX1u8oxqrCGMA+qXwpq
-         YwD8xzvIMjsHTjnf5PH4SlMQgNk4p4HcSYkJv24Ax2h9CG7U4zf36grq2rfX3NIwCkHg
-         LSftkcS5uDlmc3aOz7EzgO9nE5eqxE/TLDjLrCXiwhW1hOp6ISG4bP6Zp336D55gpkiV
-         S9e9g6dX/TYaWulRY9/SvUdjMG+1u/tOcqw0owQi8Fo0bF+OxiDVz8x9pQlnblWqcwmo
-         tB3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710255232; x=1710860032;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=keCLG9SnPqnp4c4TkDEyJxwdSrYn/phlS9CwfE8jy2w=;
-        b=vGoPXkQiPqGUDabE9VxkT/q+Jp4Gn2uBmv2k8UxYaNCsniOt9V7hpYIhWx5nT1o+LL
-         oWv7O8nmzHarZTSENnmKjSnZkllzOtbehXkzo7mnVgxTYcxzlaEcCmNtwSFYzUaQbt8s
-         JCeg6Q5hVwgEd3FrRcZPiwBP6qOjFA/4nig+8Tq1UQF8JKs7cE96zXKAwrtLcVSilSrq
-         o4LC6kgzTRwOrXhxlAPNYuHqHzU938D14emXt0fHUKRoSi3TjpyXE+2/m52uVW57q2yG
-         dZCXDZkn8KX+TXRcnTYStZrDkuWknD1Sx+6Gik+JdE0uh7aRkgrI4dN1LqSjtamttAgF
-         cODQ==
-X-Gm-Message-State: AOJu0Yy9g8u5mB8cGoKitbcCyAjHVEqgnDkXK2pR+TbxUlMJszML4OKk
-	ciLCdjGBI1bL4HsyUm4g7EEUM7KVJanQlxZN7SPC8LXcZv66yQshPg+B+4U09tg=
-X-Google-Smtp-Source: AGHT+IHWscraXWfl9i2ubcI6WwPw3EVwwdQh9J4Hzv7X4J9wenpjW8/dzOuu7lN6Ggow35umWvP/Ag==
-X-Received: by 2002:ac2:4da7:0:b0:513:b062:98bf with SMTP id h7-20020ac24da7000000b00513b06298bfmr246742lfe.20.1710255232372;
-        Tue, 12 Mar 2024 07:53:52 -0700 (PDT)
-Received: from [172.30.205.61] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id 2-20020ac24822000000b00513c58e7601sm66644lft.284.2024.03.12.07.53.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Mar 2024 07:53:51 -0700 (PDT)
-Message-ID: <5046cdf6-8111-477b-9724-c68183e5f357@linaro.org>
-Date: Tue, 12 Mar 2024 15:53:50 +0100
+	s=arc-20240116; t=1710255727; c=relaxed/simple;
+	bh=+2b6ed3F/KPCOCDW0fG1OdfwFqw9j+nnEkaHGDQ6eqc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Xy18ZPhFu1iZGnIGBxvwryfd0aHhwoVwrHVrBj5G56gK9dJeT8lOhrR2VTNALTee921dHZulkD1O0g8ZleIxInacpJIXE4RwiU6zwVaynJ/NzVFVLp9sqIm2dQpGFgtDbbycBKtdCoH+ulpw7vbwEugqZXH0V3xN0zDjG4hILTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nLiwURvL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42CAvwvU021211;
+	Tue, 12 Mar 2024 15:02:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=qXoAYhHKfTUJsSlgTVytqgymms4yVPOoUBmHB7FY+F0=; b=nL
+	iwURvLXZXJMQX43Y0kLb4lxaEVl8xGwk4s2N7OzlDJttEtuNqvGVFCiH1DPAO6U1
+	HBi3VyogXhHLXifL1Cmq/2I6WApVFRuuJmymnrcM+NOL9+GmO14oHXBFAtc9B2Hj
+	xB2xvLxuZnkvonoVIKfVHKnZt+GwIhzdISZcO80evlqsfviPU/SUuslxA+tpMgz4
+	7WZShHjlWT+cSutPJudqzJO/ZV4rG7Aw7oc4HAx84Zk9Yek4l7dfneQNjM8a/VGa
+	5sM5gtP+Bm3itHOc7h0lsfp3+/77HAqHZL5d9Aapkrp+fPEVVKVcmUzHFUhdJ78G
+	Qolz6ktpyqu9s/UOn0xQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wtjef0xs3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Mar 2024 15:01:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42CF1wAS026791
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Mar 2024 15:01:58 GMT
+Received: from [10.251.45.43] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
+ 2024 08:01:55 -0700
+Message-ID: <b852d178-dfb6-47fb-a5bf-55b614cbfae3@quicinc.com>
+Date: Tue, 12 Mar 2024 17:01:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,31 +65,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add Sony Xperia Z3 smartphone
+Subject: Re: [PATCH 1/9] media: qcom: camss: Add per sub-device type resources
 Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240310-shinano-common-v1-0-d64cd322ebca@z3ntu.xyz>
- <20240310-shinano-common-v1-3-d64cd322ebca@z3ntu.xyz>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240310-shinano-common-v1-3-d64cd322ebca@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <andersson@kernel.org>, <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
+        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
+References: <20240227122415.491-1-quic_grosikop@quicinc.com>
+ <20240227122415.491-2-quic_grosikop@quicinc.com>
+ <9af62237-98ec-4130-8523-f6c9cb0ad281@linaro.org>
+From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
+In-Reply-To: <9af62237-98ec-4130-8523-f6c9cb0ad281@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LGqLkHqDYaoPEJxN4hAgfQ_V7MvdLw0y
+X-Proofpoint-GUID: LGqLkHqDYaoPEJxN4hAgfQ_V7MvdLw0y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-12_10,2024-03-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ suspectscore=0 bulkscore=0 spamscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403120115
 
+Hi Konrad,
 
+Thank you for the review.
 
-On 3/10/24 12:41, Luca Weiss wrote:
-> Add the dts for the Xperia Z3 smartphone which is based on Sony's
-> shinano platform, so at the moment there's little device-specific dts to
-> add on top of the common parts.
+On 3/12/2024 4:44 PM, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+> 
+> On 2/27/24 13:24, Gjorgji Rosikopulos wrote:
+>> From: Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>
+>>
+>> Currently resources structure grows with additional parameters
+>> required for
+>> each sub-deivce. However each sub-device has some specific resources or
+>> configurations which need to be passed during the initialization.
+>>
+>> This change adds per sub-device type structure to simplify the things
+>> and removes the magical void pointer to hw_ops.
+> 
+> I'm not quite sure what the benefit here is, as opposed to simply
+> extending <name>_device?
+> 
+> Generally, I think the driver state as of today is somewhat backwards..
+> 
+> We define a common set of resources, and then assign them subdev-specific
+> ops, instead of defining the subdev and consuming clocks/pds/resets
+> within a subdevice there..
 
-modulo missing makfile, this looks good
+In the current code only ops are specific. However there are other
+configurations passed to the sub-devices which are actually specific to
+different sub-device, as an example:
+
+
+1. is_lite flag. The lite flag is valid for csid and vfe but not for csiphy.
+
+2. line_num this is valid only for vfe sub-device.
+
+3. video device available formats. Those formats are only used by the
+vfe sub-device and are not valid to other sub-devices which are not
+having any video device connected, (those will be added in next patches
+in the patch-set).
+
+Please check the other changes in this patch-set maybe it will make more
+sense.
+
+I am not sure with such differences in the sub-device code we can have
+generic structure which contains only ops...
+
+And please note that when we are introducing new sub-device for other
+SoC it may need additional specific configuration.
+
+
+Regards,
+
+~Gjorgji
+
 
