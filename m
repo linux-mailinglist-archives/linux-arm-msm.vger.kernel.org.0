@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-13892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EBC9878EFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:06:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 345F2878F21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:41:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 615F61C20B8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:06:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5828C1C21043
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 731A069950;
-	Tue, 12 Mar 2024 07:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95CCD69960;
+	Tue, 12 Mar 2024 07:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MTbYQNFe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pyy+ZTA+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED756C2FD;
-	Tue, 12 Mar 2024 07:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50D36995B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 07:41:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710227165; cv=none; b=CgyFAF2SGs/NooUolIk5XVN0VxBeoFxKZ6cIZvZUZCedPUVqpXLa35Oi2t3ZPsZbtMCcb74/1hGMW2GiI5ojctf35di21GoPuEmAuXXjysnSFwd1EMDPAMVBJl9V1RDJm0LaiPhORnrf9EjCe+LdTlRl1LeDGyL6wi/PadJtWc0=
+	t=1710229287; cv=none; b=kC4VKEZ83n5n9TMQVm9OKDW723iqK+H6SIjZYksJ4gf7Wmc+2exTbeesU9xcgSt7vj4Aef0iijdnShXGROITYYZOrPzpXKZSG7GouevLJnnkNYDE8evWyFcm/QABao6Pri6hSFl5R5+8EAfEe2Dguod2SNqtqMpIzkrUl+1t20I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710227165; c=relaxed/simple;
-	bh=JocwIlLZjm9gCYFghV8+dAjoZOh1i8sXxt+NJb3kdU4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=f317CTnrmFq0ClQl+c2a56aZDtJCR5AqbWFYv2V7Tpgx/kEbZDRZkdukTktZ+j1ts4bZOL3IhpzrMcfdU0v1NJs17DbXyU2WIDuOhlgPdoluC/jtXNYupldPRoFmSJvvpgKE3bH31Xn7tpcFQX5XaNMVS6lSH54ZfRy89DV6Uj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MTbYQNFe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42C6Hj1p024963;
-	Tue, 12 Mar 2024 07:05:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:from:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=wH+mvWcyy2v9McJVwf0Nnv0Qi7tO2fnY7lw9wytsMe8=; b=MT
-	bYQNFeeRbZp+eh+OiG1mTRIpRJ6Kryc0pXGcHaKOcJH2gzFwraAjC8cz6repyNs4
-	YF1zx2a9ee0nGep5lIMPHulz8G0qVZ8eTvUug9N6pSICr0JyldHpksp0mg9MhTPK
-	5XxDuNyTndyKYHPoowhyUAMvAizgyjvR6TrLeigeuNWnwVgnTJqGJF5n8GJ2wFip
-	Jsrvn4AnLPOD76VpvEC+WU4HWPVffDnakz0ufOINbXK2F7VFY09Jf3nfoYoDAROl
-	wAn1kXncYY80oAmya0+UhcLkPaOAJuL9DFxou2nO7jKJEQC014PUOKx3r4a3x39s
-	tz7S8OVrnpMY1xp3qIFQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wtfwn08g5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 07:05:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42C75tc4011990
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 07:05:55 GMT
-Received: from [10.214.18.146] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
- 2024 00:05:53 -0700
-Message-ID: <2521790d-2676-43af-bdac-76043fd63dd6@quicinc.com>
-Date: Tue, 12 Mar 2024 12:35:46 +0530
+	s=arc-20240116; t=1710229287; c=relaxed/simple;
+	bh=RvSPT6Bv6vtEsmD42vrmzXn81zZVIEsyfqALmNQg48I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jcqEEX7aPNKeCjfGtxpxP1KwjNZ+VoJrrWxlE2zUpdQpJjsl05tvLQCMNsk9Yt9ci+1NYyX2pujSW025ic1sNYEXQjxZwnHBLz9Z8cf57QieuPgJrLtS/ZpqBcIlgfZHW/IKFg/XkezvOD7Mo7uYNayFiIh6tOoLbLM3jSa0TWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Pyy+ZTA+; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-33e1878e357so2988979f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 00:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710229284; x=1710834084; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TgYDdxFq67p/WOX1eeP/vTP5ro009CFfqUvEFFUtHGA=;
+        b=Pyy+ZTA+HbpkQ6rX5LAtbSGSqxoL658nNGqGuMYDvEJCAEeHH1KhpNv+4BoSye/PVT
+         qYnoPdXzOj4iD9gO9N//C9boz7rLrzlRbUXkLsJKEOGsMqNwjZrDYTBSCBagajOVlt8k
+         mCLM18xLPTyMkU+FJwuj9nhBeFOM6EPFz5MOhiLBjOPtiu4UouTYotRxV2hm6HialleH
+         mxN0A1QhORvwzYYpZ/ShiaSVewqGsfPZNyhrS/IHdzomhxKP2rYPjCMYRfzM/Xv8XgGc
+         lkvK7rX1B8iokORIfqsSYakkd+lA1l6NN8tYUfRNRYCKswk8SJm3KY9a94re01Uejyq/
+         vBNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710229284; x=1710834084;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TgYDdxFq67p/WOX1eeP/vTP5ro009CFfqUvEFFUtHGA=;
+        b=dP+bNN1PtWlzDOJN63h2UsMfetfpA/Xcwb4O25mfMrPHIWOnn08jKBT8cqGAAZ/FBB
+         Kge+pbHZtZI2w7+TUrk9qZwunvjE63drCg9c8CqmV5x/VyYdIxUly2YWLzZpM7eSu2cr
+         SwKdtIttvuI5QBcZJh2SEeaWfky7Ma0FuNhsv9musz3t0jn0bp7YrVQQEjsQzZVLs3dX
+         66PFkzd/4PLcFAknUZr/JJpH7Anx28ZWiIVvy5MFMt3FOHviQ9Cx/TACbMGxIqy7Y4kN
+         sTpflribV6yTwd6Po8+d2f7ZQTf3Nh/tldGPz5GxwIyyyv1kraMyTY1MjbBsKY7H+O5O
+         F16w==
+X-Gm-Message-State: AOJu0Yxn/YMT37UyJd9Z7TEzEJ8fgryAuQ/xYVLM8uhb93d2i2GZdzlf
+	Rcn9u7/esAYMdK9kXMHnV91k41U/9GEZ5ULp0+4hwKEObiPeC+l29pCtHzQD2mw=
+X-Google-Smtp-Source: AGHT+IESMVwiJpASkWfvM7UEJkVOkQJsL9skqKFEAKnIjaDtVoluPz4uvz7gf1Ez+dKNy3FaRgBroQ==
+X-Received: by 2002:adf:fdca:0:b0:33e:7938:9e65 with SMTP id i10-20020adffdca000000b0033e79389e65mr5313783wrs.18.1710229284106;
+        Tue, 12 Mar 2024 00:41:24 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id a11-20020adff7cb000000b0033b48190e5esm8266360wrq.67.2024.03.12.00.41.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Mar 2024 00:41:23 -0700 (PDT)
+Message-ID: <0d768f17-22d9-448e-9253-8498b61bf71e@linaro.org>
+Date: Tue, 12 Mar 2024 08:41:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,106 +75,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] soc: qcom: mdt_loader: Add Upperbounds check for
- program header access
-From: Auditya Bhattaram <quic_audityab@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20240213080010.16924-1-quic_audityab@quicinc.com>
- <y6em73mzbh47fzpgfvfsrypw5ktgt6zaqfujscaxkjuqivlxcr@vcke7w4omq7b>
- <38e6cf32-78fc-4a5a-a98c-18b126bdf50f@quicinc.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: update compatible name
+ for match with driver
 Content-Language: en-US
-In-Reply-To: <38e6cf32-78fc-4a5a-a98c-18b126bdf50f@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nZv5UbID9omxc2EP9MeKPXrrWihXnuOz
-X-Proofpoint-GUID: nZv5UbID9omxc2EP9MeKPXrrWihXnuOz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- bulkscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403120053
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
+ <20240312025807.26075-2-quic_tengfan@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240312025807.26075-2-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 12/03/2024 03:58, Tengfei Fan wrote:
+> Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
+> to match the compatible name in sm4450 pinctrl driver.
+> 
+> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
+Wasn't this applied?
 
-On 2/14/2024 11:27 AM, Auditya Bhattaram wrote:
-> 
-> 
-> On 2/14/2024 11:12 AM, Bjorn Andersson wrote:
->> On Tue, Feb 13, 2024 at 01:30:10PM +0530, Auditya Bhattaram wrote:
->>> hash_index is evaluated by looping phdrs till QCOM_MDT_TYPE_HASH
->>> is found. Add an upperbound check to phdrs to access within elf size.
->>>
->>
->> How is this compatible with what is being observed on SM8450 and
->> implemented in commit 8bd42e2341a7 ("soc: qcom: mdt_loader: Allow hash
->> segment to be split out"?
->>
->> Regards,
->> Bjorn
->>
-> 
-> Calculating hash_index is introduced with this commit 8bd42e2341a7 
-> ("soc: qcom: mdt_loader: Allow hash segment to be split out"
-> 
->      for (i = 1; i < ehdr->e_phnum; i++) {
->       if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) ...
-> 
-> I'm trying to add an upper bound for this access "phdrs[i]"
-> 
+Best regards,
+Krzysztof
 
-Any further questions on this Bjorn.
-
->>> Fixes: 64fb5eb87d58 ("soc: qcom: mdt_loader: Allow hash to reside in 
->>> any segment")
->>> Cc: <stable@vger.kernel.org>
->>> Signed-off-by: Auditya Bhattaram <quic_audityab@quicinc.com>
->>> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>> ---
->>> Changes in v4:
->>>   - Added additional prints incase of Invalid access.
->>> Link to v3 
->>> https://lore.kernel.org/stable/1c91c653-cebe-4407-bdd6-cfc73b64c0fb@quicinc.com
->>> Link to v2 
->>> https://lore.kernel.org/linux-arm-msm/9773d189-c896-d5c5-804c-e086c24987b4@quicinc.com/T/#t
->>> Link to v1 
->>> https://lore.kernel.org/linux-arm-msm/5d7a3b97-d840-4863-91a0-32c1d8e7532f@linaro.org/T/#t
->>> ---
->>>   drivers/soc/qcom/mdt_loader.c | 7 +++++++
->>>   1 file changed, 7 insertions(+)
->>>
->>> diff --git a/drivers/soc/qcom/mdt_loader.c 
->>> b/drivers/soc/qcom/mdt_loader.c
->>> index 6f177e46fa0f..1a79a7bba468 100644
->>> --- a/drivers/soc/qcom/mdt_loader.c
->>> +++ b/drivers/soc/qcom/mdt_loader.c
->>> @@ -145,6 +143,13 @@ void *qcom_mdt_read_metadata(const struct 
->>> firmware *fw, size_t *data_len,
->>>       if (phdrs[0].p_type == PT_LOAD)
->>>           return ERR_PTR(-EINVAL);
->>>
->>> +    if (((size_t)(phdrs + ehdr->e_phnum)) > ((size_t)ehdr + 
->>> fw->size)) {
->>> +        dev_err(dev,
->>> +            "Invalid phdrs access for fw: %s, e_phnum: %u, fw->size: 
->>> %zu\n",
->>> +            fw_name, ehdr->e_phnum, fw->size);
->>> +        return ERR_PTR(-EINVAL);
->>> +    }
->>> +
->>>       for (i = 1; i < ehdr->e_phnum; i++) {
->>>           if ((phdrs[i].p_flags & QCOM_MDT_TYPE_MASK) == 
->>> QCOM_MDT_TYPE_HASH) {
->>>               hash_segment = i;
->>> -- 
->>> 2.17.1
->>>
 
