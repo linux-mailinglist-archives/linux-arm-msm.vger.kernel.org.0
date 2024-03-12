@@ -1,168 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-13894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E229878F2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:46:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BEF86878F30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:48:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 39C1F282C37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:46:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78C30282D7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:48:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCDCF6995F;
-	Tue, 12 Mar 2024 07:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229906996F;
+	Tue, 12 Mar 2024 07:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Lb56FpPP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ekx8eCHi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577816995B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 07:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D15AB657;
+	Tue, 12 Mar 2024 07:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710229567; cv=none; b=iME7ywMIjtNLVABx/TKdRMmrpjgpwkxUbNcgnLtkyAIrSKj5JTZQzGeXJ+USCyFq4haqtt1sLU+ExjNk7o8o5GVPOn9l0L82741lOkqarJAzCuCcCu3x6PvbIirqQGMlR45fmsBQNHDG4haARxTH2l1DLjv/SiHNuDebzFMpPXg=
+	t=1710229692; cv=none; b=QTDBLiIwcTdZUYZFkZz3P4rFNLYQQZ8KbaDLf8XX/As5glNUIyz65xO7vX0VbPQbaN+zsYSnD56tWO8reR4zvIaE/MuW/QBv0CpVb50MsTQ0qN2+he/YA41+B/TCfNc7oDXlb1bLA8/JTYBTwVSicXkzFgt4npcRcoG2BlCs+5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710229567; c=relaxed/simple;
-	bh=nAKaAzfxM+TFh5Qpz2J4wCa6Dr9859dg3apghxnoja0=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=a8H4dj3LsmXl0/NAQUg8a1vcer5Hi7PvPLijhlY3QyQU+riCpPpY9HS9YJiAY6+eNfvn4aNGVmWIBwvGRiYUQLGFcEWIFsSydGpNPusZTmHjBw7NwxEN5E6CRScj2N+JOCq0xqMdBlusvgBdOJmZqTdhkrgY9EopGPxKKdwVOng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Lb56FpPP; arc=none smtp.client-ip=185.70.43.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1710229555; x=1710488755;
-	bh=DaPBnbbEkmUycyEZJwv4LHBaiqagj1bYs7NPHk20HRs=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=Lb56FpPPyy6Z6YqvkokT76iv1PogGPvWLj86UZds8I5ywqZhda9mfdNpzv2w46CML
-	 43JceMkwEzhuQVdPqobuJtQJvodzZkUDiYnfRIiEdXpKARWScYC/2I8jP/3Dg37zFF
-	 zaEOcARVidVp+TEx4tnDDIK0BlkvNGr9ul8nPquxMUvRv4voEVnY13GdWvEVVTz2Sf
-	 Hc+l8P+cGyTwQMz+w1DOYfbnMnRUIIFgSUi16JPUVKCGtCestT74RH4kCwCCkJZQal
-	 aCd9aP7mOFBgQa4Zrr0oGWF3/NPsoeWgsdqUK0x8loBxU0xe1U+fJm977ZJNh//YV2
-	 IggAdobIYJ1GQ==
-Date: Tue, 12 Mar 2024 07:45:42 +0000
-To: linux-kernel@vger.kernel.org
-From: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Joe Mason <buddyjojo06@outlook.com>
-Subject: [PATCH v2] arm64: dts: qcom: msm8916-samsung-fortuna: Add touchscreen
-Message-ID: <20240312074536.62964-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
+	s=arc-20240116; t=1710229692; c=relaxed/simple;
+	bh=oHNMUs0E9LTvbdffnW9qL4JVkImwURiE8Vj3N2Ew36I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CQPcEuCO1XCs5DRcNixbpvhMydOp+Cy25ayHgpsmFYfptXD8B13pIYw+x5tCcDyblS4kG3tZSCbIe+Cyo85NBvov80wUWY0uat2GSMZH1Kwn/E/Dnes74JkS64SO9lw0dQX8u10Eu+3jrkGRXMVgy3kMjI8CO6aFdd5teix8lG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ekx8eCHi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42C5fswZ010197;
+	Tue, 12 Mar 2024 07:47:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=09wLCnezT9Uab9FiCyCAUmZgWKMnkvwzvdFxcpiHZ7Q=; b=ek
+	x8eCHiCJLwB0ucuLy/+ZXmmgwB85Ni72Oz7TC1n4RXKuuEEcsvGGD1s0uGYzJcPJ
+	kYb8PGB4ld4q+X2FA6g6d/WLQiDhDnJMcW2aSpWTECaEypWv0AsqRO+rwxAgfYUl
+	deU+X3tV8+VtNuSDXpbq7VTMD61tOXhoDysSYZtJzbG9EJ4PnnI6MBLnjj6TAw27
+	nB1IzrEndZV466AkL7Cto2YOyRHjy7XfW8xAEYPUvgF6AYyBgP2Kh86t0nUwBRBO
+	GGOrPCkoj2kPpWnvl1AaIzP+uzwt07miHTzcsM1b7prw/KVzuJF90ko9q6fcQ4ld
+	SB0Giha3oFgRhVoBrnPw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wte5d0hps-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Mar 2024 07:47:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42C7lrBW013216
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Mar 2024 07:47:53 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
+ 2024 00:47:48 -0700
+Message-ID: <31b02b76-88ff-42d7-a665-18d2661e028c@quicinc.com>
+Date: Tue, 12 Mar 2024 15:47:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-From: Joe Mason <buddyjojo06@outlook.com>
-
-Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
-touchscreen. Add it together with the necessary fixed-regulator to the
-device tree.
-
-Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
-[Raymond: Move to fortuna-common. Use interrupts-extended]
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
----
-v2: Add &touchscreen. Keep i2c5 enabled
----
- .../qcom/msm8916-samsung-fortuna-common.dtsi  | 49 +++++++++++++++++++
- .../qcom/msm8916-samsung-rossa-common.dtsi    |  3 ++
- 2 files changed, 52 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b=
-/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-index c2800ad2dd5b..d16647e687ef 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-@@ -66,6 +66,19 @@ reg_motor_vdd: regulator-motor-vdd {
- =09=09pinctrl-0 =3D <&motor_en_default>;
- =09=09pinctrl-names =3D "default";
- =09};
-+
-+=09reg_vdd_tsp_a: regulator-vdd-tsp-a {
-+=09=09compatible =3D "regulator-fixed";
-+=09=09regulator-name =3D "vdd_tsp_a";
-+=09=09regulator-min-microvolt =3D <3000000>;
-+=09=09regulator-max-microvolt =3D <3000000>;
-+
-+=09=09gpio =3D <&tlmm 73 GPIO_ACTIVE_HIGH>;
-+=09=09enable-active-high;
-+
-+=09=09pinctrl-0 =3D <&tsp_en_default>;
-+=09=09pinctrl-names =3D "default";
-+=09};
- };
-=20
- &blsp_i2c1 {
-@@ -94,6 +107,28 @@ fuel-gauge@35 {
- =09};
- };
-=20
-+&blsp_i2c5 {
-+=09status =3D "okay";
-+
-+=09touchscreen: touchscreen@20 {
-+=09=09compatible =3D "zinitix,bt541";
-+=09=09reg =3D <0x20>;
-+
-+=09=09interrupts-extended =3D <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+
-+=09=09touchscreen-size-x =3D <540>;
-+=09=09touchscreen-size-y =3D <960>;
-+
-+=09=09vcca-supply =3D <&reg_vdd_tsp_a>;
-+=09=09vdd-supply =3D <&pm8916_l6>;
-+
-+=09=09pinctrl-0 =3D <&tsp_int_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09linux,keycodes =3D <KEY_APPSELECT KEY_BACK>;
-+=09};
-+};
-+
- &blsp_uart2 {
- =09status =3D "okay";
- };
-@@ -200,4 +235,18 @@ sdc2_cd_default: sdc2-cd-default-state {
- =09=09drive-strength =3D <2>;
- =09=09bias-disable;
- =09};
-+
-+=09tsp_en_default: tsp-en-default-state {
-+=09=09pins =3D "gpio73";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
-+=09tsp_int_default: tsp-int-default-state {
-+=09=09pins =3D "gpio13";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-index 42843771ae2a..4048b72efcdc 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa-common.dtsi
-@@ -5,6 +5,9 @@
- /* SM5504 MUIC instead of SM5502 */
- /delete-node/ &muic;
-=20
-+/* Touchscreen varies depending on model variant */
-+/delete-node/ &touchscreen;
-+
- &blsp_i2c1 {
- =09muic: extcon@14 {
- =09=09compatible =3D "siliconmitus,sm5504-muic";
---=20
-2.39.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: update compatible name
+ for match with driver
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
+ <20240312025807.26075-2-quic_tengfan@quicinc.com>
+ <0d768f17-22d9-448e-9253-8498b61bf71e@linaro.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <0d768f17-22d9-448e-9253-8498b61bf71e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sGpLBNzSyAuYletnjCAvLzneg5Gd2Gcg
+X-Proofpoint-GUID: sGpLBNzSyAuYletnjCAvLzneg5Gd2Gcg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 mlxlogscore=923
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403120060
 
 
+
+On 3/12/2024 3:41 PM, Krzysztof Kozlowski wrote:
+> On 12/03/2024 03:58, Tengfei Fan wrote:
+>> Use compatible name "qcom,sm4450-tlmm" instead of "qcom,sm4450-pinctrl"
+>> to match the compatible name in sm4450 pinctrl driver.
+>>
+>> Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Wasn't this applied?
+
+My test code base on tag: next-20240308, this patch is still not applied.
+
+In fact, the following dt binding check warning only can be got before 
+this patch is applied.
+
+Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.example.dtb:
+/example-0/pinctrl@f100000: failed to match any schema with
+compatible: ['qcom,sm4450-tlmm']
+
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
+-- 
+Thx and BRs,
+Tengfei Fan
 
