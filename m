@@ -1,153 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-13896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16C68878F34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:49:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDF9C878F38
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 08:50:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0B671F2180D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:49:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73C531F21899
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 07:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2125469965;
-	Tue, 12 Mar 2024 07:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 554516996D;
+	Tue, 12 Mar 2024 07:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ipfK8Rx1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAuh0qAl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D778B657;
-	Tue, 12 Mar 2024 07:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4FE6995B;
+	Tue, 12 Mar 2024 07:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710229746; cv=none; b=Y3k96D/StSBbTsWCyGAp0qGaQHiu77rsjF5HX5UTjkE4G0eR/71OY451liY/Ep/cVkQx1yhdU4GBktXeh8H5e5oCgIEGjOmY+Z0QD8hcA3rftIPOrtUmyNWs596DcYAeFmZeIJnqLKHUMk1o2h0Ph6dALWnFf5+kk7Jw2L/JTNI=
+	t=1710229796; cv=none; b=X32BGCZOJKtWF9H9fXnJYPKzuBq2YRNT/u/Y74mRDKqcDCCfYRM3EXLejcAstJi0CB/E3aYFMtMACHs/H1q/vDFOyLYXIbqn9HvSfkTUxW58MNE1GQZsO31n5wmKiS811DRI0oJxcZwzt0b61Edz6cUgESS+EPM0fxoDDirXwzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710229746; c=relaxed/simple;
-	bh=CnDj4IfCHLZHcS/QVCnsqSx+w23pfSL78CMmdBfa9XA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TvG49A91PanVB/6uwk3LTePGqN9QkxZqRZ6SBW2Doh6o1Tv95dSRt/sopJek9TCjYzIgM5JInE7d06T6Z+8z6AjI5KxaR7sej7Sg4tixHtgGKIDLKZ8sFh9+RWCfSbKzP+vMtbiYqulqOrzHOKhFdyztDgIXITwAkz0IbLGqLBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ipfK8Rx1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42C69UPN027712;
-	Tue, 12 Mar 2024 07:49:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=6Uzy/8D9SZEN26+WLHmsf3RcTY73t2Lstgw30JYn4wo=; b=ip
-	fK8Rx1089YWDyPMu9MowG9vh32IQVKBbjlT2xVoSCds7iOUICt2pJl8D75c2Ch6/
-	Q0dlT3sw26Ww1J6GsCiAejZnIy1qHVjHj/clAMDawo0tzjYXg2CjgPk79hVR7QN+
-	XE39Z5qAqlhD1O19isDUnAoo7Wv83AgfFnwUhJq/Bz2plOEJ2MKWwZPCbUo+3kKu
-	Yk7yNZNK404JlnVrtfNl1pg8gGsKB/AaHEGRO7mfti20CbmpDxSP5xT2LY4aBUXf
-	e5FTP8yuTTgQK64UpM5F1vxpImMwtaMOTdg6Y9D3svfZENxagOxjvDITKYhOqpho
-	dX9OsCxWk8rEsDzKX8fQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wth7rr6y5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 07:48:59 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42C7mxur006194
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Mar 2024 07:48:59 GMT
-Received: from [10.216.13.198] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
- 2024 00:48:55 -0700
-Message-ID: <b25ce24d-12d1-4112-9c35-30a75634f9fc@quicinc.com>
-Date: Tue, 12 Mar 2024 13:18:49 +0530
+	s=arc-20240116; t=1710229796; c=relaxed/simple;
+	bh=KzsirukdSTe8fOrCswNhfKEgbN1Y1uITjfKe3osVnQw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U4bpcEBpp8PMwdOV6GzzKyZ47NP7/2IbFdMdpwVt+oJZiKI5N6GUmv7dN0X8/5GE227HhC9ScwhZvGCdQimyQx2XMDFOPbET0VfGE5vsa5XRpUFWwbO7j1FEQJc+9E6rE+sJnZibnp1FBo+atRjXNWwYVcjVGvbvbtAHYOHpzwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAuh0qAl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80676C433C7;
+	Tue, 12 Mar 2024 07:49:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710229795;
+	bh=KzsirukdSTe8fOrCswNhfKEgbN1Y1uITjfKe3osVnQw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iAuh0qAlmRM3Kbs/1vPzGB4iAeRuq6Gps4iX9PbZzHs7LmeYb7gTQjdA78YnFt6LQ
+	 kvJgFDxy6VnM6nRMX0iKBanBvA8FOGD54H+43YCM4MybQuQ/0LRvFuyjMozvVjYM/n
+	 pgcN3FLGkZ8S3mmJ3iRBd8IC7tIdWQxAMdd4WApEVSZZ3yljKTYjQ0Iqu981bhljjx
+	 mL5jcOehg5bLaF07nRChVz8keNRceCe171O4QAAgwhZjn0vhP0DYyP8tDJ+wpYBJ1N
+	 3G3sJeIi/07kafXLmemRviaFWJZMVhh2CfXTfczDXhHV0s2ZsW31W5XJMk0B30Dhr/
+	 UucLsp8wilxMA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rjwtd-0000000075p-1sK9;
+	Tue, 12 Mar 2024 08:50:01 +0100
+Date: Tue, 12 Mar 2024 08:50:01 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>, andy.gross@linaro.org,
+	david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
+	linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.7 05/14] arm64: dts: qcom: sc8280xp-crd: limit
+ pcie4 link speed
+Message-ID: <ZfAJKTvQFtoZ8SSN@hovoldconsulting.com>
+References: <20240311183618.327694-1-sashal@kernel.org>
+ <20240311183618.327694-5-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Add missing hs_phy_irq in USB
- nodes
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>
-References: <20240219075720.640529-1-quic_kriskura@quicinc.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20240219075720.640529-1-quic_kriskura@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bK8TgxxplakkFS6aXl3vXr-5TDomRXAk
-X-Proofpoint-ORIG-GUID: bK8TgxxplakkFS6aXl3vXr-5TDomRXAk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 phishscore=0 spamscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015
- mlxlogscore=634 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403120060
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240311183618.327694-5-sashal@kernel.org>
 
-
-
-On 2/19/2024 1:27 PM, Krishna Kurapati wrote:
-> Recent binding update [1] indicates that there are hs_phy_irq
-> present in primary and secondary usb controllers of sc8280xp.
+On Mon, Mar 11, 2024 at 02:36:08PM -0400, Sasha Levin wrote:
+> From: Johan Hovold <johan+linaro@kernel.org>
 > 
-> Add the missing hs_phy_irq for these controllers. Since the driver
-> doesn't use this interrupt, this change has been only compile
-> tested.
+> [ Upstream commit db8138845cebcdd0c709570b8217bd052757b8df ]
 > 
-> [1]: https://lore.kernel.org/all/20231227091951.685-2-quic_kriskura@quicinc.com/
+> Limit the WiFi PCIe link speed to Gen2 speed (500 MB/s), which is the
+> speed that Windows uses.
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index a5b194813079..62e2b99915af 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3361,10 +3361,12 @@ usb_0: usb@a6f8800 {
->   			assigned-clock-rates = <19200000>, <200000000>;
->   
->   			interrupts-extended = <&intc GIC_SPI 804 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 805 IRQ_TYPE_LEVEL_HIGH>,
->   					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
->   					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
->   					      <&pdc 138 IRQ_TYPE_LEVEL_HIGH>;
->   			interrupt-names = "pwr_event",
-> +					  "hs_phy_irq",
->   					  "dp_hs_phy_irq",
->   					  "dm_hs_phy_irq",
->   					  "ss_phy_irq";
-> @@ -3421,10 +3423,12 @@ usb_1: usb@a8f8800 {
->   			assigned-clock-rates = <19200000>, <200000000>;
->   
->   			interrupts-extended = <&intc GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 790 IRQ_TYPE_LEVEL_HIGH>,
->   					      <&pdc 12 IRQ_TYPE_EDGE_BOTH>,
->   					      <&pdc 13 IRQ_TYPE_EDGE_BOTH>,
->   					      <&pdc 136 IRQ_TYPE_LEVEL_HIGH>;
->   			interrupt-names = "pwr_event",
-> +					  "hs_phy_irq",
->   					  "dp_hs_phy_irq",
->   					  "dm_hs_phy_irq",
->   					  "ss_phy_irq";
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Link: https://lore.kernel.org/r/20240223152124.20042-7-johan+linaro@kernel.org
+> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Gentle ping for review.
-Thanks in advance.
+This one was not marked for stable and does not need to be backported.
+Please drop from all queues.
 
-- Krishna
+Johan
 
