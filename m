@@ -1,157 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-13924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6B4A879344
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 12:45:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CCF1879366
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 12:56:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3C613B220D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 11:45:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCBAA283853
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 11:56:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B019679B91;
-	Tue, 12 Mar 2024 11:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B119679DB7;
+	Tue, 12 Mar 2024 11:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Xi5T1MoQ"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="b9LbA1nX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AEF7828D;
-	Tue, 12 Mar 2024 11:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B499E56471;
+	Tue, 12 Mar 2024 11:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710243935; cv=none; b=MCpnWhH7z2tM/Ij974dUBCUG3AIc0mS8Zi422f9I3evGzxrTOCRG/9qmAOnSKEEfTpG0Yy359vmk5DKibnrE16RzYvIlUz8om7JbxAq5/2gxHB96tl65qUroHYslkLh0H8gDN/cg32mLVOQWeCIsGvxo5nx1BlbpJVegUOqk5dE=
+	t=1710244567; cv=none; b=bHydrDmT76TuhVlPV0jeMaNBOa8EMjk6hkUS1ykj84SnjHyzCKaODW/APgPJccIRZ6Prm8XRGW/PEFc4pDZMHarCDEskiXSynx9QCDLPiZpzV8400J49LS2xojaixs9Wrx0NtbQ2iwSx88XQtWuTi9r0gc7QAL/g7FzJoOJwRqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710243935; c=relaxed/simple;
-	bh=F/hi5nNET23hU/nf7PqKIwSnpCC0q5TtzdghNZoSCv0=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=RLt48r1e/dcDo5cKpjCkpebMqK/z4nr/DJtE0L4forATx38ndqiwT+kRujUUA/4K0142wfUziz/tiq2HldmA0PFm7Qo15sq+gzAMYEuDzaCxAmXQixtLPC3MbVJFWNdppnzYQ529RWnCS7l5hpvnGuEi4bw/Q0+3t0kA3QrtEHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Xi5T1MoQ; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710243934; x=1741779934;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=F/hi5nNET23hU/nf7PqKIwSnpCC0q5TtzdghNZoSCv0=;
-  b=Xi5T1MoQPNhhtRCjVWxpSmLweS233wzz6N7N1efnN9hfDMKGf3tp/N+9
-   EE0hjATJTPOPqR0yScwZhx4Beb3YF4X+XTFyRB1sgQyqPeOvINo428lID
-   ZTCTCOfd31QlOCdzHAKXQNUk+Tx6mjyWKyaP2VXfgkJkRpwAqTzJ+oFbH
-   stejj0JaxJp2NAOPdI7fXWglxweVBPoK2PewmTvO7AQvgk0nhpQf5Cmk1
-   yWh+cblSo0HSCIVm59k30tCJqa+KDVaSgatzm++XG+l8LEnnh7xyrIv1T
-   MCiD/EhCjZiWWMQi8it11YFkyxp1hzKDcZevxTzHbHAx5qcYSn7bGTBIK
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="15585025"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="15585025"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 04:45:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="11591435"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.6])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2024 04:45:28 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Tue, 12 Mar 2024 13:45:25 +0200 (EET)
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-cc: Nikita Travkin <nikita@trvn.ru>, Hans de Goede <hdegoede@redhat.com>, 
-    Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-    Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-    Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-    Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH v4 2/4] platform: Add ARM64 platform directory
-In-Reply-To: <5d4434fc-862e-4430-a2a0-758887d7596d@linaro.org>
-Message-ID: <cc8c8b42-1f6e-3b2c-0e1a-b71b57ab43c8@linux.intel.com>
-References: <20240312-aspire1-ec-v4-0-bd8e3eea212f@trvn.ru> <20240312-aspire1-ec-v4-2-bd8e3eea212f@trvn.ru> <5d4434fc-862e-4430-a2a0-758887d7596d@linaro.org>
+	s=arc-20240116; t=1710244567; c=relaxed/simple;
+	bh=PQ1onOCNmoZb1WuqiYG6mAiWg8oiBlv8sMZhEhOIYKY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=LvNIwFhJgQtv0zL896aodkWt6/7fVAX8UlE3gY2VdkRmGlkpBc7aLmj5/7PFxDbBEpkI9q7nBvKk3trJWONcVhUrRVoOWnc+vA084d8WW0OaHONYe7PbZXqkKLTZPUaKKZi+O0kPYJ2NryZwWhE6AMMsg1J9P5jBZu9CWtj66fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=b9LbA1nX; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 4D5C9400F9;
+	Tue, 12 Mar 2024 16:56:00 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1710244560; bh=PQ1onOCNmoZb1WuqiYG6mAiWg8oiBlv8sMZhEhOIYKY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=b9LbA1nXQS7ZXbM3dG8CTpXPxZlSykZXR39MuuUxOMG45JbPXtqcATRkzKCI14UqB
+	 IVDhXsqErW0SJ+8jLlHmuXcSUaRp36hw1Fa0SBv5YLRdfiF59pD68VngE4xQYTloyq
+	 hFfluotxz7MEhTWeyTe1i3AQUrDapEYEXicOlr0X92X6I3Xw5oZkQjg36Ih8LzlZsA
+	 1X1O4LS8hhNOaOaaKlY1RkzxrziPm37E1Z9x6jGSy4RZk8R9wkRq2ZKQGRmcuieCTl
+	 MDx9jzLZdBxcSP1V6CGY953aotJh4RWoOefsRcDzMTAaA/bH/2adPSekss4QKhVSe5
+	 IGfQ04BOzkSpA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-652033754-1710243925=:1770"
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-652033754-1710243925=:1770
+Date: Tue, 12 Mar 2024 16:55:58 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Hans de Goede <hdegoede@redhat.com>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?=
+ <ilpo.jarvinen@linux.intel.com>, Sebastian Reichel <sre@kernel.org>, Rob
+ Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, Andy Gross <agross@kernel.org>, Bjorn
+ Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH v4 2/4] platform: Add ARM64 platform directory
+In-Reply-To: <5d4434fc-862e-4430-a2a0-758887d7596d@linaro.org>
+References: <20240312-aspire1-ec-v4-0-bd8e3eea212f@trvn.ru>
+ <20240312-aspire1-ec-v4-2-bd8e3eea212f@trvn.ru>
+ <5d4434fc-862e-4430-a2a0-758887d7596d@linaro.org>
+Message-ID: <7ecbcea00a4b59d7afdb529dce12801b@trvn.ru>
+X-Sender: nikita@trvn.ru
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 8bit
 
-On Tue, 12 Mar 2024, Bryan O'Donoghue wrote:
-
+Bryan O'Donoghue писал(а) 12.03.2024 16:36:
 > On 12/03/2024 08:42, Nikita Travkin wrote:
-> > Some ARM64 based laptops and computers require vendor/board specific
-> > drivers for their embedded controllers. Even though usually the most
-> > important functionality of those devices is implemented inside ACPI,
-> > unfortunately Linux doesn't currently have great support for ACPI on
-> > platforms like Qualcomm Snapdragon that are used in most ARM64 laptops
-> > today. Instead Linux relies on Device Tree for Qualcomm based devices
-> > and it's significantly easier to reimplement the EC functionality in
-> > a dedicated driver than to make use of ACPI code.
-> >=20
-> > This commit introduces a new platform/arm64 subdirectory to give a
-> > place to such drivers for EC-like devices.
-> >=20
-> > A new MAINTAINERS entry is added for this directory. Patches to files i=
-n
-> > this directory will be taken up by the platform-drivers-x86 team (i.e.
-> > Hans de Goede and Mark Gross).
-> >=20
-> > Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> > ---
-> >   MAINTAINERS                     |  9 +++++++++
-> >   drivers/platform/Kconfig        |  2 ++
-> >   drivers/platform/Makefile       |  1 +
-> >   drivers/platform/arm64/Kconfig  | 19 +++++++++++++++++++
-> >   drivers/platform/arm64/Makefile |  6 ++++++
-> >   5 files changed, 37 insertions(+)
-> >=20
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index b43102ca365d..ec8d706a99aa 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -3050,6 +3050,15 @@ F:=09drivers/mmc/host/sdhci-of-arasan.c
-> >   N:=09zynq
-> >   N:=09xilinx
-> >   +ARM64 PLATFORM DRIVERS
-> > +M:=09Hans de Goede <hdegoede@redhat.com>
-> > +M:=09Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> > +L:=09platform-driver-x86@vger.kernel.org
-> > +S:=09Maintained
-> > +Q:=09https://patchwork.kernel.org/project/platform-driver-x86/list/
-> > +T:=09git
-> > git://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x8=
-6.git
->=20
-> Surely some sort of Arm specific mailing list should be added here ?
-> platform-drivers-x86 for arm64 platform drivers standalone, makes little
-> sense.
->=20
-> Perhaps for each new SoC class added - you could add the appropriate mail=
-ing
-> list linux-arm-msm is suspiciously missing from the list even though the =
-only
-> driver that will live in this directory after this series is a qcom based
-> device.
->=20
-> And if tomorrow someone added a Rockchip based EC controller then you'd a=
-ssume
-> the rockchip mailing list should get a ping.
+>> Some ARM64 based laptops and computers require vendor/board specific
+>> drivers for their embedded controllers. Even though usually the most
+>> important functionality of those devices is implemented inside ACPI,
+>> unfortunately Linux doesn't currently have great support for ACPI on
+>> platforms like Qualcomm Snapdragon that are used in most ARM64 laptops
+>> today. Instead Linux relies on Device Tree for Qualcomm based devices
+>> and it's significantly easier to reimplement the EC functionality in
+>> a dedicated driver than to make use of ACPI code.
+>>
+>> This commit introduces a new platform/arm64 subdirectory to give a
+>> place to such drivers for EC-like devices.
+>>
+>> A new MAINTAINERS entry is added for this directory. Patches to files in
+>> this directory will be taken up by the platform-drivers-x86 team (i.e.
+>> Hans de Goede and Mark Gross).
+>>
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>>   MAINTAINERS                     |  9 +++++++++
+>>   drivers/platform/Kconfig        |  2 ++
+>>   drivers/platform/Makefile       |  1 +
+>>   drivers/platform/arm64/Kconfig  | 19 +++++++++++++++++++
+>>   drivers/platform/arm64/Makefile |  6 ++++++
+>>   5 files changed, 37 insertions(+)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index b43102ca365d..ec8d706a99aa 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -3050,6 +3050,15 @@ F:	drivers/mmc/host/sdhci-of-arasan.c
+>>   N:	zynq
+>>   N:	xilinx
+>>   +ARM64 PLATFORM DRIVERS
+>> +M:	Hans de Goede <hdegoede@redhat.com>
+>> +M:	Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>> +L:	platform-driver-x86@vger.kernel.org
+>> +S:	Maintained
+>> +Q:	https://patchwork.kernel.org/project/platform-driver-x86/list/
+>> +T:	git git://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git
+> 
+> Surely some sort of Arm specific mailing list should be added here ? platform-drivers-x86 for arm64 platform drivers standalone, makes little sense.
+> 
 
-While generic arm mailing list is perhaps lacking too, for specific=20
-driver related lists it is better to add separate MAINTAINERS entries for=
-=20
-the particular driver and put L: there.
+We agreed with Hans that pdx86 list/tree can work for EC drivers for
+other platforms because many maintainers familiar with ECs through x86
+are already there.
 
---=20
- i.
+> Perhaps for each new SoC class added - you could add the appropriate mailing list linux-arm-msm is suspiciously missing from the list even though the only driver that will live in this directory after this series is a qcom based device.
+> 
+> And if tomorrow someone added a Rockchip based EC controller then you'd assume the rockchip mailing list should get a ping.
 
---8323328-652033754-1710243925=:1770--
+I believe that even though those drivers are "board specific" (Hans
+asked to only include EC drivers here, and we have soc/ for other things
+anyway) they are not at all "platform"/"soc" specific, so I'm not sure
+adding arm lists here is a great idea:
+
+I don't think these drivers would be too specific to the SoC given it's
+just an i2c peripheral most of the time, and considering that it seems
+there soon will be many WoA devices with socs from many vendors, we would
+just have a collection of all the arm platform lists here...
+
+So even if for now, while all existing WoA devices use Snapdragon chips,
+we could get away with adding linux-arm-msm, it may end up just spamming
+all the platform lists for no reason when the list grows...
+
+I think it's better for the contributors to CC the relevant list for
+their board themselves, which is easily done implicitly by adding dts
+changes along the way, like in this series.
+
+Of course if you and other people on linux-arm-msm are fine with that
+possibility, we could add an extra list there and see if it gets out of
+hand.
+
+Nikita
+
+> 
+> ---
+> bod
 
