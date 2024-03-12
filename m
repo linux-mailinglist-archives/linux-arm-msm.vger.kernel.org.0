@@ -1,158 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-13907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6ED58790A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:22:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DD968790D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:24:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72AD71F245DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:22:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB50428742D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 09:24:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C0CF7CF3D;
-	Tue, 12 Mar 2024 09:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B49877F2F;
+	Tue, 12 Mar 2024 09:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FNxE8aax"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eW4gS9y3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7D17CF20;
-	Tue, 12 Mar 2024 09:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D2C78262;
+	Tue, 12 Mar 2024 09:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710235075; cv=none; b=VbW3MTJNn9oWBjRsoUAS9nDxlG9f9nhd33I7HYT1Hnm26tuc902GG+sKTYJrG7iUlWi0YV0sbrUCeBMOZjdvc0C4eZtClETSO/AKRMSDlmuh3AxBQBaZf6IlSFR2V2rYbpRxo4hNSkhGD/bdDFuS9mPqE6sDFreRNBZ/DwaJrCM=
+	t=1710235241; cv=none; b=Jk6RNPQ2eIJMUjye9G/HDaT5koRc6/37wCk4LFfeogHg8/GDtZquR0PYRKUxsVfQwCD9jh1cz71IuVd56fPxe1UQKqUR1wSE1dOhmuusSWyHiE/AO/XwvDczKnpp+ksUKGL1cmICAZn80qHBAnkXUK5L2gmoaFJDeQO5TT3LaRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710235075; c=relaxed/simple;
-	bh=n/xyd4RSK51AZo83JsP+jj0gL9V4BBAgGqAGe8AEkg4=;
+	s=arc-20240116; t=1710235241; c=relaxed/simple;
+	bh=zxkiu9aVl8Thl9uVJ1JoV9B0j7ibOXaq9f6g5nQEndM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c3Vg+G/L84oIgZx8kkZqLo9Z7eo+5vDUKSazUeoH3Rj2kck7s0mNJFR+lKhE2/bfujmqztjKsP4pceWPykacF8X7wbxjyskT29zKhlwO1c2SS0oaosILeEguaMsZnVkYqC7R4ReLEikpiHtA0cPDVR/Zd8ouQ4pRAOSCGd1I4d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FNxE8aax; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d27fef509eso86793231fa.3;
-        Tue, 12 Mar 2024 02:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710235072; x=1710839872; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BZ6n3LCBgXbzRZ+jOk9gBUl7KDl6UUW0N9+kmdRSwFk=;
-        b=FNxE8aaxTE41lxHvEop8BP5yy26v1Bk6wAoqvUWhnDQo2klrkHjK+dKHA5zqp8wyFZ
-         WI3DjOE61M885NnfXJ9RhBjz0M8r5jvj5OyTA4rFTVRkEu3/oje6BZ18THm0siahmQLZ
-         STrCtLAy8SIiPQzWJmOSCl9QQokoqBM1sE/uY7yGkAvLKF8mTTsv+/UEyugM/s54oA+K
-         qPm2BfgPtbNTjygSL+GlKMTxvhFrRdCeklWdbCk5QbYWDhOoiJKsiw7OYhmTCcZ9Cmu0
-         PV0CaFMnRI5cAKdkJ6OtRnlfVdzuY2X+gyDkRE0dwqjjBL27yxfdRiNC2luF1Orq4tXm
-         lmqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710235072; x=1710839872;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BZ6n3LCBgXbzRZ+jOk9gBUl7KDl6UUW0N9+kmdRSwFk=;
-        b=OhLIYnKLjelxIQGcSsolf0P89LISXMdOqdAQT3U1p8uciqVoMol626dxz72lVBG1Ms
-         oPpoEFK450xkXPJA18HNnyyiExCDsl2NYhGlyPNkpM1iLnBh/77aJkxqGgXjBM6LgP3y
-         337K0PuFgwGjw75KCRtENGHqneWR7vSizmSWTln5ADfYij2Gv6GpDhf9OowoaNnMhH18
-         V2odiRMgnRnUVYqxoxcdlUNxDLw9vnW/vmdyUvDu2eEOAQGno/Aqxhfk85+s1SURT5/5
-         wtUB7nhcf8jTPoCuOT96hBHVDbUqUqX60uluMeL1L0YtYrdDlaNCHhW6idEnWjbOHrAL
-         99iA==
-X-Forwarded-Encrypted: i=1; AJvYcCUW6updcz66nF2r0+YZCCCuZApbM9gZRSxiSiipiUn5DrG3MS9eageIUYhfjrmvNoBDL/wESqKORoUiYU5odEHgmbGhwU56AQmScWwNtWSzVT4DmyDT6JM3/CRXM2TjMdsLQdq+Nn9MV/a2xo8V2+l2QVYj3sK/zrJ6IFx8GuuL2ehVLcHNhxs0vgGULiXYP4Z8IOZbHm/PERQDdwtRv8h4sKYDmInQ64HA
-X-Gm-Message-State: AOJu0YwopXVHxULAjUDqcZyNif27uxgES2ixJFPyDXdLc14gyrV1h4Ai
-	q3o8ctVjbkNepousnSfi6Rt1w19/erfOaaiU9Ea/HU/EjboFtAeq
-X-Google-Smtp-Source: AGHT+IFm7+AOiUOnzjOZiIaCXRd9rxISYVnr31Yubo08D3ay+vXSLHfTEBCY79LtjUa86DxxV5qF6A==
-X-Received: by 2002:a2e:be8d:0:b0:2d4:59bd:bc87 with SMTP id a13-20020a2ebe8d000000b002d459bdbc87mr790603ljr.4.1710235071652;
-        Tue, 12 Mar 2024 02:17:51 -0700 (PDT)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id f9-20020a05651c02c900b002d2a710f864sm1521827ljo.24.2024.03.12.02.17.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Mar 2024 02:17:51 -0700 (PDT)
-Date: Tue, 12 Mar 2024 12:17:48 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Marek Vasut <marek.vasut+renesas@gmail.com>, 
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v4 2/5] PCI: dwc: Skip finding eDMA channels count for
- HDMA platforms
-Message-ID: <kqztfm6ri54pkxcmsmngldmlf22mt2vn5cgxxfhjqxujx3qkq2@us6rc2sof7gk>
-References: <20240306-dw-hdma-v4-0-9fed506e95be@linaro.org>
- <20240306-dw-hdma-v4-2-9fed506e95be@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ag0FLqJVls6gu15xSy421QxoahnltJrxOBus+m7cyEbE8lE365llTt8RyJpIdkWP7lcLIgSNPoYyImLTI52cuhdJsplJMJQYBBP1hU960mVO32eHwL0Vt+ShCUvN65LkLIHxV7pBDXz5Db6TY3FofUVAvNT4LtVqbFdSF2GFvgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eW4gS9y3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A19DC433C7;
+	Tue, 12 Mar 2024 09:20:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710235240;
+	bh=zxkiu9aVl8Thl9uVJ1JoV9B0j7ibOXaq9f6g5nQEndM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eW4gS9y3c6ESVgdHCwyPh8dT4j7jVE5Ns+Y/Jp2Wot7zMcCeUx039VarVhmkSNaCI
+	 vh9kFGjlbX6e+wHvJBaykGLQzjL+n0j2RbCStymyE8Ct2uPLt9aUl+x10x4X5PXjJF
+	 UllMPXed667HVZAB56aCHxQXZPrLeVXIjZgbFsIeeTxs0pUQwGHBW1xtpHppk8zTVB
+	 xsJ3NFVXQJ23Wo22FCw2ODnh1vv8TKkLajwcBlQg6TQT/zrfQ4u5locg8ajB5aDHbb
+	 QowO/OXolXhjulJI4IMXEnfyghJaciZmhI/Stfa0RBri+MU20SkF11LQv2N4SMK9lH
+	 KghG9PGxE4Bmg==
+Date: Tue, 12 Mar 2024 10:20:37 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Andi Shyti <andi.shyti@kernel.org>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	quic_vdadhani@quicinc.com
+Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
+ mode
+Message-ID: <ZfAeZbV0cXGR_Lkn@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>, konrad.dybcio@linaro.org,
+	andersson@kernel.org, vkoul@kernel.org,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	quic_vdadhani@quicinc.com
+References: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
+ <170993858923.2618408.4667207790973009000.b4-ty@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ewTupQRwbxuX6vVW"
+Content-Disposition: inline
+In-Reply-To: <170993858923.2618408.4667207790973009000.b4-ty@kernel.org>
+
+
+--ewTupQRwbxuX6vVW
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240306-dw-hdma-v4-2-9fed506e95be@linaro.org>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 06, 2024 at 03:51:58PM +0530, Manivannan Sadhasivam wrote:
-> In the case of Hyper DMA (HDMA) present in DWC controllers, there is no way
-> the drivers can auto detect the number of read/write channels as like its
-> predecessor embedded DMA (eDMA). So the glue drivers making use of HDMA
-> have to pass the channels count during probe.
-> 
-> To accommodate that, let's skip the existing auto detection of channels
-> count procedure for HDMA based platforms. If the channels count passed by
-> the glue drivers were wrong in any form, then the existing sanity check
-> will catch it.
-> 
-> Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-> Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+> On Fri, 08 Mar 2024 02:25:39 +0530, Mukesh Kumar Savaliya wrote:
+> > I2C driver currently reports "DMA txn failed" error even though it's
+> > NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+> > on the bus instead of generic transfer failure which doesn't give any
+> > specific clue.
+> >=20
+> > Make Changes inside i2c driver callback handler function
+> > i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+> > stores the error status during error interrupt.
+> >=20
+> > [...]
+>=20
+> Applied to i2c/i2c-host on
+>=20
+> git://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git
 
-Please find a tiny nitpick further below.
+Because this patch touches a file in the DMA realm, we should have an
+ack here from one of the maintainers. So they know and are okay with us
+changing something in their area.
 
-> ---
->  drivers/pci/controller/dwc/pcie-designware.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 3a26dfc5368f..599991b7ffb2 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -927,13 +927,18 @@ static int dw_pcie_edma_find_channels(struct dw_pcie *pci)
->  {
->  	u32 val;
->  
-> -	if (pci->edma.mf == EDMA_MF_EDMA_LEGACY)
-> -		val = dw_pcie_readl_dbi(pci, PCIE_DMA_VIEWPORT_BASE + PCIE_DMA_CTRL);
-> -	else
+$ scripts/get_maintainer.pl -f drivers/dma/qcom/gpi.c
+Bjorn Andersson <andersson@kernel.org>
+Konrad Dybcio <konrad.dybcio@linaro.org>
+Vinod Koul <vkoul@kernel.org>
+linux-arm-msm@vger.kernel.org
+dmaengine@vger.kernel.org
+linux-kernel@vger.kernel.org
 
-> +	/*
-> +	 * Autodetect the read/write channels count only for non-HDMA platforms.
-> +	 * HDMA platforms doesn't support autodetect, so the glue drivers should've
-> +	 * passed the valid count already. If not, the below sanity check will
-> +	 * catch it.
-> +	 */
 
-This is correct for the _native_ HDMA CSRs mapping. I suggest to emphasize
-that in the note above.
+--ewTupQRwbxuX6vVW
+Content-Type: application/pgp-signature; name="signature.asc"
 
--Serge(y)
+-----BEGIN PGP SIGNATURE-----
 
-> +	if (pci->edma.mf != EDMA_MF_HDMA_NATIVE) {
->  		val = dw_pcie_readl_dma(pci, PCIE_DMA_CTRL);
->  
-> -	pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
-> -	pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
-> +		pci->edma.ll_wr_cnt = FIELD_GET(PCIE_DMA_NUM_WR_CHAN, val);
-> +		pci->edma.ll_rd_cnt = FIELD_GET(PCIE_DMA_NUM_RD_CHAN, val);
-> +	}
->  
->  	/* Sanity check the channels count if the mapping was incorrect */
->  	if (!pci->edma.ll_wr_cnt || pci->edma.ll_wr_cnt > EDMA_MAX_WR_CH ||
-> 
-> -- 
-> 2.25.1
-> 
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmXwHmIACgkQFA3kzBSg
+KbYXUg//WE/vhqWVUyvCYAfe5NQpcr7VSpWQXTelvzhJov7fHX3qVMD5ZAzW9CSk
+Vh6iDgfKCb5JRNrKSvjyPsLvv5Ld2gDglF7+wyVZYh9ZhVpp8ncad6fLuXI3cul5
+mz7QRQ+R92BypzyAXEqE1jHIMgx3n4CDMBYrcJ3QLisUWzp8hPBmyTW7L/JMY3Xg
+Shyf+55Ncf80CXmvL3u1k/KbpGc01KFNMKSI7I0LU/NoJ2ckiVn+eVbpsWQX0JOz
+Ijso7riZWp8ltziANFSBxW0KiGpLlwnHuZUfb7gBPZ5SBNx+PVhX1SsKiw41szko
+JzC0F9WTMmt5FTj2GX7AcidnhpJP/Y4oQP23Nkt5DCkuTwNx3zwqauutshYpjl8x
+/KUyTCyE3eCgF6BzSt6/tWYOz7se4QTGGtAj6y/bnw3txppPOtPFoLP7b/8XPink
+/oQSho2ipuxF3A1o9YjDidV5YZCdbo/aByH0WTXuALJVWbAIgw4/4iMN3zqd30nH
+2jETRKrPj+AC529yh5Q/zUo1cHpNLLwIc+TblAfy0I3vL/aUiRNQssPETln5QxdW
+vkciPDnGD6Ut8gM7uMSbUcsiSItdisAqbDKdR8UoSXdl6YiHIRxh081r0ZanFB8E
+TGzku1i6hOgZ4L0F61zHREFxRRv+w/okp5LSv+FgHav0hKPiC0o=
+=Wqz8
+-----END PGP SIGNATURE-----
+
+--ewTupQRwbxuX6vVW--
 
