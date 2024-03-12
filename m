@@ -1,145 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-13914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66CC78791B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 11:09:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 129478791B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 11:09:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07BD91F22011
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:09:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1BBF281BF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Mar 2024 10:09:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E66078293;
-	Tue, 12 Mar 2024 10:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2697A78661;
+	Tue, 12 Mar 2024 10:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwpDKae3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HmhqjXA/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BB33D3A7;
-	Tue, 12 Mar 2024 10:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D016478267
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 10:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710238146; cv=none; b=BeZYDQSkxeRT446SvfmiZkhnpKCuAr4+xjpuakJHZFoMU4FuY1Yr9dp/0Rx8tITYG2Cgi5Anb7QTnUnLwgdcwurqg2KQK1Keo/5GwudOj0ZhYAxake7L16E4PN09zpeXls5idgex16ZsHsc7NpbDSUFW+xRpAC02Ugm0uDK6IAs=
+	t=1710238179; cv=none; b=kPSA0MX1SDzqomDogL+8GKaJy8BjP8PIkzidZALFCbzv0CZ0X/D3l3rBh8bkc+hfzk9pm1zNVfesH5NkL6oOmJDCW+Srqdf0JgOF+S+DzHq5PEWUI+7rABzRgxvjo9X/pAQEDf1WfNBwTUS2vTr6IZn7ahEOIn50ZI5LyyZ1ZY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710238146; c=relaxed/simple;
-	bh=AbfRb7Kg3IljFjwdymBcsCC9K7rYKzeKaZKP5Wl6L6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBI3FKk1+F+oP6FZskuQFUga1UDvuV6rRAhtqXYw6j63vGp2TiSlyBQ+QUX0py/Xf/d6kzIsgxnAER6IrhrLMPIjDh0M2TBcX1pJ8XPK18D0F5T5BLLrI6ad1Ieech3FagFI0r+Nb2vHFB4skoM6566n/Tbyht4XPNnjV7eN6ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwpDKae3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAFEC433F1;
-	Tue, 12 Mar 2024 10:09:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710238145;
-	bh=AbfRb7Kg3IljFjwdymBcsCC9K7rYKzeKaZKP5Wl6L6w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bwpDKae3eYTmJz4L6IDtofbiuUok6opahnBlZq94FCd30Y3GIjgNw5ETcXZQ0R+cL
-	 HaVf2wBHGruoBOsRZVGRviZ1ELu8yX06EEA21vuhSVigxG4hDCAzW7P8DOFxHhWJKd
-	 z8bcmOa/UpsQNkrTnjbroOkwelh2nknMidzWfeDIW/o23UvQW4xWEg2fhyxzpgGpLW
-	 9QBWdpPN5bn7kaDc2jQpgX+8oGSdx+NOgY1SAmr/VYd1fHJb/Uti/hOAfVDbNppxkX
-	 4ef4Nrwf20XwYhy7qlq0EX2CV1Yf6hq0v+Z06RdToUb3X/WzEfa2H4GZZE/BG6NWRH
-	 px3uHIF7tsqkw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rjz4J-000000007YQ-0ATZ;
-	Tue, 12 Mar 2024 11:09:11 +0100
-Date: Tue, 12 Mar 2024 11:09:11 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Message-ID: <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
-References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
+	s=arc-20240116; t=1710238179; c=relaxed/simple;
+	bh=UsYofHyo4ltDXBqykR0WqBX41CM4bURUmCq1AXyvn7U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pVXcuArhUXo/+XJQFN252uRWSC/WF4eUKT+G8YibOjl3UJNQtOBOzjfDfWWoNhMrXpNMf9H1V/KZhtvtA3PH+FM78xH08pABj5r/Cpns5M+fp70ynew8VOX8+ZnFt1PAU46bFyCXfY8YE+migwWcsGnkC/K/7YpwjzJTUWb/K4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HmhqjXA/; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-513a08f2263so2708099e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 03:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710238175; x=1710842975; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S5KrrCc46zY3EaqIGg4J3SGWx16jAIeBYBlePvonNCY=;
+        b=HmhqjXA/RVCUGjVZganzZhYcONy6NeI7o+nTk5+cTVNCgU86gUlMd15tH+FM41O/1D
+         TdfF1eC9An0MRFgcW2SSsOj51nn0Mj34OSboy9f08LfhQzWlphe6aqAwzI4EnTGt3FpN
+         bUg3Jkl3ZIbHdnGa9NrCr4nxcWpm6L4c333JqYziR46u/f4Py0tfzgaXx/bN8qGXoIbS
+         9IBNpygI95Bcvh+tfTdbaGQWQnshlRqzs2hm3kYr4KmAihX2Rj5/z6yCwpqjvklWsJIP
+         rAfJ5KjQzTR89juKxM29IPc3GSWIYAO8LV866abSwkNOZHMdvKtlUXXHpytY3w7Fi5U/
+         Hsxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710238175; x=1710842975;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S5KrrCc46zY3EaqIGg4J3SGWx16jAIeBYBlePvonNCY=;
+        b=nIvDGt1eos82h0VxcX2uJ+Pikj+oGYNsOp4t8coYaBTtzux2UjydGl55JJjWHjW/v2
+         hE2Sa7qyeLDCSPIkZBlt9ok6dkwaJPscq3zkkal4a55k+IRSRfkXvznnyh0cj2Mu/O4u
+         4t+rrsSYHHu779znQB5470nocu3qHbQPL7vNbaaj/jxZwLj3vxyo13ZKU2te3vxllarH
+         sWVKROn0Pmih14r/PADQGcA2mch+QRgP2zJSlurA7IoorTIrxiy7/kjrDOuTU80oaHkl
+         PQWCGHBbZInTRpZAlz1RW64g0ihzbpTQZxs1HLy+3v3RvVyj682plJx7pen+J7JasXrl
+         q4QA==
+X-Forwarded-Encrypted: i=1; AJvYcCU8c2EBMCktAIqFAKjcU2Y96lyCkQFGp0gjBk/hCLZDSxTCPG3pXXujSGVpf9Mzygx5cXxGTnJy6xtWHPb+uYrwiv59bwH8vx2dkumYDg==
+X-Gm-Message-State: AOJu0Ywo7bVuIqUgg2H7fKoFKcUubzpXWVkqyQEQEe8FkzMHSd0E2ONE
+	gQx3EHsAJoyu1Q04sftUvF5DOopPpkDq4bjYF/uL9rX4iBB/z8KObF99EbArE/F6nPCBoIzfDrs
+	YHv4=
+X-Google-Smtp-Source: AGHT+IEkXdl2lHpg/byD8Mwn15KSShXIciPqlDeiel+w9pEtBrJuFdZHUd3+FxLp1yhPfQh1t2aUog==
+X-Received: by 2002:a19:3847:0:b0:513:7:fc3c with SMTP id d7-20020a193847000000b005130007fc3cmr5174830lfj.55.1710238175047;
+        Tue, 12 Mar 2024 03:09:35 -0700 (PDT)
+Received: from [172.30.205.61] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id r15-20020ac25f8f000000b005134c52debbsm1507310lfe.162.2024.03.12.03.09.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Mar 2024 03:09:34 -0700 (PDT)
+Message-ID: <f3644045-6061-4281-8fbf-25054798bc45@linaro.org>
+Date: Tue, 12 Mar 2024 11:09:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8916-samsung-fortuna: Add
+ touchscreen
+To: Raymond Hackley <raymondhackley@protonmail.com>,
+ linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
+ Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Joe Mason <buddyjojo06@outlook.com>
+References: <20240312074536.62964-1-raymondhackley@protonmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240312074536.62964-1-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 08, 2024 at 01:45:32PM -0800, Abhinav Kumar wrote:
-> There are cases where the userspace might still send another
-> frame after the HPD disconnect causing a modeset cycle after
-> a disconnect. This messes the internal state machine of MSM DP driver
-> and can lead to a crash as there can be an imbalance between
-> bridge_disable() and bridge_enable().
 
-Can you be more specific here? What steps would lead to this issue and
-how exactly does is mess with the state machine? Is there an easy way
-to reproduce it (e.g. by instrumenting the code with some sleep)?
 
-The hotplug code is really convoluted and having a clear description of
-the problem is needed to evaluate the patch (including when revisiting
-it some time from now when I've forgotten about how this state machine
-works).
-
-As you know, we ran into a related issue on sc8280xp (X13s) since
-6.8-rc1, but that did not involve any user space interaction at all.
-
-For reference, there are some more details in this thread:
-
-	https://lore.kernel.org/all/Ze8Ke_M2xHyPYCu-@hovoldconsulting.com/
- 
-> This was also previously reported on [1] for which [2] was posted
-> and helped resolve the issue by rejecting commits if the DP is not
-> in connected state.
+On 3/12/24 08:45, Raymond Hackley wrote:
+> From: Joe Mason <buddyjojo06@outlook.com>
 > 
-> The change resolved the bug but there can also be another race condition.
-> If hpd_event_thread does not pick up the EV_USER_NOTIFICATION and process it
-> link_ready will also not be set to false allowing the frame to sneak in.
-
-How could the event thread fail to pick up the notification event? Or do
-you mean there's a race window before it has been processed?
-
-> Lets move setting link_ready outside of hpd_event_thread() processing to
-> eliminate a window of race condition.
-
-As we discussed in thread above, this patch does not eliminate the race,
-even if it may reduce the race window.
- 
-> [1] : https://gitlab.freedesktop.org/drm/msm/-/issues/17
-> [2] : https://lore.kernel.org/all/1664408211-25314-1-git-send-email-quic_khsieh@quicinc.com/
+> Like msm8916-samsung-a3u-eur, the Grand Prime uses a Zinitix BT541
+> touchscreen. Add it together with the necessary fixed-regulator to the
+> device tree.
 > 
-> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Joe Mason <buddyjojo06@outlook.com>
+> [Raymond: Move to fortuna-common. Use interrupts-extended]
+> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+> ---
 
-> @@ -466,6 +466,8 @@ static int dp_display_notify_disconnect(struct device *dev)
->  {
->  	struct dp_display_private *dp = dev_get_dp_display_private(dev);
->  
-> +	dp->dp_display.link_ready = false;
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-As I also pointed out in the other thread, setting link_ready to false
-here means that any spurious connect event (during physical disconnect)
-will always be processed, something which can currently lead to a leaked
-runtime pm reference.
-
-Wasting some power is of course preferred over crashing the machine, but
-please take it into consideration anyway.
-
-Especially if your intention with this patch was to address the resets
-we saw with sc8280xp which are gone since the HPD notify revert (which
-fixed the hotplug detect issue that left the bridge in a
-half-initialised state).
-
-> +
->  	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
->  
->  	return 0;
-
-Johan
+Konrad
 
