@@ -1,166 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-14028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 030A087B1AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:23:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D079887B0F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:04:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8523FB2A747
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:56:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E4A31C27A74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:04:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D6214290A;
-	Wed, 13 Mar 2024 17:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5A96CDAC;
+	Wed, 13 Mar 2024 18:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xsUiuoHs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUHSSKEu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0131113F458
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:53:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5FA6087A;
+	Wed, 13 Mar 2024 18:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710352441; cv=none; b=d7EUAaR1T0ofVEX5i7vDdADx78iLpXzj8/qYoZ9lG1EII7WwHM0wHhLzvSjLd3ScRfEhWqcweveKu+cWAt72NsYulrlFPzfzNwXyJgNz6U4NBUbM9fxqYo9ooCMSdxSSPfSiwvZz8DjTAB7aqQPQvWi3BVArNXWuQ23Vd59oS44=
+	t=1710353830; cv=none; b=QiaBpo1ybKe3ws3iL7q+nRo94S81zzPkA8amfNdg7RYy7hYqbtVcdelMWqpXLOCY/Vzk7mjJURi2+fIOskB50jEiPTrsZvYQlWLm0x+EQx+s3Bl8kXxgKZjEcS9XY+wGDpQu+Dn3UUqzf/G1Rp0cafx4qVGPNlY1D9sel1FPJWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710352441; c=relaxed/simple;
-	bh=qm9/pAfQvWiGqGVOwNxlH8gFFbT7JVKsj7HqKQPmV6U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Z28TSYwXjrQmQmywPalyNlvtlZ76rJUryq9pTaY57fsJNY0sk26MIsUg2t/7xn4qtpxtYbJ8k5arWpwSKdxrZ/c2ftpCUo4upkitptysEZqN4fJbPzS2Ubi+KFATlIRPo8RwzW5KwdF7/pBVxcjefIrn3RDLFMkfev4vhU6Uhxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xsUiuoHs; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33ddd1624beso110035f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 10:53:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710352438; x=1710957238; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KM81aTvQ9Jln3M+e1NoWl9j0TAIn4t8Grh3IDfzWXRI=;
-        b=xsUiuoHsQ8qdZC29yszSYghfj0LEfLH22+tXkaGaezo+dT4C22j4JOb2vWwqLMTSc8
-         o7tQrYV3nCbyzNNqQnal3m2Y+3Qks8enkUuzc6H/NtegPgnqB8NbeHfAe7dgEVlGFSwR
-         rcZKfgpRLSO+cCMqv7o4ljZkoF9Emi/uvsxvwaBz+Us8OII6wv70PZedOmVhW/qYtuq4
-         5NHgoOgaV95kVPl2ugRVjltbhi+WUXG1fgLm/m1PpTWtygKvQRULAXkF7JeGLgIEgWGl
-         Jouk2yen8u+dtStVxEe8JPUhL1D195MhejhHkrW7WWVkyo0WGkL5BTKwDF9brU08eZex
-         FHbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710352438; x=1710957238;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KM81aTvQ9Jln3M+e1NoWl9j0TAIn4t8Grh3IDfzWXRI=;
-        b=fb44S1yrr14DHjQYJP/dVMZElUdQD1znjGMeDUFSG+n7ziF1zk8B9rkwHqW16s/F88
-         oEd/+igACWuer8X0+FFKoC66nVUQNJtyIWl5CRYh0F0FeOdrbgCZO8vtNO+jIBYF9tFW
-         ymBb2UZzI53GLyePd24eYTQtFhHtil8plIrWhKlPAan/jnl4lpwuvPUmw240vRhCKq0E
-         ar37bAelthr7mOhM4AReyu7YfGqXQxTgm9phJKhFIxHLat8uyduRlhsTqSye8ZyNlj3R
-         VoXRNU1u72oFPXrZZu+nUdxiV9csxmGHB1C7X+rNZEyDD8oKhCcIQrdu06lwUqsXO7SR
-         4g/Q==
-X-Gm-Message-State: AOJu0YwsTNn4MrrPWPtNuZy+z2WD+K/eSuu7DfnzyhA+B6Eziz8xwi/W
-	dSRRU9gBvGNJ86UUGSeQugoR1xGKC1AudbJ+kKMRGqIsnEr+xLEeYWrvzr2oAp0=
-X-Google-Smtp-Source: AGHT+IFTtMJXFD4nfwVNpeqI+VJeyy9Yl/WRTyR07tWESrF0UzfFkVMdcOIHRLR5tG8MzAvVKVrGSw==
-X-Received: by 2002:a5d:4105:0:b0:33d:eb13:9e27 with SMTP id l5-20020a5d4105000000b0033deb139e27mr2526935wrp.23.1710352438411;
-        Wed, 13 Mar 2024 10:53:58 -0700 (PDT)
-Received: from [127.0.0.1] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id u12-20020a5d6acc000000b0033e7a499deasm9914482wrw.109.2024.03.13.10.53.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 10:53:58 -0700 (PDT)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Wed, 13 Mar 2024 17:53:53 +0000
-Subject: [PATCH v2 2/2] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as
- the parent GDSC of subordinate GDSCs
+	s=arc-20240116; t=1710353830; c=relaxed/simple;
+	bh=lJ/3lSowUjOAXc/R3q4VoL3CPOs5whatKhHPsl1wyS0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Pce9ulMPNVyhbgPu1HmiWM/G4OIS1Z/Ckxv6tONsRcZZGv4gGeQ14lNx9dKNqgrdboMILLnDP3FMkNx1831Kvnl8rxOhCd/PMqxZTiesp7MUHbZMZv6IdE9vOTMzd1yjeXam0DlQPelUdUIRGRbbhz12m2M7OYkVzzMZ4jFRRSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUHSSKEu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42DHQSY8032501;
+	Wed, 13 Mar 2024 18:16:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=v5wjPJyxlyZSgw7QRNfZacYjQP379B5XDAXYyxrHWgs=; b=jU
+	HSSKEujd5ST8b01tUiDMG1O7g5X2v+xnubLImtNi7WfDCndpJ5rXjKVhTJ+OmFFE
+	3oUCfmRtyIFaMEUymVBNI0axtLJsKfJB/sGvxwFGBwSlYL5CiocXEkYP+TI0j0HW
+	cwgAHrwih4tZ2Slt2ONptz25D73MeRycR6yzKt99i3s7YKnv1TIH1TcsDdDvNXYc
+	iQ7v3UpLs84C+iPP1ioVWwnuq7kLFrYxY7YV9qcznp5wgQ3DMrdCKoMRE5fbsFXu
+	4Ll1QwCIo35W2siD5vYMWjzHjb+3i8gUnxUQpA8R6QnUB2/fFhjYWnKslKlmhVUf
+	wpb8qauhpeF2Y/NQsZQQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu9xas35m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 18:16:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DIGsBQ004907
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 18:16:55 GMT
+Received: from [10.110.70.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
+ 2024 11:16:50 -0700
+Message-ID: <2020929f-c9a5-1209-78cb-ca75db44a432@quicinc.com>
+Date: Wed, 13 Mar 2024 11:16:48 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] drm/msm/dp: fix runtime PM leak on connect failure
+Content-Language: en-US
+To: Johan Hovold <johan+linaro@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Bjorn
+ Andersson" <quic_bjorande@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <stable@vger.kernel.org>
+References: <20240313164306.23133-1-johan+linaro@kernel.org>
+ <20240313164306.23133-3-johan+linaro@kernel.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240313164306.23133-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240313-linux-next-camcc-fixes-v2-2-9426da94ae37@linaro.org>
-References: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
-In-Reply-To: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.13-dev-26615
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BNNegcXJxongtAGZIx1lIDE54NIYGZW8
+X-Proofpoint-GUID: BNNegcXJxongtAGZIx1lIDE54NIYGZW8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2403130138
 
-The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-block. None of the subordinate blocks will switch on without the parent
-GDSC switched on.
 
-Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-index 46bb225906bff..d421da57697a2 100644
---- a/drivers/clk/qcom/camcc-x1e80100.c
-+++ b/drivers/clk/qcom/camcc-x1e80100.c
-@@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
- 	},
- };
- 
-+static struct gdsc cam_cc_titan_top_gdsc;
-+
- static struct gdsc cam_cc_bps_gdsc = {
- 	.gdscr = 0x10004,
- 	.en_rest_wait_val = 0x2,
-@@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
- 		.name = "cam_cc_sfe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
+On 3/13/2024 9:43 AM, Johan Hovold wrote:
+> Make sure to balance the runtime PM usage counter (and suspend) before
+> returning on connect failures (e.g. DPCD read failures after a spurious
+> connect event or if link training fails).
+> 
+> Fixes: 5814b8bf086a ("drm/msm/dp: incorporate pm_runtime framework into DP driver")
+> Cc: stable@vger.kernel.org      # 6.8
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
--- 
-2.44.0
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
