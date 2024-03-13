@@ -1,152 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-14023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81C7087AE78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:59:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A088C87AFE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:37:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A565F1C23658
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 17:59:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CD4F1F29A1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:37:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0312D5DF2E;
-	Wed, 13 Mar 2024 16:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52505627FB;
+	Wed, 13 Mar 2024 17:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w0gC7x7S"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HIFH71lf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2575D8EE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 16:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF42627E5;
+	Wed, 13 Mar 2024 17:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710348773; cv=none; b=scojGvO+jZxfyQmohtfLfLfHx9HcKpbtE2f2jLrmLHNQDdIhGcL9fZJjXVpbZSCAat1umqhX+y1MNvUZ//v04ZXa8Ae0vnaiU6Ula9TzxuL8Zx7ONOrhVuSt1oDqHk0YR3ELwlRUj3zFJ6k4wgQiiETQcPzWajyMoyoDHQmHGS0=
+	t=1710350670; cv=none; b=lOIa8Z260Zd+U5nbnx3C4MC6yRr17mCYUng/1lzomBZ76Q4aFSxgU+cfT6/MTTYW68Ps2tYrhIuEdQUGyp7dCuKZzw8AYZn/2L5sCoIYQkJfGXuf8swMgiDUHIb93FbYu2SeZQxhujaVFXuHvabuKE57v8+T0KS83UzulxdhaYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710348773; c=relaxed/simple;
-	bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mGBPiHRQvDK9QHzfxB1NBoGWSbnqvYFLnfYrToGiENGQRZe/EPCKmr807NcdgaByJJy1TGoAUFokGUbXqItPEy8WyGzGeyFpbjguPHi4BNiWsgPUlHL1uXyrRkTCXzQCtBGsERzqVpEUJQPux8tS/XdtprADNakAioUy2liT8c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w0gC7x7S; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d38c9ca5bso3690211f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 09:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710348770; x=1710953570; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
-        b=w0gC7x7SO5SYcffZ5OKGdaIVg63MIeuZy/ofUdCBiFm/WpH51c3/R89nUUhWuwRmuK
-         +pQXt5XawBE5eq7kYdnNy2c0/+F3ziOxXe7e1PZQtbg9ORAnJtHxvCURYQHo9y/iov97
-         +Ve9FN3vWCWAhaMMti9SdZ9cP/SL/n6YTpM6EWtazrWXgLNJk3z/H+FEu2blOG+dzkvV
-         mopPBVhQB58nzEW5u4xIrecMdmn3Bp201Nik7tfIXnLKUamhsXw8VfMRNrbWnpdonc85
-         dJNWG57sq7qgVE2DhveW+9PGYCtKMk1omZupkYWBLwyjLyaXKWN9+TLcOETCKaY78kcS
-         mx6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710348770; x=1710953570;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
-        b=NjB7GrY/jwuLThOyGU20+Jik+WPmChRUzgWlEy1WFf+uuYi0l2g4RnFD4lxGxRFEBv
-         bRQZ09AeSRwzPpA4xMKcZyjJNJsy7diPtRpD6uB1nfzMSRKR061KAo5TYeRlygA+Rome
-         1bQqVWHnqfdJrIxEp1cYu0WYCUjeJgywPeNo1GFv6kD4HAtlpIPYKQagI/gHOHg3yacO
-         nZmVmvpOgUXd97V599atMX8mxTvpRBNdFtu00aRXEaXFT5Yv4eXor3OmBFH8aYaDSQ2j
-         dsOyXVGHdqFblSlwvgo7YIplW7hZBBHImBGuT5Ajk14NUFRamBbb3KnF9dVQpvFE+2EL
-         KyNQ==
-X-Gm-Message-State: AOJu0YyBpopY2VlFRudpf53EUYg9Ub6x9CJDUzCGj8YyyGdycoPlWp7R
-	qC/MifTuwgp80dR+d4KqnjUU5o0A/Sxm2JQZHekFF5jilzTEYPPlQmo4C6mWdIM=
-X-Google-Smtp-Source: AGHT+IGW0GnRSeNm87dLzejP55klmqzL3ambDnytj8SWTVx/olGkMPH2qreqDEYsC1Z3fgrIxskPWA==
-X-Received: by 2002:a5d:44c8:0:b0:33d:a1c4:9c63 with SMTP id z8-20020a5d44c8000000b0033da1c49c63mr2178542wrr.49.1710348770600;
-        Wed, 13 Mar 2024 09:52:50 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id k8-20020a056000004800b0033d6bc17d0esm12136678wrx.74.2024.03.13.09.52.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Mar 2024 09:52:50 -0700 (PDT)
-Message-ID: <71fdbcb0-0065-4b48-8c28-6571b9b545b8@linaro.org>
-Date: Wed, 13 Mar 2024 17:52:49 +0100
+	s=arc-20240116; t=1710350670; c=relaxed/simple;
+	bh=ZvIharIEYk7kDgPIHx5QO4EE9939DqfNYXx3tDnTQHU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=p912em/rURoeo2224frRSjgAksNm5yAvjJwS8FHuNR5ktFRsXpAATsP9LeQe1O1xp67xUmQ91ZMHjmhRi8CXneb42bxnoBpGqvknd+muYmNbLZb5Jmy1hP5M7XthpN7CT97PZX2nqBnlUEseSJ+Q+ELwccUwL9bpX3N5RrdeFbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HIFH71lf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D7kCjq031221;
+	Wed, 13 Mar 2024 17:24:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=HsXYLo4vxmd7FYkONEKhNYJ7yL8L99rg/zJTykm0JYo=; b=HI
+	FH71lftMUPi/6Qh8LVdfNe6y4JITb8nbq0sFS8Q05ayyHUdV8V9sC0F6OteeOyqZ
+	qa5GkpnlNC5+JarcwCv1i8qPmMHd5r9sPumVYNTRu4gmbj30Z9TCPxMHkDn7CMRd
+	Y5ULDX6CJfqg5JBvjp1yXLcMwSUWXpQyc26eUPO1vKjoETrIBo1Bkx+aUx043Nix
+	E10+lIQsqaVK8D8yRqAZK6v981kz22SAAx3yL/ISvgKg8x8vfcWVYT9H/1HFrPVI
+	AL+7EBAp+Y2oqXFt5UHFgbG+Iu7bNCm4oyB8fw7qO9isb22vG/UQFhx7EqwnzZp8
+	4mL7ZRIP/20fM1pPB5Sw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu81m1871-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 17:24:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DHOFml013855
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 17:24:15 GMT
+Received: from [10.110.70.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
+ 2024 10:24:10 -0700
+Message-ID: <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
+Date: Wed, 13 Mar 2024 10:24:08 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] dt-bindings: pinctrl: qcom: update functions to
- match with driver
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
 Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
- <20240312025807.26075-3-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240312025807.26075-3-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To: Johan Hovold <johan@kernel.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul
+	<sean@poorly.run>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        David
+ Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Kuogee Hsieh
+	<quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
+        <quic_jesszhan@quicinc.com>, <quic_parellan@quicinc.com>,
+        <quic_bjorande@quicinc.com>, Rob Clark
+	<robdclark@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
+ <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
+ <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
+ <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
+ <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
+ <ZfFhXG5yd6O29spS@hovoldconsulting.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <ZfFhXG5yd6O29spS@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: k_KsKkFVR1NcTEJbp5-f7QVlS1rPpC3D
+X-Proofpoint-GUID: k_KsKkFVR1NcTEJbp5-f7QVlS1rPpC3D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403130132
 
-On 12/03/2024 03:58, Tengfei Fan wrote:
-> Some functions were consolidated in the SM4450 pinctrl driver, but they
-> had not been updated in the binding file before the previous SM4450
-> pinctrl patch series was merged.
-> Update functions in this binding file to match with SM4450 pinctrl
-> driver. Some functions need to be consolidated and some functions need
-> to be removed.
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 3/13/2024 1:18 AM, Johan Hovold wrote:
+> On Tue, Mar 12, 2024 at 10:39:46AM -0700, Abhinav Kumar wrote:
+>> On 3/12/2024 9:59 AM, Johan Hovold wrote:
+> 
+>>>> Heh. This is getting ridiculous. I just tried running with this patch
+>>>> and it again breaks hotplug detect in a VT console and in X (where I
+>>>> could enable a reconnected external display by running xrandr twice
+>>>> before).
+>>>>
+>>>> So, please, do not apply this one.
+>>>
+>>> To make things worse, I indeed also hit the reset when disconnecting
+>>> after such a failed hotplug.
+> 
+>> Ack, I will hold off till I analyze your issues more which you have
+>> listed in separate replies. Especially about the spurious connect, I
+>> believe you are trying to mention that, by adding logs, you are able to
+>> delay the processing of a connect event to *make* it like a spurious
+>> one? In case, I got this part wrong, can you pls explain the spurious
+>> connect scenario again?
+> 
+> No, I only mentioned the debug printks in passing as instrumentation
+> like that may affect race conditions (but I'm also hitting the resets
+> also with no printks in place).
+> 
+> The spurious connect event comes directly from the pmic firmware, and
+> even if we may optimise things by implementing some kind of debounce,
+> the hotplug implementation needs to be robust enough to not kill the
+> machine if such an event gets through.
+> 
+> Basically what I see is that during physical disconnect there can be
+> multiple hpd notify events (e.g. connect, disconnect, connect):
+> 
+> [  146.910195] usb 5-1: USB disconnect, device number 4
+> [  146.931026] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
+> [  146.934785] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
+> [  146.938114] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
+> [  146.940245] [CONNECTOR:35:DP-2] status updated from disconnected to connected
+> [  146.955193] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 0, status = 2
+> 
+> And it is the spurious connect event while the link is being tore down
+> that triggers the hotplug processing that leads to the reset.
+> 
+> Similarly, I've seen spurious disconnect events while the plug in being
+> inserted.
+> 
 
-Best regards,
-Krzysztof
+This is quite weird and also explains why most of the issues were seen 
+only with sc8280xp. pmic spurious events are busting the hpd logic.
 
+Agreed, that DP driver should be robust enough to handle this but this 
+will also bust usermode to send down unnecessary frames. Someone should 
+address why these spurious events are coming.
+
+>> A short response on why this change was made is that commit can be
+>> issued by userspace or the fbdev client. So userspace involvement only
+>> makes commit happen from a different path. It would be incorrect to
+>> assume the issues from the earlier bug and the current one are different
+>> only because there was userspace involvement in that one and not this.
+>>
+>> Because in the end, it manifests itself in the same way that
+>> atomic_enable() did not go through after an atomic_disable() and the
+>> next atomic_disable() crashes.
+> 
+> Right, but your proposed fix would not actually fix anything and judging
+> from the sparse commit message and diff itself it is clearly only meant
+> to mitigate the case where user space is involved, which is *not* the
+> case here.
+> 
+
+No, I think there is some disconnect in the way you are reading that 
+patch perhaps due to some missing details OR I am missing your point.
+
+Like I said, drm_atomic_commit() can be issued by userspace or the fbdev 
+client in the driver. Thats the only userspace involvement.
+
+Now, why the patch was made or was expected to work.
+
+There can be a race condition between the time the DP driver gets the 
+hpd disconnect event and when the hpd thread processes that event 
+allowing the commit to sneak in. This is something which has always been 
+there even without pm_runtime series and remains even today.
+
+In this race condition, the setting of "link_ready" to false can be a 
+bit delayed if we go through the HPD event processing increasing the 
+race condition window.
+
+If link_ready is false, atomic_check() fails, thereby failing any 
+commits and hence not allowing the atomic_disable() / atomic_enable() 
+cycle and hence avoiding this reset.
+
+The patch is moving the setting of link_ready to false earlier by not 
+putting it through the HPD event thread and hence trying to reduce the 
+window of the issue.
+
+> Johan
 
