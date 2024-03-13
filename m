@@ -1,269 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-13981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95EB787A356
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 08:19:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A94387A35E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 08:19:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A4412833C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 07:19:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E41032834D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 07:19:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60FAF15EB0;
-	Wed, 13 Mar 2024 07:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA696168A8;
+	Wed, 13 Mar 2024 07:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tE3wuov3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291F15AD9;
-	Wed, 13 Mar 2024 07:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E535115EB0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 07:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710314340; cv=none; b=KLSdN+DOOnnPuAS8emkYs7wXM82y+ksI+aSAQB5DWGM9afyQ0DD65tFs6glUTa0TNQ5ViUFiKS5oxI/FeHZaMb0fQ4yQ5d5p/XR7V68TxEUC1wVLtq3ZoPXeubuUPxavMWnJqUMHZOUAmkwepRmWYNrUKycjj4qKtQYLWUWPDY0=
+	t=1710314383; cv=none; b=jsDRAGJLdFJ1xCfB5lf07P1PlwxGNyZKH3UlndQVd/BmQ+ovfiCvaPzKtyyZSXPBawG0OkvgRaN8WcP1Iv0v1tKTuwjnvj2HFFm2OTnsrCzJSabddFZGrowc9hBQFMnf62ETDoC7YTv3hrS3lShwuLvRduKV65unOu+Y1gXg9j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710314340; c=relaxed/simple;
-	bh=SyHGz53d5S3pstaPL0dD+/ICzyNlgdE7M2KqnseDQ60=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=AmT0bnFieooV3xFLYXZzKdlYpCn3lB/xa9qat9MCB1GWdYME6CkWhXt9og+XDJPMH+OMA/zj8dsgEzSo4ymcpK0cbetaI4I2AwWXkRZwig8rCG9WqGnCQWBIfyfyTck22MQR4UDtoD0ls+aZY+bqWSwz/a5qMbFBqnrWnPa0hg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from amadeus-Vostro-3710.lan (unknown [IPV6:240e:3b3:2c00:9430:1955:e0f1:3204:86f1])
-	by smtp.qiye.163.com (Hmail) with ESMTPA id 766107E017A;
-	Wed, 13 Mar 2024 15:18:22 +0800 (CST)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: quic_kathirav@quicinc.com
-Cc: amadeus@jmu.edu.cn,
-	andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.baryshkov@linaro.org,
-	konrad.dybcio@linaro.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq6018: add 1.2GHz CPU Frequency
-Date: Wed, 13 Mar 2024 15:18:03 +0800
-Message-Id: <20240313071803.422343-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <1a4e09da-b19b-4cf5-8fae-822c74cfe048@quicinc.com>
-References: <1a4e09da-b19b-4cf5-8fae-822c74cfe048@quicinc.com>
+	s=arc-20240116; t=1710314383; c=relaxed/simple;
+	bh=v/hAU6PW6wjEt1e3ChheYiVgHPEB1gLGZWPraFPzoNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FgQrBSIy9MNDBokJ4uxTE3i93wzQb9XFnD4ImHgoQ0cngtRp5kpvqqqosGdD8sNHbwqnLBZC71vBZCft7nfIIX7grLsYZ27mEyxYloXckHMDrguqsE6VlfrDwHCBqA0fiusB7H85whYLpATbbwbn5N4K56hqtTBT9mFLMJq7TN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tE3wuov3; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-413ebefa168so295975e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 00:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710314380; x=1710919180; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vqjXaFj1OBGQuRnQ9ukBQMjSSkwKWQBdwlni2rHBJFo=;
+        b=tE3wuov33fYsg2Ek/sVlTaW+B5eoPbmb3n1D030n+1wXfATWrsPwpGPp+EADtPG74U
+         FBhhOL4Jj6kv2wvqNGvIhh6k2H3gd0b2d5NikHGhF9uOHQTdMigtFgKsMq1pkXZx/11U
+         dgJ8xS8rBjiGABbCJPtUaA+7W0pkg6rqhDToXmYWJ0JE3IW8I7ddeDELW7dQq5hFq17/
+         ne5AvDTvlCt1lhDWrLJUgrxDQF9PGklW5v5I7cY+s0UisxVGfMWTFOkDGqOud8EvV8gs
+         dQ8YDwnXW2+Cv3SnygpdyrCb93Szo2e/Lj6JuJOKh4IhhgD0q0ledrrAEoaBQuMyG/5p
+         2+uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710314380; x=1710919180;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vqjXaFj1OBGQuRnQ9ukBQMjSSkwKWQBdwlni2rHBJFo=;
+        b=vaI2X++XSj3lpvT/x9eIZWMZJVOqNR9+V2p0nDh8TD/nkDcWItQfqc/9GGc/Bk2JAT
+         1qFDbYfQ+jjkbDxJ0W/fddUsQXpq557SjL+fma0ltCGpyxvNO7oI3PXWuI5/PuIeZ9vj
+         NvKubUner+12K20Ghtt/ltKFEV5FJWd+xg041Y8/bEfb5q4gK1LCfvbCcqystrPF+JlL
+         eIlaYxowuqhgmPdVAb1tPHstPOCjozIQtzF/H+KhfsgYGbnGYVlf35iynHq/CRRlfcxp
+         HoliJH73vkW97h44oh59Lm8z4JYOPfxk5rCJkyIA174MFHZ2WpBrjIuYiygx/RkQd0O2
+         nMRw==
+X-Gm-Message-State: AOJu0Yx2q1KwVSSpl/4yXByP+Nsv2JAlMz9/ZBIzBF2TMA+V/55zKaRU
+	oSacZxfYZXfPATUWb7e79kFiBb72llxvTXvWIcAXIbdo3mDoxsnYY6iqd0mylt4=
+X-Google-Smtp-Source: AGHT+IGyQioiiDIf29Z761cLxYehFyDDnT3QH2/d0gCGuPrcIO5UP7XJoVEilHt+ZiKL0Z1Tbi4IXQ==
+X-Received: by 2002:a5d:654e:0:b0:33e:73f7:adac with SMTP id z14-20020a5d654e000000b0033e73f7adacmr961716wrv.1.1710314380067;
+        Wed, 13 Mar 2024 00:19:40 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id q17-20020adffed1000000b0033cf5094fcesm10898039wrs.36.2024.03.13.00.19.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Mar 2024 00:19:39 -0700 (PDT)
+Message-ID: <a3a8cb76-b6c4-47e9-a448-781225d93d84@linaro.org>
+Date: Wed, 13 Mar 2024 08:19:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSR0YVktJTkNCTE0aHR9MHlUTARMWGhIXJBQOD1
-	lXWRgSC1lBWUlPSx5BSBlIQUkYS0tBQk9IS0FKQk5OQR5LHUpBSElLT0FDTR1KWVdZFhoPEhUdFF
-	lBWU9LSFVKTEpPTENVSktLVUpCS0tZBg++
-X-HM-Tid: 0a8e36ad2d1c03a2kunm766107e017a
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MFE6Hww6HTMPEioQLU0TKgoB
-	TQEKFDFVSlVKTEpLSEpPSEtISk5JVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUlP
-	Sx5BSBlIQUkYS0tBQk9IS0FKQk5OQR5LHUpBSElLT0FDTR1KWVdZCAFZQUJKTkw3Bg++
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm: qcom: Document rb5gen2 board
+To: Wasim Nazir <quic_wasimn@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240313071238.3290-1-quic_wasimn@quicinc.com>
+ <20240313071238.3290-2-quic_wasimn@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240313071238.3290-2-quic_wasimn@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Could you share the OEM bootloader log on both these SoCs?
+On 13/03/2024 08:12, Wasim Nazir wrote:
+> Document board bindings for Rb5gen2.
+> Rb5gen2 is using Rb5 gen2 SOM which is based on QCS8550 SoC.
+> RB5gen2 is development kit used for IOT solutions.
+> 
+> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+> 
 
-Chip silk screen: ipq6000, msm_id: ipq6000, bootloader log:
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Format: Log Type - Time(microsec) - Message - Optional Info
-Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
-S - QC_IMAGE_VERSION_STRING=BOOT.XF.0.3-00086-IPQ60xxLZB-1
-S - IMAGE_VARIANT_STRING=IPQ6018LA
-S - OEM_IMAGE_VERSION_STRING=crm-ubuntu200
-S - Boot Interface: NAND
-S - Secure Boot: Off
-S - Boot Config @ 0x000a602c = 0x000002e5
-S - JTAG ID @ 0x000a607c = 0x001390e1
-S - OEM ID @ 0x000a6080 = 0x00000000
-S - Serial Number @ 0x000a4128 = 0xd553f610
-S - OEM Config Row 0 @ 0x000a4188 = 0x0000000000000000
-S - OEM Config Row 1 @ 0x000a4190 = 0x0000000000000000
-S - Feature Config Row 0 @ 0x000a4130 = 0x0000800018200021
-S - Feature Config Row 1 @ 0x000a4138 = 0x02c3e83783000009
-S - PBL Patch Ver: 1
-S - I-cache: On
-S - D-cache: On
-B -      3413 - PBL, Start
-B -       592 - bootable_media_detect_entry, Start
-B -      4339 - bootable_media_detect_success, Start
-B -      5207 - elf_loader_entry, Start
-B -      5380 - auth_hash_seg_entry, Start
-B -      7846 - auth_hash_seg_exit, Start
-B -      8341 - elf_segs_hash_verify_entry, Start
-B -    103774 - elf_segs_hash_verify_exit, Start
-B -    107970 - auth_xbl_sec_hash_seg_entry, Start
-B -    108114 - auth_xbl_sec_hash_seg_exit, Start
-B -    114659 - xbl_sec_segs_hash_verify_entry, Start
-B -    114660 - xbl_sec_segs_hash_verify_exit, Start
-B -    115589 - PBL, End
-B -     97478 - SBL1, Start
-B -    237259 - GCC [RstStat:0x0, RstDbg:0x600000] WDog Stat : 0x4
-B -    239699 - clock_init, Start
-D -      2836 - clock_init, Delta
-B -    248270 - boot_flash_init, Start
-D -     26962 - boot_flash_init, Delta
-B -    278404 - sbl1_ddr_set_default_params, Start
-D -       244 - sbl1_ddr_set_default_params, Delta
-B -    285022 - boot_config_data_table_init, Start
-D -      4788 - boot_config_data_table_init, Delta - (575 Bytes)
-B -    294904 - CDT Version:2,Platform ID:8,Major ID:3,Minor ID:2,Subtype:0
-B -    299693 - Image Load, Start
-D -      6618 - OEM_MISC Image Loaded, Delta - (0 Bytes)
-B -    309056 - Image Load, Start
-D -      5063 - PMIC Image Loaded, Delta - (0 Bytes)
-B -    316925 - sbl1_ddr_set_params, Start
-B -    321897 - CPR configuration: 0x555
-B -    325099 - Pre_DDR_clock_init, Start
-D -       213 - Pre_DDR_clock_init, Delta
-D -         0 - sbl1_ddr_set_params, Delta
-B -    357856 - Image Load, Start
-D -       427 - APDP Image Loaded, Delta - (0 Bytes)
-B -    375851 - Image Load, Start
-D -       427 - QTI_MISC Image Loaded, Delta - (0 Bytes)
-B -    378261 - Image Load, Start
-D -       793 - Auth Metadata
-D -       641 - Segments hash check
-D -     22509 - QSEE Dev Config Image Loaded, Delta - (36362 Bytes)
-B -    402722 - Image Load, Start
-D -      6863 - Auth Metadata
-D -     10309 - Segments hash check
-D -    331504 - QSEE Image Loaded, Delta - (1419184 Bytes)
-B -    734684 - Image Load, Start
-D -       671 - Auth Metadata
-D -       945 - Segments hash check
-D -     34709 - RPM Image Loaded, Delta - (102800 Bytes)
-B -    771070 - Image Load, Start
-D -       762 - Auth Metadata
-D -      3203 - Segments hash check
-D -    124440 - APPSBL Image Loaded, Delta - (563588 Bytes)
-B -    911126 - SBL1, End
-D -    813953 - SBL1, Delta
-S - Flash Throughput, 4000 KB/s  (2122509 Bytes,  432999 us)
-S - Core 0 Frequency, 800 MHz
-S - DDR Frequency, 466 MHz
+Best regards,
+Krzysztof
 
-
-U-Boot 2016.01 (Dec 01 2021 - 20:16:45 +0800)
-
-DRAM:  smem ram ptable found: ver: 2 len: 4
-512 MiB
-NAND:  ONFI device found
-ID = 1580a1f8
-Vendor = f8
-Device = a1
-SF: Unsupported flash IDs: manuf 00, jedec 0000, ext_jedec 0000
-ipq_spi: SPI Flash not found (bus/cs/speed/mode) = (0/0/48000000/0)
-128 MiB
-MMC:   <NULL>: 0
-PCI0 is not defined in the device tree
-In:    serial@78B1000
-Out:   serial@78B1000
-Err:   serial@78B1000
-machid: 8030200
-
-
-Chip silk screen: ipq6000, msm_id: ipq6018, bootloader log:
-
-Format: Log Type - Time(microsec) - Message - Optional Info
-Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
-S - QC_IMAGE_VERSION_STRING=BOOT.XF.0.3-00077-IPQ60xxLZB-2
-S - IMAGE_VARIANT_STRING=IPQ6018LA
-S - OEM_IMAGE_VERSION_STRING=crm-ubuntu64
-S - Boot Interface: NAND
-S - Secure Boot: Off
-S - Boot Config @ 0x000a602c = 0x000002e5
-S - JTAG ID @ 0x000a607c = 0x001390e1
-S - OEM ID @ 0x000a6080 = 0x00000000
-S - Serial Number @ 0x000a4128 = 0xcb4a3f56
-S - OEM Config Row 0 @ 0x000a4188 = 0x0000000000000000
-S - OEM Config Row 1 @ 0x000a4190 = 0x0000000000000000
-S - Feature Config Row 0 @ 0x000a4130 = 0x0000800018200021
-S - Feature Config Row 1 @ 0x000a4138 = 0x02c3e83783000009
-S - PBL Patch Ver: 1
-S - I-cache: On
-S - D-cache: On
-B -      3413 - PBL, Start
-B -       592 - bootable_media_detect_entry, Start
-B -      4339 - bootable_media_detect_success, Start
-B -      5147 - elf_loader_entry, Start
-B -      5319 - auth_hash_seg_entry, Start
-B -      7785 - auth_hash_seg_exit, Start
-B -      8283 - elf_segs_hash_verify_entry, Start
-B -    110432 - elf_segs_hash_verify_exit, Start
-B -    114856 - auth_xbl_sec_hash_seg_entry, Start
-B -    114999 - auth_xbl_sec_hash_seg_exit, Start
-B -    121547 - xbl_sec_segs_hash_verify_entry, Start
-B -    121548 - xbl_sec_segs_hash_verify_exit, Start
-B -    122477 - PBL, End
-B -    103273 - SBL1, Start
-B -    243359 - GCC [RstStat:0x0, RstDbg:0x600000] WDog Stat : 0x4
-B -    245799 - clock_init, Start
-D -      2836 - clock_init, Delta
-B -    254339 - boot_flash_init, Start
-D -     26199 - boot_flash_init, Delta
-B -    283772 - sbl1_ddr_set_default_params, Start
-D -       213 - sbl1_ddr_set_default_params, Delta
-B -    290390 - boot_config_data_table_init, Start
-D -      4727 - boot_config_data_table_init, Delta - (575 Bytes)
-B -    300242 - CDT Version:2,Platform ID:8,Major ID:3,Minor ID:2,Subtype:0
-B -    305091 - Image Load, Start
-D -      6618 - OEM_MISC Image Loaded, Delta - (0 Bytes)
-B -    314394 - Image Load, Start
-D -      5063 - PMIC Image Loaded, Delta - (0 Bytes)
-B -    322293 - sbl1_ddr_set_params, Start
-B -    327265 - CPR configuration: 0x366
-B -    330467 - Pre_DDR_clock_init, Start
-D -       183 - Pre_DDR_clock_init, Delta
-D -         0 - sbl1_ddr_set_params, Delta
-B -    367098 - Image Load, Start
-D -       457 - APDP Image Loaded, Delta - (0 Bytes)
-B -    380213 - Image Load, Start
-D -       458 - QTI_MISC Image Loaded, Delta - (0 Bytes)
-B -    382622 - Image Load, Start
-D -       824 - Auth Metadata
-D -       671 - Segments hash check
-D -     22235 - QSEE Dev Config Image Loaded, Delta - (36354 Bytes)
-B -    406839 - Image Load, Start
-D -      6588 - Auth Metadata
-D -     10492 - Segments hash check
-D -    329735 - QSEE Image Loaded, Delta - (1470632 Bytes)
-B -    737002 - Image Load, Start
-D -       671 - Auth Metadata
-D -       976 - Segments hash check
-D -     34465 - RPM Image Loaded, Delta - (102664 Bytes)
-B -    773175 - Image Load, Start
-D -       702 - Auth Metadata
-D -      3202 - Segments hash check
-D -    119011 - APPSBL Image Loaded, Delta - (561320 Bytes)
-B -    907802 - SBL1, End
-D -    804834 - SBL1, Delta
-S - Flash Throughput, 5000 KB/s  (2171545 Bytes,  423057 us)
-S - Core 0 Frequency, 800 MHz
-S - DDR Frequency, 466 MHz
-
-
-U-Boot 2016.01 (Mar 18 2020 - 13:15:21 +0800)
-
-DRAM:  smem ram ptable found: ver: 2 len: 4
-512 MiB
-NAND:  ONFI device found
-ID = 1590aac2
-Vendor = c2
-Device = aa
-SF: Unsupported flash IDs: manuf 00, jedec 0000, ext_jedec 0000
-ipq_spi: SPI Flash not found (bus/cs/speed/mode) = (0/0/48000000/0)
-256 MiB
-MMC:   sdhci: Node Not found, skipping initialization
-
-PCI0 is not defined in the device tree
-In:    serial@78B1000
-Out:   serial@78B1000
-Err:   serial@78B1000
-machid: 8030200
 
