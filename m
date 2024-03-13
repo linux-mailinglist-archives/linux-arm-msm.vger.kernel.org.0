@@ -1,139 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-13986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BC3587A407
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 09:18:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 758CE87A4A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 10:11:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D5A61C2187D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 08:18:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD2DC28385F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 09:11:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A475F19473;
-	Wed, 13 Mar 2024 08:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE8A1BDD9;
+	Wed, 13 Mar 2024 09:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kfvaO2p/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cUDwBOuH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793651946B;
-	Wed, 13 Mar 2024 08:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5AA1B95E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 09:11:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710317910; cv=none; b=ibMbPwqk4Rjh75H+MNil4HeLMdZz+EstgaEqFyEJGa9BLVxF1jbPkcjXs5FeoCrSI9dqegTaA03QYedIRkP7J8NGofdYCLkHUnXW0WmD/NoVjj2KSrVZv6PC9sas2+LjZM8QC1AxwDHUf7jV/6g1bxsW8QnbUNrjnEc+X7Ak7yI=
+	t=1710321084; cv=none; b=OOR/AKBfHCNeUzvqk4WJaFKkD1RmHvOGtk+hauCmLyrnInjN/wj7rcmWdvlztX7oQoyPs7V6DyrnXC3vhLnw6qAEbRJODEzDq9mpbg3uHAPeWQeyPOtpFMkGEnaPDXK2dGuD+8MoZ5972Fl7vKlguvJVjKkjuERjXG2UT/ATjdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710317910; c=relaxed/simple;
-	bh=zE7IZcvHdDf3t51MnDNR20hcSgbHGaXRCq5k//ri3Dk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p/CpqescJNZVMXdiez7FtqYIv07ZEoxEL/7ANPvnp0ZM6PP8aX1W1n57RiZ93TiVeIVcgkDnlca3jldVkjC8+TMuWfrWTz6TJW8/Nf3GgXVjDKt2eEEDeaksfly/i13CSrSFHZt1+dW9ykhBNvwFkwXwO1TUXdtTDwVG7ruSJRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kfvaO2p/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1C0C433F1;
-	Wed, 13 Mar 2024 08:18:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710317910;
-	bh=zE7IZcvHdDf3t51MnDNR20hcSgbHGaXRCq5k//ri3Dk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kfvaO2p/xA/6WQYMqWpUtHkwzvcv435FG1luuy0SdnIxrdLGbVbBn1xJkO86ckMdk
-	 ngqqHAzFfuK1K98SoFG4lRGOm45/HcSs58eq0NmXtEYaudEvOsjWBS7nZFaGjx9tEr
-	 4PBWv7NK1l8Q1718PUvdFR+0O9Jq9OrCuVvOArDJLbdEnRCX+uurBgu2Gh/x39ijev
-	 O9sjQebpCmyWLZBYdR2hCo4NwZ35Aboml0wzmJBlJ6yVxyEdyrnHGK9GWaIEAmwAWW
-	 tNXeLWq6Y662cuLDXmsz7LfduvXoz7JAbchyI1mW7Pk6xFHCYYxU6c+YXW0XanwQ4q
-	 H/ax0Le7rdWPg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rkJoq-000000007Vb-2jag;
-	Wed, 13 Mar 2024 09:18:36 +0100
-Date: Wed, 13 Mar 2024 09:18:36 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Message-ID: <ZfFhXG5yd6O29spS@hovoldconsulting.com>
-References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
- <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
- <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
- <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
- <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
+	s=arc-20240116; t=1710321084; c=relaxed/simple;
+	bh=Nog9/N+tAoaZ/MSBuyxW5ZeNiDO+1sNCdlgEZW9LEvM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tGaXSaKDRiOnelHtJZQ+nqcFALpKtkYpyTa3YmLyiS4uDHaTA3RWsLoofkUfRYPpvq4k+cXhoX8oHxwPqNE5Ye0wP7+5+/T/ltiU547ahjoZ6P045NxXv3GTfIz5AGJDfQIbtAT7JUUtPbot27YspC8Tb1duZRndxG7x6leegiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cUDwBOuH; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-413e99afcc8so2189875e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 02:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710321081; x=1710925881; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i1xxNpv8nSMeQDbbmL4FBnSN4DODov6zXmAugtpqIgo=;
+        b=cUDwBOuHRQ3hHhbZReAKGCH14J9TKFwlPgTU8uy8Dzl0+pzqqoRs2TWQt4EFOP83eN
+         gV/FfS0nR5SNBv+G2ZbZRVZVmBPlmNZq5AuROIAMpu5IuAe5fvyKHpMLv+jmoRY7B6vM
+         /uB4NFFhA1HaDFy9c9LNTOWjpOzgqzg7TH//okBT3bW2BF3H4jVv1d8hrF9WGrOt6cG2
+         U2r8/M1UsbMDPIE76w4cghyv15QOLCslXwk15jrMW/zUfUjtQweKCXzgSx+6qQmXqzwe
+         QUleO6QXg64MJy+mzr9/e7YQAsoiMSTud6lNg+GGKTNXeEQaKMhJ7RPySXONh0IpDExF
+         ajIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710321081; x=1710925881;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i1xxNpv8nSMeQDbbmL4FBnSN4DODov6zXmAugtpqIgo=;
+        b=eisz65OGJCr0NFfXaI9t0/PZz4pjAJx1T+WwKikDRcbt2u+u7NwWF6YiK6HerTRBTP
+         CzWtY0LYqAp25kEFmMPg4Lb5k7bffeJWmNlc4QENlXaIksBW8h3+gCohB3S66CRGN5WK
+         U+kBuJCGNOWXuS6kFHfkIDSiUCm0kpeoUqn5LNbwNV2Dk+sfvHt54+ovJQQ0/RRbiEvP
+         OkbgT/yHxYNlw/V+ACVduRiJkrYpD/cgPQfG5198xl6sDmCFugwCREL37ybFkE/zlM7G
+         oFxDq7zBuvn+BfJvLsV1tG8DJ2bVm+GLKUDC6b0ZUtjGRzNlknypO/owosKYk2WMzORs
+         KX5w==
+X-Gm-Message-State: AOJu0Yz4FTT8uCtiT9nelxx9SQkyqieiJQazHWSrtCIrK5e/bhv8rskD
+	bjAfFpXN6P5x/afVH1wFet55+rqqIfLFZoeR0JuCTmD3afYgpDjcXkoINs45kDw=
+X-Google-Smtp-Source: AGHT+IFcIqvxWLpB8JHMlbhQKytC3+T7HJ36QXDJC4qPN5ur6HK+IC13Up1+viwWIC5QehnNlCMqQQ==
+X-Received: by 2002:a05:600c:4f52:b0:413:1d9b:4d2 with SMTP id m18-20020a05600c4f5200b004131d9b04d2mr3560513wmq.15.1710321080720;
+        Wed, 13 Mar 2024 02:11:20 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.97])
+        by smtp.gmail.com with ESMTPSA id v11-20020a05600c444b00b00412f016a151sm1709363wmn.9.2024.03.13.02.11.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Mar 2024 02:11:20 -0700 (PDT)
+Message-ID: <15e344a8-8ad2-41f2-a8ac-6e5d1627c19a@linaro.org>
+Date: Wed, 13 Mar 2024 10:11:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: update compatible name
+ for match with driver
+Content-Language: en-US
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
+ <20240312025807.26075-2-quic_tengfan@quicinc.com>
+ <0d768f17-22d9-448e-9253-8498b61bf71e@linaro.org>
+ <31b02b76-88ff-42d7-a665-18d2661e028c@quicinc.com>
+ <6a3b5c9d-6375-457f-83c9-269746c1612a@linaro.org>
+ <ef237b3c-8613-4cd8-9391-e4a08d50cc6c@quicinc.com>
+ <60a0e51f-dc0e-4bbf-8127-f987ac2aae71@linaro.org>
+ <f515f9f4-b87c-465b-83c0-f4b7b5c47840@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <f515f9f4-b87c-465b-83c0-f4b7b5c47840@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 12, 2024 at 10:39:46AM -0700, Abhinav Kumar wrote:
-> On 3/12/2024 9:59 AM, Johan Hovold wrote:
+On 13/03/2024 08:55, Tengfei Fan wrote:
+>>>>>> Wasn't this applied?
+>>>>>
+>>>>> My test code base on tag: next-20240308, this patch is still not applied.
+>>>>>
+>>>>> In fact, the following dt binding check warning only can be got before
+>>>>> this patch is applied.
+>>>>>
+>>>>
+>>>> Please read all emails in the previous thread. You ignored two emails in
+>>>> the past and apparently one more recent.
+>>>
+>>> I don't know if you mean I ignored the email which related with "Patch
+>>> applied" tag from Linus Walleij. If so, the following is the reasion why
+>>> I still include this patch:
+>>
+>> Yep, that's the one. Please do not send patches which were already
+>> applied. It causes unnecessary effort on reviewer and maintainer side.
+>>
+>>>
+>>> I synced the latest upstream code on 03/12/2024, the latest tag is
+>>> next-20240308, this tag still doesn't include this patch[PATCH v3 1/2].
+>>
+>> Happens, considering Linus applied it after 8th of March, I think.
+>>
+>>>
+>>> Dt binding check still get warning if I only send [PATCH v3 2/2] patch
+>>> to upstream base on next-20240308. so I include this patch[PATCH v3 1/2]
+>>
+>> If you send patch 1+2, dt_binding_check will have exactly the same
+>> result. I don't know about what sort of dt binding check you talk, but
+>> for all cases: you changed nothing by sending these two patches in that
+>> regard. Only noise on the lists.
+> 
+> The dt binding check failed which Rob Herring remind me in previous 
+> patch series as the following:
 
-> >> Heh. This is getting ridiculous. I just tried running with this patch
-> >> and it again breaks hotplug detect in a VT console and in X (where I
-> >> could enable a reconnected external display by running xrandr twice
-> >> before).
-> >>
-> >> So, please, do not apply this one.
-> > 
-> > To make things worse, I indeed also hit the reset when disconnecting
-> > after such a failed hotplug.
+This does not make any sense. Whether Rob runs his test on previous or
+future next, changes nothing in regard of this patchset being sent with
+duplicated patch or not. The result will be exactly the same for Rob.
 
-> Ack, I will hold off till I analyze your issues more which you have 
-> listed in separate replies. Especially about the spurious connect, I 
-> believe you are trying to mention that, by adding logs, you are able to 
-> delay the processing of a connect event to *make* it like a spurious 
-> one? In case, I got this part wrong, can you pls explain the spurious 
-> connect scenario again?
+> 
+> Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.example.dtb:
+> /example-0/pinctrl@f100000: failed to match any schema with
+> compatible: ['qcom,sm4450-tlmm']
+> 
+> This failed is introduced by 
+> https://lore.kernel.org/linux-arm-msm/20231206020840.33228-2-quic_tengfan@quicinc.com/. 
+> Something got broken aroud -m flags for dtschema, so indeed no reports 
+> this unmatched compatibles warning when this patch was revriwed. We also 
+> have some discusstion in patch email.
 
-No, I only mentioned the debug printks in passing as instrumentation
-like that may affect race conditions (but I'm also hitting the resets
-also with no printks in place).
+Again, not related at all whether you send patch *which was applied* or not.
 
-The spurious connect event comes directly from the pmic firmware, and
-even if we may optimise things by implementing some kind of debounce,
-the hotplug implementation needs to be robust enough to not kill the
-machine if such an event gets through.
+> 
+> The patch[PATCH v3 1/2] is made for fix this previous patch dt binding 
+> check failed. So dt binding check failed will disappear after this 
+> patch[PATCH v3 1/2] is applied.
 
-Basically what I see is that during physical disconnect there can be
-multiple hpd notify events (e.g. connect, disconnect, connect):
+And who is supposed to run that dt binding check and on what base? Your
+patch changes absolutely nothing in that regard, just creates confusion.
 
-[  146.910195] usb 5-1: USB disconnect, device number 4
-[  146.931026] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
-[  146.934785] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
-[  146.938114] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
-[  146.940245] [CONNECTOR:35:DP-2] status updated from disconnected to connected
-[  146.955193] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 0, status = 2
+And the fact that you keep arguing over this simple case, reminds me
+other clueless discussions I had with some Qualcomm folks. None of the
+arguments you brought here justify sending patch which was applied.
 
-And it is the spurious connect event while the link is being tore down
-that triggers the hotplug processing that leads to the reset.
+> 
+>>
+>>> in patch series even if this patch have "Patch applied" tag.
+>>>
+>>> Looking forward to getting your advice if submitting patch series this
+>>> way is problematic.
+>>
+>> Do not send patches which are known to be applied.
+> 
+> Yes, I will be careful not to resend the patch which have already been 
+> applied in the future work.
 
-Similarly, I've seen spurious disconnect events while the plug in being
-inserted.
+Then why do you keep arguing that sending this duplicated patch was
+correct approach?
 
-> A short response on why this change was made is that commit can be 
-> issued by userspace or the fbdev client. So userspace involvement only 
-> makes commit happen from a different path. It would be incorrect to 
-> assume the issues from the earlier bug and the current one are different 
-> only because there was userspace involvement in that one and not this.
->
-> Because in the end, it manifests itself in the same way that 
-> atomic_enable() did not go through after an atomic_disable() and the 
-> next atomic_disable() crashes.
+> 
+> Do you think it is necessary to send another version patch series for 
+> remove this applied patch[PATCH v3 1/2] from patch series?
 
-Right, but your proposed fix would not actually fix anything and judging
-from the sparse commit message and diff itself it is clearly only meant
-to mitigate the case where user space is involved, which is *not* the
-case here.
+No. It is merge window, please read process documents in Documentation
+directory. Then please read Qualcomm upstreaming guide.
 
-Johan
+Best regards,
+Krzysztof
+
 
