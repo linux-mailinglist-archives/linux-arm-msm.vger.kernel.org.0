@@ -1,182 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-14045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A5FA87B264
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:58:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D7CC87B2FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 21:42:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E41D01F258F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:58:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 51C4F1C22850
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B3C4BAA6;
-	Wed, 13 Mar 2024 19:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB72A51C49;
+	Wed, 13 Mar 2024 20:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WcINpUrh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326AA20DDB;
-	Wed, 13 Mar 2024 19:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203A651C33;
+	Wed, 13 Mar 2024 20:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710359898; cv=none; b=ImeV9DvLjNvLogHLRbtuM7rC4SodVDX5svar8zu9BUVC6R6bVBaeivJxAH4SSnAhs4xlm9Y+piUG4PyuYFmtx6c8dzjXyr4vl9CDZj6K4l0NH/Ux3URsBaLq2bYp3sNZRwMJSihLFp2spVWTIs1Nd2dbXbyPYkSEARhiGcKmGUg=
+	t=1710362527; cv=none; b=HIeDTfE4AnqZrB7/IraZkXNl9h7yz4ohEeFqxjkwWMxJFGcK7P/izsCFy2lQ6gaNqhj8MRrvvkk0FBe47uAQ4zkNiQjCw5iFsEEHaNMXfzeFd+W3itRTSe8BTu2MrgpcWBw8EaTAmr37E24PXwr7v18iG0kDezV9Pwkvpa+O7r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710359898; c=relaxed/simple;
-	bh=hhFq5IpzNKqt3vASlinqD/E0HbWm7PiMwUPQBESAj5I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TCwFzEsWezUjZH8fv04mi0bJZBH6+tuzneg2tUh/d9TyV63k2DOr3bljkaDqkByp17tATkVqlzrzLVRxisB6dFboc/TNdYJxoPuNVRuk+C1jrVxEtITX8GRAJKRJmsO+Rf5OoVdTi0oYB2QBuyO81qja0QHlhcHenGrbeeta6iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2219edd959dso74895fac.0;
-        Wed, 13 Mar 2024 12:58:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710359895; x=1710964695;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NdP8F+x5j1lSl9Kjac5VCWtp2OKa5wXezFE2irQlxPY=;
-        b=a0Z04Dna8Gtl25EDeNATVlB59ubX0/tiAtYJlvgryvdokzvYz+eWuu+Z9AX4maeHoK
-         jOIQpFnt/SAADin7E6OCoqIzxTlwJ2vKMZUfcTeyUhbQc2UNv4sKPiQbIjYRhwRkf+Iq
-         pImL6fA8hCJkeInpdxDF+kq/Of+7MyvmC4rDAAleU/4teFrM9I/jhx+YmVUZ1Ov0uPWZ
-         OTkxVbL5o1AFBDm5vW5rM3V6MaCbb68z8ZWMDpqt8/bh+QzF6RVJv3FAq02mRqbmoQAi
-         gUcnhlL/5wZY6imdqWV4Zmz+nieWoBfYdTzwfk+5X2K9BrFb//AkSzOcg3uObKM+USwk
-         oHLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVJZEg3ArUTE8aNv3QGGlmHEXzhlSuQQLiZ+3SZLyn8QoCs099nrjdYacb7++GoQJGzRlV4QwYEsXa1BU3ZPKM+Bdf5tR76AXu4Qo4aDJF8bkxs40D2QLu1unVCdxTU+lPpobspiwSJ/qAajyCcXbFV34wd/XsAcQBWKWaWgMXu0PFLuwmy
-X-Gm-Message-State: AOJu0Yx0LO+PUL8p6GQBHCHiWemX9Dni2XD+cDFgBaGbgaVPmNFVYaI4
-	c+6loQSWCa6RUZKrxT+Ds7TSuFF/bYOfigKdBRa2JCJ631axKYFExYNUVnLT2k1YdsF3MbCgzlo
-	vjI8rMg0NY/Aa2Xwt9+rM9UvWMl8=
-X-Google-Smtp-Source: AGHT+IEWlkP/2kfvt3B2rhZO97HkoSPYHA2GD7sErHQcZOV/0GMkTwiKtB++GlXS5E0yL2Z77yUf5VdyVQXQhFtovPU=
-X-Received: by 2002:a05:6871:3325:b0:221:cb1b:cc05 with SMTP id
- nf37-20020a056871332500b00221cb1bcc05mr3047428oac.0.1710359895299; Wed, 13
- Mar 2024 12:58:15 -0700 (PDT)
+	s=arc-20240116; t=1710362527; c=relaxed/simple;
+	bh=+gETs3oUauSV6zqpvPZvesZpa1mrp6/VW6P3YLloEWA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=icJrSGD9PbytuIpNKpajBi11IBuQBw2Ls2JS2JmE+1mKTZ9nGqmPvadHvsOqscFSE24unolcsqyyPNF0Xsy1iQnkfSGSnNybBeqQQiY/Po1Qao6eFEzU/l5LRli8oLQUt5aMowp8JoyUzc3Q3GVp9kPr2YBdQ/A9LHVfnDXyF2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WcINpUrh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42DKY4Wn029229;
+	Wed, 13 Mar 2024 20:41:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=jGDGyPpCYBzr/XWv3ffRnHbJkeG0JATe4aKM18IYXF8=; b=Wc
+	INpUrhi/9QixN9atA58u/nHIFyNcgX+bEvZbVEAU2MiLMK+8xKphfjUIioruECdk
+	dyVnzQaQSleS481Ns3mfbF5W16BhQF6dcl+g5jVSQDpbkpmkqVQm6YAD6o4IHA3R
+	CjfWTScHe2Rq5cRI3vONE+rBvMF9Znwn8wVnE4rH6ZQVEEeNYT2WosA0wsA6v/1M
+	3YT7hHTz05Dc+MUSIc7+TUgA112cVRty6fPkPfjrAcIS6KutJBbzZoWUdW5+xDG7
+	E2+ZKq0AApseA21pkEQkQHD2Oa5wbzdD/Vuntyzmxz9g256P3vm6OLQ68bo89d03
+	Q/hucLfUV8AXonv17qAQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wuc1m96u8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 20:41:22 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DKfMoh007691
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 20:41:22 GMT
+Received: from [10.110.70.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
+ 2024 13:41:18 -0700
+Message-ID: <d6ac0328-3d3d-75bc-09b9-ed0190a6a8c5@quicinc.com>
+Date: Wed, 13 Mar 2024 13:41:16 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240312103723.3469762-1-quic_sibis@quicinc.com>
-In-Reply-To: <20240312103723.3469762-1-quic_sibis@quicinc.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 13 Mar 2024 20:58:04 +0100
-Message-ID: <CAJZ5v0iLvq_4mNTTNw9eXZL4rG25jpRuWAKvY_7HZvLDRmGZNw@mail.gmail.com>
-Subject: Re: [PATCH V3] cpufreq: Fix per-policy boost behavior on SoCs using cpufreq_boost_set_sw
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: dietmar.eggemann@arm.com, rafael@kernel.org, viresh.kumar@linaro.org, 
-	xuwei5@hisilicon.com, zhanjie9@hisilicon.com, sudeep.holla@arm.com, 
-	cristian.marussi@arm.com, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, quic_rgottimu@quicinc.com, 
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org, d-gole@ti.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/3] drm/msm/dp: Avoid a long timeout for AUX transfer if
+ nothing connected
+Content-Language: en-US
+To: Douglas Anderson <dianders@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>, Guenter Roeck <groeck@chromium.org>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, Tanmay Shah
+	<tanmay@codeaurora.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240313001345.2623074-1-dianders@chromium.org>
+ <20240312171305.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240312171305.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cGfVRyVlxK486AZoWFi746EbC71fHezU
+X-Proofpoint-GUID: cGfVRyVlxK486AZoWFi746EbC71fHezU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1011
+ adultscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2403130159
 
-On Tue, Mar 12, 2024 at 11:37=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.co=
-m> wrote:
->
-> In the existing code, per-policy flags doesn't have any impact i.e.
-> if cpufreq_driver boost is enabled and one or more of the per-policy
-> boost is disabled, the cpufreq driver will behave as if boost is
-> enabled. Fix this by incorporating per-policy boost flag in the policy->m=
-ax
-> calculus used in cpufreq_frequency_table_cpuinfo and setting the default
-> per-policy boost to mirror the cpufreq_driver boost flag.
->
-> Fixes: 218a06a79d9a ("cpufreq: Support per-policy performance boost")
-> Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-> Reviewed-by: Viresh Kumar <viresh.kumar@linaro.org>
-> Reviewed-by: Dhruva Gole <d-gole@ti.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+
+
+On 3/12/2024 5:13 PM, Douglas Anderson wrote:
+> As documented in the description of the transfer() function of
+> "struct drm_dp_aux", the transfer() function can be called at any time
+> regardless of the state of the DP port. Specifically if the kernel has
+> the DP AUX character device enabled and userspace accesses
+> "/dev/drm_dp_auxN" directly then the AUX transfer function will be
+> called regardless of whether a DP device is connected.
+> 
+
+I do see
+
+"
+* Also note that this callback can be called no matter the
+* state @dev is in and also no matter what state the panel is
+* in. It's expected:
+"
+
+I understand about the host state that we need to allow the transfers by 
+powering on if the host was off.
+
+But I wonder why we should allow the transfer if the sink is not 
+connected because it will anyway timeout.
+
+Does it make sense to have get_hpd_status() from the aux dev and not 
+issue the transfers if the sink was not connected?
+
+This is more of questioning the intent of drm_dp_helpers to allow 
+transfers without checking the sink status.
+
+> For eDP panels we have a special rule where we wait (with a 5 second
+> timeout) for HPD to go high. This rule was important before all panels
+> drivers were converted to call wait_hpd_asserted() and actually can be
+> removed in a future commit.
+> 
+> For external DP devices we never checked for HPD. That means that
+> trying to access the DP AUX character device (AKA `hexdump -C
+> /dev/drm_dp_auxN`) would very, very slowly timeout. Specifically on my
+> system:
+>    $ time hexdump -C /dev/drm_dp_aux0
+>    hexdump: /dev/drm_dp_aux0: Connection timed out
+> 
+>    real    0m8.200s
+> 
+
+IIUC, we want to timeout faster by not bailing out if not connected right?
+
+
+> Let's add a check for HPD to avoid the slow timeout. This matches
+> what, for instance, the intel_dp_aux_xfer() function does when it
+> calls intel_tc_port_connected_locked(). That call has a document by it
+> explaining that it's important to avoid the long timeouts.
+> 
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->
-> v3:
-> * Pickup Rbs.
-> * Simplify per-policy boost setting. [Viresh]
->
-> v2:
-> * Enable per-policy boost flag in the core instead. [Viresh]
-> * Add more details regarding the bug. [Viresh]
-> * Drop cover-letter and patch 2.
->
-> Logs reported-by Dietmar Eggemann:
-> https://lore.kernel.org/lkml/265e5f2c-9b45-420f-89b1-44369aeb8418@arm.com=
-/
->
->  drivers/cpufreq/cpufreq.c    | 18 ++++++++++++------
->  drivers/cpufreq/freq_table.c |  2 +-
->  2 files changed, 13 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> index f6f8d7f450e7..66e10a19d76a 100644
-> --- a/drivers/cpufreq/cpufreq.c
-> +++ b/drivers/cpufreq/cpufreq.c
-> @@ -653,14 +653,16 @@ static ssize_t store_local_boost(struct cpufreq_pol=
-icy *policy,
->         if (policy->boost_enabled =3D=3D enable)
->                 return count;
->
-> +       policy->boost_enabled =3D enable;
+> 
+>   drivers/gpu/drm/msm/dp/dp_aux.c     |  8 +++++++-
+>   drivers/gpu/drm/msm/dp/dp_catalog.c | 10 ++++++++++
+>   drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
+>   3 files changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+> index 03f4951c49f4..de0b0eabced9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+> @@ -307,7 +307,8 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+>   	 * turned on the panel and then tried to do an AUX transfer. The panel
+>   	 * driver has no way of knowing when the panel is ready, so it's up
+>   	 * to us to wait. For DP we never get into this situation so let's
+> -	 * avoid ever doing the extra long wait for DP.
+> +	 * avoid ever doing the extra long wait for DP and just query HPD
+> +	 * directly.
+>   	 */
+>   	if (aux->is_edp) {
+>   		ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
+> @@ -315,6 +316,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+>   			DRM_DEBUG_DP("Panel not ready for aux transactions\n");
+>   			goto exit;
+>   		}
+> +	} else {
+> +		if (!dp_catalog_aux_is_hpd_connected(aux->catalog)) {
+> +			ret = -ENXIO;
+> +			goto exit;
+> +		}
+>   	}
+>   
+>   	dp_aux_update_offset_and_segment(aux, msg);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 5142aeb705a4..93e2d413a1e7 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -266,6 +266,16 @@ int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog)
+>   				2000, 500000);
+>   }
+>   
+> +bool dp_catalog_aux_is_hpd_connected(struct dp_catalog *dp_catalog)
+> +{
+> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
+> +				struct dp_catalog_private, dp_catalog);
 > +
->         cpus_read_lock();
->         ret =3D cpufreq_driver->set_boost(policy, enable);
->         cpus_read_unlock();
->
-> -       if (ret)
-> +       if (ret) {
-> +               policy->boost_enabled =3D !policy->boost_enabled;
->                 return ret;
-> -
-> -       policy->boost_enabled =3D enable;
-> +       }
->
->         return count;
->  }
-> @@ -1428,6 +1430,9 @@ static int cpufreq_online(unsigned int cpu)
->                         goto out_free_policy;
->                 }
->
-> +               /* Let the per-policy boost flag mirror the cpufreq_drive=
-r boost during init */
-> +               policy->boost_enabled =3D cpufreq_boost_enabled() && poli=
-cy_has_boost_freq(policy);
-> +
->                 /*
->                  * The initialization has succeeded and the policy is onl=
-ine.
->                  * If there is a problem with its frequency table, take i=
-t
-> @@ -2769,11 +2774,12 @@ int cpufreq_boost_trigger_state(int state)
->
->         cpus_read_lock();
->         for_each_active_policy(policy) {
-> +               policy->boost_enabled =3D state;
->                 ret =3D cpufreq_driver->set_boost(policy, state);
-> -               if (ret)
-> +               if (ret) {
-> +                       policy->boost_enabled =3D !policy->boost_enabled;
->                         goto err_reset_state;
-> -
-> -               policy->boost_enabled =3D state;
-> +               }
->         }
->         cpus_read_unlock();
->
-> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
-> index c4d4643b6ca6..c17dc51a5a02 100644
-> --- a/drivers/cpufreq/freq_table.c
-> +++ b/drivers/cpufreq/freq_table.c
-> @@ -40,7 +40,7 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_poli=
-cy *policy,
->         cpufreq_for_each_valid_entry(pos, table) {
->                 freq =3D pos->frequency;
->
-> -               if (!cpufreq_boost_enabled()
-> +               if ((!cpufreq_boost_enabled() || !policy->boost_enabled)
->                     && (pos->flags & CPUFREQ_BOOST_FREQ))
->                         continue;
->
-> --
+> +	/* poll for hpd connected status every 2ms and timeout after 500ms */
+> +	return readl(catalog->io->dp_controller.aux.base + REG_DP_DP_HPD_INT_STATUS) &
+> +	       DP_DP_HPD_STATE_STATUS_CONNECTED;
+> +}
 
-Applied as 6.9-rc material, thanks!
+This method of checking HPD status works for devices which use internal 
+HPD block to control the HPD (like sc7180/sc7280) but not for devices 
+where HPD is controlled outside the MSM DP controller like sc8280xp, 
+sc835-/sm8450 etc etc which use pmic_glink and DP driver only receives 
+the hpd status using the dp_bridge_hpd_notify() callback.
+
+If we want to make this generic, we have to do something like:
+
+dp_hpd_unplug_handle() notifies the dp_aux.c module that status is 
+disconncted and we should bail out
+
+dp_hpd_plug_handle() notifies dp_aux.c module that status is connected 
+again and we allow the aux transfers.
+
+> +
+>   static void dump_regs(void __iomem *base, int len)
+>   {
+>   	int i;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 38786e855b51..1694040c530f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -86,6 +86,7 @@ void dp_catalog_aux_reset(struct dp_catalog *dp_catalog);
+>   void dp_catalog_aux_enable(struct dp_catalog *dp_catalog, bool enable);
+>   void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog);
+>   int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog);
+> +bool dp_catalog_aux_is_hpd_connected(struct dp_catalog *dp_catalog);
+>   u32 dp_catalog_aux_get_irq(struct dp_catalog *dp_catalog);
+>   
+>   /* DP Controller APIs */
 
