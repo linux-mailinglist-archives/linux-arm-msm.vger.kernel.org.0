@@ -1,118 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-14029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D079887B0F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:04:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05F2087B11E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 20:09:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E4A31C27A74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:04:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98C542880AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:09:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B5A96CDAC;
-	Wed, 13 Mar 2024 18:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12BB971B49;
+	Wed, 13 Mar 2024 18:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUHSSKEu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NMa/Sr4v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5FA6087A;
-	Wed, 13 Mar 2024 18:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485767317B;
+	Wed, 13 Mar 2024 18:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710353830; cv=none; b=QiaBpo1ybKe3ws3iL7q+nRo94S81zzPkA8amfNdg7RYy7hYqbtVcdelMWqpXLOCY/Vzk7mjJURi2+fIOskB50jEiPTrsZvYQlWLm0x+EQx+s3Bl8kXxgKZjEcS9XY+wGDpQu+Dn3UUqzf/G1Rp0cafx4qVGPNlY1D9sel1FPJWo=
+	t=1710354352; cv=none; b=Z2LrCjzchYL2Lkme1UQgyZMI/n1OI7bka1KysU2o7fsKGaLp1ywJNkJtwDIBNFGfvdvCV2lzWiiHlqsxNN3w2gpcebVoRiTc7VDNh4/27+H+vRy9pm/48ynFIMDWm1CuhQzHC9hwCx6di9/fQyjqazr2LVoZNMYPTcDtJkbT1EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710353830; c=relaxed/simple;
-	bh=lJ/3lSowUjOAXc/R3q4VoL3CPOs5whatKhHPsl1wyS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Pce9ulMPNVyhbgPu1HmiWM/G4OIS1Z/Ckxv6tONsRcZZGv4gGeQ14lNx9dKNqgrdboMILLnDP3FMkNx1831Kvnl8rxOhCd/PMqxZTiesp7MUHbZMZv6IdE9vOTMzd1yjeXam0DlQPelUdUIRGRbbhz12m2M7OYkVzzMZ4jFRRSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUHSSKEu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42DHQSY8032501;
-	Wed, 13 Mar 2024 18:16:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=v5wjPJyxlyZSgw7QRNfZacYjQP379B5XDAXYyxrHWgs=; b=jU
-	HSSKEujd5ST8b01tUiDMG1O7g5X2v+xnubLImtNi7WfDCndpJ5rXjKVhTJ+OmFFE
-	3oUCfmRtyIFaMEUymVBNI0axtLJsKfJB/sGvxwFGBwSlYL5CiocXEkYP+TI0j0HW
-	cwgAHrwih4tZ2Slt2ONptz25D73MeRycR6yzKt99i3s7YKnv1TIH1TcsDdDvNXYc
-	iQ7v3UpLs84C+iPP1ioVWwnuq7kLFrYxY7YV9qcznp5wgQ3DMrdCKoMRE5fbsFXu
-	4Ll1QwCIo35W2siD5vYMWjzHjb+3i8gUnxUQpA8R6QnUB2/fFhjYWnKslKlmhVUf
-	wpb8qauhpeF2Y/NQsZQQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu9xas35m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 18:16:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DIGsBQ004907
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 18:16:55 GMT
-Received: from [10.110.70.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
- 2024 11:16:50 -0700
-Message-ID: <2020929f-c9a5-1209-78cb-ca75db44a432@quicinc.com>
-Date: Wed, 13 Mar 2024 11:16:48 -0700
+	s=arc-20240116; t=1710354352; c=relaxed/simple;
+	bh=eZziATLAx9xM6tiTewCrYD3yYMyhh7uYKvQbwCLqTw8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hlknBqZr+MGdFv0OfejOacaOv5rLdXW6FSZbhtU2k7JgT+Np40/k5r7sCID4FvmqE6mW+6E1EQQSSeE+Ff1IN7umh1gZFZ95ubmAbIcVpOoJvhvrT59UnFPK75fpPWTUA+BgKhY0Q4iWPU+fAZNHPw+4Iq6CCz7kZscS2+1t934=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NMa/Sr4v; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d46dd5f222so1227601fa.1;
+        Wed, 13 Mar 2024 11:25:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710354348; x=1710959148; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N9Ul/Adof/r9QcGQtTSvJxfcp66lXiFES1sAN0k42Ug=;
+        b=NMa/Sr4vJBV+XxYiCxBWE8FLcYmyHyECMRuMwXKIuLkBrobPWoKxR4Bjs+IFxR7fOf
+         urvYqBQ1MhB1hrrXPLTmVCuTDVCrq2brNBD+sDvzQELusbn+389rysAShKCa6Cmz0P/E
+         e6/GmF1AMKbDmYELygYs9RZE9OuIo2WAjWnaVQrSEGmCh+/QP+CpOpr93zOkXQKfhlNo
+         fMLbOqB2bvnASRwXx65uzVYgtNEjrHMaH12EGItvERJvVhdyM78cXUwmTFtsUOGrNy7u
+         aui0B390V0eqo9BGfGr753QQjq5thz2VvKKz+wUOT4f1ONoyFfW9I7ssizNq+GF8z6Yn
+         BIpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710354348; x=1710959148;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N9Ul/Adof/r9QcGQtTSvJxfcp66lXiFES1sAN0k42Ug=;
+        b=saU3m44xpYEdlrWCVW67wcgrbLaVsFqK4sEkEDZ9X3NQnlXhWuwFEx6qpX8NOOwf6t
+         U57wrwUVHanZOUj6zfVmCZG8KMFcqTpSOWwttlCKBxlvsAhffkUBP31uBMcA3K0ELn8j
+         k9VpFO1DDHeuiIe5NXvbPjVcg9bej8bgzZAOXnG4MNTrrtb3iunXh7184u4CuFXg0OhC
+         aLA7JamClXojePfsyv6dlKbN1DZOBmkOjkKgxTQsUn0/Xniw9m9pbm7l4rX0jphNuamR
+         ncZfNI7HO+vw1wcr1wQbxfqTZX4ydASQJZzjeypSjdZ/4rf9R/KFDyyLGTgvWktfrJRU
+         6nxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU2X4bkrftHBrFZVY+H8wn0ogdvq5izUhJnx/PU+5TCgeTO2XdiHHzuXVaNNfkgbnZnwzd0GnvbtsrAO+6qcjHZ4WwYJn2LQOpNR4E/DJ+rLYc41HVo5Ql0fnqRN4RIZVTvPrivBunDLw==
+X-Gm-Message-State: AOJu0Yx9cXlH/4MTu+1Okh+j2CqFA3j11BMXpC3uOYLExeODNyaiCOXM
+	v/XowE54o9v1HHJ5jkSz0kgz0SfI2yTM5sYYWL0CSR7gWz7TSaWrlNGVkS0pnKQ=
+X-Google-Smtp-Source: AGHT+IE5XNZtl9AGVeTfzRu3cuOWaMLG7PRjjXA4DeC+1cYWZcvt+dRgGV9oB+mBZRf8gjV1NQewaw==
+X-Received: by 2002:a2e:6a0f:0:b0:2d2:3041:574e with SMTP id f15-20020a2e6a0f000000b002d23041574emr2718773ljc.4.1710354348207;
+        Wed, 13 Mar 2024 11:25:48 -0700 (PDT)
+Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id k15-20020aa7c04f000000b0056864cde14dsm2827390edo.68.2024.03.13.11.25.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Mar 2024 11:25:47 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Subject: [PATCH v3 0/2] arm64: add minimal boot support for TP-Link Archer
+ AX55 v1
+Date: Wed, 13 Mar 2024 19:25:38 +0100
+Message-Id: <20240313-archer-ax55-v1-v3-0-cd9402efab59@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] drm/msm/dp: fix runtime PM leak on connect failure
-Content-Language: en-US
-To: Johan Hovold <johan+linaro@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Bjorn
- Andersson" <quic_bjorande@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20240313164306.23133-1-johan+linaro@kernel.org>
- <20240313164306.23133-3-johan+linaro@kernel.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240313164306.23133-3-johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BNNegcXJxongtAGZIx1lIDE54NIYGZW8
-X-Proofpoint-GUID: BNNegcXJxongtAGZIx1lIDE54NIYGZW8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 adultscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403130138
+X-B4-Tracking: v=1; b=H4sIAKLv8WUC/2WMUQuCMBRG/0rc5xbuTjfXU/8jeljzTgepscUwx
+ P/eFAIp+F7OB+fMECl4inA+zBAo+ejHIYM4HsB2ZmiJ+SYzYIFlgciZCbajwMxUVSxxpgQ1mhu
+ trCTI0jOQ89MWvN4ydz6+xvDe+omv7zclflN5BdPa1c6gFXVVX9re+MfJjj2sqYR7Xf7pmHWhl
+ KS75K4UuNeXZfkAqe6Xj+sAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.12.3
 
+The purpose of this series to add minimal boot support for the
+TP-Link Archer AX55 v1 dual-band wireless router.
 
+There are two patches:
+  - the first one adds the compatible for the board into the dt-bindings
+    documentation,
+  - the second patch introduces a minimal device tree source which can be
+    used for booting initramfs images
 
-On 3/13/2024 9:43 AM, Johan Hovold wrote:
-> Make sure to balance the runtime PM usage counter (and suspend) before
-> returning on connect failures (e.g. DPCD read failures after a spurious
-> connect event or if link training fails).
-> 
-> Fixes: 5814b8bf086a ("drm/msm/dp: incorporate pm_runtime framework into DP driver")
-> Cc: stable@vger.kernel.org      # 6.8
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+Changes in v3:
+  - change pin configuration to use "gpio20" and "gpio21" for UART pins
+    in patch 2/2
+  - rebase on top of v6.8
+  - Link to v2: https://lore.kernel.org/r/20240226-archer-ax55-v1-v2-0-3776eb61f432@gmail.com
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Changes in v2:
+  - reorder pin configuration properties in patch 2/2
+  - add 'Acked-by' tag to patch 1/2
+  - Link to v1: https://lore.kernel.org/r/20240223-archer-ax55-v1-v1-0-99f8fa2c3858@gmail.com
+
+---
+Gabor Juhos (2):
+      dt-bindings: arm: qcom: add TP-Link Archer AX55 v1
+      arm64: dts: qcom: add TP-Link Archer AX55 v1
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ .../dts/qcom/ipq5018-tplink-archer-ax55-v1.dts     | 132 +++++++++++++++++++++
+ 3 files changed, 134 insertions(+)
+---
+base-commit: 0becfaedccee979a5f270647e573b52668669a4a
+change-id: 20240221-archer-ax55-v1-73ed91a97c6e
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
