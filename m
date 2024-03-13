@@ -1,154 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-13990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BECDD87A4DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 10:22:22 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BCED87A508
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 10:32:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79821282A5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 09:22:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17DC528327E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 09:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AAFC1CF87;
-	Wed, 13 Mar 2024 09:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BBF420B27;
+	Wed, 13 Mar 2024 09:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dVGZ6Q/1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bluEiDfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156091C6AB;
-	Wed, 13 Mar 2024 09:22:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AF520309;
+	Wed, 13 Mar 2024 09:32:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710321722; cv=none; b=jhrrJYy05RbcjzoEPAfQnsMVcVyg+248mXM/EeXfqItg4n6c3ahZtlAI84hZCMX2BWmTiE/ExFETeRosPPNv7EHSaAXtsNBAK9H+8KkQnwFj5CF95RaD/Hi5H8jrR35kp2Urr46IJYNxjtJSIHjRvP8RKcX7Xc29n23al8Lpjnc=
+	t=1710322339; cv=none; b=rVIhCozRIOpebQZw8TYwD8MgODpWU56ickfIYMTGetLu9dSQA0g/c7WM/zEHYta+GsIX/hor6yN/OTUFtsrI0wKU6m2TQZMv+j6yR/Rs1onui7i+sQQ7iOvUGm60WUBegPfgATXunKGVJrQkRN+z365IhKHqtL+jveE77CJyRKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710321722; c=relaxed/simple;
-	bh=raw2+FfisWfJFT08qDnQBVO8iyFRrffzMxBYqyLrj7w=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4pYfN/S9osPJv3G94cXTjs/8TGav1drpeNVzX6g21QcQbedcYyvGSaX9C8eXo3bA1ESWgjrbUmyj5b9M3441cSDRVle8Q6X9opo64GVNtnRyQKfP9t6hD87mDYoooqlvngFSxrrJn8Y9UwQp9rMAi0U9LK+8hFOUEZm42Kx9NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dVGZ6Q/1; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1710322339; c=relaxed/simple;
+	bh=tM5Bd/lj1Kyh0D2rITpWKYzjyrlwg9YS7Q94u+Z2Bfg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZvR0+TbkK4TRmn4e6ASSSjg2as2MCxDegdVfYHX+k3Jp0kq70qhV0sgexxwMMQd70ACovks+Z+gY9vol3556QTYTuoTgslfmGMOA01G7GxppJPHi7oBLNG8ENs/rpz5Bmt+RLGjJh4jvC3rrz2Ge5bFBqGuT3K8GGFsJml4EHuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bluEiDfC; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D7jkRh028610;
-	Wed, 13 Mar 2024 09:21:47 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D5RUgB001669;
+	Wed, 13 Mar 2024 09:32:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:reply-to:references
-	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=Ddp2qo1i
-	6qR7lu69JmjaNBMJT0pRYnEyFux1jrc2EUQ=; b=dVGZ6Q/1X8Ad5jO7soDJJuGP
-	wvxN5UQ/OqGTdYhRGp1s94c6TL3xTfQlCZHnzDjPquaMDlmo1cjFH9zoAfd5O0mi
-	ZCAwCPv6/l4uL3zZUC0TFhaJzOz6aZCyH8JZCjKGRFClyVSpQa4S5h37H0sIxDQ3
-	y+0XugGZIch4weB38Yb6CynlGuJjJIlSqa82KUQK3n/sZSW6kgWf64eznrQCwVU4
-	XoptEYBurXHAAl46fsjbuAm5Lvv2uJ+Uj1MvdKbRr6yjcwmSUKTBfjnR2QJdmORy
-	Mta5DQEtcJZXBeNIaigpWODaV8dUy/Jf75GjBWMMqlrz/RzYLN+hmER9jTWM/A==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu81m06vv-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=AJdXhUYrFAQmdOJASSCpwGDADNqIOouBCpm330S19a4=; b=bl
+	uEiDfCLJeRw4qHUupGybPn2B3Fd2OzgrqxEPGN9l9ixtB6IPqNr2geky7A6RIA+u
+	Kv/qlO9ZyHq983kcf/rHS0omgzhNthvALo9q4YlxgJQBvudoCTRQB/XkVN5ufA17
+	ZSyYATlVeDVGqIw28A8G/jk7zclCrE36WwsFgtKjNgge9XJ6ZtxQlS79xGBPJrgo
+	HS6scxRoeAmsOzkn8iL2+TGoit6rHPzTguNaUIcV2+2e0yrUuJPe7taiDU9aywz6
+	puQDLjv2VLSo38kM4WZJsf9limd8ygY3QYHFbfsOLGfKVIDiPkgdlUJWkdyBaEkK
+	2b20vxyb5pFiZoYRNC4A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu2j38td6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 09:21:46 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42D9Lj6X002981
+	Wed, 13 Mar 2024 09:32:08 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42D9W7fo022840
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 09:21:45 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 13 Mar 2024 09:32:07 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
- 2024 02:21:38 -0700
-Date: Wed, 13 Mar 2024 14:51:33 +0530
-From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-CC: Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik
-	<quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Fuad
- Tabba" <tabba@google.com>,
-        Sean Christopherson <seanjc@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: [PATCH v17 15/35] virt: gunyah: Add proxy-scheduled vCPUs
-Message-ID: <20240313092133.GQ440762@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-15-1e9da6763d38@quicinc.com>
+ 2024 02:32:04 -0700
+Message-ID: <4a11d946-3c32-42fd-959b-32e61cc61ab5@quicinc.com>
+Date: Wed, 13 Mar 2024 15:02:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20240222-gunyah-v17-15-1e9da6763d38@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: ipq6018: add 1.2GHz CPU
+ Frequency
+Content-Language: en-US
+To: Chukun Pan <amadeus@jmu.edu.cn>
+CC: <andersson@kernel.org>, <conor+dt@kernel.org>,
+        <devicetree@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robh@kernel.org>
+References: <1a4e09da-b19b-4cf5-8fae-822c74cfe048@quicinc.com>
+ <20240313071803.422343-1-amadeus@jmu.edu.cn>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <20240313071803.422343-1-amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Q94xi6VH8SfTFSLQi7xRGsS-lVQu-XnL
-X-Proofpoint-GUID: Q94xi6VH8SfTFSLQi7xRGsS-lVQu-XnL
+X-Proofpoint-ORIG-GUID: VBL8yQRdRkupagCiRMOn9fQyixDIxWls
+X-Proofpoint-GUID: VBL8yQRdRkupagCiRMOn9fQyixDIxWls
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-13_07,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130068
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 phishscore=0
+ mlxscore=0 mlxlogscore=739 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403130069
 
-* Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:38]:
 
-> Gunyah allows vCPUs that are configured as proxy-scheduled to be scheduled by
-> another virtual machine (host) that holds capabilities to those vCPUs with
-> suitable rights.
+
+On 3/13/2024 12:48 PM, Chukun Pan wrote:
+>> Could you share the OEM bootloader log on both these SoCs?
 > 
-> Gunyah also supports configuring regions of a proxy-scheduled VM's address
-> space to be virtualized by the host VM. This permits a host VMM to emulate MMIO
-> devices in the proxy-scheduled VM.
+> Chip silk screen: ipq6000, msm_id: ipq6000, bootloader log:
 > 
-> vCPUs are presented to the host as a Gunyah resource and represented to
-> userspace as a Gunyah VM function.
+> Format: Log Type - Time(microsec) - Message - Optional Info
+> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> S - QC_IMAGE_VERSION_STRING=BOOT.XF.0.3-00086-IPQ60xxLZB-1
+> S - IMAGE_VARIANT_STRING=IPQ6018LA
+> S - OEM_IMAGE_VERSION_STRING=crm-ubuntu200
+> S - Boot Interface: NAND
+> S - Secure Boot: Off
+> S - Boot Config @ 0x000a602c = 0x000002e5
+> S - JTAG ID @ 0x000a607c = 0x001390e1
+
+<snip>
+
+> machid: 8030200
 > 
-> Creating the vcpu function on the VM will create a file descriptor that:
->  - can handle an ioctl to run the vCPU. When called, Gunyah will directly
->    context-switch to the selected vCPU and run it until one of the following
->    events occurs:
->     * the host vcpu's time slice ends
->     * the host vcpu receives an interrupt or would have been pre-empted
->       by the hypervisor
->     * a fault occurs in the proxy-scheduled vcpu
->     * a power management event, such as idle or cpu-off call in the vcpu
->  - can be mmap'd to share the gunyah_vcpu_run structure with userspace. This
->    allows the vcpu_run result codes to be accessed, and for arguments to
->    vcpu_run to be passed, e.g. for resuming the vcpu when handling certain fault
->    and exit cases.
 > 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Chip silk screen: ipq6000, msm_id: ipq6018, bootloader log:
+> 
+> Format: Log Type - Time(microsec) - Message - Optional Info
+> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> S - QC_IMAGE_VERSION_STRING=BOOT.XF.0.3-00077-IPQ60xxLZB-2
+> S - IMAGE_VARIANT_STRING=IPQ6018LA
+> S - OEM_IMAGE_VERSION_STRING=crm-ubuntu64
+> S - Boot Interface: NAND
+> S - Secure Boot: Off
+> S - Boot Config @ 0x000a602c = 0x000002e5
+> S - JTAG ID @ 0x000a607c = 0x001390e1
 
-LGTM
 
-Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+JTAG ID represents the SKU part number. So this part is also IPQ6000 
+only. Not IPQ6018.
 
-- vatsa
+SBL build BOOT.XF.0.3-00077-IPQ60xxLZB-2 doesn't have support to 
+identify this SKU as IPQ6000. Please check if you can use the latest SBL 
+image or the one used in another board (BOOT.XF.0.3-00086-IPQ60xxLZB-1).
+
+
+> S - OEM ID @ 0x000a6080 = 0x00000000
+
+<snip>
+
+> machid: 8030200
+
+Thanks,
 
