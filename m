@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-14026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FBA287B083
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:55:59 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7871787B084
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:56:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEC782839E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:55:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0786F1F24C39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75DC413F456;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDAEB140397;
 	Wed, 13 Mar 2024 17:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YtilXYlL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DJBlkGRW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45A25823C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:53:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD70513F45A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710352438; cv=none; b=j5EEfe5lSCzUwwH/MfxAhsX9Hl7tGvjKM2gdt1rqs5hU0+dZfvN7yV94qoS7Gmymz/+5+ERfRPowe02+1cRl2icURJDV/Q6DqgGxDnwTZic1Y4DTZzpU7RiU8+5a2zo180at0fp1nBcrVnYgBXnTj6o0XK7jUfV41ooT1TepyBI=
+	t=1710352438; cv=none; b=XdNNOlx/W6CFWFKMzv6Bf/90pnUMsXzyyCICnL2jDlngLGtSr3r/NTzTWyN6m4NckY3Ymhei/RzOQ9ghWAU60D0BvJgFhP8fsCCk+OtieGQ2KhjfTttYcpJDXKv8pW9uG/UP4doWo+HxcZrU/oVHr6Qm85wjhJKD0sFzODAgo/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1710352438; c=relaxed/simple;
-	bh=m4MoUO1mvIPqt4fC1lB6nKiiGjCp4eGwXz6oqUc/OR0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IZatGXcWQyzFnriGPbBq1qfZG4i+Sh7ntDw+KP7fO1WiPnJP9qAT8iNUA0FFd+BS07X7A5DFmDWw5epbuLk2U/l1dZjw2LXu355xnggS5XVSuK72ua5EMYshvxXw3kginOawfITzjYMFpTMZzkRIHTHupAZBzRPvyvvVwpWUv10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YtilXYlL; arc=none smtp.client-ip=209.85.128.47
+	bh=pMkcGiMy0q3S9WZlbdBLqLkUokhQo4RSjeHCoPtjS+o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=XrsLplH9hk9PUERtMklPCOSGLn0346y0EvTa7MxAH5NwgHP5SHyqGcYgF1Y69dyAsm5UXFW5pdPP+W6RRpzvCsJzYVOnes2AAwQChUfPAUEP6SK6kOU0Rav17/AmPDQ1Yam/vmI/EpaKP+SlQ4tEToWfkGVocLIPe2nbMd6WNfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DJBlkGRW; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-41324a16c9eso832335e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 10:53:55 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-413eede49dbso890205e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 10:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710352434; x=1710957234; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=izT/XW0GrmGVL6Tl66ecjkPXN9CJyhGJnGTtICjCD3M=;
-        b=YtilXYlLZ883k/3wcu1/eYrS6FgOJOBJfTT34FcrCWVND4zDBllNsKYffjUUaZ3OoQ
-         3U/BCFzqc+FQ4YPfFIMFBR9ZdnoFQA+5WSX/gRkhIGISb30IXHKZSFn21uR1LIaDoQvY
-         3FpDM+aNiRTznYxitnKSEcCkP3ZGLSi/LDVjzMUQoqrPhbVTSs05ZOJFLtC7vF63CTUV
-         OcugCGa62B1IyvOG6ppdQJ+cJ+C7kJyjnH4dIDlojuDaz+qrduBAUFSubRdccMg/OYPL
-         crD/KZMJZUR4UXVAjElqNxSE14T3IKWkOkfSOgR9TNbMbYy25+SzzVxcI6w4RsMEYPkj
-         tFqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710352434; x=1710957234;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1710352435; x=1710957235; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=izT/XW0GrmGVL6Tl66ecjkPXN9CJyhGJnGTtICjCD3M=;
-        b=S1mYHd+GhDcmKlEduHl9AJvWtoBmCGsXrp1rh48cbNg2w9kyWCIqwi/gkfVmpN+xP/
-         xBIBHxqpmixxSsXHR9pFFxIdbWTIvTqKFjA2xTHfK/C9F+e1lU9S/W/mc762X0mj6fg0
-         b2+i/zk1GH/yICXoZ02+67i5cTYn7kAbq9RXL7eSzQu3C7Zgz4yRxyqxhpgUoY9V7wMz
-         5Jos3CpcZvtmedihW6GCUJHwq9Pu9FPePGBssSsWuFbVKvx0dIUh3cqGlCoFv5jJ154f
-         41Gk5f2MQd2hU+II6Kf7+ciPoVDrThKauaYU7oQ8jgJYCsp6vNUUFfJwnh0EXaZ/PsGw
-         hlaA==
-X-Gm-Message-State: AOJu0YyfnKmmUIPYl49CPBqcL/CodGZXtlwrJrvzTsKouOI1SDJ+LaNL
-	vTfx2447x6BMN4bLOoC1BPjKwr6+QdNLxOdOj1ShdOjZii7wBkg4D8ywX3yW+V4=
-X-Google-Smtp-Source: AGHT+IHaKy+zzPYoBf25HdN7N6UQcsD5sQuS2StMY4WAgYUHdmUfCSSe9fFJKEDwU62nzkDMfpNiMA==
-X-Received: by 2002:a05:600c:4e4b:b0:412:ed3f:1b4b with SMTP id e11-20020a05600c4e4b00b00412ed3f1b4bmr474221wmq.11.1710352434035;
-        Wed, 13 Mar 2024 10:53:54 -0700 (PDT)
+        bh=2SmKMGXF81mfKkNpF0CZGS/Z1f9uS1wllHcEDjQ1fhE=;
+        b=DJBlkGRWSiD7QFyrsaGqXsMR3t3z0qRmckakG6buVJCy/giXoMbyPvwEQqmxsrIAlF
+         xWDcmE6fKevJwqlpzSyb0yCDkuNxJ+SiYZuup9akIjb3CMjBnH+Xebr8sJMO9JxE7PeS
+         3nk2crXbimGFk/NiDLXd0UA4xuwobIw9UtQrbwjbcBYGvuU7kvpDc+vzqbczddcOSuc+
+         nQNtZkmP6nuVU0ILDAbXntUc/Jdk4Y+V095HQBfeTKytSqk9DuMqdHFHAbrH+0BzgK0m
+         gpUinji35sgHaGZAWRco8CJRxhPmBAS367STjTYzWKULPQ1HiI7Poc1LP738Dt6MP2QO
+         FVug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710352435; x=1710957235;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2SmKMGXF81mfKkNpF0CZGS/Z1f9uS1wllHcEDjQ1fhE=;
+        b=SICrMl7tOzCYhsRD89QEOROvHsTe87FOX7BUZoEHpFF23B3Tn/B7W0Hae0r4LgO4Kr
+         zNxj2mTNmich6qGh3jMTRuGBs7zVPzxGGNzN4dqEAMjifg6bOj0CjtE9JUKp73WV5JQ/
+         iIV4M5mCCxce31OICcyXPPyeejNl9bekqEgrcwfhPqPYQsnFjjfcYh71BqfQwqBtLpVR
+         V0swoZ8GMQqLsEKnpG1fvAfxZ52DpsAbQCFDG7fe+kdVM0aL87oNTvM1MY0WVZc7o/fQ
+         2oTMx6q8xFpll1c1nEawEafVHXDEPNoHf6VMkmimnJAOUmZjOjoD34G2Ch0a/gC5DkAy
+         +vpw==
+X-Gm-Message-State: AOJu0Yyb5cKUzIzTYAQjL/Bj1ufXYsLiDBxgyJXWyqho4NtJw4vhPG2U
+	OpU2eFzzptv9blxi0OPRvSmQ/6Uj9izf75zzwn8viI9Ql8cWaDelB060PABa+Nc=
+X-Google-Smtp-Source: AGHT+IGpjXdcVcW+OWgvTuMi+NTYup3ENVDM08ZLJnKTDwsM761kmPBqDIF23JsP73xz3/jHXijD5g==
+X-Received: by 2002:a05:600c:470f:b0:412:e3aa:8f69 with SMTP id v15-20020a05600c470f00b00412e3aa8f69mr534360wmo.30.1710352435024;
+        Wed, 13 Mar 2024 10:53:55 -0700 (PDT)
 Received: from [127.0.0.1] ([176.61.106.68])
-        by smtp.gmail.com with ESMTPSA id u12-20020a5d6acc000000b0033e7a499deasm9914482wrw.109.2024.03.13.10.53.53
+        by smtp.gmail.com with ESMTPSA id u12-20020a5d6acc000000b0033e7a499deasm9914482wrw.109.2024.03.13.10.53.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 10:53:53 -0700 (PDT)
+        Wed, 13 Mar 2024 10:53:54 -0700 (PDT)
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH v2 0/2] qcom: clk: camcc: Fix power-domain definitions on
- x1e80100
-Date: Wed, 13 Mar 2024 17:53:51 +0000
-Message-Id: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
+Date: Wed, 13 Mar 2024 17:53:52 +0000
+Subject: [PATCH v2 1/2] dt-bindings: clock: qcom: Fix x1e80100 camcc
+ power-domain declaration
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAC/o8WUC/3WNSw6CMBCGr0Jm7ZjOgERceQ/DopYRJtHWtEgwh
- LtbSVy6/P7nAkmiSoJTsUCUSZMGn4F3BbjB+l5Qu8zAhitTksG7+teMXuYRnX04hzedJaGtjyV
- zQ3XFBLn8jLIZuXtpMw+axhDf289EX/U3Sf8mJ0KDHXFtxVyb8mDOOWhj2IfYQ7uu6weicQ7mv
- QAAAA==
+Message-Id: <20240313-linux-next-camcc-fixes-v2-1-9426da94ae37@linaro.org>
+References: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
+In-Reply-To: <20240313-linux-next-camcc-fixes-v2-0-9426da94ae37@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
@@ -94,50 +94,79 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 X-Mailer: b4 0.13-dev-26615
 
-There are two problems with the upstream camcc implementation at the
-moment which this series addresses.
+camcc on x1e80100 requires two power domains MXC and MMCX. Define those as
+part of the schema.
 
-1. The camcc block has two power-domains MXC and MMCX however, the yaml
-   description doesn't include MXC.
-
-2. The code for the GDSC definitions for x1e80100 camcc fails to list
-   the titan_top_gdsc as the parent GDSC of the other GDSCs.
-
-This series addresses both of those bugs. There is currently no upstream
-camcc dtsi for x1e80100 so the yaml change won't affect the ABI.
-
+Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
-Changes in v2:
-- Incorporates Krzysztof's comment on removing "phandle" description
-- Added Konrad's RB
-- Moves the location of the allOf
-  Editing the dtsi to test the yaml constraints showed the power-domains
-  were not being picked up but putting the allOf before the required
-  fixed that.
-- Listed the 8450, 8560 and 8280 under "-items" as testing shows
-  adding too many power-domains to the dtsi was not being picked up by
-  the automated checkers.
-- Tested with
-  Too many power-domains in sm8450
-  Zero power-domains in 8550
-  Too few power-domains in x1e80100
-- Link to v1: https://lore.kernel.org/r/20240311-linux-next-camcc-fixes-v1-0-d126ae0b9350@linaro.org
-
----
-Bryan O'Donoghue (2):
-      dt-bindings: clock: qcom: Fix x1e80100 camcc power-domain declaration
-      clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the parent GDSC of subordinate GDSCs
-
  .../bindings/clock/qcom,sm8450-camcc.yaml          | 37 ++++++++++++++++++----
- drivers/clk/qcom/camcc-x1e80100.c                  |  7 ++++
- 2 files changed, 38 insertions(+), 6 deletions(-)
----
-base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
-change-id: 20240310-linux-next-camcc-fixes-a68322916421
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+index fa0e5b6b02b81..1f62139426845 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+@@ -19,9 +19,6 @@ description: |
+     include/dt-bindings/clock/qcom,sc8280xp-camcc.h
+     include/dt-bindings/clock/qcom,x1e80100-camcc.h
+ 
+-allOf:
+-  - $ref: qcom,gcc.yaml#
+-
+ properties:
+   compatible:
+     enum:
+@@ -38,9 +35,8 @@ properties:
+       - description: Sleep clock source
+ 
+   power-domains:
+-    maxItems: 1
+-    description:
+-      A phandle and PM domain specifier for the MMCX power domain.
++    minItems: 1
++    maxItems: 2
+ 
+   required-opps:
+     maxItems: 1
+@@ -50,6 +46,35 @@ properties:
+   reg:
+     maxItems: 1
+ 
++allOf:
++  - $ref: qcom,gcc.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-camcc
++              - qcom,sm8450-camcc
++              - qcom,sm8550-camcc
++    then:
++      properties:
++        power-domains:
++          items:
++            - description: MMCX power domain.
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,x1e80100-camcc
++    then:
++      properties:
++        power-domains:
++          items:
++            - description: MXC power domain.
++            - description: MMCX power domain.
++
+ required:
+   - compatible
+   - clocks
+
 -- 
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+2.44.0
 
 
