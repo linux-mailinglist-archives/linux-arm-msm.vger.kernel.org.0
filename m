@@ -1,139 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-13974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B64CD87A249
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 05:27:19 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE47387A2A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 06:27:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E80DA1C20F2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 04:27:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 48F981F21BF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 05:27:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BB010A24;
-	Wed, 13 Mar 2024 04:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1E61642A;
+	Wed, 13 Mar 2024 05:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n9KcuKFp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Te5eyCrn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E365E65C;
-	Wed, 13 Mar 2024 04:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C901C16428;
+	Wed, 13 Mar 2024 05:26:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710304035; cv=none; b=k6ZVGDUQvmQnwOvGDU8/a5eVvuOcU7SuQ1EWdCnUdh4wuTOquHZ6mv9cw6DDtpax9xggA3OctN2eZmwYBMvIMI+HMWgpyLBN77REBRS+KLjnBXzn8Ju5o2LYqfOh+JccC7KrfbLnDvAvSYtkvPjbvIuoT3yACyuSYp7qywcPNe8=
+	t=1710307619; cv=none; b=cWQHwcsauEmO04gjYi3tF4lIavgjtvp6PupKgMt5z4c4GvWGB9SOUlLvDBSBv7EpKASAmDVjfSCBUPCNEvR+vQv9nLDy+X/LQ8u4rjiotIj1RTGD6SGKsLd4t3tGq8v3TTjsdJcT6dzOGF2W6IgPjzxOA3/lHHQ9YZbRAciT/Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710304035; c=relaxed/simple;
-	bh=RFRDpG5Td68f6Fw5cn/ZXvS9iR0pwkfieQGofQe5jeg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ptPfOV0nJQhCqnApt/zwb3uVFHSZAOFzqMDTFkwX+UoEJn1zUVXwzJyMiSHCEH9U2LQvLGxPbys5Z4fBmiedtpOAh6XfWDIZO2DOOLzwAuVblfsFl9FoDVV6jlyuH7ESyH7yvU6QnOdgbIxc7gzM8E8x2aglI6Uni8BsHwNIhT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n9KcuKFp; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1710307619; c=relaxed/simple;
+	bh=QDIMpAX3SblXqrKkGcVkal7Kc4YUL294h+W6+O3lvc8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KR0aiHFPm9OUhJg4//xhgWRSwhJj+8peFLpHNNKxDwyti0WyEYNmnwFbQMik42b//lJrW6uh+i6tvaFEwwZz+MXSzT7poX+7acUAh4feOpuH6qRSu0Wpbz1JOwGt8Cqk2As0JQQojFSRsdBaVDeWM78uJsy09XNt+gUcFhrLekw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Te5eyCrn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D1ARCL022857;
-	Wed, 13 Mar 2024 04:27:08 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D3EQnR026369;
+	Wed, 13 Mar 2024 05:26:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=+82VzOw1lv5FIzC+UC5eKLpt50PCuzFKY5+brNawC8M=; b=n9
-	KcuKFplHW+ArWdvFXVy1oLpFuUGTn96X0WaYqhgx9PBzufo5cZ+/0F8B0NLXrkMA
-	8MFNAYzpcNXEevwscod/trwoD98j6dSvVrylnZrs/XPXsr13BXVeDXZnvsYYuwxC
-	sa+Mcjudle5JuAJSFOCD16bIMnmi8FBZG8VaXBPR9wQEMpNXQsccpAVn9Ide5V7z
-	n6cYbZQ1XzZcrz3D7U6fbaB7AXFTzImDhA7hMoCsH3lhChotVvqt/chN8JMHsbSl
-	q/E8LfFGmT6/t3e2YhhF+tUlkjQJ1eHUbreVDiqsfG+Zx/dIBWNelG8CUkbqYn57
-	g5aNMw9iPBGVTSWWH/RQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wtw3h0y4t-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=HWAo1HneO3Cr4Ui3pBc8
+	jLTbpGGRUGbVZPOuSOySp24=; b=Te5eyCrndjiFy62oDwa2H/Y0g9SI35JXIBQN
+	Fm5O2JyspEvI4a6KY1Aj3+t5OUxVlKbpW3PkKlRBHHg2E6FW9d726xjOCRgbriJu
+	/6exdJKc2/+NXCptzRv0I9EPAweirglhq+CwqW4HjgYHOiNttZ79Sd73XDwpGkEs
+	wGau5yTNWVdch0O3tFv3/dqoEm23L217QfLTgMx04TRRR5ssUPu4q8ouCjlAqFxw
+	/WaEXudl4dqsFgsUIoO23spyb6+P5wD5W26cN/AZkgSZsCByTLbYm2jSfC8vndDd
+	mpBclfk+3EkJwg2z1PvSNogLRR9IDwH0DXRVPI1wiW7UqH8gGQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu2j38ayn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 04:27:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42D4QWf0012924
+	Wed, 13 Mar 2024 05:26:47 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 42D5QhKs007250;
+	Wed, 13 Mar 2024 05:26:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3wrgum5361-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 04:26:32 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
- 2024 21:26:28 -0700
-Message-ID: <690cba7c-4362-4e19-8573-ab20b8119ae2@quicinc.com>
-Date: Wed, 13 Mar 2024 09:56:25 +0530
+	Wed, 13 Mar 2024 05:26:43 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42D5QhYE007244;
+	Wed, 13 Mar 2024 05:26:43 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 42D5QgYK007243
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Mar 2024 05:26:43 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 4BC6D240E1; Wed, 13 Mar 2024 10:56:42 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: konrad.dybcio@linaro.org, andersson@kernel.org, vkoul@kernel.org,
+        andi.shyti@kernel.org, wsa@kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-i2c@vger.kernel.org
+Cc: quic_vdadhani@quicinc.com,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI mode
+Date: Wed, 13 Mar 2024 10:56:39 +0530
+Message-Id: <20240313052639.1747078-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to
- fix boot failure
-Content-Language: en-US
-To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Sricharan
- Ramabadhran" <quic_srichara@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Gokul Sriram Palanisamy
-	<quic_gokulsri@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
-References: <20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Uaj_-QNsnGVNrBV1qqwUJKtX_Oo3BZYT
-X-Proofpoint-GUID: Uaj_-QNsnGVNrBV1qqwUJKtX_Oo3BZYT
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TxmVZef7H9yyvkUCUNfsHl74njhk29cM
+X-Proofpoint-GUID: TxmVZef7H9yyvkUCUNfsHl74njhk29cM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_04,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=833
- spamscore=0 malwarescore=0 impostorscore=0 clxscore=1011 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130031
+ definitions=2024-03-13_05,2024-03-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 phishscore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403130039
 
+I2C driver currently reports "DMA txn failed" error even though it's
+NACK OR BUS_PROTO OR ARB_LOST. Detect NACK error when no device ACKs
+on the bus instead of generic transfer failure which doesn't give any
+specific clue.
 
+Make Changes inside i2c driver callback handler function
+i2c_gpi_cb_result() to parse these errors and make sure GSI driver
+stores the error status during error interrupt.
 
-On 3/11/2024 8:36 PM, Gabor Juhos wrote:
-> Booting v6.8 results in a hang on various IPQ5018 based boards.
-> Investigating the problem showed that the hang happens when the
-> clk_alpha_pll_stromer_plus_set_rate() function tries to write
-> into the PLL_MODE register of the APSS PLL.
-> 
-> Checking the downstream code revealed that it uses [1] stromer
-> specific operations for IPQ5018, whereas in the current code
-> the stromer plus specific operations are used.
-> 
-> The ops in the 'ipq_pll_stromer_plus' clock definition can't be
-> changed since that is needed for IPQ5332, so add a new alpha pll
-> clock declaration which uses the correct stromer ops and use this
-> new clock for IPQ5018 to avoid the boot failure.
-> 
-> 1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
+Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+v3 -> v4:
+- Included bitfield.h to fix compilation issue for x86 arch.
+- Removed Fixes tag as this is not fixing any crash.
+- Added Reviewed-by tag.
 
+v2 -> v3:
+- Modifed commit log reflecting an imperative mood.
 
-Thanks for catching this!
+v1 -> v2:
+- Commit log changed we->We.
+- Explained the problem that we are not detecing NACK error.
+- Removed Heap based memory allocation and hence memory leakage issue.
+- Used FIELD_GET and removed shiting and masking every time as suggested by Bjorn.
+- Changed commit log to reflect the code changes done.
+- Removed adding anything into struct gpi_i2c_config and created new structure
+  for error status as suggested by Bjorn.
+---
+ drivers/dma/qcom/gpi.c             | 12 +++++++++++-
+ drivers/i2c/busses/i2c-qcom-geni.c | 20 ++++++++++++++++----
+ include/linux/dma/qcom-gpi-dma.h   | 10 ++++++++++
+ 3 files changed, 37 insertions(+), 5 deletions(-)
 
-Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 1c93864e0e4d..e3508d51fdc9 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1076,7 +1076,17 @@ static void gpi_process_xfer_compl_event(struct gchan *gchan,
+ 	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
+ 
+ 	dma_cookie_complete(&vd->tx);
+-	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
++	if (gchan->protocol == QCOM_GPI_I2C) {
++		struct dmaengine_desc_callback cb;
++		struct gpi_i2c_result *i2c;
++
++		dmaengine_desc_get_callback(&vd->tx, &cb);
++		i2c = cb.callback_param;
++		i2c->status = compl_event->status;
++		dmaengine_desc_callback_invoke(&cb, &result);
++	} else {
++		dmaengine_desc_get_callback_invoke(&vd->tx, &result);
++	}
+ 
+ gpi_free_desc:
+ 	spin_lock_irqsave(&gchan->vc.lock, flags);
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index da94df466e83..11dcfcf13d8b 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+ 
+ #include <linux/acpi.h>
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/dmaengine.h>
+ #include <linux/dma-mapping.h>
+@@ -66,6 +67,7 @@ enum geni_i2c_err_code {
+ 	GENI_TIMEOUT,
+ };
+ 
++#define I2C_DMA_TX_IRQ_MASK	GENMASK(12, 5)
+ #define DM_I2C_CB_ERR		((BIT(NACK) | BIT(BUS_PROTO) | BIT(ARB_LOST)) \
+ 									<< 5)
+ 
+@@ -99,6 +101,7 @@ struct geni_i2c_dev {
+ 	struct dma_chan *rx_c;
+ 	bool gpi_mode;
+ 	bool abort_done;
++	struct gpi_i2c_result i2c_result;
+ };
+ 
+ struct geni_i2c_desc {
+@@ -484,9 +487,18 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 
+ static void i2c_gpi_cb_result(void *cb, const struct dmaengine_result *result)
+ {
+-	struct geni_i2c_dev *gi2c = cb;
+-
+-	if (result->result != DMA_TRANS_NOERROR) {
++	struct gpi_i2c_result *i2c_res = cb;
++	struct geni_i2c_dev *gi2c = container_of(i2c_res, struct geni_i2c_dev, i2c_result);
++	u32 status;
++
++	status = FIELD_GET(I2C_DMA_TX_IRQ_MASK, i2c_res->status);
++	if (status == BIT(NACK)) {
++		geni_i2c_err(gi2c, NACK);
++	} else if (status == BIT(BUS_PROTO)) {
++		geni_i2c_err(gi2c, BUS_PROTO);
++	} else if (status == BIT(ARB_LOST)) {
++		geni_i2c_err(gi2c, ARB_LOST);
++	} else if (result->result != DMA_TRANS_NOERROR) {
+ 		dev_err(gi2c->se.dev, "DMA txn failed:%d\n", result->result);
+ 		gi2c->err = -EIO;
+ 	} else if (result->residue) {
+@@ -568,7 +580,7 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	}
+ 
+ 	desc->callback_result = i2c_gpi_cb_result;
+-	desc->callback_param = gi2c;
++	desc->callback_param = &gi2c->i2c_result;
+ 
+ 	dmaengine_submit(desc);
+ 	*buf = dma_buf;
+diff --git a/include/linux/dma/qcom-gpi-dma.h b/include/linux/dma/qcom-gpi-dma.h
+index 6680dd1a43c6..f585c6a35e51 100644
+--- a/include/linux/dma/qcom-gpi-dma.h
++++ b/include/linux/dma/qcom-gpi-dma.h
+@@ -80,4 +80,14 @@ struct gpi_i2c_config {
+ 	bool multi_msg;
+ };
+ 
++/**
++ * struct gpi_i2c_result - i2c transfer status result in GSI mode
++ *
++ * @status: store txfer status value as part of callback
++ *
++ */
++struct gpi_i2c_result {
++	u32 status;
++};
++
+ #endif /* QCOM_GPI_DMA_H */
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
-> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> ---
-> Based on v6.8.
-> ---
->   drivers/clk/qcom/apss-ipq-pll.c | 20 +++++++++++++++++++-
->   1 file changed, 19 insertions(+), 1 deletion(-)
 
