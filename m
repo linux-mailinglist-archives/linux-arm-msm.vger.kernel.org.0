@@ -1,209 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-14024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A088C87AFE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:37:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 199FE87B079
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 19:55:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CD4F1F29A1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:37:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 878F11F25697
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:55:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52505627FB;
-	Wed, 13 Mar 2024 17:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 859B113EFE9;
+	Wed, 13 Mar 2024 17:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HIFH71lf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D8zvQJOD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF42627E5;
-	Wed, 13 Mar 2024 17:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC0413DB9A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710350670; cv=none; b=lOIa8Z260Zd+U5nbnx3C4MC6yRr17mCYUng/1lzomBZ76Q4aFSxgU+cfT6/MTTYW68Ps2tYrhIuEdQUGyp7dCuKZzw8AYZn/2L5sCoIYQkJfGXuf8swMgiDUHIb93FbYu2SeZQxhujaVFXuHvabuKE57v8+T0KS83UzulxdhaYs=
+	t=1710352431; cv=none; b=fz4KC6EaPo+ue8kR/bvQHLUUVyLmgoVXewFpo0QWOZ5TlqVA+YGZJtImTV4rmnwYXe8JtLwTOETGgAoHSMhhsX40MxEjYHlCME86VzfrIEOt/3VKADCururflpoCiPB7DoK33+EBcdxporZcxfENgnVXohK8bC0i+hUbAW1LFjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710350670; c=relaxed/simple;
-	bh=ZvIharIEYk7kDgPIHx5QO4EE9939DqfNYXx3tDnTQHU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=p912em/rURoeo2224frRSjgAksNm5yAvjJwS8FHuNR5ktFRsXpAATsP9LeQe1O1xp67xUmQ91ZMHjmhRi8CXneb42bxnoBpGqvknd+muYmNbLZb5Jmy1hP5M7XthpN7CT97PZX2nqBnlUEseSJ+Q+ELwccUwL9bpX3N5RrdeFbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HIFH71lf; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D7kCjq031221;
-	Wed, 13 Mar 2024 17:24:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=HsXYLo4vxmd7FYkONEKhNYJ7yL8L99rg/zJTykm0JYo=; b=HI
-	FH71lftMUPi/6Qh8LVdfNe6y4JITb8nbq0sFS8Q05ayyHUdV8V9sC0F6OteeOyqZ
-	qa5GkpnlNC5+JarcwCv1i8qPmMHd5r9sPumVYNTRu4gmbj30Z9TCPxMHkDn7CMRd
-	Y5ULDX6CJfqg5JBvjp1yXLcMwSUWXpQyc26eUPO1vKjoETrIBo1Bkx+aUx043Nix
-	E10+lIQsqaVK8D8yRqAZK6v981kz22SAAx3yL/ISvgKg8x8vfcWVYT9H/1HFrPVI
-	AL+7EBAp+Y2oqXFt5UHFgbG+Iu7bNCm4oyB8fw7qO9isb22vG/UQFhx7EqwnzZp8
-	4mL7ZRIP/20fM1pPB5Sw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu81m1871-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 17:24:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DHOFml013855
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 17:24:15 GMT
-Received: from [10.110.70.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
- 2024 10:24:10 -0700
-Message-ID: <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
-Date: Wed, 13 Mar 2024 10:24:08 -0700
+	s=arc-20240116; t=1710352431; c=relaxed/simple;
+	bh=ikP1SQZvK81WwtXopq3dHhyUueLGCn0F9tCceqEbyeU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ryF9tGxDcwfh5wdIe6n/dPmuRwMBEEGQKsH2Y6C0qs35938UPHICLdlXZDWitGGK2q+FtegIbUAl60GWv46CucFis5A6yx3ZE2MA8WMezMpfXCnFy1GCTfK1W81yQ0Uxrgodu2jfaHKO8UCMJnpcKn6ZFqAvYcTeAybWsy3SOEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D8zvQJOD; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6e6ac58fceaso197939b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 10:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710352429; x=1710957229; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=P42L0V1byhnm9xVh8nwf+gtaXnbnBXKB7y3o50DEnDg=;
+        b=D8zvQJODpgv7AIuJtS6cE34ZEwNLkubA98YOSqTLCzC69KQKzO2f3zGeK+Z5DUDzxi
+         o+MhH1fXsTzC5+MTFYVzZwM9TKWdDIfSl1AGH4LSzvVuBGbMD9jG+UhqXrHUxeFvsP3d
+         9TbKrEZk62XKsAq5v22pZCQ97JzVgSroarKzmG+MUpGNK6RQn37mVHRtnV5W2hzV27QY
+         PmCrm+BjGNdDurv7SBFLacgCV6vRcD2ofQILGoRLKueVEbpbDvkB323zb0PN2kMXj9gt
+         xqGrrJBdBocY31UygcoLPWUorr0DO9CcXcsP4/rt5f53tS9eMDhWoE2TfEfjPvuLDUo/
+         vIjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710352429; x=1710957229;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P42L0V1byhnm9xVh8nwf+gtaXnbnBXKB7y3o50DEnDg=;
+        b=v3HGmt2GtCRnH8ZEZIZCP2F0ZJHJZlWWLfyL86nrTL/LV+CRUnYW4A8oboZ/66VdxA
+         e4ilYyGRXvS1TI+9aS8hGyzVqH/MzWc0kyiJRGuSwMGAGv+XPSgALygxg9svgMu56bFj
+         mLRbIwlsyuuLccpF9T0Bq8fc3jpNtIk2C/OFujyLGQWXOjTpTG2VuWoSUMDGqBKmuUh/
+         HpGsxFQxBNxYLZ3saWnC3Bm4goIzE7OHeEDYA2MstpmTzSgAyNCc8FuXRxjQAHmjxZYX
+         cF3Y9P9x5wtBqF/M1LyBmGvA4nuCpi7v5l9EmkSto5z2u5+mcmFW8ti1n9bxn+Z4k3mB
+         jqdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXMHNYBu8MxxrUtS6Kwfkfo9TOT2LxGFSzqiAr7p6kTlmlyOOgf6b8l+JuVmrCI8Oy/SizfOgBdRNwd6lc6B+WmNrdSfWUsfK+4tJK/1Q==
+X-Gm-Message-State: AOJu0YwXsgFMEDGaPpX+hIWaZuKL9/r3KZaor+UnhX5tGQvgWGXfXFco
+	9feFA2uzSSk/4fciePcWh3F2j8flqoxfzsr4u+uBWqBZQKJiRXa5sj7B4BRa6Q==
+X-Google-Smtp-Source: AGHT+IFcf5q7ruVnxD8hAPCs04EkAgFwMtLJq7WsD337HPZnA1JczKQ1xXu4AYtawACMGMb2l439Qw==
+X-Received: by 2002:a05:6a20:12c9:b0:1a3:113a:bbd5 with SMTP id v9-20020a056a2012c900b001a3113abbd5mr5892663pzg.40.1710352428857;
+        Wed, 13 Mar 2024 10:53:48 -0700 (PDT)
+Received: from thinkpad ([117.213.99.94])
+        by smtp.gmail.com with ESMTPSA id r6-20020a63e506000000b005dbd0facb4dsm7803062pgh.61.2024.03.13.10.53.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Mar 2024 10:53:48 -0700 (PDT)
+Date: Wed, 13 Mar 2024 23:23:33 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kishon Vijay Abraham I <kishon@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v9 07/10] PCI: dwc: ep: Remove "core_init_notifier" flag
+Message-ID: <20240313175333.GA126027@thinkpad>
+References: <20240304-pci-dbi-rework-v9-0-29d433d99cda@linaro.org>
+ <20240304-pci-dbi-rework-v9-7-29d433d99cda@linaro.org>
+ <ZesRk5Dg4KEASD3U@ryzen>
+ <20240311144559.GA2504@thinkpad>
+ <Ze99lLhe2GqIqMgl@ryzen>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul
-	<sean@poorly.run>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        David
- Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Kuogee Hsieh
-	<quic_khsieh@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <quic_parellan@quicinc.com>,
-        <quic_bjorande@quicinc.com>, Rob Clark
-	<robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
- <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
- <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
- <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
- <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
- <ZfFhXG5yd6O29spS@hovoldconsulting.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <ZfFhXG5yd6O29spS@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: k_KsKkFVR1NcTEJbp5-f7QVlS1rPpC3D
-X-Proofpoint-GUID: k_KsKkFVR1NcTEJbp5-f7QVlS1rPpC3D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130132
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Ze99lLhe2GqIqMgl@ryzen>
 
-
-
-On 3/13/2024 1:18 AM, Johan Hovold wrote:
-> On Tue, Mar 12, 2024 at 10:39:46AM -0700, Abhinav Kumar wrote:
->> On 3/12/2024 9:59 AM, Johan Hovold wrote:
+On Mon, Mar 11, 2024 at 10:54:28PM +0100, Niklas Cassel wrote:
+> On Mon, Mar 11, 2024 at 08:15:59PM +0530, Manivannan Sadhasivam wrote:
+> > > 
+> > > I would say that it is the following change that breaks things:
+> > > 
+> > > > -	if (!core_init_notifier) {
+> > > > -		ret = pci_epf_test_core_init(epf);
+> > > > -		if (ret)
+> > > > -			return ret;
+> > > > -	}
+> > > > -
+> > > 
+> > > Since without this code, pci_epf_test_core_init() will no longer be called,
+> > > as there is currently no one that calls epf->core_init() for a EPF driver
+> > > after it has been bound. (For drivers that call dw_pcie_ep_init_notify() in
+> > > .probe())
+> > > 
+> > 
+> > Thanks a lot for testing, Niklas!
+> > 
+> > > I guess one way to solve this would be for the EPC core to keep track of
+> > > the current EPC "core state" (up/down). If the core is "up" at EPF .bind()
+> > > time, notify the EPF driver directly after .bind()?
+> > > 
+> > 
+> > Yeah, that's a good solution. But I think it would be better if the EPC caches
+> > all events if the EPF drivers are not available and dispatch them once the bind
+> > happens for each EPF driver. Even though INIT_COMPLETE is the only event that is
+> > getting generated before bind() now, IMO it is better to add provision to catch
+> > other events also.
+> > 
+> > Wdyt?
 > 
->>>> Heh. This is getting ridiculous. I just tried running with this patch
->>>> and it again breaks hotplug detect in a VT console and in X (where I
->>>> could enable a reconnected external display by running xrandr twice
->>>> before).
->>>>
->>>> So, please, do not apply this one.
->>>
->>> To make things worse, I indeed also hit the reset when disconnecting
->>> after such a failed hotplug.
+> I'm not sure.
+> What if the EPF goes up/down/up, it seems a bit silly to send all those
+> events to the EPF driver that will alloc+free+alloc.
 > 
->> Ack, I will hold off till I analyze your issues more which you have
->> listed in separate replies. Especially about the spurious connect, I
->> believe you are trying to mention that, by adding logs, you are able to
->> delay the processing of a connect event to *make* it like a spurious
->> one? In case, I got this part wrong, can you pls explain the spurious
->> connect scenario again?
+> Do we know for sure that we will want to store + replay events other than
+> INIT_COMPLETE?
 > 
-> No, I only mentioned the debug printks in passing as instrumentation
-> like that may affect race conditions (but I'm also hitting the resets
-> also with no printks in place).
+> And how many events should we store?
 > 
-> The spurious connect event comes directly from the pmic firmware, and
-> even if we may optimise things by implementing some kind of debounce,
-> the hotplug implementation needs to be robust enough to not kill the
-> machine if such an event gets through.
 > 
-> Basically what I see is that during physical disconnect there can be
-> multiple hpd notify events (e.g. connect, disconnect, connect):
-> 
-> [  146.910195] usb 5-1: USB disconnect, device number 4
-> [  146.931026] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 2
-> [  146.934785] msm-dp-display ae98000.displayport-controller: dp_hpd_unplug_handle
-> [  146.938114] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 1, status = 1
-> [  146.940245] [CONNECTOR:35:DP-2] status updated from disconnected to connected
-> [  146.955193] msm-dp-display ae98000.displayport-controller: dp_bridge_hpd_notify - link_ready = 0, status = 2
-> 
-> And it is the spurious connect event while the link is being tore down
-> that triggers the hotplug processing that leads to the reset.
-> 
-> Similarly, I've seen spurious disconnect events while the plug in being
-> inserted.
+> Until we can think of a good reason which events other than UP/DOWN we
+> can to store, I think that just storing the state as an integer in
+> struct pci_epc seems simpler.
 > 
 
-This is quite weird and also explains why most of the issues were seen 
-only with sc8280xp. pmic spurious events are busting the hpd logic.
+Hmm, makes sense.
 
-Agreed, that DP driver should be robust enough to handle this but this 
-will also bust usermode to send down unnecessary frames. Someone should 
-address why these spurious events are coming.
-
->> A short response on why this change was made is that commit can be
->> issued by userspace or the fbdev client. So userspace involvement only
->> makes commit happen from a different path. It would be incorrect to
->> assume the issues from the earlier bug and the current one are different
->> only because there was userspace involvement in that one and not this.
->>
->> Because in the end, it manifests itself in the same way that
->> atomic_enable() did not go through after an atomic_disable() and the
->> next atomic_disable() crashes.
 > 
-> Right, but your proposed fix would not actually fix anything and judging
-> from the sparse commit message and diff itself it is clearly only meant
-> to mitigate the case where user space is involved, which is *not* the
-> case here.
+> Or I guess we could continue with a flag in struct pci_epc_features,
+> like has_perst_notifier, which would then require the EPC driver to
+> call both epc_notify_core_up() and epc_notify_core_down() when receiving
+> the PERST deassert/assert.
+> For a driver without the flag set, the EPC core would call
+> .epc_notify_core_up() after bind. (And .epc_notify_core_down() would never
+> be called, or it could call it before unbind().)
+> That way an EPF driver itself would not need any different handling
+> (all callbacks would always come, either triggered by an EPC driver that
+> has PERST GPIO irq, or triggered by the EPC core for a driver that lacks
+> a PERST GPIO).
 > 
 
-No, I think there is some disconnect in the way you are reading that 
-patch perhaps due to some missing details OR I am missing your point.
+For simplicity, I've just used a flag in 'struct pci_epc' to track the core_init
+and call the callback during bind().
 
-Like I said, drm_atomic_commit() can be issued by userspace or the fbdev 
-client in the driver. Thats the only userspace involvement.
+But the series has grown big, so I decided to split it into two. One to address
+the DBI access issue and also remove the 'core_init_notifier' flag and another
+one to make EPF drivers more robust to handle the host reboot scenario.
 
-Now, why the patch was made or was expected to work.
+- Mani
 
-There can be a race condition between the time the DP driver gets the 
-hpd disconnect event and when the hpd thread processes that event 
-allowing the commit to sneak in. This is something which has always been 
-there even without pm_runtime series and remains even today.
-
-In this race condition, the setting of "link_ready" to false can be a 
-bit delayed if we go through the HPD event processing increasing the 
-race condition window.
-
-If link_ready is false, atomic_check() fails, thereby failing any 
-commits and hence not allowing the atomic_disable() / atomic_enable() 
-cycle and hence avoiding this reset.
-
-The patch is moving the setting of link_ready to false earlier by not 
-putting it through the HPD event thread and hence trying to reduce the 
-window of the issue.
-
-> Johan
+-- 
+மணிவண்ணன் சதாசிவம்
 
