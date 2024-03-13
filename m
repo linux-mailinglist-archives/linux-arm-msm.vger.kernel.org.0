@@ -1,158 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-14013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C94C587A80F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 14:07:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7290F87A995
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 15:36:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84CD9284F75
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 13:07:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D715281792
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 14:36:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 430CF3F9CC;
-	Wed, 13 Mar 2024 13:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AF1D1E88C;
+	Wed, 13 Mar 2024 14:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R1fm8+l9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEzqcJeG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46D1225AD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 13:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10166290A;
+	Wed, 13 Mar 2024 14:36:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710335233; cv=none; b=WQbKZyQ1hFhL4i7mUjUbzqOYp3TZIun+4AIsOGqL1bU9fSUkER8q2mEfcQNczHi/JUxzbu5asbrzv5/5O8shUAq8mn8ObufKpnb+h8H5l+367sr7FfPoJeKb+DlMzhypBnsWm9MdqFxaxnXB2flRo1H2GI/s3Aa/Nc0Pxs8CksQ=
+	t=1710340577; cv=none; b=lIM8F4iw7d6eomWf8lL9/dz7BW0X1dkHzh3g1zfWo7vTqqcLXCOEMPo/x9Pfx2rQNWTzVVdGhLn1HYjBgJ9Yr+/MBXRS7wvBVbgKT176zNdlYQ8jG4lhf98nOQRoYwrJ6rKbEcHj6Ho2xTYiDF0864eT8ZHpxpgKVde5KWNYdk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710335233; c=relaxed/simple;
-	bh=AOENklKCQlzcOp8ThZzmspRg8sESxjS+RseYzxgGx7k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jBhzqtJjQgZW04kAEX079yCXjtKL1vRGfujV4vZ8CF8ptcUWZsT6QnZEWFOoZStd9w0RcYWJC/zIspGe+DZdc368zvMNC8/GZy1WKuQBGgFheXO2L0HxmD5Jf6Y32ogJ3VhDt/2rfXPRxxhkj2lGpP4Ue7Z865cMLZMEkRH6/9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R1fm8+l9; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-413ee78c927so130285e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 06:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710335230; x=1710940030; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0h1HJWTel+cUT0T3nBc4aPkZwYen93F3ipuXMLtZBk0=;
-        b=R1fm8+l9iHmFOk+qsI+dU8sysRumMqDffcqN9d6OnPRVXk+3YQOZSjunrXZBYLLcPu
-         KJ0jmLIKROv+tDap5yMehtdx36wyljejbAL33rYDRpD0CIqheHYDrDMckmBe4A0gDLgq
-         C0OUSQQcRvLsdiIUoifAc9cvw3xMvgaOcrs04CK76I5Al6JL4wY7+4DGOb5ry5itCLTT
-         r/aC3siRdlQtRooAQhV+bpn+hQm78o0ueZtr3u/vidRuTVGxb6zJPtItehbneN0lfWzh
-         pTZjBYTht9W2Uqf0Po+hncby0RWqccBPQuVZxp2FhJ/9w0fRpNqZlhxo17oJ3nQR9/V5
-         W9vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710335230; x=1710940030;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0h1HJWTel+cUT0T3nBc4aPkZwYen93F3ipuXMLtZBk0=;
-        b=kbLekeCPYR4toVSI4XqX7cl2mF8gXOddtKfRO8DX3fgNMPVPpt3LPJepBKpY8XqATt
-         CBW3S/CzNlMDUWS8ko9w5J5+mLEL+PX01JPiYWXzp726nmecs+oSeJ8gAa58OMHZEU+L
-         Te7hlumtp9mRujoqXgJuo0u8RTCjPYALWnqa5L41+wLExBgdJlWMCOOIGdgYtj4sDEaP
-         lBf3Z3Vpx2uYC7uqKgLv6nHlI1dS/9JmMBu7PrVwWZFCh1IqcRL9qT/I2ppt4mVBGvAU
-         mzERQ7v4AePYk9cT9Kd0UEsGXlmkQQzsjsnkv28QwhsbWitEqsfb6O1he2E4AN7zi6Dk
-         ZIuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXj5oDPDMaIXMSgGMbQLvEw9pEQg3p9hDVmuXGnKl63XfQji/UPj2BDnaC8IBGTBo+1kodKnbL68wvi0je/ZlEBa7AjlUrXysxoMm4AWw==
-X-Gm-Message-State: AOJu0YwLw6f64AmGg9yLDhfWeQcI+t6lwxKzjKyQnZoxdpIjfvUf2DRF
-	hM3ozLYFythiz+kcdJlTNJkrICTJrJWKtRMpRDvTlfrwjbFM1GyNsTNN6ruJbU4=
-X-Google-Smtp-Source: AGHT+IGCNQQ+vVI9A+/mKULdTaoDGN4LOObKn8d9gfyev3ibpUqDcfmSUpsIWnmdEnjLU2rGKjCHpQ==
-X-Received: by 2002:a05:600c:3542:b0:412:ebce:4166 with SMTP id i2-20020a05600c354200b00412ebce4166mr8648709wmq.32.1710335230145;
-        Wed, 13 Mar 2024 06:07:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id bg28-20020a05600c3c9c00b0041330d49604sm2287312wmb.45.2024.03.13.06.07.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Mar 2024 06:07:09 -0700 (PDT)
-Message-ID: <f0961a18-ddb7-4bb9-aee6-c13f8a1dc020@linaro.org>
-Date: Wed, 13 Mar 2024 14:07:07 +0100
+	s=arc-20240116; t=1710340577; c=relaxed/simple;
+	bh=XFDXYmXdUS9RT2lDf6b0r0Sb31orMCrxt5jtIkbRWKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=gtWU/utdAouDEUW/5g1K9SuiZgVbXbHlSlnSIyN6zebr8ufxZs7pxXaGluO0V1AIC9EWTSAiQrnlWBxF99cacrybZ+DQEzK9jE8PactcFXytzPPE1tkl4PpI5AIe8zxNL/Gug4ANuTI62uGBTxoMVX9NMbvMgRggKF0KcGC5Oc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEzqcJeG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A6CC433F1;
+	Wed, 13 Mar 2024 14:36:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710340576;
+	bh=XFDXYmXdUS9RT2lDf6b0r0Sb31orMCrxt5jtIkbRWKA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ZEzqcJeGxPPNYFIZRysA/arw8xKmCsgFAtuJNh6CcaGinac4jHPx0j8sRkhwKjbeG
+	 2K66SzJFHUpMdstY/bqu5mF7jniMbPjEs6OsS2AO+4KMoqx9Z00vF4N243TSn7RK//
+	 LDGvlE//xarvy1U0wLhCPnEWUMDbs+ySoXgXfs6LNUEisMlEYFpeELOwDhChL49fJc
+	 66pD5Fz0GtUEGh11BON/V1DjMBIYNy7WUCvoEh7Zw75IJFqYCGfoirAOHQcZdUBZ+w
+	 g4eAR37hfXwlKzswREpP7UkjTykH6a7nFsIOnZeEFHUXkyrxX6XZpXzUMExEOFyY50
+	 v7uwsn4hsoyvA==
+Date: Wed, 13 Mar 2024 09:36:14 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Implement shutdown() callback to properly
+ reset the endpoint devices
+Message-ID: <20240313143614.GA916555@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Sumit Garg <sumit.garg@linaro.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-Cc: andersson@kernel.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, stephan@gerhold.net,
- caleb.connolly@linaro.org, neil.armstrong@linaro.org,
- laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com,
- jimmy.lalande@se.com, benjamin.missey@non.se.com,
- daniel.thompson@linaro.org, linux-kernel@vger.kernel.org,
- Jagdish Gediya <jagdish.gediya@linaro.org>
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org>
- <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313-pci-qcom-shutdown-v1-1-fb1515334bfa@linaro.org>
 
-On 13/03/2024 14:04, Konrad Dybcio wrote:
+On Wed, Mar 13, 2024 at 05:39:22PM +0530, Manivannan Sadhasivam wrote:
+> PCIe host controller drivers are supposed to properly reset the endpoint
+> devices during host shutdown/reboot. Currently, Qcom driver doesn't do
+> anything during host shutdown/reboot, resulting in both PERST# and refclk
+> getting disabled at the same time. This prevents the endpoint device
+> firmware to properly reset the state machine. Because, if the refclk is
+> cutoff immediately along with PERST#, access to device specific registers
+> within the endpoint will result in a firmware crash.
 > 
->> +		led@5 {
->> +			reg = <5>;
->> +			label = "apq8016-hmibsc:green:wlan";
+> To address this issue, let's call qcom_pcie_host_deinit() inside the
+> shutdown callback, that asserts PERST# and then cuts off the refclk with a
+> delay of 1ms, thus allowing the endpoint device firmware to properly
+> cleanup the state machine.
+
+I guess this 1ms delay is the PERST_DELAY_US hidden inside
+qcom_ep_reset_assert()?  I assume the refclk disable is done by
+clk_bulk_disable_unprepare()?
+
+  #define PERST_DELAY_US 1000
+
+  qcom_pcie_shutdown
+    qcom_pcie_host_deinit
+      qcom_ep_reset_assert
+        gpiod_set_value_cansleep(pcie->reset, 1);
+        usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);  <--
+      phy_power_off(pcie->phy)
+      pcie->cfg->ops->deinit()
+        qcom_pcie_deinit_...
+          clk_bulk_disable_unprepare                         <--
+
+Is there a spec citation for this delay requirement?  If not, how do
+we know 1ms is enough for whatever the firmware needs to do?
+
+Do other drivers require similar changes?
+
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> These names look overly complicated.. s/apq8016-hmibsc://g?
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2ce2a3bd932b..41434bc4761a 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1618,6 +1618,13 @@ static int qcom_pcie_resume_noirq(struct device *dev)
+>  	return 0;
+>  }
+>  
+> +static void qcom_pcie_shutdown(struct platform_device *pdev)
+> +{
+> +	struct qcom_pcie *pcie = platform_get_drvdata(pdev);
+> +
+> +	qcom_pcie_host_deinit(&pcie->pci->pp);
+> +}
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
+> @@ -1670,5 +1677,6 @@ static struct platform_driver qcom_pcie_driver = {
+>  		.pm = &qcom_pcie_pm_ops,
+>  		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+>  	},
+> +	.shutdown = qcom_pcie_shutdown,
+>  };
+>  builtin_platform_driver(qcom_pcie_driver);
 > 
-
-It should be dropped entirely in fact. There is color and function.
-
-Best regards,
-Krzysztof
-
+> ---
+> base-commit: 51459eb30f88651d3688b9e95fed0f97767ececb
+> change-id: 20240313-pci-qcom-shutdown-d86298186560
+> 
+> Best regards,
+> -- 
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
 
