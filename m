@@ -1,124 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-13976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1CF887A2B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 06:35:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36ADA87A343
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 08:13:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 286E41C20CE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 05:35:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C683A281CDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 07:13:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B309C125C0;
-	Wed, 13 Mar 2024 05:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C45168CE;
+	Wed, 13 Mar 2024 07:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUaMZqaY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gIUJBfji"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB6910A1D;
-	Wed, 13 Mar 2024 05:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449D814A8C;
+	Wed, 13 Mar 2024 07:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710308145; cv=none; b=aEgMXsRhDPOF0xy64sg0q86bGx/Ll151Zw1LnRuBjdydKUNAmEx3g1Ikby05ZmRQNgQAQ0g/Da0jT69ukzbE2jmlF1DoSN9QipTpNucuUhS9Qdq4V31ucrZTcPMrOB9TDQTco0WN5rqMEv02yeL1CPeRRw2+wbcW/1OstYKybo8=
+	t=1710313979; cv=none; b=nFRBeSpkUyESWR4b4ChFzwM0/kiEbwfD+aJ/SvOlR+rJtbFdgNNAiDLIeN8OrKG0MLqrxBAQdPEdP1Zj60zhczpOYnnowPF0saiOPSSoCgk1TC+Z7Q/0Q2yr/rXEZjiznIRzBLDQSLtjIuBcHWaM4XlL7OM09m1gnqND5ifXxm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710308145; c=relaxed/simple;
-	bh=icYO5AqGUEJy2g2FzBgaoVvXzp73Jbi9ol7QJfdrF4Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KzcP9ib2kABmBDVXq2YlXtCJU9MsI5cJEd4JgnzU8tI4V2LfnTPCZA0/WA3bRaelgVw0RMn/Cm73IfPGUX/m8iYJOWyN1F4X/lQ949n+YQ1u/UiswtPBhlE7V3HEHlmdcpP5kLBbKE8OwwiQG2rPly8HLTEWvdWEmDusdtv0FxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUaMZqaY; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1710313979; c=relaxed/simple;
+	bh=oShe8btTfkGarb8alIU3sHKX1/SNy2xiqRU8KUvNtlY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jI8WgbAJ2MuQBDmHvLrqPwIz+YEXUdW/9gmw5w+NGjEgR68Gk848rvbrtztCAVr66tgrs7VygHScPvw20Od7iLBM49h+mgKXYNxRjLl7DTZEMPwfI+/CBvgzb+Pp/2XbYMN3DIWHgmoDknTDfFCmQQwoYzS8TyJ0LbnhxFN2uco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gIUJBfji; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D3Dhnw026482;
-	Wed, 13 Mar 2024 05:35:35 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42D6DBli013186;
+	Wed, 13 Mar 2024 07:12:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=cCwcK/aazlsFy8Zq3Ky6o32u5JSaZ75YFGnu+hvDL1M=; b=jU
-	aMZqaYcdE1rEi2xEVBLaawc/DIuQ5LtLdCFHCYjZ6yn8sU3NTC+BeD8bRH+lsuG4
-	AQT8AiIuhrbLdpEfyzKCOnYiG5FOA5ZMGHfCHSprqFHq9nHjf/5ggiRn8v0wGGS2
-	o4/xdddGuPEbaQ3sEy7GIdLtF4abVVc9y+FxfV5iKx2ZXV4TswVQbv/0vEVJTy7T
-	j6eJu2rfTb/sWnmuz7EZu6oxINuzjLAbvWTSO9G/bsNAf+FumXEDlHtblvepRUdC
-	NoPDLL5/ck0vabsKiu/2izXwlzJou0p4XyvZsIb5/Yfvm49CcPNxQOclz9MI7xNE
-	E385+4sIeeQFiK4/e6zg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wtmpd2by2-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding; s=qcppdkim1; bh=S/vGuzgzFEQW92LuIB4q
+	e62iy3ALlUdy+4YMMiio5Cg=; b=gIUJBfjiAUP1Ax/pUE3r0VucePzxy8IHWPki
+	kFttcNLM4B4gSxzaLIdadNk1GgNVPzI3i3ia6TjcvTIDEyejf4+degfUwK9vsevn
+	Vpkq0Th44su60v8LBgRw2rAkT0pFRARORhs5d3WNFs/c30NBK+WpEhqbDo/cB16X
+	tlVKMky8O5dZT3OozWWUfGbyCiBYMDhpRfhwLSIywld6DaRAJ2o3n86Na/mAezwZ
+	RPcKLCr00RD6GLhFup6GXCzkXkeQxPZNFc4a65Ds5hcatpSGbM9UwyiOfO1/LIJ9
+	JOrxFr2T0JpDxa5S7SOt/SswJ/7TqfLsZiU83A1SA7ADBWFlLQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu07c8rrr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 05:35:35 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42D5ZYWf019620
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 05:35:34 GMT
-Received: from [10.218.22.190] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Mar
- 2024 22:35:30 -0700
-Message-ID: <0971ac51-f823-4338-ba95-3ceced9d2a1c@quicinc.com>
-Date: Wed, 13 Mar 2024 11:05:27 +0530
+	Wed, 13 Mar 2024 07:12:53 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 42D7Couk021194;
+	Wed, 13 Mar 2024 07:12:50 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3wrgum5nrt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Wed, 13 Mar 2024 07:12:50 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42D7CoPY021170;
+	Wed, 13 Mar 2024 07:12:50 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-wasimn-hyd.qualcomm.com [10.147.242.220])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 42D7CnPm021165;
+	Wed, 13 Mar 2024 07:12:50 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3944840)
+	id B3C22500969; Wed, 13 Mar 2024 12:42:48 +0530 (+0530)
+From: Wasim Nazir <quic_wasimn@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        Wasim Nazir <quic_wasimn@quicinc.com>
+Subject: [PATCH v3 0/3] arm64: qcom: add support for QCS8550 RB5gen2 board
+Date: Wed, 13 Mar 2024 12:42:35 +0530
+Message-ID: <20240313071238.3290-1-quic_wasimn@quicinc.com>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] i2c: i2c-qcom-geni: Parse Error correctly in i2c GSI
- mode
-Content-Language: en-US
-To: Andi Shyti <andi.shyti@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>, <vkoul@kernel.org>,
-        <wsa@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <quic_vdadhani@quicinc.com>,
-        Stephen Rothwell
-	<sfr@canb.auug.org.au>
-References: <20240307205539.217204-1-quic_msavaliy@quicinc.com>
- <a5oiihch2yqsosq337hogqzd3r4ldgfrzub4m6kofheh2k3qjv@wxageydv4q37>
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <a5oiihch2yqsosq337hogqzd3r4ldgfrzub4m6kofheh2k3qjv@wxageydv4q37>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gb-huY-5_rp4JyJruohlt362HGxFuzk4
-X-Proofpoint-ORIG-GUID: gb-huY-5_rp4JyJruohlt362HGxFuzk4
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GhuIpg2lHgeGsOS20g8yMoizvCOA_466
+X-Proofpoint-GUID: GhuIpg2lHgeGsOS20g8yMoizvCOA_466
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_05,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=939 mlxscore=0
- spamscore=0 clxscore=1011 malwarescore=0 impostorscore=0 adultscore=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130040
+ definitions=2024-03-13_06,2024-03-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=746
+ priorityscore=1501 malwarescore=0 suspectscore=0 bulkscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2403130053
 
-Hi Andi, Wolfram,
+RB5gen2 is Thundercomm's development platform used for IOT solutions.
+It is based on Rb5gen2-SOM which is using QCOM's QCS8550 SoC.
 
-On 3/12/2024 4:19 PM, Andi Shyti wrote:
-> Hi Mukesh,
-> 
->> +	status = FIELD_GET(I2C_DMA_TX_IRQ_MASK, i2c_res->status);
-> 
-> This fails here:
-> 
-> drivers/i2c/busses/i2c-qcom-geni.c: In function 'i2c_gpi_cb_result':
-> drivers/i2c/busses/i2c-qcom-geni.c:493:18: error: implicit declaration of function 'FIELD_GET' [-Werror=implicit-function-declaration]
->    493 |         status = FIELD_GET(I2C_DMA_TX_IRQ_MASK, i2c_res->status);
->        |                  ^~~~~~~~~
-> cc1: all warnings being treated as errors
-> 
-> I will remove this patch from the i2c/i2c-host and we will need
-> to wait for the next merge window to get this through.
-> 
-> Please submit v4 with the Cc list recommended by Wolfram.
->Submitted V4 patch. Let me wait for the dmaengine maintainers to sig off 
-too. Sorry for the trouble.
+On-board components:
+- Qualcomm QCS8550 SoC
+- LPDDR5, 12 GiB
+- UFS3.1, 128 GiB
+- USB3.1
 
-> Thanks,
-> Andi
-> 
+On-board PMICs:
+- PM8550VS
+- PM8550VE
+- PM8550
+- PM8550BH
+- PMK8550
+- PMR735D
+- PM8010
+
+v2 -> v3:
+ - Move qcs8550-rb5gen2 info after sm8550 boards in qcom.yaml
+ - Link to v2 [3].
+
+v1 -> v2:
+ - Update board name from qcs8550-rb5gen2-hdk to qcs8550-rb5gen2.
+ - Update SOM name to qcs8550-rb5gen2-som.
+ - Remove qcm8550 from board definition.
+ - Update DT files wrt board/som name changes.
+ - Link to v1 [2].
+
+This series depends on [1].
+
+[1]: https://lore.kernel.org/all/20240308070432.28195-1-quic_tengfan@quicinc.com/
+[2]: https://lore.kernel.org/all/20240202133638.4720-1-quic_wasimn@quicinc.com/
+[3]: https://lore.kernel.org/all/20240304055333.15952-1-quic_wasimn@quicinc.com/
+
+Wasim Nazir (3):
+  dt-bindings: arm: qcom: Document rb5gen2 board
+  arm64: dts: qcom: Add initial support for rb5gen2 SOM
+  arm64: dts: qcom: Add initial support for rb5gen2 board
+
+ .../devicetree/bindings/arm/qcom.yaml         |   7 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/qcs8550-rb5gen2-som.dtsi    | 438 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts  | 136 ++++++
+ 4 files changed, 582 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-rb5gen2-som.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-rb5gen2.dts
+
+--
+2.43.2
+
 
