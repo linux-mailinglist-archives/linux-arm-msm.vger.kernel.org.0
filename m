@@ -1,131 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-14016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD37787AA80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 16:35:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85F1E87AA99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 16:45:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88544284F99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 15:35:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B008A1C209BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 15:45:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F104946441;
-	Wed, 13 Mar 2024 15:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9842F4779E;
+	Wed, 13 Mar 2024 15:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JsGryI05"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VCJlhXp4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCAC47773;
-	Wed, 13 Mar 2024 15:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D997C46542;
+	Wed, 13 Mar 2024 15:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710344134; cv=none; b=UVMjz7pe/mdqJm9D4Xq3D6SVRs7ikZGWK0+aE9rZb1zsM+lATJMRsWLcpsoCUL8jdxRsFjdjpx0c4I3PAh5b8DhEWMXBKtjL9rG0xrPP/u+nQOtOxmkSim2yQJeqX2UAYBME9BcDmS3tJ1O/yh34bIfPqIOp1ll19sunnVZz6oM=
+	t=1710344700; cv=none; b=a0dZafWK6d8yyHyRjjVkZarLjvFTj5JO0vY2yT/fE4+5xWov7OruFjUyVepOAvZq9vmUtHXof6Bd01XWJf7tkYdmAkstNWhToUrqJ7nsaQ+QISAmon97XE1Zbb/AP/CmQtPa+E8lQyZV3gBq9G9ihTQyyQEC0r9u6yAiZk7vjMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710344134; c=relaxed/simple;
-	bh=jOQp4CryTW9XagCDuR6uUkkHla07BH/PK6sB2sD9gbA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ARDc7POu4phEAToTs4f5nhPgOOYMtvkfn0dc9WgKLtDutanKygEAiaMG5SoJnovQm40djO8Afl4m8T/NfuW7XOqq5r2HAMIYCComGSysYGwZlSCCVmVNJQicozvnNLZ29+nsSZCWH2I/hOXSuZnO85WFgfyZy9y52Z/EPmBeHZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JsGryI05; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42DAPHf3019208;
-	Wed, 13 Mar 2024 15:35:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:reply-to:references
-	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=d52KNA3q
-	0BZMEfgemsDgnZIe/xCWMrozSCni3qIL1PE=; b=JsGryI054YgtkJQmVj05IhF2
-	nNO2JpXzrj0y+U9pXCIWM5TGt057i8EktE24HO+6/jowwc+PDKQhfggTDYFlKegB
-	AZ8haHqr5iKoiONxG7KIpf0CNYmG2gFdKdDcam6LZ3nqPau6zS1rAQCvOv7H1jhQ
-	bhLRy3ys4L5Vy7ZnxhKSMazoGKtKIrUfX1L+sIBLHJLPA9jQFxGs/OwO6pTLXIAr
-	7Crnb83FayC3zxMA5dSwOWegVPyPSUVrEc2JvUv/ZYLxMJ9wRt49SJolH6tXSB1D
-	olR7vWQxGAXQVuhfTGhwc5OryOW7NAptdojYL2K0eL+yjgniwsXWPVZBNhImhw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wu815rys8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 15:35:16 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DFZF03025574
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 15:35:15 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
- 2024 08:35:07 -0700
-Date: Wed, 13 Mar 2024 21:05:03 +0530
-From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To: Elliot Berman <quic_eberman@quicinc.com>
-CC: Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Murali Nalajal <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik
-	<quic_cvanscha@quicinc.com>,
-        Philip Derrin <quic_pderrin@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Fuad
- Tabba" <tabba@google.com>,
-        Sean Christopherson <seanjc@google.com>,
-        "Andrew
- Morton" <akpm@linux-foundation.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
-Subject: Re: [PATCH v17 16/35] gunyah: Add hypercalls for demand paging
-Message-ID: <20240313153503.GR440762@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
- <20240222-gunyah-v17-16-1e9da6763d38@quicinc.com>
+	s=arc-20240116; t=1710344700; c=relaxed/simple;
+	bh=LH7ZEG59+iIy7RtL0sW3+enVljanvZQhTqpxoXUooT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qdb9WeDI65kY8Z2brxSJiZONIFBeMUANotYFwGYr8QFI2bQUryXwYju0bBizAZwC67HxgRQT/gnofQg8qfGwZefNk57rUORFiNKLW0ebZk1MfxDZBuiqTeh89BdikqxoRgQwpYQUb5ldf+aDzLjLne2l/tnG09k+rzExHpaem6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VCJlhXp4; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-568307fe62eso7396364a12.1;
+        Wed, 13 Mar 2024 08:44:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710344697; x=1710949497; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZZbw7L5uSD+BOeh64uEzemiVW3Z6bMdu9+1+cxN8JvI=;
+        b=VCJlhXp4oDQzaEJ5va1xUVFmh6TqJU2rd0b/fzyR4PkVt6ryVxJW/TvBFafUnSPOib
+         wzew3rfvW5xwIqa34L1UNF59Vq5V3Mb7ug5z2r1h4d164H8gXM3QC1ojN9ILk4t6dh1i
+         9as0bpfnaNV6Jfh9xVhsdejCC03eHqQ1i4IXCSjGz45psH475cd3wGUtnzmtfvPWW/by
+         QoyGK2vHuRAcs8IqWYET05KGgf/ZhyhK70v5FlLKT7Jd6fIhltA4oShbPtwED03IL2PA
+         Ja9jbezrCklZsT3r4zFZP8OY9r64Spikozg2304nUAGyXVgimkNQzk77wr8ZT7Lh/uub
+         ziRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710344697; x=1710949497;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZZbw7L5uSD+BOeh64uEzemiVW3Z6bMdu9+1+cxN8JvI=;
+        b=nT/3zM0ry2uYuBLscvUY2YO+k7bFygu2NSvlcIZKhvGRzOC+rHphu0dklVO8eLzOt2
+         2a2VZ6B0g3Qru+fcCboux00KSD0apen+JYNICu/x3m48OLxVh0JIadpLs2Xd94xIGCzK
+         RTGkeqxuLvHto8Vtv0Oa7tLwxfyncLEMtcVNKJJtSLjpw/BYBandsFxGkXFbsWKule9O
+         2tD8h5qHZ4qSLkuGGXgjIOfdw5Z+XiO2VkVf7/y8wArKYg9VgE+oR5ohICKep2mMcegU
+         wugQz/nUqP9ftKYhoAGxTZSCY2p9nwNtv0B7bxODOAroX6JLyxxmFxppdKqCULPT6yYV
+         bjsA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjHqVm58kMn4Vzj0zOFglTkhtWqdfIJDflWu8et+cX6/3hwVz4BZhy7tStWG0l8fW6AilB6djQcp4IFjDRnaRor577n4EbCzh1X7drJ8BtjxDCCVISX6/2aH0CBbWBXSjl58HGCRJDBA==
+X-Gm-Message-State: AOJu0Yyx/IX7xRjRRSJxlLdAVODXNBVFu4wGNMOKh5fVyCN65sKNVfxk
+	9SQpifmdKxZTU8WOVV0x7S7wTYy4LdbkAgxF76Y794viPFyq3WTnPGPwmPjs
+X-Google-Smtp-Source: AGHT+IFaKBZnOcyfCzW7+Hn/dVGI5KPw2JKlgWj5gNIo3GYyYysV3HpM7FFGsmZf4mfBhNVrdG5Yrg==
+X-Received: by 2002:a50:d794:0:b0:566:4adc:45ac with SMTP id w20-20020a50d794000000b005664adc45acmr8668585edi.8.1710344696974;
+        Wed, 13 Mar 2024 08:44:56 -0700 (PDT)
+Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.gmail.com with ESMTPSA id e12-20020a056402104c00b005686037bc12sm2988096edu.29.2024.03.13.08.44.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Mar 2024 08:44:54 -0700 (PDT)
+Message-ID: <fe8a758d-b417-4c37-9520-3b44e243bde7@gmail.com>
+Date: Wed, 13 Mar 2024 16:44:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20240222-gunyah-v17-16-1e9da6763d38@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mFx73PGakvisSNip6iUaO2FFTWeGcFAO
-X-Proofpoint-ORIG-GUID: mFx73PGakvisSNip6iUaO2FFTWeGcFAO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- adultscore=0 malwarescore=0 mlxlogscore=512 suspectscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130117
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: add TP-Link Archer AX55 v1
+Content-Language: hu
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240226-archer-ax55-v1-v2-0-3776eb61f432@gmail.com>
+ <20240226-archer-ax55-v1-v2-2-3776eb61f432@gmail.com>
+ <6cbc2741-db0f-4acb-a9e1-45b3df1292d5@linaro.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
+In-Reply-To: <6cbc2741-db0f-4acb-a9e1-45b3df1292d5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-* Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:39]:
+Hi Konrad,
 
-> Three hypercalls are needed to support demand paging.
-> In create page mappings for a virtual machine's address space, memory
-> must be moved to a memory extent that is allowed to be mapped into that
-> address space. Memory extents are Gunyah's implementation of access
-> control. Once the memory is moved to the proper memory extent, the
-> memory can be mapped into the VM's address space. Implement the
-> bindings to perform those hypercalls.
+2024. 03. 12. 21:37 keltezéssel, Konrad Dybcio írta:
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> 
+> On 2/26/24 18:12, Gabor Juhos wrote:
+>> Add device tree source for the TP-Link Archer AX55 v1 [1]
+>> which is a dual-band WiFi router based on the IPQ5018 SoC.
+>>
+>> At the moment, only the UART, the GPIO LEDs and buttons
+>> are usable, but it makes it possible to boot an initramfs
+>> image on the device.
+>>
+>> The device tree can be extended in the future, once support
+>> for other periherals will be available for the platform.
+>>
+>> 1. https://www.tp-link.com/en/home-networking/wifi-router/archer-ax55/v1/
+>>
+>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+>> ---
+> 
+> [...]
+> 
+>> +
+>> +&uart1_pins {
+>> +    /*
+>> +     * Remove "gpio31" from the default pins in order to be able
+>> +     * to use that for the WPS button.
+>> +     */
+>> +    pins = "gpio32", "gpio33", "gpio34";
+> 
+> I believe you can even shorten it down to gpio32/33, 4pin uart
+> screams flow control, and I'm not sure if it's there only one-way
 
-Reviewed-by: Srivatsa Vaddagiri <quic_svaddagiri@quicinc.com>
+Thank you for the tip!
+
+The board only uses the TX and RX lines so I have removed "gpio34" and the
+console works without that.
+
+But since I have no documentation about which GPIOs are assigned to TX and RX, I
+did not stop here and checked the other two gpios as well.
+
+The interesting thing is that the console works even if "gpio32" or "gpio33"
+gets removed instead of "gpio34". It also works after the function of all three
+pins being set to "gpio" instead of the current "blsp1_uart1".
+
+This indicates that the pins are not related to UART TX/RX on this board at all.
+It seems that "gpio20" and "gpio21" are used instead, and the function of those
+must be set to "blsp0_uart0" even if the "blsp1_uart1" device is used.
+
+It is quite confusing. :(
+
+Nevertheless, I will send a new version.
+
+Regards,
+Gabor
+
 
