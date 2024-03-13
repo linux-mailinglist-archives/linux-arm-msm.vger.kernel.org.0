@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E61687AE73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:59:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81C7087AE78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 18:59:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 523981C23658
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 17:59:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A565F1C23658
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 17:59:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53C295CDDD;
-	Wed, 13 Mar 2024 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0312D5DF2E;
+	Wed, 13 Mar 2024 16:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GOppHXwS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w0gC7x7S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C2E5D464
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 16:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2575D8EE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 16:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710348709; cv=none; b=gAyF+MtyNEQincRUwruWF7z1Zpxu/8s+nFgCJXjrP2hMJ97VVyKXmXBqcia1e5AivIfDH3nYzXg2SV+9Gl8htvRAP8b2n7RTiTDBqHkcibul6jopZBtX2RKxyc0j9gJME0ieFckfegb9msreeGMc+4/TQjK7+TjZMMInADQ7gBs=
+	t=1710348773; cv=none; b=scojGvO+jZxfyQmohtfLfLfHx9HcKpbtE2f2jLrmLHNQDdIhGcL9fZJjXVpbZSCAat1umqhX+y1MNvUZ//v04ZXa8Ae0vnaiU6Ula9TzxuL8Zx7ONOrhVuSt1oDqHk0YR3ELwlRUj3zFJ6k4wgQiiETQcPzWajyMoyoDHQmHGS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710348709; c=relaxed/simple;
-	bh=kHmNH4atjpPEguQSbWjBGituRrM0Qr3ZHM8xK8RZGlM=;
+	s=arc-20240116; t=1710348773; c=relaxed/simple;
+	bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oI1DTMRuukCRqsS6aC3Z6SveHRZX6OabRcu0du7UvtZy21GK3LYeEglzS3YU+Ppp37TF1vg/VXYe8/5YAn5pGj9dvpgahlfDjxbkv8WaYekcpaRg3Y4LWw5W53JjwWbzqD+gDn54ZTKqYO9R1WGHvLC7Epmp+SP51LLaxWDnRAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GOppHXwS; arc=none smtp.client-ip=209.85.221.47
+	 In-Reply-To:Content-Type; b=mGBPiHRQvDK9QHzfxB1NBoGWSbnqvYFLnfYrToGiENGQRZe/EPCKmr807NcdgaByJJy1TGoAUFokGUbXqItPEy8WyGzGeyFpbjguPHi4BNiWsgPUlHL1uXyrRkTCXzQCtBGsERzqVpEUJQPux8tS/XdtprADNakAioUy2liT8c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w0gC7x7S; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33e959d8bc0so3512946f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 09:51:47 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d38c9ca5bso3690211f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 09:52:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710348706; x=1710953506; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710348770; x=1710953570; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KeRaxUS3lCqKuFUraLSdrlCZg+6cVn+NjlXyt/cGFhI=;
-        b=GOppHXwS9ELxDlW6lL1W+JS806wqyQw+OBvgjbfcxKP+uwZb51IUJFELMs8B5akcxk
-         oHLkNgnfhNbAl52YQ/W8uUi9xA+zakrTXOdiNc/JhVbu1a4TbWILYoLsrwpOoCx/jpSF
-         HZBtYk8yoWfFr0BcAPzoOiDuvF3NkBeYiyicL6Vt5RQErco4tHMZVEeKFry+iBzwsr4/
-         WqVRj2rE3eQBpCEynXyog2eOSnAEUucBy/DgMNrbMDza+duZBHac3hPgNoII0y6pv8r+
-         Y4owc8EF7IF2+baIBqEG1xmixJj4p+JcrVyO4MExYcWx7UxGMpIUZyibX9v6E3cviLJz
-         XYxA==
+        bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
+        b=w0gC7x7SO5SYcffZ5OKGdaIVg63MIeuZy/ofUdCBiFm/WpH51c3/R89nUUhWuwRmuK
+         +pQXt5XawBE5eq7kYdnNy2c0/+F3ziOxXe7e1PZQtbg9ORAnJtHxvCURYQHo9y/iov97
+         +Ve9FN3vWCWAhaMMti9SdZ9cP/SL/n6YTpM6EWtazrWXgLNJk3z/H+FEu2blOG+dzkvV
+         mopPBVhQB58nzEW5u4xIrecMdmn3Bp201Nik7tfIXnLKUamhsXw8VfMRNrbWnpdonc85
+         dJNWG57sq7qgVE2DhveW+9PGYCtKMk1omZupkYWBLwyjLyaXKWN9+TLcOETCKaY78kcS
+         mx6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710348706; x=1710953506;
+        d=1e100.net; s=20230601; t=1710348770; x=1710953570;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KeRaxUS3lCqKuFUraLSdrlCZg+6cVn+NjlXyt/cGFhI=;
-        b=IjUe++M1XXwNH/Vr7Vy6C4QOsB3BHkhYndb5eOMwiyI+m9rxydGxYulqLRMPJF3hJL
-         iT6Y+yHfQ1YfoMjrllJ9zLNAONlu+rKobYFLkwQw9aFz0OhKPKswP6xyK5GMmzoZYFLN
-         kUWNlR8IULFiR72mb8NfeDEBN/rZ5cbLzLH90+wobrshMPuN9dexRNg8UQMGGYzyEtAm
-         MbeONhdrRoj9MRxuZI2wAnvv1ikaPKiazElmfBRhDhbZPKMYj0BIMYClsDUnOxyu17g2
-         5GX3QG7Gfv5boJoQmHY6Y/fgXAnwQEJyuZ9YShHxCHFkywY2w/t0pyTBwcewN1v09NA4
-         F1PA==
-X-Forwarded-Encrypted: i=1; AJvYcCXrf54MHjgwo528RmNGDtAMZCCjrHHb7C6tSQspnvhwAjXEhI1P10p2JEa43FAy8xjBMLYFI32Ft8yA3qeZmi8Zq93wYutnMLijJz6b7Q==
-X-Gm-Message-State: AOJu0YwlKr7HY3muGRbi2plMlXD5ah3EnpDVCTQtFp7fVBiLUhGOd0hw
-	D0FNvC9XrqNoQSqV+CJQKd5FN5OQ2mKB9UZH9oVvu0UxrYGdAkWuM2exB4+xbPg=
-X-Google-Smtp-Source: AGHT+IGNQEy1Yd2X6NGmcGSc9n36ODAa+4iNAF8HvsjuMyICqj9+19T+I/qPzSCc7nGEkqEeipCJog==
-X-Received: by 2002:a5d:44c8:0:b0:33d:a1c4:9c63 with SMTP id z8-20020a5d44c8000000b0033da1c49c63mr2177149wrr.49.1710348705653;
-        Wed, 13 Mar 2024 09:51:45 -0700 (PDT)
+        bh=ggognJw3z48pZHxQ4KZ8+MPjo+B48mgxcGqkAqjrY0c=;
+        b=NjB7GrY/jwuLThOyGU20+Jik+WPmChRUzgWlEy1WFf+uuYi0l2g4RnFD4lxGxRFEBv
+         bRQZ09AeSRwzPpA4xMKcZyjJNJsy7diPtRpD6uB1nfzMSRKR061KAo5TYeRlygA+Rome
+         1bQqVWHnqfdJrIxEp1cYu0WYCUjeJgywPeNo1GFv6kD4HAtlpIPYKQagI/gHOHg3yacO
+         nZmVmvpOgUXd97V599atMX8mxTvpRBNdFtu00aRXEaXFT5Yv4eXor3OmBFH8aYaDSQ2j
+         dsOyXVGHdqFblSlwvgo7YIplW7hZBBHImBGuT5Ajk14NUFRamBbb3KnF9dVQpvFE+2EL
+         KyNQ==
+X-Gm-Message-State: AOJu0YyBpopY2VlFRudpf53EUYg9Ub6x9CJDUzCGj8YyyGdycoPlWp7R
+	qC/MifTuwgp80dR+d4KqnjUU5o0A/Sxm2JQZHekFF5jilzTEYPPlQmo4C6mWdIM=
+X-Google-Smtp-Source: AGHT+IGW0GnRSeNm87dLzejP55klmqzL3ambDnytj8SWTVx/olGkMPH2qreqDEYsC1Z3fgrIxskPWA==
+X-Received: by 2002:a5d:44c8:0:b0:33d:a1c4:9c63 with SMTP id z8-20020a5d44c8000000b0033da1c49c63mr2178542wrr.49.1710348770600;
+        Wed, 13 Mar 2024 09:52:50 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id k8-20020a056000004800b0033d6bc17d0esm12136678wrx.74.2024.03.13.09.51.44
+        by smtp.gmail.com with ESMTPSA id k8-20020a056000004800b0033d6bc17d0esm12136678wrx.74.2024.03.13.09.52.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Mar 2024 09:51:45 -0700 (PDT)
-Message-ID: <e8037775-78cf-4d18-9f8b-9dc5f497ad14@linaro.org>
-Date: Wed, 13 Mar 2024 17:51:43 +0100
+        Wed, 13 Mar 2024 09:52:50 -0700 (PDT)
+Message-ID: <71fdbcb0-0065-4b48-8c28-6571b9b545b8@linaro.org>
+Date: Wed, 13 Mar 2024 17:52:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,22 +75,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom: Update SM8150 videocc
- bindings
+Subject: Re: [PATCH v3 2/2] dt-bindings: pinctrl: qcom: update functions to
+ match with driver
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org
-References: <20240313-videocc-sm8150-dt-node-v1-0-ae8ec3c822c2@quicinc.com>
- <20240313-videocc-sm8150-dt-node-v1-1-ae8ec3c822c2@quicinc.com>
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240312025807.26075-1-quic_tengfan@quicinc.com>
+ <20240312025807.26075-3-quic_tengfan@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -137,41 +131,20 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240313-videocc-sm8150-dt-node-v1-1-ae8ec3c822c2@quicinc.com>
+In-Reply-To: <20240312025807.26075-3-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/03/2024 12:08, Satya Priya Kakitapalli wrote:
-> Update the videocc device tree bindings for sm8150 to align with the
-> latest convention.
-
-Everything is an update. Please explain what you did and why. The "why"
-part you tried to cover but I just don't understand what is "align with
-the latest convention". What convention?
-
-> 
-> Fixes: 35d26e9292e2 ("dt-bindings: clock: Add YAML schemas for the QCOM VIDEOCC clock bindings")
-
-What is the bug being fixed here?
+On 12/03/2024 03:58, Tengfei Fan wrote:
+> Some functions were consolidated in the SM4450 pinctrl driver, but they
+> had not been updated in the binding file before the previous SM4450
+> pinctrl patch series was merged.
+> Update functions in this binding file to match with SM4450 pinctrl
+> driver. Some functions need to be consolidated and some functions need
+> to be removed.
 
 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 1 +
->  Documentation/devicetree/bindings/clock/qcom,videocc.yaml        | 3 ---
->  2 files changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> index bad8f019a8d3..e00fdc8ceaa4 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> @@ -20,6 +20,7 @@ properties:
->      enum:
->        - qcom,sm8450-videocc
->        - qcom,sm8550-videocc
-> +      - qcom,sm8150-videocc
-
-Wrong order. Look at the place from where you copied it.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
