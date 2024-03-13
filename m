@@ -1,170 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-13960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98DF287A015
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 01:14:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA1B887A03E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 01:47:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E87DEB22BDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 00:14:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5158282867
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 00:47:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804A8A930;
-	Wed, 13 Mar 2024 00:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0AB76FD5;
+	Wed, 13 Mar 2024 00:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="WJ4cjpfe"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pWFsiZHJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AF179EF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 00:14:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AA56FB0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 00:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710288845; cv=none; b=RohdIKpKmKuWrY3YY28VM7r4bRjElh3MzKWoxKWiniGtun3PCtid7EjG+AJVlcpuSjx7LH6KV0TtsGxe6aSQKJr1iJQkKeQwvGu3zt0/5foM6+3j4FSCEpzoSHNzz5mmObmam+nryW8ZIhKE1CBNlAOYL9LDUT1uG3/xylnUwpo=
+	t=1710290821; cv=none; b=LOUyCwJP9tiu7DzgZIa7cMEV0qt310Aqi1jxjIeSrEfmxHJfATyGPIsQWf2OkRbLH2gvss8z+cGjVbbjEwVirtQFrCyMnvtOXFs2moqVKaQdaJbMJp/7wRonIl30kFmhAaZvyIBCIlRGIEH9z7SbBftuL318xYvh1y2LkQuScNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710288845; c=relaxed/simple;
-	bh=tz/keXsa37xWJ0MEaMsuV4ypOd5lshGQXM3Y1Ue3+6w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XE1fTgANDI+yQRdwry8B7w04gPkU7lsdKvPrJUbeWPBz+FX0zQaSGw5L2FWDATjpC7cMzlVfOphO3gJsBW04ekN+oJBYEBTNzPu0T1UXlY/0wAJ5CoqpX5D19jG/fWkd0XlSeZSSBY7p1qnDE+mqXyl4+RvrAwg9M+z9PVYxFbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=WJ4cjpfe; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1dd5df90170so3412165ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 17:14:03 -0700 (PDT)
+	s=arc-20240116; t=1710290821; c=relaxed/simple;
+	bh=ul5scHj5JIWXIbj3a/W8NcuMaoMKAWTLOHd3ci4t0p0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r0XdEcbZj1XRVqLQQ1JxJEQ/TqNSsUXDXbs6tCG8lel4Psg1OiN05iXt4Gfd6gWqgZ5fd400t5oAOgWIVAxSM5WTe1Jihv7yBCjjQGIKAvWp48DBwIjw47vyzs9N99+ui5KbPw1YtKViVGo3i80lTlHskjOBbuL2HMPI6+vbj4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pWFsiZHJ; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-428405a0205so88411cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 17:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1710288843; x=1710893643; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1710290819; x=1710895619; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ojXHCUbSnEQhORVd/rWq7LKRiJH0Wv/f2AD6HriHOV4=;
-        b=WJ4cjpfe50D2VHXM6Yn+wjZm6vTrfn9hLWLGzfotXI/LO0tJZ3AYy6qE0GQftTSyeI
-         JCw/BdUyAPEycUAIUv5Y6Sfgdfl0DH8Gc9F4VB5Nmqq8Yp6cN8XjQ8C60iD3gLxxm100
-         sK+taO65aJllH3v7Pp4EWkQZPFeLu0Ppuyr18=
+        bh=+04D6u+/MuKPrCCxQ1meOXYi6MthiRQ4bVsU1Ta9CV0=;
+        b=pWFsiZHJheiXbr4ZbB37GrSFiE2iKlViaDTT7Iqwl0k4oRyVSu12cGa92coaNj/dE5
+         GtiV6V4L8h+j0TFManQDgWzc2TfIXEUbPIsZtPz+Xfz2RJGUPsE5Ji69gQbIhSxwMpAY
+         d+AJ27nPG/RheLGPLw9C3kv1nOSTjRFcpyCFBika+jgd3dOHoX4pyEppUt745akb4l5u
+         1JxIWA/A6uE5d9H6WUj9zXHjC6QFKmn4kmh4Kmg8y33Q9qkJ2VjPk58ebZYR19ENhy4y
+         6rdALcNu9MymaY076kJlUnJmG7Y6uJ7R16fI2qkdoy7sO/qFo8aK1zCqzA5xAwXU+EE/
+         lv6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710288843; x=1710893643;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1710290819; x=1710895619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ojXHCUbSnEQhORVd/rWq7LKRiJH0Wv/f2AD6HriHOV4=;
-        b=RHMqnLtGkt6WQKeR4bvOyznY4QCz1HABySkTMeR7bdk5xdTVQiqkky1jEkzoHOoDSI
-         y3aSsUToD5W8G/yxdxl1+8o4TzbIShVapDnHWdzXumcpLANb50Yll796r/2bNKHy09Cd
-         o7SxR5bwDznB5HkqVNdjNUo/S/Q6h0xtLWod7wsFvtHmKc1cntNeyDraEwztYxos8c3z
-         Tt+4asCwIpbZdibrojrUWdY1JEBQVyLD475ZmooOx3cjbPRR8bHB24dn3cAiPSpjLggs
-         6Z446nEroAXkQLVcZDJrUN+3Pc3MIE0jeB+fwYABL8uXmDebzcXAonO+DjTEstuozV8D
-         T8wA==
-X-Forwarded-Encrypted: i=1; AJvYcCXM4XL69vrOfcH4JR2nBsqkASaIMk0mOvHWBb4MyugMyee0NXuDbi9HLGfT+3UaNb7Oah6QHKTQf1PkYqrieYL4bBCmSk8KDv/mdKNOGA==
-X-Gm-Message-State: AOJu0Yw8VPPXU5fe9rlDzzv3GONHUmGDrKwRxnN2wlMQsNaMcpGwb4ou
-	+hhyZeQnwJySEWJiNjj5mfSypqeBLUdNl+HIWVsNdDPMKJT7TKO9rA0xv7X6rg==
-X-Google-Smtp-Source: AGHT+IHg+QGPW6c7yNuVfIy4mB1qUblGBo63Tt7Q82dhAxfSHW8SU9MTfYSWrSGI9xpyWtMDyKwWUw==
-X-Received: by 2002:a17:903:22cb:b0:1dd:8d25:f8a0 with SMTP id y11-20020a17090322cb00b001dd8d25f8a0mr1295429plg.24.1710288843216;
-        Tue, 12 Mar 2024 17:14:03 -0700 (PDT)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:f8dd:895c:e876:6edb])
-        by smtp.gmail.com with ESMTPSA id x8-20020a170902a38800b001dd761faec3sm7432924pla.251.2024.03.12.17.14.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Mar 2024 17:14:01 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Douglas Anderson <dianders@chromium.org>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sean Paul <sean@poorly.run>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] drm/msm/dp: Delete the old 500 ms wait for eDP HPD in aux transfer
-Date: Tue, 12 Mar 2024 17:13:18 -0700
-Message-ID: <20240312171305.3.I535606f6d4f7e3e5588bb75c55996f61980183cd@changeid>
-X-Mailer: git-send-email 2.44.0.278.ge034bb2e1d-goog
-In-Reply-To: <20240313001345.2623074-1-dianders@chromium.org>
-References: <20240313001345.2623074-1-dianders@chromium.org>
+        bh=+04D6u+/MuKPrCCxQ1meOXYi6MthiRQ4bVsU1Ta9CV0=;
+        b=FMoyURR+uIDMnp+A+CqjbQXt+YHn76udnnwev7DuoQZIXCDcDYDK+gskkAy+hqvAKt
+         fS10QuwTf6wTBA2Gk/OVztnOm9MDAoS66QX3fw27AjIllAH5QCFgJkBU6mYlchQgQNhZ
+         osw02V4xPtmUKlCq1wBsIrX4G+RsUVYEqihzxRB6s2ouz0U3jxQM198/CUKTbHUm9YMm
+         kAMucONjAwyNw9Bn+iQiz7LNdOvD2tejRJlHsWjEXUNP8sM3Sj5ebwV6pN99wuyPocLj
+         qcvAezHReuswZcR23yE5jFbH0v9v6LWve+YYhL12e8Gl2Oq6ek+1SPWX4Myd0SZCRnzs
+         Ptpw==
+X-Forwarded-Encrypted: i=1; AJvYcCVjTXUAniv7yTzOqtUZwsjXc26VomrE6NHYlzhAeYLrNWIi8OEDqF5rkA1iU1L/vUdZFVYr5iOJGeAXU8eimFK/p1SfeHmrgXlSqlorJg==
+X-Gm-Message-State: AOJu0YyToebCKa6HySX5NEllh1gIwlpLSoH54vlwS/L3xUZRHST+R8+r
+	5P8YK66l+5aHkL2gIdxs4Ze5vXhbz7hjax5shp4537/b5Ydi+6a4fBkhFcs+CtoulovL9I+jRnF
+	qrKoP6EAv4K7j4d1GCNSTzXiJ0/poBHVpgOyN
+X-Google-Smtp-Source: AGHT+IEDNUZtHnW293+epCHuCd7X0kpy8JB6UScKG21DsvkhxYQyKtycIK7/9X0BOK18ToSUjuwEy0eQqZbYLoYTvI0=
+X-Received: by 2002:ac8:5956:0:b0:42f:172b:a814 with SMTP id
+ 22-20020ac85956000000b0042f172ba814mr148134qtz.0.1710290818723; Tue, 12 Mar
+ 2024 17:46:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240313001345.2623074-1-dianders@chromium.org> <20240312171305.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid>
+In-Reply-To: <20240312171305.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid>
+From: Guenter Roeck <groeck@google.com>
+Date: Tue, 12 Mar 2024 17:46:44 -0700
+Message-ID: <CABXOdTfNaorDgyZT8owH6ypYpZMhVpUEcK8N4Mbw2UumA8Db2g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/msm/dp: Avoid a long timeout for AUX transfer if
+ nothing connected
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, Guenter Roeck <groeck@chromium.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Sean Paul <sean@poorly.run>, Tanmay Shah <tanmay@codeaurora.org>, 
+	Vinod Polimera <quic_vpolimer@quicinc.com>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Before the introduction of the wait_hpd_asserted() callback in commit
-841d742f094e ("drm/dp: Add wait_hpd_asserted() callback to struct
-drm_dp_aux") the API between panel drivers and DP AUX bus drivers was
-that it was up to the AUX bus driver to wait for HPD in the transfer()
-function.
+On Tue, Mar 12, 2024 at 5:14=E2=80=AFPM Douglas Anderson <dianders@chromium=
+.org> wrote:
+>
+> As documented in the description of the transfer() function of
+> "struct drm_dp_aux", the transfer() function can be called at any time
+> regardless of the state of the DP port. Specifically if the kernel has
+> the DP AUX character device enabled and userspace accesses
+> "/dev/drm_dp_auxN" directly then the AUX transfer function will be
+> called regardless of whether a DP device is connected.
+>
+> For eDP panels we have a special rule where we wait (with a 5 second
+> timeout) for HPD to go high. This rule was important before all panels
+> drivers were converted to call wait_hpd_asserted() and actually can be
+> removed in a future commit.
+>
+> For external DP devices we never checked for HPD. That means that
+> trying to access the DP AUX character device (AKA `hexdump -C
+> /dev/drm_dp_auxN`) would very, very slowly timeout. Specifically on my
+> system:
+>   $ time hexdump -C /dev/drm_dp_aux0
+>   hexdump: /dev/drm_dp_aux0: Connection timed out
+>
+>   real    0m8.200s
+>
+> Let's add a check for HPD to avoid the slow timeout. This matches
+> what, for instance, the intel_dp_aux_xfer() function does when it
+> calls intel_tc_port_connected_locked(). That call has a document by it
+> explaining that it's important to avoid the long timeouts.
+>
+> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+>  drivers/gpu/drm/msm/dp/dp_aux.c     |  8 +++++++-
+>  drivers/gpu/drm/msm/dp/dp_catalog.c | 10 ++++++++++
+>  drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
+>  3 files changed, 18 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_=
+aux.c
+> index 03f4951c49f4..de0b0eabced9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+> @@ -307,7 +307,8 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_=
+aux,
+>          * turned on the panel and then tried to do an AUX transfer. The =
+panel
+>          * driver has no way of knowing when the panel is ready, so it's =
+up
+>          * to us to wait. For DP we never get into this situation so let'=
+s
+> -        * avoid ever doing the extra long wait for DP.
+> +        * avoid ever doing the extra long wait for DP and just query HPD
+> +        * directly.
+>          */
+>         if (aux->is_edp) {
+>                 ret =3D dp_catalog_aux_wait_for_hpd_connect_state(aux->ca=
+talog);
+> @@ -315,6 +316,11 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp=
+_aux,
+>                         DRM_DEBUG_DP("Panel not ready for aux transaction=
+s\n");
+>                         goto exit;
+>                 }
+> +       } else {
+> +               if (!dp_catalog_aux_is_hpd_connected(aux->catalog)) {
+> +                       ret =3D -ENXIO;
+> +                       goto exit;
+> +               }
+>         }
+>
+>         dp_aux_update_offset_and_segment(aux, msg);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp=
+/dp_catalog.c
+> index 5142aeb705a4..93e2d413a1e7 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -266,6 +266,16 @@ int dp_catalog_aux_wait_for_hpd_connect_state(struct=
+ dp_catalog *dp_catalog)
+>                                 2000, 500000);
+>  }
+>
+> +bool dp_catalog_aux_is_hpd_connected(struct dp_catalog *dp_catalog)
+> +{
+> +       struct dp_catalog_private *catalog =3D container_of(dp_catalog,
+> +                               struct dp_catalog_private, dp_catalog);
+> +
+> +       /* poll for hpd connected status every 2ms and timeout after 500m=
+s */
 
-Now wait_hpd_asserted() has been added. The two panel drivers that are
-DP AUX endpoints use it. See commit 2327b13d6c47 ("drm/panel-edp: Take
-advantage of wait_hpd_asserted() in struct drm_dp_aux") and commit
-3b5765df375c ("drm/panel: atna33xc20: Take advantage of
-wait_hpd_asserted() in struct drm_dp_aux"). We've implemented
-wait_hpd_asserted() in the MSM DP driver as of commit e2969ee30252
-("drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()"). There is
-no longer any reason for long wait in the AUX transfer() function.
-Remove it.
+Maybe I am missing something, but the comment doesn't seem to match
+the code below.
 
-NOTE: the wait_hpd_asserted() is listed as "optional". That means it's
-optional for the DP AUX bus to implement. In the case of the MSM DP
-driver we implement it so we can assume it will be called.
+Guenter
 
-ALSO NOTE: the wait wasn't actually _hurting_ anything and wasn't even
-causing long timeouts, but it's still nice to get rid of unneeded
-code. Specificaly it's not truly needed because to handle other DP
-drivers that can't power on as quickly (specifically parade-ps8640) we
-already avoid DP AUX transfers for eDP panels that aren't powered
-on. See commit 8df1ddb5bf11 ("drm/dp: Don't attempt AUX transfers when
-eDP panels are not powered").
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/gpu/drm/msm/dp/dp_aux.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index fc398e8a69a7..dd62ad6007a6 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -302,26 +302,14 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 	}
- 
- 	/*
--	 * For eDP it's important to give a reasonably long wait here for HPD
--	 * to be asserted. This is because the panel driver may have _just_
--	 * turned on the panel and then tried to do an AUX transfer. The panel
--	 * driver has no way of knowing when the panel is ready, so it's up
--	 * to us to wait. For DP we never get into this situation so let's
--	 * avoid ever doing the extra long wait for DP and just query HPD
--	 * directly.
-+	 * If HPD isn't asserted then the transfer won't succeed. Return
-+	 * right away. If we don't do this we can end up with long timeouts
-+	 * if someone tries to access the DP AUX character device when no
-+	 * DP device is connected.
- 	 */
--	if (aux->is_edp) {
--		ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog,
--								500000);
--		if (ret) {
--			DRM_DEBUG_DP("Panel not ready for aux transactions\n");
--			goto exit;
--		}
--	} else {
--		if (!dp_catalog_aux_is_hpd_connected(aux->catalog)) {
--			ret = -ENXIO;
--			goto exit;
--		}
-+	if (!dp_catalog_aux_is_hpd_connected(aux->catalog)) {
-+		ret = -ENXIO;
-+		goto exit;
- 	}
- 
- 	dp_aux_update_offset_and_segment(aux, msg);
--- 
-2.44.0.278.ge034bb2e1d-goog
-
+> +       return readl(catalog->io->dp_controller.aux.base + REG_DP_DP_HPD_=
+INT_STATUS) &
+> +              DP_DP_HPD_STATE_STATUS_CONNECTED;
+> +}
+> +
+>  static void dump_regs(void __iomem *base, int len)
+>  {
+>         int i;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp=
+/dp_catalog.h
+> index 38786e855b51..1694040c530f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -86,6 +86,7 @@ void dp_catalog_aux_reset(struct dp_catalog *dp_catalog=
+);
+>  void dp_catalog_aux_enable(struct dp_catalog *dp_catalog, bool enable);
+>  void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog);
+>  int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_cata=
+log);
+> +bool dp_catalog_aux_is_hpd_connected(struct dp_catalog *dp_catalog);
+>  u32 dp_catalog_aux_get_irq(struct dp_catalog *dp_catalog);
+>
+>  /* DP Controller APIs */
+> --
+> 2.44.0.278.ge034bb2e1d-goog
+>
 
