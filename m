@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-13965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-13966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 821AD87A202
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 04:54:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E159E87A207
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 04:54:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12ACB1F23E71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 03:54:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D86C282DCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 03:54:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A1D10965;
-	Wed, 13 Mar 2024 03:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE341119B;
+	Wed, 13 Mar 2024 03:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iOzrJosK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vq4sTN5r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F6910799
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 03:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6914B101DE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 03:54:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710302064; cv=none; b=eqCPFo71GYp4sJ8S8JBLtWGApue7+cl+owF5S11hhXOhcrCofiqSjrqzinjnN4Es0I6wLdcKnFcobhZeQmrqrIK6hYe2A+/e/nrRBbRtH6PcHaBEKsDa+XI26/abfSpfgYE/McPqV5M+FENk8kkC/Ap2/52hG9RhZ9MwODrd9Bo=
+	t=1710302066; cv=none; b=lpjTIWncCwruMp1QBrB7n0kBwg/KN5A2OXLrjaviGqR5LXa2VTYJhPSsyj+m/Rpz/AcKXz2ibwWRl6n70H99QiTH21saKBQvX2NMIlosSCughqYWTHB7a6V8NdC+HsuNx+rrKpSBSN1+781t6BahgwLpfX12EXG82TUSbvzdVmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710302064; c=relaxed/simple;
-	bh=uuYeQvYvdPa6xmGP869tkZ5w3Kz9K6rlx7X6sdK7szI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YTXjeEgNywH/vxRCBtbJ8D2IH78i2OqjHy/IYXbIRFZsTgz9jpan8aE9Uu2y8t9u6GRyQaWF3ccqqXzjIgXMHdVu6YRlAlVvAmt0VqkaGILZgKdfm5OfTfPsijU0wFVwVbKLCsJ6jNrFDe8wUjfwih18SCAH8IfrLTSSYLDKiD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iOzrJosK; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1710302066; c=relaxed/simple;
+	bh=5qUUCTMFfwh0GWLizFk8xctUPdAHmp89Ki8123ktN38=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=k0vcAiY7dB/sLVJNKGR0lP3+qaW0soMpO+NHN3Y7MLxropIvdLiMTIpDVpbkkr1qhXRHMO4ffKEWdeeyhwJIsvvj6vQrs+oPwaGPH0gm0O9X++H4ZV/pPjlShYcCRN1TgVWaa+C1wFxWB0Uap/njx3yNcQ4T4iE/JTySaKWd4ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vq4sTN5r; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d220e39907so9740711fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 20:54:22 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d27fef509eso101134421fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Mar 2024 20:54:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710302061; x=1710906861; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul9kMS0dDijopmqealloW1ilUpaK8SpmQOuP6iZpG7o=;
-        b=iOzrJosKf/4P2vfyFYxlGjdPDMnBaYb0pZNWChh6287FnZGgiVGyyqm3mnTcP9V8l+
-         VMBB98sLzN8nYTTq3y/400VOfbHLiPxey4T32uw0Cjp2c7WWV0q9MPpyb0rDcvZ1S68N
-         AD9JPRT3RaDVMtLAW2KH+7xbaHFNe680yh9bnuErvHm8w/a1Vdsd4ez5K5CRpm+fPO4j
-         D5P2p78jTzqjkvbRjWGyORTiGoIa4YX1v4yClJArHEzwni8CmnWhmcSx83hqjydPnaas
-         MFu8QtvPakQ0k/krM5rNZ2AFzsffXXnOvlqNf9idvx9d6JrEqHbuhNyJNW1G++rRFMH9
-         ynSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710302061; x=1710906861;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1710302062; x=1710906862; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ul9kMS0dDijopmqealloW1ilUpaK8SpmQOuP6iZpG7o=;
-        b=tuoHvWbPzo8t1Kowg4tumlyLgO/CQvcWtBebv8qlGLHl1WsQyBSPcPfGhqDileFNeH
-         SLWiS60OhDUI+okfFHkY4aL8UKLvnZXE5Gqb8aAHDWWb50OgMAfIhGxjIl28Yx39rIHY
-         Yq73xMBZDaXwyg7n4WPovLOcQbVOfBvjXO0sg+Dlx2Xq2vOgJzMIE2mwQp5QM8xzQ/8R
-         ToNpX7naZzyQi/4gfZp1zP6tZPFsKaGqWW9euXhS8pmqWockyith5/wqh8sRpD3g+g5O
-         dM3NMAY+QOHMoPijPwDkbyUb/aj6Jmt0R7z0RAFUWHDAAMrWCq8QkFcaI9vtrsUHEQez
-         5smg==
-X-Forwarded-Encrypted: i=1; AJvYcCWqYVWEg3xYyZc1AQhtR0tA3GZ6Sbj6lslcwmkvXOx6Ynddrz5q4YZdMYsnfhH7m3FpasdhxR/oYtpjIDoSNgo8ZIAgWkSNPdXbGxI1yQ==
-X-Gm-Message-State: AOJu0YyPtGVvTosc72nu29lwapNc7VdoXCxz8icxI/Ux7Jt9dnR+57p4
-	dd7wTkE+UfBJx6du2OU3WB07t/zqia5jF4aRwkgt63F0HmfxUa8VqAXKnmF7eGY=
-X-Google-Smtp-Source: AGHT+IFFWO0p1YoK78R5xGmkweZHTNPWCkFoHXOWekR/ioaaF/xOmbY+3EHSZ9Lmr/mIoMKmse9siQ==
-X-Received: by 2002:a2e:9cd4:0:b0:2d4:54dc:28e3 with SMTP id g20-20020a2e9cd4000000b002d454dc28e3mr2747237ljj.28.1710302060670;
-        Tue, 12 Mar 2024 20:54:20 -0700 (PDT)
+        bh=RLTPq66GU+FLbpH3nyuA9I8IqdpbGC/dXUxjJTbbTFU=;
+        b=Vq4sTN5resfoKl2ZP0jIXXTxe6kN5nrkl2+af6Nd9sXill94EtJYPjSO7fsRitsmiV
+         f6CvorYT9NujrGwI/6V4vJBc4jRpDHyYWGaw5fUgS9ITYobFPQ8BXMlhLQ6iP09cTUMV
+         NTg88+KUuYj45Qm2ldzBJK9lvWFJ8WLfgOgERsrc3R83nNSygF5h1gXY1pX5KhDx6Auz
+         XUCrzteGKc5oZoH81wGcbXyd3MpC62YrKWWJ6bz3SrNEntu3uKa11D8AepEAXzYYUf5P
+         1H6a+fVGfQIIV6GbqRtuNMxOwIVUYd3jd9ik0STnHB4jTUtxKxN4vdYk6YrVrsnLCWJ+
+         iiQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710302062; x=1710906862;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RLTPq66GU+FLbpH3nyuA9I8IqdpbGC/dXUxjJTbbTFU=;
+        b=i4qZQKThIpu/z1Ewq+oz2LPHO4Dp+HZGwWix0qYdi5SGcuJrDJ2KeLiNUazOQnRRhz
+         t5T5jxEGHP5q0RQ6B5WTJTwyNHWlZGZOOePbWHVlE3xfNrPAnF38JOlCo2Gr3a4xvC20
+         03jamXHKjVzWbikd6tK1Jeapm2hexXufXtGsjFAdh1C5GG5N8ciRWGKV+NxMx/5kjtXy
+         fMqwI+wcj6IaiV8MdHevH8/Dws7bOpA6P+oRnAXLBw3AU0PuFnT9Edz5l+tjmm4fzN3z
+         SjQpJqTvrrx7MZdVk5Bah9Lg8zC8dHsCO97yyk/iqiBBoIu81hW+rXrRJM3HH1U4LS0N
+         Ct7g==
+X-Forwarded-Encrypted: i=1; AJvYcCXy6m0zqOC2BubJGPEY2NpzrMQ7ZSbBArzWTGoyRPUY8SY2/Xus3n94zpX6ufSH0EMmlI0nlwEX3u7+QP5jRVTKKQia+8kiNxFuK4JDjw==
+X-Gm-Message-State: AOJu0YwRIJpJ0WjGJUVYcebEZg4K1/a9nHhXCeTMeL69hVoGo7FUhsiC
+	6toE/V7ieoRG6cbTyeyYcpYtzhy7+lmuUWW2nHGi2W74YS1qFs99PF0wxEs17II=
+X-Google-Smtp-Source: AGHT+IF2gIO8l89DhMPUZnzCGqhK82MhP/4ZMa2FOkGWNOMjWcfpe6eVq0PlHpm1K5Fom8nIThZywQ==
+X-Received: by 2002:a2e:7812:0:b0:2d4:142:488a with SMTP id t18-20020a2e7812000000b002d40142488amr7666840ljc.8.1710302062209;
+        Tue, 12 Mar 2024 20:54:22 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f25-20020a05651c02d900b002d0acb57c89sm1854319ljo.64.2024.03.12.20.54.19
+        by smtp.gmail.com with ESMTPSA id f25-20020a05651c02d900b002d0acb57c89sm1854319ljo.64.2024.03.12.20.54.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 12 Mar 2024 20:54:20 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 0/7] usb: typec: ucsi: fix several issues manifesting on
- Qualcomm platforms
-Date: Wed, 13 Mar 2024 05:54:10 +0200
-Message-Id: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
+Date: Wed, 13 Mar 2024 05:54:11 +0200
+Subject: [PATCH 1/7] usb: typec: ucsi: fix race condition in connection
+ change ACK'ing
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,9 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGIj8WUC/x3LQQ5AMBBA0avIrE1SRYmriIXWYBaUTohEeneN5
- cvPf0EoMAl02QuBbhb2e0KRZ+DWcV8IeUoGrXSlykLj6fyGlxPGmR8SNHXTTro01igL6ToC/SF
- N/RDjByyx2sNhAAAA
+Message-Id: <20240313-qcom-ucsi-fixes-v1-1-74d90cb48a00@linaro.org>
+References: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
+In-Reply-To: <20240313-qcom-ucsi-fixes-v1-0-74d90cb48a00@linaro.org>
 To: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
  Guenter Roeck <linux@roeck-us.net>, Bjorn Andersson <andersson@kernel.org>, 
@@ -89,44 +90,82 @@ To: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 Cc: Johan Hovold <johan+linaro@kernel.org>, linux-usb@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1153;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2257;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=uuYeQvYvdPa6xmGP869tkZ5w3Kz9K6rlx7X6sdK7szI=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+pH5azXzEv/mU/YY+XI72Umr/rxs/apdoM7X0MX5ZaJ5
- Ypxs1h0MhqzMDByMciKKbL4FLRMjdmUHPZhx9R6mEGsTCBTGLg4BWAije0cDDM+yrCzKq48cYHp
- 1IP1QT+EHQR5wxh+3NTr39h6Z43ulx8TV2x51u8rK6AgeNW7irNLblcKz3reBZvjeHdYtUtP18n
- WXdzVu9Ln1CdVxy3ppvJJHUvX2Sxct2Z/+sw9xRmZ75tOSsaoi6lY8LuKPPmimbZB/Pr+NBmLqA
- Mz5aNP7PJbd0zmmMtbvmAlrbVHE6teepWpOHRN27fIWUaT1yc2M2tyIf+i6c/vNxlOTrS7MLMyz
- JBvmzffURf77w9bXzgsusqX8Lvf9kWj5BHPkutnzDY2n5CsF/S5Ybw0wluDN0Dkepr9pSw17cBf
- pUYz9gnZi066UuLGdnqtjcPuyPd9M64YWJW3bJX/d+YlAA==
+ bh=5qUUCTMFfwh0GWLizFk8xctUPdAHmp89Ki8123ktN38=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl8SNqd16wpFUFHQFpmCrx+aM4x5e+9Cbg/SwXy
+ EdVo+IYGxKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfEjagAKCRCLPIo+Aiko
+ 1UjFB/4vxPjvb5YNIJgzQJVuz/WdW4MrD6GzN/1jhebh/IPO9C/nP43s77XTsN73+OTlfVNgKj7
+ KRzqBz1ESGVxQQxhe/2KfA1S5ijpxK+egNcbul3gw/oqD+nGfIZhPoHp7k6GhiX8akiKxqn27LC
+ iJm920Vq03Of8/X5T8XaKKqmaZ26hpUvv9x0bkBWszW0edyW/Nbyj4Ad4nUiQaFlmVS/e7RpQcK
+ Z7HDoO+hI6Oj3xqrjlFHLVrxkw2ozF+vWnWoYPI9QENjgV58QiyN1B+zRyyTNVaIXyrZkuhqa2l
+ FS4ARb4RRh7dauequb0u/GYKVmA1E3ZUQZmDS9/GMRhM9S1M
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Fix several issues discovered while debugging UCSI implementation on
-Qualcomm platforms (ucsi_glink). With these patches I was able to
-get a working Type-C port managament implementation. Tested on SC8280XP
-(Lenovo X13s laptop) and SM8350-HDK.
+The code to handle connection change events contains a race: there is an
+open window for notifications to arrive between clearing EVENT_PENDING
+bit and sending the ACK_CC_CI command to acknowledge the connection
+change. This is mostly not an issue, but on Qualcomm platforms when the
+PPM receives ACK_CC_CI with the ConnectorChange bit set if there is no
+pending reported Connector Change, it responds with the CommandCompleted
++ NotSupported notifications, completely breaking UCSI state machine.
 
+Fix this by reading out CCI after ACK_CC_CI and scheduling the work if
+there is a connector change reported.
+
+Fixes: bdc62f2bae8f ("usb: typec: ucsi: Simplified registration and I/O API")
+Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Dmitry Baryshkov (7):
-      usb: typec: ucsi: fix race condition in connection change ACK'ing
-      usb: typec: ucsi: acknowledge the UCSI_CCI_NOT_SUPPORTED
-      usb: typec: ucsi: make ACK_CC_CI rules more obvious
-      usb: typec: ucsi: allow non-partner GET_PDOS for Qualcomm devices
-      usb: typec: ucsi: limit the UCSI_NO_PARTNER_PDOS even further
-      usb: typec: ucsi: properly register partner's PD device
-      soc: qcom: pmic_glink: reenable UCSI on sc8280xp
+ drivers/usb/typec/ucsi/ucsi.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
- drivers/soc/qcom/pmic_glink.c |  1 -
- drivers/usb/typec/ucsi/ucsi.c | 51 +++++++++++++++++++++++++++++++++----------
- 2 files changed, 39 insertions(+), 13 deletions(-)
----
-base-commit: ea86f16f605361af3779af0e0b4be18614282091
-change-id: 20240312-qcom-ucsi-fixes-6578d236b60b
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index cf52cb34d285..4abb752c6806 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -61,12 +61,28 @@ static int ucsi_acknowledge_command(struct ucsi *ucsi)
+ 
+ static int ucsi_acknowledge_connector_change(struct ucsi *ucsi)
+ {
++	unsigned int con_num;
+ 	u64 ctrl;
++	u32 cci;
++	int ret;
+ 
+ 	ctrl = UCSI_ACK_CC_CI;
+ 	ctrl |= UCSI_ACK_CONNECTOR_CHANGE;
+ 
+-	return ucsi->ops->sync_write(ucsi, UCSI_CONTROL, &ctrl, sizeof(ctrl));
++	ret = ucsi->ops->sync_write(ucsi, UCSI_CONTROL, &ctrl, sizeof(ctrl));
++	if (ret)
++		return ret;
++
++	clear_bit(EVENT_PENDING, &ucsi->flags);
++	ret = ucsi->ops->read(ucsi, UCSI_CCI, &cci, sizeof(cci));
++	if (ret)
++		return ret;
++
++	con_num = UCSI_CCI_CONNECTOR(cci);
++	if (con_num)
++		ucsi_connector_change(ucsi, con_num);
++
++	return 0;
+ }
+ 
+ static int ucsi_exec_command(struct ucsi *ucsi, u64 command);
+@@ -1215,8 +1231,6 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+ 	if (con->status.change & UCSI_CONSTAT_CAM_CHANGE)
+ 		ucsi_partner_task(con, ucsi_check_altmodes, 1, 0);
+ 
+-	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+-
+ 	mutex_lock(&ucsi->ppm_lock);
+ 	ret = ucsi_acknowledge_connector_change(ucsi);
+ 	mutex_unlock(&ucsi->ppm_lock);
 
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
