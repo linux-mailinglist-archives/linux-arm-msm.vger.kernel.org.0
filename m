@@ -1,177 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-14130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2157987BC1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 12:44:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FB6087BC55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 12:56:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C9BAB22249
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:44:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C326A1C22B86
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:56:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39046EB73;
-	Thu, 14 Mar 2024 11:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59EB06F067;
+	Thu, 14 Mar 2024 11:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EH8tH1tt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nNbjRRsr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CAF6EB72
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 11:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0E86EB74
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 11:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710416655; cv=none; b=qLJRENlaITi1PdIMI1+poCbFGrNqj6KLg2KvjClPTc1QLq5/JpxJkH/OJWP5B+5jMbit0zz7SFKApFdAVXhOBcmVqR87/3+6aFqS83A/GyT3dnZ+f+hax1/DW1Bx1ouSyglTiYj4wrGDodXlevfZi8ppiVtPMWfr60c9fo5l9j0=
+	t=1710417403; cv=none; b=XknftNOoLpw13OSuGb6W1koCvN2ZjONcw8aUXKXxJSnHSpTi2+xppbg6QOlOgi4/PrmiTE3AYxj6fYDFlvqf6z45PB0va5QbFW40/s436EoR8aku/krq33IaGmPLOy1OdZMiAGi4LpyEu9OGWE0EpJyJxb9NgzoN98p5KDNPMyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710416655; c=relaxed/simple;
-	bh=uHmXx1vffgb10IBWDDsRkysFRIXMcuzCGZ7lRM+V3YM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EUg90/2b8/ra+4H2K5fMeAaf/2cYct1FifrnHP/8UIrCmARjfnpUscUKTqZoWTjHRUg+wlRr4xNLp1/FC8Rt7CQrCOrywhORrzjJEzgHF/Jb4EZpfMIyBZmZOkKDEj0RE9wI9VUG/okF5gd/hEQmaVQN4VtnhGyYnCXWhyR9eZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EH8tH1tt; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1710416654; x=1741952654;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=uHmXx1vffgb10IBWDDsRkysFRIXMcuzCGZ7lRM+V3YM=;
-  b=EH8tH1ttM3ezuXqMzvC/22781dlq5xbHr8dvqyCVImX4GcUw5Zw0WVDm
-   i0N7ZV5aHhPrKYD3M+gzBean83dyTHaca4evJuYqkvxO0P/vWOdp2sbxH
-   MwTQt0RJ+kiO6VV6Kwa/H+e5pNSZvHp8oCswodDNhZlg+9gkAB2RqBRmP
-   EuPkQ0+PcwKVgJmrjKe18sPwI30IdBIg+esIc5eGjQo9SIXTMzxUrghQv
-   B3DscKEGsBfKftHfyCVOlcxUhDlfdjY9y+2IJXUJn8iCIuVR25j5Xhs3J
-   XhKmODmwisBPe6/dYj6rIMJbWNWO0gkpYsESIO+1GLe80aiuc6NL9QSV7
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11012"; a="30667519"
-X-IronPort-AV: E=Sophos;i="6.07,125,1708416000"; 
-   d="scan'208";a="30667519"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2024 04:44:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,125,1708416000"; 
-   d="scan'208";a="16923748"
-Received: from jlawryno-mobl.ger.corp.intel.com (HELO [10.217.160.171]) ([10.217.160.171])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2024 04:44:13 -0700
-Message-ID: <e53e5a34-b9cd-4147-9d1a-f46f2cc65a63@linux.intel.com>
-Date: Thu, 14 Mar 2024 12:44:12 +0100
+	s=arc-20240116; t=1710417403; c=relaxed/simple;
+	bh=OnR+b4vuwemmK4UxRqvqWSVAvC55cRTDFTw44osbDl8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bc1Ee2xQxT/SgwSyZwjjor6HgKbyl22NlOJUTLYIPYbXOmVAU8j2vVab3Otlck2mLs1DqPt/pXsChz/ekWEssAoVMze0ymjvRfDNmEDmgEOIWzbcwAgsAEAmf+ZM5txfkdIO7lg/sCK/ZEXKoycCLAGbFF0u9Itt2nraxu9V5ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nNbjRRsr; arc=none smtp.client-ip=209.85.221.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-4d41334b45eso353616e0c.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 04:56:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710417399; x=1711022199; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4p7bU1aHHtSQT0obHNU/eUyOrGVsRVnhtaCT7GQv+pA=;
+        b=nNbjRRsrdohsFl+xJVvy5TycmFhpa5QF38zbtA6+Z3CthHwmodfjMFCCuJjvrP/DzV
+         ipzyr25PqVyiGHGgE8w8UzAxqBEbMdpipnzaQWywEKgaSDCDVnc4sLdsk1Lhn1+NZkt6
+         KQ9o3JCghgatsFrCOfeYovst6WEjlLHXID6bMPCdB7WTt3V/OnN53bEZltxv8nZci8wv
+         gxbg+eCXIrr2dGWPW1Vx+Qkaaz4VxHRQWpPkh3kAWT8CfkCuDEkIvTBk86FIwTqH4XTH
+         WbAaDMjMRspvcu+MuTTVoj3AgzrxC4qUdCtJxx7+1CupYw/T+9q23t7+6XZ9wTsMaopP
+         OYzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710417399; x=1711022199;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4p7bU1aHHtSQT0obHNU/eUyOrGVsRVnhtaCT7GQv+pA=;
+        b=EIsOkji/8YFMXV9MPuuNPewQ7qPwUdR5ugremDo7Oi6oQSbcLaiVulT5OVGcqcGWf2
+         GwzAfSmlBKh4X6jNhbtaKGYQ78sUgVsMGqBKqQ+8yoyBF50Dbu+yylZK6e+EEu4v25pD
+         GY6bK0uSYZ1G9Y6BvA2WM1IaxoemA8FPtDmqU22UIWsxFnD1lH5zo43r6r0kDCTllKxY
+         BDhHvyFNDQL0ctM+kj9npkq7vfvfSzoKWCszaUdjXSiQPC/ZtpCZdgbdVYa9/yXFxnzV
+         MHsFNdSdFd9cXNRFE+XZKl39BNTNQ815szztnoGWB8Hn/czc/dXzeEmIdQw1ZG60IpKV
+         mx8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXcGWyQ24aRkjw1z/JQz3vbr1ICSvAOXqf5bwR6/FbZvtOhgmpWp9AEdB6mGGeTugPjnvNhmX8gP+RVC4rmlqZ8tHA3xOTyTDA/fAf4UA==
+X-Gm-Message-State: AOJu0YwX5Y+c2nZfrSYZZ92iZd489crEdYJidzxtDhdIeOwRc7/dEhkz
+	pIGVzdT2WQTLqu8t6dQ+pIiQEt5ZnHHKCxoBG9ih3qymFMWzlLB74Bhoj6mw7FDvKoTnt2RaYVU
+	KYiBtot71h+1MwkoEpGK3qx7JGZAPCHePoXVYcw==
+X-Google-Smtp-Source: AGHT+IFw6UFe8Y6PwM28pisV3eC96R7jT95oGvUJqCkFT7yNA+I/M7/0r+6kLSxppke9VRZdanPgRKOSZBgImSorCr4=
+X-Received: by 2002:a05:6102:2907:b0:476:262:1245 with SMTP id
+ cz7-20020a056102290700b0047602621245mr1948187vsb.15.1710417398935; Thu, 14
+ Mar 2024 04:56:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] accel/qaic: Add fifo queued debugfs
-Content-Language: en-US
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>, quic_carlv@quicinc.com,
- quic_pkanojiy@quicinc.com, stanislaw.gruszka@linux.intel.com
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- ogabbay@kernel.org
-References: <20240311165826.1728693-1-quic_jhugo@quicinc.com>
- <20240311165826.1728693-4-quic_jhugo@quicinc.com>
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-In-Reply-To: <20240311165826.1728693-4-quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240313123017.362570-1-sumit.garg@linaro.org>
+ <20240313123017.362570-4-sumit.garg@linaro.org> <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
+ <CAFA6WYNMjCaa0FKjNv6a8VFkco3=GBfgWNDuckGZdiZ9dGmHgg@mail.gmail.com>
+ <d82ab1f8-e677-485f-9a6b-4115acfd7239@linaro.org> <CAFA6WYNSumyScax=GkN42GJOG56T3odF5Ed9A2i1nk_exCyGtA@mail.gmail.com>
+ <ZfLUu6_Vq7MvG2G3@gerhold.net>
+In-Reply-To: <ZfLUu6_Vq7MvG2G3@gerhold.net>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Thu, 14 Mar 2024 17:26:27 +0530
+Message-ID: <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+To: Stephan Gerhold <stephan@gerhold.net>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
+	laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com, 
+	jimmy.lalande@se.com, benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
+	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+On Thu, 14 Mar 2024 at 16:13, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Thu, Mar 14, 2024 at 03:02:31PM +0530, Sumit Garg wrote:
+> > On Thu, 14 Mar 2024 at 14:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > > On 3/14/24 10:04, Sumit Garg wrote:
+> > > > On Wed, 13 Mar 2024 at 18:34, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > > >> On 3/13/24 13:30, Sumit Garg wrote:
+> > > >>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> > > >>> Box Core board based on the Qualcomm APQ8016E SoC.
+> > > >>>
+> > > >>> Support for Schneider Electric HMIBSC. Features:
+> > > >>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> > > >>> - 1GiB RAM
+> > > >>> - 8GiB eMMC, SD slot
+> > > >>> - WiFi and Bluetooth
+> > > >>> - 2x Host, 1x Device USB port
+> > > >>> - HDMI
+> > > >>> - Discrete TPM2 chip over SPI
+> > > >>> - USB ethernet adaptors (soldered)
+> > > >>>
+> > > >>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > >>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > >>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+> > > >>> ---
+> > > >>
+> > > >> [...]
+> > > >>
+> > > >>> +     memory@80000000 {
+> > > >>> +             reg = <0 0x80000000 0 0x40000000>;
+> > > >>> +     };
+> > > >>
+> > > >> I'm not sure the entirety of DRAM is accessible..
+> > > >>
+> > > >> This override should be unnecessary, as bootloaders generally update
+> > > >> the size field anyway.
+> > > >
+> > > > On this board, U-Boot is used as the first stage bootloader (replacing
+> > > > Little Kernel (LK), thanks to Stephan's work). And U-Boot consumes
+> > > > memory range from DT as Linux does but doesn't require any memory to
+> > > > be reserved for U-Boot itself. So apart from reserved memory nodes
+> > > > explicitly described in DT all the other DRAM regions are accessible.
+> > >
+> > > Still, u-boot has code to fetch the size dynamically, no?
+> > >
+> >
+> > No U-Boot being the first stage bootloader fetches size from DT which
+> > is bundled into U-Boot binary.
+> >
+>
+> Back when I added support for using U-Boot as first stage bootloader on
+> DB410c the way it worked is that U-Boot used a fixed amount of DRAM
+> (originally 968 MiB, later 1 GiB since I fixed this in commit
+> 1d667227ea51 ("board: dragonboard410c: Fix PHYS_SDRAM_1_SIZE") [1]).
+> When booting Linux, the Linux DT was dynamically patched with the right
+> amount of DRAM (obtained from SMEM). So if you had e.g. a Geniatech DB4
+> board with 2 GiB DRAM, U-Boot was only using 1 GiB of DRAM, but Linux
+> later got the full 2 GiB patched into its DTB.
+>
+> I didn't have much time for testing U-Boot myself lately but a quick
+> look at the recent changes suggest that Caleb accidentally removed that
+> functionality in the recent cleanup. Specifically, the SMEM-based DRAM
+> size detection was removed in commit 14868845db54 ("board:
+> dragonboard410c: import board code from mach-snapdragon" [2]), the
+> msm_fixup_memory() function does not seem to exist anymore now. :')
 
-On 11.03.2024 17:58, Jeffrey Hugo wrote:
-> When debugging functional issues with workload input processing, it is
-> useful to know if requests are backing up in the fifo, or perhaps
-> getting stuck elsewhere. To answer the question of how many requests are
-> in the fifo, implement a "queued" debugfs entry per-dbc that returns the
-> number of pending requests when read.
-> 
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> ---
->  drivers/accel/qaic/qaic.h         |  1 +
->  drivers/accel/qaic/qaic_data.c    |  9 +++++++++
->  drivers/accel/qaic/qaic_debugfs.c | 31 +++++++++++++++++++++++++++++++
->  3 files changed, 41 insertions(+)
-> 
-> diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-> index 03d9c9fbffb3..02561b6cecc6 100644
-> --- a/drivers/accel/qaic/qaic.h
-> +++ b/drivers/accel/qaic/qaic.h
-> @@ -288,6 +288,7 @@ int disable_dbc(struct qaic_device *qdev, u32 dbc_id, struct qaic_user *usr);
->  void enable_dbc(struct qaic_device *qdev, u32 dbc_id, struct qaic_user *usr);
->  void wakeup_dbc(struct qaic_device *qdev, u32 dbc_id);
->  void release_dbc(struct qaic_device *qdev, u32 dbc_id);
-> +void qaic_data_get_fifo_info(struct dma_bridge_chan *dbc, u32 *head, u32 *tail);
->  
->  void wake_all_cntl(struct qaic_device *qdev);
->  void qaic_dev_reset_clean_local_state(struct qaic_device *qdev);
-> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-> index 2459fe4a3f95..e86e71c1cdd8 100644
-> --- a/drivers/accel/qaic/qaic_data.c
-> +++ b/drivers/accel/qaic/qaic_data.c
-> @@ -1981,3 +1981,12 @@ void release_dbc(struct qaic_device *qdev, u32 dbc_id)
->  	dbc->in_use = false;
->  	wake_up(&dbc->dbc_release);
->  }
-> +
-> +void qaic_data_get_fifo_info(struct dma_bridge_chan *dbc, u32 *head, u32 *tail)
-> +{
-> +	if (!dbc || !head || !tail)
-> +		return;
-> +
-> +	*head = readl(dbc->dbc_base + REQHP_OFF);
-> +	*tail = readl(dbc->dbc_base + REQTP_OFF);
-> +}
-> diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_debugfs.c
-> index 9d56cd451b64..12a65b98701d 100644
-> --- a/drivers/accel/qaic/qaic_debugfs.c
-> +++ b/drivers/accel/qaic/qaic_debugfs.c
-> @@ -97,6 +97,36 @@ static const struct file_operations fifo_size_fops = {
->  	.release = single_release,
->  };
->  
-> +static int read_dbc_queued(struct seq_file *s, void *unused)
-> +{
-> +	struct dma_bridge_chan *dbc = s->private;
-> +	u32 tail = 0, head = 0;
-> +
-> +	qaic_data_get_fifo_info(dbc, &head, &tail);
-> +
-> +	if (head == U32_MAX || tail == U32_MAX)
-> +		seq_printf(s, "%u\n", 0);
-> +	else if (head > tail)
-> +		seq_printf(s, "%u\n", dbc->nelem - head + tail);
-> +	else
-> +		seq_printf(s, "%u\n", tail - head);
-> +
-> +	return 0;
-> +}
-> +
-> +static int queued_open(struct inode *inode, struct file *file)
-> +{
-> +	return single_open(file, read_dbc_queued, inode->i_private);
-> +}
-> +
-> +static const struct file_operations queued_fops = {
-> +	.owner = THIS_MODULE,
-> +	.open = queued_open,
-> +	.read = seq_read,
-> +	.llseek = seq_lseek,
-> +	.release = single_release,
-> +};
-> +
->  void qaic_debugfs_init(struct qaic_drm_device *qddev)
->  {
->  	struct qaic_device *qdev = qddev->qdev;
-> @@ -112,6 +142,7 @@ void qaic_debugfs_init(struct qaic_drm_device *qddev)
->  		snprintf(name, QAIC_DBC_DIR_NAME, "dbc%03u", i);
->  		debugfs_dir = debugfs_create_dir(name, debugfs_root);
->  		debugfs_create_file("fifo_size", 0400, debugfs_dir, &qdev->dbc[i], &fifo_size_fops);
-> +		debugfs_create_file("queued", 0400, debugfs_dir, &qdev->dbc[i], &queued_fops);
->  	}
->  }
->  
+Ah now I see the reasoning for that particular piece of code. Is SMEM
+based approach the standardized way used by early stage boot-loaders
+on other Qcom SoCs too?
+
+>
+> Also, the DRAM size is now always taken from the DT (which is probably
+> better than the previous hardcoded size in the U-Boot board code).
+>
+> I think we should bring the dynamic DRAM size detection back, because
+> there are quite some boards available with varying DRAM size. Restoring
+> msm_fixup_memory() would likely be easiest, I guess the ideal solution
+> would be to parse SMEM in U-Boot's dram_init() function so even U-Boot
+> has the correct amount of DRAM to work with.
+
+In the context of the HMIBSC board, it has 1 GB RAM LPDDR3 internal
+not expandable. IMO, having it in DT as default should be fine.
+
+-Sumit
+
+>
+> Thanks,
+> Stephan
+>
+> [1]: https://source.denx.de/u-boot/u-boot/-/commit/1d667227ea512537b8453abeb49abbf19a1a18e8
+> [2]: https://source.denx.de/u-boot/u-boot/-/commit/14868845db54b4f64701977385dc9a6e951e4139
 
