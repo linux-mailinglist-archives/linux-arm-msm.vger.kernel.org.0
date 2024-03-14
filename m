@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-14053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19FEB87B58B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:02:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD84887B591
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:02:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B65B71F2247F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 00:02:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C9BA1C219B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 00:02:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD339473;
-	Thu, 14 Mar 2024 00:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07888EC2;
+	Thu, 14 Mar 2024 00:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AMOn/niR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bol4sS23"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31618BF8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E72947B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710374544; cv=none; b=sDRdCgLiPOTanjYhxi1rCiGt1LPUHg8XPDRXLIWbdpCBMluR4tr3qgf+F2GIgYhU3uNGtpPSbc+hSke3OrLOlblkUXZvwOaW4QKsXuzxgbCO+KC32KWQ7za09q880z9I9wJ35ao3kjQVHcKwhRqDx/Z0R42EqTUiojxHqxQVArc=
+	t=1710374546; cv=none; b=maRW/TfaKzp4xjrD8cyg79bO8pBvMrDIvm3S47JTcWsm+lLleOVYgAUGtlAwclclIOzlK+F71l6mY9ApFesE/HauOFJRj0ZfoTNNoO3FJjNX1DR6maniWvkD2hx2wdhaW0IrHyhXYq0v5BKs+hshHHttmXUl+tGJxZz7lsMcftk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710374544; c=relaxed/simple;
-	bh=KNldNFyPEEfzuAEtH1cnTT4X5jlP7dQNiCH2aZ9Uhok=;
+	s=arc-20240116; t=1710374546; c=relaxed/simple;
+	bh=oGhm2AfFpbwDUwQXJd23O5OpDvnVkCsnioPMvs7UQWw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZO8iUqDPheC3UV87pxhNb2s8F6dmy34+Iji2xMdSr7cZpNVVlZ/nfO5P3jGi3BRl+ijYJAIeqUI/SpeEtTnPEZdWAtxQrcsh/K5fC2fvCJWNJ8zggt/6wxPLlkCQe7G3vUTEpc5ZZiKHTksX8VuJD1DtI++TlkMPEGJMSRGhVyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AMOn/niR; arc=none smtp.client-ip=209.85.167.51
+	 MIME-Version; b=fZ6vZKkrhKNu+ep3rVMhEr0GE2Oobq8LbivCONZaiNrqiRFFCZnZF3etKVEQegWsh9YMqNw5iwU9YCz0Z4c1NkIUISK41Tiy/VR6yZ1SHjYsEg/1t027iUEKIfBvhf9NBN78k8PiN6hv4DnurANf+KKs4C3J8ccAQG4p1OYySbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bol4sS23; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5101cd91017so696719e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:02:22 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d109e82bd0so4223821fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710374541; x=1710979341; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710374542; x=1710979342; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=clvqfuDuLHhOMDUpN28VXezisf/pvnw+VhoyO8COXfI=;
-        b=AMOn/niRmZmk4FWG9D/oBEId2qt0g1H/zhHAEqvJUSS6Lqx0ml8jNiww2hD3u2M/c2
-         7d45K8I5zku+AwjdPiGQyP+9NOwscdIZ5hoI2N6dML1DOWijY0Oxk95BdiLgk6aDpJjv
-         28GC45xyxFK5ddO3rHziOlerjLJw/0lyP3QihQxM2wVGiiTrCt0x2tXL80up1l7hrA+o
-         QNuKBaEkMGKZr8wUz9ugvCqGu8xHaz3Vwaq9xMc7cV0zLuhSOBzzMXHXVTbQ4XdVSqZF
-         WfJ8yEtbchtz3fslxrWH14MuboMkBmyPMg89PYu0SZNkcTFpGJH31yBxAru8bZl+5E8z
-         PYOw==
+        bh=omhQlSoxtqwZ2DMzUczrlWHRB9OlkJVlUrZG2hp78ts=;
+        b=bol4sS23TlCee2NVorbumYlVFNCnVjhR/+8lOSCxWYtPagk0rv66dFftTAccY17MV/
+         r2fNL745fyC55RKCmFpKRRv7NrO+scFD1f1KoYYbYhLzGTYnS4WBnyVXdgH2lNskrKX+
+         rxxy6iKpdzwvdsdRfc6MzfYQwsKEMy2vUp493WPNg571JhuXKdM/CLblR9P0lBfaWTQQ
+         n03CZmcqIH43Hti4XEppSFNLhHv4SG30U/MMRZ50xCDrPqbwBvKJzSHHWqdTF6O3FoFM
+         EkbUEEIJWqWsij0fZF7Fw8w7mPGv1h1x20ZKxCZgL4SmBFx7agK0I1xWlEs0923DpIY9
+         t6jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710374541; x=1710979341;
+        d=1e100.net; s=20230601; t=1710374542; x=1710979342;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=clvqfuDuLHhOMDUpN28VXezisf/pvnw+VhoyO8COXfI=;
-        b=QxEIca7yCIjff0FjJzOL3r/36Efr7y/UDgnT8bBu6YEjmibjmL6VuL3xxH0Ql/a9Ry
-         OqydxAMk1DcMT7nfhi26bRHezuXtP3OEAMAIhV8qz8ueFW8hZojd+gYiMR8ynP81T//S
-         tEaYMNRr4eRqgfDs2MnNmV7ttlxGAsy/mMIrwcA7BctNAw3YTh/Wr9vKyKT3HZBhon0z
-         kFVkkL1/JLl4etepNOytA8QuLg+u8oN7Uv8IM4OLCKnJ7YCw/OmVW/wE7yTMCTab7jt0
-         CvzEtqkwHF20+hliiShZtCRU4rfr6t/y5/m4PzTLNe1m1qBCTykbjQa3VR+UXYonsb0G
-         pO0w==
-X-Forwarded-Encrypted: i=1; AJvYcCXERMBzp4oD1XkxkZh9VhrEjHumBNufgQxEwSLckmBOR1iS/ND54BXG2PhjIhGZhsORhqPG/7IhMof146nH/JbJJKxPlqKZvgoq7pSvQw==
-X-Gm-Message-State: AOJu0YyRE1X0j4dL4P5/7i7vWJ/9kIdM6TxIzjmu5PcUQnAAj7Gleej7
-	RQQmg+xY0qLLsU/V9T54IJRgyWziXU35X4SHFVprPXDnpzIS4pTDp61RZaPiUaw=
-X-Google-Smtp-Source: AGHT+IGDNT6i0DXVmxw8bW/VTemWoJzET4Y18lYpr6RE06EgwiFAMctoBH25D0HuRmKi+lnoQc0Fkg==
-X-Received: by 2002:a19:ca51:0:b0:512:bf43:d786 with SMTP id h17-20020a19ca51000000b00512bf43d786mr55047lfj.10.1710374541287;
-        Wed, 13 Mar 2024 17:02:21 -0700 (PDT)
+        bh=omhQlSoxtqwZ2DMzUczrlWHRB9OlkJVlUrZG2hp78ts=;
+        b=Va882d7YKt6Yqu78brX446//ufkLcp6skqKaWhZcM2vHkSJZ7fGqBDgBF1JAtuw4q3
+         5tsH9k9Go6xLmV4dJznq1cHVepfgVn+Kq0zLJhxTiTf6M5fQxo5dTG2UGzyjCBzVgw1n
+         0DW+J8XaNYkE/7gUG6EYhGprYi+9GQtuaclvsJxIid9P98omL5NB4FDHeMzN6LE+aV9i
+         9qVuCMdXfUixhQZb0ghf+USzcLKEb0MY7PXhhwmhOmbxWhz+qEKOvIy6HsYZjzYeVUQT
+         Wt1AYFWtppDZySUZysJS8vRZ/EHTZWhp3u3HnTF8wPXNkE8sl189Pa7KAR8AoEBQN7sZ
+         zsNg==
+X-Forwarded-Encrypted: i=1; AJvYcCUMQIk/B3wvSjkh1Ix6sGZQ7ClVs9bo0IU5Tyu3sv05YtfpW44eCPCI+QMjrg3H0f5TbqReTsJDRMKUk/sxVVCN6mnxM8jwys0y5EZPMA==
+X-Gm-Message-State: AOJu0YwomN24wyvKkFUwvrG4kKqhRJ1A4Jt2ikd8DFiBc3IaZ38ny7WD
+	2fVxQm574F0ERKTb73fE6PYhh8+QmG/dYNqMbdTMhPlRwmqSzfjn3r665pCFOk4=
+X-Google-Smtp-Source: AGHT+IFaWhVXOZSe75zGW3/qdv3Rp6jkv+9SmxpEyBltlIqwlLMBx+Ebzj6Tb8KVpz8Fk69lhkR/0A==
+X-Received: by 2002:ac2:5b9a:0:b0:513:c9a6:46ce with SMTP id o26-20020ac25b9a000000b00513c9a646cemr51945lfn.9.1710374542109;
+        Wed, 13 Mar 2024 17:02:22 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x5-20020a19e005000000b00513360ebd22sm46111lfg.118.2024.03.13.17.02.20
+        by smtp.gmail.com with ESMTPSA id x5-20020a19e005000000b00513360ebd22sm46111lfg.118.2024.03.13.17.02.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 17:02:20 -0700 (PDT)
+        Wed, 13 Mar 2024 17:02:21 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -79,9 +79,9 @@ Cc: Stephen Boyd <swboyd@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH v4 04/13] drm/msm/dpu: drop virt_formats from SSPP subblock configuration
-Date: Thu, 14 Mar 2024 02:02:07 +0200
-Message-Id: <20240314000216.392549-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v4 05/13] drm/msm/dpu: move scaling limitations out of the hw_catalog
+Date: Thu, 14 Mar 2024 02:02:08 +0200
+Message-Id: <20240314000216.392549-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
 References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
@@ -93,79 +93,133 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The virt_formats / virt_num_formats are not used by the current driver
-and are not going to be used in future since formats for virtual planes
-are handled in a different way, by forbidding unsupported combinations
-during atomic_check. Drop those fields now.
+Max upscale / downscale factors are constant between platforms. In
+preparation to adding support for virtual planes and allocating SSPP
+blocks on demand move max scaling factors out of the HW catalog and
+handle them in the dpu_plane directly. If any of the scaling blocks gets
+different limitations, this will have to be handled separately, after
+the plane refactoring.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 8 --------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 4 ----
- 2 files changed, 12 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 ----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 16 +++++++++++++---
+ 3 files changed, 13 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index f2b6eac7601d..a2e4832aa25d 100644
+index a2e4832aa25d..47fd8baf53e6 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -289,8 +289,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
- 		.base = 0x1a00, .len = 0x100,}, \
- 	.format_list = plane_formats_yuv, \
- 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
--	.virt_format_list = plane_formats, \
--	.virt_num_formats = ARRAY_SIZE(plane_formats), \
- 	.rotation_cfg = NULL, \
- 	}
+@@ -113,10 +113,6 @@
+ #define MAX_HORZ_DECIMATION	4
+ #define MAX_VERT_DECIMATION	4
  
-@@ -305,8 +303,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
- 		.base = 0x1a00, .len = 0x100,}, \
- 	.format_list = plane_formats_yuv, \
- 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
--	.virt_format_list = plane_formats, \
--	.virt_num_formats = ARRAY_SIZE(plane_formats), \
- 	.rotation_cfg = rot_cfg, \
- 	}
+-#define MAX_UPSCALE_RATIO	20
+-#define MAX_DOWNSCALE_RATIO	4
+-#define SSPP_UNITY_SCALE	1
+-
+ #define STRCAT(X, Y) (X Y)
  
-@@ -316,8 +312,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
- 	.maxupscale = SSPP_UNITY_SCALE, \
+ static const uint32_t plane_formats[] = {
+@@ -280,8 +276,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
+ /* SSPP common configuration */
+ #define _VIG_SBLK(scaler_ver) \
+ 	{ \
+-	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+-	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+@@ -294,8 +288,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
+ 
+ #define _VIG_SBLK_ROT(scaler_ver, rot_cfg) \
+ 	{ \
+-	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+-	.maxupscale = MAX_UPSCALE_RATIO, \
+ 	.scaler_blk = {.name = "scaler", \
+ 		.version = scaler_ver, \
+ 		.base = 0xa00, .len = 0xa0,}, \
+@@ -308,16 +300,12 @@ static const u32 wb2_formats_rgb_yuv[] = {
+ 
+ #define _VIG_SBLK_NOSCALE() \
+ 	{ \
+-	.maxdwnscale = SSPP_UNITY_SCALE, \
+-	.maxupscale = SSPP_UNITY_SCALE, \
  	.format_list = plane_formats_yuv, \
  	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
--	.virt_format_list = plane_formats, \
--	.virt_num_formats = ARRAY_SIZE(plane_formats), \
  	}
  
  #define _DMA_SBLK() \
-@@ -326,8 +320,6 @@ static const u32 wb2_formats_rgb_yuv[] = {
- 	.maxupscale = SSPP_UNITY_SCALE, \
+ 	{ \
+-	.maxdwnscale = SSPP_UNITY_SCALE, \
+-	.maxupscale = SSPP_UNITY_SCALE, \
  	.format_list = plane_formats, \
  	.num_formats = ARRAY_SIZE(plane_formats), \
--	.virt_format_list = plane_formats, \
--	.virt_num_formats = ARRAY_SIZE(plane_formats), \
  	}
- 
- static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index d1aef778340b..addf8e932d12 100644
+index addf8e932d12..fc7da6e1feeb 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -372,8 +372,6 @@ struct dpu_caps {
-  * @csc_blk:
-  * @format_list: Pointer to list of supported formats
-  * @num_formats: Number of supported formats
-- * @virt_format_list: Pointer to list of supported formats for virtual planes
-- * @virt_num_formats: Number of supported formats for virtual planes
+@@ -364,8 +364,6 @@ struct dpu_caps {
+ /**
+  * struct dpu_sspp_sub_blks : SSPP sub-blocks
+  * common: Pointer to common configurations shared by sub blocks
+- * @maxdwnscale: max downscale ratio supported(without DECIMATION)
+- * @maxupscale:  maxupscale ratio supported
+  * @max_per_pipe_bw: maximum allowable bandwidth of this pipe in kBps
+  * @qseed_ver: qseed version
+  * @scaler_blk:
+@@ -375,8 +373,6 @@ struct dpu_caps {
   * @dpu_rotation_cfg: inline rotation configuration
   */
  struct dpu_sspp_sub_blks {
-@@ -386,8 +384,6 @@ struct dpu_sspp_sub_blks {
+-	u32 maxdwnscale;
+-	u32 maxupscale;
+ 	u32 max_per_pipe_bw;
+ 	u32 qseed_ver;
+ 	struct dpu_scaler_blk scaler_blk;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 70d6a8989e1a..6360052523b5 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -785,12 +785,15 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+ 	return 0;
+ }
  
- 	const u32 *format_list;
- 	u32 num_formats;
--	const u32 *virt_format_list;
--	u32 virt_num_formats;
- 	const struct dpu_rotation_cfg *rotation_cfg;
- };
++#define MAX_UPSCALE_RATIO	20
++#define MAX_DOWNSCALE_RATIO	4
++
+ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 				  struct drm_atomic_state *state)
+ {
+ 	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+ 										 plane);
+-	int ret = 0, min_scale;
++	int ret = 0, min_scale, max_scale;
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
+ 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+ 	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+@@ -822,10 +825,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	pipe_hw_caps = pipe->sspp->cap;
+ 	sblk = pipe->sspp->cap->sblk;
  
+-	min_scale = FRAC_16_16(1, sblk->maxupscale);
++	if (sblk->scaler_blk.len) {
++		min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
++		max_scale = MAX_DOWNSCALE_RATIO << 16;
++	} else {
++		min_scale = 1 << 16;
++		max_scale = 1 << 16;
++	}
++
+ 	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+ 						  min_scale,
+-						  sblk->maxdwnscale << 16,
++						  max_scale,
+ 						  true, true);
+ 	if (ret) {
+ 		DPU_DEBUG_PLANE(pdpu, "Check plane state failed (%d)\n", ret);
 -- 
 2.39.2
 
