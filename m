@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-14068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F0C187B606
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 02:10:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAFE987B607
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 02:10:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 468C11C211AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:10:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C61D11C20E05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:10:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C543D75;
-	Thu, 14 Mar 2024 01:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1A6C4439;
+	Thu, 14 Mar 2024 01:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rYSt/9U5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t9AgWM2K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82394A1B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFCCEDE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710378649; cv=none; b=m3ri2cTtHijxK5xuMpxuYn2j/iDhsdc0RMFZdzRe9P39qp5rs3jiK2bTGv6fOe84KIxpYTe6wgXS5GICXTNsziig5fP2IUdDXqG1MRi0yofjheM3NYj8EZJByrKrBH/dMn8CENZRLfo+0VkS7E2TisF4L3GJkBA9/NW8TcREVfY=
+	t=1710378650; cv=none; b=ZSkLmnMcpeBL3BhTr27JPMmrJ+jcVgAzYlQL8CawmUPftn60DSDnbX/5IThl8ZmOVoi1O4CGGwyLuH8TP1QvulyUKkQzzaNc4FzK3dc3NqvZdc3Rsi4CpzSzbmVcl6ALeFONni8nW+pxCmd5i2jhfZNJTG8mokdcESuolLodeR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710378649; c=relaxed/simple;
-	bh=jkx8QeT632cJYJKjDVA7lP5qA9kMxj5ChekVZ1pgV/A=;
+	s=arc-20240116; t=1710378650; c=relaxed/simple;
+	bh=XB5qQZ6AM1gMdqH09M2m8W3Q7FcCw/TC5ffKreIP0Lc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nNsQeseHrLlL/PQXS6GNfIL3N8krRa/4B0RU9FrUKZPABPAMGwNDUdDiT5/6Py3OxV4Ozr9MnNU1Lr28H8NNWWjvQ6DDXTcWZLMI6STkT9T3EWaJQgPT6hLcka1OIp1dFtgQES6pQDl5u5bXXTB1wPCVr2zni1+y3GiZ/aEQQmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rYSt/9U5; arc=none smtp.client-ip=209.85.208.182
+	 In-Reply-To:To:Cc; b=oVZm/UXjKPT3zry8xlKMwdA8etqg2QLtQPVFnbr6K0yYrHfAvqwLmiX7NZHybpuMBLDSncV5KMHWjKjGGcsOWE9FvvbqK8cRFA4TLL4zcFLbL+sm7VmtU1HjvH1In1jtMUcKihymqWeke8a9kEmUlSXIf3YKOhcwEi2rjYUo4B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t9AgWM2K; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d2509c66daso4408801fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 18:10:47 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2d204e102a9so4726261fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 18:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710378646; x=1710983446; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710378647; x=1710983447; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Zxdr/mpui1hYVgn1hATuqyEXzqZWkDVcTe72ce1oxoA=;
-        b=rYSt/9U5Gqylu0hEZrikVpSmDWWrjipUAEUOT+xdDwEEqOptdmN8MaynqOrTB02C7u
-         6OFkE65w1sbAkGoCNMPsFThwApxXDELVOT5tQvwogtLJOQIrsUpl0w40qYulfsYODlXd
-         B10PBD1K4VnZ5P2/iQzOTZ2UAGELlVwGvZFMtj//iLGtdkbJndpwgWtOgVeV41PHdZEH
-         PkLj69o7wnbTDoumH9q2PSECMHQXE5xbcKOW3+QmFlAkmQIK9D1CdBsf0GSWjuWoRn51
-         yjIukwWOS99rxTIuBpszxlE8+CqvtnOeH19PnYefD73Blo5IZA6a3JBxG1yjeThWa+qE
-         SXIQ==
+        bh=H05lkKyWbPVJPRRlJwmLAAiEv2sm+h09AW5BdkwY1QU=;
+        b=t9AgWM2Kv8MWLh/HUzn9swDPH+XE0WjCZEegtTwGUq9CkvkqsT15gVRQ5oR27FyqBA
+         NIhqioPbRHLgoUPWD/XRcHmOTUMmSz12nZ3cEP/KDVERby/fERtoHB4hVqBdISG688lD
+         FvSmxxprnWC/q5gvaLtzUyJnah5/uZzR+OUf9i3X3eJBVQtQJ7sdZpAdXrM6E/dRR42c
+         AjLlXs3cJ146foggLuW9vP1csfLXZo0IrKmmiwFBbfNe34Rs1NQI1vyZd6c88Y+CxUhQ
+         xk5NGdilYWvusiwd8NUmIZrdau64eInqs4Z0KTtK25ev/ccvwYdGsf2PJJ1oPBRiIJ2j
+         r1lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710378646; x=1710983446;
+        d=1e100.net; s=20230601; t=1710378647; x=1710983447;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Zxdr/mpui1hYVgn1hATuqyEXzqZWkDVcTe72ce1oxoA=;
-        b=Q7cV22UHSnxkwbnveBqpJ85HBUyfcgYABwwLv72EGavzBKXwR3WNUr8EnKFykRrmDw
-         YAKE8kztdhXwOt/DdFhTgjpc1xxTybNWbn5+JVX8dt7XLv7Imhu0VKu/jLDcWItzmcTg
-         gCkDuZDDo2GiT4BLD7lKykynk3e6dvBVsJv9BBNe1occpyPryEPwo+mdgLW0NylcaBy0
-         naRqpm3lm3Jsodl3fphDVmWcQMvMxkKsSboMKRtJu05wLE/Hsjq7AYgXeTU4C/scCF5f
-         145sTwXCa2gcGLEvTRk0ubvNMkSQ72xFvJSnpn2EoRfTmEnzJodK69zJYPZbRPsnUxi2
-         5FDA==
-X-Gm-Message-State: AOJu0YwxImZHIACdTOLEjbFQ8Lk/Rr9Z9ywp8Tgo6Xm2uUV2dt9Jl8Nn
-	YUVt7IEXAx3ooA4Ak1ZZkt+kSEj43fPHMvu00uCzPbu4CYU6rqBpxyjpoLq6be8=
-X-Google-Smtp-Source: AGHT+IHCUJmoYn9jI50GYYIrQhEEZr2dXcfoR+wFJNhsonpJAZ8FGcHSZtzK/NG5ppzW2cGCp28OgQ==
-X-Received: by 2002:a2e:9b99:0:b0:2d4:7756:3549 with SMTP id z25-20020a2e9b99000000b002d477563549mr110990lji.16.1710378645969;
-        Wed, 13 Mar 2024 18:10:45 -0700 (PDT)
+        bh=H05lkKyWbPVJPRRlJwmLAAiEv2sm+h09AW5BdkwY1QU=;
+        b=CTpFZHABTdgnUHIB8jd+h93UOjQLxIRKe1r/0LhsL96Cs7P3OxZNN8jZidpsXysGsG
+         wEm2fi9NSjWufBujlXu9Dxlx3I1OFDi7esz2FH0y7pVHTMV7M43NJ4mP2wkoZsQ1WGPb
+         2nm0YKGKkqK3+w+hwnV/WxBvmgi8p0MK2kKpgJAEEXj+2Rd6L4QyHIv142QRf44ArOLZ
+         4dqTTgReT/JcQ24itERb058YPldhuk57jkKFYIy6+t/ZwvkN7Tq3uPmxwacxa920OZQ4
+         FTlobU9gPgnNpI5A+95YsdSw4u2g/tZs4jEhL1i3Fqt0E6J270cMwejWEtYXqTDgYuB0
+         boTQ==
+X-Gm-Message-State: AOJu0YxrokfrnmlOGJeFA7U9+dBp2wGldnrx6kVOdNcJaYjYrWJKgdwk
+	FG/QXWuikwWEpxWUy1jX8HKUThF3bFqdU57xOxky/b59x52rSklY58hOuEwgofqZPpfmBsj0V+k
+	j
+X-Google-Smtp-Source: AGHT+IGW4KP56dB8kSZt72D48OJV+VAsUXapGyd7phHEUjL0KU73SEVc2EAO3GOCJO0b2LhW1PtD8Q==
+X-Received: by 2002:a2e:be83:0:b0:2d4:64b1:25e2 with SMTP id a3-20020a2ebe83000000b002d464b125e2mr124380ljr.44.1710378646791;
+        Wed, 13 Mar 2024 18:10:46 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u19-20020a2e91d3000000b002d2ab6ae675sm48917ljg.137.2024.03.13.18.10.44
+        by smtp.gmail.com with ESMTPSA id u19-20020a2e91d3000000b002d2ab6ae675sm48917ljg.137.2024.03.13.18.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 18:10:45 -0700 (PDT)
+        Wed, 13 Mar 2024 18:10:46 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Mar 2024 03:10:41 +0200
-Subject: [PATCH v3 1/5] drm/msm/dpu: don't allow overriding data from
- catalog
+Date: Thu, 14 Mar 2024 03:10:42 +0200
+Subject: [PATCH v3 2/5] drm/msm/dpu: core_perf: extract bandwidth
+ aggregation function
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240314-dpu-perf-rework-v3-1-79fa4e065574@linaro.org>
+Message-Id: <20240314-dpu-perf-rework-v3-2-79fa4e065574@linaro.org>
 References: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
 In-Reply-To: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -89,55 +90,94 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1831;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2547;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=jkx8QeT632cJYJKjDVA7lP5qA9kMxj5ChekVZ1pgV/A=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl8k6SaiBAo9biqgSROXWBG9JOaT2gSR6NNM1gh
- rLTYn6o59CJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfJOkgAKCRCLPIo+Aiko
- 1TYsCACm/8pvdQnme+edeFf6jF9cCNURSjDk4BGjb7bgjZKUe9tXt33VNrUPfjO0bhwsako1KR3
- obQmzwXxfZy6NcTFP4FxqyJBUsAqpyADelajr+98gbDM45cU+KgXN+/P7poEjnUAh0MMeAx5EH+
- TYKZY6PfJJ3DR0+RF1Ns5s3iFPljn7to7/iR+8v1FJDPauYU1uiQSA/pGLWaYGJdhB30K0hyffk
- 66e0UDmS49YG093eSEHaMJg93YLO6xYeHZBuzR4UYsrD3+17FZd3hazxJ1AGFFIEaF9vC2zxvvR
- r2ok0315QhHToQeoL+6xkvY7NHEFizL6ZxatKwH9tsY20eZK
+ bh=XB5qQZ6AM1gMdqH09M2m8W3Q7FcCw/TC5ffKreIP0Lc=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+onv0kXr8re+i35+SlTdqBy1spZr5luMYQ+snYTuNj6O
+ 6JZfClnJ6MxCwMjF4OsmCKLT0HL1JhNyWEfdkythxnEygQyhYGLUwAmkqbI/ovJbPuPd+LrnBLP
+ Tzjj+pppSZDAq3k2HdHLK9qCywxrw9/c6V5y+t237E2zk/2+xlQpRP5e/OeBUA1v0IEpz1feM4h
+ Z0R9XlnT6WMya/UpCbr7JgUZyu1Vsi8sXZib8047gDkg6qL4pdXlnwIOde01Xzlg+02oh27aUe4
+ b7uqYtEyh+v8aSyYHbS2We+vwJ3HosssyhCXUZH0z/Jkm0q7PtrHoZ773c8ADLA8kbp45YF0XUH
+ Gwp0GNJdcn9u9BOVb3z/6f+O7ZzjFIu2QpM+CKa1md/rLSNaVFz3mnrHfxSCVHuJWzHygWzAo+J
+ Razje3jyZcabDgb/JtE3vgkf/eR+typM5tRJqTm8aW4mAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The data from catalog is marked as const, so it is a part of the RO
-segment. Allowing userspace to write to it through debugfs can cause
-protection faults. Set debugfs file mode to read-only for debug entries
-corresponding to perf_cfg coming from catalog.
+In preparation to refactoring the dpu_core_perf debugfs interface,
+extract the bandwidth aggregation function from
+_dpu_core_perf_crtc_update_bus().
 
-Fixes: abda0d925f9c ("drm/msm/dpu: Mark various data tables as const")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 45 +++++++++++++++------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index ef871239adb2..68fae048a9a8 100644
+index 68fae048a9a8..87b892069526 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -459,15 +459,15 @@ int dpu_core_perf_debugfs_init(struct dpu_kms *dpu_kms, struct dentry *parent)
- 			&perf->core_clk_rate);
- 	debugfs_create_u32("enable_bw_release", 0600, entry,
- 			(u32 *)&perf->enable_bw_release);
--	debugfs_create_u32("threshold_low", 0600, entry,
-+	debugfs_create_u32("threshold_low", 0400, entry,
- 			(u32 *)&perf->perf_cfg->max_bw_low);
--	debugfs_create_u32("threshold_high", 0600, entry,
-+	debugfs_create_u32("threshold_high", 0400, entry,
- 			(u32 *)&perf->perf_cfg->max_bw_high);
--	debugfs_create_u32("min_core_ib", 0600, entry,
-+	debugfs_create_u32("min_core_ib", 0400, entry,
- 			(u32 *)&perf->perf_cfg->min_core_ib);
--	debugfs_create_u32("min_llcc_ib", 0600, entry,
-+	debugfs_create_u32("min_llcc_ib", 0400, entry,
- 			(u32 *)&perf->perf_cfg->min_llcc_ib);
--	debugfs_create_u32("min_dram_ib", 0600, entry,
-+	debugfs_create_u32("min_dram_ib", 0400, entry,
- 			(u32 *)&perf->perf_cfg->min_dram_ib);
- 	debugfs_create_file("perf_mode", 0600, entry,
- 			(u32 *)perf, &dpu_core_perf_mode_fops);
+@@ -204,36 +204,41 @@ int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
+ 	return 0;
+ }
+ 
+-static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+-		struct drm_crtc *crtc)
++static void dpu_core_perf_aggregate(struct drm_device *ddev,
++				    enum dpu_crtc_client_type curr_client_type,
++				    struct dpu_core_perf_params *perf)
+ {
+-	struct dpu_core_perf_params perf = { 0 };
+-	enum dpu_crtc_client_type curr_client_type
+-					= dpu_crtc_get_client_type(crtc);
+-	struct drm_crtc *tmp_crtc;
+ 	struct dpu_crtc_state *dpu_cstate;
+-	int i, ret = 0;
+-	u64 avg_bw;
+-
+-	if (!kms->num_paths)
+-		return 0;
++	struct drm_crtc *tmp_crtc;
+ 
+-	drm_for_each_crtc(tmp_crtc, crtc->dev) {
++	drm_for_each_crtc(tmp_crtc, ddev) {
+ 		if (tmp_crtc->enabled &&
+-			curr_client_type ==
+-				dpu_crtc_get_client_type(tmp_crtc)) {
++		    curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
+ 			dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
+ 
+-			perf.max_per_pipe_ib = max(perf.max_per_pipe_ib,
+-					dpu_cstate->new_perf.max_per_pipe_ib);
++			perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
++						    dpu_cstate->new_perf.max_per_pipe_ib);
+ 
+-			perf.bw_ctl += dpu_cstate->new_perf.bw_ctl;
++			perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
+ 
+-			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu paths:%d\n",
+-				  tmp_crtc->base.id,
+-				  dpu_cstate->new_perf.bw_ctl, kms->num_paths);
++			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
++					 tmp_crtc->base.id,
++					 dpu_cstate->new_perf.bw_ctl);
+ 		}
+ 	}
++}
++
++static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
++		struct drm_crtc *crtc)
++{
++	struct dpu_core_perf_params perf = { 0 };
++	int i, ret = 0;
++	u64 avg_bw;
++
++	if (!kms->num_paths)
++		return 0;
++
++	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
+ 
+ 	avg_bw = perf.bw_ctl;
+ 	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
 
 -- 
 2.39.2
