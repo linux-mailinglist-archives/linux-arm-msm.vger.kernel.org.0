@@ -1,514 +1,325 @@
-Return-Path: <linux-arm-msm+bounces-14179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C6CC87C33C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 20:00:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7767F87C3D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 20:44:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FA271C215D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 19:00:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E53BD1F22D7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 19:44:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99AFF757E8;
-	Thu, 14 Mar 2024 19:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B0FB757F5;
+	Thu, 14 Mar 2024 19:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="4U+gO66B"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i8Rw/x1J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F537580D;
-	Thu, 14 Mar 2024 19:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DBC1A38C6;
+	Thu, 14 Mar 2024 19:44:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710442836; cv=none; b=cL27MvrMVIFsrLGoGW0saw5it3RRKEvd3IHYxfKtwqQACAcoKiWtTU/dzAqQs0QnsQOtsjVKoKwweZsFk2pCb1T5FcKBY9SCCmeomsaoGEuLeo0BGz6dK7kqij3geJuCpS2AEivIKuJaDhU5v9jmt+7s3rTnP36L/Ng/7bDNFA4=
+	t=1710445486; cv=none; b=WT/yjV+2GjpItHDPD9rgpLnCf2lGAsi/fy0dAu6rk9UbMp0hrKn09yD5kMeElvzkEFVaSvn/UqQkE+0MQKrfCI0ob5qxWrjvB9+MXEHGdUiKzydpPOISq910yw9fqL002/0FjVG/w64IQ2+dqQoff0Hx7EKDiUfXiJ9/ooftDxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710442836; c=relaxed/simple;
-	bh=k1EUM52/pGtlQBvmoPyzLXh9QwDn2Kef17+1XtrFe6Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bkMKxFDUG53Q2r1p9TTgqSsl/CcskIh9/78Ps8rzL0GRgholFDsYfpJ9p5IY/zBGOgS2NLCFl8l8IFJngEye1UPJrc1AO3c8uOSuyNbFCOiyDQwZLBMYW+2Qo2BvOlmToqVQcmI7w4V0uLW+W8/wdZ2O6Cbd6FHovktkRk8M54k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=4U+gO66B; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1710442831; bh=k1EUM52/pGtlQBvmoPyzLXh9QwDn2Kef17+1XtrFe6Y=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=4U+gO66BoN71oewdRZp0SIiflNSryRgl5/OssbLZAgssM26ijKmXpG3vCDeCuwn4q
-	 eW4L1gIKkvz/siQ8Eh6F2It7VDEI/PV1st4NYQbLw1BDIvt9WPO2pfL9QQO3W77KAW
-	 WM/8EbycAaIMwlkdg80b35b4zPRaEXBBkKSAZ244=
-From: Luca Weiss <luca@z3ntu.xyz>
-Date: Thu, 14 Mar 2024 20:00:15 +0100
-Subject: [PATCH v2 2/2] ARM: dts: qcom: msm8974: Add Samsung Galaxy Note 3
+	s=arc-20240116; t=1710445486; c=relaxed/simple;
+	bh=2VAFFvE8hC51NJbCKu5HHS9Y7CIO/4MUkYGNq6PZkCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hv0uFTgqJ3j5cbL5KbJju5PxCG4lmOH4rc+e2hm9ikj3P4srPUqjuKVuKPTiusTHxUEYr3l+RrGlM285IMyOAtY/mpC2cDFy7cBEdoX199iA/W4mMZLFq0BQKbj1WjW5RxOriyVCdYVBNKwUu42RW5vGNtj4iE9PkemUSIVc0Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i8Rw/x1J; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42EEk30P012432;
+	Thu, 14 Mar 2024 19:44:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=iL933Rm0BkJfGjEMAYFzZvTqtHIowO4xPeKVSq4JyDM=; b=i8
+	Rw/x1JuzIfzEf1SjVGejvBxv+spdeDzCUwLpN5YFV2UnII0wMyQRdZvHYgKwh+ET
+	idlMlnRqdKr37GXvAb7adpPnJBDzcodHLnKDOR+9vhrHWnwpS+NfhEGt/XYP1pdw
+	Q7OOa2RPfm7/lF7alW3Cn9VUF/2Fz8CScNoecQdvWoaMSLoLpqaQQ5NaTQFVKvlz
+	638iQVshF0oqnF6NmaMENT/H0mbiTx85ReqQXHhZERvLuO7uGAfmClCEMf7xzFZA
+	hQEP4dkxXAwNz5/QBnBNYkSEB2xTXGxW8IT4mCCdZgISI90Ds8A7KEFluhiczmMz
+	yPI300v53YwoYcEY6Mlw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wv0kjs20k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 19:44:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42EJicVM017793
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 19:44:38 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
+ 2024 12:44:38 -0700
+Message-ID: <714bb2ca-40ac-80a2-454f-021da3caa93d@quicinc.com>
+Date: Thu, 14 Mar 2024 12:44:37 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/7] soc: qcom: add pd-mapper implementation
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu
+ Poirier <mathieu.poirier@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        Johan
+ Hovold <johan+linaro@kernel.org>
+References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
+ <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org>
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240314-samsung-hlte-v2-2-84094b41c033@z3ntu.xyz>
-References: <20240314-samsung-hlte-v2-0-84094b41c033@z3ntu.xyz>
-In-Reply-To: <20240314-samsung-hlte-v2-0-84094b41c033@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Adam Honse <calcprogrammer1@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9723; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=hNrgnYCIw05P6KejFkBsgEIJHGH4vf3pz20hJhZSyuU=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBl80lErhjBUZc8EACELo0tjjwprMvcMgp4edr3F
- bYiACmOUKKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZfNJRAAKCRBy2EO4nU3X
- VmVqD/9ujc/LtJESLyVPx0O3J11/Bb2tfupK6X0s2x0X5fhCgwRpDcQ9V30hPhYzgxGF2B5GXov
- G+kzJ/I4n0R4Ni3I0isDcTmwY0IFCPWRgrUA0hdNpbLNVDmY6cX5FE6v+dWq7Ru85zRRCsdW626
- iuGkJ38SBnBXdNbPTfjMhSWKADT842Fe/S54WbWjQ/ERDQCW9YVU5TB82GDVE1V4j0Vfvt+3inN
- tvL4jNFULoSIc9AqD+xSWlzp+dD6QA/iV1rtE7/1ylG04DORz26FJOyqa7GIkpfMT1MipR8rDA1
- UuWu8r92/ZO4E5TyK/MKux69KyqtoV75495aiOoo7foPMGd3AaxN35wGpIrh2MS/6QYk03BvchC
- D6Fc+Eaos0gNE0Eqx/LJLM6GJg0QSDQCGcYxDzGvx6sCWEXQFsG/1xlMuQQLkr2Iud6RSiaQ/YG
- q36mi5Qpn9yZSMi7ARf5rIs7VHW1i45gXMhx6g4uVS0XONKBwoWhv3hVUsYcVCVLorahSyODI3x
- Zouo49qgLaYYRBx5vWUK2unUa/RqWiMdJTIozMce9zH2kr8EftLzCJk3zyhQ6Pa2XmXdP6TFWhn
- /xZAN9W9I8ZLi0libVgIKQ9f1ovGwgscOe0U2mxJ+QiXURRG5EbOrD/fqhjWpjcvujEDnOhHExe
- 0YKShF6Les2yKTA==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HV-EZiQzJG9FvpTg3lfjZy4JAGsjsyZH
+X-Proofpoint-ORIG-GUID: HV-EZiQzJG9FvpTg3lfjZy4JAGsjsyZH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2402120000 definitions=main-2403140152
 
-From: Adam Honse <calcprogrammer1@gmail.com>
 
-Add the devicetree for this "phablet" using the Snapdragon 800 SoC.
 
-Signed-off-by: Adam Honse <calcprogrammer1@gmail.com>
-[luca@z3ntu.xyz: clean up, prepare for upstream]
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/qcom/Makefile                    |   1 +
- .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 401 +++++++++++++++++++++
- 2 files changed, 402 insertions(+)
+On 3/11/2024 8:34 AM, Dmitry Baryshkov wrote:
+> +int qcom_pdm_add_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+> +{
+> +	int ret;
+> +	int i;
+> +
+> +	mutex_lock(&qcom_pdm_mutex);
+> +
+> +	if (qcom_pdm_server_added) {
+> +		ret = qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> +				     SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> +		if (ret)
+> +			goto err_out;
+> +	}
+> +
+> +	for (i = 0; i < num_data; i++) {
+> +		ret = qcom_pdm_add_domain_locked(data[i]);
+> +		if (ret)
+> +			goto err;
+> +	}
+> +
+> +	ret = qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> +			     SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> +	if (ret) {
+> +		pr_err("PDM: error adding server %d\n", ret);
+> +		goto err;
+> +	}
+> +
+> +	qcom_pdm_server_added = true;
+> +
+> +	mutex_unlock(&qcom_pdm_mutex);
+> +
+> +	return 0;
+> +
+> +err:
+> +	while (--i >= 0)
+> +		qcom_pdm_del_domain_locked(data[i]);
+> +
+> +	qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> +		       SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> +
+> +err_out:
+> +	mutex_unlock(&qcom_pdm_mutex);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pdm_add_domains);
+> +
+> +void qcom_pdm_del_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+> +{
+> +	int i;
+> +
+> +	mutex_lock(&qcom_pdm_mutex);
+> +
+> +	if (qcom_pdm_server_added) {
+> +		qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> +			       SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> +	}
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index 9cc1e14e6cd0..845af12d15a2 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -39,6 +39,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8960-samsung-expressatt.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
-+	qcom-msm8974-samsung-hlte.dtb \
- 	qcom-msm8974-sony-xperia-rhine-amami.dtb \
- 	qcom-msm8974-sony-xperia-rhine-honami.dtb \
- 	qcom-msm8974pro-fairphone-fp2.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dts b/arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dts
-new file mode 100644
-index 000000000000..903bb4d12513
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dts
-@@ -0,0 +1,401 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include "qcom-msm8974.dtsi"
-+#include "pm8841.dtsi"
-+#include "pm8941.dtsi"
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
-+/ {
-+	model = "Samsung Galaxy Note 3";
-+	compatible = "samsung,hlte", "qcom,msm8974";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_3; /* SDC3 SD card slot */
-+		serial0 = &blsp1_uart1;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_pin_a>;
-+		pinctrl-names = "default";
-+
-+		key-home {
-+			label = "Home Key";
-+			gpios = <&pm8941_gpios 3 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_HOMEPAGE>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			gpios = <&pm8941_gpios 2 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&pm8941_gpios 5 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	touch_ldo: regulator-touch {
-+		compatible = "regulator-fixed";
-+		regulator-name = "touch-ldo";
-+
-+		gpio = <&pm8941_gpios 9 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-boot-on;
-+
-+		pinctrl-0 = <&touch_ldo_pin>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp1_i2c2 {
-+	status = "okay";
-+
-+	touchscreen@20 {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x20>;
-+
-+		interrupt-parent = <&pm8941_gpios>;
-+		interrupts = <30 IRQ_TYPE_EDGE_FALLING>;
-+
-+		vdd-supply = <&pm8941_l10>;
-+		vio-supply = <&touch_ldo>;
-+
-+		pinctrl-0 = <&touch_pin>;
-+		pinctrl-names = "default";
-+
-+		syna,startup-delay-ms = <100>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x1>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f12@12 {
-+			reg = <0x12>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
-+&blsp2_i2c6 {
-+	status = "okay";
-+
-+	fuelgauge@36 {
-+		compatible = "maxim,max17048";
-+		reg = <0x36>;
-+
-+		maxim,double-soc;
-+		maxim,rcomp = /bits/ 8 <0x56>;
-+
-+		interrupt-parent = <&pm8941_gpios>;
-+		interrupts = <26 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-0 = <&fuelgauge_pin>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp1_uart2 {
-+	status = "okay";
-+};
-+
-+&pm8941_gpios {
-+	gpio_keys_pin_a: gpio-keys-active-state {
-+		pins = "gpio2", "gpio3", "gpio5";
-+		function = "normal";
-+		bias-pull-up;
-+		power-source = <PM8941_GPIO_S3>;
-+	};
-+
-+	fuelgauge_pin: fuelgauge-int-state {
-+		pins = "gpio26";
-+		function = "normal";
-+		bias-disable;
-+		input-enable;
-+		power-source = <PM8941_GPIO_S3>;
-+	};
-+
-+	touch_pin: touchscreen-int-state {
-+		pins = "gpio30";
-+		function = "normal";
-+		bias-disable;
-+		input-enable;
-+		power-source = <PM8941_GPIO_S3>;
-+	};
-+
-+	touch_ldo_pin: touchscreen-ldo-state {
-+		pins = "gpio9";
-+		function = "normal";
-+		output-high;
-+		power-source = <PM8941_GPIO_S3>;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+	};
-+};
-+
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
-+	status = "okay";
-+};
-+
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8841-regulators";
-+
-+		pm8841_s1: s1 {
-+			regulator-min-microvolt = <675000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		pm8841_s2: s2 {
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		pm8841_s3: s3 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		pm8841_s4: s4 {
-+			regulator-min-microvolt = <815000>;
-+			regulator-max-microvolt = <900000>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,rpm-pm8941-regulators";
-+
-+		pm8941_s1: s1 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8941_s2: s2 {
-+			regulator-min-microvolt = <2150000>;
-+			regulator-max-microvolt = <2150000>;
-+		};
-+
-+		pm8941_s3: s3 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l1: l1 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8941_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8941_l3: l3 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8941_l4: l4 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8941_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l9: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8941_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l11: l11 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8941_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8941_l13: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8941_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8941_l15: l15 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8941_l16: l16 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2700000>;
-+		};
-+
-+		pm8941_l17: l17 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8941_l18: l18 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8941_l19: l19 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+
-+		pm8941_l20: l20 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-system-load = <200000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8941_l21: l21 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-system-load = <200000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8941_l22: l22 {
-+			regulator-min-microvolt = <2500000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8941_l23: l23 {
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8941_l24: l24 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8941_l20>;
-+	vqmmc-supply = <&pm8941_s3>;
-+
-+	pinctrl-0 = <&sdhc1_pin_a>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&sdhc_3 {
-+	max-frequency = <100000000>;
-+
-+	vmmc-supply = <&pm8941_l21>;
-+	vqmmc-supply = <&pm8941_l21>;
-+
-+	pinctrl-0 = <&sdhc3_pin_a>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	sdhc1_pin_a: sdhc1-pin-active-state {
-+		clk-pins {
-+			pins = "sdc1_clk";
-+			drive-strength = <4>;
-+			bias-disable;
-+		};
-+
-+		cmd-data-pins {
-+			pins = "sdc1_cmd", "sdc1_data";
-+			drive-strength = <4>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	sdhc3_pin_a: sdhc3-pin-active-state {
-+		pins = "gpio35", "gpio36", "gpio37", "gpio38", "gpio39", "gpio40";
-+		function = "sdc3";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+};
-+
-+&usb {
-+	phys = <&usb_hs1_phy>;
-+	phy-select = <&tcsr 0xb000 0>;
-+
-+	hnp-disable;
-+	srp-disable;
-+	adp-disable;
-+
-+	status = "okay";
-+};
-+
-+&usb_hs1_phy {
-+	v1p8-supply = <&pm8941_l6>;
-+	v3p3-supply = <&pm8941_l24>;
-+
-+	qcom,init-seq = /bits/ 8 <0x1 0x64>;
-+
-+	status = "okay";
-+};
+I am confused as to why we need to reset the qmi handle anytime
+qcom_pdm_del_domains or qcom_pdm_add_domains is called. Is this to
+trigger some kind of re-broadcast type notification to clients because
+the service list has been updated?
 
--- 
-2.44.0
+My concern would be that this causes some kind of unintended side-effect
+on the rprocs that are not restarting.
 
+> +
+> +	for (i = 0; i < num_data; i++)
+> +		qcom_pdm_del_domain_locked(data[i]);
+> +
+> +	qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> +		       SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> +	qcom_pdm_server_added = true;
+> +
+> +	mutex_unlock(&qcom_pdm_mutex);
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pdm_del_domains);
+> +
+> +static void qcom_pdm_get_domain_list(struct qmi_handle *qmi,
+> +				     struct sockaddr_qrtr *sq,
+> +				     struct qmi_txn *txn,
+> +				     const void *decoded)
+> +{
+> +	const struct servreg_loc_get_domain_list_req *req = decoded;
+> +	struct servreg_loc_get_domain_list_resp *rsp = kzalloc(sizeof(*rsp), GFP_KERNEL);
+> +	struct qcom_pdm_service *service;
+> +	u32 offset;
+> +	int ret;
+> +
+> +	offset = req->offset_valid ? req->offset : 0;
+> +
+> +	rsp->rsp.result = QMI_RESULT_SUCCESS_V01;
+> +	rsp->rsp.error = QMI_ERR_NONE_V01;
+> +
+> +	rsp->db_revision_valid = true;
+> +	rsp->db_revision = 1;
+> +
+> +	rsp->total_domains_valid = true;
+> +	rsp->total_domains = 0;
+> +
+> +	mutex_lock(&qcom_pdm_mutex);
+> +
+> +	service = qcom_pdm_find_locked(req->name);
+> +	if (service) {
+> +		struct qcom_pdm_domain *domain;
+> +
+> +		rsp->domain_list_valid = true;
+> +		rsp->domain_list_len = 0;
+> +
+> +		list_for_each_entry(domain, &service->domains, list) {
+> +			u32 i = rsp->total_domains++;
+> +
+> +			if (i >= offset && i < SERVREG_LOC_MAX_DOMAINS) {
+> +				u32 j = rsp->domain_list_len++;
+> +
+> +				strscpy(rsp->domain_list[j].name, domain->name,
+> +					sizeof(rsp->domain_list[i].name));
+> +				rsp->domain_list[j].instance_id = domain->instance_id;
+> +
+> +				pr_debug("PDM: found %s / %d\n", domain->name,
+> +					 domain->instance_id);
+> +			}
+> +		}
+> +
+> +	}
+> +
+> +	mutex_unlock(&qcom_pdm_mutex);
+> +
+> +	pr_debug("PDM: service '%s' offset %d returning %d domains (of %d)\n", req->name,
+> +		 req->offset_valid ? req->offset : -1, rsp->domain_list_len, rsp->total_domains);
+> +
+> +	ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_GET_DOMAIN_LIST,
+> +				2658,
+> +				servreg_loc_get_domain_list_resp_ei, rsp);
+
+Other QMI clients like pdr_interface have macros for the message size.
+Can we considering adding one instead of using 2658 directly?
+
+> +	if (ret)
+> +		pr_err("Error sending servreg response: %d\n", ret);
+> +
+> +	kfree(rsp);
+> +}
+> +
+> +static void qcom_pdm_pfr(struct qmi_handle *qmi,
+> +			 struct sockaddr_qrtr *sq,
+> +			 struct qmi_txn *txn,
+> +			 const void *decoded)
+> +{
+> +	const struct servreg_loc_pfr_req *req = decoded;
+> +	struct servreg_loc_pfr_resp rsp = {};
+> +	int ret;
+> +
+> +	pr_warn_ratelimited("PDM: service '%s' crash: '%s'\n", req->service, req->reason);
+> +
+> +	rsp.rsp.result = QMI_RESULT_SUCCESS_V01;
+> +	rsp.rsp.error = QMI_ERR_NONE_V01;
+> +
+> +	ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_PFR,
+> +				SERVREG_LOC_PFR_RESP_MSG_SIZE,
+> +				servreg_loc_pfr_resp_ei, &rsp);
+> +	if (ret)
+> +		pr_err("Error sending servreg response: %d\n", ret);
+> +}
+> +
+> diff --git a/drivers/soc/qcom/qcom_pdm_msg.h b/drivers/soc/qcom/qcom_pdm_msg.h
+> new file mode 100644
+> index 000000000000..e576b87c67c0
+> --- /dev/null
+> +++ b/drivers/soc/qcom/qcom_pdm_msg.h
+> @@ -0,0 +1,66 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2018, Linaro Ltd.
+> + * Copyright (c) 2016, Bjorn Andersson
+> + */
+> +
+> +#ifndef __QMI_SERVREG_LOC_H__
+> +#define __QMI_SERVREG_LOC_H__
+> +
+
+Should we update the header guards to reflect the new file name?
+
+> +#include <linux/types.h>
+> +#include <linux/soc/qcom/qmi.h>
+> +
+> +#define SERVREG_QMI_SERVICE 64
+> +#define SERVREG_QMI_VERSION 257
+> +#define SERVREG_QMI_INSTANCE 0
+> +#define QMI_RESULT_SUCCESS 0
+> +#define QMI_RESULT_FAILURE 1
+> +#define QMI_ERR_NONE 0
+> +#define QMI_ERR_INTERNAL 1
+> +#define QMI_ERR_MALFORMED_MSG 2
+
+I think these common QMI macro definitions are wrong. They should match
+what is defined in <soc/qcom/qmi.h>. This is a bug in the userspace
+pd-mapper header as well.
+
+> +#endif
+> diff --git a/include/linux/soc/qcom/pd_mapper.h b/include/linux/soc/qcom/pd_mapper.h
+> new file mode 100644
+> index 000000000000..86438b7ca6fe
+> --- /dev/null
+> +++ b/include/linux/soc/qcom/pd_mapper.h
+> @@ -0,0 +1,39 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Qualcomm Protection Domain mapper
+> + *
+> + * Copyright (c) 2023 Linaro Ltd.
+> + */
+> +#ifndef __QCOM_PD_MAPPER__
+> +#define __QCOM_PD_MAPPER__
+> +
+> +struct qcom_pdm_domain_data {
+> +	const char *domain;
+> +	u32 instance_id;
+> +	/* NULL-terminated array */
+> +	const char * services[];
+
+s/char * services[]/char *services[]/
 
