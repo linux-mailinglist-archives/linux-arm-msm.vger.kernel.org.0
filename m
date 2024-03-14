@@ -1,153 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-14119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A82B87BB17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:15:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8945487BB5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:35:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5A242845CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 10:15:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F156B20DAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 10:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C38A96EB59;
-	Thu, 14 Mar 2024 10:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A51A5A0F8;
+	Thu, 14 Mar 2024 10:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RZtsRSrR"
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="dy0FAtPv";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="6wF/ZzEQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356026E60E;
-	Thu, 14 Mar 2024 10:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710411321; cv=none; b=bUmE4tl88oCY5hvw8YknplNWJZipYXoTmp5yLbF/B6gqaJGXDIG6cWgJtMdRv4bjpV49jBCogtqqoRPxKEpA1pFC7QFjDB/YMgFn9g19sUSsfvS774Ppjm6JdcKoOZRPk3qQGxSTQyozJlCSZ1RHO+aHHZYJup7GUitusgmng70=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710411321; c=relaxed/simple;
-	bh=gvWWFnoja/uQ4wxkGeFqleadvmNvo0/6Y5PqxYgqZyM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uyQvrDo1pXTQnJqz3EpPcnb8B6x24OP5NrQaSOM1aGPro2dJ6kUfSu8tGebcV13AFTHf4FkP3u++X/tpVmCqZh+DaHsoLiRU1q4bzMyBqALnxiKbXtq9uCY1qE0moaARCtjUHynV/aRKQ8q16u1EbB1rsCgGngiDFr4vH+iggV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RZtsRSrR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42E5Gv4I007740;
-	Thu, 14 Mar 2024 10:15:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=0uKg55Ve0ppdH9/LgTqLgn+XcTUF/8sUOQU6Y+kxKAM=; b=RZ
-	tsRSrRD3MIwk2XumzM+gSPjvL4PSNHFqGXsSFKLROB5BvKCNzD5NkVV/TJGA7OEj
-	mqHazOzbzglF/p+08Sgb3IXXhxuIbH2S7rfQHv7lDH+88BQMNWqrwNFnl33b1oj3
-	agsT0B0mpXtod6W+bnEJTNudLObp4uQt8A0Jl02YE8Z4IVzUIsCRYRc7IZIOg5pA
-	523nNTSlj59a2aTAl77zL834YXiAl2fpx6nnYGbwDvzXjQJQAxSO6+sxRkZodIi2
-	NhPT7DXmVF7iEA4Tl4mkpput/rAvMC6KOeXLrD4Vt1WV57FvAI3a37VPWif5M0P5
-	NIy+q4IiJSQk7d8YAcdw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wuruqrwub-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Mar 2024 10:15:16 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42EAFDqa023164
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Mar 2024 10:15:14 GMT
-Received: from [10.239.29.49] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
- 2024 03:15:08 -0700
-Message-ID: <41889d0b-fe20-4fde-a71c-45d928ede11d@quicinc.com>
-Date: Thu, 14 Mar 2024 18:15:06 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B45641C63;
+	Thu, 14 Mar 2024 10:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.165
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710412526; cv=pass; b=USvZF+LYFraIIvn3U7TjGbMfm68SEONp5i6Czvo3K6VqTjnjHNKmQPsgOYhnbocEIEIkLTQo/2PEYYlVfAY4rjxCbRcNCwPqNZqdDWlL6nEjKm9n+QUd/Tg26lgQkdSKYeGz3+dOAPfPEsIS618CrLmAObHHy9Kd3NzUuEd5hQQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710412526; c=relaxed/simple;
+	bh=cyEeG6oHajbU9HRN3AVDJrilxbg7x+M53eUX+Bz8Vrw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cqR9R4KQ1exZkh8hJZdPdVwxKMmtljDNrUvQbBPs/gEaVoFqdZT9u2A2sTQ7jBhRSZ49uIrew8Tt9DUZoa2yTyFn1yb8Q91aFBf7YHU7+4w0/P0SCxAiW9kKxE0Z3gU9PNbwadlejqtqDEyjybekpN2m0/pQ5zbS1LFGs5iuZzo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=dy0FAtPv; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=6wF/ZzEQ; arc=pass smtp.client-ip=81.169.146.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
+ARC-Seal: i=1; a=rsa-sha256; t=1710411438; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=KZGg4H5ZwbmwjQXq2xvKnJVk/7T1MdL3DzAjZ4P3izUnEVcp8OTNRZ7IIcby1Cv4lv
+    J/eFzyc52OfHpG+AzDyGZ4Dtf+hLcIPipjFpRkDgr5DTm25OFMRz9jeYJ1GEANlwm87i
+    38RoGScEkA5FvwdANcNVtIxANYbC7sOiKx1vdwko4mL3ClM8r+Nei0N5cwiDrDbB35ys
+    kNo0lAsa6hYH5E7UiHfX4CBPZ0SUFO5uavkxrxCH1qCF1HUPv5CjXMrxb1B+vW9OE5v3
+    fyNDiY2P5rvfQNdgdLGtGA0ZJOFsk0A6Hw5TV0axbGM8u7aU2jmpj+iVk9nuA91OV0hb
+    6upw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710411438;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=cyEeG6oHajbU9HRN3AVDJrilxbg7x+M53eUX+Bz8Vrw=;
+    b=du5xzq+ot0ptQiK+xHua+LK1D4fTJxJvM4drxJWZII8WTnggJZP2y+vlBCVIDn0r1W
+    i6CtWBPF+9GpzbmDQdeVpPFZw5uHxp+VMlUN2gpNNh51YwxZdjhE2Owk2Du5fD0k8L/X
+    lOL0fP21Wl8fR3V82pPEsm+enOfcApufAUu2l4NiTuDGB+InMGbS4AscbrmgYJgOaZuk
+    QpHwFrFOLVpueSXEx5ISR+V7OgF+nGlDJ5mss2P+9phQpYMkKWQTGZqHNi8rtjz3/rqe
+    KqBF1eoxZkdnscCXXnto9H0uRDKZuu+/7llLOVIRCWPkZ8UPx4e5I2cXMTlb59PZxePy
+    hiVQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710411438;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=cyEeG6oHajbU9HRN3AVDJrilxbg7x+M53eUX+Bz8Vrw=;
+    b=dy0FAtPvhIOuvlDtHV3XTtSeG06fedAhgxREGaFOe298ltKBPj4LGxPFWqfqXE0rKj
+    xuPcOwUV1Cf/NsUPozixyOSVH2RscRGmbgp/31bA0EcPm8Cld2JDmzZTQ30DVBjGFXkp
+    WvKJoegAE5VLyzoLrB4h/UtUjoB1GvAJlG1xlPEkgiVcHi15Mj8Q1ROVRA5h6eesD41K
+    MTvWtnfG2IPPDfNXaPm+hYFTX/rRQm6pE8AO+oPWmWZXfslmKfbQO0chKLQ7tgGyusiV
+    7X+pLiwrKvavuJGWb7Kj+0rtNkSXnkofyCG0xsd7TP289tMHO+rGkuVC/WwaIFRSM55f
+    TYUg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710411438;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=cyEeG6oHajbU9HRN3AVDJrilxbg7x+M53eUX+Bz8Vrw=;
+    b=6wF/ZzEQ05owbrTftYzw48cliWZqhFXCT2MF41+26PXRf9473GInAbfdxvIox9dIf4
+    LVfsPfXQU6pI6ZZSX4Ag==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p+L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 50.2.2 DYNA|AUTH)
+    with ESMTPSA id Rf2ecd02EAHH3LN
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 14 Mar 2024 11:17:17 +0100 (CET)
+Date: Thu, 14 Mar 2024 11:17:11 +0100
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: msm8916: drop dtbTool
+ compatibles
+Message-ID: <ZfLOp3aGgvGTRsT2@gerhold.net>
+References: <20240314-msm8916-drop-compats-v2-0-5a4b40f832d3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Add three missing
- fastrpc-compute-cb nodes
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC: <quic_ekangupt@quicinc.com>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240314063334.31942-1-quic_lxu5@quicinc.com>
- <c7ac2b10-eee3-4269-85e4-a68d24c2337a@linaro.org>
- <88c32ccb-fadd-49e8-a8fc-76f93353d204@quicinc.com>
- <46e90e1f-1c93-4e88-b73c-94c165217d98@linaro.org>
-From: Ling Xu <quic_lxu5@quicinc.com>
-In-Reply-To: <46e90e1f-1c93-4e88-b73c-94c165217d98@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _KX1XI8PGm3nlyF5raEMMPEi0UoW3Iq2
-X-Proofpoint-GUID: _KX1XI8PGm3nlyF5raEMMPEi0UoW3Iq2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-14_08,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 spamscore=0 adultscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403140072
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240314-msm8916-drop-compats-v2-0-5a4b40f832d3@linaro.org>
+Content-Transfer-Encoding: 7bit
 
-在 2024/3/14 18:09, Krzysztof Kozlowski 写道:
-> On 14/03/2024 11:05, Ling Xu wrote:
->> 在 2024/3/14 14:55, Krzysztof Kozlowski 写道:
->>> On 14/03/2024 07:33, Ling Xu wrote:
->>>> Add three missing cDSP fastrpc compute-cb nodes for the SM8650 SoC.
->>>>
->>>> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 29 ++++++++++++++++++++++++++++
->>>>  1 file changed, 29 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>> index ba72d8f38420..c238ad1be0d4 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->>>> @@ -5084,6 +5084,35 @@
->>>>  							 <&apps_smmu 0x19c8 0x0>;
->>>>  						dma-coherent;
->>>>  					};
->>>> +
->>>> +					/* note: secure cb9 in downstream */
->>>> +
->>>> +					compute-cb@10 {
->>>> +						compatible = "qcom,fastrpc-compute-cb";
->>>> +						reg = <12>;
->>>> +						iommus = <&apps_smmu 0x196C 0x0000>,
->>>> +							 <&apps_smmu 0x0C0C 0x0020>,
->>>> +							 <&apps_smmu 0x19CC 0x0000>;
->>>
->>> Lowercase hex. Please look at the code above, don't copy downstream
->>> code. This applies to all your work: don't send us downstream code, but
->>> clean it up from all of its problems.
->>>
->>> Best regards,
->>> Krzysztof
->>>
->>
->> Hi, sorry, do you mean that I should delete this line: /* note: secure cb9 in downstream */?
->> All I sent are upstream codes, I didn't copy cb9 here and I also see this commented line in sm8550.dtsi.
-> 
-> My comment was about the style. If you send "upstream codes", how could
-> you have there uppercase hex? It is even visible in the diff context
-> that it should be lowercase!
-> 
-> Best regards,
-> Krzysztof
-> 
-Sorry for that, I got it. Thanks for your comment.
--- 
-Thx and BRs,
-Ling Xu
+rOn Thu, Mar 14, 2024 at 03:42:47AM +0200, Dmitry Baryshkov wrote:
+> Only two boards ever has adopted the dtbTool-specific compatibles.
+> However the dtbTool should not be used anymore. It was required only for
+> the old, broken lk1st bootloader. All users of those boards should have
+> updated to use lk2nd instead. Otherwise several important features
+> (secondary CPU cores, WiFi, BT) will not work with the upstream kernel.
 
+Nitpick: The term "the old, broken lk1st bootloader" is a bit misleading
+here. I believe you are referring to Qualcomm's original LK bootloader.
+"lk1st" is actually the name of an alternative configuration in the
+lk2nd project that can be used to replace the first-stage bootloader on
+devices without secure boot, e.g. DB410c and a few smartphones. lk1st
+has exactly the same functionality as lk2nd and is therefore definitely
+not old and broken. Both support DTB selection, secondary CPU cores etc. :-)
+
+I don't think we put the cover letter into a merge commit message in the
+qcom tree, so there is no need to resend. I just wanted to clarify this.
+
+Thanks for cleaning this up!
+Stephan
 
