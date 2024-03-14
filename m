@@ -1,208 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-14137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1C0387BD66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:14:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E072487BDAB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:28:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8BEB289170
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 13:14:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F9931C21E71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 13:28:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C8C05B5C5;
-	Thu, 14 Mar 2024 13:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A31C6FE3E;
+	Thu, 14 Mar 2024 13:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mbExeOXW"
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="i7ilBbfc";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="b5Myrf7Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F195A4C0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 13:14:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710422086; cv=none; b=qCcqoWNHJsWOYSeM80c871uxI7eNgGU1xhUzW6JRwQqacKlzdk7+IhuxmZiD6fNdA8Ex00UwA6oATeo4QZ8Rpp1uJVwTP+riHpBBALU/0dEMqnmdjkAvZAYVHZoWTFtGssJPj/yZx2E2zt2J26w0PRfJuMs4vcFGI6zGBFr9rp0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710422086; c=relaxed/simple;
-	bh=nzs6zCI1jdSZw5ilnOs66b3DiJ+Gf76pVPexRiRqK7E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A3ev6ZFDjEd1YMOqNmPpmhQQhAkVWgIpVUoD1dVLEqu6z7QetOlCYEZBUtZQ/sTOjjiq20bT41DHEebqkpX/cWCIsCyKZXKkfGIWaku7mGk4Fhzm8kis59whOht27/CBByIcc8kw9AP5Sxg2qyer+cyF4g7BiwK5AT5yK8hbWNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mbExeOXW; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-609fb19ae76so10448857b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 06:14:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710422084; x=1711026884; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fkD0KnYDjnqjUj1tphaFuRIzplXQwfgK5ojv6GksvlY=;
-        b=mbExeOXWboJjaCa3+MJDNvkDycW3WnS7LAgCFA+ETZWcjDuJUe01dOwfhbqJ8GHTiK
-         eUl4AT/2414JLugozU+NuTglKzUQm6h2NJqtadjwqSV/MV+G0BWcnQVfkEyYH5oOl3ad
-         jaBQvGr7jBp7Nv+5nIeesKqk5usYZfGNm7+A5skXqQaY1ZgOp+YFR+q3fnzmBMMR8kVf
-         fCYeWsH6BuljNTJxUm0Q+7tFKQgSoRjAtd9hKAvkPTlcyYiaD2QG6Dg0Y8zQqmPqfM24
-         sDkJVZninY99Nu/F+9dzUbpB5fcS977LehLkc/Ku4PJlgjTgD3Km4QK6Rl8FU7C2wg9M
-         1vpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710422084; x=1711026884;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fkD0KnYDjnqjUj1tphaFuRIzplXQwfgK5ojv6GksvlY=;
-        b=JVm6JeBWYyE9A8WozdouYXi7I32Za2hpVNxdDXgcy8yfagPnCF1ghcdWjMp5FXBWQw
-         yB2LXr/liRgf5LBhnre7+mH9iBQii6MKLB4/WUt3+4XjMX1pthZKUYoixgEEVy5FX+Zt
-         R5eGLqXR7L6avD9S5xDHATQph3hIAe9gWhueaOc3VOEQS/fKODJBqpCYNwe6IIZXQahH
-         7g97mtlmEa3S5Ci4g23W1a/qyAr5G77soGHjbV33fbiKcxyxchNO4/GEqQoYk8RACgvs
-         6VkaM6uWhIREWEohIozFQSI2Jb8pxCn8w1oOs5Ik5p6Mi9rKArXw2VcAbQLoljeC3pmt
-         R9xg==
-X-Forwarded-Encrypted: i=1; AJvYcCUwTFM+fYYbHWJSAJGu/Gfxv8xqRO2wtodbsLTvNsXmRSEdAPrw2NdQmv0nowkXjkFu2rmlIHdboVnz5WtxcVO3RbuPJYOvGeojEa0E6w==
-X-Gm-Message-State: AOJu0Yz2vuu16IBw3yiS121kAIk8JQq019p+GH42D6pSenZZFWdnWKWy
-	g5xPFrm+9cHwgO+/6N/M2f+WGvCF4qhWUVDEoOFbf0209pFCPEbpBCfltGvI2/hKZB6ruscaeup
-	b2bUaR7Z6G5ER8feATtgKB5Jy/f6YdwpBz+b9HQ==
-X-Google-Smtp-Source: AGHT+IENdbs25prtdnXfRF19x+3DROxo9WIqwzwvi6gTNh98VdEaATL6yqgmxAYviMYew8QsBjhPAlhRMp6IcmuesAo=
-X-Received: by 2002:a05:690c:6f88:b0:60c:d56c:2c38 with SMTP id
- je8-20020a05690c6f8800b0060cd56c2c38mr341959ywb.7.1710422083691; Thu, 14 Mar
- 2024 06:14:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE326EB79;
+	Thu, 14 Mar 2024 13:27:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.164
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710422859; cv=pass; b=XzWRnPn6/4EIXFl/9IADXLYMql2pneZWSZFpYUtXFoeLQhLWEWUfe9AeXVta0fULa7VyVJEvHjzM1fSSrNhNJJRfGgUpmTqEr89XVFxNcPalE4Yroq4X2Q038kRrkTpKvSJYke+GqshqMqANkbwRCBf8eXrwtPnpB9rvhGP9M1Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710422859; c=relaxed/simple;
+	bh=wlAjoEmmqbb90V29uMN7qmilpO/NLQlvdBoOehj02Zg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oPEliPdah4treA65Jdmx2uwHhsVt6brgzQnbUqtjc6cesVa/bXfKajAj6xmoP1cJ+hCus9GeNUkkQF/IjnQC057aoXrVRGqGLhfiZvY73Zn6AePruDGPPP1S7VZt1DFUYWkvvFVFqBcOTr48TmBEBdO1Nr5uaEdXDlQGG4ICdC8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=i7ilBbfc; dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=b5Myrf7Y; arc=pass smtp.client-ip=81.169.146.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gerhold.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
+ARC-Seal: i=1; a=rsa-sha256; t=1710422668; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=E4Iwe4V+vwQhOykblpEseoJt9+tD1NcewVXb5PUBEFs3NwEncKa/dFjrBpz2W8iu2t
+    jTq8ij2mINARzlEJ75LQP/QDTHU6P8Gv/IAM1vwIpgyhootIUD8ayYopdr9hWPGhfdUe
+    7+3AzB+mbRlUA1olLyFtSNfLPuUDAw6rMrPBMYW8PCPZeodkVnUwmTBjA4PlvpKsQT6h
+    Qh5UZFMh7kZ50xTrR2iT0M1fNEx4UKrFMVxY8w7HTrZgvGNFdOn5dI6YXZKghZCPmYio
+    nSBUB12CRMNH8ehESREWdjZh3qAugqO3bVKbkpxEDwQnMXYWb2+YXerA1oUpIomh1Aa3
+    Fklw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710422668;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ct/z5cPRWSv8Gwipo9RaoUxHvAdzX90f5gn0Pkz4RcQ=;
+    b=XAhN0uUZLumYEZzgPjCuemsq3EkE1sgc3RnSQD/ZrmDV4RkBvGg6g4GGtBUdSEIqiT
+    rNXn3pSsZzVtAVyv0yVUgvPETvc8gFWULr1kRDQbtPkX/sRqhWo3ZL9lQeouP3PCFeAO
+    HP2kN/QqnlqgYM/N3p3TFQDclhXSLXi+hhxBDtwNi/NGS6K2BlLi0YmOUVKVHH0uC4u/
+    4nCbbTFsn7ym3aYMuEyw8V38FX9l/ClYVu1TyJfsA/PHq5GbbpSH5FwrDjCFGb4HR9vo
+    mfBUN3e/kJTeFO2PY6gYZa10W94S5a7r/sgJ4rK/hccGQwEK1dks1XBNA/9JX6TUN3dl
+    T6Bw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710422668;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ct/z5cPRWSv8Gwipo9RaoUxHvAdzX90f5gn0Pkz4RcQ=;
+    b=i7ilBbfc/am6jj92M1VwAgpCdIEs5Lpm0KjHOSn8UbRylUWrTsmX214qeSagBzjmAc
+    M3EDqGFCbHUfe2bp2yLJ+P6QZ5lLUkSxv93gr1K/QBrJShttXo0jCSl5Qsbi+Cn2yZZU
+    afruzI2SkW/GjIgdGRzGYqzxVuTAkEUy7O4kFZY2u6RO5tp8u+OYR+sypIG/oGtX9f7q
+    R+vKfe+2KwzX0yXvKn8VOKlbZO9vH+niAv8D2iy9JZp4EM+sSorAkibBHosKcsx5ojda
+    WtTiq3wp3724Rv9ryXM8+HxaFp03z0ax5wC6PUtPXm8xSuE5BTg5LMaQ30wmeCirOnQM
+    loPQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710422668;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=ct/z5cPRWSv8Gwipo9RaoUxHvAdzX90f5gn0Pkz4RcQ=;
+    b=b5Myrf7YLUgs4KeyXKT9xaAoUbucA0dV1hZ+QwqFpPNWT35Ua1bEfekssBS4osqBBq
+    YA80jidbAtTkW7XNERDA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p+L1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 50.2.2 DYNA|AUTH)
+    with ESMTPSA id Rf2ecd02EDOR4Jd
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Thu, 14 Mar 2024 14:24:27 +0100 (CET)
+Date: Thu, 14 Mar 2024 14:24:22 +0100
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Sumit Garg <sumit.garg@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, andersson@kernel.org,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, caleb.connolly@linaro.org,
+	neil.armstrong@linaro.org, laetitia.mariottini@se.com,
+	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com,
+	benjamin.missey@non.se.com, daniel.thompson@linaro.org,
+	linux-kernel@vger.kernel.org,
+	Jagdish Gediya <jagdish.gediya@linaro.org>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+Message-ID: <ZfL6hi0kfp9MXQ0H@gerhold.net>
+References: <20240313123017.362570-1-sumit.garg@linaro.org>
+ <20240313123017.362570-4-sumit.garg@linaro.org>
+ <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
+ <CAFA6WYNMjCaa0FKjNv6a8VFkco3=GBfgWNDuckGZdiZ9dGmHgg@mail.gmail.com>
+ <d82ab1f8-e677-485f-9a6b-4115acfd7239@linaro.org>
+ <CAFA6WYNSumyScax=GkN42GJOG56T3odF5Ed9A2i1nk_exCyGtA@mail.gmail.com>
+ <ZfLUu6_Vq7MvG2G3@gerhold.net>
+ <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org> <4a0a8db7-a2bc-4c99-94b2-c13facbd1bef@linaro.org>
- <CAFA6WYPh5BS_Fpi6ksAC7bwoFEyqjj1Y3EahyQxCG9Pp=KDw=Q@mail.gmail.com>
- <9dc0415c-4138-4867-861a-38b45b636182@linaro.org> <CAFA6WYPFfL18acdZt6O-_=LWnH7J2MooDuf9cA3JCaQZdoLhVA@mail.gmail.com>
- <CAFA6WYNo73S5ROHCMK0ZQSiU0DDbuDadptmaPL+GPCocE0h-mA@mail.gmail.com>
-In-Reply-To: <CAFA6WYNo73S5ROHCMK0ZQSiU0DDbuDadptmaPL+GPCocE0h-mA@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Mar 2024 15:14:32 +0200
-Message-ID: <CAA8EJpqxb39u=ShpcALa+M8Pj8fE-q2p6WzZA=HPLJ-47UH+qg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: Sumit Garg <sumit.garg@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	stephan@gerhold.net, caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
-	laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com, 
-	jimmy.lalande@se.com, benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
-	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
 
-On Thu, 14 Mar 2024 at 11:37, Sumit Garg <sumit.garg@linaro.org> wrote:
->
-> On Thu, 14 Mar 2024 at 14:47, Sumit Garg <sumit.garg@linaro.org> wrote:
-> >
-> > On Thu, 14 Mar 2024 at 14:00, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > >
-> > > >>> +
-> > > >>> +             compatible = "gpio-leds";
-> > > >>> +             #address-cells = <1>;
-> > > >>> +             #size-cells = <0>;
-> > > >>
-> > > >> That's not a bus.
-> > > >>
-> > > >> It does not look like you tested the DTS against bindings. Please run
-> > > >> `make dtbs_check W=1` (see
-> > > >> Documentation/devicetree/bindings/writing-schema.rst or
-> > > >> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-> > > >> for instructions).
+On Thu, Mar 14, 2024 at 05:26:27PM +0530, Sumit Garg wrote:
+> On Thu, 14 Mar 2024 at 16:13, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > On Thu, Mar 14, 2024 at 03:02:31PM +0530, Sumit Garg wrote:
+> > > On Thu, 14 Mar 2024 at 14:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > > > On 3/14/24 10:04, Sumit Garg wrote:
+> > > > > On Wed, 13 Mar 2024 at 18:34, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> > > > >> On 3/13/24 13:30, Sumit Garg wrote:
+> > > > >>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> > > > >>> Box Core board based on the Qualcomm APQ8016E SoC.
+> > > > >>>
+> > > > >>> Support for Schneider Electric HMIBSC. Features:
+> > > > >>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> > > > >>> - 1GiB RAM
+> > > > >>> - 8GiB eMMC, SD slot
+> > > > >>> - WiFi and Bluetooth
+> > > > >>> - 2x Host, 1x Device USB port
+> > > > >>> - HDMI
+> > > > >>> - Discrete TPM2 chip over SPI
+> > > > >>> - USB ethernet adaptors (soldered)
+> > > > >>>
+> > > > >>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > > >>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+> > > > >>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+> > > > >>> ---
+> > > > >>
+> > > > >> [...]
+> > > > >>
+> > > > >>> +     memory@80000000 {
+> > > > >>> +             reg = <0 0x80000000 0 0x40000000>;
+> > > > >>> +     };
+> > > > >>
+> > > > >> I'm not sure the entirety of DRAM is accessible..
+> > > > >>
+> > > > >> This override should be unnecessary, as bootloaders generally update
+> > > > >> the size field anyway.
+> > > > >
+> > > > > On this board, U-Boot is used as the first stage bootloader (replacing
+> > > > > Little Kernel (LK), thanks to Stephan's work). And U-Boot consumes
+> > > > > memory range from DT as Linux does but doesn't require any memory to
+> > > > > be reserved for U-Boot itself. So apart from reserved memory nodes
+> > > > > explicitly described in DT all the other DRAM regions are accessible.
 > > > >
-> > > > I assumed earlier that W=1 is sufficient for DT schema checks but it
-> > >
-> > > W=1 as in make? No, it is not. It's flag changing the build process.
-> > > dtbs_check is separate target.
-> > >
-> > > > looks like those are two different entities. However, I added these
-> > > > address and size cells properties only to get rid of warnings reported
-> > > > by W=1, see below:
+> > > > Still, u-boot has code to fetch the size dynamically, no?
 > > > >
-> > > > $ make qcom/apq8016-schneider-hmibsc.dtb W=1
-> > > >   DTC     arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb
-> > > > arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:96.9-103.5:
-> > > > Warning (unit_address_vs_reg): /leds/led@5: node has a unit name, but
-> > > > no reg or ranges property
-> > > > arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:105.9-112.5:
-> > > > Warning (unit_address_vs_reg): /leds/led@6: node has a unit name, but
-> > > > no reg or ranges property
 > > >
-> > > Wait, so you saw the warnings and ignored them?
-> >
-> > Sorry but you are ignoring what I am trying to say.
-> >
-> > > These are legitimate
-> > > warnings, although they don't give you full answer.
-> > >
-> > > > <snip>
-> > > >
-> > > > So it looks like W=1 is reporting false warnings and we should rather
-> > >
-> > > Warnings were true.
+> > > No U-Boot being the first stage bootloader fetches size from DT which
+> > > is bundled into U-Boot binary.
 > > >
 > >
-> > That's was my initial impression too and I fixed them via following diff:
+> > Back when I added support for using U-Boot as first stage bootloader on
+> > DB410c the way it worked is that U-Boot used a fixed amount of DRAM
+> > (originally 968 MiB, later 1 GiB since I fixed this in commit
+> > 1d667227ea51 ("board: dragonboard410c: Fix PHYS_SDRAM_1_SIZE") [1]).
+> > When booting Linux, the Linux DT was dynamically patched with the right
+> > amount of DRAM (obtained from SMEM). So if you had e.g. a Geniatech DB4
+> > board with 2 GiB DRAM, U-Boot was only using 1 GiB of DRAM, but Linux
+> > later got the full 2 GiB patched into its DTB.
 > >
-> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > index 8f9cacf8de89..a366d3aff3c5 100644
-> > --- a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> > @@ -92,8 +92,11 @@ leds {
-> >                 pinctrl-0 = <&pm8916_mpps_leds>;
-> >
-> >                 compatible = "gpio-leds";
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> >
-> >                 led@5 {
-> > +                       reg = <5>;
-> >                         label = "apq8016-hmibsc:green:wlan";
-> >                         function = LED_FUNCTION_WLAN;
-> >                         color = <LED_COLOR_ID_YELLOW>;
-> > @@ -103,6 +106,7 @@ led@5 {
-> >                 };
-> >
-> >                 led@6 {
-> > +                       reg = <6>;
-> >                         label = "apq8016-hmibsc:yellow:bt";
-> >                         function = LED_FUNCTION_BLUETOOTH;
-> >                         color = <LED_COLOR_ID_BLUE>;
-> >
-> > But it then broke dtbs_check.
->
-> See following breakage afterwards:
->
-> $ make qcom/apq8016-schneider-hmibsc.dtb dtbs_check
-> <snip>
-> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> leds: led@5: Unevaluated properties are not allowed ('reg' was
-> unexpected)
-> from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
-> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> leds: led@6: Unevaluated properties are not allowed ('reg' was
-> unexpected)
-> from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
-> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> leds: '#address-cells', '#size-cells' do not match any of the regexes:
-> '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
-> <snip>
+> > I didn't have much time for testing U-Boot myself lately but a quick
+> > look at the recent changes suggest that Caleb accidentally removed that
+> > functionality in the recent cleanup. Specifically, the SMEM-based DRAM
+> > size detection was removed in commit 14868845db54 ("board:
+> > dragonboard410c: import board code from mach-snapdragon" [2]), the
+> > msm_fixup_memory() function does not seem to exist anymore now. :')
+> 
+> Ah now I see the reasoning for that particular piece of code. Is SMEM
+> based approach the standardized way used by early stage boot-loaders
+> on other Qcom SoCs too?
+> 
 
-That's because there is no addressing for gpio-leds. Just use names as
-led-5, led-6.
+It is definitely used on all the SoCs that were deployed with LK. I am
+not entirely sure about the newer ABL/UEFI-based ones. A quick look at
+the ABL source code suggests it is abstracted through an EFI protocol
+there (so we cannot see where the information comes from with just the
+open-source code). However, in my experience SMEM data structures are
+usually kept quite stable (or properly versioned), so it is quite likely
+that we could use this approach for all Qualcomm SoCs.
 
->
-> > Are you aware of any other saner way to
-> > fix those warnings properly?
 > >
->
-> -Sumit
->
+> > Also, the DRAM size is now always taken from the DT (which is probably
+> > better than the previous hardcoded size in the U-Boot board code).
+> >
+> > I think we should bring the dynamic DRAM size detection back, because
+> > there are quite some boards available with varying DRAM size. Restoring
+> > msm_fixup_memory() would likely be easiest, I guess the ideal solution
+> > would be to parse SMEM in U-Boot's dram_init() function so even U-Boot
+> > has the correct amount of DRAM to work with.
+> 
+> In the context of the HMIBSC board, it has 1 GB RAM LPDDR3 internal
+> not expandable. IMO, having it in DT as default should be fine.
+> 
 
+Right. I was more talking in terms of DB410c here, where the lack of
+this feature is kind of a regression.
 
--- 
-With best wishes
-Dmitry
+Personally, I'm fine if you put the memory node here like this. If there
+are concerns from others you could also move it to the -u-boot.dtsi and
+omit it for Linux.
+
+Thanks,
+Stephan
 
