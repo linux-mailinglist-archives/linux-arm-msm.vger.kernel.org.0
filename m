@@ -1,180 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-14136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7A3187BD3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:05:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1C0387BD66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:14:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D47FB217F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 13:05:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8BEB289170
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 13:14:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD2705914E;
-	Thu, 14 Mar 2024 13:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C8C05B5C5;
+	Thu, 14 Mar 2024 13:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gXLxoAhX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mbExeOXW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F55759B6E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 13:05:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F195A4C0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 13:14:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710421540; cv=none; b=MhAy7POWyImGtz9SOPQiiAfekFz77/w9H44qeZkzDr45nsKHJGXZM2RT5up1qFyPFU82BjTe4hqhuVo9NENGIRlUufX/XvhpwtvFwBTzrDWvPcbwq2IzVukADbLPB3GmNY3w4+V1rIDalc2CO4GaKQmkFy4StqURP1gpB+gqQAk=
+	t=1710422086; cv=none; b=qCcqoWNHJsWOYSeM80c871uxI7eNgGU1xhUzW6JRwQqacKlzdk7+IhuxmZiD6fNdA8Ex00UwA6oATeo4QZ8Rpp1uJVwTP+riHpBBALU/0dEMqnmdjkAvZAYVHZoWTFtGssJPj/yZx2E2zt2J26w0PRfJuMs4vcFGI6zGBFr9rp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710421540; c=relaxed/simple;
-	bh=QBhs2rdEI9Ta2Qm5lV/m1p6meuBuhC/dnIjl3YYKYI4=;
+	s=arc-20240116; t=1710422086; c=relaxed/simple;
+	bh=nzs6zCI1jdSZw5ilnOs66b3DiJ+Gf76pVPexRiRqK7E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HMoLo2KmnciHUL4UYgJmn7ilJ33A3ky2VPSyccr1c4jZg72mGPXJ1STtMxjzQqbn4QuZAFXyPjkeavYGADQ8x6BaA6PGXv/awICUVhtwJ8fJJAcO02EgUdwZVUloPS63Fg+saQoI6bvJd4yRqtqMBBgcU+relU4zpDyCAmsNVWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gXLxoAhX; arc=none smtp.client-ip=209.85.128.179
+	 To:Cc:Content-Type; b=A3ev6ZFDjEd1YMOqNmPpmhQQhAkVWgIpVUoD1dVLEqu6z7QetOlCYEZBUtZQ/sTOjjiq20bT41DHEebqkpX/cWCIsCyKZXKkfGIWaku7mGk4Fhzm8kis59whOht27/CBByIcc8kw9AP5Sxg2qyer+cyF4g7BiwK5AT5yK8hbWNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mbExeOXW; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6099703e530so9049217b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 06:05:38 -0700 (PDT)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-609fb19ae76so10448857b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 06:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710421537; x=1711026337; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1710422084; x=1711026884; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=II2UsaIZAzw07RsAVvrS+6gd+EObsid7jBvJIs0WBzw=;
-        b=gXLxoAhXqsvS3fzWN/U9aHRYz4lemCrCX+CKcD0Q7RYLy2VBqhmE5LgmumFQ4hBVOO
-         K2EaqXgOPD8jhf5n2YtTKoFdYG1/pCG66yNA4vZVq4syEIgAY92WfEoLDWPbv/pOXNTP
-         H3vA7uegPZCyl8GbpN6WyPh/0pGhbFjWGf2ZhDrJ/YKYBmIakta2GIlfSk8y8pXg46b6
-         ZIUUDSGGiNlpMgN+biy0N9E8KAdb0CBv1gSY0MSvaZJCMn22J0ha/KHzYIwkg8iDakmg
-         er5f2Js7oPX0jaTWeas/7lkk7cf0EeN526XMxt74PifdLCB/EEBir507/mFAJ+Drsvvv
-         sfkg==
+        bh=fkD0KnYDjnqjUj1tphaFuRIzplXQwfgK5ojv6GksvlY=;
+        b=mbExeOXWboJjaCa3+MJDNvkDycW3WnS7LAgCFA+ETZWcjDuJUe01dOwfhbqJ8GHTiK
+         eUl4AT/2414JLugozU+NuTglKzUQm6h2NJqtadjwqSV/MV+G0BWcnQVfkEyYH5oOl3ad
+         jaBQvGr7jBp7Nv+5nIeesKqk5usYZfGNm7+A5skXqQaY1ZgOp+YFR+q3fnzmBMMR8kVf
+         fCYeWsH6BuljNTJxUm0Q+7tFKQgSoRjAtd9hKAvkPTlcyYiaD2QG6Dg0Y8zQqmPqfM24
+         sDkJVZninY99Nu/F+9dzUbpB5fcS977LehLkc/Ku4PJlgjTgD3Km4QK6Rl8FU7C2wg9M
+         1vpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710421537; x=1711026337;
+        d=1e100.net; s=20230601; t=1710422084; x=1711026884;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=II2UsaIZAzw07RsAVvrS+6gd+EObsid7jBvJIs0WBzw=;
-        b=CghFbxNKs2UhInoubXG5DEjz5+4TwBwthMwslXSVHQY0DSQw6lGgcOJ5ollv24BKwj
-         zLhIj/SFqKlNqXLiods8SkJYXNKn4+HuTzi5S7eT2b3f+Aq8cGgIoxIUWD6htn+mHs3R
-         JJnHeK0aQintvcUqhZmI59GgSPLksS11d5n1tFol84j7Xfsqt69eYzEQp0JtM8YBdyvQ
-         gaggzy+8v1FD0uzb1twnuL4AiBKpk+eeINnfyP+ceFBCjkhTL9Pz+jFRC5PWTB2GlKqk
-         RaZYwcmTPJuTNgsRlD3eLkHxDOOpfT3E7yRNlcW6gNKluYK59YkaXzPRnjaBKigYRebf
-         sAaw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9zAihoSvryASd4B0p3W1witq0xAUdtqAF6cyVdSUfa2dOC4AU/jTxQHocE5Ww0qmBd806tCaL4yZR2lgrJkjf2MP1UQO/DOwpeugNTA==
-X-Gm-Message-State: AOJu0YwjOHQes7bx/KHdbc9HoegeOcninSBAGYqgKj5VbgDoqLGHM/nt
-	AwGgrAjwJayIikCiUgd2Qi6t2RFVQSJgK++8hSi/A28tOGHuulKbBQMDqUuJ2rUKSdlpN/yhMEU
-	ZSNWCz3p3L1Mdaym77nKjiheV6gCWSLcjyWozqQ==
-X-Google-Smtp-Source: AGHT+IFXC5RLGM5+/OQzl0VN7/sYRocbZIrLl+pCS9V1R3inRBR/pXXbajydYegK5aeCFV33pHqokJMy1KmLSL3ltB4=
-X-Received: by 2002:a0d:e4c4:0:b0:60c:ced3:8e26 with SMTP id
- n187-20020a0de4c4000000b0060cced38e26mr901393ywe.13.1710421537330; Thu, 14
- Mar 2024 06:05:37 -0700 (PDT)
+        bh=fkD0KnYDjnqjUj1tphaFuRIzplXQwfgK5ojv6GksvlY=;
+        b=JVm6JeBWYyE9A8WozdouYXi7I32Za2hpVNxdDXgcy8yfagPnCF1ghcdWjMp5FXBWQw
+         yB2LXr/liRgf5LBhnre7+mH9iBQii6MKLB4/WUt3+4XjMX1pthZKUYoixgEEVy5FX+Zt
+         R5eGLqXR7L6avD9S5xDHATQph3hIAe9gWhueaOc3VOEQS/fKODJBqpCYNwe6IIZXQahH
+         7g97mtlmEa3S5Ci4g23W1a/qyAr5G77soGHjbV33fbiKcxyxchNO4/GEqQoYk8RACgvs
+         6VkaM6uWhIREWEohIozFQSI2Jb8pxCn8w1oOs5Ik5p6Mi9rKArXw2VcAbQLoljeC3pmt
+         R9xg==
+X-Forwarded-Encrypted: i=1; AJvYcCUwTFM+fYYbHWJSAJGu/Gfxv8xqRO2wtodbsLTvNsXmRSEdAPrw2NdQmv0nowkXjkFu2rmlIHdboVnz5WtxcVO3RbuPJYOvGeojEa0E6w==
+X-Gm-Message-State: AOJu0Yz2vuu16IBw3yiS121kAIk8JQq019p+GH42D6pSenZZFWdnWKWy
+	g5xPFrm+9cHwgO+/6N/M2f+WGvCF4qhWUVDEoOFbf0209pFCPEbpBCfltGvI2/hKZB6ruscaeup
+	b2bUaR7Z6G5ER8feATtgKB5Jy/f6YdwpBz+b9HQ==
+X-Google-Smtp-Source: AGHT+IENdbs25prtdnXfRF19x+3DROxo9WIqwzwvi6gTNh98VdEaATL6yqgmxAYviMYew8QsBjhPAlhRMp6IcmuesAo=
+X-Received: by 2002:a05:690c:6f88:b0:60c:d56c:2c38 with SMTP id
+ je8-20020a05690c6f8800b0060cd56c2c38mr341959ywb.7.1710422083691; Thu, 14 Mar
+ 2024 06:14:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313-videocc-sm8150-dt-node-v1-0-ae8ec3c822c2@quicinc.com>
- <20240313-videocc-sm8150-dt-node-v1-1-ae8ec3c822c2@quicinc.com>
- <CAA8EJpo63oRA07QNCdzJdHW_hJJWK6aj-LCpp-XwmPJYf0twZw@mail.gmail.com> <a09941ff-7b43-a964-1bd1-5321913be1a3@quicinc.com>
-In-Reply-To: <a09941ff-7b43-a964-1bd1-5321913be1a3@quicinc.com>
+References: <20240313123017.362570-1-sumit.garg@linaro.org>
+ <20240313123017.362570-4-sumit.garg@linaro.org> <4a0a8db7-a2bc-4c99-94b2-c13facbd1bef@linaro.org>
+ <CAFA6WYPh5BS_Fpi6ksAC7bwoFEyqjj1Y3EahyQxCG9Pp=KDw=Q@mail.gmail.com>
+ <9dc0415c-4138-4867-861a-38b45b636182@linaro.org> <CAFA6WYPFfL18acdZt6O-_=LWnH7J2MooDuf9cA3JCaQZdoLhVA@mail.gmail.com>
+ <CAFA6WYNo73S5ROHCMK0ZQSiU0DDbuDadptmaPL+GPCocE0h-mA@mail.gmail.com>
+In-Reply-To: <CAFA6WYNo73S5ROHCMK0ZQSiU0DDbuDadptmaPL+GPCocE0h-mA@mail.gmail.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Mar 2024 15:05:26 +0200
-Message-ID: <CAA8EJpo=ACtqbaPQN--p_28Cf6DLsKMFKh-A0crMZq4hmhPdyA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom: Update SM8150 videocc bindings
-To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org
+Date: Thu, 14 Mar 2024 15:14:32 +0200
+Message-ID: <CAA8EJpqxb39u=ShpcALa+M8Pj8fE-q2p6WzZA=HPLJ-47UH+qg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+To: Sumit Garg <sumit.garg@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	stephan@gerhold.net, caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
+	laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com, 
+	jimmy.lalande@se.com, benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
+	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 14 Mar 2024 at 11:19, Satya Priya Kakitapalli (Temp)
-<quic_skakitap@quicinc.com> wrote:
+On Thu, 14 Mar 2024 at 11:37, Sumit Garg <sumit.garg@linaro.org> wrote:
 >
->
-> On 3/14/2024 12:50 AM, Dmitry Baryshkov wrote:
-> > On Wed, 13 Mar 2024 at 13:11, Satya Priya Kakitapalli
-> > <quic_skakitap@quicinc.com> wrote:
-> >> Update the videocc device tree bindings for sm8150 to align with the
-> >> latest convention.
-> > But why? Bindings already exist. There is nothing wrong with them. And
-> > sm8150 platform in general uses name-based lookup.
->
->
-> With the new index based lookup introduced we cannot use this bindings,
-> hence I moved to the sm8450-videocc bindings.
-
-This is true for _new_ drivers. However you have a driver already. And
-the driver has bindings. If you check, existing drivers were updated
-from parent_names to fw_name / parent_hw lookups. However none of the
-drivers was _updated_ to use index-based lookups.
-
-> >> Fixes: 35d26e9292e2 ("dt-bindings: clock: Add YAML schemas for the QCOM VIDEOCC clock bindings")
-> > It is not a fix, there is no bug that this commit is fixing.
->
->
-> The clocks list needs to be fixed to add both XO and AHB clocks, and we
-> are adding required-opps property.
-
-Oh, so you have mixed two unrelated changes without telling anybody.
-Please don't do this.
-
->
->
-> >> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> >> ---
-> >>   Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml | 1 +
-> >>   Documentation/devicetree/bindings/clock/qcom,videocc.yaml        | 3 ---
-> >>   2 files changed, 1 insertion(+), 3 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> >> index bad8f019a8d3..e00fdc8ceaa4 100644
-> >> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> >> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> >> @@ -20,6 +20,7 @@ properties:
-> >>       enum:
-> >>         - qcom,sm8450-videocc
-> >>         - qcom,sm8550-videocc
-> >> +      - qcom,sm8150-videocc
-> >>
-> >>     reg:
-> >>       maxItems: 1
-> >> diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> >> index 6999e36ace1b..28d134ad9517 100644
-> >> --- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> >> +++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> >> @@ -17,7 +17,6 @@ description: |
-> >>       include/dt-bindings/clock/qcom,videocc-sc7180.h
-> >>       include/dt-bindings/clock/qcom,videocc-sc7280.h
-> >>       include/dt-bindings/clock/qcom,videocc-sdm845.h
-> >> -    include/dt-bindings/clock/qcom,videocc-sm8150.h
-> >>       include/dt-bindings/clock/qcom,videocc-sm8250.h
-> >>
-> >>   properties:
-> >> @@ -26,7 +25,6 @@ properties:
-> >>         - qcom,sc7180-videocc
-> >>         - qcom,sc7280-videocc
-> >>         - qcom,sdm845-videocc
-> >> -      - qcom,sm8150-videocc
-> >>         - qcom,sm8250-videocc
-> >>
-> >>     clocks:
-> >> @@ -75,7 +73,6 @@ allOf:
-> >>             enum:
-> >>               - qcom,sc7180-videocc
-> >>               - qcom,sdm845-videocc
-> >> -            - qcom,sm8150-videocc
-> >>       then:
-> >>         properties:
-> >>           clocks:
-> >>
-> >> --
-> >> 2.25.1
-> >>
-> >>
+> On Thu, 14 Mar 2024 at 14:47, Sumit Garg <sumit.garg@linaro.org> wrote:
 > >
+> > On Thu, 14 Mar 2024 at 14:00, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> > >
+> > > >>> +
+> > > >>> +             compatible = "gpio-leds";
+> > > >>> +             #address-cells = <1>;
+> > > >>> +             #size-cells = <0>;
+> > > >>
+> > > >> That's not a bus.
+> > > >>
+> > > >> It does not look like you tested the DTS against bindings. Please run
+> > > >> `make dtbs_check W=1` (see
+> > > >> Documentation/devicetree/bindings/writing-schema.rst or
+> > > >> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+> > > >> for instructions).
+> > > >
+> > > > I assumed earlier that W=1 is sufficient for DT schema checks but it
+> > >
+> > > W=1 as in make? No, it is not. It's flag changing the build process.
+> > > dtbs_check is separate target.
+> > >
+> > > > looks like those are two different entities. However, I added these
+> > > > address and size cells properties only to get rid of warnings reported
+> > > > by W=1, see below:
+> > > >
+> > > > $ make qcom/apq8016-schneider-hmibsc.dtb W=1
+> > > >   DTC     arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb
+> > > > arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:96.9-103.5:
+> > > > Warning (unit_address_vs_reg): /leds/led@5: node has a unit name, but
+> > > > no reg or ranges property
+> > > > arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:105.9-112.5:
+> > > > Warning (unit_address_vs_reg): /leds/led@6: node has a unit name, but
+> > > > no reg or ranges property
+> > >
+> > > Wait, so you saw the warnings and ignored them?
+> >
+> > Sorry but you are ignoring what I am trying to say.
+> >
+> > > These are legitimate
+> > > warnings, although they don't give you full answer.
+> > >
+> > > > <snip>
+> > > >
+> > > > So it looks like W=1 is reporting false warnings and we should rather
+> > >
+> > > Warnings were true.
+> > >
+> >
+> > That's was my initial impression too and I fixed them via following diff:
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > index 8f9cacf8de89..a366d3aff3c5 100644
+> > --- a/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > @@ -92,8 +92,11 @@ leds {
+> >                 pinctrl-0 = <&pm8916_mpps_leds>;
+> >
+> >                 compatible = "gpio-leds";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> >
+> >                 led@5 {
+> > +                       reg = <5>;
+> >                         label = "apq8016-hmibsc:green:wlan";
+> >                         function = LED_FUNCTION_WLAN;
+> >                         color = <LED_COLOR_ID_YELLOW>;
+> > @@ -103,6 +106,7 @@ led@5 {
+> >                 };
+> >
+> >                 led@6 {
+> > +                       reg = <6>;
+> >                         label = "apq8016-hmibsc:yellow:bt";
+> >                         function = LED_FUNCTION_BLUETOOTH;
+> >                         color = <LED_COLOR_ID_BLUE>;
+> >
+> > But it then broke dtbs_check.
+>
+> See following breakage afterwards:
+>
+> $ make qcom/apq8016-schneider-hmibsc.dtb dtbs_check
+> <snip>
+> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
+> leds: led@5: Unevaluated properties are not allowed ('reg' was
+> unexpected)
+> from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
+> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
+> leds: led@6: Unevaluated properties are not allowed ('reg' was
+> unexpected)
+> from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
+> /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
+> leds: '#address-cells', '#size-cells' do not match any of the regexes:
+> '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
+> <snip>
 
+That's because there is no addressing for gpio-leds. Just use names as
+led-5, led-6.
+
+>
+> > Are you aware of any other saner way to
+> > fix those warnings properly?
+> >
+>
+> -Sumit
+>
 
 
 -- 
