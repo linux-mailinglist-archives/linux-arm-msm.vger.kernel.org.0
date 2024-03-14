@@ -1,164 +1,336 @@
-Return-Path: <linux-arm-msm+bounces-14193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B684987C4AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 22:21:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B8A887C4C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 22:31:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9B651C213A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 21:20:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C174D283D04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 21:31:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7BB276418;
-	Thu, 14 Mar 2024 21:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 813B076417;
+	Thu, 14 Mar 2024 21:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ghg2CRbb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hIPTzrH0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D22763EE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 21:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10057351E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 21:31:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710451256; cv=none; b=XX4UG9QSUvB6IFfaMtAWfIxcdSutuDZqpdvbirh0jrdS1kS6rljfbEoLAEXwn9cLUW5Djdm1ddW4RbKztWJXWplIXcxVxd8SXLasN3wKcn4s50G2kh+oCkTyT+5FNgZtSF2Klv8wVu8FFsO6r+lSbQp5UN5w4fKEVSywvBv70tQ=
+	t=1710451873; cv=none; b=oBUuEXRgL1lC2Ueqo+t5BtzwvR4L1+cRD07FdvnpaETIoo6r9PF2p+I4YTomcK2oiAWnMHjzLZecQol4x37TjVDd9KFnI+Q17POIaAknsr2gwT+RnvBuGfHLUSOSG2mOXr7O6xklm6b1mrGWPI6K4LhqrethYA2KFnd6JxBMYn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710451256; c=relaxed/simple;
-	bh=Bc3TWzLq5Se/cGgui0UH3wgUf/bBdbLrUHlygXVOtSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ecjCCEJil/kVADgw1muHYRfu7HBBhRitgDLjt89Xr62z35INjj5UU4UZ8UHqYF0wPTPeV+cSb8j7qZbv26r5goMeoLbjArQ7Nz40kqaywgABexPVsSRfkPrSX1ZwWlE2McRR8eq9VaMxayVjBpcZ7KswQK+4r00o5A5klmha46o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ghg2CRbb; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1710451873; c=relaxed/simple;
+	bh=lLq2z3acMBmKWSX0heeafT8NN4r2sNB2KCmYV7lgKbk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FH8CAjq13MIFhrJ0Hk3Gu4rDZmOdaCSXY5js5UDr5NHlgXsfBh1NLxc6O+ZdTy9pme1MyjlK6nRSi88TqJ6+droI50ZAVqAqLjd+qHt6LNtL75PwB/xN8HwKwGWl3898vyO2ubJdXMfDVIY4wI3HmQ73xnRAJWZjVB4PEBiQDsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hIPTzrH0; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512bde3d197so1496202e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 14:20:54 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dc236729a2bso1333364276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 14:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710451253; x=1711056053; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5AaTGg0kAhiMjsJjr/oy7y4nkyssEzLV/1qGSoX4gZw=;
-        b=Ghg2CRbb32bZrC57v3wSIvGp8FwbF8yTzE//jXExWDtMm88m7oXLM5brSla6+xuXLU
-         H35zuo0v+EJo4e+D9V+w7Y8ajShtRwGhBTV8x1VEk0C6JlAEKc3JWPXczgf1FLqe4Ydk
-         RNjxJC7vr9pJCN7hbD8AqZpJ0DLX6sji7SuA0tGS4IZwRIuYtddfQjc5GozEnmBMMDP2
-         Cl+gtp8mbAfyq8VfHgO709vT6x/pYDnCAH+jfiYrEBfR/IVTLA5felL/xfJFbcULKi3m
-         QR1e6O3Jk07KwWo3jUeVvd6ahfyvPOitFO1wX1vohN+rjNpXVGB09sAoF1YNypX5IG4O
-         xU4g==
+        d=linaro.org; s=google; t=1710451870; x=1711056670; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EOl/X/aPu0Coxr/5ANXN6j6HPnl02z9ugLIqCnakY0A=;
+        b=hIPTzrH09l1SIygaYLEFcCje+H0BrRshHeH4+P+s73lZ0xPYUgVMVZBl+/Q/zy3eiV
+         lyEhd9v162OMAOQMSVyQMC2hYG76VJUR2s+V0ZUlCnd0obO+MuzZFjX/yiXoc1vg68f3
+         afU5HtHzth3z+B+uontxro2tY//nSdNFL4iiDIk6kwOUb+jePikpRum6zcvtWsXaqKUN
+         sb2LUlY8gauC7eYnlmW5IkxC/Bk7RrhuVgxlVujYbcYKM7uWaJddJL/IR064nwXIZaDl
+         9TFG1ieup+KPNfhGXuJNlZz8uk525H1SI30Gd+cK9lEeZQfhxU+g2xXaOcGgy8zFyM7a
+         Fsng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710451253; x=1711056053;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5AaTGg0kAhiMjsJjr/oy7y4nkyssEzLV/1qGSoX4gZw=;
-        b=JqNjcZ3k2up3F6N4RgUgOFN2iKLeczXHA7Gt3p6bb6Q0JtxmDL7FN5kuTwagStDaP+
-         BVvslviIy0c/h/bWqmqCyKba7q2dY6Y1YvTJgtcVbISl8lbtqGHldJyQS37+OiJ5X17T
-         b+Tjew+eltyVNLuYZ1YKt/0GpML26XXryH2b91Dga1kzxfbauzQdTKvMYrqOKxwYoROs
-         v2v2SDdGhEOTFdUKMhHoL0ztXrVW8sFsNx9sDEKT4wI4uzYF7tlfWagEX/wK8sdn721n
-         C4C2iaBhauuz1SMyhA5ajMtNvnbOmA4ncAAniKNZU8D76lr4u05gAi55pIl4BIyrjqjF
-         5wzA==
-X-Gm-Message-State: AOJu0YyvGWN7m9ckJCiLwsdj863KLjoDh9UdgjYTQZA3D1sdIZIcl2YN
-	cNjTfupuwn/bqC+ZJM9fqn8ZmAggqlFoi5ZBSNCCg50ZL7OFPnE6QfexovgzNp8=
-X-Google-Smtp-Source: AGHT+IEglS2IPMmFYFEpCcRW8fHxKCmCfx+pzQQt2ei51NY/HxeiA50TpeJtDNqSROvJ8h9HsxWr8A==
-X-Received: by 2002:a19:ca51:0:b0:513:b061:1815 with SMTP id h17-20020a19ca51000000b00513b0611815mr1816609lfj.18.1710451253356;
-        Thu, 14 Mar 2024 14:20:53 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id kk28-20020a170907767c00b00a4666bfa979sm1038038ejc.118.2024.03.14.14.20.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 14:20:52 -0700 (PDT)
-Message-ID: <5e317ad1-d473-423a-b85e-2f64a37f7d0d@linaro.org>
-Date: Thu, 14 Mar 2024 22:20:51 +0100
+        d=1e100.net; s=20230601; t=1710451870; x=1711056670;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EOl/X/aPu0Coxr/5ANXN6j6HPnl02z9ugLIqCnakY0A=;
+        b=NC7qOBN8JJ0DASWV69Ak7WZgZR/6VQsADCvFiVjo/ifZKGdXpp23AbFUNy1k6r2xms
+         6+rzPXleX+i3jbeBUk35yHY39NT3dalKIYmXmyneeiWdH87hrF+dtJskNPEAFstnUbKr
+         ttJwZ3NsTcBtEnS4VA+QUgiCJW7EAx8EczrAA+ZuOrWi70KMEtckl2E189LBKwYCdQLr
+         PlELKDjasP3U1nv0MkYYSykxuKYIVKeoYP8b0MiTg24/b8brcxtvioksAgygVOEWvJqM
+         MzN2Peyj6qeEOTyRUWHdf+tsnMJMhTMXdiRJiuebez+h6ZtfiQDvMsj71oFKNCgCKaSx
+         IB8g==
+X-Forwarded-Encrypted: i=1; AJvYcCVVOsjzsz3I3vq64j6BKn152zKfssN9mkVYV8OQWvktsrzNr5yDZ6K4AYd8v2NyarlQnvDXlR1YjNOhlZ4YnLuQohUx38sLEFq9n5NLPw==
+X-Gm-Message-State: AOJu0Yy+E+nybFket1AJT8aev2I439pFQ78neZ0LsEx6o2G6IRFy6Jfv
+	OHhGch5agh6KxaczMkhuThewVjrijaPS2N5NPvEnPn9p9AiivKdK5klYRp9Eezfk2X94Ninhfi/
+	To7c9ubcPAp7zjpkFxcBX2N+HpkxWLalrweOGe8Atkb0E3yXF
+X-Google-Smtp-Source: AGHT+IE7fca54CqrT9ej0Gh2NfwDmefTfPeTkgdJsVY6rfRdiQoWuCVZ53vuVxxMF2+mr/Fterc2I0euMEjOPT9ivRU=
+X-Received: by 2002:a25:9182:0:b0:dcf:4663:ecd8 with SMTP id
+ w2-20020a259182000000b00dcf4663ecd8mr3123365ybl.8.1710451870607; Thu, 14 Mar
+ 2024 14:31:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] dt-bindings: pinctrl: qcom,pmic-gpio: Add PMIH010x
- and PMD802x binding
-Content-Language: en-US
-To: Anjelique Melendez <quic_amelende@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_subbaram@quicinc.com, quic_collinsd@quicinc.com,
- quic_jprakash@quicinc.com
-References: <20240314200419.4733-2-quic_amelende@quicinc.com>
- <20240314200419.4733-6-quic_amelende@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240314200419.4733-6-quic_amelende@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
+ <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org> <714bb2ca-40ac-80a2-454f-021da3caa93d@quicinc.com>
+In-Reply-To: <714bb2ca-40ac-80a2-454f-021da3caa93d@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 14 Mar 2024 23:30:59 +0200
+Message-ID: <CAA8EJpokFA=s5uhrb-OxH=BigfAP7jZ_K5z1FXJ0p1h3h3_CLQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] soc: qcom: add pd-mapper implementation
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 14/03/2024 21:04, Anjelique Melendez wrote:
-> Update the Qualcomm Technologies, Inc. PMIC GPIO binding documentation
-> to include compatible strings for PMIH010x and PMD802x PMICs.
-> 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  .../bindings/pinctrl/qcom,pmic-gpio.yaml      | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> index 2b17d244f051..5cc04c016b25 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> @@ -57,10 +57,12 @@ properties:
->            - qcom,pma8084-gpio
->            - qcom,pmc8180-gpio
->            - qcom,pmc8180c-gpio
-> +          - qcom,pmd802x-gpio
+On Thu, 14 Mar 2024 at 21:44, Chris Lew <quic_clew@quicinc.com> wrote:
+>
+>
+>
+> On 3/11/2024 8:34 AM, Dmitry Baryshkov wrote:
+> > +int qcom_pdm_add_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+> > +{
+> > +     int ret;
+> > +     int i;
+> > +
+> > +     mutex_lock(&qcom_pdm_mutex);
+> > +
+> > +     if (qcom_pdm_server_added) {
+> > +             ret = qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> > +                                  SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> > +             if (ret)
+> > +                     goto err_out;
+> > +     }
+> > +
+> > +     for (i = 0; i < num_data; i++) {
+> > +             ret = qcom_pdm_add_domain_locked(data[i]);
+> > +             if (ret)
+> > +                     goto err;
+> > +     }
+> > +
+> > +     ret = qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> > +                          SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> > +     if (ret) {
+> > +             pr_err("PDM: error adding server %d\n", ret);
+> > +             goto err;
+> > +     }
+> > +
+> > +     qcom_pdm_server_added = true;
+> > +
+> > +     mutex_unlock(&qcom_pdm_mutex);
+> > +
+> > +     return 0;
+> > +
+> > +err:
+> > +     while (--i >= 0)
+> > +             qcom_pdm_del_domain_locked(data[i]);
+> > +
+> > +     qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> > +                    SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> > +
+> > +err_out:
+> > +     mutex_unlock(&qcom_pdm_mutex);
+> > +
+> > +     return ret;
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_pdm_add_domains);
+> > +
+> > +void qcom_pdm_del_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+> > +{
+> > +     int i;
+> > +
+> > +     mutex_lock(&qcom_pdm_mutex);
+> > +
+> > +     if (qcom_pdm_server_added) {
+> > +             qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> > +                            SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> > +     }
+>
+> I am confused as to why we need to reset the qmi handle anytime
+> qcom_pdm_del_domains or qcom_pdm_add_domains is called. Is this to
+> trigger some kind of re-broadcast type notification to clients because
+> the service list has been updated?
 
-Is the "x" some sort of wildcard or actual PMIC model/version name?
-Wildcards are in general discouraged.
+Yes. Otherwise clients like pmic-glink will miss new domains.
 
-Best regards,
-Krzysztof
+>
+> My concern would be that this causes some kind of unintended side-effect
+> on the rprocs that are not restarting.
 
+Well, an alternative is to match machine compatible strings and to
+build a full list of domains right from the beginning.
+
+>
+> > +
+> > +     for (i = 0; i < num_data; i++)
+> > +             qcom_pdm_del_domain_locked(data[i]);
+> > +
+> > +     qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+> > +                    SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+> > +     qcom_pdm_server_added = true;
+> > +
+> > +     mutex_unlock(&qcom_pdm_mutex);
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_pdm_del_domains);
+> > +
+> > +static void qcom_pdm_get_domain_list(struct qmi_handle *qmi,
+> > +                                  struct sockaddr_qrtr *sq,
+> > +                                  struct qmi_txn *txn,
+> > +                                  const void *decoded)
+> > +{
+> > +     const struct servreg_loc_get_domain_list_req *req = decoded;
+> > +     struct servreg_loc_get_domain_list_resp *rsp = kzalloc(sizeof(*rsp), GFP_KERNEL);
+> > +     struct qcom_pdm_service *service;
+> > +     u32 offset;
+> > +     int ret;
+> > +
+> > +     offset = req->offset_valid ? req->offset : 0;
+> > +
+> > +     rsp->rsp.result = QMI_RESULT_SUCCESS_V01;
+> > +     rsp->rsp.error = QMI_ERR_NONE_V01;
+> > +
+> > +     rsp->db_revision_valid = true;
+> > +     rsp->db_revision = 1;
+> > +
+> > +     rsp->total_domains_valid = true;
+> > +     rsp->total_domains = 0;
+> > +
+> > +     mutex_lock(&qcom_pdm_mutex);
+> > +
+> > +     service = qcom_pdm_find_locked(req->name);
+> > +     if (service) {
+> > +             struct qcom_pdm_domain *domain;
+> > +
+> > +             rsp->domain_list_valid = true;
+> > +             rsp->domain_list_len = 0;
+> > +
+> > +             list_for_each_entry(domain, &service->domains, list) {
+> > +                     u32 i = rsp->total_domains++;
+> > +
+> > +                     if (i >= offset && i < SERVREG_LOC_MAX_DOMAINS) {
+> > +                             u32 j = rsp->domain_list_len++;
+> > +
+> > +                             strscpy(rsp->domain_list[j].name, domain->name,
+> > +                                     sizeof(rsp->domain_list[i].name));
+> > +                             rsp->domain_list[j].instance_id = domain->instance_id;
+> > +
+> > +                             pr_debug("PDM: found %s / %d\n", domain->name,
+> > +                                      domain->instance_id);
+> > +                     }
+> > +             }
+> > +
+> > +     }
+> > +
+> > +     mutex_unlock(&qcom_pdm_mutex);
+> > +
+> > +     pr_debug("PDM: service '%s' offset %d returning %d domains (of %d)\n", req->name,
+> > +              req->offset_valid ? req->offset : -1, rsp->domain_list_len, rsp->total_domains);
+> > +
+> > +     ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_GET_DOMAIN_LIST,
+> > +                             2658,
+> > +                             servreg_loc_get_domain_list_resp_ei, rsp);
+>
+> Other QMI clients like pdr_interface have macros for the message size.
+> Can we considering adding one instead of using 2658 directly?
+
+
+Ack
+
+>
+> > +     if (ret)
+> > +             pr_err("Error sending servreg response: %d\n", ret);
+> > +
+> > +     kfree(rsp);
+> > +}
+> > +
+> > +static void qcom_pdm_pfr(struct qmi_handle *qmi,
+> > +                      struct sockaddr_qrtr *sq,
+> > +                      struct qmi_txn *txn,
+> > +                      const void *decoded)
+> > +{
+> > +     const struct servreg_loc_pfr_req *req = decoded;
+> > +     struct servreg_loc_pfr_resp rsp = {};
+> > +     int ret;
+> > +
+> > +     pr_warn_ratelimited("PDM: service '%s' crash: '%s'\n", req->service, req->reason);
+> > +
+> > +     rsp.rsp.result = QMI_RESULT_SUCCESS_V01;
+> > +     rsp.rsp.error = QMI_ERR_NONE_V01;
+> > +
+> > +     ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_PFR,
+> > +                             SERVREG_LOC_PFR_RESP_MSG_SIZE,
+> > +                             servreg_loc_pfr_resp_ei, &rsp);
+> > +     if (ret)
+> > +             pr_err("Error sending servreg response: %d\n", ret);
+> > +}
+> > +
+> > diff --git a/drivers/soc/qcom/qcom_pdm_msg.h b/drivers/soc/qcom/qcom_pdm_msg.h
+> > new file mode 100644
+> > index 000000000000..e576b87c67c0
+> > --- /dev/null
+> > +++ b/drivers/soc/qcom/qcom_pdm_msg.h
+> > @@ -0,0 +1,66 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2018, Linaro Ltd.
+> > + * Copyright (c) 2016, Bjorn Andersson
+> > + */
+> > +
+> > +#ifndef __QMI_SERVREG_LOC_H__
+> > +#define __QMI_SERVREG_LOC_H__
+> > +
+>
+> Should we update the header guards to reflect the new file name?
+
+Ack
+
+>
+> > +#include <linux/types.h>
+> > +#include <linux/soc/qcom/qmi.h>
+> > +
+> > +#define SERVREG_QMI_SERVICE 64
+> > +#define SERVREG_QMI_VERSION 257
+> > +#define SERVREG_QMI_INSTANCE 0
+> > +#define QMI_RESULT_SUCCESS 0
+> > +#define QMI_RESULT_FAILURE 1
+> > +#define QMI_ERR_NONE 0
+> > +#define QMI_ERR_INTERNAL 1
+> > +#define QMI_ERR_MALFORMED_MSG 2
+>
+> I think these common QMI macro definitions are wrong. They should match
+> what is defined in <soc/qcom/qmi.h>. This is a bug in the userspace
+> pd-mapper header as well.
+
+Ack
+
+>
+> > +#endif
+> > diff --git a/include/linux/soc/qcom/pd_mapper.h b/include/linux/soc/qcom/pd_mapper.h
+> > new file mode 100644
+> > index 000000000000..86438b7ca6fe
+> > --- /dev/null
+> > +++ b/include/linux/soc/qcom/pd_mapper.h
+> > @@ -0,0 +1,39 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +/*
+> > + * Qualcomm Protection Domain mapper
+> > + *
+> > + * Copyright (c) 2023 Linaro Ltd.
+> > + */
+> > +#ifndef __QCOM_PD_MAPPER__
+> > +#define __QCOM_PD_MAPPER__
+> > +
+> > +struct qcom_pdm_domain_data {
+> > +     const char *domain;
+> > +     u32 instance_id;
+> > +     /* NULL-terminated array */
+> > +     const char * services[];
+>
+> s/char * services[]/char *services[]/
+
+
+
+-- 
+With best wishes
+Dmitry
 
