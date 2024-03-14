@@ -1,530 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-14097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECD7587B930
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 09:19:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E14687B948
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 09:29:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C93C1C21AB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:19:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C03B31F238E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:29:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE7EE5D73B;
-	Thu, 14 Mar 2024 08:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A101E5D747;
+	Thu, 14 Mar 2024 08:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hD7GlnzP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SScl5PSS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21AF5D488
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94B154677;
+	Thu, 14 Mar 2024 08:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710404379; cv=none; b=CFZxye4E3CmNabDRe099+q4spDNLk/Su811zN9Wc/XNFmdqPTSCUF5gJWaL4RIyqj7xZrCfIbM1acqFabSR/yWHoP2GW4Snl4shX1A1plVoEd+/cZXtWT+21Pa6y7dO2eVHMe2bV50pulpH0zKpV7OinJhQ6frvD6CKqPUtYPj8=
+	t=1710404943; cv=none; b=BICi61uJf3A5pSHOlFToXADcLD2O8xMDVgy8mM0GcQlNkINxeY2L8wHwdgEU2MzKFQSp52Ir9LF5oWJ193Enxspa4GMkm1V9aXZg9nZIgGwmoDRy1LOoUSaVElh46wjd92I9/XwAPEK8NSfU0NzY7EsmATIP5hkunTEOqSKwENI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710404379; c=relaxed/simple;
-	bh=IXY0wwQwDlRv4odrCfBTKygI9/tM2ICF/hkN3lASWe8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rb+69gSDXHPttN9vqEH6ru9aRag1Fev0t2dw5NimGdodmXmNkaw7OuHjck6qG6n+anKzOHF0IRX9MkahJNhjtSIP3woPx6nupSkzXLcx36ITuaGPHhE+/W1reZtqA6JgCSJTUfeb8QZCnn1eCJwsvNa83Rz+TX9y4lPGXLTT0BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hD7GlnzP; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-476025fde0aso277639137.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:19:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710404376; x=1711009176; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tK+3kQqSlfPhFWBUtsWPYQNkWNEDMgLpBguwcQs2Jwk=;
-        b=hD7GlnzPqf3p2Aymf1IWRETvwRF6dTbOdW5AUYuVASCPvEANVTzZgKvHCd6eP+bsXM
-         Us8meQ1coa9cULZi3swGsVvu+hR0sdMtXXLHt5trciqwX4p8JoXYLVndYmfFlvvI39jj
-         zttsA56270rj6TQZPPdQq+opbDp9tFUf4x/YjQqXReKlgjzHhvX7EA5KJmke/XgkW3kq
-         5bsdJcADdGCCDSIlPIvIKEWzojxgQ2pPhLf/YOWPzFQ8TDLOoA2ftd8WiW63awIhvXyz
-         2iC6w7rxMoKhVskJoCPUcnjop4VVN/aaaHY0TmvL4eJRjHnul/FiT4DzSpEr+CoA5P8h
-         sUDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710404376; x=1711009176;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tK+3kQqSlfPhFWBUtsWPYQNkWNEDMgLpBguwcQs2Jwk=;
-        b=skgazOWPWHmSrCiwkd+A3+TpxBRNr9kqaVlDlRX8zgFwMGWlvVr93EQi+8qa8PUYEU
-         mtnHUA16Bf2bKEn+Een3n/fU2NmXJVFVWgbuZue3LKhAGxsnwDyxRC6QBSXarEys/ZAN
-         Kf4cvdlHWpEoeGoqOwzAmuqj/tSfUEQnoG3b9J1iJbqP975NBh/ymF3dy4m0s7sy8Zph
-         6ou9hWFGDjKsQwSfDKWebf2yXbn/MRnnhA9aY8Gxw2yO+ClGhqPu/SKMwrPnFI0UBh+e
-         2MjeJHcEUVlZPevS0WJigo3ns+YiVP1agUFSNSQXaaT3T1+0tuGQB9hVvwUMslPPIOf0
-         GIfw==
-X-Gm-Message-State: AOJu0YyHABiW7QAKokxF6E0P2ftll/MDxSalr3OTeb9ccstBS2Zaq6Gq
-	zKplR0pzHZTgW+vy5gl3DX4J8qCuqJgs2qULAyG7EWZEKQvXfPpgknGiMyfVtgIMrJA9ObAIW66
-	Z6c+d+tjObE00cyI8sTQYHtz1pzs15IAfDhnMDw==
-X-Google-Smtp-Source: AGHT+IGPQWkXK7MdgQEmauYaWdQfwjYuThqRNmj7dp6O2HGI3PntS4E9mND6iNXfPwnlSecTt+045PAaCABauVWMNJc=
-X-Received: by 2002:a05:6102:508:b0:474:5f25:58a3 with SMTP id
- l8-20020a056102050800b004745f2558a3mr1176602vsa.19.1710404374994; Thu, 14 Mar
- 2024 01:19:34 -0700 (PDT)
+	s=arc-20240116; t=1710404943; c=relaxed/simple;
+	bh=JzGyHEjo0l5+t705kG/iFokneXzvLXfTOvbSZ7ORaQ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GCiUP1imq8OFWqMXtGZbk6rjHWyDxwKLUikYqIyYGejicQ9BsaHg6Voy/fSrNamknMTOLlml7qdM6uCw5nl2bzlOaqsxsFCMKbIuOYXKxq6B+TWjfS/6fNbsgS4VSlKhCfp9xPYz56qJk/v7ZvX6Lb04tBaWbZN82A5Emz++2Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SScl5PSS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42E7MsdY032381;
+	Thu, 14 Mar 2024 08:28:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=K1DI991HbjwKV63GHD7ax9zV5QvSZ/lxPe4APc6ldJ4=; b=SS
+	cl5PSSel+4Erl0rURjtjYVAKuPzxU5tpymP0aSMamry9oQQoNq/ndKGhvtSrISog
+	QVRj1XoTte7kaNod5lRayBkTa9uxCrm15wb1mYLV5NJpOg9bcFrQqJQjwIz7zDWa
+	w3tnGWg5pGf2r+lEfBKS0Iel+fYbIkHN2ibpZSC3s0hUkntD5zUS0h7Hzvgw33lz
+	2r/Dcg8k+WyqCCM/VWL09DoiI8FFQDKMajHtYzKJPYhUI33xq3XiDdZhbDE1yjxD
+	BhKkhqUeW9alHPvSCUHu7EdbJaD+y0duSJTrEmtFmoyUsavFPxLQAum0j90ExWgp
+	hQ6A73Jn6HNmuBF7gGuw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wusxgghmj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 08:28:37 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42E8SaMu007591
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 08:28:36 GMT
+Received: from [10.217.217.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
+ 2024 01:28:24 -0700
+Message-ID: <1537d42f-fe61-48c2-9ee2-1066db71a19e@quicinc.com>
+Date: Thu, 14 Mar 2024 13:58:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org> <4a0a8db7-a2bc-4c99-94b2-c13facbd1bef@linaro.org>
-In-Reply-To: <4a0a8db7-a2bc-4c99-94b2-c13facbd1bef@linaro.org>
-From: Sumit Garg <sumit.garg@linaro.org>
-Date: Thu, 14 Mar 2024 13:49:23 +0530
-Message-ID: <CAFA6WYPh5BS_Fpi6ksAC7bwoFEyqjj1Y3EahyQxCG9Pp=KDw=Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, stephan@gerhold.net, 
-	caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
-	laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com, 
-	jimmy.lalande@se.com, benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
-	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <jic23@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>,
+        <andriy.shevchenko@linux.intel.com>, <daniel.lezcano@linaro.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <lars@metafoo.de>, <luca@z3ntu.xyz>, <marijn.suijten@somainline.org>,
+        <agross@kernel.org>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
+        <linus.walleij@linaro.org>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <kernel@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
+ <20231231171237.3322376-3-quic_jprakash@quicinc.com>
+ <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
+ <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
+ <f52b2d5e-b2b4-48ae-a6a6-fc00c89662d2@linaro.org>
+ <0b9e807d-e0ca-411c-9a2b-3d804bdf168c@quicinc.com>
+ <d3dc9a41-4738-4634-9a98-fefcf418f552@linaro.org>
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <d3dc9a41-4738-4634-9a98-fefcf418f552@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: USFgAHj3NNLldE_h9mKjClq3LRVoHbpe
+X-Proofpoint-GUID: USFgAHj3NNLldE_h9mKjClq3LRVoHbpe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_05,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 impostorscore=0
+ malwarescore=0 clxscore=1011 mlxscore=0 phishscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2402120000 definitions=main-2403140057
 
 Hi Krzysztof,
 
-On Wed, 13 Mar 2024 at 18:30, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 13/03/2024 13:30, Sumit Garg wrote:
-> > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-> > Box Core board based on the Qualcomm APQ8016E SoC.
-> >
->
-> ...
->
-> > +
-> > +/ {
-> > +     model = "Schneider Electric HMIBSC Board";
-> > +     compatible = "schneider,apq8016-hmibsc", "qcom,apq8016";
-> > +
-> > +     aliases {
-> > +             mmc0 = &sdhc_1; /* eMMC */
-> > +             mmc1 = &sdhc_2; /* SD card */
-> > +             serial0 = &blsp_uart1;
-> > +             serial1 = &blsp_uart2;
-> > +             usid0 = &pm8916_0;
-> > +             i2c1 = &blsp_i2c6;
-> > +             i2c3 = &blsp_i2c4;
-> > +             i2c4 = &blsp_i2c3;
->
-> The aliases should match schematics of the board, so I assume missing
-> i2c2 is intentional, right?
+On 2/21/2024 12:49 PM, Krzysztof Kozlowski wrote:
+> On 21/02/2024 06:36, Jishnu Prakash wrote:
+>> Hi Krzysztof,
+>>
+>> On 2/17/2024 7:43 PM, Krzysztof Kozlowski wrote:
+>>> On 16/02/2024 11:39, Jishnu Prakash wrote:
+>>>> Hi Krzysztof,
+>>>>
 
-Yeah that is intentional as per board schematics.
 
->
-> > +             spi0 = &blsp_spi5;
-> > +     };
-> > +
-> > +     chosen {
-> > +             stdout-path = "serial0";
-> > +     };
-> > +
-> > +     memory@80000000 {
-> > +             reg = <0 0x80000000 0 0x40000000>;
-> > +     };
-> > +
-> > +     reserved-memory {
-> > +             ramoops@bff00000 {
-> > +                     compatible = "ramoops";
-> > +                     reg = <0x0 0xbff00000 0x0 0x100000>;
-> > +
-> > +                     record-size = <0x20000>;
-> > +                     console-size = <0x20000>;
-> > +                     ftrace-size = <0x20000>;
-> > +             };
-> > +     };
-> > +
-> > +     usb2513 {
->
-> Node names should be generic. See also an explanation and list of
-> examples (not exhaustive) in DT specification:
-> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-> e.g. usb-hub
->
+>>
+>>> How is this a problem?
+>>
+>> In qcom,spmi-vadc.yaml, we have the following top-level constraints for
+>> the "reg" and "interrupts" properties:
+>>
+>>     reg:
+>>       maxItems: 1
+>>
+>>     interrupts:
+>>       maxItems: 1
+>>
+>> For the ADC5 Gen3 device being added now, these constraints cannot be
+>> followed always, as there may be more than one peripheral under one
+>> device instance, each with a corresponding interrupt. For example, the
+>> above properties could be like this for a ADC5 Gen3 device:
+>>
+>>       reg = <0x9000>, <0x9100>;
+>>       interrupts = <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
+>>                    <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
+>>
+>>
+>> I could not overwrite the top-level constraints for the new device
+>> "qcom,spmi-adc5-gen3" alone in qcom,spmi-vadc.yaml, so I tried to remove
+>> the constraints from the top level and add them back conditionally for
+>> all the device types separately, but you told me not to remove them
+>> (full message:
+>> https://lore.kernel.org/linux-iio/832053f4-bd5d-4e58-81bb-1a8188e7f364@linaro.org/)
+> 
+> Because top-level widest constraints must stay, but it is not a problem.
+> Most of the multi-device bindings work like this. Dozen of Qualcomm. Why
+> you cannot do this the same way we do for all Qualcomm devices?
+> 
 
-Okay, I will rename it to usb-hub.
+I would like to clarify a point with you related to the top-level 
+constraints, as I think I have not asked this exact question earlier.
 
->
->
-> > +             compatible = "smsc,usb3503";
-> > +             reset-gpios = <&pm8916_gpios 1 GPIO_ACTIVE_LOW>;
-> > +             initial-mode = <1>;
-> > +     };
-> > +
-> > +     usb_id: usb-id {
-> > +             compatible = "linux,extcon-usb-gpio";
-> > +             id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-> > +             pinctrl-names = "default";
-> > +             pinctrl-0 = <&usb_id_default>;
-> > +     };
-> > +
-> > +     hdmi-out {
-> > +             compatible = "hdmi-connector";
-> > +             type = "a";
-> > +
-> > +             port {
-> > +                     hdmi_con: endpoint {
-> > +                             remote-endpoint = <&adv7533_out>;
-> > +                     };
-> > +             };
-> > +     };
-> > +
-> > +     gpio-keys {
-> > +             compatible = "gpio-keys";
-> > +             autorepeat;
-> > +
-> > +             pinctrl-names = "default";
-> > +             pinctrl-0 = <&msm_key_volp_n_default>;
-> > +
-> > +             button {
-> > +                     label = "Volume Up";
-> > +                     linux,code = <KEY_VOLUMEUP>;
-> > +                     gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-> > +             };
-> > +     };
-> > +
-> > +     leds {
-> > +             pinctrl-names = "default";
-> > +             pinctrl-0 = <&pm8916_mpps_leds>;
->
-> First property is always compatible. Please apply DTS coding style rules.
+For these top-level constraints in qcom,spmi-vadc.yaml:
 
-Ack.
+     reg:
+       maxItems: 1
 
->
-> > +
-> > +             compatible = "gpio-leds";
-> > +             #address-cells = <1>;
-> > +             #size-cells = <0>;
->
-> That's not a bus.
->
-> It does not look like you tested the DTS against bindings. Please run
-> `make dtbs_check W=1` (see
-> Documentation/devicetree/bindings/writing-schema.rst or
-> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-> for instructions).
+     interrupts:
+       maxItems: 1
 
-I assumed earlier that W=1 is sufficient for DT schema checks but it
-looks like those are two different entities. However, I added these
-address and size cells properties only to get rid of warnings reported
-by W=1, see below:
+If we add ADC5 Gen3 bindings in the same file, is it acceptable to 
+update the top-level constraints to something like this:
 
-$ make qcom/apq8016-schneider-hmibsc.dtb W=1
-  DTC     arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:96.9-103.5:
-Warning (unit_address_vs_reg): /leds/led@5: node has a unit name, but
-no reg or ranges property
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts:105.9-112.5:
-Warning (unit_address_vs_reg): /leds/led@6: node has a unit name, but
-no reg or ranges property
-<snip>
+     reg:
+       minItems: 1
+       maxItems: 2
 
-So it looks like W=1 is reporting false warnings and we should rather
-rely on dtbs_check only.
+     interrupts:
+       minItems: 1
+       maxItems: 2
 
->
-> > +
-> > +             led@5 {
-> > +                     reg = <5>;
-> > +                     label = "apq8016-hmibsc:green:wlan";
-> > +                     function = LED_FUNCTION_WLAN;
-> > +                     color = <LED_COLOR_ID_YELLOW>;
-> > +                     gpios = <&pm8916_mpps 2 GPIO_ACTIVE_HIGH>;
-> > +                     linux,default-trigger = "phy0tx";
-> > +                     default-state = "off";
-> > +             };
-> > +
-> > +             led@6 {
-> > +                     reg = <6>;
-> > +                     label = "apq8016-hmibsc:yellow:bt";
-> > +                     function = LED_FUNCTION_BLUETOOTH;
-> > +                     color = <LED_COLOR_ID_BLUE>;
-> > +                     gpios = <&pm8916_mpps 3 GPIO_ACTIVE_HIGH>;
-> > +                     linux,default-trigger = "bluetooth-power";
-> > +                     default-state = "off";
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&blsp_i2c3 {
-> > +     status = "okay";
-> > +
-> > +     eeprom@50 {
-> > +             compatible = "atmel,24c32";
-> > +             reg = <0x50>;
-> > +     };
-> > +};
-> > +
-> > +&blsp_i2c4 {
-> > +     status = "okay";
-> > +
-> > +     adv_bridge: bridge@39 {
-> > +             status = "okay";
->
-> Why do you need it? Was it disabled?
->
-> And why this is before compatible? If this stays, please use DTS coding
-> style rules for placement.
+followed by updating maxItems back to 1 for all the earlier existing 
+compatibles, using if:then: conditions, like the below example?
 
-Okay I will remove it.
+   - if:
+       properties:
+         compatible:
+           contains:
+             const: qcom,spmi-adc5
 
->
-> > +
-> > +             compatible = "adi,adv7533";
-> > +             reg = <0x39>;
-> > +
-> > +             interrupt-parent = <&tlmm>;
-> > +             interrupts = <31 IRQ_TYPE_EDGE_FALLING>;
-> > +
-> > +             adi,dsi-lanes = <4>;
-> > +             clocks = <&rpmcc RPM_SMD_BB_CLK2>;
-> > +             clock-names = "cec";
-> > +
-> > +             pd-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-> > +
-> > +             avdd-supply = <&pm8916_l6>;
-> > +             a2vdd-supply = <&pm8916_l6>;
-> > +             dvdd-supply = <&pm8916_l6>;
-> > +             pvdd-supply = <&pm8916_l6>;
-> > +             v1p2-supply = <&pm8916_l6>;
-> > +             v3p3-supply = <&pm8916_l17>;
-> > +
-> > +             pinctrl-names = "default","sleep";
-> > +             pinctrl-0 = <&adv7533_int_active &adv7533_switch_active>;
-> > +             pinctrl-1 = <&adv7533_int_suspend &adv7533_switch_suspend>;
-> > +             #sound-dai-cells = <1>;
-> > +
-> > +             ports {
-> > +                     #address-cells = <1>;
-> > +                     #size-cells = <0>;
-> > +
-> > +                     port@0 {
-> > +                             reg = <0>;
-> > +                             adv7533_in: endpoint {
-> > +                                     remote-endpoint = <&mdss_dsi0_out>;
-> > +                             };
-> > +                     };
-> > +
-> > +                     port@1 {
-> > +                             reg = <1>;
-> > +                             adv7533_out: endpoint {
-> > +                                     remote-endpoint = <&hdmi_con>;
-> > +                             };
-> > +                     };
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&blsp_i2c6 {
-> > +     status = "okay";
-> > +
-> > +     rtc@30 {
-> > +             compatible = "sii,s35390a";
-> > +             reg = <0x30>;
-> > +     };
-> > +
-> > +     eeprom@50 {
-> > +             compatible = "atmel,24c256";
-> > +             reg = <0x50>;
-> > +     };
-> > +};
-> > +
-> > +&blsp_spi5 {
-> > +     status = "okay";
-> > +     cs-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
-> > +
-> > +     tpm@0 {
-> > +             compatible = "tcg,tpm_tis-spi";
-> > +             reg = <0>;
-> > +             spi-max-frequency = <500000>;
-> > +     };
-> > +};
-> > +
-> > +&blsp_uart1 {
-> > +     status = "okay";
-> > +     label = "UART0";
-> > +};
-> > +
-> > +&blsp_uart2 {
-> > +     status = "okay";
-> > +     label = "UART1";
-> > +};
-> > +
-> > +&lpass {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&mdss {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&mdss_dsi0_out {
-> > +     data-lanes = <0 1 2 3>;
-> > +     remote-endpoint = <&adv7533_in>;
-> > +};
-> > +
-> > +&pm8916_codec {
-> > +     status = "okay";
-> > +     qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-> > +     qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-> > +};
-> > +
-> > +&pm8916_resin {
-> > +     status = "okay";
-> > +     linux,code = <KEY_POWER>;
-> > +};
-> > +
-> > +&pm8916_rpm_regulators {
-> > +     pm8916_l17: l17 {
-> > +             regulator-min-microvolt = <3300000>;
-> > +             regulator-max-microvolt = <3300000>;
-> > +     };
-> > +};
-> > +
-> > +&sdhc_1 {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&sdhc_2 {
-> > +     status = "okay";
-> > +
-> > +     pinctrl-names = "default", "sleep";
-> > +     pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-> > +     pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-> > +
-> > +     cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-> > +};
-> > +
-> > +&sound {
-> > +     status = "okay";
->
-> Is thi sneeded?
+     then:
+       properties:
+         reg:
+           maxItems: 1
+         interrupts:
+           maxItems: 1
 
-Yeah it is disabled by default.
 
->
-> > +
-> > +     pinctrl-0 = <&cdc_pdm_default &sec_mi2s_default>;
-> > +     pinctrl-1 = <&cdc_pdm_sleep &sec_mi2s_sleep>;
-> > +     pinctrl-names = "default", "sleep";
-> > +     model = "DB410c";
-> > +     audio-routing =
-> > +             "AMIC2", "MIC BIAS Internal2",
-> > +             "AMIC3", "MIC BIAS External1";
-> > +
-> > +     quaternary-dai-link {
-> > +             link-name = "ADV7533";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_QUATERNARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&adv_bridge 0>;
-> > +             };
-> > +     };
-> > +
-> > +     primary-dai-link {
-> > +             link-name = "WCD";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_PRIMARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&lpass_codec 0>, <&pm8916_codec 0>;
-> > +             };
-> > +     };
-> > +
-> > +     tertiary-dai-link {
-> > +             link-name = "WCD-Capture";
-> > +             cpu {
-> > +                     sound-dai = <&lpass MI2S_TERTIARY>;
-> > +             };
-> > +             codec {
-> > +                     sound-dai = <&lpass_codec 1>, <&pm8916_codec 1>;
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&usb {
-> > +     status = "okay";
-> > +     extcon = <&usb_id>, <&usb_id>;
-> > +
-> > +     pinctrl-names = "default", "device";
-> > +     pinctrl-0 = <&usb_sw_sel_pm &usb_hub_reset_pm>;
-> > +     pinctrl-1 = <&usb_sw_sel_pm_device &usb_hub_reset_pm_device>;
-> > +};
-> > +
-> > +&usb_hs_phy {
-> > +     extcon = <&usb_id>;
-> > +};
-> > +
-> > +&wcnss {
-> > +     status = "okay";
-> > +     firmware-name = "qcom/apq8016/wcnss.mbn";
-> > +};
-> > +
-> > +&wcnss_ctrl {
-> > +     firmware-name = "qcom/apq8016/WCNSS_qcom_wlan_nv_sbc.bin";
-> > +};
-> > +
-> > +&wcnss_iris {
-> > +     compatible = "qcom,wcn3620";
-> > +};
-> > +
-> > +&wcnss_mem {
-> > +     status = "okay";
-> > +};
-> > +
-> > +/* Enable CoreSight */
-> > +&cti0 { status = "okay"; };
-> > +&cti1 { status = "okay"; };
-> > +&cti12 { status = "okay"; };
-> > +&cti13 { status = "okay"; };
-> > +&cti14 { status = "okay"; };
-> > +&cti15 { status = "okay"; };
-> > +&debug0 { status = "okay"; };
-> > +&debug1 { status = "okay"; };
-> > +&debug2 { status = "okay"; };
-> > +&debug3 { status = "okay"; };
-> > +&etf { status = "okay"; };
-> > +&etm0 { status = "okay"; };
-> > +&etm1 { status = "okay"; };
-> > +&etm2 { status = "okay"; };
-> > +&etm3 { status = "okay"; };
-> > +&etr { status = "okay"; };
-> > +&funnel0 { status = "okay"; };
-> > +&funnel1 { status = "okay"; };
-> > +&replicator { status = "okay"; };
-> > +&stm { status = "okay"; };
-> > +&tpiu { status = "okay"; };
-> > +
-> > +/*
-> > + * 2mA drive strength is not enough when connecting multiple
-> > + * I2C devices with different pull up resistors.
-> > + */
-> > +
-> > +&blsp_i2c4_default {
->
-> None of your overrides look like have proper alphabetical order. Please
-> use alphabetical order.
->
+If this is acceptable, I'll add ADC5 Gen3 bindings in the same file with 
+changes like the above, else I'll add them in a new file after first 
+creating a common schema file as you suggested.
 
-Although these are already following the same order as
-apq8016-sbc.dts, would you like the two DTS files based on the same
-SoC to follow different orders?
+Thanks,
+Jishnu
 
--Sumit
-
->
->
+>>
+>> Since these constraints cannot be modified for a specific new device or
+> 
+> ???
+> 
+>> removed, I think the only way to accommodate this new device is to add
+>> it in its own new file.
+>>
+>> Is this a sufficient justification for adding this documentation in a
+>> new file or do you have any other suggestions?
+> 
+> I already gave you the suggestions and you ignored them. Do like we are
+> doing for all other drivers. Don't re-invent stuff. Either this fits to
+> existing schema or come with common schema (and then provide rationale
+> why it does not fit to existing one).
+> 
 > Best regards,
 > Krzysztof
->
+> 
 
