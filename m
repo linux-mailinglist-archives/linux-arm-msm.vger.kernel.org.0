@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61ECC87BE0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:53:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AD7F87BE36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:00:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C786283988
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 13:53:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A50AF1F222C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0DF45D8F8;
-	Thu, 14 Mar 2024 13:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C4416F506;
+	Thu, 14 Mar 2024 14:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0ga1FK5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ri8Mz3cH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3125B5DD;
-	Thu, 14 Mar 2024 13:52:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EF66EB73
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 14:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710424377; cv=none; b=TvqIoMPoiKFT3OzNFLB+bg6Y+MWXvh5afSh8DAmtcFf0Rq2PZvoeNQnMMlKYvbKRrI1A3sU74KAy4ZH7OKv0hAjgzpc0M4OWm5sqnZUZDXid4dYE7Uo+JwYuQGUE6hvHmkcgOHu7bmzrjkz3BgmAIqwiqmk+9ayIUw8JkElWMw0=
+	t=1710424811; cv=none; b=jPWiHa75X2qp8NayuoAdRwY1CpQWEP6+bYznrNUTGwV1dM8V74aosZPy7i+qjooDcdMsOL7OERtS6lgul38WxjlH4LdpR15VpRNBTn7M196Zk9sqJ+nVubV44djegaFiu27Rhla16I4J5wpdeULRw2MUOV1SagmbT03XKepppCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710424377; c=relaxed/simple;
-	bh=dzagUUNASVzuZpjkvZI9csv9wyIfQ6jRNw4sLWIkiEc=;
+	s=arc-20240116; t=1710424811; c=relaxed/simple;
+	bh=hIlmhR3AzpmS8Vgf5z1Vc+JUV312hQfTQ06lv4JjRys=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T1+1pPKX0uvfyHDhkIdXKuwBz4vNoxGlZPYGdCH7AcBTEt0WSHR/REy43Yxypr+lm2JV18ZQAFR1QlqzQEVBzJSTPu7akQWHLevm1BPyBly8h191Xrd7vAdFsdePlvYHcMUaEEpYW0iyOBERFMfnsxYVb3EWnle4iXRm6Wc9yHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0ga1FK5; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33e9dfd343fso569477f8f.0;
-        Thu, 14 Mar 2024 06:52:55 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=hAr8xq4CrDwthvvYw0cWYKgBx8TKcdbBYxAD4nZDMA2boQGptgwRBfiSludY4rESuja5tMD7o3ltdFhUbGWquXQpm9odrh4Qkibl2lrdtAvjG8wH5L33WTiDcBv5VMeSevuA7IqhxHVqdZKvSMoXV5bpOSFLyo5pw0wlankJTLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ri8Mz3cH; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51325c38d10so1906203e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 07:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710424374; x=1711029174; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1710424808; x=1711029608; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xIl4vzYLu7H92myngevMJEPjqZCqCBPhgfD/SqnC3pE=;
-        b=K0ga1FK5wV5hXkvHxoqzBM0QrCO55eO4zlvCthw1aRUnOSOwY+kUIdguKXRIFzrWOn
-         zrnIPUMYR4/9877vssF/EjLpQ46yA4xwRlDovwIsyTSyb84jClNdVuuHO0B/NAxEE1CD
-         mvtu1I3FrLfWdFt8LtH1XsmE5RQMp27mjG1REOLBKYXqkYpAa283KA633ipQSxPUWvQ7
-         EsFtbdI4RDj5XLgIviVb40Er+ihF1LIYe7QmhdRebC3ZVVNiADHAMurNznGwovX5WDeo
-         Uwm1Y6EPqJ+xNSSDuPFKvTOGunGW5bF/mWy4bN9biYa7gJUvCgadwAyADMCqvubtjCZ3
-         U+AA==
+        bh=FxNLG3KW46YsRyLUDeirw2sQ0+ONikiBJMDP2FhU0UA=;
+        b=ri8Mz3cH4KNRQiNXdJLBe2OMCeyhWFnRIub4ycboIIJeBmxtYs3PPyqukoH1y5rAfC
+         ni2sSkNc10D4ioy96BjG6X5rAQBywoLV8gQ1kT12px8d3AqAyzoHZSaqaUZImtYGZOiV
+         H3hensV7O4fxyxNh/YQQb48kSg2sIAOhAEIp6F6QCuhFxPA6uKIjDl8QsjISaZgMT8Zz
+         i+o94YVumapeOZ/PMlAO4jWAd8KGRn3blVXDX9rkypCf0jVS6s8uUAfoxpSZFBrGZek9
+         Vw6YFYWUGT63QwYd4Gqx8J9NVbGLMEbbpu1GT5ijew/2JCdixKhsgrFNqz7ygMZKXBdC
+         qslQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710424374; x=1711029174;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1710424808; x=1711029608;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xIl4vzYLu7H92myngevMJEPjqZCqCBPhgfD/SqnC3pE=;
-        b=K+fVqaiRhr3yvm0Xxy7Lw//NkEqV1IxVsDaJUSJBRpUQ4JKc65ccZKCO+C/HdIBxaZ
-         Av6O43tggVYi5SMiZtRWmWvXHtfq4GwAw7TstfjaggDZxscRjkA2oyhVRDSJ3/f5x+zn
-         Ofk1COsUX7NEVUHitI7zXy/ZvKsgxcDqUmc/OjntrXzVN2Css4iBAIZyhIZGKEN5UYyu
-         pxoVyHhZM35im0WBQ2hBNdtNJD/4vhIGTvYG691WaP+e7jIX9YUh5yxZ87Jgwwa7H+e+
-         Q6U6W+Zl1vNL72wKchbDosKK8EE7qB78ghr6n+33sfdJcGnurzbukuSddt+NytB/Bn3V
-         +WJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUiypvQOV37qVw7XqvqGY0DrP4buHfO6Knp1Tz9HuSXct3u9lGB4U8aep0fCsv1kHVhLuvhdnusy18HgvV4nh4gvLA6bU9AmYSi+oKAhXsQYFvNEWDBswMl98LzXCSkV6YAd21SlDT0LTT1y88y2ZrR4Pp+y+LAe/jsGaVj5Ofg
-X-Gm-Message-State: AOJu0Yylig2ckHmxtjroVC7JdN+hzKnnsbXmOfwX1fPF1GvRUFR8g6IM
-	4bKT4b1TOkcFfqNRRYUrFQ3YC7sGsyaRo7QECVSwquOwAUXm/hig
-X-Google-Smtp-Source: AGHT+IFf+kJk7xGcSVahe5u1ec7CBmGtIvekV5cmZjqxXpV9hnuLTiOLG8wA4rCJG7svPg7uDZ5MIg==
-X-Received: by 2002:a5d:68cb:0:b0:33e:4590:8bd8 with SMTP id p11-20020a5d68cb000000b0033e45908bd8mr1060606wrw.60.1710424374339;
-        Thu, 14 Mar 2024 06:52:54 -0700 (PDT)
-Received: from [192.168.20.170] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.gmail.com with ESMTPSA id az9-20020adfe189000000b0033e43756d11sm857939wrb.85.2024.03.14.06.52.51
+        bh=FxNLG3KW46YsRyLUDeirw2sQ0+ONikiBJMDP2FhU0UA=;
+        b=ktyLA/cMY4cePDJgg+kI9wWZzDvlHBTqrvABviLcN9dmpYL8gM2QU49T+1U2JJrYoh
+         QwTHwOQv9L6bbnYORx4MTpXEZ9cQTd3/U1jF7UTMflSID4AuvKmDzL9mky4Qi86zh7sA
+         1zgs/3ZQ6quPjl7ygeoco1XMzByYqG+tOXXcqRcWUc9qT8MvzmA8XtcEZiaNQoCkrGN8
+         Vb/2VTLsuMzMEVzoBEq5zWGPPXFGu6vDSC1uBno420Pz/74YzpsDiQqzI+OvT0LTe62/
+         OeE7SfMFYQia2S95RJFWqw8ssAkwfiem4KgjeSrHn9vn/yGM0M7b0enEvl3KYdYk//5o
+         r4aQ==
+X-Gm-Message-State: AOJu0YwfoeyI5WO3Fq9jCyxpEe5/R0GQHQo3zOZpd7xyVwm13cXBNy3p
+	jZYSei4ZzXaEckIRvDlM8K1AWqCgM6Nolf4Ab4zykXF/3UE6cCG3jf2N90woByQ=
+X-Google-Smtp-Source: AGHT+IHue9gaD3zPtJZnyQCeG7GuQwFP18YfHf0KLTKt0TTAlkcgMAoYq0PpAFe1/h3NaSxXwr70dQ==
+X-Received: by 2002:a19:e056:0:b0:513:c5d1:a537 with SMTP id g22-20020a19e056000000b00513c5d1a537mr792222lfj.10.1710424808071;
+        Thu, 14 Mar 2024 07:00:08 -0700 (PDT)
+Received: from [172.30.204.13] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id a19-20020a19ca13000000b00513d10789easm263158lfg.180.2024.03.14.07.00.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 06:52:53 -0700 (PDT)
-Message-ID: <4f18053b-9e64-4437-8bdf-18e68b4835d9@gmail.com>
-Date: Thu, 14 Mar 2024 14:52:50 +0100
+        Thu, 14 Mar 2024 07:00:07 -0700 (PDT)
+Message-ID: <8affb3d8-6210-43e6-8cbb-de28bdcf326a@linaro.org>
+Date: Thu, 14 Mar 2024 15:00:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,47 +77,82 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to
  fix boot failure
-Content-Language: hu
-To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Sricharan Ramabadhran <quic_srichara@quicinc.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>,
- Sricharan Ramabadhran <quic_srichara@quicinc.com>
+ Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, stable@vger.kernel.org
 References: <20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com>
- <219f3eeba68fd0542d4954205c35bafa.sboyd@kernel.org>
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <219f3eeba68fd0542d4954205c35bafa.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+ <58f07908-127a-438d-84e2-e059f269859b@linaro.org>
+ <2b95a593-225e-47b1-8bda-03240eb0f81e@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <2b95a593-225e-47b1-8bda-03240eb0f81e@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Stephen,
 
-2024. 03. 13. 23:57 keltezéssel, Stephen Boyd írta:
-> Quoting Gabor Juhos (2024-03-11 08:06:36)
->> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
->> index 678b805f13d45..11f1ae59438f7 100644
->> --- a/drivers/clk/qcom/apss-ipq-pll.c
->> +++ b/drivers/clk/qcom/apss-ipq-pll.c
->> @@ -55,6 +55,24 @@ static struct clk_alpha_pll ipq_pll_huayra = {
->>         },
->>  };
->>  
->> +static struct clk_alpha_pll ipq_pll_stromer = {
->> +       .offset = 0x0,
->> +       .regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
->> +       .flags = SUPPORTS_DYNAMIC_UPDATE,
->> +       .clkr = {
->> +               .enable_reg = 0x0,
->> +               .enable_mask = BIT(0),
->> +               .hw.init = &(struct clk_init_data){
+
+On 3/14/24 14:50, Gabor Juhos wrote:
+> 2024. 03. 13. 19:36 keltezéssel, Konrad Dybcio írta:
+>>
+>>
+>> On 3/11/24 16:06, Gabor Juhos wrote:
+>>> Booting v6.8 results in a hang on various IPQ5018 based boards.
+>>> Investigating the problem showed that the hang happens when the
+>>> clk_alpha_pll_stromer_plus_set_rate() function tries to write
+>>> into the PLL_MODE register of the APSS PLL.
+>>>
+>>> Checking the downstream code revealed that it uses [1] stromer
+>>> specific operations for IPQ5018, whereas in the current code
+>>> the stromer plus specific operations are used.
+>>>
+>>> The ops in the 'ipq_pll_stromer_plus' clock definition can't be
+>>> changed since that is needed for IPQ5332, so add a new alpha pll
+>>> clock declaration which uses the correct stromer ops and use this
+>>> new clock for IPQ5018 to avoid the boot failure.
+>>>
+>>> 1.
+>>> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
+>>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+>>> ---
+>>> Based on v6.8.
+>>> ---
+>>>    drivers/clk/qcom/apss-ipq-pll.c | 20 +++++++++++++++++++-
+>>>    1 file changed, 19 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+>>> index 678b805f13d45..11f1ae59438f7 100644
+>>> --- a/drivers/clk/qcom/apss-ipq-pll.c
+>>> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+>>> @@ -55,6 +55,24 @@ static struct clk_alpha_pll ipq_pll_huayra = {
+>>>        },
+>>>    };
+>>>    +static struct clk_alpha_pll ipq_pll_stromer = {
+>>> +    .offset = 0x0,
+>>> +    .regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
+>>
+>> CLK_ALPHA_PLL_TYPE_STROMER?
 > 
-> const?
+> I admit that using CLK_ALPHA_PLL_TYPE_STROMER would be less confusing. However
+> 'ipq_pll_offsets' array has no entry for that enum, and given the fact that the
+> CLK_ALPHA_PLL_TYPE_STROMER_PLUS entry uses the correct register offsets it makes
+>   little sense to add another entry with the same offsets.
+> 
+> Although the 'clk_alpha_pll_regs' in clk-alpha-pll.c has an entry for
+> CLK_ALPHA_PLL_TYPE_STROMER, but the offsets defined there are not 'exactly' the
+> same as the ones defined locally in 'ipq_pll_offsets'. They will be identical if
+> [1] gets accepted but we are not there yet.
 
-You are right, I will add it in the next version.
+Oh, I completely overlooked that this driver has its own array.. Hm..
 
-Thanks,
-Gabor
+I suppose it would make sense to rename these indices to IPQ_PLL_x to
+help avoid such confusion..
+
+Konrad
 
