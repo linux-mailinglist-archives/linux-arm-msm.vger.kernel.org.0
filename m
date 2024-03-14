@@ -1,117 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-14164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B17A87C02E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:29:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 737AF87C06F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:37:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B88491F20C23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:29:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F36CF1F238D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:37:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 657BC71B3B;
-	Thu, 14 Mar 2024 15:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA1871B48;
+	Thu, 14 Mar 2024 15:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="n5glVOxG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wgWdlUBX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFBB51C3B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 15:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA48871B3B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 15:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710430176; cv=none; b=VhgS0fNHvpt1Lj54tddEUjQx+JfkS+GL8iMJ4byY7ia2pSRz4rgYafd6hpbUiYB88EcDsbcxKg23CagiCZ2O2Ixn66ivGUDnIPxcD08yOImqWRteUfHXi70Y7t+wuxXcuFsKibVZ0HDlFLkcLaKV8SROOgn8UzdlQVXssFlHuws=
+	t=1710430644; cv=none; b=Z1kONFOamAQKVa8RLAs+8CI2mz2P0IhUiW0BbeyCFysIJMVMz3rB2NyQ4PMEs1Yw6LH2O2nNyKOhIym4kNVti6tsgHFE7pQkoMZgkaYH622WUVqGk9wv8nAtFkuMB0JT6a49siXrnm5dB5jvZw6oOiQjUCxG66qjiHJvPWXBTCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710430176; c=relaxed/simple;
-	bh=BK5vGjzgLHTG5Uy0fF+PO/iDPbQ/wrXrAZUSjAUJ9iw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PW0bOMt+q0oUYIsiJwTpGMkPXwHDZY/0QSmq1jddHI4r7gLi5efoTfiIHKhR6v7wY54MFFXVWQ8fn8NbJy7SbWSNEmNpgB/YuNI9OZDdlZGEuZWoE06Czrl35H5+mcobMFfoz2b8vY2P5UI75rX7n7BeeYkHzdIVLt62luQ4e9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=n5glVOxG; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6900f479e3cso10841156d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:29:34 -0700 (PDT)
+	s=arc-20240116; t=1710430644; c=relaxed/simple;
+	bh=SPVqWWkb2K1BrqMKLNhmlLdj/AUNuhYVfe1ThELFrb0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AZZ5HUrIHvCELtmL2Z+4xc8RRCAXi+jA3LsI16HUIMt7QiNCXS9RqhdfI3nCqDClUAM7/whuixIL3L9zdEPc0n1/KgVLByDQzwGSuLU+HTcugs7YcT2OXK4SO7I+0FBn9oMUNlpw7DhnqlU9sRtDwXheZQx7xELzpbKDhwoImaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wgWdlUBX; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-412e784060cso13695675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1710430171; x=1711034971; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tuhQc5l9apEej2H4LOTY9yaoxPUBJy/wLmmpg/Pkruk=;
-        b=n5glVOxGsnctw/5jZnWEKcMdDcXqTWHRBa+sWfvNfJ+BO8d4+frFSRW/QA/2Qx3Ke9
-         hUJM+itue+MdCyOai+U8nHCVqLpmtrBA6Y58DQw8e2OLKuHDVhX0prB4IQzsK6qa/aa1
-         NJeQkjVjrrjdlINJwe2W6E3IJ39d4ZOE+Rh4Q=
+        d=linaro.org; s=google; t=1710430639; x=1711035439; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hrkk0iamSD3B9fHRkTsQ+4hlgt0dhGX0M+8WUe7tnlA=;
+        b=wgWdlUBXsccxOtxVCFkXBvwqfyrUkpYrBFV8/NRn9c4Sx/ViV1ESkKi7cPZKloRLQv
+         ZldV1CrT9jd83XXWG6NTinSdH9uSk5waqvs2YJRwgRP42q2lcRQ62SDg2GODppGUgKma
+         bxehDlOepfsWFFcKHyA5aC1l1K510vhy3DDLnaaOpab/5WEWCPiYbiiRibBJfwy2iVuF
+         OrASWTo1mNzGsfDcw/DwmQ8uNBQdg6VL7Uy/w4HqHQZC1/6+Z0sMcvQzijbLk8tqdQSy
+         NqxCmSNOTYGQ5vOpGSyrQsIr32cHZMfx49gxOvBUpOCE5ictLE8ljXst7W8BtuQKQo3T
+         D6iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710430171; x=1711034971;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tuhQc5l9apEej2H4LOTY9yaoxPUBJy/wLmmpg/Pkruk=;
-        b=rNAcQgMFWLfyls9Up9QPmDEomTsynAxQlmc7+VGj4zb8A1I98f4K0IAP4QJZeVRF+Y
-         hH8V0nei6jhPN90RZTI0yUVrqdr9Vu7ebP3DqJG7L9u2JH8rYbRRDGFfVifh8D+33cYr
-         2uRL7tTS7Xyyf4cVTxN9mIRCuUeUlM+4Y76Gb0jVTkQefruy0Gnhwwt09XF3uOM8Y9fl
-         wj8ECqep6WV0813yPbcqfT3kjJLDQOyH/u8L0DAt4Si7n1PooYB4P7Zok4mQ6c1De7bG
-         Y1KDlHO8ZdQ66UZ6oNFB+pvS0EmCKZYMyoeA1jBe3uQjZDmMJIBhZQe6e43j8P9h1wnx
-         +xjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWkinzTHhD3oqoqpyB4HccG9QDubo+pJB4qEnEe3B/7lm3gPOJidWevBgjrPYP+iSLyIbK/KZ/bvaXVmtaBInjxuKNlRzZ9+a+cHhM+og==
-X-Gm-Message-State: AOJu0Yw1htB5/7kR2KE8ljuoUMPskvyJguEmjIe1qUS3pL3l9KubV+TZ
-	cZE+9MgmTvpR1TCz3RFyMkm7sPLkVbkku1bjfSNiKw1HVr5O448Nz0UT492y52fZyu36kVM/uBU
-	BWg==
-X-Google-Smtp-Source: AGHT+IEZcXO4L75AGmwSJFtM58488TjSMw99h2i1jA4fxLdy10o9bWKsXXgvAfRXkB7L/geYcFxVTg==
-X-Received: by 2002:ad4:5907:0:b0:691:4662:17c with SMTP id ez7-20020ad45907000000b006914662017cmr2043417qvb.14.1710430171221;
-        Thu, 14 Mar 2024 08:29:31 -0700 (PDT)
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com. [209.85.160.177])
-        by smtp.gmail.com with ESMTPSA id t12-20020ad45bcc000000b00690d2942caasm582254qvt.20.2024.03.14.08.29.29
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1710430639; x=1711035439;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hrkk0iamSD3B9fHRkTsQ+4hlgt0dhGX0M+8WUe7tnlA=;
+        b=tLpRnUfxHzTW3ixVJZDT3wEIwg3Vxa8n0XiIxW2M5iV+ZllyRg5bn9CUf2kWsVu6Eh
+         ZuX9fQHZ826XUCUvt/4Mxl0+XqeSl4LZzx4l1IAA5b3XJ6e//KFIdvxkTZbXZCcKPXoI
+         gfHyjh8/r9f9YkF86asmZRdJhrC1puJoo0dsCo6ElWnLz6QudB8JvzowuzB8dBJcOTJh
+         ZpH0SCXNXKnRq22nZ7RVijeSI+RstbnpQpomwP5zsuBpZI/Yq47LZTrOfVK2Neu1Zyse
+         1IMqLMQ9O1FVce445nEkbln/I5yaFzrgj0iTyTV8mVFtOGdeBv79ndmWIOGSDYeBTBVO
+         Pwzw==
+X-Gm-Message-State: AOJu0YzRjlJlJXgNUlYnlztYxe7frincwdM/fpuNXq0UQf2K+SkrSJlx
+	iTb0lnh8rzx+fPWCsKWrbX//PSaAjvtzGJFHhhWoo9wUzd1zq0icD97LxDNhRKM=
+X-Google-Smtp-Source: AGHT+IFBgOSw9MnbY+rRKz5fxCP4xUmA4m909MnaxVuf1SVf2slvt1nzfZzf7+4/YmkGyAL28r0LeA==
+X-Received: by 2002:adf:a4c1:0:b0:33d:7ec9:f5d0 with SMTP id h1-20020adfa4c1000000b0033d7ec9f5d0mr1905835wrb.2.1710430639085;
+        Thu, 14 Mar 2024 08:37:19 -0700 (PDT)
+Received: from [192.168.1.78] (host-92-17-96-232.as13285.net. [92.17.96.232])
+        by smtp.gmail.com with ESMTPSA id h15-20020a05600016cf00b0033dc931eb06sm1112659wrf.0.2024.03.14.08.37.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 08:29:30 -0700 (PDT)
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-43095dcbee6so324251cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:29:29 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUs3YuuatK4N+9hPzFS+AAAJvmvDeQoTBe54J5uFV68myfCTz4cPbNlX01jbH3avd9SZ08/SjQ6+dfAMb6tLuPcZmii9U+hZzlRGnW4rQ==
-X-Received: by 2002:ac8:474e:0:b0:430:90af:43c3 with SMTP id
- k14-20020ac8474e000000b0043090af43c3mr272846qtp.21.1710430169466; Thu, 14 Mar
- 2024 08:29:29 -0700 (PDT)
+        Thu, 14 Mar 2024 08:37:18 -0700 (PDT)
+Message-ID: <9b614c61-276d-45bf-8320-44b7358a3e19@linaro.org>
+Date: Thu, 14 Mar 2024 15:37:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240307093727.1978126-1-colin.i.king@gmail.com>
-In-Reply-To: <20240307093727.1978126-1-colin.i.king@gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 14 Mar 2024 08:29:12 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XQ5XBT4Jt6VUgVqxsn7NQZjDCTRFOFk5Fr+Fxkpv55SQ@mail.gmail.com>
-Message-ID: <CAD=FV=XQ5XBT4Jt6VUgVqxsn7NQZjDCTRFOFk5Fr+Fxkpv55SQ@mail.gmail.com>
-Subject: Re: [PATCH][next] drm/msm: remove unused variable 'out'
-To: Colin Ian King <colin.i.king@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Sumit Garg <sumit.garg@linaro.org>, Stephan Gerhold <stephan@gerhold.net>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ andersson@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ conor+dt@kernel.org, neil.armstrong@linaro.org, laetitia.mariottini@se.com,
+ pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com,
+ benjamin.missey@non.se.com, daniel.thompson@linaro.org,
+ linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
+References: <20240313123017.362570-1-sumit.garg@linaro.org>
+ <20240313123017.362570-4-sumit.garg@linaro.org>
+ <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
+ <CAFA6WYNMjCaa0FKjNv6a8VFkco3=GBfgWNDuckGZdiZ9dGmHgg@mail.gmail.com>
+ <d82ab1f8-e677-485f-9a6b-4115acfd7239@linaro.org>
+ <CAFA6WYNSumyScax=GkN42GJOG56T3odF5Ed9A2i1nk_exCyGtA@mail.gmail.com>
+ <ZfLUu6_Vq7MvG2G3@gerhold.net>
+ <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
+ <ZfL6hi0kfp9MXQ0H@gerhold.net>
+ <CAFA6WYMa_0OMkjUdvhYtWZ9SvQx5bB8+YrBZN08BaDXXOtPPNQ@mail.gmail.com>
+ <fb20d921-dabd-41dc-9f91-bde90e3b87be@linaro.org>
+From: Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <fb20d921-dabd-41dc-9f91-bde90e3b87be@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
 
-On Thu, Mar 7, 2024 at 1:37=E2=80=AFAM Colin Ian King <colin.i.king@gmail.c=
-om> wrote:
->
-> The variable out is being initialized and incremented but it is never
-> actually referenced in any other way. The variable is redundant and can
-> be removed.
->
-> Cleans up clang scan build warning:
-> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:843:6: warning: variable
-> 'out' set but not used [-Wunused-but-set-variable]
->
-> Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 3 ---
->  1 file changed, 3 deletions(-)
 
-Tested-by: Douglas Anderson <dianders@chromium.org>
+On 14/03/2024 15:20, Konrad Dybcio wrote:
+> 
+> 
+> On 3/14/24 14:50, Sumit Garg wrote:
+>> On Thu, 14 Mar 2024 at 18:54, Stephan Gerhold <stephan@gerhold.net>
+>> wrote:
+>>>
+>>> On Thu, Mar 14, 2024 at 05:26:27PM +0530, Sumit Garg wrote:
+>>>> On Thu, 14 Mar 2024 at 16:13, Stephan Gerhold <stephan@gerhold.net>
+>>>> wrote:
+>>>>> On Thu, Mar 14, 2024 at 03:02:31PM +0530, Sumit Garg wrote:
+>>>>>> On Thu, 14 Mar 2024 at 14:48, Konrad Dybcio
+>>>>>> <konrad.dybcio@linaro.org> wrote:
+>>>>>>> On 3/14/24 10:04, Sumit Garg wrote:
+>>>>>>>> On Wed, 13 Mar 2024 at 18:34, Konrad Dybcio
+>>>>>>>> <konrad.dybcio@linaro.org> wrote:
+>>>>>>>>> On 3/13/24 13:30, Sumit Garg wrote:
+>>>>>>>>>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is
+>>>>>>>>>> an IIoT Edge
+>>>>>>>>>> Box Core board based on the Qualcomm APQ8016E SoC.
+>>>>>>>>>>
+>>>>>>>>>> Support for Schneider Electric HMIBSC. Features:
+>>>>>>>>>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno
+>>>>>>>>>> 306)
+>>>>>>>>>> - 1GiB RAM
+>>>>>>>>>> - 8GiB eMMC, SD slot
+>>>>>>>>>> - WiFi and Bluetooth
+>>>>>>>>>> - 2x Host, 1x Device USB port
+>>>>>>>>>> - HDMI
+>>>>>>>>>> - Discrete TPM2 chip over SPI
+>>>>>>>>>> - USB ethernet adaptors (soldered)
+>>>>>>>>>>
+>>>>>>>>>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+>>>>>>>>>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
+>>>>>>>>>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+>>>>>>>>>> ---
+>>>>>>>>>
+>>>>>>>>> [...]
+>>>>>>>>>
+>>>>>>>>>> +     memory@80000000 {
+>>>>>>>>>> +             reg = <0 0x80000000 0 0x40000000>;
+>>>>>>>>>> +     };
+>>>>>>>>>
+>>>>>>>>> I'm not sure the entirety of DRAM is accessible..
+>>>>>>>>>
+>>>>>>>>> This override should be unnecessary, as bootloaders generally
+>>>>>>>>> update
+>>>>>>>>> the size field anyway.
+>>>>>>>>
+>>>>>>>> On this board, U-Boot is used as the first stage bootloader
+>>>>>>>> (replacing
+>>>>>>>> Little Kernel (LK), thanks to Stephan's work). And U-Boot consumes
+>>>>>>>> memory range from DT as Linux does but doesn't require any
+>>>>>>>> memory to
+>>>>>>>> be reserved for U-Boot itself. So apart from reserved memory nodes
+>>>>>>>> explicitly described in DT all the other DRAM regions are
+>>>>>>>> accessible.
+>>>>>>>
+>>>>>>> Still, u-boot has code to fetch the size dynamically, no?
+>>>>>>>
+>>>>>>
+>>>>>> No U-Boot being the first stage bootloader fetches size from DT which
+>>>>>> is bundled into U-Boot binary.
+>>>>>>
+>>>>>
+>>>>> Back when I added support for using U-Boot as first stage
+>>>>> bootloader on
+>>>>> DB410c the way it worked is that U-Boot used a fixed amount of DRAM
+>>>>> (originally 968 MiB, later 1 GiB since I fixed this in commit
+>>>>> 1d667227ea51 ("board: dragonboard410c: Fix PHYS_SDRAM_1_SIZE") [1]).
+>>>>> When booting Linux, the Linux DT was dynamically patched with the
+>>>>> right
+>>>>> amount of DRAM (obtained from SMEM). So if you had e.g. a Geniatech
+>>>>> DB4
+>>>>> board with 2 GiB DRAM, U-Boot was only using 1 GiB of DRAM, but Linux
+>>>>> later got the full 2 GiB patched into its DTB.
+>>>>>
+>>>>> I didn't have much time for testing U-Boot myself lately but a quick
+>>>>> look at the recent changes suggest that Caleb accidentally removed
+>>>>> that
+>>>>> functionality in the recent cleanup. Specifically, the SMEM-based DRAM
+>>>>> size detection was removed in commit 14868845db54 ("board:
+>>>>> dragonboard410c: import board code from mach-snapdragon" [2]), the
+>>>>> msm_fixup_memory() function does not seem to exist anymore now. :')
+>>>>
+>>>> Ah now I see the reasoning for that particular piece of code. Is SMEM
+>>>> based approach the standardized way used by early stage boot-loaders
+>>>> on other Qcom SoCs too?
+>>>>
+>>>
+>>> It is definitely used on all the SoCs that were deployed with LK. I am
+>>> not entirely sure about the newer ABL/UEFI-based ones. A quick look at
+>>> the ABL source code suggests it is abstracted through an EFI protocol
+>>> there (so we cannot see where the information comes from with just the
+>>> open-source code). However, in my experience SMEM data structures are
+>>> usually kept quite stable (or properly versioned), so it is quite likely
+>>> that we could use this approach for all Qualcomm SoCs.
+>>>
+>>
+>> If the SoCs which support this standardized way to dynamic discover
+>> DRAM size via SMEM then why do we need to rely on DT at all for those
+>> SoCs? Can't U-Boot and Linux have the same driver to fetch DRAM size
+>> via SMEM? I am not sure if it's an appropriate way for U-Boot to fixup
+>> DT when that information can be discovered dynamically.
+
+"standardized" I'm not so sure... But yes, smem does offer this. The
+definition in DT here is for U-Boot, ABL will always clobber it, and so
+does U-Boot before handing over to the kernel. Linux should never see
+this without a bootloader having looked at it.
+
+The reason I decided to hardcode this in DT for U-Boot is because SMEM
+currently relies on the driver model and isn't available early enough.
+
+Also admittedly I just wasn't that familiar with the U-Boot codebase. I
+just wanted to avoid hardcoding this in C code, and given that this was
+already supported for the "chainloading from ABL" usecase, just
+hardcoding the values was the obvious solution.
+
+I would definitely be open to revisiting this in U-Boot, having an SMEM
+framework that we could use without the driver model which would just
+take a base address and then let us interact with SMEM and populate the
+dram bank data would be a good improvement, and would let us avoid
+hardcoding the memory layout in DT. We'd just need to manually find the
+SMEM base address in the FDT as part of "dram_init_banksize()" and
+retrieve the data there.
+
+That all being said, I don't see any reason not to define the memory
+layout in DT, it's a hardware feature, DT describes the hardware. The
+whole "bootloader will fill this in" implies that the bootloader isn't
+also using DT as the source of truth, but now with U-Boot it actually
+is, so it's all the more important that DT be accurate ;P
+> 
+> You're mixing two things. Linux expects a devicetree where
+> /memory/reg[size]
+> is valid. Such driver should indeed be (re)implemented in u-boot to provide
+> this information.
+> 
+> As for linux, I am working on making Linux aware of the DDR capabilities
+> on Snapdragons, for other reasons, but it's on the back burner, as it
+> still needs some broad thinking about integrating it with the interested
+> consumers.. Bottom line is, Linux should be fed a devicetree with DRAM size
+> filled.
+> 
+> Konrad
+
+-- 
+// Caleb (they/them)
 
