@@ -1,132 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-14120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F0F287BB37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:26:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7799387BB3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 11:30:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E82B91F2520B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 10:26:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9122A1C216EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 10:30:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEF616EB45;
-	Thu, 14 Mar 2024 10:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C6A76EB51;
+	Thu, 14 Mar 2024 10:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gbYZCwiB"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tDxU1XBo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1376CDD7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 10:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455206EB41
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 10:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710411986; cv=none; b=kdRbsGGfYSN6lK8aH1Si0e9IJ96izvgqvd99HZ2557lazf4QMMfggnaQ0euS/gguItsIwosK0PcpNvMyQqM0dgkdsJXjb9nxiSicMXo4uKL50yQXRfy/sm2h6z8McIk2/ShXN5tyrBoYLVwrR0dBhRKQeDUROfa3J1H6hz+6fvg=
+	t=1710412204; cv=none; b=JjPn5/mQkb75SjVdLy+PbS/kpIsn7F40R2w6uTYFP28nTvzi/TBKXhqf/CcCgKZTBbN3Pb2l/5YE9ISmXG6SiM/A6nfk59fV+Uu3/SfsakVmc84rJtRS0APKQ4Kczuebr7kOvdku41tPx5q2ph2IJ3YUvryKVSj1WCxECWGWaPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710411986; c=relaxed/simple;
-	bh=bClml7W2Syxqpxl+P0XTyjEWXWGG/s5JmZLnZYmwEdM=;
+	s=arc-20240116; t=1710412204; c=relaxed/simple;
+	bh=l85vnkr5IVShaY0q/S02bkIi9AiEbiKbWt69y83fl00=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oqctqqzoUb2bBCmj16UO9rp6limOCCWAwkiDIrBVpcxfJS5fA3NHuw2I8cHK090P6AKnBPyl/t6D9pMjZX6EPrR6c18pZ1K3G19oVu71JdmPRsSkQVkHB5Ru51KOHRS1662HDnpuu2KRmDexynZkUACe7QhKkMD8mTTI1n9uYLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gbYZCwiB; arc=none smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-47288b46f2fso113151137.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 03:26:24 -0700 (PDT)
+	 To:Cc:Content-Type; b=PqDsXODOB9y6MF5z+CrgZTubLccyaBZZ92+xt/JgvJ6mG7ueDr6H2s5VPbKnNNraG43IFS+pfC1ALgfvQuXlQs0rbd20YBTl2nbRX7blIEDuSB5sZwgVLXK3gsaiWJjUBMihTToYjBhQRFsPwIeqOIwsndtSf7w5Ci2ST1UeLKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tDxU1XBo; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a45bb2a9c20so73023766b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 03:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710411983; x=1711016783; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bClml7W2Syxqpxl+P0XTyjEWXWGG/s5JmZLnZYmwEdM=;
-        b=gbYZCwiBXN0zyT4Uj+JhC5pfcZAZoCkXzwxw4o0qR7YREdG5kiBKdaPp6lSP98rEbw
-         EB/5j5tn+iftiwUTRFMlsbte+cllaUBsE3668HWJYfe7lqi5kQOzuKiEyMpleHWL3Ha9
-         aFJDcblp6eyGGf6n82PxXSIQK1GUxFI7opnn4cjqct23KiTwTgsMFzWpJoFeo31RQKJ6
-         DtGvrlPYWq/CtXf0IiBcVvflBEGsS/sGNmGNpxD1s9hQrsJqoOqCUov8dMauKkeIaszT
-         Ot8kI7r5CtPJjJsxU6uCsKFJdiTHNfIhhocGTeoCRGUG0PeBWjplUCS4GK3zFOuXc1sL
-         9W7g==
+        d=google.com; s=20230601; t=1710412201; x=1711017001; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jcGu0HbVhJ43nJUYs2HgED0p2686qNZu20aPF6xMbD0=;
+        b=tDxU1XBo8Yy3CGE41rhPNSftVACrFGazPrIt3QB9KNqkNRFwR8qPf2sKC8Yu9vGvYo
+         7MZAg9u6twmvy2pht4oFXxquE67+Y0wGbVqy7Ijkq6NdOHoyXHJFCA4hLLnk4IKmBk6P
+         DVwaEMHzE7blXcii4HuW2aArMm8yZ3Ptt8yEy0fOeDZwAjEHd0hWmY65MzEdfwyQMUj5
+         VoyX4N6dWvjp05Dh1xP1FO3D9Yovfv8v9vduIw71RH5QIPxRJyWBWGenELH25dJ+OnJ7
+         xdM69HwdQlCznhgf0sBJyFIyQdCvzJw24QObFzj6+MDGF6ugnJcqfZrYa3wOtu4Jcn1f
+         J3hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710411983; x=1711016783;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bClml7W2Syxqpxl+P0XTyjEWXWGG/s5JmZLnZYmwEdM=;
-        b=n/5P25tVvlSwKCEDmZoZ6S9PBDelG9l2ZGpXZFCRl5J4hBlWu24K2O2u+Tt81uuNp8
-         cGO/FSInkjB8Ws/5n9LkcKRdYbi9lA73lGQLBJZs/Dc1kSWHKi5xLsWGMSDAcfHxugOv
-         exH/G7mZ/pYJoqtawq+0OiRgtj1BVKp4YdMHjvwKZZUfUnSFnpWzxaNJCt9SSQwKh+Iq
-         8caEaVxC74NbSJar+ja0C4Ur/FuFWkPp4MRco2ZRHI+Ax0cGb2+Vws0Tnm0soNyqSAnb
-         XiMEEKI/EHtzkBceLNx0i6rg1oZw0ACbG24R2Jj+IgmGD/DhliMaCeOJycEFJKdcdcMT
-         j2Vw==
-X-Gm-Message-State: AOJu0YxmKZMvxnItHAC82m4eXX3vEbx1OUCpiSRZFxwBha+fVeEmXP3U
-	nf0w+6vjOdTtTltmhDcZ7kEu7uaoQca1b9H5zv4Bhkbsgqiaex4istALuPQUQ7lViV8Dq1bCIlc
-	Y6+XPYi+OJsa9ddUGNNV04qJIXIgNHjJrZd1ZgQ==
-X-Google-Smtp-Source: AGHT+IHQotcVxfbfFxcjGI7/T/ebobFcozaCDRBw/St3GkLtFEQShNOY4t4ZZOogNwvVxa7Pm+LCr1GCxRVS9jyr/Tg=
-X-Received: by 2002:a67:b345:0:b0:476:7bf:8912 with SMTP id
- b5-20020a67b345000000b0047607bf8912mr1239701vsm.11.1710411983143; Thu, 14 Mar
- 2024 03:26:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710412201; x=1711017001;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jcGu0HbVhJ43nJUYs2HgED0p2686qNZu20aPF6xMbD0=;
+        b=R/odLuo7mwWFT3kDNi/LyaxlFOnnqQsC4roiiHNbuLQR4mUfkBv/IoY/0edZmhGFA/
+         Ltj0pNrwwMfRP1jIBbnCy1IH8FUbUvaFkSETw+RW4qPqkLQNaMxQ8zc/Swv38i3IbE/P
+         iV6MMcN5YLUhR6aoze0SD0NbBbRZ5OujvKEg7eiof30fJRfk+2B55WlESXaaYHBhQ/7L
+         VOs4HDExoG3WJsIZH7YMpef1SF3D2FkgJRy41ozj2fmn0Ncg3Afh8c5JOi4jv0+HG/MK
+         wOnR1e2AZ60eh6AeTS+jdrEVOUtJmgHJxsXAQVQGYyHnqu0bvNXGYalz2hoacXYhlspw
+         4mDg==
+X-Forwarded-Encrypted: i=1; AJvYcCVv2ct7ZCsS4Ytko1hHfWUeiyqR5R0nnspjAw3uAJ0kISqa2YSa8ANjfWlGoLQ0LCjAiYlvA5+++iCFX0RRsNsMhR49jwSOKDKCWxvOhw==
+X-Gm-Message-State: AOJu0YzAJibiwDwfu324U7IJ7svc0XACW63IffMMzHrEiS4bhFMvIoML
+	8n2gDWZzH6ykaWdFCNAolD/GnhSnQ+kUrep/SWKicsz7qCL6OXnU7oyOjUIYk30tQ0dtdnwVOrs
+	XGAHhJ7fk8/q0lk4jC86YCWx31kz6XyxP9+Mm
+X-Google-Smtp-Source: AGHT+IGON9Se+9pz19hDr8yNzBsEwejkS9/dMYiC1+kL2sDCzCuSpkLFSJJXHnc5NytKjijIcb1mX2sR+v6mI2ND08I=
+X-Received: by 2002:a17:906:99d3:b0:a46:749b:58a with SMTP id
+ s19-20020a17090699d300b00a46749b058amr784155ejn.57.1710412200434; Thu, 14 Mar
+ 2024 03:30:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org> <4a0a8db7-a2bc-4c99-94b2-c13facbd1bef@linaro.org>
- <CAFA6WYPh5BS_Fpi6ksAC7bwoFEyqjj1Y3EahyQxCG9Pp=KDw=Q@mail.gmail.com>
- <9dc0415c-4138-4867-861a-38b45b636182@linaro.org> <CAFA6WYPFfL18acdZt6O-_=LWnH7J2MooDuf9cA3JCaQZdoLhVA@mail.gmail.com>
- <CAFA6WYNo73S5ROHCMK0ZQSiU0DDbuDadptmaPL+GPCocE0h-mA@mail.gmail.com> <f03c7979-79f3-4894-98b0-1e5a2dc18ba6@linaro.org>
-In-Reply-To: <f03c7979-79f3-4894-98b0-1e5a2dc18ba6@linaro.org>
-From: Sumit Garg <sumit.garg@linaro.org>
-Date: Thu, 14 Mar 2024 15:56:11 +0530
-Message-ID: <CAFA6WYNRwF7GqhBk2B7i-deT3aLxNQckhnOasjip2TYm4HZgAw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, stephan@gerhold.net, 
-	caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
-	laetitia.mariottini@se.com, pascal.eberhard@se.com, abdou.saker@se.com, 
-	jimmy.lalande@se.com, benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
-	linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
+References: <20240228013619.29758-1-quic_wcheng@quicinc.com>
+ <20240228013619.29758-21-quic_wcheng@quicinc.com> <CANqn-rjTgHgzssxZiuwvTKzOS31wzjS4Y9G-XacZN4a7c82MaA@mail.gmail.com>
+ <d97f635f-053b-70a7-5ffe-a1ae273091d1@quicinc.com>
+In-Reply-To: <d97f635f-053b-70a7-5ffe-a1ae273091d1@quicinc.com>
+From: Albert Wang <albertccwang@google.com>
+Date: Thu, 14 Mar 2024 18:29:47 +0800
+Message-ID: <CANqn-ring2uf=A-F7VuRwnJ--n=FtFzSddCmR-=nfxCGcFAF2g@mail.gmail.com>
+Subject: Re: [PATCH v18 20/41] ALSA: usb-audio: qcom: Introduce QC USB SND
+ offloading support
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, mathias.nyman@intel.com, perex@perex.cz, 
+	conor+dt@kernel.org, corbet@lwn.net, lgirdwood@gmail.com, 
+	andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com, broonie@kernel.org, 
+	bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org, 
+	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 14 Mar 2024 at 15:36, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Thu, Mar 14, 2024 at 3:18=E2=80=AFAM Wesley Cheng <quic_wcheng@quicinc.c=
+om> wrote:
 >
-> On 14/03/2024 10:36, Sumit Garg wrote:
-> >>
-> >> But it then broke dtbs_check.
+> Hi Albert,
+>
+> On 3/13/2024 1:03 AM, Albert Wang wrote:
+> > Hi Wesley,
 > >
-> > See following breakage afterwards:
-> >
-> > $ make qcom/apq8016-schneider-hmibsc.dtb dtbs_check
-> > <snip>
-> > /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> > leds: led@5: Unevaluated properties are not allowed ('reg' was
-> > unexpected)
-> > from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
-> > /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> > leds: led@6: Unevaluated properties are not allowed ('reg' was
-> > unexpected)
-> > from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
-> > /home/sumit/build/upstream/linux/arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb:
-> > leds: '#address-cells', '#size-cells' do not match any of the regexes:
-> > '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
+> > The suspend function `qc_usb_audio_offload_suspend()` looks to stop
+> > the traffic on the bus, so that the bus can be suspended. That allows
+> > the application processor(AP) to enter suspend. There is a subtle
+> > difference with our feature, which is to allow AP suspend with the
+> > Host and USB controller active to continue the audio offloading. We
+> > call this feature `allow AP suspend in playback`. So, I have some
+> > points to clarify with you:
 >
-> That's obvious, I don't get what is the question. Adding not correct
-> properties is not a solution and dtbs_check correctly tells you that.
+> Yes, I'm aware of that feature also.
 >
-> If you only opened absolutely any existing upstream source, you would
-> see how the gpio leds are represented in DTS.
+> > 1. Will the suspend flow `usb_audio_suspend() -->
+> > platform_ops->suspend_cb() --> qc_usb_audio_offload_suspend()` be
+> > called when offloading is active?
 >
+> It can be.  This is why in our case, we are going to issue the
+> disconnect event to the audio DSP to stop the session if it is currently
+> in one.
+>
+> > 2. As my understanding, the suspend function is to allow AP suspend
+> > when the offloading is IDLE, but it won't allow AP suspend when in
+> > playback or capture. Please correct me if anything is wrong.
+>
+> As mentioned above, it will let apps go into PM suspend after forcing
+> the audio stream to be idle.  We won't block PM suspend entry.
+>
+Right. Your design is to force the audio stream idle, or say, inform
+the audio DSP
+to stop the current offloading session first, then AP can go into PM
+suspend as usual.
+Then I can say the current design did not support the `allow AP
+suspend in playback`
+feature, right?
 
-It looks like my reference example:
-arch/arm64/boot/dts/qcom/apq8016-sbc.dts wasn't correct then. I will
-drop unit addresses then.
+> Yes, I saw that patch as well.  I'll take a look once this series lands
+> upstream.
 
--Sumit
+That patch is rejected and archived now. So we need to find another
+approach to do
+that, even based on your framework.
 
-> Best regards,
-> Krzysztof
+Thanks,
+Albert
+
+
+> > 3. We would like to integrate the `allow AP suspend in playback`
+> > feature with your framework to become one upstream offload solution.
+> > Here is the patch:
+> > https://patchwork.kernel.org/project/linux-pm/patch/20240223143833.1509=
+961-1-guanyulin@google.com/
+> > .
 >
+> Yes, I saw that patch as well.  I'll take a look once this series lands
+> upstream.
+>
+> Thanks
+> Wesley Cheng
 
