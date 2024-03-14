@@ -1,116 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-14169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EA2887C18A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 17:49:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E770E87C198
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 17:58:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D02561C2163C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:49:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DCB4283AB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:58:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F4F57441D;
-	Thu, 14 Mar 2024 16:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EB2374426;
+	Thu, 14 Mar 2024 16:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fMeg+X4Z"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Upxp6VnM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A516574297;
-	Thu, 14 Mar 2024 16:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6584D1EB34;
+	Thu, 14 Mar 2024 16:58:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710434992; cv=none; b=nt2/MnnyUKPs3z8jRZ+hGxZmR2jnhRxw/Zk9wBzbY6k4MF6zDp/l9AI/EGHTf776MAC+VXX4oSgG+GyEnXPiQ/5sQ30aspiXqPL7YDdr3aPKE2wKGFIb4Zg2tsQUK3MObY2ZLzUNRnxbPI5yxH643+Rfc2dOtGkdC1A69N55qxg=
+	t=1710435486; cv=none; b=Vcs77zsqIn9OruxtzeUdAOrJhUYLw+iYoFLIzWGw/W1n/H2zKqN5I1yG9u5alCNlf3pNPTfHuREtZOlBEzJS0fzW7a9v20Ko9xJfnrzJbAb1Is7iRYCAwb5GtlzMLZLZdG1Fn3cHee7QZ7COTyOrYZxE6RDu4X1820poWEiZfbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710434992; c=relaxed/simple;
-	bh=77RGVau4t5+nCJcsSl+IWY9mY9TgXjNVDBPzWOsL7Oc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Vn8kIQEMg2NFuuAPOcPfXbaj1sGyTEF5ZXrOS7Dzs77SzSHIsyCx29Q6WwFGBK2SA8Udsa1WDJo5vmyRyiqDyTgEx81xEFDANmT/oLTnerYyhG8TDuntioNLEFHcgSxf1DuRvLm9FDmklkkaio9DVOLu8yTu0C8T1LdbicSfgNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fMeg+X4Z; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42ECt8TR020772;
-	Thu, 14 Mar 2024 16:49:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=L1eAnaiZBqkMn7bva+eCnIAzET7tl1WlG5vQ4gbJSPk=; b=fM
-	eg+X4ZuP7VBPIbi+PTue/ReWNL6Gsl88ooXnBa7JVZf9PE9ghFUb544baDCkrzfi
-	4A36waAHOkAP+veaoTf6kHD5QHTMQr7KKLVqAvMWRkcWZ4l+03QxXtnurrLtLl7D
-	DO4Fl388xc2qehbfTtiTtGFpe7vR1UHdx+IclIP8L2gXI1DJQH9ORizwqHJr1cDz
-	UKzCAnF++Coa7SKlKe11fTizyWVFgfA5B7uD+h2IGZ705sHaqq5eapWUisGnEdjX
-	98FMcq94QMwAd/WVoNWM14YNZSaTLRtaFrABTrs2cjTNH2ABO+HfxoHW+kxZOAVR
-	s/0QTsN9dAQpY5eON4wQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wv1njrjce-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Mar 2024 16:49:47 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42EGnkSI028029
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 14 Mar 2024 16:49:46 GMT
-Received: from [10.216.10.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
- 2024 09:49:43 -0700
-Message-ID: <3f80db1c-43ba-aafb-3f4d-f0e348808f52@quicinc.com>
-Date: Thu, 14 Mar 2024 22:19:40 +0530
+	s=arc-20240116; t=1710435486; c=relaxed/simple;
+	bh=fcf8GvnNI2NlxwWa/BLBUBs674hhRLyrkoAa66D2RKo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nE9Dvb4jlx6h5vXrX4A9HOeg58e+rGh2c7tkkgerxTH4oqbOienOHOVPcy/KYUA6XDZf6V+m6gCBjqy5QTyf7NcGJc9/rDTvrPmiASibu9GsfnMNXtwivmFvh9LqXtIIbs5WA4+yEvd/cAiOkfmsi8qZbL7NfrNIwdhyRUBBxTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Upxp6VnM; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1710435484; x=1741971484;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fcf8GvnNI2NlxwWa/BLBUBs674hhRLyrkoAa66D2RKo=;
+  b=Upxp6VnMtVVIh5OrjLy1m4x53O33vUT82Px9mA1yIg4XVcMfwTQJFixh
+   7LgJMYtNRqx/gFI4UZaFZANBwyUZ2125tyWFO/h/8aNJY3Ssz6Q5mTtSq
+   z2Rj4kEpS4nJkn25okzKvdQv4rbbJF9HCHjqQ9B/Jb64bwio9XG/KBlJp
+   J699SnKSz1nj/E2RkWAJaF9YVeUpsaCsOXlpHs5uHkESF9K3aOaQpXess
+   FCsbM8DPR2tGCmMJCjBmNp+30GvOQOM0FuzvdY/0Dl1c7H5pm+EbBsxtB
+   SWZno7PLV95EK9E7rTZWvtAMKbMAY13rhlzTtvMhwYJfdAqn3LBycbVbu
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11013"; a="22731667"
+X-IronPort-AV: E=Sophos;i="6.07,126,1708416000"; 
+   d="scan'208";a="22731667"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2024 09:58:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,126,1708416000"; 
+   d="scan'208";a="16952403"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO aschofie-mobl2) ([10.209.72.214])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2024 09:57:59 -0700
+Date: Thu, 14 Mar 2024 09:57:57 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+	Linux Trace Kernel <linux-trace-kernel@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-cxl@vger.kernel.org,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, virtualization@lists.linux.dev,
+	linux-rdma@vger.kernel.org, linux-pm@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	netdev@vger.kernel.org, linux-hyperv@vger.kernel.org,
+	ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org, ath12k@lists.infradead.org,
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+	linux-usb@vger.kernel.org, linux-bcachefs@vger.kernel.org,
+	linux-nfs@vger.kernel.org, ocfs2-devel@lists.linux.dev,
+	linux-cifs@vger.kernel.org, linux-xfs@vger.kernel.org,
+	linux-edac@vger.kernel.org, selinux@vger.kernel.org,
+	linux-btrfs@vger.kernel.org, linux-erofs@lists.ozlabs.org,
+	linux-f2fs-devel@lists.sourceforge.net, linux-hwmon@vger.kernel.org,
+	io-uring@vger.kernel.org, linux-sound@vger.kernel.org,
+	bpf@vger.kernel.org, linux-wpan@vger.kernel.org,
+	dev@openvswitch.org, linux-s390@vger.kernel.org,
+	tipc-discussion@lists.sourceforge.net,
+	Julia Lawall <Julia.Lawall@inria.fr>
+Subject: Re: [FYI][PATCH] tracing/treewide: Remove second parameter of
+ __assign_str()
+Message-ID: <ZfMslbCmCtyEaEWN@aschofie-mobl2>
+References: <20240223125634.2888c973@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 0/3] Add eFuse region for Qualcomm SoCs
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1709727995-19821-1-git-send-email-quic_mojha@quicinc.com>
- <40985e3c-9280-4035-9f01-4693cfd39235@linaro.org>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <40985e3c-9280-4035-9f01-4693cfd39235@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4iwqqpsrm7ZWbmAUqgcDbIprV8S3W76Z
-X-Proofpoint-GUID: 4iwqqpsrm7ZWbmAUqgcDbIprV8S3W76Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0 phishscore=0
- mlxlogscore=464 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
- definitions=main-2403140126
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223125634.2888c973@gandalf.local.home>
 
-
-
-On 3/6/2024 8:38 PM, Krzysztof Kozlowski wrote:
-> On 06/03/2024 13:26, Mukesh Ojha wrote:
->> This series is dependent on [1] for binding.
->>
+On Fri, Feb 23, 2024 at 12:56:34PM -0500, Steven Rostedt wrote:
+> From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 > 
-> Thanks for linking, that's good and explains a lot, but to clarify: No,
-> it does not depend. There is no dependency. This can be applied via
-> Qualcomm SoC.
-
-I see, thanks.
-
--Mukesh
-
+> [
+>    This is a treewide change. I will likely re-create this patch again in
+>    the second week of the merge window of v6.9 and submit it then. Hoping
+>    to keep the conflicts that it will cause to a minimum.
+> ]
 > 
-> Best regards,
-> Krzysztof
+> With the rework of how the __string() handles dynamic strings where it
+> saves off the source string in field in the helper structure[1], the
+> assignment of that value to the trace event field is stored in the helper
+> value and does not need to be passed in again.
 > 
+> This means that with:
+> 
+>   __string(field, mystring)
+> 
+> Which use to be assigned with __assign_str(field, mystring), no longer
+> needs the second parameter and it is unused. With this, __assign_str()
+> will now only get a single parameter.
+> 
+> There's over 700 users of __assign_str() and because coccinelle does not
+> handle the TRACE_EVENT() macro I ended up using the following sed script:
+> 
+>   git grep -l __assign_str | while read a ; do
+>       sed -e 's/\(__assign_str([^,]*[^ ,]\) *,[^;]*/\1)/' $a > /tmp/test-file;
+>       mv /tmp/test-file $a;
+>   done
+> 
+> I then searched for __assign_str() that did not end with ';' as those
+> were multi line assignments that the sed script above would fail to catch.
+> 
+> Note, the same updates will need to be done for:
+> 
+>   __assign_str_len()
+>   __assign_rel_str()
+>   __assign_rel_str_len()
+>   __assign_bitmask()
+>   __assign_rel_bitmask()
+>   __assign_cpumask()
+>   __assign_rel_cpumask()
+> 
+> [1] https://lore.kernel.org/linux-trace-kernel/20240222211442.634192653@goodmis.org/
+> 
+> Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+> ---
+>  arch/arm64/kernel/trace-events-emulation.h    |   2 +-
+>  arch/powerpc/include/asm/trace.h              |   4 +-
+>  arch/x86/kvm/trace.h                          |   2 +-
+>  drivers/base/regmap/trace.h                   |  18 +--
+>  drivers/base/trace.h                          |   2 +-
+>  drivers/block/rnbd/rnbd-srv-trace.h           |  12 +-
+>  drivers/cxl/core/trace.h                      |  24 ++--
+
+snip to CXL
+
+
+> diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
+> index bdf117a33744..07ba4e033347 100644
+> --- a/drivers/cxl/core/trace.h
+> +++ b/drivers/cxl/core/trace.h
+
+snip to poison
+
+> @@ -668,8 +668,8 @@ TRACE_EVENT(cxl_poison,
+>  	    ),
+>  
+>  	TP_fast_assign(
+> -		__assign_str(memdev, dev_name(&cxlmd->dev));
+> -		__assign_str(host, dev_name(cxlmd->dev.parent));
+> +		__assign_str(memdev);
+> +		__assign_str(host);
+
+I think I get that the above changes work because the TP_STRUCT__entry for
+these did:
+	__string(memdev, dev_name(&cxlmd->dev))
+	__string(host, dev_name(cxlmd->dev.parent))
+
+>  		__entry->serial = cxlmd->cxlds->serial;
+>  		__entry->overflow_ts = cxl_poison_overflow(flags, overflow_ts);
+>  		__entry->dpa = cxl_poison_record_dpa(record);
+> @@ -678,12 +678,12 @@ TRACE_EVENT(cxl_poison,
+>  		__entry->trace_type = trace_type;
+>  		__entry->flags = flags;
+>  		if (region) {
+> -			__assign_str(region, dev_name(&region->dev));
+> +			__assign_str(region);
+>  			memcpy(__entry->uuid, &region->params.uuid, 16);
+>  			__entry->hpa = cxl_trace_hpa(region, cxlmd,
+>  						     __entry->dpa);
+>  		} else {
+> -			__assign_str(region, "");
+> +			__assign_str(region);
+>  			memset(__entry->uuid, 0, 16);
+>  			__entry->hpa = ULLONG_MAX;
+
+For the above 2, there was no helper in TP_STRUCT__entry. A recently
+posted patch is fixing that up to be __string(region, NULL) See [1],
+with the actual assignment still happening in TP_fast_assign.
+
+Does that assign logic need to move to the TP_STRUCT__entry definition
+when you merge these changes? I'm not clear how much logic is able to be
+included, ie like 'C' style code in the TP_STRUCT__entry.
+
+[1]
+https://lore.kernel.org/linux-cxl/20240314044301.2108650-1-alison.schofield@intel.com/
+
+Thanks for helping,
+Alison
+
+
+>  		}
+
+
+
 
