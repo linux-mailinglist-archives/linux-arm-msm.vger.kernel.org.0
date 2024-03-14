@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC79887B610
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 02:11:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89F8087B626
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 02:43:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D173B23BDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:11:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44B77285BBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89A24683;
-	Thu, 14 Mar 2024 01:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EACF4C9F;
+	Thu, 14 Mar 2024 01:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fcs8yGXj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nWyH91IE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAFA4A15
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4954C46A0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710378653; cv=none; b=FAt85e3MAYOz4e3wNI7zeAaYSpAI0HhIN61xxqB9hIAKuXH7Nt7VqNBDRo3eUPh8eYoVj3aRNd0ZhEXQBLGWAozpGCPR/wtdRZDtdC9ZiTOpc/YpfBucCtPdUaVURsuv+9wemn9FDHPHhDejE6MPB5++klUzmbWRSaPfFgP0rEc=
+	t=1710380579; cv=none; b=mUq01ARjf6fakhbiI2EbclGlTUA+9xdzqau9+mGR8hDI7Gz2miXuDFB5ykCuU+0DvwJJoPeRGzD9YLM4koiLGfRjakO6tr6evnaUMcx5DTMp+KB5gStPgerDKjS5fVrOAj78Ii2cWKBpUBSW15xvpgXQEwwwnKhVy8I/lbVVJf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710378653; c=relaxed/simple;
-	bh=HtjO3+r4eD0Q2obHhXvuyUuLiZ1mp8ct03mOrvFNMx0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=khzVbIw3EYabOLIyNYVW/OGfqYUsvqSOJkEkO7VaC6oa18fMf//GutFgcl95LjMX7zFbqUIgpjNqvYCajuc0JI8HFFywgMFXCUvIUnfcq3opOJUI5Ql+DCPUpVEsu1dzYCXjcaoYJBDmbJS/MbfQleuAa4VRiR+1wmAe79C14yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fcs8yGXj; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1710380579; c=relaxed/simple;
+	bh=/9o8wupjT2lFvIVQz6ywcaPq/J3mTzdTMJ1bW3KmM/k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JM0dZeVGUuPkJsHKD0DoYLavP5H9DtSs1gFQ4ypmEl59RXB+g2jl2cKMqxvzh7OMYA/s1pnCShPnFCNDwVrd9SYxiu5iZqtHRvPzUhOcPjVwjQIAUapYFYGdmfFM2P6rGzTOp/Z+5PYrDxAGNUFnDJUX2LDCY63QJumB96GcZrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nWyH91IE; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d46dd8b0b8so4286651fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 18:10:51 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5131bec457eso436611e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 18:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710378650; x=1710983450; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AkT0b7xRMHVuIJC0eNZGFO5wcpvp57gRfpmlCIxi9Y4=;
-        b=Fcs8yGXjKU0d3dY0rUQk6QigazY0c97p22WA9ToFwILFu2zx/UM+IhWSUrBVs6f8Yy
-         JaDvW63Fxty26muqPfr7SsrzyG9dZTFRc8cTo0SyMo6MGlKc+36T+JVtSnRw5orcAHud
-         zuf3Or3XxkERpQ3Y5pWDb8NwraPOGrj9LEfKCICUYegYiZnCKw+I4blJeeM6ScFz/UxN
-         nRqSa416Q1MO2O8aQl09FmwHPWzZ9cT9EJxXAj2bcEk5JLShieNUDUjdrx5pmResd2dk
-         1iETBOvfcFe3kqMILn5qJvhtbN/Vm71rlB024pB4xSnKC3rjsMqLylzy6psPjynQFC0D
-         r7Uw==
+        d=linaro.org; s=google; t=1710380575; x=1710985375; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pr28EdwX1bs5qhBixWH7XvK1iMcKHzy7Xszob8QwMuY=;
+        b=nWyH91IEm/gkRPr5MYJbZ7Znir4c1fJh7Ta7BIHHhH5aIwaN1nAV3MBxhfxk+h5ZSt
+         /TuEj7DEGIEngiizIs/XINnjoAMy3Tpdbok+Ek/voVYS0EzQk66FdMdgLsm2mMD43+d8
+         xY+ohO0B2s9EwawGX36PhSLvNYZriqf5NtbL4bkYXWGGnNino/2hUQZkPWO0dmFdHUme
+         uFQPSaHleSh+EVBXbRZl7ad5urZXFrTuPviTujjZRb2ZCyhqZxobhSRBo9ptybH1oe2Y
+         ily+kiNyXdoFv8l3ycSzrv624IdYkGKWsnbcsQUEgD2LeGfN0e2GCi8FFf0TpopCx8ZN
+         Tdjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710378650; x=1710983450;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AkT0b7xRMHVuIJC0eNZGFO5wcpvp57gRfpmlCIxi9Y4=;
-        b=UCSz7gUyc7cExbYMOqntctMDUyqskxJpjDkr69r2I1zrqlANak86ea6DJJGFETeZD9
-         28jQPSuwnBmw6+tNbqaJS3hrEmJ6ced8LA6tIieGj3ppbf4QDf8sgXM2/HgrAOBzG24g
-         UkXU85hCWT9r+TnD1lo8ZcnbBPcg4JJ8euFcgCt7qgAYyepMP8rnLMQB0ejsL70BWTif
-         JXOcvqiqllWJGtHEMBdhY//jihRGYkgnsw4NBOY2uQtDW05qZGnbmsKn2Mb/NrRgZoUx
-         ljQr0l4qet0fJVTiNn5jj8A1Lf4ur7GdIKXQ3BuLytoiYQtp5vbklE6HfQ3GpVLuuqJj
-         mOgA==
-X-Gm-Message-State: AOJu0YzlvDlsxWChzeXydCa/UooOatVul3bx9cF7XkPwvyPb9tzJ9WC3
-	rFu0WtaUB0MGoXUGAfE/DFR7bmekYtK74VzNS2Tx+X/j/bFa7G5k72xdivmSgDk=
-X-Google-Smtp-Source: AGHT+IHbftlvUJD0VKntserQOB+EnscF+o7ttbHZCzElms73MiWTPm5j4W35pZLrGaf/0ry1Bv4xvg==
-X-Received: by 2002:a2e:8187:0:b0:2d4:5d56:e559 with SMTP id e7-20020a2e8187000000b002d45d56e559mr94218ljg.47.1710378649994;
-        Wed, 13 Mar 2024 18:10:49 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710380575; x=1710985375;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Pr28EdwX1bs5qhBixWH7XvK1iMcKHzy7Xszob8QwMuY=;
+        b=jPOmSNnEtuvjy9GGiHHchoZHKPNTeLrNnnkLuRc4rRhWCOH6yqwO0j+o5Qf8Cgw65L
+         vuppbGaS+QZYWUC++Q4g8mMJHvDlKPjsbempyAeehqR0X2RMT7glzIwNBwN81gTb3VDj
+         0gcF5mbTAWGLbE1XStnNHyC7xm4/bYnvI4ecp51EJtEjKj5xYjmK7KAIkVeRpIbOz0U7
+         ouIzJkbv+4AOW7Ui+DWYDlPAnYufx0BbtMpQ/ksGYuEhy0N9GHTOdezOuGqUZzQtkYwG
+         Q0FLotXGvLOJAeMEM2C9hEkweCAcDYeC9BJ1KX/0RCo20Ixn7sTbkl1wWFBJUG31G8/A
+         OGMA==
+X-Gm-Message-State: AOJu0YxDu4njaDESQtmRN2imuUmB0jweq3nr/hqnDlOjOL75Gij2sO/3
+	WqvridZYMVGZXMe//m9Euw7Dcqo4M48kOYBLlRB8co0hP5V67PpiOPy46g084b+rvsNrkh9dTQx
+	o
+X-Google-Smtp-Source: AGHT+IGcTBHMI8oHUsiT+fZXBiRNdKrcPD4PPsQcNnRDNTflB8fcdAPSZ/IoAVPm6YeuwnWT7fad6Q==
+X-Received: by 2002:a19:2d0b:0:b0:513:ca9f:3c7f with SMTP id k11-20020a192d0b000000b00513ca9f3c7fmr152918lfj.17.1710380574753;
+        Wed, 13 Mar 2024 18:42:54 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id u19-20020a2e91d3000000b002d2ab6ae675sm48917ljg.137.2024.03.13.18.10.48
+        by smtp.gmail.com with ESMTPSA id u16-20020ac243d0000000b005131e4804f9sm66566lfl.190.2024.03.13.18.42.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 18:10:49 -0700 (PDT)
+        Wed, 13 Mar 2024 18:42:54 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Mar 2024 03:10:45 +0200
-Subject: [PATCH v3 5/5] drm/msm/dpu: drop
- dpu_core_perf_params::max_per_pipe_ib
+Subject: [PATCH v2 0/2] arm64: dts: qcom: msm8916: drop dtbTool compatibles
+Date: Thu, 14 Mar 2024 03:42:47 +0200
+Message-Id: <20240314-msm8916-drop-compats-v2-0-5a4b40f832d3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,131 +77,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240314-dpu-perf-rework-v3-5-79fa4e065574@linaro.org>
-References: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
-In-Reply-To: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABdW8mUC/4WNQQqDMBBFryKz7hQnDRq78h7FxVSjDlQjE5EW8
+ e5NvUCX78F/f4foVXyEe7aD+k2ihDmBuWTQjjwPHqVLDCY3NjeGcIqTq6jATsOCbZgWXiOWfZE
+ 7Zusq6yBNF/W9vM/so0k8SlyDfs6XjX72T3AjJCyJ246fZMubq18ys4Zr0AGa4zi+yutucLkAA
+ AA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Stephan Gerhold <stephan@gerhold.net>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4144;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1368;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=HtjO3+r4eD0Q2obHhXvuyUuLiZ1mp8ct03mOrvFNMx0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl8k6TPD8BbtAUQpZUbTD3Z/1YlsRo8D0pPIlbn
- OullnlyTpWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfJOkwAKCRCLPIo+Aiko
- 1QZcB/9VgPlKys7jt/lpRgWB5rrxlnQ5HZMGHoClHsG0Q1rsFCxp6+pdLWyZvuagrhUp+fNXGDL
- t+193uvDqf2swJeUWWBNdChGRgEZHPnXMHmodThOTq9cYfTFogx8HBwzXVSTIunAAGogNTWBhTB
- VGULPe71s6UNu32IPcbHfYX5AVU3Ny1N2P6YihRpH9RGxf+gk+i4hVe5srVVOPhmG+WbCxbdgEI
- 9qT4bWQlzaf4JoM2oPmSxybHJ2F90gf84yzck6z+uKXxhQeKl3yz+mfLrj7U33AB3c4eMbhYAxv
- bPVGgskCjTDZdS//uQIldaPIkypgpyVcadUblq27F38w3s8w
+ bh=/9o8wupjT2lFvIVQz6ywcaPq/J3mTzdTMJ1bW3KmM/k=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ+qnMNnvFc0G9pHTL6ru0HYUu3d6L9ei7N6K1MiaebaC3
+ Rl16as7GY1ZGBi5GGTFFFl8ClqmxmxKDvuwY2o9zCBWJpApDFycAjAR5skcDL37WvK3hmrOms95
+ iHXyQYHHPTXrfok5cXTH/e2u2i/+i1l1heEHjrSASG/dhIhXbmqmFhaXryTZ3WFL3RLx8+PcNH+
+ B0s68QraSPTdTL616LeZ2zm7tbB1b+cNlveVxRfvbD1mcjC6R3fRlsbt4t+FJgY2P589qerAq3N
+ V7rZGazs0uO9PqSTpOOnI1M9+9UjOcf8jqIWPy7vdnGrLa6qKuRyfmfcu/n+2icPRi7Lm7zq/nM
+ C9t3BrwrLrwhezVb1YOos+tP6zefMwg9bGgKvOXKXuYOgMjvq6M1TQJsq58szR++Q/H9GRlb+1k
+ y7mMRWnOtskbVxV5aFx6nyDfm7qiSmFDynP3k0eZVKcAAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The max_per_pipe_ib is a constant across all CRTCs and is read from the
-catalog. Drop corresponding calculations and read the value directly at
-icc_set_bw() time.
+Only two boards ever has adopted the dtbTool-specific compatibles.
+However the dtbTool should not be used anymore. It was required only for
+the old, broken lk1st bootloader. All users of those boards should have
+updated to use lk2nd instead. Otherwise several important features
+(secondary CPU cores, WiFi, BT) will not work with the upstream kernel.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Drop these extra compatibles, merging these two boards into the common
+bindings case for msm8916.
+
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 17 +++++------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  2 --
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  2 --
- 3 files changed, 5 insertions(+), 16 deletions(-)
+Changes in v2:
+- Drop the compatibles from bindings too (Krzysztof)
+- Add cover letter, describing why everybody has switched to lk2nd.
+- Link to v1: https://lore.kernel.org/r/20240221-msm8916-drop-compats-v1-1-71acdab14738@linaro.org
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 2e78e57665fc..2fc05665dc7a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -105,13 +105,12 @@ static void _dpu_core_perf_calc_crtc(const struct dpu_core_perf *core_perf,
- 	}
- 
- 	perf->bw_ctl = _dpu_core_perf_calc_bw(perf_cfg, crtc);
--	perf->max_per_pipe_ib = perf_cfg->min_dram_ib;
- 	perf->core_clk_rate = _dpu_core_perf_calc_clk(perf_cfg, crtc, state);
- 
- 	DRM_DEBUG_ATOMIC(
--		"crtc=%d clk_rate=%llu core_ib=%llu core_ab=%llu\n",
-+		"crtc=%d clk_rate=%llu core_ab=%llu\n",
- 			crtc->base.id, perf->core_clk_rate,
--			perf->max_per_pipe_ib, perf->bw_ctl);
-+			perf->bw_ctl);
- }
- 
- int dpu_core_perf_crtc_check(struct drm_crtc *crtc,
-@@ -190,9 +189,6 @@ static void dpu_core_perf_aggregate(struct drm_device *ddev,
- 		    curr_client_type == dpu_crtc_get_client_type(tmp_crtc)) {
- 			dpu_cstate = to_dpu_crtc_state(tmp_crtc->state);
- 
--			perf->max_per_pipe_ib = max(perf->max_per_pipe_ib,
--						    dpu_cstate->new_perf.max_per_pipe_ib);
--
- 			perf->bw_ctl += dpu_cstate->new_perf.bw_ctl;
- 
- 			DRM_DEBUG_ATOMIC("crtc=%d bw=%llu\n",
-@@ -216,7 +212,7 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
- 	dpu_core_perf_aggregate(crtc->dev, dpu_crtc_get_client_type(crtc), &perf);
- 
- 	avg_bw = div_u64(perf.bw_ctl, 1000); /*Bps_to_icc*/
--	peak_bw = perf.max_per_pipe_ib;
-+	peak_bw = kms->catalog->perf->min_dram_ib;
- 
- 	if (kms->perf.fix_core_ab_vote)
- 		avg_bw = kms->perf.fix_core_ab_vote;
-@@ -321,15 +317,12 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
- 		 * 2. new bandwidth vote - "ab or ib vote" is lower
- 		 *    than current vote at end of commit or stop.
- 		 */
--		if ((params_changed && ((new->bw_ctl > old->bw_ctl) ||
--			(new->max_per_pipe_ib > old->max_per_pipe_ib)))	||
--			(!params_changed && ((new->bw_ctl < old->bw_ctl) ||
--			(new->max_per_pipe_ib < old->max_per_pipe_ib)))) {
-+		if ((params_changed && new->bw_ctl > old->bw_ctl) ||
-+		    (!params_changed && new->bw_ctl < old->bw_ctl)) {
- 			DRM_DEBUG_ATOMIC("crtc=%d p=%d new_bw=%llu,old_bw=%llu\n",
- 				crtc->base.id, params_changed,
- 				new->bw_ctl, old->bw_ctl);
- 			old->bw_ctl = new->bw_ctl;
--			old->max_per_pipe_ib = new->max_per_pipe_ib;
- 			update_bus = true;
- 		}
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-index 5a3d18ca9555..a5a9c3389718 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
-@@ -14,12 +14,10 @@
- 
- /**
-  * struct dpu_core_perf_params - definition of performance parameters
-- * @max_per_pipe_ib: maximum instantaneous bandwidth request
-  * @bw_ctl: arbitrated bandwidth request
-  * @core_clk_rate: core clock rate request
-  */
- struct dpu_core_perf_params {
--	u64 max_per_pipe_ib;
- 	u64 bw_ctl;
- 	u64 core_clk_rate;
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 88c2e51ab166..771c04c1a5ea 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1389,8 +1389,6 @@ static int dpu_crtc_debugfs_state_show(struct seq_file *s, void *v)
- 	seq_printf(s, "core_clk_rate: %llu\n",
- 			dpu_crtc->cur_perf.core_clk_rate);
- 	seq_printf(s, "bw_ctl: %llu\n", dpu_crtc->cur_perf.bw_ctl);
--	seq_printf(s, "max_per_pipe_ib: %llu\n",
--				dpu_crtc->cur_perf.max_per_pipe_ib);
- 
- 	return 0;
- }
+---
+Dmitry Baryshkov (2):
+      dt-bindings: arm: qcom: drop dtbTool-specific compatibles
+      arm64: dts: qcom: msm8916: drop dtbTool-specific compatibles
 
+ Documentation/devicetree/bindings/arm/qcom.yaml      | 12 ++----------
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916-mtp.dts             |  2 +-
+ 3 files changed, 4 insertions(+), 12 deletions(-)
+---
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+change-id: 20240221-msm8916-drop-compats-7f608aa48948
+
+Best regards,
 -- 
-2.39.2
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
