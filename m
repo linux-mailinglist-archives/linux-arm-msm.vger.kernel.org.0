@@ -1,182 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-14100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3127187B95E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 09:36:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5682887B9B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 09:53:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9FC8C1F21C86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:36:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D43EC1F21979
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:53:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A63866AFB6;
-	Thu, 14 Mar 2024 08:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC78E5D497;
+	Thu, 14 Mar 2024 08:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h76hchDn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="By/226kC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF38433D4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:36:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE5062177
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710405376; cv=none; b=Hevb7Kn/NZtOgTUjxSAMSfpDkOIvfg1zf0QjrThr1zxrgbEpnCEUcy8iKjkj6L7/3ZQM19fydpCVbvY5BXkJabejcE7Ce+nrsKFz48be4INqokg4j7pMOAE6KKJhWeICNqSiHh6Ka51fVafg7w3DCLM/2y2UHmFIKM6MYWNjUnU=
+	t=1710406392; cv=none; b=gg/NZmHzOMqK94KJBtS6sJ8l1hMgD/mAEujR1vLMyUmtn6KZ4WBs8a5O4UMOvv3mKzwLirrxT8nYvnhMwlwjROBQ4eN0iieduNsJjKOplPWCknZQWIuOYwmN7OEeAnCcPX7XqVvTl41aq2gQZtzyYJiEAkMBqnyIz8XnqpqDBM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710405376; c=relaxed/simple;
-	bh=fjbWlaQOikwKMnwZOz8/d8vqFrfC7KHDtintYgjI3K0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QEAOm/odypT26Fk/jQyWLJJPYadgilyTuIrUQZgypj8yw8nO/vH3umT3FdWA/9Mh1ohjE3BU9MinGcUeD6+Sv1UkiDOYqziNexXqeSStVx4SF0B7cNoBejtkcdPXOWMhOggs/7Oj5PglnT71vQVIo/hv33K3Rt+G5A8fMDAEnNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h76hchDn; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1710406392; c=relaxed/simple;
+	bh=JRbh0ekOAZoITs6bw+4Z2PKWQij1OKHQNZkoVnNXhvo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=MfYldJgKHnjHi2D6Iqo+bgRgQ8PYZu/F+2N8iVCUY5rKeviYxPNoJE9+/HcAxmcQH1EsTUY1VsBg++bccxFILpVEhI+qHxWMdtIL/SFWgp7KwQWuGz+fTsTjbXOEZ8WOwsVWcTiDdf2dU7AhF6qVM9LclGbIpaOd6tMAYiGlzvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=By/226kC; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso740508e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:36:14 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-413f2f696abso1471465e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710405373; x=1711010173; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hj/WaHxD/qNMmrcRTKT2ci5bqw6SYan4groqkVU9P0E=;
-        b=h76hchDnBKjjXkxRbAf1ymo1yYHVSGX/vE5MYuYOw/LniQcDQCsHBv5h9OvllF71Yq
-         NwsveUquZ3Lz2pJ+58CjYnVtCVsXJSYEJbgbk/DKKR2EEWdbTEteLP2QwXkfyL8CQLmv
-         sbXVxkEhyEZsst7mAocG1EI/ziw8bjZQhSF6UKUfZN+x8vOdq4PvD/+xYiOvtnVN5qFG
-         VKwdo2i3UmB/dKfeUgwdN95BuQEt00ML0u4WzwcF6wVvJq7MqEXJVG1IAtGMd3EqAwJG
-         MdQYvJVMTtNQKUu/PD3flCkCgfbLfJwdW9A/Ze+S/Cfx6IDENUPFLRLLd0edcUQET22G
-         6KLg==
+        d=linaro.org; s=google; t=1710406389; x=1711011189; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UbDxneRzxmh6zafaW9TXqgUwW7Hf6w8+OIr/Rmft0o8=;
+        b=By/226kCUcEjhGfFaLeDVzuo87OuoGSgpEdVtQZq0EApeYwXbATrwOUSlc3s7ePqrU
+         3oUC363DsRRji1s7Our7OgxQHsFRIl845qTxVcJHkLyc81gJmxLeIKcG7Q0qiLEkLoGG
+         lAAD/oFB/BkIcfS8dKidS4drVoRR5okno6Qs3/iBF2ebAxy8GRcroHK4ihx9GoC+E/h7
+         KrzEV532nhI7opHaPb8I0rY/mDiqSvAUxGf4fg4AIxBKsy7RJeBxrwMYP1ksUqKN+/kQ
+         5R3WiJZ121KuJHKodExU52BNl4LmEce4S1D0FG7lunS7DNn8yU678qHQ+UvRVSxhdQ9r
+         HnEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710405373; x=1711010173;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hj/WaHxD/qNMmrcRTKT2ci5bqw6SYan4groqkVU9P0E=;
-        b=CfqQeWapwSd56Xzb6AX43bCveE4uUs9cx68fpXLni5EA3RtZUL2gwWO7g3lcSi551v
-         TT+GVKMzt894HBYwRgRUiXmQn3uUI/etrdTqneNKNqgBG5SDQ04oJLxqJqgW8iR3jlEw
-         pWSTZrfJDz785Q0EWZBqz0M1lr/Xo9UAFRtGiZmz/P3M28eQb744ZoPfllhkgk/beIVy
-         wq/NQlFkVRz2oRmfVDkfSlgDSiYH4eQiF/JdtGHforfYT2uEZJhZWxVjUSDVu9PbJgnI
-         21raLoEGyziE9hQjm40jwRaIpUSJjK4sl69TQexEhcNBS1ar52hhDhfn6rH7j2XhUlwD
-         Ddew==
-X-Forwarded-Encrypted: i=1; AJvYcCWMf+skfQsiRmjh1cD1pwRntfNFAMYmfD9oB3WUS6i1efhvIUn42ZA/KS/byh+QAhbxWsfPisG5ElthT61Iq8eivjtDbMjbRpCI2Ax5CA==
-X-Gm-Message-State: AOJu0YzHcCyydL7HvZszZuZG5n31z704XErmpT81WZS//Ob2kaj1+Gei
-	aTYUkonnW1DXb4Ia3kllUaKTTWMFYfSYFM9i6NL2qZ3f0kgEV+o/NrF2RLZeAKI=
-X-Google-Smtp-Source: AGHT+IHg2phWpA6wr0Ec2JY5vMTzDKNCDe3uQE5/b2ulf3w4ZnDGpniqfyMBM8L5ZJNhTuBmWoDrLg==
-X-Received: by 2002:a19:ae17:0:b0:513:cd2e:ceb1 with SMTP id f23-20020a19ae17000000b00513cd2eceb1mr619712lfc.48.1710405373003;
-        Thu, 14 Mar 2024 01:36:13 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id n23-20020a05600c3b9700b00412d4c8b743sm1709942wms.30.2024.03.14.01.36.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 01:36:12 -0700 (PDT)
-Message-ID: <75fd6970-f3a0-4eec-957c-3d8f6a553e0f@linaro.org>
-Date: Thu, 14 Mar 2024 09:36:08 +0100
+        d=1e100.net; s=20230601; t=1710406389; x=1711011189;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UbDxneRzxmh6zafaW9TXqgUwW7Hf6w8+OIr/Rmft0o8=;
+        b=rMUJ1XfT1Kh5CFFRA/4ITY0vPXGyGaaPzkwMo1/Dg4r4LxM0PVa3hMqtLEp3c6oRaZ
+         x4V6bb0DqO6sGZd4l0nmXKWKwggEOIfnFfrxqIEM9+49LWnEbVD6ea0dn4F8Y6Y9Nulm
+         4EMmMpcPFmIPRGTpdIJNxHMRX1UxZ5OMuMpfizeXNEWFUERm8QB5tC/NODM35PKaHUIO
+         5/uQBMP1RaFKg0mAU2KbEIyuUY0tksx2OfS/XHbUKim5Vy880m3JsFxr3uET0a69vHwO
+         CC/zPxnTMa/onDstazo8gH3GC+QeCxekBMEsZaYPTgRJAwJBslSW84SuM8e+0S3uZk27
+         uJag==
+X-Gm-Message-State: AOJu0Ywq7CjoJpSerJdCAU9e0FjdabnVZRlOWvoohN4U4WlDgh8MDYx+
+	LYJqbtbaT1Ja6z2MnFxuMulRqnhNO1IASmRaabmUzn2hJZj4n5RKLDlpGVy1sWA=
+X-Google-Smtp-Source: AGHT+IFRpexeDw19e7xHc9v1E4DV5w6+c9RQwY+Hev2+ZsJyImI39fcT/32EqxfKP6Mso5LyjBhRTA==
+X-Received: by 2002:a05:600c:511d:b0:413:27ac:d2fa with SMTP id o29-20020a05600c511d00b0041327acd2famr775723wms.6.1710406388634;
+        Thu, 14 Mar 2024 01:53:08 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id c16-20020a05600c0a5000b00413f7c89c0esm239089wmq.24.2024.03.14.01.53.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Mar 2024 01:53:08 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Thu, 14 Mar 2024 09:53:06 +0100
+Subject: [PATCH] arm64: dts: qcom: sm8650: fix usb interrupts properties
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dt-bindings: iio: adc: Add support for QCOM PMIC5
- Gen3 ADC
-Content-Language: en-US
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, jic23@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
- andriy.shevchenko@linux.intel.com, daniel.lezcano@linaro.org,
- dmitry.baryshkov@linaro.org
-Cc: lars@metafoo.de, luca@z3ntu.xyz, marijn.suijten@somainline.org,
- agross@kernel.org, sboyd@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
- lukasz.luba@arm.com, linus.walleij@linaro.org, quic_subbaram@quicinc.com,
- quic_collinsd@quicinc.com, quic_amelende@quicinc.com,
- quic_kamalw@quicinc.com, kernel@quicinc.com, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-References: <20231231171237.3322376-1-quic_jprakash@quicinc.com>
- <20231231171237.3322376-3-quic_jprakash@quicinc.com>
- <3f812ffa-ec33-448e-b72a-ce698618a8c1@linaro.org>
- <13f2b558-a50d-44d3-85de-38e230212732@quicinc.com>
- <f52b2d5e-b2b4-48ae-a6a6-fc00c89662d2@linaro.org>
- <0b9e807d-e0ca-411c-9a2b-3d804bdf168c@quicinc.com>
- <d3dc9a41-4738-4634-9a98-fefcf418f552@linaro.org>
- <1537d42f-fe61-48c2-9ee2-1066db71a19e@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
- m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
- XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
- mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
- v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
- cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
- rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
- qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
- aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
- gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
- dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
- NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
- hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
- oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
- H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
- yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
- 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
- 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
- +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
- FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
- 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
- DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
- oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
- 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
- Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
- qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
- /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
- qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
- EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
- KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
- fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1537d42f-fe61-48c2-9ee2-1066db71a19e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240314-topic-sm8650-upstream-usb-dt-irq-fix-v1-1-ea8ab2051869@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAPG68mUC/x2Nuw6DMAwAfwV5rqUQHgJ+peqQEKf1AAQ7VJUQ/
+ 96I8W64O0FJmBSm6gShLytva4H6UcH8ceubkENhsMa2pqlbzFviGXUZ+s7gkTQLuQUP9Rgysuw
+ Y+Yeh995GCk10I5RUEir63jxf1/UHgOjETXYAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Krishna Kurapati <quic_kriskura@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2404;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=JRbh0ekOAZoITs6bw+4Z2PKWQij1OKHQNZkoVnNXhvo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBl8rrz9KSsY3SwzrfHNznomVnGxXTudvzA0j9vmM0U
+ eawhbiCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZfK68wAKCRB33NvayMhJ0RixD/
+ 9xz+bVW58nmfFwhQ8QFWl1/VMdntM/B/3YsrSWuRe1u2XNLVXIrgIkMuSPeja1NEbIFnF2nIYluBuW
+ 6IkPMmgeYusMuptUkp0agOOHL97/hMK8fTjcl3+dw5jPuUUNr33XHAT4cXeM1YuNyfq/STDBy4cpm2
+ WTGw6/AB9TbI90Fv50hTiOeCLv4oV094z7OPUlAHmDAAKT+B1PpAOLGQYFW/vBNcFpxN8bBYahpIb9
+ Rvp0gzh2ALztMGs3Ks3HyaYdKhRaosKkupFaC+ydDn62Elep3oGUIKYXiEMXUF6vc0ZkfiO5kzLujT
+ 92OLAezUcFKt70XqL7qSwlJCIgEQ7NUlv7iTt2WNNsUQ6IoO+IIttVjIpf4kiumW/9+33ExOs0eXsT
+ 0KMMapBvALHPNH4Z9+Xup9HfH8ayW/BC2v/kDhlMmi63Jdw6uhPPwp8uTD83zojAtDO2LXuObC75/k
+ t4NQNqqt2VlX04omvCPvA4TDssPUno/HHyQNQdyVhVYDCnslhshumB13Y3d+ji9IBRAwAxnBgPA9fa
+ FCjyVQqwfhLGqLHrorZBoDLpCeycCTsT6YLSNQak37CPXE5/Vf1WADEmFe4zu53FjWh/xQs71bAqvl
+ CulT+f/Xk5DUmiGwnA7qrLch33qjWHMBekgPnqlgcjEcifN15yWppihQsWnA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 14/03/2024 09:28, Jishnu Prakash wrote:
-> 
-> followed by updating maxItems back to 1 for all the earlier existing 
-> compatibles, using if:then: conditions, like the below example?
-> 
->    - if:
->        properties:
->          compatible:
->            contains:
->              const: qcom,spmi-adc5
-> 
->      then:
->        properties:
->          reg:
->            maxItems: 1
->          interrupts:
->            maxItems: 1
-> 
-> 
-> If this is acceptable, I'll add ADC5 Gen3 bindings in the same file with 
-> changes like the above, else I'll add them in a new file after first 
-> creating a common schema file as you suggested.
+Update the usb interrupts properties to fix the following
+bindings check errors:
+usb@a6f8800: interrupt-names:0: 'pwr_event' was expected
+        from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+usb@a6f8800: interrupt-names:1: 'hs_phy_irq' was expected
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+usb@a6f8800: interrupt-names:2: 'dp_hs_phy_irq' was expected
+        from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+usb@a6f8800: interrupt-names:3: 'dm_hs_phy_irq' was expected
+        from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+usb@a6f8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too short
+        from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
 
-Please refer to existing files how it is done:
-https://elixir.bootlin.com/linux/v6.8/source/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml#L132
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index ba72d8f38420..985ef46a04e1 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -3584,14 +3584,16 @@ usb_1: usb@a6f8800 {
+ 			compatible = "qcom,sm8650-dwc3", "qcom,dwc3";
+ 			reg = <0 0x0a6f8800 0 0x400>;
+ 
+-			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
++					      <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 14 IRQ_TYPE_EDGE_RISING>,
+ 					      <&pdc 15 IRQ_TYPE_EDGE_RISING>,
+-					      <&pdc 14 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "hs_phy_irq",
+-					  "ss_phy_irq",
++					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "pwr_event",
++					  "hs_phy_irq",
++					  "dp_hs_phy_irq",
+ 					  "dm_hs_phy_irq",
+-					  "dp_hs_phy_irq";
++					  "ss_phy_irq";
+ 
+ 			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+ 				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+
+---
+base-commit: 9bb9b28d0568991b1d63e66fe75afa5f97ad1156
+change-id: 20240314-topic-sm8650-upstream-usb-dt-irq-fix-d6bb2fed3fa9
 
 Best regards,
-Krzysztof
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
