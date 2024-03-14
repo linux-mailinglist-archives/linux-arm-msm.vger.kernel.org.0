@@ -1,128 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-14048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0D4187B53B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 00:35:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15EFB87B583
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:02:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 823691F21DD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Mar 2024 23:35:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47C501C20A27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 00:02:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF1AA59167;
-	Wed, 13 Mar 2024 23:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE786110;
+	Thu, 14 Mar 2024 00:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DPb1TgVZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vxJr12T2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306401A38DB;
-	Wed, 13 Mar 2024 23:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D44346A0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710372931; cv=none; b=cQQBD0UDE7OgcgqrxuP912mZxvi2W52xomRH+Nu0U+Q+PLLOuHoI8ve8STbUAmga4FfF25tEXiUbFxJEMQZ2MUvYBetIeSpC2MxZcQjE1WMyG4g4RBts0RnlgJIW79RAYyEe1m5tuUZ+hqXSXpkoOswpYtfQNed4sWylkN4iHFQ=
+	t=1710374542; cv=none; b=EoGtkgsxvfHi7RIpuAmufBItAuuYLNQJYUgv5VHUfwEEC73m7m4Gx+Q7IBB9legJ2NDKVx82ekM3uvX5OjABhX5qlq0FTwMxMV+3rWO6HGF1Z4o1kXd3vY1o9SN3SrkIhuSZvU+uGtQ/wEaWAKidVsi2eA1iJ+7TdAp2pvoSTxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710372931; c=relaxed/simple;
-	bh=Z4wsRgTcB9Tuyme7jkJ30TZVZRuJCDanKTwrnQSHR48=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SETVbDv6jsKBOuf/cFHS3YHlRJhaXOruJkQh7VdBCup8CaEM3CGVAxxOhoycktGNc1uUpRo6QDYF56nOdJb9OpP4XZeqb1wZSo9Pi+Xa+GPWvhOo4gNc13UK11WRQi2oEzb8JbI6oZLIvDD1PMWw/PkQptW/cI6uwdiFvCbNpwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DPb1TgVZ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42DKNlnb019914;
-	Wed, 13 Mar 2024 23:35:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=SRA0+FCsBgitWMlVubXqcPii+ndab4G+gfadeHVyUEE=; b=DP
-	b1TgVZVdEH9gN7/rMfyWlj91WES1dI1jOFMxLSock0idXgp0n9HvXt0rc1SkNH9C
-	s6aTeC/sgT3NDRhjKNtEZ9xOnJA1Z6fHIIljcCQLynAamGVqkaZzrFFagehLtXn1
-	nt7pO7p/eF29k9OpSXBRl0jqDdj5YCIIWecU7O7AjR6Zqnj1dlLmwEth/kX1uZSA
-	EEm6B58DvUiAUOGyVaqizhfico+IkIrg+RiQC71OtdbKhPgGKpUSWTrCXWt7r4nR
-	CPdVcmxDr4Chnlvl+taJ+9O96VOLIazKO5NGNsQk8vK2wdJyXg4AXz+5H/xVhh8u
-	BdmeisGvmhCvG9YeC0sQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wuggr0t8b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 23:35:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42DNZP0s022893
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Mar 2024 23:35:25 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Mar
- 2024 16:35:25 -0700
-Message-ID: <0fd377a8-281d-634f-014b-509fd8dada98@quicinc.com>
-Date: Wed, 13 Mar 2024 16:35:24 -0700
+	s=arc-20240116; t=1710374542; c=relaxed/simple;
+	bh=ilkoJctGVT8SM5WLUF6Ip7DMWvtQmLAOACa8wpiZRFg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=C+Wz3kVsWcK9rWH+Pi99lXgnnJzycvovPy2aJ2Qjn4HSL/KDhPbyXcRA9p1ntzOZvk+uM9qgEwRHS5NLxrQ0/Y4rWHyjwV9Od7LcUR1Bm6xrx5GngLi89vHANJ6yAwbEnjRBNxEiYlqvET0msgKSIhDfKlWnfa8FDM2Xf0h0iH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vxJr12T2; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-513b1e1724bso458382e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710374538; x=1710979338; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FeiSzTwCi2+P1JIq2YaZveHxo9xBvRmuEUfbA8nH/hg=;
+        b=vxJr12T2rhXj4LEnmGhHtOswNUtzMwS2oaVqkBYp1n1wiMOxlTs5JC5w9eDTWokEEX
+         2B/niN1fHvGv7wed6HKyAVwT86iSUMo5v/QucdmlYEPCG2ymfygrAN7SQZUEYy01DdE0
+         l2c7XKYyhqXdhKyrzGVOZJrEhCn3BVh43oWOciVAgDhTMENzXc/Ick2ZqWFUVItCmRHV
+         wHBmR6MXNaI+D2jjL/p617jqMAUhNycqYAXj4Bb1BSyplfw8VmL8GguUqZFRrfhfNOvK
+         HHjRxa43dgpFjqlfd9zvNBo27mZ3kE+YEYeCZ2MmOmI045GXuZ+wvueGzH0g7xRaWdZV
+         N/BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710374538; x=1710979338;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FeiSzTwCi2+P1JIq2YaZveHxo9xBvRmuEUfbA8nH/hg=;
+        b=SMb2y6fwwyS7gURpmz20lRpYcav+QfSLoO/aW2FKCsVlQSZBg59af1H8bNhQUEokuH
+         0/2BDRyamNT4Xu3nCMKVs5jXDMWmRk3U8icLLHn/CNjsYVhU168CPENt045BbT61Y9M7
+         8vs/NWWJr5FLeFNY1w3t1i1cZZVJqdnAVHFoaw5Ba7YSyUez1Mq9KSGCAWOjqVLBpVHK
+         fqvF7lnv150GlcPBmd7yNPayJgXEdveGqOzs9k+mbcKU1p7dOtNeXInoNRV2IV5q8hmj
+         Yhh5eGJOgzj+mgFjMMxqB5ADGEFLrx8ef/equN3NyyrT5MM/CQpmpUHXSQ69Wh+8polA
+         zVUw==
+X-Forwarded-Encrypted: i=1; AJvYcCWIrPZqQ9Hrtj2RULfi0uwotBEFWhkDW/xXFVYjs0S+lrg28f+wgFx01WvLWZC2636kNrfinPBhqD8gy21uZC6D3s6u/i6kJQKL1Gc2Ng==
+X-Gm-Message-State: AOJu0YyD2iTTsZtzPkQde4bBhVKwz9BmYVb26N82P+KP2/2qGJM9e/eB
+	N3zcyFcfHbd7ACmNWRSXFP4CbC7ZXmNFaop+4hzqP8LU2SGP8Dw5GuPhc8zz7vo=
+X-Google-Smtp-Source: AGHT+IFtdclqN3OE7RqShWXdxrVC85SIqVaNFQ57TBoMNm0+PbjGlb49KMOWGCVgP1rVSceRnv/Emg==
+X-Received: by 2002:a05:6512:525:b0:512:b2b0:89d with SMTP id o5-20020a056512052500b00512b2b0089dmr1615356lfc.28.1710374538324;
+        Wed, 13 Mar 2024 17:02:18 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id x5-20020a19e005000000b00513360ebd22sm46111lfg.118.2024.03.13.17.02.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Mar 2024 17:02:17 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH v4 00/13] drm/msm/dpu: support virtual wide planes
+Date: Thu, 14 Mar 2024 02:02:03 +0200
+Message-Id: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] soc: qcom: pdr: protect locator_addr with the main
- mutex
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu
- Poirier <mathieu.poirier@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        Johan
- Hovold <johan+linaro@kernel.org>
-References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
- <20240311-qcom-pd-mapper-v4-1-24679cca5c24@linaro.org>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240311-qcom-pd-mapper-v4-1-24679cca5c24@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 730UKbsTu0jT9oKMJnw9p9xitRtdUfli
-X-Proofpoint-ORIG-GUID: 730UKbsTu0jT9oKMJnw9p9xitRtdUfli
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-13_10,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1011 impostorscore=0 spamscore=0 mlxscore=0 adultscore=0
- mlxlogscore=691 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2403130179
+Content-Transfer-Encoding: 8bit
 
+As promised in the basic wide planes support ([1]) here comes a series
+supporting 2*max_linewidth for all the planes.
 
+Note: Unlike v1 and v2 this series finally includes support for
+additional planes - having more planes than the number of SSPP blocks.
 
-On 3/11/2024 8:34 AM, Dmitry Baryshkov wrote:
-> @@ -133,11 +133,13 @@ static int pdr_register_listener(struct pdr_handle *pdr,
->  	req.enable = enable;
->  	strscpy(req.service_path, pds->service_path, sizeof(req.service_path));
->  
-> +	mutex_lock(&pdr->lock);
->  	ret = qmi_send_request(&pdr->notifier_hdl, &pds->addr,
->  			       &txn, SERVREG_REGISTER_LISTENER_REQ,
->  			       SERVREG_REGISTER_LISTENER_REQ_LEN,
->  			       servreg_register_listener_req_ei,
->  			       &req);
-> +	mutex_unlock(&pdr->lock);
->  	if (ret < 0) {
->  		qmi_txn_cancel(&txn);
->  		return ret;
-> 
+Note: this iteration features handling of rotation and reflection of the
+wide plane. However rot90 is still not tested: it is enabled on sc7280
+and it only supports UBWC (tiled) framebuffers, it was quite low on my
+priority list.
 
-Hi Dmitry,
+[1] https://patchwork.freedesktop.org/series/99909/
 
-What is the reason for taking the pdr lock here? The addr struct passed
-into qmi_send_request is from the pdr_service. I think this is different
-from the pdr_handle we are protecting in the other parts of the patch.
+Changes since v3:
+- Dropped the drm_atomic_helper_check_plane_noscale (Ville)
+- Reworked the scaling factor according to global value and then check
+  if SSPP has scaler_blk later on.
+- Split drm_rect_fp_to_int from the rotation-related fix (Abhinav)
 
-Thanks,
-Chris
+Changes since v2:
+- Dropped the encoder-related parts, leave all resource allocation as is
+  (Abhinav)
+- Significantly reworked the SSPP allocation code
+- Added debugging code to dump RM state in dri/N/state
+
+Changes since v1:
+- Fixed build error due to me missing one of fixups, it was left
+  uncommitted.
+- Implementated proper handling of wide plane rotation & reflection.
+
+Dmitry Baryshkov (13):
+  drm/msm/dpu: take plane rotation into account for wide planes
+  drm/msm/dpu: use drm_rect_fp_to_int()
+  drm/msm/dpu: move pstate->pipe initialization to
+    dpu_plane_atomic_check
+  drm/msm/dpu: drop virt_formats from SSPP subblock configuration
+  drm/msm/dpu: move scaling limitations out of the hw_catalog
+  drm/msm/dpu: split dpu_plane_atomic_check()
+  drm/msm/dpu: move rot90 checking to dpu_plane_atomic_check_pipe()
+  drm/msm/dpu: add support for virtual planes
+  drm/msm/dpu: allow using two SSPP blocks for a single plane
+  drm/msm/dpu: allow sharing SSPP between planes
+  drm/msm/dpu: create additional virtual planes
+  drm/msm/dpu: allow sharing of blending stages
+  drm/msm/dpu: include SSPP allocation state into the dumped state
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  59 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  20 -
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   8 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  22 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 675 +++++++++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |  29 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  84 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  28 +
+ 10 files changed, 779 insertions(+), 152 deletions(-)
+
+-- 
+2.39.2
+
 
