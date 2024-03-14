@@ -1,158 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-14143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AD7F87BE36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:00:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E4C87BE3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A50AF1F222C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:00:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2CAD51C2129E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 14:02:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C4416F506;
-	Thu, 14 Mar 2024 14:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41DB46F06D;
+	Thu, 14 Mar 2024 14:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ri8Mz3cH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zorg+HYu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EF66EB73
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 14:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB186EB66;
+	Thu, 14 Mar 2024 14:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710424811; cv=none; b=jPWiHa75X2qp8NayuoAdRwY1CpQWEP6+bYznrNUTGwV1dM8V74aosZPy7i+qjooDcdMsOL7OERtS6lgul38WxjlH4LdpR15VpRNBTn7M196Zk9sqJ+nVubV44djegaFiu27Rhla16I4J5wpdeULRw2MUOV1SagmbT03XKepppCM=
+	t=1710424967; cv=none; b=cPmu7H7HCtPTmhnaA2mOysU0W/uBkA5dmRrzythoMMLxMvL7D0OQkZyUhwgsYozDGnl2TxDxKepM5qIo2efgtKi8QGwkv5McSZQds6FmeqEgy2Y7jD+w0Xd6/O48K6lv7JNYc8Qxgu84mcHtIrjXYHVTaKl+YH4NM4AEdJCVk48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710424811; c=relaxed/simple;
-	bh=hIlmhR3AzpmS8Vgf5z1Vc+JUV312hQfTQ06lv4JjRys=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hAr8xq4CrDwthvvYw0cWYKgBx8TKcdbBYxAD4nZDMA2boQGptgwRBfiSludY4rESuja5tMD7o3ltdFhUbGWquXQpm9odrh4Qkibl2lrdtAvjG8wH5L33WTiDcBv5VMeSevuA7IqhxHVqdZKvSMoXV5bpOSFLyo5pw0wlankJTLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ri8Mz3cH; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51325c38d10so1906203e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 07:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710424808; x=1711029608; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FxNLG3KW46YsRyLUDeirw2sQ0+ONikiBJMDP2FhU0UA=;
-        b=ri8Mz3cH4KNRQiNXdJLBe2OMCeyhWFnRIub4ycboIIJeBmxtYs3PPyqukoH1y5rAfC
-         ni2sSkNc10D4ioy96BjG6X5rAQBywoLV8gQ1kT12px8d3AqAyzoHZSaqaUZImtYGZOiV
-         H3hensV7O4fxyxNh/YQQb48kSg2sIAOhAEIp6F6QCuhFxPA6uKIjDl8QsjISaZgMT8Zz
-         i+o94YVumapeOZ/PMlAO4jWAd8KGRn3blVXDX9rkypCf0jVS6s8uUAfoxpSZFBrGZek9
-         Vw6YFYWUGT63QwYd4Gqx8J9NVbGLMEbbpu1GT5ijew/2JCdixKhsgrFNqz7ygMZKXBdC
-         qslQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710424808; x=1711029608;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxNLG3KW46YsRyLUDeirw2sQ0+ONikiBJMDP2FhU0UA=;
-        b=ktyLA/cMY4cePDJgg+kI9wWZzDvlHBTqrvABviLcN9dmpYL8gM2QU49T+1U2JJrYoh
-         QwTHwOQv9L6bbnYORx4MTpXEZ9cQTd3/U1jF7UTMflSID4AuvKmDzL9mky4Qi86zh7sA
-         1zgs/3ZQ6quPjl7ygeoco1XMzByYqG+tOXXcqRcWUc9qT8MvzmA8XtcEZiaNQoCkrGN8
-         Vb/2VTLsuMzMEVzoBEq5zWGPPXFGu6vDSC1uBno420Pz/74YzpsDiQqzI+OvT0LTe62/
-         OeE7SfMFYQia2S95RJFWqw8ssAkwfiem4KgjeSrHn9vn/yGM0M7b0enEvl3KYdYk//5o
-         r4aQ==
-X-Gm-Message-State: AOJu0YwfoeyI5WO3Fq9jCyxpEe5/R0GQHQo3zOZpd7xyVwm13cXBNy3p
-	jZYSei4ZzXaEckIRvDlM8K1AWqCgM6Nolf4Ab4zykXF/3UE6cCG3jf2N90woByQ=
-X-Google-Smtp-Source: AGHT+IHue9gaD3zPtJZnyQCeG7GuQwFP18YfHf0KLTKt0TTAlkcgMAoYq0PpAFe1/h3NaSxXwr70dQ==
-X-Received: by 2002:a19:e056:0:b0:513:c5d1:a537 with SMTP id g22-20020a19e056000000b00513c5d1a537mr792222lfj.10.1710424808071;
-        Thu, 14 Mar 2024 07:00:08 -0700 (PDT)
-Received: from [172.30.204.13] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a19-20020a19ca13000000b00513d10789easm263158lfg.180.2024.03.14.07.00.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 07:00:07 -0700 (PDT)
-Message-ID: <8affb3d8-6210-43e6-8cbb-de28bdcf326a@linaro.org>
-Date: Thu, 14 Mar 2024 15:00:02 +0100
+	s=arc-20240116; t=1710424967; c=relaxed/simple;
+	bh=1VujOo3bwS8aZF9+nYwk4562s+hxXxzy/YG40BYsEn0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qk2ec9OADNkYReYSzioxdIbwRn6FMg+6VGPks8s5xcuFpwR6DzYGsdG2xaezonsoufGrA2Bg0qKIHX3BPd6m30XD2VBuRV+BtpHL6aF649SZfomww6jFKtPshKJqcHlGJ1u7iWel9z2+NrcBfbs9+z/IaPRIVMOEh+x8y1xxhCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zorg+HYu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42ECsvIB019870;
+	Thu, 14 Mar 2024 14:02:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:reply-to:references
+	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=N2j5RMdH
+	DNmm3vWJcZlaSTomA4u+OU2nb6B+0WWCKZs=; b=Zorg+HYu948hVr1+iR8dxpo4
+	bfHfry6RIKXCZaDkp2VQMriK4+dEwyXKMiJKH3/zVPRukJuzKVgPpYHU3CrFoMkv
+	dqdaBUAb4j3jVgmtNdmO3UqfIASahKjTIoSJDQR1nIjgC2DUugUYn5dTLGs7+1b4
+	BMNlQSFmVZLlJ9roHCyX751/TPdfGUO2N3dwdvU8Ng0iglSvohB/uJ4IFPBb2aOz
+	G4FjLUy2GC/y2jVXbh1nRmeg1PYi6m3g7t9OcgSoRHdRYXZrAw6aexMC4mj9a0G7
+	EIZhqlteO6R7UxULrUMVJjIfkOIUJJM8+RfpiXA4s6N1C41F/ycFNrUWJ5u9HA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wv1njr508-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 14:02:22 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42EE2Lo6009173
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 14 Mar 2024 14:02:21 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
+ 2024 07:02:13 -0700
+Date: Thu, 14 Mar 2024 19:32:10 +0530
+From: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+CC: Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        Murali Nalajal <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik
+	<quic_cvanscha@quicinc.com>,
+        Philip Derrin <quic_pderrin@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet
+	<corbet@lwn.net>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Fuad
+ Tabba" <tabba@google.com>,
+        Sean Christopherson <seanjc@google.com>,
+        "Andrew
+ Morton" <akpm@linux-foundation.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>
+Subject: Re: [PATCH v17 17/35] gunyah: rsc_mgr: Add memory parcel RPC
+Message-ID: <20240314140210.GU440762@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20240222-gunyah-v17-0-1e9da6763d38@quicinc.com>
+ <20240222-gunyah-v17-17-1e9da6763d38@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to
- fix boot failure
-To: Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Sricharan Ramabadhran <quic_srichara@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com>
- <58f07908-127a-438d-84e2-e059f269859b@linaro.org>
- <2b95a593-225e-47b1-8bda-03240eb0f81e@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2b95a593-225e-47b1-8bda-03240eb0f81e@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <20240222-gunyah-v17-17-1e9da6763d38@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: l11wezTxCzYOMBhKzKDcLrBYuuW80ZZ3
+X-Proofpoint-GUID: l11wezTxCzYOMBhKzKDcLrBYuuW80ZZ3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_11,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0 phishscore=0
+ mlxlogscore=782 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2402120000
+ definitions=main-2403140103
 
+* Elliot Berman <quic_eberman@quicinc.com> [2024-02-22 15:16:40]:
 
-
-On 3/14/24 14:50, Gabor Juhos wrote:
-> 2024. 03. 13. 19:36 keltezéssel, Konrad Dybcio írta:
->>
->>
->> On 3/11/24 16:06, Gabor Juhos wrote:
->>> Booting v6.8 results in a hang on various IPQ5018 based boards.
->>> Investigating the problem showed that the hang happens when the
->>> clk_alpha_pll_stromer_plus_set_rate() function tries to write
->>> into the PLL_MODE register of the APSS PLL.
->>>
->>> Checking the downstream code revealed that it uses [1] stromer
->>> specific operations for IPQ5018, whereas in the current code
->>> the stromer plus specific operations are used.
->>>
->>> The ops in the 'ipq_pll_stromer_plus' clock definition can't be
->>> changed since that is needed for IPQ5332, so add a new alpha pll
->>> clock declaration which uses the correct stromer ops and use this
->>> new clock for IPQ5018 to avoid the boot failure.
->>>
->>> 1.
->>> https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
->>>
->>> Cc: stable@vger.kernel.org
->>> Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
->>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
->>> ---
->>> Based on v6.8.
->>> ---
->>>    drivers/clk/qcom/apss-ipq-pll.c | 20 +++++++++++++++++++-
->>>    1 file changed, 19 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
->>> index 678b805f13d45..11f1ae59438f7 100644
->>> --- a/drivers/clk/qcom/apss-ipq-pll.c
->>> +++ b/drivers/clk/qcom/apss-ipq-pll.c
->>> @@ -55,6 +55,24 @@ static struct clk_alpha_pll ipq_pll_huayra = {
->>>        },
->>>    };
->>>    +static struct clk_alpha_pll ipq_pll_stromer = {
->>> +    .offset = 0x0,
->>> +    .regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
->>
->> CLK_ALPHA_PLL_TYPE_STROMER?
+> In a Gunyah hypervisor system using the Gunyah Resource Manager, the
+> "standard" unit of donating, lending and sharing memory is called a
+> memory parcel (memparcel).  A memparcel is an abstraction used by the
+> resource manager for securely managing donating, lending and sharing
+> memory, which may be physically and virtually fragmented, without
+> dealing directly with physical memory addresses.
 > 
-> I admit that using CLK_ALPHA_PLL_TYPE_STROMER would be less confusing. However
-> 'ipq_pll_offsets' array has no entry for that enum, and given the fact that the
-> CLK_ALPHA_PLL_TYPE_STROMER_PLUS entry uses the correct register offsets it makes
->   little sense to add another entry with the same offsets.
+> Memparcels are created and managed through the RM RPC functions for
+> lending, sharing and reclaiming memory from VMs.
 > 
-> Although the 'clk_alpha_pll_regs' in clk-alpha-pll.c has an entry for
-> CLK_ALPHA_PLL_TYPE_STROMER, but the offsets defined there are not 'exactly' the
-> same as the ones defined locally in 'ipq_pll_offsets'. They will be identical if
-> [1] gets accepted but we are not there yet.
+> When creating a new VM the initial VM memory containing the VM image and
+> the VM's device tree blob must be provided as a memparcel. The memparcel
+> must be created using the RM RPC for lending and mapping the memory to
+> the VM.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-Oh, I completely overlooked that this driver has its own array.. Hm..
+Reviewed-by: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 
-I suppose it would make sense to rename these indices to IPQ_PLL_x to
-help avoid such confusion..
-
-Konrad
+- vatsa
 
