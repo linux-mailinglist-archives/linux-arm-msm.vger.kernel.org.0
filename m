@@ -1,145 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-14066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF44D87B5B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:10:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18A0587B603
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 02:10:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 167A61C220C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 00:10:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FA012874C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 01:10:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625B87FD;
-	Thu, 14 Mar 2024 00:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0052B1113;
+	Thu, 14 Mar 2024 01:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u16ou+af"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="avl1SMsx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36E238F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:10:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70474A15
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 01:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710375008; cv=none; b=VDlnwb2N4BdvwIK2mmW2hsZ14ewbAuP4v4t+GHNHhl/+e6/z7O1eLrum3Y2Teef9Yy8f/N4DlzZwZgGzRONo5QOEcW2Mr4HP9IPduf7LLIzeqVBrYFwUr3Ki4FrYAnyYlpwa8eOhCxl9YZfxns85EVLQwwInGk/IJCv9abv649g=
+	t=1710378648; cv=none; b=FDza6AOJqKDKB9toCKfvGmk7TOXTDvsGW62eo5GUAPYD7PrqikgmLTtwCJgEe2AgwPxL65t1KcwFxy1fFOzYKGTbtgBVTYrsowy6nWOE093LX1cMC7g/mAnj+WVE5eI0pyLGVas9P9AoZIpENHMyrryTM4sTt7/4C3NtkH5w64E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710375008; c=relaxed/simple;
-	bh=ec22eP484v/AXC4kjGAAzrxbXX6N5ohUbSJGQR4ZIww=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IQzrAPcPsgZ4EUbnViVy0G9aEjFOXUCWHjg+bKc8iVJPDD4mYn75RByHXSzpPjP1Pjiqtplrfah9ONNJNJp6Y4rtYa58S7BenXVTrIfj0Z08ZTXTmX6E5cFhfAI+mmRW8d8Vhvb31OSYOkfRyuIICirL7taxAg7Kl00L1f8e9rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u16ou+af; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1710378648; c=relaxed/simple;
+	bh=mcoRDZpsdRWUc9CzNSaO1uzjelf+jpM6O+E6SIXUuPc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GBRWUWRUzDvmqfFwIM1AcD97dwawf9G7ek376H7hWUI4bIIbaUdkGJSwuOov9w2JfOan37Ih1mAJ4Dyj0qGzRdhCyMmNYVix+I79mvz9burAglMZJ9HxE5RpWAmJ/zWDJ0F/X3PdUR6aNce1P9adtRSEgnBiGI8QiCbP9NOzm14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=avl1SMsx; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-60a0579a931so4646377b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 17:10:06 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d46c44dcc0so5139991fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 18:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710375005; x=1710979805; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CObZLoh3uZD+J/vo9QTXq7jAF93NORabu7T4LEk61OA=;
-        b=u16ou+afCsS//aOvI4TUCfbvIE4N3YjX22Z8wjGF48YzCR2Y0+iewqF0a/tA8H1YnK
-         J6zsPBl5dq/iWLt8YKPNd40smMZPiUbEucsXwxb15DegwdAbZAzs2o8i0ClyTvNfCQGD
-         sK+crNRtpG5WZgWDOBnrAg0AkMAYdnNFPB8k+VkHpepVda64QFytdmpAcwiY0mmjAZ0d
-         KIp1M9gYaRR6S3GCLvoQfNiia2zxLJFUSEf9ArxgRzHkz4mvga1mfBScHFlOP1LI9zss
-         6kJzstzLO6TOfR+Wy+3padlad86z6If+ENRXSmbtVtbfKNF/BIklc5pGK5jANP+1x8zz
-         GACw==
+        d=linaro.org; s=google; t=1710378645; x=1710983445; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GJyH63K/3kfz/t7TmUobgQSHCuwrTCRn+6jW9teKGDY=;
+        b=avl1SMsxasmRooDRNUMA+iSoaDhj5XXaXJhiRpGO0bbFiu+uKWbQuGKLiFJpnnmdwV
+         KMh7IpfcicTEkHbVvlRZeWa4ScXc1QPqFVV26MLWnmpTl/ZfA4f0YafZsmOjcNspYwjf
+         qxoGlUMYcRoMuP/KpRG0KeIZF8p/SlZR3ZJcYNF114KPDzC0Z0qy8Vvbr66sRvZqawZb
+         dfjBTfX6UuSA5IyXdDLyYO2dV1eVM7zt5YrmWH562fbYKojXvmhn4NKF9zb3mqzhivGE
+         BDju8EuzORYanvzzD+Hkb5aSdaqy6DiS/GCzFoVxXZBM+mY7+9H1bzKTeN5oKlSyGZSP
+         aagw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710375005; x=1710979805;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1710378645; x=1710983445;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CObZLoh3uZD+J/vo9QTXq7jAF93NORabu7T4LEk61OA=;
-        b=SQUL2Xem8wM1k1CdDKIa3DPQ1k+LjeVyGGGYWyZhvgIGAcvpO6djeL0Lr/kONOsbfM
-         gubkHXc17pnH0JFunlgC03xdVoxGa1lD5uzS9vhQZhi03/YtOCa7c7PKl2nzUjn4Z0wi
-         VcdF6vz2zdnlJGjhMr6jvDBoSOFm3FZfOha+KRRzNQV0o+vNyF8nk0VerDgkLiKAYC6H
-         TKLcl4AqmE+rRrS8QtN5Zzx8DeRjd2DgCtfBGLIATfXhAERU8UwkJDpBsADBU/lbjg59
-         B9IVepX0+BvfjplqV6gFVqgsluDblwp+Mt0xYQNsw5m5aJoUgSLLQ+XuMGUVm3NMirDS
-         kfpg==
-X-Forwarded-Encrypted: i=1; AJvYcCWxSvVrwI0noiQTyJdz7tb3vz+98pnoLdQuv7+YA0t6mirenOY3DHBQSOszTNPbNRChpgehSoa7MXCToo6JW5kAWeRe79e01CTxyL7rvQ==
-X-Gm-Message-State: AOJu0YzTeluMR9a4MVYYh3zRGOavwyq8JwUDtGYs6hOPTfIqQDb9ccw9
-	c6uhYxzGVw/Xy6aVN+3N1aPI9ITZp6U86nHKAw6gX2QDPkYbj7TOkPTvgZvaZHZJiR8FCNPrWQM
-	SD2cw++3+B3ui8dx23+ZTfY22Vlek/+wuzhSPBs8VVzReBP2Z
-X-Google-Smtp-Source: AGHT+IHdrgV0AmpnXR7NivcZfh9QuBWnkGN4Tif18Aw8PrgVxPSxQyie2ULwkB9RBOYiLqqC2uWDaTku/4dWuExCB8k=
-X-Received: by 2002:a25:b7c2:0:b0:dcc:6112:f90d with SMTP id
- u2-20020a25b7c2000000b00dcc6112f90dmr262699ybj.62.1710375005672; Wed, 13 Mar
- 2024 17:10:05 -0700 (PDT)
+        bh=GJyH63K/3kfz/t7TmUobgQSHCuwrTCRn+6jW9teKGDY=;
+        b=eJSOF4q4ZlhThq7FGGdza0VpCwhkqwSPq/uw0x83G2f5XP93y7yDE1wlDKigum6rMh
+         Doc1S6NTGfTtnYTZPrSZ/BjbACRQPhG2JxpAVTlXFaGDhauN/3k4L845wj/8P8VzoWoY
+         B4ZPL7J/Xl0zwS8/MR15/Si98nexm8B+AHd2WYhpsg8GTrXxBhdYX+qWMpkt1BNbzzGz
+         TYSnYdI5d6W49+aQz38v9h1I/Ymx4/RJaNsJJ9y7HhgvQujJ6fRIZD1wD9EWBvmEFtYY
+         eLj3jwNQ7uhvHeMmzaibgDRRXLxBP2W2PmvDxmyST0N4W5BNNWkLYy9KSGtNYa4Sjby5
+         W0Xw==
+X-Gm-Message-State: AOJu0Yxk/M9a1NkQLORdGRDomqlvmMvpWcNOR062mZgRjvW4w9oUGOxB
+	3iJEB738rhnPtkkeOM5jnubITO+ae6FlTlCgXoenPdlSseLnTXWPZE5RmtV3ecA=
+X-Google-Smtp-Source: AGHT+IHNqyh4yHjx4f2lbz11ebvSoKS23d+YkWVSiV98SJzvaX38j7nrhbk5X0mfm3vdlYU9TCfASg==
+X-Received: by 2002:a2e:a409:0:b0:2d2:3915:cfc4 with SMTP id p9-20020a2ea409000000b002d23915cfc4mr132809ljn.4.1710378644793;
+        Wed, 13 Mar 2024 18:10:44 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u19-20020a2e91d3000000b002d2ab6ae675sm48917ljg.137.2024.03.13.18.10.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Mar 2024 18:10:43 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 0/5] drm/msm/dpu: rework debugfs interface of
+ dpu_core_perf
+Date: Thu, 14 Mar 2024 03:10:40 +0200
+Message-Id: <20240314-dpu-perf-rework-v3-0-79fa4e065574@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
- <20240311-qcom-pd-mapper-v4-2-24679cca5c24@linaro.org> <9785a6e6-3700-0b89-b4b5-7981ed5bdd38@quicinc.com>
-In-Reply-To: <9785a6e6-3700-0b89-b4b5-7981ed5bdd38@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 14 Mar 2024 02:09:54 +0200
-Message-ID: <CAA8EJpr0vV4THO=+rNTXmK5YJtQwzfcsWCWHUgU1XaiSEudtsA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/7] soc: qcom: qmi: add a way to remove running service
-To: Chris Lew <quic_clew@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJBO8mUC/x3MTQqAIBBA4avErBuolMKuEi2sxhoCk5F+QLp70
+ vJbvJcgkjBF6IsEQhdHPnyGKguYN+tXQl6yoakaXala4xJODCQOhe5DdjSdm60xhibdQq6CkOP
+ nPw7j+36H2rq9YQAAAA==
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Stephen Boyd <swboyd@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1146;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=mcoRDZpsdRWUc9CzNSaO1uzjelf+jpM6O+E6SIXUuPc=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl8k6S939S1AGBh+umrCI3yOyxFUeiuid7YfY9J
+ eLvmg21yFKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfJOkgAKCRCLPIo+Aiko
+ 1WYIB/9eQm1HoYYH4yjNQBS3+epCQ27cMCuT+cnF/b3Ygyzw9AmJcywdSc6XIb0Ga/KCxabJ6i9
+ lWxXehoAdlnOXS36njJa0QEMb+hlBWx/SX1MgVRJBmq9q923yNKX5QYDgHoSYk5KC3o0epp1nBs
+ GuC3uDm5UZcFzxKuScDTSKS+zAYLowsch6Clj+2XXwiRyyHbw714/qO5LqdMIk6AP804rUVHFrr
+ yg08sOItnWxqXfYXHR56uyb+zaKuh6trBbAnNQMbO9gzCh1muTENOtitnvv0BGWoOF1X1vH6oKd
+ VXh/rvoTq6PbqUQjN0q0gK8baYFrGeki5oi9RKm9levz4zen
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Thu, 14 Mar 2024 at 02:03, Chris Lew <quic_clew@quicinc.com> wrote:
->
->
->
-> On 3/11/2024 8:34 AM, Dmitry Baryshkov wrote:
-> > +/**
-> > + * qmi_del_server() - register a service with the name service
->
-> s/register/deregister/g
+Bring back a set of patches extracted from [1] per Abhinav's suggestion.
 
-ack
+Rework debugging overrides for the bandwidth and clock settings. Instead
+of specifying the 'mode' and some values, allow one to set the affected
+value directly.
 
->
-> > + * @qmi:     qmi handle
-> > + * @service: type of the service
-> > + * @instance:        instance of the service
-> > + * @version: version of the service
-> > + *
-> > + * Remove registration of the service with the name service. This notifies
-> > + * clients that they should no longer send messages to the client associated
-> > + * with @qmi.
-> > + *
-> > + * Return: 0 on success, negative errno on failure.
-> > + */
-> > +int qmi_del_server(struct qmi_handle *qmi, unsigned int service,
-> > +                unsigned int version, unsigned int instance)
-> > +{
-> > +     struct qmi_service *svc;
-> > +     struct qmi_service *tmp;
-> > +
-> > +     list_for_each_entry_safe(svc, tmp, &qmi->services, list_node) {
-> > +             if (svc->service != service ||
-> > +                 svc->version != version ||
-> > +                 svc->instance != instance)
-> > +                     continue;
-> > +
-> > +             qmi_send_del_server(qmi, svc);
-> > +             list_del(&svc->list_node);
-> > +             kfree(svc);
-> > +
-> > +             return 0;
-> > +     }
-> > +
->
-> is list_for_each_entry_safe required if we stop iterating and return
-> after we find the first instance of the service?
+[1] https://patchwork.freedesktop.org/series/119552/#rev2
 
-Yes, it just adds a temp variable here.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (5):
+      drm/msm/dpu: don't allow overriding data from catalog
+      drm/msm/dpu: core_perf: extract bandwidth aggregation function
+      drm/msm/dpu: handle perf mode in _dpu_core_perf_crtc_update_bus()
+      drm/msm/dpu: rework core_perf debugfs overrides
+      drm/msm/dpu: drop dpu_core_perf_params::max_per_pipe_ib
 
->
-> > +     return -EINVAL;
-> > +}
-> > +EXPORT_SYMBOL_GPL(qmi_del_server);
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 160 +++++++-------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  12 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |   2 -
+ 3 files changed, 44 insertions(+), 130 deletions(-)
+---
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+change-id: 20240314-dpu-perf-rework-97fca999eb46
 
-
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
