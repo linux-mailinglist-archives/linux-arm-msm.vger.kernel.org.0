@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-14081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECAA387B82E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:01:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0865C87B831
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:01:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CC7F1F22DD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 07:01:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8702B1F23550
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 07:01:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 974AE5CBD;
-	Thu, 14 Mar 2024 07:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C648C5664;
+	Thu, 14 Mar 2024 07:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YI3qPqvr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AsR6oAXd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE055398
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 07:01:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FAD10788
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 07:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710399691; cv=none; b=tFfteN3hFtwhq9MFOKmiooWcXyH3iFQpJoQlbk1GY19Nk/khWT0munNm5PsVztEEqmqbdAWdk+ojNAkKnbABA1RNiWfzFn6e0PXtbGlOCDljTPlGPPPiX+PPVgt/MSSQQdLkbEYdqegT0GHQ7ghB0B+XPMtKdjE0cm8ghrKBrK8=
+	t=1710399706; cv=none; b=GCAwfxWnok8A6ll2N8LvLeb+eQzqp4f2lSBybEUOaeR6iWcCADhaMahU1DSDdl0I5nVQw8YliMrCzPEZJ+CWFNRXPSCzcPYai3yEU2lQnK7apwqpunRnMGhm5lmV/M3qLqE23rWghTqOVH1h36SWI5j6A87YFqh0AFch2Di9N8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710399691; c=relaxed/simple;
-	bh=7NkQyoOA1mHyQIXA52IUTmI0Wd4PYuuEIHltkCMQUOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CfU+Wa0uiBOKElsEVaaUxUPrtd9kzdHYbLiE+1IpK+ua9CrxUR+ntr3nWVSirj6OEYQCJNMXKXVygFPk9Zqps88P1BHGEjrS84FE+d/YAkbZqI/Jjj6kejOxaDvy3W5UA6hs7emrND6cL6iva+Khbq1rGiRlQGmMsTgm+kTDa7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YI3qPqvr; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1710399706; c=relaxed/simple;
+	bh=oKEeb6EEnkUNUtdLlExYb/7QKyplJ5eEQDfuruPtN8c=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cZVlJ6reyYReKOAuGQg6CwEYfE746BwM/W+ey5iOimEbECpawwaoME+AjhU6a4Sa+YkTFHuQzV1hjaiuO0lVAFURKnfnRgQ/4L0hwCDd812j+hTSzcXHUrPgx3idWkEoLfljd2ZXxSf3ecj4HoM7F7ljJRk8M1ufypCHQgmkm5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AsR6oAXd; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33e672e10cfso295103f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:01:29 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-33e9990da78so504552f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710399688; x=1711004488; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6lbY8CxO60JeZjTgbdzeSJeBKzxbN0g8ObCIYlzq2v4=;
-        b=YI3qPqvryHjB9ZAa6n3qiAwlKAYAbaPoOAa7W9eNkKLM6iclN+7mZwUnuggy4RxTKC
-         jAewnAtcs/M0QAxwUXCFQt4KoGO6k4R9xB4qbvDzwRV1x7ICH+KVaeJ5Ig0LTnI9Z5qC
-         F+M803AlZ4XRPXHZwaRsJS9ok3XA0sNHdvHKNXaUzueRcL5iWdG4C5tqPVd56sRDaCWf
-         bzeif7NbZFEGfZaA2d1NZL5pE7/bJO32WW0oR/vQLg08ga03HgE/tTPyAqslHfUQR6ef
-         pmYhWZXx+acnc3yHtWMRKkQ4t+LMNNdGYFpxiMmA0YKfXAhM3i7INLz86E23s+t0JkDZ
-         Y0SQ==
+        d=linaro.org; s=google; t=1710399703; x=1711004503; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=J6Zl5PsXItphLAQHfny4W11Akk6tvfHOAxphvyDkaZA=;
+        b=AsR6oAXdJwPbGanqsMYZhEm6mBey15AVx54pb6R68EsDjvrwiXiONgxhsuk0Sa+6YU
+         XeDf9jo6LAeB5unBp/P5qInihPpkWZWHIaaasUnTV8g9aqPw728oRSvA+5nS1M9mMIKz
+         m17DCCVKmCFNPwpsB4hLPrqktart0gUDqVntIoJwuyTCLbVRuSWYRXcCqF/mFfrwkg5Y
+         JSkWtP1vbpsyq3gWyA9BbUURsHPYstUhbIV7zK6uWwLUU/KVa4mtpKjnVBa27DED70JD
+         P4D3ThFWMiv4kP2r/pMsrMAxAMe7qelwYwuuKthUjWCqSLV/0YSOo5/wwVjZ1ZO6Oc+5
+         ZnAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710399688; x=1711004488;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6lbY8CxO60JeZjTgbdzeSJeBKzxbN0g8ObCIYlzq2v4=;
-        b=TCimMcvX4Kcz55METqnb5qcePQi+zkZYk0kniyKIt2izZ9EGXkFJluYdrBqjWeXUNt
-         mcl3hnFdxcXFWuqYLyJMuV/Lpuj1hmdokP5MieX/3ZXH6xUIFCGv5xg2+tJUgunuRiUG
-         Sgyb9qeO4ubjvm5Lm7sT7K6vybmFJb6dVUTvNLC9ppcTqLmpSIRXh30Wnp/FnZLtlOBg
-         Kb8rZcYLZmf8uVDvStj5HL40X1VaXwPRTUo2LpovADQxyzL83Houu6bBwqvQm4mA6Ldm
-         NqAvpiE8097crFUyi/2+DploLKGrJNagj8OqolJqcQeRSyXcN8i7vP7/93/j6Lj3QKsN
-         JT1Q==
-X-Gm-Message-State: AOJu0Yyro8xV/BsxD+4kVq8j8aLOWRBW+IbmhjTP7541Z5Ciux4Yz4fA
-	skCXP8vveGFzozTzNyjZIB8JzVSH7lfXI/IcDzuIlQlEdL9+W0qm/ffhKt4efJs=
-X-Google-Smtp-Source: AGHT+IERaoaq1F3MVIhdgIzUtYz0Iuz2Pu/YzlkKgvcGZZUiGSmADiZ0Y/YE0roJ6qi4Vox3KEy3tw==
-X-Received: by 2002:adf:fc8e:0:b0:33e:c974:1296 with SMTP id g14-20020adffc8e000000b0033ec9741296mr161792wrr.25.1710399688114;
-        Thu, 14 Mar 2024 00:01:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710399703; x=1711004503;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J6Zl5PsXItphLAQHfny4W11Akk6tvfHOAxphvyDkaZA=;
+        b=SzW3TVWmSdTEYGewlMX8Bto8FqbiABYaMOrxOhFrhl/ddG6GKDnU1W+klvM+v2ytnx
+         SO3buJuKTOtOVqIdvHLtfV1Nk4WuvUKmXQAbQ9ImDDpILgbYO7EhThwadyUNZ0MBardb
+         ZFnmNA2yIBKE1uJpJ9J6S2tCzR4LEzP8zrnegDS1BgywK5akU+e4alRjAmfydkgW1XjH
+         pRjgPpZfgNtanK+eyQEQJPRVqVhrorwUyMZTJKl996H1lTaDy0Kq+iLuIn6octGkKeSB
+         dRmN1UmdAQIiT4pO17RMoI9zuZcb4pSJrapDDv7AbvM4uz4XRIbHZJ5WqSnidXGi5A7A
+         xNTA==
+X-Gm-Message-State: AOJu0Yw9qVF+RJKLpefGFE2gRa7i1bOcejBFqgWFE5QUAbvpcL+7Piv6
+	bRsocKo+oRNB6Qk6W3lADlG3TjwUT0OipdmR9wV9vOlR5SVQPZqlVbH6TQV9nmA=
+X-Google-Smtp-Source: AGHT+IHzOgh90fGGHYITKcwfTAZcr0gunhmD9f3jnshfog8AWFvM/+uY84+FcfmBfL2Ljk7cakm9jQ==
+X-Received: by 2002:a5d:4310:0:b0:33e:7054:3791 with SMTP id h16-20020a5d4310000000b0033e70543791mr551747wrq.70.1710399703318;
+        Thu, 14 Mar 2024 00:01:43 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id v29-20020adfa1dd000000b0033ec3c2e410sm15902wrv.23.2024.03.14.00.01.26
+        by smtp.gmail.com with ESMTPSA id v29-20020adfa1dd000000b0033ec3c2e410sm15902wrv.23.2024.03.14.00.01.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 00:01:27 -0700 (PDT)
-Message-ID: <3163c850-a0e0-4170-a5ee-cfc412b875b4@linaro.org>
-Date: Thu, 14 Mar 2024 08:01:25 +0100
+        Thu, 14 Mar 2024 00:01:42 -0700 (PDT)
+Message-ID: <d87f2518-a394-4fec-a484-fe92977488fe@linaro.org>
+Date: Thu, 14 Mar 2024 08:01:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,18 +78,17 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 1/3] dt-bindings: arm: qcom: Document rb5gen2 board
 Content-Language: en-US
-To: Caleb Connolly <caleb.connolly@linaro.org>,
- Wasim Nazir <quic_wasimn@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Rob Herring <robh@kernel.org>,
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Wasim Nazir <quic_wasimn@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel@quicinc.com
 References: <20240313071238.3290-1-quic_wasimn@quicinc.com>
  <20240313071238.3290-2-quic_wasimn@quicinc.com>
- <fc00af46-1521-4bb8-9b7c-237cbd26a17c@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ <a3a8cb76-b6c4-47e9-a448-781225d93d84@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -133,41 +133,22 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <fc00af46-1521-4bb8-9b7c-237cbd26a17c@linaro.org>
+In-Reply-To: <a3a8cb76-b6c4-47e9-a448-781225d93d84@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/03/2024 05:15, Caleb Connolly wrote:
-> 
-> 
-> On 13/03/2024 07:12, Wasim Nazir wrote:
+On 13/03/2024 08:19, Krzysztof Kozlowski wrote:
+> On 13/03/2024 08:12, Wasim Nazir wrote:
 >> Document board bindings for Rb5gen2.
 >> Rb5gen2 is using Rb5 gen2 SOM which is based on QCS8550 SoC.
 >> RB5gen2 is development kit used for IOT solutions.
 >>
 >> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
 >>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 8115088a6076..de6139db8ef6 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -1013,6 +1013,13 @@ properties:
->>            - const: qcom,qcs8550
->>            - const: qcom,sm8550
->>
->> +      - items:
->> +          - enum:
->> +              - qcom,qcs8550-rb5gen2
->> +          - const: qcom,qcs8550-rb5gen2-som
-> Is this a Thundercomm SoM like the other RBx boards? If so, shouldn't it
-> be "thundercomm,c8550-som" (Or "qcom,c8550-som")?
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-If this is the same product, then yes. It's clearly not Qualcomm:
-https://www.thundercomm.com/product/c8550-som/
-
-If not, can you point us to any resources on this?
-
-Eh, let me un-review it.
+Due to ongoing discussion: un-reviewed.
 
 Best regards,
 Krzysztof
