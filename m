@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-14152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B72B087BFD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:24:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C61A187BFDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 16:24:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 423E61F22FEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:24:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3D421C22870
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 15:24:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB6B171B44;
-	Thu, 14 Mar 2024 15:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE2FB71B4F;
+	Thu, 14 Mar 2024 15:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BlYqSTHf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LK7PBwQM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D3571B27
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 15:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D0B71B5E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 15:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710429849; cv=none; b=Do3T5zsmvUFKtDVBJK2U7VgMqEF8QnLlFUQkK94MVPIDnfI6SIJ/CK1VxpAxEb06NYyFNqRhMmvkME5scjG9MFByyPffMJinyo3CoSctxSFq1vYMcb7Rj3ocoM4e+9oRlSJmyUlgANj+s2RoNINoPiSEQ62KWSnOoHcmaz3fZvE=
+	t=1710429853; cv=none; b=eCny3oDH9owu2nldDQfaw9LNzghe+naJKVaD8BlWY2g6EJh29l7Xq2FOwG0SV79jpGDmo+NfBmlEh0phq++DO7zK5XAuwHSFC/YAssfRQXeUOUhhVHywtrODE1eDDoNbRCR++XM5f0DrzZeAnvD54SVmOcC/iJix3ywXIQcHBWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710429849; c=relaxed/simple;
-	bh=+XqMRpYE8HYIeYnArh9TOIJOZHL3dBFs8VCBPD9Q15c=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jHAy1rlh4Otnxj8/pUaMKfQYbsc30QEKrDS6CHV977Og/hLpxPBl9gZNxIkehXpk+ti9sSmUlMGYMR/lrfdjdfgWRHVacQiYMvXbznqC65HyRJFmHUNGSODOFJ0mFghlCQgZKZFUpEzNlvPOw/Kc8zKnhGW5YQEpkI5NzrhiIzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BlYqSTHf; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1710429853; c=relaxed/simple;
+	bh=JRZLwKxhEM0x8HfB67G9+Fzppqg8xFqlyA8aRxI9XHM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=KMKJs0NYfgl9vD5dh509jFg5sucNOdMBBuCRzLEZRyx9vpcXm13TwZST5j5jIdNfLXadviuvv+J2M5jHEsAki54B95PKcxAfA7+2CE4v0geAP7xRNp05mQdKV1wR2wVmie2AeoMqthba8ZDyBFsMiT0HBkJQ48csJbXoWFE1qng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LK7PBwQM; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6e6ee9e3cffso340889b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:24:06 -0700 (PDT)
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6e6ee9e3cffso340948b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 08:24:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710429846; x=1711034646; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uipF2nWjwEvJ8FinmI/99ZEfUz9FMdfPX7qMJmCrSQo=;
-        b=BlYqSTHfD9UyaO7QVLhiSf54KlVc81u084CL0d6bDiHMVx3Qds5aFDQ+qTDpErSu2D
-         XlsgTVI4RKjJVl3UMQktfDuibqduqOrh1HGRbdLv75+58BKu63/lUGl5jZhh+LuGrVLs
-         8kpUs91JFZ+pfZUqE8+qm/rDtiTKciCLiRsD8O+HI+vtJ/KpVxNc2zfqKLDYN/40kpwD
-         3oWLUx15fqU9rXyhUW7NKKBqoX5elZUesr90pwDIwyR/XrH9T9agOWbd4tynlBEo7H3t
-         fTgegKj4w9RFNTSUWX97cUYfkHQhJSFpsxWMNnwlE72cPxLUDAkPfjtXOj2yfVGrKzCV
-         3s3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710429846; x=1711034646;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1710429851; x=1711034651; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uipF2nWjwEvJ8FinmI/99ZEfUz9FMdfPX7qMJmCrSQo=;
-        b=j/Ur4/2j74jr/RX0rDLQZzhdFY7o0DVH2tJyUagtPgb1uxLL5UZsjJbHyF88JwWdwv
-         qfD3VU3sR0yCyOWdVGRe334fbxpjFDZSFsKfTPGCrlMwVXEIwoHT7PwdzQhtHYLMnhZf
-         7vV+H29RZZQp11GbjRPK3tHDoL7c/FAoXbEOt6MpuwJnFH5fCUfvvOrpiwqq2tMnW3Zc
-         2vBPhSTDUleelONnlE/wvo6xDbCO+++FIQ/dNpArbVzsw/wcu9btjGbpzLdEtC869wvM
-         ytVsnnaE7JP1g+LWSsbKP/5RPfvXEOX89l/atVprDeNg1uaieWKwOvBwJjlJWBc7x5gW
-         493g==
-X-Forwarded-Encrypted: i=1; AJvYcCV5kijySKv1E6xOmstbS52mWwdEZP/AgsLbvAA++Q2gUtHdnqjobsSDL7RrWuvF58D5wZSfjM6VUFXAQVfTYZS5ab0d00UnnW/hP9lZmQ==
-X-Gm-Message-State: AOJu0YwO/EkNVQPQcnhtSnFQg+opZWHbWOiq7bpJX7WaFJgLV8DweRtX
-	YiLCYexJ5+oOM4xWzQ3m+fRWG1cjSOAYWKXBdEMLKEQU4ABs+g763GLhYBLW0Q==
-X-Google-Smtp-Source: AGHT+IFklPwK5lYnqo3cgyMR3pbXaUxnP8BhUJMkvG0Mpsc5bJGrHi6YT+MWzcxtRkOPSBXX0DpvhA==
-X-Received: by 2002:a05:6a21:99a2:b0:1a1:5a12:9119 with SMTP id ve34-20020a056a2199a200b001a15a129119mr8387816pzb.3.1710429846330;
-        Thu, 14 Mar 2024 08:24:06 -0700 (PDT)
+        bh=/IrOa9F9FCptyyElLcaGG4pDepSH3LTIYhrJfnXA2HI=;
+        b=LK7PBwQMYWbLkvRxwvWy/ZjWPoXZwFihG1FkCi0AIudAoVAB1eS0H7bH/s3Oy6y6jk
+         AF0rYbkid5IvNxMpChhQrDoMdEmVgp1vo/3+y8qmMI/rAnubePompPYvVzReDulzX1uo
+         znWPI8C7hQ7CbQ94rPH/OCmc45KtaRYsRcckWj1zLLNAGwTiyhlLs+PNUWLdtLOAZPZc
+         K7ufHM2XenZaIthORJ3vX0Ob+vOVNVNLsI8SJKRhetdnZ5+O/rdViopv6cbqRCxlyHK5
+         s+/zYojZ32by9TLWxXMr9KYeZrHjwcYNalAIn9PuYIuBYNmGAPeXBvJuXZ+hZzkr0WGT
+         lF1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710429851; x=1711034651;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/IrOa9F9FCptyyElLcaGG4pDepSH3LTIYhrJfnXA2HI=;
+        b=TpY62iYXsobrH7nbpYtex3RD+WihUw0z1ZjruKkvDcw5Ort2AECiiBS9sxJmRoD6Zb
+         pXxwNulGtdvg1ezFeExoxXlMjiAgXFYmpOLyEyvRXx3SA7Uf7ZoSbbx+VvjBitrzKcyN
+         zVZap7ZT7JMOQXeeaW/uDwxfxFhtHR8VgR3E1wnnl57XhYJpOJCB28mvDNtGj4mjdMZ6
+         KMtnenAjPm4Qc/dqRHjX+gsnqpbbYQ2E+zh99DCzAphO4agJ/JkqFOrA4xXE95OdN7Hb
+         nf/x8hsWzuMhAIyqfzG6NTlDstiALAiE4xa8B81BqBcTYjrtcRB4YOnyA+nq9M8+naXO
+         NKWA==
+X-Forwarded-Encrypted: i=1; AJvYcCVDHu6yCD5d009OTrXPfLBusBEJ7TH/udYwKkhV5AK5oGC5luKpWlbDk0nw6/k4LhdPgCu8ThYPPeHRWY6XhiJ8yETN00vpGCQBok4Izg==
+X-Gm-Message-State: AOJu0Yzwm6xKCwuzR6WBmOhqETiFOb7izfSJ+tDS4njt4YIPNdyCin4m
+	VPnOVkACoqMXvev4uAI/yx4ETTOQBtpcUPGC8urktHK5GW6U/1SE7jubo4/3yw==
+X-Google-Smtp-Source: AGHT+IG7jwbZIclHbE1GnAK6Rj5Bq8CoICWzMlScgrOOGIyJU6eaD/H0E/Up5FStL4M0GtXAcOvRKg==
+X-Received: by 2002:a05:6a20:3941:b0:1a1:e41:3edb with SMTP id r1-20020a056a20394100b001a10e413edbmr3110511pzg.11.1710429850762;
+        Thu, 14 Mar 2024 08:24:10 -0700 (PDT)
 Received: from [127.0.1.1] ([117.207.30.211])
-        by smtp.gmail.com with ESMTPSA id m4-20020a63ed44000000b005e438ea2a5asm824021pgk.53.2024.03.14.08.24.01
+        by smtp.gmail.com with ESMTPSA id m4-20020a63ed44000000b005e438ea2a5asm824021pgk.53.2024.03.14.08.24.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Mar 2024 08:24:05 -0700 (PDT)
+        Thu, 14 Mar 2024 08:24:10 -0700 (PDT)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 00/11] PCI: endpoint: Make host reboot handling more robust
-Date: Thu, 14 Mar 2024 20:53:39 +0530
-Message-Id: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+Date: Thu, 14 Mar 2024 20:53:40 +0530
+Subject: [PATCH 01/11] PCI: qcom-ep: Disable resources unconditionally
+ during PERST# assert
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHsW82UC/x3MQQqAIBBA0avIrBtQs6KuEi2sphqCkhEqCO+et
- HyL/1+IJEwROvWC0MWRzyPDFAqmzR8rIc/ZYLV1ujQOw8RIYUGh+5QdfU11NRpd+qaFHAWhhZ9
- /2A8pfYuAfZ5gAAAA
+Message-Id: <20240314-pci-epf-rework-v1-1-6134e6c1d491@linaro.org>
+References: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
+In-Reply-To: <20240314-pci-epf-rework-v1-0-6134e6c1d491@linaro.org>
 To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
  =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
  Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
@@ -90,74 +92,54 @@ To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
  linux-tegra@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Niklas Cassel <cassel@kernel.org>, Vidya Sagar <vidyas@nvidia.com>
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2289;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1341;
  i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=+XqMRpYE8HYIeYnArh9TOIJOZHL3dBFs8VCBPD9Q15c=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl8xaJsDnRXWXOn639N6QSYpQWMRYVyNmaaXhJa
- fn0bkPxFe2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZfMWiQAKCRBVnxHm/pHO
- 9aycB/9b/o4Li6j8PqMVlSnWfc7wdfhcraMkEMFGScwUc/THnarLDa5UEMcMICzCyb9OLOWRndt
- oCBxFCx4BL1ZKDe4PUbQUdo47vJm12TLIoq5bnXsy8rl7eUSaxklwzQaG1HxCbenXX6Ob93oo3M
- nOaWZ/FWBuLztkGRERM5PsXEcw0ViOcPwn3IlQ/1qBvKdBCQ+bJEtrJFih8ES1wXtxMCeeeBMem
- 0kVbsWosc0pA5xP6Q8EKQfQRX3VLIpRuoL1MmkEA+yQTL03Au8rJS8JowKwbh/MjtDwv+XSiSUu
- Xx+afP9RJhNfpvDPNHIJ/UKyy2Hhztd6xfR07xVMgfhQgjzZ
+ bh=JRZLwKxhEM0x8HfB67G9+Fzppqg8xFqlyA8aRxI9XHM=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBl8xaOLrQOPVb1HVr/175Bwj4SLK9E64perYmGL
+ IBSuWUMVHGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZfMWjgAKCRBVnxHm/pHO
+ 9ROLCACSxVDvqf0sTonqAB4efCgXpbE8NA//bIFdXLvO2DxsLrdraqYdwvMEiH+CAtxrSHwW3cE
+ FCGe61CdFCnn3hhtoh05WnTStcOoxu7X2p8Lah7zUn7BBg7dScjvASClkPt0iqwsQjNhi0LmwHW
+ xSofd+6XrLFHrATDGnodX1uVN2PcZZSXJdHw5oINOdggFxeHD1m9exuzvl6s5gY5SJ3lgg4q8Nw
+ SZ86dARIy67pxK4Tkui+6vLp8YpJuby4gtksND4QVksT3VGTatVl30dDQE+e86Ntl1YgSKaJost
+ K6XAXGDFLhZf0jQo8+mwwqh3P5s4NtOxeKumlgu2yg6kSQ4B
 X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-Hello,
+All EP specific resources are enabled during PERST# deassert. As a counter
+operation, all resources should be disabled during PERST# assert. There is
+no point in skipping that if the link was not enabled.
 
-This is the follow up series of [1], to improve the handling of host reboot in
-the endpoint subsystem. This involves refining the PERST# and Link Down event
-handling in both the controller and function drivers.
+This will also result in enablement of the resources twice if PERST# got
+deasserted again. So remove the check from qcom_pcie_perst_assert() and
+disable all the resources unconditionally.
 
-Testing
-=======
-
-This series is tested on Qcom SM8450 based development board with both MHI_EPF
-and EPF_TEST function drivers.
-
-Dependency
-==========
-
-This series depends on [1].
-
-- Mani
-
-[1] https://lore.kernel.org/linux-pci/20240314-pci-dbi-rework-v10-0-14a45c5a938e@linaro.org/
-
+Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
-Manivannan Sadhasivam (11):
-      PCI: qcom-ep: Disable resources unconditionally during PERST# assert
-      PCI: endpoint: Decouple EPC and PCIe bus specific events
-      PCI: endpoint: Rename core_init() callback in 'struct pci_epc_event_ops' to init()
-      PCI: epf-test: Refactor pci_epf_test_unbind() function
-      PCI: epf-{mhi/test}: Move DMA initialization to EPC init callback
-      PCI: endpoint: Introduce EPC 'deinit' event and notify the EPF drivers
-      PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
-      PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
-      PCI: epf-test: Handle Link Down event
-      PCI: qcom-ep: Rework {start/stop}_link() callbacks implementation
-      PCI: tegra194: Rework {start/stop}_link() callbacks implementation
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
- drivers/pci/controller/dwc/pcie-designware-ep.c |  93 +++++++++++++-------
- drivers/pci/controller/dwc/pcie-designware.h    |   5 ++
- drivers/pci/controller/dwc/pcie-qcom-ep.c       |  30 +++----
- drivers/pci/controller/dwc/pcie-tegra194.c      |  25 +++---
- drivers/pci/endpoint/functions/pci-epf-mhi.c    |  47 ++++++++---
- drivers/pci/endpoint/functions/pci-epf-test.c   | 108 +++++++++++++++++-------
- drivers/pci/endpoint/pci-epc-core.c             |  53 +++++++++---
- include/linux/pci-epc.h                         |   1 +
- include/linux/pci-epf.h                         |  27 ++++--
- 9 files changed, 265 insertions(+), 124 deletions(-)
----
-base-commit: d65c75fc384ada26392a975c351689ec4e069c50
-change-id: 20240314-pci-epf-rework-a6e65b103a79
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 2fb8c15e7a91..50b1635e3cbb 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -500,12 +500,6 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+ {
+ 	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+-	struct device *dev = pci->dev;
+-
+-	if (pcie_ep->link_status == QCOM_PCIE_EP_LINK_DISABLED) {
+-		dev_dbg(dev, "Link is already disabled\n");
+-		return;
+-	}
+ 
+ 	dw_pcie_ep_cleanup(&pci->ep);
+ 	qcom_pcie_disable_resources(pcie_ep);
 
-Best regards,
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+2.25.1
 
 
