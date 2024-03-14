@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-14080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAE9787B818
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 07:56:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECAA387B82E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 08:01:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F5C41C22008
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 06:56:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CC7F1F22DD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 07:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 899345677;
-	Thu, 14 Mar 2024 06:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 974AE5CBD;
+	Thu, 14 Mar 2024 07:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qBTJMn8W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YI3qPqvr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFA15398
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 06:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE055398
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 07:01:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710399367; cv=none; b=NmyXZ2pclkAZKBM2W5CwwPs1xmYsm7g8aljdKJ6Eo8gvvgqldR+3jCvX0IMKAlTUdV2RK6KAn2gcFq8GyvTEI0RrH4C8dtoNx4l+enqUzGXyGirf9MXftCriVOj+dY9SkQGHRVhv7PLJ7PggyBaXKhdZAqcnxhq1TCJxSpQ0fPQ=
+	t=1710399691; cv=none; b=tFfteN3hFtwhq9MFOKmiooWcXyH3iFQpJoQlbk1GY19Nk/khWT0munNm5PsVztEEqmqbdAWdk+ojNAkKnbABA1RNiWfzFn6e0PXtbGlOCDljTPlGPPPiX+PPVgt/MSSQQdLkbEYdqegT0GHQ7ghB0B+XPMtKdjE0cm8ghrKBrK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710399367; c=relaxed/simple;
-	bh=ScvJR9e+IUmaIppQzVF9209j+jrkMtKvY9dGw05D6ik=;
+	s=arc-20240116; t=1710399691; c=relaxed/simple;
+	bh=7NkQyoOA1mHyQIXA52IUTmI0Wd4PYuuEIHltkCMQUOI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p+4C2pzX/a4KDGPpWqXKfh+xahCBy8MHQg3lUfMR4TANqzZXCMT+0wMWJhDo6SV1aUCubQz5MVkijEW8pxC6jK4TtD8Tb5YoQ9sGZ0VWz4Jyf4/RLjLncF/VfBNA7jZcH/1WkpmJid7slDXFwBgTlvVHE+HW3/c+9yUuW2pRuX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qBTJMn8W; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=CfU+Wa0uiBOKElsEVaaUxUPrtd9kzdHYbLiE+1IpK+ua9CrxUR+ntr3nWVSirj6OEYQCJNMXKXVygFPk9Zqps88P1BHGEjrS84FE+d/YAkbZqI/Jjj6kejOxaDvy3W5UA6hs7emrND6cL6iva+Khbq1rGiRlQGmMsTgm+kTDa7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YI3qPqvr; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-413eede49dbso3604745e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Mar 2024 23:56:04 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33e672e10cfso295103f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 00:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710399363; x=1711004163; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ODMItIFfIliVR/2fgKV0McdXY87HA4sQWGAc6B5tQA=;
-        b=qBTJMn8W1oAc7rGsOVgadBEi28uvoivVdGIjHH0RvVpnywEMUEzi7kHDWwmsYBIJqA
-         W6uZ1RgGaChs7sGRDLXvWcIfpW8+7t/lMHCKgKE0egqMtTVinxMU7IVQqP/fVsacwrZd
-         XMrSH8YuxCK/QsMmy4o3COKgwUb3OrG7oSNOvJk5spbi+1956//QyrdbP/VJJS+L/zIT
-         44hCa6ARHSEbKCGmfz9Gp6ZkB+Lpwzjhfl2WlEVPMajwkXcsEdU8vFQA0DJ53CUXAs/T
-         anKK5cWHY9Jb+sD5pK/OBldYpmz0BGbrq05eSVQflls5uacrDCBxVPkvbBQYu8ikHJm+
-         Au5A==
+        d=linaro.org; s=google; t=1710399688; x=1711004488; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6lbY8CxO60JeZjTgbdzeSJeBKzxbN0g8ObCIYlzq2v4=;
+        b=YI3qPqvryHjB9ZAa6n3qiAwlKAYAbaPoOAa7W9eNkKLM6iclN+7mZwUnuggy4RxTKC
+         jAewnAtcs/M0QAxwUXCFQt4KoGO6k4R9xB4qbvDzwRV1x7ICH+KVaeJ5Ig0LTnI9Z5qC
+         F+M803AlZ4XRPXHZwaRsJS9ok3XA0sNHdvHKNXaUzueRcL5iWdG4C5tqPVd56sRDaCWf
+         bzeif7NbZFEGfZaA2d1NZL5pE7/bJO32WW0oR/vQLg08ga03HgE/tTPyAqslHfUQR6ef
+         pmYhWZXx+acnc3yHtWMRKkQ4t+LMNNdGYFpxiMmA0YKfXAhM3i7INLz86E23s+t0JkDZ
+         Y0SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710399363; x=1711004163;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/ODMItIFfIliVR/2fgKV0McdXY87HA4sQWGAc6B5tQA=;
-        b=dM3Etfr56Fix7yMe9WtG52bjtF0gdpTj5URKI8KJHn6hpFIcxu8kSEHAubNabGYmKm
-         0A3335lH5H8JVH08HlwdaYE0cNkPObpDQQmjzp3cVz687Fzdz66GkSO9EVF4DYChUjWE
-         R3ttEPE1WZUPN6hNkVLtLRUyhWi7noUSBSmkYNXElHoHDnIg3layLSKOJazNwSzQN5ER
-         D3molyuoatnrPUhlp7BUwQa+2XXqe7ElmCcY3czOGRtl2aj8K8/gc3E3JE97OsqCMdh8
-         F7O86d2y4S8/8iSiRXH6YUcgXrYTTpJcEomXAYyf5vjcasFBbdagjeBfKeIse3RhSIES
-         lIYg==
-X-Forwarded-Encrypted: i=1; AJvYcCW82icDDVUXG+74vBogOuQzZyMNWgP1dRYCqmWPTwLLahRm1X13k03zsDk9LYbp/RybmsBKm6JlQB02ST0Mlguf4OQPNfmL9OhM0urV3w==
-X-Gm-Message-State: AOJu0Yw9t8kovhxsuosjre36lvlEaV6wKVGOn3rFOVJBjwc/FG09pHJK
-	B7Nuh4Q9UGwkdlYD1yWK7fcAmxL+WarywyP+kAaz1qmxvx7HrBTUyzhIu0BXtXA=
-X-Google-Smtp-Source: AGHT+IGQ3RD5Vlr1YHs+yA1FvdR1nvHGEm9pqQxSi1fqNhifG/CVxFFJ2koTGPduOX1IymgC7pL+CA==
-X-Received: by 2002:a05:600c:1912:b0:413:e4cf:fdcc with SMTP id j18-20020a05600c191200b00413e4cffdccmr682519wmq.15.1710399362984;
-        Wed, 13 Mar 2024 23:56:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710399688; x=1711004488;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6lbY8CxO60JeZjTgbdzeSJeBKzxbN0g8ObCIYlzq2v4=;
+        b=TCimMcvX4Kcz55METqnb5qcePQi+zkZYk0kniyKIt2izZ9EGXkFJluYdrBqjWeXUNt
+         mcl3hnFdxcXFWuqYLyJMuV/Lpuj1hmdokP5MieX/3ZXH6xUIFCGv5xg2+tJUgunuRiUG
+         Sgyb9qeO4ubjvm5Lm7sT7K6vybmFJb6dVUTvNLC9ppcTqLmpSIRXh30Wnp/FnZLtlOBg
+         Kb8rZcYLZmf8uVDvStj5HL40X1VaXwPRTUo2LpovADQxyzL83Houu6bBwqvQm4mA6Ldm
+         NqAvpiE8097crFUyi/2+DploLKGrJNagj8OqolJqcQeRSyXcN8i7vP7/93/j6Lj3QKsN
+         JT1Q==
+X-Gm-Message-State: AOJu0Yyro8xV/BsxD+4kVq8j8aLOWRBW+IbmhjTP7541Z5Ciux4Yz4fA
+	skCXP8vveGFzozTzNyjZIB8JzVSH7lfXI/IcDzuIlQlEdL9+W0qm/ffhKt4efJs=
+X-Google-Smtp-Source: AGHT+IERaoaq1F3MVIhdgIzUtYz0Iuz2Pu/YzlkKgvcGZZUiGSmADiZ0Y/YE0roJ6qi4Vox3KEy3tw==
+X-Received: by 2002:adf:fc8e:0:b0:33e:c974:1296 with SMTP id g14-20020adffc8e000000b0033ec9741296mr161792wrr.25.1710399688114;
+        Thu, 14 Mar 2024 00:01:28 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.97])
-        by smtp.gmail.com with ESMTPSA id a8-20020a05600c348800b00413f52889desm328813wmq.3.2024.03.13.23.56.00
+        by smtp.gmail.com with ESMTPSA id v29-20020adfa1dd000000b0033ec3c2e410sm15902wrv.23.2024.03.14.00.01.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Mar 2024 23:56:02 -0700 (PDT)
-Message-ID: <c7ac2b10-eee3-4269-85e4-a68d24c2337a@linaro.org>
-Date: Thu, 14 Mar 2024 07:55:59 +0100
+        Thu, 14 Mar 2024 00:01:27 -0700 (PDT)
+Message-ID: <3163c850-a0e0-4170-a5ee-cfc412b875b4@linaro.org>
+Date: Thu, 14 Mar 2024 08:01:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +75,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Add three missing
- fastrpc-compute-cb nodes
-To: Ling Xu <quic_lxu5@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: quic_ekangupt@quicinc.com, kernel@quicinc.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240314063334.31942-1-quic_lxu5@quicinc.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm: qcom: Document rb5gen2 board
 Content-Language: en-US
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+ Wasim Nazir <quic_wasimn@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240313071238.3290-1-quic_wasimn@quicinc.com>
+ <20240313071238.3290-2-quic_wasimn@quicinc.com>
+ <fc00af46-1521-4bb8-9b7c-237cbd26a17c@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -132,39 +133,41 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240314063334.31942-1-quic_lxu5@quicinc.com>
+In-Reply-To: <fc00af46-1521-4bb8-9b7c-237cbd26a17c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/03/2024 07:33, Ling Xu wrote:
-> Add three missing cDSP fastrpc compute-cb nodes for the SM8650 SoC.
+On 14/03/2024 05:15, Caleb Connolly wrote:
 > 
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 29 ++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index ba72d8f38420..c238ad1be0d4 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -5084,6 +5084,35 @@
->  							 <&apps_smmu 0x19c8 0x0>;
->  						dma-coherent;
->  					};
-> +
-> +					/* note: secure cb9 in downstream */
-> +
-> +					compute-cb@10 {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <12>;
-> +						iommus = <&apps_smmu 0x196C 0x0000>,
-> +							 <&apps_smmu 0x0C0C 0x0020>,
-> +							 <&apps_smmu 0x19CC 0x0000>;
+> On 13/03/2024 07:12, Wasim Nazir wrote:
+>> Document board bindings for Rb5gen2.
+>> Rb5gen2 is using Rb5 gen2 SOM which is based on QCS8550 SoC.
+>> RB5gen2 is development kit used for IOT solutions.
+>>
+>> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index 8115088a6076..de6139db8ef6 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -1013,6 +1013,13 @@ properties:
+>>            - const: qcom,qcs8550
+>>            - const: qcom,sm8550
+>>
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,qcs8550-rb5gen2
+>> +          - const: qcom,qcs8550-rb5gen2-som
+> Is this a Thundercomm SoM like the other RBx boards? If so, shouldn't it
+> be "thundercomm,c8550-som" (Or "qcom,c8550-som")?
 
-Lowercase hex. Please look at the code above, don't copy downstream
-code. This applies to all your work: don't send us downstream code, but
-clean it up from all of its problems.
+If this is the same product, then yes. It's clearly not Qualcomm:
+https://www.thundercomm.com/product/c8550-som/
+
+If not, can you point us to any resources on this?
+
+Eh, let me un-review it.
 
 Best regards,
 Krzysztof
