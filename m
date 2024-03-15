@@ -1,306 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-14244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F19087CD73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 13:53:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8C1187CE0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 14:25:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17A162831A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:53:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 811E0281B74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 13:24:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B15A24A1F;
-	Fri, 15 Mar 2024 12:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1640C286A6;
+	Fri, 15 Mar 2024 13:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kbvOSEIN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PG0ZuEFQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEFB28DCF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 12:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484082577C;
+	Fri, 15 Mar 2024 13:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710507215; cv=none; b=ryNKHXpnQDHxuLgwmwvTz/JmmJsR88bGcWSdj22icCzuDE92vWrUsOua0VFciYPEg0bgIBphJ6cTMEEI4ZmpRAP0DKVASC+If3CpvuoNAedWNolDtUkRpOPk5ydEUxqk/INQd9VzurUa6wM7kLyS67B4FMYp+Iz7qWDJSJv0/50=
+	t=1710509096; cv=none; b=AXtqwJMX9RcVHS1xC5yFsdpNi5SNK28zvWaUovbcjd6hs6+lVRoyKFOQxqVkRpQESGV0Ffr1rPUXL/Licv6/LghCgOYe6vy7UPbeI5IHHkePI83Uvbt6NKn+tbSaeYXC8YaO2R0ymqnEWT1R0c7bHXsfcgGX88YxXmRWiTW8ta0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710507215; c=relaxed/simple;
-	bh=878fUXrIzy8AoCz4HpvqUjQurnd3X/b24V2aWR0xlSo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iuGiaU0yzvOJbg5vpYF7CvFVItvU2qgJPaGE3N2Qh76zEKQ15NLj024K62UWkhNOiGDHiTCtlyg4FCrxTai30q4DmWRGfqbcVK2wP2tRFLqJ5E/hygxEmAY4D/nMQzqQFuGRuQSut/fq732Li96gHEv8hahqcWPBb2Gjib2pPrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kbvOSEIN; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-41400332525so5515565e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 05:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710507211; x=1711112011; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=88QrDXyhZonJiUtk4+p2VGWo+c1RmzJaSt8ckvMK1H0=;
-        b=kbvOSEINLeVeMRlRIZ9+6tvhbw2ZOcoBVY94nbol/C263/zUHgvNBSnK3tXwre4S0U
-         3zAoSjDxyyt6HoHdfLmX3Vf8g9Xq0UDwEx1JnW3gYPtJkmu/J+HvaVp5c8eLufqr9EcJ
-         cU3xrtDdqr1t0m3lsdSnwG5Ghmmmpo1sBNuUCuhXvPob0/D2qnr2dklGjr4iIKAgEQHg
-         SP8Z2YDKtjzyFMklvD2pPz19A62noQnTgdFGyc/rW+XDnOncVt3aNwH21Hx3HjzkofMt
-         HNlkucZRv9M7wVJf/tHRXkd68GA0RmJ689TBsCsn+s4weKoaiP5UjkNQSNwuEZjM2M01
-         0kWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710507211; x=1711112011;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=88QrDXyhZonJiUtk4+p2VGWo+c1RmzJaSt8ckvMK1H0=;
-        b=FIihWPwsDI3YMOQ4vK8Tyg8KX/ZjOk+MGNIUHoT6Uuaou0cNCa11BIPN+VC9HMC+21
-         zety6TpKXLGRS+CSzyOtFhKvigIZpW0nftvAg5/NIIP+FKJ8koHQLnATkqZYWvYo7PL4
-         PbquNqNYqx4+FHGAAqJ+NdRFhjz/5EbmNXKf3rk9p7SYn2C9RN7MkJVgoq8wXlhSsnUR
-         GEnOWqi4WwW58eO4vGLxoo/HTYxTNa6CSJbhUZU34Z/QGbtNjmODm7Wnx+n9Ju0IFQqc
-         zklE35KT5LDisumskVrkqwDSEWcqx91VDueN0ANeSWgWi2jTlVRJncmkBDWGTRvIswZJ
-         ZDmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVnJQZRbUNkD4pPw2mcdNaGvd8WmGHzgrdy8K0eYFhL1E5ytzCPBxXk7zMSwwh+Jh0XRBzt1IynoQKEfYH00vbB3nuSZ4hQstY7ehGXBg==
-X-Gm-Message-State: AOJu0YxaJLHUCQmH/WnYGR9NP0qLQKODORHaw3AN6IGpmqs+wSj4Ofh8
-	izMYkeuTTfrMASFV/NjXrW7dT1cWulWA5tqBFfSU7HY53XjNzEh8YbRefZ0fqlw=
-X-Google-Smtp-Source: AGHT+IEVNF+5IITjsP2/nV8skRrbhEO9hjiUKGEqvE8F7IaXIWPdwRERdAR2whAXhea0tztIxn/IWQ==
-X-Received: by 2002:adf:e892:0:b0:33d:15c1:cfcb with SMTP id d18-20020adfe892000000b0033d15c1cfcbmr2611482wrm.40.1710507211479;
-        Fri, 15 Mar 2024 05:53:31 -0700 (PDT)
-Received: from [192.168.1.78] (host-92-17-96-232.as13285.net. [92.17.96.232])
-        by smtp.gmail.com with ESMTPSA id f22-20020a5d58f6000000b0033e7a204dc7sm3122840wrd.32.2024.03.15.05.53.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Mar 2024 05:53:31 -0700 (PDT)
-Message-ID: <44675792-687d-4fba-bb87-1785788528e6@linaro.org>
-Date: Fri, 15 Mar 2024 12:53:29 +0000
+	s=arc-20240116; t=1710509096; c=relaxed/simple;
+	bh=3OvIJgX2Z3ssQlYadNpDLe9VAvQdGUrGfsyDarOqmng=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L/4P/swi+NLQoci1bC1H8Msy7wLbvce/EokvTARhdAkv3iMlj5vOsd2Au7Cs9GyOnrAN0RONXlxNk6v2m6RqJkx1xsfq+dPjLaBUlim+AqDcE9vpexKtzfMe131wIP326cK2bBuuwpeWuI1BwmPh9MovVYJtRHzeryGz3hsDZG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PG0ZuEFQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42FCjHeJ017733;
+	Fri, 15 Mar 2024 13:24:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=tT8B/kd
+	UHkC46V7YhLl5lhQXDDvT9Jmv/Vgr4h24VN0=; b=PG0ZuEFQSlRUNOsMygaGEbG
+	31ibMrDsFBSz16LXP/ql2wFcS2upE6ZC+po89zAef6qXuOOXbEkXoDHNPIJxCpsA
+	/W2d/NOLxdbtw0NR1OJb6tg4xw0Ntr3SvpywW1ysf/Xk4fGF1W5U0/7U42eItQuG
+	xCT/OVwN4Pp/CTwwPg1ashjw+fnYoDnAS/Xxd2R/5igQzTGOV+KPAd8Y0jUzbFsQ
+	qzG/uqI8Axyzd3K0UyYP2dktkW7YOEIopEHie7w4XScyaIOyhGmyod7L9lGB+R99
+	n2jbVExPvJyhMYlk2jzz3b0BbOicftAdID7pBMRqSdKfPlX7Slvo/Ja0Vqdaheg=
+	=
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wv9yq987p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 13:24:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42FDOdwT022423
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 13:24:39 GMT
+Received: from hu-rjendra-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 15 Mar 2024 06:24:36 -0700
+From: Rajendra Nayak <quic_rjendra@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <abel.vesa@linaro.org>, <quic_sibis@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH] arm64: dts: qcom: Fix the compatible for cluster idle states
+Date: Fri, 15 Mar 2024 18:54:23 +0530
+Message-ID: <20240315132423.2422484-1-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-Content-Language: en-US
-To: Sumit Garg <sumit.garg@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, andersson@kernel.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- neil.armstrong@linaro.org, laetitia.mariottini@se.com,
- pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com,
- benjamin.missey@non.se.com, daniel.thompson@linaro.org,
- linux-kernel@vger.kernel.org, Jagdish Gediya <jagdish.gediya@linaro.org>
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org>
- <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
- <CAFA6WYNMjCaa0FKjNv6a8VFkco3=GBfgWNDuckGZdiZ9dGmHgg@mail.gmail.com>
- <d82ab1f8-e677-485f-9a6b-4115acfd7239@linaro.org>
- <CAFA6WYNSumyScax=GkN42GJOG56T3odF5Ed9A2i1nk_exCyGtA@mail.gmail.com>
- <ZfLUu6_Vq7MvG2G3@gerhold.net>
- <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
- <ZfL6hi0kfp9MXQ0H@gerhold.net>
- <CAFA6WYMa_0OMkjUdvhYtWZ9SvQx5bB8+YrBZN08BaDXXOtPPNQ@mail.gmail.com>
- <fb20d921-dabd-41dc-9f91-bde90e3b87be@linaro.org>
- <9b614c61-276d-45bf-8320-44b7358a3e19@linaro.org>
- <CAFA6WYMHA2M1LLjaog17f83Cu_wH4MAvxhuwAQH0c7j4XTM3XA@mail.gmail.com>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <CAFA6WYMHA2M1LLjaog17f83Cu_wH4MAvxhuwAQH0c7j4XTM3XA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SehvGgjt0_tc9Hh5mjLgjGHbwB6eM-iw
+X-Proofpoint-GUID: SehvGgjt0_tc9Hh5mjLgjGHbwB6eM-iw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=695 clxscore=1011 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403150108
 
+The compatible's for the cluster/domain idle states of x1e80100
+are wrong, fix it.
 
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 15/03/2024 09:31, Sumit Garg wrote:
-> On Thu, 14 Mar 2024 at 21:07, Caleb Connolly <caleb.connolly@linaro.org> wrote:
->>
->>
->>
->> On 14/03/2024 15:20, Konrad Dybcio wrote:
->>>
->>>
->>> On 3/14/24 14:50, Sumit Garg wrote:
->>>> On Thu, 14 Mar 2024 at 18:54, Stephan Gerhold <stephan@gerhold.net>
->>>> wrote:
->>>>>
->>>>> On Thu, Mar 14, 2024 at 05:26:27PM +0530, Sumit Garg wrote:
->>>>>> On Thu, 14 Mar 2024 at 16:13, Stephan Gerhold <stephan@gerhold.net>
->>>>>> wrote:
->>>>>>> On Thu, Mar 14, 2024 at 03:02:31PM +0530, Sumit Garg wrote:
->>>>>>>> On Thu, 14 Mar 2024 at 14:48, Konrad Dybcio
->>>>>>>> <konrad.dybcio@linaro.org> wrote:
->>>>>>>>> On 3/14/24 10:04, Sumit Garg wrote:
->>>>>>>>>> On Wed, 13 Mar 2024 at 18:34, Konrad Dybcio
->>>>>>>>>> <konrad.dybcio@linaro.org> wrote:
->>>>>>>>>>> On 3/13/24 13:30, Sumit Garg wrote:
->>>>>>>>>>>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is
->>>>>>>>>>>> an IIoT Edge
->>>>>>>>>>>> Box Core board based on the Qualcomm APQ8016E SoC.
->>>>>>>>>>>>
->>>>>>>>>>>> Support for Schneider Electric HMIBSC. Features:
->>>>>>>>>>>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno
->>>>>>>>>>>> 306)
->>>>>>>>>>>> - 1GiB RAM
->>>>>>>>>>>> - 8GiB eMMC, SD slot
->>>>>>>>>>>> - WiFi and Bluetooth
->>>>>>>>>>>> - 2x Host, 1x Device USB port
->>>>>>>>>>>> - HDMI
->>>>>>>>>>>> - Discrete TPM2 chip over SPI
->>>>>>>>>>>> - USB ethernet adaptors (soldered)
->>>>>>>>>>>>
->>>>>>>>>>>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
->>>>>>>>>>>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
->>>>>>>>>>>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
->>>>>>>>>>>> ---
->>>>>>>>>>>
->>>>>>>>>>> [...]
->>>>>>>>>>>
->>>>>>>>>>>> +     memory@80000000 {
->>>>>>>>>>>> +             reg = <0 0x80000000 0 0x40000000>;
->>>>>>>>>>>> +     };
->>>>>>>>>>>
->>>>>>>>>>> I'm not sure the entirety of DRAM is accessible..
->>>>>>>>>>>
->>>>>>>>>>> This override should be unnecessary, as bootloaders generally
->>>>>>>>>>> update
->>>>>>>>>>> the size field anyway.
->>>>>>>>>>
->>>>>>>>>> On this board, U-Boot is used as the first stage bootloader
->>>>>>>>>> (replacing
->>>>>>>>>> Little Kernel (LK), thanks to Stephan's work). And U-Boot consumes
->>>>>>>>>> memory range from DT as Linux does but doesn't require any
->>>>>>>>>> memory to
->>>>>>>>>> be reserved for U-Boot itself. So apart from reserved memory nodes
->>>>>>>>>> explicitly described in DT all the other DRAM regions are
->>>>>>>>>> accessible.
->>>>>>>>>
->>>>>>>>> Still, u-boot has code to fetch the size dynamically, no?
->>>>>>>>>
->>>>>>>>
->>>>>>>> No U-Boot being the first stage bootloader fetches size from DT which
->>>>>>>> is bundled into U-Boot binary.
->>>>>>>>
->>>>>>>
->>>>>>> Back when I added support for using U-Boot as first stage
->>>>>>> bootloader on
->>>>>>> DB410c the way it worked is that U-Boot used a fixed amount of DRAM
->>>>>>> (originally 968 MiB, later 1 GiB since I fixed this in commit
->>>>>>> 1d667227ea51 ("board: dragonboard410c: Fix PHYS_SDRAM_1_SIZE") [1]).
->>>>>>> When booting Linux, the Linux DT was dynamically patched with the
->>>>>>> right
->>>>>>> amount of DRAM (obtained from SMEM). So if you had e.g. a Geniatech
->>>>>>> DB4
->>>>>>> board with 2 GiB DRAM, U-Boot was only using 1 GiB of DRAM, but Linux
->>>>>>> later got the full 2 GiB patched into its DTB.
->>>>>>>
->>>>>>> I didn't have much time for testing U-Boot myself lately but a quick
->>>>>>> look at the recent changes suggest that Caleb accidentally removed
->>>>>>> that
->>>>>>> functionality in the recent cleanup. Specifically, the SMEM-based DRAM
->>>>>>> size detection was removed in commit 14868845db54 ("board:
->>>>>>> dragonboard410c: import board code from mach-snapdragon" [2]), the
->>>>>>> msm_fixup_memory() function does not seem to exist anymore now. :')
->>>>>>
->>>>>> Ah now I see the reasoning for that particular piece of code. Is SMEM
->>>>>> based approach the standardized way used by early stage boot-loaders
->>>>>> on other Qcom SoCs too?
->>>>>>
->>>>>
->>>>> It is definitely used on all the SoCs that were deployed with LK. I am
->>>>> not entirely sure about the newer ABL/UEFI-based ones. A quick look at
->>>>> the ABL source code suggests it is abstracted through an EFI protocol
->>>>> there (so we cannot see where the information comes from with just the
->>>>> open-source code). However, in my experience SMEM data structures are
->>>>> usually kept quite stable (or properly versioned), so it is quite likely
->>>>> that we could use this approach for all Qualcomm SoCs.
->>>>>
->>>>
->>>> If the SoCs which support this standardized way to dynamic discover
->>>> DRAM size via SMEM then why do we need to rely on DT at all for those
->>>> SoCs? Can't U-Boot and Linux have the same driver to fetch DRAM size
->>>> via SMEM? I am not sure if it's an appropriate way for U-Boot to fixup
->>>> DT when that information can be discovered dynamically.
->>
->> "standardized" I'm not so sure... But yes, smem does offer this. The
->> definition in DT here is for U-Boot,
-> 
-> We should move away from that thinking that U-Boot has its own DT and
-> Linux kernel has its own. IMO, that's just the opposite of the true DT
-> definition.
-
-I was clarifying here that the memory node being defined with real
-values was because U-Boot uses them. Just in case some folks thought
-that Linux was using whatever values were here.
-> 
->> ABL will always clobber it, and so
->> does U-Boot before handing over to the kernel. Linux should never see
->> this without a bootloader having looked at it.
-> 
-> Where does U-Boot clobber SMEM? I would be interested to see if ABL
-> clobbers it too?
-
-Not SMEM, the /memory node.
-> 
->>
->> The reason I decided to hardcode this in DT for U-Boot is because SMEM
->> currently relies on the driver model and isn't available early enough.
->>
->> Also admittedly I just wasn't that familiar with the U-Boot codebase. I
->> just wanted to avoid hardcoding this in C code, and given that this was
->> already supported for the "chainloading from ABL" usecase, just
->> hardcoding the values was the obvious solution.
->>
->> I would definitely be open to revisiting this in U-Boot, having an SMEM
->> framework that we could use without the driver model which would just
->> take a base address and then let us interact with SMEM and populate the
->> dram bank data would be a good improvement, and would let us avoid
->> hardcoding the memory layout in DT. We'd just need to manually find the
->> SMEM base address in the FDT as part of "dram_init_banksize()" and
->> retrieve the data there.
-> 
-> These are the similar problems Linux has to deal with too but on Qcom
-> platforms it is rather offloaded to bootloaders to rather implement
-> this. It leads to custom DT modification or board code in U-Boot which
-> is hard to maintain. If we want to implement it properly then
-> corresponding bindings should be upstreamed too regarding how DRAM
-> range is to be discovered via SMEM.
-> 
->>
->> That all being said, I don't see any reason not to define the memory
->> layout in DT, it's a hardware feature, DT describes the hardware. The
->> whole "bootloader will fill this in" implies that the bootloader isn't
->> also using DT as the source of truth, but now with U-Boot it actually
->> is, so it's all the more important that DT be accurate ;P
-> 
-> I agree DT should be accurate and not a fan of DT fixups. However,
-> when it comes to some hardware configuration being discoverable then
-> IMHO DT isn't the appropriate place for that. For the time being I am
-> fine with the DRAM range to be specified in DT.
-
-Agreed
-> 
->>>
->>> You're mixing two things. Linux expects a devicetree where
->>> /memory/reg[size]
->>> is valid. Such driver should indeed be (re)implemented in u-boot to provide
->>> this information.
-> 
-> No, I don't think so. We should rather start thinking about the
-> overall stack rather than just being Linux kernel centric. Do you have
-> a generic solution for U-Boot regarding how this should be
-> implemented?
-> 
-> -Sumit
-> 
->>>
->>> As for linux, I am working on making Linux aware of the DDR capabilities
->>> on Snapdragons, for other reasons, but it's on the back burner, as it
->>> still needs some broad thinking about integrating it with the interested
->>> consumers.. Bottom line is, Linux should be fed a devicetree with DRAM size
->>> filled.
->>>
->>> Konrad
->>
->> --
->> // Caleb (they/them)
-
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 8e517f76189e..6b40082bac68 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -284,7 +284,7 @@ CLUSTER_C4: cpu-sleep-0 {
+ 
+ 		domain-idle-states {
+ 			CLUSTER_CL4: cluster-sleep-0 {
+-				compatible = "arm,idle-state";
++				compatible = "domain-idle-state";
+ 				idle-state-name = "l2-ret";
+ 				arm,psci-suspend-param = <0x01000044>;
+ 				entry-latency-us = <350>;
+@@ -293,7 +293,7 @@ CLUSTER_CL4: cluster-sleep-0 {
+ 			};
+ 
+ 			CLUSTER_CL5: cluster-sleep-1 {
+-				compatible = "arm,idle-state";
++				compatible = "domain-idle-state";
+ 				idle-state-name = "ret-pll-off";
+ 				arm,psci-suspend-param = <0x01000054>;
+ 				entry-latency-us = <2200>;
 -- 
-// Caleb (they/them)
+2.34.1
+
 
