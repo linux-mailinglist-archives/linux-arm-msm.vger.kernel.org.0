@@ -1,152 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-14264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1150B87D0AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:52:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7187487D0CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:57:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4258E1C22C6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:52:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1375B1F23F57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:57:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D66054CB36;
-	Fri, 15 Mar 2024 15:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D14CC405FF;
+	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y78+5BAi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjFwN2R7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E854CB28;
-	Fri, 15 Mar 2024 15:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63C53E48E;
+	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710517849; cv=none; b=c/flcEJqfnYFc/cSj5TyHF+/zVCVPP/MyH+qdL3A1KEaK37CwA8yleB/B3vtpw3owkwf4I+WHM3OHTfgkq6UXxnYuEu2Gnv17xyJpGDJ9VLUhyctm/aW5RyveE48ZKl+pDPKUxBQKNfUKrOF33hUWlAAH6cbHkNoUbyDlBBQGKE=
+	t=1710518238; cv=none; b=mxbtpWQGstHc0nOuYOkMxM38Mx8V0BL8LlaJd8ZTUqjzk+YFEysqMY0hLshxYqjLiZoswwFW1cD5UceaRXNBwJ2LebqEZIxiqpwk6FUtE/vm2UTevxGohisDLcj9fjHzHpJPjzuKubz5js+e40mZZGqTlP0V3XEfyyAluXlaL0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710517849; c=relaxed/simple;
-	bh=5vC/kvCpA1Nhw+acrnEBDIJ2Ao2icl642LalVRfo+yI=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=O9HiejstZFGhLV3ZOxfzPDRcBLYb7qbJhuP+gM+hi+BJ5GFoxO37sJ9gMGZaaWSwhKq7XA8VPHlmTryL4HMydbsBaeXPoaAv4sv933m1kLu5F9RmfM5D6bgpKsRnspLbiYevALcgVbpLIKem5O86qALJnSWWy8lWn+04CfFOZQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y78+5BAi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E842C433C7;
-	Fri, 15 Mar 2024 15:50:49 +0000 (UTC)
+	s=arc-20240116; t=1710518238; c=relaxed/simple;
+	bh=+27njxvTQI9ZBIhezxtzfCGEjQq6eW+OVH0WF5kinqo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ac1WmXIplm/F4V/0byrE5I3cOd5PN6MRsv1OXH7vYWnMbK51eKgOyXLupZo1k3MSUDT+ylZU0VbQz1iMGG/pEwN/jKF4/HFbhBKS+ZdBBzYnkxbai31PoXjdiLQQG42so5XS7+2+SO+oJOA4IywstSCSBfsntymmCsXtVVXeCiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjFwN2R7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D985C433C7;
+	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710517849;
-	bh=5vC/kvCpA1Nhw+acrnEBDIJ2Ao2icl642LalVRfo+yI=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=Y78+5BAiLGZxR2No77opChV/R77eO+L8SB+1Kn3gxIhBKLm2BAsM5t8XHVOUDWd22
-	 LiNaTCzyo9+gyeKJENGRffoTcrf+LBsHkpi1KDmvofuLN3P+qvUAUuEPs6fyilxmKS
-	 oOwoThSiHw6hgXVzhR6Hsd4Yakay45kvApwn1X482+EWf+PK9BGZTybeh1ucvK8x9T
-	 coUb79T3cZdhBWY3J3plIz81ozo1F4/T7X7bLuJIPYzFLipF02wsZz8GVx4gdeKkwO
-	 t3aQ41Ui7kya+Hh8l5Dwyk18Xm9yh7ekEPhXTrnkjDg18pE8JHBXBWaE5DmSZFbRSE
-	 KQ85oKBeyuBhw==
-Date: Fri, 15 Mar 2024 09:50:48 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1710518238;
+	bh=+27njxvTQI9ZBIhezxtzfCGEjQq6eW+OVH0WF5kinqo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PjFwN2R7Ml6OnXuHFUNhVlcuAMX/WtOyTgqbQYADqdwTqZfVB8pwjSULrG8PfvJDE
+	 fCLlafHqOz5eEY497R8gJvP1h1a0G0Ow4kPlu995KdckrKw9MBNofk2jJn1ZWJFrMY
+	 QdipCePE9gRzhFADdzMxJmFev7yM+2e96GfI1HFS+pX/qI9lZEOI7Sgkpdim94SxPa
+	 MIW6RC75gYNG3ASz8AUXm8uk0mkAElWnV6WYUopArvcrZXJm0ue6toNIAROIXWLH+O
+	 aaWYZkWjj1Khl9Ap3wri881v+EtdyZXdpQMKuWlpxOsVD75hSk3QxsJe2S8/Aru0FQ
+	 CCanFtVG4Zpnw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rl9vy-000000008Ts-0qdx;
+	Fri, 15 Mar 2024 16:57:26 +0100
+Date: Fri, 15 Mar 2024 16:57:26 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
+	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
+Message-ID: <ZfRv5le7Bfdiwrk_@hovoldconsulting.com>
+References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
+ <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
+ <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
+ <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
+ <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
+ <ZfFhXG5yd6O29spS@hovoldconsulting.com>
+ <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
+ <ZfMaEIzv3Z3ny3y0@hovoldconsulting.com>
+ <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Sumit Garg <sumit.garg@linaro.org>
-Cc: pascal.eberhard@se.com, jimmy.lalande@se.com, 
- linux-kernel@vger.kernel.org, abdou.saker@se.com, conor+dt@kernel.org, 
- laetitia.mariottini@se.com, stephan@gerhold.net, robh+dt@kernel.org, 
- neil.armstrong@linaro.org, devicetree@vger.kernel.org, andersson@kernel.org, 
- daniel.thompson@linaro.org, caleb.connolly@linaro.org, 
- linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org, 
- benjamin.missey@non.se.com, dmitry.baryshkov@linaro.org, 
- krzysztof.kozlowski+dt@linaro.org
-In-Reply-To: <20240315060707.471248-1-sumit.garg@linaro.org>
-References: <20240315060707.471248-1-sumit.garg@linaro.org>
-Message-Id: <171051664299.1380117.15860712289809679173.robh@kernel.org>
-Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
 
+On Thu, Mar 14, 2024 at 09:30:57AM -0700, Abhinav Kumar wrote:
+> On 3/14/2024 8:38 AM, Johan Hovold wrote:
+> > On Wed, Mar 13, 2024 at 10:24:08AM -0700, Abhinav Kumar wrote:
 
-On Fri, 15 Mar 2024 11:37:04 +0530, Sumit Garg wrote:
-> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
-> Box Core board based on the Qualcomm APQ8016E SoC. For more information
-> refer to the product page [1].
+> > Perhaps I'm missing something in the race that you are trying to
+> > describe (and which I've asked you to describe in more detail so that I
+> > don't have to spend more time trying to come up with a reproducer
+> > myself).
+
+> The race condition is between the time we get disconnect event and set 
+> link_ready to false, a commit can come in. Because setting link_ready to 
+> false happens in the event thread so it could be slightly delayed.
+
+I get this part, just not why, or rather when, that becomes a problem.
+
+Once the disconnect event is processed, dp_hpd_unplug_handle() will
+update the state to ST_DISCONNECT_PENDING, and queue a notification
+event. link_ready is (before this patch) still set to 1.
+
+Here a commit comes in; what exactly are you suggesting would trigger
+that? And in such a way that it breaks the state machine?
+
+One way this could cause trouble is if you end up with a call to
+dp_bridge_atomic_post_disable() which updates the state to
+ST_DISCONNECTED. (1)
+
+This would then need to be followed by another call to
+dp_bridge_atomic_enable() which bails out early with the link clock
+disabled. (2) (And if link_ready were to be set to 0 sooner, the
+likelihood of this is reduced.)
+
+This in turn, would trigger a reset when dp_bridge_atomic_disable() is
+later called.
+
+This is the kind of description of the race I expect to see in the
+commit message, and I'm still not sure what would trigger the call to
+dp_bridge_atomic_post_disable() and dp_bridge_atomic_enable() (i.e. (1)
+and (2) above) and whether this is a real issue or not.
+
+Also note that the above scenario is quite different from the one I've
+hit and described earlier.
+
+> It will be hard to reproduce this. Only way I can think of is to delay 
+> the EV_NOTIFICATION for sometime and see in dp_bridge_hpd_notify()
 > 
-> One of the major difference from db410c is serial port where HMIBSC board
-> uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
-> configured via gpio99 and gpio100).
+>          else if (dp_display->link_ready && status == 
+> connector_status_disconnected)
+>                  dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
 > 
-> Support for Schneider Electric HMIBSC. Features:
-> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
-> - 1GiB RAM
-> - 8GiB eMMC, SD slot
-> - WiFi and Bluetooth
-> - 2x Host, 1x Device USB port
-> - HDMI
-> - Discrete TPM2 chip over SPI
-> - USB ethernet adaptors (soldered)
-> 
-> This series is a v2 since v1 of this DTS file has been reviewed on the
-> U-Boot mailing list [2].
-> 
-> Changes in v3:
-> - Picked up tags.
-> - Fixed further DT schema warnings.
-> - Configure resin/power button interrupt as falling edge.
-> - Incorporate DTS coding style comments from Krzysztof and Konrad.
-> 
-> Changes in v2:
-> - Fix DT schema warnings.
-> - Incorporate suggestions from Stephan.
-> - Document UART1 mode GPIOs based mux.
-> 
-> [1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
-> [2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
-> 
-> Sumit Garg (3):
->   dt-bindings: vendor-prefixes: Add Schneider Electric
->   dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
->   arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 510 ++++++++++++++++++
->  4 files changed, 514 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
-> 
-> --
-> 2.34.1
-> 
-> 
-> 
+> as dp_add_event() will add the event, then wakeup the event_q.
 
+Sure that would increase the race window with the current code, but that
+alone isn't enough to trigger the bug AFAICT.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+> Before the event thread wakes up and processes this unplug event, the 
+> commit can come in. This is the race condition i was thinking of.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/apq8016-schneider-hmibsc.dtb' for 20240315060707.471248-1-sumit.garg@linaro.org:
-
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/audio-codec@771c000: failed to match any schema with compatible: ['qcom,msm8916-wcd-digital-codec']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
-
-
-
-
-
+Yes, but what triggers the commit? And why would it lead to a mode set
+that disables the bridge?
+ 
+Johan
 
