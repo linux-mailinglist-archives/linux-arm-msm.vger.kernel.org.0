@@ -1,279 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-14220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24AEB87CAC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 10:31:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A3B887CB3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:17:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47F821C22603
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 09:31:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 165C7281443
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 10:17:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9635A17C61;
-	Fri, 15 Mar 2024 09:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804A218627;
+	Fri, 15 Mar 2024 10:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cps2RsU+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RPsowmXT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA6317C66
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 09:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1AB182AE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 10:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710495102; cv=none; b=heIcBSqpQnwEG+8aKpQjyvWeUgiMYHYALlFi3NIoYk0sbSk2B/FmqHLH0HoUhE3T5v2YxX5TnsR7p70VQQLYCCnafbpya+IE1nZr1b1VLVld+rviHOY2oRe1Ce7UR6j5RFENFppCeyL2RRvfO6RQQ7JdvsDGq+BT4ppaeZkUfLA=
+	t=1710497830; cv=none; b=cm+kTQRR4U4jlXl9zMf1q7UhkQdrodOY2SWqaQnzzD8AWhQuUkPO+gOg8GrAAr7qTKrtTVX8yuSKrR5Y6nkLIl3Wjpmk1IuYzOHn+Nm1CMGj2feI0+roJChHCUY4oOS2SoOeFnjQjImMGqkp5DfHQuVUDcNwci270OUiKlwoKOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710495102; c=relaxed/simple;
-	bh=wKEW1rXXeX+2+0FZCZcmMKdT8S2KJyJy6N936Rnnq1U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SY1fQS5j+pW//1lkUAln6Kygs+iktGXb6J2U2qdsISYelns8G/QhZ2PJEYtY0hgkNx/5IXE7If2jbNNAyBBaws5DXvs7/zRCO77oXtanQJHiMYjOBRLKNB7bqCwpQPa2KLLuBE4jnzoGnYD2z9mPHYQj3KP8Ykizrp6KJf+bVRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cps2RsU+; arc=none smtp.client-ip=209.85.217.48
+	s=arc-20240116; t=1710497830; c=relaxed/simple;
+	bh=oHV5jyiNttfVN2XdElX7JwJmvr1YWBo1/0MlP/fboNg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fX4zK+DgCj78xBwVyDNGy2U22eH/kUzWLLZhxfcqSRgqG9/SpMaciBE8NxL9NOw5bqyoAP8v66/5/AZiYAYA57JluPAn3ZnWJTuh+lesOnvy8xSpcawau4seTcF9cFPLV/5UCy9U/N2lNoLCwlZSWl5rfQCtkWsRBh3gXTH6KE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RPsowmXT; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-474c802022fso1200982137.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 02:31:40 -0700 (PDT)
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-69145fc4265so11675606d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 03:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710495099; x=1711099899; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4n3K5fB4Q6ZdxH2TmCXh/YokpYNn7Qm173oXHneXpP4=;
-        b=cps2RsU+8Y644Yq/wfZCe5+5+9MHEVQDcjCGPg85oD34DLgdMvgmwCvbzJTiZvEkLz
-         D4Ff3lNq6/wHX/8QsVXmHoFgjlyvzffcUg+yxpVW/STKr98f2YlOEdOLAVZUK5NHk4Cg
-         g7aJHiyFlByJUN67cP9akHX6SUyUgkSG/J0fvTwXb0sowLogNfdQb9isGGAKtno6FTpT
-         /9KWt0MnL5qLCSXYUbLVK5MOWzDB8UJqwlE2Gb0wRrUOIAK0tGZuMd2wIa8lGwydoGXF
-         CDFRrt+9HTzU3VWcGcol7j+2XzGHmwaoBbx9KeLGk1tHWl9lXDn0/Qx4BRGo4RybiDE1
-         /70w==
+        d=linaro.org; s=google; t=1710497828; x=1711102628; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I6tT+NcwpCH1Pw07al3Z4O6Zj2OI59Neo7bH4uFpikU=;
+        b=RPsowmXT64dpl7oyDH7qsDikmJcWt4AYym6upL2gtxeRUg0bFelEcIhASeC37dZXna
+         UfdtTx+bcQTForK3l9/iaL1ykkacEgeDD1MlgjbRrSg7+RosZpo2vJE6V4lxGEOsX4PQ
+         7yq8RVSmX50P62J32wZJywl4lMbSJJkdDJencYsOXUeOd/yAzmyVkHkARmW8HgJYn//f
+         IbonwcDJcHtNomwNkUEgJx1W3XsyZFapBGQcdlHc4Ky8AtHvffghdhOGOELPeBe1B+Vk
+         pM+VBOe3M5usnBPPDd9/NaWwERPkfRKq9jQA0bSFksgOh4/Z+hUYqawUVFVL6CKnDBwV
+         yetg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710495099; x=1711099899;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4n3K5fB4Q6ZdxH2TmCXh/YokpYNn7Qm173oXHneXpP4=;
-        b=NuluIPKGJTO9Y1BwAfSG+LESt5jOyHYZtzhmIocweGdQRQE0Z2MBnHs9EsWCRmqjl0
-         RJfpw9yAo0WD9PiMo0AtYQ/mwEESL5pphcTQJMJoSiPnf0Dsmvsqn0yy86bnXq9kNFG0
-         lVUYeEdaExSdhCEnOrYDyhYg3OC2Lq7cFAVZrjGewEo5nsy4Yn5ZenkvaouSBwtEBvQQ
-         ChEig2PiYAQIh0pQHH7igfLTODI5I+S8dYVBU45e+71inRt638VyuapVJyQr4gNMNGpT
-         VtGHKfKCQL/4gma4W1Vwfhf53CSAmmCWwhdWy0e4dIxQwuml2hIFiLu/KW11wIuZHsqL
-         9GWA==
-X-Forwarded-Encrypted: i=1; AJvYcCXg6t+p2ZR+z2MfcXzHO5yW1ExCNTImi1bkaYUzALKU8BIKHNbiQeOcPCfA3+NM6fCbFmKFPPPtny7koJqqk6bZr0uLwxnpva5qH8KLxA==
-X-Gm-Message-State: AOJu0YxOom141yP0kOwQiJSAZQ9URb0oTKLD4n2dW3cC/pTaRuYnOVBz
-	Bol9jG7AAqlH6DD0Ot20FiChSy6CcaAcdJjB6AZ7PMld3wvrYvKJalCs0ZXDmz2QDle8X2q00W0
-	R6EqrSSJUakuKBxij0VugmdjBgBZgxv7zTc3xYw==
-X-Google-Smtp-Source: AGHT+IG0ULaZsxmFehQ06UxEqE9PR91qErbbaT9Qyaco2mCuBunM7DMFrIqLIA7KcR7d9umvhHrblyrGagFAhkgI/l8=
-X-Received: by 2002:a05:6102:2837:b0:473:34fc:d9c2 with SMTP id
- ba23-20020a056102283700b0047334fcd9c2mr4364954vsb.11.1710495099324; Fri, 15
- Mar 2024 02:31:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1710497828; x=1711102628;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=I6tT+NcwpCH1Pw07al3Z4O6Zj2OI59Neo7bH4uFpikU=;
+        b=eRsz8B3dTrkLHbT7cgaEGQet4BUQK5Y+yPdgptYZyM1wRRG5BF2+2/+AX3LjeGN0Ow
+         /GIiipGhAaqZ2f9BhQJPYJR1NCU7CWZIDLp/B55fmohiGuzRVPeFNWaBtaZ4cKYuemuQ
+         xaatIpqz13ryPHzgX/j70OO2jqCHXrSC2XNXrNl4vfYt3vjWf3frGSXCCLEIqkY0vAuN
+         Gz8nrJ2PKrmn4qROcRGH33C4nNfFBTNejDs4AHtix75ulFFrxqRXY4L/5o6XbPvaWg35
+         KzaDIeaPYXditTPwCk1AMu434/w41xriyFtY0yemIaG/3CeCABBy3FBFHs0R11Xv+O4R
+         2hlg==
+X-Forwarded-Encrypted: i=1; AJvYcCWFqUTmUPlfVjiaQotQUcQDaYuwcF84NZBQGao5yAQ+PGz+12h4WpI3xngpA7BeXQwypEoYVCyOKJO4n62JUtIt07rnQLnzvHywMq/alA==
+X-Gm-Message-State: AOJu0YwoQyf+JYk9zZOM4Raecz4qZqhdh7sPKMB/uh+NsCd7pHwdW+2u
+	a45mmLhDkzuS2RflqgIukLEwoZvmDzSd6acDeK/IzOfEhHXkwqKf1m3dZDNTCtU=
+X-Google-Smtp-Source: AGHT+IHrhbiGVEjN1QgiRSnPRQQmIe+549icsYvrMinCkS0IAydYdE6xtIBvVfhrF3hMoV0M0FyHzQ==
+X-Received: by 2002:a0c:e8c6:0:b0:690:9a8a:855b with SMTP id m6-20020a0ce8c6000000b006909a8a855bmr4498037qvo.29.1710497827614;
+        Fri, 15 Mar 2024 03:17:07 -0700 (PDT)
+Received: from [87.246.221.229] (netpanel-87-246-221-229.pol.akademiki.lublin.pl. [87.246.221.229])
+        by smtp.gmail.com with ESMTPSA id p14-20020a05621421ee00b00691631154a2sm1472434qvj.43.2024.03.15.03.17.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Mar 2024 03:17:07 -0700 (PDT)
+Message-ID: <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
+Date: Fri, 15 Mar 2024 11:16:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240313123017.362570-1-sumit.garg@linaro.org>
- <20240313123017.362570-4-sumit.garg@linaro.org> <c0e10cbf-c6f3-4b0c-8616-983da2a40236@linaro.org>
- <CAFA6WYNMjCaa0FKjNv6a8VFkco3=GBfgWNDuckGZdiZ9dGmHgg@mail.gmail.com>
- <d82ab1f8-e677-485f-9a6b-4115acfd7239@linaro.org> <CAFA6WYNSumyScax=GkN42GJOG56T3odF5Ed9A2i1nk_exCyGtA@mail.gmail.com>
- <ZfLUu6_Vq7MvG2G3@gerhold.net> <CAFA6WYPN2Bt7zvDyd+02jrsZJz0sFhkD_o4W+PvU=-VC4W5k=A@mail.gmail.com>
- <ZfL6hi0kfp9MXQ0H@gerhold.net> <CAFA6WYMa_0OMkjUdvhYtWZ9SvQx5bB8+YrBZN08BaDXXOtPPNQ@mail.gmail.com>
- <fb20d921-dabd-41dc-9f91-bde90e3b87be@linaro.org> <9b614c61-276d-45bf-8320-44b7358a3e19@linaro.org>
-In-Reply-To: <9b614c61-276d-45bf-8320-44b7358a3e19@linaro.org>
-From: Sumit Garg <sumit.garg@linaro.org>
-Date: Fri, 15 Mar 2024 15:01:27 +0530
-Message-ID: <CAFA6WYMHA2M1LLjaog17f83Cu_wH4MAvxhuwAQH0c7j4XTM3XA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
- board DTS
-To: Caleb Connolly <caleb.connolly@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, andersson@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	neil.armstrong@linaro.org, laetitia.mariottini@se.com, pascal.eberhard@se.com, 
-	abdou.saker@se.com, jimmy.lalande@se.com, benjamin.missey@non.se.com, 
-	daniel.thompson@linaro.org, linux-kernel@vger.kernel.org, 
-	Jagdish Gediya <jagdish.gediya@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240215161114.GA1292081@bhelgaas>
+ <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
+ <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 14 Mar 2024 at 21:07, Caleb Connolly <caleb.connolly@linaro.org> wrote:
->
->
->
-> On 14/03/2024 15:20, Konrad Dybcio wrote:
-> >
-> >
-> > On 3/14/24 14:50, Sumit Garg wrote:
-> >> On Thu, 14 Mar 2024 at 18:54, Stephan Gerhold <stephan@gerhold.net>
-> >> wrote:
-> >>>
-> >>> On Thu, Mar 14, 2024 at 05:26:27PM +0530, Sumit Garg wrote:
-> >>>> On Thu, 14 Mar 2024 at 16:13, Stephan Gerhold <stephan@gerhold.net>
-> >>>> wrote:
-> >>>>> On Thu, Mar 14, 2024 at 03:02:31PM +0530, Sumit Garg wrote:
-> >>>>>> On Thu, 14 Mar 2024 at 14:48, Konrad Dybcio
-> >>>>>> <konrad.dybcio@linaro.org> wrote:
-> >>>>>>> On 3/14/24 10:04, Sumit Garg wrote:
-> >>>>>>>> On Wed, 13 Mar 2024 at 18:34, Konrad Dybcio
-> >>>>>>>> <konrad.dybcio@linaro.org> wrote:
-> >>>>>>>>> On 3/13/24 13:30, Sumit Garg wrote:
-> >>>>>>>>>> Add Schneider Electric HMIBSC board DTS. The HMIBSC board is
-> >>>>>>>>>> an IIoT Edge
-> >>>>>>>>>> Box Core board based on the Qualcomm APQ8016E SoC.
-> >>>>>>>>>>
-> >>>>>>>>>> Support for Schneider Electric HMIBSC. Features:
-> >>>>>>>>>> - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno
-> >>>>>>>>>> 306)
-> >>>>>>>>>> - 1GiB RAM
-> >>>>>>>>>> - 8GiB eMMC, SD slot
-> >>>>>>>>>> - WiFi and Bluetooth
-> >>>>>>>>>> - 2x Host, 1x Device USB port
-> >>>>>>>>>> - HDMI
-> >>>>>>>>>> - Discrete TPM2 chip over SPI
-> >>>>>>>>>> - USB ethernet adaptors (soldered)
-> >>>>>>>>>>
-> >>>>>>>>>> Co-developed-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-> >>>>>>>>>> Signed-off-by: Jagdish Gediya <jagdish.gediya@linaro.org>
-> >>>>>>>>>> Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-> >>>>>>>>>> ---
-> >>>>>>>>>
-> >>>>>>>>> [...]
-> >>>>>>>>>
-> >>>>>>>>>> +     memory@80000000 {
-> >>>>>>>>>> +             reg = <0 0x80000000 0 0x40000000>;
-> >>>>>>>>>> +     };
-> >>>>>>>>>
-> >>>>>>>>> I'm not sure the entirety of DRAM is accessible..
-> >>>>>>>>>
-> >>>>>>>>> This override should be unnecessary, as bootloaders generally
-> >>>>>>>>> update
-> >>>>>>>>> the size field anyway.
-> >>>>>>>>
-> >>>>>>>> On this board, U-Boot is used as the first stage bootloader
-> >>>>>>>> (replacing
-> >>>>>>>> Little Kernel (LK), thanks to Stephan's work). And U-Boot consumes
-> >>>>>>>> memory range from DT as Linux does but doesn't require any
-> >>>>>>>> memory to
-> >>>>>>>> be reserved for U-Boot itself. So apart from reserved memory nodes
-> >>>>>>>> explicitly described in DT all the other DRAM regions are
-> >>>>>>>> accessible.
-> >>>>>>>
-> >>>>>>> Still, u-boot has code to fetch the size dynamically, no?
-> >>>>>>>
-> >>>>>>
-> >>>>>> No U-Boot being the first stage bootloader fetches size from DT which
-> >>>>>> is bundled into U-Boot binary.
-> >>>>>>
-> >>>>>
-> >>>>> Back when I added support for using U-Boot as first stage
-> >>>>> bootloader on
-> >>>>> DB410c the way it worked is that U-Boot used a fixed amount of DRAM
-> >>>>> (originally 968 MiB, later 1 GiB since I fixed this in commit
-> >>>>> 1d667227ea51 ("board: dragonboard410c: Fix PHYS_SDRAM_1_SIZE") [1]).
-> >>>>> When booting Linux, the Linux DT was dynamically patched with the
-> >>>>> right
-> >>>>> amount of DRAM (obtained from SMEM). So if you had e.g. a Geniatech
-> >>>>> DB4
-> >>>>> board with 2 GiB DRAM, U-Boot was only using 1 GiB of DRAM, but Linux
-> >>>>> later got the full 2 GiB patched into its DTB.
-> >>>>>
-> >>>>> I didn't have much time for testing U-Boot myself lately but a quick
-> >>>>> look at the recent changes suggest that Caleb accidentally removed
-> >>>>> that
-> >>>>> functionality in the recent cleanup. Specifically, the SMEM-based DRAM
-> >>>>> size detection was removed in commit 14868845db54 ("board:
-> >>>>> dragonboard410c: import board code from mach-snapdragon" [2]), the
-> >>>>> msm_fixup_memory() function does not seem to exist anymore now. :')
-> >>>>
-> >>>> Ah now I see the reasoning for that particular piece of code. Is SMEM
-> >>>> based approach the standardized way used by early stage boot-loaders
-> >>>> on other Qcom SoCs too?
-> >>>>
-> >>>
-> >>> It is definitely used on all the SoCs that were deployed with LK. I am
-> >>> not entirely sure about the newer ABL/UEFI-based ones. A quick look at
-> >>> the ABL source code suggests it is abstracted through an EFI protocol
-> >>> there (so we cannot see where the information comes from with just the
-> >>> open-source code). However, in my experience SMEM data structures are
-> >>> usually kept quite stable (or properly versioned), so it is quite likely
-> >>> that we could use this approach for all Qualcomm SoCs.
-> >>>
-> >>
-> >> If the SoCs which support this standardized way to dynamic discover
-> >> DRAM size via SMEM then why do we need to rely on DT at all for those
-> >> SoCs? Can't U-Boot and Linux have the same driver to fetch DRAM size
-> >> via SMEM? I am not sure if it's an appropriate way for U-Boot to fixup
-> >> DT when that information can be discovered dynamically.
->
-> "standardized" I'm not so sure... But yes, smem does offer this. The
-> definition in DT here is for U-Boot,
 
-We should move away from that thinking that U-Boot has its own DT and
-Linux kernel has its own. IMO, that's just the opposite of the true DT
-definition.
 
-> ABL will always clobber it, and so
-> does U-Boot before handing over to the kernel. Linux should never see
-> this without a bootloader having looked at it.
+On 2/16/24 07:52, Johan Hovold wrote:
+> On Thu, Feb 15, 2024 at 07:44:27PM +0100, Konrad Dybcio wrote:
+>> On 15.02.2024 17:11, Bjorn Helgaas wrote:
+>>> On Thu, Feb 15, 2024 at 11:21:45AM +0100, Konrad Dybcio wrote:
+>>>> On 14.02.2024 23:28, Bjorn Helgaas wrote:
+>>>>> On Wed, Feb 14, 2024 at 10:35:16PM +0100, Konrad Dybcio wrote:
+>>>>>> On 12.02.2024 22:17, Bjorn Helgaas wrote:
+>>>>>>> Maybe include the reason in the subject?  "Read back" is literally
+>>>>>>> what the diff says.
+>>>>>>>
+>>>>>>> On Sat, Feb 10, 2024 at 06:10:06PM +0100, Konrad Dybcio wrote:
+>>>>>>>> To ensure write completion, read the PARF_LTSSM register after setting
+>>>>>>>> the LTSSM enable bit before polling for "link up".
+>>>>>>>
+>>>>>>> The write will obviously complete *some* time; I assume the point is
+>>>>>>> that it's important for it to complete before some other event, and it
+>>>>>>> would be nice to know why that's important.
+>>>>>>
+>>>>>> Right, that's very much meaningful on non-total-store-ordering
+>>>>>> architectures, like arm64, where the CPU receives a store instruction,
+>>>>>> but that does not necessarily impact the memory/MMIO state immediately.
+>>>>>
+>>>>> I was hinting that maybe we could say what the other event is, or what
+>>>>> problem this solves?  E.g., maybe it's as simple as "there's no point
+>>>>> in polling for link up until after the PARF_LTSSM store completes."
+>>>>>
+>>>>> But while the read of PARF_LTSSM might reduce the number of "is the
+>>>>> link up" polls, it probably wouldn't speed anything up otherwise, so I
+>>>>> suspect there's an actual functional reason for this patch, and that's
+>>>>> what I'm getting at.
+>>>>
+>>>> So, the register containing the "enable switch" (PARF_LTSSM) can (due
+>>>> to the armv8 memory model) be "written" but not "change the value of
+>>>> memory/mmio from the perspective of other (non-CPU) memory-readers
+>>>> (such as the MMIO-mapped PCI controller itself)".
+>>>>
+>>>> In that case, the CPU will happily continue calling qcom_pcie_link_up()
+>>>> in a loop, waiting for the PCIe controller to bring the link up, however
+>>>> the PCIE controller may have never received the PARF_LTSSM "enable link"
+>>>> write by the time we decide to time out on checking the link status.
+> 
+> This makes no sense. As Bjorn already said, you're just polling for the
+> link to come up (for a second). And unless you have something else that
+> depends on the write to have reached the device, there is no need to
+> read it back. It's not going to be cached indefinitely if that's what
+> you fear.
 
-Where does U-Boot clobber SMEM? I would be interested to see if ABL
-clobbers it too?
+The point is, if we know that the hardware is expected to return "done"
+within the polling timeout value of receiving the request to do so, we
+are actively taking away an unknown amount of time from that timeout.
 
->
-> The reason I decided to hardcode this in DT for U-Boot is because SMEM
-> currently relies on the driver model and isn't available early enough.
->
-> Also admittedly I just wasn't that familiar with the U-Boot codebase. I
-> just wanted to avoid hardcoding this in C code, and given that this was
-> already supported for the "chainloading from ABL" usecase, just
-> hardcoding the values was the obvious solution.
->
-> I would definitely be open to revisiting this in U-Boot, having an SMEM
-> framework that we could use without the driver model which would just
-> take a base address and then let us interact with SMEM and populate the
-> dram bank data would be a good improvement, and would let us avoid
-> hardcoding the memory layout in DT. We'd just need to manually find the
-> SMEM base address in the FDT as part of "dram_init_banksize()" and
-> retrieve the data there.
+So, if the polling condition becomes true after 980ms, but due to write
+buffering the value reached the PCIe hardware after 21 ms, we're gonna
+hit a timeout. Or under truly extreme circumstances, the polling may
+time out before the write has even arrived at the PCIe hw.
 
-These are the similar problems Linux has to deal with too but on Qcom
-platforms it is rather offloaded to bootloaders to rather implement
-this. It leads to custom DT modification or board code in U-Boot which
-is hard to maintain. If we want to implement it properly then
-corresponding bindings should be upstreamed too regarding how DRAM
-range is to be discovered via SMEM.
+> 
+>> Generally, it's a good idea to add such readbacks after all timing-
+>> critical writes, especially when they concern asserting reset,
+>> enabling/disabling power, etc., to make sure we're not assuming the
+>> hardware state of a peripheral has changed before we ask it to do so.
+> 
+> Again no, there is no general need to do that. It all depends on what
+> the code does and how the device works.
 
->
-> That all being said, I don't see any reason not to define the memory
-> layout in DT, it's a hardware feature, DT describes the hardware. The
-> whole "bootloader will fill this in" implies that the bootloader isn't
-> also using DT as the source of truth, but now with U-Boot it actually
-> is, so it's all the more important that DT be accurate ;P
+Agreed it's not necessary *in general*, but as I pointed out, this is
+an operation that we expect to complete within a set time frame, which
+involves external hardware.
 
-I agree DT should be accurate and not a fan of DT fixups. However,
-when it comes to some hardware configuration being discoverable then
-IMHO DT isn't the appropriate place for that. For the time being I am
-fine with the DRAM range to be specified in DT.
-
-> >
-> > You're mixing two things. Linux expects a devicetree where
-> > /memory/reg[size]
-> > is valid. Such driver should indeed be (re)implemented in u-boot to provide
-> > this information.
-
-No, I don't think so. We should rather start thinking about the
-overall stack rather than just being Linux kernel centric. Do you have
-a generic solution for U-Boot regarding how this should be
-implemented?
-
--Sumit
-
-> >
-> > As for linux, I am working on making Linux aware of the DDR capabilities
-> > on Snapdragons, for other reasons, but it's on the back burner, as it
-> > still needs some broad thinking about integrating it with the interested
-> > consumers.. Bottom line is, Linux should be fed a devicetree with DRAM size
-> > filled.
-> >
-> > Konrad
->
-> --
-> // Caleb (they/them)
+Konrad
 
