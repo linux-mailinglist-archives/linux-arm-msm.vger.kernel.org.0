@@ -1,198 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-14266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B59F87D106
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:17:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75F5B87D16E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:47:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB7A01F2397C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:17:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97CEA1C223F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:47:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2107543AD0;
-	Fri, 15 Mar 2024 16:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE203D96E;
+	Fri, 15 Mar 2024 16:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IrvBXckd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bYMrTgRi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D834144C64;
-	Fri, 15 Mar 2024 16:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBD928F1;
+	Fri, 15 Mar 2024 16:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710519420; cv=none; b=TawXyb6lsdB2W/IhMJRU5a4q1Rn9vyaP0M1yUpTPkrCDmEqElEuQ2LvYAn/nPO2iG2emBXrOb8U+/3gFABJzFwD/+nfPrHxq7OpO9iPqfVZiMFfd4ulo2h6l39S2OnIQUbdUKacLXmwksGQ7/Sb7z2vAcnI/pN4jpEhHZx3tTxQ=
+	t=1710521264; cv=none; b=JntgiFsXtl7F824DeAECqn03nhkQWEmdwJGPjuRDRNhzvMm7+a25sADovINWZhA1Qk68cfgoa2mMfXkPmf/kyzC0e3fsBkIBMcJUlQB3BEVoMY9dVgbonZjaknDBXiO4OcDfoH9Qb1cQFwkDW6M3oyacP2suTNAB8YUR9x4legM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710519420; c=relaxed/simple;
-	bh=IyytQBo2KIJF54NrANAyUTvbiB6Rzt4f4opggr/aZgE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BMT1MXcktiF3QztGfIYZtEdw+WFHBdwmV9+EWSQqwqUhXnhEAmS7CkbalnVveC4CMkyq4sC+2gnTJWZuzkP6/EgbuUonTa6ZPcLoxBM1du1l/i2T58Nqo9h+xa3mMD2JsJXFpz6gM9bfys6S7Quua7FJaEe3GXnTy8uOginRTOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IrvBXckd; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-565c6cf4819so5676788a12.1;
-        Fri, 15 Mar 2024 09:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710519415; x=1711124215; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hq26cNsD7jowb3hRFtXkhmvH+pk4/HkmfGFyk+22HD0=;
-        b=IrvBXckdY6A/y/wKd+r8x33eovdCcnR2Uu31fUAFthMt1oxhncLc86ykoEje2Q6U9R
-         j8Fnh6ro9+L0NyNRS2xOeTpaedeyYsFm9pzOzkR1GeeCbcFCo8kRDCk33wwDJc27Cu5e
-         jfd5Xs8fSxDzgww3rHaaQW7HSlZgDfjXlsaniG3JrVtp2+RPPIF17jFW9GFQ6FVR9WTW
-         cA2DqyqLhkNvAMC+cp/M0aL6JQRVZAfvkdU5SEgys/JVo8pvhHcLn/Nakpf8y7hz3zpC
-         HHuulgXFngj+dAA7qJ1PRx+7ZV676/Gzvm44BGJDtVXZ9sc7a8b3CdB680/+UcGC6ots
-         Yf/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710519415; x=1711124215;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Hq26cNsD7jowb3hRFtXkhmvH+pk4/HkmfGFyk+22HD0=;
-        b=Z6dDCr7zZ1t1eMUX8OMr6cIZVQ+TLb7fbVyhL1SKv0KfpBQW8hjBrydWLToc9P4Nnd
-         NIkU3lUEUQSlsJtSRQLTlU3m+pChS/oA9ognpcMAiD3Iwlt7gaYLSF/FITkY7RYoygtP
-         Wkcpm9ewB+XwZEO+DHM9jLrvSRG/Nx7AMr8zsJYB1Ywq0n1wdJlgtlITjfOtXJAkNJUF
-         XDqphcdIm9TcVE3SPdAIKDv9jAH9lVp6HnXwsCXPcaEn9xm/dGjISTZiQWKDxPQnqq6T
-         1XG0T+PRC12zIZga7Y4k6aU5u5T9oSBUWnt/N7zmnC1vfAjOxYLCzloRNBPySF0aEZ8m
-         QRXg==
-X-Forwarded-Encrypted: i=1; AJvYcCUET8097kafvap4O3cu7+QNTGbJMbq8Hc8x05kozcPxB43sWSptiuUmn5Tfn/mM11Hn6Lk4fAdl9Gp/cP93oEouBDZ3WwZrP+iQezqGLhrjrDC//0C9yMwAFZxdYJpeviGTyOLEcqGoeDc+0dYGX+pu+/D3r2qtP7ckzCYDy8LF
-X-Gm-Message-State: AOJu0YxtDxHIKHg98vvrxj7IemRixNWW3AQjg23ywdL8v+9BzyhRRHSO
-	eYGdAMHmJQpd9GfVVZ6cMU8x+mdSw17jQEC970Wvsv7byVm33khg
-X-Google-Smtp-Source: AGHT+IFv/E9MBLkyKgj7qZIVTGEgGlu0AGvsb77hVYdllp23GXPaquSMaDb/YqvQ3JdCNN4cWhrsMw==
-X-Received: by 2002:a17:906:5a95:b0:a46:74fe:9177 with SMTP id l21-20020a1709065a9500b00a4674fe9177mr4056795ejq.21.1710519414942;
-        Fri, 15 Mar 2024 09:16:54 -0700 (PDT)
-Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
-        by smtp.googlemail.com with ESMTPSA id me17-20020a170906aed100b00a4679ce191csm1330205ejb.121.2024.03.15.09.16.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Mar 2024 09:16:54 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Fri, 15 Mar 2024 17:16:41 +0100
-Subject: [PATCH v2] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to
- fix boot failure
+	s=arc-20240116; t=1710521264; c=relaxed/simple;
+	bh=JL5eSL26L69YUqhQ5+zJQo9l0y8hKk3BZ+EnlZ3I0ew=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mgX752XL4uINe/JMTIx/fTAia9Rmhmzv+1qLbDvVzIoOx0CQ3YAlt3JFlzjO+VuvVt/8IXIuQ3Qtf4rbQvrk2HnJgGPU7M8n+GoZFMAEX9bXXJSka5KWuDESQQ5wyxVdQEezJ+VcGZbK3RP1ql34dB40eOb72D6vd8HTKnjOj4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bYMrTgRi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA8AC433C7;
+	Fri, 15 Mar 2024 16:47:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710521263;
+	bh=JL5eSL26L69YUqhQ5+zJQo9l0y8hKk3BZ+EnlZ3I0ew=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bYMrTgRi1fAF0uJpaHYkRyXi7WMU9CRq/YAAwuGPJ96W4PBq+7ovToG4kCo/Wh9he
+	 0FQhO8q2MPRkIiOYC/kBvrSn17yLoSkOuf8FKSraqnI1nDrVkmSWd3b9HAIjxCrUcW
+	 GTxUZ399ds/6rak0w56+JGj/BG6zNMnfuW+UzYueaEGHBHoExb0TPtkcV3wbwpWsl6
+	 DC4p1cxQETsHR1wh8l06vm6qbgmR+PM1DhCRCJlViSSpd4bvVAPp7WSIZTZiNxLqdi
+	 +8v6sqK2++UPI8NRxHA+pHQBRnmAJnqj/speZyq2TwAD/ieIOKwMoDFbRCcM8YZN3A
+	 UWzjd3bXJuYZg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1rlAim-000000000Nn-3x3C;
+	Fri, 15 Mar 2024 17:47:53 +0100
+Date: Fri, 15 Mar 2024 17:47:52 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Helgaas <helgaas@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v2 2/3] PCI: qcom: Read back PARF_LTSSM register
+Message-ID: <ZfR7uCcflCiFTvBh@hovoldconsulting.com>
+References: <20240215161114.GA1292081@bhelgaas>
+ <bc7d9859-f7ec-41c5-8a9e-170ccdfff46a@linaro.org>
+ <Zc8GHrgdF7jJBgyu@hovoldconsulting.com>
+ <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAGh09GUC/42NTQ6CMBCFr0Jm7ZhOqRZceQ/DotICk/BTW0M0h
- LvbcgJXL9/L+9kgusAuwq3YILiVIy9zAnkqoB3M3DtkmxikkEqURGh8jMj+hX4cs14EVZiTqJW
- tTdUpTeUVUt8H1/Hn2H40iQeO7yV8j6uVsvvP6kpIWDmr5FObWih77yfD47ldJmj2ff8Boz155
- 8IAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c1f85249-32b1-41e2-adc3-5aa4ad7609b9@linaro.org>
 
-Booting v6.8 results in a hang on various IPQ5018 based boards.
-Investigating the problem showed that the hang happens when the
-clk_alpha_pll_stromer_plus_set_rate() function tries to write
-into the PLL_MODE register of the APSS PLL.
+On Fri, Mar 15, 2024 at 11:16:59AM +0100, Konrad Dybcio wrote:
+> On 2/16/24 07:52, Johan Hovold wrote:
 
-Checking the downstream code revealed that it uses [1] stromer
-specific operations for IPQ5018, whereas in the current code
-the stromer plus specific operations are used.
+> > This makes no sense. As Bjorn already said, you're just polling for the
+> > link to come up (for a second). And unless you have something else that
+> > depends on the write to have reached the device, there is no need to
+> > read it back. It's not going to be cached indefinitely if that's what
+> > you fear.
+> 
+> The point is, if we know that the hardware is expected to return "done"
+> within the polling timeout value of receiving the request to do so, we
+> are actively taking away an unknown amount of time from that timeout.
 
-The ops in the 'ipq_pll_stromer_plus' clock definition can't be
-changed since that is needed for IPQ5332, so add a new alpha pll
-clock declaration which uses the correct stromer ops and use this
-new clock for IPQ5018 to avoid the boot failure.
+We're talking about microseconds, not milliseconds or seconds as you
+seem to believe.
 
-Also, change pll_type in 'ipq5018_pll_data' to
-CLK_ALPHA_PLL_TYPE_STROMER to better reflect that it is a Stromer
-PLL and change the apss_ipq_pll_probe() function accordingly.
+> So, if the polling condition becomes true after 980ms, but due to write
+> buffering the value reached the PCIe hardware after 21 ms, we're gonna
+> hit a timeout. Or under truly extreme circumstances, the polling may
+> time out before the write has even arrived at the PCIe hw.
 
-1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
+So the write latency is not an issue here.
 
-Cc: stable@vger.kernel.org
-Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
-Changes in v2:
-  - extend commit description due to the changes
-  - add a comment about why CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets
-    are used
-  - constify hw clock init data (Stephen)
-  - change pll_type in ipq5018_pll_data to CLK_ALPHA_PLL_TYPE_STROMER (Konrad)
-  - Link to v1: https://lore.kernel.org/r/20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com
----
-Based on v6.8.
----
- drivers/clk/qcom/apss-ipq-pll.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index 678b805f13d45..dfffec2f06ae7 100644
---- a/drivers/clk/qcom/apss-ipq-pll.c
-+++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -55,6 +55,29 @@ static struct clk_alpha_pll ipq_pll_huayra = {
- 	},
- };
- 
-+static struct clk_alpha_pll ipq_pll_stromer = {
-+	.offset = 0x0,
-+	/*
-+	 * Reuse CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets.
-+	 * Although this is a bit confusing, but the offset values
-+	 * are correct nevertheless.
-+	 */
-+	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
-+	.flags = SUPPORTS_DYNAMIC_UPDATE,
-+	.clkr = {
-+		.enable_reg = 0x0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "a53pll",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.fw_name = "xo",
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_stromer_ops,
-+		},
-+	},
-+};
-+
- static struct clk_alpha_pll ipq_pll_stromer_plus = {
- 	.offset = 0x0,
- 	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
-@@ -144,8 +167,8 @@ struct apss_pll_data {
- };
- 
- static const struct apss_pll_data ipq5018_pll_data = {
--	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
--	.pll = &ipq_pll_stromer_plus,
-+	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER,
-+	.pll = &ipq_pll_stromer,
- 	.pll_config = &ipq5018_pll_config,
- };
- 
-@@ -203,7 +226,8 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
- 
- 	if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
- 		clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
--	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
-+	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER ||
-+		 data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
- 		clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
- 
- 	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
-
----
-base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
-change-id: 20240311-apss-ipq-pll-ipq5018-hang-74d9a8f47136
-
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
-
+Johan
 
