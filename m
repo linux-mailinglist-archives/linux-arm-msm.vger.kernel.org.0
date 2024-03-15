@@ -1,388 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-14229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11C5E87CC9F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:45:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35ED087CCAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 12:46:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C336D2836CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:45:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90213B20FFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 11:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E6581B948;
-	Fri, 15 Mar 2024 11:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F281BDCB;
+	Fri, 15 Mar 2024 11:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="MwAvTPay"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eIIACkX5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B481BC59;
-	Fri, 15 Mar 2024 11:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247B91BC2C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 11:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710503124; cv=none; b=V9hD6SxiOm0iIyQgUDJIxJmHkKG99hr29x8nJHNgCI1+biW+vdmm56y5sWAOnWDYL0o32JdfDMYkJrPh0GrOniudd4x0pfvJ/bHF9vHRbKJ6GSuSFG4XOsxZGtSCuco97GzOtShbFoutQhHGA+hxFiT60lwfF5dHoDVtvMP/7DE=
+	t=1710503192; cv=none; b=RSBeK1AislMj4fVnVf60I0Dm2aXfao00M90/WrGDqMdZrWcNn/S34FGmJq5JQO3jINmOdJa89xJ9dcpwux3Tjp9rinGUJu/PuZhR9yVV+qCrbRnOA0vnzJYA5RiWb1/ixxYaq+0PNUxUbkF6pAm6ylFFKkDl5hSSWUnHYXbQyI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710503124; c=relaxed/simple;
-	bh=xADKVOnSLQ/eSoxk0F4pbiiTRO2FBYoibk1GxdCL7Ug=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UFpIZAM3G/V6LH5nmJlrGlN0Ge+oON62uEtKOXuGkvt8K2siTMGd7sMNDRuF3Et6J5CXzutgX8gwqX9FSY0whfGhZAdwCb9yPc4x9/ZLZYTa6cLGXWrxqnfIurcSTQFZlKMHRxZ7R2vbRmKX38GlHP79tKodKdma8KH0zlTpNds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=MwAvTPay; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 9CFDBE0005;
-	Fri, 15 Mar 2024 11:45:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1710503120;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R0kqNtL6G3XJ3YlpCpRDs+8Ulm0OGWV3L8/ec8/EvgA=;
-	b=MwAvTPaym4uwlN1C1EKgYc3IKFvTxnhIr+kXMPITBXU9heEQTwKc5yqIMpdk4aDLrsHsFr
-	EMDVVDpRFOb71CDe8L7p5WJkkCEUlEj07gGU1kjv7/NSUeCrpkPEIKkEGMZgLlZx70O7LF
-	F4JTHrNdYsnCy0kGE/VSaK8rjaVTOS4f5+gVih9kw3MDFbYvhLwXKDjTYk+lpyY9tRGfdj
-	OrTvX+x2Tw+5/DFixsU306TRTcsuszxO1Pvrx10j1ycpHpRK96t2KP3baGsi7Bp9Q78tr0
-	MJdjRBo3stvEKHJL9Dj74IHYauC5nn3YgYYKHN9HfT5mzCJ/K0K+uqEuK4Y8rA==
-Date: Fri, 15 Mar 2024 12:45:17 +0100
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
- robh@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- richard@nod.at, vigneshr@ti.com, manivannan.sadhasivam@linaro.org,
- neil.armstrong@linaro.org, daniel@makrotopia.org, arnd@arndb.de,
- chris.packham@alliedtelesis.co.nz, christophe.kerello@foss.st.com,
- linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mtd@lists.infradead.org, quic_srichara@quicinc.com,
- quic_varada@quicinc.com
-Subject: Re: [PATCH v4 2/5] drivers: mtd: nand: Add qpic_common API file
-Message-ID: <20240315124517.4a546ce9@xps-13>
-In-Reply-To: <20240308091752.16136-3-quic_mdalam@quicinc.com>
-References: <20240308091752.16136-1-quic_mdalam@quicinc.com>
-	<20240308091752.16136-3-quic_mdalam@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1710503192; c=relaxed/simple;
+	bh=9bSTjD6AablTExbFVQTQerY0tTFpkWHBp91hc5H4cUI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=l1jX7e70yaloJuRpLQ14gXYfwDCNPJtGrzdoU8ZSiDWvuOcDNzZaBWOQlkPYm93EfYBM9dFsMPNvDWDY8twbvzR5i1j/sDmTjAHrjeY34kleBqQ4CthRc77tyu7ucakj1kaEQ8EJfL/YDjMF1Qa6sbt3jmcKfiyJVJxIuIIuKPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eIIACkX5; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-513dd2d2415so132622e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 04:46:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1710503188; x=1711107988; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JxuX+Ti8fZn5m/f6VGuBCXk/rLdBCegJSuZBjwwF710=;
+        b=eIIACkX5gFDZdiP8hXym9mohQpTVCT0z2SL69bt6ujOQ65mLqssAnMWJby5TmcqYXS
+         ROmtqyvl9QoPJm7Yj8QVWYisCA5u0FjhIB6X7LN5AXAhE8QUuLAIbX0gQReHVsq6PxVV
+         U5mM4O+/cIX5dLpbc1pcSE2pzNPXq2aXwnGR8F793dZ1vvjBrt/f8HmuocazukfNagID
+         1+9Qu1Fae/RKwad/x0IqpTnx7+FHsfBZt1OTDaosJHcCCrVJ2KB1/o37LVuscJC15bcu
+         A+ig5TuFNyBOQSVM+uvydUq9+GPoypv3FZKCPJRntIZqL8MqiXoye34uzVbEmsqxJjvC
+         84Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710503188; x=1711107988;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JxuX+Ti8fZn5m/f6VGuBCXk/rLdBCegJSuZBjwwF710=;
+        b=EfLm9BUgOCvUzUw+bc/hcHK7xtkBNds2cWRDAuMXB73wElrgV/rgqK4ojpuAucdO75
+         mSI/Jx7adZkdziM1tkNKCbcaWjICdZaGR6KbcJUHdX+dbMVNL8dBGK2T42tH74FHPNXR
+         SFQ3s53MidTcto/M+1fKjhquiqel+6ETOKIwrRkyGSjssEJ/AM0BGnQwtEkdxKRulT6T
+         FicztaK0Wioix8tzo2nmG0pHks/DS1kbNRFOKHvwBPc46LzCY7tZ4TVIy3lzgbtQsT/M
+         vq4I4sFZEuff/pYpDw8JP9x93hjqRyhr2BohkqmjnSPLToEYF5a6mK4MaTAjLJBKfB5P
+         bHlw==
+X-Forwarded-Encrypted: i=1; AJvYcCW2+c4x6emJ5dtwYKo/bbrTUMeSWoaw0ZjXzrNdtGotFN9WHGyuo5Dy79Vh9ZffdxCKuE58+zuyRQWiN21iR4o9m9d/X+3TaPKRAW7khA==
+X-Gm-Message-State: AOJu0Ywo6A3BolunNTzdqNjLFFFeF8RzUyiNBE/kRlVXpF1IikJJnNr0
+	shjyHzVD8Mziif2U8JakRGxilhT8iBObwR0gqAsO5vfj72Z7eiaZzA/urcFhH7Y=
+X-Google-Smtp-Source: AGHT+IG9loNuyVc8//m6ic0j8Svp2nfhDtNubUz8f7QGRIjouieDxv551LYQkLnlsit4nPLk8OzCpQ==
+X-Received: by 2002:ac2:4902:0:b0:513:ba9b:80ea with SMTP id n2-20020ac24902000000b00513ba9b80eamr1897125lfi.63.1710503188171;
+        Fri, 15 Mar 2024 04:46:28 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l17-20020ac24a91000000b00513b024b232sm619987lfp.10.2024.03.15.04.46.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Mar 2024 04:46:27 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH RFC v3 00/12] drm/msm: generate register header files
+Date: Fri, 15 Mar 2024 13:46:22 +0200
+Message-Id: <20240315-fd-xml-shipped-v3-0-0fc122e36c53@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA419GUC/2WOQQrCMBBFryJZG0knNVZXguAB3IqLNJm2A7Upi
+ YRK6d0NQRB1+efz3vyZBfSEgR1WM/MYKZAbUpDrFTOdHlrkZFNmIKAUAFveWD7dex46Gke0vNZ
+ 7LaEwFm3DEjR6bGjKwiu7nE/slo4dhYfzz/wkFrl6+9SvLxZc8ErVtTJSlsrCsadBe7dxvs2uC
+ B9eFn97IiR+Z6yq0JhSgvjil2V5AdjevhryAAAA
+To: Masahiro Yamada <masahiroy@kernel.org>, 
+ Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-kbuild@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5696;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=9bSTjD6AablTExbFVQTQerY0tTFpkWHBp91hc5H4cUI=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBl9DUQ1vnb905j4UscY4QZmZYGeF6jFRsUj0dRE
+ RZHB73ol7GJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZfQ1EAAKCRCLPIo+Aiko
+ 1UYhCAClgd8Y5INWbu6fvY7IYqDegE8lnXbaciORcH7QIUzQM0yn8mW3EJ1XG/hwCGvvsfH68H+
+ GnVaIds3A6UjmImexoUoNOqK+yOfyt8347G1R5nim7gNZTC3IbRiobW1rIbegYp308TWXqUMBZX
+ rjBQEa3OG+AZsMC6yZlKQONDH6c6uhBOkbyL5S6LBEA34K5P8XXgtWhfWAIrsM4vMxotWUzf0fN
+ 9heRihYI9GIe647vpWdv2wCRK7CXpb+mqIJFOWBNxtrbIwng2Fq3VjQIq6yCQhyZCbiyvb2/tmf
+ DgbGhhfBfYiaNYYMibJxt0Yx9GRPIpl8JZNN8VjP3lL2Adea
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Hello,
+Currently display-related register headers are generated from XML files
+shipped withing Mesa source tree. This is not fully optimal: it requires
+multi-stage process of the changes first being landed to Mesa and only
+then synced to the kernel tree.
 
-> +/**
-> + * qcom_qpic_bam_dma_done() - Callback for DMA descriptor completion
-> + * @data: data pointer
-> + *
-> + * This function is a callback for DMA descriptor completion
-> + */
-> +void qcom_qpic_bam_dma_done(void *data)
-> +{
-> +	struct bam_transaction *bam_txn =3D data;
-> +
-> +	/*
-> +	 * In case of data transfer with NAND, 2 callbacks will be generated.
-> +	 * One for command channel and another one for data channel.
-> +	 * If current transaction has data descriptors
-> +	 * (i.e. wait_second_completion is true), then set this to false
-> +	 * and wait for second DMA descriptor completion.
-> +	 */
-> +	if (bam_txn->wait_second_completion)
-> +		bam_txn->wait_second_completion =3D false;
-> +	else
-> +		complete(&bam_txn->txn_done);
+Move original XML files to the kernel tree and generate header files
+when required.
 
-Can't you just call "wait" and "complete" twice? It's supposed to be
-handled by the API. This is totally racy.
+NOTE: the gen_header.py script is based on the non-merged Mesa MR [1].
+Once that MR lands, I will update the script and commit messages and
+send the next iteration.
 
-> +}
-> +
-> +/**
-> + * qcom_nandc_read_buffer_sync() - Check for dma sync for cpu or device
-> + * @nandc: qpic nand controller
-> + * @is_cpu: cpu or Device
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/28193
 
-? the naming is really strange dev_to_mem or something like that would
-probably be more helpful.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v3:
+- Split XML and git rm patches in hope to pass ML limitations
+- Link to v2: https://lore.kernel.org/r/20240315-fd-xml-shipped-v2-0-7cd68ecc4320@linaro.org
 
-> + *
-> + * This function will check for dma sync for cpu or device
-> + */
-> +void qcom_nandc_read_buffer_sync(struct qcom_nand_controller *nandc,
-> +				 bool is_cpu)
-> +{
-> +	if (!nandc->props->is_bam)
-> +		return;
-> +
-> +	if (is_cpu)
-> +		dma_sync_single_for_cpu(nandc->dev, nandc->reg_read_dma,
-> +					MAX_REG_RD *
-> +					sizeof(*nandc->reg_read_buf),
-> +					DMA_FROM_DEVICE);
-> +	else
-> +		dma_sync_single_for_device(nandc->dev, nandc->reg_read_dma,
-> +					   MAX_REG_RD *
-> +					   sizeof(*nandc->reg_read_buf),
-> +					   DMA_FROM_DEVICE);
-> +}
-> +
-> +/**
-> + * qcom_offset_to_nandc_reg() - Get the actual offset
-> + * @regs: pointer to nandc_reg structure
-> + * @offset: register offset
-> + *
-> + * This function will reurn the actual offset for qpic controller regist=
-er
-> + */
-> +__le32 *qcom_offset_to_nandc_reg(struct nandc_regs *regs, int offset)
-> +{
-> +	switch (offset) {
-> +	case NAND_FLASH_CMD:
-> +		return &regs->cmd;
-> +	case NAND_ADDR0:
-> +		return &regs->addr0;
-> +	case NAND_ADDR1:
-> +		return &regs->addr1;
-> +	case NAND_FLASH_CHIP_SELECT:
-> +		return &regs->chip_sel;
-> +	case NAND_EXEC_CMD:
-> +		return &regs->exec;
-> +	case NAND_FLASH_STATUS:
-> +		return &regs->clrflashstatus;
-> +	case NAND_DEV0_CFG0:
-> +		return &regs->cfg0;
-> +	case NAND_DEV0_CFG1:
-> +		return &regs->cfg1;
-> +	case NAND_DEV0_ECC_CFG:
-> +		return &regs->ecc_bch_cfg;
-> +	case NAND_READ_STATUS:
-> +		return &regs->clrreadstatus;
-> +	case NAND_DEV_CMD1:
-> +		return &regs->cmd1;
-> +	case NAND_DEV_CMD1_RESTORE:
-> +		return &regs->orig_cmd1;
-> +	case NAND_DEV_CMD_VLD:
-> +		return &regs->vld;
-> +	case NAND_DEV_CMD_VLD_RESTORE:
-> +		return &regs->orig_vld;
-> +	case NAND_EBI2_ECC_BUF_CFG:
-> +		return &regs->ecc_buf_cfg;
-> +	case NAND_READ_LOCATION_0:
-> +		return &regs->read_location0;
-> +	case NAND_READ_LOCATION_1:
-> +		return &regs->read_location1;
-> +	case NAND_READ_LOCATION_2:
-> +		return &regs->read_location2;
-> +	case NAND_READ_LOCATION_3:
-> +		return &regs->read_location3;
-> +	case NAND_READ_LOCATION_LAST_CW_0:
-> +		return &regs->read_location_last0;
-> +	case NAND_READ_LOCATION_LAST_CW_1:
-> +		return &regs->read_location_last1;
-> +	case NAND_READ_LOCATION_LAST_CW_2:
-> +		return &regs->read_location_last2;
-> +	case NAND_READ_LOCATION_LAST_CW_3:
-> +		return &regs->read_location_last3;
+Changes in v2:
+- Removed the _shipped files, always generating the headers (Masahiro
+  Yamada)
+- Replaced headergen2 with gen_headers.py
+- Simplify Makefile rules, making all Adreno objects depend on Adreno
+  headers and all displau objects depend on all display headers
+- Also handle Adreno registers
+- Link to v1: https://lore.kernel.org/r/20240226-fd-xml-shipped-v1-0-86bb6c3346d2@linaro.org
 
-Why do you need this indirection?
+---
+Dmitry Baryshkov (12):
+      drm/msm/mdp5: add writeback block bases
+      drm/msm/hdmi: drop qfprom.xml.h
+      drm/msm/dsi: drop mmss_cc.xml.h
+      drm/msm: move msm_gpummu.c to adreno/a2xx_gpummu.c
+      drm/msm: import XML display registers database
+      drm/msm: import A2xx-A4xx XML display registers database
+      drm/msm: import A5xx-A7xx XML display registers database
+      drm/msm: import gen_header.py script from Mesa
+      drm/msm: generate headers on the fly
+      drm/msm: drop display-related headers
+      drm/msm: drop A5xx, A6xx headers
+      drm/msm: drop A2xx-A4xx headers
 
-> +	default:
-> +		return NULL;
-> +	}
-> +}
-> +
+ drivers/gpu/drm/msm/.gitignore                     |     6 +
+ drivers/gpu/drm/msm/Makefile                       |    97 +-
+ drivers/gpu/drm/msm/adreno/a2xx.xml.h              |  3251 -----
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |     4 +-
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.h              |     4 +
+ .../drm/msm/{msm_gpummu.c => adreno/a2xx_gpummu.c} |    45 +-
+ drivers/gpu/drm/msm/adreno/a3xx.xml.h              |  3268 -----
+ drivers/gpu/drm/msm/adreno/a4xx.xml.h              |  4379 -------
+ drivers/gpu/drm/msm/adreno/a5xx.xml.h              |  5572 ---------
+ drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 11858 -------------------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   422 -
+ drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |   539 -
+ drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  2803 -----
+ drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |  1181 --
+ drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |  1979 ----
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |    11 +
+ drivers/gpu/drm/msm/disp/mdp_common.xml.h          |   111 -
+ drivers/gpu/drm/msm/dsi/dsi.xml.h                  |   790 --
+ drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |   227 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |   309 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |   237 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |   384 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |   286 -
+ drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |   483 -
+ drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |   131 -
+ drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |    70 -
+ drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |  1399 ---
+ drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |    61 -
+ drivers/gpu/drm/msm/msm_drv.c                      |     3 +-
+ drivers/gpu/drm/msm/msm_gpu.c                      |     2 +-
+ drivers/gpu/drm/msm/msm_mmu.h                      |     5 -
+ drivers/gpu/drm/msm/registers/adreno/a2xx.xml      |  1865 +++
+ drivers/gpu/drm/msm/registers/adreno/a3xx.xml      |  1751 +++
+ drivers/gpu/drm/msm/registers/adreno/a4xx.xml      |  2409 ++++
+ drivers/gpu/drm/msm/registers/adreno/a5xx.xml      |  3039 +++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |  4969 ++++++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml  |   228 +
+ .../gpu/drm/msm/registers/adreno/adreno_common.xml |   399 +
+ .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  2267 ++++
+ drivers/gpu/drm/msm/registers/display/dsi.xml      |   390 +
+ .../gpu/drm/msm/registers/display/dsi_phy_10nm.xml |   102 +
+ .../gpu/drm/msm/registers/display/dsi_phy_14nm.xml |   135 +
+ .../gpu/drm/msm/registers/display/dsi_phy_20nm.xml |   100 +
+ .../gpu/drm/msm/registers/display/dsi_phy_28nm.xml |   180 +
+ .../msm/registers/display/dsi_phy_28nm_8960.xml    |   134 +
+ .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |   230 +
+ drivers/gpu/drm/msm/registers/display/edp.xml      |   239 +
+ drivers/gpu/drm/msm/registers/display/hdmi.xml     |  1015 ++
+ drivers/gpu/drm/msm/registers/display/mdp4.xml     |   504 +
+ drivers/gpu/drm/msm/registers/display/mdp5.xml     |   806 ++
+ .../gpu/drm/msm/registers/display/mdp_common.xml   |    89 +
+ drivers/gpu/drm/msm/registers/display/msm.xml      |    32 +
+ drivers/gpu/drm/msm/registers/display/sfpb.xml     |    17 +
+ .../gpu/drm/msm/registers/freedreno_copyright.xml  |    40 +
+ drivers/gpu/drm/msm/registers/gen_header.py        |   958 ++
+ drivers/gpu/drm/msm/registers/rules-ng.xsd         |   457 +
+ 56 files changed, 22480 insertions(+), 39792 deletions(-)
+---
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+change-id: 20240225-fd-xml-shipped-ba9a321cdedf
 
-...
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +/**
-> + * qcom_clear_bam_transaction() - Clears the BAM transaction
-> + * @nandc: qpic nand controller
-> + *
-> + * This function will clear the BAM transaction indexes.
-> + */
-> +void qcom_clear_bam_transaction(struct qcom_nand_controller *nandc)
-> +{
-> +	struct bam_transaction *bam_txn =3D nandc->bam_txn;
-> +
-> +	if (!nandc->props->is_bam)
-> +		return;
-> +
-> +	bam_txn->bam_ce_pos =3D 0;
-> +	bam_txn->bam_ce_start =3D 0;
-> +	bam_txn->cmd_sgl_pos =3D 0;
-> +	bam_txn->cmd_sgl_start =3D 0;
-> +	bam_txn->tx_sgl_pos =3D 0;
-> +	bam_txn->tx_sgl_start =3D 0;
-> +	bam_txn->rx_sgl_pos =3D 0;
-> +	bam_txn->rx_sgl_start =3D 0;
-> +	bam_txn->last_data_desc =3D NULL;
-> +	bam_txn->wait_second_completion =3D false;
-
-What about using memset here?
-
-> +
-> +	sg_init_table(bam_txn->cmd_sgl, nandc->max_cwperpage *
-> +		      QPIC_PER_CW_CMD_SGL);
-> +	sg_init_table(bam_txn->data_sgl, nandc->max_cwperpage *
-> +		      QPIC_PER_CW_DATA_SGL);
-> +
-> +	reinit_completion(&bam_txn->txn_done);
-> +}
-
-...
-
-> diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nan=
-d-qpic-common.h
-> new file mode 100644
-> index 000000000000..aced15866627
-> --- /dev/null
-> +++ b/include/linux/mtd/nand-qpic-common.h
-> @@ -0,0 +1,486 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * QCOM QPIC common APIs header file
-> + *
-> + * Copyright (c) 2023 Qualcomm Inc.
-> + * Authors:     Md sadre Alam           <quic_mdalam@quicinc.com>
-> + *		Sricharan R             <quic_srichara@quicinc.com>
-> + *		Varadarajan Narayanan   <quic_varada@quicinc.com>
-> + *
-> + */
-> +#ifndef __MTD_NAND_QPIC_COMMON_H__
-> +#define __MTD_NAND_QPIC_COMMON_H__
-> +
-> +#include <linux/bitops.h>
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/dmaengine.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/dma/qcom_adm.h>
-> +#include <linux/dma/qcom_bam_dma.h>
-> +#include <linux/module.h>
-> +#include <linux/mtd/partitions.h>
-> +#include <linux/mtd/rawnand.h>
-
-You really need this?
-
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +
-> +/* NANDc reg offsets */
-> +#define	NAND_FLASH_CMD			0x00
-> +#define	NAND_ADDR0			0x04
-> +#define	NAND_ADDR1			0x08
-> +#define	NAND_FLASH_CHIP_SELECT		0x0c
-> +#define	NAND_EXEC_CMD			0x10
-> +#define	NAND_FLASH_STATUS		0x14
-> +#define	NAND_BUFFER_STATUS		0x18
-> +#define	NAND_DEV0_CFG0			0x20
-> +#define	NAND_DEV0_CFG1			0x24
-> +#define	NAND_DEV0_ECC_CFG		0x28
-> +#define	NAND_AUTO_STATUS_EN		0x2c
-> +#define	NAND_DEV1_CFG0			0x30
-> +#define	NAND_DEV1_CFG1			0x34
-> +#define	NAND_READ_ID			0x40
-> +#define	NAND_READ_STATUS		0x44
-> +#define	NAND_DEV_CMD0			0xa0
-> +#define	NAND_DEV_CMD1			0xa4
-> +#define	NAND_DEV_CMD2			0xa8
-> +#define	NAND_DEV_CMD_VLD		0xac
-> +#define	SFLASHC_BURST_CFG		0xe0
-> +#define	NAND_ERASED_CW_DETECT_CFG	0xe8
-> +#define	NAND_ERASED_CW_DETECT_STATUS	0xec
-> +#define	NAND_EBI2_ECC_BUF_CFG		0xf0
-> +#define	FLASH_BUF_ACC			0x100
-> +
-
-...
-
-> +/*
-> + * This data type corresponds to the NAND controller properties which va=
-ries
-> + * among different NAND controllers.
-> + * @ecc_modes - ecc mode for NAND
-
-Should this member be an enum?
-
-> + * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
-> + * @is_bam - whether NAND controller is using BAM
-
-has_bam_support? supports_bam?
-
-> + * @is_qpic - whether NAND CTRL is part of qpic IP
-
-CTRL? do you mean controller?
-
-> + * @qpic_v2 - flag to indicate QPIC IP version 2
-> + * @use_codeword_fixup - whether NAND has different layout for boot part=
-itions
-
-The doc is clear but the member name is terrible. Please clarify the
-naming.
-
-> + */
-> +struct qcom_nandc_props {
-> +	u32 ecc_modes;
-> +	u32 dev_cmd_reg_start;
-> +	bool is_bam;
-> +	bool is_qpic;
-> +	bool qpic_v2;
-> +	bool use_codeword_fixup;
-> +};
-> +
-> +void config_nand_page_read(struct nand_chip *chip);
-> +void qcom_qpic_bam_dma_done(void *data);
-> +void qcom_nandc_read_buffer_sync(struct qcom_nand_controller *nandc, boo=
-l is_cpu);
-> +__le32 *qcom_offset_to_nandc_reg(struct nandc_regs *regs, int offset);
-> +int qcom_prep_adm_dma_desc(struct qcom_nand_controller *nandc, bool read,
-> +			   int reg_off, const void *vaddr, int size,
-> +			bool flow_control);
-> +int qcom_submit_descs(struct qcom_nand_controller *nandc);
-> +int qcom_prepare_bam_async_desc(struct qcom_nand_controller *nandc,
-> +				struct dma_chan *chan, unsigned long flags);
-> +int qcom_prep_bam_dma_desc_cmd(struct qcom_nand_controller *nandc, bool =
-read,
-> +			       int reg_off, const void *vaddr,
-> +			int size, unsigned int flags);
-> +int qcom_prep_bam_dma_desc_data(struct qcom_nand_controller *nandc, bool=
- read,
-> +				const void *vaddr,
-> +			int size, unsigned int flags);
-> +int qcom_read_reg_dma(struct qcom_nand_controller *nandc, int first,
-> +		      int num_regs, unsigned int flags);
-> +int qcom_write_reg_dma(struct qcom_nand_controller *nandc, int first,
-> +		       int num_regs, unsigned int flags);
-> +int qcom_read_data_dma(struct qcom_nand_controller *nandc, int reg_off,
-> +		       const u8 *vaddr, int size, unsigned int flags);
-> +int qcom_write_data_dma(struct qcom_nand_controller *nandc, int reg_off,
-> +			const u8 *vaddr, int size, unsigned int flags);
-> +struct bam_transaction *qcom_alloc_bam_transaction(struct qcom_nand_cont=
-roller *nandc);
-> +void qcom_clear_bam_transaction(struct qcom_nand_controller *nandc);
-> +void qcom_nandc_unalloc(struct qcom_nand_controller *nandc);
-> +int qcom_nandc_alloc(struct qcom_nand_controller *nandc);
-> +void qcom_clear_read_regs(struct qcom_nand_controller *nandc);
-> +void qcom_free_bam_transaction(struct qcom_nand_controller *nandc);
-> +#endif
-
-I made several requests on code that already exists, please add these
-changes to your series.
-
-
-Also, this patching being big, please split:
-1- rename your all your symbols to start with the same prefix
-(qcom_nand_ instead of nothing or just qcom)
-2- then perform the move, which should not require changing the names
-of all the functions everywhere.
-
-Thanks,
-Miqu=C3=A8l
 
