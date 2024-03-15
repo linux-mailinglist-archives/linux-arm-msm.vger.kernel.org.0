@@ -1,134 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-14283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE81387D64D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 22:38:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2D4F87D656
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 22:41:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5405A2832D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 21:38:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B2153B217FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 21:41:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF2775813A;
-	Fri, 15 Mar 2024 21:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7819A548F4;
+	Fri, 15 Mar 2024 21:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="IHBg+r/o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WP+cAXoe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E5457881
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 21:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC52317BB4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 21:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710538669; cv=none; b=twVJR3T6sGoFA6IGFQK8PyY5NZya9Mvn9W+CC6/8/vihqrrvopWBWJW8CRe2slIY19AbHAGj4OB6oTAXKaow3Ivo6t0MSCEtxFhDiMX3/r9Q+u9owENQnXST68KnEDtTkrXxdQh4fOJ4MGA+KZ1pynxuo3Hyp5uUshWS07v1JvQ=
+	t=1710538875; cv=none; b=DD/8Dto4mr5+QHdDGtZrp1H/xuGGGmur+j2i65UYQtiGGRM4Yx3lLCDxZOJ14bT0HC/zKSRPkj410gFVJo74pMEsu+y7b5ZLUUA4wySzQ+26+FemyBGGOhoRZ6CMwElyUruWwFy+CYZFbqd3i9PI2eHT0pbvryPRjZ/Kvp0ag6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710538669; c=relaxed/simple;
-	bh=j7l/Wm2Ft+e3LgNffRWN0vGzV11pIV6gqysmAZ2ebYQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMhu1oe4oU4MsupIECYpbi5HhI4YksESdF8oLbPSpL0Do86dR264mdW9ddXHzO7kNBPJfXrS8s7PAHOOjT+/LX4GyZE2rSCUPusd28sAntDxkzUtgvTtVUBO/6siQNDPpljdny9iteQKlOlnf9JcJTaPvMMvDjXLVK463XzEMgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=IHBg+r/o; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6e6ccd69ebcso1647075b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 14:37:46 -0700 (PDT)
+	s=arc-20240116; t=1710538875; c=relaxed/simple;
+	bh=e+MdelWcouBWrzG5vmleXYm/BqFUODKFt3Mb+0U1G88=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kmIb/RO4u6Rbp/MBVZu9FwYGlBmoeogkMLIMszuJ/2NqR5QXuR0AdzuDr+oLr2+DMN2IW1irqWlDXN0SQqna971Q6/axecG4IBM0YzOKX5ggRnA18wuUjXSEVEEFBI2i+kdmantJLlvtdr0xioLbialnl2Nr5SIyerNsvaeAe9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WP+cAXoe; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dbed179f0faso2652132276.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Mar 2024 14:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1710538666; x=1711143466; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1710538870; x=1711143670; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Gz22lebM2rTHwhNkx5aAaX7EA6Wa3wOGuC1PNKA3MCs=;
-        b=IHBg+r/oUGxaLys6qlwFNA47SFc2j/1FkFfzxcsEZHFgKJm2+EF7sIiTn98TzGKLrg
-         wVMsqkDOPI70Z/bJrVM8zoEYhDnaL3GF1yd53jYxkjebDFwfk5fRcE/uagPTE1p+BRoB
-         Bfee85uLs7tByJfW6UQG1/yCiGOW2LaZeQN48=
+        bh=lQIyog+V+hDOz6P/17DYQkVpq9nNe+yutAMO1vEHDgE=;
+        b=WP+cAXoeTV2eL6Prc7z5dQeTBBCa3kPvkdzZbS28Zd0mP3P2p3OG0O1Qk7+II4qkB1
+         6OZ3mDhuxAy9Q3jgBWCt6amj5uKoJsMzCFfix/d1WWDueB8MNxOUrhEwP2DMqa6flZJm
+         8cC62Hr+SPSY66NifCCHxVl2v7Hn3ub9eBvDS2A2rKQVIc6eP48GdPEvbPxDD/ozLlbV
+         DSOT0gLGem/CfjwX78hyDMua1wkfzDbY3usqiVdGCNyd5sMacneT0d4IgEELZFBxjeUf
+         nYfdGQbTm6KcEFPen8I+gQrNRf0KGjCLCRib4QHX1y9RZVydt/C2h86VXA1ssRJnTQJd
+         mKKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710538666; x=1711143466;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1710538870; x=1711143670;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Gz22lebM2rTHwhNkx5aAaX7EA6Wa3wOGuC1PNKA3MCs=;
-        b=hOh/XEfaYeWteXJOLhJwu4DwabWHgbpXMdAN9mGFxfBlZwaJy+9hpwUkAXFbuo114c
-         NEoywOQ+ouzFQSKa3w//i7PNG/TWXJ1ybKHSKXXumEUkeIXsxLO0Xzy4WZG7j7FZR01j
-         AmcgxeQZN/fn7jOMChQyqdc5cDdl9vnwtKJYLPEmx+dggF9WsMrXtKDjSkKPrq82dk2S
-         DSK7yjt+QRKJYCEbCZAskP4iIN+1SE1oPjusBILfjej4zRlgNSMZeMXYwbyAQnAtVkjG
-         8k1d6V7yte94jj8s7Ck5xUxfONRt4T5WRMGNXFcTezALHwGoJLKt2hm16VPttQImrw3v
-         Ifow==
-X-Forwarded-Encrypted: i=1; AJvYcCUt3R+sSwfFf5C4B6sPLgGbK4ECLqVFWW3bpEzQXp3BHzlanRaYQEnjXSr9s/MRImaxC19ARMuo2tXyfOrV6xWKV5VGkMRu/mN1BVL6MQ==
-X-Gm-Message-State: AOJu0YyohbPUwdzDPAbvVOJcYObfv/jkOnjkyPi3Tq7WZ2BosyCQxlVu
-	M94l8AreG0qHhw2vgLbxFn88rykjd9ok676ZAoX5pmIfYdfQgLBUB9J25Da6PyMnhfVcCnsSLZA
-	=
-X-Google-Smtp-Source: AGHT+IHQFsTaKAjTWRRsrq1ZbLWnGQEVyGRFX2DMyF+SJJVN6Bd0rkX5tleEQkFmHdo17KUR5G1ENw==
-X-Received: by 2002:a05:6a00:845:b0:6e6:fb34:2568 with SMTP id q5-20020a056a00084500b006e6fb342568mr3035362pfk.0.1710538666024;
-        Fri, 15 Mar 2024 14:37:46 -0700 (PDT)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:b23e:e8dc:3df4:aa2a])
-        by smtp.gmail.com with ESMTPSA id a26-20020aa7865a000000b006e6b5e65579sm3837142pfo.106.2024.03.15.14.37.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Mar 2024 14:37:44 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	David Airlie <airlied@gmail.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Sean Paul <sean@poorly.run>,
-	Stephen Boyd <swboyd@chromium.org>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] drm/msm/dp: Fix typo in static function (ststus => status)
-Date: Fri, 15 Mar 2024 14:36:32 -0700
-Message-ID: <20240315143621.v2.4.Ia5dd755f81d7cc9a4393c43f77b9be4ed2278ee3@changeid>
-X-Mailer: git-send-email 2.44.0.291.gc1ea87d7ee-goog
-In-Reply-To: <20240315213717.1411017-1-dianders@chromium.org>
-References: <20240315213717.1411017-1-dianders@chromium.org>
+        bh=lQIyog+V+hDOz6P/17DYQkVpq9nNe+yutAMO1vEHDgE=;
+        b=K7joDioyiDJeYSxYRhk40LDmkl6u68YnM0kyUQIwQuLezEF9D+1mzA5xBqOfECMma2
+         w7R/Lhv3biOrsetcJ2h5lnTAgpQdjiWwIiHIVVUFEiAyQti7TzoxXvvvS+IkE8wTsGEd
+         nb6jSqFRGVs/jcr9xLhi4VRAp1PcCs4tO4GZm9UFeHOH1Rd124xEQkXwOhvWRk7fh9lV
+         VqAlHzheluOC2M6vXJ5Lx4KVHxny5Oa8GhdqNfZlNxnOch6uZL7mIapN6RI9WETj8+vg
+         IKKMEWxXo6lZNAxXA499jsWgA1Yk4IQpz4XVSXQlPXlilBtmarkIbVLHTwlIFrSaFkoE
+         qxag==
+X-Forwarded-Encrypted: i=1; AJvYcCX4mdvnrA3t377hXKmjt4ST/I2JouzKh1TQ6GKLFUCeMfCXt/BEqpRaaYCZd2vFK0OSt+RuLCZKm4e5inwpj/kYGiKqBVBYLDO+SWWseQ==
+X-Gm-Message-State: AOJu0YzNuwDgD92JWvS0FWIqAlE3usyvqvXkBqun8jhnTiP9qHQTaRy9
+	b3jR2OLOc8D6Sz7HjpjHHQHfzP/fwd+jA9etRQMkuW8zA9KactrLfxSK8xcfqklXrID0Nf2Z2an
+	16b6Ew20LwOJt1QSsrkBOnkwoso7UOWGUqDcsvQ==
+X-Google-Smtp-Source: AGHT+IGkFWhHBndUjNRvX85twH2BG12l/RgBN92Ky0LJE7Oaz6Ep8+Pl/wLqIh6+hAWEvDmLKEyjzMjOZ3OYh6EKHUQ=
+X-Received: by 2002:a25:ad64:0:b0:dcc:5b7e:ddfe with SMTP id
+ l36-20020a25ad64000000b00dcc5b7eddfemr4607628ybe.4.1710538869766; Fri, 15 Mar
+ 2024 14:41:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240315-fd-xml-shipped-v3-0-0fc122e36c53@linaro.org> <CAF6AEGuc-xu_Ji5fOXCFFudos1Ah4tgFxjRs0neHVujtNdXB+A@mail.gmail.com>
+In-Reply-To: <CAF6AEGuc-xu_Ji5fOXCFFudos1Ah4tgFxjRs0neHVujtNdXB+A@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 15 Mar 2024 23:40:58 +0200
+Message-ID: <CAA8EJppek+zDUxE9q9NivE7T1KHigP80NOfy0oLYJd8z_DdoXA@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 00/12] drm/msm: generate register header files
+To: Rob Clark <robdclark@gmail.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-kbuild@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is a no-op change to just fix a typo in the name of a static function.
+On Fri, 15 Mar 2024 at 22:02, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Fri, Mar 15, 2024 at 4:46=E2=80=AFAM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Currently display-related register headers are generated from XML files
+> > shipped withing Mesa source tree. This is not fully optimal: it require=
+s
+> > multi-stage process of the changes first being landed to Mesa and only
+> > then synced to the kernel tree.
+>
+> I think we'd more or less need to continue following this process for
+> the gpu .xml so that the kernel and mesa are not diverging.  I guess
+> we could drop the display related .xml from mesa.  (But it would be
+> nice to have a decoder tool for display devcoredumps, like we do for
+> gpu..)
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+Yes.  But syncing XMLs is much easier compared to syncing the generated hea=
+ders.
 
-Changes in v2:
-- ("Fix typo in static function (ststus => status)") new for v2.
+For display-relaed headers, that's a good question, whether we want to
+drop them from mesa or not. I think it might be easier (and more
+logical) to get such a tool into the kernel. Note, that it will also
+require us to describe DPU registers in the XML format. And also maybe
+to sort out the DSI registers finally.
 
- drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> BR,
+> -R
+>
+> > Move original XML files to the kernel tree and generate header files
+> > when required.
+> >
+> > NOTE: the gen_header.py script is based on the non-merged Mesa MR [1].
+> > Once that MR lands, I will update the script and commit messages and
+> > send the next iteration.
+> >
+> > [1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/28193
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> > Changes in v3:
+> > - Split XML and git rm patches in hope to pass ML limitations
+> > - Link to v2: https://lore.kernel.org/r/20240315-fd-xml-shipped-v2-0-7c=
+d68ecc4320@linaro.org
+> >
+> > Changes in v2:
+> > - Removed the _shipped files, always generating the headers (Masahiro
+> >   Yamada)
+> > - Replaced headergen2 with gen_headers.py
+> > - Simplify Makefile rules, making all Adreno objects depend on Adreno
+> >   headers and all displau objects depend on all display headers
+> > - Also handle Adreno registers
+> > - Link to v1: https://lore.kernel.org/r/20240226-fd-xml-shipped-v1-0-86=
+bb6c3346d2@linaro.org
+> >
+> > ---
+> > Dmitry Baryshkov (12):
+> >       drm/msm/mdp5: add writeback block bases
+> >       drm/msm/hdmi: drop qfprom.xml.h
+> >       drm/msm/dsi: drop mmss_cc.xml.h
+> >       drm/msm: move msm_gpummu.c to adreno/a2xx_gpummu.c
+> >       drm/msm: import XML display registers database
+> >       drm/msm: import A2xx-A4xx XML display registers database
+> >       drm/msm: import A5xx-A7xx XML display registers database
+> >       drm/msm: import gen_header.py script from Mesa
+> >       drm/msm: generate headers on the fly
+> >       drm/msm: drop display-related headers
+> >       drm/msm: drop A5xx, A6xx headers
+> >       drm/msm: drop A2xx-A4xx headers
+> >
+> >  drivers/gpu/drm/msm/.gitignore                     |     6 +
+> >  drivers/gpu/drm/msm/Makefile                       |    97 +-
+> >  drivers/gpu/drm/msm/adreno/a2xx.xml.h              |  3251 -----
+> >  drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |     4 +-
+> >  drivers/gpu/drm/msm/adreno/a2xx_gpu.h              |     4 +
+> >  .../drm/msm/{msm_gpummu.c =3D> adreno/a2xx_gpummu.c} |    45 +-
+> >  drivers/gpu/drm/msm/adreno/a3xx.xml.h              |  3268 -----
+> >  drivers/gpu/drm/msm/adreno/a4xx.xml.h              |  4379 -------
+> >  drivers/gpu/drm/msm/adreno/a5xx.xml.h              |  5572 ---------
+> >  drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 11858 -----------=
+--------
+> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |   422 -
+> >  drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |   539 -
+> >  drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  2803 -----
+> >  drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |  1181 --
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |  1979 ----
+> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.h           |    11 +
+> >  drivers/gpu/drm/msm/disp/mdp_common.xml.h          |   111 -
+> >  drivers/gpu/drm/msm/dsi/dsi.xml.h                  |   790 --
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |   227 -
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |   309 -
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |   237 -
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |   384 -
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |   286 -
+> >  drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |   483 -
+> >  drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |   131 -
+> >  drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |    70 -
+> >  drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |  1399 ---
+> >  drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |    61 -
+> >  drivers/gpu/drm/msm/msm_drv.c                      |     3 +-
+> >  drivers/gpu/drm/msm/msm_gpu.c                      |     2 +-
+> >  drivers/gpu/drm/msm/msm_mmu.h                      |     5 -
+> >  drivers/gpu/drm/msm/registers/adreno/a2xx.xml      |  1865 +++
+> >  drivers/gpu/drm/msm/registers/adreno/a3xx.xml      |  1751 +++
+> >  drivers/gpu/drm/msm/registers/adreno/a4xx.xml      |  2409 ++++
+> >  drivers/gpu/drm/msm/registers/adreno/a5xx.xml      |  3039 +++++
+> >  drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |  4969 ++++++++
+> >  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml  |   228 +
+> >  .../gpu/drm/msm/registers/adreno/adreno_common.xml |   399 +
+> >  .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  2267 ++++
+> >  drivers/gpu/drm/msm/registers/display/dsi.xml      |   390 +
+> >  .../gpu/drm/msm/registers/display/dsi_phy_10nm.xml |   102 +
+> >  .../gpu/drm/msm/registers/display/dsi_phy_14nm.xml |   135 +
+> >  .../gpu/drm/msm/registers/display/dsi_phy_20nm.xml |   100 +
+> >  .../gpu/drm/msm/registers/display/dsi_phy_28nm.xml |   180 +
+> >  .../msm/registers/display/dsi_phy_28nm_8960.xml    |   134 +
+> >  .../gpu/drm/msm/registers/display/dsi_phy_7nm.xml  |   230 +
+> >  drivers/gpu/drm/msm/registers/display/edp.xml      |   239 +
+> >  drivers/gpu/drm/msm/registers/display/hdmi.xml     |  1015 ++
+> >  drivers/gpu/drm/msm/registers/display/mdp4.xml     |   504 +
+> >  drivers/gpu/drm/msm/registers/display/mdp5.xml     |   806 ++
+> >  .../gpu/drm/msm/registers/display/mdp_common.xml   |    89 +
+> >  drivers/gpu/drm/msm/registers/display/msm.xml      |    32 +
+> >  drivers/gpu/drm/msm/registers/display/sfpb.xml     |    17 +
+> >  .../gpu/drm/msm/registers/freedreno_copyright.xml  |    40 +
+> >  drivers/gpu/drm/msm/registers/gen_header.py        |   958 ++
+> >  drivers/gpu/drm/msm/registers/rules-ng.xsd         |   457 +
+> >  56 files changed, 22480 insertions(+), 39792 deletions(-)
+> > ---
+> > base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+> > change-id: 20240225-fd-xml-shipped-ba9a321cdedf
+> >
+> > Best regards,
+> > --
+> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index b0f3e2ef5a6b..78e702f66ed2 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -494,7 +494,7 @@ static void dp_display_handle_video_request(struct dp_display_private *dp)
- 	}
- }
- 
--static int dp_display_handle_port_ststus_changed(struct dp_display_private *dp)
-+static int dp_display_handle_port_status_changed(struct dp_display_private *dp)
- {
- 	int rc = 0;
- 
-@@ -551,7 +551,7 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 		drm_dbg_dp(dp->drm_dev, "hpd_state=%d sink_request=%d\n",
- 					dp->hpd_state, sink_request);
- 		if (sink_request & DS_PORT_STATUS_CHANGED)
--			rc = dp_display_handle_port_ststus_changed(dp);
-+			rc = dp_display_handle_port_status_changed(dp);
- 		else
- 			rc = dp_display_handle_irq_hpd(dp);
- 	}
--- 
-2.44.0.291.gc1ea87d7ee-goog
 
+
+--=20
+With best wishes
+Dmitry
 
