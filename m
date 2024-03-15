@@ -1,143 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-14265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7187487D0CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:57:33 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B59F87D106
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 17:17:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1375B1F23F57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 15:57:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB7A01F2397C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 16:17:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D14CC405FF;
-	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2107543AD0;
+	Fri, 15 Mar 2024 16:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjFwN2R7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IrvBXckd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63C53E48E;
-	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D834144C64;
+	Fri, 15 Mar 2024 16:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710518238; cv=none; b=mxbtpWQGstHc0nOuYOkMxM38Mx8V0BL8LlaJd8ZTUqjzk+YFEysqMY0hLshxYqjLiZoswwFW1cD5UceaRXNBwJ2LebqEZIxiqpwk6FUtE/vm2UTevxGohisDLcj9fjHzHpJPjzuKubz5js+e40mZZGqTlP0V3XEfyyAluXlaL0c=
+	t=1710519420; cv=none; b=TawXyb6lsdB2W/IhMJRU5a4q1Rn9vyaP0M1yUpTPkrCDmEqElEuQ2LvYAn/nPO2iG2emBXrOb8U+/3gFABJzFwD/+nfPrHxq7OpO9iPqfVZiMFfd4ulo2h6l39S2OnIQUbdUKacLXmwksGQ7/Sb7z2vAcnI/pN4jpEhHZx3tTxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710518238; c=relaxed/simple;
-	bh=+27njxvTQI9ZBIhezxtzfCGEjQq6eW+OVH0WF5kinqo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ac1WmXIplm/F4V/0byrE5I3cOd5PN6MRsv1OXH7vYWnMbK51eKgOyXLupZo1k3MSUDT+ylZU0VbQz1iMGG/pEwN/jKF4/HFbhBKS+ZdBBzYnkxbai31PoXjdiLQQG42so5XS7+2+SO+oJOA4IywstSCSBfsntymmCsXtVVXeCiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjFwN2R7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D985C433C7;
-	Fri, 15 Mar 2024 15:57:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710518238;
-	bh=+27njxvTQI9ZBIhezxtzfCGEjQq6eW+OVH0WF5kinqo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PjFwN2R7Ml6OnXuHFUNhVlcuAMX/WtOyTgqbQYADqdwTqZfVB8pwjSULrG8PfvJDE
-	 fCLlafHqOz5eEY497R8gJvP1h1a0G0Ow4kPlu995KdckrKw9MBNofk2jJn1ZWJFrMY
-	 QdipCePE9gRzhFADdzMxJmFev7yM+2e96GfI1HFS+pX/qI9lZEOI7Sgkpdim94SxPa
-	 MIW6RC75gYNG3ASz8AUXm8uk0mkAElWnV6WYUopArvcrZXJm0ue6toNIAROIXWLH+O
-	 aaWYZkWjj1Khl9Ap3wri881v+EtdyZXdpQMKuWlpxOsVD75hSk3QxsJe2S8/Aru0FQ
-	 CCanFtVG4Zpnw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1rl9vy-000000008Ts-0qdx;
-	Fri, 15 Mar 2024 16:57:26 +0100
-Date: Fri, 15 Mar 2024 16:57:26 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	quic_bjorande@quicinc.com, Rob Clark <robdclark@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: move link_ready out of HPD event thread
-Message-ID: <ZfRv5le7Bfdiwrk_@hovoldconsulting.com>
-References: <20240308214532.1404038-1-quic_abhinavk@quicinc.com>
- <ZfApxyVAJMK4bL8O@hovoldconsulting.com>
- <ZfCFsmNv62-KMkA6@hovoldconsulting.com>
- <ZfCKDGq9n9WG3Quj@hovoldconsulting.com>
- <8e125a99-543d-8328-a2a9-100e223e4faf@quicinc.com>
- <ZfFhXG5yd6O29spS@hovoldconsulting.com>
- <ec2cba17-5644-6cf6-f6c9-d37d7ca56204@quicinc.com>
- <ZfMaEIzv3Z3ny3y0@hovoldconsulting.com>
- <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
+	s=arc-20240116; t=1710519420; c=relaxed/simple;
+	bh=IyytQBo2KIJF54NrANAyUTvbiB6Rzt4f4opggr/aZgE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BMT1MXcktiF3QztGfIYZtEdw+WFHBdwmV9+EWSQqwqUhXnhEAmS7CkbalnVveC4CMkyq4sC+2gnTJWZuzkP6/EgbuUonTa6ZPcLoxBM1du1l/i2T58Nqo9h+xa3mMD2JsJXFpz6gM9bfys6S7Quua7FJaEe3GXnTy8uOginRTOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IrvBXckd; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-565c6cf4819so5676788a12.1;
+        Fri, 15 Mar 2024 09:16:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710519415; x=1711124215; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hq26cNsD7jowb3hRFtXkhmvH+pk4/HkmfGFyk+22HD0=;
+        b=IrvBXckdY6A/y/wKd+r8x33eovdCcnR2Uu31fUAFthMt1oxhncLc86ykoEje2Q6U9R
+         j8Fnh6ro9+L0NyNRS2xOeTpaedeyYsFm9pzOzkR1GeeCbcFCo8kRDCk33wwDJc27Cu5e
+         jfd5Xs8fSxDzgww3rHaaQW7HSlZgDfjXlsaniG3JrVtp2+RPPIF17jFW9GFQ6FVR9WTW
+         cA2DqyqLhkNvAMC+cp/M0aL6JQRVZAfvkdU5SEgys/JVo8pvhHcLn/Nakpf8y7hz3zpC
+         HHuulgXFngj+dAA7qJ1PRx+7ZV676/Gzvm44BGJDtVXZ9sc7a8b3CdB680/+UcGC6ots
+         Yf/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710519415; x=1711124215;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hq26cNsD7jowb3hRFtXkhmvH+pk4/HkmfGFyk+22HD0=;
+        b=Z6dDCr7zZ1t1eMUX8OMr6cIZVQ+TLb7fbVyhL1SKv0KfpBQW8hjBrydWLToc9P4Nnd
+         NIkU3lUEUQSlsJtSRQLTlU3m+pChS/oA9ognpcMAiD3Iwlt7gaYLSF/FITkY7RYoygtP
+         Wkcpm9ewB+XwZEO+DHM9jLrvSRG/Nx7AMr8zsJYB1Ywq0n1wdJlgtlITjfOtXJAkNJUF
+         XDqphcdIm9TcVE3SPdAIKDv9jAH9lVp6HnXwsCXPcaEn9xm/dGjISTZiQWKDxPQnqq6T
+         1XG0T+PRC12zIZga7Y4k6aU5u5T9oSBUWnt/N7zmnC1vfAjOxYLCzloRNBPySF0aEZ8m
+         QRXg==
+X-Forwarded-Encrypted: i=1; AJvYcCUET8097kafvap4O3cu7+QNTGbJMbq8Hc8x05kozcPxB43sWSptiuUmn5Tfn/mM11Hn6Lk4fAdl9Gp/cP93oEouBDZ3WwZrP+iQezqGLhrjrDC//0C9yMwAFZxdYJpeviGTyOLEcqGoeDc+0dYGX+pu+/D3r2qtP7ckzCYDy8LF
+X-Gm-Message-State: AOJu0YxtDxHIKHg98vvrxj7IemRixNWW3AQjg23ywdL8v+9BzyhRRHSO
+	eYGdAMHmJQpd9GfVVZ6cMU8x+mdSw17jQEC970Wvsv7byVm33khg
+X-Google-Smtp-Source: AGHT+IFv/E9MBLkyKgj7qZIVTGEgGlu0AGvsb77hVYdllp23GXPaquSMaDb/YqvQ3JdCNN4cWhrsMw==
+X-Received: by 2002:a17:906:5a95:b0:a46:74fe:9177 with SMTP id l21-20020a1709065a9500b00a4674fe9177mr4056795ejq.21.1710519414942;
+        Fri, 15 Mar 2024 09:16:54 -0700 (PDT)
+Received: from [192.168.20.102] (57657817.catv.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id me17-20020a170906aed100b00a4679ce191csm1330205ejb.121.2024.03.15.09.16.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Mar 2024 09:16:54 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Fri, 15 Mar 2024 17:16:41 +0100
+Subject: [PATCH v2] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to
+ fix boot failure
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9313aa00-41f0-15af-a646-3f4e4b3098c7@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAGh09GUC/42NTQ6CMBCFr0Jm7ZhOqRZceQ/DotICk/BTW0M0h
+ LvbcgJXL9/L+9kgusAuwq3YILiVIy9zAnkqoB3M3DtkmxikkEqURGh8jMj+hX4cs14EVZiTqJW
+ tTdUpTeUVUt8H1/Hn2H40iQeO7yV8j6uVsvvP6kpIWDmr5FObWih77yfD47ldJmj2ff8Boz155
+ 8IAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.12.3
 
-On Thu, Mar 14, 2024 at 09:30:57AM -0700, Abhinav Kumar wrote:
-> On 3/14/2024 8:38 AM, Johan Hovold wrote:
-> > On Wed, Mar 13, 2024 at 10:24:08AM -0700, Abhinav Kumar wrote:
+Booting v6.8 results in a hang on various IPQ5018 based boards.
+Investigating the problem showed that the hang happens when the
+clk_alpha_pll_stromer_plus_set_rate() function tries to write
+into the PLL_MODE register of the APSS PLL.
 
-> > Perhaps I'm missing something in the race that you are trying to
-> > describe (and which I've asked you to describe in more detail so that I
-> > don't have to spend more time trying to come up with a reproducer
-> > myself).
+Checking the downstream code revealed that it uses [1] stromer
+specific operations for IPQ5018, whereas in the current code
+the stromer plus specific operations are used.
 
-> The race condition is between the time we get disconnect event and set 
-> link_ready to false, a commit can come in. Because setting link_ready to 
-> false happens in the event thread so it could be slightly delayed.
+The ops in the 'ipq_pll_stromer_plus' clock definition can't be
+changed since that is needed for IPQ5332, so add a new alpha pll
+clock declaration which uses the correct stromer ops and use this
+new clock for IPQ5018 to avoid the boot failure.
 
-I get this part, just not why, or rather when, that becomes a problem.
+Also, change pll_type in 'ipq5018_pll_data' to
+CLK_ALPHA_PLL_TYPE_STROMER to better reflect that it is a Stromer
+PLL and change the apss_ipq_pll_probe() function accordingly.
 
-Once the disconnect event is processed, dp_hpd_unplug_handle() will
-update the state to ST_DISCONNECT_PENDING, and queue a notification
-event. link_ready is (before this patch) still set to 1.
+1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
 
-Here a commit comes in; what exactly are you suggesting would trigger
-that? And in such a way that it breaks the state machine?
+Cc: stable@vger.kernel.org
+Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Changes in v2:
+  - extend commit description due to the changes
+  - add a comment about why CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets
+    are used
+  - constify hw clock init data (Stephen)
+  - change pll_type in ipq5018_pll_data to CLK_ALPHA_PLL_TYPE_STROMER (Konrad)
+  - Link to v1: https://lore.kernel.org/r/20240311-apss-ipq-pll-ipq5018-hang-v1-1-8ed42b7a904d@gmail.com
+---
+Based on v6.8.
+---
+ drivers/clk/qcom/apss-ipq-pll.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-One way this could cause trouble is if you end up with a call to
-dp_bridge_atomic_post_disable() which updates the state to
-ST_DISCONNECTED. (1)
-
-This would then need to be followed by another call to
-dp_bridge_atomic_enable() which bails out early with the link clock
-disabled. (2) (And if link_ready were to be set to 0 sooner, the
-likelihood of this is reduced.)
-
-This in turn, would trigger a reset when dp_bridge_atomic_disable() is
-later called.
-
-This is the kind of description of the race I expect to see in the
-commit message, and I'm still not sure what would trigger the call to
-dp_bridge_atomic_post_disable() and dp_bridge_atomic_enable() (i.e. (1)
-and (2) above) and whether this is a real issue or not.
-
-Also note that the above scenario is quite different from the one I've
-hit and described earlier.
-
-> It will be hard to reproduce this. Only way I can think of is to delay 
-> the EV_NOTIFICATION for sometime and see in dp_bridge_hpd_notify()
-> 
->          else if (dp_display->link_ready && status == 
-> connector_status_disconnected)
->                  dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-> 
-> as dp_add_event() will add the event, then wakeup the event_q.
-
-Sure that would increase the race window with the current code, but that
-alone isn't enough to trigger the bug AFAICT.
-
-> Before the event thread wakes up and processes this unplug event, the 
-> commit can come in. This is the race condition i was thinking of.
-
-Yes, but what triggers the commit? And why would it lead to a mode set
-that disables the bridge?
+diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+index 678b805f13d45..dfffec2f06ae7 100644
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -55,6 +55,29 @@ static struct clk_alpha_pll ipq_pll_huayra = {
+ 	},
+ };
  
-Johan
++static struct clk_alpha_pll ipq_pll_stromer = {
++	.offset = 0x0,
++	/*
++	 * Reuse CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets.
++	 * Although this is a bit confusing, but the offset values
++	 * are correct nevertheless.
++	 */
++	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
++	.flags = SUPPORTS_DYNAMIC_UPDATE,
++	.clkr = {
++		.enable_reg = 0x0,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "a53pll",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "xo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_stromer_ops,
++		},
++	},
++};
++
+ static struct clk_alpha_pll ipq_pll_stromer_plus = {
+ 	.offset = 0x0,
+ 	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
+@@ -144,8 +167,8 @@ struct apss_pll_data {
+ };
+ 
+ static const struct apss_pll_data ipq5018_pll_data = {
+-	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
+-	.pll = &ipq_pll_stromer_plus,
++	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER,
++	.pll = &ipq_pll_stromer,
+ 	.pll_config = &ipq5018_pll_config,
+ };
+ 
+@@ -203,7 +226,8 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+ 
+ 	if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
+ 		clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
+-	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
++	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER ||
++		 data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
+ 		clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
+ 
+ 	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
+
+---
+base-commit: e8f897f4afef0031fe618a8e94127a0934896aba
+change-id: 20240311-apss-ipq-pll-ipq5018-hang-74d9a8f47136
+
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
+
 
