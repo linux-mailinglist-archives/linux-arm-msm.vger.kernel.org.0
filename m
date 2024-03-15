@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-14201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-14202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8927A87C698
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 00:49:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F13487C6DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 01:57:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 273191F213CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Mar 2024 23:49:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF2EA1F22154
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Mar 2024 00:57:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DE6F14AB0;
-	Thu, 14 Mar 2024 23:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDCAAD518;
+	Fri, 15 Mar 2024 00:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qUogpZee"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c4D42RWC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E85714A9F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 23:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28DAD502;
+	Fri, 15 Mar 2024 00:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710460179; cv=none; b=UhcgC5R8VeeTZQ07oLC4TpTKumlsyWRoQHpSBkMj7shgUQDB71Az5qVDvGGhbx32rJnUaudUn35OoVlyZP0HApPmgM803Lafd1uCshv2AtSXDCoP6La2x8/bTdsVCNKmSctLsSlshIOaTkZynuP5ODCCUjGUm7Tc9bxSp9Nh4S0=
+	t=1710464273; cv=none; b=rFmHFnLc4uzr/4fnfJ5fhZseJ1Do8vxVEMeGtt7JDs+gm2m1O5GLgwX4LoOzrqmBRuyXhX12bgOSPTr1D7meuHWkBJju/A2fG7UmrTYGndKCBUQz5ENPCbkWW96fuFBQUrhM1fhvZoN+KyP+oxljyDIFrV/8ET90fL6ikR3UZMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710460179; c=relaxed/simple;
-	bh=WENTUOp3D5qKgO+Me5EIUQATACagdW7x0MfwkgJNAYw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q5TIefuUwY1NBdHLsq/Tg+Cs1t2SRgY/H1n0PirnL83rNHSqmKgvkqh5FA/cltBKt9gWe/8V4lRYbzmFROdY2aYrDYoL+jn3kIZBcOB+KzA2BW+JJ+73WZV7lASThDPl7XC7wqINMpVrXYUMgpMmqTd5/tAfaMa+7T2XIS/LFQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qUogpZee; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-513d247e3c4so962031e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Mar 2024 16:49:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1710460175; x=1711064975; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JDDmMzCYMjAaKsu18+oLY6uSXCtu/11fL+3ri7il4Nk=;
-        b=qUogpZee0pG8hv6hV+Bln4Zh2yetfz3hlxa5RLlmmPgCc14B+F7GeCyOcLXkrO/EyA
-         d+Nq+KzuHCs7u32i+ac+qaGwAn/ssn3are/wx87iljSGgRz7iY7Wtt4zRhmq7hkdYUjQ
-         svN7sr9IHnawYCaJnbeNu2DNs4If+7jAUiYpCYfGgGxgsW+P2KjESIaHD23eDnTagTCF
-         qKlwf5Qhs2D1hWP4aQ6ogNtc911+IAZ9d+jCK5QJhdB7uXJlDzUIiJgAzDUxoIPA6v89
-         Yg8YGWU8LArQ8VhQljwbodDq/vNqoqBrTDgzxVh6WTe9i/3LdJm8Z09TD4dAxy5x5spC
-         NnoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710460175; x=1711064975;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JDDmMzCYMjAaKsu18+oLY6uSXCtu/11fL+3ri7il4Nk=;
-        b=hDZmB8/PE0zp+mZa3ftkHNbxrh8NEnqShBC2jP5GPwvK8bt8pRuzZxe7jF5tCSqyci
-         33Zot6kC4dmWOP2RjPs/uKnAwi0JOp5aQFwkt3AOxNlPt8MoZYVV1o/CcTOHe4ZqtSss
-         PoLQPsaW3olcyfRbTYVZ/WK5yUVEX3PofOOV3mlyw/BwAcwviujZ/Oazr1WNNIV9XRVG
-         BAbmgXOvL2Q72Hf7IvRQTKGMWtZRYLLugD630K8PDH3V2H9C4lSmznijWtuIq/D8nWa+
-         GC1mMY5EVd6aPcPeGxTXqF0IMcKxVvqNeA4UC39ka4J1GEkzPzxXgvkjkUZFWDAr0x+n
-         wFCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVmWa3d/CdMuunigJa9tM7m0dRvis4/Oq2EB95vi6KWjQeTbexVeTeDO2Llqzb8zaY6qX4M3GRtWEFmF0QjbCH271h+0YHDK/9CSq7r2Q==
-X-Gm-Message-State: AOJu0Yw8MSR2JrTgMmnsllisxdafZmxHxxcGvEFKAnpixD8OFV2P1AIj
-	gjpy6EkvAGoqs72+uw7M7KvgvIhaH1iJZrXcylmOybYsLcyP9AfuynwDxKdF80Q=
-X-Google-Smtp-Source: AGHT+IFEcYIa4GpGeC93soGHGUNc0pmDIvNhbFoVaCBY2T7BXc4vsb3knxKvgcBO/BTy2mEbvdXVlg==
-X-Received: by 2002:a19:5e4f:0:b0:513:d3ea:ec5f with SMTP id z15-20020a195e4f000000b00513d3eaec5fmr820021lfi.34.1710460175498;
-        Thu, 14 Mar 2024 16:49:35 -0700 (PDT)
-Received: from [172.30.204.13] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a17-20020a056512021100b00513cd2e23f0sm444666lfo.149.2024.03.14.16.49.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Mar 2024 16:49:35 -0700 (PDT)
-Message-ID: <359dafcc-4774-4ff4-8df0-03e3641082e5@linaro.org>
-Date: Fri, 15 Mar 2024 00:49:33 +0100
+	s=arc-20240116; t=1710464273; c=relaxed/simple;
+	bh=j13QLgYOb0kS6R4/5VVu1Oe7voHpWamm9OhFQVr8rYk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BUU4SsKA6WXoZCscPJpfwKAIayHsp6dAfdfMr+KiNLhmGdeLDmlaorQdkW+tUtUjcqm/LSJx+KK4Cpm8EqOi9HundUOOtjZ3buBhdHoN2GvEAZyvSSMVYYeAXGjHqaDmEy6MqTUhUXgdq5ciRe9E3A8YF3tiQSCx6Xby6NOjFiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c4D42RWC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 42F0ttIU013083;
+	Fri, 15 Mar 2024 00:57:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=5d1KXGqIP2/Z3YcymowfRnlD39KGKaYWq2ZynjnQd/c=; b=c4
+	D42RWCg+Ol7I9EPApkYXYBZrMeIVLYsEDMRNb6x+XP0lXTSl8xZtxbjgptZ+7WhJ
+	huv0JI5qYSX4J/xq75cgU0jtqbgudRs43wy8cDN2cpw0zSJlrzfd6DDhqgtd2AST
+	jD7HE6QKUeaG4Gb1V0dMsyGSBN6XfxYvMBkYDQz/KsvHFPD/jwc+0CQuhjFiNmj1
+	El1cN9VKJR0+rSdoExVG6iI1rXUHbUhMDuHC8fmBPQGh4axSfA+LnY7PWptWyFQ5
+	3fWXq6gG5yVzLc6M/ht2JfXEtAsxw3fvw2wW5S8MhVC0Em4R/pwx/YRLqywZfRo/
+	c9SkK1Agq2HHAFIAyWww==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wva0eg78f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 00:57:40 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 42F0vdDK025745
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 15 Mar 2024 00:57:39 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 14 Mar
+ 2024 17:57:39 -0700
+Message-ID: <f4e2c00e-b669-9827-a480-5670ef9711c0@quicinc.com>
+Date: Thu, 14 Mar 2024 17:57:38 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,55 +65,293 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sdm630-nile: add pinctrl for camera
- key
+Subject: Re: [PATCH v4 3/7] soc: qcom: add pd-mapper implementation
 Content-Language: en-US
-To: Sebastian Raase <linux@sraa.de>
-Cc: marijn.suijten@somainline.org, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240314200037.549206-1-linux@sraa.de>
- <20240314232043.1441395-1-linux@sraa.de>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240314232043.1441395-1-linux@sraa.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        Johan
+ Hovold <johan+linaro@kernel.org>
+References: <20240311-qcom-pd-mapper-v4-0-24679cca5c24@linaro.org>
+ <20240311-qcom-pd-mapper-v4-3-24679cca5c24@linaro.org>
+ <714bb2ca-40ac-80a2-454f-021da3caa93d@quicinc.com>
+ <CAA8EJpokFA=s5uhrb-OxH=BigfAP7jZ_K5z1FXJ0p1h3h3_CLQ@mail.gmail.com>
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <CAA8EJpokFA=s5uhrb-OxH=BigfAP7jZ_K5z1FXJ0p1h3h3_CLQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0O-ACVdpDIGBArFSKUVHPQYtnS7kncoo
+X-Proofpoint-GUID: 0O-ACVdpDIGBArFSKUVHPQYtnS7kncoo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 adultscore=0
+ spamscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2403140001 definitions=main-2403150004
 
 
 
-On 3/15/24 00:20, Sebastian Raase wrote:
-> Add pinctrl configuration for gpio-keys. Without this,
-> camera button half-presses are not detected.
+On 3/14/2024 2:30 PM, Dmitry Baryshkov wrote:
+> On Thu, 14 Mar 2024 at 21:44, Chris Lew <quic_clew@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 3/11/2024 8:34 AM, Dmitry Baryshkov wrote:
+>>> +int qcom_pdm_add_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+>>> +{
+>>> +     int ret;
+>>> +     int i;
+>>> +
+>>> +     mutex_lock(&qcom_pdm_mutex);
+>>> +
+>>> +     if (qcom_pdm_server_added) {
+>>> +             ret = qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+>>> +                                  SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+>>> +             if (ret)
+>>> +                     goto err_out;
+>>> +     }
+>>> +
+>>> +     for (i = 0; i < num_data; i++) {
+>>> +             ret = qcom_pdm_add_domain_locked(data[i]);
+>>> +             if (ret)
+>>> +                     goto err;
+>>> +     }
+>>> +
+>>> +     ret = qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+>>> +                          SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+>>> +     if (ret) {
+>>> +             pr_err("PDM: error adding server %d\n", ret);
+>>> +             goto err;
+>>> +     }
+>>> +
+>>> +     qcom_pdm_server_added = true;
+>>> +
+>>> +     mutex_unlock(&qcom_pdm_mutex);
+>>> +
+>>> +     return 0;
+>>> +
+>>> +err:
+>>> +     while (--i >= 0)
+>>> +             qcom_pdm_del_domain_locked(data[i]);
+>>> +
+>>> +     qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+>>> +                    SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+>>> +
+>>> +err_out:
+>>> +     mutex_unlock(&qcom_pdm_mutex);
+>>> +
+>>> +     return ret;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(qcom_pdm_add_domains);
+>>> +
+>>> +void qcom_pdm_del_domains(const struct qcom_pdm_domain_data * const *data, size_t num_data)
+>>> +{
+>>> +     int i;
+>>> +
+>>> +     mutex_lock(&qcom_pdm_mutex);
+>>> +
+>>> +     if (qcom_pdm_server_added) {
+>>> +             qmi_del_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+>>> +                            SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+>>> +     }
+>>
+>> I am confused as to why we need to reset the qmi handle anytime
+>> qcom_pdm_del_domains or qcom_pdm_add_domains is called. Is this to
+>> trigger some kind of re-broadcast type notification to clients because
+>> the service list has been updated?
 > 
-> Tested on discovery and pioneer.
+> Yes. Otherwise clients like pmic-glink will miss new domains.
 > 
-> Fixes: e781633b6067 ("arm64: dts: qcom: Add support for Sony Xperia XA2/Plus/Ultra (Nile platform)")
-> Signed-off-by: Sebastian Raase <linux@sraa.de>
-> ---
->   arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 9 +++++++++
->   1 file changed, 9 insertions(+)
+>>
+>> My concern would be that this causes some kind of unintended side-effect
+>> on the rprocs that are not restarting.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> index 87d0293c728d..823c21d5ee59 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> @@ -90,6 +90,8 @@ cam_vana_rear_vreg: cam-vana-rear-regulator {
->   
->   	gpio-keys {
->   		compatible = "gpio-keys";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&gpio_keys_default>;
+> Well, an alternative is to match machine compatible strings and to
+> build a full list of domains right from the beginning.
+> 
 
-It's fine to keep the "non-preferred" order, I'll probably send some
-changes to nile and fix up the style while at it in the near future.
+Ok, thanks for clarifying. I spoke to some of the firmware developers
+and a quick scan seems to indicate their handling is robust enough to
+handle this. It is a change in expected behavior but I think the current
+approach is reasonable.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-
-P.S.
-For your next submissions, please send the follow-up revisions in
-new mail threads
+>>
+>>> +
+>>> +     for (i = 0; i < num_data; i++)
+>>> +             qcom_pdm_del_domain_locked(data[i]);
+>>> +
+>>> +     qmi_add_server(&qcom_pdm_handle, SERVREG_QMI_SERVICE,
+>>> +                    SERVREG_QMI_VERSION, SERVREG_QMI_INSTANCE);
+>>> +     qcom_pdm_server_added = true;
+>>> +
+>>> +     mutex_unlock(&qcom_pdm_mutex);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(qcom_pdm_del_domains);
+>>> +
+>>> +static void qcom_pdm_get_domain_list(struct qmi_handle *qmi,
+>>> +                                  struct sockaddr_qrtr *sq,
+>>> +                                  struct qmi_txn *txn,
+>>> +                                  const void *decoded)
+>>> +{
+>>> +     const struct servreg_loc_get_domain_list_req *req = decoded;
+>>> +     struct servreg_loc_get_domain_list_resp *rsp = kzalloc(sizeof(*rsp), GFP_KERNEL);
+>>> +     struct qcom_pdm_service *service;
+>>> +     u32 offset;
+>>> +     int ret;
+>>> +
+>>> +     offset = req->offset_valid ? req->offset : 0;
+>>> +
+>>> +     rsp->rsp.result = QMI_RESULT_SUCCESS_V01;
+>>> +     rsp->rsp.error = QMI_ERR_NONE_V01;
+>>> +
+>>> +     rsp->db_revision_valid = true;
+>>> +     rsp->db_revision = 1;
+>>> +
+>>> +     rsp->total_domains_valid = true;
+>>> +     rsp->total_domains = 0;
+>>> +
+>>> +     mutex_lock(&qcom_pdm_mutex);
+>>> +
+>>> +     service = qcom_pdm_find_locked(req->name);
+>>> +     if (service) {
+>>> +             struct qcom_pdm_domain *domain;
+>>> +
+>>> +             rsp->domain_list_valid = true;
+>>> +             rsp->domain_list_len = 0;
+>>> +
+>>> +             list_for_each_entry(domain, &service->domains, list) {
+>>> +                     u32 i = rsp->total_domains++;
+>>> +
+>>> +                     if (i >= offset && i < SERVREG_LOC_MAX_DOMAINS) {
+>>> +                             u32 j = rsp->domain_list_len++;
+>>> +
+>>> +                             strscpy(rsp->domain_list[j].name, domain->name,
+>>> +                                     sizeof(rsp->domain_list[i].name));
+>>> +                             rsp->domain_list[j].instance_id = domain->instance_id;
+>>> +
+>>> +                             pr_debug("PDM: found %s / %d\n", domain->name,
+>>> +                                      domain->instance_id);
+>>> +                     }
+>>> +             }
+>>> +
+>>> +     }
+>>> +
+>>> +     mutex_unlock(&qcom_pdm_mutex);
+>>> +
+>>> +     pr_debug("PDM: service '%s' offset %d returning %d domains (of %d)\n", req->name,
+>>> +              req->offset_valid ? req->offset : -1, rsp->domain_list_len, rsp->total_domains);
+>>> +
+>>> +     ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_GET_DOMAIN_LIST,
+>>> +                             2658,
+>>> +                             servreg_loc_get_domain_list_resp_ei, rsp);
+>>
+>> Other QMI clients like pdr_interface have macros for the message size.
+>> Can we considering adding one instead of using 2658 directly?
+> 
+> 
+> Ack
+> 
+>>
+>>> +     if (ret)
+>>> +             pr_err("Error sending servreg response: %d\n", ret);
+>>> +
+>>> +     kfree(rsp);
+>>> +}
+>>> +
+>>> +static void qcom_pdm_pfr(struct qmi_handle *qmi,
+>>> +                      struct sockaddr_qrtr *sq,
+>>> +                      struct qmi_txn *txn,
+>>> +                      const void *decoded)
+>>> +{
+>>> +     const struct servreg_loc_pfr_req *req = decoded;
+>>> +     struct servreg_loc_pfr_resp rsp = {};
+>>> +     int ret;
+>>> +
+>>> +     pr_warn_ratelimited("PDM: service '%s' crash: '%s'\n", req->service, req->reason);
+>>> +
+>>> +     rsp.rsp.result = QMI_RESULT_SUCCESS_V01;
+>>> +     rsp.rsp.error = QMI_ERR_NONE_V01;
+>>> +
+>>> +     ret = qmi_send_response(qmi, sq, txn, SERVREG_LOC_PFR,
+>>> +                             SERVREG_LOC_PFR_RESP_MSG_SIZE,
+>>> +                             servreg_loc_pfr_resp_ei, &rsp);
+>>> +     if (ret)
+>>> +             pr_err("Error sending servreg response: %d\n", ret);
+>>> +}
+>>> +
+>>> diff --git a/drivers/soc/qcom/qcom_pdm_msg.h b/drivers/soc/qcom/qcom_pdm_msg.h
+>>> new file mode 100644
+>>> index 000000000000..e576b87c67c0
+>>> --- /dev/null
+>>> +++ b/drivers/soc/qcom/qcom_pdm_msg.h
+>>> @@ -0,0 +1,66 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2018, Linaro Ltd.
+>>> + * Copyright (c) 2016, Bjorn Andersson
+>>> + */
+>>> +
+>>> +#ifndef __QMI_SERVREG_LOC_H__
+>>> +#define __QMI_SERVREG_LOC_H__
+>>> +
+>>
+>> Should we update the header guards to reflect the new file name?
+> 
+> Ack
+> 
+>>
+>>> +#include <linux/types.h>
+>>> +#include <linux/soc/qcom/qmi.h>
+>>> +
+>>> +#define SERVREG_QMI_SERVICE 64
+>>> +#define SERVREG_QMI_VERSION 257
+>>> +#define SERVREG_QMI_INSTANCE 0
+>>> +#define QMI_RESULT_SUCCESS 0
+>>> +#define QMI_RESULT_FAILURE 1
+>>> +#define QMI_ERR_NONE 0
+>>> +#define QMI_ERR_INTERNAL 1
+>>> +#define QMI_ERR_MALFORMED_MSG 2
+>>
+>> I think these common QMI macro definitions are wrong. They should match
+>> what is defined in <soc/qcom/qmi.h>. This is a bug in the userspace
+>> pd-mapper header as well.
+> 
+> Ack
+> 
+>>
+>>> +#endif
+>>> diff --git a/include/linux/soc/qcom/pd_mapper.h b/include/linux/soc/qcom/pd_mapper.h
+>>> new file mode 100644
+>>> index 000000000000..86438b7ca6fe
+>>> --- /dev/null
+>>> +++ b/include/linux/soc/qcom/pd_mapper.h
+>>> @@ -0,0 +1,39 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>> +/*
+>>> + * Qualcomm Protection Domain mapper
+>>> + *
+>>> + * Copyright (c) 2023 Linaro Ltd.
+>>> + */
+>>> +#ifndef __QCOM_PD_MAPPER__
+>>> +#define __QCOM_PD_MAPPER__
+>>> +
+>>> +struct qcom_pdm_domain_data {
+>>> +     const char *domain;
+>>> +     u32 instance_id;
+>>> +     /* NULL-terminated array */
+>>> +     const char * services[];
+>>
+>> s/char * services[]/char *services[]/
+> 
+> 
+> 
 
